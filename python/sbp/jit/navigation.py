@@ -35,6 +35,7 @@ There is no inertial navigation capability on Piksi Multi or Duro.
 import json
 
 import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -75,41 +76,60 @@ these messages.
                'ns_residual',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__wn, offset, length) = get_u16(buf, offset, length)
-    ret['wn'] = __wn
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__ns_residual, offset, length) = get_s32(buf, offset, length)
-    ret['ns_residual'] = __ns_residual
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.wn = res['wn']
-    self.tow = res['tow']
-    self.ns_residual = res['ns_residual']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # wn: u16
-    ret += 2
-    # tow: u32
-    ret += 4
-    # ns_residual: s32
-    ret += 4
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('wn', 'u2'),
+          ('tow', 'u4'),
+          ('ns_residual', 'i4'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('wn', 'u2'),
+          ('tow', 'u4'),
+          ('ns_residual', 'i4'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'wn': int(res['wn'] if element else res['wn'][0]),
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'ns_residual': int(res['ns_residual'] if element else res['ns_residual'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_UTC_TIME = 0x0103
 class MsgUtcTime(SBP):
@@ -135,66 +155,75 @@ which indicate the source of the UTC offset value and source of the time fix.
                'seconds',
                'ns',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__year, offset, length) = get_u16(buf, offset, length)
-    ret['year'] = __year
-    (__month, offset, length) = get_u8(buf, offset, length)
-    ret['month'] = __month
-    (__day, offset, length) = get_u8(buf, offset, length)
-    ret['day'] = __day
-    (__hours, offset, length) = get_u8(buf, offset, length)
-    ret['hours'] = __hours
-    (__minutes, offset, length) = get_u8(buf, offset, length)
-    ret['minutes'] = __minutes
-    (__seconds, offset, length) = get_u8(buf, offset, length)
-    ret['seconds'] = __seconds
-    (__ns, offset, length) = get_u32(buf, offset, length)
-    ret['ns'] = __ns
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.flags = res['flags']
-    self.tow = res['tow']
-    self.year = res['year']
-    self.month = res['month']
-    self.day = res['day']
-    self.hours = res['hours']
-    self.minutes = res['minutes']
-    self.seconds = res['seconds']
-    self.ns = res['ns']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # flags: u8
-    ret += 1
-    # tow: u32
-    ret += 4
-    # year: u16
-    ret += 2
-    # month: u8
-    ret += 1
-    # day: u8
-    ret += 1
-    # hours: u8
-    ret += 1
-    # minutes: u8
-    ret += 1
-    # seconds: u8
-    ret += 1
-    # ns: u32
-    ret += 4
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('flags', 'u1'),
+          ('tow', 'u4'),
+          ('year', 'u2'),
+          ('month', 'u1'),
+          ('day', 'u1'),
+          ('hours', 'u1'),
+          ('minutes', 'u1'),
+          ('seconds', 'u1'),
+          ('ns', 'u4'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('flags', 'u1'),
+          ('tow', 'u4'),
+          ('year', 'u2'),
+          ('month', 'u1'),
+          ('day', 'u1'),
+          ('hours', 'u1'),
+          ('minutes', 'u1'),
+          ('seconds', 'u1'),
+          ('ns', 'u4'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'flags': int(res['flags'] if element else res['flags'][0]),
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'year': int(res['year'] if element else res['year'][0]),
+      'month': int(res['month'] if element else res['month'][0]),
+      'day': int(res['day'] if element else res['day'][0]),
+      'hours': int(res['hours'] if element else res['hours'][0]),
+      'minutes': int(res['minutes'] if element else res['minutes'][0]),
+      'seconds': int(res['seconds'] if element else res['seconds'][0]),
+      'ns': int(res['ns'] if element else res['ns'][0]),
+    }
+    return d
+
   
 SBP_MSG_DOPS = 0x0208
 class MsgDops(SBP):
@@ -220,56 +249,69 @@ corresponds to differential or SPP solution.
                'vdop',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__gdop, offset, length) = get_u16(buf, offset, length)
-    ret['gdop'] = __gdop
-    (__pdop, offset, length) = get_u16(buf, offset, length)
-    ret['pdop'] = __pdop
-    (__tdop, offset, length) = get_u16(buf, offset, length)
-    ret['tdop'] = __tdop
-    (__hdop, offset, length) = get_u16(buf, offset, length)
-    ret['hdop'] = __hdop
-    (__vdop, offset, length) = get_u16(buf, offset, length)
-    ret['vdop'] = __vdop
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.gdop = res['gdop']
-    self.pdop = res['pdop']
-    self.tdop = res['tdop']
-    self.hdop = res['hdop']
-    self.vdop = res['vdop']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # gdop: u16
-    ret += 2
-    # pdop: u16
-    ret += 2
-    # tdop: u16
-    ret += 2
-    # hdop: u16
-    ret += 2
-    # vdop: u16
-    ret += 2
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('gdop', 'u2'),
+          ('pdop', 'u2'),
+          ('tdop', 'u2'),
+          ('hdop', 'u2'),
+          ('vdop', 'u2'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('gdop', 'u2'),
+          ('pdop', 'u2'),
+          ('tdop', 'u2'),
+          ('hdop', 'u2'),
+          ('vdop', 'u2'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'gdop': int(res['gdop'] if element else res['gdop'][0]),
+      'pdop': int(res['pdop'] if element else res['pdop'][0]),
+      'tdop': int(res['tdop'] if element else res['tdop'][0]),
+      'hdop': int(res['hdop'] if element else res['hdop'][0]),
+      'vdop': int(res['vdop'] if element else res['vdop'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_POS_ECEF = 0x0209
 class MsgPosECEF(SBP):
@@ -299,56 +341,69 @@ MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__x, offset, length) = get_f64(buf, offset, length)
-    ret['x'] = __x
-    (__y, offset, length) = get_f64(buf, offset, length)
-    ret['y'] = __y
-    (__z, offset, length) = get_f64(buf, offset, length)
-    ret['z'] = __z
-    (__accuracy, offset, length) = get_u16(buf, offset, length)
-    ret['accuracy'] = __accuracy
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.x = res['x']
-    self.y = res['y']
-    self.z = res['z']
-    self.accuracy = res['accuracy']
-    self.n_sats = res['n_sats']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: double
-    ret += 8
-    # y: double
-    ret += 8
-    # z: double
-    ret += 8
-    # accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('x', 'f8'),
+          ('y', 'f8'),
+          ('z', 'f8'),
+          ('accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('x', 'f8'),
+          ('y', 'f8'),
+          ('z', 'f8'),
+          ('accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'x': float(res['x'] if element else res['x'][0]),
+      'y': float(res['y'] if element else res['y'][0]),
+      'z': float(res['z'] if element else res['z'][0]),
+      'accuracy': int(res['accuracy'] if element else res['accuracy'][0]),
+      'n_sats': int(res['n_sats'] if element else res['n_sats'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_POS_ECEF_COV = 0x0214
 class MsgPosECEFCov(SBP):
@@ -384,81 +439,84 @@ MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__x, offset, length) = get_f64(buf, offset, length)
-    ret['x'] = __x
-    (__y, offset, length) = get_f64(buf, offset, length)
-    ret['y'] = __y
-    (__z, offset, length) = get_f64(buf, offset, length)
-    ret['z'] = __z
-    (__cov_x_x, offset, length) = get_f32(buf, offset, length)
-    ret['cov_x_x'] = judicious_round(nb.f4(__cov_x_x)) if SBP.judicious_rounding else __cov_x_x
-    (__cov_x_y, offset, length) = get_f32(buf, offset, length)
-    ret['cov_x_y'] = judicious_round(nb.f4(__cov_x_y)) if SBP.judicious_rounding else __cov_x_y
-    (__cov_x_z, offset, length) = get_f32(buf, offset, length)
-    ret['cov_x_z'] = judicious_round(nb.f4(__cov_x_z)) if SBP.judicious_rounding else __cov_x_z
-    (__cov_y_y, offset, length) = get_f32(buf, offset, length)
-    ret['cov_y_y'] = judicious_round(nb.f4(__cov_y_y)) if SBP.judicious_rounding else __cov_y_y
-    (__cov_y_z, offset, length) = get_f32(buf, offset, length)
-    ret['cov_y_z'] = judicious_round(nb.f4(__cov_y_z)) if SBP.judicious_rounding else __cov_y_z
-    (__cov_z_z, offset, length) = get_f32(buf, offset, length)
-    ret['cov_z_z'] = judicious_round(nb.f4(__cov_z_z)) if SBP.judicious_rounding else __cov_z_z
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.x = res['x']
-    self.y = res['y']
-    self.z = res['z']
-    self.cov_x_x = res['cov_x_x']
-    self.cov_x_y = res['cov_x_y']
-    self.cov_x_z = res['cov_x_z']
-    self.cov_y_y = res['cov_y_y']
-    self.cov_y_z = res['cov_y_z']
-    self.cov_z_z = res['cov_z_z']
-    self.n_sats = res['n_sats']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: double
-    ret += 8
-    # y: double
-    ret += 8
-    # z: double
-    ret += 8
-    # cov_x_x: float
-    ret += 4
-    # cov_x_y: float
-    ret += 4
-    # cov_x_z: float
-    ret += 4
-    # cov_y_y: float
-    ret += 4
-    # cov_y_z: float
-    ret += 4
-    # cov_z_z: float
-    ret += 4
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('x', 'f8'),
+          ('y', 'f8'),
+          ('z', 'f8'),
+          ('cov_x_x', 'f4'),
+          ('cov_x_y', 'f4'),
+          ('cov_x_z', 'f4'),
+          ('cov_y_y', 'f4'),
+          ('cov_y_z', 'f4'),
+          ('cov_z_z', 'f4'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('x', 'f8'),
+          ('y', 'f8'),
+          ('z', 'f8'),
+          ('cov_x_x', 'f4'),
+          ('cov_x_y', 'f4'),
+          ('cov_x_z', 'f4'),
+          ('cov_y_y', 'f4'),
+          ('cov_y_z', 'f4'),
+          ('cov_z_z', 'f4'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'x': float(res['x'] if element else res['x'][0]),
+      'y': float(res['y'] if element else res['y'][0]),
+      'z': float(res['z'] if element else res['z'][0]),
+      'cov_x_x': float(res['cov_x_x'] if element else res['cov_x_x'][0]),
+      'cov_x_y': float(res['cov_x_y'] if element else res['cov_x_y'][0]),
+      'cov_x_z': float(res['cov_x_z'] if element else res['cov_x_z'][0]),
+      'cov_y_y': float(res['cov_y_y'] if element else res['cov_y_y'][0]),
+      'cov_y_z': float(res['cov_y_z'] if element else res['cov_y_z'][0]),
+      'cov_z_z': float(res['cov_z_z'] if element else res['cov_z_z'][0]),
+      'n_sats': int(res['n_sats'] if element else res['n_sats'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_POS_LLH = 0x020A
 class MsgPosLLH(SBP):
@@ -489,61 +547,72 @@ matching time-of-week (tow).
                'n_sats',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__lat, offset, length) = get_f64(buf, offset, length)
-    ret['lat'] = __lat
-    (__lon, offset, length) = get_f64(buf, offset, length)
-    ret['lon'] = __lon
-    (__height, offset, length) = get_f64(buf, offset, length)
-    ret['height'] = __height
-    (__h_accuracy, offset, length) = get_u16(buf, offset, length)
-    ret['h_accuracy'] = __h_accuracy
-    (__v_accuracy, offset, length) = get_u16(buf, offset, length)
-    ret['v_accuracy'] = __v_accuracy
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.lat = res['lat']
-    self.lon = res['lon']
-    self.height = res['height']
-    self.h_accuracy = res['h_accuracy']
-    self.v_accuracy = res['v_accuracy']
-    self.n_sats = res['n_sats']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # lat: double
-    ret += 8
-    # lon: double
-    ret += 8
-    # height: double
-    ret += 8
-    # h_accuracy: u16
-    ret += 2
-    # v_accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('lat', 'f8'),
+          ('lon', 'f8'),
+          ('height', 'f8'),
+          ('h_accuracy', 'u2'),
+          ('v_accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('lat', 'f8'),
+          ('lon', 'f8'),
+          ('height', 'f8'),
+          ('h_accuracy', 'u2'),
+          ('v_accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'lat': float(res['lat'] if element else res['lat'][0]),
+      'lon': float(res['lon'] if element else res['lon'][0]),
+      'height': float(res['height'] if element else res['height'][0]),
+      'h_accuracy': int(res['h_accuracy'] if element else res['h_accuracy'][0]),
+      'v_accuracy': int(res['v_accuracy'] if element else res['v_accuracy'][0]),
+      'n_sats': int(res['n_sats'] if element else res['n_sats'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_POS_LLH_COV = 0x0211
 class MsgPosLLHCov(SBP):
@@ -578,81 +647,84 @@ measurement and care should be taken with the sign convention.
                'n_sats',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__lat, offset, length) = get_f64(buf, offset, length)
-    ret['lat'] = __lat
-    (__lon, offset, length) = get_f64(buf, offset, length)
-    ret['lon'] = __lon
-    (__height, offset, length) = get_f64(buf, offset, length)
-    ret['height'] = __height
-    (__cov_n_n, offset, length) = get_f32(buf, offset, length)
-    ret['cov_n_n'] = judicious_round(nb.f4(__cov_n_n)) if SBP.judicious_rounding else __cov_n_n
-    (__cov_n_e, offset, length) = get_f32(buf, offset, length)
-    ret['cov_n_e'] = judicious_round(nb.f4(__cov_n_e)) if SBP.judicious_rounding else __cov_n_e
-    (__cov_n_d, offset, length) = get_f32(buf, offset, length)
-    ret['cov_n_d'] = judicious_round(nb.f4(__cov_n_d)) if SBP.judicious_rounding else __cov_n_d
-    (__cov_e_e, offset, length) = get_f32(buf, offset, length)
-    ret['cov_e_e'] = judicious_round(nb.f4(__cov_e_e)) if SBP.judicious_rounding else __cov_e_e
-    (__cov_e_d, offset, length) = get_f32(buf, offset, length)
-    ret['cov_e_d'] = judicious_round(nb.f4(__cov_e_d)) if SBP.judicious_rounding else __cov_e_d
-    (__cov_d_d, offset, length) = get_f32(buf, offset, length)
-    ret['cov_d_d'] = judicious_round(nb.f4(__cov_d_d)) if SBP.judicious_rounding else __cov_d_d
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.lat = res['lat']
-    self.lon = res['lon']
-    self.height = res['height']
-    self.cov_n_n = res['cov_n_n']
-    self.cov_n_e = res['cov_n_e']
-    self.cov_n_d = res['cov_n_d']
-    self.cov_e_e = res['cov_e_e']
-    self.cov_e_d = res['cov_e_d']
-    self.cov_d_d = res['cov_d_d']
-    self.n_sats = res['n_sats']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # lat: double
-    ret += 8
-    # lon: double
-    ret += 8
-    # height: double
-    ret += 8
-    # cov_n_n: float
-    ret += 4
-    # cov_n_e: float
-    ret += 4
-    # cov_n_d: float
-    ret += 4
-    # cov_e_e: float
-    ret += 4
-    # cov_e_d: float
-    ret += 4
-    # cov_d_d: float
-    ret += 4
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('lat', 'f8'),
+          ('lon', 'f8'),
+          ('height', 'f8'),
+          ('cov_n_n', 'f4'),
+          ('cov_n_e', 'f4'),
+          ('cov_n_d', 'f4'),
+          ('cov_e_e', 'f4'),
+          ('cov_e_d', 'f4'),
+          ('cov_d_d', 'f4'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('lat', 'f8'),
+          ('lon', 'f8'),
+          ('height', 'f8'),
+          ('cov_n_n', 'f4'),
+          ('cov_n_e', 'f4'),
+          ('cov_n_d', 'f4'),
+          ('cov_e_e', 'f4'),
+          ('cov_e_d', 'f4'),
+          ('cov_d_d', 'f4'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'lat': float(res['lat'] if element else res['lat'][0]),
+      'lon': float(res['lon'] if element else res['lon'][0]),
+      'height': float(res['height'] if element else res['height'][0]),
+      'cov_n_n': float(res['cov_n_n'] if element else res['cov_n_n'][0]),
+      'cov_n_e': float(res['cov_n_e'] if element else res['cov_n_e'][0]),
+      'cov_n_d': float(res['cov_n_d'] if element else res['cov_n_d'][0]),
+      'cov_e_e': float(res['cov_e_e'] if element else res['cov_e_e'][0]),
+      'cov_e_d': float(res['cov_e_d'] if element else res['cov_e_d'][0]),
+      'cov_d_d': float(res['cov_d_d'] if element else res['cov_d_d'][0]),
+      'n_sats': int(res['n_sats'] if element else res['n_sats'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_BASELINE_ECEF = 0x020B
 class MsgBaselineECEF(SBP):
@@ -679,56 +751,69 @@ matching time-of-week (tow).
                'n_sats',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__x, offset, length) = get_s32(buf, offset, length)
-    ret['x'] = __x
-    (__y, offset, length) = get_s32(buf, offset, length)
-    ret['y'] = __y
-    (__z, offset, length) = get_s32(buf, offset, length)
-    ret['z'] = __z
-    (__accuracy, offset, length) = get_u16(buf, offset, length)
-    ret['accuracy'] = __accuracy
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.x = res['x']
-    self.y = res['y']
-    self.z = res['z']
-    self.accuracy = res['accuracy']
-    self.n_sats = res['n_sats']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: s32
-    ret += 4
-    # y: s32
-    ret += 4
-    # z: s32
-    ret += 4
-    # accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('x', 'i4'),
+          ('y', 'i4'),
+          ('z', 'i4'),
+          ('accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('x', 'i4'),
+          ('y', 'i4'),
+          ('z', 'i4'),
+          ('accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'x': int(res['x'] if element else res['x'][0]),
+      'y': int(res['y'] if element else res['y'][0]),
+      'z': int(res['z'] if element else res['z'][0]),
+      'accuracy': int(res['accuracy'] if element else res['accuracy'][0]),
+      'n_sats': int(res['n_sats'] if element else res['n_sats'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_BASELINE_NED = 0x020C
 class MsgBaselineNED(SBP):
@@ -757,61 +842,72 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__n, offset, length) = get_s32(buf, offset, length)
-    ret['n'] = __n
-    (__e, offset, length) = get_s32(buf, offset, length)
-    ret['e'] = __e
-    (__d, offset, length) = get_s32(buf, offset, length)
-    ret['d'] = __d
-    (__h_accuracy, offset, length) = get_u16(buf, offset, length)
-    ret['h_accuracy'] = __h_accuracy
-    (__v_accuracy, offset, length) = get_u16(buf, offset, length)
-    ret['v_accuracy'] = __v_accuracy
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.n = res['n']
-    self.e = res['e']
-    self.d = res['d']
-    self.h_accuracy = res['h_accuracy']
-    self.v_accuracy = res['v_accuracy']
-    self.n_sats = res['n_sats']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # n: s32
-    ret += 4
-    # e: s32
-    ret += 4
-    # d: s32
-    ret += 4
-    # h_accuracy: u16
-    ret += 2
-    # v_accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('n', 'i4'),
+          ('e', 'i4'),
+          ('d', 'i4'),
+          ('h_accuracy', 'u2'),
+          ('v_accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('n', 'i4'),
+          ('e', 'i4'),
+          ('d', 'i4'),
+          ('h_accuracy', 'u2'),
+          ('v_accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'n': int(res['n'] if element else res['n'][0]),
+      'e': int(res['e'] if element else res['e'][0]),
+      'd': int(res['d'] if element else res['d'][0]),
+      'h_accuracy': int(res['h_accuracy'] if element else res['h_accuracy'][0]),
+      'v_accuracy': int(res['v_accuracy'] if element else res['v_accuracy'][0]),
+      'n_sats': int(res['n_sats'] if element else res['n_sats'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_VEL_ECEF = 0x020D
 class MsgVelECEF(SBP):
@@ -836,56 +932,69 @@ MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__x, offset, length) = get_s32(buf, offset, length)
-    ret['x'] = __x
-    (__y, offset, length) = get_s32(buf, offset, length)
-    ret['y'] = __y
-    (__z, offset, length) = get_s32(buf, offset, length)
-    ret['z'] = __z
-    (__accuracy, offset, length) = get_u16(buf, offset, length)
-    ret['accuracy'] = __accuracy
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.x = res['x']
-    self.y = res['y']
-    self.z = res['z']
-    self.accuracy = res['accuracy']
-    self.n_sats = res['n_sats']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: s32
-    ret += 4
-    # y: s32
-    ret += 4
-    # z: s32
-    ret += 4
-    # accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('x', 'i4'),
+          ('y', 'i4'),
+          ('z', 'i4'),
+          ('accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('x', 'i4'),
+          ('y', 'i4'),
+          ('z', 'i4'),
+          ('accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'x': int(res['x'] if element else res['x'][0]),
+      'y': int(res['y'] if element else res['y'][0]),
+      'z': int(res['z'] if element else res['z'][0]),
+      'accuracy': int(res['accuracy'] if element else res['accuracy'][0]),
+      'n_sats': int(res['n_sats'] if element else res['n_sats'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_VEL_ECEF_COV = 0x0215
 class MsgVelECEFCov(SBP):
@@ -915,81 +1024,84 @@ MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__x, offset, length) = get_s32(buf, offset, length)
-    ret['x'] = __x
-    (__y, offset, length) = get_s32(buf, offset, length)
-    ret['y'] = __y
-    (__z, offset, length) = get_s32(buf, offset, length)
-    ret['z'] = __z
-    (__cov_x_x, offset, length) = get_f32(buf, offset, length)
-    ret['cov_x_x'] = judicious_round(nb.f4(__cov_x_x)) if SBP.judicious_rounding else __cov_x_x
-    (__cov_x_y, offset, length) = get_f32(buf, offset, length)
-    ret['cov_x_y'] = judicious_round(nb.f4(__cov_x_y)) if SBP.judicious_rounding else __cov_x_y
-    (__cov_x_z, offset, length) = get_f32(buf, offset, length)
-    ret['cov_x_z'] = judicious_round(nb.f4(__cov_x_z)) if SBP.judicious_rounding else __cov_x_z
-    (__cov_y_y, offset, length) = get_f32(buf, offset, length)
-    ret['cov_y_y'] = judicious_round(nb.f4(__cov_y_y)) if SBP.judicious_rounding else __cov_y_y
-    (__cov_y_z, offset, length) = get_f32(buf, offset, length)
-    ret['cov_y_z'] = judicious_round(nb.f4(__cov_y_z)) if SBP.judicious_rounding else __cov_y_z
-    (__cov_z_z, offset, length) = get_f32(buf, offset, length)
-    ret['cov_z_z'] = judicious_round(nb.f4(__cov_z_z)) if SBP.judicious_rounding else __cov_z_z
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.x = res['x']
-    self.y = res['y']
-    self.z = res['z']
-    self.cov_x_x = res['cov_x_x']
-    self.cov_x_y = res['cov_x_y']
-    self.cov_x_z = res['cov_x_z']
-    self.cov_y_y = res['cov_y_y']
-    self.cov_y_z = res['cov_y_z']
-    self.cov_z_z = res['cov_z_z']
-    self.n_sats = res['n_sats']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: s32
-    ret += 4
-    # y: s32
-    ret += 4
-    # z: s32
-    ret += 4
-    # cov_x_x: float
-    ret += 4
-    # cov_x_y: float
-    ret += 4
-    # cov_x_z: float
-    ret += 4
-    # cov_y_y: float
-    ret += 4
-    # cov_y_z: float
-    ret += 4
-    # cov_z_z: float
-    ret += 4
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('x', 'i4'),
+          ('y', 'i4'),
+          ('z', 'i4'),
+          ('cov_x_x', 'f4'),
+          ('cov_x_y', 'f4'),
+          ('cov_x_z', 'f4'),
+          ('cov_y_y', 'f4'),
+          ('cov_y_z', 'f4'),
+          ('cov_z_z', 'f4'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('x', 'i4'),
+          ('y', 'i4'),
+          ('z', 'i4'),
+          ('cov_x_x', 'f4'),
+          ('cov_x_y', 'f4'),
+          ('cov_x_z', 'f4'),
+          ('cov_y_y', 'f4'),
+          ('cov_y_z', 'f4'),
+          ('cov_z_z', 'f4'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'x': int(res['x'] if element else res['x'][0]),
+      'y': int(res['y'] if element else res['y'][0]),
+      'z': int(res['z'] if element else res['z'][0]),
+      'cov_x_x': float(res['cov_x_x'] if element else res['cov_x_x'][0]),
+      'cov_x_y': float(res['cov_x_y'] if element else res['cov_x_y'][0]),
+      'cov_x_z': float(res['cov_x_z'] if element else res['cov_x_z'][0]),
+      'cov_y_y': float(res['cov_y_y'] if element else res['cov_y_y'][0]),
+      'cov_y_z': float(res['cov_y_z'] if element else res['cov_y_z'][0]),
+      'cov_z_z': float(res['cov_z_z'] if element else res['cov_z_z'][0]),
+      'n_sats': int(res['n_sats'] if element else res['n_sats'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_VEL_NED = 0x020E
 class MsgVelNED(SBP):
@@ -1016,61 +1128,72 @@ given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__n, offset, length) = get_s32(buf, offset, length)
-    ret['n'] = __n
-    (__e, offset, length) = get_s32(buf, offset, length)
-    ret['e'] = __e
-    (__d, offset, length) = get_s32(buf, offset, length)
-    ret['d'] = __d
-    (__h_accuracy, offset, length) = get_u16(buf, offset, length)
-    ret['h_accuracy'] = __h_accuracy
-    (__v_accuracy, offset, length) = get_u16(buf, offset, length)
-    ret['v_accuracy'] = __v_accuracy
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.n = res['n']
-    self.e = res['e']
-    self.d = res['d']
-    self.h_accuracy = res['h_accuracy']
-    self.v_accuracy = res['v_accuracy']
-    self.n_sats = res['n_sats']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # n: s32
-    ret += 4
-    # e: s32
-    ret += 4
-    # d: s32
-    ret += 4
-    # h_accuracy: u16
-    ret += 2
-    # v_accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('n', 'i4'),
+          ('e', 'i4'),
+          ('d', 'i4'),
+          ('h_accuracy', 'u2'),
+          ('v_accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('n', 'i4'),
+          ('e', 'i4'),
+          ('d', 'i4'),
+          ('h_accuracy', 'u2'),
+          ('v_accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'n': int(res['n'] if element else res['n'][0]),
+      'e': int(res['e'] if element else res['e'][0]),
+      'd': int(res['d'] if element else res['d'][0]),
+      'h_accuracy': int(res['h_accuracy'] if element else res['h_accuracy'][0]),
+      'v_accuracy': int(res['v_accuracy'] if element else res['v_accuracy'][0]),
+      'n_sats': int(res['n_sats'] if element else res['n_sats'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_VEL_NED_COV = 0x0212
 class MsgVelNEDCov(SBP):
@@ -1103,81 +1226,84 @@ portion of the 3x3 covariance matrix.
                'n_sats',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__n, offset, length) = get_s32(buf, offset, length)
-    ret['n'] = __n
-    (__e, offset, length) = get_s32(buf, offset, length)
-    ret['e'] = __e
-    (__d, offset, length) = get_s32(buf, offset, length)
-    ret['d'] = __d
-    (__cov_n_n, offset, length) = get_f32(buf, offset, length)
-    ret['cov_n_n'] = judicious_round(nb.f4(__cov_n_n)) if SBP.judicious_rounding else __cov_n_n
-    (__cov_n_e, offset, length) = get_f32(buf, offset, length)
-    ret['cov_n_e'] = judicious_round(nb.f4(__cov_n_e)) if SBP.judicious_rounding else __cov_n_e
-    (__cov_n_d, offset, length) = get_f32(buf, offset, length)
-    ret['cov_n_d'] = judicious_round(nb.f4(__cov_n_d)) if SBP.judicious_rounding else __cov_n_d
-    (__cov_e_e, offset, length) = get_f32(buf, offset, length)
-    ret['cov_e_e'] = judicious_round(nb.f4(__cov_e_e)) if SBP.judicious_rounding else __cov_e_e
-    (__cov_e_d, offset, length) = get_f32(buf, offset, length)
-    ret['cov_e_d'] = judicious_round(nb.f4(__cov_e_d)) if SBP.judicious_rounding else __cov_e_d
-    (__cov_d_d, offset, length) = get_f32(buf, offset, length)
-    ret['cov_d_d'] = judicious_round(nb.f4(__cov_d_d)) if SBP.judicious_rounding else __cov_d_d
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.n = res['n']
-    self.e = res['e']
-    self.d = res['d']
-    self.cov_n_n = res['cov_n_n']
-    self.cov_n_e = res['cov_n_e']
-    self.cov_n_d = res['cov_n_d']
-    self.cov_e_e = res['cov_e_e']
-    self.cov_e_d = res['cov_e_d']
-    self.cov_d_d = res['cov_d_d']
-    self.n_sats = res['n_sats']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # n: s32
-    ret += 4
-    # e: s32
-    ret += 4
-    # d: s32
-    ret += 4
-    # cov_n_n: float
-    ret += 4
-    # cov_n_e: float
-    ret += 4
-    # cov_n_d: float
-    ret += 4
-    # cov_e_e: float
-    ret += 4
-    # cov_e_d: float
-    ret += 4
-    # cov_d_d: float
-    ret += 4
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('n', 'i4'),
+          ('e', 'i4'),
+          ('d', 'i4'),
+          ('cov_n_n', 'f4'),
+          ('cov_n_e', 'f4'),
+          ('cov_n_d', 'f4'),
+          ('cov_e_e', 'f4'),
+          ('cov_e_d', 'f4'),
+          ('cov_d_d', 'f4'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('n', 'i4'),
+          ('e', 'i4'),
+          ('d', 'i4'),
+          ('cov_n_n', 'f4'),
+          ('cov_n_e', 'f4'),
+          ('cov_n_d', 'f4'),
+          ('cov_e_e', 'f4'),
+          ('cov_e_d', 'f4'),
+          ('cov_d_d', 'f4'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'n': int(res['n'] if element else res['n'][0]),
+      'e': int(res['e'] if element else res['e'][0]),
+      'd': int(res['d'] if element else res['d'][0]),
+      'cov_n_n': float(res['cov_n_n'] if element else res['cov_n_n'][0]),
+      'cov_n_e': float(res['cov_n_e'] if element else res['cov_n_e'][0]),
+      'cov_n_d': float(res['cov_n_d'] if element else res['cov_n_d'][0]),
+      'cov_e_e': float(res['cov_e_e'] if element else res['cov_e_e'][0]),
+      'cov_e_d': float(res['cov_e_d'] if element else res['cov_e_d'][0]),
+      'cov_d_d': float(res['cov_d_d'] if element else res['cov_d_d'][0]),
+      'n_sats': int(res['n_sats'] if element else res['n_sats'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_VEL_BODY = 0x0213
 class MsgVelBody(SBP):
@@ -1212,81 +1338,84 @@ products and is not available from Piksi Multi or Duro.
                'n_sats',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__x, offset, length) = get_s32(buf, offset, length)
-    ret['x'] = __x
-    (__y, offset, length) = get_s32(buf, offset, length)
-    ret['y'] = __y
-    (__z, offset, length) = get_s32(buf, offset, length)
-    ret['z'] = __z
-    (__cov_x_x, offset, length) = get_f32(buf, offset, length)
-    ret['cov_x_x'] = judicious_round(nb.f4(__cov_x_x)) if SBP.judicious_rounding else __cov_x_x
-    (__cov_x_y, offset, length) = get_f32(buf, offset, length)
-    ret['cov_x_y'] = judicious_round(nb.f4(__cov_x_y)) if SBP.judicious_rounding else __cov_x_y
-    (__cov_x_z, offset, length) = get_f32(buf, offset, length)
-    ret['cov_x_z'] = judicious_round(nb.f4(__cov_x_z)) if SBP.judicious_rounding else __cov_x_z
-    (__cov_y_y, offset, length) = get_f32(buf, offset, length)
-    ret['cov_y_y'] = judicious_round(nb.f4(__cov_y_y)) if SBP.judicious_rounding else __cov_y_y
-    (__cov_y_z, offset, length) = get_f32(buf, offset, length)
-    ret['cov_y_z'] = judicious_round(nb.f4(__cov_y_z)) if SBP.judicious_rounding else __cov_y_z
-    (__cov_z_z, offset, length) = get_f32(buf, offset, length)
-    ret['cov_z_z'] = judicious_round(nb.f4(__cov_z_z)) if SBP.judicious_rounding else __cov_z_z
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.x = res['x']
-    self.y = res['y']
-    self.z = res['z']
-    self.cov_x_x = res['cov_x_x']
-    self.cov_x_y = res['cov_x_y']
-    self.cov_x_z = res['cov_x_z']
-    self.cov_y_y = res['cov_y_y']
-    self.cov_y_z = res['cov_y_z']
-    self.cov_z_z = res['cov_z_z']
-    self.n_sats = res['n_sats']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: s32
-    ret += 4
-    # y: s32
-    ret += 4
-    # z: s32
-    ret += 4
-    # cov_x_x: float
-    ret += 4
-    # cov_x_y: float
-    ret += 4
-    # cov_x_z: float
-    ret += 4
-    # cov_y_y: float
-    ret += 4
-    # cov_y_z: float
-    ret += 4
-    # cov_z_z: float
-    ret += 4
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('x', 'i4'),
+          ('y', 'i4'),
+          ('z', 'i4'),
+          ('cov_x_x', 'f4'),
+          ('cov_x_y', 'f4'),
+          ('cov_x_z', 'f4'),
+          ('cov_y_y', 'f4'),
+          ('cov_y_z', 'f4'),
+          ('cov_z_z', 'f4'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('x', 'i4'),
+          ('y', 'i4'),
+          ('z', 'i4'),
+          ('cov_x_x', 'f4'),
+          ('cov_x_y', 'f4'),
+          ('cov_x_z', 'f4'),
+          ('cov_y_y', 'f4'),
+          ('cov_y_z', 'f4'),
+          ('cov_z_z', 'f4'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'x': int(res['x'] if element else res['x'][0]),
+      'y': int(res['y'] if element else res['y'][0]),
+      'z': int(res['z'] if element else res['z'][0]),
+      'cov_x_x': float(res['cov_x_x'] if element else res['cov_x_x'][0]),
+      'cov_x_y': float(res['cov_x_y'] if element else res['cov_x_y'][0]),
+      'cov_x_z': float(res['cov_x_z'] if element else res['cov_x_z'][0]),
+      'cov_y_y': float(res['cov_y_y'] if element else res['cov_y_y'][0]),
+      'cov_y_z': float(res['cov_y_z'] if element else res['cov_y_z'][0]),
+      'cov_z_z': float(res['cov_z_z'] if element else res['cov_z_z'][0]),
+      'n_sats': int(res['n_sats'] if element else res['n_sats'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_AGE_CORRECTIONS = 0x0210
 class MsgAgeCorrections(SBP):
@@ -1305,31 +1434,54 @@ Differential solution
   __slots__ = ['tow',
                'age',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__age, offset, length) = get_u16(buf, offset, length)
-    ret['age'] = __age
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.age = res['age']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # age: u16
-    ret += 2
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('age', 'u2'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('age', 'u2'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'age': int(res['age'] if element else res['age'][0]),
+    }
+    return d
+
   
 SBP_MSG_GPS_TIME_DEP_A = 0x0100
 class MsgGPSTimeDepA(SBP):
@@ -1361,41 +1513,60 @@ these messages.
                'ns_residual',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__wn, offset, length) = get_u16(buf, offset, length)
-    ret['wn'] = __wn
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__ns_residual, offset, length) = get_s32(buf, offset, length)
-    ret['ns_residual'] = __ns_residual
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.wn = res['wn']
-    self.tow = res['tow']
-    self.ns_residual = res['ns_residual']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # wn: u16
-    ret += 2
-    # tow: u32
-    ret += 4
-    # ns_residual: s32
-    ret += 4
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('wn', 'u2'),
+          ('tow', 'u4'),
+          ('ns_residual', 'i4'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('wn', 'u2'),
+          ('tow', 'u4'),
+          ('ns_residual', 'i4'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'wn': int(res['wn'] if element else res['wn'][0]),
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'ns_residual': int(res['ns_residual'] if element else res['ns_residual'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_DOPS_DEP_A = 0x0206
 class MsgDopsDepA(SBP):
@@ -1419,51 +1590,66 @@ precision.
                'hdop',
                'vdop',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__gdop, offset, length) = get_u16(buf, offset, length)
-    ret['gdop'] = __gdop
-    (__pdop, offset, length) = get_u16(buf, offset, length)
-    ret['pdop'] = __pdop
-    (__tdop, offset, length) = get_u16(buf, offset, length)
-    ret['tdop'] = __tdop
-    (__hdop, offset, length) = get_u16(buf, offset, length)
-    ret['hdop'] = __hdop
-    (__vdop, offset, length) = get_u16(buf, offset, length)
-    ret['vdop'] = __vdop
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.gdop = res['gdop']
-    self.pdop = res['pdop']
-    self.tdop = res['tdop']
-    self.hdop = res['hdop']
-    self.vdop = res['vdop']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # gdop: u16
-    ret += 2
-    # pdop: u16
-    ret += 2
-    # tdop: u16
-    ret += 2
-    # hdop: u16
-    ret += 2
-    # vdop: u16
-    ret += 2
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('gdop', 'u2'),
+          ('pdop', 'u2'),
+          ('tdop', 'u2'),
+          ('hdop', 'u2'),
+          ('vdop', 'u2'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('gdop', 'u2'),
+          ('pdop', 'u2'),
+          ('tdop', 'u2'),
+          ('hdop', 'u2'),
+          ('vdop', 'u2'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'gdop': int(res['gdop'] if element else res['gdop'][0]),
+      'pdop': int(res['pdop'] if element else res['pdop'][0]),
+      'tdop': int(res['tdop'] if element else res['tdop'][0]),
+      'hdop': int(res['hdop'] if element else res['hdop'][0]),
+      'vdop': int(res['vdop'] if element else res['vdop'][0]),
+    }
+    return d
+
   
 SBP_MSG_POS_ECEF_DEP_A = 0x0200
 class MsgPosECEFDepA(SBP):
@@ -1493,56 +1679,69 @@ MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__x, offset, length) = get_f64(buf, offset, length)
-    ret['x'] = __x
-    (__y, offset, length) = get_f64(buf, offset, length)
-    ret['y'] = __y
-    (__z, offset, length) = get_f64(buf, offset, length)
-    ret['z'] = __z
-    (__accuracy, offset, length) = get_u16(buf, offset, length)
-    ret['accuracy'] = __accuracy
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.x = res['x']
-    self.y = res['y']
-    self.z = res['z']
-    self.accuracy = res['accuracy']
-    self.n_sats = res['n_sats']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: double
-    ret += 8
-    # y: double
-    ret += 8
-    # z: double
-    ret += 8
-    # accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('x', 'f8'),
+          ('y', 'f8'),
+          ('z', 'f8'),
+          ('accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('x', 'f8'),
+          ('y', 'f8'),
+          ('z', 'f8'),
+          ('accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'x': float(res['x'] if element else res['x'][0]),
+      'y': float(res['y'] if element else res['y'][0]),
+      'z': float(res['z'] if element else res['z'][0]),
+      'accuracy': int(res['accuracy'] if element else res['accuracy'][0]),
+      'n_sats': int(res['n_sats'] if element else res['n_sats'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_POS_LLH_DEP_A = 0x0201
 class MsgPosLLHDepA(SBP):
@@ -1573,61 +1772,72 @@ matching time-of-week (tow).
                'n_sats',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__lat, offset, length) = get_f64(buf, offset, length)
-    ret['lat'] = __lat
-    (__lon, offset, length) = get_f64(buf, offset, length)
-    ret['lon'] = __lon
-    (__height, offset, length) = get_f64(buf, offset, length)
-    ret['height'] = __height
-    (__h_accuracy, offset, length) = get_u16(buf, offset, length)
-    ret['h_accuracy'] = __h_accuracy
-    (__v_accuracy, offset, length) = get_u16(buf, offset, length)
-    ret['v_accuracy'] = __v_accuracy
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.lat = res['lat']
-    self.lon = res['lon']
-    self.height = res['height']
-    self.h_accuracy = res['h_accuracy']
-    self.v_accuracy = res['v_accuracy']
-    self.n_sats = res['n_sats']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # lat: double
-    ret += 8
-    # lon: double
-    ret += 8
-    # height: double
-    ret += 8
-    # h_accuracy: u16
-    ret += 2
-    # v_accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('lat', 'f8'),
+          ('lon', 'f8'),
+          ('height', 'f8'),
+          ('h_accuracy', 'u2'),
+          ('v_accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('lat', 'f8'),
+          ('lon', 'f8'),
+          ('height', 'f8'),
+          ('h_accuracy', 'u2'),
+          ('v_accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'lat': float(res['lat'] if element else res['lat'][0]),
+      'lon': float(res['lon'] if element else res['lon'][0]),
+      'height': float(res['height'] if element else res['height'][0]),
+      'h_accuracy': int(res['h_accuracy'] if element else res['h_accuracy'][0]),
+      'v_accuracy': int(res['v_accuracy'] if element else res['v_accuracy'][0]),
+      'n_sats': int(res['n_sats'] if element else res['n_sats'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_BASELINE_ECEF_DEP_A = 0x0202
 class MsgBaselineECEFDepA(SBP):
@@ -1654,56 +1864,69 @@ matching time-of-week (tow).
                'n_sats',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__x, offset, length) = get_s32(buf, offset, length)
-    ret['x'] = __x
-    (__y, offset, length) = get_s32(buf, offset, length)
-    ret['y'] = __y
-    (__z, offset, length) = get_s32(buf, offset, length)
-    ret['z'] = __z
-    (__accuracy, offset, length) = get_u16(buf, offset, length)
-    ret['accuracy'] = __accuracy
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.x = res['x']
-    self.y = res['y']
-    self.z = res['z']
-    self.accuracy = res['accuracy']
-    self.n_sats = res['n_sats']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: s32
-    ret += 4
-    # y: s32
-    ret += 4
-    # z: s32
-    ret += 4
-    # accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('x', 'i4'),
+          ('y', 'i4'),
+          ('z', 'i4'),
+          ('accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('x', 'i4'),
+          ('y', 'i4'),
+          ('z', 'i4'),
+          ('accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'x': int(res['x'] if element else res['x'][0]),
+      'y': int(res['y'] if element else res['y'][0]),
+      'z': int(res['z'] if element else res['z'][0]),
+      'accuracy': int(res['accuracy'] if element else res['accuracy'][0]),
+      'n_sats': int(res['n_sats'] if element else res['n_sats'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_BASELINE_NED_DEP_A = 0x0203
 class MsgBaselineNEDDepA(SBP):
@@ -1732,61 +1955,72 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__n, offset, length) = get_s32(buf, offset, length)
-    ret['n'] = __n
-    (__e, offset, length) = get_s32(buf, offset, length)
-    ret['e'] = __e
-    (__d, offset, length) = get_s32(buf, offset, length)
-    ret['d'] = __d
-    (__h_accuracy, offset, length) = get_u16(buf, offset, length)
-    ret['h_accuracy'] = __h_accuracy
-    (__v_accuracy, offset, length) = get_u16(buf, offset, length)
-    ret['v_accuracy'] = __v_accuracy
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.n = res['n']
-    self.e = res['e']
-    self.d = res['d']
-    self.h_accuracy = res['h_accuracy']
-    self.v_accuracy = res['v_accuracy']
-    self.n_sats = res['n_sats']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # n: s32
-    ret += 4
-    # e: s32
-    ret += 4
-    # d: s32
-    ret += 4
-    # h_accuracy: u16
-    ret += 2
-    # v_accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('n', 'i4'),
+          ('e', 'i4'),
+          ('d', 'i4'),
+          ('h_accuracy', 'u2'),
+          ('v_accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('n', 'i4'),
+          ('e', 'i4'),
+          ('d', 'i4'),
+          ('h_accuracy', 'u2'),
+          ('v_accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'n': int(res['n'] if element else res['n'][0]),
+      'e': int(res['e'] if element else res['e'][0]),
+      'd': int(res['d'] if element else res['d'][0]),
+      'h_accuracy': int(res['h_accuracy'] if element else res['h_accuracy'][0]),
+      'v_accuracy': int(res['v_accuracy'] if element else res['v_accuracy'][0]),
+      'n_sats': int(res['n_sats'] if element else res['n_sats'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_VEL_ECEF_DEP_A = 0x0204
 class MsgVelECEFDepA(SBP):
@@ -1811,56 +2045,69 @@ MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__x, offset, length) = get_s32(buf, offset, length)
-    ret['x'] = __x
-    (__y, offset, length) = get_s32(buf, offset, length)
-    ret['y'] = __y
-    (__z, offset, length) = get_s32(buf, offset, length)
-    ret['z'] = __z
-    (__accuracy, offset, length) = get_u16(buf, offset, length)
-    ret['accuracy'] = __accuracy
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.x = res['x']
-    self.y = res['y']
-    self.z = res['z']
-    self.accuracy = res['accuracy']
-    self.n_sats = res['n_sats']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: s32
-    ret += 4
-    # y: s32
-    ret += 4
-    # z: s32
-    ret += 4
-    # accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('x', 'i4'),
+          ('y', 'i4'),
+          ('z', 'i4'),
+          ('accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('x', 'i4'),
+          ('y', 'i4'),
+          ('z', 'i4'),
+          ('accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'x': int(res['x'] if element else res['x'][0]),
+      'y': int(res['y'] if element else res['y'][0]),
+      'z': int(res['z'] if element else res['z'][0]),
+      'accuracy': int(res['accuracy'] if element else res['accuracy'][0]),
+      'n_sats': int(res['n_sats'] if element else res['n_sats'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_VEL_NED_DEP_A = 0x0205
 class MsgVelNEDDepA(SBP):
@@ -1887,61 +2134,72 @@ given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__n, offset, length) = get_s32(buf, offset, length)
-    ret['n'] = __n
-    (__e, offset, length) = get_s32(buf, offset, length)
-    ret['e'] = __e
-    (__d, offset, length) = get_s32(buf, offset, length)
-    ret['d'] = __d
-    (__h_accuracy, offset, length) = get_u16(buf, offset, length)
-    ret['h_accuracy'] = __h_accuracy
-    (__v_accuracy, offset, length) = get_u16(buf, offset, length)
-    ret['v_accuracy'] = __v_accuracy
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.n = res['n']
-    self.e = res['e']
-    self.d = res['d']
-    self.h_accuracy = res['h_accuracy']
-    self.v_accuracy = res['v_accuracy']
-    self.n_sats = res['n_sats']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # n: s32
-    ret += 4
-    # e: s32
-    ret += 4
-    # d: s32
-    ret += 4
-    # h_accuracy: u16
-    ret += 2
-    # v_accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('n', 'i4'),
+          ('e', 'i4'),
+          ('d', 'i4'),
+          ('h_accuracy', 'u2'),
+          ('v_accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('n', 'i4'),
+          ('e', 'i4'),
+          ('d', 'i4'),
+          ('h_accuracy', 'u2'),
+          ('v_accuracy', 'u2'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'n': int(res['n'] if element else res['n'][0]),
+      'e': int(res['e'] if element else res['e'][0]),
+      'd': int(res['d'] if element else res['d'][0]),
+      'h_accuracy': int(res['h_accuracy'] if element else res['h_accuracy'][0]),
+      'v_accuracy': int(res['v_accuracy'] if element else res['v_accuracy'][0]),
+      'n_sats': int(res['n_sats'] if element else res['n_sats'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_BASELINE_HEADING_DEP_A = 0x0207
 class MsgBaselineHeadingDepA(SBP):
@@ -1963,41 +2221,60 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
                'n_sats',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__heading, offset, length) = get_u32(buf, offset, length)
-    ret['heading'] = __heading
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.heading = res['heading']
-    self.n_sats = res['n_sats']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # heading: u32
-    ret += 4
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('heading', 'u4'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('heading', 'u4'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'heading': int(res['heading'] if element else res['heading'][0]),
+      'n_sats': int(res['n_sats'] if element else res['n_sats'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 
 msg_classes = {

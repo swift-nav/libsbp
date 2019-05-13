@@ -17,6 +17,7 @@ Magnetometer (mag) messages.
 import json
 
 import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -46,46 +47,63 @@ class MsgMagRaw(SBP):
                'mag_y',
                'mag_z',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__tow_f, offset, length) = get_u8(buf, offset, length)
-    ret['tow_f'] = __tow_f
-    (__mag_x, offset, length) = get_s16(buf, offset, length)
-    ret['mag_x'] = __mag_x
-    (__mag_y, offset, length) = get_s16(buf, offset, length)
-    ret['mag_y'] = __mag_y
-    (__mag_z, offset, length) = get_s16(buf, offset, length)
-    ret['mag_z'] = __mag_z
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.tow_f = res['tow_f']
-    self.mag_x = res['mag_x']
-    self.mag_y = res['mag_y']
-    self.mag_z = res['mag_z']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # tow_f: u8
-    ret += 1
-    # mag_x: s16
-    ret += 2
-    # mag_y: s16
-    ret += 2
-    # mag_z: s16
-    ret += 2
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('tow_f', 'u1'),
+          ('mag_x', 'i2'),
+          ('mag_y', 'i2'),
+          ('mag_z', 'i2'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('tow_f', 'u1'),
+          ('mag_x', 'i2'),
+          ('mag_y', 'i2'),
+          ('mag_z', 'i2'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'tow_f': int(res['tow_f'] if element else res['tow_f'][0]),
+      'mag_x': int(res['mag_x'] if element else res['mag_x'][0]),
+      'mag_y': int(res['mag_y'] if element else res['mag_y'][0]),
+      'mag_z': int(res['mag_z'] if element else res['mag_z'][0]),
+    }
+    return d
+
   
 
 msg_classes = {

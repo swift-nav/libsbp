@@ -18,6 +18,7 @@ Messages for logging NDB events.
 import json
 
 import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -52,61 +53,72 @@ message could also be sent out when fetching an object from NDB.
                'src_sid',
                'original_sender',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__recv_time, offset, length) = get_u64(buf, offset, length)
-    ret['recv_time'] = __recv_time
-    (__event, offset, length) = get_u8(buf, offset, length)
-    ret['event'] = __event
-    (__object_type, offset, length) = get_u8(buf, offset, length)
-    ret['object_type'] = __object_type
-    (__result, offset, length) = get_u8(buf, offset, length)
-    ret['result'] = __result
-    (__data_source, offset, length) = get_u8(buf, offset, length)
-    ret['data_source'] = __data_source
-    (__object_sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
-    ret['object_sid'] = __object_sid
-    (__src_sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
-    ret['src_sid'] = __src_sid
-    (__original_sender, offset, length) = get_u16(buf, offset, length)
-    ret['original_sender'] = __original_sender
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.recv_time = res['recv_time']
-    self.event = res['event']
-    self.object_type = res['object_type']
-    self.result = res['result']
-    self.data_source = res['data_source']
-    self.object_sid = res['object_sid']
-    self.src_sid = res['src_sid']
-    self.original_sender = res['original_sender']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # recv_time: u64
-    ret += 8
-    # event: u8
-    ret += 1
-    # object_type: u8
-    ret += 1
-    # result: u8
-    ret += 1
-    # data_source: u8
-    ret += 1
-    # object_sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # src_sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # original_sender: u16
-    ret += 2
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('recv_time', 'u8'),
+          ('event', 'u1'),
+          ('object_type', 'u1'),
+          ('result', 'u1'),
+          ('data_source', 'u1'),
+          ('object_sid', GnssSignal._static_dtype()),
+          ('src_sid', GnssSignal._static_dtype()),
+          ('original_sender', 'u2'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('recv_time', 'u8'),
+          ('event', 'u1'),
+          ('object_type', 'u1'),
+          ('result', 'u1'),
+          ('data_source', 'u1'),
+          ('object_sid', GnssSignal._static_dtype()),
+          ('src_sid', GnssSignal._static_dtype()),
+          ('original_sender', 'u2'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'recv_time': int(res['recv_time'] if element else res['recv_time'][0]),
+      'event': int(res['event'] if element else res['event'][0]),
+      'object_type': int(res['object_type'] if element else res['object_type'][0]),
+      'result': int(res['result'] if element else res['result'][0]),
+      'data_source': int(res['data_source'] if element else res['data_source'][0]),
+      'object_sid': GnssSignal._unpack_members(res['object_sid'], element=element),
+      'src_sid': GnssSignal._unpack_members(res['src_sid'], element=element),
+      'original_sender': int(res['original_sender'] if element else res['original_sender'][0]),
+    }
+    return d
+
   
 
 msg_classes = {

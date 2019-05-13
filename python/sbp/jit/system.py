@@ -17,6 +17,7 @@ Standardized system messages from Swift Navigation devices.
 import json
 
 import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -47,36 +48,57 @@ or configuration requests.
                'startup_type',
                'reserved',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__cause, offset, length) = get_u8(buf, offset, length)
-    ret['cause'] = __cause
-    (__startup_type, offset, length) = get_u8(buf, offset, length)
-    ret['startup_type'] = __startup_type
-    (__reserved, offset, length) = get_u16(buf, offset, length)
-    ret['reserved'] = __reserved
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.cause = res['cause']
-    self.startup_type = res['startup_type']
-    self.reserved = res['reserved']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # cause: u8
-    ret += 1
-    # startup_type: u8
-    ret += 1
-    # reserved: u16
-    ret += 2
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('cause', 'u1'),
+          ('startup_type', 'u1'),
+          ('reserved', 'u2'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('cause', 'u1'),
+          ('startup_type', 'u1'),
+          ('reserved', 'u2'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'cause': int(res['cause'] if element else res['cause'][0]),
+      'startup_type': int(res['startup_type'] if element else res['startup_type'][0]),
+      'reserved': int(res['reserved'] if element else res['reserved'][0]),
+    }
+    return d
+
   
 SBP_MSG_DGNSS_STATUS = 0xFF02
 class MsgDgnssStatus(SBP):
@@ -98,41 +120,60 @@ corrections packet.
                'num_signals',
                'source',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    (__latency, offset, length) = get_u16(buf, offset, length)
-    ret['latency'] = __latency
-    (__num_signals, offset, length) = get_u8(buf, offset, length)
-    ret['num_signals'] = __num_signals
-    (__source, offset, length) = get_string(buf, offset, length)
-    ret['source'] = __source
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.flags = res['flags']
-    self.latency = res['latency']
-    self.num_signals = res['num_signals']
-    self.source = res['source']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # flags: u8
-    ret += 1
-    # latency: u16
-    ret += 2
-    # num_signals: u8
-    ret += 1
-    # source: string
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('flags', 'u1'),
+          ('latency', 'u2'),
+          ('num_signals', 'u1'),
+          ('source', '|S{}'.format(count)),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('flags', 'u1'),
+          ('latency', 'u2'),
+          ('num_signals', 'u1'),
+          ('source', '|S{}'.format(count)),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype('u1')
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'flags': int(res['flags'] if element else res['flags'][0]),
+      'latency': int(res['latency'] if element else res['latency'][0]),
+      'num_signals': int(res['num_signals'] if element else res['num_signals'][0]),
+      'source': '' if res['source'] is None else res['source'].tostring().decode('ascii'),
+    }
+    return d
+
   
 SBP_MSG_HEARTBEAT = 0xFFFF
 class MsgHeartbeat(SBP):
@@ -158,26 +199,51 @@ the remaining error flags should be inspected.
   """
   __slots__ = ['flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__flags, offset, length) = get_u32(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # flags: u32
-    ret += 4
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('flags', 'u4'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('flags', 'u4'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_INS_STATUS = 0xFF03
 class MsgInsStatus(SBP):
@@ -195,26 +261,51 @@ and initialization of the inertial navigation system.
   """
   __slots__ = ['flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__flags, offset, length) = get_u32(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # flags: u32
-    ret += 4
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('flags', 'u4'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('flags', 'u4'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_CSAC_TELEMETRY = 0xFF04
 class MsgCsacTelemetry(SBP):
@@ -234,31 +325,54 @@ It is intended to be a low rate message for status purposes.
   __slots__ = ['id',
                'telemetry',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__id, offset, length) = get_u8(buf, offset, length)
-    ret['id'] = __id
-    (__telemetry, offset, length) = get_string(buf, offset, length)
-    ret['telemetry'] = __telemetry
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.id = res['id']
-    self.telemetry = res['telemetry']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # id: u8
-    ret += 1
-    # telemetry: string
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('id', 'u1'),
+          ('telemetry', '|S{}'.format(count)),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('id', 'u1'),
+          ('telemetry', '|S{}'.format(count)),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype('u1')
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'id': int(res['id'] if element else res['id'][0]),
+      'telemetry': '' if res['telemetry'] is None else res['telemetry'].tostring().decode('ascii'),
+    }
+    return d
+
   
 SBP_MSG_CSAC_TELEMETRY_LABELS = 0xFF05
 class MsgCsacTelemetryLabels(SBP):
@@ -278,31 +392,54 @@ rate than the MSG_CSAC_TELEMETRY.
   __slots__ = ['id',
                'telemetry_labels',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__id, offset, length) = get_u8(buf, offset, length)
-    ret['id'] = __id
-    (__telemetry_labels, offset, length) = get_string(buf, offset, length)
-    ret['telemetry_labels'] = __telemetry_labels
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.id = res['id']
-    self.telemetry_labels = res['telemetry_labels']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # id: u8
-    ret += 1
-    # telemetry_labels: string
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('id', 'u1'),
+          ('telemetry_labels', '|S{}'.format(count)),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('id', 'u1'),
+          ('telemetry_labels', '|S{}'.format(count)),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype('u1')
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'id': int(res['id'] if element else res['id'][0]),
+      'telemetry_labels': '' if res['telemetry_labels'] is None else res['telemetry_labels'].tostring().decode('ascii'),
+    }
+    return d
+
   
 
 msg_classes = {

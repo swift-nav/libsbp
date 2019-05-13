@@ -18,6 +18,7 @@ Satellite code and carrier-phase tracking messages from the device.
 import json
 
 import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -65,126 +66,111 @@ single tracking channel useful for debugging issues.
                'pset_flags',
                'misc_flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__recv_time, offset, length) = get_u64(buf, offset, length)
-    ret['recv_time'] = __recv_time
-    (__tot, offset, length) = GPSTime.parse_members(buf, offset, length)
-    ret['tot'] = __tot
-    (__P, offset, length) = get_u32(buf, offset, length)
-    ret['P'] = __P
-    (__P_std, offset, length) = get_u16(buf, offset, length)
-    ret['P_std'] = __P_std
-    (__L, offset, length) = CarrierPhase.parse_members(buf, offset, length)
-    ret['L'] = __L
-    (__cn0, offset, length) = get_u8(buf, offset, length)
-    ret['cn0'] = __cn0
-    (__lock, offset, length) = get_u16(buf, offset, length)
-    ret['lock'] = __lock
-    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
-    ret['sid'] = __sid
-    (__doppler, offset, length) = get_s32(buf, offset, length)
-    ret['doppler'] = __doppler
-    (__doppler_std, offset, length) = get_u16(buf, offset, length)
-    ret['doppler_std'] = __doppler_std
-    (__uptime, offset, length) = get_u32(buf, offset, length)
-    ret['uptime'] = __uptime
-    (__clock_offset, offset, length) = get_s16(buf, offset, length)
-    ret['clock_offset'] = __clock_offset
-    (__clock_drift, offset, length) = get_s16(buf, offset, length)
-    ret['clock_drift'] = __clock_drift
-    (__corr_spacing, offset, length) = get_u16(buf, offset, length)
-    ret['corr_spacing'] = __corr_spacing
-    (__acceleration, offset, length) = get_s8(buf, offset, length)
-    ret['acceleration'] = __acceleration
-    (__sync_flags, offset, length) = get_u8(buf, offset, length)
-    ret['sync_flags'] = __sync_flags
-    (__tow_flags, offset, length) = get_u8(buf, offset, length)
-    ret['tow_flags'] = __tow_flags
-    (__track_flags, offset, length) = get_u8(buf, offset, length)
-    ret['track_flags'] = __track_flags
-    (__nav_flags, offset, length) = get_u8(buf, offset, length)
-    ret['nav_flags'] = __nav_flags
-    (__pset_flags, offset, length) = get_u8(buf, offset, length)
-    ret['pset_flags'] = __pset_flags
-    (__misc_flags, offset, length) = get_u8(buf, offset, length)
-    ret['misc_flags'] = __misc_flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.recv_time = res['recv_time']
-    self.tot = res['tot']
-    self.P = res['P']
-    self.P_std = res['P_std']
-    self.L = res['L']
-    self.cn0 = res['cn0']
-    self.lock = res['lock']
-    self.sid = res['sid']
-    self.doppler = res['doppler']
-    self.doppler_std = res['doppler_std']
-    self.uptime = res['uptime']
-    self.clock_offset = res['clock_offset']
-    self.clock_drift = res['clock_drift']
-    self.corr_spacing = res['corr_spacing']
-    self.acceleration = res['acceleration']
-    self.sync_flags = res['sync_flags']
-    self.tow_flags = res['tow_flags']
-    self.track_flags = res['track_flags']
-    self.nav_flags = res['nav_flags']
-    self.pset_flags = res['pset_flags']
-    self.misc_flags = res['misc_flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # recv_time: u64
-    ret += 8
-    # tot: GPSTime
-    ret += GPSTime._payload_size()
-    # P: u32
-    ret += 4
-    # P_std: u16
-    ret += 2
-    # L: CarrierPhase
-    ret += CarrierPhase._payload_size()
-    # cn0: u8
-    ret += 1
-    # lock: u16
-    ret += 2
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # doppler: s32
-    ret += 4
-    # doppler_std: u16
-    ret += 2
-    # uptime: u32
-    ret += 4
-    # clock_offset: s16
-    ret += 2
-    # clock_drift: s16
-    ret += 2
-    # corr_spacing: u16
-    ret += 2
-    # acceleration: s8
-    ret += 1
-    # sync_flags: u8
-    ret += 1
-    # tow_flags: u8
-    ret += 1
-    # track_flags: u8
-    ret += 1
-    # nav_flags: u8
-    ret += 1
-    # pset_flags: u8
-    ret += 1
-    # misc_flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('recv_time', 'u8'),
+          ('tot', GPSTime._static_dtype()),
+          ('P', 'u4'),
+          ('P_std', 'u2'),
+          ('L', CarrierPhase._static_dtype()),
+          ('cn0', 'u1'),
+          ('lock', 'u2'),
+          ('sid', GnssSignal._static_dtype()),
+          ('doppler', 'i4'),
+          ('doppler_std', 'u2'),
+          ('uptime', 'u4'),
+          ('clock_offset', 'i2'),
+          ('clock_drift', 'i2'),
+          ('corr_spacing', 'u2'),
+          ('acceleration', 'i1'),
+          ('sync_flags', 'u1'),
+          ('tow_flags', 'u1'),
+          ('track_flags', 'u1'),
+          ('nav_flags', 'u1'),
+          ('pset_flags', 'u1'),
+          ('misc_flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('recv_time', 'u8'),
+          ('tot', GPSTime._static_dtype()),
+          ('P', 'u4'),
+          ('P_std', 'u2'),
+          ('L', CarrierPhase._static_dtype()),
+          ('cn0', 'u1'),
+          ('lock', 'u2'),
+          ('sid', GnssSignal._static_dtype()),
+          ('doppler', 'i4'),
+          ('doppler_std', 'u2'),
+          ('uptime', 'u4'),
+          ('clock_offset', 'i2'),
+          ('clock_drift', 'i2'),
+          ('corr_spacing', 'u2'),
+          ('acceleration', 'i1'),
+          ('sync_flags', 'u1'),
+          ('tow_flags', 'u1'),
+          ('track_flags', 'u1'),
+          ('nav_flags', 'u1'),
+          ('pset_flags', 'u1'),
+          ('misc_flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'recv_time': int(res['recv_time'] if element else res['recv_time'][0]),
+      'tot': GPSTime._unpack_members(res['tot'], element=element),
+      'P': int(res['P'] if element else res['P'][0]),
+      'P_std': int(res['P_std'] if element else res['P_std'][0]),
+      'L': CarrierPhase._unpack_members(res['L'], element=element),
+      'cn0': int(res['cn0'] if element else res['cn0'][0]),
+      'lock': int(res['lock'] if element else res['lock'][0]),
+      'sid': GnssSignal._unpack_members(res['sid'], element=element),
+      'doppler': int(res['doppler'] if element else res['doppler'][0]),
+      'doppler_std': int(res['doppler_std'] if element else res['doppler_std'][0]),
+      'uptime': int(res['uptime'] if element else res['uptime'][0]),
+      'clock_offset': int(res['clock_offset'] if element else res['clock_offset'][0]),
+      'clock_drift': int(res['clock_drift'] if element else res['clock_drift'][0]),
+      'corr_spacing': int(res['corr_spacing'] if element else res['corr_spacing'][0]),
+      'acceleration': int(res['acceleration'] if element else res['acceleration'][0]),
+      'sync_flags': int(res['sync_flags'] if element else res['sync_flags'][0]),
+      'tow_flags': int(res['tow_flags'] if element else res['tow_flags'][0]),
+      'track_flags': int(res['track_flags'] if element else res['track_flags'][0]),
+      'nav_flags': int(res['nav_flags'] if element else res['nav_flags'][0]),
+      'pset_flags': int(res['pset_flags'] if element else res['pset_flags'][0]),
+      'misc_flags': int(res['misc_flags'] if element else res['misc_flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_TRACKING_STATE_DETAILED_DEP = 0x0011
 class MsgTrackingStateDetailedDep(SBP):
@@ -220,126 +206,111 @@ class MsgTrackingStateDetailedDep(SBP):
                'pset_flags',
                'misc_flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__recv_time, offset, length) = get_u64(buf, offset, length)
-    ret['recv_time'] = __recv_time
-    (__tot, offset, length) = GPSTimeDep.parse_members(buf, offset, length)
-    ret['tot'] = __tot
-    (__P, offset, length) = get_u32(buf, offset, length)
-    ret['P'] = __P
-    (__P_std, offset, length) = get_u16(buf, offset, length)
-    ret['P_std'] = __P_std
-    (__L, offset, length) = CarrierPhase.parse_members(buf, offset, length)
-    ret['L'] = __L
-    (__cn0, offset, length) = get_u8(buf, offset, length)
-    ret['cn0'] = __cn0
-    (__lock, offset, length) = get_u16(buf, offset, length)
-    ret['lock'] = __lock
-    (__sid, offset, length) = GnssSignalDep.parse_members(buf, offset, length)
-    ret['sid'] = __sid
-    (__doppler, offset, length) = get_s32(buf, offset, length)
-    ret['doppler'] = __doppler
-    (__doppler_std, offset, length) = get_u16(buf, offset, length)
-    ret['doppler_std'] = __doppler_std
-    (__uptime, offset, length) = get_u32(buf, offset, length)
-    ret['uptime'] = __uptime
-    (__clock_offset, offset, length) = get_s16(buf, offset, length)
-    ret['clock_offset'] = __clock_offset
-    (__clock_drift, offset, length) = get_s16(buf, offset, length)
-    ret['clock_drift'] = __clock_drift
-    (__corr_spacing, offset, length) = get_u16(buf, offset, length)
-    ret['corr_spacing'] = __corr_spacing
-    (__acceleration, offset, length) = get_s8(buf, offset, length)
-    ret['acceleration'] = __acceleration
-    (__sync_flags, offset, length) = get_u8(buf, offset, length)
-    ret['sync_flags'] = __sync_flags
-    (__tow_flags, offset, length) = get_u8(buf, offset, length)
-    ret['tow_flags'] = __tow_flags
-    (__track_flags, offset, length) = get_u8(buf, offset, length)
-    ret['track_flags'] = __track_flags
-    (__nav_flags, offset, length) = get_u8(buf, offset, length)
-    ret['nav_flags'] = __nav_flags
-    (__pset_flags, offset, length) = get_u8(buf, offset, length)
-    ret['pset_flags'] = __pset_flags
-    (__misc_flags, offset, length) = get_u8(buf, offset, length)
-    ret['misc_flags'] = __misc_flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.recv_time = res['recv_time']
-    self.tot = res['tot']
-    self.P = res['P']
-    self.P_std = res['P_std']
-    self.L = res['L']
-    self.cn0 = res['cn0']
-    self.lock = res['lock']
-    self.sid = res['sid']
-    self.doppler = res['doppler']
-    self.doppler_std = res['doppler_std']
-    self.uptime = res['uptime']
-    self.clock_offset = res['clock_offset']
-    self.clock_drift = res['clock_drift']
-    self.corr_spacing = res['corr_spacing']
-    self.acceleration = res['acceleration']
-    self.sync_flags = res['sync_flags']
-    self.tow_flags = res['tow_flags']
-    self.track_flags = res['track_flags']
-    self.nav_flags = res['nav_flags']
-    self.pset_flags = res['pset_flags']
-    self.misc_flags = res['misc_flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # recv_time: u64
-    ret += 8
-    # tot: GPSTimeDep
-    ret += GPSTimeDep._payload_size()
-    # P: u32
-    ret += 4
-    # P_std: u16
-    ret += 2
-    # L: CarrierPhase
-    ret += CarrierPhase._payload_size()
-    # cn0: u8
-    ret += 1
-    # lock: u16
-    ret += 2
-    # sid: GnssSignalDep
-    ret += GnssSignalDep._payload_size()
-    # doppler: s32
-    ret += 4
-    # doppler_std: u16
-    ret += 2
-    # uptime: u32
-    ret += 4
-    # clock_offset: s16
-    ret += 2
-    # clock_drift: s16
-    ret += 2
-    # corr_spacing: u16
-    ret += 2
-    # acceleration: s8
-    ret += 1
-    # sync_flags: u8
-    ret += 1
-    # tow_flags: u8
-    ret += 1
-    # track_flags: u8
-    ret += 1
-    # nav_flags: u8
-    ret += 1
-    # pset_flags: u8
-    ret += 1
-    # misc_flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('recv_time', 'u8'),
+          ('tot', GPSTimeDep._static_dtype()),
+          ('P', 'u4'),
+          ('P_std', 'u2'),
+          ('L', CarrierPhase._static_dtype()),
+          ('cn0', 'u1'),
+          ('lock', 'u2'),
+          ('sid', GnssSignalDep._static_dtype()),
+          ('doppler', 'i4'),
+          ('doppler_std', 'u2'),
+          ('uptime', 'u4'),
+          ('clock_offset', 'i2'),
+          ('clock_drift', 'i2'),
+          ('corr_spacing', 'u2'),
+          ('acceleration', 'i1'),
+          ('sync_flags', 'u1'),
+          ('tow_flags', 'u1'),
+          ('track_flags', 'u1'),
+          ('nav_flags', 'u1'),
+          ('pset_flags', 'u1'),
+          ('misc_flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('recv_time', 'u8'),
+          ('tot', GPSTimeDep._static_dtype()),
+          ('P', 'u4'),
+          ('P_std', 'u2'),
+          ('L', CarrierPhase._static_dtype()),
+          ('cn0', 'u1'),
+          ('lock', 'u2'),
+          ('sid', GnssSignalDep._static_dtype()),
+          ('doppler', 'i4'),
+          ('doppler_std', 'u2'),
+          ('uptime', 'u4'),
+          ('clock_offset', 'i2'),
+          ('clock_drift', 'i2'),
+          ('corr_spacing', 'u2'),
+          ('acceleration', 'i1'),
+          ('sync_flags', 'u1'),
+          ('tow_flags', 'u1'),
+          ('track_flags', 'u1'),
+          ('nav_flags', 'u1'),
+          ('pset_flags', 'u1'),
+          ('misc_flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'recv_time': int(res['recv_time'] if element else res['recv_time'][0]),
+      'tot': GPSTimeDep._unpack_members(res['tot'], element=element),
+      'P': int(res['P'] if element else res['P'][0]),
+      'P_std': int(res['P_std'] if element else res['P_std'][0]),
+      'L': CarrierPhase._unpack_members(res['L'], element=element),
+      'cn0': int(res['cn0'] if element else res['cn0'][0]),
+      'lock': int(res['lock'] if element else res['lock'][0]),
+      'sid': GnssSignalDep._unpack_members(res['sid'], element=element),
+      'doppler': int(res['doppler'] if element else res['doppler'][0]),
+      'doppler_std': int(res['doppler_std'] if element else res['doppler_std'][0]),
+      'uptime': int(res['uptime'] if element else res['uptime'][0]),
+      'clock_offset': int(res['clock_offset'] if element else res['clock_offset'][0]),
+      'clock_drift': int(res['clock_drift'] if element else res['clock_drift'][0]),
+      'corr_spacing': int(res['corr_spacing'] if element else res['corr_spacing'][0]),
+      'acceleration': int(res['acceleration'] if element else res['acceleration'][0]),
+      'sync_flags': int(res['sync_flags'] if element else res['sync_flags'][0]),
+      'tow_flags': int(res['tow_flags'] if element else res['tow_flags'][0]),
+      'track_flags': int(res['track_flags'] if element else res['track_flags'][0]),
+      'nav_flags': int(res['nav_flags'] if element else res['nav_flags'][0]),
+      'pset_flags': int(res['pset_flags'] if element else res['pset_flags'][0]),
+      'misc_flags': int(res['misc_flags'] if element else res['misc_flags'][0]),
+    }
+    return d
+
   
 class TrackingChannelState(object):
   """SBP class for message TrackingChannelState
@@ -358,36 +329,57 @@ measured signal power.
                'fcn',
                'cn0',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
-    ret['sid'] = __sid
-    (__fcn, offset, length) = get_u8(buf, offset, length)
-    ret['fcn'] = __fcn
-    (__cn0, offset, length) = get_u8(buf, offset, length)
-    ret['cn0'] = __cn0
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.sid = res['sid']
-    self.fcn = res['fcn']
-    self.cn0 = res['cn0']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # fcn: u8
-    ret += 1
-    # cn0: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('sid', GnssSignal._static_dtype()),
+          ('fcn', 'u1'),
+          ('cn0', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('sid', GnssSignal._static_dtype()),
+          ('fcn', 'u1'),
+          ('cn0', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'sid': GnssSignal._unpack_members(res['sid'], element=element),
+      'fcn': int(res['fcn'] if element else res['fcn'][0]),
+      'cn0': int(res['cn0'] if element else res['cn0'][0]),
+    }
+    return d
+
   
 SBP_MSG_TRACKING_STATE = 0x0041
 class MsgTrackingState(SBP):
@@ -406,26 +398,51 @@ measurements for all tracked satellites.
   """
   __slots__ = ['states',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__states, offset, length) = get_array(TrackingChannelState.parse_members)(buf, offset, length)
-    ret['states'] = __states
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.states = res['states']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # states: array of TrackingChannelState
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('states', (TrackingChannelState._static_dtype(), (count,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('states', (TrackingChannelState._static_dtype(), (count,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('states', TrackingChannelState._static_dtype()),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'states': [] if res['states'] is None else [TrackingChannelState._unpack_members(x, element=True) for x in res['states'].flatten()],
+    }
+    return d
+
   
 class MeasurementState(object):
   """SBP class for message MeasurementState
@@ -446,31 +463,54 @@ the Slot ID (from 1 to 28)
   __slots__ = ['mesid',
                'cn0',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__mesid, offset, length) = GnssSignal.parse_members(buf, offset, length)
-    ret['mesid'] = __mesid
-    (__cn0, offset, length) = get_u8(buf, offset, length)
-    ret['cn0'] = __cn0
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.mesid = res['mesid']
-    self.cn0 = res['cn0']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # mesid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # cn0: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('mesid', GnssSignal._static_dtype()),
+          ('cn0', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('mesid', GnssSignal._static_dtype()),
+          ('cn0', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'mesid': GnssSignal._unpack_members(res['mesid'], element=element),
+      'cn0': int(res['cn0'] if element else res['cn0'][0]),
+    }
+    return d
+
   
 SBP_MSG_MEASUREMENT_STATE = 0x0061
 class MsgMeasurementState(SBP):
@@ -489,26 +529,51 @@ measurements for all tracked satellites.
   """
   __slots__ = ['states',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__states, offset, length) = get_array(MeasurementState.parse_members)(buf, offset, length)
-    ret['states'] = __states
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.states = res['states']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # states: array of MeasurementState
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('states', (MeasurementState._static_dtype(), (count,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('states', (MeasurementState._static_dtype(), (count,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('states', MeasurementState._static_dtype()),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'states': [] if res['states'] is None else [MeasurementState._unpack_members(x, element=True) for x in res['states'].flatten()],
+    }
+    return d
+
   
 class TrackingChannelCorrelation(object):
   """SBP class for message TrackingChannelCorrelation
@@ -525,31 +590,54 @@ class TrackingChannelCorrelation(object):
   __slots__ = ['I',
                'Q',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__I, offset, length) = get_s16(buf, offset, length)
-    ret['I'] = __I
-    (__Q, offset, length) = get_s16(buf, offset, length)
-    ret['Q'] = __Q
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.I = res['I']
-    self.Q = res['Q']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # I: s16
-    ret += 2
-    # Q: s16
-    ret += 2
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('I', 'i2'),
+          ('Q', 'i2'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('I', 'i2'),
+          ('Q', 'i2'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'I': int(res['I'] if element else res['I'][0]),
+      'Q': int(res['Q'] if element else res['Q'][0]),
+    }
+    return d
+
   
 SBP_MSG_TRACKING_IQ = 0x002D
 class MsgTrackingIq(SBP):
@@ -569,36 +657,57 @@ update interval.
                'sid',
                'corrs',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__channel, offset, length) = get_u8(buf, offset, length)
-    ret['channel'] = __channel
-    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
-    ret['sid'] = __sid
-    (__corrs, offset, length) = get_fixed_array(TrackingChannelCorrelation._unpack_members, 3, TrackingChannelCorrelation._payload_size())(buf, offset, length)
-    ret['corrs'] = __corrs
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.channel = res['channel']
-    self.sid = res['sid']
-    self.corrs = res['corrs']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # channel: u8
-    ret += 1
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # corrs: array of TrackingChannelCorrelation
-    ret += TrackingChannelCorrelation._payload_size() * 3
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('channel', 'u1'),
+          ('sid', GnssSignal._static_dtype()),
+          ('corrs', (TrackingChannelCorrelation._static_dtype(), (3,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('channel', 'u1'),
+          ('sid', GnssSignal._static_dtype()),
+          ('corrs', (TrackingChannelCorrelation._static_dtype(), (3,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('corrs', TrackingChannelCorrelation._static_dtype()),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'channel': int(res['channel'] if element else res['channel'][0]),
+      'sid': GnssSignal._unpack_members(res['sid'], element=element),
+      'corrs': [] if res['corrs'] is None else [TrackingChannelCorrelation._unpack_members(x, element=True) for x in res['corrs'].flatten()],
+    }
+    return d
+
   
 class TrackingChannelCorrelationDep(object):
   """SBP class for message TrackingChannelCorrelationDep
@@ -615,31 +724,54 @@ class TrackingChannelCorrelationDep(object):
   __slots__ = ['I',
                'Q',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__I, offset, length) = get_s32(buf, offset, length)
-    ret['I'] = __I
-    (__Q, offset, length) = get_s32(buf, offset, length)
-    ret['Q'] = __Q
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.I = res['I']
-    self.Q = res['Q']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # I: s32
-    ret += 4
-    # Q: s32
-    ret += 4
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('I', 'i4'),
+          ('Q', 'i4'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('I', 'i4'),
+          ('Q', 'i4'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'I': int(res['I'] if element else res['I'][0]),
+      'Q': int(res['Q'] if element else res['Q'][0]),
+    }
+    return d
+
   
 SBP_MSG_TRACKING_IQ_DEP_B = 0x002C
 class MsgTrackingIqDepB(SBP):
@@ -659,36 +791,57 @@ update interval.
                'sid',
                'corrs',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__channel, offset, length) = get_u8(buf, offset, length)
-    ret['channel'] = __channel
-    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
-    ret['sid'] = __sid
-    (__corrs, offset, length) = get_fixed_array(TrackingChannelCorrelationDep._unpack_members, 3, TrackingChannelCorrelationDep._payload_size())(buf, offset, length)
-    ret['corrs'] = __corrs
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.channel = res['channel']
-    self.sid = res['sid']
-    self.corrs = res['corrs']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # channel: u8
-    ret += 1
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # corrs: array of TrackingChannelCorrelationDep
-    ret += TrackingChannelCorrelationDep._payload_size() * 3
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('channel', 'u1'),
+          ('sid', GnssSignal._static_dtype()),
+          ('corrs', (TrackingChannelCorrelationDep._static_dtype(), (3,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('channel', 'u1'),
+          ('sid', GnssSignal._static_dtype()),
+          ('corrs', (TrackingChannelCorrelationDep._static_dtype(), (3,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('corrs', TrackingChannelCorrelationDep._static_dtype()),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'channel': int(res['channel'] if element else res['channel'][0]),
+      'sid': GnssSignal._unpack_members(res['sid'], element=element),
+      'corrs': [] if res['corrs'] is None else [TrackingChannelCorrelationDep._unpack_members(x, element=True) for x in res['corrs'].flatten()],
+    }
+    return d
+
   
 SBP_MSG_TRACKING_IQ_DEP_A = 0x001C
 class MsgTrackingIqDepA(SBP):
@@ -706,36 +859,57 @@ class MsgTrackingIqDepA(SBP):
                'sid',
                'corrs',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__channel, offset, length) = get_u8(buf, offset, length)
-    ret['channel'] = __channel
-    (__sid, offset, length) = GnssSignalDep.parse_members(buf, offset, length)
-    ret['sid'] = __sid
-    (__corrs, offset, length) = get_fixed_array(TrackingChannelCorrelationDep._unpack_members, 3, TrackingChannelCorrelationDep._payload_size())(buf, offset, length)
-    ret['corrs'] = __corrs
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.channel = res['channel']
-    self.sid = res['sid']
-    self.corrs = res['corrs']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # channel: u8
-    ret += 1
-    # sid: GnssSignalDep
-    ret += GnssSignalDep._payload_size()
-    # corrs: array of TrackingChannelCorrelationDep
-    ret += TrackingChannelCorrelationDep._payload_size() * 3
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('channel', 'u1'),
+          ('sid', GnssSignalDep._static_dtype()),
+          ('corrs', (TrackingChannelCorrelationDep._static_dtype(), (3,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('channel', 'u1'),
+          ('sid', GnssSignalDep._static_dtype()),
+          ('corrs', (TrackingChannelCorrelationDep._static_dtype(), (3,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('corrs', TrackingChannelCorrelationDep._static_dtype()),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'channel': int(res['channel'] if element else res['channel'][0]),
+      'sid': GnssSignalDep._unpack_members(res['sid'], element=element),
+      'corrs': [] if res['corrs'] is None else [TrackingChannelCorrelationDep._unpack_members(x, element=True) for x in res['corrs'].flatten()],
+    }
+    return d
+
   
 class TrackingChannelStateDepA(object):
   """SBP class for message TrackingChannelStateDepA
@@ -752,36 +926,57 @@ class TrackingChannelStateDepA(object):
                'prn',
                'cn0',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__state, offset, length) = get_u8(buf, offset, length)
-    ret['state'] = __state
-    (__prn, offset, length) = get_u8(buf, offset, length)
-    ret['prn'] = __prn
-    (__cn0, offset, length) = get_f32(buf, offset, length)
-    ret['cn0'] = judicious_round(nb.f4(__cn0)) if SBP.judicious_rounding else __cn0
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.state = res['state']
-    self.prn = res['prn']
-    self.cn0 = res['cn0']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # state: u8
-    ret += 1
-    # prn: u8
-    ret += 1
-    # cn0: float
-    ret += 4
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('state', 'u1'),
+          ('prn', 'u1'),
+          ('cn0', 'f4'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('state', 'u1'),
+          ('prn', 'u1'),
+          ('cn0', 'f4'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'state': int(res['state'] if element else res['state'][0]),
+      'prn': int(res['prn'] if element else res['prn'][0]),
+      'cn0': float(res['cn0'] if element else res['cn0'][0]),
+    }
+    return d
+
   
 SBP_MSG_TRACKING_STATE_DEP_A = 0x0016
 class MsgTrackingStateDepA(SBP):
@@ -797,26 +992,51 @@ class MsgTrackingStateDepA(SBP):
   """
   __slots__ = ['states',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__states, offset, length) = get_array(TrackingChannelStateDepA.parse_members)(buf, offset, length)
-    ret['states'] = __states
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.states = res['states']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # states: array of TrackingChannelStateDepA
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('states', (TrackingChannelStateDepA._static_dtype(), (count,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('states', (TrackingChannelStateDepA._static_dtype(), (count,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('states', TrackingChannelStateDepA._static_dtype()),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'states': [] if res['states'] is None else [TrackingChannelStateDepA._unpack_members(x, element=True) for x in res['states'].flatten()],
+    }
+    return d
+
   
 class TrackingChannelStateDepB(object):
   """SBP class for message TrackingChannelStateDepB
@@ -833,36 +1053,57 @@ class TrackingChannelStateDepB(object):
                'sid',
                'cn0',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__state, offset, length) = get_u8(buf, offset, length)
-    ret['state'] = __state
-    (__sid, offset, length) = GnssSignalDep.parse_members(buf, offset, length)
-    ret['sid'] = __sid
-    (__cn0, offset, length) = get_f32(buf, offset, length)
-    ret['cn0'] = judicious_round(nb.f4(__cn0)) if SBP.judicious_rounding else __cn0
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.state = res['state']
-    self.sid = res['sid']
-    self.cn0 = res['cn0']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # state: u8
-    ret += 1
-    # sid: GnssSignalDep
-    ret += GnssSignalDep._payload_size()
-    # cn0: float
-    ret += 4
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('state', 'u1'),
+          ('sid', GnssSignalDep._static_dtype()),
+          ('cn0', 'f4'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('state', 'u1'),
+          ('sid', GnssSignalDep._static_dtype()),
+          ('cn0', 'f4'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'state': int(res['state'] if element else res['state'][0]),
+      'sid': GnssSignalDep._unpack_members(res['sid'], element=element),
+      'cn0': float(res['cn0'] if element else res['cn0'][0]),
+    }
+    return d
+
   
 SBP_MSG_TRACKING_STATE_DEP_B = 0x0013
 class MsgTrackingStateDepB(SBP):
@@ -878,26 +1119,51 @@ class MsgTrackingStateDepB(SBP):
   """
   __slots__ = ['states',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__states, offset, length) = get_array(TrackingChannelStateDepB.parse_members)(buf, offset, length)
-    ret['states'] = __states
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.states = res['states']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # states: array of TrackingChannelStateDepB
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('states', (TrackingChannelStateDepB._static_dtype(), (count,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('states', (TrackingChannelStateDepB._static_dtype(), (count,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('states', TrackingChannelStateDepB._static_dtype()),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'states': [] if res['states'] is None else [TrackingChannelStateDepB._unpack_members(x, element=True) for x in res['states'].flatten()],
+    }
+    return d
+
   
 
 msg_classes = {

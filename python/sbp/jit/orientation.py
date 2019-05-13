@@ -17,6 +17,7 @@ Orientation Messages
 import json
 
 import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -48,41 +49,60 @@ that time-matched RTK mode is used when the base station is moving.
                'n_sats',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__heading, offset, length) = get_u32(buf, offset, length)
-    ret['heading'] = __heading
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.heading = res['heading']
-    self.n_sats = res['n_sats']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # heading: u32
-    ret += 4
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('heading', 'u4'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('heading', 'u4'),
+          ('n_sats', 'u1'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'heading': int(res['heading'] if element else res['heading'][0]),
+      'n_sats': int(res['n_sats'] if element else res['n_sats'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_ORIENT_QUAT = 0x0220
 class MsgOrientQuat(SBP):
@@ -112,71 +132,78 @@ or Duro.
                'z_accuracy',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__w, offset, length) = get_s32(buf, offset, length)
-    ret['w'] = __w
-    (__x, offset, length) = get_s32(buf, offset, length)
-    ret['x'] = __x
-    (__y, offset, length) = get_s32(buf, offset, length)
-    ret['y'] = __y
-    (__z, offset, length) = get_s32(buf, offset, length)
-    ret['z'] = __z
-    (__w_accuracy, offset, length) = get_f32(buf, offset, length)
-    ret['w_accuracy'] = judicious_round(nb.f4(__w_accuracy)) if SBP.judicious_rounding else __w_accuracy
-    (__x_accuracy, offset, length) = get_f32(buf, offset, length)
-    ret['x_accuracy'] = judicious_round(nb.f4(__x_accuracy)) if SBP.judicious_rounding else __x_accuracy
-    (__y_accuracy, offset, length) = get_f32(buf, offset, length)
-    ret['y_accuracy'] = judicious_round(nb.f4(__y_accuracy)) if SBP.judicious_rounding else __y_accuracy
-    (__z_accuracy, offset, length) = get_f32(buf, offset, length)
-    ret['z_accuracy'] = judicious_round(nb.f4(__z_accuracy)) if SBP.judicious_rounding else __z_accuracy
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.w = res['w']
-    self.x = res['x']
-    self.y = res['y']
-    self.z = res['z']
-    self.w_accuracy = res['w_accuracy']
-    self.x_accuracy = res['x_accuracy']
-    self.y_accuracy = res['y_accuracy']
-    self.z_accuracy = res['z_accuracy']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # w: s32
-    ret += 4
-    # x: s32
-    ret += 4
-    # y: s32
-    ret += 4
-    # z: s32
-    ret += 4
-    # w_accuracy: float
-    ret += 4
-    # x_accuracy: float
-    ret += 4
-    # y_accuracy: float
-    ret += 4
-    # z_accuracy: float
-    ret += 4
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('w', 'i4'),
+          ('x', 'i4'),
+          ('y', 'i4'),
+          ('z', 'i4'),
+          ('w_accuracy', 'f4'),
+          ('x_accuracy', 'f4'),
+          ('y_accuracy', 'f4'),
+          ('z_accuracy', 'f4'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('w', 'i4'),
+          ('x', 'i4'),
+          ('y', 'i4'),
+          ('z', 'i4'),
+          ('w_accuracy', 'f4'),
+          ('x_accuracy', 'f4'),
+          ('y_accuracy', 'f4'),
+          ('z_accuracy', 'f4'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'w': int(res['w'] if element else res['w'][0]),
+      'x': int(res['x'] if element else res['x'][0]),
+      'y': int(res['y'] if element else res['y'][0]),
+      'z': int(res['z'] if element else res['z'][0]),
+      'w_accuracy': float(res['w_accuracy'] if element else res['w_accuracy'][0]),
+      'x_accuracy': float(res['x_accuracy'] if element else res['x_accuracy'][0]),
+      'y_accuracy': float(res['y_accuracy'] if element else res['y_accuracy'][0]),
+      'z_accuracy': float(res['z_accuracy'] if element else res['z_accuracy'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_ORIENT_EULER = 0x0221
 class MsgOrientEuler(SBP):
@@ -204,61 +231,72 @@ INS versions of Swift Products and is not produced by Piksi Multi or Duro.
                'yaw_accuracy',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__roll, offset, length) = get_s32(buf, offset, length)
-    ret['roll'] = __roll
-    (__pitch, offset, length) = get_s32(buf, offset, length)
-    ret['pitch'] = __pitch
-    (__yaw, offset, length) = get_s32(buf, offset, length)
-    ret['yaw'] = __yaw
-    (__roll_accuracy, offset, length) = get_f32(buf, offset, length)
-    ret['roll_accuracy'] = judicious_round(nb.f4(__roll_accuracy)) if SBP.judicious_rounding else __roll_accuracy
-    (__pitch_accuracy, offset, length) = get_f32(buf, offset, length)
-    ret['pitch_accuracy'] = judicious_round(nb.f4(__pitch_accuracy)) if SBP.judicious_rounding else __pitch_accuracy
-    (__yaw_accuracy, offset, length) = get_f32(buf, offset, length)
-    ret['yaw_accuracy'] = judicious_round(nb.f4(__yaw_accuracy)) if SBP.judicious_rounding else __yaw_accuracy
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.roll = res['roll']
-    self.pitch = res['pitch']
-    self.yaw = res['yaw']
-    self.roll_accuracy = res['roll_accuracy']
-    self.pitch_accuracy = res['pitch_accuracy']
-    self.yaw_accuracy = res['yaw_accuracy']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # roll: s32
-    ret += 4
-    # pitch: s32
-    ret += 4
-    # yaw: s32
-    ret += 4
-    # roll_accuracy: float
-    ret += 4
-    # pitch_accuracy: float
-    ret += 4
-    # yaw_accuracy: float
-    ret += 4
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('roll', 'i4'),
+          ('pitch', 'i4'),
+          ('yaw', 'i4'),
+          ('roll_accuracy', 'f4'),
+          ('pitch_accuracy', 'f4'),
+          ('yaw_accuracy', 'f4'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('roll', 'i4'),
+          ('pitch', 'i4'),
+          ('yaw', 'i4'),
+          ('roll_accuracy', 'f4'),
+          ('pitch_accuracy', 'f4'),
+          ('yaw_accuracy', 'f4'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'roll': int(res['roll'] if element else res['roll'][0]),
+      'pitch': int(res['pitch'] if element else res['pitch'][0]),
+      'yaw': int(res['yaw'] if element else res['yaw'][0]),
+      'roll_accuracy': float(res['roll_accuracy'] if element else res['roll_accuracy'][0]),
+      'pitch_accuracy': float(res['pitch_accuracy'] if element else res['pitch_accuracy'][0]),
+      'yaw_accuracy': float(res['yaw_accuracy'] if element else res['yaw_accuracy'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_ANGULAR_RATE = 0x0222
 class MsgAngularRate(SBP):
@@ -287,46 +325,63 @@ and is not produced by Piksi Multi or Duro.
                'z',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__x, offset, length) = get_s32(buf, offset, length)
-    ret['x'] = __x
-    (__y, offset, length) = get_s32(buf, offset, length)
-    ret['y'] = __y
-    (__z, offset, length) = get_s32(buf, offset, length)
-    ret['z'] = __z
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.x = res['x']
-    self.y = res['y']
-    self.z = res['z']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: s32
-    ret += 4
-    # y: s32
-    ret += 4
-    # z: s32
-    ret += 4
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('x', 'i4'),
+          ('y', 'i4'),
+          ('z', 'i4'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('x', 'i4'),
+          ('y', 'i4'),
+          ('z', 'i4'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'x': int(res['x'] if element else res['x'][0]),
+      'y': int(res['y'] if element else res['y'][0]),
+      'z': int(res['z'] if element else res['z'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 
 msg_classes = {

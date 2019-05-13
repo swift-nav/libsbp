@@ -17,6 +17,7 @@ Messages from a vehicle.
 import json
 
 import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -48,36 +49,57 @@ source 0 through 3.
                'velocity',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__velocity, offset, length) = get_s32(buf, offset, length)
-    ret['velocity'] = __velocity
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.velocity = res['velocity']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # velocity: s32
-    ret += 4
-    # flags: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('velocity', 'i4'),
+          ('flags', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('velocity', 'i4'),
+          ('flags', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'velocity': int(res['velocity'] if element else res['velocity'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 
 msg_classes = {

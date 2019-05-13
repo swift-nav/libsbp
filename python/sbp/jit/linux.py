@@ -18,6 +18,7 @@ Linux state monitoring.
 import json
 
 import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -48,46 +49,63 @@ consumers of CPU on the system.
                'tname',
                'cmdline',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__index, offset, length) = get_u8(buf, offset, length)
-    ret['index'] = __index
-    (__pid, offset, length) = get_u16(buf, offset, length)
-    ret['pid'] = __pid
-    (__pcpu, offset, length) = get_u8(buf, offset, length)
-    ret['pcpu'] = __pcpu
-    (__tname, offset, length) = get_fixed_string(15)(buf, offset, length)
-    ret['tname'] = __tname
-    (__cmdline, offset, length) = get_string(buf, offset, length)
-    ret['cmdline'] = __cmdline
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.index = res['index']
-    self.pid = res['pid']
-    self.pcpu = res['pcpu']
-    self.tname = res['tname']
-    self.cmdline = res['cmdline']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # index: u8
-    ret += 1
-    # pid: u16
-    ret += 2
-    # pcpu: u8
-    ret += 1
-    # tname: string
-    ret += 15
-    # cmdline: string
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('index', 'u1'),
+          ('pid', 'u2'),
+          ('pcpu', 'u1'),
+          ('tname', '|S15'),
+          ('cmdline', '|S{}'.format(count)),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('index', 'u1'),
+          ('pid', 'u2'),
+          ('pcpu', 'u1'),
+          ('tname', '|S15'),
+          ('cmdline', '|S{}'.format(count)),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype('u1')
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'index': int(res['index'] if element else res['index'][0]),
+      'pid': int(res['pid'] if element else res['pid'][0]),
+      'pcpu': int(res['pcpu'] if element else res['pcpu'][0]),
+      'tname': '' if res['tname'] is None else res['tname'].tostring().decode('ascii'),
+      'cmdline': '' if res['cmdline'] is None else res['cmdline'].tostring().decode('ascii'),
+    }
+    return d
+
   
 SBP_MSG_LINUX_MEM_STATE = 0x7F01
 class MsgLinuxMemState(SBP):
@@ -109,46 +127,63 @@ consumers of memory on the system.
                'tname',
                'cmdline',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__index, offset, length) = get_u8(buf, offset, length)
-    ret['index'] = __index
-    (__pid, offset, length) = get_u16(buf, offset, length)
-    ret['pid'] = __pid
-    (__pmem, offset, length) = get_u8(buf, offset, length)
-    ret['pmem'] = __pmem
-    (__tname, offset, length) = get_fixed_string(15)(buf, offset, length)
-    ret['tname'] = __tname
-    (__cmdline, offset, length) = get_string(buf, offset, length)
-    ret['cmdline'] = __cmdline
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.index = res['index']
-    self.pid = res['pid']
-    self.pmem = res['pmem']
-    self.tname = res['tname']
-    self.cmdline = res['cmdline']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # index: u8
-    ret += 1
-    # pid: u16
-    ret += 2
-    # pmem: u8
-    ret += 1
-    # tname: string
-    ret += 15
-    # cmdline: string
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('index', 'u1'),
+          ('pid', 'u2'),
+          ('pmem', 'u1'),
+          ('tname', '|S15'),
+          ('cmdline', '|S{}'.format(count)),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('index', 'u1'),
+          ('pid', 'u2'),
+          ('pmem', 'u1'),
+          ('tname', '|S15'),
+          ('cmdline', '|S{}'.format(count)),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype('u1')
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'index': int(res['index'] if element else res['index'][0]),
+      'pid': int(res['pid'] if element else res['pid'][0]),
+      'pmem': int(res['pmem'] if element else res['pmem'][0]),
+      'tname': '' if res['tname'] is None else res['tname'].tostring().decode('ascii'),
+      'cmdline': '' if res['cmdline'] is None else res['cmdline'].tostring().decode('ascii'),
+    }
+    return d
+
   
 SBP_MSG_LINUX_SYS_STATE = 0x7F02
 class MsgLinuxSysState(SBP):
@@ -170,51 +205,66 @@ class MsgLinuxSysState(SBP):
                'procs_stopping',
                'pid_count',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__mem_total, offset, length) = get_u16(buf, offset, length)
-    ret['mem_total'] = __mem_total
-    (__pcpu, offset, length) = get_u8(buf, offset, length)
-    ret['pcpu'] = __pcpu
-    (__pmem, offset, length) = get_u8(buf, offset, length)
-    ret['pmem'] = __pmem
-    (__procs_starting, offset, length) = get_u16(buf, offset, length)
-    ret['procs_starting'] = __procs_starting
-    (__procs_stopping, offset, length) = get_u16(buf, offset, length)
-    ret['procs_stopping'] = __procs_stopping
-    (__pid_count, offset, length) = get_u16(buf, offset, length)
-    ret['pid_count'] = __pid_count
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.mem_total = res['mem_total']
-    self.pcpu = res['pcpu']
-    self.pmem = res['pmem']
-    self.procs_starting = res['procs_starting']
-    self.procs_stopping = res['procs_stopping']
-    self.pid_count = res['pid_count']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # mem_total: u16
-    ret += 2
-    # pcpu: u8
-    ret += 1
-    # pmem: u8
-    ret += 1
-    # procs_starting: u16
-    ret += 2
-    # procs_stopping: u16
-    ret += 2
-    # pid_count: u16
-    ret += 2
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('mem_total', 'u2'),
+          ('pcpu', 'u1'),
+          ('pmem', 'u1'),
+          ('procs_starting', 'u2'),
+          ('procs_stopping', 'u2'),
+          ('pid_count', 'u2'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('mem_total', 'u2'),
+          ('pcpu', 'u1'),
+          ('pmem', 'u1'),
+          ('procs_starting', 'u2'),
+          ('procs_stopping', 'u2'),
+          ('pid_count', 'u2'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'mem_total': int(res['mem_total'] if element else res['mem_total'][0]),
+      'pcpu': int(res['pcpu'] if element else res['pcpu'][0]),
+      'pmem': int(res['pmem'] if element else res['pmem'][0]),
+      'procs_starting': int(res['procs_starting'] if element else res['procs_starting'][0]),
+      'procs_stopping': int(res['procs_stopping'] if element else res['procs_stopping'][0]),
+      'pid_count': int(res['pid_count'] if element else res['pid_count'][0]),
+    }
+    return d
+
   
 SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS = 0x7F03
 class MsgLinuxProcessSocketCounts(SBP):
@@ -236,51 +286,66 @@ class MsgLinuxProcessSocketCounts(SBP):
                'socket_states',
                'cmdline',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__index, offset, length) = get_u8(buf, offset, length)
-    ret['index'] = __index
-    (__pid, offset, length) = get_u16(buf, offset, length)
-    ret['pid'] = __pid
-    (__socket_count, offset, length) = get_u16(buf, offset, length)
-    ret['socket_count'] = __socket_count
-    (__socket_types, offset, length) = get_u16(buf, offset, length)
-    ret['socket_types'] = __socket_types
-    (__socket_states, offset, length) = get_u16(buf, offset, length)
-    ret['socket_states'] = __socket_states
-    (__cmdline, offset, length) = get_string(buf, offset, length)
-    ret['cmdline'] = __cmdline
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.index = res['index']
-    self.pid = res['pid']
-    self.socket_count = res['socket_count']
-    self.socket_types = res['socket_types']
-    self.socket_states = res['socket_states']
-    self.cmdline = res['cmdline']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # index: u8
-    ret += 1
-    # pid: u16
-    ret += 2
-    # socket_count: u16
-    ret += 2
-    # socket_types: u16
-    ret += 2
-    # socket_states: u16
-    ret += 2
-    # cmdline: string
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('index', 'u1'),
+          ('pid', 'u2'),
+          ('socket_count', 'u2'),
+          ('socket_types', 'u2'),
+          ('socket_states', 'u2'),
+          ('cmdline', '|S{}'.format(count)),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('index', 'u1'),
+          ('pid', 'u2'),
+          ('socket_count', 'u2'),
+          ('socket_types', 'u2'),
+          ('socket_states', 'u2'),
+          ('cmdline', '|S{}'.format(count)),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype('u1')
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'index': int(res['index'] if element else res['index'][0]),
+      'pid': int(res['pid'] if element else res['pid'][0]),
+      'socket_count': int(res['socket_count'] if element else res['socket_count'][0]),
+      'socket_types': int(res['socket_types'] if element else res['socket_types'][0]),
+      'socket_states': int(res['socket_states'] if element else res['socket_states'][0]),
+      'cmdline': '' if res['cmdline'] is None else res['cmdline'].tostring().decode('ascii'),
+    }
+    return d
+
   
 SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES = 0x7F04
 class MsgLinuxProcessSocketQueues(SBP):
@@ -304,61 +369,72 @@ class MsgLinuxProcessSocketQueues(SBP):
                'address_of_largest',
                'cmdline',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__index, offset, length) = get_u8(buf, offset, length)
-    ret['index'] = __index
-    (__pid, offset, length) = get_u16(buf, offset, length)
-    ret['pid'] = __pid
-    (__recv_queued, offset, length) = get_u16(buf, offset, length)
-    ret['recv_queued'] = __recv_queued
-    (__send_queued, offset, length) = get_u16(buf, offset, length)
-    ret['send_queued'] = __send_queued
-    (__socket_types, offset, length) = get_u16(buf, offset, length)
-    ret['socket_types'] = __socket_types
-    (__socket_states, offset, length) = get_u16(buf, offset, length)
-    ret['socket_states'] = __socket_states
-    (__address_of_largest, offset, length) = get_fixed_string(64)(buf, offset, length)
-    ret['address_of_largest'] = __address_of_largest
-    (__cmdline, offset, length) = get_string(buf, offset, length)
-    ret['cmdline'] = __cmdline
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.index = res['index']
-    self.pid = res['pid']
-    self.recv_queued = res['recv_queued']
-    self.send_queued = res['send_queued']
-    self.socket_types = res['socket_types']
-    self.socket_states = res['socket_states']
-    self.address_of_largest = res['address_of_largest']
-    self.cmdline = res['cmdline']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # index: u8
-    ret += 1
-    # pid: u16
-    ret += 2
-    # recv_queued: u16
-    ret += 2
-    # send_queued: u16
-    ret += 2
-    # socket_types: u16
-    ret += 2
-    # socket_states: u16
-    ret += 2
-    # address_of_largest: string
-    ret += 64
-    # cmdline: string
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('index', 'u1'),
+          ('pid', 'u2'),
+          ('recv_queued', 'u2'),
+          ('send_queued', 'u2'),
+          ('socket_types', 'u2'),
+          ('socket_states', 'u2'),
+          ('address_of_largest', '|S64'),
+          ('cmdline', '|S{}'.format(count)),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('index', 'u1'),
+          ('pid', 'u2'),
+          ('recv_queued', 'u2'),
+          ('send_queued', 'u2'),
+          ('socket_types', 'u2'),
+          ('socket_states', 'u2'),
+          ('address_of_largest', '|S64'),
+          ('cmdline', '|S{}'.format(count)),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype('u1')
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'index': int(res['index'] if element else res['index'][0]),
+      'pid': int(res['pid'] if element else res['pid'][0]),
+      'recv_queued': int(res['recv_queued'] if element else res['recv_queued'][0]),
+      'send_queued': int(res['send_queued'] if element else res['send_queued'][0]),
+      'socket_types': int(res['socket_types'] if element else res['socket_types'][0]),
+      'socket_states': int(res['socket_states'] if element else res['socket_states'][0]),
+      'address_of_largest': '' if res['address_of_largest'] is None else res['address_of_largest'].tostring().decode('ascii'),
+      'cmdline': '' if res['cmdline'] is None else res['cmdline'].tostring().decode('ascii'),
+    }
+    return d
+
   
 SBP_MSG_LINUX_SOCKET_USAGE = 0x7F05
 class MsgLinuxSocketUsage(SBP):
@@ -378,41 +454,60 @@ class MsgLinuxSocketUsage(SBP):
                'socket_state_counts',
                'socket_type_counts',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__avg_queue_depth, offset, length) = get_u32(buf, offset, length)
-    ret['avg_queue_depth'] = __avg_queue_depth
-    (__max_queue_depth, offset, length) = get_u32(buf, offset, length)
-    ret['max_queue_depth'] = __max_queue_depth
-    (__socket_state_counts, offset, length) = get_fixed_array(get_u16, 16, 2)(buf, offset, length)
-    ret['socket_state_counts'] = __socket_state_counts
-    (__socket_type_counts, offset, length) = get_fixed_array(get_u16, 16, 2)(buf, offset, length)
-    ret['socket_type_counts'] = __socket_type_counts
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.avg_queue_depth = res['avg_queue_depth']
-    self.max_queue_depth = res['max_queue_depth']
-    self.socket_state_counts = res['socket_state_counts']
-    self.socket_type_counts = res['socket_type_counts']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # avg_queue_depth: u32
-    ret += 4
-    # max_queue_depth: u32
-    ret += 4
-    # socket_state_counts: array of u16
-    ret += 2 * 16
-    # socket_type_counts: array of u16
-    ret += 2 * 16
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('avg_queue_depth', 'u4'),
+          ('max_queue_depth', 'u4'),
+          ('socket_state_counts', ('u2', (16,))),
+          ('socket_type_counts', ('u2', (16,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('avg_queue_depth', 'u4'),
+          ('max_queue_depth', 'u4'),
+          ('socket_state_counts', ('u2', (16,))),
+          ('socket_type_counts', ('u2', (16,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('socket_state_counts', 'u2'),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'avg_queue_depth': int(res['avg_queue_depth'] if element else res['avg_queue_depth'][0]),
+      'max_queue_depth': int(res['max_queue_depth'] if element else res['max_queue_depth'][0]),
+      'socket_state_counts': [] if res['socket_state_counts'] is None else [x.item() for x in res['socket_state_counts'].flatten()],
+      'socket_type_counts': [] if res['socket_type_counts'] is None else [x.item() for x in res['socket_type_counts'].flatten()],
+    }
+    return d
+
   
 SBP_MSG_LINUX_PROCESS_FD_COUNT = 0x7F06
 class MsgLinuxProcessFdCount(SBP):
@@ -432,41 +527,60 @@ class MsgLinuxProcessFdCount(SBP):
                'fd_count',
                'cmdline',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__index, offset, length) = get_u8(buf, offset, length)
-    ret['index'] = __index
-    (__pid, offset, length) = get_u16(buf, offset, length)
-    ret['pid'] = __pid
-    (__fd_count, offset, length) = get_u16(buf, offset, length)
-    ret['fd_count'] = __fd_count
-    (__cmdline, offset, length) = get_string(buf, offset, length)
-    ret['cmdline'] = __cmdline
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.index = res['index']
-    self.pid = res['pid']
-    self.fd_count = res['fd_count']
-    self.cmdline = res['cmdline']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # index: u8
-    ret += 1
-    # pid: u16
-    ret += 2
-    # fd_count: u16
-    ret += 2
-    # cmdline: string
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('index', 'u1'),
+          ('pid', 'u2'),
+          ('fd_count', 'u2'),
+          ('cmdline', '|S{}'.format(count)),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('index', 'u1'),
+          ('pid', 'u2'),
+          ('fd_count', 'u2'),
+          ('cmdline', '|S{}'.format(count)),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype('u1')
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'index': int(res['index'] if element else res['index'][0]),
+      'pid': int(res['pid'] if element else res['pid'][0]),
+      'fd_count': int(res['fd_count'] if element else res['fd_count'][0]),
+      'cmdline': '' if res['cmdline'] is None else res['cmdline'].tostring().decode('ascii'),
+    }
+    return d
+
   
 SBP_MSG_LINUX_PROCESS_FD_SUMMARY = 0x7F07
 class MsgLinuxProcessFdSummary(SBP):
@@ -484,31 +598,54 @@ class MsgLinuxProcessFdSummary(SBP):
   __slots__ = ['sys_fd_count',
                'most_opened',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__sys_fd_count, offset, length) = get_u32(buf, offset, length)
-    ret['sys_fd_count'] = __sys_fd_count
-    (__most_opened, offset, length) = get_string(buf, offset, length)
-    ret['most_opened'] = __most_opened
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.sys_fd_count = res['sys_fd_count']
-    self.most_opened = res['most_opened']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sys_fd_count: u32
-    ret += 4
-    # most_opened: string
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('sys_fd_count', 'u4'),
+          ('most_opened', '|S{}'.format(count)),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('sys_fd_count', 'u4'),
+          ('most_opened', '|S{}'.format(count)),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype('u1')
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'sys_fd_count': int(res['sys_fd_count'] if element else res['sys_fd_count'][0]),
+      'most_opened': '' if res['most_opened'] is None else res['most_opened'].tostring().decode('ascii'),
+    }
+    return d
+
   
 
 msg_classes = {

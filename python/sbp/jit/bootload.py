@@ -22,6 +22,7 @@ host request and the device response.
 import json
 
 import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -51,6 +52,9 @@ response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
   def _unpack_members(self, buf, offset, length):
     return {}, offset, length
 
+  def parse_members(self, buf, offset, length):
+    return {}, offset, length
+
   def _payload_size(self):
     return 0
   
@@ -74,31 +78,54 @@ protocol version number.
   __slots__ = ['flags',
                'version',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__flags, offset, length) = get_u32(buf, offset, length)
-    ret['flags'] = __flags
-    (__version, offset, length) = get_string(buf, offset, length)
-    ret['version'] = __version
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.flags = res['flags']
-    self.version = res['version']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # flags: u32
-    ret += 4
-    # version: string
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('flags', 'u4'),
+          ('version', '|S{}'.format(count)),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('flags', 'u4'),
+          ('version', '|S{}'.format(count)),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype('u1')
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'flags': int(res['flags'] if element else res['flags'][0]),
+      'version': '' if res['version'] is None else res['version'].tostring().decode('ascii'),
+    }
+    return d
+
   
 SBP_MSG_BOOTLOADER_JUMP_TO_APP = 0x00B1
 class MsgBootloaderJumpToApp(SBP):
@@ -115,26 +142,51 @@ class MsgBootloaderJumpToApp(SBP):
   """
   __slots__ = ['jump',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__jump, offset, length) = get_u8(buf, offset, length)
-    ret['jump'] = __jump
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.jump = res['jump']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # jump: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('jump', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('jump', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'jump': int(res['jump'] if element else res['jump'][0]),
+    }
+    return d
+
   
 SBP_MSG_NAP_DEVICE_DNA_REQ = 0x00DE
 class MsgNapDeviceDnaReq(SBP):
@@ -156,6 +208,9 @@ and not related to the Piksi's serial number.
   """
   __slots__ = []
   def _unpack_members(self, buf, offset, length):
+    return {}, offset, length
+
+  def parse_members(self, buf, offset, length):
     return {}, offset, length
 
   def _payload_size(self):
@@ -181,26 +236,51 @@ and not related to the Piksi's serial number.
   """
   __slots__ = ['dna',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__dna, offset, length) = get_fixed_array(get_u8, 8, 1)(buf, offset, length)
-    ret['dna'] = __dna
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.dna = res['dna']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # dna: array of u8
-    ret += 1 * 8
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('dna', ('u1', (8,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('dna', ('u1', (8,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('dna', 'u1'),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'dna': [] if res['dna'] is None else [x.item() for x in res['dna'].flatten()],
+    }
+    return d
+
   
 SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A = 0x00B0
 class MsgBootloaderHandshakeDepA(SBP):
@@ -216,26 +296,51 @@ class MsgBootloaderHandshakeDepA(SBP):
   """
   __slots__ = ['handshake',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__handshake, offset, length) = get_array(get_u8)(buf, offset, length)
-    ret['handshake'] = __handshake
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.handshake = res['handshake']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # handshake: array of u8
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('handshake', ('u1', (count,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('handshake', ('u1', (count,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('handshake', 'u1'),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'handshake': [] if res['handshake'] is None else [x.item() for x in res['handshake'].flatten()],
+    }
+    return d
+
   
 
 msg_classes = {

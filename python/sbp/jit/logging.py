@@ -18,6 +18,7 @@ Logging and debugging messages from the device.
 import json
 
 import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -46,31 +47,54 @@ ERROR, WARNING, DEBUG, INFO logging levels.
   __slots__ = ['level',
                'text',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__level, offset, length) = get_u8(buf, offset, length)
-    ret['level'] = __level
-    (__text, offset, length) = get_string(buf, offset, length)
-    ret['text'] = __text
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.level = res['level']
-    self.text = res['text']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # level: u8
-    ret += 1
-    # text: string
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('level', 'u1'),
+          ('text', '|S{}'.format(count)),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('level', 'u1'),
+          ('text', '|S{}'.format(count)),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype('u1')
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'level': int(res['level'] if element else res['level'][0]),
+      'text': '' if res['text'] is None else res['text'].tostring().decode('ascii'),
+    }
+    return d
+
   
 SBP_MSG_FWD = 0x0402
 class MsgFwd(SBP):
@@ -95,36 +119,57 @@ Protocol 0 represents SBP and the remaining values are implementation defined.
                'protocol',
                'fwd_payload',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__source, offset, length) = get_u8(buf, offset, length)
-    ret['source'] = __source
-    (__protocol, offset, length) = get_u8(buf, offset, length)
-    ret['protocol'] = __protocol
-    (__fwd_payload, offset, length) = get_string(buf, offset, length)
-    ret['fwd_payload'] = __fwd_payload
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.source = res['source']
-    self.protocol = res['protocol']
-    self.fwd_payload = res['fwd_payload']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # source: u8
-    ret += 1
-    # protocol: u8
-    ret += 1
-    # fwd_payload: string
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('source', 'u1'),
+          ('protocol', 'u1'),
+          ('fwd_payload', '|S{}'.format(count)),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('source', 'u1'),
+          ('protocol', 'u1'),
+          ('fwd_payload', '|S{}'.format(count)),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype('u1')
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'source': int(res['source'] if element else res['source'][0]),
+      'protocol': int(res['protocol'] if element else res['protocol'][0]),
+      'fwd_payload': '' if res['fwd_payload'] is None else res['fwd_payload'].tostring().decode('ascii'),
+    }
+    return d
+
   
 SBP_MSG_PRINT_DEP = 0x0010
 class MsgPrintDep(SBP):
@@ -140,26 +185,51 @@ class MsgPrintDep(SBP):
   """
   __slots__ = ['text',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__text, offset, length) = get_string(buf, offset, length)
-    ret['text'] = __text
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.text = res['text']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # text: string
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('text', '|S{}'.format(count)),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('text', '|S{}'.format(count)),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype('u1')
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'text': '' if res['text'] is None else res['text'].tostring().decode('ascii'),
+    }
+    return d
+
   
 
 msg_classes = {

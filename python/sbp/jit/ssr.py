@@ -17,6 +17,7 @@ Precise State Space Representation (SSR) corrections format
 import json
 
 import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -44,31 +45,54 @@ The corrections are conform with typical RTCMv3 MT1059 and 1065.
   __slots__ = ['code',
                'value',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__code, offset, length) = get_u8(buf, offset, length)
-    ret['code'] = __code
-    (__value, offset, length) = get_s16(buf, offset, length)
-    ret['value'] = __value
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.code = res['code']
-    self.value = res['value']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # code: u8
-    ret += 1
-    # value: s16
-    ret += 2
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('code', 'u1'),
+          ('value', 'i2'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('code', 'u1'),
+          ('value', 'i2'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'code': int(res['code'] if element else res['code'][0]),
+      'value': int(res['value'] if element else res['value'][0]),
+    }
+    return d
+
   
 class PhaseBiasesContent(object):
   """SBP class for message PhaseBiasesContent
@@ -89,46 +113,63 @@ The corrections are conform with typical RTCMv3 MT1059 and 1065.
                'discontinuity_counter',
                'bias',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__code, offset, length) = get_u8(buf, offset, length)
-    ret['code'] = __code
-    (__integer_indicator, offset, length) = get_u8(buf, offset, length)
-    ret['integer_indicator'] = __integer_indicator
-    (__widelane_integer_indicator, offset, length) = get_u8(buf, offset, length)
-    ret['widelane_integer_indicator'] = __widelane_integer_indicator
-    (__discontinuity_counter, offset, length) = get_u8(buf, offset, length)
-    ret['discontinuity_counter'] = __discontinuity_counter
-    (__bias, offset, length) = get_s32(buf, offset, length)
-    ret['bias'] = __bias
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.code = res['code']
-    self.integer_indicator = res['integer_indicator']
-    self.widelane_integer_indicator = res['widelane_integer_indicator']
-    self.discontinuity_counter = res['discontinuity_counter']
-    self.bias = res['bias']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # code: u8
-    ret += 1
-    # integer_indicator: u8
-    ret += 1
-    # widelane_integer_indicator: u8
-    ret += 1
-    # discontinuity_counter: u8
-    ret += 1
-    # bias: s32
-    ret += 4
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('code', 'u1'),
+          ('integer_indicator', 'u1'),
+          ('widelane_integer_indicator', 'u1'),
+          ('discontinuity_counter', 'u1'),
+          ('bias', 'i4'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('code', 'u1'),
+          ('integer_indicator', 'u1'),
+          ('widelane_integer_indicator', 'u1'),
+          ('discontinuity_counter', 'u1'),
+          ('bias', 'i4'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'code': int(res['code'] if element else res['code'][0]),
+      'integer_indicator': int(res['integer_indicator'] if element else res['integer_indicator'][0]),
+      'widelane_integer_indicator': int(res['widelane_integer_indicator'] if element else res['widelane_integer_indicator'][0]),
+      'discontinuity_counter': int(res['discontinuity_counter'] if element else res['discontinuity_counter'][0]),
+      'bias': int(res['bias'] if element else res['bias'][0]),
+    }
+    return d
+
   
 SBP_MSG_SSR_ORBIT_CLOCK = 0x05DD
 class MsgSsrOrbitClock(SBP):
@@ -161,91 +202,90 @@ and 1066 RTCM message types
                'c1',
                'c2',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__time, offset, length) = GPSTimeSec.parse_members(buf, offset, length)
-    ret['time'] = __time
-    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
-    ret['sid'] = __sid
-    (__update_interval, offset, length) = get_u8(buf, offset, length)
-    ret['update_interval'] = __update_interval
-    (__iod_ssr, offset, length) = get_u8(buf, offset, length)
-    ret['iod_ssr'] = __iod_ssr
-    (__iod, offset, length) = get_u32(buf, offset, length)
-    ret['iod'] = __iod
-    (__radial, offset, length) = get_s32(buf, offset, length)
-    ret['radial'] = __radial
-    (__along, offset, length) = get_s32(buf, offset, length)
-    ret['along'] = __along
-    (__cross, offset, length) = get_s32(buf, offset, length)
-    ret['cross'] = __cross
-    (__dot_radial, offset, length) = get_s32(buf, offset, length)
-    ret['dot_radial'] = __dot_radial
-    (__dot_along, offset, length) = get_s32(buf, offset, length)
-    ret['dot_along'] = __dot_along
-    (__dot_cross, offset, length) = get_s32(buf, offset, length)
-    ret['dot_cross'] = __dot_cross
-    (__c0, offset, length) = get_s32(buf, offset, length)
-    ret['c0'] = __c0
-    (__c1, offset, length) = get_s32(buf, offset, length)
-    ret['c1'] = __c1
-    (__c2, offset, length) = get_s32(buf, offset, length)
-    ret['c2'] = __c2
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.time = res['time']
-    self.sid = res['sid']
-    self.update_interval = res['update_interval']
-    self.iod_ssr = res['iod_ssr']
-    self.iod = res['iod']
-    self.radial = res['radial']
-    self.along = res['along']
-    self.cross = res['cross']
-    self.dot_radial = res['dot_radial']
-    self.dot_along = res['dot_along']
-    self.dot_cross = res['dot_cross']
-    self.c0 = res['c0']
-    self.c1 = res['c1']
-    self.c2 = res['c2']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # time: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # update_interval: u8
-    ret += 1
-    # iod_ssr: u8
-    ret += 1
-    # iod: u32
-    ret += 4
-    # radial: s32
-    ret += 4
-    # along: s32
-    ret += 4
-    # cross: s32
-    ret += 4
-    # dot_radial: s32
-    ret += 4
-    # dot_along: s32
-    ret += 4
-    # dot_cross: s32
-    ret += 4
-    # c0: s32
-    ret += 4
-    # c1: s32
-    ret += 4
-    # c2: s32
-    ret += 4
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('time', GPSTimeSec._static_dtype()),
+          ('sid', GnssSignal._static_dtype()),
+          ('update_interval', 'u1'),
+          ('iod_ssr', 'u1'),
+          ('iod', 'u4'),
+          ('radial', 'i4'),
+          ('along', 'i4'),
+          ('cross', 'i4'),
+          ('dot_radial', 'i4'),
+          ('dot_along', 'i4'),
+          ('dot_cross', 'i4'),
+          ('c0', 'i4'),
+          ('c1', 'i4'),
+          ('c2', 'i4'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('time', GPSTimeSec._static_dtype()),
+          ('sid', GnssSignal._static_dtype()),
+          ('update_interval', 'u1'),
+          ('iod_ssr', 'u1'),
+          ('iod', 'u4'),
+          ('radial', 'i4'),
+          ('along', 'i4'),
+          ('cross', 'i4'),
+          ('dot_radial', 'i4'),
+          ('dot_along', 'i4'),
+          ('dot_cross', 'i4'),
+          ('c0', 'i4'),
+          ('c1', 'i4'),
+          ('c2', 'i4'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'time': GPSTimeSec._unpack_members(res['time'], element=element),
+      'sid': GnssSignal._unpack_members(res['sid'], element=element),
+      'update_interval': int(res['update_interval'] if element else res['update_interval'][0]),
+      'iod_ssr': int(res['iod_ssr'] if element else res['iod_ssr'][0]),
+      'iod': int(res['iod'] if element else res['iod'][0]),
+      'radial': int(res['radial'] if element else res['radial'][0]),
+      'along': int(res['along'] if element else res['along'][0]),
+      'cross': int(res['cross'] if element else res['cross'][0]),
+      'dot_radial': int(res['dot_radial'] if element else res['dot_radial'][0]),
+      'dot_along': int(res['dot_along'] if element else res['dot_along'][0]),
+      'dot_cross': int(res['dot_cross'] if element else res['dot_cross'][0]),
+      'c0': int(res['c0'] if element else res['c0'][0]),
+      'c1': int(res['c1'] if element else res['c1'][0]),
+      'c2': int(res['c2'] if element else res['c2'][0]),
+    }
+    return d
+
   
 SBP_MSG_SSR_ORBIT_CLOCK_DEP_A = 0x05DC
 class MsgSsrOrbitClockDepA(SBP):
@@ -278,91 +318,90 @@ and 1066 RTCM message types
                'c1',
                'c2',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__time, offset, length) = GPSTimeSec.parse_members(buf, offset, length)
-    ret['time'] = __time
-    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
-    ret['sid'] = __sid
-    (__update_interval, offset, length) = get_u8(buf, offset, length)
-    ret['update_interval'] = __update_interval
-    (__iod_ssr, offset, length) = get_u8(buf, offset, length)
-    ret['iod_ssr'] = __iod_ssr
-    (__iod, offset, length) = get_u8(buf, offset, length)
-    ret['iod'] = __iod
-    (__radial, offset, length) = get_s32(buf, offset, length)
-    ret['radial'] = __radial
-    (__along, offset, length) = get_s32(buf, offset, length)
-    ret['along'] = __along
-    (__cross, offset, length) = get_s32(buf, offset, length)
-    ret['cross'] = __cross
-    (__dot_radial, offset, length) = get_s32(buf, offset, length)
-    ret['dot_radial'] = __dot_radial
-    (__dot_along, offset, length) = get_s32(buf, offset, length)
-    ret['dot_along'] = __dot_along
-    (__dot_cross, offset, length) = get_s32(buf, offset, length)
-    ret['dot_cross'] = __dot_cross
-    (__c0, offset, length) = get_s32(buf, offset, length)
-    ret['c0'] = __c0
-    (__c1, offset, length) = get_s32(buf, offset, length)
-    ret['c1'] = __c1
-    (__c2, offset, length) = get_s32(buf, offset, length)
-    ret['c2'] = __c2
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.time = res['time']
-    self.sid = res['sid']
-    self.update_interval = res['update_interval']
-    self.iod_ssr = res['iod_ssr']
-    self.iod = res['iod']
-    self.radial = res['radial']
-    self.along = res['along']
-    self.cross = res['cross']
-    self.dot_radial = res['dot_radial']
-    self.dot_along = res['dot_along']
-    self.dot_cross = res['dot_cross']
-    self.c0 = res['c0']
-    self.c1 = res['c1']
-    self.c2 = res['c2']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # time: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # update_interval: u8
-    ret += 1
-    # iod_ssr: u8
-    ret += 1
-    # iod: u8
-    ret += 1
-    # radial: s32
-    ret += 4
-    # along: s32
-    ret += 4
-    # cross: s32
-    ret += 4
-    # dot_radial: s32
-    ret += 4
-    # dot_along: s32
-    ret += 4
-    # dot_cross: s32
-    ret += 4
-    # c0: s32
-    ret += 4
-    # c1: s32
-    ret += 4
-    # c2: s32
-    ret += 4
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('time', GPSTimeSec._static_dtype()),
+          ('sid', GnssSignal._static_dtype()),
+          ('update_interval', 'u1'),
+          ('iod_ssr', 'u1'),
+          ('iod', 'u1'),
+          ('radial', 'i4'),
+          ('along', 'i4'),
+          ('cross', 'i4'),
+          ('dot_radial', 'i4'),
+          ('dot_along', 'i4'),
+          ('dot_cross', 'i4'),
+          ('c0', 'i4'),
+          ('c1', 'i4'),
+          ('c2', 'i4'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('time', GPSTimeSec._static_dtype()),
+          ('sid', GnssSignal._static_dtype()),
+          ('update_interval', 'u1'),
+          ('iod_ssr', 'u1'),
+          ('iod', 'u1'),
+          ('radial', 'i4'),
+          ('along', 'i4'),
+          ('cross', 'i4'),
+          ('dot_radial', 'i4'),
+          ('dot_along', 'i4'),
+          ('dot_cross', 'i4'),
+          ('c0', 'i4'),
+          ('c1', 'i4'),
+          ('c2', 'i4'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'time': GPSTimeSec._unpack_members(res['time'], element=element),
+      'sid': GnssSignal._unpack_members(res['sid'], element=element),
+      'update_interval': int(res['update_interval'] if element else res['update_interval'][0]),
+      'iod_ssr': int(res['iod_ssr'] if element else res['iod_ssr'][0]),
+      'iod': int(res['iod'] if element else res['iod'][0]),
+      'radial': int(res['radial'] if element else res['radial'][0]),
+      'along': int(res['along'] if element else res['along'][0]),
+      'cross': int(res['cross'] if element else res['cross'][0]),
+      'dot_radial': int(res['dot_radial'] if element else res['dot_radial'][0]),
+      'dot_along': int(res['dot_along'] if element else res['dot_along'][0]),
+      'dot_cross': int(res['dot_cross'] if element else res['dot_cross'][0]),
+      'c0': int(res['c0'] if element else res['c0'][0]),
+      'c1': int(res['c1'] if element else res['c1'][0]),
+      'c2': int(res['c2'] if element else res['c2'][0]),
+    }
+    return d
+
   
 SBP_MSG_SSR_CODE_BIASES = 0x05E1
 class MsgSsrCodeBiases(SBP):
@@ -386,46 +425,63 @@ an equivalent to the 1059 and 1065 RTCM message types
                'iod_ssr',
                'biases',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__time, offset, length) = GPSTimeSec.parse_members(buf, offset, length)
-    ret['time'] = __time
-    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
-    ret['sid'] = __sid
-    (__update_interval, offset, length) = get_u8(buf, offset, length)
-    ret['update_interval'] = __update_interval
-    (__iod_ssr, offset, length) = get_u8(buf, offset, length)
-    ret['iod_ssr'] = __iod_ssr
-    (__biases, offset, length) = get_array(CodeBiasesContent.parse_members)(buf, offset, length)
-    ret['biases'] = __biases
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.time = res['time']
-    self.sid = res['sid']
-    self.update_interval = res['update_interval']
-    self.iod_ssr = res['iod_ssr']
-    self.biases = res['biases']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # time: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # update_interval: u8
-    ret += 1
-    # iod_ssr: u8
-    ret += 1
-    # biases: array of CodeBiasesContent
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('time', GPSTimeSec._static_dtype()),
+          ('sid', GnssSignal._static_dtype()),
+          ('update_interval', 'u1'),
+          ('iod_ssr', 'u1'),
+          ('biases', (CodeBiasesContent._static_dtype(), (count,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('time', GPSTimeSec._static_dtype()),
+          ('sid', GnssSignal._static_dtype()),
+          ('update_interval', 'u1'),
+          ('iod_ssr', 'u1'),
+          ('biases', (CodeBiasesContent._static_dtype(), (count,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('biases', CodeBiasesContent._static_dtype()),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'time': GPSTimeSec._unpack_members(res['time'], element=element),
+      'sid': GnssSignal._unpack_members(res['sid'], element=element),
+      'update_interval': int(res['update_interval'] if element else res['update_interval'][0]),
+      'iod_ssr': int(res['iod_ssr'] if element else res['iod_ssr'][0]),
+      'biases': [] if res['biases'] is None else [CodeBiasesContent._unpack_members(x, element=True) for x in res['biases'].flatten()],
+    }
+    return d
+
   
 SBP_MSG_SSR_PHASE_BIASES = 0x05E6
 class MsgSsrPhaseBiases(SBP):
@@ -455,66 +511,75 @@ It is typically an equivalent to the 1265 RTCM message types
                'yaw_rate',
                'biases',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__time, offset, length) = GPSTimeSec.parse_members(buf, offset, length)
-    ret['time'] = __time
-    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
-    ret['sid'] = __sid
-    (__update_interval, offset, length) = get_u8(buf, offset, length)
-    ret['update_interval'] = __update_interval
-    (__iod_ssr, offset, length) = get_u8(buf, offset, length)
-    ret['iod_ssr'] = __iod_ssr
-    (__dispersive_bias, offset, length) = get_u8(buf, offset, length)
-    ret['dispersive_bias'] = __dispersive_bias
-    (__mw_consistency, offset, length) = get_u8(buf, offset, length)
-    ret['mw_consistency'] = __mw_consistency
-    (__yaw, offset, length) = get_u16(buf, offset, length)
-    ret['yaw'] = __yaw
-    (__yaw_rate, offset, length) = get_s8(buf, offset, length)
-    ret['yaw_rate'] = __yaw_rate
-    (__biases, offset, length) = get_array(PhaseBiasesContent.parse_members)(buf, offset, length)
-    ret['biases'] = __biases
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.time = res['time']
-    self.sid = res['sid']
-    self.update_interval = res['update_interval']
-    self.iod_ssr = res['iod_ssr']
-    self.dispersive_bias = res['dispersive_bias']
-    self.mw_consistency = res['mw_consistency']
-    self.yaw = res['yaw']
-    self.yaw_rate = res['yaw_rate']
-    self.biases = res['biases']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # time: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # update_interval: u8
-    ret += 1
-    # iod_ssr: u8
-    ret += 1
-    # dispersive_bias: u8
-    ret += 1
-    # mw_consistency: u8
-    ret += 1
-    # yaw: u16
-    ret += 2
-    # yaw_rate: s8
-    ret += 1
-    # biases: array of PhaseBiasesContent
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('time', GPSTimeSec._static_dtype()),
+          ('sid', GnssSignal._static_dtype()),
+          ('update_interval', 'u1'),
+          ('iod_ssr', 'u1'),
+          ('dispersive_bias', 'u1'),
+          ('mw_consistency', 'u1'),
+          ('yaw', 'u2'),
+          ('yaw_rate', 'i1'),
+          ('biases', (PhaseBiasesContent._static_dtype(), (count,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('time', GPSTimeSec._static_dtype()),
+          ('sid', GnssSignal._static_dtype()),
+          ('update_interval', 'u1'),
+          ('iod_ssr', 'u1'),
+          ('dispersive_bias', 'u1'),
+          ('mw_consistency', 'u1'),
+          ('yaw', 'u2'),
+          ('yaw_rate', 'i1'),
+          ('biases', (PhaseBiasesContent._static_dtype(), (count,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('biases', PhaseBiasesContent._static_dtype()),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'time': GPSTimeSec._unpack_members(res['time'], element=element),
+      'sid': GnssSignal._unpack_members(res['sid'], element=element),
+      'update_interval': int(res['update_interval'] if element else res['update_interval'][0]),
+      'iod_ssr': int(res['iod_ssr'] if element else res['iod_ssr'][0]),
+      'dispersive_bias': int(res['dispersive_bias'] if element else res['dispersive_bias'][0]),
+      'mw_consistency': int(res['mw_consistency'] if element else res['mw_consistency'][0]),
+      'yaw': int(res['yaw'] if element else res['yaw'][0]),
+      'yaw_rate': int(res['yaw_rate'] if element else res['yaw_rate'][0]),
+      'biases': [] if res['biases'] is None else [PhaseBiasesContent._unpack_members(x, element=True) for x in res['biases'].flatten()],
+    }
+    return d
+
   
 
 msg_classes = {

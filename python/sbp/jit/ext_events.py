@@ -19,6 +19,7 @@ e.g. camera shutter time.
 import json
 
 import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -49,46 +50,63 @@ which pin it was and whether it was rising or falling.
                'flags',
                'pin',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__wn, offset, length) = get_u16(buf, offset, length)
-    ret['wn'] = __wn
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__ns_residual, offset, length) = get_s32(buf, offset, length)
-    ret['ns_residual'] = __ns_residual
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    (__pin, offset, length) = get_u8(buf, offset, length)
-    ret['pin'] = __pin
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.wn = res['wn']
-    self.tow = res['tow']
-    self.ns_residual = res['ns_residual']
-    self.flags = res['flags']
-    self.pin = res['pin']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # wn: u16
-    ret += 2
-    # tow: u32
-    ret += 4
-    # ns_residual: s32
-    ret += 4
-    # flags: u8
-    ret += 1
-    # pin: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('wn', 'u2'),
+          ('tow', 'u4'),
+          ('ns_residual', 'i4'),
+          ('flags', 'u1'),
+          ('pin', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('wn', 'u2'),
+          ('tow', 'u4'),
+          ('ns_residual', 'i4'),
+          ('flags', 'u1'),
+          ('pin', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'wn': int(res['wn'] if element else res['wn'][0]),
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'ns_residual': int(res['ns_residual'] if element else res['ns_residual'][0]),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+      'pin': int(res['pin'] if element else res['pin'][0]),
+    }
+    return d
+
   
 
 msg_classes = {

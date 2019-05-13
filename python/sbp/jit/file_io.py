@@ -25,6 +25,7 @@ host request and the device response.
 import json
 
 import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -60,41 +61,60 @@ to this message when it is received from sender ID 0x42.
                'chunk_size',
                'filename',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__sequence, offset, length) = get_u32(buf, offset, length)
-    ret['sequence'] = __sequence
-    (__offset, offset, length) = get_u32(buf, offset, length)
-    ret['offset'] = __offset
-    (__chunk_size, offset, length) = get_u8(buf, offset, length)
-    ret['chunk_size'] = __chunk_size
-    (__filename, offset, length) = get_string(buf, offset, length)
-    ret['filename'] = __filename
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.sequence = res['sequence']
-    self.offset = res['offset']
-    self.chunk_size = res['chunk_size']
-    self.filename = res['filename']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    # offset: u32
-    ret += 4
-    # chunk_size: u8
-    ret += 1
-    # filename: string
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('sequence', 'u4'),
+          ('offset', 'u4'),
+          ('chunk_size', 'u1'),
+          ('filename', '|S{}'.format(count)),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('sequence', 'u4'),
+          ('offset', 'u4'),
+          ('chunk_size', 'u1'),
+          ('filename', '|S{}'.format(count)),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype('u1')
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'sequence': int(res['sequence'] if element else res['sequence'][0]),
+      'offset': int(res['offset'] if element else res['offset'][0]),
+      'chunk_size': int(res['chunk_size'] if element else res['chunk_size'][0]),
+      'filename': '' if res['filename'] is None else res['filename'].tostring().decode('ascii'),
+    }
+    return d
+
   
 SBP_MSG_FILEIO_READ_RESP = 0x00A3
 class MsgFileioReadResp(SBP):
@@ -116,31 +136,54 @@ preserved from the request.
   __slots__ = ['sequence',
                'contents',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__sequence, offset, length) = get_u32(buf, offset, length)
-    ret['sequence'] = __sequence
-    (__contents, offset, length) = get_array(get_u8)(buf, offset, length)
-    ret['contents'] = __contents
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.sequence = res['sequence']
-    self.contents = res['contents']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    # contents: array of u8
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('sequence', 'u4'),
+          ('contents', ('u1', (count,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('sequence', 'u4'),
+          ('contents', ('u1', (count,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('contents', 'u1'),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'sequence': int(res['sequence'] if element else res['sequence'][0]),
+      'contents': [] if res['contents'] is None else [x.item() for x in res['contents'].flatten()],
+    }
+    return d
+
   
 SBP_MSG_FILEIO_READ_DIR_REQ = 0x00A9
 class MsgFileioReadDirReq(SBP):
@@ -168,36 +211,57 @@ from sender ID 0x42.
                'offset',
                'dirname',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__sequence, offset, length) = get_u32(buf, offset, length)
-    ret['sequence'] = __sequence
-    (__offset, offset, length) = get_u32(buf, offset, length)
-    ret['offset'] = __offset
-    (__dirname, offset, length) = get_string(buf, offset, length)
-    ret['dirname'] = __dirname
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.sequence = res['sequence']
-    self.offset = res['offset']
-    self.dirname = res['dirname']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    # offset: u32
-    ret += 4
-    # dirname: string
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('sequence', 'u4'),
+          ('offset', 'u4'),
+          ('dirname', '|S{}'.format(count)),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('sequence', 'u4'),
+          ('offset', 'u4'),
+          ('dirname', '|S{}'.format(count)),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype('u1')
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'sequence': int(res['sequence'] if element else res['sequence'][0]),
+      'offset': int(res['offset'] if element else res['offset'][0]),
+      'dirname': '' if res['dirname'] is None else res['dirname'].tostring().decode('ascii'),
+    }
+    return d
+
   
 SBP_MSG_FILEIO_READ_DIR_RESP = 0x00AA
 class MsgFileioReadDirResp(SBP):
@@ -220,31 +284,54 @@ the response is preserved from the request.
   __slots__ = ['sequence',
                'contents',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__sequence, offset, length) = get_u32(buf, offset, length)
-    ret['sequence'] = __sequence
-    (__contents, offset, length) = get_array(get_u8)(buf, offset, length)
-    ret['contents'] = __contents
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.sequence = res['sequence']
-    self.contents = res['contents']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    # contents: array of u8
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('sequence', 'u4'),
+          ('contents', ('u1', (count,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('sequence', 'u4'),
+          ('contents', ('u1', (count,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('contents', 'u1'),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'sequence': int(res['sequence'] if element else res['sequence'][0]),
+      'contents': [] if res['contents'] is None else [x.item() for x in res['contents'].flatten()],
+    }
+    return d
+
   
 SBP_MSG_FILEIO_REMOVE = 0x00AC
 class MsgFileioRemove(SBP):
@@ -264,26 +351,51 @@ process this message when it is received from sender ID 0x42.
   """
   __slots__ = ['filename',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__filename, offset, length) = get_string(buf, offset, length)
-    ret['filename'] = __filename
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.filename = res['filename']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # filename: string
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('filename', '|S{}'.format(count)),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('filename', '|S{}'.format(count)),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype('u1')
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'filename': '' if res['filename'] is None else res['filename'].tostring().decode('ascii'),
+    }
+    return d
+
   
 SBP_MSG_FILEIO_WRITE_REQ = 0x00AD
 class MsgFileioWriteReq(SBP):
@@ -310,41 +422,60 @@ only  process this message when it is received from sender ID
                'filename',
                'data',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__sequence, offset, length) = get_u32(buf, offset, length)
-    ret['sequence'] = __sequence
-    (__offset, offset, length) = get_u32(buf, offset, length)
-    ret['offset'] = __offset
-    (__filename, offset, length) = get_string(buf, offset, length)
-    ret['filename'] = __filename
-    (__data, offset, length) = get_array(get_u8)(buf, offset, length)
-    ret['data'] = __data
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.sequence = res['sequence']
-    self.offset = res['offset']
-    self.filename = res['filename']
-    self.data = res['data']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    # offset: u32
-    ret += 4
-    # filename: string
-    ret += 247
-    # data: array of u8
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('sequence', 'u4'),
+          ('offset', 'u4'),
+          ('filename', '|S{}'.format(count)),
+          ('data', ('u1', (count,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('sequence', 'u4'),
+          ('offset', 'u4'),
+          ('filename', '|S{}'.format(count)),
+          ('data', ('u1', (count,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('data', 'u1'),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'sequence': int(res['sequence'] if element else res['sequence'][0]),
+      'offset': int(res['offset'] if element else res['offset'][0]),
+      'filename': '' if res['filename'] is None else res['filename'].tostring().decode('ascii'),
+      'data': [] if res['data'] is None else [x.item() for x in res['data'].flatten()],
+    }
+    return d
+
   
 SBP_MSG_FILEIO_WRITE_RESP = 0x00AB
 class MsgFileioWriteResp(SBP):
@@ -365,26 +496,51 @@ request.
   """
   __slots__ = ['sequence',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__sequence, offset, length) = get_u32(buf, offset, length)
-    ret['sequence'] = __sequence
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.sequence = res['sequence']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('sequence', 'u4'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('sequence', 'u4'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'sequence': int(res['sequence'] if element else res['sequence'][0]),
+    }
+    return d
+
   
 SBP_MSG_FILEIO_CONFIG_REQ = 0x1001
 class MsgFileioConfigReq(SBP):
@@ -404,26 +560,51 @@ that can be in-flight during read or write operations.
   """
   __slots__ = ['sequence',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__sequence, offset, length) = get_u32(buf, offset, length)
-    ret['sequence'] = __sequence
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.sequence = res['sequence']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('sequence', 'u4'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('sequence', 'u4'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'sequence': int(res['sequence'] if element else res['sequence'][0]),
+    }
+    return d
+
   
 SBP_MSG_FILEIO_CONFIG_RESP = 0x1002
 class MsgFileioConfigResp(SBP):
@@ -446,41 +627,60 @@ that can be in-flight during read or write operations.
                'batch_size',
                'fileio_version',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__sequence, offset, length) = get_u32(buf, offset, length)
-    ret['sequence'] = __sequence
-    (__window_size, offset, length) = get_u32(buf, offset, length)
-    ret['window_size'] = __window_size
-    (__batch_size, offset, length) = get_u32(buf, offset, length)
-    ret['batch_size'] = __batch_size
-    (__fileio_version, offset, length) = get_u32(buf, offset, length)
-    ret['fileio_version'] = __fileio_version
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.sequence = res['sequence']
-    self.window_size = res['window_size']
-    self.batch_size = res['batch_size']
-    self.fileio_version = res['fileio_version']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    # window_size: u32
-    ret += 4
-    # batch_size: u32
-    ret += 4
-    # fileio_version: u32
-    ret += 4
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('sequence', 'u4'),
+          ('window_size', 'u4'),
+          ('batch_size', 'u4'),
+          ('fileio_version', 'u4'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('sequence', 'u4'),
+          ('window_size', 'u4'),
+          ('batch_size', 'u4'),
+          ('fileio_version', 'u4'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'sequence': int(res['sequence'] if element else res['sequence'][0]),
+      'window_size': int(res['window_size'] if element else res['window_size'][0]),
+      'batch_size': int(res['batch_size'] if element else res['batch_size'][0]),
+      'fileio_version': int(res['fileio_version'] if element else res['fileio_version'][0]),
+    }
+    return d
+
   
 
 msg_classes = {

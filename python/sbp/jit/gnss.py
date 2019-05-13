@@ -17,6 +17,7 @@ Various structs shared between modules
 import json
 
 import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -42,31 +43,54 @@ class GnssSignal(object):
   __slots__ = ['sat',
                'code',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__sat, offset, length) = get_u8(buf, offset, length)
-    ret['sat'] = __sat
-    (__code, offset, length) = get_u8(buf, offset, length)
-    ret['code'] = __code
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.sat = res['sat']
-    self.code = res['code']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sat: u8
-    ret += 1
-    # code: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('sat', 'u1'),
+          ('code', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('sat', 'u1'),
+          ('code', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'sat': int(res['sat'] if element else res['sat'][0]),
+      'code': int(res['code'] if element else res['code'][0]),
+    }
+    return d
+
   
 class GnssSignalDep(object):
   """SBP class for message GnssSignalDep
@@ -83,36 +107,57 @@ class GnssSignalDep(object):
                'code',
                'reserved',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__sat, offset, length) = get_u16(buf, offset, length)
-    ret['sat'] = __sat
-    (__code, offset, length) = get_u8(buf, offset, length)
-    ret['code'] = __code
-    (__reserved, offset, length) = get_u8(buf, offset, length)
-    ret['reserved'] = __reserved
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.sat = res['sat']
-    self.code = res['code']
-    self.reserved = res['reserved']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sat: u16
-    ret += 2
-    # code: u8
-    ret += 1
-    # reserved: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('sat', 'u2'),
+          ('code', 'u1'),
+          ('reserved', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('sat', 'u2'),
+          ('code', 'u1'),
+          ('reserved', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'sat': int(res['sat'] if element else res['sat'][0]),
+      'code': int(res['code'] if element else res['code'][0]),
+      'reserved': int(res['reserved'] if element else res['reserved'][0]),
+    }
+    return d
+
   
 class GPSTimeDep(object):
   """SBP class for message GPSTimeDep
@@ -131,31 +176,54 @@ transition.
   __slots__ = ['tow',
                'wn',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__wn, offset, length) = get_u16(buf, offset, length)
-    ret['wn'] = __wn
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.wn = res['wn']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # wn: u16
-    ret += 2
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('wn', 'u2'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('wn', 'u2'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'wn': int(res['wn'] if element else res['wn'][0]),
+    }
+    return d
+
   
 class GPSTimeSec(object):
   """SBP class for message GPSTimeSec
@@ -174,31 +242,54 @@ transition.
   __slots__ = ['tow',
                'wn',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__wn, offset, length) = get_u16(buf, offset, length)
-    ret['wn'] = __wn
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.wn = res['wn']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # wn: u16
-    ret += 2
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('wn', 'u2'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('wn', 'u2'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'wn': int(res['wn'] if element else res['wn'][0]),
+    }
+    return d
+
   
 class GPSTime(object):
   """SBP class for message GPSTime
@@ -219,36 +310,57 @@ so ns field will be 0.
                'ns_residual',
                'wn',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__ns_residual, offset, length) = get_s32(buf, offset, length)
-    ret['ns_residual'] = __ns_residual
-    (__wn, offset, length) = get_u16(buf, offset, length)
-    ret['wn'] = __wn
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.ns_residual = res['ns_residual']
-    self.wn = res['wn']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # ns_residual: s32
-    ret += 4
-    # wn: u16
-    ret += 2
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('ns_residual', 'i4'),
+          ('wn', 'u2'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('ns_residual', 'i4'),
+          ('wn', 'u2'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'ns_residual': int(res['ns_residual'] if element else res['ns_residual'][0]),
+      'wn': int(res['wn'] if element else res['wn'][0]),
+    }
+    return d
+
   
 class CarrierPhase(object):
   """SBP class for message CarrierPhase
@@ -268,31 +380,54 @@ same sign as the pseudorange.
   __slots__ = ['i',
                'f',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__i, offset, length) = get_s32(buf, offset, length)
-    ret['i'] = __i
-    (__f, offset, length) = get_u8(buf, offset, length)
-    ret['f'] = __f
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.i = res['i']
-    self.f = res['f']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # i: s32
-    ret += 4
-    # f: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('i', 'i4'),
+          ('f', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('i', 'i4'),
+          ('f', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'i': int(res['i'] if element else res['i'][0]),
+      'f': int(res['f'] if element else res['f'][0]),
+    }
+    return d
+
   
 
 msg_classes = {

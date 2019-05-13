@@ -17,6 +17,7 @@ Inertial Measurement Unit (IMU) messages.
 import json
 
 import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -52,61 +53,72 @@ device hardware and settings, are communicated via the MSG_IMU_AUX message.
                'gyr_y',
                'gyr_z',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tow, offset, length) = get_u32(buf, offset, length)
-    ret['tow'] = __tow
-    (__tow_f, offset, length) = get_u8(buf, offset, length)
-    ret['tow_f'] = __tow_f
-    (__acc_x, offset, length) = get_s16(buf, offset, length)
-    ret['acc_x'] = __acc_x
-    (__acc_y, offset, length) = get_s16(buf, offset, length)
-    ret['acc_y'] = __acc_y
-    (__acc_z, offset, length) = get_s16(buf, offset, length)
-    ret['acc_z'] = __acc_z
-    (__gyr_x, offset, length) = get_s16(buf, offset, length)
-    ret['gyr_x'] = __gyr_x
-    (__gyr_y, offset, length) = get_s16(buf, offset, length)
-    ret['gyr_y'] = __gyr_y
-    (__gyr_z, offset, length) = get_s16(buf, offset, length)
-    ret['gyr_z'] = __gyr_z
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tow = res['tow']
-    self.tow_f = res['tow_f']
-    self.acc_x = res['acc_x']
-    self.acc_y = res['acc_y']
-    self.acc_z = res['acc_z']
-    self.gyr_x = res['gyr_x']
-    self.gyr_y = res['gyr_y']
-    self.gyr_z = res['gyr_z']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # tow_f: u8
-    ret += 1
-    # acc_x: s16
-    ret += 2
-    # acc_y: s16
-    ret += 2
-    # acc_z: s16
-    ret += 2
-    # gyr_x: s16
-    ret += 2
-    # gyr_y: s16
-    ret += 2
-    # gyr_z: s16
-    ret += 2
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tow', 'u4'),
+          ('tow_f', 'u1'),
+          ('acc_x', 'i2'),
+          ('acc_y', 'i2'),
+          ('acc_z', 'i2'),
+          ('gyr_x', 'i2'),
+          ('gyr_y', 'i2'),
+          ('gyr_z', 'i2'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tow', 'u4'),
+          ('tow_f', 'u1'),
+          ('acc_x', 'i2'),
+          ('acc_y', 'i2'),
+          ('acc_z', 'i2'),
+          ('gyr_x', 'i2'),
+          ('gyr_y', 'i2'),
+          ('gyr_z', 'i2'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tow': int(res['tow'] if element else res['tow'][0]),
+      'tow_f': int(res['tow_f'] if element else res['tow_f'][0]),
+      'acc_x': int(res['acc_x'] if element else res['acc_x'][0]),
+      'acc_y': int(res['acc_y'] if element else res['acc_y'][0]),
+      'acc_z': int(res['acc_z'] if element else res['acc_z'][0]),
+      'gyr_x': int(res['gyr_x'] if element else res['gyr_x'][0]),
+      'gyr_y': int(res['gyr_y'] if element else res['gyr_y'][0]),
+      'gyr_z': int(res['gyr_z'] if element else res['gyr_z'][0]),
+    }
+    return d
+
   
 SBP_MSG_IMU_AUX = 0x0901
 class MsgImuAux(SBP):
@@ -127,36 +139,57 @@ depends on the value of `imu_type`.
                'temp',
                'imu_conf',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__imu_type, offset, length) = get_u8(buf, offset, length)
-    ret['imu_type'] = __imu_type
-    (__temp, offset, length) = get_s16(buf, offset, length)
-    ret['temp'] = __temp
-    (__imu_conf, offset, length) = get_u8(buf, offset, length)
-    ret['imu_conf'] = __imu_conf
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.imu_type = res['imu_type']
-    self.temp = res['temp']
-    self.imu_conf = res['imu_conf']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # imu_type: u8
-    ret += 1
-    # temp: s16
-    ret += 2
-    # imu_conf: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('imu_type', 'u1'),
+          ('temp', 'i2'),
+          ('imu_conf', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('imu_type', 'u1'),
+          ('temp', 'i2'),
+          ('imu_conf', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'imu_type': int(res['imu_type'] if element else res['imu_type'][0]),
+      'temp': int(res['temp'] if element else res['temp'][0]),
+      'imu_conf': int(res['imu_conf'] if element else res['imu_conf'][0]),
+    }
+    return d
+
   
 
 msg_classes = {

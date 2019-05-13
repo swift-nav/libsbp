@@ -20,6 +20,7 @@ may no longer be used.
 import json
 
 import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -49,6 +50,9 @@ alamanac onto the Piksi's flash memory from the host.
   def _unpack_members(self, buf, offset, length):
     return {}, offset, length
 
+  def parse_members(self, buf, offset, length):
+    return {}, offset, length
+
   def _payload_size(self):
     return 0
   
@@ -70,6 +74,9 @@ time estimate sent by the host.
   def _unpack_members(self, buf, offset, length):
     return {}, offset, length
 
+  def parse_members(self, buf, offset, length):
+    return {}, offset, length
+
   def _payload_size(self):
     return 0
   
@@ -89,26 +96,51 @@ bootloader.
   """
   __slots__ = ['flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__flags, offset, length) = get_u32(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # flags: u32
-    ret += 4
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('flags', 'u4'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('flags', 'u4'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 SBP_MSG_RESET_DEP = 0x00B2
 class MsgResetDep(SBP):
@@ -126,6 +158,9 @@ bootloader.
   """
   __slots__ = []
   def _unpack_members(self, buf, offset, length):
+    return {}, offset, length
+
+  def parse_members(self, buf, offset, length):
     return {}, offset, length
 
   def _payload_size(self):
@@ -150,6 +185,9 @@ removed in a future release.
   def _unpack_members(self, buf, offset, length):
     return {}, offset, length
 
+  def parse_members(self, buf, offset, length):
+    return {}, offset, length
+
   def _payload_size(self):
     return 0
   
@@ -172,6 +210,9 @@ be removed in a future release.
   def _unpack_members(self, buf, offset, length):
     return {}, offset, length
 
+  def parse_members(self, buf, offset, length):
+    return {}, offset, length
+
   def _payload_size(self):
     return 0
   
@@ -191,26 +232,51 @@ Ambiguity Resolution (IAR) process.
   """
   __slots__ = ['filter',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__filter, offset, length) = get_u8(buf, offset, length)
-    ret['filter'] = __filter
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.filter = res['filter']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # filter: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('filter', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('filter', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'filter': int(res['filter'] if element else res['filter'][0]),
+    }
+    return d
+
   
 SBP_MSG_INIT_BASE = 0x0023
 class MsgInitBase(SBP):
@@ -231,6 +297,9 @@ observations between the two.
   """
   __slots__ = []
   def _unpack_members(self, buf, offset, length):
+    return {}, offset, length
+
+  def parse_members(self, buf, offset, length):
     return {}, offset, length
 
   def _payload_size(self):
@@ -255,36 +324,57 @@ thread. The reported percentage values must be normalized.
                'cpu',
                'stack_free',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__name, offset, length) = get_fixed_string(20)(buf, offset, length)
-    ret['name'] = __name
-    (__cpu, offset, length) = get_u16(buf, offset, length)
-    ret['cpu'] = __cpu
-    (__stack_free, offset, length) = get_u32(buf, offset, length)
-    ret['stack_free'] = __stack_free
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.name = res['name']
-    self.cpu = res['cpu']
-    self.stack_free = res['stack_free']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # name: string
-    ret += 20
-    # cpu: u16
-    ret += 2
-    # stack_free: u32
-    ret += 4
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('name', '|S20'),
+          ('cpu', 'u2'),
+          ('stack_free', 'u4'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('name', '|S20'),
+          ('cpu', 'u2'),
+          ('stack_free', 'u4'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'name': '' if res['name'] is None else res['name'].tostring().decode('ascii'),
+      'cpu': int(res['cpu'] if element else res['cpu'][0]),
+      'stack_free': int(res['stack_free'] if element else res['stack_free'][0]),
+    }
+    return d
+
   
 class UARTChannel(object):
   """SBP class for message UARTChannel
@@ -307,51 +397,66 @@ be normalized.
                'tx_buffer_level',
                'rx_buffer_level',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__tx_throughput, offset, length) = get_f32(buf, offset, length)
-    ret['tx_throughput'] = judicious_round(nb.f4(__tx_throughput)) if SBP.judicious_rounding else __tx_throughput
-    (__rx_throughput, offset, length) = get_f32(buf, offset, length)
-    ret['rx_throughput'] = judicious_round(nb.f4(__rx_throughput)) if SBP.judicious_rounding else __rx_throughput
-    (__crc_error_count, offset, length) = get_u16(buf, offset, length)
-    ret['crc_error_count'] = __crc_error_count
-    (__io_error_count, offset, length) = get_u16(buf, offset, length)
-    ret['io_error_count'] = __io_error_count
-    (__tx_buffer_level, offset, length) = get_u8(buf, offset, length)
-    ret['tx_buffer_level'] = __tx_buffer_level
-    (__rx_buffer_level, offset, length) = get_u8(buf, offset, length)
-    ret['rx_buffer_level'] = __rx_buffer_level
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.tx_throughput = res['tx_throughput']
-    self.rx_throughput = res['rx_throughput']
-    self.crc_error_count = res['crc_error_count']
-    self.io_error_count = res['io_error_count']
-    self.tx_buffer_level = res['tx_buffer_level']
-    self.rx_buffer_level = res['rx_buffer_level']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tx_throughput: float
-    ret += 4
-    # rx_throughput: float
-    ret += 4
-    # crc_error_count: u16
-    ret += 2
-    # io_error_count: u16
-    ret += 2
-    # tx_buffer_level: u8
-    ret += 1
-    # rx_buffer_level: u8
-    ret += 1
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('tx_throughput', 'f4'),
+          ('rx_throughput', 'f4'),
+          ('crc_error_count', 'u2'),
+          ('io_error_count', 'u2'),
+          ('tx_buffer_level', 'u1'),
+          ('rx_buffer_level', 'u1'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('tx_throughput', 'f4'),
+          ('rx_throughput', 'f4'),
+          ('crc_error_count', 'u2'),
+          ('io_error_count', 'u2'),
+          ('tx_buffer_level', 'u1'),
+          ('rx_buffer_level', 'u1'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'tx_throughput': float(res['tx_throughput'] if element else res['tx_throughput'][0]),
+      'rx_throughput': float(res['rx_throughput'] if element else res['rx_throughput'][0]),
+      'crc_error_count': int(res['crc_error_count'] if element else res['crc_error_count'][0]),
+      'io_error_count': int(res['io_error_count'] if element else res['io_error_count'][0]),
+      'tx_buffer_level': int(res['tx_buffer_level'] if element else res['tx_buffer_level'][0]),
+      'rx_buffer_level': int(res['rx_buffer_level'] if element else res['rx_buffer_level'][0]),
+    }
+    return d
+
   
 class Period(object):
   """SBP class for message Period
@@ -375,41 +480,60 @@ can cause momentary RTK solution outages.
                'pmax',
                'current',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__avg, offset, length) = get_s32(buf, offset, length)
-    ret['avg'] = __avg
-    (__pmin, offset, length) = get_s32(buf, offset, length)
-    ret['pmin'] = __pmin
-    (__pmax, offset, length) = get_s32(buf, offset, length)
-    ret['pmax'] = __pmax
-    (__current, offset, length) = get_s32(buf, offset, length)
-    ret['current'] = __current
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.avg = res['avg']
-    self.pmin = res['pmin']
-    self.pmax = res['pmax']
-    self.current = res['current']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # avg: s32
-    ret += 4
-    # pmin: s32
-    ret += 4
-    # pmax: s32
-    ret += 4
-    # current: s32
-    ret += 4
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('avg', 'i4'),
+          ('pmin', 'i4'),
+          ('pmax', 'i4'),
+          ('current', 'i4'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('avg', 'i4'),
+          ('pmin', 'i4'),
+          ('pmax', 'i4'),
+          ('current', 'i4'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'avg': int(res['avg'] if element else res['avg'][0]),
+      'pmin': int(res['pmin'] if element else res['pmin'][0]),
+      'pmax': int(res['pmax'] if element else res['pmax'][0]),
+      'current': int(res['current'] if element else res['current'][0]),
+    }
+    return d
+
   
 class Latency(object):
   """SBP class for message Latency
@@ -432,41 +556,60 @@ communication latency in the system.
                'lmax',
                'current',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__avg, offset, length) = get_s32(buf, offset, length)
-    ret['avg'] = __avg
-    (__lmin, offset, length) = get_s32(buf, offset, length)
-    ret['lmin'] = __lmin
-    (__lmax, offset, length) = get_s32(buf, offset, length)
-    ret['lmax'] = __lmax
-    (__current, offset, length) = get_s32(buf, offset, length)
-    ret['current'] = __current
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.avg = res['avg']
-    self.lmin = res['lmin']
-    self.lmax = res['lmax']
-    self.current = res['current']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # avg: s32
-    ret += 4
-    # lmin: s32
-    ret += 4
-    # lmax: s32
-    ret += 4
-    # current: s32
-    ret += 4
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('avg', 'i4'),
+          ('lmin', 'i4'),
+          ('lmax', 'i4'),
+          ('current', 'i4'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('avg', 'i4'),
+          ('lmin', 'i4'),
+          ('lmax', 'i4'),
+          ('current', 'i4'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'avg': int(res['avg'] if element else res['avg'][0]),
+      'lmin': int(res['lmin'] if element else res['lmin'][0]),
+      'lmax': int(res['lmax'] if element else res['lmax'][0]),
+      'current': int(res['current'] if element else res['current'][0]),
+    }
+    return d
+
   
 SBP_MSG_UART_STATE = 0x001D
 class MsgUartState(SBP):
@@ -495,46 +638,63 @@ period indicates their likelihood of transmission.
                'latency',
                'obs_period',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__uart_a, offset, length) = UARTChannel.parse_members(buf, offset, length)
-    ret['uart_a'] = __uart_a
-    (__uart_b, offset, length) = UARTChannel.parse_members(buf, offset, length)
-    ret['uart_b'] = __uart_b
-    (__uart_ftdi, offset, length) = UARTChannel.parse_members(buf, offset, length)
-    ret['uart_ftdi'] = __uart_ftdi
-    (__latency, offset, length) = Latency.parse_members(buf, offset, length)
-    ret['latency'] = __latency
-    (__obs_period, offset, length) = Period.parse_members(buf, offset, length)
-    ret['obs_period'] = __obs_period
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.uart_a = res['uart_a']
-    self.uart_b = res['uart_b']
-    self.uart_ftdi = res['uart_ftdi']
-    self.latency = res['latency']
-    self.obs_period = res['obs_period']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # uart_a: UARTChannel
-    ret += UARTChannel._payload_size()
-    # uart_b: UARTChannel
-    ret += UARTChannel._payload_size()
-    # uart_ftdi: UARTChannel
-    ret += UARTChannel._payload_size()
-    # latency: Latency
-    ret += Latency._payload_size()
-    # obs_period: Period
-    ret += Period._payload_size()
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('uart_a', UARTChannel._static_dtype()),
+          ('uart_b', UARTChannel._static_dtype()),
+          ('uart_ftdi', UARTChannel._static_dtype()),
+          ('latency', Latency._static_dtype()),
+          ('obs_period', Period._static_dtype()),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('uart_a', UARTChannel._static_dtype()),
+          ('uart_b', UARTChannel._static_dtype()),
+          ('uart_ftdi', UARTChannel._static_dtype()),
+          ('latency', Latency._static_dtype()),
+          ('obs_period', Period._static_dtype()),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'uart_a': UARTChannel._unpack_members(res['uart_a'], element=element),
+      'uart_b': UARTChannel._unpack_members(res['uart_b'], element=element),
+      'uart_ftdi': UARTChannel._unpack_members(res['uart_ftdi'], element=element),
+      'latency': Latency._unpack_members(res['latency'], element=element),
+      'obs_period': Period._unpack_members(res['obs_period'], element=element),
+    }
+    return d
+
   
 SBP_MSG_UART_STATE_DEPA = 0x0018
 class MsgUartStateDepa(SBP):
@@ -553,41 +713,60 @@ class MsgUartStateDepa(SBP):
                'uart_ftdi',
                'latency',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__uart_a, offset, length) = UARTChannel.parse_members(buf, offset, length)
-    ret['uart_a'] = __uart_a
-    (__uart_b, offset, length) = UARTChannel.parse_members(buf, offset, length)
-    ret['uart_b'] = __uart_b
-    (__uart_ftdi, offset, length) = UARTChannel.parse_members(buf, offset, length)
-    ret['uart_ftdi'] = __uart_ftdi
-    (__latency, offset, length) = Latency.parse_members(buf, offset, length)
-    ret['latency'] = __latency
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.uart_a = res['uart_a']
-    self.uart_b = res['uart_b']
-    self.uart_ftdi = res['uart_ftdi']
-    self.latency = res['latency']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # uart_a: UARTChannel
-    ret += UARTChannel._payload_size()
-    # uart_b: UARTChannel
-    ret += UARTChannel._payload_size()
-    # uart_ftdi: UARTChannel
-    ret += UARTChannel._payload_size()
-    # latency: Latency
-    ret += Latency._payload_size()
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('uart_a', UARTChannel._static_dtype()),
+          ('uart_b', UARTChannel._static_dtype()),
+          ('uart_ftdi', UARTChannel._static_dtype()),
+          ('latency', Latency._static_dtype()),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('uart_a', UARTChannel._static_dtype()),
+          ('uart_b', UARTChannel._static_dtype()),
+          ('uart_ftdi', UARTChannel._static_dtype()),
+          ('latency', Latency._static_dtype()),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'uart_a': UARTChannel._unpack_members(res['uart_a'], element=element),
+      'uart_b': UARTChannel._unpack_members(res['uart_b'], element=element),
+      'uart_ftdi': UARTChannel._unpack_members(res['uart_ftdi'], element=element),
+      'latency': Latency._unpack_members(res['latency'], element=element),
+    }
+    return d
+
   
 SBP_MSG_IAR_STATE = 0x0019
 class MsgIarState(SBP):
@@ -607,26 +786,51 @@ from satellite observations.
   """
   __slots__ = ['num_hyps',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__num_hyps, offset, length) = get_u32(buf, offset, length)
-    ret['num_hyps'] = __num_hyps
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.num_hyps = res['num_hyps']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # num_hyps: u32
-    ret += 4
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('num_hyps', 'u4'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('num_hyps', 'u4'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'num_hyps': int(res['num_hyps'] if element else res['num_hyps'][0]),
+    }
+    return d
+
   
 SBP_MSG_MASK_SATELLITE = 0x002B
 class MsgMaskSatellite(SBP):
@@ -645,31 +849,54 @@ from being used in various Piksi subsystems.
   __slots__ = ['mask',
                'sid',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__mask, offset, length) = get_u8(buf, offset, length)
-    ret['mask'] = __mask
-    (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
-    ret['sid'] = __sid
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.mask = res['mask']
-    self.sid = res['sid']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # mask: u8
-    ret += 1
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('mask', 'u1'),
+          ('sid', GnssSignal._static_dtype()),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('mask', 'u1'),
+          ('sid', GnssSignal._static_dtype()),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'mask': int(res['mask'] if element else res['mask'][0]),
+      'sid': GnssSignal._unpack_members(res['sid'], element=element),
+    }
+    return d
+
   
 SBP_MSG_MASK_SATELLITE_DEP = 0x001B
 class MsgMaskSatelliteDep(SBP):
@@ -686,31 +913,54 @@ class MsgMaskSatelliteDep(SBP):
   __slots__ = ['mask',
                'sid',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__mask, offset, length) = get_u8(buf, offset, length)
-    ret['mask'] = __mask
-    (__sid, offset, length) = GnssSignalDep.parse_members(buf, offset, length)
-    ret['sid'] = __sid
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.mask = res['mask']
-    self.sid = res['sid']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # mask: u8
-    ret += 1
-    # sid: GnssSignalDep
-    ret += GnssSignalDep._payload_size()
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('mask', 'u1'),
+          ('sid', GnssSignalDep._static_dtype()),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('mask', 'u1'),
+          ('sid', GnssSignalDep._static_dtype()),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'mask': int(res['mask'] if element else res['mask'][0]),
+      'sid': GnssSignalDep._unpack_members(res['sid'], element=element),
+    }
+    return d
+
   
 SBP_MSG_DEVICE_MONITOR = 0x00B5
 class MsgDeviceMonitor(SBP):
@@ -733,46 +983,63 @@ available.
                'cpu_temperature',
                'fe_temperature',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__dev_vin, offset, length) = get_s16(buf, offset, length)
-    ret['dev_vin'] = __dev_vin
-    (__cpu_vint, offset, length) = get_s16(buf, offset, length)
-    ret['cpu_vint'] = __cpu_vint
-    (__cpu_vaux, offset, length) = get_s16(buf, offset, length)
-    ret['cpu_vaux'] = __cpu_vaux
-    (__cpu_temperature, offset, length) = get_s16(buf, offset, length)
-    ret['cpu_temperature'] = __cpu_temperature
-    (__fe_temperature, offset, length) = get_s16(buf, offset, length)
-    ret['fe_temperature'] = __fe_temperature
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.dev_vin = res['dev_vin']
-    self.cpu_vint = res['cpu_vint']
-    self.cpu_vaux = res['cpu_vaux']
-    self.cpu_temperature = res['cpu_temperature']
-    self.fe_temperature = res['fe_temperature']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # dev_vin: s16
-    ret += 2
-    # cpu_vint: s16
-    ret += 2
-    # cpu_vaux: s16
-    ret += 2
-    # cpu_temperature: s16
-    ret += 2
-    # fe_temperature: s16
-    ret += 2
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('dev_vin', 'i2'),
+          ('cpu_vint', 'i2'),
+          ('cpu_vaux', 'i2'),
+          ('cpu_temperature', 'i2'),
+          ('fe_temperature', 'i2'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('dev_vin', 'i2'),
+          ('cpu_vint', 'i2'),
+          ('cpu_vaux', 'i2'),
+          ('cpu_temperature', 'i2'),
+          ('fe_temperature', 'i2'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'dev_vin': int(res['dev_vin'] if element else res['dev_vin'][0]),
+      'cpu_vint': int(res['cpu_vint'] if element else res['cpu_vint'][0]),
+      'cpu_vaux': int(res['cpu_vaux'] if element else res['cpu_vaux'][0]),
+      'cpu_temperature': int(res['cpu_temperature'] if element else res['cpu_temperature'][0]),
+      'fe_temperature': int(res['fe_temperature'] if element else res['fe_temperature'][0]),
+    }
+    return d
+
   
 SBP_MSG_COMMAND_REQ = 0x00B8
 class MsgCommandReq(SBP):
@@ -792,31 +1059,54 @@ code will be returned with MSG_COMMAND_RESP.
   __slots__ = ['sequence',
                'command',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__sequence, offset, length) = get_u32(buf, offset, length)
-    ret['sequence'] = __sequence
-    (__command, offset, length) = get_string(buf, offset, length)
-    ret['command'] = __command
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.sequence = res['sequence']
-    self.command = res['command']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    # command: string
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('sequence', 'u4'),
+          ('command', '|S{}'.format(count)),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('sequence', 'u4'),
+          ('command', '|S{}'.format(count)),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype('u1')
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'sequence': int(res['sequence'] if element else res['sequence'][0]),
+      'command': '' if res['command'] is None else res['command'].tostring().decode('ascii'),
+    }
+    return d
+
   
 SBP_MSG_COMMAND_RESP = 0x00B9
 class MsgCommandResp(SBP):
@@ -835,31 +1125,54 @@ the command.  A return code of zero indicates success.
   __slots__ = ['sequence',
                'code',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__sequence, offset, length) = get_u32(buf, offset, length)
-    ret['sequence'] = __sequence
-    (__code, offset, length) = get_s32(buf, offset, length)
-    ret['code'] = __code
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.sequence = res['sequence']
-    self.code = res['code']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    # code: s32
-    ret += 4
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('sequence', 'u4'),
+          ('code', 'i4'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('sequence', 'u4'),
+          ('code', 'i4'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = None
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'sequence': int(res['sequence'] if element else res['sequence'][0]),
+      'code': int(res['code'] if element else res['code'][0]),
+    }
+    return d
+
   
 SBP_MSG_COMMAND_OUTPUT = 0x00BC
 class MsgCommandOutput(SBP):
@@ -880,31 +1193,54 @@ the correct command.
   __slots__ = ['sequence',
                'line',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__sequence, offset, length) = get_u32(buf, offset, length)
-    ret['sequence'] = __sequence
-    (__line, offset, length) = get_string(buf, offset, length)
-    ret['line'] = __line
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.sequence = res['sequence']
-    self.line = res['line']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    # line: string
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('sequence', 'u4'),
+          ('line', '|S{}'.format(count)),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('sequence', 'u4'),
+          ('line', '|S{}'.format(count)),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype('u1')
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'sequence': int(res['sequence'] if element else res['sequence'][0]),
+      'line': '' if res['line'] is None else res['line'].tostring().decode('ascii'),
+    }
+    return d
+
   
 SBP_MSG_NETWORK_STATE_REQ = 0x00BA
 class MsgNetworkStateReq(SBP):
@@ -922,6 +1258,9 @@ Output will be sent in MSG_NETWORK_STATE_RESP messages
   """
   __slots__ = []
   def _unpack_members(self, buf, offset, length):
+    return {}, offset, length
+
+  def parse_members(self, buf, offset, length):
     return {}, offset, length
 
   def _payload_size(self):
@@ -951,61 +1290,72 @@ in c.
                'interface_name',
                'flags',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__ipv4_address, offset, length) = get_fixed_array(get_u8, 4, 1)(buf, offset, length)
-    ret['ipv4_address'] = __ipv4_address
-    (__ipv4_mask_size, offset, length) = get_u8(buf, offset, length)
-    ret['ipv4_mask_size'] = __ipv4_mask_size
-    (__ipv6_address, offset, length) = get_fixed_array(get_u8, 16, 1)(buf, offset, length)
-    ret['ipv6_address'] = __ipv6_address
-    (__ipv6_mask_size, offset, length) = get_u8(buf, offset, length)
-    ret['ipv6_mask_size'] = __ipv6_mask_size
-    (__rx_bytes, offset, length) = get_u32(buf, offset, length)
-    ret['rx_bytes'] = __rx_bytes
-    (__tx_bytes, offset, length) = get_u32(buf, offset, length)
-    ret['tx_bytes'] = __tx_bytes
-    (__interface_name, offset, length) = get_fixed_string(16)(buf, offset, length)
-    ret['interface_name'] = __interface_name
-    (__flags, offset, length) = get_u32(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.ipv4_address = res['ipv4_address']
-    self.ipv4_mask_size = res['ipv4_mask_size']
-    self.ipv6_address = res['ipv6_address']
-    self.ipv6_mask_size = res['ipv6_mask_size']
-    self.rx_bytes = res['rx_bytes']
-    self.tx_bytes = res['tx_bytes']
-    self.interface_name = res['interface_name']
-    self.flags = res['flags']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # ipv4_address: array of u8
-    ret += 1 * 4
-    # ipv4_mask_size: u8
-    ret += 1
-    # ipv6_address: array of u8
-    ret += 1 * 16
-    # ipv6_mask_size: u8
-    ret += 1
-    # rx_bytes: u32
-    ret += 4
-    # tx_bytes: u32
-    ret += 4
-    # interface_name: string
-    ret += 16
-    # flags: u32
-    ret += 4
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('ipv4_address', ('u1', (4,))),
+          ('ipv4_mask_size', 'u1'),
+          ('ipv6_address', ('u1', (16,))),
+          ('ipv6_mask_size', 'u1'),
+          ('rx_bytes', 'u4'),
+          ('tx_bytes', 'u4'),
+          ('interface_name', '|S16'),
+          ('flags', 'u4'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('ipv4_address', ('u1', (4,))),
+          ('ipv4_mask_size', 'u1'),
+          ('ipv6_address', ('u1', (16,))),
+          ('ipv6_mask_size', 'u1'),
+          ('rx_bytes', 'u4'),
+          ('tx_bytes', 'u4'),
+          ('interface_name', '|S16'),
+          ('flags', 'u4'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('ipv4_address', 'u1'),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'ipv4_address': [] if res['ipv4_address'] is None else [x.item() for x in res['ipv4_address'].flatten()],
+      'ipv4_mask_size': int(res['ipv4_mask_size'] if element else res['ipv4_mask_size'][0]),
+      'ipv6_address': [] if res['ipv6_address'] is None else [x.item() for x in res['ipv6_address'].flatten()],
+      'ipv6_mask_size': int(res['ipv6_mask_size'] if element else res['ipv6_mask_size'][0]),
+      'rx_bytes': int(res['rx_bytes'] if element else res['rx_bytes'][0]),
+      'tx_bytes': int(res['tx_bytes'] if element else res['tx_bytes'][0]),
+      'interface_name': '' if res['interface_name'] is None else res['interface_name'].tostring().decode('ascii'),
+      'flags': int(res['flags'] if element else res['flags'][0]),
+    }
+    return d
+
   
 class NetworkUsage(object):
   """SBP class for message NetworkUsage
@@ -1030,46 +1380,63 @@ though may not necessarily be populated with a value.
                'tx_bytes',
                'interface_name',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__duration, offset, length) = get_u64(buf, offset, length)
-    ret['duration'] = __duration
-    (__total_bytes, offset, length) = get_u64(buf, offset, length)
-    ret['total_bytes'] = __total_bytes
-    (__rx_bytes, offset, length) = get_u32(buf, offset, length)
-    ret['rx_bytes'] = __rx_bytes
-    (__tx_bytes, offset, length) = get_u32(buf, offset, length)
-    ret['tx_bytes'] = __tx_bytes
-    (__interface_name, offset, length) = get_fixed_string(16)(buf, offset, length)
-    ret['interface_name'] = __interface_name
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.duration = res['duration']
-    self.total_bytes = res['total_bytes']
-    self.rx_bytes = res['rx_bytes']
-    self.tx_bytes = res['tx_bytes']
-    self.interface_name = res['interface_name']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # duration: u64
-    ret += 8
-    # total_bytes: u64
-    ret += 8
-    # rx_bytes: u32
-    ret += 4
-    # tx_bytes: u32
-    ret += 4
-    # interface_name: string
-    ret += 16
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('duration', 'u8'),
+          ('total_bytes', 'u8'),
+          ('rx_bytes', 'u4'),
+          ('tx_bytes', 'u4'),
+          ('interface_name', '|S16'),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('duration', 'u8'),
+          ('total_bytes', 'u8'),
+          ('rx_bytes', 'u4'),
+          ('tx_bytes', 'u4'),
+          ('interface_name', '|S16'),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype('u1')
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'duration': int(res['duration'] if element else res['duration'][0]),
+      'total_bytes': int(res['total_bytes'] if element else res['total_bytes'][0]),
+      'rx_bytes': int(res['rx_bytes'] if element else res['rx_bytes'][0]),
+      'tx_bytes': int(res['tx_bytes'] if element else res['tx_bytes'][0]),
+      'interface_name': '' if res['interface_name'] is None else res['interface_name'].tostring().decode('ascii'),
+    }
+    return d
+
   
 SBP_MSG_NETWORK_BANDWIDTH_USAGE = 0x00BD
 class MsgNetworkBandwidthUsage(SBP):
@@ -1086,26 +1453,51 @@ class MsgNetworkBandwidthUsage(SBP):
   """
   __slots__ = ['interfaces',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__interfaces, offset, length) = get_array(NetworkUsage.parse_members)(buf, offset, length)
-    ret['interfaces'] = __interfaces
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.interfaces = res['interfaces']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # interfaces: array of NetworkUsage
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('interfaces', (NetworkUsage._static_dtype(), (count,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('interfaces', (NetworkUsage._static_dtype(), (count,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('interfaces', NetworkUsage._static_dtype()),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'interfaces': [] if res['interfaces'] is None else [NetworkUsage._unpack_members(x, element=True) for x in res['interfaces'].flatten()],
+    }
+    return d
+
   
 SBP_MSG_CELL_MODEM_STATUS = 0x00BE
 class MsgCellModemStatus(SBP):
@@ -1126,36 +1518,57 @@ of the modem and its various parameters.
                'signal_error_rate',
                'reserved',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__signal_strength, offset, length) = get_s8(buf, offset, length)
-    ret['signal_strength'] = __signal_strength
-    (__signal_error_rate, offset, length) = get_f32(buf, offset, length)
-    ret['signal_error_rate'] = judicious_round(nb.f4(__signal_error_rate)) if SBP.judicious_rounding else __signal_error_rate
-    (__reserved, offset, length) = get_array(get_u8)(buf, offset, length)
-    ret['reserved'] = __reserved
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.signal_strength = res['signal_strength']
-    self.signal_error_rate = res['signal_error_rate']
-    self.reserved = res['reserved']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # signal_strength: s8
-    ret += 1
-    # signal_error_rate: float
-    ret += 4
-    # reserved: array of u8
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('signal_strength', 'i1'),
+          ('signal_error_rate', 'f4'),
+          ('reserved', ('u1', (count,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('signal_strength', 'i1'),
+          ('signal_error_rate', 'f4'),
+          ('reserved', ('u1', (count,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('reserved', 'u1'),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'signal_strength': int(res['signal_strength'] if element else res['signal_strength'][0]),
+      'signal_error_rate': float(res['signal_error_rate'] if element else res['signal_error_rate'][0]),
+      'reserved': [] if res['reserved'] is None else [x.item() for x in res['reserved'].flatten()],
+    }
+    return d
+
   
 SBP_MSG_SPECAN_DEP = 0x0050
 class MsgSpecanDep(SBP):
@@ -1177,56 +1590,69 @@ class MsgSpecanDep(SBP):
                'amplitude_unit',
                'amplitude_value',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__channel_tag, offset, length) = get_u16(buf, offset, length)
-    ret['channel_tag'] = __channel_tag
-    (__t, offset, length) = GPSTimeDep.parse_members(buf, offset, length)
-    ret['t'] = __t
-    (__freq_ref, offset, length) = get_f32(buf, offset, length)
-    ret['freq_ref'] = judicious_round(nb.f4(__freq_ref)) if SBP.judicious_rounding else __freq_ref
-    (__freq_step, offset, length) = get_f32(buf, offset, length)
-    ret['freq_step'] = judicious_round(nb.f4(__freq_step)) if SBP.judicious_rounding else __freq_step
-    (__amplitude_ref, offset, length) = get_f32(buf, offset, length)
-    ret['amplitude_ref'] = judicious_round(nb.f4(__amplitude_ref)) if SBP.judicious_rounding else __amplitude_ref
-    (__amplitude_unit, offset, length) = get_f32(buf, offset, length)
-    ret['amplitude_unit'] = judicious_round(nb.f4(__amplitude_unit)) if SBP.judicious_rounding else __amplitude_unit
-    (__amplitude_value, offset, length) = get_array(get_u8)(buf, offset, length)
-    ret['amplitude_value'] = __amplitude_value
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.channel_tag = res['channel_tag']
-    self.t = res['t']
-    self.freq_ref = res['freq_ref']
-    self.freq_step = res['freq_step']
-    self.amplitude_ref = res['amplitude_ref']
-    self.amplitude_unit = res['amplitude_unit']
-    self.amplitude_value = res['amplitude_value']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # channel_tag: u16
-    ret += 2
-    # t: GPSTimeDep
-    ret += GPSTimeDep._payload_size()
-    # freq_ref: float
-    ret += 4
-    # freq_step: float
-    ret += 4
-    # amplitude_ref: float
-    ret += 4
-    # amplitude_unit: float
-    ret += 4
-    # amplitude_value: array of u8
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('channel_tag', 'u2'),
+          ('t', GPSTimeDep._static_dtype()),
+          ('freq_ref', 'f4'),
+          ('freq_step', 'f4'),
+          ('amplitude_ref', 'f4'),
+          ('amplitude_unit', 'f4'),
+          ('amplitude_value', ('u1', (count,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('channel_tag', 'u2'),
+          ('t', GPSTimeDep._static_dtype()),
+          ('freq_ref', 'f4'),
+          ('freq_step', 'f4'),
+          ('amplitude_ref', 'f4'),
+          ('amplitude_unit', 'f4'),
+          ('amplitude_value', ('u1', (count,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('amplitude_value', 'u1'),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'channel_tag': int(res['channel_tag'] if element else res['channel_tag'][0]),
+      't': GPSTimeDep._unpack_members(res['t'], element=element),
+      'freq_ref': float(res['freq_ref'] if element else res['freq_ref'][0]),
+      'freq_step': float(res['freq_step'] if element else res['freq_step'][0]),
+      'amplitude_ref': float(res['amplitude_ref'] if element else res['amplitude_ref'][0]),
+      'amplitude_unit': float(res['amplitude_unit'] if element else res['amplitude_unit'][0]),
+      'amplitude_value': [] if res['amplitude_value'] is None else [x.item() for x in res['amplitude_value'].flatten()],
+    }
+    return d
+
   
 SBP_MSG_SPECAN = 0x0051
 class MsgSpecan(SBP):
@@ -1249,56 +1675,69 @@ class MsgSpecan(SBP):
                'amplitude_unit',
                'amplitude_value',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__channel_tag, offset, length) = get_u16(buf, offset, length)
-    ret['channel_tag'] = __channel_tag
-    (__t, offset, length) = GPSTime.parse_members(buf, offset, length)
-    ret['t'] = __t
-    (__freq_ref, offset, length) = get_f32(buf, offset, length)
-    ret['freq_ref'] = judicious_round(nb.f4(__freq_ref)) if SBP.judicious_rounding else __freq_ref
-    (__freq_step, offset, length) = get_f32(buf, offset, length)
-    ret['freq_step'] = judicious_round(nb.f4(__freq_step)) if SBP.judicious_rounding else __freq_step
-    (__amplitude_ref, offset, length) = get_f32(buf, offset, length)
-    ret['amplitude_ref'] = judicious_round(nb.f4(__amplitude_ref)) if SBP.judicious_rounding else __amplitude_ref
-    (__amplitude_unit, offset, length) = get_f32(buf, offset, length)
-    ret['amplitude_unit'] = judicious_round(nb.f4(__amplitude_unit)) if SBP.judicious_rounding else __amplitude_unit
-    (__amplitude_value, offset, length) = get_array(get_u8)(buf, offset, length)
-    ret['amplitude_value'] = __amplitude_value
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.channel_tag = res['channel_tag']
-    self.t = res['t']
-    self.freq_ref = res['freq_ref']
-    self.freq_step = res['freq_step']
-    self.amplitude_ref = res['amplitude_ref']
-    self.amplitude_unit = res['amplitude_unit']
-    self.amplitude_value = res['amplitude_value']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # channel_tag: u16
-    ret += 2
-    # t: GPSTime
-    ret += GPSTime._payload_size()
-    # freq_ref: float
-    ret += 4
-    # freq_step: float
-    ret += 4
-    # amplitude_ref: float
-    ret += 4
-    # amplitude_unit: float
-    ret += 4
-    # amplitude_value: array of u8
-    ret += 247
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('channel_tag', 'u2'),
+          ('t', GPSTime._static_dtype()),
+          ('freq_ref', 'f4'),
+          ('freq_step', 'f4'),
+          ('amplitude_ref', 'f4'),
+          ('amplitude_unit', 'f4'),
+          ('amplitude_value', ('u1', (count,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('channel_tag', 'u2'),
+          ('t', GPSTime._static_dtype()),
+          ('freq_ref', 'f4'),
+          ('freq_step', 'f4'),
+          ('amplitude_ref', 'f4'),
+          ('amplitude_unit', 'f4'),
+          ('amplitude_value', ('u1', (count,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('amplitude_value', 'u1'),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'channel_tag': int(res['channel_tag'] if element else res['channel_tag'][0]),
+      't': GPSTime._unpack_members(res['t'], element=element),
+      'freq_ref': float(res['freq_ref'] if element else res['freq_ref'][0]),
+      'freq_step': float(res['freq_step'] if element else res['freq_step'][0]),
+      'amplitude_ref': float(res['amplitude_ref'] if element else res['amplitude_ref'][0]),
+      'amplitude_unit': float(res['amplitude_unit'] if element else res['amplitude_unit'][0]),
+      'amplitude_value': [] if res['amplitude_value'] is None else [x.item() for x in res['amplitude_value'].flatten()],
+    }
+    return d
+
   
 SBP_MSG_FRONT_END_GAIN = 0x00BF
 class MsgFrontEndGain(SBP):
@@ -1321,31 +1760,54 @@ A negative value implies an error for the particular gain stage as reported by t
   __slots__ = ['rf_gain',
                'if_gain',
                ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__rf_gain, offset, length) = get_fixed_array(get_s8, 8, 1)(buf, offset, length)
-    ret['rf_gain'] = __rf_gain
-    (__if_gain, offset, length) = get_fixed_array(get_s8, 8, 1)(buf, offset, length)
-    ret['if_gain'] = __if_gain
-    return ret, offset, length
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
 
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.rf_gain = res['rf_gain']
-    self.if_gain = res['if_gain']
-    return res, off, length
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
 
   @classmethod
-  def _payload_size(self):
-    ret = 0
-    # rf_gain: array of s8
-    ret += 1 * 8
-    # if_gain: array of s8
-    ret += 1 * 8
-    return ret
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+          ('rf_gain', ('i1', (8,))),
+          ('if_gain', ('i1', (8,))),
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+          ('rf_gain', ('i1', (8,))),
+          ('if_gain', ('i1', (8,))),
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = np.dtype([('rf_gain', 'i1'),])
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+      'rf_gain': [] if res['rf_gain'] is None else [x.item() for x in res['rf_gain'].flatten()],
+      'if_gain': [] if res['if_gain'] is None else [x.item() for x in res['if_gain'].flatten()],
+    }
+    return d
+
   
 
 msg_classes = {
