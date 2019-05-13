@@ -43,7 +43,7 @@ def test_tcp_logger():
   baud = 115200
   t0 = time.time()
   sleep = 0.1
-  timeout = 1.0
+  timeout = 5.0
   cb_context = {'assert_logger_called': False}
   def assert_logger(s, **metadata):
     cb_context['assert_logger_called'] = True

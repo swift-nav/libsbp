@@ -22,15 +22,27 @@ cache:
 matrix:
   include:
     - env:
-        - TRAVIS_TARGET=python
+        - TRAVIS_TARGET=python-haskell
       language: python
       python: 3.7-dev
       before_install:
         - sudo apt-get -qq update
         - sudo apt-get install python2.7 python2.7-dev
         - sudo apt-get install python3.5 python3.5-dev
+        - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
         - sudo pip install tox
-      script: make test-python
+        - git clone https://github.com/swift-nav/piksi_tools.git ../piksi_tools
+        - git -C ../piksi_tools fetch
+        - git -C ../piksi_tools checkout silverjam/sbp2json
+      script: |
+        pushd haskell
+        docker build -t sbp2json .
+        docker run --rm --name sbp2json sbp2json >sbp_linux_tools.tar
+        tar xf sbp_linux_tools.tar
+        gzip sbp_linux_tools.tar
+        ls -l
+        popd
+        make test-python
     - env:
         - TRAVIS_TARGET=default JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
       before_install:
@@ -54,18 +66,6 @@ matrix:
         - npm install -g mocha
         - npm install
       script: make test-c test-haskell test-java test-javascript
-    - env:
-        - TRAVIS_TARGET=haskell-tools
-      before_install: |
-        sudo apt-get update
-        sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
-      script: |
-        pushd haskell
-        docker build -t sbp2json .
-        docker run --rm --name sbp2json sbp2json >sbp_linux_tools.tar
-        gzip sbp_linux_tools.tar
-        ls -l
-        popd
 
 deploy:
   provider: releases
