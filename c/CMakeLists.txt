@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 project(libsbp)
 
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" "${CMAKE_SOURCE_DIR}/cmake/common")
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake" "${CMAKE_CURRENT_LIST_DIR}/cmake/common")
 
 include(GNUInstallDirs)
 include(SwiftCmakeOptions)
