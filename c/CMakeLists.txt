@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.2)
 project(libsbp)
 
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake" "${CMAKE_SOURCE_DIR}/cmake/common")
 
 include(GNUInstallDirs)
+include(SwiftCmakeOptions)
 
 ##########################################################
 # Set some reasonable default compiler flags.
@@ -18,5 +19,9 @@ else()
 endif()
 
 add_subdirectory(src)
-add_subdirectory(docs)
-add_subdirectory(test)
+if(libsbp_BUILD_DOCS)
+  add_subdirectory(docs)
+endif()
+if(libsbp_BUILD_TESTS)
+  add_subdirectory(test)
+endif()
