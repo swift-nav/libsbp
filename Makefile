@@ -61,6 +61,7 @@ docs: verify-prereq-docs pdf html
 
 c:          deps-c          gen-c          test-c
 python:     deps-python     gen-python     test-python
+pythonNG:   deps-python     gen-pythonNG
 javascript: deps-javascript gen-javascript test-javascript
 java:       deps-java       gen-java       test-java
 haskell:    deps-haskell    gen-haskell    test-haskell
@@ -146,6 +147,15 @@ gen-python:
 		       --python
 	$(call announce-end,"Finished generating Python bindings. Please check $(SWIFTNAV_ROOT)/python/sbp")
 
+gen-pythonNG:
+	$(call announce-begin,"Generating Python bindings")
+	cd $(SWIFTNAV_ROOT)/generator; \
+	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
+		       -o $(SWIFTNAV_ROOT)/python/sbp/jit \
+                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
+		       --pythonNG
+	$(call announce-end,"Finished generating Python bindings. Please check $(SWIFTNAV_ROOT)/python/sbp")
+
 gen-javascript:
 	$(call announce-begin,"Generating JavaScript bindings")
 	cd $(SWIFTNAV_ROOT)/generator; \
@@ -208,7 +218,7 @@ test-c:
 test-python:
 	$(call announce-begin,"Running Python tests")
 ifdef TRAVIS_TARGET
-	cd $(SWIFTNAV_ROOT)/python/ && tox
+	cd $(SWIFTNAV_ROOT)/python/ && tox -- $(SWIFTNAV_ROOT)/haskell
 else
 	cd $(SWIFTNAV_ROOT)/python/ && tox --skip-missing-interpreters
 endif

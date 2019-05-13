@@ -1,0 +1,139 @@
+#!/usr/bin/env python
+# Copyright (C) 2015-2018 Swift Navigation Inc.
+# Contact: Swift Navigation <dev@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+
+"""
+(((description|comment_links)))
+"""
+
+import json
+
+import numba as nb
+import numpy as np
+
+from sbp.jit.msg import SBP, SENDER_ID
+from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
+from sbp.jit.msg import get_s8, get_s16, get_s32, get_s64
+from sbp.jit.msg import get_f32, get_f64, judicious_round
+from sbp.jit.msg import get_string, get_fixed_string, get_setting
+from sbp.jit.msg import get_array, get_fixed_array
+
+((*- for i in include *))
+from (((module_path))).jit.(((i))) import *
+((*- endfor *))
+
+# Automatically generated from piksi/yaml/(((filepath))) with generate.py.
+# Please do not hand edit!
+
+((*- for m in msgs *))
+((*- if m.static *))
+
+((*- if m.sbp_id *))
+SBP_(((m.identifier))) = ((('0x%04X'|format(m.sbp_id))))
+((*- endif *))
+
+((*- if m.sbp_id *))
+class ((( m.identifier | classnameify )))(SBP):
+  """SBP class for message (((m.identifier))) ((('(0x%04X)'|format(m.sbp_id)))).
+((*- else *))
+class ((( m.identifier )))(object):
+  """SBP class for message (((m.identifier)))
+((*- endif *))
+
+  You can have (((m.identifier))) inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  ((* if m.desc *))
+  (((m.desc)))
+  ((*- endif *))
+
+  """
+  ((*- if m.fields *))
+  __slots__ = [((*- for f in m.fields *))'((( f.identifier )))',
+               ((* endfor *))]
+  ((*- else *))
+  __slots__ = []
+  ((*- endif *))
+
+
+  ((*- if m.fields *))
+  def parse_members(self, buf, offset, length):
+    dtype = self._static_dtype()
+    dlength = length
+    if len(dtype):
+      dlength -= dtype.itemsize
+
+    if dlength:
+      ddtype = self._dynamic_dtype()
+      count = dlength // ddtype.itemsize
+      dtype = self._static_dtype(count)
+
+    res, offset, length = (np.frombuffer(buf, dtype, 1, offset), offset - length, 0)
+
+    return self._unpack_members(res), offset, length
+
+  @classmethod
+  def _static_dtype(cls, count=0):
+    if count:
+      return np.dtype([
+        ((*- for f in m.fields *))
+          ((( f | numpy_type )))
+        ((*- endfor *))
+        ])
+
+    t = getattr(cls, 'static_dtype0', None)
+    if not t:
+      t = np.dtype([
+        ((*- for f in m.fields *))
+          ((( f | numpy_type )))
+        ((*- endfor *))
+        ])
+      cls.static_dtype0 = t
+    return t
+
+  @classmethod
+  def _dynamic_dtype(cls):
+    t = getattr(cls, 'dynamic_dtype', None)
+    if not t:    
+      t = ((( m | numba_py )))
+      cls.dynamic_dtype = t
+    return t
+
+  @staticmethod
+  def _unpack_members(res, element=False):
+    d = {
+    ((*- for f in m.fields *))
+      ((( f | numpy_unpack ))),
+    ((*- endfor *))
+    }
+    return d
+
+  ((* else *))
+  def _unpack_members(self, buf, offset, length):
+    return {}, offset, length
+
+  def parse_members(self, buf, offset, length):
+    return {}, offset, length
+
+  def _payload_size(self):
+    return 0
+  ((* endif *))
+((*- endif *))
+((*- endfor *))
+
+msg_classes = {
+((*- for m in msgs *))
+  ((*- if m.sbp_id *))
+  ((('0x%04X'|format(m.sbp_id)))): ((( m.identifier | classnameify ))),
+  ((*- endif*))
+((*- endfor *))
+}

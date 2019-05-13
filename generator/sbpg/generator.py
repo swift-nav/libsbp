@@ -25,6 +25,7 @@ import sbpg.targets.latex as tex
 import sbpg.targets.haskell as hs
 import sbpg.targets.protobuf as pb
 import sbpg.targets.python as py
+import sbpg.targets.pythonNG as pyNG
 import sbpg.targets.javascript as js
 
 def get_args():
@@ -40,6 +41,9 @@ def get_args():
                       required=True,
                       help='Output directory.')
   parser.add_argument('--python',
+                      action="store_true",
+                      help='Target language: Python.')
+  parser.add_argument('--pythonNG',
                       action="store_true",
                       help='Target language: Python.')
   parser.add_argument('--javascript',
@@ -80,7 +84,7 @@ def main():
     # Parse and validate arguments.
     args = get_args().parse_args()
     verbose = args.verbose
-    assert args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.protobuf or args.java, \
+    assert args.pythonNG or args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.protobuf or args.java, \
       "Please specify a target language."
     input_file = os.path.abspath(args.input_file[0])
     assert len(args.input_file) == 1
@@ -122,6 +126,8 @@ def main():
           continue
         if args.python:
           py.render_source(output_dir, parsed)
+        if args.pythonNG:
+          pyNG.render_source(output_dir, parsed)
         elif args.javascript:
           js.render_source(output_dir, parsed)
         elif args.c:
