@@ -5,7 +5,11 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake" "${CMAKE_CURRENT_LIST_DI
 
 include(GNUInstallDirs)
 include(SwiftCmakeOptions)
-swift_create_project_options(TEST_PACKAGES "Check")
+swift_create_project_options(
+    TESTS
+    DOCS
+    TEST_PACKAGES "Check"
+    )
 
 ##########################################################
 # Set some reasonable default compiler flags.
