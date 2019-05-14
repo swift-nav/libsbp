@@ -160,8 +160,9 @@ if __name__ == "__main__":
     with open(os.path.join(filedir, 'README.rst')) as f:
         readme = f.read()
 
+    INSTALL_REQUIRES = ["cffi>=1.0.0"]
     with open(os.path.join(filedir, 'requirements.txt')) as f:
-        INSTALL_REQUIRES = [i.strip() for i in f.readlines()]
+        INSTALL_REQUIRES += [i.strip() for i in f.readlines()]
 
     with open(os.path.join(filedir, 'test_requirements.txt')) as f:
         TEST_REQUIRES = [i.strip() for i in f.readlines()]
@@ -182,4 +183,6 @@ if __name__ == "__main__":
           install_requires=INSTALL_REQUIRES,
           tests_require=TEST_REQUIRES,
           use_2to3=False,
-          zip_safe=False)
+          zip_safe=False,
+          setup_requires=["cffi>=1.0.0"],
+          cffi_modules=["sbp/jit/parse_float.py:ffi"])

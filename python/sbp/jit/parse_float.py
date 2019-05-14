@@ -41,9 +41,14 @@ module_name = "parse_float_c"
 
 ffi.set_source(module_name=module_name, source=source)
 
-ffi.compile()
+def compile():
+    ffi.compile()
 
-# Move deliverables to same dir as the script
-dest_dir = os.path.dirname(os.path.realpath(__file__))
-for f in glob.glob(os.path.join(os.getcwd(), module_name + '.*')):
-    shutil.move(f, os.path.join(dest_dir, ntpath.basename(f)))
+    # Move deliverables to same dir as the script
+    dest_dir = os.path.dirname(os.path.realpath(__file__))
+    for f in glob.glob(os.path.join(os.getcwd(), module_name + '.*')):
+        shutil.move(f, os.path.join(dest_dir, ntpath.basename(f)))
+
+
+if __name__ == "__main__":    # not when running with setuptools
+    compile()

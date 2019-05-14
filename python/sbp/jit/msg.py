@@ -23,7 +23,15 @@ from sbp.msg import crc16jit
 from sbp.msg import SENDER_ID as _SENDER_ID
 from sbp.msg import SBP_PREAMBLE as _SBP_PREAMBLE
 
-from sbp.jit import parse_float
+from pkgutil import iter_modules
+
+if not 'parse_float_c' in (name for loader, name, ispkg in iter_modules()):
+    # not in sys.path
+    if not 'parse_float_c' in (name for loader, name, ispkg in iter_modules(['sbp/jit'])):
+        # not in sbp.jit -> compile
+        from sbp.jit import parse_float
+        parse_float.compile()
+
 from sbp.jit import parse_float_c
 
 
