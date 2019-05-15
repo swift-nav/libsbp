@@ -25,14 +25,17 @@ from sbp.msg import SBP_PREAMBLE as _SBP_PREAMBLE
 
 from pkgutil import iter_modules
 
-if not 'parse_float_c' in (name for loader, name, ispkg in iter_modules()):
-    # not in sys.path
-    if not 'parse_float_c' in (name for loader, name, ispkg in iter_modules(['sbp/jit'])):
-        # not in sbp.jit -> compile
-        from sbp.jit import parse_float
-        parse_float.compile()
-
-from sbp.jit import parse_float_c
+if 'parse_float_c' in (name for loader, name, ispkg in iter_modules()):
+    # found in sys.path
+    import parse_float_c
+elif 'parse_float_c' in (name for loader, name, ispkg in iter_modules(['sbp/jit'])):
+    # found in sbp.jit
+    from sbp.jit import parse_float_c
+else:
+    # not found -> compile
+    from sbp.jit import parse_float
+    parse_float.compile()
+    from sbp.jit import parse_float_c
 
 
 numba.cffi_support.register_module(parse_float_c)

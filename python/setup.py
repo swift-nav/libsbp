@@ -30,6 +30,7 @@ CLASSIFIERS = [
 
 PACKAGES = [
   'sbp',
+  'sbp.jit',
   'sbp.client',
   'sbp.client.drivers',
   'sbp.client.loggers',
