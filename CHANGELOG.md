@@ -1,6 +1,24 @@
 # Change Log
 
-## [2.5.4](https://github.com/swift-nav/libsbp/tree/v2.5.4)
+## [2.5.5](https://github.com/swift-nav/libsbp/tree/v2.5.5) (2019-05-16)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.4...v2.5.5)
+
+**Closed issues:**
+
+- MSG\_INIT\_BASE / Hotstart with known Position [\#681](https://github.com/swift-nav/libsbp/issues/681)
+- Problem when casting messages from callback in C [\#611](https://github.com/swift-nav/libsbp/issues/611)
+
+**Merged pull requests:**
+
+- Use piksi\_tools master in benchmark [\#689](https://github.com/swift-nav/libsbp/pull/689)
+- Add source to gal eph [\#688](https://github.com/swift-nav/libsbp/pull/688)
+- Added additional checks for tools in the Makefile [\#684](https://github.com/swift-nav/libsbp/pull/684)
+- \[ESD-1238\] Do not call nullary constructors in Haskell ToJSON [\#680](https://github.com/swift-nav/libsbp/pull/680)
+- Automated Travis benchmark \[ESD-1158\] [\#667](https://github.com/swift-nav/libsbp/pull/667)
+- Log a warning for dispatch exceptions [\#653](https://github.com/swift-nav/libsbp/pull/653)
+
+## [2.5.4](https://github.com/swift-nav/libsbp/tree/v2.5.4) (2019-04-09)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.3...v2.5.4)
 
