@@ -877,10 +877,130 @@ $(makeSBP 'msgEphemerisBds ''MsgEphemerisBds)
 $(makeJSON "_msgEphemerisBds_" ''MsgEphemerisBds)
 $(makeLenses ''MsgEphemerisBds)
 
-msgEphemerisGal :: Word16
-msgEphemerisGal = 0x0095
+msgEphemerisGalDepA :: Word16
+msgEphemerisGalDepA = 0x0095
 
--- | SBP class for message MSG_EPHEMERIS_GAL (0x0095).
+-- | SBP class for message MSG_EPHEMERIS_GAL_DEP_A (0x0095).
+--
+-- This observation message has been deprecated in favor of an ephemeris
+-- message with explicit source of NAV data.
+data MsgEphemerisGalDepA = MsgEphemerisGalDepA
+  { _msgEphemerisGalDepA_common  :: !EphemerisCommonContent
+    -- ^ Values common for all ephemeris types
+  , _msgEphemerisGalDepA_bgd_e1e5a :: !Float
+    -- ^ E1-E5a Broadcast Group Delay
+  , _msgEphemerisGalDepA_bgd_e1e5b :: !Float
+    -- ^ E1-E5b Broadcast Group Delay
+  , _msgEphemerisGalDepA_c_rs    :: !Float
+    -- ^ Amplitude of the sine harmonic correction term to the orbit radius
+  , _msgEphemerisGalDepA_c_rc    :: !Float
+    -- ^ Amplitude of the cosine harmonic correction term to the orbit radius
+  , _msgEphemerisGalDepA_c_uc    :: !Float
+    -- ^ Amplitude of the cosine harmonic correction term to the argument of
+    -- latitude
+  , _msgEphemerisGalDepA_c_us    :: !Float
+    -- ^ Amplitude of the sine harmonic correction term to the argument of
+    -- latitude
+  , _msgEphemerisGalDepA_c_ic    :: !Float
+    -- ^ Amplitude of the cosine harmonic correction term to the angle of
+    -- inclination
+  , _msgEphemerisGalDepA_c_is    :: !Float
+    -- ^ Amplitude of the sine harmonic correction term to the angle of
+    -- inclination
+  , _msgEphemerisGalDepA_dn      :: !Double
+    -- ^ Mean motion difference
+  , _msgEphemerisGalDepA_m0      :: !Double
+    -- ^ Mean anomaly at reference time
+  , _msgEphemerisGalDepA_ecc     :: !Double
+    -- ^ Eccentricity of satellite orbit
+  , _msgEphemerisGalDepA_sqrta   :: !Double
+    -- ^ Square root of the semi-major axis of orbit
+  , _msgEphemerisGalDepA_omega0  :: !Double
+    -- ^ Longitude of ascending node of orbit plane at weekly epoch
+  , _msgEphemerisGalDepA_omegadot :: !Double
+    -- ^ Rate of right ascension
+  , _msgEphemerisGalDepA_w       :: !Double
+    -- ^ Argument of perigee
+  , _msgEphemerisGalDepA_inc     :: !Double
+    -- ^ Inclination
+  , _msgEphemerisGalDepA_inc_dot :: !Double
+    -- ^ Inclination first derivative
+  , _msgEphemerisGalDepA_af0     :: !Double
+    -- ^ Polynomial clock correction coefficient (clock bias)
+  , _msgEphemerisGalDepA_af1     :: !Double
+    -- ^ Polynomial clock correction coefficient (clock drift)
+  , _msgEphemerisGalDepA_af2     :: !Float
+    -- ^ Polynomial clock correction coefficient (rate of clock drift)
+  , _msgEphemerisGalDepA_toc     :: !GpsTimeSec
+    -- ^ Clock reference
+  , _msgEphemerisGalDepA_iode    :: !Word16
+    -- ^ Issue of ephemeris data
+  , _msgEphemerisGalDepA_iodc    :: !Word16
+    -- ^ Issue of clock data
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgEphemerisGalDepA where
+  get = do
+    _msgEphemerisGalDepA_common <- get
+    _msgEphemerisGalDepA_bgd_e1e5a <- getFloat32le
+    _msgEphemerisGalDepA_bgd_e1e5b <- getFloat32le
+    _msgEphemerisGalDepA_c_rs <- getFloat32le
+    _msgEphemerisGalDepA_c_rc <- getFloat32le
+    _msgEphemerisGalDepA_c_uc <- getFloat32le
+    _msgEphemerisGalDepA_c_us <- getFloat32le
+    _msgEphemerisGalDepA_c_ic <- getFloat32le
+    _msgEphemerisGalDepA_c_is <- getFloat32le
+    _msgEphemerisGalDepA_dn <- getFloat64le
+    _msgEphemerisGalDepA_m0 <- getFloat64le
+    _msgEphemerisGalDepA_ecc <- getFloat64le
+    _msgEphemerisGalDepA_sqrta <- getFloat64le
+    _msgEphemerisGalDepA_omega0 <- getFloat64le
+    _msgEphemerisGalDepA_omegadot <- getFloat64le
+    _msgEphemerisGalDepA_w <- getFloat64le
+    _msgEphemerisGalDepA_inc <- getFloat64le
+    _msgEphemerisGalDepA_inc_dot <- getFloat64le
+    _msgEphemerisGalDepA_af0 <- getFloat64le
+    _msgEphemerisGalDepA_af1 <- getFloat64le
+    _msgEphemerisGalDepA_af2 <- getFloat32le
+    _msgEphemerisGalDepA_toc <- get
+    _msgEphemerisGalDepA_iode <- getWord16le
+    _msgEphemerisGalDepA_iodc <- getWord16le
+    pure MsgEphemerisGalDepA {..}
+
+  put MsgEphemerisGalDepA {..} = do
+    put _msgEphemerisGalDepA_common
+    putFloat32le _msgEphemerisGalDepA_bgd_e1e5a
+    putFloat32le _msgEphemerisGalDepA_bgd_e1e5b
+    putFloat32le _msgEphemerisGalDepA_c_rs
+    putFloat32le _msgEphemerisGalDepA_c_rc
+    putFloat32le _msgEphemerisGalDepA_c_uc
+    putFloat32le _msgEphemerisGalDepA_c_us
+    putFloat32le _msgEphemerisGalDepA_c_ic
+    putFloat32le _msgEphemerisGalDepA_c_is
+    putFloat64le _msgEphemerisGalDepA_dn
+    putFloat64le _msgEphemerisGalDepA_m0
+    putFloat64le _msgEphemerisGalDepA_ecc
+    putFloat64le _msgEphemerisGalDepA_sqrta
+    putFloat64le _msgEphemerisGalDepA_omega0
+    putFloat64le _msgEphemerisGalDepA_omegadot
+    putFloat64le _msgEphemerisGalDepA_w
+    putFloat64le _msgEphemerisGalDepA_inc
+    putFloat64le _msgEphemerisGalDepA_inc_dot
+    putFloat64le _msgEphemerisGalDepA_af0
+    putFloat64le _msgEphemerisGalDepA_af1
+    putFloat32le _msgEphemerisGalDepA_af2
+    put _msgEphemerisGalDepA_toc
+    putWord16le _msgEphemerisGalDepA_iode
+    putWord16le _msgEphemerisGalDepA_iodc
+
+$(makeSBP 'msgEphemerisGalDepA ''MsgEphemerisGalDepA)
+$(makeJSON "_msgEphemerisGalDepA_" ''MsgEphemerisGalDepA)
+$(makeLenses ''MsgEphemerisGalDepA)
+
+msgEphemerisGal :: Word16
+msgEphemerisGal = 0x008D
+
+-- | SBP class for message MSG_EPHEMERIS_GAL (0x008D).
 --
 -- The ephemeris message returns a set of satellite orbit parameters that is
 -- used to calculate Galileo satellite position, velocity, and clock offset.
@@ -939,6 +1059,8 @@ data MsgEphemerisGal = MsgEphemerisGal
     -- ^ Issue of ephemeris data
   , _msgEphemerisGal_iodc    :: !Word16
     -- ^ Issue of clock data
+  , _msgEphemerisGal_source  :: !Word8
+    -- ^ 0=I/NAV, 1=F/NAV, ...
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgEphemerisGal where
@@ -967,6 +1089,7 @@ instance Binary MsgEphemerisGal where
     _msgEphemerisGal_toc <- get
     _msgEphemerisGal_iode <- getWord16le
     _msgEphemerisGal_iodc <- getWord16le
+    _msgEphemerisGal_source <- getWord8
     pure MsgEphemerisGal {..}
 
   put MsgEphemerisGal {..} = do
@@ -994,6 +1117,7 @@ instance Binary MsgEphemerisGal where
     put _msgEphemerisGal_toc
     putWord16le _msgEphemerisGal_iode
     putWord16le _msgEphemerisGal_iodc
+    putWord8 _msgEphemerisGal_source
 
 $(makeSBP 'msgEphemerisGal ''MsgEphemerisGal)
 $(makeJSON "_msgEphemerisGal_" ''MsgEphemerisGal)

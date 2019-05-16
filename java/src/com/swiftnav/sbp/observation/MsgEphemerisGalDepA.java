@@ -23,19 +23,17 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_EPHEMERIS_GAL (0x008D).
+/** SBP class for message MSG_EPHEMERIS_GAL_DEP_A (0x0095).
  *
- * You can have MSG_EPHEMERIS_GAL inherent its fields directly from
+ * You can have MSG_EPHEMERIS_GAL_DEP_A inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The ephemeris message returns a set of satellite orbit
- * parameters that is used to calculate Galileo satellite position,
- * velocity, and clock offset. Please see the Signal In Space ICD
- * OS SIS ICD, Issue 1.3, December 2016 for more details. */
+ * This observation message has been deprecated in favor of
+ * an ephemeris message with explicit source of NAV data. */
 
-public class MsgEphemerisGal extends SBPMessage {
-    public static final int TYPE = 0x008D;
+public class MsgEphemerisGalDepA extends SBPMessage {
+    public static final int TYPE = 0x0095;
 
     
     /** Values common for all ephemeris types */
@@ -110,13 +108,10 @@ public class MsgEphemerisGal extends SBPMessage {
     /** Issue of clock data */
     public int iodc;
     
-    /** 0=I/NAV, 1=F/NAV, ... */
-    public int source;
-    
 
-    public MsgEphemerisGal (int sender) { super(sender, TYPE); }
-    public MsgEphemerisGal () { super(TYPE); }
-    public MsgEphemerisGal (SBPMessage msg) throws SBPBinaryException {
+    public MsgEphemerisGalDepA (int sender) { super(sender, TYPE); }
+    public MsgEphemerisGalDepA () { super(TYPE); }
+    public MsgEphemerisGalDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -148,7 +143,6 @@ public class MsgEphemerisGal extends SBPMessage {
         toc = new GPSTimeSec().parse(parser);
         iode = parser.getU16();
         iodc = parser.getU16();
-        source = parser.getU8();
     }
 
     @Override
@@ -177,7 +171,6 @@ public class MsgEphemerisGal extends SBPMessage {
         toc.build(builder);
         builder.putU16(iode);
         builder.putU16(iodc);
-        builder.putU8(source);
     }
 
     @Override
@@ -207,7 +200,6 @@ public class MsgEphemerisGal extends SBPMessage {
         obj.put("toc", toc.toJSON());
         obj.put("iode", iode);
         obj.put("iodc", iodc);
-        obj.put("source", source);
         return obj;
     }
 }
