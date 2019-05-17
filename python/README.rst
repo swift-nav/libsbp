@@ -21,7 +21,7 @@ Install package from pypi::
   $ sudo pip install sbp
 
 Setup using a virtual environment
------
+---------------------------------
 
 Setup and activate the `virtualenv`::
 

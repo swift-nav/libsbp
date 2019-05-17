@@ -12,6 +12,7 @@ RUN \
 CMD \
   tar -C $(find .stack-work/install -name bin) -cf - \
     sbp2json \
+    sbp2prettyjson \
     sbp2yaml \
     json2sbp \
     json2json

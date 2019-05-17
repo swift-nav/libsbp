@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_EPHEMERIS_GAL (0x0095).
+/** SBP class for message MSG_EPHEMERIS_GAL (0x008D).
  *
  * You can have MSG_EPHEMERIS_GAL inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -35,7 +35,7 @@ import org.json.JSONArray;
  * OS SIS ICD, Issue 1.3, December 2016 for more details. */
 
 public class MsgEphemerisGal extends SBPMessage {
-    public static final int TYPE = 0x0095;
+    public static final int TYPE = 0x008D;
 
     
     /** Values common for all ephemeris types */
@@ -110,6 +110,9 @@ public class MsgEphemerisGal extends SBPMessage {
     /** Issue of clock data */
     public int iodc;
     
+    /** 0=I/NAV, 1=F/NAV, ... */
+    public int source;
+    
 
     public MsgEphemerisGal (int sender) { super(sender, TYPE); }
     public MsgEphemerisGal () { super(TYPE); }
@@ -145,6 +148,7 @@ public class MsgEphemerisGal extends SBPMessage {
         toc = new GPSTimeSec().parse(parser);
         iode = parser.getU16();
         iodc = parser.getU16();
+        source = parser.getU8();
     }
 
     @Override
@@ -173,6 +177,7 @@ public class MsgEphemerisGal extends SBPMessage {
         toc.build(builder);
         builder.putU16(iode);
         builder.putU16(iodc);
+        builder.putU8(source);
     }
 
     @Override
@@ -202,6 +207,7 @@ public class MsgEphemerisGal extends SBPMessage {
         obj.put("toc", toc.toJSON());
         obj.put("iode", iode);
         obj.put("iodc", iodc);
+        obj.put("source", source);
         return obj;
     }
 }

@@ -16,6 +16,7 @@ import datetime
 import time
 import uuid
 import six
+import warnings
 
 import numpy as np
 
@@ -102,14 +103,8 @@ class Framer(six.Iterator):
         data = b""
         while len(data) < size:
             d = self._read(size - len(data))
-            if self._broken:
+            if not d or self._broken:
                 raise StopIteration
-            if not d:
-                # NOTE (Buro/jgross): Force a yield here to another thread. In
-                # case the stream fails midstream, the spinning here causes
-                # the UI thread to lock up without yielding.
-                time.sleep(0)
-                continue
             data += d
         return data
 
@@ -143,8 +138,8 @@ class Framer(six.Iterator):
         msg = SBP(msg_type, sender, msg_len, data, crc)
         try:
             msg = self._dispatch(msg)
-        except:
-            pass
+        except Exception as exc:
+            warnings.warn("SBP dispatch error: %s" % (exc,))
         return msg
 
     def __call__(self, *msgs, **metadata):
