@@ -5,6 +5,8 @@ import ntpath
 import os
 import shutil
 
+from sbp.utils import get_py_version
+
 ffi = cffi.FFI()
 ffi.cdef("""
 float get_f32(unsigned char a, unsigned char b, unsigned char c, unsigned char d);
@@ -37,7 +39,7 @@ double get_f64(unsigned char a, unsigned char b, unsigned char c, unsigned char 
 }
 """
 
-module_name = "parse_float_c"
+module_name = "parse_float_c_py{}".format(get_py_version())
 
 ffi.set_source(module_name=module_name, source=source)
 

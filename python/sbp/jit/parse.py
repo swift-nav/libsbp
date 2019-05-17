@@ -14,6 +14,7 @@ import glob
 import ntpath
 import os
 import shutil
+import importlib
 
 import numpy as np
 import numba as nb
@@ -22,21 +23,23 @@ from numba.pycc import CC
 
 from sbp.utils import SENDER_ID as _SENDER_ID
 from sbp.utils import SBP_PREAMBLE as _SBP_PREAMBLE
-from sbp.utils import _crc16_tab
+from sbp.utils import _crc16_tab, get_py_version
 
 from pkgutil import iter_modules
 
-if 'parse_float_c' in (name for loader, name, ispkg in iter_modules()):
+parse_float_c_name = "parse_float_c_py{}".format(get_py_version())
+
+if parse_float_c_name in (name for loader, name, ispkg in iter_modules()):
     # found in sys.path
-    import parse_float_c
-elif 'parse_float_c' in (name for loader, name, ispkg in iter_modules(['sbp/jit'])):
+    parse_float_c = importlib.import_module(parse_float_c_name)
+elif parse_float_c_name in (name for loader, name, ispkg in iter_modules(['sbp/jit'])):
     # found in sbp.jit
-    from sbp.jit import parse_float_c
+    parse_float_c = importlib.import_module('sbp.jit.' + parse_float_c_name)
 else:
     # not found -> compile
     from sbp.jit import parse_float
     parse_float.compile()
-    from sbp.jit import parse_float_c
+    parse_float_c = importlib.import_module('sbp.jit.' + parse_float_c_name)
 
 from numba import cffi_support
 cffi_support.register_module(parse_float_c)
@@ -147,7 +150,7 @@ def CCompiler_compile(self, sources, output_dir=None, macros=None,
 replace_method(CCompiler, 'compile', CCompiler_compile)
 # monkeypatch end
 
-module_name='parse_jit'
+module_name = "parse_jit_py{}".format(get_py_version())
 cc = CC(module_name)
 cc.verbose = False
 

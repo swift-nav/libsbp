@@ -11,6 +11,7 @@
 
 import base64
 import copy
+import importlib
 import json
 import struct
 
@@ -18,24 +19,26 @@ import construct
 
 from sbp.utils import SENDER_ID as _SENDER_ID
 from sbp.utils import SBP_PREAMBLE as _SBP_PREAMBLE
-from sbp.utils import _crc16_tab
+from sbp.utils import _crc16_tab, get_py_version
 
 import numba as nb
 import numpy as np
 
 from pkgutil import iter_modules
 
-if 'parse_jit' in (name for loader, name, ispkg in iter_modules()):
+parse_jit_name = "parse_jit_py{}".format(get_py_version())
+
+if parse_jit_name in (name for loader, name, ispkg in iter_modules()):
     # found in sys.path
-    import parse_float_c
-elif 'parse_jit' in (name for loader, name, ispkg in iter_modules(['sbp/jit'])):
+    parse_jit = importlib.import_module(parse_jit_name)
+elif parse_jit_name in (name for loader, name, ispkg in iter_modules(['sbp/jit'])):
     # found in sbp.jit
-    from sbp.jit import parse_jit
+    parse_jit = importlib.import_module('sbp.jit.' + parse_jit_name)
 else:
     # not found -> compile
     from sbp.jit import parse
     parse.compile()
-    from sbp.jit import parse_jit
+    parse_jit = importlib.import_module('sbp.jit.' + parse_jit_name)
 
 
 crc16_tab = np.array(_crc16_tab, dtype=np.uint16)

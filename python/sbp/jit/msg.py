@@ -10,28 +10,34 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+import importlib
+
 from pybase64 import standard_b64encode
 
 import decimal as dec
 
 import numpy as np
 
+from sbp.utils import get_py_version
+
 from sbp.jit.parse import SENDER_ID as _SENDER_ID
 from sbp.jit.parse import SBP_PREAMBLE as _SBP_PREAMBLE
 
 from pkgutil import iter_modules
 
-if 'parse_jit' in (name for loader, name, ispkg in iter_modules()):
+parse_jit_name = "parse_jit_py{}".format(get_py_version())
+
+if parse_jit_name in (name for loader, name, ispkg in iter_modules()):
     # found in sys.path
-    import parse_float_c
-elif 'parse_jit' in (name for loader, name, ispkg in iter_modules(['sbp/jit'])):
+    parse_jit = importlib.import_module(parse_jit_name)
+elif parse_jit_name in (name for loader, name, ispkg in iter_modules(['sbp/jit'])):
     # found in sbp.jit
-    from sbp.jit import parse_jit
+    parse_jit = importlib.import_module('sbp.jit.' + parse_jit_name)
 else:
     # not found -> compile
     from sbp.jit import parse
     parse.compile()
-    from sbp.jit import parse_jit
+    parse_jit = importlib.import_module('sbp.jit.' + parse_jit_name)
 
 get_u8 = parse_jit.get_u8
 get_u16 = parse_jit.get_u16
