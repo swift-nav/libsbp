@@ -20,8 +20,8 @@ import numpy as np
 
 from sbp.utils import get_py_version
 
-from sbp.jit.parse import SENDER_ID as _SENDER_ID
-from sbp.jit.parse import SBP_PREAMBLE as _SBP_PREAMBLE
+from sbp.utils import SENDER_ID as _SENDER_ID
+from sbp.utils import SBP_PREAMBLE as _SBP_PREAMBLE
 
 from pkgutil import iter_modules
 
@@ -47,8 +47,8 @@ get_s8 = parse_jit.get_s8
 get_s16 = parse_jit.get_s16
 get_s32 = parse_jit.get_s32
 get_s64 = parse_jit.get_s64
-get_f32 = parse_jit.get_f32
-get_f64 = parse_jit.get_f64
+get_f32 = lambda buf, offset, length: (float(np.frombuffer(buf, dtype=np.float32, count=1, offset=offset)), offset + 4, length - 4)
+get_f64 = lambda buf, offset, length: (float(np.frombuffer(buf, dtype=np.float64, count=1, offset=offset)), offset + 8, length - 8)
 _get_string = parse_jit._get_string
 unpack_payload = parse_jit.unpack_payload
 

@@ -25,27 +25,29 @@ from sbp.utils import SENDER_ID as _SENDER_ID
 from sbp.utils import SBP_PREAMBLE as _SBP_PREAMBLE
 from sbp.utils import _crc16_tab, get_py_version
 
-from pkgutil import iter_modules
+# See comment before get_f32() below
 
-parse_float_c_name = "parse_float_c_py{}".format(get_py_version())
+# from pkgutil import iter_modules
 
-if parse_float_c_name in (name for loader, name, ispkg in iter_modules()):
-    # found in sys.path
-    parse_float_c = importlib.import_module(parse_float_c_name)
-elif parse_float_c_name in (name for loader, name, ispkg in iter_modules(['sbp/jit'])):
-    # found in sbp.jit
-    parse_float_c = importlib.import_module('sbp.jit.' + parse_float_c_name)
-else:
-    # not found -> compile
-    from sbp.jit import parse_float
-    parse_float.compile()
-    parse_float_c = importlib.import_module('sbp.jit.' + parse_float_c_name)
+# parse_float_c_name = "parse_float_c_py{}".format(get_py_version())
 
-from numba import cffi_support
-cffi_support.register_module(parse_float_c)
+# if parse_float_c_name in (name for loader, name, ispkg in iter_modules()):
+#     # found in sys.path
+#     parse_float_c = importlib.import_module(parse_float_c_name)
+# elif parse_float_c_name in (name for loader, name, ispkg in iter_modules(['sbp/jit'])):
+#     # found in sbp.jit
+#     parse_float_c = importlib.import_module('sbp.jit.' + parse_float_c_name)
+# else:
+#     # not found -> compile
+#     from sbp.jit import parse_float
+#     parse_float.compile()
+#     parse_float_c = importlib.import_module('sbp.jit.' + parse_float_c_name)
 
-_get_f32 = parse_float_c.lib.get_f32
-_get_f64 = parse_float_c.lib.get_f64
+#from numba import cffi_support
+#cffi_support.register_module(parse_float_c)
+
+#_get_f32 = parse_float_c.lib.get_f32
+#_get_f64 = parse_float_c.lib.get_f64
 
 from distutils.ccompiler import CCompiler
 from numpy.distutils.misc_util import get_num_build_jobs
@@ -114,6 +116,7 @@ def CCompiler_compile(self, sources, output_dir=None, macros=None,
             self._setup_compile(output_dir, macros, include_dirs, sources,
                                 depends, extra_postargs)
     cc_args = self._get_cc_args(pp_opts, debug, extra_preargs)
+    #cc_args += ['-g']
     display = "compile options: '%s'" % (' '.join(cc_args))
     if extra_postargs:
         display += "\nextra options: '%s'" % (' '.join(extra_postargs))
@@ -152,7 +155,7 @@ replace_method(CCompiler, 'compile', CCompiler_compile)
 
 module_name = "parse_jit_py{}".format(get_py_version())
 cc = CC(module_name)
-cc.verbose = False
+cc.verbose = True
 
 crc16_tab = np.array(_crc16_tab, dtype=np.uint16)
 
@@ -257,31 +260,33 @@ def get_s64(buf, offset, length):
     h = nb.i8(buf[offset + 0]) << 0
     return a | b | c | d | e | f | g | h, offset + 8, length - 8
 
+# These float functions segfault in case this module is just imported and not
+# ran through numba compile process.
 
-@cc.export('get_f32', 'Tuple((f4,u4,u4))(u1[:],u4,u4)')
-def get_f32(buf, offset, length):
-    if length < 4:
-        return (0, offset, length)
-    res = _get_f32(buf[offset + 0],
-                   buf[offset + 1],
-                   buf[offset + 2],
-                   buf[offset + 3])
-    return res, offset + 4, length - 4
+# @cc.export('get_f32', 'Tuple((f4,u4,u4))(u1[:],u4,u4)')
+# def get_f32(buf, offset, length):
+#     if length < 4:
+#         return (0, offset, length)
+#     res = _get_f32(buf[offset + 0],
+#                    buf[offset + 1],
+#                    buf[offset + 2],
+#                    buf[offset + 3])
+#     return res, offset + 4, length - 4
 
 
-@cc.export('get_f64', 'Tuple((f8,u4,u4))(u1[:],u4,u4)')
-def get_f64(buf, offset, length):
-    if length < 8:
-        return (0, offset, length)
-    res = _get_f64(buf[offset + 0],
-                   buf[offset + 1],
-                   buf[offset + 2],
-                   buf[offset + 3],
-                   buf[offset + 4],
-                   buf[offset + 5],
-                   buf[offset + 6],
-                   buf[offset + 7])
-    return res, offset + 8, length - 8
+# @cc.export('get_f64', 'Tuple((f8,u4,u4))(u1[:],u4,u4)')
+# def get_f64(buf, offset, length):
+#     if length < 8:
+#         return (0, offset, length)
+#     res = _get_f64(buf[offset + 0],
+#                    buf[offset + 1],
+#                    buf[offset + 2],
+#                    buf[offset + 3],
+#                    buf[offset + 4],
+#                    buf[offset + 5],
+#                    buf[offset + 6],
+#                    buf[offset + 7])
+#     return res, offset + 8, length - 8
 
 
 @cc.export('_get_string', 'Tuple((u1[:],u4,u4))(u1[:],u4,u4,b1)')
