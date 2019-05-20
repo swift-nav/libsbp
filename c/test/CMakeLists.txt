@@ -7,7 +7,11 @@ else (CMAKE_CROSSCOMPILING)
     message(STATUS "Skipping unit tests, Check library not found!")
   else (NOT CHECK_FOUND)
 
-    set(TEST_LIBS ${TEST_LIBS} ${CHECK_LIBRARIES} pthread sbp m)
+    if(PLATFORM_IMPLEMENTATION_NO_PTHREAD)
+      set(TEST_LIBS ${TEST_LIBS} ${CHECK_LIBRARIES} pthread sbp m)
+    else()
+      set(TEST_LIBS ${TEST_LIBS} ${CHECK_LIBRARIES} sbp m)
+    endif()
 
     # Check needs to be linked against Librt on Linux
     if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
