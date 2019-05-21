@@ -14,5 +14,8 @@ set_target_properties(test_libsbp PROPERTIES
         C_STANDARD_REQUIRED ON)
 target_include_directories(test_libsbp PRIVATE ${PROJECT_SOURCE_DIR}/include/libsbp/)
 
-add_test(NAME test_libsbp COMMAND test_libsbp)
-
+add_custom_command(
+  TARGET test_libsbp POST_BUILD
+  COMMENT "Running unit tests"
+  COMMAND test_libsbp
+)
