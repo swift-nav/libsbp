@@ -18,14 +18,14 @@ import decimal as dec
 
 import numpy as np
 
-from sbp.utils import get_py_version
-
-from sbp.utils import SENDER_ID as _SENDER_ID
-from sbp.utils import SBP_PREAMBLE as _SBP_PREAMBLE
+from sbp.constants import SENDER_ID as _SENDER_ID
+from sbp.constants import SBP_PREAMBLE as _SBP_PREAMBLE
 
 from pkgutil import iter_modules
 
-parse_jit_name = "parse_jit_py{}".format(get_py_version())
+import sys
+
+parse_jit_name = "parse_jit_py{}".format(str(sys.version_info[0]) + str(sys.version_info[1]))
 
 if parse_jit_name in (name for loader, name, ispkg in iter_modules()):
     # found in sys.path

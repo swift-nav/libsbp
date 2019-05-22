@@ -21,9 +21,9 @@ import numba as nb
 
 from numba.pycc import CC
 
-from sbp.utils import SENDER_ID as _SENDER_ID
-from sbp.utils import SBP_PREAMBLE as _SBP_PREAMBLE
-from sbp.utils import _crc16_tab, get_py_version
+from sbp.constants import SENDER_ID as _SENDER_ID
+from sbp.constants import SBP_PREAMBLE as _SBP_PREAMBLE
+from sbp.constants import _crc16_tab
 
 from distutils.ccompiler import CCompiler
 from numpy.distutils.misc_util import get_num_build_jobs
@@ -129,7 +129,7 @@ def CCompiler_compile(self, sources, output_dir=None, macros=None,
 replace_method(CCompiler, 'compile', CCompiler_compile)
 # monkeypatch end
 
-module_name = "parse_jit_py{}".format(get_py_version())
+module_name = "parse_jit_py{}".format(str(sys.version_info[0]) + str(sys.version_info[1]))
 cc = CC(module_name)
 cc.verbose = True
 
