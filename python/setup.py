@@ -14,6 +14,8 @@ import os
 
 import subprocess
 
+from sbp.jit.parse import cc
+
 CLASSIFIERS = [
   'Intended Audience :: Developers',
   'Intended Audience :: Science/Research',
@@ -184,4 +186,5 @@ if __name__ == "__main__":
           install_requires=INSTALL_REQUIRES,
           tests_require=TEST_REQUIRES,
           use_2to3=False,
-          zip_safe=False)
+          zip_safe=False,
+          ext_modules=[cc.distutils_extension()])
