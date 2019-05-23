@@ -408,7 +408,7 @@ definitions:
 
  - MSG_SSR_STEC_CORRECTION:
     id: 0x05EB
-    short_desc: Slant Total Electon Content
+    short_desc: Slant Total Electron Content
     desc: |
       The STEC per space vehicle, given as polynomial approximation for
       a given grid.  This should be combined with SSR-GriddedCorrection
