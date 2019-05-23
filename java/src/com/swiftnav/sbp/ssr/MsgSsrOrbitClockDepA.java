@@ -29,8 +29,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * The precise orbit and clock correction message is 
- * to be applied as a delta correction to broadcast 
+ * The precise orbit and clock correction message is
+ * to be applied as a delta correction to broadcast
  * ephemeris and is typically an equivalent to the 1060
  * and 1066 RTCM message types */
 
@@ -48,7 +48,7 @@ public class MsgSsrOrbitClockDepA extends SBPMessage {
     public int update_interval;
     
     /** IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR 
+SSR is used to indicate a change in the SSR
 generating configuration
  */
     public int iod_ssr;

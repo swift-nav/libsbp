@@ -41,6 +41,17 @@ the Slot ID in [1,28]
 } sbp_gnss_signal_t;
 
 
+/** Space vehicle identifier
+ *
+ * A (Constellation ID, satellite ID) tuple that uniquely identifies
+ * a space vehicle
+ */
+typedef struct SBP_ATTR_PACKED {
+  u8 satId;            /**< ID of the space vehicle within its constellation */
+  u8 constellation;    /**< Constellation ID to which the SV belongs */
+} sv_id_t;
+
+
 /** Deprecated
  *
 * Deprecated.

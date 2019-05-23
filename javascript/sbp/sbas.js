@@ -29,6 +29,7 @@ var CarrierPhase = require("./gnss").CarrierPhase;
 var GPSTime = require("./gnss").GPSTime;
 var GPSTimeSec = require("./gnss").GPSTimeSec;
 var GPSTimeDep = require("./gnss").GPSTimeDep;
+var SvId = require("./gnss").SvId;
 
 /**
  * SBP class for message MSG_SBAS_RAW (0x7777).
