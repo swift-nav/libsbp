@@ -59,6 +59,30 @@ instance Binary GnssSignal where
 $(makeJSON "_gnssSignal_" ''GnssSignal)
 $(makeLenses ''GnssSignal)
 
+-- | SvId.
+--
+-- A (Constellation ID, satellite ID) tuple that uniquely identifies a space
+-- vehicle
+data SvId = SvId
+  { _svId_satId       :: !Word8
+    -- ^ ID of the space vehicle within its constellation
+  , _svId_constellation :: !Word8
+    -- ^ Constellation ID to which the SV belongs
+  } deriving ( Show, Read, Eq )
+
+instance Binary SvId where
+  get = do
+    _svId_satId <- getWord8
+    _svId_constellation <- getWord8
+    pure SvId {..}
+
+  put SvId {..} = do
+    putWord8 _svId_satId
+    putWord8 _svId_constellation
+
+$(makeJSON "_svId_" ''SvId)
+$(makeLenses ''SvId)
+
 -- | GnssSignalDep.
 --
 -- Deprecated.
