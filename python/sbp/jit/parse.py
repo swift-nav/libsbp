@@ -23,7 +23,7 @@ from numba.pycc import CC
 
 from sbp.constants import SENDER_ID as _SENDER_ID
 from sbp.constants import SBP_PREAMBLE as _SBP_PREAMBLE
-from sbp.constants import _crc16_tab
+from sbp.constants import crc16_tab
 
 from distutils.ccompiler import CCompiler
 from numpy.distutils.misc_util import get_num_build_jobs
@@ -133,7 +133,7 @@ module_name = "parse_jit_py{}".format(str(sys.version_info[0]) + str(sys.version
 cc = CC(module_name)
 cc.verbose = True
 
-crc16_tab = np.array(_crc16_tab, dtype=np.uint16)
+np_crc16_tab = np.array(crc16_tab, dtype=np.uint16)
 
 SENDER_ID = _SENDER_ID
 SBP_PREAMBLE = _SBP_PREAMBLE
@@ -145,7 +145,7 @@ def crc16jit(buf, offset, crc, length):
   """CRC16 implementation acording to CCITT standards."""
   for index in range(offset, offset + length):
     data = buf[index]
-    lookup = crc16_tab[((nb.u2(crc) >> 8) & nb.u2(0xFF)) ^ (data & nb.u2(0xFF))]
+    lookup = np_crc16_tab[((nb.u2(crc) >> 8) & nb.u2(0xFF)) ^ (data & nb.u2(0xFF))]
     crc = ((nb.u2(crc) << nb.u2(8)) & nb.u2(0xFFFF)) ^ lookup
     crc = nb.u2(crc) & nb.u2(0xFFFF)
   return crc

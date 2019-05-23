@@ -19,7 +19,7 @@ import construct
 
 from sbp.constants import SENDER_ID as _SENDER_ID
 from sbp.constants import SBP_PREAMBLE as _SBP_PREAMBLE
-from sbp.constants import _crc16_tab
+from sbp.constants import crc16_tab
 
 import numba as nb
 import numpy as np
@@ -43,7 +43,7 @@ else:
     parse_jit = importlib.import_module('sbp.jit.' + parse_jit_name)
 
 
-crc16_tab = np.array(_crc16_tab, dtype=np.uint16)
+np_crc16_tab = np.array(crc16_tab, dtype=np.uint16)
 
 SENDER_ID = _SENDER_ID
 SBP_PREAMBLE = _SBP_PREAMBLE
@@ -59,7 +59,7 @@ def crc16(s, crc=0, buf=crc_buffer):
 def crc16_nojit(s, crc=0):
   """CRC16 implementation acording to CCITT standards."""
   for ch in bytearray(s):  # bytearray's elements are integers in both python 2 and 3
-    crc = ((crc << 8) & 0xFFFF) ^ crc16_tab[((crc >> 8) & 0xFF) ^ (ch & 0xFF)]
+    crc = ((crc << 8) & 0xFFFF) ^ np_crc16_tab[((crc >> 8) & 0xFF) ^ (ch & 0xFF)]
     crc &= 0xFFFF
   return crc
 
