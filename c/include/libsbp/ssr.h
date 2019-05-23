@@ -253,7 +253,7 @@ satellite being tracked.
 } msg_ssr_phase_biases_t;
 
 
-/** Slant Total Electon Content
+/** Slant Total Electron Content
  *
  * The STEC per space vehicle, given as polynomial approximation for
  * a given grid.  This should be combined with SSR-GriddedCorrection
