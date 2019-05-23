@@ -107,20 +107,20 @@ definitions:
         desc: troposphere quality indicator
 
  - STECSatElement:
-     desc: STEC for the given satellite.
-     fields:
-     - sv_id:
-         type: SvId
-         desc: Unique space vehicle identifier
-     - stec_quality_indicator:
-         type: u8
-         units: encoded value - see spec for details
-         desc: quality of STEC data
-     - stec_coeff:
-         type: array
-         size: 4
-         fill: s16
-         desc: coefficents of the STEC polynomial
+    desc: STEC for the given satellite.
+    fields:
+    - sv_id:
+        type: SvId
+        desc: Unique space vehicle identifier
+    - stec_quality_indicator:
+        type: u8
+        units: encoded value - see spec for details
+        desc: quality of STEC data
+    - stec_coeff:
+        type: array
+        size: 4
+        fill: s16
+        desc: coefficents of the STEC polynomial
 
  - TroposphericDelayCorrection:
     short_desc: troposphere delay correction
@@ -130,7 +130,7 @@ definitions:
     - hydro:
         type: s16
         units: 0.4 mm (add 2.3 m to get actual vert hydro delay)
-       desc: hydrostatic vertical delay
+        desc: hydrostatic vertical delay
     - wet:
         type: s8
         units: 0.4 mm (add 0.252 m to get actual vert wet delay)
