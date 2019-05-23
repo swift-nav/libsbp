@@ -166,6 +166,16 @@ public class SBPMessage {
             return ret;
         }
 
+        public int[] getArrayofS16() {
+            return getArrayofS16(buf.remaining());
+        }
+        public int[] getArrayofS16(int n) {
+            int[] ret = new int[n];
+            for (int i = 0; i < n; i++)
+                ret[i] = getS16();
+            return ret;
+        }
+
         public int[] getArrayofU16() {
             return getArrayofU16(buf.remaining());
         }
@@ -296,6 +306,15 @@ public class SBPMessage {
         public void putArrayofS8(int[] data, int n) {
             assert(n == data.length);
             putArrayofS8(data);
+        }
+
+        public void putArrayofS16(int[] data) {
+            for (int x : data)
+                buf.putShort((short)x);
+        }
+        public void putArrayofS16(int[] data, int n) {
+            assert(n == data.length);
+            putArrayofS16(data);
         }
 
         public void putArrayofU16(int[] data) {

@@ -47,19 +47,156 @@ definitions:
      - discontinuity_counter:
             type: u8
             desc: |
-              Signal phase discontinuity counter. 
+              Signal phase discontinuity counter.
               Increased for every discontinuity in phase.
      - bias:
             type: s32
             units: 0.1 mm
             desc: Phase bias for specified signal
 
+ - STECHeader:
+    short_desc: Header for MSG_SSR_STEC_CORRECTION message
+    desc: |
+      A full set of STEC information will likely span multiple SBP
+      messages, since SBP message a limited to 255 bytes.  The header
+      is used to tie multiple SBP messages into a sequence.
+    fields:
+    - time:
+        type: GPSTime
+        desc: GNSS time of the STEC data
+    - num_msgs:
+        type: u8
+        desc: Number of messages in the dataset
+    - seq_num:
+        type: u8
+        desc: Position of this message in the dataset
+    - ssr_update_interval:
+        type: u16
+        units: seconds
+        desc: update interval in seconds
+    - iod_ssr:
+        type: u8
+        desc: range 0 - 15
+
+ - GriddedCorrectionHeader:
+    short_desc: Header for MSG_SSR_GRIDDED_CORRECTION
+    desc: |
+      The 3GPP message contains nested variable length arrays
+      which are not suppported in SBP, so each grid point will
+      be identified by the index.
+    fields:
+    - time:
+        type: GPSTime
+        desc: GNSS time of the STEC data
+    - num_msgs:
+        type: u16
+        desc: Number of messages in the dataset
+    - seq_num:
+        type: u16
+        desc: Position of this message in the dataset
+    - ssr_update_interval:
+        type: u16
+        units: seconds
+        desc: update interval in seconds
+    - iod_ssr:
+        type: u8
+        desc: range 0 - 15
+    - tropo_quality:
+        type: u8
+        units: encoded value - see spec for details
+        desc: troposphere quality indicator
+
+ - STECSatElement:
+    desc: STEC for the given satellite.
+    fields:
+    - sv_id:
+        type: SvId
+        desc: Unique space vehicle identifier
+    - stec_quality_indicator:
+        type: u8
+        units: encoded value - see spec for details
+        desc: quality of STEC data
+    - stec_coeff:
+        type: array
+        size: 4
+        fill: s16
+        desc: coefficents of the STEC polynomial
+
+ - TroposphericDelayCorrection:
+    short_desc: troposphere delay correction
+    desc: |
+      Contains wet vertical and hydrostatic vertical delay
+    fields:
+    - hydro:
+        type: s16
+        units: 0.4 mm (add 2.3 m to get actual vert hydro delay)
+        desc: hydrostatic vertical delay
+    - wet:
+        type: s8
+        units: 0.4 mm (add 0.252 m to get actual vert wet delay)
+        desc: wet vertical delay
+
+ - STECResidual:
+    desc: STEC residual
+    fields:
+    - sv_id:
+        type: SvId
+        desc: space vehicle identifier
+    - residual:
+        type: s16
+        units: 0.04 TECU
+        desc: STEC residual
+
+ - GridElement:
+    short_desc: Grid datum for troposphere and STEC residuals
+    desc: |
+      Contains one tropo datum, plus STEC residuals for each space
+      vehicle
+    fields:
+    - index:
+        type: u16
+        desc: index of the grid point
+    - tropo_delay_correction:
+        type: TroposphericDelayCorrection
+        desc: Wet and Hydrostatic Vertical Delay
+    - STEC_residuals:
+        type: array
+        fill: STECResidual
+        desc: STEC Residual for the given space vehicle
+
+ - GridDefinitionHeader:
+    short_desc: Defines the grid for STEC and tropo grid messages
+    desc: |
+      Defines the grid for STEC and tropo grid messages.
+      Also includes an RLE encoded validity list.
+    fields:
+    - region_size_inverse:
+        type: u8
+        units: coded value - see spec
+        desc: inverse of region size
+    - area_width:
+        type: u16
+        units: coded value - 0 means not present (Swift convention)
+        desc: area width; see spec for details
+    - lat_nw_corner_enc:
+        type: u16
+        desc: encoded latitude of the northwest corner of the grid
+    - lon_nw_corner_enc:
+        type: u16
+        desc: encoded longitude of the northwest corner of the grid
+    - num_msgs:
+        type: u8
+        desc: Number of messages in the dataset
+    - seq_num:
+        type: u8
+        desc: Postion of this message in the dataset
+
  - MSG_SSR_ORBIT_CLOCK:
     id: 0x05DD
     short_desc: Precise orbit and clock correction
     desc: |
-      The precise orbit and clock correction message is 
-      to be applied as a delta correction to broadcast 
+      The precise orbit and clock correction message is
+      to be applied as a delta correction to broadcast
       ephemeris and is typically an equivalent to the 1060
       and 1066 RTCM message types
     fields:
@@ -77,7 +214,7 @@ definitions:
             type: u8
             desc: |
                 IOD of the SSR correction. A change of Issue Of Data
-                SSR is used to indicate a change in the SSR 
+                SSR is used to indicate a change in the SSR
                 generating configuration
         - iod:
             type: u32
@@ -123,8 +260,8 @@ definitions:
     id: 0x05DC
     short_desc: Precise orbit and clock correction
     desc: |
-      The precise orbit and clock correction message is 
-      to be applied as a delta correction to broadcast 
+      The precise orbit and clock correction message is
+      to be applied as a delta correction to broadcast
       ephemeris and is typically an equivalent to the 1060
       and 1066 RTCM message types
     fields:
@@ -142,7 +279,7 @@ definitions:
             type: u8
             desc: |
                 IOD of the SSR correction. A change of Issue Of Data
-                SSR is used to indicate a change in the SSR 
+                SSR is used to indicate a change in the SSR
                 generating configuration
         - iod:
             type: u8
@@ -183,15 +320,15 @@ definitions:
             type: s32
             units: 0.00002 mm/s^-2
             desc: C2 polynomial coefficient for correction of broadcast satellite clock
-        
-              
+
+
  - MSG_SSR_CODE_BIASES:
     id: 0x05E1
     short_desc: Precise code biases correction
     desc: |
       The precise code biases message is to be added
       to the pseudorange of the corresponding signal
-      to get corrected pseudorange. It is typically 
+      to get corrected pseudorange. It is typically
       an equivalent to the 1059 and 1065 RTCM message types
     fields:
         - time:
@@ -208,14 +345,14 @@ definitions:
             type: u8
             desc: |
                 IOD of the SSR correction. A change of Issue Of Data
-                SSR is used to indicate a change in the SSR 
+                SSR is used to indicate a change in the SSR
                 generating configuration
         - biases:
             type: array
             fill: CodeBiasesContent
             map_by: code
             desc: Code biases for the different satellite signals
-        
+
 
  - MSG_SSR_PHASE_BIASES:
     id: 0x05E6
@@ -223,9 +360,9 @@ definitions:
     desc: |
       The precise phase biases message contains the biases
       to be added to the carrier phase of the corresponding
-      signal to get corrected carrier phase measurement, as 
-      well as the satellite yaw angle to be applied to compute 
-      the phase wind-up correction. 
+      signal to get corrected carrier phase measurement, as
+      well as the satellite yaw angle to be applied to compute
+      the phase wind-up correction.
       It is typically an equivalent to the 1265 RTCM message types
     fields:
         - time:
@@ -242,7 +379,7 @@ definitions:
             type: u8
             desc: |
                 IOD of the SSR correction. A change of Issue Of Data
-                SSR is used to indicate a change in the SSR 
+                SSR is used to indicate a change in the SSR
                 generating configuration
         - dispersive_bias:
             type: u8
@@ -267,3 +404,51 @@ definitions:
             desc: |
               Phase biases corrections for a
               satellite being tracked.
+
+
+ - MSG_SSR_STEC_CORRECTION:
+    id: 0x05EB
+    short_desc: Slant Total Electron Content
+    desc: |
+      The STEC per space vehicle, given as polynomial approximation for
+      a given grid.  This should be combined with SSR-GriddedCorrection
+      message to get the state space representation of the atmospheric
+      delay.
+    fields:
+        - header:
+            type: STECHeader
+            desc: Header of a STEC message
+        - stec_sat_list:
+            type: array
+            fill: STECSatElement
+            desc: Array of STEC information for each space vehicle
+
+ - MSG_SSR_GRIDDED_CORRECTION:
+    id: 0x05F0
+    short_desc: Gridded troposphere and STEC residuals
+    desc: |
+      STEC residuals are per space vehicle, tropo is not.
+    fields:
+        - header:
+            type: GriddedCorrectionHeader
+            desc: Header of a Gridded Correction message
+        - element:
+            type: GridElement
+            desc: Tropo and STEC residuals for the given grid point
+
+
+ - MSG_SSR_GRID_DEFINITION:
+    id: 0x05F5
+    desc: Definition of the grid for STEC and tropo messages
+    fields:
+        - header:
+            type: GridDefinitionHeader
+            desc: Header of a Gridded Correction message
+        - rle_list:
+            type: array
+            fill: u8
+            desc: |
+              Run Length Encode list of quadrants that contain valid data.
+              The spec describes the encoding scheme in detail, but
+              essentially the index of the quadrants that contain transitions between
+              valid and invalid (and vice versa) are encoded as u8 integers.

@@ -84,7 +84,7 @@ The corrections are conform with typical RTCMv3 MT1059 and 1065.
   widelane_integer_indicator : int
     Indicator for two groups of Wide-Lane(s) integer property
   discontinuity_counter : int
-    Signal phase discontinuity counter. 
+    Signal phase discontinuity counter.
 Increased for every discontinuity in phase.
 
   bias : int
@@ -127,6 +127,362 @@ Increased for every discontinuity in phase.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return PhaseBiasesContent.build(d)
     
+class STECHeader(object):
+  """STECHeader.
+  
+  A full set of STEC information will likely span multiple SBP
+messages, since SBP message a limited to 255 bytes.  The header
+is used to tie multiple SBP messages into a sequence.
+
+  
+  Parameters
+  ----------
+  time : GPSTime
+    GNSS time of the STEC data
+  num_msgs : int
+    Number of messages in the dataset
+  seq_num : int
+    Position of this message in the dataset
+  ssr_update_interval : int
+    update interval in seconds
+  iod_ssr : int
+    range 0 - 15
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'time' / construct.Struct(GPSTime._parser),
+                     'num_msgs' / construct.Int8ul,
+                     'seq_num' / construct.Int8ul,
+                     'ssr_update_interval' / construct.Int16ul,
+                     'iod_ssr' / construct.Int8ul,))
+  __slots__ = [
+               'time',
+               'num_msgs',
+               'seq_num',
+               'ssr_update_interval',
+               'iod_ssr',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.time = kwargs.pop('time')
+      self.num_msgs = kwargs.pop('num_msgs')
+      self.seq_num = kwargs.pop('seq_num')
+      self.ssr_update_interval = kwargs.pop('ssr_update_interval')
+      self.iod_ssr = kwargs.pop('iod_ssr')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = STECHeader._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return STECHeader.build(d)
+    
+class GriddedCorrectionHeader(object):
+  """GriddedCorrectionHeader.
+  
+  The 3GPP message contains nested variable length arrays
+which are not suppported in SBP, so each grid point will
+be identified by the index.
+
+  
+  Parameters
+  ----------
+  time : GPSTime
+    GNSS time of the STEC data
+  num_msgs : int
+    Number of messages in the dataset
+  seq_num : int
+    Position of this message in the dataset
+  ssr_update_interval : int
+    update interval in seconds
+  iod_ssr : int
+    range 0 - 15
+  tropo_quality : int
+    troposphere quality indicator
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'time' / construct.Struct(GPSTime._parser),
+                     'num_msgs' / construct.Int16ul,
+                     'seq_num' / construct.Int16ul,
+                     'ssr_update_interval' / construct.Int16ul,
+                     'iod_ssr' / construct.Int8ul,
+                     'tropo_quality' / construct.Int8ul,))
+  __slots__ = [
+               'time',
+               'num_msgs',
+               'seq_num',
+               'ssr_update_interval',
+               'iod_ssr',
+               'tropo_quality',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.time = kwargs.pop('time')
+      self.num_msgs = kwargs.pop('num_msgs')
+      self.seq_num = kwargs.pop('seq_num')
+      self.ssr_update_interval = kwargs.pop('ssr_update_interval')
+      self.iod_ssr = kwargs.pop('iod_ssr')
+      self.tropo_quality = kwargs.pop('tropo_quality')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = GriddedCorrectionHeader._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return GriddedCorrectionHeader.build(d)
+    
+class STECSatElement(object):
+  """STECSatElement.
+  
+  STEC for the given satellite.
+  
+  Parameters
+  ----------
+  sv_id : SvId
+    Unique space vehicle identifier
+  stec_quality_indicator : int
+    quality of STEC data
+  stec_coeff : array
+    coefficents of the STEC polynomial
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'sv_id' / construct.Struct(SvId._parser),
+                     'stec_quality_indicator' / construct.Int8ul,
+                     'stec_coeff' / construct.Array(4, construct.Int16sl),))
+  __slots__ = [
+               'sv_id',
+               'stec_quality_indicator',
+               'stec_coeff',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.sv_id = kwargs.pop('sv_id')
+      self.stec_quality_indicator = kwargs.pop('stec_quality_indicator')
+      self.stec_coeff = kwargs.pop('stec_coeff')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = STECSatElement._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return STECSatElement.build(d)
+    
+class TroposphericDelayCorrection(object):
+  """TroposphericDelayCorrection.
+  
+  Contains wet vertical and hydrostatic vertical delay
+
+  
+  Parameters
+  ----------
+  hydro : int
+    hydrostatic vertical delay
+  wet : int
+    wet vertical delay
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'hydro' / construct.Int16sl,
+                     'wet' / construct.Int8sl,))
+  __slots__ = [
+               'hydro',
+               'wet',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.hydro = kwargs.pop('hydro')
+      self.wet = kwargs.pop('wet')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = TroposphericDelayCorrection._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return TroposphericDelayCorrection.build(d)
+    
+class STECResidual(object):
+  """STECResidual.
+  
+  STEC residual
+  
+  Parameters
+  ----------
+  sv_id : SvId
+    space vehicle identifier
+  residual : int
+    STEC residual
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'sv_id' / construct.Struct(SvId._parser),
+                     'residual' / construct.Int16sl,))
+  __slots__ = [
+               'sv_id',
+               'residual',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.sv_id = kwargs.pop('sv_id')
+      self.residual = kwargs.pop('residual')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = STECResidual._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return STECResidual.build(d)
+    
+class GridElement(object):
+  """GridElement.
+  
+  Contains one tropo datum, plus STEC residuals for each space
+vehicle
+
+  
+  Parameters
+  ----------
+  index : int
+    index of the grid point
+  tropo_delay_correction : TroposphericDelayCorrection
+    Wet and Hydrostatic Vertical Delay
+  STEC_residuals : array
+    STEC Residual for the given space vehicle
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'index' / construct.Int16ul,
+                     'tropo_delay_correction' / construct.Struct(TroposphericDelayCorrection._parser),
+                     construct.GreedyRange('STEC_residuals' / construct.Struct(STECResidual._parser)),))
+  __slots__ = [
+               'index',
+               'tropo_delay_correction',
+               'STEC_residuals',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.index = kwargs.pop('index')
+      self.tropo_delay_correction = kwargs.pop('tropo_delay_correction')
+      self.STEC_residuals = kwargs.pop('STEC_residuals')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = GridElement._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return GridElement.build(d)
+    
+class GridDefinitionHeader(object):
+  """GridDefinitionHeader.
+  
+  Defines the grid for STEC and tropo grid messages.
+Also includes an RLE encoded validity list.
+
+  
+  Parameters
+  ----------
+  region_size_inverse : int
+    inverse of region size
+  area_width : int
+    area width; see spec for details
+  lat_nw_corner_enc : int
+    encoded latitude of the northwest corner of the grid
+  lon_nw_corner_enc : int
+    encoded longitude of the northwest corner of the grid
+  num_msgs : int
+    Number of messages in the dataset
+  seq_num : int
+    Postion of this message in the dataset
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'region_size_inverse' / construct.Int8ul,
+                     'area_width' / construct.Int16ul,
+                     'lat_nw_corner_enc' / construct.Int16ul,
+                     'lon_nw_corner_enc' / construct.Int16ul,
+                     'num_msgs' / construct.Int8ul,
+                     'seq_num' / construct.Int8ul,))
+  __slots__ = [
+               'region_size_inverse',
+               'area_width',
+               'lat_nw_corner_enc',
+               'lon_nw_corner_enc',
+               'num_msgs',
+               'seq_num',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.region_size_inverse = kwargs.pop('region_size_inverse')
+      self.area_width = kwargs.pop('area_width')
+      self.lat_nw_corner_enc = kwargs.pop('lat_nw_corner_enc')
+      self.lon_nw_corner_enc = kwargs.pop('lon_nw_corner_enc')
+      self.num_msgs = kwargs.pop('num_msgs')
+      self.seq_num = kwargs.pop('seq_num')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = GridDefinitionHeader._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return GridDefinitionHeader.build(d)
+    
 SBP_MSG_SSR_ORBIT_CLOCK = 0x05DD
 class MsgSsrOrbitClock(SBP):
   """SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DD).
@@ -136,8 +492,8 @@ class MsgSsrOrbitClock(SBP):
   of its fields.
 
   
-  The precise orbit and clock correction message is 
-to be applied as a delta correction to broadcast 
+  The precise orbit and clock correction message is
+to be applied as a delta correction to broadcast
 ephemeris and is typically an equivalent to the 1060
 and 1066 RTCM message types
 
@@ -154,7 +510,7 @@ and 1066 RTCM message types
     Update interval between consecutive corrections
   iod_ssr : int
     IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR 
+SSR is used to indicate a change in the SSR
 generating configuration
 
   iod : int
@@ -297,8 +653,8 @@ class MsgSsrOrbitClockDepA(SBP):
   of its fields.
 
   
-  The precise orbit and clock correction message is 
-to be applied as a delta correction to broadcast 
+  The precise orbit and clock correction message is
+to be applied as a delta correction to broadcast
 ephemeris and is typically an equivalent to the 1060
 and 1066 RTCM message types
 
@@ -315,7 +671,7 @@ and 1066 RTCM message types
     Update interval between consecutive corrections
   iod_ssr : int
     IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR 
+SSR is used to indicate a change in the SSR
 generating configuration
 
   iod : int
@@ -460,7 +816,7 @@ class MsgSsrCodeBiases(SBP):
   
   The precise code biases message is to be added
 to the pseudorange of the corresponding signal
-to get corrected pseudorange. It is typically 
+to get corrected pseudorange. It is typically
 an equivalent to the 1059 and 1065 RTCM message types
 
 
@@ -476,7 +832,7 @@ an equivalent to the 1059 and 1065 RTCM message types
     Update interval between consecutive corrections
   iod_ssr : int
     IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR 
+SSR is used to indicate a change in the SSR
 generating configuration
 
   biases : array
@@ -576,9 +932,9 @@ class MsgSsrPhaseBiases(SBP):
   
   The precise phase biases message contains the biases
 to be added to the carrier phase of the corresponding
-signal to get corrected carrier phase measurement, as 
-well as the satellite yaw angle to be applied to compute 
-the phase wind-up correction. 
+signal to get corrected carrier phase measurement, as
+well as the satellite yaw angle to be applied to compute
+the phase wind-up correction.
 It is typically an equivalent to the 1265 RTCM message types
 
 
@@ -594,7 +950,7 @@ It is typically an equivalent to the 1265 RTCM message types
     Update interval between consecutive corrections
   iod_ssr : int
     IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR 
+SSR is used to indicate a change in the SSR
 generating configuration
 
   dispersive_bias : int
@@ -707,10 +1063,304 @@ satellite being tracked.
     d.update(j)
     return d
     
+SBP_MSG_SSR_STEC_CORRECTION = 0x05EB
+class MsgSsrStecCorrection(SBP):
+  """SBP class for message MSG_SSR_STEC_CORRECTION (0x05EB).
+
+  You can have MSG_SSR_STEC_CORRECTION inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The STEC per space vehicle, given as polynomial approximation for
+a given grid.  This should be combined with SSR-GriddedCorrection
+message to get the state space representation of the atmospheric
+delay.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  header : STECHeader
+    Header of a STEC message
+  stec_sat_list : array
+    Array of STEC information for each space vehicle
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'header' / construct.Struct(STECHeader._parser),
+                   construct.GreedyRange('stec_sat_list' / construct.Struct(STECSatElement._parser)),)
+  __slots__ = [
+               'header',
+               'stec_sat_list',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSsrStecCorrection,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrStecCorrection, self).__init__()
+      self.msg_type = SBP_MSG_SSR_STEC_CORRECTION
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.header = kwargs.pop('header')
+      self.stec_sat_list = kwargs.pop('stec_sat_list')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrStecCorrection.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrStecCorrection(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrStecCorrection._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrStecCorrection._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrStecCorrection._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrStecCorrection, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SSR_GRIDDED_CORRECTION = 0x05F0
+class MsgSsrGriddedCorrection(SBP):
+  """SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05F0).
+
+  You can have MSG_SSR_GRIDDED_CORRECTION inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  STEC residuals are per space vehicle, tropo is not.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  header : GriddedCorrectionHeader
+    Header of a Gridded Correction message
+  element : GridElement
+    Tropo and STEC residuals for the given grid point
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'header' / construct.Struct(GriddedCorrectionHeader._parser),
+                   'element' / construct.Struct(GridElement._parser),)
+  __slots__ = [
+               'header',
+               'element',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSsrGriddedCorrection,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrGriddedCorrection, self).__init__()
+      self.msg_type = SBP_MSG_SSR_GRIDDED_CORRECTION
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.header = kwargs.pop('header')
+      self.element = kwargs.pop('element')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrGriddedCorrection.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrGriddedCorrection(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrGriddedCorrection._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrGriddedCorrection._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrGriddedCorrection._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrGriddedCorrection, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SSR_GRID_DEFINITION = 0x05F5
+class MsgSsrGridDefinition(SBP):
+  """SBP class for message MSG_SSR_GRID_DEFINITION (0x05F5).
+
+  You can have MSG_SSR_GRID_DEFINITION inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Definition of the grid for STEC and tropo messages
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  header : GridDefinitionHeader
+    Header of a Gridded Correction message
+  rle_list : array
+    Run Length Encode list of quadrants that contain valid data.
+The spec describes the encoding scheme in detail, but
+essentially the index of the quadrants that contain transitions between
+valid and invalid (and vice versa) are encoded as u8 integers.
+
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'header' / construct.Struct(GridDefinitionHeader._parser),
+                   construct.GreedyRange('rle_list' / construct.Int8ul),)
+  __slots__ = [
+               'header',
+               'rle_list',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSsrGridDefinition,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrGridDefinition, self).__init__()
+      self.msg_type = SBP_MSG_SSR_GRID_DEFINITION
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.header = kwargs.pop('header')
+      self.rle_list = kwargs.pop('rle_list')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrGridDefinition.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrGridDefinition(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrGridDefinition._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrGridDefinition._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrGridDefinition._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrGridDefinition, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x05DD: MsgSsrOrbitClock,
   0x05DC: MsgSsrOrbitClockDepA,
   0x05E1: MsgSsrCodeBiases,
   0x05E6: MsgSsrPhaseBiases,
+  0x05EB: MsgSsrStecCorrection,
+  0x05F0: MsgSsrGriddedCorrection,
+  0x05F5: MsgSsrGridDefinition,
 }

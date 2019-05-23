@@ -46,6 +46,19 @@ definitions:
                       - 14: GAL E1B
                       - 20: GAL E7I
 
+ - SvId:
+    short_desc: Space vehicle identifier
+    desc: |
+      A (Constellation ID, satellite ID) tuple that uniquely identifies
+      a space vehicle
+    fields:
+    - satId:
+        type: u8
+        desc: ID of the space vehicle within its constellation
+    - constellation:
+        type: u8
+        desc: Constellation ID to which the SV belongs
+
  - GnssSignalDep:
     short_desc: Deprecated
     desc: Deprecated.

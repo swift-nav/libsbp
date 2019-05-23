@@ -29,6 +29,16 @@ message GnssSignal {
     uint32 code = 2;
 }
 
+/** Space vehicle identifier
+ *
+ * A (Constellation ID, satellite ID) tuple that uniquely identifies
+ * a space vehicle
+ */
+message SvId {
+    uint32 satId = 1;
+    uint32 constellation = 2;
+}
+
 /** Whole second accurate GPS time
  *
  * A GPS time, defined as the number of

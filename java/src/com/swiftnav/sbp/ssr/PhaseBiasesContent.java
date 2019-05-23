@@ -34,7 +34,7 @@ public class PhaseBiasesContent extends SBPStruct {
     /** Indicator for two groups of Wide-Lane(s) integer property */
     public int widelane_integer_indicator;
     
-    /** Signal phase discontinuity counter. 
+    /** Signal phase discontinuity counter.
 Increased for every discontinuity in phase.
  */
     public int discontinuity_counter;
