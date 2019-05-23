@@ -114,7 +114,7 @@ typedef struct SBP_ATTR_PACKED {
  */
 typedef struct SBP_ATTR_PACKED {
   sv_id_t sv_id;       /**< space vehicle identifier */
-  s16 residual;    /**< STEC residual (Scale factor 0.04 TECU) */
+  s16 residual;    /**< STEC residual [0.04 TECU] */
 } stec_residual_t;
 
 

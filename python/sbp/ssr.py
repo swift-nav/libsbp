@@ -344,7 +344,7 @@ class STECResidual(object):
   sv_id : SvId
     space vehicle identifier
   residual : int
-    STEC residual (Scale factor 0.04 TECU)
+    STEC residual
 
   """
   _parser = construct.Embedded(construct.Struct(

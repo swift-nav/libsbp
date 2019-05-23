@@ -250,7 +250,7 @@ TroposphericDelayCorrection.prototype.fieldSpec.push(['wet', 'writeInt8', 1]);
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field sv_id SvId space vehicle identifier
- * @field residual number (signed 16-bit int, 2 bytes) STEC residual (Scale factor 0.04 TECU)
+ * @field residual number (signed 16-bit int, 2 bytes) STEC residual
  *
  * @param sbp An SBP object with a payload to be decoded.
  */

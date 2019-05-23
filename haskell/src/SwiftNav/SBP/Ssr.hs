@@ -231,7 +231,7 @@ data STECResidual = STECResidual
   { _sTECResidual_sv_id  :: !SvId
     -- ^ space vehicle identifier
   , _sTECResidual_residual :: !Int16
-    -- ^ STEC residual (Scale factor 0.04 TECU)
+    -- ^ STEC residual
   } deriving ( Show, Read, Eq )
 
 instance Binary STECResidual where

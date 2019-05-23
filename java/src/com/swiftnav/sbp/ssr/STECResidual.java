@@ -28,7 +28,7 @@ public class STECResidual extends SBPStruct {
     /** space vehicle identifier */
     public SvId sv_id;
     
-    /** STEC residual (Scale factor 0.04 TECU) */
+    /** STEC residual */
     public int residual;
     
 
