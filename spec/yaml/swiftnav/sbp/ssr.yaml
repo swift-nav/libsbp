@@ -144,7 +144,8 @@ definitions:
         desc: space vehicle identifier
     - residual:
         type: s16
-        desc: STEC residual (Scale factor 0.04 TECU)
+        units: 0.04 TECU
+        desc: STEC residual
 
  - GridElement:
     short_desc: Grid datum for troposphere and STEC residuals
