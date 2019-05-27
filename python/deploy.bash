@@ -10,53 +10,62 @@ IFS=$'\n\t'
   { printf "\n!!! Please set PYPI_PASSWORD in the environment !!!\n\n"; exit 1; }
 
 if ! command -v conda; then
-  echo '!!! Please install conda to deploy python !!!'
+  { printf "\n!!! Please install conda to deploy python !!!\n\n"; exit 1; }
 fi
 
-conda_dir=$(mktemp -d)
-conda create --yes -p "$conda_dir" python=3.5
+for py_version in 2.7 3.5 3.7
 
-# Activate conda
-{
-  # Workaround bug in activate code...
-  export PS1=''
+do
+  echo ">>> Building wheel for Python $py_version ..."
+  conda_dir=$(mktemp -d)
+  conda create --yes -p "$conda_dir" python=$py_version
 
-  eval "$(conda shell.bash hook)"
-  # shellcheck disable=SC1091
-  source activate "$conda_dir"
-}
+  # Activate conda
+  {
+    # Workaround bug in activate code...
+    export PS1=''
 
-conda install --yes \
-  cython virtualenv twine wheel
+    eval "$(conda shell.bash hook)"
+    # shellcheck disable=SC1091
+    conda activate "$conda_dir"
+  }
 
-deploy_dir=$(mktemp -d)
-trap 'rm -rf "$deploy_dir" "$conda_dir"' EXIT
+  conda install --yes \
+    cython virtualenv twine wheel
 
-echo "$deploy_dir"
-cd "$deploy_dir"
+  pip install --user -r setup_requirements.txt
 
-echo ">>> Building staging area for deployment ..."
+  deploy_dir=$(mktemp -d)
+  trap 'rm -rf "$deploy_dir" "$conda_dir"' EXIT
 
-mkdir module
+  echo "$deploy_dir"
+  cd "$deploy_dir"
 
-cp -r "$(dirname "$0")"/../.git .
+  echo ">>> Building staging area for deployment ..."
 
-cp -r "$(dirname "$0")"/.coveragerc module/.
-cp -r "$(dirname "$0")"/.gitignore module/.
+  mkdir module
 
-cp -r "$(dirname "$0")"/* module/.
+  cp -r "$(dirname "$0")"/../.git .
 
-echo ">>> Pruning ..."
-rm -r -f module/docs/_build
-rm -r -f module/build/*
+  cp -r "$(dirname "$0")"/.coveragerc module/.
+  cp -r "$(dirname "$0")"/.gitignore module/.
 
-echo ">>> Patching setup.py ..."
-sed -i.backup 's@IS_RELEASED = False@IS_RELEASED = True@' module/setup.py
+  cp -r "$(dirname "$0")"/* module/.
 
-cd module
+  echo ">>> Pruning ..."
+  rm -r -f module/docs/_build
+  rm -r -f module/build/*
 
-echo ">>> Building Python wheel ..."
-python setup.py sdist bdist_wheel
+  echo ">>> Patching setup.py ..."
+  sed -i.backup 's@IS_RELEASED = False@IS_RELEASED = True@' module/setup.py
 
-echo ">>> Uploading Python wheel ..."
-twine upload -u "$PYPI_USERNAME" -p "$PYPI_PASSWORD" "dist/sbp-$SBP_VERSION-*.whl"
+  cd module
+
+  echo ">>> Building Python wheel ..."
+  python setup.py bdist_wheel
+
+  echo ">>> Uploading Python wheel ..."
+  twine upload -u "$PYPI_USERNAME" -p "$PYPI_PASSWORD" "dist/sbp-$SBP_VERSION-*.whl"
+
+  conda deactivate
+done

@@ -167,9 +167,6 @@ if __name__ == "__main__":
     with open(os.path.join(filedir, 'requirements.txt')) as f:
         INSTALL_REQUIRES += [i.strip() for i in f.readlines()]
 
-    with open(os.path.join(filedir, 'setup_requirements.txt')) as f:
-        INSTALL_REQUIRES += [i.strip() for i in f.readlines()]
-
     with open(os.path.join(filedir, 'test_requirements.txt')) as f:
         TEST_REQUIRES = [i.strip() for i in f.readlines()]
 
