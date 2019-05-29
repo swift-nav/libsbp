@@ -4,6 +4,7 @@ project(libsbp)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake" "${CMAKE_CURRENT_LIST_DIR}/cmake/common")
 
 include(GNUInstallDirs)
+include(CCache)
 include(SwiftCmakeOptions)
 swift_create_project_options(
     HAS_TESTS
