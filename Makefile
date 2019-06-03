@@ -3,7 +3,7 @@
 # before using it to do Crazy Things.
 
 SHELL := /bin/bash
-SWIFTNAV_ROOT := $(shell pwd)
+SWIFTNAV_ROOT := $(CURDIR)
 MAKEFLAGS += SWIFTNAV_ROOT=$(SWIFTNAV_ROOT)
 SBP_SPEC_DIR := $(SWIFTNAV_ROOT)/spec/yaml/swiftnav/sbp/
 SBP_TESTS_SPEC_DIR := $(SWIFTNAV_ROOT)/spec/tests/yaml/

@@ -1,0 +1,128 @@
+#!/usr/bin/env python
+
+import os
+import sys
+import glob
+import shutil
+import tempfile
+import subprocess
+
+if 'PYPI_USERNAME' not in os.environ:
+    print("\n!!! Please set PYPI_USERNAME in the environment !!!\n\n")
+    sys.exit(1)
+
+PYPI_USERNAME = os.environ['PYPI_USERNAME']
+
+if 'PYPI_PASSWORD' not in os.environ:
+    print("\n!!! Please set PYPI_PASSWORD in the environment !!!\n\n")
+    sys.exit(1)
+
+PYPI_PASSWORD = os.environ['PYPI_PASSWORD']
+
+if 'SBP_VERSION' not in os.environ:
+    print("\n!!! Please set SBP_VERSION in the environment !!!\n\n")
+    sys.exit(1)
+
+SBP_VERSION = os.environ['SBP_VERSION']
+
+if not shutil.which('conda'):
+    print("\n!!! Please install conda to deploy python !!!\n\n")
+    sys.exit(1)
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+repo_dir = os.path.join(script_dir, "..")
+
+os.chdir(script_dir)
+
+def build_wheel(conda_dir, deploy_dir, py_version):
+
+    print(">>> Creating conda environment for Python version: {}...".format(py_version))
+
+    subprocess.check_call([
+        "conda", "create", "--yes", "-p", conda_dir,
+        "python={}".format(py_version)])
+
+    print(">>> Installing build deps in Python {} conda environment...".format(py_version))
+
+    subprocess.check_call([
+        "conda", "install", "-p", conda_dir, "--yes",
+        "cython", "virtualenv", "twine", "wheel"
+    ])
+
+    print(">>> Installing setup deps in Python {} conda environment...".format(py_version))
+
+    subprocess.check_call([
+        "conda", "run", "-p", conda_dir,
+        "pip", "install", "--user", "-r", "setup_requirements.txt"
+    ])
+
+    print(">>> Building staging area for deployment ...")
+
+    os.chdir(deploy_dir)
+    os.mkdir('module')
+
+    shutil.copytree(os.path.join(repo_dir, ".git"), ".git")
+
+    shutil.copy(os.path.join(script_dir, ".coveragerc"), "module/.coveragerc")
+    shutil.copy(os.path.join(script_dir, ".gitignore"), "module/.gitignore")
+    shutil.copy(os.path.join(script_dir, ".flake8"), "module/.flake8")
+
+    for dirent in glob.glob(os.path.join(script_dir, "*")):
+        print(dirent)
+        _, leaf_name = os.path.split(dirent)
+        if os.path.isdir(dirent):
+            shutil.copytree(dirent, os.path.join("module", leaf_name))
+        else:
+            shutil.copy(dirent, os.path.join("module", leaf_name))
+
+    print(">>> Pruning ...")
+
+    if os.path.exists("module/docs/_build"):
+        shutil.rmtree("module/docs/_build")
+
+    for dirent in glob.glob("module/build/*"):
+        shutil.rmtree(dirent) if os.path.isdir(dirent) else os.unlink(dirent)
+
+    with open("module/setup.py", "rb") as fp:
+        data = fp.read()
+    with open("module/setup.py", "wb") as fp:
+        fp.write(data.replace(b"IS_RELEASED = False", b"IS_RELEASED = True"))
+
+    os.chdir("module")
+
+    print(">>> Building Python wheel ...")
+
+    subprocess.check_call([
+        "conda", "run", "-p", conda_dir,
+        "python", "setup.py", "bdist_wheel"
+    ])
+
+    print(">>> Uploading Python wheel ...")
+
+    wheels = glob.glob("dist/sbp-{}-*.whl".format(SBP_VERSION))
+    if not wheels:
+        print("\n!!! No Python wheel (.whl) file found...\n\n")
+        sys.exit(1)
+
+    wheel = wheels[0]
+
+    print(">>> Found wheel (of {} matches): {}".format(len(wheels), wheel))
+
+    subprocess.check_call([
+        "conda", "run", "-p", conda_dir,
+        "twine", "upload", "-u", PYPI_USERNAME, "-p", PYPI_PASSWORD, wheel
+    ])
+
+for py_version in ['2.7', '3.5', '3.7']:
+
+    print(">>> Building wheel for Python {}...".format(py_version))
+
+    conda_dir = tempfile.mkdtemp()
+    deploy_dir = tempfile.mkdtemp()
+
+    try:
+        build_wheel(conda_dir, deploy_dir, py_version)
+    finally:
+        os.chdir(script_dir)
+        shutil.rmtree(conda_dir, ignore_errors=True)
+        shutil.rmtree(deploy_dir, ignore_errors=True)

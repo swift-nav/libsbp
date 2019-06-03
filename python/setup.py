@@ -7,6 +7,7 @@
 #   https://github.com/swift-nav/traitsui/blob/swift-2019.01/setup.py
 #
 
+import warnings
 from setuptools import setup
 
 import re
@@ -53,7 +54,8 @@ def _read_release_version():
         with open(relver_path, "r") as f:
             version = f.readlines()[0]
             return version.strip()
-    except IOError:
+    except IOError as ex:
+        warnings.warn("Error reading version: {}".format(ex))
         return "0.0.0"
 
 
