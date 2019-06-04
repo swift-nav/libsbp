@@ -50,10 +50,7 @@ set_target_properties(sbp PROPERTIES
         C_STANDARD_REQUIRED ON)
 
 swift_install_targets(
-    TARGETS sbp dummy
+    TARGETS sbp
     HEADER_DIRS "${PROJECT_SOURCE_DIR}/include/libsbp"
     )
 
-add_executable(exe exe.c)
-target_link_libraries(exe dummy)
-swift_install_targets(TARGETS exe)
