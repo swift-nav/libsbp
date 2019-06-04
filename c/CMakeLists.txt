@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
-project(libsbp)
+
+project(libsbp LANGUAGES C CXX VERSION 2.5.5)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake" "${CMAKE_CURRENT_LIST_DIR}/cmake/common")
 
@@ -23,6 +24,8 @@ if(MSVC)
 else()
     set(LIBSBP_CFLAGS "-Wall -Werror" CACHE STRING "Compile flags for libsbp.")
 endif()
+
+include(SwiftPackageHelpers)
 
 add_subdirectory(src)
 if(libsbp_BUILD_DOCS)

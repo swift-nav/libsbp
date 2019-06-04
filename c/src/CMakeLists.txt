@@ -41,17 +41,19 @@ else()
 endif()
 target_compile_options(sbp PRIVATE ${LIBSBP_COMPILER_OPTIONS})
 
-target_include_directories(sbp PUBLIC ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(sbp 
+    PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+    )
 set_target_properties(sbp PROPERTIES
         POSITION_INDEPENDENT_CODE ON
         C_STANDARD 99
         C_STANDARD_REQUIRED ON)
 
-install(TARGETS sbp
-        EXPORT sbp-export
-        DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR})
-install(FILES ${libsbp_HEADERS} DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/libsbp)
+swift_install_targets(
+    TARGETS sbp dummy
+    HEADER_DIRS "${PROJECT_SOURCE_DIR}/include/libsbp"
+    )
 
-export(EXPORT sbp-export
-        NAMESPACE LibSbp::
-        FILE ${PROJECT_BINARY_DIR}/LibSbpImport.cmake)
+add_executable(exe exe.c)
+target_link_libraries(exe dummy)
+swift_install_targets(TARGETS exe)
