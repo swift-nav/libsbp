@@ -15,8 +15,6 @@ import os
 
 import subprocess
 
-from sbp.jit.parse import cc
-
 CLASSIFIERS = [
   'Intended Audience :: Developers',
   'Intended Audience :: Science/Research',
@@ -171,13 +169,13 @@ if __name__ == "__main__":
 
     write_version_py()
 
-    import sbp
-    sbp = reload(sbp)
+    from sbp import __version__ as sbp_version
+    print("Building/installing libsbp version {} (read version: {})".format(sbp_version, VERSION))
 
-    print("Building/installing libsbp version {} (read version: {})".format(sbp.__version__, VERSION))
+    from sbp.jit.parse import cc
 
     setup(name='sbp',
-          version=sbp.__version__,
+          version=sbp_version,
           description='Python bindings for Swift Binary Protocol',
           long_description=readme,
           author='Swift Navigation',
