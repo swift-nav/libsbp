@@ -4,6 +4,7 @@ import os
 import sys
 import glob
 import shutil
+import platform
 import tempfile
 import subprocess
 
@@ -121,9 +122,17 @@ for py_version in ['2.7', '3.5', '3.7']:
 
     print(">>> Building wheel for Python {}...".format(py_version))
 
+    conda_dir = tempfile.mkdtemp()
+    deploy_dir = tempfile.mkdtemp()
+
     try:
-        with tempfile.TemporaryDirectory() as conda_dir:
-            with tempfile.TemporaryDirectory() as deploy_dir:
-                build_wheel(conda_dir, deploy_dir, py_version)
+        build_wheel(conda_dir, deploy_dir, py_version)
     finally:
         os.chdir(script_dir)
+        shutil.rmtree(conda_dir)
+        if platform.system() == "Windows":
+            # Workaround a permission denied error that happens for the copied
+            #   .git directory...
+            subprocess.check_call(["rmdir", "/s", "/q", deploy_dir], shell=True)
+        else:
+            shutil.rmtree(deploy_dir)
