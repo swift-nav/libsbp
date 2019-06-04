@@ -39,12 +39,15 @@ os.chdir(script_dir)
 
 
 def twine_upload(conda_dir, wheel):
-    subprocess.check_call([
+    invoke = subprocess.check_call if not USE_TEST_PYPI else subprocess.call
+    ret = invoke([
         "conda", "run", "-p", conda_dir,
         "twine", "upload", "-u", PYPI_USERNAME, "-p", PYPI_PASSWORD] + ([
         "--repository-url", "https://test.pypi.org/legacy/"]
             if USE_TEST_PYPI else []
         ) + [wheel])
+    if USE_TEST_PYPI and ret != 0:
+        print(">>> Warning: twine upload returned exit code {}".format(ret))
 
 
 def build_wheel(conda_dir, deploy_dir, py_version):
