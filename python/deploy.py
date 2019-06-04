@@ -58,6 +58,12 @@ def build_wheel(conda_dir, deploy_dir, py_version):
         "conda", "create", "--yes", "-p", conda_dir,
         "python={}".format(py_version)])
 
+    if platform.system() == 'Linux' and '64bit' in platform.architecture():
+        subprocess.check_call([
+            "conda", "install", "--yes", "-p", conda_dir,
+            "gcc_linux-64", "gxx_linux-64"
+        ])
+
     print(">>> Installing build deps in Python {} conda environment...".format(py_version))
 
     subprocess.check_call([
