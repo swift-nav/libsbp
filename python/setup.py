@@ -46,10 +46,10 @@ PLATFORMS = [
   'win32',
 ]
 
+setup_py_dir = os.path.dirname(os.path.abspath(__file__))
 
 def _read_release_version():
-    this_dir = os.path.dirname(__file__)
-    relver_path = os.path.join(this_dir, 'sbp/RELEASE-VERSION')
+    relver_path = os.path.join(setup_py_dir, 'sbp/RELEASE-VERSION')
     try:
         with open(relver_path, "r") as f:
             version = f.readlines()[0]
@@ -115,10 +115,8 @@ def git_version():
 
 def write_version_py(filename=VERSION_PY_PATH):
 
-    filedir = os.path.abspath(os.path.dirname(__file__))
-
     fullversion = VERSION
-    if os.path.exists(os.path.join(filedir, '..', '.git')):
+    if os.path.exists(os.path.join(setup_py_dir, '..', '.git')):
         git_rev, dev_num = git_version()
     elif os.path.exists(VERSION_PY_PATH):
         # must be a source distribution, use existing version file
@@ -149,7 +147,8 @@ def write_version_py(filename=VERSION_PY_PATH):
         #
         fullversion += '.dev{0}+g{1}'.format(dev_num, git_rev)
 
-    filename_fullpath = os.path.join(filedir, filename)
+    filename_fullpath = os.path.join(setup_py_dir, filename)
+    print(filename_fullpath)
 
     with open(filename_fullpath, "wt") as fp:
         fp.write(VERSION_PY_TEMPLATE.format(version=VERSION,
@@ -160,23 +159,25 @@ def write_version_py(filename=VERSION_PY_PATH):
 
 if __name__ == "__main__":
 
-    filedir = os.path.abspath(os.path.dirname(__file__))
-
-    with open(os.path.join(filedir, 'README.rst')) as f:
+    with open(os.path.join(setup_py_dir, 'README.rst')) as f:
         readme = f.read()
 
     INSTALL_REQUIRES = []
-    with open(os.path.join(filedir, 'requirements.txt')) as f:
+    with open(os.path.join(setup_py_dir, 'requirements.txt')) as f:
         INSTALL_REQUIRES += [i.strip() for i in f.readlines()]
 
-    with open(os.path.join(filedir, 'test_requirements.txt')) as f:
+    with open(os.path.join(setup_py_dir, 'test_requirements.txt')) as f:
         TEST_REQUIRES = [i.strip() for i in f.readlines()]
 
     write_version_py()
-    from sbp import __version__
+
+    import sbp
+    sbp = reload(sbp)
+
+    print("Building/installing libsbp version {} (read version: {})".format(sbp.__version__, VERSION))
 
     setup(name='sbp',
-          version=__version__,
+          version=sbp.__version__,
           description='Python bindings for Swift Binary Protocol',
           long_description=readme,
           author='Swift Navigation',

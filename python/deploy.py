@@ -68,11 +68,12 @@ def build_wheel(conda_dir, deploy_dir, py_version):
     shutil.copy(os.path.join(script_dir, ".flake8"), "module/.flake8")
 
     for dirent in glob.glob(os.path.join(script_dir, "*")):
-        print(dirent)
         _, leaf_name = os.path.split(dirent)
         if os.path.isdir(dirent):
+            print('Copying (recursive) {}'.format(dirent))
             shutil.copytree(dirent, os.path.join("module", leaf_name))
         else:
+            print('Copying (non-recursive) {}'.format(dirent))
             shutil.copy(dirent, os.path.join("module", leaf_name))
 
     print(">>> Pruning ...")
@@ -90,6 +91,8 @@ def build_wheel(conda_dir, deploy_dir, py_version):
 
     os.chdir("module")
 
+    print(">>> Staged to '{}'...'".format(deploy_dir))
+
     print(">>> Building Python wheel ...")
 
     subprocess.check_call([
@@ -97,9 +100,10 @@ def build_wheel(conda_dir, deploy_dir, py_version):
         "python", "setup.py", "bdist_wheel"
     ])
 
-    print(">>> Uploading Python wheel ...")
+    whl_pattern = "dist/sbp-{}-*.whl".format(SBP_VERSION)
+    print(">>> Uploading Python wheel (glob: {})...".format(whl_pattern))
 
-    wheels = glob.glob("dist/sbp-{}-*.whl".format(SBP_VERSION))
+    wheels = glob.glob(whl_pattern)
     if not wheels:
         print("\n!!! No Python wheel (.whl) file found...\n\n")
         sys.exit(1)
@@ -117,12 +121,9 @@ for py_version in ['2.7', '3.5', '3.7']:
 
     print(">>> Building wheel for Python {}...".format(py_version))
 
-    conda_dir = tempfile.mkdtemp()
-    deploy_dir = tempfile.mkdtemp()
-
     try:
-        build_wheel(conda_dir, deploy_dir, py_version)
+        with tempfile.TemporaryDirectory() as conda_dir:
+            with tempfile.TemporaryDirectory() as deploy_dir:
+                build_wheel(conda_dir, deploy_dir, py_version)
     finally:
         os.chdir(script_dir)
-        shutil.rmtree(conda_dir, ignore_errors=True)
-        shutil.rmtree(deploy_dir, ignore_errors=True)
