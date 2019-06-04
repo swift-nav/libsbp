@@ -26,6 +26,8 @@ if 'SBP_VERSION' not in os.environ:
 
 SBP_VERSION = os.environ['SBP_VERSION']
 
+USE_TEST_PYPI = bool(os.environ.get('USE_TEST_PYPI', None))
+
 if not shutil.which('conda'):
     print("\n!!! Please install conda to deploy python !!!\n\n")
     sys.exit(1)
@@ -34,6 +36,16 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 repo_dir = os.path.join(script_dir, "..")
 
 os.chdir(script_dir)
+
+
+def twine_upload(conda_dir, wheel):
+    subprocess.check_call([
+        "conda", "run", "-p", conda_dir,
+        "twine", "upload", "-u", PYPI_USERNAME, "-p", PYPI_PASSWORD] + ([
+        "--repository-url", "https://test.pypi.org/legacy/"]
+            if USE_TEST_PYPI else []
+        ) + [wheel])
+
 
 def build_wheel(conda_dir, deploy_dir, py_version):
 
@@ -113,10 +125,8 @@ def build_wheel(conda_dir, deploy_dir, py_version):
 
     print(">>> Found wheel (of {} matches): {}".format(len(wheels), wheel))
 
-    subprocess.check_call([
-        "conda", "run", "-p", conda_dir,
-        "twine", "upload", "-u", PYPI_USERNAME, "-p", PYPI_PASSWORD, wheel
-    ])
+    twine_upload(conda_dir, wheel)
+
 
 for py_version in ['2.7', '3.5', '3.7']:
 
