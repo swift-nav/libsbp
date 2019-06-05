@@ -170,7 +170,7 @@ Python distribution requires compilation for the JIT accelerated `sbp.jit`
 package.  This package uses the Python `numba` library, which supports AOT
 compilation of a native Python extension.  The distributions for each platform
 can be created by running the `make dist-python` target on each platform
-(Windows, Mac OS X, Linux x86, and Linux ARM through docker).
+(Windows, Mac OS X, Linux x86/ARM through docker).
 
 For example, running this:
 ```
@@ -184,11 +184,21 @@ can be produced and uploaded by running the following command:
 make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=... LIBSBP_BUILD_ANY=y
 ```
 
-The Linux ARM build of libsbp can be done either natively, or through docker
-via the following set of command:
+The Linux x86 build of libsbp can be done throuch docker via the "manylinux"
+project by running the following set of commands:
+```
+docker build -f python/Dockerfile.x86_64 -t libsbp-amd64 .
+docker run -v linux-amd64-root:/root -v $PWD:/work --rm -it libsbp-amd64 /bin/bash
+cd /work
+make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
+```
+
+The Linux ARM build of libsbp can be done through docker via the following set
+of commands:
 ```
 docker build -f python/Dockerfile.arm -t libsbp-arm .
-docker run -v $PWD:/work --rm -it libsbp-arm /bin/bash
+docker run -v linux-arm-root:/root -v $PWD:/work --rm -it libsbp-arm /bin/bash
+cd /work
 make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
 ```
 
