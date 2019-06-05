@@ -3,7 +3,7 @@ import numpy as np
 
 from sbp.file_io import MsgFileioWriteReq
 
-from sbp.jit.msg import SBP
+from sbp.jit.msg import unpack_payload
 
 from sbp.jit.msg import get_string
 from sbp.jit.msg import get_fixed_string
@@ -74,7 +74,7 @@ def test_parse():
 
     assert len(buf) > 0
 
-    pkt_len, payload_len, msg_type, sender, crc, crc_fail = SBP.unpack_payload(buf, 0, len(buf))
+    pkt_len, payload_len, msg_type, sender, crc, crc_fail = unpack_payload(buf, 0, len(buf))
     assert not crc_fail
 
     m = dispatch(msg_type)(msg_type)
