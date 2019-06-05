@@ -167,12 +167,20 @@ if __name__ == "__main__":
     with open(os.path.join(setup_py_dir, 'test_requirements.txt')) as f:
         TEST_REQUIRES = [i.strip() for i in f.readlines()]
 
+    with open(os.path.join(setup_py_dir, 'setup_requirements.txt')) as f:
+        SETUP_REQUIRES = [i.strip() for i in f.readlines()
+                          if 'setuptools' not in i]
+
     write_version_py()
 
     from sbp import __version__ as sbp_version
     print("Building/installing libsbp version {} (read version: {})".format(sbp_version, VERSION))
 
-    from sbp.jit.parse import cc
+    ext_modules = None
+    if not os.environ.get('LIBSBP_BUILD_ANY', None):
+        from sbp.jit.parse import cc
+        ext_modules = [cc.distutils_extension()]
+        INSTALL_REQUIRES.extend(SETUP_REQUIRES)
 
     setup(name='sbp',
           version=sbp_version,
@@ -188,4 +196,4 @@ if __name__ == "__main__":
           tests_require=TEST_REQUIRES,
           use_2to3=False,
           zip_safe=False,
-          ext_modules=[cc.distutils_extension()])
+          ext_modules=ext_modules)

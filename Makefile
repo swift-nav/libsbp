@@ -249,15 +249,22 @@ dist-python:
 	make -C $(SWIFTNAV_ROOT)/python SBP_VERSION="$(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION)" deploy 
 	$(call announce-end,"Finished deploying Python package")
 
-dist: dist-python
-	$(call announce-begin,"Deploying packages")
+dist-javascript:
+	$(call announce-begin,"Deploying Javascript package")
 	npm publish
-	pushd $(SWIFTNAV_ROOT)/haskell
-	stack sdist
-	stack upload .
-	popd
+	$(call announce-begin,"Finished deploying Javascript package")
+
+dist-haskell:
+	$(call announce-begin,"Deploying Haskell package")
+	(cd $(SWIFTNAV_ROOT)/haskell; stack sdist; stack upload .)
+	$(call announce-begin,"Finished deploying Haskell package")
+
+dist-pdf:
+	$(call announce-begin,"Deploying PDF documentation")
 	make pdf_dist
-	$(call announce-end,"Finished deploying packages")
+	$(call announce-begin,"Finished deploying PDF documentation")
+
+dist: dist-python dist-javascript dist-haskell dist-pdf
 
 pdf:
 	$(call announce-begin,"Generating PDF datasheet documentation")

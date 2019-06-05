@@ -37,12 +37,16 @@ repo_dir = os.path.join(script_dir, "..")
 
 os.chdir(script_dir)
 
+if platform.system() == "Linux":
+    DASHDASH = ["--"]
+else:
+    DASHDASH = []
 
 def twine_upload(conda_dir, wheel, use_conda=True):
 
     cmd_prefix = ["/usr/bin/python3", "-m"]
     if use_conda:
-        cmd_prefix = ["conda", "run", "-p", conda_dir, "--"]
+        cmd_prefix = ["conda", "run", "-p", conda_dir] + DASHDASH
 
     invoke = subprocess.check_call if not USE_TEST_PYPI else subprocess.call
     ret = invoke(cmd_prefix + [
@@ -88,7 +92,7 @@ def invoke_bdist(conda_dir, use_conda):
 
     cmd_prefix = ["/usr/bin/python3"]
     if use_conda:
-        cmd_prefix = ["conda", "run", "-p", conda_dir, "--", "python"]
+        cmd_prefix = ["conda", "run", "-p", conda_dir] + DASHDASH + ["python"]
 
     subprocess.check_call(cmd_prefix + [
         "setup.py", "bdist_wheel"
@@ -174,18 +178,18 @@ def build_wheel_conda(conda_dir, deploy_dir, py_version):
         "cython", "wheel", "setuptools"
     ])
     subprocess.check_call([
-        "conda", "run", "-p", conda_dir, "--",
+        "conda", "run", "-p", conda_dir] + DASHDASH + [
         "pip", "install", "--upgrade", "pip"
     ])
     subprocess.check_call([
-        "conda", "run", "-p", conda_dir, "--",
+        "conda", "run", "-p", conda_dir] + DASHDASH + [
         "pip", "install", "twine", "numpy"
     ])
 
     print(">>> Installing setup deps in Python {} conda environment...".format(py_version))
 
     subprocess.check_call([
-        "conda", "run", "-p", conda_dir, '--',
+        "conda", "run", "-p", conda_dir] + DASHDASH + [
         "pip", "install", "--ignore-installed", "-r", "setup_requirements.txt"
     ])
 
@@ -200,9 +204,10 @@ def build_wheel(conda_dir, deploy_dir, py_version):
 
 
 def py_versions():
-    if platform.system() == "Linux" and platform.machine().startswith("arm"):
-        #return ["2.7", "3.4", "3.7"]
+    if os.environ.get('LIBSBP_BUILD_ANY', None):
         return ["3.7"]
+    if platform.system() == "Linux" and platform.machine().startswith("arm"):
+        return ["2.7", "3.7"]
     else:
         return ["2.7", "3.5", "3.7"]
 
