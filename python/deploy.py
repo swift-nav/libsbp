@@ -38,10 +38,14 @@ repo_dir = os.path.join(script_dir, "..")
 os.chdir(script_dir)
 
 
-def twine_upload(conda_dir, wheel):
+def twine_upload(conda_dir, wheel, use_conda=True):
+
+    cmd_prefix = ["/usr/bin/python3", "-m"]
+    if use_conda:
+        cmd_prefix = ["conda", "run", "-p", conda_dir, "--"]
+
     invoke = subprocess.check_call if not USE_TEST_PYPI else subprocess.call
-    ret = invoke([
-        "conda", "run", "-p", conda_dir,
+    ret = invoke(cmd_prefix + [
         "twine", "upload", "-u", PYPI_USERNAME, "-p", PYPI_PASSWORD] + ([
         "--repository-url", "https://test.pypi.org/legacy/"]
             if USE_TEST_PYPI else []
@@ -50,33 +54,48 @@ def twine_upload(conda_dir, wheel):
         print(">>> Warning: twine upload returned exit code {}".format(ret))
 
 
-def build_wheel(conda_dir, deploy_dir, py_version):
+def build_wheel_native(conda_dir, deploy_dir, py_version):
 
-    print(">>> Creating conda environment for Python version: {}...".format(py_version))
+    print(">>> Installing native deps for: {}...".format(py_version))
 
-    subprocess.check_call([
-        "conda", "create", "--yes", "-p", conda_dir,
-        "python={}".format(py_version)])
+    subprocess.check_call(["apt-get", "update"])
 
-    if platform.system() == 'Linux' and '64bit' in platform.architecture():
-        subprocess.check_call([
-            "conda", "install", "--yes", "-p", conda_dir,
-            "gcc_linux-64", "gxx_linux-64"
+    subprocess.check_call(["apt-get", "install", "-y",
+        "python3", "python3-wheel", "cython3", "python3-pip", "python3-dev",
         ])
 
-    print(">>> Installing build deps in Python {} conda environment...".format(py_version))
+    subprocess.check_call([
+        "/usr/bin/python3", "-m",
+        "pip", "install", "--upgrade", "pip"
+    ])
 
     subprocess.check_call([
-        "conda", "install", "-p", conda_dir, "--yes",
-        "cython", "virtualenv", "twine", "wheel"
+        "/usr/bin/python3", "-m",
+        "pip", "install", "twine", "numpy", "setuptools"
     ])
 
     print(">>> Installing setup deps in Python {} conda environment...".format(py_version))
 
     subprocess.check_call([
-        "conda", "run", "-p", conda_dir,
-        "pip", "install", "--user", "-r", "setup_requirements.txt"
+        "/usr/bin/python3", "-m",
+        "pip", "install", "--ignore-installed", "-r", "setup_requirements.txt"
     ])
+
+    run_bdist(conda_dir, deploy_dir, py_version, use_conda=False)
+
+
+def invoke_bdist(conda_dir, use_conda):
+
+    cmd_prefix = ["/usr/bin/python3"]
+    if use_conda:
+        cmd_prefix = ["conda", "run", "-p", conda_dir, "--", "python"]
+
+    subprocess.check_call(cmd_prefix + [
+        "setup.py", "bdist_wheel"
+    ])
+
+
+def run_bdist(conda_dir, deploy_dir, py_version, use_conda=True):
 
     print(">>> Building staging area for deployment ...")
 
@@ -117,10 +136,7 @@ def build_wheel(conda_dir, deploy_dir, py_version):
 
     print(">>> Building Python wheel ...")
 
-    subprocess.check_call([
-        "conda", "run", "-p", conda_dir,
-        "python", "setup.py", "bdist_wheel"
-    ])
+    invoke_bdist(conda_dir, use_conda)
 
     whl_pattern = "dist/sbp-{}-*.whl".format(SBP_VERSION)
     print(">>> Uploading Python wheel (glob: {})...".format(whl_pattern))
@@ -134,21 +150,80 @@ def build_wheel(conda_dir, deploy_dir, py_version):
 
     print(">>> Found wheel (of {} matches): {}".format(len(wheels), wheel))
 
-    twine_upload(conda_dir, wheel)
+    twine_upload(conda_dir, wheel, use_conda)
 
 
-for py_version in ['2.7', '3.5', '3.7']:
+def build_wheel_conda(conda_dir, deploy_dir, py_version):
+
+    print(">>> Creating conda environment for Python version: {}...".format(py_version))
+
+    subprocess.check_call([
+        "conda", "create", "--yes", "-p", conda_dir,
+        "python={}".format(py_version)])
+
+    if platform.system() == 'Linux' and platform.machine() == 'x86_64':
+        subprocess.check_call([
+            "conda", "install", "--yes", "-p", conda_dir,
+            "gcc_linux-64", "gxx_linux-64"
+        ])
+
+    print(">>> Installing build deps in Python {} conda environment...".format(py_version))
+
+    subprocess.check_call([
+        "conda", "install", "-p", conda_dir, "--yes",
+        "cython", "wheel", "setuptools"
+    ])
+    subprocess.check_call([
+        "conda", "run", "-p", conda_dir, "--",
+        "pip", "install", "--upgrade", "pip"
+    ])
+    subprocess.check_call([
+        "conda", "run", "-p", conda_dir, "--",
+        "pip", "install", "twine", "numpy"
+    ])
+
+    print(">>> Installing setup deps in Python {} conda environment...".format(py_version))
+
+    subprocess.check_call([
+        "conda", "run", "-p", conda_dir, '--',
+        "pip", "install", "--ignore-installed", "-r", "setup_requirements.txt"
+    ])
+
+    run_bdist(conda_dir, deploy_dir, py_version, use_conda=True)
+
+
+def build_wheel(conda_dir, deploy_dir, py_version):
+    if platform.system() == "Linux" and platform.machine().startswith("arm") and py_version == "3.7":
+        build_wheel_native(conda_dir, deploy_dir, py_version)
+    else:
+        build_wheel_conda(conda_dir, deploy_dir, py_version)
+
+
+def py_versions():
+    if platform.system() == "Linux" and platform.machine().startswith("arm"):
+        #return ["2.7", "3.4", "3.7"]
+        return ["3.7"]
+    else:
+        return ["2.7", "3.5", "3.7"]
+
+
+for py_version in py_versions():
 
     print(">>> Building wheel for Python {}...".format(py_version))
 
-    conda_dir = tempfile.mkdtemp()
+    conda_tmp_dir = tempfile.mkdtemp()
+    conda_dir = os.path.join(conda_tmp_dir, "conda")
+
     deploy_dir = tempfile.mkdtemp()
 
     try:
         build_wheel(conda_dir, deploy_dir, py_version)
     finally:
         os.chdir(script_dir)
-        shutil.rmtree(conda_dir)
+        if platform.system() == "Linux" and not platform.machine().startswith("arm"):
+            shutil.rmtree(conda_tmp_dir)
+        else:
+            subprocess.check_call(["rm", "-fr", conda_dir])
         if platform.system() == "Windows":
             # Workaround a permission denied error that happens for the copied
             #   .git directory...
