@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.12)
 project(libsbp)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
@@ -15,6 +15,7 @@ if(MSVC)
     set(LIBSBP_CFLAGS "/Wall" CACHE STRING "Compile flags for libsbp.")
 else()
     set(LIBSBP_CFLAGS "-Wall -Werror" CACHE STRING "Compile flags for libsbp.")
+    link_directories("/usr/local/lib")
 endif()
 
 add_subdirectory(src)

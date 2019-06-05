@@ -97,7 +97,7 @@ Ubuntu 16.04.
 2. This will bump versions in the following files:
    - `python/sbp/RELEASE-VERSION`
    - `docs/sbp.pdf`
-   - `haskell/sbp.cabal.m4`
+   - `haskell/sbp.cabal`
    - `package.json`
    - `c/include/libsbp/version.h`
    - `package-lock.json` -- you can typically revert all the changes in this

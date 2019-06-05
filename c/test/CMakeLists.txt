@@ -21,7 +21,12 @@ else (CMAKE_CROSSCOMPILING)
     set_target_properties(test_libsbp PROPERTIES
             C_STANDARD 99
             C_STANDARD_REQUIRED ON)
-    target_include_directories(test_libsbp PRIVATE ${PROJECT_SOURCE_DIR}/include/libsbp/)
+
+    if(MSVC)
+      target_include_directories(test_libsbp PRIVATE ${PROJECT_SOURCE_DIR}/include/libsbp/)
+    else()
+      target_include_directories(test_libsbp PRIVATE ${PROJECT_SOURCE_DIR}/include/libsbp/ /usr/local/include/)
+    endif()
 
     add_custom_command(
       TARGET test_libsbp POST_BUILD
