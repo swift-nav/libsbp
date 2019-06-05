@@ -31,7 +31,7 @@ matrix:
         - sudo apt-get install python3.5 python3.5-dev
         - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
         - sudo pip install tox
-        - git clone -b pmiettinen/esd-1156-numba-deployment https://github.com/swift-nav/piksi_tools.git ../piksi_tools
+        - git clone -b master https://github.com/swift-nav/piksi_tools.git ../piksi_tools
       script: |
         pushd haskell
         docker build -t sbp2json .

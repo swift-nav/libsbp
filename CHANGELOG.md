@@ -1,5 +1,15 @@
 # Change Log
 
+## [2.6.0](https://github.com/swift-nav/libsbp/tree/v2.6.0)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.5...v2.6.0)
+
+**Merged pull requests:**
+
+- Remove unused build\_test\_data.py \[ESD-1086\] [\#693](https://github.com/swift-nav/libsbp/pull/693)
+- Integrate numba into setuptools \[ESD-1156\] [\#687](https://github.com/swift-nav/libsbp/pull/687)
+- Added three new messages for gridded atmospheric SSR corrections. [\#686](https://github.com/swift-nav/libsbp/pull/686)
+
 ## [2.5.5](https://github.com/swift-nav/libsbp/tree/v2.5.5) (2019-05-16)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.4...v2.5.5)
