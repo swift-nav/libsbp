@@ -37,7 +37,7 @@ repo_dir = os.path.join(script_dir, "..")
 
 os.chdir(script_dir)
 
-if platform.system() == "Linux":
+if platform.system() == "Linux" and platform.python_version().startswith("3.4"):
     DASHDASH = ["--"]
 else:
     DASHDASH = []
