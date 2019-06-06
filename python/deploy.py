@@ -75,7 +75,7 @@ def build_wheel_native(conda_dir, deploy_dir, py_version):
 
     subprocess.check_call([
         "/usr/bin/python3", "-m",
-        "pip", "install", "twine", "numpy", "auditwheel"
+        "pip", "install", "twine", "numpy"
     ])
 
     print(">>> Installing setup deps in Python {} conda environment...".format(py_version))
@@ -193,10 +193,12 @@ def build_wheel_conda(conda_dir, deploy_dir, py_version):
         "conda", "run", "-p", conda_dir] + DASHDASH + [
         "pip", "install", "twine", "numpy"
     ])
-    subprocess.check_call([
-        "python3", "-m",
-        "pip", "install", "auditwheel"
-    ])
+
+    if platform.system() == "Linux" and platform.machine().startswith("x86"):
+        subprocess.check_call([
+            "python3", "-m",
+            "pip", "install", "auditwheel"
+        ])
 
     print(">>> Installing setup deps in Python {} conda environment...".format(py_version))
 
