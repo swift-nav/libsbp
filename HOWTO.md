@@ -170,7 +170,7 @@ Python distribution requires compilation for the JIT accelerated `sbp.jit`
 package.  This package uses the Python `numba` library, which supports AOT
 compilation of a native Python extension.  The distributions for each platform
 can be created by running the `make dist-python` target on each platform
-(Windows, Mac OS X, Linux x86, and Linux ARM through docker).
+(Windows, Mac OS X, Linux x86/ARM through docker).
 
 For example, running this:
 ```
@@ -184,13 +184,53 @@ can be produced and uploaded by running the following command:
 make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=... LIBSBP_BUILD_ANY=y
 ```
 
-The Linux ARM build of libsbp can be done either natively, or through docker
-via the following set of command:
+The Linux x86 build of libsbp can be done throuch docker via the "manylinux"
+project by running the following set of commands:
 ```
-docker build -f python/Dockerfile.arm -t libsbp-arm .
-docker run -v $PWD:/work --rm -it libsbp-arm /bin/bash
+docker build -f python/Dockerfile.x86_64 -t libsbp-amd64 .
+docker run -v linux-amd64-root:/root -v $PWD:/work --rm -it libsbp-amd64 /bin/bash
+cd /work
 make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
 ```
+
+The Linux ARM build of libsbp can be done through docker via the following set
+of commands:
+```
+docker build -f python/Dockerfile.arm -t libsbp-arm .
+docker run -v linux-arm-root:/root -v $PWD:/work --rm -it libsbp-arm /bin/bash
+cd /work
+make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
+```
+
+## Building on Windows
+
+In order to build on Windows, first install the necessary compilers per the
+instructions [on this Microsoft developer blog][1] install the 64-bit Python
+3.7 version of [Conda][2]
+
+[1]: https://devblogs.microsoft.com/python/unable-to-find-vcvarsall-bat/
+[2]: https://docs.conda.io/en/latest/miniconda.html
+
+In order to compile for 64-bit: start a command shell with the x64 set
+of compiler tools (shortcut `x64 Native Tools Command Prompt for VS 2019`).
+Then activate Conda with the `activate.bat` script in the Conda installation.
+
+Invoke the `dist-python` target from `libsbp` (with appropriate PyPI auth).
+
+In order to compile for 32-bit: start a command shell with the x86 set
+of compiler tools (shortcut `x86 Native Tools Command Prompt for VS 2019`).
+Then activate Conda with the `activate.bat` script in the Conda installation.
+
+Prior to invoking the `dist-python` target.  Set the following global variable
+to force Conda to create 32-bit environemnts:
+```
+set CONDA_FORCE_32BIT=1
+```
+
+Then invoke the `dist-python` target per usual. (Side note: at some point
+it was also necessary to delete libraries from `C:\Users\<user>\AppData\Roaming\Python`
+in order to prevent 32-bit Conda Python from loading libraries of the wrong
+architecture).
 
 # Contributions
 

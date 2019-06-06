@@ -65,7 +65,7 @@ def build_wheel_native(conda_dir, deploy_dir, py_version):
     subprocess.check_call(["apt-get", "update"])
 
     subprocess.check_call(["apt-get", "install", "-y",
-        "python3", "python3-wheel", "cython3", "python3-pip", "python3-dev",
+        "python3", "python3-wheel", "cython3", "python3-pip", "python3-dev", "python3-setuptools"
         ])
 
     subprocess.check_call([
@@ -75,7 +75,7 @@ def build_wheel_native(conda_dir, deploy_dir, py_version):
 
     subprocess.check_call([
         "/usr/bin/python3", "-m",
-        "pip", "install", "twine", "numpy", "setuptools"
+        "pip", "install", "twine", "numpy", "auditwheel"
     ])
 
     print(">>> Installing setup deps in Python {} conda environment...".format(py_version))
@@ -154,6 +154,14 @@ def run_bdist(conda_dir, deploy_dir, py_version, use_conda=True):
 
     print(">>> Found wheel (of {} matches): {}".format(len(wheels), wheel))
 
+    if platform.system() == "Linux" and platform.machine().startswith("x86"):
+        print(">>> Auditing wheel: {}".format(wheel))
+        subprocess.check_call([
+            "python3", "-m",
+            "auditwheel", "repair", "-w", "dist", wheel
+        ])
+
+    wheel = wheel.replace("-linux_x86_64", "-manylinux1_x86_64")
     twine_upload(conda_dir, wheel, use_conda)
 
 
@@ -184,6 +192,10 @@ def build_wheel_conda(conda_dir, deploy_dir, py_version):
     subprocess.check_call([
         "conda", "run", "-p", conda_dir] + DASHDASH + [
         "pip", "install", "twine", "numpy"
+    ])
+    subprocess.check_call([
+        "python3", "-m",
+        "pip", "install", "auditwheel"
     ])
 
     print(">>> Installing setup deps in Python {} conda environment...".format(py_version))
@@ -225,7 +237,7 @@ for py_version in py_versions():
         build_wheel(conda_dir, deploy_dir, py_version)
     finally:
         os.chdir(script_dir)
-        if platform.system() == "Linux" and not platform.machine().startswith("arm"):
+        if platform.system() != "Linux" or not platform.machine().startswith("arm"):
             shutil.rmtree(conda_tmp_dir)
         else:
             subprocess.check_call(["rm", "-fr", conda_dir])
