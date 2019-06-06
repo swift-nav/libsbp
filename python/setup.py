@@ -7,6 +7,7 @@
 #   https://github.com/swift-nav/traitsui/blob/swift-2019.01/setup.py
 #
 
+import warnings
 from setuptools import setup
 
 import re
@@ -30,6 +31,7 @@ CLASSIFIERS = [
 
 PACKAGES = [
   'sbp',
+  'sbp.jit',
   'sbp.client',
   'sbp.client.drivers',
   'sbp.client.loggers',
@@ -42,15 +44,16 @@ PLATFORMS = [
   'win32',
 ]
 
+setup_py_dir = os.path.dirname(os.path.abspath(__file__))
 
 def _read_release_version():
-    this_dir = os.path.dirname(__file__)
-    relver_path = os.path.join(this_dir, 'sbp/RELEASE-VERSION')
+    relver_path = os.path.join(setup_py_dir, 'sbp/RELEASE-VERSION')
     try:
         with open(relver_path, "r") as f:
             version = f.readlines()[0]
             return version.strip()
-    except IOError:
+    except IOError as ex:
+        warnings.warn("Error reading version: {}".format(ex))
         return "0.0.0"
 
 
@@ -110,10 +113,8 @@ def git_version():
 
 def write_version_py(filename=VERSION_PY_PATH):
 
-    filedir = os.path.abspath(os.path.dirname(__file__))
-
     fullversion = VERSION
-    if os.path.exists(os.path.join(filedir, '..', '.git')):
+    if os.path.exists(os.path.join(setup_py_dir, '..', '.git')):
         git_rev, dev_num = git_version()
     elif os.path.exists(VERSION_PY_PATH):
         # must be a source distribution, use existing version file
@@ -144,7 +145,8 @@ def write_version_py(filename=VERSION_PY_PATH):
         #
         fullversion += '.dev{0}+g{1}'.format(dev_num, git_rev)
 
-    filename_fullpath = os.path.join(filedir, filename)
+    filename_fullpath = os.path.join(setup_py_dir, filename)
+    print(filename_fullpath)
 
     with open(filename_fullpath, "wt") as fp:
         fp.write(VERSION_PY_TEMPLATE.format(version=VERSION,
@@ -155,22 +157,33 @@ def write_version_py(filename=VERSION_PY_PATH):
 
 if __name__ == "__main__":
 
-    filedir = os.path.abspath(os.path.dirname(__file__))
-
-    with open(os.path.join(filedir, 'README.rst')) as f:
+    with open(os.path.join(setup_py_dir, 'README.rst')) as f:
         readme = f.read()
 
-    with open(os.path.join(filedir, 'requirements.txt')) as f:
-        INSTALL_REQUIRES = [i.strip() for i in f.readlines()]
+    INSTALL_REQUIRES = []
+    with open(os.path.join(setup_py_dir, 'requirements.txt')) as f:
+        INSTALL_REQUIRES += [i.strip() for i in f.readlines()]
 
-    with open(os.path.join(filedir, 'test_requirements.txt')) as f:
+    with open(os.path.join(setup_py_dir, 'test_requirements.txt')) as f:
         TEST_REQUIRES = [i.strip() for i in f.readlines()]
 
+    with open(os.path.join(setup_py_dir, 'setup_requirements.txt')) as f:
+        SETUP_REQUIRES = [i.strip() for i in f.readlines()
+                          if 'setuptools' not in i]
+
     write_version_py()
-    from sbp import __version__
+
+    from sbp import __version__ as sbp_version
+    print("Building/installing libsbp version {} (read version: {})".format(sbp_version, VERSION))
+
+    ext_modules = None
+    if not os.environ.get('LIBSBP_BUILD_ANY', None):
+        from sbp.jit.parse import cc
+        ext_modules = [cc.distutils_extension()]
+        INSTALL_REQUIRES.extend(SETUP_REQUIRES)
 
     setup(name='sbp',
-          version=__version__,
+          version=sbp_version,
           description='Python bindings for Swift Binary Protocol',
           long_description=readme,
           author='Swift Navigation',
@@ -182,4 +195,5 @@ if __name__ == "__main__":
           install_requires=INSTALL_REQUIRES,
           tests_require=TEST_REQUIRES,
           use_2to3=False,
-          zip_safe=False)
+          zip_safe=False,
+          ext_modules=ext_modules)

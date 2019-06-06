@@ -190,7 +190,7 @@ def render_cabal(output_dir, package_specs, release):
     module_name = camel_case(name)
     full_module_name = ".".join([module_prefix, module_name])
     modules.append(full_module_name)
-  destination_filename = "%s/sbp.cabal.m4" % output_dir
+  destination_filename = "%s/sbp.cabal" % output_dir
   py_template = JENV.get_template(CABAL_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(modules=sorted(modules),

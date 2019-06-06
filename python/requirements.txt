@@ -3,8 +3,5 @@ pyftdi==0.13.4
 pylibftdi
 pyserial
 requests>=2.8.1
-llvmlite==0.26.0
 numpy==1.16.2
-numba==0.41.0
 pybase64
-cffi

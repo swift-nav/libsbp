@@ -97,7 +97,7 @@ Ubuntu 16.04.
 2. This will bump versions in the following files:
    - `python/sbp/RELEASE-VERSION`
    - `docs/sbp.pdf`
-   - `haskell/sbp.cabal.m4`
+   - `haskell/sbp.cabal`
    - `package.json`
    - `c/include/libsbp/version.h`
    - `package-lock.json` -- you can typically revert all the changes in this
@@ -144,16 +144,53 @@ Ubuntu 16.04.
    [GitHub](https://github.com/swift-nav/libsbp/releases) and add the
    RELEASE_NOTES.md.
 
-7. Distribute release packages: `make dist`. You may need credentials
-   on the appropriate package repositories. Ignore the GPG error in `stack`,
-   the package will get uploaded correctly anyway.  If the release is
-   a Python only change it may be appropriate to just publish to PyPI
-   with `make dist-python` -- we typically update all other supported
-   languages when we make an official firmware release.
+7. Distribute release packages.  You can attempt to run all releases
+   with `make dist` -- this will likely not work through... it is
+   advisable to run each dist target separately.  In particular:
+
+   - `make dist-javascript`
+   - `make dist-haskell`
+   - `make dist-pdf`
+   - `make dist-python` (see section on Python below)
+
+   You may need credentials on the appropriate package repositories. Ignore the
+   GPG error in `stack`, the package will get uploaded correctly anyway.  If
+   the release is a Python only change it may be appropriate to just publish to
+   PyPI with `make dist-python` (see section on Python below) -- we typically
+   update all other supported languages when we make an official firmware
+   release.
 
 8. Releases are not only never perfect, they never really end. Please
    pay special attention to any downstream projects or users that may
    have issues or regressions as a consequence of the release version.
+
+# Distributing Python
+
+Python distribution requires compilation for the JIT accelerated `sbp.jit`
+package.  This package uses the Python `numba` library, which supports AOT
+compilation of a native Python extension.  The distributions for each platform
+can be created by running the `make dist-python` target on each platform
+(Windows, Mac OS X, Linux x86, and Linux ARM through docker).
+
+For example, running this:
+```
+make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
+```
+
+...will produce and upload a `.whl` appropriate for that platform.  A
+wheel that targets any platform (but requires that `numba` be installed)
+can be produced and uploaded by running the following command:
+```
+make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=... LIBSBP_BUILD_ANY=y
+```
+
+The Linux ARM build of libsbp can be done either natively, or through docker
+via the following set of command:
+```
+docker build -f python/Dockerfile.arm -t libsbp-arm .
+docker run -v $PWD:/work --rm -it libsbp-arm /bin/bash
+make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
+```
 
 # Contributions
 
