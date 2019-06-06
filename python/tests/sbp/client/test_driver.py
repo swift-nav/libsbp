@@ -33,7 +33,7 @@ def tcp_server(handler):
   server_thread = threading.Thread(target=server.serve_forever)
   server_thread.daemon = True
   server_thread.start()
-  time.sleep(0.1)  # wait for server to start
+  time.sleep(1)  # wait for server to start
   return (ip, port)
 
 def test_tcp_logger():
