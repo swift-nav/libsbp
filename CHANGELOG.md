@@ -1,5 +1,15 @@
 # Change Log
 
+## [2.6.1](https://github.com/swift-nav/libsbp/tree/v2.6.1)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.0...v2.6.1)
+
+**Merged pull requests:**
+
+- Add QZSS eph [\#695](https://github.com/swift-nav/libsbp/pull/695)
+- Import standard cmake modules, standardise dependency resolution \[ESD-1246\] \[ESD-1247\] [\#692](https://github.com/swift-nav/libsbp/pull/692)
+
+
 ## [2.6.0](https://github.com/swift-nav/libsbp/tree/v2.6.0)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.5...v2.6.0)
