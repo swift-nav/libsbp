@@ -202,6 +202,36 @@ cd /work
 make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
 ```
 
+## Building on Windows
+
+In order to build on Windows, first install the necessary compilers per the
+instructions [on this Microsoft developer blog][1] install the 64-bit Python
+3.7 version of [Conda][2]
+
+[1]: https://devblogs.microsoft.com/python/unable-to-find-vcvarsall-bat/
+[2]: https://docs.conda.io/en/latest/miniconda.html
+
+In order to compile for 64-bit: start a command shell with the x64 set
+of compiler tools (shortcut `x64 Native Tools Command Prompt for VS 2019`).
+Then activate Conda with the `activate.bat` script in the Conda installation.
+
+Invoke the `dist-python` target from `libsbp` (with appropriate PyPI auth).
+
+In order to compile for 32-bit: start a command shell with the x86 set
+of compiler tools (shortcut `x86 Native Tools Command Prompt for VS 2019`).
+Then activate Conda with the `activate.bat` script in the Conda installation.
+
+Prior to invoking the `dist-python` target.  Set the following global variable
+to force Conda to create 32-bit environemnts:
+```
+set CONDA_FORCE_32BIT=1
+```
+
+Then invoke the `dist-python` target per usual. (Side note: at some point
+it was also necessary to delete libraries from `C:\Users\<user>\AppData\Roaming\Python`
+in order to prevent 32-bit Conda Python from loading libraries of the wrong
+architecture).
+
 # Contributions
 
 This library is developed internally by Swift Navigation. We welcome
