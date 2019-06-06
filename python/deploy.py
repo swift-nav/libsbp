@@ -237,7 +237,7 @@ for py_version in py_versions():
         build_wheel(conda_dir, deploy_dir, py_version)
     finally:
         os.chdir(script_dir)
-        if platform.system() == "Linux" and not platform.machine().startswith("arm"):
+        if platform.system() != "Linux" or not platform.machine().startswith("arm"):
             shutil.rmtree(conda_tmp_dir)
         else:
             subprocess.check_call(["rm", "-fr", conda_dir])
