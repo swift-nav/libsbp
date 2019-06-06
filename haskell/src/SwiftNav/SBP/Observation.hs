@@ -755,6 +755,122 @@ $(makeSBP 'msgEphemerisGps ''MsgEphemerisGps)
 $(makeJSON "_msgEphemerisGps_" ''MsgEphemerisGps)
 $(makeLenses ''MsgEphemerisGps)
 
+msgEphemerisQzss :: Word16
+msgEphemerisQzss = 0x008E
+
+-- | SBP class for message MSG_EPHEMERIS_QZSS (0x008E).
+--
+-- The ephemeris message returns a set of satellite orbit parameters that is
+-- used to calculate QZSS satellite position, velocity, and clock offset.
+data MsgEphemerisQzss = MsgEphemerisQzss
+  { _msgEphemerisQzss_common :: !EphemerisCommonContent
+    -- ^ Values common for all ephemeris types
+  , _msgEphemerisQzss_tgd    :: !Float
+    -- ^ Group delay differential between L1 and L2
+  , _msgEphemerisQzss_c_rs   :: !Float
+    -- ^ Amplitude of the sine harmonic correction term to the orbit radius
+  , _msgEphemerisQzss_c_rc   :: !Float
+    -- ^ Amplitude of the cosine harmonic correction term to the orbit radius
+  , _msgEphemerisQzss_c_uc   :: !Float
+    -- ^ Amplitude of the cosine harmonic correction term to the argument of
+    -- latitude
+  , _msgEphemerisQzss_c_us   :: !Float
+    -- ^ Amplitude of the sine harmonic correction term to the argument of
+    -- latitude
+  , _msgEphemerisQzss_c_ic   :: !Float
+    -- ^ Amplitude of the cosine harmonic correction term to the angle of
+    -- inclination
+  , _msgEphemerisQzss_c_is   :: !Float
+    -- ^ Amplitude of the sine harmonic correction term to the angle of
+    -- inclination
+  , _msgEphemerisQzss_dn     :: !Double
+    -- ^ Mean motion difference
+  , _msgEphemerisQzss_m0     :: !Double
+    -- ^ Mean anomaly at reference time
+  , _msgEphemerisQzss_ecc    :: !Double
+    -- ^ Eccentricity of satellite orbit
+  , _msgEphemerisQzss_sqrta  :: !Double
+    -- ^ Square root of the semi-major axis of orbit
+  , _msgEphemerisQzss_omega0 :: !Double
+    -- ^ Longitude of ascending node of orbit plane at weekly epoch
+  , _msgEphemerisQzss_omegadot :: !Double
+    -- ^ Rate of right ascension
+  , _msgEphemerisQzss_w      :: !Double
+    -- ^ Argument of perigee
+  , _msgEphemerisQzss_inc    :: !Double
+    -- ^ Inclination
+  , _msgEphemerisQzss_inc_dot :: !Double
+    -- ^ Inclination first derivative
+  , _msgEphemerisQzss_af0    :: !Float
+    -- ^ Polynomial clock correction coefficient (clock bias)
+  , _msgEphemerisQzss_af1    :: !Float
+    -- ^ Polynomial clock correction coefficient (clock drift)
+  , _msgEphemerisQzss_af2    :: !Float
+    -- ^ Polynomial clock correction coefficient (rate of clock drift)
+  , _msgEphemerisQzss_toc    :: !GpsTimeSec
+    -- ^ Clock reference
+  , _msgEphemerisQzss_iode   :: !Word8
+    -- ^ Issue of ephemeris data
+  , _msgEphemerisQzss_iodc   :: !Word16
+    -- ^ Issue of clock data
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgEphemerisQzss where
+  get = do
+    _msgEphemerisQzss_common <- get
+    _msgEphemerisQzss_tgd <- getFloat32le
+    _msgEphemerisQzss_c_rs <- getFloat32le
+    _msgEphemerisQzss_c_rc <- getFloat32le
+    _msgEphemerisQzss_c_uc <- getFloat32le
+    _msgEphemerisQzss_c_us <- getFloat32le
+    _msgEphemerisQzss_c_ic <- getFloat32le
+    _msgEphemerisQzss_c_is <- getFloat32le
+    _msgEphemerisQzss_dn <- getFloat64le
+    _msgEphemerisQzss_m0 <- getFloat64le
+    _msgEphemerisQzss_ecc <- getFloat64le
+    _msgEphemerisQzss_sqrta <- getFloat64le
+    _msgEphemerisQzss_omega0 <- getFloat64le
+    _msgEphemerisQzss_omegadot <- getFloat64le
+    _msgEphemerisQzss_w <- getFloat64le
+    _msgEphemerisQzss_inc <- getFloat64le
+    _msgEphemerisQzss_inc_dot <- getFloat64le
+    _msgEphemerisQzss_af0 <- getFloat32le
+    _msgEphemerisQzss_af1 <- getFloat32le
+    _msgEphemerisQzss_af2 <- getFloat32le
+    _msgEphemerisQzss_toc <- get
+    _msgEphemerisQzss_iode <- getWord8
+    _msgEphemerisQzss_iodc <- getWord16le
+    pure MsgEphemerisQzss {..}
+
+  put MsgEphemerisQzss {..} = do
+    put _msgEphemerisQzss_common
+    putFloat32le _msgEphemerisQzss_tgd
+    putFloat32le _msgEphemerisQzss_c_rs
+    putFloat32le _msgEphemerisQzss_c_rc
+    putFloat32le _msgEphemerisQzss_c_uc
+    putFloat32le _msgEphemerisQzss_c_us
+    putFloat32le _msgEphemerisQzss_c_ic
+    putFloat32le _msgEphemerisQzss_c_is
+    putFloat64le _msgEphemerisQzss_dn
+    putFloat64le _msgEphemerisQzss_m0
+    putFloat64le _msgEphemerisQzss_ecc
+    putFloat64le _msgEphemerisQzss_sqrta
+    putFloat64le _msgEphemerisQzss_omega0
+    putFloat64le _msgEphemerisQzss_omegadot
+    putFloat64le _msgEphemerisQzss_w
+    putFloat64le _msgEphemerisQzss_inc
+    putFloat64le _msgEphemerisQzss_inc_dot
+    putFloat32le _msgEphemerisQzss_af0
+    putFloat32le _msgEphemerisQzss_af1
+    putFloat32le _msgEphemerisQzss_af2
+    put _msgEphemerisQzss_toc
+    putWord8 _msgEphemerisQzss_iode
+    putWord16le _msgEphemerisQzss_iodc
+
+$(makeSBP 'msgEphemerisQzss ''MsgEphemerisQzss)
+$(makeJSON "_msgEphemerisQzss_" ''MsgEphemerisQzss)
+$(makeLenses ''MsgEphemerisQzss)
+
 msgEphemerisBds :: Word16
 msgEphemerisBds = 0x0089
 
