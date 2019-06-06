@@ -95,7 +95,7 @@ verify-prereq-java: verify-prereq-generator
 
 verify-prereq-haskell: verify-prereq-generator
 
-verify-prereq-protobuf: verify-prereq-protobuf
+verify-prereq-protobuf: verify-prereq-generator
 
 verify-prereq-docs: verify-prereq-generator
 	@command -v pdflatex  1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`pdflatex\` but it's not installed. Aborting.\n\nHave you installed pdflatex? See the generator readme (Installing instructions) at \`generator/README.md\` for setup instructions.\n"; exit 1; }
