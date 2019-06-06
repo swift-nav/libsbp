@@ -106,6 +106,7 @@ data SBPMsg =
    | SBPMsgEphemerisGps MsgEphemerisGps Msg
    | SBPMsgEphemerisGpsDepE MsgEphemerisGpsDepE Msg
    | SBPMsgEphemerisGpsDepF MsgEphemerisGpsDepF Msg
+   | SBPMsgEphemerisQzss MsgEphemerisQzss Msg
    | SBPMsgEphemerisSbas MsgEphemerisSbas Msg
    | SBPMsgEphemerisSbasDepA MsgEphemerisSbasDepA Msg
    | SBPMsgEphemerisSbasDepB MsgEphemerisSbasDepB Msg
@@ -291,6 +292,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgEphemerisGps = SBPMsgEphemerisGps (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisGpsDepE = SBPMsgEphemerisGpsDepE (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisGpsDepF = SBPMsgEphemerisGpsDepF (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisQzss = SBPMsgEphemerisQzss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisSbas = SBPMsgEphemerisSbas (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisSbasDepA = SBPMsgEphemerisSbasDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisSbasDepB = SBPMsgEphemerisSbasDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -468,6 +470,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgEphemerisGps _ m) = put m
       encoder (SBPMsgEphemerisGpsDepE _ m) = put m
       encoder (SBPMsgEphemerisGpsDepF _ m) = put m
+      encoder (SBPMsgEphemerisQzss _ m) = put m
       encoder (SBPMsgEphemerisSbas _ m) = put m
       encoder (SBPMsgEphemerisSbasDepA _ m) = put m
       encoder (SBPMsgEphemerisSbasDepB _ m) = put m
@@ -649,6 +652,7 @@ instance FromJSON SBPMsg where
         | msgType == msgEphemerisGps = SBPMsgEphemerisGps <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisGpsDepE = SBPMsgEphemerisGpsDepE <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisGpsDepF = SBPMsgEphemerisGpsDepF <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisQzss = SBPMsgEphemerisQzss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisSbas = SBPMsgEphemerisSbas <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisSbasDepA = SBPMsgEphemerisSbasDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisSbasDepB = SBPMsgEphemerisSbasDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -831,6 +835,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgEphemerisGps n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisGpsDepE n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisGpsDepF n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisQzss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisSbas n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisSbasDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisSbasDepB n m) = toJSON n <<>> toJSON m
@@ -1007,6 +1012,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgEphemerisGps n m) = SBPMsgEphemerisGps n <$> f m
   msg f (SBPMsgEphemerisGpsDepE n m) = SBPMsgEphemerisGpsDepE n <$> f m
   msg f (SBPMsgEphemerisGpsDepF n m) = SBPMsgEphemerisGpsDepF n <$> f m
+  msg f (SBPMsgEphemerisQzss n m) = SBPMsgEphemerisQzss n <$> f m
   msg f (SBPMsgEphemerisSbas n m) = SBPMsgEphemerisSbas n <$> f m
   msg f (SBPMsgEphemerisSbasDepA n m) = SBPMsgEphemerisSbasDepA n <$> f m
   msg f (SBPMsgEphemerisSbasDepB n m) = SBPMsgEphemerisSbasDepB n <$> f m
