@@ -177,11 +177,12 @@ if __name__ == "__main__":
     print("Building/installing libsbp version {} (read version: {})".format(sbp_version, VERSION))
 
     ext_modules = None
-    if os.environ.get('LIBSBP_BUILD_ANY', None):
-        INSTALL_REQUIRES.extend(SETUP_REQUIRES)
-    else:
+
+    if not os.environ.get('LIBSBP_BUILD_ANY', None):
         from sbp.jit.parse import cc
         ext_modules = [cc.distutils_extension()]
+
+    INSTALL_REQUIRES.extend(SETUP_REQUIRES)
 
     setup(name='sbp',
           version=sbp_version,
