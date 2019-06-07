@@ -49,6 +49,7 @@ help:
 	@echo "  html      to make all HTML language docs"
 	@echo "  pdf       to make SBP LaTeX datasheet"
 	@echo "  python    to make Python bindings"
+	@echo "  pythonNG  to make Python (JIT) bindings"
 	@echo "  haskell   to make Haskell bindings"
 	@echo "  java      to make Java bindings"
 	@echo "  protobuf  to make Protocol Buffer bindings"
@@ -56,7 +57,7 @@ help:
 	@echo "  test      to run all tests"
 	@echo
 
-all: c python javascript java docs haskell protobuf
+all: c python pythonNG javascript java docs haskell protobuf
 docs: verify-prereq-docs pdf html
 
 c:          deps-c          gen-c          test-c
