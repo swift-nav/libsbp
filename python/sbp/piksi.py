@@ -682,34 +682,29 @@ Ambiguity Resolution (IAR) process.
     d.update(j)
     return d
     
-SBP_MSG_INIT_BASE = 0x0023
-class MsgInitBase(SBP):
-  """SBP class for message MSG_INIT_BASE (0x0023).
+SBP_MSG_INIT_BASE_DEP = 0x0023
+class MsgInitBaseDep(SBP):
+  """SBP class for message MSG_INIT_BASE_DEP (0x0023).
 
-  You can have MSG_INIT_BASE inherit its fields directly
+  You can have MSG_INIT_BASE_DEP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
-  This message initializes the integer ambiguity resolution (IAR)
-process on the Piksi to use an assumed baseline position between
-the base station and rover receivers. Warns via MSG_PRINT if
-there aren't a shared minimum number (4) of satellite
-observations between the two.
-
+  Deprecated
 
   """
   __slots__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgInitBase,
+      super( MsgInitBaseDep,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.payload = sbp.payload
     else:
-      super( MsgInitBase, self).__init__()
-      self.msg_type = SBP_MSG_INIT_BASE
+      super( MsgInitBaseDep, self).__init__()
+      self.msg_type = SBP_MSG_INIT_BASE_DEP
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.payload = b""
 
@@ -722,12 +717,12 @@ observations between the two.
 
     """
     d = json.loads(s)
-    return MsgInitBase.from_json_dict(d)
+    return MsgInitBaseDep.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgInitBase(sbp, **d)
+    return MsgInitBaseDep(sbp, **d)
 
  
     
@@ -2466,7 +2461,7 @@ msg_classes = {
   0x00C0: MsgCwResults,
   0x00C1: MsgCwStart,
   0x0022: MsgResetFilters,
-  0x0023: MsgInitBase,
+  0x0023: MsgInitBaseDep,
   0x0017: MsgThreadState,
   0x001D: MsgUartState,
   0x0018: MsgUartStateDepa,

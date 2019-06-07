@@ -68,6 +68,48 @@ class GnssSignal(object):
     ret += 1
     return ret
   
+class SvId(object):
+  """SBP class for message SvId
+
+  You can have SvId inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  A (Constellation ID, satellite ID) tuple that uniquely identifies
+a space vehicle
+
+
+  """
+  __slots__ = ['satId',
+               'constellation',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__satId, offset, length) = get_u8(buf, offset, length)
+    ret['satId'] = __satId
+    (__constellation, offset, length) = get_u8(buf, offset, length)
+    ret['constellation'] = __constellation
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.satId = res['satId']
+    self.constellation = res['constellation']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # satId: u8
+    ret += 1
+    # constellation: u8
+    ret += 1
+    return ret
+  
 class GnssSignalDep(object):
   """SBP class for message GnssSignalDep
 

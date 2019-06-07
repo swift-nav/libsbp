@@ -212,21 +212,16 @@ Ambiguity Resolution (IAR) process.
     ret += 1
     return ret
   
-SBP_MSG_INIT_BASE = 0x0023
-class MsgInitBase(SBP):
-  """SBP class for message MSG_INIT_BASE (0x0023).
+SBP_MSG_INIT_BASE_DEP = 0x0023
+class MsgInitBaseDep(SBP):
+  """SBP class for message MSG_INIT_BASE_DEP (0x0023).
 
-  You can have MSG_INIT_BASE inherit its fields directly
+  You can have MSG_INIT_BASE_DEP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
-  This message initializes the integer ambiguity resolution (IAR)
-process on the Piksi to use an assumed baseline position between
-the base station and rover receivers. Warns via MSG_PRINT if
-there aren't a shared minimum number (4) of satellite
-observations between the two.
-
+  Deprecated
 
   """
   __slots__ = []
@@ -1356,7 +1351,7 @@ msg_classes = {
   0x00C0: MsgCwResults,
   0x00C1: MsgCwStart,
   0x0022: MsgResetFilters,
-  0x0023: MsgInitBase,
+  0x0023: MsgInitBaseDep,
   0x0017: MsgThreadState,
   0x001D: MsgUartState,
   0x0018: MsgUartStateDepa,

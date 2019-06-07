@@ -95,15 +95,11 @@ typedef struct SBP_ATTR_PACKED {
 } msg_reset_filters_t;
 
 
-/** Initialize IAR from known baseline (host => device)
+/** Deprecated
  *
- * This message initializes the integer ambiguity resolution (IAR)
- * process on the Piksi to use an assumed baseline position between
- * the base station and rover receivers. Warns via MSG_PRINT if
- * there aren't a shared minimum number (4) of satellite
- * observations between the two.
+* Deprecated
  */
-#define SBP_MSG_INIT_BASE               0x0023
+#define SBP_MSG_INIT_BASE_DEP           0x0023
 
 
 /** State of an RTOS thread
