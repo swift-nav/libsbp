@@ -186,27 +186,24 @@ $(makeSBP 'msgResetFilters ''MsgResetFilters)
 $(makeJSON "_msgResetFilters_" ''MsgResetFilters)
 $(makeLenses ''MsgResetFilters)
 
-msgInitBase :: Word16
-msgInitBase = 0x0023
+msgInitBaseDep :: Word16
+msgInitBaseDep = 0x0023
 
--- | SBP class for message MSG_INIT_BASE (0x0023).
+-- | SBP class for message MSG_INIT_BASE_DEP (0x0023).
 --
--- This message initializes the integer ambiguity resolution (IAR) process on
--- the Piksi to use an assumed baseline position between the base station and
--- rover receivers. Warns via MSG_PRINT if there aren't a shared minimum number
--- (4) of satellite observations between the two.
-data MsgInitBase = MsgInitBase
+-- Deprecated
+data MsgInitBaseDep = MsgInitBaseDep
   deriving ( Show, Read, Eq )
 
-instance Binary MsgInitBase where
+instance Binary MsgInitBaseDep where
   get =
-    pure MsgInitBase
+    pure MsgInitBaseDep
 
-  put MsgInitBase =
+  put MsgInitBaseDep =
     pure ()
-$(makeSBP 'msgInitBase ''MsgInitBase)
-$(makeJSON "_msgInitBase_" ''MsgInitBase)
-$(makeLenses ''MsgInitBase)
+$(makeSBP 'msgInitBaseDep ''MsgInitBaseDep)
+$(makeJSON "_msgInitBaseDep_" ''MsgInitBaseDep)
+$(makeLenses ''MsgInitBaseDep)
 
 msgThreadState :: Word16
 msgThreadState = 0x0017

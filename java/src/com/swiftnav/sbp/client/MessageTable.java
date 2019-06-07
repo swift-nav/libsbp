@@ -135,7 +135,7 @@ import com.swiftnav.sbp.piksi.MsgResetDep;
 import com.swiftnav.sbp.piksi.MsgCwResults;
 import com.swiftnav.sbp.piksi.MsgCwStart;
 import com.swiftnav.sbp.piksi.MsgResetFilters;
-import com.swiftnav.sbp.piksi.MsgInitBase;
+import com.swiftnav.sbp.piksi.MsgInitBaseDep;
 import com.swiftnav.sbp.piksi.MsgThreadState;
 import com.swiftnav.sbp.piksi.MsgUartState;
 import com.swiftnav.sbp.piksi.MsgUartStateDepa;
@@ -432,8 +432,8 @@ final class MessageTable {
                 return new MsgCwStart(msg);
             case MsgResetFilters.TYPE:
                 return new MsgResetFilters(msg);
-            case MsgInitBase.TYPE:
-                return new MsgInitBase(msg);
+            case MsgInitBaseDep.TYPE:
+                return new MsgInitBaseDep(msg);
             case MsgThreadState.TYPE:
                 return new MsgThreadState(msg);
             case MsgUartState.TYPE:
