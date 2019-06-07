@@ -97,15 +97,10 @@ definitions:
                   - 1: IAR process
                   - 2: Inertial filter 
 
- - MSG_INIT_BASE:
+ - MSG_INIT_BASE_DEP:
     id: 0x0023
-    short_desc: Initialize IAR from known baseline (host => device)
-    desc: |
-      This message initializes the integer ambiguity resolution (IAR)
-      process on the Piksi to use an assumed baseline position between
-      the base station and rover receivers. Warns via MSG_PRINT if
-      there aren't a shared minimum number (4) of satellite
-      observations between the two.
+    short_desc: Deprecated
+    desc: Deprecated
 
  - MSG_THREAD_STATE:
     id: 0x0017
