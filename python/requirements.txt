@@ -5,3 +5,4 @@ pyserial
 requests>=2.8.1
 numpy==1.16.2
 pybase64
+ujson
