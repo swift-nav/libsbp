@@ -12,7 +12,7 @@ echo "Running benchmark, please wait.."
 
 # http://mywiki.wooledge.org/BashFAQ/032
 time_py=$(TIMEFORMAT="%R"; { time PYTHONPATH=$TESTDATA_ROOT/../python/ \
-    python $TESTDATA_ROOT/../../piksi_tools/piksi_tools/sbp2json.py \
+    python $TESTDATA_ROOT/../python/bin/sbp2json \
     < $TESTDATA_ROOT/long.sbp --mode ujson > $TESTDATA_ROOT/long_py.json; } 2>&1)
 echo "Python" $time_py
 
