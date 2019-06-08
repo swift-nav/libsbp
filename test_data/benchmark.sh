@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
+
 if [ "$#" -ne 1 ]; then
     echo "Skipping benchmark.sh, enable by providing a full path to Haskell SBP tools"
     exit 0
 fi
 
-set -e
+set -ex
 
 TESTDATA_ROOT=$(git rev-parse --show-toplevel)/test_data
 echo "Running benchmark, please wait.."
