@@ -1121,6 +1121,176 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     ret += 2
     return ret
   
+SBP_MSG_EPHEMERIS_QZSS = 0x008E
+class MsgEphemerisQzss(SBP):
+  """SBP class for message MSG_EPHEMERIS_QZSS (0x008E).
+
+  You can have MSG_EPHEMERIS_QZSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The ephemeris message returns a set of satellite orbit
+parameters that is used to calculate QZSS satellite position,
+velocity, and clock offset.
+
+
+  """
+  __slots__ = ['common',
+               'tgd',
+               'c_rs',
+               'c_rc',
+               'c_uc',
+               'c_us',
+               'c_ic',
+               'c_is',
+               'dn',
+               'm0',
+               'ecc',
+               'sqrta',
+               'omega0',
+               'omegadot',
+               'w',
+               'inc',
+               'inc_dot',
+               'af0',
+               'af1',
+               'af2',
+               'toc',
+               'iode',
+               'iodc',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__common, offset, length) = EphemerisCommonContent.parse_members(buf, offset, length)
+    ret['common'] = __common
+    (__tgd, offset, length) = get_f32(buf, offset, length)
+    ret['tgd'] = judicious_round(nb.f4(__tgd)) if SBP.judicious_rounding else __tgd
+    (__c_rs, offset, length) = get_f32(buf, offset, length)
+    ret['c_rs'] = judicious_round(nb.f4(__c_rs)) if SBP.judicious_rounding else __c_rs
+    (__c_rc, offset, length) = get_f32(buf, offset, length)
+    ret['c_rc'] = judicious_round(nb.f4(__c_rc)) if SBP.judicious_rounding else __c_rc
+    (__c_uc, offset, length) = get_f32(buf, offset, length)
+    ret['c_uc'] = judicious_round(nb.f4(__c_uc)) if SBP.judicious_rounding else __c_uc
+    (__c_us, offset, length) = get_f32(buf, offset, length)
+    ret['c_us'] = judicious_round(nb.f4(__c_us)) if SBP.judicious_rounding else __c_us
+    (__c_ic, offset, length) = get_f32(buf, offset, length)
+    ret['c_ic'] = judicious_round(nb.f4(__c_ic)) if SBP.judicious_rounding else __c_ic
+    (__c_is, offset, length) = get_f32(buf, offset, length)
+    ret['c_is'] = judicious_round(nb.f4(__c_is)) if SBP.judicious_rounding else __c_is
+    (__dn, offset, length) = get_f64(buf, offset, length)
+    ret['dn'] = __dn
+    (__m0, offset, length) = get_f64(buf, offset, length)
+    ret['m0'] = __m0
+    (__ecc, offset, length) = get_f64(buf, offset, length)
+    ret['ecc'] = __ecc
+    (__sqrta, offset, length) = get_f64(buf, offset, length)
+    ret['sqrta'] = __sqrta
+    (__omega0, offset, length) = get_f64(buf, offset, length)
+    ret['omega0'] = __omega0
+    (__omegadot, offset, length) = get_f64(buf, offset, length)
+    ret['omegadot'] = __omegadot
+    (__w, offset, length) = get_f64(buf, offset, length)
+    ret['w'] = __w
+    (__inc, offset, length) = get_f64(buf, offset, length)
+    ret['inc'] = __inc
+    (__inc_dot, offset, length) = get_f64(buf, offset, length)
+    ret['inc_dot'] = __inc_dot
+    (__af0, offset, length) = get_f32(buf, offset, length)
+    ret['af0'] = judicious_round(nb.f4(__af0)) if SBP.judicious_rounding else __af0
+    (__af1, offset, length) = get_f32(buf, offset, length)
+    ret['af1'] = judicious_round(nb.f4(__af1)) if SBP.judicious_rounding else __af1
+    (__af2, offset, length) = get_f32(buf, offset, length)
+    ret['af2'] = judicious_round(nb.f4(__af2)) if SBP.judicious_rounding else __af2
+    (__toc, offset, length) = GPSTimeSec.parse_members(buf, offset, length)
+    ret['toc'] = __toc
+    (__iode, offset, length) = get_u8(buf, offset, length)
+    ret['iode'] = __iode
+    (__iodc, offset, length) = get_u16(buf, offset, length)
+    ret['iodc'] = __iodc
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.common = res['common']
+    self.tgd = res['tgd']
+    self.c_rs = res['c_rs']
+    self.c_rc = res['c_rc']
+    self.c_uc = res['c_uc']
+    self.c_us = res['c_us']
+    self.c_ic = res['c_ic']
+    self.c_is = res['c_is']
+    self.dn = res['dn']
+    self.m0 = res['m0']
+    self.ecc = res['ecc']
+    self.sqrta = res['sqrta']
+    self.omega0 = res['omega0']
+    self.omegadot = res['omegadot']
+    self.w = res['w']
+    self.inc = res['inc']
+    self.inc_dot = res['inc_dot']
+    self.af0 = res['af0']
+    self.af1 = res['af1']
+    self.af2 = res['af2']
+    self.toc = res['toc']
+    self.iode = res['iode']
+    self.iodc = res['iodc']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # common: EphemerisCommonContent
+    ret += EphemerisCommonContent._payload_size()
+    # tgd: float
+    ret += 4
+    # c_rs: float
+    ret += 4
+    # c_rc: float
+    ret += 4
+    # c_uc: float
+    ret += 4
+    # c_us: float
+    ret += 4
+    # c_ic: float
+    ret += 4
+    # c_is: float
+    ret += 4
+    # dn: double
+    ret += 8
+    # m0: double
+    ret += 8
+    # ecc: double
+    ret += 8
+    # sqrta: double
+    ret += 8
+    # omega0: double
+    ret += 8
+    # omegadot: double
+    ret += 8
+    # w: double
+    ret += 8
+    # inc: double
+    ret += 8
+    # inc_dot: double
+    ret += 8
+    # af0: float
+    ret += 4
+    # af1: float
+    ret += 4
+    # af2: float
+    ret += 4
+    # toc: GPSTimeSec
+    ret += GPSTimeSec._payload_size()
+    # iode: u8
+    ret += 1
+    # iodc: u16
+    ret += 2
+    return ret
+  
 SBP_MSG_EPHEMERIS_BDS = 0x0089
 class MsgEphemerisBds(SBP):
   """SBP class for message MSG_EPHEMERIS_BDS (0x0089).
@@ -1298,19 +1468,17 @@ Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
     ret += 2
     return ret
   
-SBP_MSG_EPHEMERIS_GAL = 0x0095
-class MsgEphemerisGal(SBP):
-  """SBP class for message MSG_EPHEMERIS_GAL (0x0095).
+SBP_MSG_EPHEMERIS_GAL_DEP_A = 0x0095
+class MsgEphemerisGalDepA(SBP):
+  """SBP class for message MSG_EPHEMERIS_GAL_DEP_A (0x0095).
 
-  You can have MSG_EPHEMERIS_GAL inherit its fields directly
+  You can have MSG_EPHEMERIS_GAL_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
-  The ephemeris message returns a set of satellite orbit
-parameters that is used to calculate Galileo satellite position,
-velocity, and clock offset. Please see the Signal In Space ICD
-OS SIS ICD, Issue 1.3, December 2016 for more details.
+  This observation message has been deprecated in favor of
+an ephemeris message with explicit source of NAV data.
 
 
   """
@@ -1473,6 +1641,189 @@ OS SIS ICD, Issue 1.3, December 2016 for more details.
     ret += 2
     # iodc: u16
     ret += 2
+    return ret
+  
+SBP_MSG_EPHEMERIS_GAL = 0x008D
+class MsgEphemerisGal(SBP):
+  """SBP class for message MSG_EPHEMERIS_GAL (0x008D).
+
+  You can have MSG_EPHEMERIS_GAL inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The ephemeris message returns a set of satellite orbit
+parameters that is used to calculate Galileo satellite position,
+velocity, and clock offset. Please see the Signal In Space ICD
+OS SIS ICD, Issue 1.3, December 2016 for more details.
+
+
+  """
+  __slots__ = ['common',
+               'bgd_e1e5a',
+               'bgd_e1e5b',
+               'c_rs',
+               'c_rc',
+               'c_uc',
+               'c_us',
+               'c_ic',
+               'c_is',
+               'dn',
+               'm0',
+               'ecc',
+               'sqrta',
+               'omega0',
+               'omegadot',
+               'w',
+               'inc',
+               'inc_dot',
+               'af0',
+               'af1',
+               'af2',
+               'toc',
+               'iode',
+               'iodc',
+               'source',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__common, offset, length) = EphemerisCommonContent.parse_members(buf, offset, length)
+    ret['common'] = __common
+    (__bgd_e1e5a, offset, length) = get_f32(buf, offset, length)
+    ret['bgd_e1e5a'] = judicious_round(nb.f4(__bgd_e1e5a)) if SBP.judicious_rounding else __bgd_e1e5a
+    (__bgd_e1e5b, offset, length) = get_f32(buf, offset, length)
+    ret['bgd_e1e5b'] = judicious_round(nb.f4(__bgd_e1e5b)) if SBP.judicious_rounding else __bgd_e1e5b
+    (__c_rs, offset, length) = get_f32(buf, offset, length)
+    ret['c_rs'] = judicious_round(nb.f4(__c_rs)) if SBP.judicious_rounding else __c_rs
+    (__c_rc, offset, length) = get_f32(buf, offset, length)
+    ret['c_rc'] = judicious_round(nb.f4(__c_rc)) if SBP.judicious_rounding else __c_rc
+    (__c_uc, offset, length) = get_f32(buf, offset, length)
+    ret['c_uc'] = judicious_round(nb.f4(__c_uc)) if SBP.judicious_rounding else __c_uc
+    (__c_us, offset, length) = get_f32(buf, offset, length)
+    ret['c_us'] = judicious_round(nb.f4(__c_us)) if SBP.judicious_rounding else __c_us
+    (__c_ic, offset, length) = get_f32(buf, offset, length)
+    ret['c_ic'] = judicious_round(nb.f4(__c_ic)) if SBP.judicious_rounding else __c_ic
+    (__c_is, offset, length) = get_f32(buf, offset, length)
+    ret['c_is'] = judicious_round(nb.f4(__c_is)) if SBP.judicious_rounding else __c_is
+    (__dn, offset, length) = get_f64(buf, offset, length)
+    ret['dn'] = __dn
+    (__m0, offset, length) = get_f64(buf, offset, length)
+    ret['m0'] = __m0
+    (__ecc, offset, length) = get_f64(buf, offset, length)
+    ret['ecc'] = __ecc
+    (__sqrta, offset, length) = get_f64(buf, offset, length)
+    ret['sqrta'] = __sqrta
+    (__omega0, offset, length) = get_f64(buf, offset, length)
+    ret['omega0'] = __omega0
+    (__omegadot, offset, length) = get_f64(buf, offset, length)
+    ret['omegadot'] = __omegadot
+    (__w, offset, length) = get_f64(buf, offset, length)
+    ret['w'] = __w
+    (__inc, offset, length) = get_f64(buf, offset, length)
+    ret['inc'] = __inc
+    (__inc_dot, offset, length) = get_f64(buf, offset, length)
+    ret['inc_dot'] = __inc_dot
+    (__af0, offset, length) = get_f64(buf, offset, length)
+    ret['af0'] = __af0
+    (__af1, offset, length) = get_f64(buf, offset, length)
+    ret['af1'] = __af1
+    (__af2, offset, length) = get_f32(buf, offset, length)
+    ret['af2'] = judicious_round(nb.f4(__af2)) if SBP.judicious_rounding else __af2
+    (__toc, offset, length) = GPSTimeSec.parse_members(buf, offset, length)
+    ret['toc'] = __toc
+    (__iode, offset, length) = get_u16(buf, offset, length)
+    ret['iode'] = __iode
+    (__iodc, offset, length) = get_u16(buf, offset, length)
+    ret['iodc'] = __iodc
+    (__source, offset, length) = get_u8(buf, offset, length)
+    ret['source'] = __source
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.common = res['common']
+    self.bgd_e1e5a = res['bgd_e1e5a']
+    self.bgd_e1e5b = res['bgd_e1e5b']
+    self.c_rs = res['c_rs']
+    self.c_rc = res['c_rc']
+    self.c_uc = res['c_uc']
+    self.c_us = res['c_us']
+    self.c_ic = res['c_ic']
+    self.c_is = res['c_is']
+    self.dn = res['dn']
+    self.m0 = res['m0']
+    self.ecc = res['ecc']
+    self.sqrta = res['sqrta']
+    self.omega0 = res['omega0']
+    self.omegadot = res['omegadot']
+    self.w = res['w']
+    self.inc = res['inc']
+    self.inc_dot = res['inc_dot']
+    self.af0 = res['af0']
+    self.af1 = res['af1']
+    self.af2 = res['af2']
+    self.toc = res['toc']
+    self.iode = res['iode']
+    self.iodc = res['iodc']
+    self.source = res['source']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # common: EphemerisCommonContent
+    ret += EphemerisCommonContent._payload_size()
+    # bgd_e1e5a: float
+    ret += 4
+    # bgd_e1e5b: float
+    ret += 4
+    # c_rs: float
+    ret += 4
+    # c_rc: float
+    ret += 4
+    # c_uc: float
+    ret += 4
+    # c_us: float
+    ret += 4
+    # c_ic: float
+    ret += 4
+    # c_is: float
+    ret += 4
+    # dn: double
+    ret += 8
+    # m0: double
+    ret += 8
+    # ecc: double
+    ret += 8
+    # sqrta: double
+    ret += 8
+    # omega0: double
+    ret += 8
+    # omegadot: double
+    ret += 8
+    # w: double
+    ret += 8
+    # inc: double
+    ret += 8
+    # inc_dot: double
+    ret += 8
+    # af0: double
+    ret += 8
+    # af1: double
+    ret += 8
+    # af2: float
+    ret += 4
+    # toc: GPSTimeSec
+    ret += GPSTimeSec._payload_size()
+    # iode: u16
+    ret += 2
+    # iodc: u16
+    ret += 2
+    # source: u8
+    ret += 1
     return ret
   
 SBP_MSG_EPHEMERIS_SBAS_DEP_A = 0x0082
@@ -4407,8 +4758,10 @@ msg_classes = {
   0x0081: MsgEphemerisGPSDepE,
   0x0086: MsgEphemerisGPSDepF,
   0x008A: MsgEphemerisGPS,
+  0x008E: MsgEphemerisQzss,
   0x0089: MsgEphemerisBds,
-  0x0095: MsgEphemerisGal,
+  0x0095: MsgEphemerisGalDepA,
+  0x008D: MsgEphemerisGal,
   0x0082: MsgEphemerisSbasDepA,
   0x0083: MsgEphemerisGloDepA,
   0x0084: MsgEphemerisSbasDepB,
