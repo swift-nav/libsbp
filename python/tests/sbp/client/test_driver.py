@@ -56,6 +56,7 @@ def test_tcp_logger():
   with PySerialDriver(port, baud) as driver:
     with Handler(Framer(driver.read, None, verbose=False), autostart=False) as link:
       link.add_callback(assert_logger)
+      time.sleep(sleep)
       link.start()
       while True:
         if time.time() - t0 > timeout or cb_context['assert_logger_called']:
