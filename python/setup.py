@@ -36,6 +36,7 @@ PACKAGES = [
   'sbp.client.drivers',
   'sbp.client.loggers',
   'sbp.client.util',
+  'sbp2json',
 ]
 
 PLATFORMS = [
@@ -198,4 +199,5 @@ if __name__ == "__main__":
           tests_require=TEST_REQUIRES,
           use_2to3=False,
           zip_safe=False,
-          ext_modules=ext_modules)
+          ext_modules=ext_modules,
+          scripts=['bin/sbp2json'])
