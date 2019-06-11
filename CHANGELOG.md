@@ -1,5 +1,14 @@
 # Change Log
 
+## [2.6.3](https://github.com/swift-nav/libsbp/tree/v2.6.3)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.1...v2.6.3)
+
+**Merged pull requests:**
+
+- Move sbp2json to libsbp from piksi\_tools \[ESD-1374\] [\#699](https://github.com/swift-nav/libsbp/pull/699)
+- Deprecate MSG\_INIT\_BASE \[ESD-1286\] [\#698](https://github.com/swift-nav/libsbp/pull/698)
+
 ## [2.6.1](https://github.com/swift-nav/libsbp/tree/v2.6.1)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.0...v2.6.1)
