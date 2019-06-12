@@ -22,7 +22,6 @@ if(MSVC)
     set(LIBSBP_CFLAGS "/Wall" CACHE STRING "Compile flags for libsbp.")
 else()
     set(LIBSBP_CFLAGS "-Wall -Werror" CACHE STRING "Compile flags for libsbp.")
-    link_directories("/usr/local/lib")
 endif()
 
 add_subdirectory(src)

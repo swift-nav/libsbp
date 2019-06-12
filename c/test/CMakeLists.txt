@@ -16,7 +16,7 @@ set_target_properties(test_libsbp PROPERTIES
 if(MSVC)
   target_include_directories(test_libsbp PRIVATE ${PROJECT_SOURCE_DIR}/include/libsbp/)
 else()
-  target_include_directories(test_libsbp PRIVATE ${PROJECT_SOURCE_DIR}/include/libsbp/ /usr/local/include/)
+  target_include_directories(test_libsbp PRIVATE ${PROJECT_SOURCE_DIR}/include/libsbp/)
 endif()
 
 add_custom_command(
