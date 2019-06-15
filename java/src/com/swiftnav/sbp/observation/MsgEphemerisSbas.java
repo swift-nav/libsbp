@@ -25,7 +25,7 @@ import org.json.JSONArray;
 
 
 public class MsgEphemerisSbas extends SBPMessage {
-    public static final int TYPE = 0x0084;
+    public static final int TYPE = 0x008C;
 
     
     /** Values common for all ephemeris types */
@@ -35,16 +35,16 @@ public class MsgEphemerisSbas extends SBPMessage {
     public double[] pos;
     
     /** Velocity of the GEO at time toe */
-    public double[] vel;
+    public float[] vel;
     
     /** Acceleration of the GEO at time toe */
-    public double[] acc;
+    public float[] acc;
     
     /** Time offset of the GEO clock w.r.t. SBAS Network Time */
-    public double a_gf0;
+    public float a_gf0;
     
     /** Drift of the GEO clock w.r.t. SBAS Network Time */
-    public double a_gf1;
+    public float a_gf1;
     
 
     public MsgEphemerisSbas (int sender) { super(sender, TYPE); }
@@ -59,20 +59,20 @@ public class MsgEphemerisSbas extends SBPMessage {
         /* Parse fields from binary */
         common = new EphemerisCommonContent().parse(parser);
         pos = parser.getArrayofDouble(3);
-        vel = parser.getArrayofDouble(3);
-        acc = parser.getArrayofDouble(3);
-        a_gf0 = parser.getDouble();
-        a_gf1 = parser.getDouble();
+        vel = parser.getArrayofFloat(3);
+        acc = parser.getArrayofFloat(3);
+        a_gf0 = parser.getFloat();
+        a_gf1 = parser.getFloat();
     }
 
     @Override
     protected void build(Builder builder) {
         common.build(builder);
         builder.putArrayofDouble(pos, 3);
-        builder.putArrayofDouble(vel, 3);
-        builder.putArrayofDouble(acc, 3);
-        builder.putDouble(a_gf0);
-        builder.putDouble(a_gf1);
+        builder.putArrayofFloat(vel, 3);
+        builder.putArrayofFloat(acc, 3);
+        builder.putFloat(a_gf0);
+        builder.putFloat(a_gf1);
     }
 
     @Override

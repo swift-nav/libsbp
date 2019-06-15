@@ -302,6 +302,15 @@ ratio.
     self.payload = MsgAcqResult._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgAcqResult._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgAcqResult, self).to_json_dict()
@@ -396,6 +405,15 @@ class MsgAcqResultDepC(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgAcqResultDepC._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgAcqResultDepC._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -493,6 +511,15 @@ be in units of dB Hz in a later revision of this message.
     c = containerize(exclude_fields(self))
     self.payload = MsgAcqResultDepB._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgAcqResultDepB._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -593,6 +620,15 @@ acquisition was attempted
     self.payload = MsgAcqResultDepA._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgAcqResultDepA._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgAcqResultDepA, self).to_json_dict()
@@ -675,6 +711,15 @@ The message is used to debug and measure the performance.
     self.payload = MsgAcqSvProfile._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgAcqSvProfile._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgAcqSvProfile, self).to_json_dict()
@@ -754,6 +799,15 @@ class MsgAcqSvProfileDep(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgAcqSvProfileDep._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgAcqSvProfileDep._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()

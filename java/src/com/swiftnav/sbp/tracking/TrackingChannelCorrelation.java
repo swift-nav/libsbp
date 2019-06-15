@@ -37,16 +37,16 @@ public class TrackingChannelCorrelation extends SBPStruct {
     @Override
     public TrackingChannelCorrelation parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        I = parser.getS32();
-        Q = parser.getS32();
+        I = parser.getS16();
+        Q = parser.getS16();
         return this;
     }
 
     @Override
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
-        builder.putS32(I);
-        builder.putS32(Q);
+        builder.putS16(I);
+        builder.putS16(Q);
     }
 
     @Override

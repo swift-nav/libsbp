@@ -25,15 +25,18 @@
 
 #include "common.h"
 
+SBP_PACK_START
+
 
 /** Raw IMU data
  *
  * Raw data from the Inertial Measurement Unit, containing accelerometer and
  * gyroscope readings. The sense of the measurements are to be aligned with 
- * the indications on the device itself.
+ * the indications on the device itself. Measurement units, which are specific to the
+ * device hardware and settings, are communicated via the MSG_IMU_AUX message.
  */
 #define SBP_MSG_IMU_RAW 0x0900
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;      /**< Milliseconds since start of GPS week. If the high bit is set, the
 time is unknown or invalid.
  [ms] */
@@ -55,7 +58,7 @@ time is unknown or invalid.
  * depends on the value of `imu_type`.
  */
 #define SBP_MSG_IMU_AUX 0x0901
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u8 imu_type;    /**< IMU type */
   s16 temp;        /**< Raw IMU temperature */
   u8 imu_conf;    /**< IMU configuration */
@@ -63,5 +66,7 @@ typedef struct __attribute__((packed)) {
 
 
 /** \} */
+
+SBP_PACK_END
 
 #endif /* LIBSBP_IMU_MESSAGES_H */

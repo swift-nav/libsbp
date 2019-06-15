@@ -19,7 +19,8 @@ from sbp.logging import MsgPrintDep
 from sbp.table import _SBP_TABLE, dispatch
 from sbp.table import InvalidSBPMessageType
 import pytest
-import SocketServer
+import six
+from six.moves import socketserver
 import threading
 import warnings
 
@@ -31,9 +32,9 @@ def test_log():
   with open(log_datafile, 'r') as infile:
     with LogIterator(infile) as log:
       with pytest.raises(NotImplementedError) as exc_info:
-        for msg, metadata in log.next():
+        for msg, metadata in next(log):
           pass
-  assert exc_info.value.message == "next() not implemented!"
+  assert exc_info.value.args[0] == "next() not implemented!"
 
 def test_json_log():
   """
@@ -44,8 +45,8 @@ def test_json_log():
   with warnings.catch_warnings(record=True) as w:
     with open(log_datafile, 'r') as infile:
       with JSONLogIterator(infile) as log:
-        for msg, metadata in log.next():
-          assert type(metadata['time']) == unicode
+        for msg, metadata in next(log):
+          assert type(metadata['time']) == six.text_type
           assert isinstance(msg, SBP) or issubclass(type(msg), SBP)
           count += 1
         warnings.simplefilter("always")
@@ -61,7 +62,7 @@ def test_non_utf8_json_log():
   with warnings.catch_warnings(record=True) as w:
     with open(log_datafile, 'r') as infile:
       with JSONLogIterator(infile) as log:
-        for msg, metadata in log.next():
+        for msg, metadata in next(log):
           pass
         warnings.simplefilter("always")
         assert len(w) == 1
@@ -74,7 +75,7 @@ def test_msg_print():
   with open(log_datafile, 'r') as infile:
     with JSONLogIterator(infile) as log:
       with warnings.catch_warnings(record=True) as w:
-        for msg, metadata in log.next():
+        for msg, metadata in next(log):
           pass
         warnings.simplefilter("always")
         # Check for warnings.
@@ -83,12 +84,12 @@ def test_msg_print():
         assert str(w[0].message).startswith('Bad message parsing for line')
 
 def udp_handler(data):
-  class MockRequestHandler(SocketServer.BaseRequestHandler):
+  class MockRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
       assert data == self.request[0].strip()
   return MockRequestHandler
 
-class MockServer(SocketServer.ThreadingMixIn, SocketServer.UDPServer):
+class MockServer(socketserver.ThreadingMixIn, socketserver.UDPServer):
   pass
 
 def udp_server(handler):
@@ -100,7 +101,7 @@ def udp_server(handler):
   return (ip, port)
 
 def test_udp_logger():
-  msg = SBP(1, 2, 3, 'abc', 4)
+  msg = SBP(1, 2, 3, b'abc', 4)
   handler = udp_handler(msg.pack())
   ip, port = udp_server(handler)
   with UdpLogger(ip, port) as udp:
@@ -123,7 +124,7 @@ def test_rolling_json_log():
       with RotatingFileLogger(tf.name, when='S', interval=r_interval) as log:
         t0 = time.time()
         t = time.time()
-        msg = SBP(0x10, 2, 3, 'abc\n', 4)
+        msg = SBP(0x10, 2, 3, b'abc\n', 4)
         msgs = []
         while t - t0 < test_interval:
           log(msg, delta=t-t0, timestamp=t)
@@ -133,9 +134,9 @@ def test_rolling_json_log():
       i = 0
       with open(tf.name, 'r') as infile:
         with JSONLogIterator(infile) as log:
-          for msg, metadata in log.next():
+          for msg, metadata in next(log):
             assert isinstance(msg, MsgPrintDep)
-            assert msg.text == "abc\n"
+            assert msg.text == b"abc\n"
             i += 1
       assert i > 0
       assert i <= len(msgs)

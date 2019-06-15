@@ -11,6 +11,7 @@
 from ...table import dispatch
 from construct.core import ConstructError
 import warnings
+import six
 
 
 class BaseLogger(object):
@@ -59,7 +60,7 @@ class BaseLogger(object):
         return data
 
 
-class LogIterator(object):
+class LogIterator(six.Iterator):
     """
     LogIterator
 
@@ -110,7 +111,7 @@ class LogIterator(object):
             data = msg
         return data
 
-    def next(self):
+    def __next__(self):
         """Return the next record tuple from the log file. If an unknown SBP
         message type is found, it'll return the raw SBP. If EOF, throws
         exception and then returns to start of file.

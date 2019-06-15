@@ -80,7 +80,8 @@ msgOrientQuat = 0x0220
 -- This message reports the quaternion vector describing the vehicle body
 -- frame's orientation with respect to a local-level NED frame. The components
 -- of the vector should sum to a unit vector assuming that the LSB of each
--- component as a value of 2^-31.
+-- component as a value of 2^-31. This message will only be available in future
+-- INS versions of Swift Products and is not produced by Piksi Multi  or Duro.
 data MsgOrientQuat = MsgOrientQuat
   { _msgOrientQuat_tow      :: !Word32
     -- ^ GPS Time of Week
@@ -120,10 +121,10 @@ instance Binary MsgOrientQuat where
 
   put MsgOrientQuat {..} = do
     putWord32le _msgOrientQuat_tow
-    putWord32le $ fromIntegral _msgOrientQuat_w
-    putWord32le $ fromIntegral _msgOrientQuat_x
-    putWord32le $ fromIntegral _msgOrientQuat_y
-    putWord32le $ fromIntegral _msgOrientQuat_z
+    (putWord32le . fromIntegral) _msgOrientQuat_w
+    (putWord32le . fromIntegral) _msgOrientQuat_x
+    (putWord32le . fromIntegral) _msgOrientQuat_y
+    (putWord32le . fromIntegral) _msgOrientQuat_z
     putFloat32le _msgOrientQuat_w_accuracy
     putFloat32le _msgOrientQuat_x_accuracy
     putFloat32le _msgOrientQuat_y_accuracy
@@ -142,7 +143,9 @@ msgOrientEuler = 0x0221
 -- This message reports the yaw, pitch, and roll angles of the vehicle body
 -- frame. The rotations should applied intrinsically in the order yaw, pitch,
 -- and roll  in order to rotate the from a frame aligned with the local-level
--- NED frame  to the vehicle body frame.
+-- NED frame  to the vehicle body frame.  This message will only be available
+-- in future  INS versions of Swift Products and is not produced by Piksi Multi
+-- or Duro.
 data MsgOrientEuler = MsgOrientEuler
   { _msgOrientEuler_tow          :: !Word32
     -- ^ GPS Time of Week
@@ -176,9 +179,9 @@ instance Binary MsgOrientEuler where
 
   put MsgOrientEuler {..} = do
     putWord32le _msgOrientEuler_tow
-    putWord32le $ fromIntegral _msgOrientEuler_roll
-    putWord32le $ fromIntegral _msgOrientEuler_pitch
-    putWord32le $ fromIntegral _msgOrientEuler_yaw
+    (putWord32le . fromIntegral) _msgOrientEuler_roll
+    (putWord32le . fromIntegral) _msgOrientEuler_pitch
+    (putWord32le . fromIntegral) _msgOrientEuler_yaw
     putFloat32le _msgOrientEuler_roll_accuracy
     putFloat32le _msgOrientEuler_pitch_accuracy
     putFloat32le _msgOrientEuler_yaw_accuracy
@@ -200,6 +203,8 @@ msgAngularRate = 0x0222
 -- By convention, the vehicle x-axis is expected to be aligned with the forward
 -- direction, while the vehicle y-axis is expected to be aligned with the right
 -- direction, and the vehicle z-axis should be aligned with the down direction.
+-- This message will only be available in future INS versions of Swift Products
+-- and is not produced by Piksi Multi or Duro.
 data MsgAngularRate = MsgAngularRate
   { _msgAngularRate_tow :: !Word32
     -- ^ GPS Time of Week
@@ -224,9 +229,9 @@ instance Binary MsgAngularRate where
 
   put MsgAngularRate {..} = do
     putWord32le _msgAngularRate_tow
-    putWord32le $ fromIntegral _msgAngularRate_x
-    putWord32le $ fromIntegral _msgAngularRate_y
-    putWord32le $ fromIntegral _msgAngularRate_z
+    (putWord32le . fromIntegral) _msgAngularRate_x
+    (putWord32le . fromIntegral) _msgAngularRate_y
+    (putWord32le . fromIntegral) _msgAngularRate_z
     putWord8 _msgAngularRate_flags
 
 $(makeSBP 'msgAngularRate ''MsgAngularRate)

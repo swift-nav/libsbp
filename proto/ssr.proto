@@ -44,10 +44,92 @@ message PhaseBiasesContent {
     sint32 bias = 5;
 }
 
+/** Header for MSG_SSR_STEC_CORRECTION message
+ *
+ * A full set of STEC information will likely span multiple SBP
+ * messages, since SBP message a limited to 255 bytes.  The header
+ * is used to tie multiple SBP messages into a sequence.
+ */
+message STECHeader {
+    gnss.GpsTime time = 1;
+    uint32 num_msgs = 2;
+    uint32 seq_num = 3;
+    uint32 ssr_update_interval = 4;
+    uint32 iod_ssr = 5;
+}
+
+/** Header for MSG_SSR_GRIDDED_CORRECTION
+ *
+ * The 3GPP message contains nested variable length arrays
+ * which are not suppported in SBP, so each grid point will
+ * be identified by the index.
+ */
+message GriddedCorrectionHeader {
+    gnss.GpsTime time = 1;
+    uint32 num_msgs = 2;
+    uint32 seq_num = 3;
+    uint32 ssr_update_interval = 4;
+    uint32 iod_ssr = 5;
+    uint32 tropo_quality = 6;
+}
+
+/** None
+ *
+* STEC for the given satellite.
+ */
+message STECSatElement {
+    SvId sv_id = 1;
+    uint32 stec_quality_indicator = 2;
+    repeated sint32 stec_coeff = 3;
+}
+
+/** troposphere delay correction
+ *
+ * Contains wet vertical and hydrostatic vertical delay
+ */
+message TroposphericDelayCorrection {
+    sint32 hydro = 1;
+    sint32 wet = 2;
+}
+
+/** None
+ *
+* STEC residual
+ */
+message STECResidual {
+    SvId sv_id = 1;
+    sint32 residual = 2;
+}
+
+/** Grid datum for troposphere and STEC residuals
+ *
+ * Contains one tropo datum, plus STEC residuals for each space
+ * vehicle
+ */
+message GridElement {
+    uint32 index = 1;
+    TroposphericDelayCorrection tropo_delay_correction = 2;
+    repeated STECResidual STEC_residuals = 3;
+}
+
+/** Defines the grid for STEC and tropo grid messages
+ *
+ * Defines the grid for STEC and tropo grid messages.
+ * Also includes an RLE encoded validity list.
+ */
+message GridDefinitionHeader {
+    uint32 region_size_inverse = 1;
+    uint32 area_width = 2;
+    uint32 lat_nw_corner_enc = 3;
+    uint32 lon_nw_corner_enc = 4;
+    uint32 num_msgs = 5;
+    uint32 seq_num = 6;
+}
+
 /** Precise orbit and clock correction
  *
- * The precise orbit and clock correction message is 
- * to be applied as a delta correction to broadcast 
+ * The precise orbit and clock correction message is
+ * to be applied as a delta correction to broadcast
  * ephemeris and is typically an equivalent to the 1060
  * and 1066 RTCM message types
  */
@@ -72,7 +154,7 @@ message MsgSsrOrbitClock {
  *
  * The precise code biases message is to be added
  * to the pseudorange of the corresponding signal
- * to get corrected pseudorange. It is typically 
+ * to get corrected pseudorange. It is typically
  * an equivalent to the 1059 and 1065 RTCM message types
  */
 message MsgSsrCodeBiases {
@@ -87,9 +169,9 @@ message MsgSsrCodeBiases {
  *
  * The precise phase biases message contains the biases
  * to be added to the carrier phase of the corresponding
- * signal to get corrected carrier phase measurement, as 
- * well as the satellite yaw angle to be applied to compute 
- * the phase wind-up correction. 
+ * signal to get corrected carrier phase measurement, as
+ * well as the satellite yaw angle to be applied to compute
+ * the phase wind-up correction.
  * It is typically an equivalent to the 1265 RTCM message types
  */
 message MsgSsrPhaseBiases {
@@ -102,4 +184,34 @@ message MsgSsrPhaseBiases {
     uint32 yaw = 7;
     sint32 yaw_rate = 8;
     repeated PhaseBiasesContent biases = 9;
+}
+
+/** Slant Total Electron Content
+ *
+ * The STEC per space vehicle, given as polynomial approximation for
+ * a given grid.  This should be combined with SSR-GriddedCorrection
+ * message to get the state space representation of the atmospheric
+ * delay.
+ */
+message MsgSsrStecCorrection {
+    STECHeader header = 1;
+    repeated STECSatElement stec_sat_list = 2;
+}
+
+/** Gridded troposphere and STEC residuals
+ *
+ * STEC residuals are per space vehicle, tropo is not.
+ */
+message MsgSsrGriddedCorrection {
+    GriddedCorrectionHeader header = 1;
+    GridElement element = 2;
+}
+
+/** None
+ *
+* Definition of the grid for STEC and tropo messages
+ */
+message MsgSsrGridDefinition {
+    GridDefinitionHeader header = 1;
+    repeated uint32 rle_list = 2;
 }

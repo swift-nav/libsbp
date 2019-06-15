@@ -278,6 +278,73 @@ MsgFileioWriteResp.prototype.parser = new Parser()
 MsgFileioWriteResp.prototype.fieldSpec = [];
 MsgFileioWriteResp.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
 
+/**
+ * SBP class for message MSG_FILEIO_CONFIG_REQ (0x1001).
+ *
+ * Requests advice on the optimal configuration for a FileIO  transfer.  Newer
+ * version of FileIO can support greater throughput by supporting a large window of
+ * FileIO data that can be in-flight during read or write operations.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sequence number (unsigned 32-bit int, 4 bytes) Advice sequence number
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgFileioConfigReq = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_FILEIO_CONFIG_REQ";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgFileioConfigReq.prototype = Object.create(SBP.prototype);
+MsgFileioConfigReq.prototype.messageType = "MSG_FILEIO_CONFIG_REQ";
+MsgFileioConfigReq.prototype.msg_type = 0x1001;
+MsgFileioConfigReq.prototype.constructor = MsgFileioConfigReq;
+MsgFileioConfigReq.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('sequence');
+MsgFileioConfigReq.prototype.fieldSpec = [];
+MsgFileioConfigReq.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
+
+/**
+ * SBP class for message MSG_FILEIO_CONFIG_RESP (0x1002).
+ *
+ * The advice on the optimal configuration for a FileIO transfer.  Newer version of
+ * FileIO can support greater throughput by supporting a large window of FileIO
+ * data that can be in-flight during read or write operations.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sequence number (unsigned 32-bit int, 4 bytes) Advice sequence number
+ * @field window_size number (unsigned 32-bit int, 4 bytes) The number of SBP packets in the data in-flight window
+ * @field batch_size number (unsigned 32-bit int, 4 bytes) The number of SBP packets sent in one PDU
+ * @field fileio_version number (unsigned 32-bit int, 4 bytes) The version of FileIO that is supported
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgFileioConfigResp = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_FILEIO_CONFIG_RESP";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgFileioConfigResp.prototype = Object.create(SBP.prototype);
+MsgFileioConfigResp.prototype.messageType = "MSG_FILEIO_CONFIG_RESP";
+MsgFileioConfigResp.prototype.msg_type = 0x1002;
+MsgFileioConfigResp.prototype.constructor = MsgFileioConfigResp;
+MsgFileioConfigResp.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('sequence')
+  .uint32('window_size')
+  .uint32('batch_size')
+  .uint32('fileio_version');
+MsgFileioConfigResp.prototype.fieldSpec = [];
+MsgFileioConfigResp.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
+MsgFileioConfigResp.prototype.fieldSpec.push(['window_size', 'writeUInt32LE', 4]);
+MsgFileioConfigResp.prototype.fieldSpec.push(['batch_size', 'writeUInt32LE', 4]);
+MsgFileioConfigResp.prototype.fieldSpec.push(['fileio_version', 'writeUInt32LE', 4]);
+
 module.exports = {
   0x00A8: MsgFileioReadReq,
   MsgFileioReadReq: MsgFileioReadReq,
@@ -293,4 +360,8 @@ module.exports = {
   MsgFileioWriteReq: MsgFileioWriteReq,
   0x00AB: MsgFileioWriteResp,
   MsgFileioWriteResp: MsgFileioWriteResp,
+  0x1001: MsgFileioConfigReq,
+  MsgFileioConfigReq: MsgFileioConfigReq,
+  0x1002: MsgFileioConfigResp,
+  MsgFileioConfigResp: MsgFileioConfigResp,
 }

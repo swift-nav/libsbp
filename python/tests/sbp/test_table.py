@@ -16,6 +16,7 @@ from sbp import acquisition as acq
 from sbp import bootload as boot
 from sbp import file_io as file_io
 from sbp import flash as flash
+from sbp import linux as linux
 from sbp import logging as log
 from sbp import navigation as nav
 from sbp import observation as obs
@@ -31,6 +32,7 @@ from sbp import mag as mag
 from sbp import vehicle as vehicle
 from sbp import orientation as orientation
 from sbp import sbas as sbas
+from sbp import ssr as ssr
 
 import pytest
 import sbp.acquisition as acq
@@ -42,7 +44,7 @@ def test_table_count():
   Test number of available messages to deserialize.
 
   """
-  number_of_messages = 144
+  number_of_messages = 173
   assert len(_SBP_TABLE) == number_of_messages
 
 def test_table_unqiue_count():
@@ -53,6 +55,7 @@ def test_table_unqiue_count():
                         + len(boot.msg_classes)
                         + len(file_io.msg_classes)
                         + len(flash.msg_classes)
+                        + len(linux.msg_classes)
                         + len(log.msg_classes)
                         + len(nav.msg_classes)
                         + len(obs.msg_classes)
@@ -68,6 +71,7 @@ def test_table_unqiue_count():
                         + len(vehicle.msg_classes)
                         + len(orientation.msg_classes)
                         + len(sbas.msg_classes)
+                        + len(ssr.msg_classes)
                          )
   assert len(_SBP_TABLE) == number_of_messages
 
@@ -79,7 +83,7 @@ def test_available_messages():
   table = {acq.SBP_MSG_ACQ_RESULT_DEP_A: acq.MsgAcqResultDepA,
            log.SBP_MSG_PRINT_DEP: log.MsgPrintDep}
   msg = SBP(msg_type=0x15, sender=1219, length=13,
-            payload='\x92$yA\x00\x00\xbcC\x81\xc1\xf9\xc5\x1d')
+            payload=b'\x92$yA\x00\x00\xbcC\x81\xc1\xf9\xc5\x1d')
   # TODO (Buro): Replace this message constructor once generated SBP
   # can support kwargs for constructor, instead of requiring SBP
   # object.

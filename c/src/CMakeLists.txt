@@ -1,27 +1,57 @@
-if (NOT DEFINED BUILD_SHARED_LIBS)
-  set(BUILD_SHARED_LIBS ON)
-endif (NOT DEFINED BUILD_SHARED_LIBS)
-
-file(GLOB libsbp_HEADERS "${PROJECT_SOURCE_DIR}/include/libsbp/*.h")
-
-include_directories("${PROJECT_SOURCE_DIR}/CBLAS/include")
-include_directories("${PROJECT_SOURCE_DIR}/clapack-3.2.1-CMAKE/INCLUDE")
-include_directories("${PROJECT_SOURCE_DIR}/lapacke/include")
-include_directories("${PROJECT_SOURCE_DIR}/include")
+set(libsbp_HEADERS
+  "${PROJECT_SOURCE_DIR}/include/libsbp/acquisition.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/bootload.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/common.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/edc.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/ext_events.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/file_io.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/flash.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/gnss.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/imu.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/linux.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/logging.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/mag.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/navigation.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/ndb.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/observation.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/orientation.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/piksi.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/sbas.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/sbp.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/settings.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/ssr.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/system.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/tracking.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/user.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/vehicle.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/version.h"
+  )
 
 set(libsbp_SRCS
   edc.c
   sbp.c
-)
+  )
 
-add_library(sbp-static STATIC ${libsbp_SRCS})
-install(TARGETS sbp-static DESTINATION lib${LIB_SUFFIX})
+add_library(sbp ${libsbp_SRCS})
 
-if(BUILD_SHARED_LIBS)
-  add_library(sbp SHARED ${libsbp_SRCS})
-  install(TARGETS sbp DESTINATION lib${LIB_SUFFIX})
-else(BUILD_SHARED_LIBS)
-  message(STATUS "Not building shared libraries")
-endif(BUILD_SHARED_LIBS)
+if(MSVC)
+    separate_arguments(LIBSBP_COMPILER_OPTIONS WINDOWS_COMMAND ${LIBSBP_CFLAGS})
+else()
+    separate_arguments(LIBSBP_COMPILER_OPTIONS UNIX_COMMAND ${LIBSBP_CFLAGS})
+endif()
+target_compile_options(sbp PRIVATE ${LIBSBP_COMPILER_OPTIONS})
 
-install(FILES ${libsbp_HEADERS} DESTINATION include/libsbp)
+target_include_directories(sbp PUBLIC ${PROJECT_SOURCE_DIR}/include)
+set_target_properties(sbp PROPERTIES
+        POSITION_INDEPENDENT_CODE ON
+        C_STANDARD 99
+        C_STANDARD_REQUIRED ON)
+
+install(TARGETS sbp
+        EXPORT sbp-export
+        DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR})
+install(FILES ${libsbp_HEADERS} DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR}/libsbp)
+
+export(EXPORT sbp-export
+        NAMESPACE LibSbp::
+        FILE ${PROJECT_BINARY_DIR}/LibSbpImport.cmake)

@@ -19,6 +19,7 @@ from . import acquisition as acq
 from . import bootload as boot
 from . import file_io as file_io
 from . import flash as flash
+from . import linux as linux
 from . import logging as log
 from . import navigation as nav
 from . import observation as obs
@@ -34,28 +35,31 @@ from . import ndb as ndb
 from . import vehicle as vehicle
 from . import orientation as orientation
 from . import sbas as sbas
+from . import ssr as ssr
 
 import warnings
 
-_SBP_TABLE = dict(acq.msg_classes.items()
-                  + boot.msg_classes.items()
-                  + file_io.msg_classes.items()
-                  + flash.msg_classes.items()
-                  + log.msg_classes.items()
-                  + nav.msg_classes.items()
-                  + obs.msg_classes.items()
-                  + piksi.msg_classes.items()
-                  + settings.msg_classes.items()
-                  + sys.msg_classes.items()
-                  + trac.msg_classes.items()
-                  + user.msg_classes.items()
-                  + imu.msg_classes.items()
-                  + mag.msg_classes.items()
-                  + ext_events.msg_classes.items()
-                  + ndb.msg_classes.items()
-                  + vehicle.msg_classes.items()
-                  + orientation.msg_classes.items()
-                  + sbas.msg_classes.items()
+_SBP_TABLE = dict(list(acq.msg_classes.items())
+                  + list(boot.msg_classes.items())
+                  + list(file_io.msg_classes.items())
+                  + list(flash.msg_classes.items())
+                  + list(linux.msg_classes.items())
+                  + list(log.msg_classes.items())
+                  + list(nav.msg_classes.items())
+                  + list(obs.msg_classes.items())
+                  + list(piksi.msg_classes.items())
+                  + list(settings.msg_classes.items())
+                  + list(sys.msg_classes.items())
+                  + list(trac.msg_classes.items())
+                  + list(user.msg_classes.items())
+                  + list(imu.msg_classes.items())
+                  + list(mag.msg_classes.items())
+                  + list(ext_events.msg_classes.items())
+                  + list(ndb.msg_classes.items())
+                  + list(vehicle.msg_classes.items())
+                  + list(orientation.msg_classes.items())
+                  + list(sbas.msg_classes.items())
+                  + list(ssr.msg_classes.items())
                   )
 
 class InvalidSBPMessageType(NotImplementedError):

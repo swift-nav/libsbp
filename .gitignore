@@ -67,9 +67,8 @@ sbp_out.*
 /*env
 *venv/
 
-RELEASE-VERSION
-
 # Haskell
 .stack-work/
 .build/
 
+python/sbp/_version.py

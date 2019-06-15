@@ -15,9 +15,13 @@ import struct
 import datetime
 import time
 import uuid
+import six
+import warnings
+
+import numpy as np
 
 
-class Framer(object):
+class Framer(six.Iterator):
     """
     Framer
 
@@ -32,13 +36,22 @@ class Framer(object):
       Stream of bytes to write to.
     """
 
-    def __init__(self, read, write, verbose=False, dispatcher=dispatch):
+    def __init__(self,
+                 read,
+                 write,
+                 verbose=False,
+                 dispatcher=dispatch,
+                 into_buffer=True,
+                 skip_metadata=False):
         self._read = read
         self._write = write
         self._verbose = verbose
         self._broken = False
         self._dispatch = dispatcher
         self._session = str(uuid.uuid4())
+        self._buffer = np.zeros(16*1024, dtype=np.uint8)
+        self._into_buffer = into_buffer
+        self._skip_metadata = skip_metadata
 
     def __iter__(self):
         self._broken = False
@@ -61,7 +74,7 @@ class Framer(object):
         """
         return datetime.datetime.utcnow().isoformat() + 'Z'
 
-    def next(self):
+    def __next__(self):
         msg = None
         while msg is None:
             try:
@@ -70,7 +83,13 @@ class Framer(object):
                     raise StopIteration
             except IOError:
                 raise StopIteration
-        return (msg, {'time': self._time(), 'session-uid': self._session})
+
+        metadata = {}
+        if not self._skip_metadata:
+            metadata['time'] = self._time()
+            metadata['session-uid'] = self._session
+
+        return (msg, metadata)
 
     def _readall(self, size):
         """
@@ -81,17 +100,11 @@ class Framer(object):
         size : int
           Number of bytes to read.
         """
-        data = ""
+        data = b""
         while len(data) < size:
             d = self._read(size - len(data))
-            if self._broken:
+            if not d or self._broken:
                 raise StopIteration
-            if not d:
-                # NOTE (Buro/jgross): Force a yield here to another thread. In
-                # case the stream fails midstream, the spinning here causes
-                # the UI thread to lock up without yielding.
-                time.sleep(0)
-                continue
             data += d
         return data
 
@@ -106,7 +119,7 @@ class Framer(object):
             return None
         elif ord(preamble) != SBP_PREAMBLE:
             if self._verbose:
-                print "Host Side Unhandled byte: 0x%02x" % ord(preamble)
+                print("Host Side Unhandled byte: 0x%02x" % ord(preamble))
             return None
         # hdr
         hdr = self._readall(5)
@@ -119,24 +132,36 @@ class Framer(object):
         crc = self._readall(2)
         crc, = struct.unpack("<H", crc)
         if crc != msg_crc:
-            print "crc mismatch: 0x%04X 0x%04X" % (msg_crc, crc)
+            if self._verbose:
+                print("crc mismatch: 0x%04X 0x%04X" % (msg_crc, crc))
             return None
         msg = SBP(msg_type, sender, msg_len, data, crc)
         try:
             msg = self._dispatch(msg)
-        except:
-            pass
+        except Exception as exc:
+            warnings.warn("SBP dispatch error: %s" % (exc,))
         return msg
 
-    def __call__(self, msg, **metadata):
+    def __call__(self, *msgs, **metadata):
         """
         Build and write SBP message.
 
         Parameters
         ----------
-        msg : SBP message
-          SBP message to send.
+        msgs : SBP messages
+          SBP messages to send.  Multiple messages are sent in one batch.
         metadata : dict
-          {'time': 'ISO 8601 str'} (ignored for now)
+          Metadata for this batch of messages, e.g. `{'time': 'ISO 8601 str'}`
+          (ignored for now).
         """
-        self._write(msg.to_binary())
+        index = 0
+        if self._into_buffer:
+            for msg in msgs:
+                index += msg.into_buffer(self._buffer, index)
+        else:
+            for msg in msgs:
+                msg_buff = msg.to_binary()
+                buff_len = len(msg_buff)
+                self._buffer[index:(index+buff_len)] = bytearray(msg_buff)
+                index += buff_len
+        self._write(memoryview(self._buffer)[:index])

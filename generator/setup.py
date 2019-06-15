@@ -1,16 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-try:
-  import sys
-  reload(sys).setdefaultencoding("UTF-8")
-except:
-  pass
+import sys
 
 try:
   from setuptools import setup, find_packages
 except ImportError:
-  print 'Please install or upgrade setuptools or pip to continue.'
+  print('Please install or upgrade setuptools or pip to continue.')
   sys.exit(1)
 
 setup(name='sbp_gen',
@@ -35,7 +31,9 @@ setup(name='sbp_gen',
                    'Programming Language :: Python',
                    'Topic :: Scientific/Engineering :: Interface Engine/Protocol Translator',
                    'Topic :: Software Development :: Libraries :: Python Modules',
-                   'Programming Language :: Python :: 2.7'
+                   'Programming Language :: Python :: 2.7',
+                   'Programming Language :: Python :: 3.5',
+                   'Programming Language :: Python :: 3.7',
                    ],
       packages=find_packages(),
       use_2to3=False,

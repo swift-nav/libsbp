@@ -34,12 +34,15 @@
  * device settings.  By default, the vehicle body frame is configured to be
  * coincident with the antenna phase center.  When there is no inertial
  * navigation, the solution will be reported at the phase center of the antenna.
+ * There is no inertial navigation capability on Piksi Multi or Duro. 
  * \{ */
 
 #ifndef LIBSBP_NAVIGATION_MESSAGES_H
 #define LIBSBP_NAVIGATION_MESSAGES_H
 
 #include "common.h"
+
+SBP_PACK_START
 
 
 /** GPS Time
@@ -59,7 +62,7 @@
  * these messages.
  */
 #define SBP_MSG_GPS_TIME               0x0102
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u16 wn;             /**< GPS week number [weeks] */
   u32 tow;            /**< GPS time of week rounded to the nearest millisecond [ms] */
   s32 ns_residual;    /**< Nanosecond residual of millisecond-rounded TOW (ranges
@@ -75,7 +78,7 @@ from -500000 to 500000)
  * which indicate the source of the UTC offset value and source of the time fix.
  */
 #define SBP_MSG_UTC_TIME               0x0103
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u8 flags;      /**< Indicates source and time validity */
   u32 tow;        /**< GPS time of week rounded to the nearest millisecond [ms] */
   u16 year;       /**< Year [year] */
@@ -96,7 +99,7 @@ typedef struct __attribute__((packed)) {
  * corresponds to differential or SPP solution.
  */
 #define SBP_MSG_DOPS                   0x0208
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;      /**< GPS Time of Week [ms] */
   u16 gdop;     /**< Geometric Dilution of Precision [0.01] */
   u16 pdop;     /**< Position Dilution of Precision [0.01] */
@@ -119,7 +122,7 @@ typedef struct __attribute__((packed)) {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_POS_ECEF               0x0209
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;         /**< GPS Time of Week [ms] */
   double x;           /**< ECEF X coordinate [m] */
   double y;           /**< ECEF Y coordinate [m] */
@@ -143,7 +146,7 @@ typedef struct __attribute__((packed)) {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_POS_ECEF_COV           0x0214
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
   double x;          /**< ECEF X coordinate [m] */
   double y;          /**< ECEF Y coordinate [m] */
@@ -171,7 +174,7 @@ typedef struct __attribute__((packed)) {
  * matching time-of-week (tow).
  */
 #define SBP_MSG_POS_LLH                0x020A
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;           /**< GPS Time of Week [ms] */
   double lat;           /**< Latitude [deg] */
   double lon;           /**< Longitude [deg] */
@@ -195,7 +198,7 @@ typedef struct __attribute__((packed)) {
  * measurement and care should be taken with the sign convention.
  */
 #define SBP_MSG_POS_LLH_COV            0x0211
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
   double lat;        /**< Latitude [deg] */
   double lon;        /**< Longitude [deg] */
@@ -220,7 +223,7 @@ typedef struct __attribute__((packed)) {
  * matching time-of-week (tow).
  */
 #define SBP_MSG_BASELINE_ECEF          0x020B
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;         /**< GPS Time of Week [ms] */
   s32 x;           /**< Baseline ECEF X coordinate [mm] */
   s32 y;           /**< Baseline ECEF Y coordinate [mm] */
@@ -241,7 +244,7 @@ typedef struct __attribute__((packed)) {
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_BASELINE_NED           0x020C
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;           /**< GPS Time of Week [ms] */
   s32 n;             /**< Baseline North coordinate [mm] */
   s32 e;             /**< Baseline East coordinate [mm] */
@@ -260,7 +263,7 @@ typedef struct __attribute__((packed)) {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_ECEF               0x020D
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;         /**< GPS Time of Week [ms] */
   s32 x;           /**< Velocity ECEF X coordinate [mm/s] */
   s32 y;           /**< Velocity ECEF Y coordinate [mm/s] */
@@ -279,7 +282,7 @@ typedef struct __attribute__((packed)) {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_ECEF_COV           0x0215
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
   s32 x;          /**< Velocity ECEF X coordinate [mm/s] */
   s32 y;          /**< Velocity ECEF Y coordinate [mm/s] */
@@ -303,7 +306,7 @@ typedef struct __attribute__((packed)) {
  * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_NED                0x020E
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;           /**< GPS Time of Week [ms] */
   s32 n;             /**< Velocity North coordinate [mm/s] */
   s32 e;             /**< Velocity East coordinate [mm/s] */
@@ -327,7 +330,7 @@ typedef struct __attribute__((packed)) {
  * portion of the 3x3 covariance matrix.
  */
 #define SBP_MSG_VEL_NED_COV            0x0212
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
   s32 n;          /**< Velocity North coordinate [mm/s] */
   s32 e;          /**< Velocity East coordinate [mm/s] */
@@ -351,10 +354,11 @@ typedef struct __attribute__((packed)) {
  * Since this is a right handed system, z should point out the bottom of the vehicle.
  * The orientation and origin of the Vehicle Body Frame are specified via the device settings.
  * The full GPS time is given by the preceding MSG_GPS_TIME with the
- * matching time-of-week (tow).
+ * matching time-of-week (tow). This message is only produced by inertial versions of Swift
+ * products and is not available from Piksi Multi or Duro.
  */
 #define SBP_MSG_VEL_BODY               0x0213
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
   s32 x;          /**< Velocity in x direction [mm/s] */
   s32 y;          /**< Velocity in y direction [mm/s] */
@@ -376,7 +380,7 @@ typedef struct __attribute__((packed)) {
  * Differential solution
  */
 #define SBP_MSG_AGE_CORRECTIONS        0x0210
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;    /**< GPS Time of Week [ms] */
   u16 age;    /**< Age of the corrections (0xFFFF indicates invalid) [deciseconds] */
 } msg_age_corrections_t;
@@ -399,7 +403,7 @@ typedef struct __attribute__((packed)) {
  * these messages.
  */
 #define SBP_MSG_GPS_TIME_DEP_A         0x0100
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u16 wn;             /**< GPS week number [weeks] */
   u32 tow;            /**< GPS time of week rounded to the nearest millisecond [ms] */
   s32 ns_residual;    /**< Nanosecond residual of millisecond-rounded TOW (ranges
@@ -416,7 +420,7 @@ from -500000 to 500000)
  * precision.
  */
 #define SBP_MSG_DOPS_DEP_A             0x0206
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;     /**< GPS Time of Week [ms] */
   u16 gdop;    /**< Geometric Dilution of Precision [0.01] */
   u16 pdop;    /**< Position Dilution of Precision [0.01] */
@@ -438,7 +442,7 @@ typedef struct __attribute__((packed)) {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_POS_ECEF_DEP_A         0x0200
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;         /**< GPS Time of Week [ms] */
   double x;           /**< ECEF X coordinate [m] */
   double y;           /**< ECEF Y coordinate [m] */
@@ -463,7 +467,7 @@ to 0.
  * matching time-of-week (tow).
  */
 #define SBP_MSG_POS_LLH_DEP_A          0x0201
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;           /**< GPS Time of Week [ms] */
   double lat;           /**< Latitude [deg] */
   double lon;           /**< Longitude [deg] */
@@ -488,7 +492,7 @@ implemented). Defaults to 0.
  * matching time-of-week (tow).
  */
 #define SBP_MSG_BASELINE_ECEF_DEP_A    0x0202
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;         /**< GPS Time of Week [ms] */
   s32 x;           /**< Baseline ECEF X coordinate [mm] */
   s32 y;           /**< Baseline ECEF Y coordinate [mm] */
@@ -510,7 +514,7 @@ typedef struct __attribute__((packed)) {
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_BASELINE_NED_DEP_A     0x0203
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;           /**< GPS Time of Week [ms] */
   s32 n;             /**< Baseline North coordinate [mm] */
   s32 e;             /**< Baseline East coordinate [mm] */
@@ -533,7 +537,7 @@ implemented). Defaults to 0.
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_ECEF_DEP_A         0x0204
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;         /**< GPS Time of Week [ms] */
   s32 x;           /**< Velocity ECEF X coordinate [mm/s] */
   s32 y;           /**< Velocity ECEF Y coordinate [mm/s] */
@@ -554,7 +558,7 @@ to 0.
  * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_NED_DEP_A          0x0205
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;           /**< GPS Time of Week [ms] */
   s32 n;             /**< Velocity North coordinate [mm/s] */
   s32 e;             /**< Velocity East coordinate [mm/s] */
@@ -577,7 +581,7 @@ implemented). Defaults to 0.
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_BASELINE_HEADING_DEP_A 0x0207
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
   u32 heading;    /**< Heading [mdeg] */
   u8 n_sats;     /**< Number of satellites used in solution */
@@ -586,5 +590,7 @@ typedef struct __attribute__((packed)) {
 
 
 /** \} */
+
+SBP_PACK_END
 
 #endif /* LIBSBP_NAVIGATION_MESSAGES_H */

@@ -107,6 +107,15 @@ ERROR, WARNING, DEBUG, INFO logging levels.
     self.payload = MsgLog._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgLog._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgLog, self).to_json_dict()
@@ -204,89 +213,18 @@ Protocol 0 represents SBP and the remaining values are implementation defined.
     self.payload = MsgFwd._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgFwd._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgFwd, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return d
-    
-SBP_MSG_TWEET = 0x0012
-class MsgTweet(SBP):
-  """SBP class for message MSG_TWEET (0x0012).
-
-  You can have MSG_TWEET inherit its fields directly
-  from an inherited SBP object, or construct it inline using a dict
-  of its fields.
-
-  
-  All the news fit to tweet.
-
-  Parameters
-  ----------
-  sbp : SBP
-    SBP parent object to inherit from.
-  tweet : string
-    Human-readable string
-  sender : int
-    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
-
-  """
-  _parser = construct.Struct(
-                   'tweet'/ construct.Bytes(140),)
-  __slots__ = [
-               'tweet',
-              ]
-
-  def __init__(self, sbp=None, **kwargs):
-    if sbp:
-      super( MsgTweet,
-             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
-                            sbp.payload, sbp.crc)
-      self.from_binary(sbp.payload)
-    else:
-      super( MsgTweet, self).__init__()
-      self.msg_type = SBP_MSG_TWEET
-      self.sender = kwargs.pop('sender', SENDER_ID)
-      self.tweet = kwargs.pop('tweet')
-
-  def __repr__(self):
-    return fmt_repr(self)
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    return MsgTweet.from_json_dict(d)
-
-  @staticmethod
-  def from_json_dict(d):
-    sbp = SBP.from_json_dict(d)
-    return MsgTweet(sbp, **d)
-
- 
-  def from_binary(self, d):
-    """Given a binary payload d, update the appropriate payload fields of
-    the message.
-
-    """
-    p = MsgTweet._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    """Produce a framed/packed SBP message.
-
-    """
-    c = containerize(exclude_fields(self))
-    self.payload = MsgTweet._parser.build(c)
-    return self.pack()
-
-  def to_json_dict(self):
-    self.to_binary()
-    d = super( MsgTweet, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -364,6 +302,15 @@ class MsgPrintDep(SBP):
     self.payload = MsgPrintDep._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgPrintDep._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgPrintDep, self).to_json_dict()
@@ -375,6 +322,5 @@ class MsgPrintDep(SBP):
 msg_classes = {
   0x0401: MsgLog,
   0x0402: MsgFwd,
-  0x0012: MsgTweet,
   0x0010: MsgPrintDep,
 }

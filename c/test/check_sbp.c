@@ -23,13 +23,13 @@ u32 dummy_rd = 0;
 u8 dummy_buff[1024];
 void* last_io_context;
 
-void dummy_reset()
+void dummy_reset(void)
 {
   dummy_rd = dummy_wr = 0;
   memset(dummy_buff, 0, sizeof(dummy_buff));
 }
 
-u32 dummy_write(u8 *buff, u32 n, void* context)
+s32 dummy_write(u8 *buff, u32 n, void* context)
 {
  last_io_context = context;
  u32 real_n = n;//(dummy_n > n) ? n : dummy_n;
@@ -38,7 +38,7 @@ u32 dummy_write(u8 *buff, u32 n, void* context)
  return real_n;
 }
 
-u32 dummy_read(u8 *buff, u32 n, void* context)
+s32 dummy_read(u8 *buff, u32 n, void* context)
 {
  last_io_context = context;
  u32 real_n = n;//(dummy_n > n) ? n : dummy_n;
@@ -47,7 +47,7 @@ u32 dummy_read(u8 *buff, u32 n, void* context)
  return real_n;
 }
 
-u32 dummy_read_single_byte(u8 *buff, u32 n, void* context)
+s32 dummy_read_single_byte(u8 *buff, u32 n, void* context)
 {
   (void)n;
   last_io_context = context;
@@ -56,7 +56,7 @@ u32 dummy_read_single_byte(u8 *buff, u32 n, void* context)
   return 1;
 }
 
-u32 dummy_write_single_byte(u8 *buff, u32 n, void* context)
+s32 dummy_write_single_byte(u8 *buff, u32 n, void* context)
 {
   (void)n;
   last_io_context = context;
@@ -83,7 +83,7 @@ u8 last_msg[256];
 void* last_context;
 
 
-void logging_reset()
+void logging_reset(void)
 {
   n_callbacks_logged = 0;
   last_context = 0;

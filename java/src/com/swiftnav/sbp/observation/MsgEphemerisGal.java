@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_EPHEMERIS_GAL (0x0095).
+/** SBP class for message MSG_EPHEMERIS_GAL (0x008D).
  *
  * You can have MSG_EPHEMERIS_GAL inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -35,7 +35,7 @@ import org.json.JSONArray;
  * OS SIS ICD, Issue 1.3, December 2016 for more details. */
 
 public class MsgEphemerisGal extends SBPMessage {
-    public static final int TYPE = 0x0095;
+    public static final int TYPE = 0x008D;
 
     
     /** Values common for all ephemeris types */
@@ -66,7 +66,7 @@ public class MsgEphemerisGal extends SBPMessage {
     public float c_is;
     
     /** Mean motion difference */
-    public float dn;
+    public double dn;
     
     /** Mean anomaly at reference time */
     public double m0;
@@ -90,13 +90,13 @@ public class MsgEphemerisGal extends SBPMessage {
     public double inc;
     
     /** Inclination first derivative */
-    public float inc_dot;
+    public double inc_dot;
     
     /** Polynomial clock correction coefficient (clock bias) */
     public double af0;
     
     /** Polynomial clock correction coefficient (clock drift) */
-    public float af1;
+    public double af1;
     
     /** Polynomial clock correction coefficient (rate of clock drift) */
     public float af2;
@@ -109,6 +109,9 @@ public class MsgEphemerisGal extends SBPMessage {
     
     /** Issue of clock data */
     public int iodc;
+    
+    /** 0=I/NAV, 1=F/NAV, ... */
+    public int source;
     
 
     public MsgEphemerisGal (int sender) { super(sender, TYPE); }
@@ -130,7 +133,7 @@ public class MsgEphemerisGal extends SBPMessage {
         c_us = parser.getFloat();
         c_ic = parser.getFloat();
         c_is = parser.getFloat();
-        dn = parser.getFloat();
+        dn = parser.getDouble();
         m0 = parser.getDouble();
         ecc = parser.getDouble();
         sqrta = parser.getDouble();
@@ -138,13 +141,14 @@ public class MsgEphemerisGal extends SBPMessage {
         omegadot = parser.getDouble();
         w = parser.getDouble();
         inc = parser.getDouble();
-        inc_dot = parser.getFloat();
+        inc_dot = parser.getDouble();
         af0 = parser.getDouble();
-        af1 = parser.getFloat();
+        af1 = parser.getDouble();
         af2 = parser.getFloat();
         toc = new GPSTimeSec().parse(parser);
         iode = parser.getU16();
         iodc = parser.getU16();
+        source = parser.getU8();
     }
 
     @Override
@@ -158,7 +162,7 @@ public class MsgEphemerisGal extends SBPMessage {
         builder.putFloat(c_us);
         builder.putFloat(c_ic);
         builder.putFloat(c_is);
-        builder.putFloat(dn);
+        builder.putDouble(dn);
         builder.putDouble(m0);
         builder.putDouble(ecc);
         builder.putDouble(sqrta);
@@ -166,13 +170,14 @@ public class MsgEphemerisGal extends SBPMessage {
         builder.putDouble(omegadot);
         builder.putDouble(w);
         builder.putDouble(inc);
-        builder.putFloat(inc_dot);
+        builder.putDouble(inc_dot);
         builder.putDouble(af0);
-        builder.putFloat(af1);
+        builder.putDouble(af1);
         builder.putFloat(af2);
         toc.build(builder);
         builder.putU16(iode);
         builder.putU16(iodc);
+        builder.putU8(source);
     }
 
     @Override
@@ -202,6 +207,7 @@ public class MsgEphemerisGal extends SBPMessage {
         obj.put("toc", toc.toJSON());
         obj.put("iode", iode);
         obj.put("iodc", iodc);
+        obj.put("source", source);
         return obj;
     }
 }

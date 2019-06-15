@@ -25,6 +25,7 @@ import sbpg.targets.latex as tex
 import sbpg.targets.haskell as hs
 import sbpg.targets.protobuf as pb
 import sbpg.targets.python as py
+import sbpg.targets.pythonNG as pyNG
 import sbpg.targets.javascript as js
 import sbpg.targets.rust as rs
 
@@ -41,6 +42,9 @@ def get_args():
                       required=True,
                       help='Output directory.')
   parser.add_argument('--python',
+                      action="store_true",
+                      help='Target language: Python.')
+  parser.add_argument('--pythonNG',
                       action="store_true",
                       help='Target language: Python.')
   parser.add_argument('--javascript',
@@ -84,7 +88,7 @@ def main():
     # Parse and validate arguments.
     args = get_args().parse_args()
     verbose = args.verbose
-    assert args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.protobuf or args.rust or args.java, \
+    assert args.pythonNG or args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.protobuf or args.java or args.rust, \
       "Please specify a target language."
     input_file = os.path.abspath(args.input_file[0])
     assert len(args.input_file) == 1
@@ -106,9 +110,9 @@ def main():
     file_index_items = sorted(file_index.items(), key=lambda f: f[0])
 
     if verbose:
-      print "Reading files..."
-      pprint.pprint(file_index.keys())
-      print "Writing to %s" % output_dir
+      print("Reading files...")
+      pprint.pprint(list(file_index.keys()))
+      print("Writing to %s" % output_dir)
     if args.latex:
       parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
       tex.render_source(output_dir, parsed, args.release[0])
@@ -126,6 +130,8 @@ def main():
           continue
         if args.python:
           py.render_source(output_dir, parsed)
+        if args.pythonNG:
+          pyNG.render_source(output_dir, parsed)
         elif args.javascript:
           js.render_source(output_dir, parsed)
         elif args.c:
@@ -142,12 +148,14 @@ def main():
           pb.render_source(output_dir, parsed)
       if args.c:
         c.render_version(output_dir, args.release[0])
+      elif args.python:
+        py.render_version(output_dir, args.release[0])
       elif args.haskell:
         parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
         hs.render_cabal(output_dir, parsed, args.release[0])
         hs.render_sbp(output_dir, parsed)
       elif args.java:
-        parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
+        parsed = [yaml.parse_spec(spec) for _, spec in file_index_items]
         java.render_table(output_dir, parsed)
       elif args.rust:
         parsed = [yaml.parse_spec(spec) for spec in file_index.values()]

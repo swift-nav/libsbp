@@ -12,10 +12,12 @@ The :mod:`sbp.client.handler` module contains classes related to
 SBP message handling.
 """
 
+import warnings
 import collections
 import threading
 import weakref
-from Queue import Queue
+import six
+from six.moves.queue import Queue
 
 
 class Handler(object):
@@ -30,9 +32,15 @@ class Handler(object):
     ----------
     source : Iterable of tuple(SBP message, {'time':'ISO 8601 str'})
       Stream of SBP messages
+    autostart : Boolean
+      If false, start() shall be skipped when entering context scope and it
+      should be explicitly called by the parent. This will prevent losing
+      messages in case where receive thread would otherwise be started before
+      consumers are ready.
     """
 
-    def __init__(self, source):
+    def __init__(self, source, autostart=True):
+        self._autostart = autostart
         self._source = source
         self._callbacks = collections.defaultdict(set)
         self._receive_thread = threading.Thread(
@@ -57,7 +65,8 @@ class Handler(object):
         self._dead = True
 
     def __enter__(self):
-        self.start()
+        if self._autostart:
+            self.start()
         return self
 
     def __exit__(self, *args):
@@ -98,6 +107,12 @@ class Handler(object):
         """
         return self.filter()
 
+    def _to_iter(self, maybe_iter):
+        try:
+            return iter(maybe_iter)
+        except TypeError:
+            return None
+
     def add_callback(self, callback, msg_type=None):
         """
         Add per message type or global callback.
@@ -110,10 +125,11 @@ class Handler(object):
           Message type to register callback against. Default `None` means global callback.
           Iterable type adds the callback to all the message types.
         """
-        try:
-            for mt in iter(msg_type):
-                self._callbacks[mt].add(callback)
-        except TypeError:
+        cb_keys = self._to_iter(msg_type)
+        if cb_keys is not None:
+            for msg_type_ in cb_keys:
+                self._callbacks[msg_type_].add(callback)
+        else:
             self._callbacks[msg_type].add(callback)
 
     def remove_callback(self, callback, msg_type=None):
@@ -130,14 +146,14 @@ class Handler(object):
         """
         if msg_type is None:
             msg_type = self._callbacks.keys()
-
-        try:
-            for mt in iter(msg_type):
+        cb_keys = self._to_iter(msg_type)
+        if cb_keys is not None:
+            for msg_type_ in cb_keys:
                 try:
-                    self._callbacks[mt].remove(callback)
+                    self._callbacks[msg_type_].remove(callback)
                 except KeyError:
                     pass
-        except TypeError as e:
+        else:
             self._callbacks[msg_type].remove(callback)
 
     def _gc_dead_sinks(self):
@@ -194,8 +210,12 @@ class Handler(object):
         try:
             self._source.breakiter()
             self._receive_thread.join(0.1)
-        except:
+        except Exception as exc:
+            warnings.warn("Handler stop error: %s" % (exc,))
             pass
+
+    def join(self, timeout=None):
+        self._receive_thread.join(timeout)
 
     def is_alive(self):
         """
@@ -250,11 +270,23 @@ class Handler(object):
         event.wait(timeout)
         self.remove_callback(cb, msg_type)
 
-    def __call__(self, msg, **metadata):
-        with self._write_lock:
-            self._source(msg, **metadata)
+    def __call__(self, *msgs, **metadata):
+        """
+        Pass messages to the `source` to be consumed.  Typically this means
+        the messages will be framed and transmitted via whatever transport
+        layer is currently active.
 
-    class _SBPQueueIterator(object):
+        Parameters
+        ----------
+        msgs : SBP messages
+          SBP messages to send.
+        metadata : dict
+          Metadata for this batch of messages, passed to the `source`.
+        """
+        with self._write_lock:
+            self._source(*msgs, **metadata)
+
+    class _SBPQueueIterator(six.Iterator):
         """
         Class for upstream iterators.  Implements callable interface for adding
         messages into the queue, and iterable interface for getting them out.
@@ -274,7 +306,7 @@ class Handler(object):
             self._broken = True
             self._queue.put(None, True, 1.0)
 
-        def next(self):
+        def __next__(self):
             if self._broken and self._queue.empty():
                 raise StopIteration
             m = self._queue.get(True)

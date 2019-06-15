@@ -50,6 +50,8 @@
 
 #include "common.h"
 
+SBP_PACK_START
+
 
 /** Save settings to flash (host => device)
  *
@@ -70,7 +72,7 @@
  * "solution\0soln_freq\010\0".
  */
 #define SBP_MSG_SETTINGS_WRITE              0x00A0
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   char setting[0]; /**< A NULL-terminated and NULL-delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE\0"
  */
@@ -88,7 +90,7 @@ typedef struct __attribute__((packed)) {
  * "solution\0soln_freq\010\0".
  */
 #define SBP_MSG_SETTINGS_WRITE_RESP         0x00AF
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u8 status;     /**< Write status */
   char setting[0]; /**< A NULL-terminated and delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE\0" 
@@ -108,7 +110,7 @@ typedef struct __attribute__((packed)) {
  * message (msg_id 0x00A5).
  */
 #define SBP_MSG_SETTINGS_READ_REQ           0x00A4
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   char setting[0]; /**< A NULL-terminated and NULL-delimited string with contents
 "SECTION_SETTING\0SETTING\0"
  */
@@ -126,7 +128,7 @@ typedef struct __attribute__((packed)) {
  * "solution\0soln_freq\010\0".
  */
 #define SBP_MSG_SETTINGS_READ_RESP          0x00A5
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   char setting[0]; /**< A NULL-terminated and NULL-delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE\0"
  
@@ -141,7 +143,7 @@ typedef struct __attribute__((packed)) {
  * "MSG_SETTINGS_READ_BY_INDEX_RESP".
  */
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_REQ  0x00A2
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u16 index;    /**< An index into the device settings, with values ranging from
 0 to length(settings)
  */
@@ -162,7 +164,7 @@ typedef struct __attribute__((packed)) {
  * the device is "simulator\0enabled\0True\0enum:True,False\0"
  */
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_RESP 0x00A7
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u16 index;      /**< An index into the device settings, with values ranging from
 0 to length(settings)
  */
@@ -186,13 +188,32 @@ typedef struct __attribute__((packed)) {
  * for this setting to set the initial value.
  */
 #define SBP_MSG_SETTINGS_REGISTER           0x00AE
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   char setting[0]; /**< A NULL-terminated and delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE".
  */
 } msg_settings_register_t;
 
 
+/** Register setting and default value (device <= host)
+ *
+ * This message responds to setting registration with the effective value.
+ * The effective value shall differ from the given default value if setting
+ * was already registered or is available in the permanent setting storage
+ * and had a different value.
+ */
+#define SBP_MSG_SETTINGS_REGISTER_RESP      0x01AF
+typedef struct SBP_ATTR_PACKED {
+  u8 status;     /**< Register status */
+  char setting[0]; /**< A NULL-terminated and delimited string with contents
+"SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined
+according to the status field.
+ */
+} msg_settings_register_resp_t;
+
+
 /** \} */
+
+SBP_PACK_END
 
 #endif /* LIBSBP_SETTINGS_MESSAGES_H */

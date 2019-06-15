@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_TRACKING_IQ (0x002C).
+/** SBP class for message MSG_TRACKING_IQ (0x002D).
  *
  * You can have MSG_TRACKING_IQ inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -33,7 +33,7 @@ import org.json.JSONArray;
  * update interval. */
 
 public class MsgTrackingIq extends SBPMessage {
-    public static final int TYPE = 0x002C;
+    public static final int TYPE = 0x002D;
 
     
     /** Tracking channel of origin */

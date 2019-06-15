@@ -18,7 +18,7 @@ from voluptuous import IsFalse
 SBP_EXTENSION = "/*.yaml"
 
 msg = Schema({
-  'fields': Any(Schema({ Schema(str): Coerce(str) }), IsFalse),
+  'fields': Any(Schema({ Coerce(str): Coerce(str) }), IsFalse),
   'module': Coerce(str),
   'name': Coerce(str)
 })
@@ -28,7 +28,7 @@ test = Schema({
   'msg_type': Schema(str),
   'raw_json': Schema(str),
   'raw_packet': Coerce(str),
-  'sbp': Schema({ Schema(str): Coerce(str) }),
+  'sbp': Schema({ Coerce(str): Coerce(str) }),
 })
 
 tests = Schema([test])

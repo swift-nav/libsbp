@@ -54,6 +54,36 @@ GnssSignal.prototype.fieldSpec.push(['sat', 'writeUInt8', 1]);
 GnssSignal.prototype.fieldSpec.push(['code', 'writeUInt8', 1]);
 
 /**
+ * SBP class for message fragment SvId
+ *
+ * A (Constellation ID, satellite ID) tuple that uniquely identifies a space
+ * vehicle
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field satId number (unsigned 8-bit int, 1 byte) ID of the space vehicle within its constellation
+ * @field constellation number (unsigned 8-bit int, 1 byte) Constellation ID to which the SV belongs
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var SvId = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "SvId";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+SvId.prototype = Object.create(SBP.prototype);
+SvId.prototype.messageType = "SvId";
+SvId.prototype.constructor = SvId;
+SvId.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('satId')
+  .uint8('constellation');
+SvId.prototype.fieldSpec = [];
+SvId.prototype.fieldSpec.push(['satId', 'writeUInt8', 1]);
+SvId.prototype.fieldSpec.push(['constellation', 'writeUInt8', 1]);
+
+/**
  * SBP class for message fragment GnssSignalDep
  *
  * Deprecated.
@@ -214,6 +244,7 @@ CarrierPhase.prototype.fieldSpec.push(['f', 'writeUInt8', 1]);
 
 module.exports = {
   GnssSignal: GnssSignal,
+  SvId: SvId,
   GnssSignalDep: GnssSignalDep,
   GPSTimeDep: GPSTimeDep,
   GPSTimeSec: GPSTimeSec,

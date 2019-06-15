@@ -36,15 +36,15 @@ class CdcDriver(BaseDriver):
         try:
             return_val = self.handle.read(size)
             if return_val == '':
-                print
-                print "Piksi disconnected"
-                print
+                print()
+                print("Piksi disconnected")
+                print()
                 raise IOError
             return return_val
         except OSError:
-            print
-            print "Piksi disconnected"
-            print
+            print()
+            print("Piksi disconnected")
+            print()
             raise IOError
 
     def write(self, s):
@@ -59,9 +59,9 @@ class CdcDriver(BaseDriver):
         try:
             return self.handle.write(s)
         except OSError:
-            print
-            print "Piksi disconnected"
-            print
+            print()
+            print("Piksi disconnected")
+            print()
             raise IOError
 
     def close(self):
@@ -70,5 +70,5 @@ class CdcDriver(BaseDriver):
         """
         try:
             self.handle.close()
-        except OSError, IOError:
+        except (OSError, IOError):
             pass

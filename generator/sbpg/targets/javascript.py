@@ -140,7 +140,10 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
     else:
       field_type = "'%s'" % field_type
     if size is not None:
-      return "array('%s', { length: %d, type: %s })" % (f.identifier, size.value, field_type)
+      d = { "'uint16'" : "'uint16le'", "'uint32'" : "'uint32le'", "'uint64'" : "'uint16le'",
+            "'int16'" : "'int16le'", "'int32'" : "'int32le'", "'int64'" : "'int16le'" }
+      field_type_arr = d.get(field_type, field_type)
+      return "array('%s', { length: %d, type: %s })" % (f.identifier, size.value, field_type_arr)
     elif f.options.get('size_fn') is not None:
       return "array('%s', { type: %s, length: '%s' })" % (f_.identifier, field_type, size_fn.value)
     else:
@@ -191,7 +194,7 @@ def render_source(output_dir, package_spec, jenv=JENV):
   destination_filename = "%s/%s.js" % (directory, name)
   py_template = jenv.get_template(TEMPLATE_NAME)
   module_path = ".".join(package_spec.identifier.split(".")[1:-1])
-  includeMap = {'gnss': ['GnssSignal', 'GnssSignalDep', 'GPSTime', 'CarrierPhase', 'GPSTime', 'GPSTimeSec', 'GPSTimeDep'] }
+  includeMap = {'gnss': ['GnssSignal', 'GnssSignalDep', 'GPSTime', 'CarrierPhase', 'GPSTime', 'GPSTimeSec', 'GPSTimeDep', 'SvId'] }
   includes = [".".join(i.split(".")[:-1]) for i in package_spec.includes]
   includes = [(i, includeMap.get(i)) for i in includes if i != "types"]
   with open(destination_filename, 'w') as f:

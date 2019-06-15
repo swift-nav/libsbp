@@ -131,3 +131,29 @@ message MsgFileioWriteReq {
 message MsgFileioWriteResp {
     uint32 sequence = 1;
 }
+
+/** Request advice on the optimal configuration for FileIO.
+ *
+ * Requests advice on the optimal configuration for a FileIO 
+ * transfer.  Newer version of FileIO can support greater
+ * throughput by supporting a large window of FileIO data
+ * that can be in-flight during read or write operations.
+ */
+message MsgFileioConfigReq {
+    uint32 sequence = 1;
+}
+
+/** Response with advice on the optimal configuration for FileIO.
+
+ *
+ * The advice on the optimal configuration for a FileIO
+ * transfer.  Newer version of FileIO can support greater
+ * throughput by supporting a large window of FileIO data
+ * that can be in-flight during read or write operations.
+ */
+message MsgFileioConfigResp {
+    uint32 sequence = 1;
+    uint32 window_size = 2;
+    uint32 batch_size = 3;
+    uint32 fileio_version = 4;
+}

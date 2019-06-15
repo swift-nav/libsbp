@@ -31,7 +31,7 @@ import org.json.JSONArray;
  *
  * The precise code biases message is to be added
  * to the pseudorange of the corresponding signal
- * to get corrected pseudorange. It is typically 
+ * to get corrected pseudorange. It is typically
  * an equivalent to the 1059 and 1065 RTCM message types */
 
 public class MsgSsrCodeBiases extends SBPMessage {
@@ -48,7 +48,7 @@ public class MsgSsrCodeBiases extends SBPMessage {
     public int update_interval;
     
     /** IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR 
+SSR is used to indicate a change in the SSR
 generating configuration
  */
     public int iod_ssr;

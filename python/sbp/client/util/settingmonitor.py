@@ -36,7 +36,7 @@ class SettingMonitor(object):
         Messages of any type other than SBP_MSG_SETTINGS_READ_RESP are ignored
         """
         if sbp_msg.msg_type == SBP_MSG_SETTINGS_READ_RESP:
-            section, setting, value = sbp_msg.payload.split('\0')[:3]
+            section, setting, value = sbp_msg.payload.split(b'\0')[:3]
             self.settings.append((section, setting, value))
 
     def wait_for_setting_value(self, section, setting, value, wait_time=5.0):
@@ -46,8 +46,7 @@ class SettingMonitor(object):
         expire = time.time() + wait_time
         ok = False
         while not ok and time.time() < expire:
-            settings = filter(lambda x: (x[0], x[1]) == (section, setting),
-                              self.settings)
+            settings = [x for x in self.settings if (x[0], x[1]) == (section, setting)]
             # Check to see if the last setting has the value we want
             if len(settings) > 0:
                 ok = settings[-1][2] == value
@@ -57,15 +56,13 @@ class SettingMonitor(object):
 
     def clear(self, section=None, setting=None, value=None):
         """Clear settings"""
-        match = map(lambda (x,y,z): all((section is None or x == section,
-                                         setting is None or y == setting,
-                                         value is None or z == value)),
-                    self.settings)
+        match = [all((section is None or x_y_z[0] == section,
+                      setting is None or x_y_z[1] == setting,
+                      value is None or x_y_z[2] == value)) for x_y_z in self.settings]
 
-        keep = filter(lambda (setting,remove): not remove,
-                      zip(self.settings,match))
+        keep = [setting_remove for setting_remove in zip(self.settings,match) if not setting_remove[1]]
 
-        self.settings[:] = map(lambda x: x[0], keep)
+        self.settings[:] = [x[0] for x in keep]
 
 
 if __name__ == "__main__":
@@ -75,7 +72,7 @@ if __name__ == "__main__":
     import argparse
 
     def print_setting(sbp_msg, **metadata):
-        print sbp_msg
+        print(sbp_msg)
 
     def main():
         parser = argparse.ArgumentParser(
@@ -106,29 +103,29 @@ if __name__ == "__main__":
                 link.add_callback(print_setting, SBP_MSG_SETTINGS_READ_RESP)
 
                 # Disable spectrum analyzer
-                link(MsgSettingsWrite(setting='%s\0%s\0%s\0' % (
-                    'system_monitor', 'spectrum_analyzer', 'False')))
+                link(MsgSettingsWrite(setting=b'%s\0%s\0%s\0' % (
+                    b'system_monitor', b'spectrum_analyzer', b'False')))
 
                 # Request the value of the system_monitor:spectrum_analyzer setting
-                link(MsgSettingsReadReq(setting='%s\0%s\0' % (
-                     'system_monitor', 'spectrum_analyzer')))
+                link(MsgSettingsReadReq(setting=b'%s\0%s\0' % (
+                     b'system_monitor', b'spectrum_analyzer')))
 
                 # Wait up to 5 seconds to see the setting we want
                 specan_off = monitor.wait_for_setting_value(
-                        'system_monitor', 'spectrum_analyzer', 'False')
+                        b'system_monitor', b'spectrum_analyzer', b'False')
 
                 assert(specan_off == True)
-                print "Spectrum analyzer turned off!"
+                print("Spectrum analyzer turned off!")
 
                 # Request the value of the system_monitor:spectrum_analyzer setting
-                link(MsgSettingsReadReq(setting='%s\0%s\0' % (
-                     'system_monitor', 'spectrum_analyzer')))
+                link(MsgSettingsReadReq(setting=b'%s\0%s\0' % (
+                     b'system_monitor', b'spectrum_analyzer')))
 
                 # Wait up to 5 seconds to see the setting we (don't) want
                 specan_off = monitor.wait_for_setting_value(
-                        'system_monitor', 'spectrum_analyzer', 'True')
+                        b'system_monitor', b'spectrum_analyzer', b'True')
 
                 assert(specan_off == False)
-                print "Spectrum analyzer still off!"
+                print("Spectrum analyzer still off!")
 
     main()

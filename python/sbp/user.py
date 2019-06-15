@@ -101,6 +101,15 @@ maximum length of 255 bytes per message.
     self.payload = MsgUserData._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgUserData._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgUserData, self).to_json_dict()

@@ -153,7 +153,7 @@ class ((( m.identifier | classnameify )))(SBP):
       self.(((f.identifier))) = kwargs.pop('(((f.identifier)))')
       ((*- endfor *))
     ((*- else *))
-      self.payload = ""
+      self.payload = b""
     ((*- endif *))
 
   def __repr__(self):
@@ -189,6 +189,15 @@ class ((( m.identifier | classnameify )))(SBP):
     c = containerize(exclude_fields(self))
     self.payload = ((( m.identifier | classnameify )))._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = ((( m.identifier | classnameify )))._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()

@@ -303,3 +303,35 @@ instance Binary MsgSettingsRegister where
 $(makeSBP 'msgSettingsRegister ''MsgSettingsRegister)
 $(makeJSON "_msgSettingsRegister_" ''MsgSettingsRegister)
 $(makeLenses ''MsgSettingsRegister)
+
+msgSettingsRegisterResp :: Word16
+msgSettingsRegisterResp = 0x01AF
+
+-- | SBP class for message MSG_SETTINGS_REGISTER_RESP (0x01AF).
+--
+-- This message responds to setting registration with the effective value. The
+-- effective value shall differ from the given default value if setting was
+-- already registered or is available in the permanent setting storage and had
+-- a different value.
+data MsgSettingsRegisterResp = MsgSettingsRegisterResp
+  { _msgSettingsRegisterResp_status :: !Word8
+    -- ^ Register status
+  , _msgSettingsRegisterResp_setting :: !Text
+    -- ^ A NULL-terminated and delimited string with contents
+    -- "SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined
+    -- according to the status field.
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSettingsRegisterResp where
+  get = do
+    _msgSettingsRegisterResp_status <- getWord8
+    _msgSettingsRegisterResp_setting <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    pure MsgSettingsRegisterResp {..}
+
+  put MsgSettingsRegisterResp {..} = do
+    putWord8 _msgSettingsRegisterResp_status
+    putByteString $ encodeUtf8 _msgSettingsRegisterResp_setting
+
+$(makeSBP 'msgSettingsRegisterResp ''MsgSettingsRegisterResp)
+$(makeJSON "_msgSettingsRegisterResp_" ''MsgSettingsRegisterResp)
+$(makeLenses ''MsgSettingsRegisterResp)

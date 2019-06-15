@@ -294,7 +294,7 @@ alamanac onto the Piksi's flash memory from the host.
       super( MsgAlmanac, self).__init__()
       self.msg_type = SBP_MSG_ALMANAC
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.payload = ""
+      self.payload = b""
 
   def __repr__(self):
     return fmt_repr(self)
@@ -340,7 +340,7 @@ time estimate sent by the host.
       super( MsgSetTime, self).__init__()
       self.msg_type = SBP_MSG_SET_TIME
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.payload = ""
+      self.payload = b""
 
   def __repr__(self):
     return fmt_repr(self)
@@ -435,6 +435,15 @@ bootloader.
     self.payload = MsgReset._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgReset._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgReset, self).to_json_dict()
@@ -468,7 +477,7 @@ bootloader.
       super( MsgResetDep, self).__init__()
       self.msg_type = SBP_MSG_RESET_DEP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.payload = ""
+      self.payload = b""
 
   def __repr__(self):
     return fmt_repr(self)
@@ -515,7 +524,7 @@ removed in a future release.
       super( MsgCwResults, self).__init__()
       self.msg_type = SBP_MSG_CW_RESULTS
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.payload = ""
+      self.payload = b""
 
   def __repr__(self):
     return fmt_repr(self)
@@ -562,7 +571,7 @@ be removed in a future release.
       super( MsgCwStart, self).__init__()
       self.msg_type = SBP_MSG_CW_START
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.payload = ""
+      self.payload = b""
 
   def __repr__(self):
     return fmt_repr(self)
@@ -657,6 +666,15 @@ Ambiguity Resolution (IAR) process.
     self.payload = MsgResetFilters._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgResetFilters._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgResetFilters, self).to_json_dict()
@@ -664,36 +682,31 @@ Ambiguity Resolution (IAR) process.
     d.update(j)
     return d
     
-SBP_MSG_INIT_BASE = 0x0023
-class MsgInitBase(SBP):
-  """SBP class for message MSG_INIT_BASE (0x0023).
+SBP_MSG_INIT_BASE_DEP = 0x0023
+class MsgInitBaseDep(SBP):
+  """SBP class for message MSG_INIT_BASE_DEP (0x0023).
 
-  You can have MSG_INIT_BASE inherit its fields directly
+  You can have MSG_INIT_BASE_DEP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
-  This message initializes the integer ambiguity resolution (IAR)
-process on the Piksi to use an assumed baseline position between
-the base station and rover receivers. Warns via MSG_PRINT if
-there aren't a shared minimum number (4) of satellite
-observations between the two.
-
+  Deprecated
 
   """
   __slots__ = []
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgInitBase,
+      super( MsgInitBaseDep,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.payload = sbp.payload
     else:
-      super( MsgInitBase, self).__init__()
-      self.msg_type = SBP_MSG_INIT_BASE
+      super( MsgInitBaseDep, self).__init__()
+      self.msg_type = SBP_MSG_INIT_BASE_DEP
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.payload = ""
+      self.payload = b""
 
   def __repr__(self):
     return fmt_repr(self)
@@ -704,12 +717,12 @@ observations between the two.
 
     """
     d = json.loads(s)
-    return MsgInitBase.from_json_dict(d)
+    return MsgInitBaseDep.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgInitBase(sbp, **d)
+    return MsgInitBaseDep(sbp, **d)
 
  
     
@@ -800,6 +813,15 @@ thread. The reported percentage values must be normalized.
     c = containerize(exclude_fields(self))
     self.payload = MsgThreadState._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgThreadState._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -910,6 +932,15 @@ period indicates their likelihood of transmission.
     self.payload = MsgUartState._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgUartState._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgUartState, self).to_json_dict()
@@ -1005,6 +1036,15 @@ class MsgUartStateDepa(SBP):
     self.payload = MsgUartStateDepa._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgUartStateDepa._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgUartStateDepa, self).to_json_dict()
@@ -1088,6 +1128,15 @@ from satellite observations.
     c = containerize(exclude_fields(self))
     self.payload = MsgIarState._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgIarState._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -1176,6 +1225,15 @@ from being used in various Piksi subsystems.
     self.payload = MsgMaskSatellite._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgMaskSatellite._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgMaskSatellite, self).to_json_dict()
@@ -1260,6 +1318,15 @@ class MsgMaskSatelliteDep(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgMaskSatelliteDep._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgMaskSatelliteDep._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -1364,6 +1431,15 @@ available.
     self.payload = MsgDeviceMonitor._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgDeviceMonitor._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgDeviceMonitor, self).to_json_dict()
@@ -1452,6 +1528,15 @@ code will be returned with MSG_COMMAND_RESP.
     self.payload = MsgCommandReq._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgCommandReq._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgCommandReq, self).to_json_dict()
@@ -1538,6 +1623,15 @@ the command.  A return code of zero indicates success.
     c = containerize(exclude_fields(self))
     self.payload = MsgCommandResp._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgCommandResp._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -1628,6 +1722,15 @@ the correct command.
     self.payload = MsgCommandOutput._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgCommandOutput._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgCommandOutput, self).to_json_dict()
@@ -1661,7 +1764,7 @@ Output will be sent in MSG_NETWORK_STATE_RESP messages
       super( MsgNetworkStateReq, self).__init__()
       self.msg_type = SBP_MSG_NETWORK_STATE_REQ
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.payload = ""
+      self.payload = b""
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1792,6 +1895,15 @@ in c.
     self.payload = MsgNetworkStateResp._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgNetworkStateResp._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgNetworkStateResp, self).to_json_dict()
@@ -1872,6 +1984,15 @@ class MsgNetworkBandwidthUsage(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgNetworkBandwidthUsage._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgNetworkBandwidthUsage._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -1965,6 +2086,15 @@ of the modem and its various parameters.
     c = containerize(exclude_fields(self))
     self.payload = MsgCellModemStatus._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgCellModemStatus._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -2080,6 +2210,15 @@ class MsgSpecanDep(SBP):
     c = containerize(exclude_fields(self))
     self.payload = MsgSpecanDep._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSpecanDep._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -2197,9 +2336,118 @@ class MsgSpecan(SBP):
     self.payload = MsgSpecan._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSpecan._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgSpecan, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_FRONT_END_GAIN = 0x00BF
+class MsgFrontEndGain(SBP):
+  """SBP class for message MSG_FRONT_END_GAIN (0x00BF).
+
+  You can have MSG_FRONT_END_GAIN inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message describes the gain of each channel in the receiver frontend. Each 
+gain is encoded as a non-dimensional percentage relative to the maximum range  
+possible for the gain stage of the frontend. By convention, each gain array 
+has 8 entries and the index of the array corresponding to the index of the rf channel 
+in the frontend. A gain of 127 percent encodes that rf channel is not present in the hardware.
+A negative value implies an error for the particular gain stage as reported by the frontend.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  rf_gain : array
+    RF gain for each frontend channel
+  if_gain : array
+    Intermediate frequency gain for each frontend channel
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'rf_gain' / construct.Array(8, construct.Int8sl),
+                   'if_gain' / construct.Array(8, construct.Int8sl),)
+  __slots__ = [
+               'rf_gain',
+               'if_gain',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgFrontEndGain,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgFrontEndGain, self).__init__()
+      self.msg_type = SBP_MSG_FRONT_END_GAIN
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.rf_gain = kwargs.pop('rf_gain')
+      self.if_gain = kwargs.pop('if_gain')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgFrontEndGain.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgFrontEndGain(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgFrontEndGain._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgFrontEndGain._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgFrontEndGain._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgFrontEndGain, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -2213,7 +2461,7 @@ msg_classes = {
   0x00C0: MsgCwResults,
   0x00C1: MsgCwStart,
   0x0022: MsgResetFilters,
-  0x0023: MsgInitBase,
+  0x0023: MsgInitBaseDep,
   0x0017: MsgThreadState,
   0x001D: MsgUartState,
   0x0018: MsgUartStateDepa,
@@ -2230,4 +2478,5 @@ msg_classes = {
   0x00BE: MsgCellModemStatus,
   0x0050: MsgSpecanDep,
   0x0051: MsgSpecan,
+  0x00BF: MsgFrontEndGain,
 }

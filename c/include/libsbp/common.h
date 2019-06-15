@@ -21,7 +21,6 @@
 /* Should match guard in libswiftnav/common.h */
 #ifndef COMMON_INT_TYPES
 #define COMMON_INT_TYPES
-
 /** \defgroup common_inttypes Integer types
  * Specified-width integer type definitions for shorter and nicer code.
  *
@@ -48,7 +47,26 @@ typedef uint64_t u64;
 
 #endif
 
-/** \} */
+/* Set packing based upon toolchain */
+#if defined(__GNUC__) || defined(__clang__)
+
+#define SBP_PACK_START /* Intentionally empty */
+#define SBP_PACK_END /* Intentionally empty */
+#define SBP_ATTR_PACKED __attribute__((packed))
+
+#elif defined(_MSC_VER)
+
+#define SBP_PACK_START __pragma(pack(1));
+#define SBP_PACK_END __pragma(pack());
+#define SBP_ATTR_PACKED /* Intentionally empty */
+
+#else
+
+#if !defined(SBP_PACK_START) || !defined(SBP_PACK_END) || !defined(SBP_ATTR_PACKED)
+#error Unknown compiler, please override SBP_PACK_START, SBP_PACK_END, and SBP_ATTR_PACKED
+#endif 
+
+#endif /* toolchaing packing macros */
 
 /** \} */
 

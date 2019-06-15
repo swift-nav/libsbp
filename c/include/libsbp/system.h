@@ -25,6 +25,8 @@
 
 #include "common.h"
 
+SBP_PACK_START
+
 
 /** System start-up message
  *
@@ -33,8 +35,8 @@
  * the system has started and is now ready to respond to commands
  * or configuration requests.
  */
-#define SBP_MSG_STARTUP      0xFF00
-typedef struct __attribute__((packed)) {
+#define SBP_MSG_STARTUP               0xFF00
+typedef struct SBP_ATTR_PACKED {
   u8 cause;           /**< Cause of startup */
   u8 startup_type;    /**< Startup type */
   u16 reserved;        /**< Reserved */
@@ -47,8 +49,8 @@ typedef struct __attribute__((packed)) {
  * corrections.  It is expected to be sent with each receipt of a complete
  * corrections packet.
  */
-#define SBP_MSG_DGNSS_STATUS 0xFF02
-typedef struct __attribute__((packed)) {
+#define SBP_MSG_DGNSS_STATUS          0xFF02
+typedef struct SBP_ATTR_PACKED {
   u8 flags;          /**< Status flags */
   u16 latency;        /**< Latency of observation receipt [deci-seconds] */
   u8 num_signals;    /**< Number of signals from base station */
@@ -69,8 +71,8 @@ typedef struct __attribute__((packed)) {
  * occurred in the system. To determine the source of the error,
  * the remaining error flags should be inspected.
  */
-#define SBP_MSG_HEARTBEAT    0xFFFF
-typedef struct __attribute__((packed)) {
+#define SBP_MSG_HEARTBEAT             0xFFFF
+typedef struct SBP_ATTR_PACKED {
   u32 flags;    /**< Status flags */
 } msg_heartbeat_t;
 
@@ -80,12 +82,40 @@ typedef struct __attribute__((packed)) {
  * The INS status message describes the state of the operation
  * and initialization of the inertial navigation system. 
  */
-#define SBP_MSG_INS_STATUS   0xFF03
-typedef struct __attribute__((packed)) {
+#define SBP_MSG_INS_STATUS            0xFF03
+typedef struct SBP_ATTR_PACKED {
   u32 flags;    /**< Status flags */
 } msg_ins_status_t;
 
 
+/** Experimental telemetry message
+ *
+ * The CSAC telemetry message has an implementation defined telemetry string
+ * from a device. It is not produced or available on general Swift Products.
+ * It is intended to be a low rate message for status purposes.
+ */
+#define SBP_MSG_CSAC_TELEMETRY        0xFF04
+typedef struct SBP_ATTR_PACKED {
+  u8 id;           /**< Index representing the type of telemetry in use.  It is implemention defined. */
+  char telemetry[0]; /**< Comma separated list of values as defined by the index */
+} msg_csac_telemetry_t;
+
+
+/** Experimental telemetry message labels
+ *
+ * The CSAC telemetry message provides labels for each member of the string
+ * produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
+ * rate than the MSG_CSAC_TELEMETRY.
+ */
+#define SBP_MSG_CSAC_TELEMETRY_LABELS 0xFF05
+typedef struct SBP_ATTR_PACKED {
+  u8 id;                  /**< Index representing the type of telemetry in use.  It is implemention defined. */
+  char telemetry_labels[0]; /**< Comma separated list of telemetry field values */
+} msg_csac_telemetry_labels_t;
+
+
 /** \} */
+
+SBP_PACK_END
 
 #endif /* LIBSBP_SYSTEM_MESSAGES_H */

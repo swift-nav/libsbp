@@ -31,9 +31,9 @@ import org.json.JSONArray;
  *
  * The precise phase biases message contains the biases
  * to be added to the carrier phase of the corresponding
- * signal to get corrected carrier phase measurement, as 
- * well as the satellite yaw angle to be applied to compute 
- * the phase wind-up correction. 
+ * signal to get corrected carrier phase measurement, as
+ * well as the satellite yaw angle to be applied to compute
+ * the phase wind-up correction.
  * It is typically an equivalent to the 1265 RTCM message types */
 
 public class MsgSsrPhaseBiases extends SBPMessage {
@@ -50,7 +50,7 @@ public class MsgSsrPhaseBiases extends SBPMessage {
     public int update_interval;
     
     /** IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR 
+SSR is used to indicate a change in the SSR
 generating configuration
  */
     public int iod_ssr;

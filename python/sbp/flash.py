@@ -126,6 +126,15 @@ starting address
     self.payload = MsgFlashProgram._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgFlashProgram._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgFlashProgram, self).to_json_dict()
@@ -209,6 +218,15 @@ MSG_FLASH_PROGRAM, may return this message on failure.
     c = containerize(exclude_fields(self))
     self.payload = MsgFlashDone._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgFlashDone._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -309,6 +327,15 @@ starting address
     self.payload = MsgFlashReadReq._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgFlashReadReq._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgFlashReadReq, self).to_json_dict()
@@ -408,6 +435,15 @@ starting address
     self.payload = MsgFlashReadResp._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgFlashReadResp._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgFlashReadResp, self).to_json_dict()
@@ -500,6 +536,15 @@ the M25)
     self.payload = MsgFlashErase._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgFlashErase._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgFlashErase, self).to_json_dict()
@@ -581,6 +626,15 @@ memory. The device replies with a MSG_FLASH_DONE message.
     c = containerize(exclude_fields(self))
     self.payload = MsgStmFlashLockSector._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgStmFlashLockSector._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
@@ -664,6 +718,15 @@ memory. The device replies with a MSG_FLASH_DONE message.
     self.payload = MsgStmFlashUnlockSector._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgStmFlashUnlockSector._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgStmFlashUnlockSector, self).to_json_dict()
@@ -699,7 +762,7 @@ ID in the payload.
       super( MsgStmUniqueIdReq, self).__init__()
       self.msg_type = SBP_MSG_STM_UNIQUE_ID_REQ
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.payload = ""
+      self.payload = b""
 
   def __repr__(self):
     return fmt_repr(self)
@@ -796,6 +859,15 @@ ID in the payload..
     self.payload = MsgStmUniqueIdResp._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgStmUniqueIdResp._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgStmUniqueIdResp, self).to_json_dict()
@@ -877,6 +949,15 @@ register. The device replies with a MSG_FLASH_DONE message.
     c = containerize(exclude_fields(self))
     self.payload = MsgM25FlashWriteStatus._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgM25FlashWriteStatus._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()

@@ -26,6 +26,8 @@
 #include "common.h"
 #include "gnss.h"
 
+SBP_PACK_START
+
 
 /** Raw SBAS data
  *
@@ -33,7 +35,7 @@
  * parity of the data block and sends only blocks that pass the check.
  */
 #define SBP_MSG_SBAS_RAW 0x7777
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   sbp_gnss_signal_t sid;             /**< GNSS signal identifier. */
   u32 tow;             /**< GPS time-of-week at the start of the data block. [ms] */
   u8 message_type;    /**< SBAS message type (0-63) */
@@ -42,5 +44,7 @@ typedef struct __attribute__((packed)) {
 
 
 /** \} */
+
+SBP_PACK_END
 
 #endif /* LIBSBP_SBAS_MESSAGES_H */

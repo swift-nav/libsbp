@@ -23,9 +23,9 @@ def sbp_nav():
                                   accuracy=0,
                                   n_sats=10,
                                   flags=1))
-  print len(ll)
+  print(len(ll))
   h = hpy()
-  print h.heap()
+  print(h.heap())
 
 if __name__ == '__main__':
   sbp_nav()

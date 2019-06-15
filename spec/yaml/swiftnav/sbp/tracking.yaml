@@ -503,10 +503,10 @@ definitions:
  - MeasurementState:
     short_desc: Measurement Engine signal tracking channel state
     desc: |
-      Measurement Engine tracking channel state for a specific satellite signal 
-      and measured signal power. 
-      The mesid field for Glonass can either 
-      carry the FCN as 100 + FCN where FCN is in [-7, +6] or 
+      Measurement Engine tracking channel state for a specific satellite signal
+      and measured signal power.
+      The mesid field for Glonass can either
+      carry the FCN as 100 + FCN where FCN is in [-7, +6] or
       the Slot ID (from 1 to 28)
     fields:
         - mesid:
@@ -529,21 +529,21 @@ definitions:
           type: array
           fill: MeasurementState
           desc: ME signal tracking channel state
-            
+
  - TrackingChannelCorrelation:
     short_desc: Complex correlation structure
     desc: |
       Structure containing in-phase and quadrature correlation components.
     fields:
         - I:
-            type: s32
+            type: s16
             desc: In-phase correlation
         - Q:
-            type: s32
+            type: s16
             desc: Quadrature correlation
 
  - MSG_TRACKING_IQ:
-    id: 0x002C
+    id: 0x002D
     short_desc: Tracking channel correlations
     desc: |
       When enabled, a tracking channel can output the correlations at each
@@ -561,7 +561,38 @@ definitions:
           size: 3
           desc: Early, Prompt and Late correlations
 
- - MSG_TRACKING_IQ_DEP:
+ - TrackingChannelCorrelationDep:
+    short_desc: Complex correlation structure
+    desc: |
+      Structure containing in-phase and quadrature correlation components.
+    fields:
+        - I:
+            type: s32
+            desc: In-phase correlation
+        - Q:
+            type: s32
+            desc: Quadrature correlation
+
+ - MSG_TRACKING_IQ_DEP_B:
+    id: 0x002C
+    short_desc: Tracking channel correlations
+    desc: |
+      When enabled, a tracking channel can output the correlations at each
+      update interval.
+    fields:
+      - channel:
+          type: u8
+          desc: Tracking channel of origin
+      - sid:
+          type: GnssSignal
+          desc: GNSS signal identifier
+      - corrs:
+          type: array
+          fill: TrackingChannelCorrelationDep
+          size: 3
+          desc: Early, Prompt and Late correlations
+
+ - MSG_TRACKING_IQ_DEP_A:
     id: 0x001C
     short_desc: Deprecated
     desc: Deprecated.
@@ -577,7 +608,7 @@ definitions:
           desc: GNSS signal identifier
       - corrs:
           type: array
-          fill: TrackingChannelCorrelation
+          fill: TrackingChannelCorrelationDep
           size: 3
           desc: Early, Prompt and Late correlations
 

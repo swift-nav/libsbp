@@ -25,6 +25,8 @@
 
 #include "common.h"
 
+SBP_PACK_START
+
 
 /** Heading relative to True North
  *
@@ -34,7 +36,7 @@
  * that time-matched RTK mode is used when the base station is moving.
  */
 #define SBP_MSG_BASELINE_HEADING 0x020F
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
   u32 heading;    /**< Heading [mdeg] */
   u8 n_sats;     /**< Number of satellites used in solution */
@@ -46,10 +48,12 @@ typedef struct __attribute__((packed)) {
  *
  * This message reports the quaternion vector describing the vehicle body frame's orientation
  * with respect to a local-level NED frame. The components of the vector should sum to a unit
- * vector assuming that the LSB of each component as a value of 2^-31. 
+ * vector assuming that the LSB of each component as a value of 2^-31. This message will only
+ * be available in future INS versions of Swift Products and is not produced by Piksi Multi 
+ * or Duro.
  */
 #define SBP_MSG_ORIENT_QUAT      0x0220
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;           /**< GPS Time of Week [ms] */
   s32 w;             /**< Real component [2^-31] */
   s32 x;             /**< 1st imaginary component [2^-31] */
@@ -68,10 +72,11 @@ typedef struct __attribute__((packed)) {
  * This message reports the yaw, pitch, and roll angles of the vehicle body frame.
  * The rotations should applied intrinsically in the order yaw, pitch, and roll 
  * in order to rotate the from a frame aligned with the local-level NED frame 
- * to the vehicle body frame.
+ * to the vehicle body frame.  This message will only be available in future 
+ * INS versions of Swift Products and is not produced by Piksi Multi or Duro.
  */
 #define SBP_MSG_ORIENT_EULER     0x0221
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;               /**< GPS Time of Week [ms] */
   s32 roll;              /**< rotation about the forward axis of the vehicle [microdegrees] */
   s32 pitch;             /**< rotation about the rightward axis of the vehicle [microdegrees] */
@@ -92,9 +97,11 @@ typedef struct __attribute__((packed)) {
  * By convention, the vehicle x-axis is expected to be aligned with the forward
  * direction, while the vehicle y-axis is expected to be aligned with the right
  * direction, and the vehicle z-axis should be aligned with the down direction.
+ * This message will only be available in future INS versions of Swift Products 
+ * and is not produced by Piksi Multi or Duro.
  */
 #define SBP_MSG_ANGULAR_RATE     0x0222
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 tow;      /**< GPS Time of Week [ms] */
   s32 x;        /**< angular rate about x axis [microdegrees/s] */
   s32 y;        /**< angular rate about y axis [microdegrees/s] */
@@ -104,5 +111,7 @@ typedef struct __attribute__((packed)) {
 
 
 /** \} */
+
+SBP_PACK_END
 
 #endif /* LIBSBP_ORIENTATION_MESSAGES_H */

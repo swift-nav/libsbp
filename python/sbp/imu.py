@@ -36,7 +36,8 @@ class MsgImuRaw(SBP):
   
   Raw data from the Inertial Measurement Unit, containing accelerometer and
 gyroscope readings. The sense of the measurements are to be aligned with 
-the indications on the device itself.
+the indications on the device itself. Measurement units, which are specific to the
+device hardware and settings, are communicated via the MSG_IMU_AUX message.
 
 
   Parameters
@@ -139,6 +140,15 @@ time is unknown or invalid.
     self.payload = MsgImuRaw._parser.build(c)
     return self.pack()
 
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgImuRaw._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgImuRaw, self).to_json_dict()
@@ -231,6 +241,15 @@ depends on the value of `imu_type`.
     c = containerize(exclude_fields(self))
     self.payload = MsgImuAux._parser.build(c)
     return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgImuAux._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()

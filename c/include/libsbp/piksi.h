@@ -28,6 +28,8 @@
 #include "common.h"
 #include "gnss.h"
 
+SBP_PACK_START
+
 
 /** Legacy message to load satellite almanac (host => Piksi)
  *
@@ -51,7 +53,7 @@
  * bootloader.
  */
 #define SBP_MSG_RESET                   0x00B6
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 flags;    /**< Reset flags */
 } msg_reset_t;
 
@@ -88,20 +90,16 @@ typedef struct __attribute__((packed)) {
  * Ambiguity Resolution (IAR) process.
  */
 #define SBP_MSG_RESET_FILTERS           0x0022
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u8 filter;    /**< Filter flags */
 } msg_reset_filters_t;
 
 
-/** Initialize IAR from known baseline (host => device)
+/** Deprecated
  *
- * This message initializes the integer ambiguity resolution (IAR)
- * process on the Piksi to use an assumed baseline position between
- * the base station and rover receivers. Warns via MSG_PRINT if
- * there aren't a shared minimum number (4) of satellite
- * observations between the two.
+* Deprecated
  */
-#define SBP_MSG_INIT_BASE               0x0023
+#define SBP_MSG_INIT_BASE_DEP           0x0023
 
 
 /** State of an RTOS thread
@@ -111,7 +109,7 @@ typedef struct __attribute__((packed)) {
  * thread. The reported percentage values must be normalized.
  */
 #define SBP_MSG_THREAD_STATE            0x0017
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   char name[20];      /**< Thread name (NULL terminated) */
   u16 cpu;           /**< Percentage cpu use for this thread. Values range from 0
 - 1000 and needs to be renormalized to 100
@@ -126,7 +124,7 @@ typedef struct __attribute__((packed)) {
  * of this UART channel. The reported percentage values must
  * be normalized.
  */
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   float tx_throughput;      /**< UART transmit throughput [kB/s] */
   float rx_throughput;      /**< UART receive throughput [kB/s] */
   u16 crc_error_count;    /**< UART CRC error count */
@@ -149,7 +147,7 @@ typedef struct __attribute__((packed)) {
  * or missing sets will increase the period.  Long periods
  * can cause momentary RTK solution outages.
  */
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   s32 avg;        /**< Average period [ms] */
   s32 pmin;       /**< Minimum period [ms] */
   s32 pmax;       /**< Maximum period [ms] */
@@ -165,7 +163,7 @@ typedef struct __attribute__((packed)) {
  * receiver to give a precise measurement of the end-to-end
  * communication latency in the system.
  */
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   s32 avg;        /**< Average latency [ms] */
   s32 lmin;       /**< Minimum latency [ms] */
   s32 lmax;       /**< Maximum latency [ms] */
@@ -186,7 +184,7 @@ typedef struct __attribute__((packed)) {
  * period indicates their likelihood of transmission.
  */
 #define SBP_MSG_UART_STATE              0x001D
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   uart_channel_t uart_a;        /**< State of UART A */
   uart_channel_t uart_b;        /**< State of UART B */
   uart_channel_t uart_ftdi;     /**< State of UART FTDI (USB logger) */
@@ -200,7 +198,7 @@ typedef struct __attribute__((packed)) {
 * Deprecated
  */
 #define SBP_MSG_UART_STATE_DEPA         0x0018
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   uart_channel_t uart_a;       /**< State of UART A */
   uart_channel_t uart_b;       /**< State of UART B */
   uart_channel_t uart_ftdi;    /**< State of UART FTDI (USB logger) */
@@ -216,7 +214,7 @@ typedef struct __attribute__((packed)) {
  * from satellite observations.
  */
 #define SBP_MSG_IAR_STATE               0x0019
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 num_hyps;    /**< Number of integer ambiguity hypotheses remaining */
 } msg_iar_state_t;
 
@@ -227,7 +225,7 @@ typedef struct __attribute__((packed)) {
  * from being used in various Piksi subsystems.
  */
 #define SBP_MSG_MASK_SATELLITE          0x002B
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u8 mask;    /**< Mask of systems that should ignore this satellite. */
   sbp_gnss_signal_t sid;     /**< GNSS signal for which the mask is applied */
 } msg_mask_satellite_t;
@@ -238,7 +236,7 @@ typedef struct __attribute__((packed)) {
 * Deprecated.
  */
 #define SBP_MSG_MASK_SATELLITE_DEP      0x001B
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u8 mask;    /**< Mask of systems that should ignore this satellite. */
   gnss_signal_dep_t sid;     /**< GNSS signal for which the mask is applied */
 } msg_mask_satellite_dep_t;
@@ -251,7 +249,7 @@ typedef struct __attribute__((packed)) {
  * available.
  */
 #define SBP_MSG_DEVICE_MONITOR          0x00B5
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   s16 dev_vin;            /**< Device V_in [V / 1000] */
   s16 cpu_vint;           /**< Processor V_int [V / 1000] */
   s16 cpu_vaux;           /**< Processor V_aux [V / 1000] */
@@ -267,7 +265,7 @@ typedef struct __attribute__((packed)) {
  * code will be returned with MSG_COMMAND_RESP.
  */
 #define SBP_MSG_COMMAND_REQ             0x00B8
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Sequence number */
   char command[0];  /**< Command line to execute */
 } msg_command_req_t;
@@ -279,7 +277,7 @@ typedef struct __attribute__((packed)) {
  * the command.  A return code of zero indicates success.
  */
 #define SBP_MSG_COMMAND_RESP            0x00B9
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Sequence number */
   s32 code;        /**< Exit code */
 } msg_command_resp_t;
@@ -293,7 +291,7 @@ typedef struct __attribute__((packed)) {
  * the correct command.
  */
 #define SBP_MSG_COMMAND_OUTPUT          0x00BC
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Sequence number */
   char line[0];     /**< Line of standard output or standard error */
 } msg_command_output_t;
@@ -314,7 +312,7 @@ typedef struct __attribute__((packed)) {
  * in c.
  */
 #define SBP_MSG_NETWORK_STATE_RESP      0x00BB
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u8 ipv4_address[4];   /**< IPv4 address (all zero when unavailable) */
   u8 ipv4_mask_size;    /**< IPv4 netmask CIDR notation */
   u8 ipv6_address[16];  /**< IPv6 address (all zero when unavailable) */
@@ -335,7 +333,7 @@ typedef struct __attribute__((packed)) {
  * may vary, both a timestamp and period field is provided,
  * though may not necessarily be populated with a value. 
  */
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u64 duration;          /**< Duration over which the measurement was collected [ms] */
   u64 total_bytes;       /**< Number of bytes handled in total within period */
   u32 rx_bytes;          /**< Number of bytes transmitted within period */
@@ -349,7 +347,7 @@ typedef struct __attribute__((packed)) {
  * The bandwidth usage, a list of usage by interface. 
  */
 #define SBP_MSG_NETWORK_BANDWIDTH_USAGE 0x00BD
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   network_usage_t interfaces[0]; /**< Usage measurement array */
 } msg_network_bandwidth_usage_t;
 
@@ -361,7 +359,7 @@ typedef struct __attribute__((packed)) {
  * of the modem and its various parameters.
  */
 #define SBP_MSG_CELL_MODEM_STATUS       0x00BE
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   s8 signal_strength;      /**< Received cell signal strength in dBm, zero translates to unknown [dBm] */
   float signal_error_rate;    /**< BER as reported by the modem, zero translates to unknown */
   u8 reserved[0];          /**< Unspecified data TBD for this schema */
@@ -373,7 +371,7 @@ typedef struct __attribute__((packed)) {
 * Deprecated.
  */
 #define SBP_MSG_SPECAN_DEP              0x0050
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u16 channel_tag;        /**< Channel ID */
   gps_time_dep_t t;                  /**< Receiver time of this observation */
   float freq_ref;           /**< Reference frequency of this packet
@@ -394,7 +392,7 @@ typedef struct __attribute__((packed)) {
  * Spectrum analyzer packet.
  */
 #define SBP_MSG_SPECAN                  0x0051
-typedef struct __attribute__((packed)) {
+typedef struct SBP_ATTR_PACKED {
   u16 channel_tag;        /**< Channel ID */
   sbp_gps_time_t t;                  /**< Receiver time of this observation */
   float freq_ref;           /**< Reference frequency of this packet
@@ -410,6 +408,24 @@ typedef struct __attribute__((packed)) {
 } msg_specan_t;
 
 
+/** RF AGC status
+ *
+ * This message describes the gain of each channel in the receiver frontend. Each 
+ * gain is encoded as a non-dimensional percentage relative to the maximum range  
+ * possible for the gain stage of the frontend. By convention, each gain array 
+ * has 8 entries and the index of the array corresponding to the index of the rf channel 
+ * in the frontend. A gain of 127 percent encodes that rf channel is not present in the hardware.
+ * A negative value implies an error for the particular gain stage as reported by the frontend.
+ */
+#define SBP_MSG_FRONT_END_GAIN          0x00BF
+typedef struct SBP_ATTR_PACKED {
+  s8 rf_gain[8]; /**< RF gain for each frontend channel [percent] */
+  s8 if_gain[8]; /**< Intermediate frequency gain for each frontend channel [percent] */
+} msg_front_end_gain_t;
+
+
 /** \} */
+
+SBP_PACK_END
 
 #endif /* LIBSBP_PIKSI_MESSAGES_H */

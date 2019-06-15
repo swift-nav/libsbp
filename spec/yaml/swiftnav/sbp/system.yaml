@@ -147,21 +147,54 @@ definitions:
             fields:
               - 8-31:
                   desc: Reserved
-              - 5-7:
-                  desc:  IMU Status
+              - 4-7:
+                  desc:  INS Error
                   values:
-                      - 0: IMU Ready
-                      - 1: No raw IMU data
-                      - 2: No raw IMU timestamp
-                      - 3: Unrecommended raw IMU rate
-              - 3-4:
-                  desc: Initialization Routine Indicator
+                      - 0: Reserved
+                      - 1: IMU Data Error
+                      - 2: INS License Error
+                      - 3: IMU Calibration Data Error
+              - 3:
+                  desc: GNSS Fix
                   values:
-                      - 0: None
-                      - 1: Initial startup
+                      - 0: No GNSS fix available
+                      - 1: GNSS fix
               - 0-2:
-                  desc: INS Status
+                  desc: Mode
                   values:
-                      - 0: INS ready
-                      - 1: INS initializing
-                      - 2: INS error 
+                      - 0: Awaiting initialization
+                      - 1: Dynamically aligning
+                      - 2: Ready
+                      - 3: GNSS Outage exceeds max duration
+
+ - MSG_CSAC_TELEMETRY:
+    id: 0xFF04
+    short_desc: Experimental telemetry message
+    public: false
+    desc: |
+        The CSAC telemetry message has an implementation defined telemetry string
+        from a device. It is not produced or available on general Swift Products.
+        It is intended to be a low rate message for status purposes.
+    fields:
+        - id:
+            type: u8
+            desc: Index representing the type of telemetry in use.  It is implemention defined.
+        - telemetry:
+            type: string
+            desc: Comma separated list of values as defined by the index
+
+ - MSG_CSAC_TELEMETRY_LABELS:
+    id: 0xFF05
+    short_desc: Experimental telemetry message labels
+    public: false
+    desc: |
+        The CSAC telemetry message provides labels for each member of the string
+        produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
+        rate than the MSG_CSAC_TELEMETRY.
+    fields:
+        - id:
+            type: u8
+            desc: Index representing the type of telemetry in use.  It is implemention defined.
+        - telemetry_labels:
+            type: string
+            desc: Comma separated list of telemetry field values

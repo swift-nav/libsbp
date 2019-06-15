@@ -8,3 +8,10 @@
 # THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+from __future__ import absolute_import
+
+try:
+    from ._version import full_version as __version__
+except ImportError:
+    __version__ = "0.0.0"

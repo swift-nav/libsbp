@@ -55,10 +55,10 @@ PUT_CONSTRUCT_CODE = {
   'u16': 'putWord16le',
   'u32': 'putWord32le',
   'u64': 'putWord64le',
-  's8': 'putWord8 $ fromIntegral',
-  's16': 'putWord16le $ fromIntegral',
-  's32': 'putWord32le $ fromIntegral',
-  's64': 'putWord64le $ fromIntegral',
+  's8': '(putWord8 . fromIntegral)',
+  's16': '(putWord16le . fromIntegral)',
+  's32': '(putWord32le . fromIntegral)',
+  's64': '(putWord64le . fromIntegral)',
   'float': 'putFloat32le',
   'double': 'putFloat64le',
   'string': 'putByteString $ encodeUtf8',
@@ -68,7 +68,7 @@ def camel_case(s):
   """
   Convert snake_case to camel_case.
   """
-  return "".join([string.capitalize(i) for i in s.split("_")])
+  return "".join([i.capitalize() for i in s.split("_")])
 
 def to_global(s):
   """
@@ -78,7 +78,7 @@ def to_global(s):
     s = 'Gps' + s[3:]
 
   if '_' in s:
-    s = "".join([string.capitalize(i) for i in s.split("_")])
+    s = "".join([i.capitalize() for i in s.split("_")])
   return s[0].lower() + s[1:]
 
 def to_data(s):
@@ -89,7 +89,7 @@ def to_data(s):
     s = 'Gps' + s[3:]
 
   if '_' in s:
-    return "".join([string.capitalize(i) for i in s.split("_")])
+    return "".join([i.capitalize() for i in s.split("_")])
   return s
 
 def to_type(f, type_map=CONSTRUCT_CODE):
@@ -190,7 +190,7 @@ def render_cabal(output_dir, package_specs, release):
     module_name = camel_case(name)
     full_module_name = ".".join([module_prefix, module_name])
     modules.append(full_module_name)
-  destination_filename = "%s/sbp.cabal.m4" % output_dir
+  destination_filename = "%s/sbp.cabal" % output_dir
   py_template = JENV.get_template(CABAL_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(modules=sorted(modules),
@@ -209,16 +209,16 @@ def render_sbp(output_dir, package_specs):
     modules.append(full_module_name)
     for m in package_spec.definitions:
       if m.static and m.sbp_id:
-        msgs.append(to_data(m.identifier))
+        msgs.append(m)
   destination_filename = "%s/src/SwiftNav/SBP.hs" % output_dir
   py_template = JENV.get_template(SBP_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(modules=sorted(modules),
                                pkgs=package_specs,
-                               msgs=sorted(msgs)))
+                               msgs=sorted(msgs, key=lambda m:to_data(m.identifier))))
   destination_filename = "%s/src/SwiftNav/SBP/Msg.hs" % output_dir
   py_template = JENV.get_template(MESSAGE_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(modules=sorted(modules),
                                pkgs=package_specs,
-                               msgs=sorted(msgs)))
+                               msgs=sorted(msgs, key=lambda m:to_data(m.identifier))))

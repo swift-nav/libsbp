@@ -44,9 +44,13 @@ message Doppler {
 
 /** GNSS observations for a particular satellite signal.
  *
- * Pseudorange and carrier phase observation for a satellite being
- * tracked. The observations are interoperable with 3rd party
- * receivers and conform with typical RTCMv3 GNSS observations.
+ * Pseudorange and carrier phase observation for a satellite being tracked.
+ * The observations are interoperable with 3rd party receivers and conform with
+ * typical RTCM 3.1 message GPS/GLO observations.
+ * 
+ * Carrier phase observations are not guaranteed to be aligned to the RINEX 3
+ * or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
+ * peformed.
  */
 message PackedObsContent {
     uint32 P = 1;
@@ -56,6 +60,21 @@ message PackedObsContent {
     uint32 lock = 5;
     uint32 flags = 6;
     gnss.GnssSignal sid = 7;
+}
+
+/** Network correction for a particular satellite signal.
+ *
+ * Pseudorange and carrier phase network corrections for a satellite signal.
+ */
+message PackedOsrContent {
+    uint32 P = 1;
+    gnss.CarrierPhase L = 2;
+    uint32 lock = 3;
+    uint32 flags = 4;
+    gnss.GnssSignal sid = 5;
+    uint32 iono_std = 6;
+    uint32 tropo_std = 7;
+    uint32 range_std = 8;
 }
 
 /** GPS satellite observations
@@ -109,7 +128,7 @@ None
 message EphemerisCommonContent {
     gnss.GnssSignal sid = 1;
     gnss.GpsTimeSec toe = 2;
-    double ura = 3;
+    float ura = 3;
     uint32 fit_interval = 4;
     uint32 valid = 5;
     uint32 health_bits = 6;
@@ -125,13 +144,13 @@ message EphemerisCommonContent {
  */
 message MsgEphemerisGps {
     EphemerisCommonContent common = 1;
-    double tgd = 2;
-    double c_rs = 3;
-    double c_rc = 4;
-    double c_uc = 5;
-    double c_us = 6;
-    double c_ic = 7;
-    double c_is = 8;
+    float tgd = 2;
+    float c_rs = 3;
+    float c_rc = 4;
+    float c_uc = 5;
+    float c_us = 6;
+    float c_ic = 7;
+    float c_is = 8;
     double dn = 9;
     double m0 = 10;
     double ecc = 11;
@@ -141,9 +160,41 @@ message MsgEphemerisGps {
     double w = 15;
     double inc = 16;
     double inc_dot = 17;
-    double af0 = 18;
-    double af1 = 19;
-    double af2 = 20;
+    float af0 = 18;
+    float af1 = 19;
+    float af2 = 20;
+    gnss.GpsTimeSec toc = 21;
+    uint32 iode = 22;
+    uint32 iodc = 23;
+}
+
+/** Satellite broadcast ephemeris for QZSS
+ *
+ * The ephemeris message returns a set of satellite orbit
+ * parameters that is used to calculate QZSS satellite position,
+ * velocity, and clock offset.
+ */
+message MsgEphemerisQzss {
+    EphemerisCommonContent common = 1;
+    float tgd = 2;
+    float c_rs = 3;
+    float c_rc = 4;
+    float c_uc = 5;
+    float c_us = 6;
+    float c_ic = 7;
+    float c_is = 8;
+    double dn = 9;
+    double m0 = 10;
+    double ecc = 11;
+    double sqrta = 12;
+    double omega0 = 13;
+    double omegadot = 14;
+    double w = 15;
+    double inc = 16;
+    double inc_dot = 17;
+    float af0 = 18;
+    float af1 = 19;
+    float af2 = 20;
     gnss.GpsTimeSec toc = 21;
     uint32 iode = 22;
     uint32 iodc = 23;
@@ -166,7 +217,7 @@ message MsgEphemerisBds {
     float c_us = 7;
     float c_ic = 8;
     float c_is = 9;
-    float dn = 10;
+    double dn = 10;
     double m0 = 11;
     double ecc = 12;
     double sqrta = 13;
@@ -174,7 +225,7 @@ message MsgEphemerisBds {
     double omegadot = 15;
     double w = 16;
     double inc = 17;
-    float inc_dot = 18;
+    double inc_dot = 18;
     double af0 = 19;
     float af1 = 20;
     float af2 = 21;
@@ -200,7 +251,7 @@ message MsgEphemerisGal {
     float c_us = 7;
     float c_ic = 8;
     float c_is = 9;
-    float dn = 10;
+    double dn = 10;
     double m0 = 11;
     double ecc = 12;
     double sqrta = 13;
@@ -208,13 +259,14 @@ message MsgEphemerisGal {
     double omegadot = 15;
     double w = 16;
     double inc = 17;
-    float inc_dot = 18;
+    double inc_dot = 18;
     double af0 = 19;
-    float af1 = 20;
+    double af1 = 20;
     float af2 = 21;
     gnss.GpsTimeSec toc = 22;
     uint32 iode = 23;
     uint32 iodc = 24;
+    uint32 source = 25;
 }
 
 /** Satellite broadcast ephemeris for SBAS
@@ -224,10 +276,10 @@ None
 message MsgEphemerisSbas {
     EphemerisCommonContent common = 1;
     repeated double pos = 2;
-    repeated double vel = 3;
-    repeated double acc = 4;
-    double a_gf0 = 5;
-    double a_gf1 = 6;
+    repeated float vel = 3;
+    repeated float acc = 4;
+    float a_gf0 = 5;
+    float a_gf1 = 6;
 }
 
 /** Satellite broadcast ephemeris for GLO
@@ -240,12 +292,12 @@ message MsgEphemerisSbas {
  */
 message MsgEphemerisGlo {
     EphemerisCommonContent common = 1;
-    double gamma = 2;
-    double tau = 3;
-    double d_tau = 4;
+    float gamma = 2;
+    float tau = 3;
+    float d_tau = 4;
     repeated double pos = 5;
     repeated double vel = 6;
-    repeated double acc = 7;
+    repeated float acc = 7;
     uint32 fcn = 8;
     uint32 iod = 9;
 }
@@ -268,13 +320,35 @@ message MsgIono {
     double b3 = 9;
 }
 
-/** L2C capability mask
+/** GNSS capabilities masks
  *
- * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+None
  */
-message MsgSvConfigurationGps {
+message GnssCapb {
+    uint64 gps_active = 1;
+    uint64 gps_l2c = 2;
+    uint64 gps_l5 = 3;
+    uint32 glo_active = 4;
+    uint32 glo_l2of = 5;
+    uint32 glo_l3 = 6;
+    uint64 sbas_active = 7;
+    uint64 sbas_l5 = 8;
+    uint64 bds_active = 9;
+    uint64 bds_d2nav = 10;
+    uint64 bds_b2 = 11;
+    uint64 bds_b2a = 12;
+    uint32 qzss_active = 13;
+    uint64 gal_active = 14;
+    uint64 gal_e5 = 15;
+}
+
+/** GNSS capabilities
+ *
+None
+ */
+message MsgGnssCapb {
     gnss.GpsTimeSec t_nmct = 1;
-    uint32 l2c_mask = 2;
+    GnssCapb gc = 2;
 }
 
 /** Group Delay
@@ -343,7 +417,7 @@ message MsgAlmanacGlo {
 
 /** GLONASS L1/L2 Code-Phase biases
  *
- * The GLONASS L1/L2 Code-Phase biases allows to perform 
+ * The GLONASS L1/L2 Code-Phase biases allows to perform
  * GPS+GLONASS integer ambiguity resolution for baselines
  * with mixed receiver types (e.g. receiver of different
  * manufacturers)
@@ -354,4 +428,32 @@ message MsgGloBiases {
     sint32 l1p_bias = 3;
     sint32 l2ca_bias = 4;
     sint32 l2p_bias = 5;
+}
+
+/** Satellite azimuth and elevation.
+ *
+* Satellite azimuth and elevation.
+ */
+message SvAzEl {
+    gnss.GnssSignal sid = 1;
+    uint32 az = 2;
+    sint32 el = 3;
+}
+
+/** Satellite azimuths and elevations
+ *
+ * Azimuth and elevation angles of all the visible satellites
+ * that the device does have ephemeris or almanac for.
+ */
+message MsgSvAzEl {
+    repeated SvAzEl azel = 1;
+}
+
+/** OSR corrections
+ *
+ * The OSR message contains network corrections in an observation-like format
+ */
+message MsgOsr {
+    ObservationHeader header = 1;
+    repeated PackedOsrContent obs = 2;
 }

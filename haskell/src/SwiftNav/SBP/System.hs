@@ -157,3 +157,63 @@ instance Binary MsgInsStatus where
 $(makeSBP 'msgInsStatus ''MsgInsStatus)
 $(makeJSON "_msgInsStatus_" ''MsgInsStatus)
 $(makeLenses ''MsgInsStatus)
+
+msgCsacTelemetry :: Word16
+msgCsacTelemetry = 0xFF04
+
+-- | SBP class for message MSG_CSAC_TELEMETRY (0xFF04).
+--
+-- The CSAC telemetry message has an implementation defined telemetry string
+-- from a device. It is not produced or available on general Swift Products. It
+-- is intended to be a low rate message for status purposes.
+data MsgCsacTelemetry = MsgCsacTelemetry
+  { _msgCsacTelemetry_id      :: !Word8
+    -- ^ Index representing the type of telemetry in use.  It is implemention
+    -- defined.
+  , _msgCsacTelemetry_telemetry :: !Text
+    -- ^ Comma separated list of values as defined by the index
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgCsacTelemetry where
+  get = do
+    _msgCsacTelemetry_id <- getWord8
+    _msgCsacTelemetry_telemetry <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    pure MsgCsacTelemetry {..}
+
+  put MsgCsacTelemetry {..} = do
+    putWord8 _msgCsacTelemetry_id
+    putByteString $ encodeUtf8 _msgCsacTelemetry_telemetry
+
+$(makeSBP 'msgCsacTelemetry ''MsgCsacTelemetry)
+$(makeJSON "_msgCsacTelemetry_" ''MsgCsacTelemetry)
+$(makeLenses ''MsgCsacTelemetry)
+
+msgCsacTelemetryLabels :: Word16
+msgCsacTelemetryLabels = 0xFF05
+
+-- | SBP class for message MSG_CSAC_TELEMETRY_LABELS (0xFF05).
+--
+-- The CSAC telemetry message provides labels for each member of the string
+-- produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
+-- rate than the MSG_CSAC_TELEMETRY.
+data MsgCsacTelemetryLabels = MsgCsacTelemetryLabels
+  { _msgCsacTelemetryLabels_id             :: !Word8
+    -- ^ Index representing the type of telemetry in use.  It is implemention
+    -- defined.
+  , _msgCsacTelemetryLabels_telemetry_labels :: !Text
+    -- ^ Comma separated list of telemetry field values
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgCsacTelemetryLabels where
+  get = do
+    _msgCsacTelemetryLabels_id <- getWord8
+    _msgCsacTelemetryLabels_telemetry_labels <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    pure MsgCsacTelemetryLabels {..}
+
+  put MsgCsacTelemetryLabels {..} = do
+    putWord8 _msgCsacTelemetryLabels_id
+    putByteString $ encodeUtf8 _msgCsacTelemetryLabels_telemetry_labels
+
+$(makeSBP 'msgCsacTelemetryLabels ''MsgCsacTelemetryLabels)
+$(makeJSON "_msgCsacTelemetryLabels_" ''MsgCsacTelemetryLabels)
+$(makeLenses ''MsgCsacTelemetryLabels)

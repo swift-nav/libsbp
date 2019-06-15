@@ -8,5 +8,6 @@ include .coveragerc
 include .gitignore
 include LICENSE
 include tox.ini
-recursive-include sbp/ *.py
+include sbp/RELEASE-VERSION
+recursive-include sbp *.py
 prune docs/_build

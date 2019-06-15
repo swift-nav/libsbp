@@ -22,10 +22,10 @@ from voluptuous import Schema
 SBP_EXTENSION = "/*.yaml"
 
 filename = Schema(str)
-identifier = Schema(str)
+identifier = Coerce(str)
 description = Schema(str)
 include = Schema([filename])
-bit = Schema(int)
+bit = Coerce(int)
 type_identifier = Schema(str)
 sbp_identifier = Schema(int)
 units = Coerce(str)

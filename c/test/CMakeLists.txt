@@ -1,31 +1,38 @@
-if (CMAKE_CROSSCOMPILING)
-  message(STATUS "Skipping unit tests, cross compiling")
-else (CMAKE_CROSSCOMPILING)
+set(TEST_LIBS ${TEST_LIBS} ${CHECK_LIBRARIES} pthread sbp m)
 
-  find_package(Check)
-  if (NOT CHECK_FOUND)
-    message(STATUS "Skipping unit tests, Check library not found!")
-  else (NOT CHECK_FOUND)
+# Check needs to be linked against Librt on Linux
+if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+  set(TEST_LIBS ${TEST_LIBS} rt)
+endif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
 
-    include_directories(${CHECK_INCLUDE_DIRS})
-    set(TEST_LIBS ${TEST_LIBS} ${CHECK_LIBRARIES} pthread sbp m)
+FILE(GLOB generated_c_sources auto*.c)
+add_executable(test_libsbp check_main.c check_edc.c check_sbp.c ${generated_c_sources})
 
-    # Check needs to be linked against Librt on Linux
-    if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
-      set(TEST_LIBS ${TEST_LIBS} rt)
-    endif(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+target_link_libraries(test_libsbp PRIVATE ${TEST_LIBS})
+set_target_properties(test_libsbp PROPERTIES
+        C_STANDARD 99
+        C_STANDARD_REQUIRED ON)
 
-    include_directories("${PROJECT_SOURCE_DIR}/include/libsbp")
+if(MSVC)
+  target_include_directories(test_libsbp PRIVATE ${PROJECT_SOURCE_DIR}/include/libsbp/)
+else()
+  target_include_directories(test_libsbp PRIVATE ${PROJECT_SOURCE_DIR}/include/libsbp/)
+  if(APPLE)
+    # Some libraries are available in non-standard places on apple.
+    target_include_directories(test_libsbp PRIVATE /usr/local/include)
 
-    FILE(GLOB generated_c_sources auto*.c)
-    add_executable(test_libsbp check_main.c check_edc.c check_sbp.c ${generated_c_sources})
+    # This is not a great way of doing this, but the proper cmake function
+    # target_link_directories() was introduced in version 3.13 and we need to support
+    # older versions for the moment. We can use target_link_libraries to pass arbitrary
+    # linker flags, making sure that this instance is well protected and only applies
+    # to a single platform. Don't use the extant link_directories() function since
+    # that leaks the path to other targets.
+    target_link_libraries(test_libsbp PRIVATE "-L/usr/local/lib")
+  endif()
+endif()
 
-    target_link_libraries(test_libsbp ${TEST_LIBS})
-    add_custom_command(
-      TARGET test_libsbp POST_BUILD
-      COMMENT "Running unit tests"
-      COMMAND test_libsbp
-    )
-
-  endif (NOT CHECK_FOUND)
-endif (CMAKE_CROSSCOMPILING)
+add_custom_command(
+  TARGET test_libsbp POST_BUILD
+  COMMENT "Running unit tests"
+  COMMAND test_libsbp
+)

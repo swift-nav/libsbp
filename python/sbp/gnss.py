@@ -69,6 +69,48 @@ the Slot ID in [1,28]
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return GnssSignal.build(d)
     
+class SvId(object):
+  """SvId.
+  
+  A (Constellation ID, satellite ID) tuple that uniquely identifies
+a space vehicle
+
+  
+  Parameters
+  ----------
+  satId : int
+    ID of the space vehicle within its constellation
+  constellation : int
+    Constellation ID to which the SV belongs
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'satId' / construct.Int8ul,
+                     'constellation' / construct.Int8ul,))
+  __slots__ = [
+               'satId',
+               'constellation',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.satId = kwargs.pop('satId')
+      self.constellation = kwargs.pop('constellation')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = SvId._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return SvId.build(d)
+    
 class GnssSignalDep(object):
   """GnssSignalDep.
   

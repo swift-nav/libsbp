@@ -36,9 +36,9 @@ import SwiftNav.SBP.Types
 -- Includes SBPMsgUnknown for valid SBP messages with undefined message
 -- types and SBPMsgBadCRC for SBP messages with invalid CRC checksums.
 data SBPMsg =
-     SBP(((m))) (((m))) Msg
+     SBP(((m.identifier | hs_to_data))) (((m.identifier | hs_to_data))) Msg
 ((*- else *))
-   | SBP(((m))) (((m))) Msg
+   | SBP(((m.identifier | hs_to_data))) (((m.identifier | hs_to_data))) Msg
 ((*- endif *))
 ((*- if loop.last *))
    | SBPMsgBadCrc Msg
@@ -57,7 +57,7 @@ instance Binary SBPMsg where
         decoder m@Msg {..}
           | checkCrc m /= _msgSBPCrc = SBPMsgBadCrc m
           ((*- for m in msgs *))
-          | _msgSBPType == (((m | hs_to_global))) = SBP(((m))) (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == (((m.identifier | hs_to_global))) = SBP(((m.identifier | hs_to_data))) (decode (fromStrict (unBytes _msgSBPPayload))) m
           ((*- endfor *))
           | otherwise = SBPMsgUnknown m
 
@@ -65,7 +65,7 @@ instance Binary SBPMsg where
     putWord8 msgSBPPreamble
     encoder sm where
       ((*- for m in msgs *))
-      encoder (SBP(((m))) _ m) = put m
+      encoder (SBP(((m.identifier | hs_to_data))) _ m) = put m
       ((*- endfor *))
       encoder (SBPMsgUnknown m) = put m
       encoder (SBPMsgBadCrc m) = put m
@@ -77,7 +77,7 @@ instance FromJSON SBPMsg where
     decoder msgType payload where
       decoder msgType payload
 ((*- for m in msgs *))
-        | msgType == (((m | hs_to_global))) = SBP(((m))) <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == (((m.identifier | hs_to_global))) = SBP(((m.identifier | hs_to_data))) <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
 ((*- endfor *))
         | otherwise = SBPMsgUnknown <$> parseJSON obj
   parseJSON _ = mzero
@@ -90,14 +90,18 @@ instance FromJSON SBPMsg where
 
 instance ToJSON SBPMsg where
 ((*- for m in msgs *))
-  toJSON (SBP(((m))) n m) = toJSON n <<>> toJSON m
+  ((*- if m.fields *))
+  toJSON (SBP(((m.identifier | hs_to_data))) n m) = toJSON n <<>> toJSON m
+  ((*- else *))
+  toJSON (SBP(((m.identifier | hs_to_data))) _ m) = toJSON m
+  ((*- endif *))
 ((*- endfor *))
   toJSON (SBPMsgBadCrc m) = toJSON m
   toJSON (SBPMsgUnknown m) = toJSON m
 
 instance HasMsg SBPMsg where
 ((*- for m in msgs *))
-  msg f (SBP(((m))) n m) = SBP(((m))) n <$> f m
+  msg f (SBP(((m.identifier | hs_to_data))) n m) = SBP(((m.identifier | hs_to_data))) n <$> f m
 ((*- endfor *))
   msg f (SBPMsgUnknown m) = SBPMsgUnknown <$> f m
   msg f (SBPMsgBadCrc m) = SBPMsgBadCrc <$> f m

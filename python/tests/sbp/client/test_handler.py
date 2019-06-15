@@ -18,7 +18,7 @@ from sbp.client import *
 from sbp.msg            import SBP
 from sbp.logging import MsgLog
 
-class TestCallbackCounter(object):
+class CallbackCounter(object):
   """
   Callable counter to count callbacks.
   """
@@ -64,10 +64,10 @@ def until(p, limit=1000):
 
 def test_handler_callbacks():
   handler = Handler(())
-  global_counter1 = TestCallbackCounter()
-  global_counter2 = TestCallbackCounter()
-  msg_type_counter1 = TestCallbackCounter()
-  msg_type_counter2 = TestCallbackCounter()
+  global_counter1 = CallbackCounter()
+  global_counter2 = CallbackCounter()
+  msg_type_counter1 = CallbackCounter()
+  msg_type_counter2 = CallbackCounter()
   handler.add_callback(global_counter1)
   handler.add_callback(global_counter2)
   handler.add_callback(global_counter2)
@@ -93,8 +93,8 @@ def test_handler_callbacks():
 
 def test_multiple_handler_callbacks():
   handler = Handler(())
-  msg_type_counter1 = TestCallbackCounter()
-  msg_type_counter2 = TestCallbackCounter()
+  msg_type_counter1 = CallbackCounter()
+  msg_type_counter2 = CallbackCounter()
   handler.add_callback(msg_type_counter1, [0x55, 0x66])
   handler.add_callback(msg_type_counter2, [0x11, 0x55])
   handler._call(SBP(0x11, None, None, None, None), x=1, y=6)

@@ -128,13 +128,13 @@ instance Binary MsgTrackingStateDetailedDepA where
     putWord8 _msgTrackingStateDetailedDepA_cn0
     putWord16le _msgTrackingStateDetailedDepA_lock
     put _msgTrackingStateDetailedDepA_sid
-    putWord32le $ fromIntegral _msgTrackingStateDetailedDepA_doppler
+    (putWord32le . fromIntegral) _msgTrackingStateDetailedDepA_doppler
     putWord16le _msgTrackingStateDetailedDepA_doppler_std
     putWord32le _msgTrackingStateDetailedDepA_uptime
-    putWord16le $ fromIntegral _msgTrackingStateDetailedDepA_clock_offset
-    putWord16le $ fromIntegral _msgTrackingStateDetailedDepA_clock_drift
+    (putWord16le . fromIntegral) _msgTrackingStateDetailedDepA_clock_offset
+    (putWord16le . fromIntegral) _msgTrackingStateDetailedDepA_clock_drift
     putWord16le _msgTrackingStateDetailedDepA_corr_spacing
-    putWord8 $ fromIntegral _msgTrackingStateDetailedDepA_acceleration
+    (putWord8 . fromIntegral) _msgTrackingStateDetailedDepA_acceleration
     putWord8 _msgTrackingStateDetailedDepA_sync_flags
     putWord8 _msgTrackingStateDetailedDepA_tow_flags
     putWord8 _msgTrackingStateDetailedDepA_track_flags
@@ -237,13 +237,13 @@ instance Binary MsgTrackingStateDetailedDep where
     putWord8 _msgTrackingStateDetailedDep_cn0
     putWord16le _msgTrackingStateDetailedDep_lock
     put _msgTrackingStateDetailedDep_sid
-    putWord32le $ fromIntegral _msgTrackingStateDetailedDep_doppler
+    (putWord32le . fromIntegral) _msgTrackingStateDetailedDep_doppler
     putWord16le _msgTrackingStateDetailedDep_doppler_std
     putWord32le _msgTrackingStateDetailedDep_uptime
-    putWord16le $ fromIntegral _msgTrackingStateDetailedDep_clock_offset
-    putWord16le $ fromIntegral _msgTrackingStateDetailedDep_clock_drift
+    (putWord16le . fromIntegral) _msgTrackingStateDetailedDep_clock_offset
+    (putWord16le . fromIntegral) _msgTrackingStateDetailedDep_clock_drift
     putWord16le _msgTrackingStateDetailedDep_corr_spacing
-    putWord8 $ fromIntegral _msgTrackingStateDetailedDep_acceleration
+    (putWord8 . fromIntegral) _msgTrackingStateDetailedDep_acceleration
     putWord8 _msgTrackingStateDetailedDep_sync_flags
     putWord8 _msgTrackingStateDetailedDep_tow_flags
     putWord8 _msgTrackingStateDetailedDep_track_flags
@@ -311,8 +311,8 @@ $(makeLenses ''MsgTrackingState)
 -- | MeasurementState.
 --
 -- Measurement Engine tracking channel state for a specific satellite signal
--- and measured signal power.  The mesid field for Glonass can either  carry
--- the FCN as 100 + FCN where FCN is in [-7, +6] or  the Slot ID (from 1 to 28)
+-- and measured signal power. The mesid field for Glonass can either carry the
+-- FCN as 100 + FCN where FCN is in [-7, +6] or the Slot ID (from 1 to 28)
 data MeasurementState = MeasurementState
   { _measurementState_mesid :: !GnssSignal
     -- ^ Measurement Engine GNSS signal being tracked (carries either Glonass FCN
@@ -363,29 +363,29 @@ $(makeLenses ''MsgMeasurementState)
 --
 -- Structure containing in-phase and quadrature correlation components.
 data TrackingChannelCorrelation = TrackingChannelCorrelation
-  { _trackingChannelCorrelation_I :: !Int32
+  { _trackingChannelCorrelation_I :: !Int16
     -- ^ In-phase correlation
-  , _trackingChannelCorrelation_Q :: !Int32
+  , _trackingChannelCorrelation_Q :: !Int16
     -- ^ Quadrature correlation
   } deriving ( Show, Read, Eq )
 
 instance Binary TrackingChannelCorrelation where
   get = do
-    _trackingChannelCorrelation_I <- fromIntegral <$> getWord32le
-    _trackingChannelCorrelation_Q <- fromIntegral <$> getWord32le
+    _trackingChannelCorrelation_I <- fromIntegral <$> getWord16le
+    _trackingChannelCorrelation_Q <- fromIntegral <$> getWord16le
     pure TrackingChannelCorrelation {..}
 
   put TrackingChannelCorrelation {..} = do
-    putWord32le $ fromIntegral _trackingChannelCorrelation_I
-    putWord32le $ fromIntegral _trackingChannelCorrelation_Q
+    (putWord16le . fromIntegral) _trackingChannelCorrelation_I
+    (putWord16le . fromIntegral) _trackingChannelCorrelation_Q
 
 $(makeJSON "_trackingChannelCorrelation_" ''TrackingChannelCorrelation)
 $(makeLenses ''TrackingChannelCorrelation)
 
 msgTrackingIq :: Word16
-msgTrackingIq = 0x002C
+msgTrackingIq = 0x002D
 
--- | SBP class for message MSG_TRACKING_IQ (0x002C).
+-- | SBP class for message MSG_TRACKING_IQ (0x002D).
 --
 -- When enabled, a tracking channel can output the correlations at each update
 -- interval.
@@ -414,36 +414,91 @@ $(makeSBP 'msgTrackingIq ''MsgTrackingIq)
 $(makeJSON "_msgTrackingIq_" ''MsgTrackingIq)
 $(makeLenses ''MsgTrackingIq)
 
-msgTrackingIqDep :: Word16
-msgTrackingIqDep = 0x001C
-
--- | SBP class for message MSG_TRACKING_IQ_DEP (0x001C).
+-- | TrackingChannelCorrelationDep.
 --
--- Deprecated.
-data MsgTrackingIqDep = MsgTrackingIqDep
-  { _msgTrackingIqDep_channel :: !Word8
+-- Structure containing in-phase and quadrature correlation components.
+data TrackingChannelCorrelationDep = TrackingChannelCorrelationDep
+  { _trackingChannelCorrelationDep_I :: !Int32
+    -- ^ In-phase correlation
+  , _trackingChannelCorrelationDep_Q :: !Int32
+    -- ^ Quadrature correlation
+  } deriving ( Show, Read, Eq )
+
+instance Binary TrackingChannelCorrelationDep where
+  get = do
+    _trackingChannelCorrelationDep_I <- fromIntegral <$> getWord32le
+    _trackingChannelCorrelationDep_Q <- fromIntegral <$> getWord32le
+    pure TrackingChannelCorrelationDep {..}
+
+  put TrackingChannelCorrelationDep {..} = do
+    (putWord32le . fromIntegral) _trackingChannelCorrelationDep_I
+    (putWord32le . fromIntegral) _trackingChannelCorrelationDep_Q
+
+$(makeJSON "_trackingChannelCorrelationDep_" ''TrackingChannelCorrelationDep)
+$(makeLenses ''TrackingChannelCorrelationDep)
+
+msgTrackingIqDepB :: Word16
+msgTrackingIqDepB = 0x002C
+
+-- | SBP class for message MSG_TRACKING_IQ_DEP_B (0x002C).
+--
+-- When enabled, a tracking channel can output the correlations at each update
+-- interval.
+data MsgTrackingIqDepB = MsgTrackingIqDepB
+  { _msgTrackingIqDepB_channel :: !Word8
     -- ^ Tracking channel of origin
-  , _msgTrackingIqDep_sid   :: !GnssSignalDep
+  , _msgTrackingIqDepB_sid   :: !GnssSignal
     -- ^ GNSS signal identifier
-  , _msgTrackingIqDep_corrs :: ![TrackingChannelCorrelation]
+  , _msgTrackingIqDepB_corrs :: ![TrackingChannelCorrelationDep]
     -- ^ Early, Prompt and Late correlations
   } deriving ( Show, Read, Eq )
 
-instance Binary MsgTrackingIqDep where
+instance Binary MsgTrackingIqDepB where
   get = do
-    _msgTrackingIqDep_channel <- getWord8
-    _msgTrackingIqDep_sid <- get
-    _msgTrackingIqDep_corrs <- replicateM 3 get
-    pure MsgTrackingIqDep {..}
+    _msgTrackingIqDepB_channel <- getWord8
+    _msgTrackingIqDepB_sid <- get
+    _msgTrackingIqDepB_corrs <- replicateM 3 get
+    pure MsgTrackingIqDepB {..}
 
-  put MsgTrackingIqDep {..} = do
-    putWord8 _msgTrackingIqDep_channel
-    put _msgTrackingIqDep_sid
-    mapM_ put _msgTrackingIqDep_corrs
+  put MsgTrackingIqDepB {..} = do
+    putWord8 _msgTrackingIqDepB_channel
+    put _msgTrackingIqDepB_sid
+    mapM_ put _msgTrackingIqDepB_corrs
 
-$(makeSBP 'msgTrackingIqDep ''MsgTrackingIqDep)
-$(makeJSON "_msgTrackingIqDep_" ''MsgTrackingIqDep)
-$(makeLenses ''MsgTrackingIqDep)
+$(makeSBP 'msgTrackingIqDepB ''MsgTrackingIqDepB)
+$(makeJSON "_msgTrackingIqDepB_" ''MsgTrackingIqDepB)
+$(makeLenses ''MsgTrackingIqDepB)
+
+msgTrackingIqDepA :: Word16
+msgTrackingIqDepA = 0x001C
+
+-- | SBP class for message MSG_TRACKING_IQ_DEP_A (0x001C).
+--
+-- Deprecated.
+data MsgTrackingIqDepA = MsgTrackingIqDepA
+  { _msgTrackingIqDepA_channel :: !Word8
+    -- ^ Tracking channel of origin
+  , _msgTrackingIqDepA_sid   :: !GnssSignalDep
+    -- ^ GNSS signal identifier
+  , _msgTrackingIqDepA_corrs :: ![TrackingChannelCorrelationDep]
+    -- ^ Early, Prompt and Late correlations
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgTrackingIqDepA where
+  get = do
+    _msgTrackingIqDepA_channel <- getWord8
+    _msgTrackingIqDepA_sid <- get
+    _msgTrackingIqDepA_corrs <- replicateM 3 get
+    pure MsgTrackingIqDepA {..}
+
+  put MsgTrackingIqDepA {..} = do
+    putWord8 _msgTrackingIqDepA_channel
+    put _msgTrackingIqDepA_sid
+    mapM_ put _msgTrackingIqDepA_corrs
+
+$(makeSBP 'msgTrackingIqDepA ''MsgTrackingIqDepA)
+$(makeJSON "_msgTrackingIqDepA_" ''MsgTrackingIqDepA)
+$(makeLenses ''MsgTrackingIqDepA)
 
 -- | TrackingChannelStateDepA.
 --
