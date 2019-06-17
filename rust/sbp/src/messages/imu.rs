@@ -12,45 +12,44 @@
 // Automatically generated from yaml/swiftnav/sbp/imu.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 // Inertial Measurement Unit (IMU) messages.
 extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian,ReadBytesExt};
-
+use self::byteorder::{LittleEndian, ReadBytesExt};
 
 // Raw IMU data
 //
 // Raw data from the Inertial Measurement Unit, containing accelerometer and
-// gyroscope readings. The sense of the measurements are to be aligned with 
-// the indications on the device itself.
+// gyroscope readings. The sense of the measurements are to be aligned with
+// the indications on the device itself. Measurement units, which are specific to the
+// device hardware and settings, are communicated via the MSG_IMU_AUX message.
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgImuRaw {
     pub tow: u32,
-        // ^ Milliseconds since start of GPS week. If the high bit is set, the time
-        // is unknown or invalid.
+    // ^ Milliseconds since start of GPS week. If the high bit is set, the time
+    // is unknown or invalid.
     pub tow_f: u8,
-        // ^ Milliseconds since start of GPS week, fractional part
+    // ^ Milliseconds since start of GPS week, fractional part
     pub acc_x: i16,
-        // ^ Acceleration in the IMU frame X axis
+    // ^ Acceleration in the IMU frame X axis
     pub acc_y: i16,
-        // ^ Acceleration in the IMU frame Y axis
+    // ^ Acceleration in the IMU frame Y axis
     pub acc_z: i16,
-        // ^ Acceleration in the IMU frame Z axis
+    // ^ Acceleration in the IMU frame Z axis
     pub gyr_x: i16,
-        // ^ Angular rate around IMU frame X axis
+    // ^ Angular rate around IMU frame X axis
     pub gyr_y: i16,
-        // ^ Angular rate around IMU frame Y axis
+    // ^ Angular rate around IMU frame Y axis
     pub gyr_z: i16,
-        // ^ Angular rate around IMU frame Z axis
+    // ^ Angular rate around IMU frame Z axis
 }
 
 impl MsgImuRaw {
     pub const TYPE: u16 = 2304;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuRaw, ::Error> {
-        Ok( MsgImuRaw{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuRaw, ::parser::MessageError> {
+        Ok(MsgImuRaw {
             tow: _buf.read_u32::<LittleEndian>()?,
             tow_f: _buf.read_u8()?,
             acc_x: _buf.read_i16::<LittleEndian>()?,
@@ -59,10 +58,9 @@ impl MsgImuRaw {
             gyr_x: _buf.read_i16::<LittleEndian>()?,
             gyr_y: _buf.read_i16::<LittleEndian>()?,
             gyr_z: _buf.read_i16::<LittleEndian>()?,
-        } )
+        })
     }
 }
-
 
 // Auxiliary IMU data
 //
@@ -74,21 +72,20 @@ impl MsgImuRaw {
 #[allow(non_snake_case)]
 pub struct MsgImuAux {
     pub imu_type: u8,
-        // ^ IMU type
+    // ^ IMU type
     pub temp: i16,
-        // ^ Raw IMU temperature
+    // ^ Raw IMU temperature
     pub imu_conf: u8,
-        // ^ IMU configuration
+    // ^ IMU configuration
 }
 
 impl MsgImuAux {
     pub const TYPE: u16 = 2305;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuAux, ::Error> {
-        Ok( MsgImuAux{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuAux, ::parser::MessageError> {
+        Ok(MsgImuAux {
             imu_type: _buf.read_u8()?,
             temp: _buf.read_i16::<LittleEndian>()?,
             imu_conf: _buf.read_u8()?,
-        } )
+        })
     }
 }
-

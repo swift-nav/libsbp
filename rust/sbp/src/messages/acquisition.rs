@@ -12,13 +12,11 @@
 // Automatically generated from yaml/swiftnav/sbp/acquisition.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 // Satellite acquisition messages from the device.
 extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian,ReadBytesExt};
+use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
-
 
 // Satellite acquisition result
 //
@@ -32,27 +30,26 @@ use super::gnss::*;
 #[allow(non_snake_case)]
 pub struct MsgAcqResult {
     pub cn0: f32,
-        // ^ CN/0 of best point
+    // ^ CN/0 of best point
     pub cp: f32,
-        // ^ Code phase of best point
+    // ^ Code phase of best point
     pub cf: f32,
-        // ^ Carrier frequency of best point
+    // ^ Carrier frequency of best point
     pub sid: GnssSignal,
-        // ^ GNSS signal for which acquisition was attempted
+    // ^ GNSS signal for which acquisition was attempted
 }
 
 impl MsgAcqResult {
     pub const TYPE: u16 = 47;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResult, ::Error> {
-        Ok( MsgAcqResult{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResult, ::parser::MessageError> {
+        Ok(MsgAcqResult {
             cn0: _buf.read_f32::<LittleEndian>()?,
             cp: _buf.read_f32::<LittleEndian>()?,
             cf: _buf.read_f32::<LittleEndian>()?,
             sid: GnssSignal::parse(_buf)?,
-        } )
+        })
     }
 }
-
 
 // Deprecated
 //
@@ -62,27 +59,26 @@ impl MsgAcqResult {
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepC {
     pub cn0: f32,
-        // ^ CN/0 of best point
+    // ^ CN/0 of best point
     pub cp: f32,
-        // ^ Code phase of best point
+    // ^ Code phase of best point
     pub cf: f32,
-        // ^ Carrier frequency of best point
+    // ^ Carrier frequency of best point
     pub sid: GnssSignalDep,
-        // ^ GNSS signal for which acquisition was attempted
+    // ^ GNSS signal for which acquisition was attempted
 }
 
 impl MsgAcqResultDepC {
     pub const TYPE: u16 = 31;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepC, ::Error> {
-        Ok( MsgAcqResultDepC{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepC, ::parser::MessageError> {
+        Ok(MsgAcqResultDepC {
             cn0: _buf.read_f32::<LittleEndian>()?,
             cp: _buf.read_f32::<LittleEndian>()?,
             cf: _buf.read_f32::<LittleEndian>()?,
             sid: GnssSignalDep::parse(_buf)?,
-        } )
+        })
     }
 }
-
 
 // Deprecated
 //
@@ -92,28 +88,27 @@ impl MsgAcqResultDepC {
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepB {
     pub snr: f32,
-        // ^ SNR of best point. Currently in arbitrary SNR points, but will be in
-        // units of dB Hz in a later revision of this message.
+    // ^ SNR of best point. Currently in arbitrary SNR points, but will be in
+    // units of dB Hz in a later revision of this message.
     pub cp: f32,
-        // ^ Code phase of best point
+    // ^ Code phase of best point
     pub cf: f32,
-        // ^ Carrier frequency of best point
+    // ^ Carrier frequency of best point
     pub sid: GnssSignalDep,
-        // ^ GNSS signal for which acquisition was attempted
+    // ^ GNSS signal for which acquisition was attempted
 }
 
 impl MsgAcqResultDepB {
     pub const TYPE: u16 = 20;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepB, ::Error> {
-        Ok( MsgAcqResultDepB{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepB, ::parser::MessageError> {
+        Ok(MsgAcqResultDepB {
             snr: _buf.read_f32::<LittleEndian>()?,
             cp: _buf.read_f32::<LittleEndian>()?,
             cf: _buf.read_f32::<LittleEndian>()?,
             sid: GnssSignalDep::parse(_buf)?,
-        } )
+        })
     }
 }
-
 
 // Deprecated
 //
@@ -123,29 +118,28 @@ impl MsgAcqResultDepB {
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepA {
     pub snr: f32,
-        // ^ SNR of best point. Currently dimensonless, but will have units of dB Hz
-        // in the revision of this message.
+    // ^ SNR of best point. Currently dimensonless, but will have units of dB Hz
+    // in the revision of this message.
     pub cp: f32,
-        // ^ Code phase of best point
+    // ^ Code phase of best point
     pub cf: f32,
-        // ^ Carrier frequency of best point
+    // ^ Carrier frequency of best point
     pub prn: u8,
-        // ^ PRN-1 identifier of the satellite signal for which acquisition was
-        // attempted
+    // ^ PRN-1 identifier of the satellite signal for which acquisition was
+    // attempted
 }
 
 impl MsgAcqResultDepA {
     pub const TYPE: u16 = 21;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepA, ::Error> {
-        Ok( MsgAcqResultDepA{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepA, ::parser::MessageError> {
+        Ok(MsgAcqResultDepA {
             snr: _buf.read_f32::<LittleEndian>()?,
             cp: _buf.read_f32::<LittleEndian>()?,
             cf: _buf.read_f32::<LittleEndian>()?,
             prn: _buf.read_u8()?,
-        } )
+        })
     }
 }
-
 
 // Acq perfomance measurement and debug
 //
@@ -157,34 +151,34 @@ impl MsgAcqResultDepA {
 #[allow(non_snake_case)]
 pub struct AcqSvProfile {
     pub job_type: u8,
-        // ^ SV search job type (deep, fallback, etc)
+    // ^ SV search job type (deep, fallback, etc)
     pub status: u8,
-        // ^ Acquisition status 1 is Success, 0 is Failure
+    // ^ Acquisition status 1 is Success, 0 is Failure
     pub cn0: u16,
-        // ^ CN0 value. Only valid if status is '1'
+    // ^ CN0 value. Only valid if status is '1'
     pub int_time: u8,
-        // ^ Acquisition integration time
+    // ^ Acquisition integration time
     pub sid: GnssSignal,
-        // ^ GNSS signal for which acquisition was attempted
+    // ^ GNSS signal for which acquisition was attempted
     pub bin_width: u16,
-        // ^ Acq frequency bin width
+    // ^ Acq frequency bin width
     pub timestamp: u32,
-        // ^ Timestamp of the job complete event
+    // ^ Timestamp of the job complete event
     pub time_spent: u32,
-        // ^ Time spent to search for sid.code
+    // ^ Time spent to search for sid.code
     pub cf_min: i32,
-        // ^ Doppler range lowest frequency
+    // ^ Doppler range lowest frequency
     pub cf_max: i32,
-        // ^ Doppler range highest frequency
+    // ^ Doppler range highest frequency
     pub cf: i32,
-        // ^ Doppler value of detected peak. Only valid if status is '1'
+    // ^ Doppler value of detected peak. Only valid if status is '1'
     pub cp: u32,
-        // ^ Codephase of detected peak. Only valid if status is '1'
+    // ^ Codephase of detected peak. Only valid if status is '1'
 }
 
 impl AcqSvProfile {
-    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfile, ::Error> {
-        Ok( AcqSvProfile{
+    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfile, ::parser::MessageError> {
+        Ok(AcqSvProfile {
             job_type: _buf.read_u8()?,
             status: _buf.read_u8()?,
             cn0: _buf.read_u16::<LittleEndian>()?,
@@ -197,25 +191,27 @@ impl AcqSvProfile {
             cf_max: _buf.read_i32::<LittleEndian>()?,
             cf: _buf.read_i32::<LittleEndian>()?,
             cp: _buf.read_u32::<LittleEndian>()?,
-        } )
+        })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfile>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfile>, ::parser::MessageError> {
         let mut v = Vec::new();
         while buf.len() > 0 {
-            v.push( AcqSvProfile::parse(buf)? );
+            v.push(AcqSvProfile::parse(buf)?);
         }
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<AcqSvProfile>, ::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<AcqSvProfile>, ::parser::MessageError> {
         let mut v = Vec::new();
         for _ in 0..n {
-            v.push( AcqSvProfile::parse(buf)? );
+            v.push(AcqSvProfile::parse(buf)?);
         }
         Ok(v)
     }
 }
-
 
 // Deprecated
 //
@@ -225,34 +221,34 @@ impl AcqSvProfile {
 #[allow(non_snake_case)]
 pub struct AcqSvProfileDep {
     pub job_type: u8,
-        // ^ SV search job type (deep, fallback, etc)
+    // ^ SV search job type (deep, fallback, etc)
     pub status: u8,
-        // ^ Acquisition status 1 is Success, 0 is Failure
+    // ^ Acquisition status 1 is Success, 0 is Failure
     pub cn0: u16,
-        // ^ CN0 value. Only valid if status is '1'
+    // ^ CN0 value. Only valid if status is '1'
     pub int_time: u8,
-        // ^ Acquisition integration time
+    // ^ Acquisition integration time
     pub sid: GnssSignalDep,
-        // ^ GNSS signal for which acquisition was attempted
+    // ^ GNSS signal for which acquisition was attempted
     pub bin_width: u16,
-        // ^ Acq frequency bin width
+    // ^ Acq frequency bin width
     pub timestamp: u32,
-        // ^ Timestamp of the job complete event
+    // ^ Timestamp of the job complete event
     pub time_spent: u32,
-        // ^ Time spent to search for sid.code
+    // ^ Time spent to search for sid.code
     pub cf_min: i32,
-        // ^ Doppler range lowest frequency
+    // ^ Doppler range lowest frequency
     pub cf_max: i32,
-        // ^ Doppler range highest frequency
+    // ^ Doppler range highest frequency
     pub cf: i32,
-        // ^ Doppler value of detected peak. Only valid if status is '1'
+    // ^ Doppler value of detected peak. Only valid if status is '1'
     pub cp: u32,
-        // ^ Codephase of detected peak. Only valid if status is '1'
+    // ^ Codephase of detected peak. Only valid if status is '1'
 }
 
 impl AcqSvProfileDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfileDep, ::Error> {
-        Ok( AcqSvProfileDep{
+    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfileDep, ::parser::MessageError> {
+        Ok(AcqSvProfileDep {
             job_type: _buf.read_u8()?,
             status: _buf.read_u8()?,
             cn0: _buf.read_u16::<LittleEndian>()?,
@@ -265,25 +261,27 @@ impl AcqSvProfileDep {
             cf_max: _buf.read_i32::<LittleEndian>()?,
             cf: _buf.read_i32::<LittleEndian>()?,
             cp: _buf.read_u32::<LittleEndian>()?,
-        } )
+        })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfileDep>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfileDep>, ::parser::MessageError> {
         let mut v = Vec::new();
         while buf.len() > 0 {
-            v.push( AcqSvProfileDep::parse(buf)? );
+            v.push(AcqSvProfileDep::parse(buf)?);
         }
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<AcqSvProfileDep>, ::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<AcqSvProfileDep>, ::parser::MessageError> {
         let mut v = Vec::new();
         for _ in 0..n {
-            v.push( AcqSvProfileDep::parse(buf)? );
+            v.push(AcqSvProfileDep::parse(buf)?);
         }
         Ok(v)
     }
 }
-
 
 // Acquisition perfomance measurement and debug
 //
@@ -294,18 +292,17 @@ impl AcqSvProfileDep {
 #[allow(non_snake_case)]
 pub struct MsgAcqSvProfile {
     pub acq_sv_profile: Vec<AcqSvProfile>,
-        // ^ SV profiles during acquisition time
+    // ^ SV profiles during acquisition time
 }
 
 impl MsgAcqSvProfile {
     pub const TYPE: u16 = 46;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfile, ::Error> {
-        Ok( MsgAcqSvProfile{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfile, ::parser::MessageError> {
+        Ok(MsgAcqSvProfile {
             acq_sv_profile: AcqSvProfile::parse_array(_buf)?,
-        } )
+        })
     }
 }
-
 
 // Deprecated.
 //
@@ -315,15 +312,14 @@ impl MsgAcqSvProfile {
 #[allow(non_snake_case)]
 pub struct MsgAcqSvProfileDep {
     pub acq_sv_profile: Vec<AcqSvProfileDep>,
-        // ^ SV profiles during acquisition time
+    // ^ SV profiles during acquisition time
 }
 
 impl MsgAcqSvProfileDep {
     pub const TYPE: u16 = 30;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfileDep, ::Error> {
-        Ok( MsgAcqSvProfileDep{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfileDep, ::parser::MessageError> {
+        Ok(MsgAcqSvProfileDep {
             acq_sv_profile: AcqSvProfileDep::parse_array(_buf)?,
-        } )
+        })
     }
 }
-

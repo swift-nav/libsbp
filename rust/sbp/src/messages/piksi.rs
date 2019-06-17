@@ -12,15 +12,13 @@
 // Automatically generated from yaml/swiftnav/sbp/piksi.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 // System health, configuration, and diagnostic messages specific to
 // the Piksi L1 receiver, including a variety of legacy messages that
 // may no longer be used.
 extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian,ReadBytesExt};
+use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
-
 
 // Legacy message to load satellite almanac (host => Piksi)
 //
@@ -29,17 +27,14 @@ use super::gnss::*;
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgAlmanac {
-}
+pub struct MsgAlmanac {}
 
 impl MsgAlmanac {
     pub const TYPE: u16 = 105;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanac, ::Error> {
-        Ok( MsgAlmanac{
-        } )
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanac, ::parser::MessageError> {
+        Ok(MsgAlmanac {})
     }
 }
-
 
 // Send GPS time from host (host => Piksi)
 //
@@ -48,17 +43,14 @@ impl MsgAlmanac {
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgSetTime {
-}
+pub struct MsgSetTime {}
 
 impl MsgSetTime {
     pub const TYPE: u16 = 104;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSetTime, ::Error> {
-        Ok( MsgSetTime{
-        } )
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSetTime, ::parser::MessageError> {
+        Ok(MsgSetTime {})
     }
 }
-
 
 // Reset the device (host => Piksi)
 //
@@ -69,18 +61,17 @@ impl MsgSetTime {
 #[allow(non_snake_case)]
 pub struct MsgReset {
     pub flags: u32,
-        // ^ Reset flags
+    // ^ Reset flags
 }
 
 impl MsgReset {
     pub const TYPE: u16 = 182;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgReset, ::Error> {
-        Ok( MsgReset{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgReset, ::parser::MessageError> {
+        Ok(MsgReset {
             flags: _buf.read_u32::<LittleEndian>()?,
-        } )
+        })
     }
 }
-
 
 // Reset the device (host => Piksi)
 //
@@ -89,17 +80,14 @@ impl MsgReset {
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgResetDep {
-}
+pub struct MsgResetDep {}
 
 impl MsgResetDep {
     pub const TYPE: u16 = 178;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgResetDep, ::Error> {
-        Ok( MsgResetDep{
-        } )
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgResetDep, ::parser::MessageError> {
+        Ok(MsgResetDep {})
     }
 }
-
 
 // Legacy message for CW interference channel (Piksi => host)
 //
@@ -109,17 +97,14 @@ impl MsgResetDep {
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgCwResults {
-}
+pub struct MsgCwResults {}
 
 impl MsgCwResults {
     pub const TYPE: u16 = 192;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCwResults, ::Error> {
-        Ok( MsgCwResults{
-        } )
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCwResults, ::parser::MessageError> {
+        Ok(MsgCwResults {})
     }
 }
-
 
 // Legacy message for CW interference channel (host => Piksi)
 //
@@ -129,17 +114,14 @@ impl MsgCwResults {
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgCwStart {
-}
+pub struct MsgCwStart {}
 
 impl MsgCwStart {
     pub const TYPE: u16 = 193;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCwStart, ::Error> {
-        Ok( MsgCwStart{
-        } )
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCwStart, ::parser::MessageError> {
+        Ok(MsgCwStart {})
     }
 }
-
 
 // Reset IAR filters (host => Piksi)
 //
@@ -150,40 +132,32 @@ impl MsgCwStart {
 #[allow(non_snake_case)]
 pub struct MsgResetFilters {
     pub filter: u8,
-        // ^ Filter flags
+    // ^ Filter flags
 }
 
 impl MsgResetFilters {
     pub const TYPE: u16 = 34;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgResetFilters, ::Error> {
-        Ok( MsgResetFilters{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgResetFilters, ::parser::MessageError> {
+        Ok(MsgResetFilters {
             filter: _buf.read_u8()?,
-        } )
+        })
     }
 }
 
-
-// Initialize IAR from known baseline (host => device)
+// Deprecated
 //
-// This message initializes the integer ambiguity resolution (IAR)
-// process on the Piksi to use an assumed baseline position between
-// the base station and rover receivers. Warns via MSG_PRINT if
-// there aren't a shared minimum number (4) of satellite
-// observations between the two.
+// Deprecated
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgInitBase {
-}
+pub struct MsgInitBaseDep {}
 
-impl MsgInitBase {
+impl MsgInitBaseDep {
     pub const TYPE: u16 = 35;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgInitBase, ::Error> {
-        Ok( MsgInitBase{
-        } )
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgInitBaseDep, ::parser::MessageError> {
+        Ok(MsgInitBaseDep {})
     }
 }
-
 
 // State of an RTOS thread
 //
@@ -195,25 +169,24 @@ impl MsgInitBase {
 #[allow(non_snake_case)]
 pub struct MsgThreadState {
     pub name: String,
-        // ^ Thread name (NULL terminated)
+    // ^ Thread name (NULL terminated)
     pub cpu: u16,
-        // ^ Percentage cpu use for this thread. Values range from 0 - 1000 and needs
-        // to be renormalized to 100
+    // ^ Percentage cpu use for this thread. Values range from 0 - 1000 and needs
+    // to be renormalized to 100
     pub stack_free: u32,
-        // ^ Free stack space for this thread
+    // ^ Free stack space for this thread
 }
 
 impl MsgThreadState {
     pub const TYPE: u16 = 23;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgThreadState, ::Error> {
-        Ok( MsgThreadState{
-            name: ::read_string_limit(_buf, 20)?,
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgThreadState, ::parser::MessageError> {
+        Ok(MsgThreadState {
+            name: ::parser::read_string_limit(_buf, 20)?,
             cpu: _buf.read_u16::<LittleEndian>()?,
             stack_free: _buf.read_u32::<LittleEndian>()?,
-        } )
+        })
     }
 }
-
 
 // State of the UART channel
 //
@@ -225,47 +198,49 @@ impl MsgThreadState {
 #[allow(non_snake_case)]
 pub struct UARTChannel {
     pub tx_throughput: f32,
-        // ^ UART transmit throughput
+    // ^ UART transmit throughput
     pub rx_throughput: f32,
-        // ^ UART receive throughput
+    // ^ UART receive throughput
     pub crc_error_count: u16,
-        // ^ UART CRC error count
+    // ^ UART CRC error count
     pub io_error_count: u16,
-        // ^ UART IO error count
+    // ^ UART IO error count
     pub tx_buffer_level: u8,
-        // ^ UART transmit buffer percentage utilization (ranges from 0 to 255)
+    // ^ UART transmit buffer percentage utilization (ranges from 0 to 255)
     pub rx_buffer_level: u8,
-        // ^ UART receive buffer percentage utilization (ranges from 0 to 255)
+    // ^ UART receive buffer percentage utilization (ranges from 0 to 255)
 }
 
 impl UARTChannel {
-    pub fn parse(_buf: &mut &[u8]) -> Result<UARTChannel, ::Error> {
-        Ok( UARTChannel{
+    pub fn parse(_buf: &mut &[u8]) -> Result<UARTChannel, ::parser::MessageError> {
+        Ok(UARTChannel {
             tx_throughput: _buf.read_f32::<LittleEndian>()?,
             rx_throughput: _buf.read_f32::<LittleEndian>()?,
             crc_error_count: _buf.read_u16::<LittleEndian>()?,
             io_error_count: _buf.read_u16::<LittleEndian>()?,
             tx_buffer_level: _buf.read_u8()?,
             rx_buffer_level: _buf.read_u8()?,
-        } )
+        })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<UARTChannel>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<UARTChannel>, ::parser::MessageError> {
         let mut v = Vec::new();
         while buf.len() > 0 {
-            v.push( UARTChannel::parse(buf)? );
+            v.push(UARTChannel::parse(buf)?);
         }
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<UARTChannel>, ::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<UARTChannel>, ::parser::MessageError> {
         let mut v = Vec::new();
         for _ in 0..n {
-            v.push( UARTChannel::parse(buf)? );
+            v.push(UARTChannel::parse(buf)?);
         }
         Ok(v)
     }
 }
-
 
 // base station observation message receipt period
 //
@@ -280,41 +255,43 @@ impl UARTChannel {
 #[allow(non_snake_case)]
 pub struct Period {
     pub avg: i32,
-        // ^ Average period
+    // ^ Average period
     pub pmin: i32,
-        // ^ Minimum period
+    // ^ Minimum period
     pub pmax: i32,
-        // ^ Maximum period
+    // ^ Maximum period
     pub current: i32,
-        // ^ Smoothed estimate of the current period
+    // ^ Smoothed estimate of the current period
 }
 
 impl Period {
-    pub fn parse(_buf: &mut &[u8]) -> Result<Period, ::Error> {
-        Ok( Period{
+    pub fn parse(_buf: &mut &[u8]) -> Result<Period, ::parser::MessageError> {
+        Ok(Period {
             avg: _buf.read_i32::<LittleEndian>()?,
             pmin: _buf.read_i32::<LittleEndian>()?,
             pmax: _buf.read_i32::<LittleEndian>()?,
             current: _buf.read_i32::<LittleEndian>()?,
-        } )
+        })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<Period>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<Period>, ::parser::MessageError> {
         let mut v = Vec::new();
         while buf.len() > 0 {
-            v.push( Period::parse(buf)? );
+            v.push(Period::parse(buf)?);
         }
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<Period>, ::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<Period>, ::parser::MessageError> {
         let mut v = Vec::new();
         for _ in 0..n {
-            v.push( Period::parse(buf)? );
+            v.push(Period::parse(buf)?);
         }
         Ok(v)
     }
 }
-
 
 // Receiver-to-base station latency
 //
@@ -328,41 +305,43 @@ impl Period {
 #[allow(non_snake_case)]
 pub struct Latency {
     pub avg: i32,
-        // ^ Average latency
+    // ^ Average latency
     pub lmin: i32,
-        // ^ Minimum latency
+    // ^ Minimum latency
     pub lmax: i32,
-        // ^ Maximum latency
+    // ^ Maximum latency
     pub current: i32,
-        // ^ Smoothed estimate of the current latency
+    // ^ Smoothed estimate of the current latency
 }
 
 impl Latency {
-    pub fn parse(_buf: &mut &[u8]) -> Result<Latency, ::Error> {
-        Ok( Latency{
+    pub fn parse(_buf: &mut &[u8]) -> Result<Latency, ::parser::MessageError> {
+        Ok(Latency {
             avg: _buf.read_i32::<LittleEndian>()?,
             lmin: _buf.read_i32::<LittleEndian>()?,
             lmax: _buf.read_i32::<LittleEndian>()?,
             current: _buf.read_i32::<LittleEndian>()?,
-        } )
+        })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<Latency>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<Latency>, ::parser::MessageError> {
         let mut v = Vec::new();
         while buf.len() > 0 {
-            v.push( Latency::parse(buf)? );
+            v.push(Latency::parse(buf)?);
         }
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<Latency>, ::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<Latency>, ::parser::MessageError> {
         let mut v = Vec::new();
         for _ in 0..n {
-            v.push( Latency::parse(buf)? );
+            v.push(Latency::parse(buf)?);
         }
         Ok(v)
     }
 }
-
 
 // State of the UART channels
 //
@@ -380,30 +359,29 @@ impl Latency {
 #[allow(non_snake_case)]
 pub struct MsgUartState {
     pub uart_a: UARTChannel,
-        // ^ State of UART A
+    // ^ State of UART A
     pub uart_b: UARTChannel,
-        // ^ State of UART B
+    // ^ State of UART B
     pub uart_ftdi: UARTChannel,
-        // ^ State of UART FTDI (USB logger)
+    // ^ State of UART FTDI (USB logger)
     pub latency: Latency,
-        // ^ UART communication latency
+    // ^ UART communication latency
     pub obs_period: Period,
-        // ^ Observation receipt period
+    // ^ Observation receipt period
 }
 
 impl MsgUartState {
     pub const TYPE: u16 = 29;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUartState, ::Error> {
-        Ok( MsgUartState{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUartState, ::parser::MessageError> {
+        Ok(MsgUartState {
             uart_a: UARTChannel::parse(_buf)?,
             uart_b: UARTChannel::parse(_buf)?,
             uart_ftdi: UARTChannel::parse(_buf)?,
             latency: Latency::parse(_buf)?,
             obs_period: Period::parse(_buf)?,
-        } )
+        })
     }
 }
-
 
 // Deprecated
 //
@@ -413,27 +391,26 @@ impl MsgUartState {
 #[allow(non_snake_case)]
 pub struct MsgUartStateDepa {
     pub uart_a: UARTChannel,
-        // ^ State of UART A
+    // ^ State of UART A
     pub uart_b: UARTChannel,
-        // ^ State of UART B
+    // ^ State of UART B
     pub uart_ftdi: UARTChannel,
-        // ^ State of UART FTDI (USB logger)
+    // ^ State of UART FTDI (USB logger)
     pub latency: Latency,
-        // ^ UART communication latency
+    // ^ UART communication latency
 }
 
 impl MsgUartStateDepa {
     pub const TYPE: u16 = 24;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUartStateDepa, ::Error> {
-        Ok( MsgUartStateDepa{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUartStateDepa, ::parser::MessageError> {
+        Ok(MsgUartStateDepa {
             uart_a: UARTChannel::parse(_buf)?,
             uart_b: UARTChannel::parse(_buf)?,
             uart_ftdi: UARTChannel::parse(_buf)?,
             latency: Latency::parse(_buf)?,
-        } )
+        })
     }
 }
-
 
 // State of the Integer Ambiguity Resolution (IAR) process
 //
@@ -446,18 +423,17 @@ impl MsgUartStateDepa {
 #[allow(non_snake_case)]
 pub struct MsgIarState {
     pub num_hyps: u32,
-        // ^ Number of integer ambiguity hypotheses remaining
+    // ^ Number of integer ambiguity hypotheses remaining
 }
 
 impl MsgIarState {
     pub const TYPE: u16 = 25;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgIarState, ::Error> {
-        Ok( MsgIarState{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgIarState, ::parser::MessageError> {
+        Ok(MsgIarState {
             num_hyps: _buf.read_u32::<LittleEndian>()?,
-        } )
+        })
     }
 }
-
 
 // Mask a satellite from use in Piksi subsystems
 //
@@ -468,21 +444,20 @@ impl MsgIarState {
 #[allow(non_snake_case)]
 pub struct MsgMaskSatellite {
     pub mask: u8,
-        // ^ Mask of systems that should ignore this satellite.
+    // ^ Mask of systems that should ignore this satellite.
     pub sid: GnssSignal,
-        // ^ GNSS signal for which the mask is applied
+    // ^ GNSS signal for which the mask is applied
 }
 
 impl MsgMaskSatellite {
     pub const TYPE: u16 = 43;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMaskSatellite, ::Error> {
-        Ok( MsgMaskSatellite{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMaskSatellite, ::parser::MessageError> {
+        Ok(MsgMaskSatellite {
             mask: _buf.read_u8()?,
             sid: GnssSignal::parse(_buf)?,
-        } )
+        })
     }
 }
-
 
 // Deprecated
 //
@@ -492,21 +467,20 @@ impl MsgMaskSatellite {
 #[allow(non_snake_case)]
 pub struct MsgMaskSatelliteDep {
     pub mask: u8,
-        // ^ Mask of systems that should ignore this satellite.
+    // ^ Mask of systems that should ignore this satellite.
     pub sid: GnssSignalDep,
-        // ^ GNSS signal for which the mask is applied
+    // ^ GNSS signal for which the mask is applied
 }
 
 impl MsgMaskSatelliteDep {
     pub const TYPE: u16 = 27;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMaskSatelliteDep, ::Error> {
-        Ok( MsgMaskSatelliteDep{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMaskSatelliteDep, ::parser::MessageError> {
+        Ok(MsgMaskSatelliteDep {
             mask: _buf.read_u8()?,
             sid: GnssSignalDep::parse(_buf)?,
-        } )
+        })
     }
 }
-
 
 // Device temperature and voltage levels
 //
@@ -518,30 +492,29 @@ impl MsgMaskSatelliteDep {
 #[allow(non_snake_case)]
 pub struct MsgDeviceMonitor {
     pub dev_vin: i16,
-        // ^ Device V_in
+    // ^ Device V_in
     pub cpu_vint: i16,
-        // ^ Processor V_int
+    // ^ Processor V_int
     pub cpu_vaux: i16,
-        // ^ Processor V_aux
+    // ^ Processor V_aux
     pub cpu_temperature: i16,
-        // ^ Processor temperature
+    // ^ Processor temperature
     pub fe_temperature: i16,
-        // ^ Frontend temperature (if available)
+    // ^ Frontend temperature (if available)
 }
 
 impl MsgDeviceMonitor {
     pub const TYPE: u16 = 181;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDeviceMonitor, ::Error> {
-        Ok( MsgDeviceMonitor{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDeviceMonitor, ::parser::MessageError> {
+        Ok(MsgDeviceMonitor {
             dev_vin: _buf.read_i16::<LittleEndian>()?,
             cpu_vint: _buf.read_i16::<LittleEndian>()?,
             cpu_vaux: _buf.read_i16::<LittleEndian>()?,
             cpu_temperature: _buf.read_i16::<LittleEndian>()?,
             fe_temperature: _buf.read_i16::<LittleEndian>()?,
-        } )
+        })
     }
 }
-
 
 // Execute a command (host => device)
 //
@@ -553,21 +526,20 @@ impl MsgDeviceMonitor {
 #[allow(non_snake_case)]
 pub struct MsgCommandReq {
     pub sequence: u32,
-        // ^ Sequence number
+    // ^ Sequence number
     pub command: String,
-        // ^ Command line to execute
+    // ^ Command line to execute
 }
 
 impl MsgCommandReq {
     pub const TYPE: u16 = 184;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCommandReq, ::Error> {
-        Ok( MsgCommandReq{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCommandReq, ::parser::MessageError> {
+        Ok(MsgCommandReq {
             sequence: _buf.read_u32::<LittleEndian>()?,
-            command: ::read_string(_buf)?,
-        } )
+            command: ::parser::read_string(_buf)?,
+        })
     }
 }
-
 
 // Exit code from executed command (device => host)
 //
@@ -578,21 +550,20 @@ impl MsgCommandReq {
 #[allow(non_snake_case)]
 pub struct MsgCommandResp {
     pub sequence: u32,
-        // ^ Sequence number
+    // ^ Sequence number
     pub code: i32,
-        // ^ Exit code
+    // ^ Exit code
 }
 
 impl MsgCommandResp {
     pub const TYPE: u16 = 185;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCommandResp, ::Error> {
-        Ok( MsgCommandResp{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCommandResp, ::parser::MessageError> {
+        Ok(MsgCommandResp {
             sequence: _buf.read_u32::<LittleEndian>()?,
             code: _buf.read_i32::<LittleEndian>()?,
-        } )
+        })
     }
 }
-
 
 // Command output
 //
@@ -605,21 +576,20 @@ impl MsgCommandResp {
 #[allow(non_snake_case)]
 pub struct MsgCommandOutput {
     pub sequence: u32,
-        // ^ Sequence number
+    // ^ Sequence number
     pub line: String,
-        // ^ Line of standard output or standard error
+    // ^ Line of standard output or standard error
 }
 
 impl MsgCommandOutput {
     pub const TYPE: u16 = 188;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCommandOutput, ::Error> {
-        Ok( MsgCommandOutput{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCommandOutput, ::parser::MessageError> {
+        Ok(MsgCommandOutput {
             sequence: _buf.read_u32::<LittleEndian>()?,
-            line: ::read_string(_buf)?,
-        } )
+            line: ::parser::read_string(_buf)?,
+        })
     }
 }
-
 
 // Request state of Piksi network interfaces
 //
@@ -628,17 +598,14 @@ impl MsgCommandOutput {
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgNetworkStateReq {
-}
+pub struct MsgNetworkStateReq {}
 
 impl MsgNetworkStateReq {
     pub const TYPE: u16 = 186;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNetworkStateReq, ::Error> {
-        Ok( MsgNetworkStateReq{
-        } )
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNetworkStateReq, ::parser::MessageError> {
+        Ok(MsgNetworkStateReq {})
     }
 }
-
 
 // State of network interface
 //
@@ -650,39 +617,38 @@ impl MsgNetworkStateReq {
 #[allow(non_snake_case)]
 pub struct MsgNetworkStateResp {
     pub ipv4_address: Vec<u8>,
-        // ^ IPv4 address (all zero when unavailable)
+    // ^ IPv4 address (all zero when unavailable)
     pub ipv4_mask_size: u8,
-        // ^ IPv4 netmask CIDR notation
+    // ^ IPv4 netmask CIDR notation
     pub ipv6_address: Vec<u8>,
-        // ^ IPv6 address (all zero when unavailable)
+    // ^ IPv6 address (all zero when unavailable)
     pub ipv6_mask_size: u8,
-        // ^ IPv6 netmask CIDR notation
+    // ^ IPv6 netmask CIDR notation
     pub rx_bytes: u32,
-        // ^ Number of Rx bytes
+    // ^ Number of Rx bytes
     pub tx_bytes: u32,
-        // ^ Number of Tx bytes
+    // ^ Number of Tx bytes
     pub interface_name: String,
-        // ^ Interface Name
+    // ^ Interface Name
     pub flags: u32,
-        // ^ Interface flags from SIOCGIFFLAGS
+    // ^ Interface flags from SIOCGIFFLAGS
 }
 
 impl MsgNetworkStateResp {
     pub const TYPE: u16 = 187;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNetworkStateResp, ::Error> {
-        Ok( MsgNetworkStateResp{
-            ipv4_address: ::read_u8_array_limit(_buf, 4)?,
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNetworkStateResp, ::parser::MessageError> {
+        Ok(MsgNetworkStateResp {
+            ipv4_address: ::parser::read_u8_array_limit(_buf, 4)?,
             ipv4_mask_size: _buf.read_u8()?,
-            ipv6_address: ::read_u8_array_limit(_buf, 16)?,
+            ipv6_address: ::parser::read_u8_array_limit(_buf, 16)?,
             ipv6_mask_size: _buf.read_u8()?,
             rx_bytes: _buf.read_u32::<LittleEndian>()?,
             tx_bytes: _buf.read_u32::<LittleEndian>()?,
-            interface_name: ::read_string_limit(_buf, 16)?,
+            interface_name: ::parser::read_string_limit(_buf, 16)?,
             flags: _buf.read_u32::<LittleEndian>()?,
-        } )
+        })
     }
 }
-
 
 // Bandwidth usage measurement for a single interface.
 //
@@ -691,71 +657,100 @@ impl MsgNetworkStateResp {
 // specify the type of traffic that is being tracked. As
 // either the interval of collection or the collection time
 // may vary, both a timestamp and period field is provided,
-// though may not necessarily be populated with a value. 
+// though may not necessarily be populated with a value.
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct NetworkUsage {
     pub duration: u64,
-        // ^ Duration over which the measurement was collected
+    // ^ Duration over which the measurement was collected
     pub total_bytes: u64,
-        // ^ Number of bytes handled in total within period
+    // ^ Number of bytes handled in total within period
     pub rx_bytes: u32,
-        // ^ Number of bytes transmitted within period
+    // ^ Number of bytes transmitted within period
     pub tx_bytes: u32,
-        // ^ Number of bytes received within period
+    // ^ Number of bytes received within period
     pub interface_name: String,
-        // ^ Interface Name
+    // ^ Interface Name
 }
 
 impl NetworkUsage {
-    pub fn parse(_buf: &mut &[u8]) -> Result<NetworkUsage, ::Error> {
-        Ok( NetworkUsage{
+    pub fn parse(_buf: &mut &[u8]) -> Result<NetworkUsage, ::parser::MessageError> {
+        Ok(NetworkUsage {
             duration: _buf.read_u64::<LittleEndian>()?,
             total_bytes: _buf.read_u64::<LittleEndian>()?,
             rx_bytes: _buf.read_u32::<LittleEndian>()?,
             tx_bytes: _buf.read_u32::<LittleEndian>()?,
-            interface_name: ::read_string_limit(_buf, 16)?,
-        } )
+            interface_name: ::parser::read_string_limit(_buf, 16)?,
+        })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<NetworkUsage>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<NetworkUsage>, ::parser::MessageError> {
         let mut v = Vec::new();
         while buf.len() > 0 {
-            v.push( NetworkUsage::parse(buf)? );
+            v.push(NetworkUsage::parse(buf)?);
         }
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<NetworkUsage>, ::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<NetworkUsage>, ::parser::MessageError> {
         let mut v = Vec::new();
         for _ in 0..n {
-            v.push( NetworkUsage::parse(buf)? );
+            v.push(NetworkUsage::parse(buf)?);
         }
         Ok(v)
     }
 }
 
-
 // Bandwidth usage reporting message
 //
-// The bandwidth usage, a list of usage by interface. 
+// The bandwidth usage, a list of usage by interface.
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgNetworkBandwidthUsage {
     pub interfaces: Vec<NetworkUsage>,
-        // ^ Usage measurement array
+    // ^ Usage measurement array
 }
 
 impl MsgNetworkBandwidthUsage {
     pub const TYPE: u16 = 189;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNetworkBandwidthUsage, ::Error> {
-        Ok( MsgNetworkBandwidthUsage{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNetworkBandwidthUsage, ::parser::MessageError> {
+        Ok(MsgNetworkBandwidthUsage {
             interfaces: NetworkUsage::parse_array(_buf)?,
-        } )
+        })
     }
 }
 
+// Cell modem information update message
+//
+// If a cell modem is present on a piksi device, this message
+// will be send periodically to update the host on the status
+// of the modem and its various parameters.
+//
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgCellModemStatus {
+    pub signal_strength: i8,
+    // ^ Received cell signal strength in dBm, zero translates to unknown
+    pub signal_error_rate: f32,
+    // ^ BER as reported by the modem, zero translates to unknown
+    pub reserved: Vec<u8>,
+    // ^ Unspecified data TBD for this schema
+}
+
+impl MsgCellModemStatus {
+    pub const TYPE: u16 = 190;
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCellModemStatus, ::parser::MessageError> {
+        Ok(MsgCellModemStatus {
+            signal_strength: _buf.read_i8()?,
+            signal_error_rate: _buf.read_f32::<LittleEndian>()?,
+            reserved: ::parser::read_u8_array(_buf)?,
+        })
+    }
+}
 
 // Deprecated
 //
@@ -765,36 +760,35 @@ impl MsgNetworkBandwidthUsage {
 #[allow(non_snake_case)]
 pub struct MsgSpecanDep {
     pub channel_tag: u16,
-        // ^ Channel ID
+    // ^ Channel ID
     pub t: GPSTimeDep,
-        // ^ Receiver time of this observation
+    // ^ Receiver time of this observation
     pub freq_ref: f32,
-        // ^ Reference frequency of this packet
+    // ^ Reference frequency of this packet
     pub freq_step: f32,
-        // ^ Frequency step of points in this packet
+    // ^ Frequency step of points in this packet
     pub amplitude_ref: f32,
-        // ^ Reference amplitude of this packet
+    // ^ Reference amplitude of this packet
     pub amplitude_unit: f32,
-        // ^ Amplitude unit value of points in this packet
+    // ^ Amplitude unit value of points in this packet
     pub amplitude_value: Vec<u8>,
-        // ^ Amplitude values (in the above units) of points in this packet
+    // ^ Amplitude values (in the above units) of points in this packet
 }
 
 impl MsgSpecanDep {
     pub const TYPE: u16 = 80;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSpecanDep, ::Error> {
-        Ok( MsgSpecanDep{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSpecanDep, ::parser::MessageError> {
+        Ok(MsgSpecanDep {
             channel_tag: _buf.read_u16::<LittleEndian>()?,
             t: GPSTimeDep::parse(_buf)?,
             freq_ref: _buf.read_f32::<LittleEndian>()?,
             freq_step: _buf.read_f32::<LittleEndian>()?,
             amplitude_ref: _buf.read_f32::<LittleEndian>()?,
             amplitude_unit: _buf.read_f32::<LittleEndian>()?,
-            amplitude_value: ::read_u8_array(_buf)?,
-        } )
+            amplitude_value: ::parser::read_u8_array(_buf)?,
+        })
     }
 }
-
 
 // Spectrum analyzer
 //
@@ -804,33 +798,60 @@ impl MsgSpecanDep {
 #[allow(non_snake_case)]
 pub struct MsgSpecan {
     pub channel_tag: u16,
-        // ^ Channel ID
+    // ^ Channel ID
     pub t: GPSTime,
-        // ^ Receiver time of this observation
+    // ^ Receiver time of this observation
     pub freq_ref: f32,
-        // ^ Reference frequency of this packet
+    // ^ Reference frequency of this packet
     pub freq_step: f32,
-        // ^ Frequency step of points in this packet
+    // ^ Frequency step of points in this packet
     pub amplitude_ref: f32,
-        // ^ Reference amplitude of this packet
+    // ^ Reference amplitude of this packet
     pub amplitude_unit: f32,
-        // ^ Amplitude unit value of points in this packet
+    // ^ Amplitude unit value of points in this packet
     pub amplitude_value: Vec<u8>,
-        // ^ Amplitude values (in the above units) of points in this packet
+    // ^ Amplitude values (in the above units) of points in this packet
 }
 
 impl MsgSpecan {
     pub const TYPE: u16 = 81;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSpecan, ::Error> {
-        Ok( MsgSpecan{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSpecan, ::parser::MessageError> {
+        Ok(MsgSpecan {
             channel_tag: _buf.read_u16::<LittleEndian>()?,
             t: GPSTime::parse(_buf)?,
             freq_ref: _buf.read_f32::<LittleEndian>()?,
             freq_step: _buf.read_f32::<LittleEndian>()?,
             amplitude_ref: _buf.read_f32::<LittleEndian>()?,
             amplitude_unit: _buf.read_f32::<LittleEndian>()?,
-            amplitude_value: ::read_u8_array(_buf)?,
-        } )
+            amplitude_value: ::parser::read_u8_array(_buf)?,
+        })
     }
 }
 
+// RF AGC status
+//
+// This message describes the gain of each channel in the receiver frontend. Each
+// gain is encoded as a non-dimensional percentage relative to the maximum range
+// possible for the gain stage of the frontend. By convention, each gain array
+// has 8 entries and the index of the array corresponding to the index of the rf channel
+// in the frontend. A gain of 127 percent encodes that rf channel is not present in the hardware.
+// A negative value implies an error for the particular gain stage as reported by the frontend.
+//
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgFrontEndGain {
+    pub rf_gain: Vec<i8>,
+    // ^ RF gain for each frontend channel
+    pub if_gain: Vec<i8>,
+    // ^ Intermediate frequency gain for each frontend channel
+}
+
+impl MsgFrontEndGain {
+    pub const TYPE: u16 = 191;
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFrontEndGain, ::parser::MessageError> {
+        Ok(MsgFrontEndGain {
+            rf_gain: ::parser::read_s8_array_limit(_buf, 8)?,
+            if_gain: ::parser::read_s8_array_limit(_buf, 8)?,
+        })
+    }
+}

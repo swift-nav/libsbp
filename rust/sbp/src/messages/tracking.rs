@@ -12,13 +12,11 @@
 // Automatically generated from yaml/swiftnav/sbp/tracking.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 // Satellite code and carrier-phase tracking messages from the device.
 extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian,ReadBytesExt};
+use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
-
 
 // Detailed signal tracking channel states. DEPRECATED.
 //
@@ -29,59 +27,59 @@ use super::gnss::*;
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDetailedDepA {
     pub recv_time: u64,
-        // ^ Receiver clock time.
+    // ^ Receiver clock time.
     pub tot: GPSTime,
-        // ^ Time of transmission of signal from satellite. TOW only valid when TOW
-        // status is decoded or propagated. WN only valid when week number valid
-        // flag is set.
+    // ^ Time of transmission of signal from satellite. TOW only valid when TOW
+    // status is decoded or propagated. WN only valid when week number valid
+    // flag is set.
     pub P: u32,
-        // ^ Pseudorange observation. Valid only when pseudorange valid flag is set.
+    // ^ Pseudorange observation. Valid only when pseudorange valid flag is set.
     pub P_std: u16,
-        // ^ Pseudorange observation standard deviation. Valid only when pseudorange
-        // valid flag is set.
+    // ^ Pseudorange observation standard deviation. Valid only when pseudorange
+    // valid flag is set.
     pub L: CarrierPhase,
-        // ^ Carrier phase observation with typical sign convention. Valid only when
-        // PLL pessimistic lock is achieved.
+    // ^ Carrier phase observation with typical sign convention. Valid only when
+    // PLL pessimistic lock is achieved.
     pub cn0: u8,
-        // ^ Carrier-to-Noise density
+    // ^ Carrier-to-Noise density
     pub lock: u16,
-        // ^ Lock time. It is encoded according to DF402 from the RTCM 10403.2
-        // Amendment 2 specification. Valid values range from 0 to 15.
+    // ^ Lock time. It is encoded according to DF402 from the RTCM 10403.2
+    // Amendment 2 specification. Valid values range from 0 to 15.
     pub sid: GnssSignal,
-        // ^ GNSS signal identifier.
+    // ^ GNSS signal identifier.
     pub doppler: i32,
-        // ^ Carrier Doppler frequency.
+    // ^ Carrier Doppler frequency.
     pub doppler_std: u16,
-        // ^ Carrier Doppler frequency standard deviation.
+    // ^ Carrier Doppler frequency standard deviation.
     pub uptime: u32,
-        // ^ Number of seconds of continuous tracking. Specifies how much time signal
-        // is in continuous track.
+    // ^ Number of seconds of continuous tracking. Specifies how much time signal
+    // is in continuous track.
     pub clock_offset: i16,
-        // ^ TCXO clock offset. Valid only when valid clock valid flag is set.
+    // ^ TCXO clock offset. Valid only when valid clock valid flag is set.
     pub clock_drift: i16,
-        // ^ TCXO clock drift. Valid only when valid clock valid flag is set.
+    // ^ TCXO clock drift. Valid only when valid clock valid flag is set.
     pub corr_spacing: u16,
-        // ^ Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
+    // ^ Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
     pub acceleration: i8,
-        // ^ Acceleration. Valid only when acceleration valid flag is set.
+    // ^ Acceleration. Valid only when acceleration valid flag is set.
     pub sync_flags: u8,
-        // ^ Synchronization status flags.
+    // ^ Synchronization status flags.
     pub tow_flags: u8,
-        // ^ TOW status flags.
+    // ^ TOW status flags.
     pub track_flags: u8,
-        // ^ Tracking loop status flags.
+    // ^ Tracking loop status flags.
     pub nav_flags: u8,
-        // ^ Navigation data status flags.
+    // ^ Navigation data status flags.
     pub pset_flags: u8,
-        // ^ Parameters sets flags.
+    // ^ Parameters sets flags.
     pub misc_flags: u8,
-        // ^ Miscellaneous flags.
+    // ^ Miscellaneous flags.
 }
 
 impl MsgTrackingStateDetailedDepA {
     pub const TYPE: u16 = 33;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDetailedDepA, ::Error> {
-        Ok( MsgTrackingStateDetailedDepA{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDetailedDepA, ::parser::MessageError> {
+        Ok(MsgTrackingStateDetailedDepA {
             recv_time: _buf.read_u64::<LittleEndian>()?,
             tot: GPSTime::parse(_buf)?,
             P: _buf.read_u32::<LittleEndian>()?,
@@ -103,10 +101,9 @@ impl MsgTrackingStateDetailedDepA {
             nav_flags: _buf.read_u8()?,
             pset_flags: _buf.read_u8()?,
             misc_flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
-
 
 // Deprecated
 //
@@ -116,59 +113,59 @@ impl MsgTrackingStateDetailedDepA {
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDetailedDep {
     pub recv_time: u64,
-        // ^ Receiver clock time.
+    // ^ Receiver clock time.
     pub tot: GPSTimeDep,
-        // ^ Time of transmission of signal from satellite. TOW only valid when TOW
-        // status is decoded or propagated. WN only valid when week number valid
-        // flag is set.
+    // ^ Time of transmission of signal from satellite. TOW only valid when TOW
+    // status is decoded or propagated. WN only valid when week number valid
+    // flag is set.
     pub P: u32,
-        // ^ Pseudorange observation. Valid only when pseudorange valid flag is set.
+    // ^ Pseudorange observation. Valid only when pseudorange valid flag is set.
     pub P_std: u16,
-        // ^ Pseudorange observation standard deviation. Valid only when pseudorange
-        // valid flag is set.
+    // ^ Pseudorange observation standard deviation. Valid only when pseudorange
+    // valid flag is set.
     pub L: CarrierPhase,
-        // ^ Carrier phase observation with typical sign convention. Valid only when
-        // PLL pessimistic lock is achieved.
+    // ^ Carrier phase observation with typical sign convention. Valid only when
+    // PLL pessimistic lock is achieved.
     pub cn0: u8,
-        // ^ Carrier-to-Noise density
+    // ^ Carrier-to-Noise density
     pub lock: u16,
-        // ^ Lock time. It is encoded according to DF402 from the RTCM 10403.2
-        // Amendment 2 specification. Valid values range from 0 to 15.
+    // ^ Lock time. It is encoded according to DF402 from the RTCM 10403.2
+    // Amendment 2 specification. Valid values range from 0 to 15.
     pub sid: GnssSignalDep,
-        // ^ GNSS signal identifier.
+    // ^ GNSS signal identifier.
     pub doppler: i32,
-        // ^ Carrier Doppler frequency.
+    // ^ Carrier Doppler frequency.
     pub doppler_std: u16,
-        // ^ Carrier Doppler frequency standard deviation.
+    // ^ Carrier Doppler frequency standard deviation.
     pub uptime: u32,
-        // ^ Number of seconds of continuous tracking. Specifies how much time signal
-        // is in continuous track.
+    // ^ Number of seconds of continuous tracking. Specifies how much time signal
+    // is in continuous track.
     pub clock_offset: i16,
-        // ^ TCXO clock offset. Valid only when valid clock valid flag is set.
+    // ^ TCXO clock offset. Valid only when valid clock valid flag is set.
     pub clock_drift: i16,
-        // ^ TCXO clock drift. Valid only when valid clock valid flag is set.
+    // ^ TCXO clock drift. Valid only when valid clock valid flag is set.
     pub corr_spacing: u16,
-        // ^ Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
+    // ^ Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
     pub acceleration: i8,
-        // ^ Acceleration. Valid only when acceleration valid flag is set.
+    // ^ Acceleration. Valid only when acceleration valid flag is set.
     pub sync_flags: u8,
-        // ^ Synchronization status flags.
+    // ^ Synchronization status flags.
     pub tow_flags: u8,
-        // ^ TOW status flags.
+    // ^ TOW status flags.
     pub track_flags: u8,
-        // ^ Tracking loop status flags.
+    // ^ Tracking loop status flags.
     pub nav_flags: u8,
-        // ^ Navigation data status flags.
+    // ^ Navigation data status flags.
     pub pset_flags: u8,
-        // ^ Parameters sets flags.
+    // ^ Parameters sets flags.
     pub misc_flags: u8,
-        // ^ Miscellaneous flags.
+    // ^ Miscellaneous flags.
 }
 
 impl MsgTrackingStateDetailedDep {
     pub const TYPE: u16 = 17;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDetailedDep, ::Error> {
-        Ok( MsgTrackingStateDetailedDep{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDetailedDep, ::parser::MessageError> {
+        Ok(MsgTrackingStateDetailedDep {
             recv_time: _buf.read_u64::<LittleEndian>()?,
             tot: GPSTimeDep::parse(_buf)?,
             P: _buf.read_u32::<LittleEndian>()?,
@@ -190,10 +187,9 @@ impl MsgTrackingStateDetailedDep {
             nav_flags: _buf.read_u8()?,
             pset_flags: _buf.read_u8()?,
             misc_flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
-
 
 // Signal tracking channel state
 //
@@ -204,38 +200,42 @@ impl MsgTrackingStateDetailedDep {
 #[allow(non_snake_case)]
 pub struct TrackingChannelState {
     pub sid: GnssSignal,
-        // ^ GNSS signal being tracked
+    // ^ GNSS signal being tracked
     pub fcn: u8,
-        // ^ Frequency channel number (GLONASS only)
+    // ^ Frequency channel number (GLONASS only)
     pub cn0: u8,
-        // ^ Carrier-to-Noise density.  Zero implies invalid cn0.
+    // ^ Carrier-to-Noise density.  Zero implies invalid cn0.
 }
 
 impl TrackingChannelState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelState, ::Error> {
-        Ok( TrackingChannelState{
+    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelState, ::parser::MessageError> {
+        Ok(TrackingChannelState {
             sid: GnssSignal::parse(_buf)?,
             fcn: _buf.read_u8()?,
             cn0: _buf.read_u8()?,
-        } )
+        })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelState>, ::Error> {
+    pub fn parse_array(
+        buf: &mut &[u8],
+    ) -> Result<Vec<TrackingChannelState>, ::parser::MessageError> {
         let mut v = Vec::new();
         while buf.len() > 0 {
-            v.push( TrackingChannelState::parse(buf)? );
+            v.push(TrackingChannelState::parse(buf)?);
         }
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<TrackingChannelState>, ::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<TrackingChannelState>, ::parser::MessageError> {
         let mut v = Vec::new();
         for _ in 0..n {
-            v.push( TrackingChannelState::parse(buf)? );
+            v.push(TrackingChannelState::parse(buf)?);
         }
         Ok(v)
     }
 }
-
 
 // Signal tracking channel states
 //
@@ -247,18 +247,84 @@ impl TrackingChannelState {
 #[allow(non_snake_case)]
 pub struct MsgTrackingState {
     pub states: Vec<TrackingChannelState>,
-        // ^ Signal tracking channel state
+    // ^ Signal tracking channel state
 }
 
 impl MsgTrackingState {
     pub const TYPE: u16 = 65;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingState, ::Error> {
-        Ok( MsgTrackingState{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingState, ::parser::MessageError> {
+        Ok(MsgTrackingState {
             states: TrackingChannelState::parse_array(_buf)?,
-        } )
+        })
     }
 }
 
+// Measurement Engine signal tracking channel state
+//
+// Measurement Engine tracking channel state for a specific satellite signal
+// and measured signal power.
+// The mesid field for Glonass can either
+// carry the FCN as 100 + FCN where FCN is in [-7, +6] or
+// the Slot ID (from 1 to 28)
+//
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MeasurementState {
+    pub mesid: GnssSignal,
+    // ^ Measurement Engine GNSS signal being tracked (carries either Glonass FCN
+    // or SLOT)
+    pub cn0: u8,
+    // ^ Carrier-to-Noise density.  Zero implies invalid cn0.
+}
+
+impl MeasurementState {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MeasurementState, ::parser::MessageError> {
+        Ok(MeasurementState {
+            mesid: GnssSignal::parse(_buf)?,
+            cn0: _buf.read_u8()?,
+        })
+    }
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<MeasurementState>, ::parser::MessageError> {
+        let mut v = Vec::new();
+        while buf.len() > 0 {
+            v.push(MeasurementState::parse(buf)?);
+        }
+        Ok(v)
+    }
+
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<MeasurementState>, ::parser::MessageError> {
+        let mut v = Vec::new();
+        for _ in 0..n {
+            v.push(MeasurementState::parse(buf)?);
+        }
+        Ok(v)
+    }
+}
+
+// Measurement Engine signal tracking channel states
+//
+// The tracking message returns a variable-length array of tracking
+// channel states. It reports status and carrier-to-noise density
+// measurements for all tracked satellites.
+//
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgMeasurementState {
+    pub states: Vec<MeasurementState>,
+    // ^ ME signal tracking channel state
+}
+
+impl MsgMeasurementState {
+    pub const TYPE: u16 = 97;
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMeasurementState, ::parser::MessageError> {
+        Ok(MsgMeasurementState {
+            states: MeasurementState::parse_array(_buf)?,
+        })
+    }
+}
 
 // Complex correlation structure
 //
@@ -267,36 +333,40 @@ impl MsgTrackingState {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelCorrelation {
-    pub I: i32,
-        // ^ In-phase correlation
-    pub Q: i32,
-        // ^ Quadrature correlation
+    pub I: i16,
+    // ^ In-phase correlation
+    pub Q: i16,
+    // ^ Quadrature correlation
 }
 
 impl TrackingChannelCorrelation {
-    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelCorrelation, ::Error> {
-        Ok( TrackingChannelCorrelation{
-            I: _buf.read_i32::<LittleEndian>()?,
-            Q: _buf.read_i32::<LittleEndian>()?,
-        } )
+    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelCorrelation, ::parser::MessageError> {
+        Ok(TrackingChannelCorrelation {
+            I: _buf.read_i16::<LittleEndian>()?,
+            Q: _buf.read_i16::<LittleEndian>()?,
+        })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelCorrelation>, ::Error> {
+    pub fn parse_array(
+        buf: &mut &[u8],
+    ) -> Result<Vec<TrackingChannelCorrelation>, ::parser::MessageError> {
         let mut v = Vec::new();
         while buf.len() > 0 {
-            v.push( TrackingChannelCorrelation::parse(buf)? );
+            v.push(TrackingChannelCorrelation::parse(buf)?);
         }
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<TrackingChannelCorrelation>, ::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<TrackingChannelCorrelation>, ::parser::MessageError> {
         let mut v = Vec::new();
         for _ in 0..n {
-            v.push( TrackingChannelCorrelation::parse(buf)? );
+            v.push(TrackingChannelCorrelation::parse(buf)?);
         }
         Ok(v)
     }
 }
-
 
 // Tracking channel correlations
 //
@@ -307,24 +377,94 @@ impl TrackingChannelCorrelation {
 #[allow(non_snake_case)]
 pub struct MsgTrackingIq {
     pub channel: u8,
-        // ^ Tracking channel of origin
+    // ^ Tracking channel of origin
     pub sid: GnssSignal,
-        // ^ GNSS signal identifier
+    // ^ GNSS signal identifier
     pub corrs: Vec<TrackingChannelCorrelation>,
-        // ^ Early, Prompt and Late correlations
+    // ^ Early, Prompt and Late correlations
 }
 
 impl MsgTrackingIq {
-    pub const TYPE: u16 = 44;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIq, ::Error> {
-        Ok( MsgTrackingIq{
+    pub const TYPE: u16 = 45;
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIq, ::parser::MessageError> {
+        Ok(MsgTrackingIq {
             channel: _buf.read_u8()?,
             sid: GnssSignal::parse(_buf)?,
             corrs: TrackingChannelCorrelation::parse_array_limit(_buf, 3)?,
-        } )
+        })
     }
 }
 
+// Complex correlation structure
+//
+// Structure containing in-phase and quadrature correlation components.
+//
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct TrackingChannelCorrelationDep {
+    pub I: i32,
+    // ^ In-phase correlation
+    pub Q: i32,
+    // ^ Quadrature correlation
+}
+
+impl TrackingChannelCorrelationDep {
+    pub fn parse(
+        _buf: &mut &[u8],
+    ) -> Result<TrackingChannelCorrelationDep, ::parser::MessageError> {
+        Ok(TrackingChannelCorrelationDep {
+            I: _buf.read_i32::<LittleEndian>()?,
+            Q: _buf.read_i32::<LittleEndian>()?,
+        })
+    }
+    pub fn parse_array(
+        buf: &mut &[u8],
+    ) -> Result<Vec<TrackingChannelCorrelationDep>, ::parser::MessageError> {
+        let mut v = Vec::new();
+        while buf.len() > 0 {
+            v.push(TrackingChannelCorrelationDep::parse(buf)?);
+        }
+        Ok(v)
+    }
+
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<TrackingChannelCorrelationDep>, ::parser::MessageError> {
+        let mut v = Vec::new();
+        for _ in 0..n {
+            v.push(TrackingChannelCorrelationDep::parse(buf)?);
+        }
+        Ok(v)
+    }
+}
+
+// Tracking channel correlations
+//
+// When enabled, a tracking channel can output the correlations at each
+// update interval.
+//
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgTrackingIqDepB {
+    pub channel: u8,
+    // ^ Tracking channel of origin
+    pub sid: GnssSignal,
+    // ^ GNSS signal identifier
+    pub corrs: Vec<TrackingChannelCorrelationDep>,
+    // ^ Early, Prompt and Late correlations
+}
+
+impl MsgTrackingIqDepB {
+    pub const TYPE: u16 = 44;
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIqDepB, ::parser::MessageError> {
+        Ok(MsgTrackingIqDepB {
+            channel: _buf.read_u8()?,
+            sid: GnssSignal::parse(_buf)?,
+            corrs: TrackingChannelCorrelationDep::parse_array_limit(_buf, 3)?,
+        })
+    }
+}
 
 // Deprecated
 //
@@ -332,26 +472,25 @@ impl MsgTrackingIq {
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgTrackingIqDep {
+pub struct MsgTrackingIqDepA {
     pub channel: u8,
-        // ^ Tracking channel of origin
+    // ^ Tracking channel of origin
     pub sid: GnssSignalDep,
-        // ^ GNSS signal identifier
-    pub corrs: Vec<TrackingChannelCorrelation>,
-        // ^ Early, Prompt and Late correlations
+    // ^ GNSS signal identifier
+    pub corrs: Vec<TrackingChannelCorrelationDep>,
+    // ^ Early, Prompt and Late correlations
 }
 
-impl MsgTrackingIqDep {
+impl MsgTrackingIqDepA {
     pub const TYPE: u16 = 28;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIqDep, ::Error> {
-        Ok( MsgTrackingIqDep{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIqDepA, ::parser::MessageError> {
+        Ok(MsgTrackingIqDepA {
             channel: _buf.read_u8()?,
             sid: GnssSignalDep::parse(_buf)?,
-            corrs: TrackingChannelCorrelation::parse_array_limit(_buf, 3)?,
-        } )
+            corrs: TrackingChannelCorrelationDep::parse_array_limit(_buf, 3)?,
+        })
     }
 }
-
 
 // Deprecated
 //
@@ -361,38 +500,42 @@ impl MsgTrackingIqDep {
 #[allow(non_snake_case)]
 pub struct TrackingChannelStateDepA {
     pub state: u8,
-        // ^ Status of tracking channel
+    // ^ Status of tracking channel
     pub prn: u8,
-        // ^ PRN-1 being tracked
+    // ^ PRN-1 being tracked
     pub cn0: f32,
-        // ^ Carrier-to-noise density
+    // ^ Carrier-to-noise density
 }
 
 impl TrackingChannelStateDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelStateDepA, ::Error> {
-        Ok( TrackingChannelStateDepA{
+    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelStateDepA, ::parser::MessageError> {
+        Ok(TrackingChannelStateDepA {
             state: _buf.read_u8()?,
             prn: _buf.read_u8()?,
             cn0: _buf.read_f32::<LittleEndian>()?,
-        } )
+        })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelStateDepA>, ::Error> {
+    pub fn parse_array(
+        buf: &mut &[u8],
+    ) -> Result<Vec<TrackingChannelStateDepA>, ::parser::MessageError> {
         let mut v = Vec::new();
         while buf.len() > 0 {
-            v.push( TrackingChannelStateDepA::parse(buf)? );
+            v.push(TrackingChannelStateDepA::parse(buf)?);
         }
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<TrackingChannelStateDepA>, ::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<TrackingChannelStateDepA>, ::parser::MessageError> {
         let mut v = Vec::new();
         for _ in 0..n {
-            v.push( TrackingChannelStateDepA::parse(buf)? );
+            v.push(TrackingChannelStateDepA::parse(buf)?);
         }
         Ok(v)
     }
 }
-
 
 // Deprecated
 //
@@ -402,18 +545,17 @@ impl TrackingChannelStateDepA {
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDepA {
     pub states: Vec<TrackingChannelStateDepA>,
-        // ^ Satellite tracking channel state
+    // ^ Satellite tracking channel state
 }
 
 impl MsgTrackingStateDepA {
     pub const TYPE: u16 = 22;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDepA, ::Error> {
-        Ok( MsgTrackingStateDepA{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDepA, ::parser::MessageError> {
+        Ok(MsgTrackingStateDepA {
             states: TrackingChannelStateDepA::parse_array(_buf)?,
-        } )
+        })
     }
 }
-
 
 // Deprecated.
 //
@@ -423,38 +565,42 @@ impl MsgTrackingStateDepA {
 #[allow(non_snake_case)]
 pub struct TrackingChannelStateDepB {
     pub state: u8,
-        // ^ Status of tracking channel
+    // ^ Status of tracking channel
     pub sid: GnssSignalDep,
-        // ^ GNSS signal being tracked
+    // ^ GNSS signal being tracked
     pub cn0: f32,
-        // ^ Carrier-to-noise density
+    // ^ Carrier-to-noise density
 }
 
 impl TrackingChannelStateDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelStateDepB, ::Error> {
-        Ok( TrackingChannelStateDepB{
+    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelStateDepB, ::parser::MessageError> {
+        Ok(TrackingChannelStateDepB {
             state: _buf.read_u8()?,
             sid: GnssSignalDep::parse(_buf)?,
             cn0: _buf.read_f32::<LittleEndian>()?,
-        } )
+        })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelStateDepB>, ::Error> {
+    pub fn parse_array(
+        buf: &mut &[u8],
+    ) -> Result<Vec<TrackingChannelStateDepB>, ::parser::MessageError> {
         let mut v = Vec::new();
         while buf.len() > 0 {
-            v.push( TrackingChannelStateDepB::parse(buf)? );
+            v.push(TrackingChannelStateDepB::parse(buf)?);
         }
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<TrackingChannelStateDepB>, ::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<TrackingChannelStateDepB>, ::parser::MessageError> {
         let mut v = Vec::new();
         for _ in 0..n {
-            v.push( TrackingChannelStateDepB::parse(buf)? );
+            v.push(TrackingChannelStateDepB::parse(buf)?);
         }
         Ok(v)
     }
 }
-
 
 // Deprecated.
 //
@@ -464,15 +610,14 @@ impl TrackingChannelStateDepB {
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDepB {
     pub states: Vec<TrackingChannelStateDepB>,
-        // ^ Signal tracking channel state
+    // ^ Signal tracking channel state
 }
 
 impl MsgTrackingStateDepB {
     pub const TYPE: u16 = 19;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDepB, ::Error> {
-        Ok( MsgTrackingStateDepB{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDepB, ::parser::MessageError> {
+        Ok(MsgTrackingStateDepB {
             states: TrackingChannelStateDepB::parse_array(_buf)?,
-        } )
+        })
     }
 }
-

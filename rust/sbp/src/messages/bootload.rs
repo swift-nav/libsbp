@@ -12,16 +12,14 @@
 // Automatically generated from yaml/swiftnav/sbp/bootload.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 // Messages for the bootloading configuration of a Piksi 2.3.1.  This message
 // group does not apply to Piksi Multi.
-// 
+//
 // Note that some of these messages share the same message type ID for both the
 // host request and the device response.
 extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian,ReadBytesExt};
-
+use self::byteorder::{LittleEndian, ReadBytesExt};
 
 // Bootloading handshake request (host => device)
 //
@@ -31,17 +29,14 @@ use self::byteorder::{LittleEndian,ReadBytesExt};
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgBootloaderHandshakeReq {
-}
+pub struct MsgBootloaderHandshakeReq {}
 
 impl MsgBootloaderHandshakeReq {
     pub const TYPE: u16 = 179;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeReq, ::Error> {
-        Ok( MsgBootloaderHandshakeReq{
-        } )
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeReq, ::parser::MessageError> {
+        Ok(MsgBootloaderHandshakeReq {})
     }
 }
-
 
 // Bootloading handshake response (host <= device)
 //
@@ -55,21 +50,20 @@ impl MsgBootloaderHandshakeReq {
 #[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeResp {
     pub flags: u32,
-        // ^ Bootloader flags
+    // ^ Bootloader flags
     pub version: String,
-        // ^ Bootloader version number
+    // ^ Bootloader version number
 }
 
 impl MsgBootloaderHandshakeResp {
     pub const TYPE: u16 = 180;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeResp, ::Error> {
-        Ok( MsgBootloaderHandshakeResp{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeResp, ::parser::MessageError> {
+        Ok(MsgBootloaderHandshakeResp {
             flags: _buf.read_u32::<LittleEndian>()?,
-            version: ::read_string(_buf)?,
-        } )
+            version: ::parser::read_string(_buf)?,
+        })
     }
 }
-
 
 // Bootloader jump to application (host => device)
 //
@@ -79,18 +73,17 @@ impl MsgBootloaderHandshakeResp {
 #[allow(non_snake_case)]
 pub struct MsgBootloaderJumpToApp {
     pub jump: u8,
-        // ^ Ignored by the device
+    // ^ Ignored by the device
 }
 
 impl MsgBootloaderJumpToApp {
     pub const TYPE: u16 = 177;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderJumpToApp, ::Error> {
-        Ok( MsgBootloaderJumpToApp{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderJumpToApp, ::parser::MessageError> {
+        Ok(MsgBootloaderJumpToApp {
             jump: _buf.read_u8()?,
-        } )
+        })
     }
 }
-
 
 // Read FPGA device ID over UART request (host => device)
 //
@@ -103,17 +96,14 @@ impl MsgBootloaderJumpToApp {
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgNapDeviceDnaReq {
-}
+pub struct MsgNapDeviceDnaReq {}
 
 impl MsgNapDeviceDnaReq {
     pub const TYPE: u16 = 222;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaReq, ::Error> {
-        Ok( MsgNapDeviceDnaReq{
-        } )
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaReq, ::parser::MessageError> {
+        Ok(MsgNapDeviceDnaReq {})
     }
 }
-
 
 // Read FPGA device ID over UART response (host <= device)
 //
@@ -128,18 +118,17 @@ impl MsgNapDeviceDnaReq {
 #[allow(non_snake_case)]
 pub struct MsgNapDeviceDnaResp {
     pub dna: Vec<u8>,
-        // ^ 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on the right.
+    // ^ 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on the right.
 }
 
 impl MsgNapDeviceDnaResp {
     pub const TYPE: u16 = 221;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaResp, ::Error> {
-        Ok( MsgNapDeviceDnaResp{
-            dna: ::read_u8_array_limit(_buf, 8)?,
-        } )
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaResp, ::parser::MessageError> {
+        Ok(MsgNapDeviceDnaResp {
+            dna: ::parser::read_u8_array_limit(_buf, 8)?,
+        })
     }
 }
-
 
 // Deprecated
 //
@@ -149,15 +138,14 @@ impl MsgNapDeviceDnaResp {
 #[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeDepA {
     pub handshake: Vec<u8>,
-        // ^ Version number string (not NULL terminated)
+    // ^ Version number string (not NULL terminated)
 }
 
 impl MsgBootloaderHandshakeDepA {
     pub const TYPE: u16 = 176;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeDepA, ::Error> {
-        Ok( MsgBootloaderHandshakeDepA{
-            handshake: ::read_u8_array(_buf)?,
-        } )
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeDepA, ::parser::MessageError> {
+        Ok(MsgBootloaderHandshakeDepA {
+            handshake: ::parser::read_u8_array(_buf)?,
+        })
     }
 }
-

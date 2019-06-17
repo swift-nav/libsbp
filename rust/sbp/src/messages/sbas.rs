@@ -12,13 +12,11 @@
 // Automatically generated from yaml/swiftnav/sbp/sbas.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 // SBAS data
 extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian,ReadBytesExt};
+use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
-
 
 // Raw SBAS data
 //
@@ -29,24 +27,23 @@ use super::gnss::*;
 #[allow(non_snake_case)]
 pub struct MsgSbasRaw {
     pub sid: GnssSignal,
-        // ^ GNSS signal identifier.
+    // ^ GNSS signal identifier.
     pub tow: u32,
-        // ^ GPS time-of-week at the start of the data block.
+    // ^ GPS time-of-week at the start of the data block.
     pub message_type: u8,
-        // ^ SBAS message type (0-63)
+    // ^ SBAS message type (0-63)
     pub data: Vec<u8>,
-        // ^ Raw SBAS data field of 212 bits (last byte padded with zeros).
+    // ^ Raw SBAS data field of 212 bits (last byte padded with zeros).
 }
 
 impl MsgSbasRaw {
     pub const TYPE: u16 = 30583;
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSbasRaw, ::Error> {
-        Ok( MsgSbasRaw{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSbasRaw, ::parser::MessageError> {
+        Ok(MsgSbasRaw {
             sid: GnssSignal::parse(_buf)?,
             tow: _buf.read_u32::<LittleEndian>()?,
             message_type: _buf.read_u8()?,
-            data: ::read_u8_array_limit(_buf, 27)?,
-        } )
+            data: ::parser::read_u8_array_limit(_buf, 27)?,
+        })
     }
 }
-
