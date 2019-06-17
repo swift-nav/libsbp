@@ -6,3 +6,4 @@ authors = ["Gareth McMullin <gareth@swiftnav.com>"]
 [dependencies]
 byteorder = "1.2.1"
 crc16 = "*"
+nom = "5.0.0-beta2"

@@ -3,6 +3,7 @@
 .DS_Store
 *.*~
 limbo/
+.idea/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -70,5 +71,8 @@ sbp_out.*
 # Haskell
 .stack-work/
 .build/
+
+# rust
+Cargo.lock
 
 python/sbp/_version.py

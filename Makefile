@@ -201,6 +201,7 @@ gen-rust:
 					-o $(SWIFTNAV_ROOT)/rust/ \
 					-r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
 					--rust
+	cd $(SWIFTNAV_ROOT)/rust/sbp && cargo fmt
 	$(call announce-begin,"Finished generating Rust bindings")
 
 gen-protobuf:

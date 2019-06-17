@@ -1,58 +1,107 @@
-pub mod client;
 pub mod messages;
-
-extern crate byteorder;
-use self::byteorder::{LittleEndian,ReadBytesExt};
-use std::io::{self, Read};
+pub mod parser;
 
 #[derive(Debug)]
 pub enum Error {
-    InvalidPreamble,
-    CRCMismatch,
     ParseError,
-    IoError(io::Error)
-}
-
-impl From<io::Error> for Error {
-    fn from(error: io::Error) -> Self {
-        Error::IoError(error)
-    }
-}
-
-fn read_string(buf: &mut Read) -> Result<String, Error> {
-    let mut s = String::new();
-    buf.read_to_string(&mut s)?;
-    Ok(s)
-}
-
-fn read_string_limit(buf: &mut Read, n: u64) -> Result<String, Error> {
-    read_string(&mut buf.take(n))
-}
-
-fn read_u8_array(buf: &mut &[u8]) -> Result<Vec<u8>, Error> {
-    Ok(buf.to_vec())
-}
-
-fn read_u8_array_limit(buf: &mut &[u8], n:usize) -> Result<Vec<u8>, Error> {
-    let mut v = Vec::new();
-    for _ in 0..n {
-        v.push(buf.read_u8()?);
-    }
-    Ok(v)
-}
-
-fn read_double_array_limit(buf: &mut &[u8], n:usize) -> Result<Vec<f64>, Error> {
-    let mut v = Vec::new();
-    for _ in 0..n {
-        v.push(buf.read_f64::<LittleEndian>()?);
-    }
-    Ok(v)
+    NotEnoughData,
+    UnrecoverableFailure,
+    IoError(std::io::Error),
 }
 
 #[cfg(test)]
 mod tests {
     #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
+    fn baseline_ecef() {
+        let baseline_ecef_payload = [
+            0x28u8, 0xf4, 0x7a, 0x13, 0x96, 0x62, 0xee, 0xff, 0xbe, 0x40, 0x14, 0x00, 0xf6, 0xa3,
+            0x09, 0x00, 0x00, 0x00, 0x0e, 0x00,
+        ];
+        let baseline_ecef_expectation = ::messages::navigation::MsgBaselineECEF {
+            accuracy: 0,
+            flags: 0,
+            n_sats: 14,
+            tow: 326825000,
+            x: -1154410,
+            y: 1327294,
+            z: 631798,
+        };
+        let sbp_result = ::messages::SBP::parse(0x20b, &mut &baseline_ecef_payload[..]);
+        assert!(sbp_result.is_ok());
+        if let ::messages::SBP::MsgBaselineECEF(msg) = sbp_result.unwrap() {
+            assert_eq!(msg.accuracy, baseline_ecef_expectation.accuracy);
+            assert_eq!(msg.flags, baseline_ecef_expectation.flags);
+            assert_eq!(msg.n_sats, baseline_ecef_expectation.n_sats);
+            assert_eq!(msg.tow, baseline_ecef_expectation.tow);
+            assert_eq!(msg.x, baseline_ecef_expectation.x);
+            assert_eq!(msg.y, baseline_ecef_expectation.y);
+            assert_eq!(msg.z, baseline_ecef_expectation.z);
+        } else {
+            assert!(false);
+        }
+    }
+
+    #[test]
+    fn frame() {
+        let packet = [
+            0x55u8, 0x0b, 0x02, 0xd3, 0x88, 0x14, 0x28, 0xf4, 0x7a, 0x13, 0x96, 0x62, 0xee, 0xff,
+            0xbe, 0x40, 0x14, 0x00, 0xf6, 0xa3, 0x09, 0x00, 0x00, 0x00, 0x0e, 0x00, 0xdb, 0xbf,
+        ];
+        let baseline_ecef_expectation = ::messages::navigation::MsgBaselineECEF {
+            accuracy: 0,
+            flags: 0,
+            n_sats: 14,
+            tow: 326825000,
+            x: -1154410,
+            y: 1327294,
+            z: 631798,
+        };
+        let (sbp_result, _remaining_data) = ::parser::frame(&packet[..]);
+        assert!(sbp_result.is_ok());
+        if let ::messages::SBP::MsgBaselineECEF(msg) = sbp_result.unwrap() {
+            assert_eq!(msg.accuracy, baseline_ecef_expectation.accuracy);
+            assert_eq!(msg.flags, baseline_ecef_expectation.flags);
+            assert_eq!(msg.n_sats, baseline_ecef_expectation.n_sats);
+            assert_eq!(msg.tow, baseline_ecef_expectation.tow);
+            assert_eq!(msg.x, baseline_ecef_expectation.x);
+            assert_eq!(msg.y, baseline_ecef_expectation.y);
+            assert_eq!(msg.z, baseline_ecef_expectation.z);
+        } else {
+            assert!(false);
+        }
+    }
+
+    #[test]
+    fn parser() {
+        let packet = vec![
+            0x00, 0x11, 0x22, 0x55u8, 0x0b, 0x02, 0xd3, 0x88, 0x14, 0x28, 0xf4, 0x7a, 0x13, 0x96,
+            0x62, 0xee, 0xff, 0xbe, 0x40, 0x14, 0x00, 0xf6, 0xa3, 0x09, 0x00, 0x00, 0x00, 0x0e,
+            0x00, 0xdb, 0xbf, 0xde, 0xad, 0xbe, 0xef,
+        ];
+        let mut reader = std::io::Cursor::new(packet);
+        let baseline_ecef_expectation = ::messages::navigation::MsgBaselineECEF {
+            accuracy: 0,
+            flags: 0,
+            n_sats: 14,
+            tow: 326825000,
+            x: -1154410,
+            y: 1327294,
+            z: 631798,
+        };
+        let mut parser = ::parser::Parser::new();
+        // Iterate through the data until we hit something that is parsable
+        let sbp_result = parser.parse(&mut reader);
+        assert!(sbp_result.is_ok());
+        if let ::messages::SBP::MsgBaselineECEF(msg) = sbp_result.unwrap() {
+            assert_eq!(msg.accuracy, baseline_ecef_expectation.accuracy);
+            assert_eq!(msg.flags, baseline_ecef_expectation.flags);
+            assert_eq!(msg.n_sats, baseline_ecef_expectation.n_sats);
+            assert_eq!(msg.tow, baseline_ecef_expectation.tow);
+            assert_eq!(msg.x, baseline_ecef_expectation.x);
+            assert_eq!(msg.y, baseline_ecef_expectation.y);
+            assert_eq!(msg.z, baseline_ecef_expectation.z);
+        } else {
+            assert!(false);
+        }
     }
 }

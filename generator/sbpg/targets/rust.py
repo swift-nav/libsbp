@@ -70,9 +70,9 @@ def parse_type(field):
   """
   if field.type_id == 'string':
     if field.options.has_key('size'):
-      return "::read_string_limit(_buf, %s)" % field.options['size'].value
+      return "::parser::read_string_limit(_buf, %s)" % field.options['size'].value
     else:
-      return "::read_string(_buf)"
+      return "::parser::read_string(_buf)"
   elif field.type_id == 'u8':
     return '_buf.read_u8()'
   elif field.type_id == 's8':
@@ -85,9 +85,9 @@ def parse_type(field):
     t = field.options['fill'].value
     if t in TYPE_MAP.keys():
       if field.options.has_key('size'):
-        return '::read_%s_array_limit(_buf, %d)' % (t, field.options['size'].value)
+        return '::parser::read_%s_array_limit(_buf, %d)' % (t, field.options['size'].value)
       else:
-        return '::read_%s_array(_buf)' % t
+        return '::parser::read_%s_array(_buf)' % t
     else:
       if field.options.has_key('size'):
         return '%s::parse_array_limit(_buf, %d)' % (t, field.options['size'].value)

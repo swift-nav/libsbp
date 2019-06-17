@@ -44,7 +44,7 @@ impl (((m.identifier|camel_case))) {
     ((*- if m.sbp_id *))
     pub const TYPE: u16 = (((m.sbp_id)));
     ((*- endif *))
-    pub fn parse(_buf: &mut &[u8]) -> Result<(((m.identifier|camel_case))), ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<(((m.identifier|camel_case))), ::parser::MessageError> {
         Ok( (((m.identifier|camel_case))){
             ((*- for f in m.fields *))
             (((f.identifier))): (((f|parse_type)))?,
@@ -52,7 +52,7 @@ impl (((m.identifier|camel_case))) {
         } )
     }
     ((*- if not m.sbp_id *))
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<(((m.identifier|camel_case)))>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<(((m.identifier|camel_case)))>, ::parser::MessageError> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push( (((m.identifier|camel_case)))::parse(buf)? );
@@ -60,7 +60,7 @@ impl (((m.identifier|camel_case))) {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<(((m.identifier|camel_case)))>, ::Error> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<(((m.identifier|camel_case)))>, ::parser::MessageError> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push( (((m.identifier|camel_case)))::parse(buf)? );

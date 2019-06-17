@@ -20,7 +20,7 @@ fn main() {
         .expect("open failed");
 
     loop {
-        match sbp::client::framer::receive(&mut port) {
+        match sbp::client::parser::parse(&mut port) {
             Ok(SBP::MsgLog(x)) =>
                 println!("{}", x.text),
             Ok(SBP::MsgPosLLH(x)) =>
