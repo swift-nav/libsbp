@@ -111,7 +111,7 @@ PhaseBiasesContent.prototype.fieldSpec.push(['bias', 'writeInt32LE', 4]);
  * @field time GPSTime GNSS time of the STEC data
  * @field num_msgs number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
  * @field seq_num number (unsigned 8-bit int, 1 byte) Position of this message in the dataset
- * @field ssr_update_interval number (unsigned 16-bit int, 2 bytes) update interval in seconds
+ * @field ssr_update_interval number (unsigned 8-bit int, 1 byte) update interval
  * @field iod_ssr number (unsigned 8-bit int, 1 byte) range 0 - 15
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -131,13 +131,13 @@ STECHeader.prototype.parser = new Parser()
   .nest('time', { type: GPSTime.prototype.parser })
   .uint8('num_msgs')
   .uint8('seq_num')
-  .uint16('ssr_update_interval')
+  .uint8('ssr_update_interval')
   .uint8('iod_ssr');
 STECHeader.prototype.fieldSpec = [];
 STECHeader.prototype.fieldSpec.push(['time', GPSTime.prototype.fieldSpec]);
 STECHeader.prototype.fieldSpec.push(['num_msgs', 'writeUInt8', 1]);
 STECHeader.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
-STECHeader.prototype.fieldSpec.push(['ssr_update_interval', 'writeUInt16LE', 2]);
+STECHeader.prototype.fieldSpec.push(['ssr_update_interval', 'writeUInt8', 1]);
 STECHeader.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
 
 /**
@@ -150,7 +150,7 @@ STECHeader.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
  * @field time GPSTime GNSS time of the STEC data
  * @field num_msgs number (unsigned 16-bit int, 2 bytes) Number of messages in the dataset
  * @field seq_num number (unsigned 16-bit int, 2 bytes) Position of this message in the dataset
- * @field ssr_update_interval number (unsigned 16-bit int, 2 bytes) update interval in seconds
+ * @field ssr_update_interval number (unsigned 8-bit int, 1 byte) update interval
  * @field iod_ssr number (unsigned 8-bit int, 1 byte) range 0 - 15
  * @field tropo_quality number (unsigned 8-bit int, 1 byte) troposphere quality indicator
  *
@@ -171,14 +171,14 @@ GriddedCorrectionHeader.prototype.parser = new Parser()
   .nest('time', { type: GPSTime.prototype.parser })
   .uint16('num_msgs')
   .uint16('seq_num')
-  .uint16('ssr_update_interval')
+  .uint8('ssr_update_interval')
   .uint8('iod_ssr')
   .uint8('tropo_quality');
 GriddedCorrectionHeader.prototype.fieldSpec = [];
 GriddedCorrectionHeader.prototype.fieldSpec.push(['time', GPSTime.prototype.fieldSpec]);
 GriddedCorrectionHeader.prototype.fieldSpec.push(['num_msgs', 'writeUInt16LE', 2]);
 GriddedCorrectionHeader.prototype.fieldSpec.push(['seq_num', 'writeUInt16LE', 2]);
-GriddedCorrectionHeader.prototype.fieldSpec.push(['ssr_update_interval', 'writeUInt16LE', 2]);
+GriddedCorrectionHeader.prototype.fieldSpec.push(['ssr_update_interval', 'writeUInt8', 1]);
 GriddedCorrectionHeader.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
 GriddedCorrectionHeader.prototype.fieldSpec.push(['tropo_quality', 'writeUInt8', 1]);
 

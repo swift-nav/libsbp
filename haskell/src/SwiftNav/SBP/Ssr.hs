@@ -109,8 +109,8 @@ data STECHeader = STECHeader
     -- ^ Number of messages in the dataset
   , _sTECHeader_seq_num           :: !Word8
     -- ^ Position of this message in the dataset
-  , _sTECHeader_ssr_update_interval :: !Word16
-    -- ^ update interval in seconds
+  , _sTECHeader_ssr_update_interval :: !Word8
+    -- ^ update interval
   , _sTECHeader_iod_ssr           :: !Word8
     -- ^ range 0 - 15
   } deriving ( Show, Read, Eq )
@@ -120,7 +120,7 @@ instance Binary STECHeader where
     _sTECHeader_time <- get
     _sTECHeader_num_msgs <- getWord8
     _sTECHeader_seq_num <- getWord8
-    _sTECHeader_ssr_update_interval <- getWord16le
+    _sTECHeader_ssr_update_interval <- getWord8
     _sTECHeader_iod_ssr <- getWord8
     pure STECHeader {..}
 
@@ -128,7 +128,7 @@ instance Binary STECHeader where
     put _sTECHeader_time
     putWord8 _sTECHeader_num_msgs
     putWord8 _sTECHeader_seq_num
-    putWord16le _sTECHeader_ssr_update_interval
+    putWord8 _sTECHeader_ssr_update_interval
     putWord8 _sTECHeader_iod_ssr
 
 $(makeJSON "_sTECHeader_" ''STECHeader)
@@ -145,8 +145,8 @@ data GriddedCorrectionHeader = GriddedCorrectionHeader
     -- ^ Number of messages in the dataset
   , _griddedCorrectionHeader_seq_num           :: !Word16
     -- ^ Position of this message in the dataset
-  , _griddedCorrectionHeader_ssr_update_interval :: !Word16
-    -- ^ update interval in seconds
+  , _griddedCorrectionHeader_ssr_update_interval :: !Word8
+    -- ^ update interval
   , _griddedCorrectionHeader_iod_ssr           :: !Word8
     -- ^ range 0 - 15
   , _griddedCorrectionHeader_tropo_quality     :: !Word8
@@ -158,7 +158,7 @@ instance Binary GriddedCorrectionHeader where
     _griddedCorrectionHeader_time <- get
     _griddedCorrectionHeader_num_msgs <- getWord16le
     _griddedCorrectionHeader_seq_num <- getWord16le
-    _griddedCorrectionHeader_ssr_update_interval <- getWord16le
+    _griddedCorrectionHeader_ssr_update_interval <- getWord8
     _griddedCorrectionHeader_iod_ssr <- getWord8
     _griddedCorrectionHeader_tropo_quality <- getWord8
     pure GriddedCorrectionHeader {..}
@@ -167,7 +167,7 @@ instance Binary GriddedCorrectionHeader where
     put _griddedCorrectionHeader_time
     putWord16le _griddedCorrectionHeader_num_msgs
     putWord16le _griddedCorrectionHeader_seq_num
-    putWord16le _griddedCorrectionHeader_ssr_update_interval
+    putWord8 _griddedCorrectionHeader_ssr_update_interval
     putWord8 _griddedCorrectionHeader_iod_ssr
     putWord8 _griddedCorrectionHeader_tropo_quality
 
