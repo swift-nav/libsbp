@@ -71,9 +71,9 @@ definitions:
         type: u8
         desc: Position of this message in the dataset
     - ssr_update_interval:
-        type: u16
-        units: seconds
-        desc: update interval in seconds
+        type: u8
+        units: coded field
+        desc: update interval
     - iod_ssr:
         type: u8
         desc: range 0 - 15
@@ -95,9 +95,9 @@ definitions:
         type: u16
         desc: Position of this message in the dataset
     - ssr_update_interval:
-        type: u16
-        units: seconds
-        desc: update interval in seconds
+        type: u8
+        units: coded field
+        desc: update interval
     - iod_ssr:
         type: u8
         desc: range 0 - 15
