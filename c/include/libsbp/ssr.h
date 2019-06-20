@@ -66,7 +66,7 @@ typedef struct SBP_ATTR_PACKED {
   sbp_gps_time_t time;                   /**< GNSS time of the STEC data */
   u8 num_msgs;               /**< Number of messages in the dataset */
   u8 seq_num;                /**< Position of this message in the dataset */
-  u16 ssr_update_interval;    /**< update interval in seconds [seconds] */
+  u8 ssr_update_interval;    /**< update interval [coded field] */
   u8 iod_ssr;                /**< range 0 - 15 */
 } stec_header_t;
 
@@ -81,7 +81,7 @@ typedef struct SBP_ATTR_PACKED {
   sbp_gps_time_t time;                   /**< GNSS time of the STEC data */
   u16 num_msgs;               /**< Number of messages in the dataset */
   u16 seq_num;                /**< Position of this message in the dataset */
-  u16 ssr_update_interval;    /**< update interval in seconds [seconds] */
+  u8 ssr_update_interval;    /**< update interval [coded field] */
   u8 iod_ssr;                /**< range 0 - 15 */
   u8 tropo_quality;          /**< troposphere quality indicator [encoded value - see spec for details] */
 } gridded_correction_header_t;

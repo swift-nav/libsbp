@@ -159,7 +159,7 @@ is used to tie multiple SBP messages into a sequence.
     ret['num_msgs'] = __num_msgs
     (__seq_num, offset, length) = get_u8(buf, offset, length)
     ret['seq_num'] = __seq_num
-    (__ssr_update_interval, offset, length) = get_u16(buf, offset, length)
+    (__ssr_update_interval, offset, length) = get_u8(buf, offset, length)
     ret['ssr_update_interval'] = __ssr_update_interval
     (__iod_ssr, offset, length) = get_u8(buf, offset, length)
     ret['iod_ssr'] = __iod_ssr
@@ -185,8 +185,8 @@ is used to tie multiple SBP messages into a sequence.
     ret += 1
     # seq_num: u8
     ret += 1
-    # ssr_update_interval: u16
-    ret += 2
+    # ssr_update_interval: u8
+    ret += 1
     # iod_ssr: u8
     ret += 1
     return ret
@@ -221,7 +221,7 @@ be identified by the index.
     ret['num_msgs'] = __num_msgs
     (__seq_num, offset, length) = get_u16(buf, offset, length)
     ret['seq_num'] = __seq_num
-    (__ssr_update_interval, offset, length) = get_u16(buf, offset, length)
+    (__ssr_update_interval, offset, length) = get_u8(buf, offset, length)
     ret['ssr_update_interval'] = __ssr_update_interval
     (__iod_ssr, offset, length) = get_u8(buf, offset, length)
     ret['iod_ssr'] = __iod_ssr
@@ -250,8 +250,8 @@ be identified by the index.
     ret += 2
     # seq_num: u16
     ret += 2
-    # ssr_update_interval: u16
-    ret += 2
+    # ssr_update_interval: u8
+    ret += 1
     # iod_ssr: u8
     ret += 1
     # tropo_quality: u8

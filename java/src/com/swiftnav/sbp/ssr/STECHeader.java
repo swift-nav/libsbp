@@ -34,7 +34,7 @@ public class STECHeader extends SBPStruct {
     /** Position of this message in the dataset */
     public int seq_num;
     
-    /** update interval in seconds */
+    /** update interval */
     public int ssr_update_interval;
     
     /** range 0 - 15 */
@@ -49,7 +49,7 @@ public class STECHeader extends SBPStruct {
         time = new GPSTime().parse(parser);
         num_msgs = parser.getU8();
         seq_num = parser.getU8();
-        ssr_update_interval = parser.getU16();
+        ssr_update_interval = parser.getU8();
         iod_ssr = parser.getU8();
         return this;
     }
@@ -60,7 +60,7 @@ public class STECHeader extends SBPStruct {
         time.build(builder);
         builder.putU8(num_msgs);
         builder.putU8(seq_num);
-        builder.putU16(ssr_update_interval);
+        builder.putU8(ssr_update_interval);
         builder.putU8(iod_ssr);
     }
 

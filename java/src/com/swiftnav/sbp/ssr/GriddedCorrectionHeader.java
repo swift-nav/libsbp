@@ -34,7 +34,7 @@ public class GriddedCorrectionHeader extends SBPStruct {
     /** Position of this message in the dataset */
     public int seq_num;
     
-    /** update interval in seconds */
+    /** update interval */
     public int ssr_update_interval;
     
     /** range 0 - 15 */
@@ -52,7 +52,7 @@ public class GriddedCorrectionHeader extends SBPStruct {
         time = new GPSTime().parse(parser);
         num_msgs = parser.getU16();
         seq_num = parser.getU16();
-        ssr_update_interval = parser.getU16();
+        ssr_update_interval = parser.getU8();
         iod_ssr = parser.getU8();
         tropo_quality = parser.getU8();
         return this;
@@ -64,7 +64,7 @@ public class GriddedCorrectionHeader extends SBPStruct {
         time.build(builder);
         builder.putU16(num_msgs);
         builder.putU16(seq_num);
-        builder.putU16(ssr_update_interval);
+        builder.putU8(ssr_update_interval);
         builder.putU8(iod_ssr);
         builder.putU8(tropo_quality);
     }

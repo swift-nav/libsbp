@@ -144,7 +144,7 @@ is used to tie multiple SBP messages into a sequence.
   seq_num : int
     Position of this message in the dataset
   ssr_update_interval : int
-    update interval in seconds
+    update interval
   iod_ssr : int
     range 0 - 15
 
@@ -153,7 +153,7 @@ is used to tie multiple SBP messages into a sequence.
                      'time' / construct.Struct(GPSTime._parser),
                      'num_msgs' / construct.Int8ul,
                      'seq_num' / construct.Int8ul,
-                     'ssr_update_interval' / construct.Int16ul,
+                     'ssr_update_interval' / construct.Int8ul,
                      'iod_ssr' / construct.Int8ul,))
   __slots__ = [
                'time',
@@ -202,7 +202,7 @@ be identified by the index.
   seq_num : int
     Position of this message in the dataset
   ssr_update_interval : int
-    update interval in seconds
+    update interval
   iod_ssr : int
     range 0 - 15
   tropo_quality : int
@@ -213,7 +213,7 @@ be identified by the index.
                      'time' / construct.Struct(GPSTime._parser),
                      'num_msgs' / construct.Int16ul,
                      'seq_num' / construct.Int16ul,
-                     'ssr_update_interval' / construct.Int16ul,
+                     'ssr_update_interval' / construct.Int8ul,
                      'iod_ssr' / construct.Int8ul,
                      'tropo_quality' / construct.Int8ul,))
   __slots__ = [
