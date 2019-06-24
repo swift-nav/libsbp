@@ -46,7 +46,9 @@ public class MsgSsrPhaseBiases extends SBPMessage {
     /** GNSS signal identifier (16 bit) */
     public GnssSignal sid;
     
-    /** Update interval between consecutive corrections */
+    /** Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+ */
     public int update_interval;
     
     /** IOD of the SSR correction. A change of Issue Of Data

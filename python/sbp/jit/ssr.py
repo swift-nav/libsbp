@@ -37,7 +37,7 @@ class CodeBiasesContent(object):
 
   
   Code biases are to be added to pseudorange.
-The corrections are conform with typical RTCMv3 MT1059 and 1065.
+The corrections conform with typical RTCMv3 MT1059 and 1065.
 
 
   """
@@ -79,7 +79,7 @@ class PhaseBiasesContent(object):
 
   
   Phase biases are to be added to carrier phase measurements.
-The corrections are conform with typical RTCMv3 MT1059 and 1065.
+The corrections conform with typical RTCMv3 MT1059 and 1065.
 
 
   """
@@ -148,12 +148,13 @@ is used to tie multiple SBP messages into a sequence.
                'num_msgs',
                'seq_num',
                'ssr_update_interval',
+               'update_interval',
                'iod_ssr',
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
     ret = {}
-    (__time, offset, length) = GPSTime.parse_members(buf, offset, length)
+    (__time, offset, length) = GPSTimeSec.parse_members(buf, offset, length)
     ret['time'] = __time
     (__num_msgs, offset, length) = get_u8(buf, offset, length)
     ret['num_msgs'] = __num_msgs
@@ -161,6 +162,8 @@ is used to tie multiple SBP messages into a sequence.
     ret['seq_num'] = __seq_num
     (__ssr_update_interval, offset, length) = get_u8(buf, offset, length)
     ret['ssr_update_interval'] = __ssr_update_interval
+    (__update_interval, offset, length) = get_u8(buf, offset, length)
+    ret['update_interval'] = __update_interval
     (__iod_ssr, offset, length) = get_u8(buf, offset, length)
     ret['iod_ssr'] = __iod_ssr
     return ret, offset, length
@@ -173,19 +176,22 @@ is used to tie multiple SBP messages into a sequence.
     self.num_msgs = res['num_msgs']
     self.seq_num = res['seq_num']
     self.ssr_update_interval = res['ssr_update_interval']
+    self.update_interval = res['update_interval']
     self.iod_ssr = res['iod_ssr']
     return res, off, length
 
   @classmethod
   def _payload_size(self):
     ret = 0
-    # time: GPSTime
-    ret += GPSTime._payload_size()
+    # time: GPSTimeSec
+    ret += GPSTimeSec._payload_size()
     # num_msgs: u8
     ret += 1
     # seq_num: u8
     ret += 1
     # ssr_update_interval: u8
+    ret += 1
+    # update_interval: u8
     ret += 1
     # iod_ssr: u8
     ret += 1
@@ -208,25 +214,25 @@ be identified by the index.
   __slots__ = ['time',
                'num_msgs',
                'seq_num',
-               'ssr_update_interval',
+               'update_interval',
                'iod_ssr',
-               'tropo_quality',
+               'tropo_quality_indicator',
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
     ret = {}
-    (__time, offset, length) = GPSTime.parse_members(buf, offset, length)
+    (__time, offset, length) = GPSTimeSec.parse_members(buf, offset, length)
     ret['time'] = __time
     (__num_msgs, offset, length) = get_u16(buf, offset, length)
     ret['num_msgs'] = __num_msgs
     (__seq_num, offset, length) = get_u16(buf, offset, length)
     ret['seq_num'] = __seq_num
-    (__ssr_update_interval, offset, length) = get_u8(buf, offset, length)
-    ret['ssr_update_interval'] = __ssr_update_interval
+    (__update_interval, offset, length) = get_u8(buf, offset, length)
+    ret['update_interval'] = __update_interval
     (__iod_ssr, offset, length) = get_u8(buf, offset, length)
     ret['iod_ssr'] = __iod_ssr
-    (__tropo_quality, offset, length) = get_u8(buf, offset, length)
-    ret['tropo_quality'] = __tropo_quality
+    (__tropo_quality_indicator, offset, length) = get_u8(buf, offset, length)
+    ret['tropo_quality_indicator'] = __tropo_quality_indicator
     return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
@@ -236,25 +242,25 @@ be identified by the index.
     self.time = res['time']
     self.num_msgs = res['num_msgs']
     self.seq_num = res['seq_num']
-    self.ssr_update_interval = res['ssr_update_interval']
+    self.update_interval = res['update_interval']
     self.iod_ssr = res['iod_ssr']
-    self.tropo_quality = res['tropo_quality']
+    self.tropo_quality_indicator = res['tropo_quality_indicator']
     return res, off, length
 
   @classmethod
   def _payload_size(self):
     ret = 0
-    # time: GPSTime
-    ret += GPSTime._payload_size()
+    # time: GPSTimeSec
+    ret += GPSTimeSec._payload_size()
     # num_msgs: u16
     ret += 2
     # seq_num: u16
     ret += 2
-    # ssr_update_interval: u8
+    # update_interval: u8
     ret += 1
     # iod_ssr: u8
     ret += 1
-    # tropo_quality: u8
+    # tropo_quality_indicator: u8
     ret += 1
     return ret
   
@@ -266,7 +272,7 @@ class STECSatElement(object):
   of its fields.
 
   
-  STEC for the given satellite.
+  STEC polynomial for the given satellite.
 
   """
   __slots__ = ['sv_id',
@@ -312,7 +318,7 @@ class TroposphericDelayCorrection(object):
   of its fields.
 
   
-  Contains wet vertical and hydrostatic vertical delay
+  Troposphere delays at the grid point.
 
 
   """
@@ -353,7 +359,7 @@ class STECResidual(object):
   of its fields.
 
   
-  STEC residual
+  STEC residual for the given satellite at the grid point.
 
   """
   __slots__ = ['sv_id',
@@ -393,14 +399,14 @@ class GridElement(object):
   of its fields.
 
   
-  Contains one tropo datum, plus STEC residuals for each space
-vehicle
+  Contains one tropo delay, plus STEC residuals for each satellite at the
+grid point.
 
 
   """
   __slots__ = ['index',
                'tropo_delay_correction',
-               'STEC_residuals',
+               'stec_residuals',
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
@@ -409,8 +415,8 @@ vehicle
     ret['index'] = __index
     (__tropo_delay_correction, offset, length) = TroposphericDelayCorrection.parse_members(buf, offset, length)
     ret['tropo_delay_correction'] = __tropo_delay_correction
-    (__STEC_residuals, offset, length) = get_array(STECResidual.parse_members)(buf, offset, length)
-    ret['STEC_residuals'] = __STEC_residuals
+    (__stec_residuals, offset, length) = get_array(STECResidual.parse_members)(buf, offset, length)
+    ret['stec_residuals'] = __stec_residuals
     return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
@@ -419,7 +425,7 @@ vehicle
       return {}, offset, length
     self.index = res['index']
     self.tropo_delay_correction = res['tropo_delay_correction']
-    self.STEC_residuals = res['STEC_residuals']
+    self.stec_residuals = res['stec_residuals']
     return res, off, length
 
   @classmethod
@@ -429,7 +435,7 @@ vehicle
     ret += 2
     # tropo_delay_correction: TroposphericDelayCorrection
     ret += TroposphericDelayCorrection._payload_size()
-    # STEC_residuals: array of STECResidual
+    # stec_residuals: array of STECResidual
     ret += 247
     return ret
   
@@ -441,7 +447,7 @@ class GridDefinitionHeader(object):
   of its fields.
 
   
-  Defines the grid for STEC and tropo grid messages.
+  Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
 Also includes an RLE encoded validity list.
 
 
@@ -895,9 +901,9 @@ class MsgSsrStecCorrection(SBP):
 
   
   The STEC per space vehicle, given as polynomial approximation for
-a given grid.  This should be combined with SSR-GriddedCorrection
+a given grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION
 message to get the state space representation of the atmospheric
-delay.
+delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
 
 
   """
@@ -940,6 +946,7 @@ class MsgSsrGriddedCorrection(SBP):
 
   
   STEC residuals are per space vehicle, tropo is not.
+It is typically equivalent to the QZSS CLAS Sub Type 9 messages
 
 
   """
