@@ -25,8 +25,8 @@ import com.swiftnav.sbp.SBPStruct;
 
 public class STECHeader extends SBPStruct {
     
-    /** GNSS time of the STEC data */
-    public GPSTime time;
+    /** GNSS reference time of the correction */
+    public GPSTimeSec time;
     
     /** Number of messages in the dataset */
     public int num_msgs;
@@ -37,7 +37,15 @@ public class STECHeader extends SBPStruct {
     /** update interval */
     public int ssr_update_interval;
     
-    /** range 0 - 15 */
+    /** Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+ */
+    public int update_interval;
+    
+    /** IOD of the SSR correction. A change of Issue Of Data
+SSR is used to indicate a change in the SSR
+generating configuration.
+ */
     public int iod_ssr;
     
 
@@ -46,10 +54,11 @@ public class STECHeader extends SBPStruct {
     @Override
     public STECHeader parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        time = new GPSTime().parse(parser);
+        time = new GPSTimeSec().parse(parser);
         num_msgs = parser.getU8();
         seq_num = parser.getU8();
         ssr_update_interval = parser.getU8();
+        update_interval = parser.getU8();
         iod_ssr = parser.getU8();
         return this;
     }
@@ -61,6 +70,7 @@ public class STECHeader extends SBPStruct {
         builder.putU8(num_msgs);
         builder.putU8(seq_num);
         builder.putU8(ssr_update_interval);
+        builder.putU8(update_interval);
         builder.putU8(iod_ssr);
     }
 
@@ -71,6 +81,7 @@ public class STECHeader extends SBPStruct {
         obj.put("num_msgs", num_msgs);
         obj.put("seq_num", seq_num);
         obj.put("ssr_update_interval", ssr_update_interval);
+        obj.put("update_interval", update_interval);
         obj.put("iod_ssr", iod_ssr);
         return obj;
     }

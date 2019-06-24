@@ -25,14 +25,14 @@ import com.swiftnav.sbp.SBPStruct;
 
 public class GridElement extends SBPStruct {
     
-    /** index of the grid point */
+    /** Index of the grid point */
     public int index;
     
-    /** Wet and Hydrostatic Vertical Delay */
+    /** Wet and hydrostatic vertical delays */
     public TroposphericDelayCorrection tropo_delay_correction;
     
-    /** STEC Residual for the given space vehicle */
-    public STECResidual[] STEC_residuals;
+    /** STEC residuals for each satellite */
+    public STECResidual[] stec_residuals;
     
 
     public GridElement () {}
@@ -42,7 +42,7 @@ public class GridElement extends SBPStruct {
         /* Parse fields from binary */
         index = parser.getU16();
         tropo_delay_correction = new TroposphericDelayCorrection().parse(parser);
-        STEC_residuals = parser.getArray(STECResidual.class);
+        stec_residuals = parser.getArray(STECResidual.class);
         return this;
     }
 
@@ -51,7 +51,7 @@ public class GridElement extends SBPStruct {
         /* Build fields into binary */
         builder.putU16(index);
         tropo_delay_correction.build(builder);
-        builder.putArray(STEC_residuals);
+        builder.putArray(stec_residuals);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class GridElement extends SBPStruct {
         JSONObject obj = new JSONObject();
         obj.put("index", index);
         obj.put("tropo_delay_correction", tropo_delay_correction.toJSON());
-        obj.put("STEC_residuals", SBPStruct.toJSONArray(STEC_residuals));
+        obj.put("stec_residuals", SBPStruct.toJSONArray(stec_residuals));
         return obj;
     }
 }
