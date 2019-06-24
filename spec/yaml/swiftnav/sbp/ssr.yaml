@@ -427,7 +427,7 @@ definitions:
     short_desc: Slant Total Electron Content
     desc: |
       The STEC per space vehicle, given as polynomial approximation for
-      a given grid area.  This should be combined with MSG_SSR_GRIDDED_CORRECTION
+      a given grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION
       message to get the state space representation of the atmospheric
       delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
     fields:
