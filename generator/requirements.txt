@@ -1,5 +1,5 @@
 Jinja2
-ruamel.yaml
+pyyaml
 coverage
 docutils
 flake8

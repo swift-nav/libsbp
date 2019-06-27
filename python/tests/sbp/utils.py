@@ -17,9 +17,7 @@ from sbp.msg import SBP
 from sbp.table import dispatch, _SBP_TABLE
 import base64
 import json
-from ruamel.yaml import YAML
-
-yaml = YAML(typ='safe')
+import yaml
 
 def _encoded_string(s):
   """Encode the string-like argument as bytes if suitable"""
