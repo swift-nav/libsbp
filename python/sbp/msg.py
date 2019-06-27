@@ -21,7 +21,6 @@ from sbp.constants import SENDER_ID as _SENDER_ID
 from sbp.constants import SBP_PREAMBLE as _SBP_PREAMBLE
 from sbp.constants import crc16_tab
 
-import numba as nb
 import numpy as np
 
 from pkgutil import iter_modules

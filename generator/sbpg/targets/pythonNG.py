@@ -22,17 +22,17 @@ import copy
 
 TEMPLATE_NAME = "sbp_numba.py.j2"
 
-NUMBA_TYPE = {
-  'u8': 'u1',
-  'u16': 'u2',
-  'u32': 'u4',
-  'u64': 'u8',
-  's8': 'i1',
-  's16': 'i2',
-  's32': 'i4',
-  's64': 'i8',
-  'float': 'f4',
-  'double': 'f8',
+NUMPY_TYPE = {
+  'u8': 'uint8',
+  'u16': 'uint16',
+  'u32': 'uint32',
+  'u64': 'uint64',
+  's8': 'int8',
+  's16': 'int16',
+  's32': 'int32',
+  's64': 'int64',
+  'float': 'float32',
+  'double': 'float64',
 }
 
 NUMBA_GET_FN = {
@@ -81,7 +81,7 @@ def is_array():
 
 def numba_type(f):
   if f.type_id == 'float':
-    return 'judicious_round(nb.' + NUMBA_TYPE[f.type_id] + \
+    return 'judicious_round(np.' + NUMPY_TYPE[f.type_id] + \
       '(__' + f.identifier + ')) if SBP.judicious_rounding else __' + f.identifier
   else:
     return '__' + f.identifier
@@ -131,7 +131,7 @@ def numba_format(f):
       el_size = NUMBA_TY_BYTES[t]
       if f.options['fill'].value == 'float':
         return "get_fixed_array(%s, %d, %d, %s if SBP.judicious_rounding else None)" \
-          % (fill_func, count, el_size, 'nb.f4')
+          % (fill_func, count, el_size, 'np.float32')
       else:
         return "get_fixed_array(%s, %d, %d)" % (fill_func, count, el_size)
     else:

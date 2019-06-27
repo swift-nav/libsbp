@@ -25,7 +25,9 @@ CLASSIFIERS = [
   'Topic :: Scientific/Engineering :: Interface Engine/Protocol Translator',
   'Topic :: Software Development :: Libraries :: Python Modules',
   'Programming Language :: Python :: 2.7',
+  'Programming Language :: Python :: 3.4',
   'Programming Language :: Python :: 3.5',
+  'Programming Language :: Python :: 3.6',
   'Programming Language :: Python :: 3.7',
 ]
 
@@ -182,8 +184,6 @@ if __name__ == "__main__":
     if not os.environ.get('LIBSBP_BUILD_ANY', None):
         from sbp.jit.parse import cc
         ext_modules = [cc.distutils_extension()]
-
-    INSTALL_REQUIRES.extend(SETUP_REQUIRES)
 
     setup(name='sbp',
           version=sbp_version,
