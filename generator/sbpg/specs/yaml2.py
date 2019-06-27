@@ -22,8 +22,7 @@ import sbpg.test_structs as sbp_test
 import sys
 import inspect
 
-from ruamel.yaml import YAML
-yaml = YAML(typ='safe')
+import yaml
 
 ##############################################################################
 #

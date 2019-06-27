@@ -20,7 +20,6 @@ setup(name='sbp_gen',
       url='https://github.com/swift-nav/libsbp/generator',
       install_requires=[
           'Jinja2',
-          'ruamel.yaml',
           'voluptuous'
       ],
       keywords='',
