@@ -17,6 +17,7 @@ from pybase64 import standard_b64encode
 import decimal as dec
 
 import numpy as np
+import ctypes as ct
 
 from sbp.constants import SENDER_ID as _SENDER_ID
 from sbp.constants import SBP_PREAMBLE as _SBP_PREAMBLE
