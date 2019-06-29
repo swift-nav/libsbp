@@ -16,7 +16,7 @@ Satellite acquisition messages from the device.
 
 import json
 
-import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -54,11 +54,11 @@ ratio.
   def parse_members(cls, buf, offset, length):
     ret = {}
     (__cn0, offset, length) = get_f32(buf, offset, length)
-    ret['cn0'] = judicious_round(nb.f4(__cn0)) if SBP.judicious_rounding else __cn0
+    ret['cn0'] = judicious_round(np.float32(__cn0)) if SBP.judicious_rounding else __cn0
     (__cp, offset, length) = get_f32(buf, offset, length)
-    ret['cp'] = judicious_round(nb.f4(__cp)) if SBP.judicious_rounding else __cp
+    ret['cp'] = judicious_round(np.float32(__cp)) if SBP.judicious_rounding else __cp
     (__cf, offset, length) = get_f32(buf, offset, length)
-    ret['cf'] = judicious_round(nb.f4(__cf)) if SBP.judicious_rounding else __cf
+    ret['cf'] = judicious_round(np.float32(__cf)) if SBP.judicious_rounding else __cf
     (__sid, offset, length) = GnssSignal.parse_members(buf, offset, length)
     ret['sid'] = __sid
     return ret, offset, length
@@ -107,11 +107,11 @@ class MsgAcqResultDepC(SBP):
   def parse_members(cls, buf, offset, length):
     ret = {}
     (__cn0, offset, length) = get_f32(buf, offset, length)
-    ret['cn0'] = judicious_round(nb.f4(__cn0)) if SBP.judicious_rounding else __cn0
+    ret['cn0'] = judicious_round(np.float32(__cn0)) if SBP.judicious_rounding else __cn0
     (__cp, offset, length) = get_f32(buf, offset, length)
-    ret['cp'] = judicious_round(nb.f4(__cp)) if SBP.judicious_rounding else __cp
+    ret['cp'] = judicious_round(np.float32(__cp)) if SBP.judicious_rounding else __cp
     (__cf, offset, length) = get_f32(buf, offset, length)
-    ret['cf'] = judicious_round(nb.f4(__cf)) if SBP.judicious_rounding else __cf
+    ret['cf'] = judicious_round(np.float32(__cf)) if SBP.judicious_rounding else __cf
     (__sid, offset, length) = GnssSignalDep.parse_members(buf, offset, length)
     ret['sid'] = __sid
     return ret, offset, length
@@ -160,11 +160,11 @@ class MsgAcqResultDepB(SBP):
   def parse_members(cls, buf, offset, length):
     ret = {}
     (__snr, offset, length) = get_f32(buf, offset, length)
-    ret['snr'] = judicious_round(nb.f4(__snr)) if SBP.judicious_rounding else __snr
+    ret['snr'] = judicious_round(np.float32(__snr)) if SBP.judicious_rounding else __snr
     (__cp, offset, length) = get_f32(buf, offset, length)
-    ret['cp'] = judicious_round(nb.f4(__cp)) if SBP.judicious_rounding else __cp
+    ret['cp'] = judicious_round(np.float32(__cp)) if SBP.judicious_rounding else __cp
     (__cf, offset, length) = get_f32(buf, offset, length)
-    ret['cf'] = judicious_round(nb.f4(__cf)) if SBP.judicious_rounding else __cf
+    ret['cf'] = judicious_round(np.float32(__cf)) if SBP.judicious_rounding else __cf
     (__sid, offset, length) = GnssSignalDep.parse_members(buf, offset, length)
     ret['sid'] = __sid
     return ret, offset, length
@@ -213,11 +213,11 @@ class MsgAcqResultDepA(SBP):
   def parse_members(cls, buf, offset, length):
     ret = {}
     (__snr, offset, length) = get_f32(buf, offset, length)
-    ret['snr'] = judicious_round(nb.f4(__snr)) if SBP.judicious_rounding else __snr
+    ret['snr'] = judicious_round(np.float32(__snr)) if SBP.judicious_rounding else __snr
     (__cp, offset, length) = get_f32(buf, offset, length)
-    ret['cp'] = judicious_round(nb.f4(__cp)) if SBP.judicious_rounding else __cp
+    ret['cp'] = judicious_round(np.float32(__cp)) if SBP.judicious_rounding else __cp
     (__cf, offset, length) = get_f32(buf, offset, length)
-    ret['cf'] = judicious_round(nb.f4(__cf)) if SBP.judicious_rounding else __cf
+    ret['cf'] = judicious_round(np.float32(__cf)) if SBP.judicious_rounding else __cf
     (__prn, offset, length) = get_u8(buf, offset, length)
     ret['prn'] = __prn
     return ret, offset, length

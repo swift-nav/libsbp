@@ -19,7 +19,7 @@ may no longer be used.
 
 import json
 
-import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -212,21 +212,16 @@ Ambiguity Resolution (IAR) process.
     ret += 1
     return ret
   
-SBP_MSG_INIT_BASE = 0x0023
-class MsgInitBase(SBP):
-  """SBP class for message MSG_INIT_BASE (0x0023).
+SBP_MSG_INIT_BASE_DEP = 0x0023
+class MsgInitBaseDep(SBP):
+  """SBP class for message MSG_INIT_BASE_DEP (0x0023).
 
-  You can have MSG_INIT_BASE inherit its fields directly
+  You can have MSG_INIT_BASE_DEP inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
-  This message initializes the integer ambiguity resolution (IAR)
-process on the Piksi to use an assumed baseline position between
-the base station and rover receivers. Warns via MSG_PRINT if
-there aren't a shared minimum number (4) of satellite
-observations between the two.
-
+  Deprecated
 
   """
   __slots__ = []
@@ -311,9 +306,9 @@ be normalized.
   def parse_members(cls, buf, offset, length):
     ret = {}
     (__tx_throughput, offset, length) = get_f32(buf, offset, length)
-    ret['tx_throughput'] = judicious_round(nb.f4(__tx_throughput)) if SBP.judicious_rounding else __tx_throughput
+    ret['tx_throughput'] = judicious_round(np.float32(__tx_throughput)) if SBP.judicious_rounding else __tx_throughput
     (__rx_throughput, offset, length) = get_f32(buf, offset, length)
-    ret['rx_throughput'] = judicious_round(nb.f4(__rx_throughput)) if SBP.judicious_rounding else __rx_throughput
+    ret['rx_throughput'] = judicious_round(np.float32(__rx_throughput)) if SBP.judicious_rounding else __rx_throughput
     (__crc_error_count, offset, length) = get_u16(buf, offset, length)
     ret['crc_error_count'] = __crc_error_count
     (__io_error_count, offset, length) = get_u16(buf, offset, length)
@@ -1132,7 +1127,7 @@ of the modem and its various parameters.
     (__signal_strength, offset, length) = get_s8(buf, offset, length)
     ret['signal_strength'] = __signal_strength
     (__signal_error_rate, offset, length) = get_f32(buf, offset, length)
-    ret['signal_error_rate'] = judicious_round(nb.f4(__signal_error_rate)) if SBP.judicious_rounding else __signal_error_rate
+    ret['signal_error_rate'] = judicious_round(np.float32(__signal_error_rate)) if SBP.judicious_rounding else __signal_error_rate
     (__reserved, offset, length) = get_array(get_u8)(buf, offset, length)
     ret['reserved'] = __reserved
     return ret, offset, length
@@ -1185,13 +1180,13 @@ class MsgSpecanDep(SBP):
     (__t, offset, length) = GPSTimeDep.parse_members(buf, offset, length)
     ret['t'] = __t
     (__freq_ref, offset, length) = get_f32(buf, offset, length)
-    ret['freq_ref'] = judicious_round(nb.f4(__freq_ref)) if SBP.judicious_rounding else __freq_ref
+    ret['freq_ref'] = judicious_round(np.float32(__freq_ref)) if SBP.judicious_rounding else __freq_ref
     (__freq_step, offset, length) = get_f32(buf, offset, length)
-    ret['freq_step'] = judicious_round(nb.f4(__freq_step)) if SBP.judicious_rounding else __freq_step
+    ret['freq_step'] = judicious_round(np.float32(__freq_step)) if SBP.judicious_rounding else __freq_step
     (__amplitude_ref, offset, length) = get_f32(buf, offset, length)
-    ret['amplitude_ref'] = judicious_round(nb.f4(__amplitude_ref)) if SBP.judicious_rounding else __amplitude_ref
+    ret['amplitude_ref'] = judicious_round(np.float32(__amplitude_ref)) if SBP.judicious_rounding else __amplitude_ref
     (__amplitude_unit, offset, length) = get_f32(buf, offset, length)
-    ret['amplitude_unit'] = judicious_round(nb.f4(__amplitude_unit)) if SBP.judicious_rounding else __amplitude_unit
+    ret['amplitude_unit'] = judicious_round(np.float32(__amplitude_unit)) if SBP.judicious_rounding else __amplitude_unit
     (__amplitude_value, offset, length) = get_array(get_u8)(buf, offset, length)
     ret['amplitude_value'] = __amplitude_value
     return ret, offset, length
@@ -1257,13 +1252,13 @@ class MsgSpecan(SBP):
     (__t, offset, length) = GPSTime.parse_members(buf, offset, length)
     ret['t'] = __t
     (__freq_ref, offset, length) = get_f32(buf, offset, length)
-    ret['freq_ref'] = judicious_round(nb.f4(__freq_ref)) if SBP.judicious_rounding else __freq_ref
+    ret['freq_ref'] = judicious_round(np.float32(__freq_ref)) if SBP.judicious_rounding else __freq_ref
     (__freq_step, offset, length) = get_f32(buf, offset, length)
-    ret['freq_step'] = judicious_round(nb.f4(__freq_step)) if SBP.judicious_rounding else __freq_step
+    ret['freq_step'] = judicious_round(np.float32(__freq_step)) if SBP.judicious_rounding else __freq_step
     (__amplitude_ref, offset, length) = get_f32(buf, offset, length)
-    ret['amplitude_ref'] = judicious_round(nb.f4(__amplitude_ref)) if SBP.judicious_rounding else __amplitude_ref
+    ret['amplitude_ref'] = judicious_round(np.float32(__amplitude_ref)) if SBP.judicious_rounding else __amplitude_ref
     (__amplitude_unit, offset, length) = get_f32(buf, offset, length)
-    ret['amplitude_unit'] = judicious_round(nb.f4(__amplitude_unit)) if SBP.judicious_rounding else __amplitude_unit
+    ret['amplitude_unit'] = judicious_round(np.float32(__amplitude_unit)) if SBP.judicious_rounding else __amplitude_unit
     (__amplitude_value, offset, length) = get_array(get_u8)(buf, offset, length)
     ret['amplitude_value'] = __amplitude_value
     return ret, offset, length
@@ -1356,7 +1351,7 @@ msg_classes = {
   0x00C0: MsgCwResults,
   0x00C1: MsgCwStart,
   0x0022: MsgResetFilters,
-  0x0023: MsgInitBase,
+  0x0023: MsgInitBaseDep,
   0x0017: MsgThreadState,
   0x001D: MsgUartState,
   0x0018: MsgUartStateDepa,

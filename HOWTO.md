@@ -188,7 +188,7 @@ The Linux x86 build of libsbp can be done throuch docker via the "manylinux"
 project by running the following set of commands:
 ```
 docker build -f python/Dockerfile.x86_64 -t libsbp-amd64 .
-docker run -v linux-amd64-root:/root -v $PWD:/work --rm -it libsbp-amd64 /bin/bash
+docker run -v libsbp-amd64-root:/root -v $PWD:/work --rm -it libsbp-amd64 /bin/bash
 cd /work
 make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
 ```
@@ -197,7 +197,7 @@ The Linux ARM build of libsbp can be done through docker via the following set
 of commands:
 ```
 docker build -f python/Dockerfile.arm -t libsbp-arm .
-docker run -v linux-arm-root:/root -v $PWD:/work --rm -it libsbp-arm /bin/bash
+docker run -v libsbp-arm-root:/root -v $PWD:/work --rm -it swiftnav/piksi-tools-stretch-arm:2019.06.25 libsbp-arm /bin/bash
 cd /work
 make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
 ```

@@ -32,7 +32,7 @@ SBP_PACK_START
 /** SSR code biases corrections for a particular satellite.
  *
  * Code biases are to be added to pseudorange.
- * The corrections are conform with typical RTCMv3 MT1059 and 1065.
+ * The corrections conform with typical RTCMv3 MT1059 and 1065.
  */
 typedef struct SBP_ATTR_PACKED {
   u8 code;     /**< Signal constellation, band and code */
@@ -43,7 +43,7 @@ typedef struct SBP_ATTR_PACKED {
 /** SSR phase biases corrections for a particular satellite.
  *
  * Phase biases are to be added to carrier phase measurements.
- * The corrections are conform with typical RTCMv3 MT1059 and 1065.
+ * The corrections conform with typical RTCMv3 MT1059 and 1065.
  */
 typedef struct SBP_ATTR_PACKED {
   u8 code;                          /**< Signal constellation, band and code */
@@ -63,11 +63,17 @@ Increased for every discontinuity in phase.
  * is used to tie multiple SBP messages into a sequence.
  */
 typedef struct SBP_ATTR_PACKED {
-  sbp_gps_time_t time;                   /**< GNSS time of the STEC data */
+  gps_time_sec_t time;                   /**< GNSS reference time of the correction */
   u8 num_msgs;               /**< Number of messages in the dataset */
   u8 seq_num;                /**< Position of this message in the dataset */
-  u16 ssr_update_interval;    /**< update interval in seconds [seconds] */
-  u8 iod_ssr;                /**< range 0 - 15 */
+  u8 ssr_update_interval;    /**< update interval [coded field] */
+  u8 update_interval;        /**< Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+ */
+  u8 iod_ssr;                /**< IOD of the SSR correction. A change of Issue Of Data
+SSR is used to indicate a change in the SSR
+generating configuration.
+ */
 } stec_header_t;
 
 
@@ -78,39 +84,49 @@ typedef struct SBP_ATTR_PACKED {
  * be identified by the index.
  */
 typedef struct SBP_ATTR_PACKED {
-  sbp_gps_time_t time;                   /**< GNSS time of the STEC data */
-  u16 num_msgs;               /**< Number of messages in the dataset */
-  u16 seq_num;                /**< Position of this message in the dataset */
-  u16 ssr_update_interval;    /**< update interval in seconds [seconds] */
-  u8 iod_ssr;                /**< range 0 - 15 */
-  u8 tropo_quality;          /**< troposphere quality indicator [encoded value - see spec for details] */
+  gps_time_sec_t time;                       /**< GNSS reference time of the correction */
+  u16 num_msgs;                   /**< Number of messages in the dataset */
+  u16 seq_num;                    /**< Position of this message in the dataset */
+  u8 update_interval;            /**< Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+ */
+  u8 iod_ssr;                    /**< IOD of the SSR correction. A change of Issue Of Data
+SSR is used to indicate a change in the SSR
+generating configuration.
+ */
+  u8 tropo_quality_indicator;    /**< Quality of the troposphere data. Encoded following RTCM DF389
+specifcation but as TECU instead of m.
+ */
 } gridded_correction_header_t;
 
 
 /** None
  *
-* STEC for the given satellite.
+* STEC polynomial for the given satellite.
  */
 typedef struct SBP_ATTR_PACKED {
   sv_id_t sv_id;                     /**< Unique space vehicle identifier */
-  u8 stec_quality_indicator;    /**< quality of STEC data [encoded value - see spec for details] */
-  s16 stec_coeff[4];             /**< coefficents of the STEC polynomial */
+  u8 stec_quality_indicator;    /**< Quality of the STEC data. Encoded following RTCM DF389 specifcation
+but as TECU instead of m.
+ */
+  s16 stec_coeff[4];             /**< Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
+ [C00 = 0.05 TECU, others = 0.02 TECU/deg] */
 } stec_sat_element_t;
 
 
-/** troposphere delay correction
+/** None
  *
- * Contains wet vertical and hydrostatic vertical delay
+ * Troposphere delays at the grid point.
  */
 typedef struct SBP_ATTR_PACKED {
-  s16 hydro;    /**< hydrostatic vertical delay [0.4 mm (add 2.3 m to get actual vert hydro delay)] */
-  s8 wet;      /**< wet vertical delay [0.4 mm (add 0.252 m to get actual vert wet delay)] */
+  s16 hydro;    /**< Hydrostatic vertical delay [0.4 mm (add 2.3 m to get actual vert hydro delay)] */
+  s8 wet;      /**< Wet vertical delay [0.4 mm (add 0.252 m to get actual vert wet delay)] */
 } tropospheric_delay_correction_t;
 
 
 /** None
  *
-* STEC residual
+* STEC residual for the given satellite at the grid point.
  */
 typedef struct SBP_ATTR_PACKED {
   sv_id_t sv_id;       /**< space vehicle identifier */
@@ -118,21 +134,21 @@ typedef struct SBP_ATTR_PACKED {
 } stec_residual_t;
 
 
-/** Grid datum for troposphere and STEC residuals
+/** Correction data for a single grid point.
  *
- * Contains one tropo datum, plus STEC residuals for each space
- * vehicle
+ * Contains one tropo delay, plus STEC residuals for each satellite at the
+ * grid point.
  */
 typedef struct SBP_ATTR_PACKED {
-  u16 index;                     /**< index of the grid point */
-  tropospheric_delay_correction_t tropo_delay_correction;    /**< Wet and Hydrostatic Vertical Delay */
-  stec_residual_t STEC_residuals[0];         /**< STEC Residual for the given space vehicle */
+  u16 index;                     /**< Index of the grid point */
+  tropospheric_delay_correction_t tropo_delay_correction;    /**< Wet and hydrostatic vertical delays */
+  stec_residual_t stec_residuals[0];         /**< STEC residuals for each satellite */
 } grid_element_t;
 
 
-/** Defines the grid for STEC and tropo grid messages
+/** Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
  *
- * Defines the grid for STEC and tropo grid messages.
+ * Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
  * Also includes an RLE encoded validity list.
  */
 typedef struct SBP_ATTR_PACKED {
@@ -156,7 +172,9 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;               /**< GNSS reference time of the correction */
   sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
-  u8 update_interval;    /**< Update interval between consecutive corrections [s] */
+  u8 update_interval;    /**< Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+ */
   u8 iod_ssr;            /**< IOD of the SSR correction. A change of Issue Of Data
 SSR is used to indicate a change in the SSR
 generating configuration
@@ -185,7 +203,9 @@ generating configuration
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;               /**< GNSS reference time of the correction */
   sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
-  u8 update_interval;    /**< Update interval between consecutive corrections [s] */
+  u8 update_interval;    /**< Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+ */
   u8 iod_ssr;            /**< IOD of the SSR correction. A change of Issue Of Data
 SSR is used to indicate a change in the SSR
 generating configuration
@@ -214,7 +234,9 @@ generating configuration
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;               /**< GNSS reference time of the correction */
   sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
-  u8 update_interval;    /**< Update interval between consecutive corrections [s] */
+  u8 update_interval;    /**< Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+ */
   u8 iod_ssr;            /**< IOD of the SSR correction. A change of Issue Of Data
 SSR is used to indicate a change in the SSR
 generating configuration
@@ -236,7 +258,9 @@ generating configuration
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;               /**< GNSS reference time of the correction */
   sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
-  u8 update_interval;    /**< Update interval between consecutive corrections [s] */
+  u8 update_interval;    /**< Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+ */
   u8 iod_ssr;            /**< IOD of the SSR correction. A change of Issue Of Data
 SSR is used to indicate a change in the SSR
 generating configuration
@@ -256,9 +280,9 @@ satellite being tracked.
 /** Slant Total Electron Content
  *
  * The STEC per space vehicle, given as polynomial approximation for
- * a given grid.  This should be combined with SSR-GriddedCorrection
+ * a given grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION
  * message to get the state space representation of the atmospheric
- * delay.
+ * delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
  */
 #define SBP_MSG_SSR_STEC_CORRECTION    0x05EB
 typedef struct SBP_ATTR_PACKED {
@@ -270,6 +294,7 @@ typedef struct SBP_ATTR_PACKED {
 /** Gridded troposphere and STEC residuals
  *
  * STEC residuals are per space vehicle, tropo is not.
+ * It is typically equivalent to the QZSS CLAS Sub Type 9 messages
  */
 #define SBP_MSG_SSR_GRIDDED_CORRECTION 0x05F0
 typedef struct SBP_ATTR_PACKED {

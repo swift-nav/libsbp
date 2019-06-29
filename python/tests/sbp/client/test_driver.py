@@ -9,7 +9,7 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-from sbp.client.drivers.pyserial_driver import PySerialDriver
+from sbp.client.drivers.network_drivers import TCPDriver
 from sbp.client import Handler, Framer
 from sbp.logging import MsgPrintDep, MsgLog, SBP_MSG_PRINT_DEP
 import pytest
@@ -39,8 +39,6 @@ def tcp_server(handler):
 def test_tcp_logger():
   handler = tcp_handler(MsgPrintDep(text=b'abc').to_binary())
   ip, port = tcp_server(handler)
-  port = "socket://%s:%s" % (ip, port)
-  baud = 115200
   t0 = time.time()
   sleep = 0.1
   timeout = 5.0
@@ -53,7 +51,7 @@ def test_tcp_logger():
     assert s.length==3
     assert s.payload==b'abc'
     assert s.crc==0xDAEE
-  with PySerialDriver(port, baud) as driver:
+  with TCPDriver(ip, port) as driver:
     with Handler(Framer(driver.read, None, verbose=False), autostart=False) as link:
       link.add_callback(assert_logger)
       link.start()

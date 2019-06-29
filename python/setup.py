@@ -25,7 +25,9 @@ CLASSIFIERS = [
   'Topic :: Scientific/Engineering :: Interface Engine/Protocol Translator',
   'Topic :: Software Development :: Libraries :: Python Modules',
   'Programming Language :: Python :: 2.7',
+  'Programming Language :: Python :: 3.4',
   'Programming Language :: Python :: 3.5',
+  'Programming Language :: Python :: 3.6',
   'Programming Language :: Python :: 3.7',
 ]
 
@@ -36,6 +38,7 @@ PACKAGES = [
   'sbp.client.drivers',
   'sbp.client.loggers',
   'sbp.client.util',
+  'sbp2json',
 ]
 
 PLATFORMS = [
@@ -177,10 +180,10 @@ if __name__ == "__main__":
     print("Building/installing libsbp version {} (read version: {})".format(sbp_version, VERSION))
 
     ext_modules = None
+
     if not os.environ.get('LIBSBP_BUILD_ANY', None):
         from sbp.jit.parse import cc
         ext_modules = [cc.distutils_extension()]
-        INSTALL_REQUIRES.extend(SETUP_REQUIRES)
 
     setup(name='sbp',
           version=sbp_version,
@@ -196,4 +199,5 @@ if __name__ == "__main__":
           tests_require=TEST_REQUIRES,
           use_2to3=False,
           zip_safe=False,
-          ext_modules=ext_modules)
+          ext_modules=ext_modules,
+          scripts=['bin/sbp2json'])

@@ -17,7 +17,7 @@ Satellite code and carrier-phase tracking messages from the device.
 
 import json
 
-import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -760,7 +760,7 @@ class TrackingChannelStateDepA(object):
     (__prn, offset, length) = get_u8(buf, offset, length)
     ret['prn'] = __prn
     (__cn0, offset, length) = get_f32(buf, offset, length)
-    ret['cn0'] = judicious_round(nb.f4(__cn0)) if SBP.judicious_rounding else __cn0
+    ret['cn0'] = judicious_round(np.float32(__cn0)) if SBP.judicious_rounding else __cn0
     return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
@@ -841,7 +841,7 @@ class TrackingChannelStateDepB(object):
     (__sid, offset, length) = GnssSignalDep.parse_members(buf, offset, length)
     ret['sid'] = __sid
     (__cn0, offset, length) = get_f32(buf, offset, length)
-    ret['cn0'] = judicious_round(nb.f4(__cn0)) if SBP.judicious_rounding else __cn0
+    ret['cn0'] = judicious_round(np.float32(__cn0)) if SBP.judicious_rounding else __cn0
     return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):

@@ -16,7 +16,7 @@ Various structs shared between modules
 
 import json
 
-import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -65,6 +65,48 @@ class GnssSignal(object):
     # sat: u8
     ret += 1
     # code: u8
+    ret += 1
+    return ret
+  
+class SvId(object):
+  """SBP class for message SvId
+
+  You can have SvId inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  A (Constellation ID, satellite ID) tuple that uniquely identifies
+a space vehicle
+
+
+  """
+  __slots__ = ['satId',
+               'constellation',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__satId, offset, length) = get_u8(buf, offset, length)
+    ret['satId'] = __satId
+    (__constellation, offset, length) = get_u8(buf, offset, length)
+    ret['constellation'] = __constellation
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.satId = res['satId']
+    self.constellation = res['constellation']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # satId: u8
+    ret += 1
+    # constellation: u8
     ret += 1
     return ret
   

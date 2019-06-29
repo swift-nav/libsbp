@@ -16,7 +16,7 @@ Orientation Messages
 
 import json
 
-import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -126,13 +126,13 @@ or Duro.
     (__z, offset, length) = get_s32(buf, offset, length)
     ret['z'] = __z
     (__w_accuracy, offset, length) = get_f32(buf, offset, length)
-    ret['w_accuracy'] = judicious_round(nb.f4(__w_accuracy)) if SBP.judicious_rounding else __w_accuracy
+    ret['w_accuracy'] = judicious_round(np.float32(__w_accuracy)) if SBP.judicious_rounding else __w_accuracy
     (__x_accuracy, offset, length) = get_f32(buf, offset, length)
-    ret['x_accuracy'] = judicious_round(nb.f4(__x_accuracy)) if SBP.judicious_rounding else __x_accuracy
+    ret['x_accuracy'] = judicious_round(np.float32(__x_accuracy)) if SBP.judicious_rounding else __x_accuracy
     (__y_accuracy, offset, length) = get_f32(buf, offset, length)
-    ret['y_accuracy'] = judicious_round(nb.f4(__y_accuracy)) if SBP.judicious_rounding else __y_accuracy
+    ret['y_accuracy'] = judicious_round(np.float32(__y_accuracy)) if SBP.judicious_rounding else __y_accuracy
     (__z_accuracy, offset, length) = get_f32(buf, offset, length)
-    ret['z_accuracy'] = judicious_round(nb.f4(__z_accuracy)) if SBP.judicious_rounding else __z_accuracy
+    ret['z_accuracy'] = judicious_round(np.float32(__z_accuracy)) if SBP.judicious_rounding else __z_accuracy
     (__flags, offset, length) = get_u8(buf, offset, length)
     ret['flags'] = __flags
     return ret, offset, length
@@ -216,11 +216,11 @@ INS versions of Swift Products and is not produced by Piksi Multi or Duro.
     (__yaw, offset, length) = get_s32(buf, offset, length)
     ret['yaw'] = __yaw
     (__roll_accuracy, offset, length) = get_f32(buf, offset, length)
-    ret['roll_accuracy'] = judicious_round(nb.f4(__roll_accuracy)) if SBP.judicious_rounding else __roll_accuracy
+    ret['roll_accuracy'] = judicious_round(np.float32(__roll_accuracy)) if SBP.judicious_rounding else __roll_accuracy
     (__pitch_accuracy, offset, length) = get_f32(buf, offset, length)
-    ret['pitch_accuracy'] = judicious_round(nb.f4(__pitch_accuracy)) if SBP.judicious_rounding else __pitch_accuracy
+    ret['pitch_accuracy'] = judicious_round(np.float32(__pitch_accuracy)) if SBP.judicious_rounding else __pitch_accuracy
     (__yaw_accuracy, offset, length) = get_f32(buf, offset, length)
-    ret['yaw_accuracy'] = judicious_round(nb.f4(__yaw_accuracy)) if SBP.judicious_rounding else __yaw_accuracy
+    ret['yaw_accuracy'] = judicious_round(np.float32(__yaw_accuracy)) if SBP.judicious_rounding else __yaw_accuracy
     (__flags, offset, length) = get_u8(buf, offset, length)
     ret['flags'] = __flags
     return ret, offset, length

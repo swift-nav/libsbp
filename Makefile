@@ -18,7 +18,7 @@ SBP_PATCH_VERSION := $(word 3, $(subst ., , $(SBP_VERSION)))
 
 CHANGELOG_MAX_ISSUES := 100
 
-.PHONY: help docs pdf html test release dist silly all docs pdf html c deps-c gen-c test-c python deps-python gen-python test-python javascript deps-javascript gen-javascript test-javascript java deps-java gen-java test-java haskell deps-haskell gen-haskell test-haskell haskell deps-protobuf gen-protobuf test-protobuf verify-prereq-generator verify-prereq-c verify-prereq-javascript verify-prereq-python verify-prereq-java verify-prereq-haskell verify-prereq-protobuf mapping
+.PHONY: help test release dist silly all docs pdf html c deps-c gen-c test-c python deps-python gen-python test-python javascript deps-javascript gen-javascript test-javascript java deps-java gen-java test-java haskell deps-haskell gen-haskell test-haskell haskell deps-protobuf gen-protobuf test-protobuf verify-prereq-generator verify-prereq-c verify-prereq-javascript verify-prereq-python verify-prereq-java verify-prereq-haskell verify-prereq-protobuf mapping
 
 # Functions
 define announce-begin
@@ -49,6 +49,7 @@ help:
 	@echo "  html      to make all HTML language docs"
 	@echo "  pdf       to make SBP LaTeX datasheet"
 	@echo "  python    to make Python bindings"
+	@echo "  pythonNG  to make Python (JIT) bindings"
 	@echo "  haskell   to make Haskell bindings"
 	@echo "  java      to make Java bindings"
 	@echo "  protobuf  to make Protocol Buffer bindings"
@@ -56,7 +57,7 @@ help:
 	@echo "  test      to run all tests"
 	@echo
 
-all: c python javascript java docs haskell protobuf
+all: c python pythonNG javascript java docs haskell protobuf
 docs: verify-prereq-docs pdf html
 
 c:          deps-c          gen-c          test-c
@@ -95,7 +96,7 @@ verify-prereq-java: verify-prereq-generator
 
 verify-prereq-haskell: verify-prereq-generator
 
-verify-prereq-protobuf: verify-prereq-protobuf
+verify-prereq-protobuf: verify-prereq-generator
 
 verify-prereq-docs: verify-prereq-generator
 	@command -v pdflatex  1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`pdflatex\` but it's not installed. Aborting.\n\nHave you installed pdflatex? See the generator readme (Installing instructions) at \`generator/README.md\` for setup instructions.\n"; exit 1; }

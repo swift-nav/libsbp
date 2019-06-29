@@ -1,5 +1,38 @@
 # Change Log
 
+## [v2.6.4](https://github.com/swift-nav/libsbp/tree/v2.6.4) (2019-06-27)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.3...v2.6.4)
+
+**Closed issues:**
+
+- cmake error while installing libsbp - include could not find load file [\#705](https://github.com/swift-nav/libsbp/issues/705)
+
+**Merged pull requests:**
+
+- SSR STEC and gridded correction message refinements [\#704](https://github.com/swift-nav/libsbp/pull/704)
+- Change ssr\_update\_interval to u8. [\#703](https://github.com/swift-nav/libsbp/pull/703)
+- Purge llvmlite and numba dependencies from generated Python code \[ESD-1396\] [\#702](https://github.com/swift-nav/libsbp/pull/702)
+- Don't use hardcoded include/link paths [\#701](https://github.com/swift-nav/libsbp/pull/701)
+
+## [2.6.3](https://github.com/swift-nav/libsbp/tree/v2.6.3)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.1...v2.6.3)
+
+**Merged pull requests:**
+
+- Move sbp2json to libsbp from piksi\_tools \[ESD-1374\] [\#699](https://github.com/swift-nav/libsbp/pull/699)
+- Deprecate MSG\_INIT\_BASE \[ESD-1286\] [\#698](https://github.com/swift-nav/libsbp/pull/698)
+
+## [2.6.1](https://github.com/swift-nav/libsbp/tree/v2.6.1)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.0...v2.6.1)
+
+**Merged pull requests:**
+
+- Add QZSS eph [\#695](https://github.com/swift-nav/libsbp/pull/695)
+- Import standard cmake modules, standardise dependency resolution \[ESD-1246\] \[ESD-1247\] [\#692](https://github.com/swift-nav/libsbp/pull/692)
+
+
 ## [2.6.0](https://github.com/swift-nav/libsbp/tree/v2.6.0)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.5...v2.6.0)

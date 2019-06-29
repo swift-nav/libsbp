@@ -23,26 +23,22 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_INIT_BASE (0x0023).
+/** SBP class for message MSG_INIT_BASE_DEP (0x0023).
  *
- * You can have MSG_INIT_BASE inherent its fields directly from
+ * You can have MSG_INIT_BASE_DEP inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message initializes the integer ambiguity resolution (IAR)
- * process on the Piksi to use an assumed baseline position between
- * the base station and rover receivers. Warns via MSG_PRINT if
- * there aren't a shared minimum number (4) of satellite
- * observations between the two. */
+* Deprecated */
 
-public class MsgInitBase extends SBPMessage {
+public class MsgInitBaseDep extends SBPMessage {
     public static final int TYPE = 0x0023;
 
     
 
-    public MsgInitBase (int sender) { super(sender, TYPE); }
-    public MsgInitBase () { super(TYPE); }
-    public MsgInitBase (SBPMessage msg) throws SBPBinaryException {
+    public MsgInitBaseDep (int sender) { super(sender, TYPE); }
+    public MsgInitBaseDep () { super(TYPE); }
+    public MsgInitBaseDep (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }

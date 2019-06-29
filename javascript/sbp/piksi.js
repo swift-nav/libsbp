@@ -202,29 +202,26 @@ MsgResetFilters.prototype.fieldSpec = [];
 MsgResetFilters.prototype.fieldSpec.push(['filter', 'writeUInt8', 1]);
 
 /**
- * SBP class for message MSG_INIT_BASE (0x0023).
+ * SBP class for message MSG_INIT_BASE_DEP (0x0023).
  *
- * This message initializes the integer ambiguity resolution (IAR) process on the
- * Piksi to use an assumed baseline position between the base station and rover
- * receivers. Warns via MSG_PRINT if there aren't a shared minimum number (4) of
- * satellite observations between the two.
+ * Deprecated
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgInitBase = function (sbp, fields) {
+var MsgInitBaseDep = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_INIT_BASE";
+  this.messageType = "MSG_INIT_BASE_DEP";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgInitBase.prototype = Object.create(SBP.prototype);
-MsgInitBase.prototype.messageType = "MSG_INIT_BASE";
-MsgInitBase.prototype.msg_type = 0x0023;
-MsgInitBase.prototype.constructor = MsgInitBase;
-MsgInitBase.prototype.parser = new Parser()
+MsgInitBaseDep.prototype = Object.create(SBP.prototype);
+MsgInitBaseDep.prototype.messageType = "MSG_INIT_BASE_DEP";
+MsgInitBaseDep.prototype.msg_type = 0x0023;
+MsgInitBaseDep.prototype.constructor = MsgInitBaseDep;
+MsgInitBaseDep.prototype.parser = new Parser()
   .endianess('little');
-MsgInitBase.prototype.fieldSpec = [];
+MsgInitBaseDep.prototype.fieldSpec = [];
 
 /**
  * SBP class for message MSG_THREAD_STATE (0x0017).
@@ -1003,8 +1000,8 @@ module.exports = {
   MsgCwStart: MsgCwStart,
   0x0022: MsgResetFilters,
   MsgResetFilters: MsgResetFilters,
-  0x0023: MsgInitBase,
-  MsgInitBase: MsgInitBase,
+  0x0023: MsgInitBaseDep,
+  MsgInitBaseDep: MsgInitBaseDep,
   0x0017: MsgThreadState,
   MsgThreadState: MsgThreadState,
   UARTChannel: UARTChannel,

@@ -106,6 +106,7 @@ data SBPMsg =
    | SBPMsgEphemerisGps MsgEphemerisGps Msg
    | SBPMsgEphemerisGpsDepE MsgEphemerisGpsDepE Msg
    | SBPMsgEphemerisGpsDepF MsgEphemerisGpsDepF Msg
+   | SBPMsgEphemerisQzss MsgEphemerisQzss Msg
    | SBPMsgEphemerisSbas MsgEphemerisSbas Msg
    | SBPMsgEphemerisSbasDepA MsgEphemerisSbasDepA Msg
    | SBPMsgEphemerisSbasDepB MsgEphemerisSbasDepB Msg
@@ -137,7 +138,7 @@ data SBPMsg =
    | SBPMsgIarState MsgIarState Msg
    | SBPMsgImuAux MsgImuAux Msg
    | SBPMsgImuRaw MsgImuRaw Msg
-   | SBPMsgInitBase MsgInitBase Msg
+   | SBPMsgInitBaseDep MsgInitBaseDep Msg
    | SBPMsgInsStatus MsgInsStatus Msg
    | SBPMsgIono MsgIono Msg
    | SBPMsgLinuxCpuState MsgLinuxCpuState Msg
@@ -291,6 +292,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgEphemerisGps = SBPMsgEphemerisGps (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisGpsDepE = SBPMsgEphemerisGpsDepE (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisGpsDepF = SBPMsgEphemerisGpsDepF (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgEphemerisQzss = SBPMsgEphemerisQzss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisSbas = SBPMsgEphemerisSbas (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisSbasDepA = SBPMsgEphemerisSbasDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgEphemerisSbasDepB = SBPMsgEphemerisSbasDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -322,7 +324,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgIarState = SBPMsgIarState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgImuAux = SBPMsgImuAux (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgImuRaw = SBPMsgImuRaw (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == msgInitBase = SBPMsgInitBase (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgInitBaseDep = SBPMsgInitBaseDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgInsStatus = SBPMsgInsStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgIono = SBPMsgIono (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxCpuState = SBPMsgLinuxCpuState (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -468,6 +470,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgEphemerisGps _ m) = put m
       encoder (SBPMsgEphemerisGpsDepE _ m) = put m
       encoder (SBPMsgEphemerisGpsDepF _ m) = put m
+      encoder (SBPMsgEphemerisQzss _ m) = put m
       encoder (SBPMsgEphemerisSbas _ m) = put m
       encoder (SBPMsgEphemerisSbasDepA _ m) = put m
       encoder (SBPMsgEphemerisSbasDepB _ m) = put m
@@ -499,7 +502,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgIarState _ m) = put m
       encoder (SBPMsgImuAux _ m) = put m
       encoder (SBPMsgImuRaw _ m) = put m
-      encoder (SBPMsgInitBase _ m) = put m
+      encoder (SBPMsgInitBaseDep _ m) = put m
       encoder (SBPMsgInsStatus _ m) = put m
       encoder (SBPMsgIono _ m) = put m
       encoder (SBPMsgLinuxCpuState _ m) = put m
@@ -649,6 +652,7 @@ instance FromJSON SBPMsg where
         | msgType == msgEphemerisGps = SBPMsgEphemerisGps <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisGpsDepE = SBPMsgEphemerisGpsDepE <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisGpsDepF = SBPMsgEphemerisGpsDepF <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgEphemerisQzss = SBPMsgEphemerisQzss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisSbas = SBPMsgEphemerisSbas <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisSbasDepA = SBPMsgEphemerisSbasDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgEphemerisSbasDepB = SBPMsgEphemerisSbasDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -680,7 +684,7 @@ instance FromJSON SBPMsg where
         | msgType == msgIarState = SBPMsgIarState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgImuAux = SBPMsgImuAux <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgImuRaw = SBPMsgImuRaw <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == msgInitBase = SBPMsgInitBase <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgInitBaseDep = SBPMsgInitBaseDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgInsStatus = SBPMsgInsStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgIono = SBPMsgIono <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxCpuState = SBPMsgLinuxCpuState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -831,6 +835,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgEphemerisGps n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisGpsDepE n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisGpsDepF n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgEphemerisQzss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisSbas n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisSbasDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgEphemerisSbasDepB n m) = toJSON n <<>> toJSON m
@@ -862,7 +867,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgIarState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgImuAux n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgImuRaw n m) = toJSON n <<>> toJSON m
-  toJSON (SBPMsgInitBase _ m) = toJSON m
+  toJSON (SBPMsgInitBaseDep _ m) = toJSON m
   toJSON (SBPMsgInsStatus n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgIono n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxCpuState n m) = toJSON n <<>> toJSON m
@@ -1007,6 +1012,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgEphemerisGps n m) = SBPMsgEphemerisGps n <$> f m
   msg f (SBPMsgEphemerisGpsDepE n m) = SBPMsgEphemerisGpsDepE n <$> f m
   msg f (SBPMsgEphemerisGpsDepF n m) = SBPMsgEphemerisGpsDepF n <$> f m
+  msg f (SBPMsgEphemerisQzss n m) = SBPMsgEphemerisQzss n <$> f m
   msg f (SBPMsgEphemerisSbas n m) = SBPMsgEphemerisSbas n <$> f m
   msg f (SBPMsgEphemerisSbasDepA n m) = SBPMsgEphemerisSbasDepA n <$> f m
   msg f (SBPMsgEphemerisSbasDepB n m) = SBPMsgEphemerisSbasDepB n <$> f m
@@ -1038,7 +1044,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgIarState n m) = SBPMsgIarState n <$> f m
   msg f (SBPMsgImuAux n m) = SBPMsgImuAux n <$> f m
   msg f (SBPMsgImuRaw n m) = SBPMsgImuRaw n <$> f m
-  msg f (SBPMsgInitBase n m) = SBPMsgInitBase n <$> f m
+  msg f (SBPMsgInitBaseDep n m) = SBPMsgInitBaseDep n <$> f m
   msg f (SBPMsgInsStatus n m) = SBPMsgInsStatus n <$> f m
   msg f (SBPMsgIono n m) = SBPMsgIono n <$> f m
   msg f (SBPMsgLinuxCpuState n m) = SBPMsgLinuxCpuState n <$> f m
