@@ -1,8 +1,8 @@
 construct==2.9.33
-pyftdi~=0.13.4
+pyftdi==0.13.*
 pylibftdi
 pyserial
-requests~=2.8.1
-numpy~=1.16.2
+requests==2.20.*
+numpy==1.16.*
 pybase64
 ujson
