@@ -46,6 +46,7 @@ set_target_properties(sbp PROPERTIES
         POSITION_INDEPENDENT_CODE ON
         C_STANDARD 99
         C_STANDARD_REQUIRED ON)
+target_code_coverage(sbp AUTO ALL)
 
 install(TARGETS sbp
         EXPORT sbp-export
