@@ -10,6 +10,7 @@ addons:
     - check
     - doxygen
     - cmake
+    - lcov
     - gradle
     - libgmp-dev
 
@@ -70,10 +71,6 @@ matrix:
     - env:
         - TRAVIS_TARGET=codecov
         - CMAKEFLAGS="-DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug"
-      addons:
-        apt:
-          packages:
-          - lcov
       script:
         - make test-c
       after_success:
