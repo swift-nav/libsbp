@@ -169,3 +169,5 @@ RUN \
   && rm -rf /tmp/openssl.tgz \
   && rm -rf /tmp/openssl-build-${OPENSSLVER} \
   && rm /tmp/get-pip.py
+
+RUN [ "cross-build-end" ]

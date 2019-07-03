@@ -1,4 +1,4 @@
-FROM swiftnav/llvm-arm:2019.06.26
+FROM balenalib/armv7hf-debian:stretch-build
 
 RUN [ "cross-build-start" ]
 
