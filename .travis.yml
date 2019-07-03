@@ -62,7 +62,9 @@ matrix:
         - sudo pip install --upgrade Sphinx
         - npm install -g mocha
         - npm install
-      script: make test-c test-haskell test-java test-javascript
+      script: make test-c test-haskell test-java test-javascript && make clean test-c CMAKEFLAGS="-DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug"
+      after_success:
+        bash <(curl -s https://codecov.io/bash) -s c/build || echo "Codecov did not collect coverage reports";
 
 deploy:
   provider: releases
