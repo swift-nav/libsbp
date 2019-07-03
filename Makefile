@@ -43,6 +43,7 @@ help:
 	@echo "Please use \`make <target>' where <target> is one of"
 	@echo "  help      to display this help message"
 	@echo "  all       to make SBP clients across all languages"
+	@echo "  clean     to remove any output files"
 	@echo "  c         to make C headers"
 	@echo "  dist      to distribute packages"
 	@echo "  docs      to make HTML and pdf documentation"
@@ -59,6 +60,7 @@ help:
 
 all: c python pythonNG javascript java docs haskell protobuf
 clean:
+	@echo "Removing the ./c/build directory..."
 	rm -r $(SWIFTNAV_ROOT)/c/build
 docs: verify-prereq-docs pdf html
 
