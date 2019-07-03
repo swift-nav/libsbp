@@ -10,6 +10,7 @@ addons:
     - check
     - doxygen
     - cmake
+    - g++-6
     - lcov
     - gradle
     - libgmp-dev
