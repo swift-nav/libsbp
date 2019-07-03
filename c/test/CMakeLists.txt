@@ -30,6 +30,7 @@ else()
     target_link_libraries(test_libsbp PRIVATE "-L/usr/local/lib")
   endif()
 endif()
+target_code_coverage(test_libsbp AUTO ALL)
 
 add_custom_command(
   TARGET test_libsbp POST_BUILD

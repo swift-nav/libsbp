@@ -1,0 +1,13 @@
+coverage:
+  status:
+    project:
+      tests:
+        target: 30%
+        paths:
+          - c/test/
+      libsbp:
+        paths:
+          - c/include/
+          - c/src/
+
+comment: off
