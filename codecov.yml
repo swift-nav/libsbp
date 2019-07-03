@@ -2,7 +2,7 @@ coverage:
   status:
     project:
       tests:
-        target: 75%
+        target: 30%
         paths:
           - c/test/
       libsbp:
