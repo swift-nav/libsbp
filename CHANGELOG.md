@@ -1,5 +1,12 @@
 # Change Log
 
+## [v2.6.5](https://github.com/swift-nav/libsbp/tree/v2.6.5) (2019-07-03)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.4...v2.6.5)
+
+**Merged pull requests:**
+
+- Pin minor rev versions, security fix for requests [\#709](https://github.com/swift-nav/libsbp/pull/709)
+
 ## [v2.6.4](https://github.com/swift-nav/libsbp/tree/v2.6.4) (2019-06-27)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.3...v2.6.4)
 
