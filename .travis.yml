@@ -62,14 +62,20 @@ matrix:
         - sudo pip install --upgrade Sphinx
         - npm install -g mocha
         - npm install
-      script: make -j4 test-c test-haskell test-java test-javascript
+      script:
+        - make -j4 test-c
+        - make -j4 test-haskell
+        - make -j4 test-java
+        - make -j4 test-javascript
     - env:
         - TRAVIS_TARGET=codecov
+        - CMAKEFLAGS="-DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug"
       addons:
         apt:
           packages:
           - lcov
-      script: make -j4 CMAKEFLAGS="-DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug" test-c
+      script:
+        - make -j4 test-c
       after_success:
         bash <(curl -s https://codecov.io/bash) -s c/build || echo "Codecov did not collect coverage reports";
 
