@@ -1,4 +1,4 @@
-FROM swiftnav/llvm-arm-stretch:2019.06.26
+FROM swiftnav/llvm-arm-stretch:2019.07.03
 
 ARG JOBS=8
 
