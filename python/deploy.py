@@ -10,9 +10,9 @@ import subprocess
 
 CP27MU = "2.7u"
 ALL_PY_VERSIONS = ["2.7", CP27MU, "3.4", "3.5", "3.6", "3.7"]
-AMD64_PY_VERSION = ["2.7", "3.5", "3.6", "3.7"]
+AMD64_PY_VERSION = [PYVER for PYVER in ALL_PY_VERSIONS if PYVER != "3.4"]
 
-SKIP_PY_VERS = os.environ.get("SKIP_PY_VERS", "").split(",") 
+SKIP_PY_VERS = os.environ.get("SKIP_PY_VERS", "").split(",")
 
 if 'PYPI_USERNAME' not in os.environ:
     print("\n!!! Please set PYPI_USERNAME in the environment !!!\n\n")
@@ -77,6 +77,52 @@ def twine_upload(conda_dir, wheel, py_version="3.7", use_conda=True):
         print(">>> Warning: twine upload returned exit code {}".format(ret))
 
 
+def build_wheel_manylinux(conda_dir, deploy_dir, py_version):
+
+    py_version_prefix = "/usr/local"
+    py_version_suffix = py_version
+
+    if py_version == "2.7":
+        py_version_prefix = "/opt/python/cp27-cp27m"
+        py_version_suffix = "2.7"
+    elif py_version == CP27MU:
+        py_version_prefix = "/opt/python/cp27-cp27mu"
+        py_version_suffix = "2.7"
+    else:
+        raise RuntimeError("Unsupport Python version for manylinux native: {}".format(py_version))
+
+    if py_version not in ALL_PY_VERSIONS:
+        raise RuntimeError("Unsupported Python version")
+
+    python = "{}/bin/python{}".format(py_version_prefix, py_version_suffix)
+
+    print(">>> Installing pip deps for manylinux version: {}...".format(py_version))
+
+    subprocess.check_call([
+        python, "-m",
+        "pip", "install", "--upgrade", "pip"
+    ])
+    subprocess.check_call([
+        python, "-m",
+        "pip", "install", "twine", "numpy", "cython", "wheel", "setuptools"
+    ])
+
+    print(">>> Installing setup deps in Python {} environment...".format(py_version))
+
+    subprocess.check_call([
+        python, "-m",
+        "pip", "install", "--ignore-installed",
+        "-r", "requirements.txt",
+        "-r", "setup_requirements.txt",
+        "-r", "test_requirements.txt"
+    ])
+
+    run_bdist(conda_dir, deploy_dir, py_version,
+              py_version_prefix=py_version_prefix,
+              py_version_suffix=py_version_suffix,
+              use_conda=False)
+
+
 def build_wheel_native(conda_dir, deploy_dir, py_version):
 
     print(">>> Installing native deps for: {}...".format(py_version))
@@ -103,7 +149,7 @@ def build_wheel_native(conda_dir, deploy_dir, py_version):
         subprocess.check_call(["apt-get", "install", "-y",
             "python", "python-pip", "python-dev", "python-setuptools"
         ])
-    
+
     subprocess.check_call([
         python, "-m",
         "pip", "install", "--upgrade", "pip"
@@ -264,7 +310,7 @@ def build_wheel_conda(conda_dir, deploy_dir, py_version):
 
     subprocess.check_call([
         "conda", "run", "-p", conda_dir] + DASHDASH + [
-        "pip", "install", "--ignore-installed", 
+        "pip", "install", "--ignore-installed",
         "-r", "requirements.txt",
         "-r", "setup_requirements.txt",
         "-r", "test_requirements.txt",
@@ -277,13 +323,21 @@ def build_native_on_arm(py_version):
     if platform.system() != "Linux":
         return False
     return platform.machine().startswith("arm")
-    #if not platform.machine().startswith("arm"):
-    #    return False
-    #return py_version == "3.5" or py_version == "3.7"
+
+
+def build_native_amd64_py27(py_version):
+    if not py_version.startswith("2.7"):
+        return False
+    if not platform.machine() == "x86_64":
+        return False
+    return True
+
 
 def build_wheel(conda_dir, deploy_dir, py_version):
     if build_native_on_arm(py_version):
         build_wheel_native(conda_dir, deploy_dir, py_version)
+    elif build_native_amd64_py27(py_version):
+        build_wheel_manylinux(conda_dir, deploy_dir, py_version)
     else:
         build_wheel_conda(conda_dir, deploy_dir, py_version)
 
