@@ -70,10 +70,6 @@ definitions:
     - seq_num:
         type: u8
         desc: Position of this message in the dataset
-    - ssr_update_interval:
-        type: u8
-        units: coded field
-        desc: update interval
     - update_interval:
         type: u8
         desc: |
