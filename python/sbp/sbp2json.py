@@ -17,6 +17,12 @@ try:
 except ImportError:
     NORM = "y"
 
+NONUMPY = False
+try:
+    import numpy as np
+except ImportError:
+    NONUMPY = True
+
 DEFAULT_JSON='ujson'
 JSON_CHOICES=['json', 'ujson']
 try:
@@ -142,7 +148,7 @@ def get_jsonable(res):
 def dump(args, res):
     if 'json' == args.mode:
         if args.judicious_rounding:
-            import numpy as np
+            assert not NONUMPY
             encoder_cls=SbpJSONEncoder
         else:
             encoder_cls=None
@@ -157,11 +163,10 @@ def dump(args, res):
 
 
 def get_buffer(size):
-    try:
-        import numpy as np
-        return np.zeros(size, dtype=np.uint8)
-    except ImportError:
+    if NONUMPY:
         return bytearray(size)
+    else:
+        return np.zeros(size, dtype=np.uint8)
 
 
 def configure_judicious_rounding(args):
