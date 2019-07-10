@@ -3,19 +3,32 @@ import sys
 
 import io
 
-import numpy as np
 import json
-import ujson
 
 import decimal as dec
-
-from sbp.jit import msg
-from sbp.jit.table import dispatch
 
 from sbp import msg as msg_nojit
 from sbp.table import dispatch as dispatch_nojit
 
 NORM = os.environ.get('NOJIT') is not None
+try:
+    from sbp.jit import msg
+    from sbp.jit.table import dispatch
+except ImportError:
+    NORM = "y"
+
+DEFAULT_JSON='ujson'
+JSON_CHOICES=['json', 'ujson']
+try:
+    import ujson
+except ImportError:
+    DEFAULT_JSON='json'
+    JSON_CHOICES=['json']
+
+try:
+    memoryview
+except NameError:
+    memoryview = lambda x: x
 
 dec.getcontext().rounding = dec.ROUND_HALF_UP
 
@@ -23,7 +36,7 @@ dec.getcontext().rounding = dec.ROUND_HALF_UP
 def base_cl_options():
     import argparse
     parser = argparse.ArgumentParser(prog="sbp2json", description="Swift Navigation SBP to JSON parser")
-    parser.add_argument('--mode', type=str, choices=['json', 'ujson'], default='ujson')
+    parser.add_argument('--mode', type=str, choices=JSON_CHOICES, default=DEFAULT_JSON)
 
     group_json = parser.add_argument_group('json specific arguments')
     group_json.add_argument(
@@ -121,26 +134,49 @@ class SbpJSONEncoder(json.JSONEncoder):
             self.skipkeys, _one_shot)
         return _iterencode(o, 0)
 
+def get_jsonable(res):
+    if hasattr(res, 'to_json_dict'):
+        return res.to_json_dict()
+    return res
 
 def dump(args, res):
     if 'json' == args.mode:
-        sys.stdout.write(json.dumps(res,
+        if args.judicious_rounding:
+            import numpy as np
+            encoder_cls=SbpJSONEncoder
+        else:
+            encoder_cls=None
+        sys.stdout.write(json.dumps(get_jsonable(res),
                          allow_nan=False,
                          sort_keys=args.sort_keys,
                          separators=(',', ':'),
-                         cls=SbpJSONEncoder if args.judicious_rounding else None))
+                         cls=encoder_cls))
     elif 'ujson' == args.mode:
-        sys.stdout.write(ujson.dumps(res))
-
+        sys.stdout.write(ujson.dumps(get_jsonable(res)))
     sys.stdout.write("\n")
 
 
-def sbp_main(args):
-    msg.SBP.judicious_rounding = args.judicious_rounding
+def get_buffer(size):
+    try:
+        import numpy as np
+        return np.zeros(size, dtype=np.uint8)
+    except ImportError:
+        return bytearray(size)
 
+
+def configure_judicious_rounding(args):
+    try:
+        _m = msg
+    except NameError:
+        _m = msg_nojit
+    _m.SBP.judicious_rounding = args.judicious_rounding
+
+
+def sbp_main(args):
+    configure_judicious_rounding(args)
     header_len = 6
     reader = io.open(sys.stdin.fileno(), 'rb')
-    buf = np.zeros(4096, dtype=np.uint8)
+    buf = get_buffer(4096)
     unconsumed_offset = 0
     read_offset = 0
     buffer_remaining = len(buf)
@@ -176,13 +212,11 @@ def sbp_main(args):
             else:
                 consumed, payload_len, msg_type, sender, crc, crc_fail = \
                     msg.unpack_payload(buf, unconsumed_offset, (read_offset - unconsumed_offset))
-
                 if not crc_fail and msg_type != 0:
                     payload = buf[unconsumed_offset + header_len:unconsumed_offset + header_len + payload_len]
                     m = dispatch(msg_type)(msg_type, sender, payload_len, payload, crc)
                     res, offset, length = m.unpack(buf, unconsumed_offset + header_len, payload_len)
                     dump(args, res)
-
                 if consumed == 0:
                     break
             unconsumed_offset += consumed

@@ -11,7 +11,6 @@
 
 import base64
 import copy
-import importlib
 import json
 import struct
 
@@ -21,36 +20,76 @@ from sbp.constants import SENDER_ID as _SENDER_ID
 from sbp.constants import SBP_PREAMBLE as _SBP_PREAMBLE
 from sbp.constants import crc16_tab
 
-import numpy as np
 
 from pkgutil import iter_modules
 
 import sys
 
-parse_jit_name = "parse_jit_py{}".format(str(sys.version_info[0]) + str(sys.version_info[1]))
-
-if parse_jit_name in (name for loader, name, ispkg in iter_modules()):
-    # found in sys.path
-    parse_jit = importlib.import_module(parse_jit_name)
-elif parse_jit_name in (name for loader, name, ispkg in iter_modules(['sbp/jit'])):
-    # found in sbp.jit
-    parse_jit = importlib.import_module('sbp.jit.' + parse_jit_name)
-else:
-    # not found -> compile
-    from sbp.jit import parse
-    parse.compile()
-    parse_jit = importlib.import_module('sbp.jit.' + parse_jit_name)
-
-
-np_crc16_tab = np.array(crc16_tab, dtype=np.uint16)
-
 SENDER_ID = _SENDER_ID
 SBP_PREAMBLE = _SBP_PREAMBLE
 
-crc_buffer = np.zeros(512, dtype=np.uint8)
+NOJIT = False
+NONUMPY = False
+
+try:
+  import importlib
+  import numpy as np
+except ImportError:
+  NONUMPY = True
+
+parse_jit_crc16 = None
+parse_jit = None
 
 
-def crc16(s, crc=0, buf=crc_buffer):
+def try_import_jit():
+  parse_jit_name = "parse_jit_py{}".format(str(sys.version_info[0]) + str(sys.version_info[1]))
+  if parse_jit_name in (name for loader, name, ispkg in iter_modules()):
+    # found in sys.path
+    parse_jit = importlib.import_module(parse_jit_name)
+  elif parse_jit_name in (name for loader, name, ispkg in iter_modules(['sbp/jit'])):
+    # found in sbp.jit
+    parse_jit = importlib.import_module('sbp.jit.' + parse_jit_name)
+  else:
+    # not found -> compile
+    try:
+      from sbp.jit import parse
+      parse.compile()
+      parse_jit = importlib.import_module('sbp.jit.' + parse_jit_name)
+    except ImportError:
+      return None
+  return parse_jit
+
+
+def no_jit_fallback():
+  global parse_jit_crc16
+  global np_crc16_tab
+  global crc_buffer
+  global parse_jit
+  np_crc16_tab = None
+  crc_buffer = None
+  parse_jit = None
+  def _parse_jit_crc16(buf, offset, crc, l):
+    _crc_buffer = bytearray(buf[offset:(offset+l)])
+    return crc16_nojit(_crc_buffer, crc)
+  parse_jit_crc16 = _parse_jit_crc16
+
+
+if not NONUMPY:
+  np_crc16_tab = np.array(crc16_tab, dtype=np.uint16)
+  crc_buffer = np.zeros(512, dtype=np.uint8)
+  parse_jit = try_import_jit()
+  if parse_jit is not None:
+    parse_jit_crc16 = parse_jit.crc16jit
+  else:
+    NOJIT = True
+    no_jit_fallback()
+else:
+  no_jit_fallback()
+
+
+def crc16(s, crc=0):
+  if NONUMPY or NOJIT:
+    return crc16_nojit(s, crc)
   crc_buffer[:len(s)] = bytearray(s)
   return parse_jit.crc16jit(crc_buffer, 0, crc, len(s))
 
@@ -58,7 +97,7 @@ def crc16(s, crc=0, buf=crc_buffer):
 def crc16_nojit(s, crc=0):
   """CRC16 implementation acording to CCITT standards."""
   for ch in bytearray(s):  # bytearray's elements are integers in both python 2 and 3
-    crc = ((crc << 8) & 0xFFFF) ^ np_crc16_tab[((crc >> 8) & 0xFF) ^ (ch & 0xFF)]
+    crc = ((crc << 8) & 0xFFFF) ^ crc16_tab[((crc >> 8) & 0xFF) ^ (ch & 0xFF)]
     crc &= 0xFFFF
   return crc
 
@@ -159,7 +198,7 @@ class SBP(object):
     crc_offset = header_offset + self.length
     preamble_bytes = 1
     crc_over_len = self._header_len + self.length - preamble_bytes
-    self.crc = parse_jit.crc16jit(buf, offset+1, 0, crc_over_len)
+    self.crc = parse_jit_crc16(buf, offset+1, 0, crc_over_len)
     struct.pack_into(self._crc_fmt, buf, crc_offset, self.crc)
     length = preamble_bytes + crc_over_len + self._crc_len
     return length
