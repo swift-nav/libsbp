@@ -103,18 +103,16 @@ $(makeLenses ''PhaseBiasesContent)
 -- SBP message a limited to 255 bytes.  The header is used to tie multiple SBP
 -- messages into a sequence.
 data STECHeader = STECHeader
-  { _sTECHeader_time              :: !GpsTimeSec
+  { _sTECHeader_time          :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
-  , _sTECHeader_num_msgs          :: !Word8
+  , _sTECHeader_num_msgs      :: !Word8
     -- ^ Number of messages in the dataset
-  , _sTECHeader_seq_num           :: !Word8
+  , _sTECHeader_seq_num       :: !Word8
     -- ^ Position of this message in the dataset
-  , _sTECHeader_ssr_update_interval :: !Word8
-    -- ^ update interval
-  , _sTECHeader_update_interval   :: !Word8
+  , _sTECHeader_update_interval :: !Word8
     -- ^ Update interval between consecutive corrections. Encoded following RTCM
     -- DF391 specification.
-  , _sTECHeader_iod_ssr           :: !Word8
+  , _sTECHeader_iod_ssr       :: !Word8
     -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
     -- indicate a change in the SSR generating configuration.
   } deriving ( Show, Read, Eq )
@@ -124,7 +122,6 @@ instance Binary STECHeader where
     _sTECHeader_time <- get
     _sTECHeader_num_msgs <- getWord8
     _sTECHeader_seq_num <- getWord8
-    _sTECHeader_ssr_update_interval <- getWord8
     _sTECHeader_update_interval <- getWord8
     _sTECHeader_iod_ssr <- getWord8
     pure STECHeader {..}
@@ -133,7 +130,6 @@ instance Binary STECHeader where
     put _sTECHeader_time
     putWord8 _sTECHeader_num_msgs
     putWord8 _sTECHeader_seq_num
-    putWord8 _sTECHeader_ssr_update_interval
     putWord8 _sTECHeader_update_interval
     putWord8 _sTECHeader_iod_ssr
 

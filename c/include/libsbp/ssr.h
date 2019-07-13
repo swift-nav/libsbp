@@ -63,14 +63,13 @@ Increased for every discontinuity in phase.
  * is used to tie multiple SBP messages into a sequence.
  */
 typedef struct SBP_ATTR_PACKED {
-  gps_time_sec_t time;                   /**< GNSS reference time of the correction */
-  u8 num_msgs;               /**< Number of messages in the dataset */
-  u8 seq_num;                /**< Position of this message in the dataset */
-  u8 ssr_update_interval;    /**< update interval [coded field] */
-  u8 update_interval;        /**< Update interval between consecutive corrections. Encoded
+  gps_time_sec_t time;               /**< GNSS reference time of the correction */
+  u8 num_msgs;           /**< Number of messages in the dataset */
+  u8 seq_num;            /**< Position of this message in the dataset */
+  u8 update_interval;    /**< Update interval between consecutive corrections. Encoded
 following RTCM DF391 specification.
  */
-  u8 iod_ssr;                /**< IOD of the SSR correction. A change of Issue Of Data
+  u8 iod_ssr;            /**< IOD of the SSR correction. A change of Issue Of Data
 SSR is used to indicate a change in the SSR
 generating configuration.
  */
