@@ -54,9 +54,8 @@ message STECHeader {
     gnss.GpsTimeSec time = 1;
     uint32 num_msgs = 2;
     uint32 seq_num = 3;
-    uint32 ssr_update_interval = 4;
-    uint32 update_interval = 5;
-    uint32 iod_ssr = 6;
+    uint32 update_interval = 4;
+    uint32 iod_ssr = 5;
 }
 
 /** Header for MSG_SSR_GRIDDED_CORRECTION

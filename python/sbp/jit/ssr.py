@@ -147,7 +147,6 @@ is used to tie multiple SBP messages into a sequence.
   __slots__ = ['time',
                'num_msgs',
                'seq_num',
-               'ssr_update_interval',
                'update_interval',
                'iod_ssr',
                ]
@@ -160,8 +159,6 @@ is used to tie multiple SBP messages into a sequence.
     ret['num_msgs'] = __num_msgs
     (__seq_num, offset, length) = get_u8(buf, offset, length)
     ret['seq_num'] = __seq_num
-    (__ssr_update_interval, offset, length) = get_u8(buf, offset, length)
-    ret['ssr_update_interval'] = __ssr_update_interval
     (__update_interval, offset, length) = get_u8(buf, offset, length)
     ret['update_interval'] = __update_interval
     (__iod_ssr, offset, length) = get_u8(buf, offset, length)
@@ -175,7 +172,6 @@ is used to tie multiple SBP messages into a sequence.
     self.time = res['time']
     self.num_msgs = res['num_msgs']
     self.seq_num = res['seq_num']
-    self.ssr_update_interval = res['ssr_update_interval']
     self.update_interval = res['update_interval']
     self.iod_ssr = res['iod_ssr']
     return res, off, length
@@ -188,8 +184,6 @@ is used to tie multiple SBP messages into a sequence.
     # num_msgs: u8
     ret += 1
     # seq_num: u8
-    ret += 1
-    # ssr_update_interval: u8
     ret += 1
     # update_interval: u8
     ret += 1

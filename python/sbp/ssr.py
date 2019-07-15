@@ -143,8 +143,6 @@ is used to tie multiple SBP messages into a sequence.
     Number of messages in the dataset
   seq_num : int
     Position of this message in the dataset
-  ssr_update_interval : int
-    update interval
   update_interval : int
     Update interval between consecutive corrections. Encoded
 following RTCM DF391 specification.
@@ -160,14 +158,12 @@ generating configuration.
                      'time' / construct.Struct(GPSTimeSec._parser),
                      'num_msgs' / construct.Int8ul,
                      'seq_num' / construct.Int8ul,
-                     'ssr_update_interval' / construct.Int8ul,
                      'update_interval' / construct.Int8ul,
                      'iod_ssr' / construct.Int8ul,))
   __slots__ = [
                'time',
                'num_msgs',
                'seq_num',
-               'ssr_update_interval',
                'update_interval',
                'iod_ssr',
               ]
@@ -179,7 +175,6 @@ generating configuration.
       self.time = kwargs.pop('time')
       self.num_msgs = kwargs.pop('num_msgs')
       self.seq_num = kwargs.pop('seq_num')
-      self.ssr_update_interval = kwargs.pop('ssr_update_interval')
       self.update_interval = kwargs.pop('update_interval')
       self.iod_ssr = kwargs.pop('iod_ssr')
 

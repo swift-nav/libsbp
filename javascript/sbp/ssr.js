@@ -111,7 +111,6 @@ PhaseBiasesContent.prototype.fieldSpec.push(['bias', 'writeInt32LE', 4]);
  * @field time GPSTimeSec GNSS reference time of the correction
  * @field num_msgs number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
  * @field seq_num number (unsigned 8-bit int, 1 byte) Position of this message in the dataset
- * @field ssr_update_interval number (unsigned 8-bit int, 1 byte) update interval
  * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections. Encoded following RTCM DF391
  *   specification.
  * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
@@ -134,14 +133,12 @@ STECHeader.prototype.parser = new Parser()
   .nest('time', { type: GPSTimeSec.prototype.parser })
   .uint8('num_msgs')
   .uint8('seq_num')
-  .uint8('ssr_update_interval')
   .uint8('update_interval')
   .uint8('iod_ssr');
 STECHeader.prototype.fieldSpec = [];
 STECHeader.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
 STECHeader.prototype.fieldSpec.push(['num_msgs', 'writeUInt8', 1]);
 STECHeader.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
-STECHeader.prototype.fieldSpec.push(['ssr_update_interval', 'writeUInt8', 1]);
 STECHeader.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
 STECHeader.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
 
