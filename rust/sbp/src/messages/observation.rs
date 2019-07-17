@@ -246,6 +246,7 @@ impl PackedOsrContent {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgObs {
+    pub sender_id: Option<u16>,
     pub header: ObservationHeader,
     // ^ Header of a GPS observation message
     pub obs: Vec<PackedObsContent>,
@@ -253,12 +254,23 @@ pub struct MsgObs {
 }
 
 impl MsgObs {
-    pub const TYPE: u16 = 74;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgObs, ::parser::MessageError> {
         Ok(MsgObs {
+            sender_id: None,
             header: ObservationHeader::parse(_buf)?,
             obs: PackedObsContent::parse_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgObs {
+    const MSG_ID: u16 = 74;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -273,6 +285,7 @@ impl MsgObs {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBasePosLLH {
+    pub sender_id: Option<u16>,
     pub lat: f64,
     // ^ Latitude
     pub lon: f64,
@@ -282,13 +295,24 @@ pub struct MsgBasePosLLH {
 }
 
 impl MsgBasePosLLH {
-    pub const TYPE: u16 = 68;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBasePosLLH, ::parser::MessageError> {
         Ok(MsgBasePosLLH {
+            sender_id: None,
             lat: _buf.read_f64::<LittleEndian>()?,
             lon: _buf.read_f64::<LittleEndian>()?,
             height: _buf.read_f64::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgBasePosLLH {
+    const MSG_ID: u16 = 68;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -304,6 +328,7 @@ impl MsgBasePosLLH {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBasePosECEF {
+    pub sender_id: Option<u16>,
     pub x: f64,
     // ^ ECEF X coodinate
     pub y: f64,
@@ -313,13 +338,24 @@ pub struct MsgBasePosECEF {
 }
 
 impl MsgBasePosECEF {
-    pub const TYPE: u16 = 72;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBasePosECEF, ::parser::MessageError> {
         Ok(MsgBasePosECEF {
+            sender_id: None,
             x: _buf.read_f64::<LittleEndian>()?,
             y: _buf.read_f64::<LittleEndian>()?,
             z: _buf.read_f64::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgBasePosECEF {
+    const MSG_ID: u16 = 72;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -487,6 +523,7 @@ impl EphemerisCommonContentDepA {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGPSDepE {
+    pub sender_id: Option<u16>,
     pub common: EphemerisCommonContentDepA,
     // ^ Values common for all ephemeris types
     pub tgd: f64,
@@ -540,9 +577,9 @@ pub struct MsgEphemerisGPSDepE {
 }
 
 impl MsgEphemerisGPSDepE {
-    pub const TYPE: u16 = 129;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPSDepE, ::parser::MessageError> {
         Ok(MsgEphemerisGPSDepE {
+            sender_id: None,
             common: EphemerisCommonContentDepA::parse(_buf)?,
             tgd: _buf.read_f64::<LittleEndian>()?,
             c_rs: _buf.read_f64::<LittleEndian>()?,
@@ -569,6 +606,17 @@ impl MsgEphemerisGPSDepE {
         })
     }
 }
+impl super::SBPMessage for MsgEphemerisGPSDepE {
+    const MSG_ID: u16 = 129;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Deprecated
 //
@@ -578,6 +626,7 @@ impl MsgEphemerisGPSDepE {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGPSDepF {
+    pub sender_id: Option<u16>,
     pub common: EphemerisCommonContentDepB,
     // ^ Values common for all ephemeris types
     pub tgd: f64,
@@ -631,9 +680,9 @@ pub struct MsgEphemerisGPSDepF {
 }
 
 impl MsgEphemerisGPSDepF {
-    pub const TYPE: u16 = 134;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPSDepF, ::parser::MessageError> {
         Ok(MsgEphemerisGPSDepF {
+            sender_id: None,
             common: EphemerisCommonContentDepB::parse(_buf)?,
             tgd: _buf.read_f64::<LittleEndian>()?,
             c_rs: _buf.read_f64::<LittleEndian>()?,
@@ -660,6 +709,17 @@ impl MsgEphemerisGPSDepF {
         })
     }
 }
+impl super::SBPMessage for MsgEphemerisGPSDepF {
+    const MSG_ID: u16 = 134;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Satellite broadcast ephemeris for GPS
 //
@@ -672,6 +732,7 @@ impl MsgEphemerisGPSDepF {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGPS {
+    pub sender_id: Option<u16>,
     pub common: EphemerisCommonContent,
     // ^ Values common for all ephemeris types
     pub tgd: f32,
@@ -725,9 +786,9 @@ pub struct MsgEphemerisGPS {
 }
 
 impl MsgEphemerisGPS {
-    pub const TYPE: u16 = 138;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPS, ::parser::MessageError> {
         Ok(MsgEphemerisGPS {
+            sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
             tgd: _buf.read_f32::<LittleEndian>()?,
             c_rs: _buf.read_f32::<LittleEndian>()?,
@@ -754,6 +815,17 @@ impl MsgEphemerisGPS {
         })
     }
 }
+impl super::SBPMessage for MsgEphemerisGPS {
+    const MSG_ID: u16 = 138;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Satellite broadcast ephemeris for QZSS
 //
@@ -764,6 +836,7 @@ impl MsgEphemerisGPS {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisQzss {
+    pub sender_id: Option<u16>,
     pub common: EphemerisCommonContent,
     // ^ Values common for all ephemeris types
     pub tgd: f32,
@@ -817,9 +890,9 @@ pub struct MsgEphemerisQzss {
 }
 
 impl MsgEphemerisQzss {
-    pub const TYPE: u16 = 142;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisQzss, ::parser::MessageError> {
         Ok(MsgEphemerisQzss {
+            sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
             tgd: _buf.read_f32::<LittleEndian>()?,
             c_rs: _buf.read_f32::<LittleEndian>()?,
@@ -846,6 +919,17 @@ impl MsgEphemerisQzss {
         })
     }
 }
+impl super::SBPMessage for MsgEphemerisQzss {
+    const MSG_ID: u16 = 142;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Satellite broadcast ephemeris for BDS
 //
@@ -857,6 +941,7 @@ impl MsgEphemerisQzss {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisBds {
+    pub sender_id: Option<u16>,
     pub common: EphemerisCommonContent,
     // ^ Values common for all ephemeris types
     pub tgd1: f32,
@@ -912,9 +997,9 @@ pub struct MsgEphemerisBds {
 }
 
 impl MsgEphemerisBds {
-    pub const TYPE: u16 = 137;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisBds, ::parser::MessageError> {
         Ok(MsgEphemerisBds {
+            sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
             tgd1: _buf.read_f32::<LittleEndian>()?,
             tgd2: _buf.read_f32::<LittleEndian>()?,
@@ -942,6 +1027,17 @@ impl MsgEphemerisBds {
         })
     }
 }
+impl super::SBPMessage for MsgEphemerisBds {
+    const MSG_ID: u16 = 137;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Deprecated
 //
@@ -951,6 +1047,7 @@ impl MsgEphemerisBds {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGalDepA {
+    pub sender_id: Option<u16>,
     pub common: EphemerisCommonContent,
     // ^ Values common for all ephemeris types
     pub bgd_e1e5a: f32,
@@ -1006,9 +1103,9 @@ pub struct MsgEphemerisGalDepA {
 }
 
 impl MsgEphemerisGalDepA {
-    pub const TYPE: u16 = 149;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGalDepA, ::parser::MessageError> {
         Ok(MsgEphemerisGalDepA {
+            sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
             bgd_e1e5a: _buf.read_f32::<LittleEndian>()?,
             bgd_e1e5b: _buf.read_f32::<LittleEndian>()?,
@@ -1036,6 +1133,17 @@ impl MsgEphemerisGalDepA {
         })
     }
 }
+impl super::SBPMessage for MsgEphemerisGalDepA {
+    const MSG_ID: u16 = 149;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Satellite broadcast ephemeris for Galileo
 //
@@ -1047,6 +1155,7 @@ impl MsgEphemerisGalDepA {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGal {
+    pub sender_id: Option<u16>,
     pub common: EphemerisCommonContent,
     // ^ Values common for all ephemeris types
     pub bgd_e1e5a: f32,
@@ -1104,9 +1213,9 @@ pub struct MsgEphemerisGal {
 }
 
 impl MsgEphemerisGal {
-    pub const TYPE: u16 = 141;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGal, ::parser::MessageError> {
         Ok(MsgEphemerisGal {
+            sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
             bgd_e1e5a: _buf.read_f32::<LittleEndian>()?,
             bgd_e1e5b: _buf.read_f32::<LittleEndian>()?,
@@ -1135,10 +1244,22 @@ impl MsgEphemerisGal {
         })
     }
 }
+impl super::SBPMessage for MsgEphemerisGal {
+    const MSG_ID: u16 = 141;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbasDepA {
+    pub sender_id: Option<u16>,
     pub common: EphemerisCommonContentDepA,
     // ^ Values common for all ephemeris types
     pub pos: Vec<f64>,
@@ -1154,9 +1275,9 @@ pub struct MsgEphemerisSbasDepA {
 }
 
 impl MsgEphemerisSbasDepA {
-    pub const TYPE: u16 = 130;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbasDepA, ::parser::MessageError> {
         Ok(MsgEphemerisSbasDepA {
+            sender_id: None,
             common: EphemerisCommonContentDepA::parse(_buf)?,
             pos: ::parser::read_double_array_limit(_buf, 3)?,
             vel: ::parser::read_double_array_limit(_buf, 3)?,
@@ -1164,6 +1285,17 @@ impl MsgEphemerisSbasDepA {
             a_gf0: _buf.read_f64::<LittleEndian>()?,
             a_gf1: _buf.read_f64::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgEphemerisSbasDepA {
+    const MSG_ID: u16 = 130;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -1178,6 +1310,7 @@ impl MsgEphemerisSbasDepA {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepA {
+    pub sender_id: Option<u16>,
     pub common: EphemerisCommonContentDepA,
     // ^ Values common for all ephemeris types
     pub gamma: f64,
@@ -1193,9 +1326,9 @@ pub struct MsgEphemerisGloDepA {
 }
 
 impl MsgEphemerisGloDepA {
-    pub const TYPE: u16 = 131;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepA, ::parser::MessageError> {
         Ok(MsgEphemerisGloDepA {
+            sender_id: None,
             common: EphemerisCommonContentDepA::parse(_buf)?,
             gamma: _buf.read_f64::<LittleEndian>()?,
             tau: _buf.read_f64::<LittleEndian>()?,
@@ -1203,6 +1336,17 @@ impl MsgEphemerisGloDepA {
             vel: ::parser::read_double_array_limit(_buf, 3)?,
             acc: ::parser::read_double_array_limit(_buf, 3)?,
         })
+    }
+}
+impl super::SBPMessage for MsgEphemerisGloDepA {
+    const MSG_ID: u16 = 131;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -1214,6 +1358,7 @@ impl MsgEphemerisGloDepA {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbasDepB {
+    pub sender_id: Option<u16>,
     pub common: EphemerisCommonContentDepB,
     // ^ Values common for all ephemeris types
     pub pos: Vec<f64>,
@@ -1229,9 +1374,9 @@ pub struct MsgEphemerisSbasDepB {
 }
 
 impl MsgEphemerisSbasDepB {
-    pub const TYPE: u16 = 132;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbasDepB, ::parser::MessageError> {
         Ok(MsgEphemerisSbasDepB {
+            sender_id: None,
             common: EphemerisCommonContentDepB::parse(_buf)?,
             pos: ::parser::read_double_array_limit(_buf, 3)?,
             vel: ::parser::read_double_array_limit(_buf, 3)?,
@@ -1241,10 +1386,22 @@ impl MsgEphemerisSbasDepB {
         })
     }
 }
+impl super::SBPMessage for MsgEphemerisSbasDepB {
+    const MSG_ID: u16 = 132;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbas {
+    pub sender_id: Option<u16>,
     pub common: EphemerisCommonContent,
     // ^ Values common for all ephemeris types
     pub pos: Vec<f64>,
@@ -1260,9 +1417,9 @@ pub struct MsgEphemerisSbas {
 }
 
 impl MsgEphemerisSbas {
-    pub const TYPE: u16 = 140;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbas, ::parser::MessageError> {
         Ok(MsgEphemerisSbas {
+            sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
             pos: ::parser::read_double_array_limit(_buf, 3)?,
             vel: ::parser::read_float_array_limit(_buf, 3)?,
@@ -1270,6 +1427,17 @@ impl MsgEphemerisSbas {
             a_gf0: _buf.read_f32::<LittleEndian>()?,
             a_gf1: _buf.read_f32::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgEphemerisSbas {
+    const MSG_ID: u16 = 140;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -1284,6 +1452,7 @@ impl MsgEphemerisSbas {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepB {
+    pub sender_id: Option<u16>,
     pub common: EphemerisCommonContentDepB,
     // ^ Values common for all ephemeris types
     pub gamma: f64,
@@ -1299,9 +1468,9 @@ pub struct MsgEphemerisGloDepB {
 }
 
 impl MsgEphemerisGloDepB {
-    pub const TYPE: u16 = 133;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepB, ::parser::MessageError> {
         Ok(MsgEphemerisGloDepB {
+            sender_id: None,
             common: EphemerisCommonContentDepB::parse(_buf)?,
             gamma: _buf.read_f64::<LittleEndian>()?,
             tau: _buf.read_f64::<LittleEndian>()?,
@@ -1309,6 +1478,17 @@ impl MsgEphemerisGloDepB {
             vel: ::parser::read_double_array_limit(_buf, 3)?,
             acc: ::parser::read_double_array_limit(_buf, 3)?,
         })
+    }
+}
+impl super::SBPMessage for MsgEphemerisGloDepB {
+    const MSG_ID: u16 = 133;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -1323,6 +1503,7 @@ impl MsgEphemerisGloDepB {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepC {
+    pub sender_id: Option<u16>,
     pub common: EphemerisCommonContentDepB,
     // ^ Values common for all ephemeris types
     pub gamma: f64,
@@ -1342,9 +1523,9 @@ pub struct MsgEphemerisGloDepC {
 }
 
 impl MsgEphemerisGloDepC {
-    pub const TYPE: u16 = 135;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepC, ::parser::MessageError> {
         Ok(MsgEphemerisGloDepC {
+            sender_id: None,
             common: EphemerisCommonContentDepB::parse(_buf)?,
             gamma: _buf.read_f64::<LittleEndian>()?,
             tau: _buf.read_f64::<LittleEndian>()?,
@@ -1356,6 +1537,17 @@ impl MsgEphemerisGloDepC {
         })
     }
 }
+impl super::SBPMessage for MsgEphemerisGloDepC {
+    const MSG_ID: u16 = 135;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Deprecated
 //
@@ -1365,6 +1557,7 @@ impl MsgEphemerisGloDepC {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepD {
+    pub sender_id: Option<u16>,
     pub common: EphemerisCommonContentDepB,
     // ^ Values common for all ephemeris types
     pub gamma: f64,
@@ -1386,9 +1579,9 @@ pub struct MsgEphemerisGloDepD {
 }
 
 impl MsgEphemerisGloDepD {
-    pub const TYPE: u16 = 136;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepD, ::parser::MessageError> {
         Ok(MsgEphemerisGloDepD {
+            sender_id: None,
             common: EphemerisCommonContentDepB::parse(_buf)?,
             gamma: _buf.read_f64::<LittleEndian>()?,
             tau: _buf.read_f64::<LittleEndian>()?,
@@ -1399,6 +1592,17 @@ impl MsgEphemerisGloDepD {
             fcn: _buf.read_u8()?,
             iod: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgEphemerisGloDepD {
+    const MSG_ID: u16 = 136;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -1413,6 +1617,7 @@ impl MsgEphemerisGloDepD {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGlo {
+    pub sender_id: Option<u16>,
     pub common: EphemerisCommonContent,
     // ^ Values common for all ephemeris types
     pub gamma: f32,
@@ -1434,9 +1639,9 @@ pub struct MsgEphemerisGlo {
 }
 
 impl MsgEphemerisGlo {
-    pub const TYPE: u16 = 139;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGlo, ::parser::MessageError> {
         Ok(MsgEphemerisGlo {
+            sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
             gamma: _buf.read_f32::<LittleEndian>()?,
             tau: _buf.read_f32::<LittleEndian>()?,
@@ -1447,6 +1652,17 @@ impl MsgEphemerisGlo {
             fcn: _buf.read_u8()?,
             iod: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgEphemerisGlo {
+    const MSG_ID: u16 = 139;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -1461,6 +1677,7 @@ impl MsgEphemerisGlo {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepD {
+    pub sender_id: Option<u16>,
     pub tgd: f64,
     // ^ Group delay differential between L1 and L2
     pub c_rs: f64,
@@ -1526,9 +1743,9 @@ pub struct MsgEphemerisDepD {
 }
 
 impl MsgEphemerisDepD {
-    pub const TYPE: u16 = 128;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepD, ::parser::MessageError> {
         Ok(MsgEphemerisDepD {
+            sender_id: None,
             tgd: _buf.read_f64::<LittleEndian>()?,
             c_rs: _buf.read_f64::<LittleEndian>()?,
             c_rc: _buf.read_f64::<LittleEndian>()?,
@@ -1561,6 +1778,17 @@ impl MsgEphemerisDepD {
         })
     }
 }
+impl super::SBPMessage for MsgEphemerisDepD {
+    const MSG_ID: u16 = 128;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Deprecated
 //
@@ -1569,6 +1797,7 @@ impl MsgEphemerisDepD {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepA {
+    pub sender_id: Option<u16>,
     pub tgd: f64,
     // ^ Group delay differential between L1 and L2
     pub c_rs: f64,
@@ -1628,9 +1857,9 @@ pub struct MsgEphemerisDepA {
 }
 
 impl MsgEphemerisDepA {
-    pub const TYPE: u16 = 26;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepA, ::parser::MessageError> {
         Ok(MsgEphemerisDepA {
+            sender_id: None,
             tgd: _buf.read_f64::<LittleEndian>()?,
             c_rs: _buf.read_f64::<LittleEndian>()?,
             c_rc: _buf.read_f64::<LittleEndian>()?,
@@ -1660,6 +1889,17 @@ impl MsgEphemerisDepA {
         })
     }
 }
+impl super::SBPMessage for MsgEphemerisDepA {
+    const MSG_ID: u16 = 26;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Deprecated
 //
@@ -1668,6 +1908,7 @@ impl MsgEphemerisDepA {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepB {
+    pub sender_id: Option<u16>,
     pub tgd: f64,
     // ^ Group delay differential between L1 and L2
     pub c_rs: f64,
@@ -1729,9 +1970,9 @@ pub struct MsgEphemerisDepB {
 }
 
 impl MsgEphemerisDepB {
-    pub const TYPE: u16 = 70;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepB, ::parser::MessageError> {
         Ok(MsgEphemerisDepB {
+            sender_id: None,
             tgd: _buf.read_f64::<LittleEndian>()?,
             c_rs: _buf.read_f64::<LittleEndian>()?,
             c_rc: _buf.read_f64::<LittleEndian>()?,
@@ -1762,6 +2003,17 @@ impl MsgEphemerisDepB {
         })
     }
 }
+impl super::SBPMessage for MsgEphemerisDepB {
+    const MSG_ID: u16 = 70;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Satellite broadcast ephemeris
 //
@@ -1774,6 +2026,7 @@ impl MsgEphemerisDepB {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepC {
+    pub sender_id: Option<u16>,
     pub tgd: f64,
     // ^ Group delay differential between L1 and L2
     pub c_rs: f64,
@@ -1839,9 +2092,9 @@ pub struct MsgEphemerisDepC {
 }
 
 impl MsgEphemerisDepC {
-    pub const TYPE: u16 = 71;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepC, ::parser::MessageError> {
         Ok(MsgEphemerisDepC {
+            sender_id: None,
             tgd: _buf.read_f64::<LittleEndian>()?,
             c_rs: _buf.read_f64::<LittleEndian>()?,
             c_rc: _buf.read_f64::<LittleEndian>()?,
@@ -1872,6 +2125,17 @@ impl MsgEphemerisDepC {
             iodc: _buf.read_u16::<LittleEndian>()?,
             reserved: _buf.read_u32::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgEphemerisDepC {
+    const MSG_ID: u16 = 71;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -2131,6 +2395,7 @@ impl PackedObsContentDepC {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgObsDepA {
+    pub sender_id: Option<u16>,
     pub header: ObservationHeaderDep,
     // ^ Header of a GPS observation message
     pub obs: Vec<PackedObsContentDepA>,
@@ -2138,12 +2403,23 @@ pub struct MsgObsDepA {
 }
 
 impl MsgObsDepA {
-    pub const TYPE: u16 = 69;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepA, ::parser::MessageError> {
         Ok(MsgObsDepA {
+            sender_id: None,
             header: ObservationHeaderDep::parse(_buf)?,
             obs: PackedObsContentDepA::parse_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgObsDepA {
+    const MSG_ID: u16 = 69;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -2159,6 +2435,7 @@ impl MsgObsDepA {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgObsDepB {
+    pub sender_id: Option<u16>,
     pub header: ObservationHeaderDep,
     // ^ Header of a GPS observation message
     pub obs: Vec<PackedObsContentDepB>,
@@ -2166,12 +2443,23 @@ pub struct MsgObsDepB {
 }
 
 impl MsgObsDepB {
-    pub const TYPE: u16 = 67;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepB, ::parser::MessageError> {
         Ok(MsgObsDepB {
+            sender_id: None,
             header: ObservationHeaderDep::parse(_buf)?,
             obs: PackedObsContentDepB::parse_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgObsDepB {
+    const MSG_ID: u16 = 67;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -2188,6 +2476,7 @@ impl MsgObsDepB {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgObsDepC {
+    pub sender_id: Option<u16>,
     pub header: ObservationHeaderDep,
     // ^ Header of a GPS observation message
     pub obs: Vec<PackedObsContentDepC>,
@@ -2195,12 +2484,23 @@ pub struct MsgObsDepC {
 }
 
 impl MsgObsDepC {
-    pub const TYPE: u16 = 73;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepC, ::parser::MessageError> {
         Ok(MsgObsDepC {
+            sender_id: None,
             header: ObservationHeaderDep::parse(_buf)?,
             obs: PackedObsContentDepC::parse_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgObsDepC {
+    const MSG_ID: u16 = 73;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -2213,6 +2513,7 @@ impl MsgObsDepC {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgIono {
+    pub sender_id: Option<u16>,
     pub t_nmct: GPSTimeSec,
     // ^ Navigation Message Correction Table Valitidy Time
     pub a0: f64,
@@ -2226,9 +2527,9 @@ pub struct MsgIono {
 }
 
 impl MsgIono {
-    pub const TYPE: u16 = 144;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgIono, ::parser::MessageError> {
         Ok(MsgIono {
+            sender_id: None,
             t_nmct: GPSTimeSec::parse(_buf)?,
             a0: _buf.read_f64::<LittleEndian>()?,
             a1: _buf.read_f64::<LittleEndian>()?,
@@ -2241,6 +2542,17 @@ impl MsgIono {
         })
     }
 }
+impl super::SBPMessage for MsgIono {
+    const MSG_ID: u16 = 144;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // L2C capability mask
 //
@@ -2249,6 +2561,7 @@ impl MsgIono {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSvConfigurationGPSDep {
+    pub sender_id: Option<u16>,
     pub t_nmct: GPSTimeSec,
     // ^ Navigation Message Correction Table Valitidy Time
     pub l2c_mask: u32,
@@ -2256,12 +2569,23 @@ pub struct MsgSvConfigurationGPSDep {
 }
 
 impl MsgSvConfigurationGPSDep {
-    pub const TYPE: u16 = 145;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSvConfigurationGPSDep, ::parser::MessageError> {
         Ok(MsgSvConfigurationGPSDep {
+            sender_id: None,
             t_nmct: GPSTimeSec::parse(_buf)?,
             l2c_mask: _buf.read_u32::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgSvConfigurationGPSDep {
+    const MSG_ID: u16 = 145;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -2345,6 +2669,7 @@ impl GnssCapb {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGnssCapb {
+    pub sender_id: Option<u16>,
     pub t_nmct: GPSTimeSec,
     // ^ Navigation Message Correction Table Validity Time
     pub gc: GnssCapb,
@@ -2352,12 +2677,23 @@ pub struct MsgGnssCapb {
 }
 
 impl MsgGnssCapb {
-    pub const TYPE: u16 = 150;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgGnssCapb, ::parser::MessageError> {
         Ok(MsgGnssCapb {
+            sender_id: None,
             t_nmct: GPSTimeSec::parse(_buf)?,
             gc: GnssCapb::parse(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgGnssCapb {
+    const MSG_ID: u16 = 150;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -2368,6 +2704,7 @@ impl MsgGnssCapb {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGroupDelayDepA {
+    pub sender_id: Option<u16>,
     pub t_op: GPSTimeDep,
     // ^ Data Predict Time of Week
     pub prn: u8,
@@ -2381,9 +2718,9 @@ pub struct MsgGroupDelayDepA {
 }
 
 impl MsgGroupDelayDepA {
-    pub const TYPE: u16 = 146;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelayDepA, ::parser::MessageError> {
         Ok(MsgGroupDelayDepA {
+            sender_id: None,
             t_op: GPSTimeDep::parse(_buf)?,
             prn: _buf.read_u8()?,
             valid: _buf.read_u8()?,
@@ -2391,6 +2728,17 @@ impl MsgGroupDelayDepA {
             isc_l1ca: _buf.read_i16::<LittleEndian>()?,
             isc_l2c: _buf.read_i16::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgGroupDelayDepA {
+    const MSG_ID: u16 = 146;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -2401,6 +2749,7 @@ impl MsgGroupDelayDepA {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGroupDelayDepB {
+    pub sender_id: Option<u16>,
     pub t_op: GPSTimeSec,
     // ^ Data Predict Time of Week
     pub sid: GnssSignalDep,
@@ -2414,9 +2763,9 @@ pub struct MsgGroupDelayDepB {
 }
 
 impl MsgGroupDelayDepB {
-    pub const TYPE: u16 = 147;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelayDepB, ::parser::MessageError> {
         Ok(MsgGroupDelayDepB {
+            sender_id: None,
             t_op: GPSTimeSec::parse(_buf)?,
             sid: GnssSignalDep::parse(_buf)?,
             valid: _buf.read_u8()?,
@@ -2424,6 +2773,17 @@ impl MsgGroupDelayDepB {
             isc_l1ca: _buf.read_i16::<LittleEndian>()?,
             isc_l2c: _buf.read_i16::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgGroupDelayDepB {
+    const MSG_ID: u16 = 147;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -2434,6 +2794,7 @@ impl MsgGroupDelayDepB {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGroupDelay {
+    pub sender_id: Option<u16>,
     pub t_op: GPSTimeSec,
     // ^ Data Predict Time of Week
     pub sid: GnssSignal,
@@ -2447,9 +2808,9 @@ pub struct MsgGroupDelay {
 }
 
 impl MsgGroupDelay {
-    pub const TYPE: u16 = 148;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelay, ::parser::MessageError> {
         Ok(MsgGroupDelay {
+            sender_id: None,
             t_op: GPSTimeSec::parse(_buf)?,
             sid: GnssSignal::parse(_buf)?,
             valid: _buf.read_u8()?,
@@ -2457,6 +2818,17 @@ impl MsgGroupDelay {
             isc_l1ca: _buf.read_i16::<LittleEndian>()?,
             isc_l2c: _buf.read_i16::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgGroupDelay {
+    const MSG_ID: u16 = 148;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -2588,6 +2960,7 @@ impl AlmanacCommonContentDep {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGPSDep {
+    pub sender_id: Option<u16>,
     pub common: AlmanacCommonContentDep,
     // ^ Values common for all almanac types
     pub m0: f64,
@@ -2611,9 +2984,9 @@ pub struct MsgAlmanacGPSDep {
 }
 
 impl MsgAlmanacGPSDep {
-    pub const TYPE: u16 = 112;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGPSDep, ::parser::MessageError> {
         Ok(MsgAlmanacGPSDep {
+            sender_id: None,
             common: AlmanacCommonContentDep::parse(_buf)?,
             m0: _buf.read_f64::<LittleEndian>()?,
             ecc: _buf.read_f64::<LittleEndian>()?,
@@ -2627,6 +3000,17 @@ impl MsgAlmanacGPSDep {
         })
     }
 }
+impl super::SBPMessage for MsgAlmanacGPSDep {
+    const MSG_ID: u16 = 112;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Satellite broadcast ephemeris for GPS
 //
@@ -2638,6 +3022,7 @@ impl MsgAlmanacGPSDep {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGPS {
+    pub sender_id: Option<u16>,
     pub common: AlmanacCommonContent,
     // ^ Values common for all almanac types
     pub m0: f64,
@@ -2661,9 +3046,9 @@ pub struct MsgAlmanacGPS {
 }
 
 impl MsgAlmanacGPS {
-    pub const TYPE: u16 = 114;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGPS, ::parser::MessageError> {
         Ok(MsgAlmanacGPS {
+            sender_id: None,
             common: AlmanacCommonContent::parse(_buf)?,
             m0: _buf.read_f64::<LittleEndian>()?,
             ecc: _buf.read_f64::<LittleEndian>()?,
@@ -2677,6 +3062,17 @@ impl MsgAlmanacGPS {
         })
     }
 }
+impl super::SBPMessage for MsgAlmanacGPS {
+    const MSG_ID: u16 = 114;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Satellite broadcast ephemeris for GLO
 //
@@ -2688,6 +3084,7 @@ impl MsgAlmanacGPS {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGloDep {
+    pub sender_id: Option<u16>,
     pub common: AlmanacCommonContentDep,
     // ^ Values common for all almanac types
     pub lambda_na: f64,
@@ -2708,9 +3105,9 @@ pub struct MsgAlmanacGloDep {
 }
 
 impl MsgAlmanacGloDep {
-    pub const TYPE: u16 = 113;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGloDep, ::parser::MessageError> {
         Ok(MsgAlmanacGloDep {
+            sender_id: None,
             common: AlmanacCommonContentDep::parse(_buf)?,
             lambda_na: _buf.read_f64::<LittleEndian>()?,
             t_lambda_na: _buf.read_f64::<LittleEndian>()?,
@@ -2720,6 +3117,17 @@ impl MsgAlmanacGloDep {
             epsilon: _buf.read_f64::<LittleEndian>()?,
             omega: _buf.read_f64::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgAlmanacGloDep {
+    const MSG_ID: u16 = 113;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -2733,6 +3141,7 @@ impl MsgAlmanacGloDep {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGlo {
+    pub sender_id: Option<u16>,
     pub common: AlmanacCommonContent,
     // ^ Values common for all almanac types
     pub lambda_na: f64,
@@ -2753,9 +3162,9 @@ pub struct MsgAlmanacGlo {
 }
 
 impl MsgAlmanacGlo {
-    pub const TYPE: u16 = 115;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGlo, ::parser::MessageError> {
         Ok(MsgAlmanacGlo {
+            sender_id: None,
             common: AlmanacCommonContent::parse(_buf)?,
             lambda_na: _buf.read_f64::<LittleEndian>()?,
             t_lambda_na: _buf.read_f64::<LittleEndian>()?,
@@ -2765,6 +3174,17 @@ impl MsgAlmanacGlo {
             epsilon: _buf.read_f64::<LittleEndian>()?,
             omega: _buf.read_f64::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgAlmanacGlo {
+    const MSG_ID: u16 = 115;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -2778,6 +3198,7 @@ impl MsgAlmanacGlo {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGloBiases {
+    pub sender_id: Option<u16>,
     pub mask: u8,
     // ^ GLONASS FDMA signals mask
     pub l1ca_bias: i16,
@@ -2791,15 +3212,26 @@ pub struct MsgGloBiases {
 }
 
 impl MsgGloBiases {
-    pub const TYPE: u16 = 117;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgGloBiases, ::parser::MessageError> {
         Ok(MsgGloBiases {
+            sender_id: None,
             mask: _buf.read_u8()?,
             l1ca_bias: _buf.read_i16::<LittleEndian>()?,
             l1p_bias: _buf.read_i16::<LittleEndian>()?,
             l2ca_bias: _buf.read_i16::<LittleEndian>()?,
             l2p_bias: _buf.read_i16::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgGloBiases {
+    const MSG_ID: u16 = 117;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -2854,16 +3286,28 @@ impl SvAzEl {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSvAzEl {
+    pub sender_id: Option<u16>,
     pub azel: Vec<SvAzEl>,
     // ^ Azimuth and elevation per satellite
 }
 
 impl MsgSvAzEl {
-    pub const TYPE: u16 = 151;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSvAzEl, ::parser::MessageError> {
         Ok(MsgSvAzEl {
+            sender_id: None,
             azel: SvAzEl::parse_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgSvAzEl {
+    const MSG_ID: u16 = 151;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -2874,6 +3318,7 @@ impl MsgSvAzEl {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgOsr {
+    pub sender_id: Option<u16>,
     pub header: ObservationHeader,
     // ^ Header of a GPS observation message
     pub obs: Vec<PackedOsrContent>,
@@ -2881,11 +3326,22 @@ pub struct MsgOsr {
 }
 
 impl MsgOsr {
-    pub const TYPE: u16 = 1600;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgOsr, ::parser::MessageError> {
         Ok(MsgOsr {
+            sender_id: None,
             header: ObservationHeader::parse(_buf)?,
             obs: PackedOsrContent::parse_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgOsr {
+    const MSG_ID: u16 = 1600;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

@@ -27,12 +27,24 @@ use super::gnss::*;
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgAlmanac {}
+pub struct MsgAlmanac {
+    pub sender_id: Option<u16>,
+}
 
 impl MsgAlmanac {
-    pub const TYPE: u16 = 105;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanac, ::parser::MessageError> {
-        Ok(MsgAlmanac {})
+        Ok(MsgAlmanac { sender_id: None })
+    }
+}
+impl super::SBPMessage for MsgAlmanac {
+    const MSG_ID: u16 = 105;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -43,12 +55,24 @@ impl MsgAlmanac {
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgSetTime {}
+pub struct MsgSetTime {
+    pub sender_id: Option<u16>,
+}
 
 impl MsgSetTime {
-    pub const TYPE: u16 = 104;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSetTime, ::parser::MessageError> {
-        Ok(MsgSetTime {})
+        Ok(MsgSetTime { sender_id: None })
+    }
+}
+impl super::SBPMessage for MsgSetTime {
+    const MSG_ID: u16 = 104;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -60,16 +84,28 @@ impl MsgSetTime {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgReset {
+    pub sender_id: Option<u16>,
     pub flags: u32,
     // ^ Reset flags
 }
 
 impl MsgReset {
-    pub const TYPE: u16 = 182;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgReset, ::parser::MessageError> {
         Ok(MsgReset {
+            sender_id: None,
             flags: _buf.read_u32::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgReset {
+    const MSG_ID: u16 = 182;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -80,12 +116,24 @@ impl MsgReset {
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgResetDep {}
+pub struct MsgResetDep {
+    pub sender_id: Option<u16>,
+}
 
 impl MsgResetDep {
-    pub const TYPE: u16 = 178;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgResetDep, ::parser::MessageError> {
-        Ok(MsgResetDep {})
+        Ok(MsgResetDep { sender_id: None })
+    }
+}
+impl super::SBPMessage for MsgResetDep {
+    const MSG_ID: u16 = 178;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -97,12 +145,24 @@ impl MsgResetDep {
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgCwResults {}
+pub struct MsgCwResults {
+    pub sender_id: Option<u16>,
+}
 
 impl MsgCwResults {
-    pub const TYPE: u16 = 192;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgCwResults, ::parser::MessageError> {
-        Ok(MsgCwResults {})
+        Ok(MsgCwResults { sender_id: None })
+    }
+}
+impl super::SBPMessage for MsgCwResults {
+    const MSG_ID: u16 = 192;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -114,12 +174,24 @@ impl MsgCwResults {
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgCwStart {}
+pub struct MsgCwStart {
+    pub sender_id: Option<u16>,
+}
 
 impl MsgCwStart {
-    pub const TYPE: u16 = 193;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgCwStart, ::parser::MessageError> {
-        Ok(MsgCwStart {})
+        Ok(MsgCwStart { sender_id: None })
+    }
+}
+impl super::SBPMessage for MsgCwStart {
+    const MSG_ID: u16 = 193;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -131,16 +203,28 @@ impl MsgCwStart {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgResetFilters {
+    pub sender_id: Option<u16>,
     pub filter: u8,
     // ^ Filter flags
 }
 
 impl MsgResetFilters {
-    pub const TYPE: u16 = 34;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgResetFilters, ::parser::MessageError> {
         Ok(MsgResetFilters {
+            sender_id: None,
             filter: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgResetFilters {
+    const MSG_ID: u16 = 34;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -150,12 +234,24 @@ impl MsgResetFilters {
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgInitBaseDep {}
+pub struct MsgInitBaseDep {
+    pub sender_id: Option<u16>,
+}
 
 impl MsgInitBaseDep {
-    pub const TYPE: u16 = 35;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgInitBaseDep, ::parser::MessageError> {
-        Ok(MsgInitBaseDep {})
+        Ok(MsgInitBaseDep { sender_id: None })
+    }
+}
+impl super::SBPMessage for MsgInitBaseDep {
+    const MSG_ID: u16 = 35;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -168,6 +264,7 @@ impl MsgInitBaseDep {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgThreadState {
+    pub sender_id: Option<u16>,
     pub name: String,
     // ^ Thread name (NULL terminated)
     pub cpu: u16,
@@ -178,13 +275,24 @@ pub struct MsgThreadState {
 }
 
 impl MsgThreadState {
-    pub const TYPE: u16 = 23;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgThreadState, ::parser::MessageError> {
         Ok(MsgThreadState {
+            sender_id: None,
             name: ::parser::read_string_limit(_buf, 20)?,
             cpu: _buf.read_u16::<LittleEndian>()?,
             stack_free: _buf.read_u32::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgThreadState {
+    const MSG_ID: u16 = 23;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -358,6 +466,7 @@ impl Latency {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgUartState {
+    pub sender_id: Option<u16>,
     pub uart_a: UARTChannel,
     // ^ State of UART A
     pub uart_b: UARTChannel,
@@ -371,15 +480,26 @@ pub struct MsgUartState {
 }
 
 impl MsgUartState {
-    pub const TYPE: u16 = 29;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgUartState, ::parser::MessageError> {
         Ok(MsgUartState {
+            sender_id: None,
             uart_a: UARTChannel::parse(_buf)?,
             uart_b: UARTChannel::parse(_buf)?,
             uart_ftdi: UARTChannel::parse(_buf)?,
             latency: Latency::parse(_buf)?,
             obs_period: Period::parse(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgUartState {
+    const MSG_ID: u16 = 29;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -390,6 +510,7 @@ impl MsgUartState {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgUartStateDepa {
+    pub sender_id: Option<u16>,
     pub uart_a: UARTChannel,
     // ^ State of UART A
     pub uart_b: UARTChannel,
@@ -401,14 +522,25 @@ pub struct MsgUartStateDepa {
 }
 
 impl MsgUartStateDepa {
-    pub const TYPE: u16 = 24;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgUartStateDepa, ::parser::MessageError> {
         Ok(MsgUartStateDepa {
+            sender_id: None,
             uart_a: UARTChannel::parse(_buf)?,
             uart_b: UARTChannel::parse(_buf)?,
             uart_ftdi: UARTChannel::parse(_buf)?,
             latency: Latency::parse(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgUartStateDepa {
+    const MSG_ID: u16 = 24;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -422,16 +554,28 @@ impl MsgUartStateDepa {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgIarState {
+    pub sender_id: Option<u16>,
     pub num_hyps: u32,
     // ^ Number of integer ambiguity hypotheses remaining
 }
 
 impl MsgIarState {
-    pub const TYPE: u16 = 25;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgIarState, ::parser::MessageError> {
         Ok(MsgIarState {
+            sender_id: None,
             num_hyps: _buf.read_u32::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgIarState {
+    const MSG_ID: u16 = 25;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -443,6 +587,7 @@ impl MsgIarState {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgMaskSatellite {
+    pub sender_id: Option<u16>,
     pub mask: u8,
     // ^ Mask of systems that should ignore this satellite.
     pub sid: GnssSignal,
@@ -450,12 +595,23 @@ pub struct MsgMaskSatellite {
 }
 
 impl MsgMaskSatellite {
-    pub const TYPE: u16 = 43;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgMaskSatellite, ::parser::MessageError> {
         Ok(MsgMaskSatellite {
+            sender_id: None,
             mask: _buf.read_u8()?,
             sid: GnssSignal::parse(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgMaskSatellite {
+    const MSG_ID: u16 = 43;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -466,6 +622,7 @@ impl MsgMaskSatellite {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgMaskSatelliteDep {
+    pub sender_id: Option<u16>,
     pub mask: u8,
     // ^ Mask of systems that should ignore this satellite.
     pub sid: GnssSignalDep,
@@ -473,12 +630,23 @@ pub struct MsgMaskSatelliteDep {
 }
 
 impl MsgMaskSatelliteDep {
-    pub const TYPE: u16 = 27;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgMaskSatelliteDep, ::parser::MessageError> {
         Ok(MsgMaskSatelliteDep {
+            sender_id: None,
             mask: _buf.read_u8()?,
             sid: GnssSignalDep::parse(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgMaskSatelliteDep {
+    const MSG_ID: u16 = 27;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -491,6 +659,7 @@ impl MsgMaskSatelliteDep {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgDeviceMonitor {
+    pub sender_id: Option<u16>,
     pub dev_vin: i16,
     // ^ Device V_in
     pub cpu_vint: i16,
@@ -504,15 +673,26 @@ pub struct MsgDeviceMonitor {
 }
 
 impl MsgDeviceMonitor {
-    pub const TYPE: u16 = 181;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgDeviceMonitor, ::parser::MessageError> {
         Ok(MsgDeviceMonitor {
+            sender_id: None,
             dev_vin: _buf.read_i16::<LittleEndian>()?,
             cpu_vint: _buf.read_i16::<LittleEndian>()?,
             cpu_vaux: _buf.read_i16::<LittleEndian>()?,
             cpu_temperature: _buf.read_i16::<LittleEndian>()?,
             fe_temperature: _buf.read_i16::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgDeviceMonitor {
+    const MSG_ID: u16 = 181;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -525,6 +705,7 @@ impl MsgDeviceMonitor {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgCommandReq {
+    pub sender_id: Option<u16>,
     pub sequence: u32,
     // ^ Sequence number
     pub command: String,
@@ -532,12 +713,23 @@ pub struct MsgCommandReq {
 }
 
 impl MsgCommandReq {
-    pub const TYPE: u16 = 184;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgCommandReq, ::parser::MessageError> {
         Ok(MsgCommandReq {
+            sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             command: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgCommandReq {
+    const MSG_ID: u16 = 184;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -549,6 +741,7 @@ impl MsgCommandReq {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgCommandResp {
+    pub sender_id: Option<u16>,
     pub sequence: u32,
     // ^ Sequence number
     pub code: i32,
@@ -556,12 +749,23 @@ pub struct MsgCommandResp {
 }
 
 impl MsgCommandResp {
-    pub const TYPE: u16 = 185;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgCommandResp, ::parser::MessageError> {
         Ok(MsgCommandResp {
+            sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             code: _buf.read_i32::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgCommandResp {
+    const MSG_ID: u16 = 185;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -575,6 +779,7 @@ impl MsgCommandResp {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgCommandOutput {
+    pub sender_id: Option<u16>,
     pub sequence: u32,
     // ^ Sequence number
     pub line: String,
@@ -582,12 +787,23 @@ pub struct MsgCommandOutput {
 }
 
 impl MsgCommandOutput {
-    pub const TYPE: u16 = 188;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgCommandOutput, ::parser::MessageError> {
         Ok(MsgCommandOutput {
+            sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             line: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgCommandOutput {
+    const MSG_ID: u16 = 188;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -598,12 +814,24 @@ impl MsgCommandOutput {
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgNetworkStateReq {}
+pub struct MsgNetworkStateReq {
+    pub sender_id: Option<u16>,
+}
 
 impl MsgNetworkStateReq {
-    pub const TYPE: u16 = 186;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgNetworkStateReq, ::parser::MessageError> {
-        Ok(MsgNetworkStateReq {})
+        Ok(MsgNetworkStateReq { sender_id: None })
+    }
+}
+impl super::SBPMessage for MsgNetworkStateReq {
+    const MSG_ID: u16 = 186;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -616,6 +844,7 @@ impl MsgNetworkStateReq {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgNetworkStateResp {
+    pub sender_id: Option<u16>,
     pub ipv4_address: Vec<u8>,
     // ^ IPv4 address (all zero when unavailable)
     pub ipv4_mask_size: u8,
@@ -635,9 +864,9 @@ pub struct MsgNetworkStateResp {
 }
 
 impl MsgNetworkStateResp {
-    pub const TYPE: u16 = 187;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgNetworkStateResp, ::parser::MessageError> {
         Ok(MsgNetworkStateResp {
+            sender_id: None,
             ipv4_address: ::parser::read_u8_array_limit(_buf, 4)?,
             ipv4_mask_size: _buf.read_u8()?,
             ipv6_address: ::parser::read_u8_array_limit(_buf, 16)?,
@@ -647,6 +876,17 @@ impl MsgNetworkStateResp {
             interface_name: ::parser::read_string_limit(_buf, 16)?,
             flags: _buf.read_u32::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgNetworkStateResp {
+    const MSG_ID: u16 = 187;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -711,16 +951,28 @@ impl NetworkUsage {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgNetworkBandwidthUsage {
+    pub sender_id: Option<u16>,
     pub interfaces: Vec<NetworkUsage>,
     // ^ Usage measurement array
 }
 
 impl MsgNetworkBandwidthUsage {
-    pub const TYPE: u16 = 189;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgNetworkBandwidthUsage, ::parser::MessageError> {
         Ok(MsgNetworkBandwidthUsage {
+            sender_id: None,
             interfaces: NetworkUsage::parse_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgNetworkBandwidthUsage {
+    const MSG_ID: u16 = 189;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -733,6 +985,7 @@ impl MsgNetworkBandwidthUsage {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgCellModemStatus {
+    pub sender_id: Option<u16>,
     pub signal_strength: i8,
     // ^ Received cell signal strength in dBm, zero translates to unknown
     pub signal_error_rate: f32,
@@ -742,13 +995,24 @@ pub struct MsgCellModemStatus {
 }
 
 impl MsgCellModemStatus {
-    pub const TYPE: u16 = 190;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgCellModemStatus, ::parser::MessageError> {
         Ok(MsgCellModemStatus {
+            sender_id: None,
             signal_strength: _buf.read_i8()?,
             signal_error_rate: _buf.read_f32::<LittleEndian>()?,
             reserved: ::parser::read_u8_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgCellModemStatus {
+    const MSG_ID: u16 = 190;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -759,6 +1023,7 @@ impl MsgCellModemStatus {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSpecanDep {
+    pub sender_id: Option<u16>,
     pub channel_tag: u16,
     // ^ Channel ID
     pub t: GPSTimeDep,
@@ -776,9 +1041,9 @@ pub struct MsgSpecanDep {
 }
 
 impl MsgSpecanDep {
-    pub const TYPE: u16 = 80;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSpecanDep, ::parser::MessageError> {
         Ok(MsgSpecanDep {
+            sender_id: None,
             channel_tag: _buf.read_u16::<LittleEndian>()?,
             t: GPSTimeDep::parse(_buf)?,
             freq_ref: _buf.read_f32::<LittleEndian>()?,
@@ -789,6 +1054,17 @@ impl MsgSpecanDep {
         })
     }
 }
+impl super::SBPMessage for MsgSpecanDep {
+    const MSG_ID: u16 = 80;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Spectrum analyzer
 //
@@ -797,6 +1073,7 @@ impl MsgSpecanDep {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSpecan {
+    pub sender_id: Option<u16>,
     pub channel_tag: u16,
     // ^ Channel ID
     pub t: GPSTime,
@@ -814,9 +1091,9 @@ pub struct MsgSpecan {
 }
 
 impl MsgSpecan {
-    pub const TYPE: u16 = 81;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSpecan, ::parser::MessageError> {
         Ok(MsgSpecan {
+            sender_id: None,
             channel_tag: _buf.read_u16::<LittleEndian>()?,
             t: GPSTime::parse(_buf)?,
             freq_ref: _buf.read_f32::<LittleEndian>()?,
@@ -825,6 +1102,17 @@ impl MsgSpecan {
             amplitude_unit: _buf.read_f32::<LittleEndian>()?,
             amplitude_value: ::parser::read_u8_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgSpecan {
+    const MSG_ID: u16 = 81;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -840,6 +1128,7 @@ impl MsgSpecan {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFrontEndGain {
+    pub sender_id: Option<u16>,
     pub rf_gain: Vec<i8>,
     // ^ RF gain for each frontend channel
     pub if_gain: Vec<i8>,
@@ -847,11 +1136,22 @@ pub struct MsgFrontEndGain {
 }
 
 impl MsgFrontEndGain {
-    pub const TYPE: u16 = 191;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFrontEndGain, ::parser::MessageError> {
         Ok(MsgFrontEndGain {
+            sender_id: None,
             rf_gain: ::parser::read_s8_array_limit(_buf, 8)?,
             if_gain: ::parser::read_s8_array_limit(_buf, 8)?,
         })
+    }
+}
+impl super::SBPMessage for MsgFrontEndGain {
+    const MSG_ID: u16 = 191;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

@@ -29,12 +29,24 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgBootloaderHandshakeReq {}
+pub struct MsgBootloaderHandshakeReq {
+    pub sender_id: Option<u16>,
+}
 
 impl MsgBootloaderHandshakeReq {
-    pub const TYPE: u16 = 179;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeReq, ::parser::MessageError> {
-        Ok(MsgBootloaderHandshakeReq {})
+        Ok(MsgBootloaderHandshakeReq { sender_id: None })
+    }
+}
+impl super::SBPMessage for MsgBootloaderHandshakeReq {
+    const MSG_ID: u16 = 179;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -49,6 +61,7 @@ impl MsgBootloaderHandshakeReq {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeResp {
+    pub sender_id: Option<u16>,
     pub flags: u32,
     // ^ Bootloader flags
     pub version: String,
@@ -56,12 +69,23 @@ pub struct MsgBootloaderHandshakeResp {
 }
 
 impl MsgBootloaderHandshakeResp {
-    pub const TYPE: u16 = 180;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeResp, ::parser::MessageError> {
         Ok(MsgBootloaderHandshakeResp {
+            sender_id: None,
             flags: _buf.read_u32::<LittleEndian>()?,
             version: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgBootloaderHandshakeResp {
+    const MSG_ID: u16 = 180;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -72,16 +96,28 @@ impl MsgBootloaderHandshakeResp {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderJumpToApp {
+    pub sender_id: Option<u16>,
     pub jump: u8,
     // ^ Ignored by the device
 }
 
 impl MsgBootloaderJumpToApp {
-    pub const TYPE: u16 = 177;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderJumpToApp, ::parser::MessageError> {
         Ok(MsgBootloaderJumpToApp {
+            sender_id: None,
             jump: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgBootloaderJumpToApp {
+    const MSG_ID: u16 = 177;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -96,12 +132,24 @@ impl MsgBootloaderJumpToApp {
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgNapDeviceDnaReq {}
+pub struct MsgNapDeviceDnaReq {
+    pub sender_id: Option<u16>,
+}
 
 impl MsgNapDeviceDnaReq {
-    pub const TYPE: u16 = 222;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaReq, ::parser::MessageError> {
-        Ok(MsgNapDeviceDnaReq {})
+        Ok(MsgNapDeviceDnaReq { sender_id: None })
+    }
+}
+impl super::SBPMessage for MsgNapDeviceDnaReq {
+    const MSG_ID: u16 = 222;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -117,16 +165,28 @@ impl MsgNapDeviceDnaReq {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgNapDeviceDnaResp {
+    pub sender_id: Option<u16>,
     pub dna: Vec<u8>,
     // ^ 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on the right.
 }
 
 impl MsgNapDeviceDnaResp {
-    pub const TYPE: u16 = 221;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaResp, ::parser::MessageError> {
         Ok(MsgNapDeviceDnaResp {
+            sender_id: None,
             dna: ::parser::read_u8_array_limit(_buf, 8)?,
         })
+    }
+}
+impl super::SBPMessage for MsgNapDeviceDnaResp {
+    const MSG_ID: u16 = 221;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -137,15 +197,27 @@ impl MsgNapDeviceDnaResp {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeDepA {
+    pub sender_id: Option<u16>,
     pub handshake: Vec<u8>,
     // ^ Version number string (not NULL terminated)
 }
 
 impl MsgBootloaderHandshakeDepA {
-    pub const TYPE: u16 = 176;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeDepA, ::parser::MessageError> {
         Ok(MsgBootloaderHandshakeDepA {
+            sender_id: None,
             handshake: ::parser::read_u8_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgBootloaderHandshakeDepA {
+    const MSG_ID: u16 = 176;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

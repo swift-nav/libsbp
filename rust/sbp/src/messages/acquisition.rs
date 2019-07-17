@@ -29,6 +29,7 @@ use super::gnss::*;
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResult {
+    pub sender_id: Option<u16>,
     pub cn0: f32,
     // ^ CN/0 of best point
     pub cp: f32,
@@ -40,14 +41,25 @@ pub struct MsgAcqResult {
 }
 
 impl MsgAcqResult {
-    pub const TYPE: u16 = 47;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResult, ::parser::MessageError> {
         Ok(MsgAcqResult {
+            sender_id: None,
             cn0: _buf.read_f32::<LittleEndian>()?,
             cp: _buf.read_f32::<LittleEndian>()?,
             cf: _buf.read_f32::<LittleEndian>()?,
             sid: GnssSignal::parse(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgAcqResult {
+    const MSG_ID: u16 = 47;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -58,6 +70,7 @@ impl MsgAcqResult {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepC {
+    pub sender_id: Option<u16>,
     pub cn0: f32,
     // ^ CN/0 of best point
     pub cp: f32,
@@ -69,14 +82,25 @@ pub struct MsgAcqResultDepC {
 }
 
 impl MsgAcqResultDepC {
-    pub const TYPE: u16 = 31;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepC, ::parser::MessageError> {
         Ok(MsgAcqResultDepC {
+            sender_id: None,
             cn0: _buf.read_f32::<LittleEndian>()?,
             cp: _buf.read_f32::<LittleEndian>()?,
             cf: _buf.read_f32::<LittleEndian>()?,
             sid: GnssSignalDep::parse(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgAcqResultDepC {
+    const MSG_ID: u16 = 31;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -87,6 +111,7 @@ impl MsgAcqResultDepC {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepB {
+    pub sender_id: Option<u16>,
     pub snr: f32,
     // ^ SNR of best point. Currently in arbitrary SNR points, but will be in
     // units of dB Hz in a later revision of this message.
@@ -99,14 +124,25 @@ pub struct MsgAcqResultDepB {
 }
 
 impl MsgAcqResultDepB {
-    pub const TYPE: u16 = 20;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepB, ::parser::MessageError> {
         Ok(MsgAcqResultDepB {
+            sender_id: None,
             snr: _buf.read_f32::<LittleEndian>()?,
             cp: _buf.read_f32::<LittleEndian>()?,
             cf: _buf.read_f32::<LittleEndian>()?,
             sid: GnssSignalDep::parse(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgAcqResultDepB {
+    const MSG_ID: u16 = 20;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -117,6 +153,7 @@ impl MsgAcqResultDepB {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepA {
+    pub sender_id: Option<u16>,
     pub snr: f32,
     // ^ SNR of best point. Currently dimensonless, but will have units of dB Hz
     // in the revision of this message.
@@ -130,14 +167,25 @@ pub struct MsgAcqResultDepA {
 }
 
 impl MsgAcqResultDepA {
-    pub const TYPE: u16 = 21;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepA, ::parser::MessageError> {
         Ok(MsgAcqResultDepA {
+            sender_id: None,
             snr: _buf.read_f32::<LittleEndian>()?,
             cp: _buf.read_f32::<LittleEndian>()?,
             cf: _buf.read_f32::<LittleEndian>()?,
             prn: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgAcqResultDepA {
+    const MSG_ID: u16 = 21;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -291,16 +339,28 @@ impl AcqSvProfileDep {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqSvProfile {
+    pub sender_id: Option<u16>,
     pub acq_sv_profile: Vec<AcqSvProfile>,
     // ^ SV profiles during acquisition time
 }
 
 impl MsgAcqSvProfile {
-    pub const TYPE: u16 = 46;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfile, ::parser::MessageError> {
         Ok(MsgAcqSvProfile {
+            sender_id: None,
             acq_sv_profile: AcqSvProfile::parse_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgAcqSvProfile {
+    const MSG_ID: u16 = 46;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -311,15 +371,27 @@ impl MsgAcqSvProfile {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqSvProfileDep {
+    pub sender_id: Option<u16>,
     pub acq_sv_profile: Vec<AcqSvProfileDep>,
     // ^ SV profiles during acquisition time
 }
 
 impl MsgAcqSvProfileDep {
-    pub const TYPE: u16 = 30;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfileDep, ::parser::MessageError> {
         Ok(MsgAcqSvProfileDep {
+            sender_id: None,
             acq_sv_profile: AcqSvProfileDep::parse_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgAcqSvProfileDep {
+    const MSG_ID: u16 = 30;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

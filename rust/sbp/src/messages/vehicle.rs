@@ -28,6 +28,7 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgOdometry {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ Time field representing either milliseconds in the GPS Week or local CPU
     // time from the producing system in milliseconds.  See the tow_source flag
@@ -39,12 +40,23 @@ pub struct MsgOdometry {
 }
 
 impl MsgOdometry {
-    pub const TYPE: u16 = 2307;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgOdometry, ::parser::MessageError> {
         Ok(MsgOdometry {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             velocity: _buf.read_i32::<LittleEndian>()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgOdometry {
+    const MSG_ID: u16 = 2307;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

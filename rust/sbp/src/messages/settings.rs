@@ -49,12 +49,24 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgSettingsSave {}
+pub struct MsgSettingsSave {
+    pub sender_id: Option<u16>,
+}
 
 impl MsgSettingsSave {
-    pub const TYPE: u16 = 161;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsSave, ::parser::MessageError> {
-        Ok(MsgSettingsSave {})
+        Ok(MsgSettingsSave { sender_id: None })
+    }
+}
+impl super::SBPMessage for MsgSettingsSave {
+    const MSG_ID: u16 = 161;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -71,17 +83,29 @@ impl MsgSettingsSave {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsWrite {
+    pub sender_id: Option<u16>,
     pub setting: String,
     // ^ A NULL-terminated and NULL-delimited string with contents
     // "SECTION_SETTING\0SETTING\0VALUE\0"
 }
 
 impl MsgSettingsWrite {
-    pub const TYPE: u16 = 160;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWrite, ::parser::MessageError> {
         Ok(MsgSettingsWrite {
+            sender_id: None,
             setting: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgSettingsWrite {
+    const MSG_ID: u16 = 160;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -98,6 +122,7 @@ impl MsgSettingsWrite {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsWriteResp {
+    pub sender_id: Option<u16>,
     pub status: u8,
     // ^ Write status
     pub setting: String,
@@ -106,12 +131,23 @@ pub struct MsgSettingsWriteResp {
 }
 
 impl MsgSettingsWriteResp {
-    pub const TYPE: u16 = 175;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWriteResp, ::parser::MessageError> {
         Ok(MsgSettingsWriteResp {
+            sender_id: None,
             status: _buf.read_u8()?,
             setting: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgSettingsWriteResp {
+    const MSG_ID: u16 = 175;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -129,17 +165,29 @@ impl MsgSettingsWriteResp {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsReadReq {
+    pub sender_id: Option<u16>,
     pub setting: String,
     // ^ A NULL-terminated and NULL-delimited string with contents
     // "SECTION_SETTING\0SETTING\0"
 }
 
 impl MsgSettingsReadReq {
-    pub const TYPE: u16 = 164;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadReq, ::parser::MessageError> {
         Ok(MsgSettingsReadReq {
+            sender_id: None,
             setting: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgSettingsReadReq {
+    const MSG_ID: u16 = 164;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -156,17 +204,29 @@ impl MsgSettingsReadReq {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsReadResp {
+    pub sender_id: Option<u16>,
     pub setting: String,
     // ^ A NULL-terminated and NULL-delimited string with contents
     // "SECTION_SETTING\0SETTING\0VALUE\0"
 }
 
 impl MsgSettingsReadResp {
-    pub const TYPE: u16 = 165;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadResp, ::parser::MessageError> {
         Ok(MsgSettingsReadResp {
+            sender_id: None,
             setting: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgSettingsReadResp {
+    const MSG_ID: u16 = 165;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -179,17 +239,29 @@ impl MsgSettingsReadResp {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsReadByIndexReq {
+    pub sender_id: Option<u16>,
     pub index: u16,
     // ^ An index into the device settings, with values ranging from 0 to
     // length(settings)
 }
 
 impl MsgSettingsReadByIndexReq {
-    pub const TYPE: u16 = 162;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexReq, ::parser::MessageError> {
         Ok(MsgSettingsReadByIndexReq {
+            sender_id: None,
             index: _buf.read_u16::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgSettingsReadByIndexReq {
+    const MSG_ID: u16 = 162;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -209,6 +281,7 @@ impl MsgSettingsReadByIndexReq {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsReadByIndexResp {
+    pub sender_id: Option<u16>,
     pub index: u16,
     // ^ An index into the device settings, with values ranging from 0 to
     // length(settings)
@@ -218,12 +291,23 @@ pub struct MsgSettingsReadByIndexResp {
 }
 
 impl MsgSettingsReadByIndexResp {
-    pub const TYPE: u16 = 167;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexResp, ::parser::MessageError> {
         Ok(MsgSettingsReadByIndexResp {
+            sender_id: None,
             index: _buf.read_u16::<LittleEndian>()?,
             setting: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgSettingsReadByIndexResp {
+    const MSG_ID: u16 = 167;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -233,12 +317,24 @@ impl MsgSettingsReadByIndexResp {
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgSettingsReadByIndexDone {}
+pub struct MsgSettingsReadByIndexDone {
+    pub sender_id: Option<u16>,
+}
 
 impl MsgSettingsReadByIndexDone {
-    pub const TYPE: u16 = 166;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexDone, ::parser::MessageError> {
-        Ok(MsgSettingsReadByIndexDone {})
+        Ok(MsgSettingsReadByIndexDone { sender_id: None })
+    }
+}
+impl super::SBPMessage for MsgSettingsReadByIndexDone {
+    const MSG_ID: u16 = 166;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -251,17 +347,29 @@ impl MsgSettingsReadByIndexDone {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsRegister {
+    pub sender_id: Option<u16>,
     pub setting: String,
     // ^ A NULL-terminated and delimited string with contents
     // "SECTION_SETTING\0SETTING\0VALUE".
 }
 
 impl MsgSettingsRegister {
-    pub const TYPE: u16 = 174;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsRegister, ::parser::MessageError> {
         Ok(MsgSettingsRegister {
+            sender_id: None,
             setting: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgSettingsRegister {
+    const MSG_ID: u16 = 174;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -275,6 +383,7 @@ impl MsgSettingsRegister {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsRegisterResp {
+    pub sender_id: Option<u16>,
     pub status: u8,
     // ^ Register status
     pub setting: String,
@@ -284,11 +393,22 @@ pub struct MsgSettingsRegisterResp {
 }
 
 impl MsgSettingsRegisterResp {
-    pub const TYPE: u16 = 431;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsRegisterResp, ::parser::MessageError> {
         Ok(MsgSettingsRegisterResp {
+            sender_id: None,
             status: _buf.read_u8()?,
             setting: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgSettingsRegisterResp {
+    const MSG_ID: u16 = 431;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

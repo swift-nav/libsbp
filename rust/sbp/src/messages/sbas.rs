@@ -26,6 +26,7 @@ use super::gnss::*;
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSbasRaw {
+    pub sender_id: Option<u16>,
     pub sid: GnssSignal,
     // ^ GNSS signal identifier.
     pub tow: u32,
@@ -37,13 +38,24 @@ pub struct MsgSbasRaw {
 }
 
 impl MsgSbasRaw {
-    pub const TYPE: u16 = 30583;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSbasRaw, ::parser::MessageError> {
         Ok(MsgSbasRaw {
+            sender_id: None,
             sid: GnssSignal::parse(_buf)?,
             tow: _buf.read_u32::<LittleEndian>()?,
             message_type: _buf.read_u8()?,
             data: ::parser::read_u8_array_limit(_buf, 27)?,
         })
+    }
+}
+impl super::SBPMessage for MsgSbasRaw {
+    const MSG_ID: u16 = 30583;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

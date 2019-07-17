@@ -25,15 +25,27 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgUserData {
+    pub sender_id: Option<u16>,
     pub contents: Vec<u8>,
     // ^ User data payload
 }
 
 impl MsgUserData {
-    pub const TYPE: u16 = 2048;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgUserData, ::parser::MessageError> {
         Ok(MsgUserData {
+            sender_id: None,
             contents: ::parser::read_u8_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgUserData {
+    const MSG_ID: u16 = 2048;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

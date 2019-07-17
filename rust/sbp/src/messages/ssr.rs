@@ -451,6 +451,7 @@ impl GridDefinitionHeader {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrOrbitClock {
+    pub sender_id: Option<u16>,
     pub time: GPSTimeSec,
     // ^ GNSS reference time of the correction
     pub sid: GnssSignal,
@@ -483,9 +484,9 @@ pub struct MsgSsrOrbitClock {
 }
 
 impl MsgSsrOrbitClock {
-    pub const TYPE: u16 = 1501;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrOrbitClock, ::parser::MessageError> {
         Ok(MsgSsrOrbitClock {
+            sender_id: None,
             time: GPSTimeSec::parse(_buf)?,
             sid: GnssSignal::parse(_buf)?,
             update_interval: _buf.read_u8()?,
@@ -503,6 +504,17 @@ impl MsgSsrOrbitClock {
         })
     }
 }
+impl super::SBPMessage for MsgSsrOrbitClock {
+    const MSG_ID: u16 = 1501;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Precise orbit and clock correction
 //
@@ -514,6 +526,7 @@ impl MsgSsrOrbitClock {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrOrbitClockDepA {
+    pub sender_id: Option<u16>,
     pub time: GPSTimeSec,
     // ^ GNSS reference time of the correction
     pub sid: GnssSignal,
@@ -546,9 +559,9 @@ pub struct MsgSsrOrbitClockDepA {
 }
 
 impl MsgSsrOrbitClockDepA {
-    pub const TYPE: u16 = 1500;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrOrbitClockDepA, ::parser::MessageError> {
         Ok(MsgSsrOrbitClockDepA {
+            sender_id: None,
             time: GPSTimeSec::parse(_buf)?,
             sid: GnssSignal::parse(_buf)?,
             update_interval: _buf.read_u8()?,
@@ -566,6 +579,17 @@ impl MsgSsrOrbitClockDepA {
         })
     }
 }
+impl super::SBPMessage for MsgSsrOrbitClockDepA {
+    const MSG_ID: u16 = 1500;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Precise code biases correction
 //
@@ -577,6 +601,7 @@ impl MsgSsrOrbitClockDepA {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrCodeBiases {
+    pub sender_id: Option<u16>,
     pub time: GPSTimeSec,
     // ^ GNSS reference time of the correction
     pub sid: GnssSignal,
@@ -591,15 +616,26 @@ pub struct MsgSsrCodeBiases {
 }
 
 impl MsgSsrCodeBiases {
-    pub const TYPE: u16 = 1505;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrCodeBiases, ::parser::MessageError> {
         Ok(MsgSsrCodeBiases {
+            sender_id: None,
             time: GPSTimeSec::parse(_buf)?,
             sid: GnssSignal::parse(_buf)?,
             update_interval: _buf.read_u8()?,
             iod_ssr: _buf.read_u8()?,
             biases: CodeBiasesContent::parse_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgSsrCodeBiases {
+    const MSG_ID: u16 = 1505;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -615,6 +651,7 @@ impl MsgSsrCodeBiases {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrPhaseBiases {
+    pub sender_id: Option<u16>,
     pub time: GPSTimeSec,
     // ^ GNSS reference time of the correction
     pub sid: GnssSignal,
@@ -637,9 +674,9 @@ pub struct MsgSsrPhaseBiases {
 }
 
 impl MsgSsrPhaseBiases {
-    pub const TYPE: u16 = 1510;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrPhaseBiases, ::parser::MessageError> {
         Ok(MsgSsrPhaseBiases {
+            sender_id: None,
             time: GPSTimeSec::parse(_buf)?,
             sid: GnssSignal::parse(_buf)?,
             update_interval: _buf.read_u8()?,
@@ -650,6 +687,17 @@ impl MsgSsrPhaseBiases {
             yaw_rate: _buf.read_i8()?,
             biases: PhaseBiasesContent::parse_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgSsrPhaseBiases {
+    const MSG_ID: u16 = 1510;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -663,6 +711,7 @@ impl MsgSsrPhaseBiases {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrStecCorrection {
+    pub sender_id: Option<u16>,
     pub header: STECHeader,
     // ^ Header of a STEC message
     pub stec_sat_list: Vec<STECSatElement>,
@@ -670,12 +719,23 @@ pub struct MsgSsrStecCorrection {
 }
 
 impl MsgSsrStecCorrection {
-    pub const TYPE: u16 = 1515;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrStecCorrection, ::parser::MessageError> {
         Ok(MsgSsrStecCorrection {
+            sender_id: None,
             header: STECHeader::parse(_buf)?,
             stec_sat_list: STECSatElement::parse_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgSsrStecCorrection {
+    const MSG_ID: u16 = 1515;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -686,6 +746,7 @@ impl MsgSsrStecCorrection {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGriddedCorrection {
+    pub sender_id: Option<u16>,
     pub header: GriddedCorrectionHeader,
     // ^ Header of a Gridded Correction message
     pub element: GridElement,
@@ -693,12 +754,23 @@ pub struct MsgSsrGriddedCorrection {
 }
 
 impl MsgSsrGriddedCorrection {
-    pub const TYPE: u16 = 1520;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGriddedCorrection, ::parser::MessageError> {
         Ok(MsgSsrGriddedCorrection {
+            sender_id: None,
             header: GriddedCorrectionHeader::parse(_buf)?,
             element: GridElement::parse(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgSsrGriddedCorrection {
+    const MSG_ID: u16 = 1520;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -709,6 +781,7 @@ impl MsgSsrGriddedCorrection {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGridDefinition {
+    pub sender_id: Option<u16>,
     pub header: GridDefinitionHeader,
     // ^ Header of a Gridded Correction message
     pub rle_list: Vec<u8>,
@@ -719,11 +792,22 @@ pub struct MsgSsrGridDefinition {
 }
 
 impl MsgSsrGridDefinition {
-    pub const TYPE: u16 = 1525;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGridDefinition, ::parser::MessageError> {
         Ok(MsgSsrGridDefinition {
+            sender_id: None,
             header: GridDefinitionHeader::parse(_buf)?,
             rle_list: ::parser::read_u8_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgSsrGridDefinition {
+    const MSG_ID: u16 = 1525;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

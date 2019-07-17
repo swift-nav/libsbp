@@ -38,6 +38,7 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadReq {
+    pub sender_id: Option<u16>,
     pub sequence: u32,
     // ^ Read sequence number
     pub offset: u32,
@@ -49,14 +50,25 @@ pub struct MsgFileioReadReq {
 }
 
 impl MsgFileioReadReq {
-    pub const TYPE: u16 = 168;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadReq, ::parser::MessageError> {
         Ok(MsgFileioReadReq {
+            sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             offset: _buf.read_u32::<LittleEndian>()?,
             chunk_size: _buf.read_u8()?,
             filename: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgFileioReadReq {
+    const MSG_ID: u16 = 168;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -71,6 +83,7 @@ impl MsgFileioReadReq {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadResp {
+    pub sender_id: Option<u16>,
     pub sequence: u32,
     // ^ Read sequence number
     pub contents: Vec<u8>,
@@ -78,12 +91,23 @@ pub struct MsgFileioReadResp {
 }
 
 impl MsgFileioReadResp {
-    pub const TYPE: u16 = 163;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadResp, ::parser::MessageError> {
         Ok(MsgFileioReadResp {
+            sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             contents: ::parser::read_u8_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgFileioReadResp {
+    const MSG_ID: u16 = 163;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -103,6 +127,7 @@ impl MsgFileioReadResp {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadDirReq {
+    pub sender_id: Option<u16>,
     pub sequence: u32,
     // ^ Read sequence number
     pub offset: u32,
@@ -112,13 +137,24 @@ pub struct MsgFileioReadDirReq {
 }
 
 impl MsgFileioReadDirReq {
-    pub const TYPE: u16 = 169;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadDirReq, ::parser::MessageError> {
         Ok(MsgFileioReadDirReq {
+            sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             offset: _buf.read_u32::<LittleEndian>()?,
             dirname: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgFileioReadDirReq {
+    const MSG_ID: u16 = 169;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -134,6 +170,7 @@ impl MsgFileioReadDirReq {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadDirResp {
+    pub sender_id: Option<u16>,
     pub sequence: u32,
     // ^ Read sequence number
     pub contents: Vec<u8>,
@@ -141,12 +178,23 @@ pub struct MsgFileioReadDirResp {
 }
 
 impl MsgFileioReadDirResp {
-    pub const TYPE: u16 = 170;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadDirResp, ::parser::MessageError> {
         Ok(MsgFileioReadDirResp {
+            sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             contents: ::parser::read_u8_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgFileioReadDirResp {
+    const MSG_ID: u16 = 170;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -160,16 +208,28 @@ impl MsgFileioReadDirResp {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioRemove {
+    pub sender_id: Option<u16>,
     pub filename: String,
     // ^ Name of the file to delete
 }
 
 impl MsgFileioRemove {
-    pub const TYPE: u16 = 172;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioRemove, ::parser::MessageError> {
         Ok(MsgFileioRemove {
+            sender_id: None,
             filename: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgFileioRemove {
+    const MSG_ID: u16 = 172;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -187,6 +247,7 @@ impl MsgFileioRemove {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioWriteReq {
+    pub sender_id: Option<u16>,
     pub sequence: u32,
     // ^ Write sequence number
     pub offset: u32,
@@ -198,14 +259,25 @@ pub struct MsgFileioWriteReq {
 }
 
 impl MsgFileioWriteReq {
-    pub const TYPE: u16 = 173;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteReq, ::parser::MessageError> {
         Ok(MsgFileioWriteReq {
+            sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             offset: _buf.read_u32::<LittleEndian>()?,
             filename: ::parser::read_string(_buf)?,
             data: ::parser::read_u8_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgFileioWriteReq {
+    const MSG_ID: u16 = 173;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -220,16 +292,28 @@ impl MsgFileioWriteReq {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioWriteResp {
+    pub sender_id: Option<u16>,
     pub sequence: u32,
     // ^ Write sequence number
 }
 
 impl MsgFileioWriteResp {
-    pub const TYPE: u16 = 171;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteResp, ::parser::MessageError> {
         Ok(MsgFileioWriteResp {
+            sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgFileioWriteResp {
+    const MSG_ID: u16 = 171;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -243,16 +327,28 @@ impl MsgFileioWriteResp {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioConfigReq {
+    pub sender_id: Option<u16>,
     pub sequence: u32,
     // ^ Advice sequence number
 }
 
 impl MsgFileioConfigReq {
-    pub const TYPE: u16 = 4097;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigReq, ::parser::MessageError> {
         Ok(MsgFileioConfigReq {
+            sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgFileioConfigReq {
+    const MSG_ID: u16 = 4097;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -267,6 +363,7 @@ impl MsgFileioConfigReq {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioConfigResp {
+    pub sender_id: Option<u16>,
     pub sequence: u32,
     // ^ Advice sequence number
     pub window_size: u32,
@@ -278,13 +375,24 @@ pub struct MsgFileioConfigResp {
 }
 
 impl MsgFileioConfigResp {
-    pub const TYPE: u16 = 4098;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigResp, ::parser::MessageError> {
         Ok(MsgFileioConfigResp {
+            sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             window_size: _buf.read_u32::<LittleEndian>()?,
             batch_size: _buf.read_u32::<LittleEndian>()?,
             fileio_version: _buf.read_u32::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgFileioConfigResp {
+    const MSG_ID: u16 = 4098;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

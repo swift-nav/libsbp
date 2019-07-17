@@ -25,6 +25,7 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxCpuState {
+    pub sender_id: Option<u16>,
     pub index: u8,
     // ^ sequence of this status message, values from 0-9
     pub pid: u16,
@@ -38,15 +39,26 @@ pub struct MsgLinuxCpuState {
 }
 
 impl MsgLinuxCpuState {
-    pub const TYPE: u16 = 32512;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxCpuState, ::parser::MessageError> {
         Ok(MsgLinuxCpuState {
+            sender_id: None,
             index: _buf.read_u8()?,
             pid: _buf.read_u16::<LittleEndian>()?,
             pcpu: _buf.read_u8()?,
             tname: ::parser::read_string_limit(_buf, 15)?,
             cmdline: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgLinuxCpuState {
+    const MSG_ID: u16 = 32512;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -58,6 +70,7 @@ impl MsgLinuxCpuState {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxMemState {
+    pub sender_id: Option<u16>,
     pub index: u8,
     // ^ sequence of this status message, values from 0-9
     pub pid: u16,
@@ -71,15 +84,26 @@ pub struct MsgLinuxMemState {
 }
 
 impl MsgLinuxMemState {
-    pub const TYPE: u16 = 32513;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxMemState, ::parser::MessageError> {
         Ok(MsgLinuxMemState {
+            sender_id: None,
             index: _buf.read_u8()?,
             pid: _buf.read_u16::<LittleEndian>()?,
             pmem: _buf.read_u8()?,
             tname: ::parser::read_string_limit(_buf, 15)?,
             cmdline: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgLinuxMemState {
+    const MSG_ID: u16 = 32513;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -90,6 +114,7 @@ impl MsgLinuxMemState {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxSysState {
+    pub sender_id: Option<u16>,
     pub mem_total: u16,
     // ^ total system memory
     pub pcpu: u8,
@@ -105,9 +130,9 @@ pub struct MsgLinuxSysState {
 }
 
 impl MsgLinuxSysState {
-    pub const TYPE: u16 = 32514;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSysState, ::parser::MessageError> {
         Ok(MsgLinuxSysState {
+            sender_id: None,
             mem_total: _buf.read_u16::<LittleEndian>()?,
             pcpu: _buf.read_u8()?,
             pmem: _buf.read_u8()?,
@@ -115,6 +140,17 @@ impl MsgLinuxSysState {
             procs_stopping: _buf.read_u16::<LittleEndian>()?,
             pid_count: _buf.read_u16::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgLinuxSysState {
+    const MSG_ID: u16 = 32514;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -125,6 +161,7 @@ impl MsgLinuxSysState {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxProcessSocketCounts {
+    pub sender_id: Option<u16>,
     pub index: u8,
     // ^ sequence of this status message, values from 0-9
     pub pid: u16,
@@ -144,9 +181,9 @@ pub struct MsgLinuxProcessSocketCounts {
 }
 
 impl MsgLinuxProcessSocketCounts {
-    pub const TYPE: u16 = 32515;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessSocketCounts, ::parser::MessageError> {
         Ok(MsgLinuxProcessSocketCounts {
+            sender_id: None,
             index: _buf.read_u8()?,
             pid: _buf.read_u16::<LittleEndian>()?,
             socket_count: _buf.read_u16::<LittleEndian>()?,
@@ -154,6 +191,17 @@ impl MsgLinuxProcessSocketCounts {
             socket_states: _buf.read_u16::<LittleEndian>()?,
             cmdline: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgLinuxProcessSocketCounts {
+    const MSG_ID: u16 = 32515;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -164,6 +212,7 @@ impl MsgLinuxProcessSocketCounts {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxProcessSocketQueues {
+    pub sender_id: Option<u16>,
     pub index: u8,
     // ^ sequence of this status message, values from 0-9
     pub pid: u16,
@@ -188,9 +237,9 @@ pub struct MsgLinuxProcessSocketQueues {
 }
 
 impl MsgLinuxProcessSocketQueues {
-    pub const TYPE: u16 = 32516;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessSocketQueues, ::parser::MessageError> {
         Ok(MsgLinuxProcessSocketQueues {
+            sender_id: None,
             index: _buf.read_u8()?,
             pid: _buf.read_u16::<LittleEndian>()?,
             recv_queued: _buf.read_u16::<LittleEndian>()?,
@@ -202,6 +251,17 @@ impl MsgLinuxProcessSocketQueues {
         })
     }
 }
+impl super::SBPMessage for MsgLinuxProcessSocketQueues {
+    const MSG_ID: u16 = 32516;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Summary of socket usage across the system
 //
@@ -210,6 +270,7 @@ impl MsgLinuxProcessSocketQueues {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxSocketUsage {
+    pub sender_id: Option<u16>,
     pub avg_queue_depth: u32,
     // ^ average socket queue depths across all sockets on the system
     pub max_queue_depth: u32,
@@ -225,14 +286,25 @@ pub struct MsgLinuxSocketUsage {
 }
 
 impl MsgLinuxSocketUsage {
-    pub const TYPE: u16 = 32517;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSocketUsage, ::parser::MessageError> {
         Ok(MsgLinuxSocketUsage {
+            sender_id: None,
             avg_queue_depth: _buf.read_u32::<LittleEndian>()?,
             max_queue_depth: _buf.read_u32::<LittleEndian>()?,
             socket_state_counts: ::parser::read_u16_array_limit(_buf, 16)?,
             socket_type_counts: ::parser::read_u16_array_limit(_buf, 16)?,
         })
+    }
+}
+impl super::SBPMessage for MsgLinuxSocketUsage {
+    const MSG_ID: u16 = 32517;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -243,6 +315,7 @@ impl MsgLinuxSocketUsage {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxProcessFdCount {
+    pub sender_id: Option<u16>,
     pub index: u8,
     // ^ sequence of this status message, values from 0-9
     pub pid: u16,
@@ -254,14 +327,25 @@ pub struct MsgLinuxProcessFdCount {
 }
 
 impl MsgLinuxProcessFdCount {
-    pub const TYPE: u16 = 32518;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessFdCount, ::parser::MessageError> {
         Ok(MsgLinuxProcessFdCount {
+            sender_id: None,
             index: _buf.read_u8()?,
             pid: _buf.read_u16::<LittleEndian>()?,
             fd_count: _buf.read_u16::<LittleEndian>()?,
             cmdline: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgLinuxProcessFdCount {
+    const MSG_ID: u16 = 32518;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -272,6 +356,7 @@ impl MsgLinuxProcessFdCount {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxProcessFdSummary {
+    pub sender_id: Option<u16>,
     pub sys_fd_count: u32,
     // ^ count of total FDs open on the system
     pub most_opened: String,
@@ -283,11 +368,22 @@ pub struct MsgLinuxProcessFdSummary {
 }
 
 impl MsgLinuxProcessFdSummary {
-    pub const TYPE: u16 = 32519;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessFdSummary, ::parser::MessageError> {
         Ok(MsgLinuxProcessFdSummary {
+            sender_id: None,
             sys_fd_count: _buf.read_u32::<LittleEndian>()?,
             most_opened: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgLinuxProcessFdSummary {
+    const MSG_ID: u16 = 32519;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

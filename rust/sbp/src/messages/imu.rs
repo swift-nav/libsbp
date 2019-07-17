@@ -27,6 +27,7 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgImuRaw {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ Milliseconds since start of GPS week. If the high bit is set, the time
     // is unknown or invalid.
@@ -47,9 +48,9 @@ pub struct MsgImuRaw {
 }
 
 impl MsgImuRaw {
-    pub const TYPE: u16 = 2304;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuRaw, ::parser::MessageError> {
         Ok(MsgImuRaw {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             tow_f: _buf.read_u8()?,
             acc_x: _buf.read_i16::<LittleEndian>()?,
@@ -59,6 +60,17 @@ impl MsgImuRaw {
             gyr_y: _buf.read_i16::<LittleEndian>()?,
             gyr_z: _buf.read_i16::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgImuRaw {
+    const MSG_ID: u16 = 2304;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -71,6 +83,7 @@ impl MsgImuRaw {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgImuAux {
+    pub sender_id: Option<u16>,
     pub imu_type: u8,
     // ^ IMU type
     pub temp: i16,
@@ -80,12 +93,23 @@ pub struct MsgImuAux {
 }
 
 impl MsgImuAux {
-    pub const TYPE: u16 = 2305;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuAux, ::parser::MessageError> {
         Ok(MsgImuAux {
+            sender_id: None,
             imu_type: _buf.read_u8()?,
             temp: _buf.read_i16::<LittleEndian>()?,
             imu_conf: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgImuAux {
+    const MSG_ID: u16 = 2305;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

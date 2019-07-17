@@ -26,6 +26,7 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLog {
+    pub sender_id: Option<u16>,
     pub level: u8,
     // ^ Logging level
     pub text: String,
@@ -33,12 +34,23 @@ pub struct MsgLog {
 }
 
 impl MsgLog {
-    pub const TYPE: u16 = 1025;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgLog, ::parser::MessageError> {
         Ok(MsgLog {
+            sender_id: None,
             level: _buf.read_u8()?,
             text: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgLog {
+    const MSG_ID: u16 = 1025;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -55,6 +67,7 @@ impl MsgLog {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFwd {
+    pub sender_id: Option<u16>,
     pub source: u8,
     // ^ source identifier
     pub protocol: u8,
@@ -64,13 +77,24 @@ pub struct MsgFwd {
 }
 
 impl MsgFwd {
-    pub const TYPE: u16 = 1026;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFwd, ::parser::MessageError> {
         Ok(MsgFwd {
+            sender_id: None,
             source: _buf.read_u8()?,
             protocol: _buf.read_u8()?,
             fwd_payload: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgFwd {
+    const MSG_ID: u16 = 1026;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -81,15 +105,27 @@ impl MsgFwd {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPrintDep {
+    pub sender_id: Option<u16>,
     pub text: String,
     // ^ Human-readable string
 }
 
 impl MsgPrintDep {
-    pub const TYPE: u16 = 16;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPrintDep, ::parser::MessageError> {
         Ok(MsgPrintDep {
+            sender_id: None,
             text: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgPrintDep {
+    const MSG_ID: u16 = 16;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

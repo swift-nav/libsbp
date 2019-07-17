@@ -26,6 +26,7 @@ use super::gnss::*;
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDetailedDepA {
+    pub sender_id: Option<u16>,
     pub recv_time: u64,
     // ^ Receiver clock time.
     pub tot: GPSTime,
@@ -77,9 +78,9 @@ pub struct MsgTrackingStateDetailedDepA {
 }
 
 impl MsgTrackingStateDetailedDepA {
-    pub const TYPE: u16 = 33;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDetailedDepA, ::parser::MessageError> {
         Ok(MsgTrackingStateDetailedDepA {
+            sender_id: None,
             recv_time: _buf.read_u64::<LittleEndian>()?,
             tot: GPSTime::parse(_buf)?,
             P: _buf.read_u32::<LittleEndian>()?,
@@ -104,6 +105,17 @@ impl MsgTrackingStateDetailedDepA {
         })
     }
 }
+impl super::SBPMessage for MsgTrackingStateDetailedDepA {
+    const MSG_ID: u16 = 33;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Deprecated
 //
@@ -112,6 +124,7 @@ impl MsgTrackingStateDetailedDepA {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDetailedDep {
+    pub sender_id: Option<u16>,
     pub recv_time: u64,
     // ^ Receiver clock time.
     pub tot: GPSTimeDep,
@@ -163,9 +176,9 @@ pub struct MsgTrackingStateDetailedDep {
 }
 
 impl MsgTrackingStateDetailedDep {
-    pub const TYPE: u16 = 17;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDetailedDep, ::parser::MessageError> {
         Ok(MsgTrackingStateDetailedDep {
+            sender_id: None,
             recv_time: _buf.read_u64::<LittleEndian>()?,
             tot: GPSTimeDep::parse(_buf)?,
             P: _buf.read_u32::<LittleEndian>()?,
@@ -188,6 +201,17 @@ impl MsgTrackingStateDetailedDep {
             pset_flags: _buf.read_u8()?,
             misc_flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgTrackingStateDetailedDep {
+    const MSG_ID: u16 = 17;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -246,16 +270,28 @@ impl TrackingChannelState {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingState {
+    pub sender_id: Option<u16>,
     pub states: Vec<TrackingChannelState>,
     // ^ Signal tracking channel state
 }
 
 impl MsgTrackingState {
-    pub const TYPE: u16 = 65;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingState, ::parser::MessageError> {
         Ok(MsgTrackingState {
+            sender_id: None,
             states: TrackingChannelState::parse_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgTrackingState {
+    const MSG_ID: u16 = 65;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -313,16 +349,28 @@ impl MeasurementState {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgMeasurementState {
+    pub sender_id: Option<u16>,
     pub states: Vec<MeasurementState>,
     // ^ ME signal tracking channel state
 }
 
 impl MsgMeasurementState {
-    pub const TYPE: u16 = 97;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgMeasurementState, ::parser::MessageError> {
         Ok(MsgMeasurementState {
+            sender_id: None,
             states: MeasurementState::parse_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgMeasurementState {
+    const MSG_ID: u16 = 97;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -376,6 +424,7 @@ impl TrackingChannelCorrelation {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingIq {
+    pub sender_id: Option<u16>,
     pub channel: u8,
     // ^ Tracking channel of origin
     pub sid: GnssSignal,
@@ -385,13 +434,24 @@ pub struct MsgTrackingIq {
 }
 
 impl MsgTrackingIq {
-    pub const TYPE: u16 = 45;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIq, ::parser::MessageError> {
         Ok(MsgTrackingIq {
+            sender_id: None,
             channel: _buf.read_u8()?,
             sid: GnssSignal::parse(_buf)?,
             corrs: TrackingChannelCorrelation::parse_array_limit(_buf, 3)?,
         })
+    }
+}
+impl super::SBPMessage for MsgTrackingIq {
+    const MSG_ID: u16 = 45;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -447,6 +507,7 @@ impl TrackingChannelCorrelationDep {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingIqDepB {
+    pub sender_id: Option<u16>,
     pub channel: u8,
     // ^ Tracking channel of origin
     pub sid: GnssSignal,
@@ -456,13 +517,24 @@ pub struct MsgTrackingIqDepB {
 }
 
 impl MsgTrackingIqDepB {
-    pub const TYPE: u16 = 44;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIqDepB, ::parser::MessageError> {
         Ok(MsgTrackingIqDepB {
+            sender_id: None,
             channel: _buf.read_u8()?,
             sid: GnssSignal::parse(_buf)?,
             corrs: TrackingChannelCorrelationDep::parse_array_limit(_buf, 3)?,
         })
+    }
+}
+impl super::SBPMessage for MsgTrackingIqDepB {
+    const MSG_ID: u16 = 44;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -473,6 +545,7 @@ impl MsgTrackingIqDepB {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingIqDepA {
+    pub sender_id: Option<u16>,
     pub channel: u8,
     // ^ Tracking channel of origin
     pub sid: GnssSignalDep,
@@ -482,13 +555,24 @@ pub struct MsgTrackingIqDepA {
 }
 
 impl MsgTrackingIqDepA {
-    pub const TYPE: u16 = 28;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIqDepA, ::parser::MessageError> {
         Ok(MsgTrackingIqDepA {
+            sender_id: None,
             channel: _buf.read_u8()?,
             sid: GnssSignalDep::parse(_buf)?,
             corrs: TrackingChannelCorrelationDep::parse_array_limit(_buf, 3)?,
         })
+    }
+}
+impl super::SBPMessage for MsgTrackingIqDepA {
+    const MSG_ID: u16 = 28;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -544,16 +628,28 @@ impl TrackingChannelStateDepA {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDepA {
+    pub sender_id: Option<u16>,
     pub states: Vec<TrackingChannelStateDepA>,
     // ^ Satellite tracking channel state
 }
 
 impl MsgTrackingStateDepA {
-    pub const TYPE: u16 = 22;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDepA, ::parser::MessageError> {
         Ok(MsgTrackingStateDepA {
+            sender_id: None,
             states: TrackingChannelStateDepA::parse_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgTrackingStateDepA {
+    const MSG_ID: u16 = 22;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -609,15 +705,27 @@ impl TrackingChannelStateDepB {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDepB {
+    pub sender_id: Option<u16>,
     pub states: Vec<TrackingChannelStateDepB>,
     // ^ Signal tracking channel state
 }
 
 impl MsgTrackingStateDepB {
-    pub const TYPE: u16 = 19;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDepB, ::parser::MessageError> {
         Ok(MsgTrackingStateDepB {
+            sender_id: None,
             states: TrackingChannelStateDepB::parse_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgTrackingStateDepB {
+    const MSG_ID: u16 = 19;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

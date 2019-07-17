@@ -33,6 +33,7 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFlashProgram {
+    pub sender_id: Option<u16>,
     pub target: u8,
     // ^ Target flags
     pub addr_start: Vec<u8>,
@@ -44,14 +45,25 @@ pub struct MsgFlashProgram {
 }
 
 impl MsgFlashProgram {
-    pub const TYPE: u16 = 230;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashProgram, ::parser::MessageError> {
         Ok(MsgFlashProgram {
+            sender_id: None,
             target: _buf.read_u8()?,
             addr_start: ::parser::read_u8_array_limit(_buf, 3)?,
             addr_len: _buf.read_u8()?,
             data: ::parser::read_u8_array(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgFlashProgram {
+    const MSG_ID: u16 = 230;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -65,16 +77,28 @@ impl MsgFlashProgram {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFlashDone {
+    pub sender_id: Option<u16>,
     pub response: u8,
     // ^ Response flags
 }
 
 impl MsgFlashDone {
-    pub const TYPE: u16 = 224;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashDone, ::parser::MessageError> {
         Ok(MsgFlashDone {
+            sender_id: None,
             response: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgFlashDone {
+    const MSG_ID: u16 = 224;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -91,6 +115,7 @@ impl MsgFlashDone {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFlashReadReq {
+    pub sender_id: Option<u16>,
     pub target: u8,
     // ^ Target flags
     pub addr_start: Vec<u8>,
@@ -100,13 +125,24 @@ pub struct MsgFlashReadReq {
 }
 
 impl MsgFlashReadReq {
-    pub const TYPE: u16 = 231;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashReadReq, ::parser::MessageError> {
         Ok(MsgFlashReadReq {
+            sender_id: None,
             target: _buf.read_u8()?,
             addr_start: ::parser::read_u8_array_limit(_buf, 3)?,
             addr_len: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgFlashReadReq {
+    const MSG_ID: u16 = 231;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -123,6 +159,7 @@ impl MsgFlashReadReq {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFlashReadResp {
+    pub sender_id: Option<u16>,
     pub target: u8,
     // ^ Target flags
     pub addr_start: Vec<u8>,
@@ -132,13 +169,24 @@ pub struct MsgFlashReadResp {
 }
 
 impl MsgFlashReadResp {
-    pub const TYPE: u16 = 225;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashReadResp, ::parser::MessageError> {
         Ok(MsgFlashReadResp {
+            sender_id: None,
             target: _buf.read_u8()?,
             addr_start: ::parser::read_u8_array_limit(_buf, 3)?,
             addr_len: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgFlashReadResp {
+    const MSG_ID: u16 = 225;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -153,6 +201,7 @@ impl MsgFlashReadResp {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFlashErase {
+    pub sender_id: Option<u16>,
     pub target: u8,
     // ^ Target flags
     pub sector_num: u32,
@@ -160,12 +209,23 @@ pub struct MsgFlashErase {
 }
 
 impl MsgFlashErase {
-    pub const TYPE: u16 = 226;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashErase, ::parser::MessageError> {
         Ok(MsgFlashErase {
+            sender_id: None,
             target: _buf.read_u8()?,
             sector_num: _buf.read_u32::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgFlashErase {
+    const MSG_ID: u16 = 226;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -177,16 +237,28 @@ impl MsgFlashErase {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgStmFlashLockSector {
+    pub sender_id: Option<u16>,
     pub sector: u32,
     // ^ Flash sector number to lock
 }
 
 impl MsgStmFlashLockSector {
-    pub const TYPE: u16 = 227;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmFlashLockSector, ::parser::MessageError> {
         Ok(MsgStmFlashLockSector {
+            sender_id: None,
             sector: _buf.read_u32::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgStmFlashLockSector {
+    const MSG_ID: u16 = 227;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -198,16 +270,28 @@ impl MsgStmFlashLockSector {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgStmFlashUnlockSector {
+    pub sender_id: Option<u16>,
     pub sector: u32,
     // ^ Flash sector number to unlock
 }
 
 impl MsgStmFlashUnlockSector {
-    pub const TYPE: u16 = 228;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmFlashUnlockSector, ::parser::MessageError> {
         Ok(MsgStmFlashUnlockSector {
+            sender_id: None,
             sector: _buf.read_u32::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgStmFlashUnlockSector {
+    const MSG_ID: u16 = 228;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -221,12 +305,24 @@ impl MsgStmFlashUnlockSector {
 //
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgStmUniqueIdReq {}
+pub struct MsgStmUniqueIdReq {
+    pub sender_id: Option<u16>,
+}
 
 impl MsgStmUniqueIdReq {
-    pub const TYPE: u16 = 232;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmUniqueIdReq, ::parser::MessageError> {
-        Ok(MsgStmUniqueIdReq {})
+        Ok(MsgStmUniqueIdReq { sender_id: None })
+    }
+}
+impl super::SBPMessage for MsgStmUniqueIdReq {
+    const MSG_ID: u16 = 232;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -241,16 +337,28 @@ impl MsgStmUniqueIdReq {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgStmUniqueIdResp {
+    pub sender_id: Option<u16>,
     pub stm_id: Vec<u8>,
     // ^ Device unique ID
 }
 
 impl MsgStmUniqueIdResp {
-    pub const TYPE: u16 = 229;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmUniqueIdResp, ::parser::MessageError> {
         Ok(MsgStmUniqueIdResp {
+            sender_id: None,
             stm_id: ::parser::read_u8_array_limit(_buf, 12)?,
         })
+    }
+}
+impl super::SBPMessage for MsgStmUniqueIdResp {
+    const MSG_ID: u16 = 229;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -262,15 +370,27 @@ impl MsgStmUniqueIdResp {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgM25FlashWriteStatus {
+    pub sender_id: Option<u16>,
     pub status: Vec<u8>,
     // ^ Byte to write to the M25 flash status register
 }
 
 impl MsgM25FlashWriteStatus {
-    pub const TYPE: u16 = 243;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgM25FlashWriteStatus, ::parser::MessageError> {
         Ok(MsgM25FlashWriteStatus {
+            sender_id: None,
             status: ::parser::read_u8_array_limit(_buf, 1)?,
         })
+    }
+}
+impl super::SBPMessage for MsgM25FlashWriteStatus {
+    const MSG_ID: u16 = 243;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

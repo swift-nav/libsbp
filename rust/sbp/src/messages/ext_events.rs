@@ -26,6 +26,7 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgExtEvent {
+    pub sender_id: Option<u16>,
     pub wn: u16,
     // ^ GPS week number
     pub tow: u32,
@@ -40,14 +41,25 @@ pub struct MsgExtEvent {
 }
 
 impl MsgExtEvent {
-    pub const TYPE: u16 = 257;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgExtEvent, ::parser::MessageError> {
         Ok(MsgExtEvent {
+            sender_id: None,
             wn: _buf.read_u16::<LittleEndian>()?,
             tow: _buf.read_u32::<LittleEndian>()?,
             ns_residual: _buf.read_i32::<LittleEndian>()?,
             flags: _buf.read_u8()?,
             pin: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgExtEvent {
+    const MSG_ID: u16 = 257;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

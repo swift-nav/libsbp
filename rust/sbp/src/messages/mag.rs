@@ -24,6 +24,7 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgMagRaw {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ Milliseconds since start of GPS week. If the high bit is set, the time
     // is unknown or invalid.
@@ -38,14 +39,25 @@ pub struct MsgMagRaw {
 }
 
 impl MsgMagRaw {
-    pub const TYPE: u16 = 2306;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgMagRaw, ::parser::MessageError> {
         Ok(MsgMagRaw {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             tow_f: _buf.read_u8()?,
             mag_x: _buf.read_i16::<LittleEndian>()?,
             mag_y: _buf.read_i16::<LittleEndian>()?,
             mag_z: _buf.read_i16::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgMagRaw {
+    const MSG_ID: u16 = 2306;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

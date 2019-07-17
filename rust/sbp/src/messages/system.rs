@@ -27,6 +27,7 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgStartup {
+    pub sender_id: Option<u16>,
     pub cause: u8,
     // ^ Cause of startup
     pub startup_type: u8,
@@ -36,13 +37,24 @@ pub struct MsgStartup {
 }
 
 impl MsgStartup {
-    pub const TYPE: u16 = 65280;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgStartup, ::parser::MessageError> {
         Ok(MsgStartup {
+            sender_id: None,
             cause: _buf.read_u8()?,
             startup_type: _buf.read_u8()?,
             reserved: _buf.read_u16::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgStartup {
+    const MSG_ID: u16 = 65280;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -55,6 +67,7 @@ impl MsgStartup {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgDgnssStatus {
+    pub sender_id: Option<u16>,
     pub flags: u8,
     // ^ Status flags
     pub latency: u16,
@@ -66,14 +79,25 @@ pub struct MsgDgnssStatus {
 }
 
 impl MsgDgnssStatus {
-    pub const TYPE: u16 = 65282;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgDgnssStatus, ::parser::MessageError> {
         Ok(MsgDgnssStatus {
+            sender_id: None,
             flags: _buf.read_u8()?,
             latency: _buf.read_u16::<LittleEndian>()?,
             num_signals: _buf.read_u8()?,
             source: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgDgnssStatus {
+    const MSG_ID: u16 = 65282;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -93,16 +117,28 @@ impl MsgDgnssStatus {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgHeartbeat {
+    pub sender_id: Option<u16>,
     pub flags: u32,
     // ^ Status flags
 }
 
 impl MsgHeartbeat {
-    pub const TYPE: u16 = 65535;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgHeartbeat, ::parser::MessageError> {
         Ok(MsgHeartbeat {
+            sender_id: None,
             flags: _buf.read_u32::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgHeartbeat {
+    const MSG_ID: u16 = 65535;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -114,16 +150,28 @@ impl MsgHeartbeat {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgInsStatus {
+    pub sender_id: Option<u16>,
     pub flags: u32,
     // ^ Status flags
 }
 
 impl MsgInsStatus {
-    pub const TYPE: u16 = 65283;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgInsStatus, ::parser::MessageError> {
         Ok(MsgInsStatus {
+            sender_id: None,
             flags: _buf.read_u32::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgInsStatus {
+    const MSG_ID: u16 = 65283;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -136,6 +184,7 @@ impl MsgInsStatus {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgCsacTelemetry {
+    pub sender_id: Option<u16>,
     pub id: u8,
     // ^ Index representing the type of telemetry in use.  It is implemention
     // defined.
@@ -144,12 +193,23 @@ pub struct MsgCsacTelemetry {
 }
 
 impl MsgCsacTelemetry {
-    pub const TYPE: u16 = 65284;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgCsacTelemetry, ::parser::MessageError> {
         Ok(MsgCsacTelemetry {
+            sender_id: None,
             id: _buf.read_u8()?,
             telemetry: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgCsacTelemetry {
+    const MSG_ID: u16 = 65284;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -162,6 +222,7 @@ impl MsgCsacTelemetry {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgCsacTelemetryLabels {
+    pub sender_id: Option<u16>,
     pub id: u8,
     // ^ Index representing the type of telemetry in use.  It is implemention
     // defined.
@@ -170,11 +231,22 @@ pub struct MsgCsacTelemetryLabels {
 }
 
 impl MsgCsacTelemetryLabels {
-    pub const TYPE: u16 = 65285;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgCsacTelemetryLabels, ::parser::MessageError> {
         Ok(MsgCsacTelemetryLabels {
+            sender_id: None,
             id: _buf.read_u8()?,
             telemetry_labels: ::parser::read_string(_buf)?,
         })
+    }
+}
+impl super::SBPMessage for MsgCsacTelemetryLabels {
+    const MSG_ID: u16 = 65285;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

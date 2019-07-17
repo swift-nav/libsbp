@@ -53,6 +53,7 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGPSTime {
+    pub sender_id: Option<u16>,
     pub wn: u16,
     // ^ GPS week number
     pub tow: u32,
@@ -65,14 +66,25 @@ pub struct MsgGPSTime {
 }
 
 impl MsgGPSTime {
-    pub const TYPE: u16 = 258;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTime, ::parser::MessageError> {
         Ok(MsgGPSTime {
+            sender_id: None,
             wn: _buf.read_u16::<LittleEndian>()?,
             tow: _buf.read_u32::<LittleEndian>()?,
             ns_residual: _buf.read_i32::<LittleEndian>()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgGPSTime {
+    const MSG_ID: u16 = 258;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -84,6 +96,7 @@ impl MsgGPSTime {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgUtcTime {
+    pub sender_id: Option<u16>,
     pub flags: u8,
     // ^ Indicates source and time validity
     pub tow: u32,
@@ -105,9 +118,9 @@ pub struct MsgUtcTime {
 }
 
 impl MsgUtcTime {
-    pub const TYPE: u16 = 259;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgUtcTime, ::parser::MessageError> {
         Ok(MsgUtcTime {
+            sender_id: None,
             flags: _buf.read_u8()?,
             tow: _buf.read_u32::<LittleEndian>()?,
             year: _buf.read_u16::<LittleEndian>()?,
@@ -118,6 +131,17 @@ impl MsgUtcTime {
             seconds: _buf.read_u8()?,
             ns: _buf.read_u32::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgUtcTime {
+    const MSG_ID: u16 = 259;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -131,6 +155,7 @@ impl MsgUtcTime {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgDops {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub gdop: u16,
@@ -148,9 +173,9 @@ pub struct MsgDops {
 }
 
 impl MsgDops {
-    pub const TYPE: u16 = 520;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgDops, ::parser::MessageError> {
         Ok(MsgDops {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             gdop: _buf.read_u16::<LittleEndian>()?,
             pdop: _buf.read_u16::<LittleEndian>()?,
@@ -159,6 +184,17 @@ impl MsgDops {
             vdop: _buf.read_u16::<LittleEndian>()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgDops {
+    const MSG_ID: u16 = 520;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -176,6 +212,7 @@ impl MsgDops {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEF {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub x: f64,
@@ -193,9 +230,9 @@ pub struct MsgPosECEF {
 }
 
 impl MsgPosECEF {
-    pub const TYPE: u16 = 521;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEF, ::parser::MessageError> {
         Ok(MsgPosECEF {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_f64::<LittleEndian>()?,
             y: _buf.read_f64::<LittleEndian>()?,
@@ -204,6 +241,17 @@ impl MsgPosECEF {
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgPosECEF {
+    const MSG_ID: u16 = 521;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -222,6 +270,7 @@ impl MsgPosECEF {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEFCov {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub x: f64,
@@ -249,9 +298,9 @@ pub struct MsgPosECEFCov {
 }
 
 impl MsgPosECEFCov {
-    pub const TYPE: u16 = 532;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFCov, ::parser::MessageError> {
         Ok(MsgPosECEFCov {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_f64::<LittleEndian>()?,
             y: _buf.read_f64::<LittleEndian>()?,
@@ -265,6 +314,17 @@ impl MsgPosECEFCov {
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgPosECEFCov {
+    const MSG_ID: u16 = 532;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -282,6 +342,7 @@ impl MsgPosECEFCov {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosLLH {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub lat: f64,
@@ -301,9 +362,9 @@ pub struct MsgPosLLH {
 }
 
 impl MsgPosLLH {
-    pub const TYPE: u16 = 522;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLH, ::parser::MessageError> {
         Ok(MsgPosLLH {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             lat: _buf.read_f64::<LittleEndian>()?,
             lon: _buf.read_f64::<LittleEndian>()?,
@@ -313,6 +374,17 @@ impl MsgPosLLH {
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgPosLLH {
+    const MSG_ID: u16 = 522;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -330,6 +402,7 @@ impl MsgPosLLH {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosLLHCov {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub lat: f64,
@@ -357,9 +430,9 @@ pub struct MsgPosLLHCov {
 }
 
 impl MsgPosLLHCov {
-    pub const TYPE: u16 = 529;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHCov, ::parser::MessageError> {
         Ok(MsgPosLLHCov {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             lat: _buf.read_f64::<LittleEndian>()?,
             lon: _buf.read_f64::<LittleEndian>()?,
@@ -375,6 +448,17 @@ impl MsgPosLLHCov {
         })
     }
 }
+impl super::SBPMessage for MsgPosLLHCov {
+    const MSG_ID: u16 = 529;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Baseline Position in ECEF
 //
@@ -387,6 +471,7 @@ impl MsgPosLLHCov {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineECEF {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub x: i32,
@@ -404,9 +489,9 @@ pub struct MsgBaselineECEF {
 }
 
 impl MsgBaselineECEF {
-    pub const TYPE: u16 = 523;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineECEF, ::parser::MessageError> {
         Ok(MsgBaselineECEF {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
             y: _buf.read_i32::<LittleEndian>()?,
@@ -415,6 +500,17 @@ impl MsgBaselineECEF {
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgBaselineECEF {
+    const MSG_ID: u16 = 523;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -430,6 +526,7 @@ impl MsgBaselineECEF {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineNED {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub n: i32,
@@ -449,9 +546,9 @@ pub struct MsgBaselineNED {
 }
 
 impl MsgBaselineNED {
-    pub const TYPE: u16 = 524;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNED, ::parser::MessageError> {
         Ok(MsgBaselineNED {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             n: _buf.read_i32::<LittleEndian>()?,
             e: _buf.read_i32::<LittleEndian>()?,
@@ -461,6 +558,17 @@ impl MsgBaselineNED {
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgBaselineNED {
+    const MSG_ID: u16 = 524;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -473,6 +581,7 @@ impl MsgBaselineNED {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelECEF {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub x: i32,
@@ -490,9 +599,9 @@ pub struct MsgVelECEF {
 }
 
 impl MsgVelECEF {
-    pub const TYPE: u16 = 525;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEF, ::parser::MessageError> {
         Ok(MsgVelECEF {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
             y: _buf.read_i32::<LittleEndian>()?,
@@ -501,6 +610,17 @@ impl MsgVelECEF {
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgVelECEF {
+    const MSG_ID: u16 = 525;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -513,6 +633,7 @@ impl MsgVelECEF {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelECEFCov {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub x: i32,
@@ -540,9 +661,9 @@ pub struct MsgVelECEFCov {
 }
 
 impl MsgVelECEFCov {
-    pub const TYPE: u16 = 533;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFCov, ::parser::MessageError> {
         Ok(MsgVelECEFCov {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
             y: _buf.read_i32::<LittleEndian>()?,
@@ -558,6 +679,17 @@ impl MsgVelECEFCov {
         })
     }
 }
+impl super::SBPMessage for MsgVelECEFCov {
+    const MSG_ID: u16 = 533;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Velocity in NED
 //
@@ -569,6 +701,7 @@ impl MsgVelECEFCov {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelNED {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub n: i32,
@@ -588,9 +721,9 @@ pub struct MsgVelNED {
 }
 
 impl MsgVelNED {
-    pub const TYPE: u16 = 526;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNED, ::parser::MessageError> {
         Ok(MsgVelNED {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             n: _buf.read_i32::<LittleEndian>()?,
             e: _buf.read_i32::<LittleEndian>()?,
@@ -600,6 +733,17 @@ impl MsgVelNED {
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgVelNED {
+    const MSG_ID: u16 = 526;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -615,6 +759,7 @@ impl MsgVelNED {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelNEDCov {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub n: i32,
@@ -642,9 +787,9 @@ pub struct MsgVelNEDCov {
 }
 
 impl MsgVelNEDCov {
-    pub const TYPE: u16 = 530;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDCov, ::parser::MessageError> {
         Ok(MsgVelNEDCov {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             n: _buf.read_i32::<LittleEndian>()?,
             e: _buf.read_i32::<LittleEndian>()?,
@@ -658,6 +803,17 @@ impl MsgVelNEDCov {
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgVelNEDCov {
+    const MSG_ID: u16 = 530;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -675,6 +831,7 @@ impl MsgVelNEDCov {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelBody {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub x: i32,
@@ -702,9 +859,9 @@ pub struct MsgVelBody {
 }
 
 impl MsgVelBody {
-    pub const TYPE: u16 = 531;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelBody, ::parser::MessageError> {
         Ok(MsgVelBody {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
             y: _buf.read_i32::<LittleEndian>()?,
@@ -720,6 +877,17 @@ impl MsgVelBody {
         })
     }
 }
+impl super::SBPMessage for MsgVelBody {
+    const MSG_ID: u16 = 531;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 // Age of corrections
 //
@@ -729,6 +897,7 @@ impl MsgVelBody {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAgeCorrections {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub age: u16,
@@ -736,12 +905,23 @@ pub struct MsgAgeCorrections {
 }
 
 impl MsgAgeCorrections {
-    pub const TYPE: u16 = 528;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAgeCorrections, ::parser::MessageError> {
         Ok(MsgAgeCorrections {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             age: _buf.read_u16::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgAgeCorrections {
+    const MSG_ID: u16 = 528;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -764,6 +944,7 @@ impl MsgAgeCorrections {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGPSTimeDepA {
+    pub sender_id: Option<u16>,
     pub wn: u16,
     // ^ GPS week number
     pub tow: u32,
@@ -776,14 +957,25 @@ pub struct MsgGPSTimeDepA {
 }
 
 impl MsgGPSTimeDepA {
-    pub const TYPE: u16 = 256;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTimeDepA, ::parser::MessageError> {
         Ok(MsgGPSTimeDepA {
+            sender_id: None,
             wn: _buf.read_u16::<LittleEndian>()?,
             tow: _buf.read_u32::<LittleEndian>()?,
             ns_residual: _buf.read_i32::<LittleEndian>()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgGPSTimeDepA {
+    const MSG_ID: u16 = 256;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -796,6 +988,7 @@ impl MsgGPSTimeDepA {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgDopsDepA {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub gdop: u16,
@@ -811,9 +1004,9 @@ pub struct MsgDopsDepA {
 }
 
 impl MsgDopsDepA {
-    pub const TYPE: u16 = 518;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgDopsDepA, ::parser::MessageError> {
         Ok(MsgDopsDepA {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             gdop: _buf.read_u16::<LittleEndian>()?,
             pdop: _buf.read_u16::<LittleEndian>()?,
@@ -821,6 +1014,17 @@ impl MsgDopsDepA {
             hdop: _buf.read_u16::<LittleEndian>()?,
             vdop: _buf.read_u16::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgDopsDepA {
+    const MSG_ID: u16 = 518;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -838,6 +1042,7 @@ impl MsgDopsDepA {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEFDepA {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub x: f64,
@@ -855,9 +1060,9 @@ pub struct MsgPosECEFDepA {
 }
 
 impl MsgPosECEFDepA {
-    pub const TYPE: u16 = 512;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFDepA, ::parser::MessageError> {
         Ok(MsgPosECEFDepA {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_f64::<LittleEndian>()?,
             y: _buf.read_f64::<LittleEndian>()?,
@@ -866,6 +1071,17 @@ impl MsgPosECEFDepA {
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgPosECEFDepA {
+    const MSG_ID: u16 = 512;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -883,6 +1099,7 @@ impl MsgPosECEFDepA {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosLLHDepA {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub lat: f64,
@@ -902,9 +1119,9 @@ pub struct MsgPosLLHDepA {
 }
 
 impl MsgPosLLHDepA {
-    pub const TYPE: u16 = 513;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHDepA, ::parser::MessageError> {
         Ok(MsgPosLLHDepA {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             lat: _buf.read_f64::<LittleEndian>()?,
             lon: _buf.read_f64::<LittleEndian>()?,
@@ -914,6 +1131,17 @@ impl MsgPosLLHDepA {
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgPosLLHDepA {
+    const MSG_ID: u16 = 513;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -928,6 +1156,7 @@ impl MsgPosLLHDepA {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineECEFDepA {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub x: i32,
@@ -945,9 +1174,9 @@ pub struct MsgBaselineECEFDepA {
 }
 
 impl MsgBaselineECEFDepA {
-    pub const TYPE: u16 = 514;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineECEFDepA, ::parser::MessageError> {
         Ok(MsgBaselineECEFDepA {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
             y: _buf.read_i32::<LittleEndian>()?,
@@ -956,6 +1185,17 @@ impl MsgBaselineECEFDepA {
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgBaselineECEFDepA {
+    const MSG_ID: u16 = 514;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -971,6 +1211,7 @@ impl MsgBaselineECEFDepA {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineNEDDepA {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub n: i32,
@@ -990,9 +1231,9 @@ pub struct MsgBaselineNEDDepA {
 }
 
 impl MsgBaselineNEDDepA {
-    pub const TYPE: u16 = 515;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNEDDepA, ::parser::MessageError> {
         Ok(MsgBaselineNEDDepA {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             n: _buf.read_i32::<LittleEndian>()?,
             e: _buf.read_i32::<LittleEndian>()?,
@@ -1002,6 +1243,17 @@ impl MsgBaselineNEDDepA {
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgBaselineNEDDepA {
+    const MSG_ID: u16 = 515;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -1014,6 +1266,7 @@ impl MsgBaselineNEDDepA {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelECEFDepA {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub x: i32,
@@ -1031,9 +1284,9 @@ pub struct MsgVelECEFDepA {
 }
 
 impl MsgVelECEFDepA {
-    pub const TYPE: u16 = 516;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFDepA, ::parser::MessageError> {
         Ok(MsgVelECEFDepA {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
             y: _buf.read_i32::<LittleEndian>()?,
@@ -1042,6 +1295,17 @@ impl MsgVelECEFDepA {
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgVelECEFDepA {
+    const MSG_ID: u16 = 516;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -1055,6 +1319,7 @@ impl MsgVelECEFDepA {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelNEDDepA {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub n: i32,
@@ -1074,9 +1339,9 @@ pub struct MsgVelNEDDepA {
 }
 
 impl MsgVelNEDDepA {
-    pub const TYPE: u16 = 517;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDDepA, ::parser::MessageError> {
         Ok(MsgVelNEDDepA {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             n: _buf.read_i32::<LittleEndian>()?,
             e: _buf.read_i32::<LittleEndian>()?,
@@ -1086,6 +1351,17 @@ impl MsgVelNEDDepA {
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgVelNEDDepA {
+    const MSG_ID: u16 = 517;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -1098,6 +1374,7 @@ impl MsgVelNEDDepA {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineHeadingDepA {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub heading: u32,
@@ -1109,13 +1386,24 @@ pub struct MsgBaselineHeadingDepA {
 }
 
 impl MsgBaselineHeadingDepA {
-    pub const TYPE: u16 = 519;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineHeadingDepA, ::parser::MessageError> {
         Ok(MsgBaselineHeadingDepA {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             heading: _buf.read_u32::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgBaselineHeadingDepA {
+    const MSG_ID: u16 = 519;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

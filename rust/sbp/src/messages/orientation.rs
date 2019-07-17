@@ -27,6 +27,7 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineHeading {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub heading: u32,
@@ -38,14 +39,25 @@ pub struct MsgBaselineHeading {
 }
 
 impl MsgBaselineHeading {
-    pub const TYPE: u16 = 527;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineHeading, ::parser::MessageError> {
         Ok(MsgBaselineHeading {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             heading: _buf.read_u32::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgBaselineHeading {
+    const MSG_ID: u16 = 527;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -60,6 +72,7 @@ impl MsgBaselineHeading {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgOrientQuat {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub w: i32,
@@ -83,9 +96,9 @@ pub struct MsgOrientQuat {
 }
 
 impl MsgOrientQuat {
-    pub const TYPE: u16 = 544;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgOrientQuat, ::parser::MessageError> {
         Ok(MsgOrientQuat {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             w: _buf.read_i32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
@@ -97,6 +110,17 @@ impl MsgOrientQuat {
             z_accuracy: _buf.read_f32::<LittleEndian>()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgOrientQuat {
+    const MSG_ID: u16 = 544;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -111,6 +135,7 @@ impl MsgOrientQuat {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgOrientEuler {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub roll: i32,
@@ -130,9 +155,9 @@ pub struct MsgOrientEuler {
 }
 
 impl MsgOrientEuler {
-    pub const TYPE: u16 = 545;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgOrientEuler, ::parser::MessageError> {
         Ok(MsgOrientEuler {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             roll: _buf.read_i32::<LittleEndian>()?,
             pitch: _buf.read_i32::<LittleEndian>()?,
@@ -142,6 +167,17 @@ impl MsgOrientEuler {
             yaw_accuracy: _buf.read_f32::<LittleEndian>()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgOrientEuler {
+    const MSG_ID: u16 = 545;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
 
@@ -160,6 +196,7 @@ impl MsgOrientEuler {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAngularRate {
+    pub sender_id: Option<u16>,
     pub tow: u32,
     // ^ GPS Time of Week
     pub x: i32,
@@ -173,14 +210,25 @@ pub struct MsgAngularRate {
 }
 
 impl MsgAngularRate {
-    pub const TYPE: u16 = 546;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAngularRate, ::parser::MessageError> {
         Ok(MsgAngularRate {
+            sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
             y: _buf.read_i32::<LittleEndian>()?,
             z: _buf.read_i32::<LittleEndian>()?,
             flags: _buf.read_u8()?,
         })
+    }
+}
+impl super::SBPMessage for MsgAngularRate {
+    const MSG_ID: u16 = 546;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }

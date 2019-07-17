@@ -26,6 +26,7 @@ use super::gnss::*;
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgNdbEvent {
+    pub sender_id: Option<u16>,
     pub recv_time: u64,
     // ^ HW time in milliseconds.
     pub event: u8,
@@ -51,9 +52,9 @@ pub struct MsgNdbEvent {
 }
 
 impl MsgNdbEvent {
-    pub const TYPE: u16 = 1024;
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgNdbEvent, ::parser::MessageError> {
         Ok(MsgNdbEvent {
+            sender_id: None,
             recv_time: _buf.read_u64::<LittleEndian>()?,
             event: _buf.read_u8()?,
             object_type: _buf.read_u8()?,
@@ -63,5 +64,16 @@ impl MsgNdbEvent {
             src_sid: GnssSignal::parse(_buf)?,
             original_sender: _buf.read_u16::<LittleEndian>()?,
         })
+    }
+}
+impl super::SBPMessage for MsgNdbEvent {
+    const MSG_ID: u16 = 1024;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
