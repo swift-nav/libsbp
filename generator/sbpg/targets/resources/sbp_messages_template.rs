@@ -32,6 +32,9 @@ use super::(((i)))::*;
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct (((m.identifier|camel_case))) {
+    ((*- if m.sbp_id *))
+    pub sender_id: Option<u16>,
+    ((*- endif *))
     ((*- for f in m.fields *))
     pub (((f.identifier))): (((f|type_map))),
         ((*- if f.desc *))
@@ -41,16 +44,17 @@ pub struct (((m.identifier|camel_case))) {
 }
 
 impl (((m.identifier|camel_case))) {
-    ((*- if m.sbp_id *))
-    pub const TYPE: u16 = (((m.sbp_id)));
-    ((*- endif *))
     pub fn parse(_buf: &mut &[u8]) -> Result<(((m.identifier|camel_case))), ::parser::MessageError> {
         Ok( (((m.identifier|camel_case))){
+            ((*- if m.sbp_id *))
+            sender_id: None,
+            ((*- endif *))
             ((*- for f in m.fields *))
             (((f.identifier))): (((f|parse_type)))?,
             ((*- endfor *))
         } )
     }
+
     ((*- if not m.sbp_id *))
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<(((m.identifier|camel_case)))>, ::parser::MessageError> {
         let mut v = Vec::new();
@@ -69,5 +73,19 @@ impl (((m.identifier|camel_case))) {
     }
     ((*- endif *))
 }
+
+((*- if m.sbp_id *))
+impl super::SBPMessage for (((m.identifier|camel_case))) {
+    const MSG_ID: u16 = (((m.sbp_id)));
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+((*- endif *))
 
 ((* endfor *))
