@@ -16,10 +16,21 @@ pub fn frame(input: &[u8]) -> (Result<SBP, ::Error>, usize) {
     let result = tuple((preamble, le_u16, le_u16, payload, le_u16))(input);
 
     match result {
-        Ok((o, (_preamble, msg_type, _sender_id, payload, _crc))) => {
-            // TODO: Add CRC checking
-            let bytes_read = original_size - o.len();
-            (SBP::parse(msg_type, &mut &payload[..]), bytes_read)
+        Ok((o, (_preamble, msg_type, sender_id, payload, _crc))) => {
+            let mut crc = crc16::State::<crc16::XMODEM>::new();
+            crc.update(&msg_type.to_le_bytes());
+            crc.update(&sender_id.to_le_bytes());
+            crc.update(&[payload.len() as u8]);
+            crc.update(payload);
+            if crc.get() == _crc {
+                let bytes_read = original_size - o.len();
+                (
+                    SBP::parse(msg_type, sender_id, &mut &payload[..]),
+                    bytes_read,
+                )
+            } else {
+                (Err(::Error::ParseError), 1)
+            }
         }
         // Act like we didn't read anything
         Err(self::nom::Err::Incomplete(_)) => (Err(::Error::NotEnoughData), 0),
@@ -61,15 +72,11 @@ impl Parser {
         result
     }
 
-    fn read_more<R: Read>(&mut self, input: &mut R) -> Result<(), std::io::Error> {
+    fn read_more<R: Read>(&mut self, input: &mut R) -> Result<usize, std::io::Error> {
         let mut local_buffer = vec![0; Parser::BUF_SIZE];
-        match input.read(local_buffer.as_mut()) {
-            Ok(read_count) => {
-                self.buffer.extend_from_slice(&local_buffer[..read_count]);
-                Ok(())
-            }
-            Err(e) => Err(e),
-        }
+        let read_bytes = input.read(local_buffer.as_mut())?;
+        self.buffer.extend_from_slice(&local_buffer[..read_bytes]);
+        Ok(read_bytes)
     }
 
     fn parse_remaining(&mut self) -> Result<SBP, ::Error> {
@@ -78,13 +85,11 @@ impl Parser {
 
             match result {
                 (Ok(msg), bytes_read) => {
-                    let tmp = self.buffer.split_off(bytes_read);
-                    self.buffer = tmp;
+                    self.buffer = self.buffer[bytes_read..].to_vec();
                     break Ok(msg);
                 }
                 (Err(::Error::ParseError), bytes_read) => {
-                    let tmp = self.buffer.split_off(bytes_read);
-                    self.buffer = tmp;
+                    self.buffer = self.buffer[bytes_read..].to_vec();
                 }
                 (Err(e), _bytes_read) => break Err(e),
             }
