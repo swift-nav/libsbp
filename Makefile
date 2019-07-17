@@ -18,7 +18,7 @@ SBP_PATCH_VERSION := $(word 3, $(subst ., , $(SBP_VERSION)))
 
 CHANGELOG_MAX_ISSUES := 100
 
-.PHONY: help docs pdf html test release dist silly all docs pdf html c deps-c gen-c test-c python deps-python gen-python test-python javascript deps-javascript gen-javascript test-javascript java deps-java gen-java test-java haskell deps-haskell gen-haskell test-haskell haskell deps-protobuf gen-protobuf test-protobuf verify-prereq-generator verify-prereq-c verify-prereq-javascript verify-prereq-python verify-prereq-java verify-prereq-haskell verify-prereq-protobuf mapping rust deps-rust gen-rust test-rust
+.PHONY: help test release dist clean all docs pdf html c deps-c gen-c test-c python deps-python gen-python test-python javascript deps-javascript gen-javascript test-javascript java deps-java gen-java test-java haskell deps-haskell gen-haskell test-haskell haskell deps-protobuf gen-protobuf test-protobuf verify-prereq-generator verify-prereq-c verify-prereq-javascript verify-prereq-python verify-prereq-java verify-prereq-haskell verify-prereq-protobuf mapping rust deps-rust gen-rust test-rust
 
 # Functions
 define announce-begin
@@ -43,6 +43,7 @@ help:
 	@echo "Please use \`make <target>' where <target> is one of"
 	@echo "  help      to display this help message"
 	@echo "  all       to make SBP clients across all languages"
+	@echo "  clean     to remove any output files"
 	@echo "  c         to make C headers"
 	@echo "  dist      to distribute packages"
 	@echo "  docs      to make HTML and pdf documentation"
@@ -59,6 +60,9 @@ help:
 	@echo
 
 all: c python pythonNG javascript java docs haskell protobuf rust
+clean:
+	@echo "Removing the ./c/build directory..."
+	rm -r $(SWIFTNAV_ROOT)/c/build
 docs: verify-prereq-docs pdf html
 
 c:          deps-c          gen-c          test-c
@@ -227,7 +231,7 @@ test-c:
 	$(call announce-begin,"Running C tests")
 	cd $(SWIFTNAV_ROOT)/c; \
 	mkdir -p build/ && cd build/; \
-	cmake ../; \
+	cmake $(CMAKEFLAGS) ../; \
 	make
 	$(call announce-end,"Finished running C tests")
 
@@ -267,7 +271,7 @@ test-protobuf:
 
 dist-python:
 	$(call announce-begin,"Deploying Python package")
-	make -C $(SWIFTNAV_ROOT)/python SBP_VERSION="$(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION)" deploy 
+	make -C $(SWIFTNAV_ROOT)/python SBP_VERSION="$(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION)" deploy
 	$(call announce-end,"Finished deploying Python package")
 
 dist-javascript:

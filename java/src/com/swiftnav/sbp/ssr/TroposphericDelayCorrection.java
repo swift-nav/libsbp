@@ -25,10 +25,10 @@ import com.swiftnav.sbp.SBPStruct;
 
 public class TroposphericDelayCorrection extends SBPStruct {
     
-    /** hydrostatic vertical delay */
+    /** Hydrostatic vertical delay */
     public int hydro;
     
-    /** wet vertical delay */
+    /** Wet vertical delay */
     public int wet;
     
 

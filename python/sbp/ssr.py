@@ -30,7 +30,7 @@ class CodeBiasesContent(object):
   """CodeBiasesContent.
   
   Code biases are to be added to pseudorange.
-The corrections are conform with typical RTCMv3 MT1059 and 1065.
+The corrections conform with typical RTCMv3 MT1059 and 1065.
 
   
   Parameters
@@ -72,7 +72,7 @@ class PhaseBiasesContent(object):
   """PhaseBiasesContent.
   
   Phase biases are to be added to carrier phase measurements.
-The corrections are conform with typical RTCMv3 MT1059 and 1065.
+The corrections conform with typical RTCMv3 MT1059 and 1065.
 
   
   Parameters
@@ -137,29 +137,34 @@ is used to tie multiple SBP messages into a sequence.
   
   Parameters
   ----------
-  time : GPSTime
-    GNSS time of the STEC data
+  time : GPSTimeSec
+    GNSS reference time of the correction
   num_msgs : int
     Number of messages in the dataset
   seq_num : int
     Position of this message in the dataset
-  ssr_update_interval : int
-    update interval in seconds
+  update_interval : int
+    Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+
   iod_ssr : int
-    range 0 - 15
+    IOD of the SSR correction. A change of Issue Of Data
+SSR is used to indicate a change in the SSR
+generating configuration.
+
 
   """
   _parser = construct.Embedded(construct.Struct(
-                     'time' / construct.Struct(GPSTime._parser),
+                     'time' / construct.Struct(GPSTimeSec._parser),
                      'num_msgs' / construct.Int8ul,
                      'seq_num' / construct.Int8ul,
-                     'ssr_update_interval' / construct.Int16ul,
+                     'update_interval' / construct.Int8ul,
                      'iod_ssr' / construct.Int8ul,))
   __slots__ = [
                'time',
                'num_msgs',
                'seq_num',
-               'ssr_update_interval',
+               'update_interval',
                'iod_ssr',
               ]
 
@@ -170,7 +175,7 @@ is used to tie multiple SBP messages into a sequence.
       self.time = kwargs.pop('time')
       self.num_msgs = kwargs.pop('num_msgs')
       self.seq_num = kwargs.pop('seq_num')
-      self.ssr_update_interval = kwargs.pop('ssr_update_interval')
+      self.update_interval = kwargs.pop('update_interval')
       self.iod_ssr = kwargs.pop('iod_ssr')
 
   def __repr__(self):
@@ -195,34 +200,41 @@ be identified by the index.
   
   Parameters
   ----------
-  time : GPSTime
-    GNSS time of the STEC data
+  time : GPSTimeSec
+    GNSS reference time of the correction
   num_msgs : int
     Number of messages in the dataset
   seq_num : int
     Position of this message in the dataset
-  ssr_update_interval : int
-    update interval in seconds
+  update_interval : int
+    Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+
   iod_ssr : int
-    range 0 - 15
-  tropo_quality : int
-    troposphere quality indicator
+    IOD of the SSR correction. A change of Issue Of Data
+SSR is used to indicate a change in the SSR
+generating configuration.
+
+  tropo_quality_indicator : int
+    Quality of the troposphere data. Encoded following RTCM DF389
+specifcation but as TECU instead of m.
+
 
   """
   _parser = construct.Embedded(construct.Struct(
-                     'time' / construct.Struct(GPSTime._parser),
+                     'time' / construct.Struct(GPSTimeSec._parser),
                      'num_msgs' / construct.Int16ul,
                      'seq_num' / construct.Int16ul,
-                     'ssr_update_interval' / construct.Int16ul,
+                     'update_interval' / construct.Int8ul,
                      'iod_ssr' / construct.Int8ul,
-                     'tropo_quality' / construct.Int8ul,))
+                     'tropo_quality_indicator' / construct.Int8ul,))
   __slots__ = [
                'time',
                'num_msgs',
                'seq_num',
-               'ssr_update_interval',
+               'update_interval',
                'iod_ssr',
-               'tropo_quality',
+               'tropo_quality_indicator',
               ]
 
   def __init__(self, payload=None, **kwargs):
@@ -232,9 +244,9 @@ be identified by the index.
       self.time = kwargs.pop('time')
       self.num_msgs = kwargs.pop('num_msgs')
       self.seq_num = kwargs.pop('seq_num')
-      self.ssr_update_interval = kwargs.pop('ssr_update_interval')
+      self.update_interval = kwargs.pop('update_interval')
       self.iod_ssr = kwargs.pop('iod_ssr')
-      self.tropo_quality = kwargs.pop('tropo_quality')
+      self.tropo_quality_indicator = kwargs.pop('tropo_quality_indicator')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -251,16 +263,19 @@ be identified by the index.
 class STECSatElement(object):
   """STECSatElement.
   
-  STEC for the given satellite.
+  STEC polynomial for the given satellite.
   
   Parameters
   ----------
   sv_id : SvId
     Unique space vehicle identifier
   stec_quality_indicator : int
-    quality of STEC data
+    Quality of the STEC data. Encoded following RTCM DF389 specifcation
+but as TECU instead of m.
+
   stec_coeff : array
-    coefficents of the STEC polynomial
+    Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
+
 
   """
   _parser = construct.Embedded(construct.Struct(
@@ -296,15 +311,15 @@ class STECSatElement(object):
 class TroposphericDelayCorrection(object):
   """TroposphericDelayCorrection.
   
-  Contains wet vertical and hydrostatic vertical delay
+  Troposphere delays at the grid point.
 
   
   Parameters
   ----------
   hydro : int
-    hydrostatic vertical delay
+    Hydrostatic vertical delay
   wet : int
-    wet vertical delay
+    Wet vertical delay
 
   """
   _parser = construct.Embedded(construct.Struct(
@@ -337,7 +352,7 @@ class TroposphericDelayCorrection(object):
 class STECResidual(object):
   """STECResidual.
   
-  STEC residual
+  STEC residual for the given satellite at the grid point.
   
   Parameters
   ----------
@@ -377,28 +392,28 @@ class STECResidual(object):
 class GridElement(object):
   """GridElement.
   
-  Contains one tropo datum, plus STEC residuals for each space
-vehicle
+  Contains one tropo delay, plus STEC residuals for each satellite at the
+grid point.
 
   
   Parameters
   ----------
   index : int
-    index of the grid point
+    Index of the grid point
   tropo_delay_correction : TroposphericDelayCorrection
-    Wet and Hydrostatic Vertical Delay
-  STEC_residuals : array
-    STEC Residual for the given space vehicle
+    Wet and hydrostatic vertical delays
+  stec_residuals : array
+    STEC residuals for each satellite
 
   """
   _parser = construct.Embedded(construct.Struct(
                      'index' / construct.Int16ul,
                      'tropo_delay_correction' / construct.Struct(TroposphericDelayCorrection._parser),
-                     construct.GreedyRange('STEC_residuals' / construct.Struct(STECResidual._parser)),))
+                     construct.GreedyRange('stec_residuals' / construct.Struct(STECResidual._parser)),))
   __slots__ = [
                'index',
                'tropo_delay_correction',
-               'STEC_residuals',
+               'stec_residuals',
               ]
 
   def __init__(self, payload=None, **kwargs):
@@ -407,7 +422,7 @@ vehicle
     else:
       self.index = kwargs.pop('index')
       self.tropo_delay_correction = kwargs.pop('tropo_delay_correction')
-      self.STEC_residuals = kwargs.pop('STEC_residuals')
+      self.stec_residuals = kwargs.pop('stec_residuals')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -424,7 +439,7 @@ vehicle
 class GridDefinitionHeader(object):
   """GridDefinitionHeader.
   
-  Defines the grid for STEC and tropo grid messages.
+  Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
 Also includes an RLE encoded validity list.
 
   
@@ -507,7 +522,9 @@ and 1066 RTCM message types
   sid : GnssSignal
     GNSS signal identifier (16 bit)
   update_interval : int
-    Update interval between consecutive corrections
+    Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+
   iod_ssr : int
     IOD of the SSR correction. A change of Issue Of Data
 SSR is used to indicate a change in the SSR
@@ -668,7 +685,9 @@ and 1066 RTCM message types
   sid : GnssSignal
     GNSS signal identifier (16 bit)
   update_interval : int
-    Update interval between consecutive corrections
+    Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+
   iod_ssr : int
     IOD of the SSR correction. A change of Issue Of Data
 SSR is used to indicate a change in the SSR
@@ -829,7 +848,9 @@ an equivalent to the 1059 and 1065 RTCM message types
   sid : GnssSignal
     GNSS signal identifier (16 bit)
   update_interval : int
-    Update interval between consecutive corrections
+    Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+
   iod_ssr : int
     IOD of the SSR correction. A change of Issue Of Data
 SSR is used to indicate a change in the SSR
@@ -947,7 +968,9 @@ It is typically an equivalent to the 1265 RTCM message types
   sid : GnssSignal
     GNSS signal identifier (16 bit)
   update_interval : int
-    Update interval between consecutive corrections
+    Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+
   iod_ssr : int
     IOD of the SSR correction. A change of Issue Of Data
 SSR is used to indicate a change in the SSR
@@ -1073,9 +1096,9 @@ class MsgSsrStecCorrection(SBP):
 
   
   The STEC per space vehicle, given as polynomial approximation for
-a given grid.  This should be combined with SSR-GriddedCorrection
+a given grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION
 message to get the state space representation of the atmospheric
-delay.
+delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
 
 
   Parameters
@@ -1171,6 +1194,7 @@ class MsgSsrGriddedCorrection(SBP):
 
   
   STEC residuals are per space vehicle, tropo is not.
+It is typically equivalent to the QZSS CLAS Sub Type 9 messages
 
 
   Parameters

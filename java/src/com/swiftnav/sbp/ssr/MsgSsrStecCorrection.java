@@ -30,9 +30,9 @@ import org.json.JSONArray;
  * fields.
  *
  * The STEC per space vehicle, given as polynomial approximation for
- * a given grid.  This should be combined with SSR-GriddedCorrection
+ * a given grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION
  * message to get the state space representation of the atmospheric
- * delay. */
+ * delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages */
 
 public class MsgSsrStecCorrection extends SBPMessage {
     public static final int TYPE = 0x05EB;

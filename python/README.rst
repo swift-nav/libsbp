@@ -1,7 +1,8 @@
 SBP Bindings for Python
 =======================
 
-Python client for Swift Binary Protocol (SBP).
+Python client for Swift Binary Protocol (SBP). 
+Since v2.5 libsbp is compatible with Python 2.7, 3.4 to 3.7. For new projects, Python v3 is recommended.
 
 Setup
 -----

@@ -38,7 +38,7 @@ import SwiftNav.SBP.Gnss
 
 -- | CodeBiasesContent.
 --
--- Code biases are to be added to pseudorange. The corrections are conform with
+-- Code biases are to be added to pseudorange. The corrections conform with
 -- typical RTCMv3 MT1059 and 1065.
 data CodeBiasesContent = CodeBiasesContent
   { _codeBiasesContent_code :: !Word8
@@ -63,7 +63,7 @@ $(makeLenses ''CodeBiasesContent)
 -- | PhaseBiasesContent.
 --
 -- Phase biases are to be added to carrier phase measurements. The corrections
--- are conform with typical RTCMv3 MT1059 and 1065.
+-- conform with typical RTCMv3 MT1059 and 1065.
 data PhaseBiasesContent = PhaseBiasesContent
   { _phaseBiasesContent_code                     :: !Word8
     -- ^ Signal constellation, band and code
@@ -103,16 +103,18 @@ $(makeLenses ''PhaseBiasesContent)
 -- SBP message a limited to 255 bytes.  The header is used to tie multiple SBP
 -- messages into a sequence.
 data STECHeader = STECHeader
-  { _sTECHeader_time              :: !GpsTime
-    -- ^ GNSS time of the STEC data
-  , _sTECHeader_num_msgs          :: !Word8
+  { _sTECHeader_time          :: !GpsTimeSec
+    -- ^ GNSS reference time of the correction
+  , _sTECHeader_num_msgs      :: !Word8
     -- ^ Number of messages in the dataset
-  , _sTECHeader_seq_num           :: !Word8
+  , _sTECHeader_seq_num       :: !Word8
     -- ^ Position of this message in the dataset
-  , _sTECHeader_ssr_update_interval :: !Word16
-    -- ^ update interval in seconds
-  , _sTECHeader_iod_ssr           :: !Word8
-    -- ^ range 0 - 15
+  , _sTECHeader_update_interval :: !Word8
+    -- ^ Update interval between consecutive corrections. Encoded following RTCM
+    -- DF391 specification.
+  , _sTECHeader_iod_ssr       :: !Word8
+    -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    -- indicate a change in the SSR generating configuration.
   } deriving ( Show, Read, Eq )
 
 instance Binary STECHeader where
@@ -120,7 +122,7 @@ instance Binary STECHeader where
     _sTECHeader_time <- get
     _sTECHeader_num_msgs <- getWord8
     _sTECHeader_seq_num <- getWord8
-    _sTECHeader_ssr_update_interval <- getWord16le
+    _sTECHeader_update_interval <- getWord8
     _sTECHeader_iod_ssr <- getWord8
     pure STECHeader {..}
 
@@ -128,7 +130,7 @@ instance Binary STECHeader where
     put _sTECHeader_time
     putWord8 _sTECHeader_num_msgs
     putWord8 _sTECHeader_seq_num
-    putWord16le _sTECHeader_ssr_update_interval
+    putWord8 _sTECHeader_update_interval
     putWord8 _sTECHeader_iod_ssr
 
 $(makeJSON "_sTECHeader_" ''STECHeader)
@@ -139,18 +141,21 @@ $(makeLenses ''STECHeader)
 -- The 3GPP message contains nested variable length arrays which are not
 -- suppported in SBP, so each grid point will be identified by the index.
 data GriddedCorrectionHeader = GriddedCorrectionHeader
-  { _griddedCorrectionHeader_time              :: !GpsTime
-    -- ^ GNSS time of the STEC data
-  , _griddedCorrectionHeader_num_msgs          :: !Word16
+  { _griddedCorrectionHeader_time                  :: !GpsTimeSec
+    -- ^ GNSS reference time of the correction
+  , _griddedCorrectionHeader_num_msgs              :: !Word16
     -- ^ Number of messages in the dataset
-  , _griddedCorrectionHeader_seq_num           :: !Word16
+  , _griddedCorrectionHeader_seq_num               :: !Word16
     -- ^ Position of this message in the dataset
-  , _griddedCorrectionHeader_ssr_update_interval :: !Word16
-    -- ^ update interval in seconds
-  , _griddedCorrectionHeader_iod_ssr           :: !Word8
-    -- ^ range 0 - 15
-  , _griddedCorrectionHeader_tropo_quality     :: !Word8
-    -- ^ troposphere quality indicator
+  , _griddedCorrectionHeader_update_interval       :: !Word8
+    -- ^ Update interval between consecutive corrections. Encoded following RTCM
+    -- DF391 specification.
+  , _griddedCorrectionHeader_iod_ssr               :: !Word8
+    -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    -- indicate a change in the SSR generating configuration.
+  , _griddedCorrectionHeader_tropo_quality_indicator :: !Word8
+    -- ^ Quality of the troposphere data. Encoded following RTCM DF389
+    -- specifcation but as TECU instead of m.
   } deriving ( Show, Read, Eq )
 
 instance Binary GriddedCorrectionHeader where
@@ -158,32 +163,33 @@ instance Binary GriddedCorrectionHeader where
     _griddedCorrectionHeader_time <- get
     _griddedCorrectionHeader_num_msgs <- getWord16le
     _griddedCorrectionHeader_seq_num <- getWord16le
-    _griddedCorrectionHeader_ssr_update_interval <- getWord16le
+    _griddedCorrectionHeader_update_interval <- getWord8
     _griddedCorrectionHeader_iod_ssr <- getWord8
-    _griddedCorrectionHeader_tropo_quality <- getWord8
+    _griddedCorrectionHeader_tropo_quality_indicator <- getWord8
     pure GriddedCorrectionHeader {..}
 
   put GriddedCorrectionHeader {..} = do
     put _griddedCorrectionHeader_time
     putWord16le _griddedCorrectionHeader_num_msgs
     putWord16le _griddedCorrectionHeader_seq_num
-    putWord16le _griddedCorrectionHeader_ssr_update_interval
+    putWord8 _griddedCorrectionHeader_update_interval
     putWord8 _griddedCorrectionHeader_iod_ssr
-    putWord8 _griddedCorrectionHeader_tropo_quality
+    putWord8 _griddedCorrectionHeader_tropo_quality_indicator
 
 $(makeJSON "_griddedCorrectionHeader_" ''GriddedCorrectionHeader)
 $(makeLenses ''GriddedCorrectionHeader)
 
 -- | STECSatElement.
 --
--- STEC for the given satellite.
+-- STEC polynomial for the given satellite.
 data STECSatElement = STECSatElement
   { _sTECSatElement_sv_id                :: !SvId
     -- ^ Unique space vehicle identifier
   , _sTECSatElement_stec_quality_indicator :: !Word8
-    -- ^ quality of STEC data
+    -- ^ Quality of the STEC data. Encoded following RTCM DF389 specifcation but
+    -- as TECU instead of m.
   , _sTECSatElement_stec_coeff           :: ![Int16]
-    -- ^ coefficents of the STEC polynomial
+    -- ^ Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
   } deriving ( Show, Read, Eq )
 
 instance Binary STECSatElement where
@@ -203,12 +209,12 @@ $(makeLenses ''STECSatElement)
 
 -- | TroposphericDelayCorrection.
 --
--- Contains wet vertical and hydrostatic vertical delay
+-- Troposphere delays at the grid point.
 data TroposphericDelayCorrection = TroposphericDelayCorrection
   { _troposphericDelayCorrection_hydro :: !Int16
-    -- ^ hydrostatic vertical delay
+    -- ^ Hydrostatic vertical delay
   , _troposphericDelayCorrection_wet :: !Int8
-    -- ^ wet vertical delay
+    -- ^ Wet vertical delay
   } deriving ( Show, Read, Eq )
 
 instance Binary TroposphericDelayCorrection where
@@ -226,7 +232,7 @@ $(makeLenses ''TroposphericDelayCorrection)
 
 -- | STECResidual.
 --
--- STEC residual
+-- STEC residual for the given satellite at the grid point.
 data STECResidual = STECResidual
   { _sTECResidual_sv_id  :: !SvId
     -- ^ space vehicle identifier
@@ -249,35 +255,36 @@ $(makeLenses ''STECResidual)
 
 -- | GridElement.
 --
--- Contains one tropo datum, plus STEC residuals for each space vehicle
+-- Contains one tropo delay, plus STEC residuals for each satellite at the grid
+-- point.
 data GridElement = GridElement
   { _gridElement_index                :: !Word16
-    -- ^ index of the grid point
+    -- ^ Index of the grid point
   , _gridElement_tropo_delay_correction :: !TroposphericDelayCorrection
-    -- ^ Wet and Hydrostatic Vertical Delay
-  , _gridElement_STEC_residuals       :: ![STECResidual]
-    -- ^ STEC Residual for the given space vehicle
+    -- ^ Wet and hydrostatic vertical delays
+  , _gridElement_stec_residuals       :: ![STECResidual]
+    -- ^ STEC residuals for each satellite
   } deriving ( Show, Read, Eq )
 
 instance Binary GridElement where
   get = do
     _gridElement_index <- getWord16le
     _gridElement_tropo_delay_correction <- get
-    _gridElement_STEC_residuals <- whileM (not <$> isEmpty) get
+    _gridElement_stec_residuals <- whileM (not <$> isEmpty) get
     pure GridElement {..}
 
   put GridElement {..} = do
     putWord16le _gridElement_index
     put _gridElement_tropo_delay_correction
-    mapM_ put _gridElement_STEC_residuals
+    mapM_ put _gridElement_stec_residuals
 
 $(makeJSON "_gridElement_" ''GridElement)
 $(makeLenses ''GridElement)
 
 -- | GridDefinitionHeader.
 --
--- Defines the grid for STEC and tropo grid messages. Also includes an RLE
--- encoded validity list.
+-- Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages. Also includes an
+-- RLE encoded validity list.
 data GridDefinitionHeader = GridDefinitionHeader
   { _gridDefinitionHeader_region_size_inverse :: !Word8
     -- ^ inverse of region size
@@ -328,7 +335,8 @@ data MsgSsrOrbitClock = MsgSsrOrbitClock
   , _msgSsrOrbitClock_sid           :: !GnssSignal
     -- ^ GNSS signal identifier (16 bit)
   , _msgSsrOrbitClock_update_interval :: !Word8
-    -- ^ Update interval between consecutive corrections
+    -- ^ Update interval between consecutive corrections. Encoded following RTCM
+    -- DF391 specification.
   , _msgSsrOrbitClock_iod_ssr       :: !Word8
     -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
     -- indicate a change in the SSR generating configuration
@@ -406,7 +414,8 @@ data MsgSsrOrbitClockDepA = MsgSsrOrbitClockDepA
   , _msgSsrOrbitClockDepA_sid           :: !GnssSignal
     -- ^ GNSS signal identifier (16 bit)
   , _msgSsrOrbitClockDepA_update_interval :: !Word8
-    -- ^ Update interval between consecutive corrections
+    -- ^ Update interval between consecutive corrections. Encoded following RTCM
+    -- DF391 specification.
   , _msgSsrOrbitClockDepA_iod_ssr       :: !Word8
     -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
     -- indicate a change in the SSR generating configuration
@@ -484,7 +493,8 @@ data MsgSsrCodeBiases = MsgSsrCodeBiases
   , _msgSsrCodeBiases_sid           :: !GnssSignal
     -- ^ GNSS signal identifier (16 bit)
   , _msgSsrCodeBiases_update_interval :: !Word8
-    -- ^ Update interval between consecutive corrections
+    -- ^ Update interval between consecutive corrections. Encoded following RTCM
+    -- DF391 specification.
   , _msgSsrCodeBiases_iod_ssr       :: !Word8
     -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
     -- indicate a change in the SSR generating configuration
@@ -528,7 +538,8 @@ data MsgSsrPhaseBiases = MsgSsrPhaseBiases
   , _msgSsrPhaseBiases_sid           :: !GnssSignal
     -- ^ GNSS signal identifier (16 bit)
   , _msgSsrPhaseBiases_update_interval :: !Word8
-    -- ^ Update interval between consecutive corrections
+    -- ^ Update interval between consecutive corrections. Encoded following RTCM
+    -- DF391 specification.
   , _msgSsrPhaseBiases_iod_ssr       :: !Word8
     -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
     -- indicate a change in the SSR generating configuration
@@ -578,8 +589,9 @@ msgSsrStecCorrection = 0x05EB
 -- | SBP class for message MSG_SSR_STEC_CORRECTION (0x05EB).
 --
 -- The STEC per space vehicle, given as polynomial approximation for a given
--- grid.  This should be combined with SSR-GriddedCorrection message to get the
--- state space representation of the atmospheric delay.
+-- grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION message to
+-- get the state space representation of the atmospheric delay. It is typically
+-- equivalent to the QZSS CLAS Sub Type 8 messages
 data MsgSsrStecCorrection = MsgSsrStecCorrection
   { _msgSsrStecCorrection_header      :: !STECHeader
     -- ^ Header of a STEC message
@@ -606,7 +618,8 @@ msgSsrGriddedCorrection = 0x05F0
 
 -- | SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05F0).
 --
--- STEC residuals are per space vehicle, tropo is not.
+-- STEC residuals are per space vehicle, tropo is not. It is typically
+-- equivalent to the QZSS CLAS Sub Type 9 messages
 data MsgSsrGriddedCorrection = MsgSsrGriddedCorrection
   { _msgSsrGriddedCorrection_header :: !GriddedCorrectionHeader
     -- ^ Header of a Gridded Correction message

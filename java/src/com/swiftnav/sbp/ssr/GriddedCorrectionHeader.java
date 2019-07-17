@@ -25,8 +25,8 @@ import com.swiftnav.sbp.SBPStruct;
 
 public class GriddedCorrectionHeader extends SBPStruct {
     
-    /** GNSS time of the STEC data */
-    public GPSTime time;
+    /** GNSS reference time of the correction */
+    public GPSTimeSec time;
     
     /** Number of messages in the dataset */
     public int num_msgs;
@@ -34,14 +34,21 @@ public class GriddedCorrectionHeader extends SBPStruct {
     /** Position of this message in the dataset */
     public int seq_num;
     
-    /** update interval in seconds */
-    public int ssr_update_interval;
+    /** Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+ */
+    public int update_interval;
     
-    /** range 0 - 15 */
+    /** IOD of the SSR correction. A change of Issue Of Data
+SSR is used to indicate a change in the SSR
+generating configuration.
+ */
     public int iod_ssr;
     
-    /** troposphere quality indicator */
-    public int tropo_quality;
+    /** Quality of the troposphere data. Encoded following RTCM DF389
+specifcation but as TECU instead of m.
+ */
+    public int tropo_quality_indicator;
     
 
     public GriddedCorrectionHeader () {}
@@ -49,12 +56,12 @@ public class GriddedCorrectionHeader extends SBPStruct {
     @Override
     public GriddedCorrectionHeader parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        time = new GPSTime().parse(parser);
+        time = new GPSTimeSec().parse(parser);
         num_msgs = parser.getU16();
         seq_num = parser.getU16();
-        ssr_update_interval = parser.getU16();
+        update_interval = parser.getU8();
         iod_ssr = parser.getU8();
-        tropo_quality = parser.getU8();
+        tropo_quality_indicator = parser.getU8();
         return this;
     }
 
@@ -64,9 +71,9 @@ public class GriddedCorrectionHeader extends SBPStruct {
         time.build(builder);
         builder.putU16(num_msgs);
         builder.putU16(seq_num);
-        builder.putU16(ssr_update_interval);
+        builder.putU8(update_interval);
         builder.putU8(iod_ssr);
-        builder.putU8(tropo_quality);
+        builder.putU8(tropo_quality_indicator);
     }
 
     @Override
@@ -75,9 +82,9 @@ public class GriddedCorrectionHeader extends SBPStruct {
         obj.put("time", time.toJSON());
         obj.put("num_msgs", num_msgs);
         obj.put("seq_num", seq_num);
-        obj.put("ssr_update_interval", ssr_update_interval);
+        obj.put("update_interval", update_interval);
         obj.put("iod_ssr", iod_ssr);
-        obj.put("tropo_quality", tropo_quality);
+        obj.put("tropo_quality_indicator", tropo_quality_indicator);
         return obj;
     }
 }

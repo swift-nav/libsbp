@@ -20,7 +20,7 @@ definitions:
      short_desc: SSR code biases corrections for a particular satellite.
      desc: |
       Code biases are to be added to pseudorange.
-      The corrections are conform with typical RTCMv3 MT1059 and 1065.
+      The corrections conform with typical RTCMv3 MT1059 and 1065.
      fields:
      - code:
             type: u8
@@ -33,7 +33,7 @@ definitions:
      short_desc: SSR phase biases corrections for a particular satellite.
      desc: |
       Phase biases are to be added to carrier phase measurements.
-      The corrections are conform with typical RTCMv3 MT1059 and 1065.
+      The corrections conform with typical RTCMv3 MT1059 and 1065.
      fields:
      - code:
             type: u8
@@ -62,21 +62,25 @@ definitions:
       is used to tie multiple SBP messages into a sequence.
     fields:
     - time:
-        type: GPSTime
-        desc: GNSS time of the STEC data
+        type: GPSTimeSec
+        desc: GNSS reference time of the correction
     - num_msgs:
         type: u8
         desc: Number of messages in the dataset
     - seq_num:
         type: u8
         desc: Position of this message in the dataset
-    - ssr_update_interval:
-        type: u16
-        units: seconds
-        desc: update interval in seconds
+    - update_interval:
+        type: u8
+        desc: |
+            Update interval between consecutive corrections. Encoded
+            following RTCM DF391 specification.
     - iod_ssr:
         type: u8
-        desc: range 0 - 15
+        desc: |
+            IOD of the SSR correction. A change of Issue Of Data
+            SSR is used to indicate a change in the SSR
+            generating configuration.
 
  - GriddedCorrectionHeader:
     short_desc: Header for MSG_SSR_GRIDDED_CORRECTION
@@ -86,58 +90,65 @@ definitions:
       be identified by the index.
     fields:
     - time:
-        type: GPSTime
-        desc: GNSS time of the STEC data
+        type: GPSTimeSec
+        desc: GNSS reference time of the correction
     - num_msgs:
         type: u16
         desc: Number of messages in the dataset
     - seq_num:
         type: u16
         desc: Position of this message in the dataset
-    - ssr_update_interval:
-        type: u16
-        units: seconds
-        desc: update interval in seconds
+    - update_interval:
+        type: u8
+        desc: |
+            Update interval between consecutive corrections. Encoded
+            following RTCM DF391 specification.
     - iod_ssr:
         type: u8
-        desc: range 0 - 15
-    - tropo_quality:
+        desc: |
+            IOD of the SSR correction. A change of Issue Of Data
+            SSR is used to indicate a change in the SSR
+            generating configuration.
+    - tropo_quality_indicator:
         type: u8
-        units: encoded value - see spec for details
-        desc: troposphere quality indicator
+        desc: |
+          Quality of the troposphere data. Encoded following RTCM DF389
+          specifcation but as TECU instead of m.
 
  - STECSatElement:
-    desc: STEC for the given satellite.
+    desc: STEC polynomial for the given satellite.
     fields:
     - sv_id:
         type: SvId
         desc: Unique space vehicle identifier
     - stec_quality_indicator:
         type: u8
-        units: encoded value - see spec for details
-        desc: quality of STEC data
+        desc: |
+          Quality of the STEC data. Encoded following RTCM DF389 specifcation
+          but as TECU instead of m.
     - stec_coeff:
         type: array
         size: 4
         fill: s16
-        desc: coefficents of the STEC polynomial
+        units: C00 = 0.05 TECU, others = 0.02 TECU/deg
+        desc: |
+          Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
 
  - TroposphericDelayCorrection:
-    short_desc: troposphere delay correction
     desc: |
-      Contains wet vertical and hydrostatic vertical delay
+      Troposphere delays at the grid point.
     fields:
     - hydro:
         type: s16
         units: 0.4 mm (add 2.3 m to get actual vert hydro delay)
-        desc: hydrostatic vertical delay
+        desc: Hydrostatic vertical delay
     - wet:
         type: s8
         units: 0.4 mm (add 0.252 m to get actual vert wet delay)
-        desc: wet vertical delay
+        desc: Wet vertical delay
 
  - STECResidual:
-    desc: STEC residual
+    desc: STEC residual for the given satellite at the grid point.
     fields:
     - sv_id:
         type: SvId
@@ -148,26 +159,26 @@ definitions:
         desc: STEC residual
 
  - GridElement:
-    short_desc: Grid datum for troposphere and STEC residuals
+    short_desc: Correction data for a single grid point.
     desc: |
-      Contains one tropo datum, plus STEC residuals for each space
-      vehicle
+      Contains one tropo delay, plus STEC residuals for each satellite at the
+      grid point.
     fields:
     - index:
         type: u16
-        desc: index of the grid point
+        desc: Index of the grid point
     - tropo_delay_correction:
         type: TroposphericDelayCorrection
-        desc: Wet and Hydrostatic Vertical Delay
-    - STEC_residuals:
+        desc: Wet and hydrostatic vertical delays
+    - stec_residuals:
         type: array
         fill: STECResidual
-        desc: STEC Residual for the given space vehicle
+        desc: STEC residuals for each satellite
 
  - GridDefinitionHeader:
-    short_desc: Defines the grid for STEC and tropo grid messages
+    short_desc: Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
     desc: |
-      Defines the grid for STEC and tropo grid messages.
+      Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
       Also includes an RLE encoded validity list.
     fields:
     - region_size_inverse:
@@ -208,8 +219,9 @@ definitions:
             desc: GNSS signal identifier (16 bit)
         - update_interval:
             type: u8
-            units: s
-            desc: Update interval between consecutive corrections
+            desc: |
+                Update interval between consecutive corrections. Encoded
+                following RTCM DF391 specification.
         - iod_ssr:
             type: u8
             desc: |
@@ -273,8 +285,9 @@ definitions:
             desc: GNSS signal identifier (16 bit)
         - update_interval:
             type: u8
-            units: s
-            desc: Update interval between consecutive corrections
+            desc: |
+                Update interval between consecutive corrections. Encoded
+                following RTCM DF391 specification.
         - iod_ssr:
             type: u8
             desc: |
@@ -321,7 +334,6 @@ definitions:
             units: 0.00002 mm/s^-2
             desc: C2 polynomial coefficient for correction of broadcast satellite clock
 
-
  - MSG_SSR_CODE_BIASES:
     id: 0x05E1
     short_desc: Precise code biases correction
@@ -339,8 +351,9 @@ definitions:
             desc: GNSS signal identifier (16 bit)
         - update_interval:
             type: u8
-            units: s
-            desc: Update interval between consecutive corrections
+            desc: |
+                Update interval between consecutive corrections. Encoded
+                following RTCM DF391 specification.
         - iod_ssr:
             type: u8
             desc: |
@@ -352,7 +365,6 @@ definitions:
             fill: CodeBiasesContent
             map_by: code
             desc: Code biases for the different satellite signals
-
 
  - MSG_SSR_PHASE_BIASES:
     id: 0x05E6
@@ -373,8 +385,9 @@ definitions:
             desc: GNSS signal identifier (16 bit)
         - update_interval:
             type: u8
-            units: s
-            desc: Update interval between consecutive corrections
+            desc: |
+                Update interval between consecutive corrections. Encoded
+                following RTCM DF391 specification.
         - iod_ssr:
             type: u8
             desc: |
@@ -405,15 +418,14 @@ definitions:
               Phase biases corrections for a
               satellite being tracked.
 
-
  - MSG_SSR_STEC_CORRECTION:
     id: 0x05EB
     short_desc: Slant Total Electron Content
     desc: |
       The STEC per space vehicle, given as polynomial approximation for
-      a given grid.  This should be combined with SSR-GriddedCorrection
+      a given grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION
       message to get the state space representation of the atmospheric
-      delay.
+      delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
     fields:
         - header:
             type: STECHeader
@@ -428,6 +440,7 @@ definitions:
     short_desc: Gridded troposphere and STEC residuals
     desc: |
       STEC residuals are per space vehicle, tropo is not.
+      It is typically equivalent to the QZSS CLAS Sub Type 9 messages
     fields:
         - header:
             type: GriddedCorrectionHeader

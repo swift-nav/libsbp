@@ -29,7 +29,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * STEC residuals are per space vehicle, tropo is not. */
+ * STEC residuals are per space vehicle, tropo is not.
+ * It is typically equivalent to the QZSS CLAS Sub Type 9 messages */
 
 public class MsgSsrGriddedCorrection extends SBPMessage {
     public static final int TYPE = 0x05F0;

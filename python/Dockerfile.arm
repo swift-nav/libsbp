@@ -1,15 +1,173 @@
-FROM balenalib/armv7hf-debian:sid-build
+FROM swiftnav/llvm-arm-stretch:2019.07.03
+
+ARG JOBS=8
 
 RUN [ "cross-build-start" ]
 
-RUN \
-     echo Setting up ARM build environment... \
-  && apt-get update \
-  && apt-get install wget bzip2 build-essential llvm-6.0-dev python3 \
-  && update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-6.0 1 \
-  && wget -O /tmp/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-armv7l.sh \
-  && bash /tmp/miniconda.sh -b \
-  && conda install --yes pip \
-  && rm /tmp/miniconda.sh
+ENV DEBIAN_FRONTEND=noninteractive
 
-ENV PATH=/root/miniconda3/bin:$PATH
+WORKDIR /work
+
+RUN \
+     echo '>>> Setting up ARM build environment...' \
+  && apt-get update \
+  && apt-get install -y wget bzip2 build-essential python3 \
+  && apt-get install -y build-essential tk-dev libncurses5-dev libncursesw5-dev \
+                        libreadline6-dev libdb5.3-dev libgdbm-dev libsqlite3-dev \
+                        libssl-dev libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev \
+                        libffi-dev cmake ccache binutils-dev ninja-build \
+                        gperf gawk flex bison ncurses-dev m4 patchelf \
+                        texinfo help2man libpthread-stubs0-dev libtinfo-dev \
+                        libatlas-base-dev libsqlite3-dev tk-dev libgdbm-dev \
+                        libc6-dev
+
+RUN \
+     echo '>>> Downlading get-pip.py...' \
+  && wget -O /tmp/get-pip.py https://bootstrap.pypa.io/get-pip.py
+
+ENV OPENSSL_VER=1.0.2s
+ENV OPENSSL_PREFIX=/opt/openssl-${OPENSSL_VER}
+ENV OPENSSL_URL=https://www.openssl.org/source/openssl-${OPENSSL_VER}.tar.gz
+
+RUN \
+     echo ">>> Building OpenSSL ${OPENSSL_VER}..." \
+  && wget -O /tmp/openssl.tgz ${OPENSSL_URL} \
+  && mkdir /tmp/openssl-build-${OPENSSL_VER} \
+  && cd /tmp/openssl-build-${OPENSSL_VER} \
+  && tar -xzf /tmp/openssl.tgz \
+  && cd openssl-${OPENSSL_VER} \
+  && ./config shared --prefix=${OPENSSL_PREFIX} \
+  && make -j${JOBS} \
+  && make -j${JOBS} install \
+  && cd /work
+
+ENV PY34=3.4.10
+ENV PY34_URL=https://www.python.org/ftp/python/${PY34}/Python-${PY34}.tar.xz
+
+RUN \
+     echo '>>> Building Python 3.4...' \
+  && wget -O /tmp/python${PY34}.txz ${PY34_URL} \
+  && mkdir /tmp/python${PY34}-build && cd /tmp/python${PY34}-build \
+  && tar -xJf /tmp/python${PY34}.txz \
+  && cd Python-${PY34} \
+  && ./configure \
+      LDFLAGS="-L${OPENSSL_PREFIX}/lib -Wl,-rpath=${OPENSSL_PREFIX}/lib" \
+      CPPFLAGS="-I${OPENSSL_PREFIX}/include" \
+  \
+  && make -j${JOBS} \
+  && make altinstall \
+  && cd /work \
+  \
+  && /usr/local/bin/python3.4 /tmp/get-pip.py \
+  && /usr/local/bin/python3.4 -m pip install --upgrade pip \
+  && /usr/local/bin/python3.4 -m pip install wheel setuptools
+
+ENV PY27=2.7.16
+ENV PY27_URL=https://www.python.org/ftp/python/${PY27}/Python-${PY27}.tar.xz
+
+RUN \
+     echo '>>> Downlading Python 2.7...' \
+  && wget -O /tmp/python${PY27}.txz ${PY27_URL}
+
+RUN \
+     echo '>>> Building Python 2.7...' \
+  \
+  && mkdir /tmp/python${PY27}-build && cd /tmp/python${PY27}-build \
+  && tar -xJf /tmp/python${PY27}.txz \
+  && cd Python-${PY27} \
+  && ./configure \
+  && make -j${JOBS} \
+  && make altinstall \
+  && cd /work \
+  \
+  && /usr/local/bin/python2.7 /tmp/get-pip.py \
+  && /usr/local/bin/python2.7 -m pip install --upgrade pip \
+  && /usr/local/bin/python2.7 -m pip install wheel setuptools
+
+ENV PY27MU=2.7.16-cp27mu
+ENV CP27MU_PREFIX=/opt/cp27mu
+
+RUN \
+     echo '>>> Building Python 2.7 (cp27mu)...' \
+  \
+  && mkdir /tmp/python${PY27MU}-build && cd /tmp/python${PY27MU}-build \
+  && tar -xJf /tmp/python${PY27}.txz \
+  && cd Python-${PY27} \
+  && ./configure \
+      --enable-unicode=ucs4 \
+      --prefix=${CP27MU_PREFIX} \
+  && make -j${JOBS} \
+  && make altinstall \
+  && cd /work \
+  \
+  && ${CP27MU_PREFIX}/bin/python2.7 /tmp/get-pip.py \
+  && ${CP27MU_PREFIX}/bin/python2.7 -m pip install --upgrade pip \
+  && ${CP27MU_PREFIX}/bin/python2.7 -m pip install wheel setuptools
+
+ENV PY35=3.5.7
+ENV PY35_URL=https://www.python.org/ftp/python/${PY35}/Python-${PY35}.tar.xz
+
+RUN \
+     echo '>>> Building Python 3.5...' \
+  && wget -O /tmp/python${PY35}.txz ${PY35_URL} \
+  && mkdir /tmp/python${PY35}-build \
+  && cd /tmp/python${PY35}-build \
+  && tar -xJf /tmp/python${PY35}.txz \
+  && cd Python-${PY35} \
+  && ./configure \
+  && make -j${JOBS} \
+  && make altinstall \
+  && cd /work \
+  \
+  && /usr/local/bin/python3.5 -m pip install --upgrade pip \
+  && /usr/local/bin/python3.5 -m pip install wheel setuptools
+
+ENV PY36=3.6.8
+ENV PY36_URL=https://www.python.org/ftp/python/${PY36}/Python-${PY36}.tar.xz
+
+RUN \
+     echo '>>> Building Python 3.6...' \
+  && wget -O /tmp/python${PY36}.txz ${PY36_URL} \
+  && mkdir /tmp/python${PY36}-build && cd /tmp/python${PY36}-build \
+  && tar -xJf /tmp/python${PY36}.txz \
+  && cd Python-${PY36} \
+  && ./configure \
+  && make -j${JOBS} \
+  && make altinstall \
+  && cd /work \
+  \
+  && /usr/local/bin/python3.6 -m pip install --upgrade pip \
+  && /usr/local/bin/python3.6 -m pip install wheel setuptools
+
+ENV PY37=3.7.3
+ENV PY37_URL=https://www.python.org/ftp/python/${PY37}/Python-${PY37}.tar.xz
+
+RUN \
+     echo '>>> Building Python 3.7...' \
+  && wget -O /tmp/python${PY37}.txz ${PY37_URL} \
+  && mkdir /tmp/python${PY37}-build && cd /tmp/python${PY37}-build \
+  && tar -xJf /tmp/python${PY37}.txz \
+  && cd Python-${PY37} \
+  && ./configure \
+  && make -j${JOBS} \
+  && make altinstall \
+  && cd /work \
+  && /usr/local/bin/python3.7 -m pip install --upgrade pip \
+  && /usr/local/bin/python3.7 -m pip install wheel setuptools
+
+RUN \
+     rm /tmp/python${PY27}.txz \
+  && rm -rf /tmp/python${PY27}-build \
+  && rm /tmp/python${PY34}.txz \
+  && rm -rf /tmp/python${PY34}-build \
+  && rm /tmp/python${PY35}.txz \
+  && rm -rf /tmp/python${PY35}-build \
+  && rm /tmp/python${PY36}.txz \
+  && rm -rf /tmp/python${PY36}-build \
+  && rm /tmp/python${PY37}.txz \
+  && rm -rf /tmp/python${PY37}-build \
+  && rm -rf /tmp/openssl.tgz \
+  && rm -rf /tmp/openssl-build-${OPENSSLVER} \
+  && rm /tmp/get-pip.py
+
+RUN [ "cross-build-end" ]

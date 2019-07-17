@@ -34,7 +34,7 @@ There is no inertial navigation capability on Piksi Multi or Duro.
 
 import json
 
-import numba as nb
+import numpy as np
 
 from sbp.jit.msg import SBP, SENDER_ID
 from sbp.jit.msg import get_u8, get_u16, get_u32, get_u64
@@ -396,17 +396,17 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     (__z, offset, length) = get_f64(buf, offset, length)
     ret['z'] = __z
     (__cov_x_x, offset, length) = get_f32(buf, offset, length)
-    ret['cov_x_x'] = judicious_round(nb.f4(__cov_x_x)) if SBP.judicious_rounding else __cov_x_x
+    ret['cov_x_x'] = judicious_round(np.float32(__cov_x_x)) if SBP.judicious_rounding else __cov_x_x
     (__cov_x_y, offset, length) = get_f32(buf, offset, length)
-    ret['cov_x_y'] = judicious_round(nb.f4(__cov_x_y)) if SBP.judicious_rounding else __cov_x_y
+    ret['cov_x_y'] = judicious_round(np.float32(__cov_x_y)) if SBP.judicious_rounding else __cov_x_y
     (__cov_x_z, offset, length) = get_f32(buf, offset, length)
-    ret['cov_x_z'] = judicious_round(nb.f4(__cov_x_z)) if SBP.judicious_rounding else __cov_x_z
+    ret['cov_x_z'] = judicious_round(np.float32(__cov_x_z)) if SBP.judicious_rounding else __cov_x_z
     (__cov_y_y, offset, length) = get_f32(buf, offset, length)
-    ret['cov_y_y'] = judicious_round(nb.f4(__cov_y_y)) if SBP.judicious_rounding else __cov_y_y
+    ret['cov_y_y'] = judicious_round(np.float32(__cov_y_y)) if SBP.judicious_rounding else __cov_y_y
     (__cov_y_z, offset, length) = get_f32(buf, offset, length)
-    ret['cov_y_z'] = judicious_round(nb.f4(__cov_y_z)) if SBP.judicious_rounding else __cov_y_z
+    ret['cov_y_z'] = judicious_round(np.float32(__cov_y_z)) if SBP.judicious_rounding else __cov_y_z
     (__cov_z_z, offset, length) = get_f32(buf, offset, length)
-    ret['cov_z_z'] = judicious_round(nb.f4(__cov_z_z)) if SBP.judicious_rounding else __cov_z_z
+    ret['cov_z_z'] = judicious_round(np.float32(__cov_z_z)) if SBP.judicious_rounding else __cov_z_z
     (__n_sats, offset, length) = get_u8(buf, offset, length)
     ret['n_sats'] = __n_sats
     (__flags, offset, length) = get_u8(buf, offset, length)
@@ -590,17 +590,17 @@ measurement and care should be taken with the sign convention.
     (__height, offset, length) = get_f64(buf, offset, length)
     ret['height'] = __height
     (__cov_n_n, offset, length) = get_f32(buf, offset, length)
-    ret['cov_n_n'] = judicious_round(nb.f4(__cov_n_n)) if SBP.judicious_rounding else __cov_n_n
+    ret['cov_n_n'] = judicious_round(np.float32(__cov_n_n)) if SBP.judicious_rounding else __cov_n_n
     (__cov_n_e, offset, length) = get_f32(buf, offset, length)
-    ret['cov_n_e'] = judicious_round(nb.f4(__cov_n_e)) if SBP.judicious_rounding else __cov_n_e
+    ret['cov_n_e'] = judicious_round(np.float32(__cov_n_e)) if SBP.judicious_rounding else __cov_n_e
     (__cov_n_d, offset, length) = get_f32(buf, offset, length)
-    ret['cov_n_d'] = judicious_round(nb.f4(__cov_n_d)) if SBP.judicious_rounding else __cov_n_d
+    ret['cov_n_d'] = judicious_round(np.float32(__cov_n_d)) if SBP.judicious_rounding else __cov_n_d
     (__cov_e_e, offset, length) = get_f32(buf, offset, length)
-    ret['cov_e_e'] = judicious_round(nb.f4(__cov_e_e)) if SBP.judicious_rounding else __cov_e_e
+    ret['cov_e_e'] = judicious_round(np.float32(__cov_e_e)) if SBP.judicious_rounding else __cov_e_e
     (__cov_e_d, offset, length) = get_f32(buf, offset, length)
-    ret['cov_e_d'] = judicious_round(nb.f4(__cov_e_d)) if SBP.judicious_rounding else __cov_e_d
+    ret['cov_e_d'] = judicious_round(np.float32(__cov_e_d)) if SBP.judicious_rounding else __cov_e_d
     (__cov_d_d, offset, length) = get_f32(buf, offset, length)
-    ret['cov_d_d'] = judicious_round(nb.f4(__cov_d_d)) if SBP.judicious_rounding else __cov_d_d
+    ret['cov_d_d'] = judicious_round(np.float32(__cov_d_d)) if SBP.judicious_rounding else __cov_d_d
     (__n_sats, offset, length) = get_u8(buf, offset, length)
     ret['n_sats'] = __n_sats
     (__flags, offset, length) = get_u8(buf, offset, length)
@@ -927,17 +927,17 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     (__z, offset, length) = get_s32(buf, offset, length)
     ret['z'] = __z
     (__cov_x_x, offset, length) = get_f32(buf, offset, length)
-    ret['cov_x_x'] = judicious_round(nb.f4(__cov_x_x)) if SBP.judicious_rounding else __cov_x_x
+    ret['cov_x_x'] = judicious_round(np.float32(__cov_x_x)) if SBP.judicious_rounding else __cov_x_x
     (__cov_x_y, offset, length) = get_f32(buf, offset, length)
-    ret['cov_x_y'] = judicious_round(nb.f4(__cov_x_y)) if SBP.judicious_rounding else __cov_x_y
+    ret['cov_x_y'] = judicious_round(np.float32(__cov_x_y)) if SBP.judicious_rounding else __cov_x_y
     (__cov_x_z, offset, length) = get_f32(buf, offset, length)
-    ret['cov_x_z'] = judicious_round(nb.f4(__cov_x_z)) if SBP.judicious_rounding else __cov_x_z
+    ret['cov_x_z'] = judicious_round(np.float32(__cov_x_z)) if SBP.judicious_rounding else __cov_x_z
     (__cov_y_y, offset, length) = get_f32(buf, offset, length)
-    ret['cov_y_y'] = judicious_round(nb.f4(__cov_y_y)) if SBP.judicious_rounding else __cov_y_y
+    ret['cov_y_y'] = judicious_round(np.float32(__cov_y_y)) if SBP.judicious_rounding else __cov_y_y
     (__cov_y_z, offset, length) = get_f32(buf, offset, length)
-    ret['cov_y_z'] = judicious_round(nb.f4(__cov_y_z)) if SBP.judicious_rounding else __cov_y_z
+    ret['cov_y_z'] = judicious_round(np.float32(__cov_y_z)) if SBP.judicious_rounding else __cov_y_z
     (__cov_z_z, offset, length) = get_f32(buf, offset, length)
-    ret['cov_z_z'] = judicious_round(nb.f4(__cov_z_z)) if SBP.judicious_rounding else __cov_z_z
+    ret['cov_z_z'] = judicious_round(np.float32(__cov_z_z)) if SBP.judicious_rounding else __cov_z_z
     (__n_sats, offset, length) = get_u8(buf, offset, length)
     ret['n_sats'] = __n_sats
     (__flags, offset, length) = get_u8(buf, offset, length)
@@ -1115,17 +1115,17 @@ portion of the 3x3 covariance matrix.
     (__d, offset, length) = get_s32(buf, offset, length)
     ret['d'] = __d
     (__cov_n_n, offset, length) = get_f32(buf, offset, length)
-    ret['cov_n_n'] = judicious_round(nb.f4(__cov_n_n)) if SBP.judicious_rounding else __cov_n_n
+    ret['cov_n_n'] = judicious_round(np.float32(__cov_n_n)) if SBP.judicious_rounding else __cov_n_n
     (__cov_n_e, offset, length) = get_f32(buf, offset, length)
-    ret['cov_n_e'] = judicious_round(nb.f4(__cov_n_e)) if SBP.judicious_rounding else __cov_n_e
+    ret['cov_n_e'] = judicious_round(np.float32(__cov_n_e)) if SBP.judicious_rounding else __cov_n_e
     (__cov_n_d, offset, length) = get_f32(buf, offset, length)
-    ret['cov_n_d'] = judicious_round(nb.f4(__cov_n_d)) if SBP.judicious_rounding else __cov_n_d
+    ret['cov_n_d'] = judicious_round(np.float32(__cov_n_d)) if SBP.judicious_rounding else __cov_n_d
     (__cov_e_e, offset, length) = get_f32(buf, offset, length)
-    ret['cov_e_e'] = judicious_round(nb.f4(__cov_e_e)) if SBP.judicious_rounding else __cov_e_e
+    ret['cov_e_e'] = judicious_round(np.float32(__cov_e_e)) if SBP.judicious_rounding else __cov_e_e
     (__cov_e_d, offset, length) = get_f32(buf, offset, length)
-    ret['cov_e_d'] = judicious_round(nb.f4(__cov_e_d)) if SBP.judicious_rounding else __cov_e_d
+    ret['cov_e_d'] = judicious_round(np.float32(__cov_e_d)) if SBP.judicious_rounding else __cov_e_d
     (__cov_d_d, offset, length) = get_f32(buf, offset, length)
-    ret['cov_d_d'] = judicious_round(nb.f4(__cov_d_d)) if SBP.judicious_rounding else __cov_d_d
+    ret['cov_d_d'] = judicious_round(np.float32(__cov_d_d)) if SBP.judicious_rounding else __cov_d_d
     (__n_sats, offset, length) = get_u8(buf, offset, length)
     ret['n_sats'] = __n_sats
     (__flags, offset, length) = get_u8(buf, offset, length)
@@ -1224,17 +1224,17 @@ products and is not available from Piksi Multi or Duro.
     (__z, offset, length) = get_s32(buf, offset, length)
     ret['z'] = __z
     (__cov_x_x, offset, length) = get_f32(buf, offset, length)
-    ret['cov_x_x'] = judicious_round(nb.f4(__cov_x_x)) if SBP.judicious_rounding else __cov_x_x
+    ret['cov_x_x'] = judicious_round(np.float32(__cov_x_x)) if SBP.judicious_rounding else __cov_x_x
     (__cov_x_y, offset, length) = get_f32(buf, offset, length)
-    ret['cov_x_y'] = judicious_round(nb.f4(__cov_x_y)) if SBP.judicious_rounding else __cov_x_y
+    ret['cov_x_y'] = judicious_round(np.float32(__cov_x_y)) if SBP.judicious_rounding else __cov_x_y
     (__cov_x_z, offset, length) = get_f32(buf, offset, length)
-    ret['cov_x_z'] = judicious_round(nb.f4(__cov_x_z)) if SBP.judicious_rounding else __cov_x_z
+    ret['cov_x_z'] = judicious_round(np.float32(__cov_x_z)) if SBP.judicious_rounding else __cov_x_z
     (__cov_y_y, offset, length) = get_f32(buf, offset, length)
-    ret['cov_y_y'] = judicious_round(nb.f4(__cov_y_y)) if SBP.judicious_rounding else __cov_y_y
+    ret['cov_y_y'] = judicious_round(np.float32(__cov_y_y)) if SBP.judicious_rounding else __cov_y_y
     (__cov_y_z, offset, length) = get_f32(buf, offset, length)
-    ret['cov_y_z'] = judicious_round(nb.f4(__cov_y_z)) if SBP.judicious_rounding else __cov_y_z
+    ret['cov_y_z'] = judicious_round(np.float32(__cov_y_z)) if SBP.judicious_rounding else __cov_y_z
     (__cov_z_z, offset, length) = get_f32(buf, offset, length)
-    ret['cov_z_z'] = judicious_round(nb.f4(__cov_z_z)) if SBP.judicious_rounding else __cov_z_z
+    ret['cov_z_z'] = judicious_round(np.float32(__cov_z_z)) if SBP.judicious_rounding else __cov_z_z
     (__n_sats, offset, length) = get_u8(buf, offset, length)
     ret['n_sats'] = __n_sats
     (__flags, offset, length) = get_u8(buf, offset, length)

@@ -1,5 +1,26 @@
 # Change Log
 
+## [v2.6.5](https://github.com/swift-nav/libsbp/tree/v2.6.5) (2019-07-03)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.4...v2.6.5)
+
+**Merged pull requests:**
+
+- Pin minor rev versions, security fix for requests [\#709](https://github.com/swift-nav/libsbp/pull/709)
+
+## [v2.6.4](https://github.com/swift-nav/libsbp/tree/v2.6.4) (2019-06-27)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.3...v2.6.4)
+
+**Closed issues:**
+
+- cmake error while installing libsbp - include could not find load file [\#705](https://github.com/swift-nav/libsbp/issues/705)
+
+**Merged pull requests:**
+
+- SSR STEC and gridded correction message refinements [\#704](https://github.com/swift-nav/libsbp/pull/704)
+- Change ssr\_update\_interval to u8. [\#703](https://github.com/swift-nav/libsbp/pull/703)
+- Purge llvmlite and numba dependencies from generated Python code \[ESD-1396\] [\#702](https://github.com/swift-nav/libsbp/pull/702)
+- Don't use hardcoded include/link paths [\#701](https://github.com/swift-nav/libsbp/pull/701)
+
 ## [2.6.3](https://github.com/swift-nav/libsbp/tree/v2.6.3)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.1...v2.6.3)

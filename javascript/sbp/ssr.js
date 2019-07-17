@@ -34,8 +34,8 @@ var SvId = require("./gnss").SvId;
 /**
  * SBP class for message fragment CodeBiasesContent
  *
- * Code biases are to be added to pseudorange. The corrections are conform with
- * typical RTCMv3 MT1059 and 1065.
+ * Code biases are to be added to pseudorange. The corrections conform with typical
+ * RTCMv3 MT1059 and 1065.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
@@ -64,7 +64,7 @@ CodeBiasesContent.prototype.fieldSpec.push(['value', 'writeInt16LE', 2]);
 /**
  * SBP class for message fragment PhaseBiasesContent
  *
- * Phase biases are to be added to carrier phase measurements. The corrections are
+ * Phase biases are to be added to carrier phase measurements. The corrections
  * conform with typical RTCMv3 MT1059 and 1065.
  *
  * Fields in the SBP payload (`sbp.payload`):
@@ -108,11 +108,13 @@ PhaseBiasesContent.prototype.fieldSpec.push(['bias', 'writeInt32LE', 4]);
  * into a sequence.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field time GPSTime GNSS time of the STEC data
+ * @field time GPSTimeSec GNSS reference time of the correction
  * @field num_msgs number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
  * @field seq_num number (unsigned 8-bit int, 1 byte) Position of this message in the dataset
- * @field ssr_update_interval number (unsigned 16-bit int, 2 bytes) update interval in seconds
- * @field iod_ssr number (unsigned 8-bit int, 1 byte) range 0 - 15
+ * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections. Encoded following RTCM DF391
+ *   specification.
+ * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
+ *   change in the SSR generating configuration.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -128,16 +130,16 @@ STECHeader.prototype.messageType = "STECHeader";
 STECHeader.prototype.constructor = STECHeader;
 STECHeader.prototype.parser = new Parser()
   .endianess('little')
-  .nest('time', { type: GPSTime.prototype.parser })
+  .nest('time', { type: GPSTimeSec.prototype.parser })
   .uint8('num_msgs')
   .uint8('seq_num')
-  .uint16('ssr_update_interval')
+  .uint8('update_interval')
   .uint8('iod_ssr');
 STECHeader.prototype.fieldSpec = [];
-STECHeader.prototype.fieldSpec.push(['time', GPSTime.prototype.fieldSpec]);
+STECHeader.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
 STECHeader.prototype.fieldSpec.push(['num_msgs', 'writeUInt8', 1]);
 STECHeader.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
-STECHeader.prototype.fieldSpec.push(['ssr_update_interval', 'writeUInt16LE', 2]);
+STECHeader.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
 STECHeader.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
 
 /**
@@ -147,12 +149,15 @@ STECHeader.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
  * in SBP, so each grid point will be identified by the index.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field time GPSTime GNSS time of the STEC data
+ * @field time GPSTimeSec GNSS reference time of the correction
  * @field num_msgs number (unsigned 16-bit int, 2 bytes) Number of messages in the dataset
  * @field seq_num number (unsigned 16-bit int, 2 bytes) Position of this message in the dataset
- * @field ssr_update_interval number (unsigned 16-bit int, 2 bytes) update interval in seconds
- * @field iod_ssr number (unsigned 8-bit int, 1 byte) range 0 - 15
- * @field tropo_quality number (unsigned 8-bit int, 1 byte) troposphere quality indicator
+ * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections. Encoded following RTCM DF391
+ *   specification.
+ * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
+ *   change in the SSR generating configuration.
+ * @field tropo_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the troposphere data. Encoded following RTCM DF389 specifcation but
+ *   as TECU instead of m.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -168,29 +173,30 @@ GriddedCorrectionHeader.prototype.messageType = "GriddedCorrectionHeader";
 GriddedCorrectionHeader.prototype.constructor = GriddedCorrectionHeader;
 GriddedCorrectionHeader.prototype.parser = new Parser()
   .endianess('little')
-  .nest('time', { type: GPSTime.prototype.parser })
+  .nest('time', { type: GPSTimeSec.prototype.parser })
   .uint16('num_msgs')
   .uint16('seq_num')
-  .uint16('ssr_update_interval')
+  .uint8('update_interval')
   .uint8('iod_ssr')
-  .uint8('tropo_quality');
+  .uint8('tropo_quality_indicator');
 GriddedCorrectionHeader.prototype.fieldSpec = [];
-GriddedCorrectionHeader.prototype.fieldSpec.push(['time', GPSTime.prototype.fieldSpec]);
+GriddedCorrectionHeader.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
 GriddedCorrectionHeader.prototype.fieldSpec.push(['num_msgs', 'writeUInt16LE', 2]);
 GriddedCorrectionHeader.prototype.fieldSpec.push(['seq_num', 'writeUInt16LE', 2]);
-GriddedCorrectionHeader.prototype.fieldSpec.push(['ssr_update_interval', 'writeUInt16LE', 2]);
+GriddedCorrectionHeader.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
 GriddedCorrectionHeader.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
-GriddedCorrectionHeader.prototype.fieldSpec.push(['tropo_quality', 'writeUInt8', 1]);
+GriddedCorrectionHeader.prototype.fieldSpec.push(['tropo_quality_indicator', 'writeUInt8', 1]);
 
 /**
  * SBP class for message fragment STECSatElement
  *
- * STEC for the given satellite.
+ * STEC polynomial for the given satellite.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field sv_id SvId Unique space vehicle identifier
- * @field stec_quality_indicator number (unsigned 8-bit int, 1 byte) quality of STEC data
- * @field stec_coeff array coefficents of the STEC polynomial
+ * @field stec_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the STEC data. Encoded following RTCM DF389 specifcation but as TECU
+ *   instead of m.
+ * @field stec_coeff array Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -217,11 +223,11 @@ STECSatElement.prototype.fieldSpec.push(['stec_coeff', 'array', 'writeInt16LE', 
 /**
  * SBP class for message fragment TroposphericDelayCorrection
  *
- * Contains wet vertical and hydrostatic vertical delay
+ * Troposphere delays at the grid point.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field hydro number (signed 16-bit int, 2 bytes) hydrostatic vertical delay
- * @field wet number (signed 8-bit int, 1 byte) wet vertical delay
+ * @field hydro number (signed 16-bit int, 2 bytes) Hydrostatic vertical delay
+ * @field wet number (signed 8-bit int, 1 byte) Wet vertical delay
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -246,7 +252,7 @@ TroposphericDelayCorrection.prototype.fieldSpec.push(['wet', 'writeInt8', 1]);
 /**
  * SBP class for message fragment STECResidual
  *
- * STEC residual
+ * STEC residual for the given satellite at the grid point.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field sv_id SvId space vehicle identifier
@@ -275,12 +281,13 @@ STECResidual.prototype.fieldSpec.push(['residual', 'writeInt16LE', 2]);
 /**
  * SBP class for message fragment GridElement
  *
- * Contains one tropo datum, plus STEC residuals for each space vehicle
+ * Contains one tropo delay, plus STEC residuals for each satellite at the grid
+ * point.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field index number (unsigned 16-bit int, 2 bytes) index of the grid point
- * @field tropo_delay_correction TroposphericDelayCorrection Wet and Hydrostatic Vertical Delay
- * @field STEC_residuals array STEC Residual for the given space vehicle
+ * @field index number (unsigned 16-bit int, 2 bytes) Index of the grid point
+ * @field tropo_delay_correction TroposphericDelayCorrection Wet and hydrostatic vertical delays
+ * @field stec_residuals array STEC residuals for each satellite
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -298,17 +305,17 @@ GridElement.prototype.parser = new Parser()
   .endianess('little')
   .uint16('index')
   .nest('tropo_delay_correction', { type: TroposphericDelayCorrection.prototype.parser })
-  .array('STEC_residuals', { type: STECResidual.prototype.parser, readUntil: 'eof' });
+  .array('stec_residuals', { type: STECResidual.prototype.parser, readUntil: 'eof' });
 GridElement.prototype.fieldSpec = [];
 GridElement.prototype.fieldSpec.push(['index', 'writeUInt16LE', 2]);
 GridElement.prototype.fieldSpec.push(['tropo_delay_correction', TroposphericDelayCorrection.prototype.fieldSpec]);
-GridElement.prototype.fieldSpec.push(['STEC_residuals', 'array', STECResidual.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+GridElement.prototype.fieldSpec.push(['stec_residuals', 'array', STECResidual.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
  * SBP class for message fragment GridDefinitionHeader
  *
- * Defines the grid for STEC and tropo grid messages. Also includes an RLE encoded
- * validity list.
+ * Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages. Also includes an RLE
+ * encoded validity list.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field region_size_inverse number (unsigned 8-bit int, 1 byte) inverse of region size
@@ -356,7 +363,8 @@ GridDefinitionHeader.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
  * Fields in the SBP payload (`sbp.payload`):
  * @field time GPSTimeSec GNSS reference time of the correction
  * @field sid GnssSignal GNSS signal identifier (16 bit)
- * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections
+ * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections. Encoded following RTCM DF391
+ *   specification.
  * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
  *   change in the SSR generating configuration
  * @field iod number (unsigned 32-bit int, 4 bytes) Issue of broadcast ephemeris data or IODCRC (Beidou)
@@ -425,7 +433,8 @@ MsgSsrOrbitClock.prototype.fieldSpec.push(['c2', 'writeInt32LE', 4]);
  * Fields in the SBP payload (`sbp.payload`):
  * @field time GPSTimeSec GNSS reference time of the correction
  * @field sid GnssSignal GNSS signal identifier (16 bit)
- * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections
+ * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections. Encoded following RTCM DF391
+ *   specification.
  * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
  *   change in the SSR generating configuration
  * @field iod number (unsigned 8-bit int, 1 byte) Issue of broadcast ephemeris data
@@ -494,7 +503,8 @@ MsgSsrOrbitClockDepA.prototype.fieldSpec.push(['c2', 'writeInt32LE', 4]);
  * Fields in the SBP payload (`sbp.payload`):
  * @field time GPSTimeSec GNSS reference time of the correction
  * @field sid GnssSignal GNSS signal identifier (16 bit)
- * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections
+ * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections. Encoded following RTCM DF391
+ *   specification.
  * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
  *   change in the SSR generating configuration
  * @field biases array Code biases for the different satellite signals
@@ -537,7 +547,8 @@ MsgSsrCodeBiases.prototype.fieldSpec.push(['biases', 'array', CodeBiasesContent.
  * Fields in the SBP payload (`sbp.payload`):
  * @field time GPSTimeSec GNSS reference time of the correction
  * @field sid GnssSignal GNSS signal identifier (16 bit)
- * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections
+ * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections. Encoded following RTCM DF391
+ *   specification.
  * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
  *   change in the SSR generating configuration
  * @field dispersive_bias number (unsigned 8-bit int, 1 byte) Indicator for the dispersive phase biases property.
@@ -585,8 +596,9 @@ MsgSsrPhaseBiases.prototype.fieldSpec.push(['biases', 'array', PhaseBiasesConten
  * SBP class for message MSG_SSR_STEC_CORRECTION (0x05EB).
  *
  * The STEC per space vehicle, given as polynomial approximation for a given grid.
- * This should be combined with SSR-GriddedCorrection message to get the state
- * space representation of the atmospheric delay.
+ * This should be combined with MSG_SSR_GRIDDED_CORRECTION message to get the state
+ * space representation of the atmospheric delay. It is typically equivalent to the
+ * QZSS CLAS Sub Type 8 messages
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header STECHeader Header of a STEC message
@@ -616,7 +628,8 @@ MsgSsrStecCorrection.prototype.fieldSpec.push(['stec_sat_list', 'array', STECSat
 /**
  * SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05F0).
  *
- * STEC residuals are per space vehicle, tropo is not.
+ * STEC residuals are per space vehicle, tropo is not. It is typically equivalent
+ * to the QZSS CLAS Sub Type 9 messages
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header GriddedCorrectionHeader Header of a Gridded Correction message
