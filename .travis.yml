@@ -13,12 +13,6 @@ addons:
     - lcov
     - gradle
     - libgmp-dev
-    - oracle-java8-installer
-    - oracle-java8-set-default
-    - cargo
-
-env:
-  - JAVA_HOME=/usr/lib/jvm/java-8-oracle
 
 cache:
   apt: true
