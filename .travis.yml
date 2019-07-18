@@ -79,6 +79,8 @@ matrix:
       language: rust
       rust:
         - stable
+      script:
+        - make test-rust
 
 deploy:
   provider: releases
