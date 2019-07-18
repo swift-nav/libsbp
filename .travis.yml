@@ -77,12 +77,6 @@ matrix:
         bash <(curl -s https://codecov.io/bash) -s c/build || echo "Codecov did not collect coverage reports";
     - env:
       language: rust
-      before_install:
-        - sudo apt-get -qq update
-        - sudo apt-get install python2.7 python2.7-dev
-        - sudo apt-get install python3.5 python3.5-dev
-        - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
-        - sudo pip install tox
       rust:
         - stable
       script:

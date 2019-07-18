@@ -260,7 +260,7 @@ test-haskell:
 	cd $(SWIFTNAV_ROOT)/haskell/ && stack build --test --allow-different-user
 	$(call announce-end,"Finished running Haskell tests")
 
-test-rust: rust
+test-rust:
 	$(call announce-begin,"Running Rust tests")
 	cd $(SWIFTNAV_ROOT)/rust/sbp && cargo test
 	$(call announce-end,"Finished running Rust tests")
