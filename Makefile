@@ -262,7 +262,7 @@ test-haskell:
 
 test-rust:
 	$(call announce-begin,"Running Rust tests")
-	cd $(SWIFTNAV_ROOT)/rust/sbp && cargo test
+	cd $(SWIFTNAV_ROOT)/rust/sbp && cargo test --verbose
 	$(call announce-end,"Finished running Rust tests")
 
 test-protobuf:
