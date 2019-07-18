@@ -18,6 +18,7 @@ mod tests {
             0x09, 0x00, 0x00, 0x00, 0x0e, 0x00,
         ];
         let baseline_ecef_expectation = ::messages::navigation::MsgBaselineECEF {
+            sender_id: Some(1234),
             accuracy: 0,
             flags: 0,
             n_sats: 14,
@@ -26,9 +27,10 @@ mod tests {
             y: 1327294,
             z: 631798,
         };
-        let sbp_result = ::messages::SBP::parse(0x20b, &mut &baseline_ecef_payload[..]);
+        let sbp_result = ::messages::SBP::parse(0x20b, 1234,&mut &baseline_ecef_payload[..]);
         assert!(sbp_result.is_ok());
         if let ::messages::SBP::MsgBaselineECEF(msg) = sbp_result.unwrap() {
+            assert_eq!(msg.sender_id, baseline_ecef_expectation.sender_id);
             assert_eq!(msg.accuracy, baseline_ecef_expectation.accuracy);
             assert_eq!(msg.flags, baseline_ecef_expectation.flags);
             assert_eq!(msg.n_sats, baseline_ecef_expectation.n_sats);
@@ -48,6 +50,7 @@ mod tests {
             0xbe, 0x40, 0x14, 0x00, 0xf6, 0xa3, 0x09, 0x00, 0x00, 0x00, 0x0e, 0x00, 0xdb, 0xbf,
         ];
         let baseline_ecef_expectation = ::messages::navigation::MsgBaselineECEF {
+            sender_id: Some(0x88d3),
             accuracy: 0,
             flags: 0,
             n_sats: 14,
@@ -59,6 +62,7 @@ mod tests {
         let (sbp_result, _remaining_data) = ::parser::frame(&packet[..]);
         assert!(sbp_result.is_ok());
         if let ::messages::SBP::MsgBaselineECEF(msg) = sbp_result.unwrap() {
+            assert_eq!(msg.sender_id, baseline_ecef_expectation.sender_id);
             assert_eq!(msg.accuracy, baseline_ecef_expectation.accuracy);
             assert_eq!(msg.flags, baseline_ecef_expectation.flags);
             assert_eq!(msg.n_sats, baseline_ecef_expectation.n_sats);
@@ -80,6 +84,7 @@ mod tests {
         ];
         let mut reader = std::io::Cursor::new(packet);
         let baseline_ecef_expectation = ::messages::navigation::MsgBaselineECEF {
+            sender_id: Some(0x88d3),
             accuracy: 0,
             flags: 0,
             n_sats: 14,
@@ -93,6 +98,7 @@ mod tests {
         let sbp_result = parser.parse(&mut reader);
         assert!(sbp_result.is_ok());
         if let ::messages::SBP::MsgBaselineECEF(msg) = sbp_result.unwrap() {
+            assert_eq!(msg.sender_id, baseline_ecef_expectation.sender_id);
             assert_eq!(msg.accuracy, baseline_ecef_expectation.accuracy);
             assert_eq!(msg.flags, baseline_ecef_expectation.flags);
             assert_eq!(msg.n_sats, baseline_ecef_expectation.n_sats);
