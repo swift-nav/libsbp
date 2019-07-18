@@ -75,6 +75,10 @@ matrix:
         - make test-c
       after_success:
         bash <(curl -s https://codecov.io/bash) -s c/build || echo "Codecov did not collect coverage reports";
+    - env:
+      language: rust
+      rust:
+        - stable
 
 deploy:
   provider: releases
