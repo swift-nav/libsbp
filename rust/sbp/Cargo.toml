@@ -2,6 +2,7 @@
 name = "sbp"
 version = "0.1.0"
 authors = ["Gareth McMullin <gareth@swiftnav.com>"]
+description = "Rust native implementation of SBP (Swift Binary Protocol) for communicating with devices made by Swift Navigation"
 
 [dependencies]
 byteorder = "1.2.1"
