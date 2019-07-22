@@ -36,9 +36,9 @@ def commentify(value):
   if value is None:
     return
   if len(value.split('\n')) == 1:
-    return "// " + value
+    return "/// " + value
   else:
-    return '\n'.join(['// ' + l for l in value.split('\n')[:-1]])
+    return '\n'.join(['/// ' + l for l in value.split('\n')[:-1]])
 
 TYPE_MAP = {'u8': 'u8',
             'u16': 'u16',

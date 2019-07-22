@@ -14,6 +14,7 @@
 //****************************************************************************/
 
 (((description|commentify)))
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian,ReadBytesExt};
@@ -24,10 +25,10 @@ use super::(((i)))::*;
 
 ((* for m in msgs *))
 ((*- if m.desc *))
-// (((m.short_desc)))
-//
+/// (((m.short_desc)))
+///
 (((m.desc|commentify)))
-//
+///
 ((*- endif *))
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -36,10 +37,10 @@ pub struct (((m.identifier|camel_case))) {
     pub sender_id: Option<u16>,
     ((*- endif *))
     ((*- for f in m.fields *))
+    ((*- if f.desc *))
+    /// (((f.desc | replace("\n", " ") | wordwrap(width=72, wrapstring="\n    /// "))))
+    ((*- endif *))
     pub (((f.identifier))): (((f|type_map))),
-        ((*- if f.desc *))
-        // ^ (((f.desc | replace("\n", " ") | wordwrap(width=72, wrapstring="\n        // "))))
-        ((*- endif *))
     ((*- endfor *))
 }
 
