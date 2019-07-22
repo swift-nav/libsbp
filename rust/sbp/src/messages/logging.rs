@@ -12,7 +12,8 @@
 // Automatically generated from yaml/swiftnav/sbp/logging.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-/// Logging and debugging messages from the device.
+//! Logging and debugging messages from the device.
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};

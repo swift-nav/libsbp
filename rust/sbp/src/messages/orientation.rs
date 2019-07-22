@@ -12,7 +12,8 @@
 // Automatically generated from yaml/swiftnav/sbp/orientation.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-/// Orientation Messages
+//! Orientation Messages
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};

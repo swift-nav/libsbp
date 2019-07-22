@@ -12,7 +12,8 @@
 // Automatically generated from yaml/swiftnav/sbp/system.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-/// Standardized system messages from Swift Navigation devices.
+//! Standardized system messages from Swift Navigation devices.
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};

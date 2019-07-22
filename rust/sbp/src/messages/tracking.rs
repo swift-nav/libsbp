@@ -12,7 +12,8 @@
 // Automatically generated from yaml/swiftnav/sbp/tracking.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-/// Satellite code and carrier-phase tracking messages from the device.
+//! Satellite code and carrier-phase tracking messages from the device.
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};

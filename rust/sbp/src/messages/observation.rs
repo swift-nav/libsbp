@@ -12,7 +12,8 @@
 // Automatically generated from yaml/swiftnav/sbp/observation.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-/// Satellite observation messages from the device.
+//! Satellite observation messages from the device.
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};

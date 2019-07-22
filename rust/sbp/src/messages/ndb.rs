@@ -12,7 +12,8 @@
 // Automatically generated from yaml/swiftnav/sbp/ndb.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-/// Messages for logging NDB events.
+//! Messages for logging NDB events.
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};

@@ -12,9 +12,10 @@
 // Automatically generated from yaml/swiftnav/sbp/piksi.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-/// System health, configuration, and diagnostic messages specific to
-/// the Piksi L1 receiver, including a variety of legacy messages that
-/// may no longer be used.
+//! System health, configuration, and diagnostic messages specific to the Piksi
+//! L1 receiver, including a variety of legacy messages that may no longer be
+//! used.
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};

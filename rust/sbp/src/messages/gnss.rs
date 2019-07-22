@@ -12,7 +12,8 @@
 // Automatically generated from yaml/swiftnav/sbp/gnss.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-/// Various structs shared between modules
+//! Various structs shared between modules
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};

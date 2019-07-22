@@ -12,7 +12,8 @@
 // Automatically generated from yaml/swiftnav/sbp/acquisition.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-/// Satellite acquisition messages from the device.
+//! Satellite acquisition messages from the device.
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};

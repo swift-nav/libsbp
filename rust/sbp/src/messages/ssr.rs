@@ -12,7 +12,8 @@
 // Automatically generated from yaml/swiftnav/sbp/ssr.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-/// Precise State Space Representation (SSR) corrections format
+//! Precise State Space Representation (SSR) corrections format
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};

@@ -27,7 +27,7 @@ mod tests {
             y: 1327294,
             z: 631798,
         };
-        let sbp_result = ::messages::SBP::parse(0x20b, 1234,&mut &baseline_ecef_payload[..]);
+        let sbp_result = ::messages::SBP::parse(0x20b, 1234, &mut &baseline_ecef_payload[..]);
         assert!(sbp_result.is_ok());
         if let ::messages::SBP::MsgBaselineECEF(msg) = sbp_result.unwrap() {
             assert_eq!(msg.sender_id, baseline_ecef_expectation.sender_id);

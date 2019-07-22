@@ -12,7 +12,8 @@
 // Automatically generated from yaml/swiftnav/sbp/vehicle.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-/// Messages from a vehicle.
+//! Messages from a vehicle.
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};

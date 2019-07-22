@@ -12,14 +12,13 @@
 // Automatically generated from yaml/swiftnav/sbp/file_io.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-/// Messages for using device's onboard flash filesystem
-/// functionality. This allows data to be stored persistently in the
-/// device's program flash with wear-levelling using a simple filesystem
-/// interface. The file system interface (CFS) defines an abstract API
-/// for reading directories and for reading and writing files.
-///
-/// Note that some of these messages share the same message type ID for both the
-/// host request and the device response.
+//! Messages for using device's onboard flash filesystem functionality. This
+//! allows data to be stored persistently in the device's program flash with
+//! wear-levelling using a simple filesystem interface. The file system
+//! interface (CFS) defines an abstract API for reading directories and for
+//! reading and writing files.  Note that some of these messages share the same
+//! message type ID for both the host request and the device response.
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};

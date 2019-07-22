@@ -12,7 +12,8 @@
 // Automatically generated from yaml/swiftnav/sbp/linux.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-/// Linux state monitoring.
+//! Linux state monitoring.
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};

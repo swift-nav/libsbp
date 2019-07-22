@@ -1,3 +1,5 @@
+//! Simple parsing functionality for extracting SBP messages from binary streams
+
 extern crate byteorder;
 extern crate nom;
 use self::byteorder::{LittleEndian, ReadBytesExt};

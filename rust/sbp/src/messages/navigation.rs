@@ -12,24 +12,21 @@
 // Automatically generated from yaml/swiftnav/sbp/navigation.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-/// Geodetic navigation messages reporting GPS time, position, velocity,
-/// and baseline position solutions. For position solutions, these
-/// messages define several different position solutions: single-point
-/// (SPP), RTK, and pseudo-absolute position solutions.
-///
-/// The SPP is the standalone, absolute GPS position solution using only
-/// a single receiver. The RTK solution is the differential GPS
-/// solution, which can use either a fixed/integer or floating carrier
-/// phase ambiguity. The pseudo-absolute position solution uses a
-/// user-provided, well-surveyed base station position (if available)
-/// and the RTK solution in tandem.
-///
-/// When the inertial navigation mode indicates that the IMU is used,
-/// all messages are reported in the vehicle body frame as defined by
-/// device settings.  By default, the vehicle body frame is configured to be
-/// coincident with the antenna phase center.  When there is no inertial
-/// navigation, the solution will be reported at the phase center of the antenna.
-/// There is no inertial navigation capability on Piksi Multi or Duro.
+//! Geodetic navigation messages reporting GPS time, position, velocity, and
+//! baseline position solutions. For position solutions, these messages define
+//! several different position solutions: single-point (SPP), RTK, and pseudo-
+//! absolute position solutions.  The SPP is the standalone, absolute GPS
+//! position solution using only a single receiver. The RTK solution is the
+//! differential GPS solution, which can use either a fixed/integer or floating
+//! carrier phase ambiguity. The pseudo-absolute position solution uses a user-
+//! provided, well-surveyed base station position (if available) and the RTK
+//! solution in tandem.  When the inertial navigation mode indicates that the
+//! IMU is used, all messages are reported in the vehicle body frame as defined
+//! by device settings.  By default, the vehicle body frame is configured to be
+//! coincident with the antenna phase center.  When there is no inertial
+//! navigation, the solution will be reported at the phase center of the
+//! antenna. There is no inertial navigation capability on Piksi Multi or Duro.
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};

@@ -12,7 +12,8 @@
 // Automatically generated from yaml/swiftnav/sbp/sbas.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-/// SBAS data
+//! SBAS data
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
