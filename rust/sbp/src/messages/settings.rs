@@ -54,7 +54,7 @@ pub struct MsgSettingsSave {
 }
 
 impl MsgSettingsSave {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsSave, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsSave, ::Error> {
         Ok(MsgSettingsSave { sender_id: None })
     }
 }
@@ -90,7 +90,7 @@ pub struct MsgSettingsWrite {
 }
 
 impl MsgSettingsWrite {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWrite, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWrite, ::Error> {
         Ok(MsgSettingsWrite {
             sender_id: None,
             setting: ::parser::read_string(_buf)?,
@@ -131,7 +131,7 @@ pub struct MsgSettingsWriteResp {
 }
 
 impl MsgSettingsWriteResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWriteResp, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWriteResp, ::Error> {
         Ok(MsgSettingsWriteResp {
             sender_id: None,
             status: _buf.read_u8()?,
@@ -172,7 +172,7 @@ pub struct MsgSettingsReadReq {
 }
 
 impl MsgSettingsReadReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadReq, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadReq, ::Error> {
         Ok(MsgSettingsReadReq {
             sender_id: None,
             setting: ::parser::read_string(_buf)?,
@@ -211,7 +211,7 @@ pub struct MsgSettingsReadResp {
 }
 
 impl MsgSettingsReadResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadResp, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadResp, ::Error> {
         Ok(MsgSettingsReadResp {
             sender_id: None,
             setting: ::parser::read_string(_buf)?,
@@ -246,7 +246,7 @@ pub struct MsgSettingsReadByIndexReq {
 }
 
 impl MsgSettingsReadByIndexReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexReq, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexReq, ::Error> {
         Ok(MsgSettingsReadByIndexReq {
             sender_id: None,
             index: _buf.read_u16::<LittleEndian>()?,
@@ -291,7 +291,7 @@ pub struct MsgSettingsReadByIndexResp {
 }
 
 impl MsgSettingsReadByIndexResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexResp, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexResp, ::Error> {
         Ok(MsgSettingsReadByIndexResp {
             sender_id: None,
             index: _buf.read_u16::<LittleEndian>()?,
@@ -322,7 +322,7 @@ pub struct MsgSettingsReadByIndexDone {
 }
 
 impl MsgSettingsReadByIndexDone {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexDone, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexDone, ::Error> {
         Ok(MsgSettingsReadByIndexDone { sender_id: None })
     }
 }
@@ -354,7 +354,7 @@ pub struct MsgSettingsRegister {
 }
 
 impl MsgSettingsRegister {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsRegister, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsRegister, ::Error> {
         Ok(MsgSettingsRegister {
             sender_id: None,
             setting: ::parser::read_string(_buf)?,
@@ -393,7 +393,7 @@ pub struct MsgSettingsRegisterResp {
 }
 
 impl MsgSettingsRegisterResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsRegisterResp, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsRegisterResp, ::Error> {
         Ok(MsgSettingsRegisterResp {
             sender_id: None,
             status: _buf.read_u8()?,

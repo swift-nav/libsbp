@@ -37,7 +37,7 @@ pub struct MsgStartup {
 }
 
 impl MsgStartup {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStartup, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStartup, ::Error> {
         Ok(MsgStartup {
             sender_id: None,
             cause: _buf.read_u8()?,
@@ -79,7 +79,7 @@ pub struct MsgDgnssStatus {
 }
 
 impl MsgDgnssStatus {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDgnssStatus, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDgnssStatus, ::Error> {
         Ok(MsgDgnssStatus {
             sender_id: None,
             flags: _buf.read_u8()?,
@@ -123,7 +123,7 @@ pub struct MsgHeartbeat {
 }
 
 impl MsgHeartbeat {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgHeartbeat, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgHeartbeat, ::Error> {
         Ok(MsgHeartbeat {
             sender_id: None,
             flags: _buf.read_u32::<LittleEndian>()?,
@@ -156,7 +156,7 @@ pub struct MsgInsStatus {
 }
 
 impl MsgInsStatus {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgInsStatus, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgInsStatus, ::Error> {
         Ok(MsgInsStatus {
             sender_id: None,
             flags: _buf.read_u32::<LittleEndian>()?,
@@ -193,7 +193,7 @@ pub struct MsgCsacTelemetry {
 }
 
 impl MsgCsacTelemetry {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCsacTelemetry, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCsacTelemetry, ::Error> {
         Ok(MsgCsacTelemetry {
             sender_id: None,
             id: _buf.read_u8()?,
@@ -231,7 +231,7 @@ pub struct MsgCsacTelemetryLabels {
 }
 
 impl MsgCsacTelemetryLabels {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCsacTelemetryLabels, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCsacTelemetryLabels, ::Error> {
         Ok(MsgCsacTelemetryLabels {
             sender_id: None,
             id: _buf.read_u8()?,

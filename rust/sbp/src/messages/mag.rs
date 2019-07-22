@@ -39,7 +39,7 @@ pub struct MsgMagRaw {
 }
 
 impl MsgMagRaw {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMagRaw, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMagRaw, ::Error> {
         Ok(MsgMagRaw {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,

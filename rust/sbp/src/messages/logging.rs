@@ -34,7 +34,7 @@ pub struct MsgLog {
 }
 
 impl MsgLog {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLog, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLog, ::Error> {
         Ok(MsgLog {
             sender_id: None,
             level: _buf.read_u8()?,
@@ -77,7 +77,7 @@ pub struct MsgFwd {
 }
 
 impl MsgFwd {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFwd, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFwd, ::Error> {
         Ok(MsgFwd {
             sender_id: None,
             source: _buf.read_u8()?,
@@ -111,7 +111,7 @@ pub struct MsgPrintDep {
 }
 
 impl MsgPrintDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPrintDep, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPrintDep, ::Error> {
         Ok(MsgPrintDep {
             sender_id: None,
             text: ::parser::read_string(_buf)?,

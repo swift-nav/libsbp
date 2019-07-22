@@ -33,13 +33,13 @@ pub struct CodeBiasesContent {
 }
 
 impl CodeBiasesContent {
-    pub fn parse(_buf: &mut &[u8]) -> Result<CodeBiasesContent, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<CodeBiasesContent, ::Error> {
         Ok(CodeBiasesContent {
             code: _buf.read_u8()?,
             value: _buf.read_i16::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CodeBiasesContent>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CodeBiasesContent>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(CodeBiasesContent::parse(buf)?);
@@ -47,10 +47,7 @@ impl CodeBiasesContent {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<CodeBiasesContent>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<CodeBiasesContent>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(CodeBiasesContent::parse(buf)?);
@@ -81,7 +78,7 @@ pub struct PhaseBiasesContent {
 }
 
 impl PhaseBiasesContent {
-    pub fn parse(_buf: &mut &[u8]) -> Result<PhaseBiasesContent, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<PhaseBiasesContent, ::Error> {
         Ok(PhaseBiasesContent {
             code: _buf.read_u8()?,
             integer_indicator: _buf.read_u8()?,
@@ -90,7 +87,7 @@ impl PhaseBiasesContent {
             bias: _buf.read_i32::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PhaseBiasesContent>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PhaseBiasesContent>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(PhaseBiasesContent::parse(buf)?);
@@ -101,7 +98,7 @@ impl PhaseBiasesContent {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<PhaseBiasesContent>, ::parser::MessageError> {
+    ) -> Result<Vec<PhaseBiasesContent>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(PhaseBiasesContent::parse(buf)?);
@@ -134,7 +131,7 @@ pub struct STECHeader {
 }
 
 impl STECHeader {
-    pub fn parse(_buf: &mut &[u8]) -> Result<STECHeader, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<STECHeader, ::Error> {
         Ok(STECHeader {
             time: GPSTimeSec::parse(_buf)?,
             num_msgs: _buf.read_u8()?,
@@ -143,7 +140,7 @@ impl STECHeader {
             iod_ssr: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECHeader>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECHeader>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(STECHeader::parse(buf)?);
@@ -151,10 +148,7 @@ impl STECHeader {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<STECHeader>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<STECHeader>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(STECHeader::parse(buf)?);
@@ -190,7 +184,7 @@ pub struct GriddedCorrectionHeader {
 }
 
 impl GriddedCorrectionHeader {
-    pub fn parse(_buf: &mut &[u8]) -> Result<GriddedCorrectionHeader, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<GriddedCorrectionHeader, ::Error> {
         Ok(GriddedCorrectionHeader {
             time: GPSTimeSec::parse(_buf)?,
             num_msgs: _buf.read_u16::<LittleEndian>()?,
@@ -200,9 +194,7 @@ impl GriddedCorrectionHeader {
             tropo_quality_indicator: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(
-        buf: &mut &[u8],
-    ) -> Result<Vec<GriddedCorrectionHeader>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GriddedCorrectionHeader>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(GriddedCorrectionHeader::parse(buf)?);
@@ -213,7 +205,7 @@ impl GriddedCorrectionHeader {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<GriddedCorrectionHeader>, ::parser::MessageError> {
+    ) -> Result<Vec<GriddedCorrectionHeader>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(GriddedCorrectionHeader::parse(buf)?);
@@ -239,14 +231,14 @@ pub struct STECSatElement {
 }
 
 impl STECSatElement {
-    pub fn parse(_buf: &mut &[u8]) -> Result<STECSatElement, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<STECSatElement, ::Error> {
         Ok(STECSatElement {
             sv_id: SvId::parse(_buf)?,
             stec_quality_indicator: _buf.read_u8()?,
             stec_coeff: ::parser::read_s16_array_limit(_buf, 4)?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECSatElement>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECSatElement>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(STECSatElement::parse(buf)?);
@@ -254,10 +246,7 @@ impl STECSatElement {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<STECSatElement>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<STECSatElement>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(STECSatElement::parse(buf)?);
@@ -280,15 +269,13 @@ pub struct TroposphericDelayCorrection {
 }
 
 impl TroposphericDelayCorrection {
-    pub fn parse(_buf: &mut &[u8]) -> Result<TroposphericDelayCorrection, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<TroposphericDelayCorrection, ::Error> {
         Ok(TroposphericDelayCorrection {
             hydro: _buf.read_i16::<LittleEndian>()?,
             wet: _buf.read_i8()?,
         })
     }
-    pub fn parse_array(
-        buf: &mut &[u8],
-    ) -> Result<Vec<TroposphericDelayCorrection>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TroposphericDelayCorrection>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(TroposphericDelayCorrection::parse(buf)?);
@@ -299,7 +286,7 @@ impl TroposphericDelayCorrection {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<TroposphericDelayCorrection>, ::parser::MessageError> {
+    ) -> Result<Vec<TroposphericDelayCorrection>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(TroposphericDelayCorrection::parse(buf)?);
@@ -322,13 +309,13 @@ pub struct STECResidual {
 }
 
 impl STECResidual {
-    pub fn parse(_buf: &mut &[u8]) -> Result<STECResidual, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<STECResidual, ::Error> {
         Ok(STECResidual {
             sv_id: SvId::parse(_buf)?,
             residual: _buf.read_i16::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECResidual>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECResidual>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(STECResidual::parse(buf)?);
@@ -336,10 +323,7 @@ impl STECResidual {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<STECResidual>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<STECResidual>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(STECResidual::parse(buf)?);
@@ -365,14 +349,14 @@ pub struct GridElement {
 }
 
 impl GridElement {
-    pub fn parse(_buf: &mut &[u8]) -> Result<GridElement, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<GridElement, ::Error> {
         Ok(GridElement {
             index: _buf.read_u16::<LittleEndian>()?,
             tropo_delay_correction: TroposphericDelayCorrection::parse(_buf)?,
             stec_residuals: STECResidual::parse_array(_buf)?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GridElement>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GridElement>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(GridElement::parse(buf)?);
@@ -380,10 +364,7 @@ impl GridElement {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<GridElement>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GridElement>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(GridElement::parse(buf)?);
@@ -415,7 +396,7 @@ pub struct GridDefinitionHeader {
 }
 
 impl GridDefinitionHeader {
-    pub fn parse(_buf: &mut &[u8]) -> Result<GridDefinitionHeader, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<GridDefinitionHeader, ::Error> {
         Ok(GridDefinitionHeader {
             region_size_inverse: _buf.read_u8()?,
             area_width: _buf.read_u16::<LittleEndian>()?,
@@ -425,9 +406,7 @@ impl GridDefinitionHeader {
             seq_num: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(
-        buf: &mut &[u8],
-    ) -> Result<Vec<GridDefinitionHeader>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GridDefinitionHeader>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(GridDefinitionHeader::parse(buf)?);
@@ -438,7 +417,7 @@ impl GridDefinitionHeader {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<GridDefinitionHeader>, ::parser::MessageError> {
+    ) -> Result<Vec<GridDefinitionHeader>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(GridDefinitionHeader::parse(buf)?);
@@ -491,7 +470,7 @@ pub struct MsgSsrOrbitClock {
 }
 
 impl MsgSsrOrbitClock {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrOrbitClock, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrOrbitClock, ::Error> {
         Ok(MsgSsrOrbitClock {
             sender_id: None,
             time: GPSTimeSec::parse(_buf)?,
@@ -567,7 +546,7 @@ pub struct MsgSsrOrbitClockDepA {
 }
 
 impl MsgSsrOrbitClockDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrOrbitClockDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrOrbitClockDepA, ::Error> {
         Ok(MsgSsrOrbitClockDepA {
             sender_id: None,
             time: GPSTimeSec::parse(_buf)?,
@@ -625,7 +604,7 @@ pub struct MsgSsrCodeBiases {
 }
 
 impl MsgSsrCodeBiases {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrCodeBiases, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrCodeBiases, ::Error> {
         Ok(MsgSsrCodeBiases {
             sender_id: None,
             time: GPSTimeSec::parse(_buf)?,
@@ -684,7 +663,7 @@ pub struct MsgSsrPhaseBiases {
 }
 
 impl MsgSsrPhaseBiases {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrPhaseBiases, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrPhaseBiases, ::Error> {
         Ok(MsgSsrPhaseBiases {
             sender_id: None,
             time: GPSTimeSec::parse(_buf)?,
@@ -729,7 +708,7 @@ pub struct MsgSsrStecCorrection {
 }
 
 impl MsgSsrStecCorrection {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrStecCorrection, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrStecCorrection, ::Error> {
         Ok(MsgSsrStecCorrection {
             sender_id: None,
             header: STECHeader::parse(_buf)?,
@@ -765,7 +744,7 @@ pub struct MsgSsrGriddedCorrection {
 }
 
 impl MsgSsrGriddedCorrection {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGriddedCorrection, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGriddedCorrection, ::Error> {
         Ok(MsgSsrGriddedCorrection {
             sender_id: None,
             header: GriddedCorrectionHeader::parse(_buf)?,
@@ -803,7 +782,7 @@ pub struct MsgSsrGridDefinition {
 }
 
 impl MsgSsrGridDefinition {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGridDefinition, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGridDefinition, ::Error> {
         Ok(MsgSsrGridDefinition {
             sender_id: None,
             header: GridDefinitionHeader::parse(_buf)?,

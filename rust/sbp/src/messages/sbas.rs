@@ -38,7 +38,7 @@ pub struct MsgSbasRaw {
 }
 
 impl MsgSbasRaw {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSbasRaw, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSbasRaw, ::Error> {
         Ok(MsgSbasRaw {
             sender_id: None,
             sid: GnssSignal::parse(_buf)?,

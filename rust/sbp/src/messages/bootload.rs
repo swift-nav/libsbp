@@ -34,7 +34,7 @@ pub struct MsgBootloaderHandshakeReq {
 }
 
 impl MsgBootloaderHandshakeReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeReq, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeReq, ::Error> {
         Ok(MsgBootloaderHandshakeReq { sender_id: None })
     }
 }
@@ -69,7 +69,7 @@ pub struct MsgBootloaderHandshakeResp {
 }
 
 impl MsgBootloaderHandshakeResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeResp, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeResp, ::Error> {
         Ok(MsgBootloaderHandshakeResp {
             sender_id: None,
             flags: _buf.read_u32::<LittleEndian>()?,
@@ -102,7 +102,7 @@ pub struct MsgBootloaderJumpToApp {
 }
 
 impl MsgBootloaderJumpToApp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderJumpToApp, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderJumpToApp, ::Error> {
         Ok(MsgBootloaderJumpToApp {
             sender_id: None,
             jump: _buf.read_u8()?,
@@ -137,7 +137,7 @@ pub struct MsgNapDeviceDnaReq {
 }
 
 impl MsgNapDeviceDnaReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaReq, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaReq, ::Error> {
         Ok(MsgNapDeviceDnaReq { sender_id: None })
     }
 }
@@ -171,7 +171,7 @@ pub struct MsgNapDeviceDnaResp {
 }
 
 impl MsgNapDeviceDnaResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaResp, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaResp, ::Error> {
         Ok(MsgNapDeviceDnaResp {
             sender_id: None,
             dna: ::parser::read_u8_array_limit(_buf, 8)?,
@@ -203,7 +203,7 @@ pub struct MsgBootloaderHandshakeDepA {
 }
 
 impl MsgBootloaderHandshakeDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeDepA, ::Error> {
         Ok(MsgBootloaderHandshakeDepA {
             sender_id: None,
             handshake: ::parser::read_u8_array(_buf)?,

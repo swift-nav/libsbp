@@ -39,7 +39,7 @@ pub struct MsgLinuxCpuState {
 }
 
 impl MsgLinuxCpuState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxCpuState, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxCpuState, ::Error> {
         Ok(MsgLinuxCpuState {
             sender_id: None,
             index: _buf.read_u8()?,
@@ -84,7 +84,7 @@ pub struct MsgLinuxMemState {
 }
 
 impl MsgLinuxMemState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxMemState, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxMemState, ::Error> {
         Ok(MsgLinuxMemState {
             sender_id: None,
             index: _buf.read_u8()?,
@@ -130,7 +130,7 @@ pub struct MsgLinuxSysState {
 }
 
 impl MsgLinuxSysState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSysState, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSysState, ::Error> {
         Ok(MsgLinuxSysState {
             sender_id: None,
             mem_total: _buf.read_u16::<LittleEndian>()?,
@@ -181,7 +181,7 @@ pub struct MsgLinuxProcessSocketCounts {
 }
 
 impl MsgLinuxProcessSocketCounts {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessSocketCounts, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessSocketCounts, ::Error> {
         Ok(MsgLinuxProcessSocketCounts {
             sender_id: None,
             index: _buf.read_u8()?,
@@ -237,7 +237,7 @@ pub struct MsgLinuxProcessSocketQueues {
 }
 
 impl MsgLinuxProcessSocketQueues {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessSocketQueues, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessSocketQueues, ::Error> {
         Ok(MsgLinuxProcessSocketQueues {
             sender_id: None,
             index: _buf.read_u8()?,
@@ -286,7 +286,7 @@ pub struct MsgLinuxSocketUsage {
 }
 
 impl MsgLinuxSocketUsage {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSocketUsage, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSocketUsage, ::Error> {
         Ok(MsgLinuxSocketUsage {
             sender_id: None,
             avg_queue_depth: _buf.read_u32::<LittleEndian>()?,
@@ -327,7 +327,7 @@ pub struct MsgLinuxProcessFdCount {
 }
 
 impl MsgLinuxProcessFdCount {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessFdCount, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessFdCount, ::Error> {
         Ok(MsgLinuxProcessFdCount {
             sender_id: None,
             index: _buf.read_u8()?,
@@ -368,7 +368,7 @@ pub struct MsgLinuxProcessFdSummary {
 }
 
 impl MsgLinuxProcessFdSummary {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessFdSummary, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessFdSummary, ::Error> {
         Ok(MsgLinuxProcessFdSummary {
             sender_id: None,
             sys_fd_count: _buf.read_u32::<LittleEndian>()?,

@@ -52,7 +52,7 @@ pub struct MsgNdbEvent {
 }
 
 impl MsgNdbEvent {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNdbEvent, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNdbEvent, ::Error> {
         Ok(MsgNdbEvent {
             sender_id: None,
             recv_time: _buf.read_u64::<LittleEndian>()?,

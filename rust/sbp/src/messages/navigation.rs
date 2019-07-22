@@ -66,7 +66,7 @@ pub struct MsgGPSTime {
 }
 
 impl MsgGPSTime {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTime, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTime, ::Error> {
         Ok(MsgGPSTime {
             sender_id: None,
             wn: _buf.read_u16::<LittleEndian>()?,
@@ -118,7 +118,7 @@ pub struct MsgUtcTime {
 }
 
 impl MsgUtcTime {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUtcTime, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUtcTime, ::Error> {
         Ok(MsgUtcTime {
             sender_id: None,
             flags: _buf.read_u8()?,
@@ -173,7 +173,7 @@ pub struct MsgDops {
 }
 
 impl MsgDops {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDops, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDops, ::Error> {
         Ok(MsgDops {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -230,7 +230,7 @@ pub struct MsgPosECEF {
 }
 
 impl MsgPosECEF {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEF, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEF, ::Error> {
         Ok(MsgPosECEF {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -298,7 +298,7 @@ pub struct MsgPosECEFCov {
 }
 
 impl MsgPosECEFCov {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFCov, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFCov, ::Error> {
         Ok(MsgPosECEFCov {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -362,7 +362,7 @@ pub struct MsgPosLLH {
 }
 
 impl MsgPosLLH {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLH, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLH, ::Error> {
         Ok(MsgPosLLH {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -430,7 +430,7 @@ pub struct MsgPosLLHCov {
 }
 
 impl MsgPosLLHCov {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHCov, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHCov, ::Error> {
         Ok(MsgPosLLHCov {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -489,7 +489,7 @@ pub struct MsgBaselineECEF {
 }
 
 impl MsgBaselineECEF {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineECEF, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineECEF, ::Error> {
         Ok(MsgBaselineECEF {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -546,7 +546,7 @@ pub struct MsgBaselineNED {
 }
 
 impl MsgBaselineNED {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNED, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNED, ::Error> {
         Ok(MsgBaselineNED {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -599,7 +599,7 @@ pub struct MsgVelECEF {
 }
 
 impl MsgVelECEF {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEF, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEF, ::Error> {
         Ok(MsgVelECEF {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -661,7 +661,7 @@ pub struct MsgVelECEFCov {
 }
 
 impl MsgVelECEFCov {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFCov, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFCov, ::Error> {
         Ok(MsgVelECEFCov {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -721,7 +721,7 @@ pub struct MsgVelNED {
 }
 
 impl MsgVelNED {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNED, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNED, ::Error> {
         Ok(MsgVelNED {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -787,7 +787,7 @@ pub struct MsgVelNEDCov {
 }
 
 impl MsgVelNEDCov {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDCov, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDCov, ::Error> {
         Ok(MsgVelNEDCov {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -859,7 +859,7 @@ pub struct MsgVelBody {
 }
 
 impl MsgVelBody {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelBody, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelBody, ::Error> {
         Ok(MsgVelBody {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -905,7 +905,7 @@ pub struct MsgAgeCorrections {
 }
 
 impl MsgAgeCorrections {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAgeCorrections, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAgeCorrections, ::Error> {
         Ok(MsgAgeCorrections {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -957,7 +957,7 @@ pub struct MsgGPSTimeDepA {
 }
 
 impl MsgGPSTimeDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTimeDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTimeDepA, ::Error> {
         Ok(MsgGPSTimeDepA {
             sender_id: None,
             wn: _buf.read_u16::<LittleEndian>()?,
@@ -1004,7 +1004,7 @@ pub struct MsgDopsDepA {
 }
 
 impl MsgDopsDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDopsDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDopsDepA, ::Error> {
         Ok(MsgDopsDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -1060,7 +1060,7 @@ pub struct MsgPosECEFDepA {
 }
 
 impl MsgPosECEFDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFDepA, ::Error> {
         Ok(MsgPosECEFDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -1119,7 +1119,7 @@ pub struct MsgPosLLHDepA {
 }
 
 impl MsgPosLLHDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHDepA, ::Error> {
         Ok(MsgPosLLHDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -1174,7 +1174,7 @@ pub struct MsgBaselineECEFDepA {
 }
 
 impl MsgBaselineECEFDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineECEFDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineECEFDepA, ::Error> {
         Ok(MsgBaselineECEFDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -1231,7 +1231,7 @@ pub struct MsgBaselineNEDDepA {
 }
 
 impl MsgBaselineNEDDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNEDDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNEDDepA, ::Error> {
         Ok(MsgBaselineNEDDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -1284,7 +1284,7 @@ pub struct MsgVelECEFDepA {
 }
 
 impl MsgVelECEFDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFDepA, ::Error> {
         Ok(MsgVelECEFDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -1339,7 +1339,7 @@ pub struct MsgVelNEDDepA {
 }
 
 impl MsgVelNEDDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDDepA, ::Error> {
         Ok(MsgVelNEDDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -1386,7 +1386,7 @@ pub struct MsgBaselineHeadingDepA {
 }
 
 impl MsgBaselineHeadingDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineHeadingDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineHeadingDepA, ::Error> {
         Ok(MsgBaselineHeadingDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,

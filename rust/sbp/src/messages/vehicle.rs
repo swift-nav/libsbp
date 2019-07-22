@@ -40,7 +40,7 @@ pub struct MsgOdometry {
 }
 
 impl MsgOdometry {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOdometry, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOdometry, ::Error> {
         Ok(MsgOdometry {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,

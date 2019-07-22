@@ -33,13 +33,13 @@ pub struct ObservationHeader {
 }
 
 impl ObservationHeader {
-    pub fn parse(_buf: &mut &[u8]) -> Result<ObservationHeader, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<ObservationHeader, ::Error> {
         Ok(ObservationHeader {
             t: GPSTime::parse(_buf)?,
             n_obs: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<ObservationHeader>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<ObservationHeader>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(ObservationHeader::parse(buf)?);
@@ -47,10 +47,7 @@ impl ObservationHeader {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<ObservationHeader>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<ObservationHeader>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(ObservationHeader::parse(buf)?);
@@ -76,13 +73,13 @@ pub struct Doppler {
 }
 
 impl Doppler {
-    pub fn parse(_buf: &mut &[u8]) -> Result<Doppler, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<Doppler, ::Error> {
         Ok(Doppler {
             i: _buf.read_i16::<LittleEndian>()?,
             f: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<Doppler>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<Doppler>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(Doppler::parse(buf)?);
@@ -90,10 +87,7 @@ impl Doppler {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<Doppler>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<Doppler>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(Doppler::parse(buf)?);
@@ -139,7 +133,7 @@ pub struct PackedObsContent {
 }
 
 impl PackedObsContent {
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContent, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContent, ::Error> {
         Ok(PackedObsContent {
             P: _buf.read_u32::<LittleEndian>()?,
             L: CarrierPhase::parse(_buf)?,
@@ -150,7 +144,7 @@ impl PackedObsContent {
             sid: GnssSignal::parse(_buf)?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContent>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContent>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(PackedObsContent::parse(buf)?);
@@ -158,10 +152,7 @@ impl PackedObsContent {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<PackedObsContent>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<PackedObsContent>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(PackedObsContent::parse(buf)?);
@@ -201,7 +192,7 @@ pub struct PackedOsrContent {
 }
 
 impl PackedOsrContent {
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedOsrContent, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<PackedOsrContent, ::Error> {
         Ok(PackedOsrContent {
             P: _buf.read_u32::<LittleEndian>()?,
             L: CarrierPhase::parse(_buf)?,
@@ -213,7 +204,7 @@ impl PackedOsrContent {
             range_std: _buf.read_u16::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedOsrContent>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedOsrContent>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(PackedOsrContent::parse(buf)?);
@@ -221,10 +212,7 @@ impl PackedOsrContent {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<PackedOsrContent>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<PackedOsrContent>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(PackedOsrContent::parse(buf)?);
@@ -254,7 +242,7 @@ pub struct MsgObs {
 }
 
 impl MsgObs {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObs, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObs, ::Error> {
         Ok(MsgObs {
             sender_id: None,
             header: ObservationHeader::parse(_buf)?,
@@ -295,7 +283,7 @@ pub struct MsgBasePosLLH {
 }
 
 impl MsgBasePosLLH {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBasePosLLH, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBasePosLLH, ::Error> {
         Ok(MsgBasePosLLH {
             sender_id: None,
             lat: _buf.read_f64::<LittleEndian>()?,
@@ -338,7 +326,7 @@ pub struct MsgBasePosECEF {
 }
 
 impl MsgBasePosECEF {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBasePosECEF, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBasePosECEF, ::Error> {
         Ok(MsgBasePosECEF {
             sender_id: None,
             x: _buf.read_f64::<LittleEndian>()?,
@@ -378,7 +366,7 @@ pub struct EphemerisCommonContent {
 }
 
 impl EphemerisCommonContent {
-    pub fn parse(_buf: &mut &[u8]) -> Result<EphemerisCommonContent, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<EphemerisCommonContent, ::Error> {
         Ok(EphemerisCommonContent {
             sid: GnssSignal::parse(_buf)?,
             toe: GPSTimeSec::parse(_buf)?,
@@ -388,9 +376,7 @@ impl EphemerisCommonContent {
             health_bits: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(
-        buf: &mut &[u8],
-    ) -> Result<Vec<EphemerisCommonContent>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<EphemerisCommonContent>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(EphemerisCommonContent::parse(buf)?);
@@ -401,7 +387,7 @@ impl EphemerisCommonContent {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<EphemerisCommonContent>, ::parser::MessageError> {
+    ) -> Result<Vec<EphemerisCommonContent>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(EphemerisCommonContent::parse(buf)?);
@@ -429,7 +415,7 @@ pub struct EphemerisCommonContentDepB {
 }
 
 impl EphemerisCommonContentDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<EphemerisCommonContentDepB, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<EphemerisCommonContentDepB, ::Error> {
         Ok(EphemerisCommonContentDepB {
             sid: GnssSignal::parse(_buf)?,
             toe: GPSTimeSec::parse(_buf)?,
@@ -439,9 +425,7 @@ impl EphemerisCommonContentDepB {
             health_bits: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(
-        buf: &mut &[u8],
-    ) -> Result<Vec<EphemerisCommonContentDepB>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<EphemerisCommonContentDepB>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(EphemerisCommonContentDepB::parse(buf)?);
@@ -452,7 +436,7 @@ impl EphemerisCommonContentDepB {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<EphemerisCommonContentDepB>, ::parser::MessageError> {
+    ) -> Result<Vec<EphemerisCommonContentDepB>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(EphemerisCommonContentDepB::parse(buf)?);
@@ -480,7 +464,7 @@ pub struct EphemerisCommonContentDepA {
 }
 
 impl EphemerisCommonContentDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<EphemerisCommonContentDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<EphemerisCommonContentDepA, ::Error> {
         Ok(EphemerisCommonContentDepA {
             sid: GnssSignalDep::parse(_buf)?,
             toe: GPSTimeDep::parse(_buf)?,
@@ -490,9 +474,7 @@ impl EphemerisCommonContentDepA {
             health_bits: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(
-        buf: &mut &[u8],
-    ) -> Result<Vec<EphemerisCommonContentDepA>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<EphemerisCommonContentDepA>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(EphemerisCommonContentDepA::parse(buf)?);
@@ -503,7 +485,7 @@ impl EphemerisCommonContentDepA {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<EphemerisCommonContentDepA>, ::parser::MessageError> {
+    ) -> Result<Vec<EphemerisCommonContentDepA>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(EphemerisCommonContentDepA::parse(buf)?);
@@ -577,7 +559,7 @@ pub struct MsgEphemerisGPSDepE {
 }
 
 impl MsgEphemerisGPSDepE {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPSDepE, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPSDepE, ::Error> {
         Ok(MsgEphemerisGPSDepE {
             sender_id: None,
             common: EphemerisCommonContentDepA::parse(_buf)?,
@@ -680,7 +662,7 @@ pub struct MsgEphemerisGPSDepF {
 }
 
 impl MsgEphemerisGPSDepF {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPSDepF, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPSDepF, ::Error> {
         Ok(MsgEphemerisGPSDepF {
             sender_id: None,
             common: EphemerisCommonContentDepB::parse(_buf)?,
@@ -786,7 +768,7 @@ pub struct MsgEphemerisGPS {
 }
 
 impl MsgEphemerisGPS {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPS, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPS, ::Error> {
         Ok(MsgEphemerisGPS {
             sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
@@ -890,7 +872,7 @@ pub struct MsgEphemerisQzss {
 }
 
 impl MsgEphemerisQzss {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisQzss, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisQzss, ::Error> {
         Ok(MsgEphemerisQzss {
             sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
@@ -997,7 +979,7 @@ pub struct MsgEphemerisBds {
 }
 
 impl MsgEphemerisBds {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisBds, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisBds, ::Error> {
         Ok(MsgEphemerisBds {
             sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
@@ -1103,7 +1085,7 @@ pub struct MsgEphemerisGalDepA {
 }
 
 impl MsgEphemerisGalDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGalDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGalDepA, ::Error> {
         Ok(MsgEphemerisGalDepA {
             sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
@@ -1213,7 +1195,7 @@ pub struct MsgEphemerisGal {
 }
 
 impl MsgEphemerisGal {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGal, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGal, ::Error> {
         Ok(MsgEphemerisGal {
             sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
@@ -1275,7 +1257,7 @@ pub struct MsgEphemerisSbasDepA {
 }
 
 impl MsgEphemerisSbasDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbasDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbasDepA, ::Error> {
         Ok(MsgEphemerisSbasDepA {
             sender_id: None,
             common: EphemerisCommonContentDepA::parse(_buf)?,
@@ -1326,7 +1308,7 @@ pub struct MsgEphemerisGloDepA {
 }
 
 impl MsgEphemerisGloDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepA, ::Error> {
         Ok(MsgEphemerisGloDepA {
             sender_id: None,
             common: EphemerisCommonContentDepA::parse(_buf)?,
@@ -1374,7 +1356,7 @@ pub struct MsgEphemerisSbasDepB {
 }
 
 impl MsgEphemerisSbasDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbasDepB, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbasDepB, ::Error> {
         Ok(MsgEphemerisSbasDepB {
             sender_id: None,
             common: EphemerisCommonContentDepB::parse(_buf)?,
@@ -1417,7 +1399,7 @@ pub struct MsgEphemerisSbas {
 }
 
 impl MsgEphemerisSbas {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbas, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbas, ::Error> {
         Ok(MsgEphemerisSbas {
             sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
@@ -1468,7 +1450,7 @@ pub struct MsgEphemerisGloDepB {
 }
 
 impl MsgEphemerisGloDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepB, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepB, ::Error> {
         Ok(MsgEphemerisGloDepB {
             sender_id: None,
             common: EphemerisCommonContentDepB::parse(_buf)?,
@@ -1523,7 +1505,7 @@ pub struct MsgEphemerisGloDepC {
 }
 
 impl MsgEphemerisGloDepC {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepC, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepC, ::Error> {
         Ok(MsgEphemerisGloDepC {
             sender_id: None,
             common: EphemerisCommonContentDepB::parse(_buf)?,
@@ -1579,7 +1561,7 @@ pub struct MsgEphemerisGloDepD {
 }
 
 impl MsgEphemerisGloDepD {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepD, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepD, ::Error> {
         Ok(MsgEphemerisGloDepD {
             sender_id: None,
             common: EphemerisCommonContentDepB::parse(_buf)?,
@@ -1639,7 +1621,7 @@ pub struct MsgEphemerisGlo {
 }
 
 impl MsgEphemerisGlo {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGlo, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGlo, ::Error> {
         Ok(MsgEphemerisGlo {
             sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
@@ -1743,7 +1725,7 @@ pub struct MsgEphemerisDepD {
 }
 
 impl MsgEphemerisDepD {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepD, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepD, ::Error> {
         Ok(MsgEphemerisDepD {
             sender_id: None,
             tgd: _buf.read_f64::<LittleEndian>()?,
@@ -1857,7 +1839,7 @@ pub struct MsgEphemerisDepA {
 }
 
 impl MsgEphemerisDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepA, ::Error> {
         Ok(MsgEphemerisDepA {
             sender_id: None,
             tgd: _buf.read_f64::<LittleEndian>()?,
@@ -1970,7 +1952,7 @@ pub struct MsgEphemerisDepB {
 }
 
 impl MsgEphemerisDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepB, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepB, ::Error> {
         Ok(MsgEphemerisDepB {
             sender_id: None,
             tgd: _buf.read_f64::<LittleEndian>()?,
@@ -2092,7 +2074,7 @@ pub struct MsgEphemerisDepC {
 }
 
 impl MsgEphemerisDepC {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepC, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepC, ::Error> {
         Ok(MsgEphemerisDepC {
             sender_id: None,
             tgd: _buf.read_f64::<LittleEndian>()?,
@@ -2154,15 +2136,13 @@ pub struct ObservationHeaderDep {
 }
 
 impl ObservationHeaderDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<ObservationHeaderDep, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<ObservationHeaderDep, ::Error> {
         Ok(ObservationHeaderDep {
             t: GPSTimeDep::parse(_buf)?,
             n_obs: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(
-        buf: &mut &[u8],
-    ) -> Result<Vec<ObservationHeaderDep>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<ObservationHeaderDep>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(ObservationHeaderDep::parse(buf)?);
@@ -2173,7 +2153,7 @@ impl ObservationHeaderDep {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<ObservationHeaderDep>, ::parser::MessageError> {
+    ) -> Result<Vec<ObservationHeaderDep>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(ObservationHeaderDep::parse(buf)?);
@@ -2200,13 +2180,13 @@ pub struct CarrierPhaseDepA {
 }
 
 impl CarrierPhaseDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<CarrierPhaseDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<CarrierPhaseDepA, ::Error> {
         Ok(CarrierPhaseDepA {
             i: _buf.read_i32::<LittleEndian>()?,
             f: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CarrierPhaseDepA>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CarrierPhaseDepA>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(CarrierPhaseDepA::parse(buf)?);
@@ -2214,10 +2194,7 @@ impl CarrierPhaseDepA {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<CarrierPhaseDepA>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<CarrierPhaseDepA>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(CarrierPhaseDepA::parse(buf)?);
@@ -2248,7 +2225,7 @@ pub struct PackedObsContentDepA {
 }
 
 impl PackedObsContentDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContentDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContentDepA, ::Error> {
         Ok(PackedObsContentDepA {
             P: _buf.read_u32::<LittleEndian>()?,
             L: CarrierPhaseDepA::parse(_buf)?,
@@ -2257,9 +2234,7 @@ impl PackedObsContentDepA {
             prn: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(
-        buf: &mut &[u8],
-    ) -> Result<Vec<PackedObsContentDepA>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContentDepA>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(PackedObsContentDepA::parse(buf)?);
@@ -2270,7 +2245,7 @@ impl PackedObsContentDepA {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<PackedObsContentDepA>, ::parser::MessageError> {
+    ) -> Result<Vec<PackedObsContentDepA>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(PackedObsContentDepA::parse(buf)?);
@@ -2302,7 +2277,7 @@ pub struct PackedObsContentDepB {
 }
 
 impl PackedObsContentDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContentDepB, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContentDepB, ::Error> {
         Ok(PackedObsContentDepB {
             P: _buf.read_u32::<LittleEndian>()?,
             L: CarrierPhaseDepA::parse(_buf)?,
@@ -2311,9 +2286,7 @@ impl PackedObsContentDepB {
             sid: GnssSignalDep::parse(_buf)?,
         })
     }
-    pub fn parse_array(
-        buf: &mut &[u8],
-    ) -> Result<Vec<PackedObsContentDepB>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContentDepB>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(PackedObsContentDepB::parse(buf)?);
@@ -2324,7 +2297,7 @@ impl PackedObsContentDepB {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<PackedObsContentDepB>, ::parser::MessageError> {
+    ) -> Result<Vec<PackedObsContentDepB>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(PackedObsContentDepB::parse(buf)?);
@@ -2357,7 +2330,7 @@ pub struct PackedObsContentDepC {
 }
 
 impl PackedObsContentDepC {
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContentDepC, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContentDepC, ::Error> {
         Ok(PackedObsContentDepC {
             P: _buf.read_u32::<LittleEndian>()?,
             L: CarrierPhase::parse(_buf)?,
@@ -2366,9 +2339,7 @@ impl PackedObsContentDepC {
             sid: GnssSignalDep::parse(_buf)?,
         })
     }
-    pub fn parse_array(
-        buf: &mut &[u8],
-    ) -> Result<Vec<PackedObsContentDepC>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContentDepC>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(PackedObsContentDepC::parse(buf)?);
@@ -2379,7 +2350,7 @@ impl PackedObsContentDepC {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<PackedObsContentDepC>, ::parser::MessageError> {
+    ) -> Result<Vec<PackedObsContentDepC>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(PackedObsContentDepC::parse(buf)?);
@@ -2403,7 +2374,7 @@ pub struct MsgObsDepA {
 }
 
 impl MsgObsDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepA, ::Error> {
         Ok(MsgObsDepA {
             sender_id: None,
             header: ObservationHeaderDep::parse(_buf)?,
@@ -2443,7 +2414,7 @@ pub struct MsgObsDepB {
 }
 
 impl MsgObsDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepB, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepB, ::Error> {
         Ok(MsgObsDepB {
             sender_id: None,
             header: ObservationHeaderDep::parse(_buf)?,
@@ -2484,7 +2455,7 @@ pub struct MsgObsDepC {
 }
 
 impl MsgObsDepC {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepC, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepC, ::Error> {
         Ok(MsgObsDepC {
             sender_id: None,
             header: ObservationHeaderDep::parse(_buf)?,
@@ -2527,7 +2498,7 @@ pub struct MsgIono {
 }
 
 impl MsgIono {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgIono, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgIono, ::Error> {
         Ok(MsgIono {
             sender_id: None,
             t_nmct: GPSTimeSec::parse(_buf)?,
@@ -2569,7 +2540,7 @@ pub struct MsgSvConfigurationGPSDep {
 }
 
 impl MsgSvConfigurationGPSDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSvConfigurationGPSDep, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSvConfigurationGPSDep, ::Error> {
         Ok(MsgSvConfigurationGPSDep {
             sender_id: None,
             t_nmct: GPSTimeSec::parse(_buf)?,
@@ -2627,7 +2598,7 @@ pub struct GnssCapb {
 }
 
 impl GnssCapb {
-    pub fn parse(_buf: &mut &[u8]) -> Result<GnssCapb, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<GnssCapb, ::Error> {
         Ok(GnssCapb {
             gps_active: _buf.read_u64::<LittleEndian>()?,
             gps_l2c: _buf.read_u64::<LittleEndian>()?,
@@ -2646,7 +2617,7 @@ impl GnssCapb {
             gal_e5: _buf.read_u64::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssCapb>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssCapb>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(GnssCapb::parse(buf)?);
@@ -2654,10 +2625,7 @@ impl GnssCapb {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<GnssCapb>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GnssCapb>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(GnssCapb::parse(buf)?);
@@ -2677,7 +2645,7 @@ pub struct MsgGnssCapb {
 }
 
 impl MsgGnssCapb {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGnssCapb, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGnssCapb, ::Error> {
         Ok(MsgGnssCapb {
             sender_id: None,
             t_nmct: GPSTimeSec::parse(_buf)?,
@@ -2718,7 +2686,7 @@ pub struct MsgGroupDelayDepA {
 }
 
 impl MsgGroupDelayDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelayDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelayDepA, ::Error> {
         Ok(MsgGroupDelayDepA {
             sender_id: None,
             t_op: GPSTimeDep::parse(_buf)?,
@@ -2763,7 +2731,7 @@ pub struct MsgGroupDelayDepB {
 }
 
 impl MsgGroupDelayDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelayDepB, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelayDepB, ::Error> {
         Ok(MsgGroupDelayDepB {
             sender_id: None,
             t_op: GPSTimeSec::parse(_buf)?,
@@ -2808,7 +2776,7 @@ pub struct MsgGroupDelay {
 }
 
 impl MsgGroupDelay {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelay, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelay, ::Error> {
         Ok(MsgGroupDelay {
             sender_id: None,
             t_op: GPSTimeSec::parse(_buf)?,
@@ -2859,7 +2827,7 @@ pub struct AlmanacCommonContent {
 }
 
 impl AlmanacCommonContent {
-    pub fn parse(_buf: &mut &[u8]) -> Result<AlmanacCommonContent, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<AlmanacCommonContent, ::Error> {
         Ok(AlmanacCommonContent {
             sid: GnssSignal::parse(_buf)?,
             toa: GPSTimeSec::parse(_buf)?,
@@ -2869,9 +2837,7 @@ impl AlmanacCommonContent {
             health_bits: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(
-        buf: &mut &[u8],
-    ) -> Result<Vec<AlmanacCommonContent>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AlmanacCommonContent>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(AlmanacCommonContent::parse(buf)?);
@@ -2882,7 +2848,7 @@ impl AlmanacCommonContent {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<AlmanacCommonContent>, ::parser::MessageError> {
+    ) -> Result<Vec<AlmanacCommonContent>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(AlmanacCommonContent::parse(buf)?);
@@ -2918,7 +2884,7 @@ pub struct AlmanacCommonContentDep {
 }
 
 impl AlmanacCommonContentDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<AlmanacCommonContentDep, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<AlmanacCommonContentDep, ::Error> {
         Ok(AlmanacCommonContentDep {
             sid: GnssSignalDep::parse(_buf)?,
             toa: GPSTimeSec::parse(_buf)?,
@@ -2928,9 +2894,7 @@ impl AlmanacCommonContentDep {
             health_bits: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(
-        buf: &mut &[u8],
-    ) -> Result<Vec<AlmanacCommonContentDep>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AlmanacCommonContentDep>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(AlmanacCommonContentDep::parse(buf)?);
@@ -2941,7 +2905,7 @@ impl AlmanacCommonContentDep {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<AlmanacCommonContentDep>, ::parser::MessageError> {
+    ) -> Result<Vec<AlmanacCommonContentDep>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(AlmanacCommonContentDep::parse(buf)?);
@@ -2984,7 +2948,7 @@ pub struct MsgAlmanacGPSDep {
 }
 
 impl MsgAlmanacGPSDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGPSDep, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGPSDep, ::Error> {
         Ok(MsgAlmanacGPSDep {
             sender_id: None,
             common: AlmanacCommonContentDep::parse(_buf)?,
@@ -3046,7 +3010,7 @@ pub struct MsgAlmanacGPS {
 }
 
 impl MsgAlmanacGPS {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGPS, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGPS, ::Error> {
         Ok(MsgAlmanacGPS {
             sender_id: None,
             common: AlmanacCommonContent::parse(_buf)?,
@@ -3105,7 +3069,7 @@ pub struct MsgAlmanacGloDep {
 }
 
 impl MsgAlmanacGloDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGloDep, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGloDep, ::Error> {
         Ok(MsgAlmanacGloDep {
             sender_id: None,
             common: AlmanacCommonContentDep::parse(_buf)?,
@@ -3162,7 +3126,7 @@ pub struct MsgAlmanacGlo {
 }
 
 impl MsgAlmanacGlo {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGlo, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGlo, ::Error> {
         Ok(MsgAlmanacGlo {
             sender_id: None,
             common: AlmanacCommonContent::parse(_buf)?,
@@ -3212,7 +3176,7 @@ pub struct MsgGloBiases {
 }
 
 impl MsgGloBiases {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGloBiases, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGloBiases, ::Error> {
         Ok(MsgGloBiases {
             sender_id: None,
             mask: _buf.read_u8()?,
@@ -3251,14 +3215,14 @@ pub struct SvAzEl {
 }
 
 impl SvAzEl {
-    pub fn parse(_buf: &mut &[u8]) -> Result<SvAzEl, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<SvAzEl, ::Error> {
         Ok(SvAzEl {
             sid: GnssSignal::parse(_buf)?,
             az: _buf.read_u8()?,
             el: _buf.read_i8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SvAzEl>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SvAzEl>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(SvAzEl::parse(buf)?);
@@ -3266,10 +3230,7 @@ impl SvAzEl {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<SvAzEl>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<SvAzEl>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(SvAzEl::parse(buf)?);
@@ -3292,7 +3253,7 @@ pub struct MsgSvAzEl {
 }
 
 impl MsgSvAzEl {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSvAzEl, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSvAzEl, ::Error> {
         Ok(MsgSvAzEl {
             sender_id: None,
             azel: SvAzEl::parse_array(_buf)?,
@@ -3326,7 +3287,7 @@ pub struct MsgOsr {
 }
 
 impl MsgOsr {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOsr, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOsr, ::Error> {
         Ok(MsgOsr {
             sender_id: None,
             header: ObservationHeader::parse(_buf)?,

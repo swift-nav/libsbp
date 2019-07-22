@@ -32,13 +32,13 @@ pub struct GnssSignal {
 }
 
 impl GnssSignal {
-    pub fn parse(_buf: &mut &[u8]) -> Result<GnssSignal, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<GnssSignal, ::Error> {
         Ok(GnssSignal {
             sat: _buf.read_u8()?,
             code: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssSignal>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssSignal>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(GnssSignal::parse(buf)?);
@@ -46,10 +46,7 @@ impl GnssSignal {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<GnssSignal>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GnssSignal>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(GnssSignal::parse(buf)?);
@@ -73,13 +70,13 @@ pub struct SvId {
 }
 
 impl SvId {
-    pub fn parse(_buf: &mut &[u8]) -> Result<SvId, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<SvId, ::Error> {
         Ok(SvId {
             satId: _buf.read_u8()?,
             constellation: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SvId>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SvId>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(SvId::parse(buf)?);
@@ -87,10 +84,7 @@ impl SvId {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<SvId>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<SvId>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(SvId::parse(buf)?);
@@ -117,14 +111,14 @@ pub struct GnssSignalDep {
 }
 
 impl GnssSignalDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<GnssSignalDep, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<GnssSignalDep, ::Error> {
         Ok(GnssSignalDep {
             sat: _buf.read_u16::<LittleEndian>()?,
             code: _buf.read_u8()?,
             reserved: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssSignalDep>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssSignalDep>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(GnssSignalDep::parse(buf)?);
@@ -132,10 +126,7 @@ impl GnssSignalDep {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<GnssSignalDep>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GnssSignalDep>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(GnssSignalDep::parse(buf)?);
@@ -160,13 +151,13 @@ pub struct GPSTimeDep {
 }
 
 impl GPSTimeDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<GPSTimeDep, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<GPSTimeDep, ::Error> {
         Ok(GPSTimeDep {
             tow: _buf.read_u32::<LittleEndian>()?,
             wn: _buf.read_u16::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTimeDep>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTimeDep>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(GPSTimeDep::parse(buf)?);
@@ -174,10 +165,7 @@ impl GPSTimeDep {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<GPSTimeDep>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GPSTimeDep>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(GPSTimeDep::parse(buf)?);
@@ -202,13 +190,13 @@ pub struct GPSTimeSec {
 }
 
 impl GPSTimeSec {
-    pub fn parse(_buf: &mut &[u8]) -> Result<GPSTimeSec, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<GPSTimeSec, ::Error> {
         Ok(GPSTimeSec {
             tow: _buf.read_u32::<LittleEndian>()?,
             wn: _buf.read_u16::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTimeSec>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTimeSec>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(GPSTimeSec::parse(buf)?);
@@ -216,10 +204,7 @@ impl GPSTimeSec {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<GPSTimeSec>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GPSTimeSec>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(GPSTimeSec::parse(buf)?);
@@ -248,14 +233,14 @@ pub struct GPSTime {
 }
 
 impl GPSTime {
-    pub fn parse(_buf: &mut &[u8]) -> Result<GPSTime, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<GPSTime, ::Error> {
         Ok(GPSTime {
             tow: _buf.read_u32::<LittleEndian>()?,
             ns_residual: _buf.read_i32::<LittleEndian>()?,
             wn: _buf.read_u16::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTime>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTime>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(GPSTime::parse(buf)?);
@@ -263,10 +248,7 @@ impl GPSTime {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<GPSTime>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GPSTime>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(GPSTime::parse(buf)?);
@@ -292,13 +274,13 @@ pub struct CarrierPhase {
 }
 
 impl CarrierPhase {
-    pub fn parse(_buf: &mut &[u8]) -> Result<CarrierPhase, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<CarrierPhase, ::Error> {
         Ok(CarrierPhase {
             i: _buf.read_i32::<LittleEndian>()?,
             f: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CarrierPhase>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CarrierPhase>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(CarrierPhase::parse(buf)?);
@@ -306,10 +288,7 @@ impl CarrierPhase {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<CarrierPhase>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<CarrierPhase>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(CarrierPhase::parse(buf)?);

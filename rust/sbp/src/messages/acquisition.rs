@@ -41,7 +41,7 @@ pub struct MsgAcqResult {
 }
 
 impl MsgAcqResult {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResult, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResult, ::Error> {
         Ok(MsgAcqResult {
             sender_id: None,
             cn0: _buf.read_f32::<LittleEndian>()?,
@@ -82,7 +82,7 @@ pub struct MsgAcqResultDepC {
 }
 
 impl MsgAcqResultDepC {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepC, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepC, ::Error> {
         Ok(MsgAcqResultDepC {
             sender_id: None,
             cn0: _buf.read_f32::<LittleEndian>()?,
@@ -124,7 +124,7 @@ pub struct MsgAcqResultDepB {
 }
 
 impl MsgAcqResultDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepB, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepB, ::Error> {
         Ok(MsgAcqResultDepB {
             sender_id: None,
             snr: _buf.read_f32::<LittleEndian>()?,
@@ -167,7 +167,7 @@ pub struct MsgAcqResultDepA {
 }
 
 impl MsgAcqResultDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepA, ::Error> {
         Ok(MsgAcqResultDepA {
             sender_id: None,
             snr: _buf.read_f32::<LittleEndian>()?,
@@ -225,7 +225,7 @@ pub struct AcqSvProfile {
 }
 
 impl AcqSvProfile {
-    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfile, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfile, ::Error> {
         Ok(AcqSvProfile {
             job_type: _buf.read_u8()?,
             status: _buf.read_u8()?,
@@ -241,7 +241,7 @@ impl AcqSvProfile {
             cp: _buf.read_u32::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfile>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfile>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(AcqSvProfile::parse(buf)?);
@@ -249,10 +249,7 @@ impl AcqSvProfile {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<AcqSvProfile>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<AcqSvProfile>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(AcqSvProfile::parse(buf)?);
@@ -295,7 +292,7 @@ pub struct AcqSvProfileDep {
 }
 
 impl AcqSvProfileDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfileDep, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfileDep, ::Error> {
         Ok(AcqSvProfileDep {
             job_type: _buf.read_u8()?,
             status: _buf.read_u8()?,
@@ -311,7 +308,7 @@ impl AcqSvProfileDep {
             cp: _buf.read_u32::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfileDep>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfileDep>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(AcqSvProfileDep::parse(buf)?);
@@ -319,10 +316,7 @@ impl AcqSvProfileDep {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<AcqSvProfileDep>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<AcqSvProfileDep>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(AcqSvProfileDep::parse(buf)?);
@@ -345,7 +339,7 @@ pub struct MsgAcqSvProfile {
 }
 
 impl MsgAcqSvProfile {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfile, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfile, ::Error> {
         Ok(MsgAcqSvProfile {
             sender_id: None,
             acq_sv_profile: AcqSvProfile::parse_array(_buf)?,
@@ -377,7 +371,7 @@ pub struct MsgAcqSvProfileDep {
 }
 
 impl MsgAcqSvProfileDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfileDep, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfileDep, ::Error> {
         Ok(MsgAcqSvProfileDep {
             sender_id: None,
             acq_sv_profile: AcqSvProfileDep::parse_array(_buf)?,

@@ -78,7 +78,7 @@ pub struct MsgTrackingStateDetailedDepA {
 }
 
 impl MsgTrackingStateDetailedDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDetailedDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDetailedDepA, ::Error> {
         Ok(MsgTrackingStateDetailedDepA {
             sender_id: None,
             recv_time: _buf.read_u64::<LittleEndian>()?,
@@ -176,7 +176,7 @@ pub struct MsgTrackingStateDetailedDep {
 }
 
 impl MsgTrackingStateDetailedDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDetailedDep, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDetailedDep, ::Error> {
         Ok(MsgTrackingStateDetailedDep {
             sender_id: None,
             recv_time: _buf.read_u64::<LittleEndian>()?,
@@ -232,16 +232,14 @@ pub struct TrackingChannelState {
 }
 
 impl TrackingChannelState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelState, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelState, ::Error> {
         Ok(TrackingChannelState {
             sid: GnssSignal::parse(_buf)?,
             fcn: _buf.read_u8()?,
             cn0: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(
-        buf: &mut &[u8],
-    ) -> Result<Vec<TrackingChannelState>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelState>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(TrackingChannelState::parse(buf)?);
@@ -252,7 +250,7 @@ impl TrackingChannelState {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<TrackingChannelState>, ::parser::MessageError> {
+    ) -> Result<Vec<TrackingChannelState>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(TrackingChannelState::parse(buf)?);
@@ -276,7 +274,7 @@ pub struct MsgTrackingState {
 }
 
 impl MsgTrackingState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingState, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingState, ::Error> {
         Ok(MsgTrackingState {
             sender_id: None,
             states: TrackingChannelState::parse_array(_buf)?,
@@ -314,13 +312,13 @@ pub struct MeasurementState {
 }
 
 impl MeasurementState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MeasurementState, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MeasurementState, ::Error> {
         Ok(MeasurementState {
             mesid: GnssSignal::parse(_buf)?,
             cn0: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<MeasurementState>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<MeasurementState>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(MeasurementState::parse(buf)?);
@@ -328,10 +326,7 @@ impl MeasurementState {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<MeasurementState>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<MeasurementState>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(MeasurementState::parse(buf)?);
@@ -355,7 +350,7 @@ pub struct MsgMeasurementState {
 }
 
 impl MsgMeasurementState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMeasurementState, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMeasurementState, ::Error> {
         Ok(MsgMeasurementState {
             sender_id: None,
             states: MeasurementState::parse_array(_buf)?,
@@ -388,15 +383,13 @@ pub struct TrackingChannelCorrelation {
 }
 
 impl TrackingChannelCorrelation {
-    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelCorrelation, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelCorrelation, ::Error> {
         Ok(TrackingChannelCorrelation {
             I: _buf.read_i16::<LittleEndian>()?,
             Q: _buf.read_i16::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(
-        buf: &mut &[u8],
-    ) -> Result<Vec<TrackingChannelCorrelation>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelCorrelation>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(TrackingChannelCorrelation::parse(buf)?);
@@ -407,7 +400,7 @@ impl TrackingChannelCorrelation {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<TrackingChannelCorrelation>, ::parser::MessageError> {
+    ) -> Result<Vec<TrackingChannelCorrelation>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(TrackingChannelCorrelation::parse(buf)?);
@@ -434,7 +427,7 @@ pub struct MsgTrackingIq {
 }
 
 impl MsgTrackingIq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIq, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIq, ::Error> {
         Ok(MsgTrackingIq {
             sender_id: None,
             channel: _buf.read_u8()?,
@@ -469,17 +462,13 @@ pub struct TrackingChannelCorrelationDep {
 }
 
 impl TrackingChannelCorrelationDep {
-    pub fn parse(
-        _buf: &mut &[u8],
-    ) -> Result<TrackingChannelCorrelationDep, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelCorrelationDep, ::Error> {
         Ok(TrackingChannelCorrelationDep {
             I: _buf.read_i32::<LittleEndian>()?,
             Q: _buf.read_i32::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(
-        buf: &mut &[u8],
-    ) -> Result<Vec<TrackingChannelCorrelationDep>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelCorrelationDep>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(TrackingChannelCorrelationDep::parse(buf)?);
@@ -490,7 +479,7 @@ impl TrackingChannelCorrelationDep {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<TrackingChannelCorrelationDep>, ::parser::MessageError> {
+    ) -> Result<Vec<TrackingChannelCorrelationDep>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(TrackingChannelCorrelationDep::parse(buf)?);
@@ -517,7 +506,7 @@ pub struct MsgTrackingIqDepB {
 }
 
 impl MsgTrackingIqDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIqDepB, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIqDepB, ::Error> {
         Ok(MsgTrackingIqDepB {
             sender_id: None,
             channel: _buf.read_u8()?,
@@ -555,7 +544,7 @@ pub struct MsgTrackingIqDepA {
 }
 
 impl MsgTrackingIqDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIqDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIqDepA, ::Error> {
         Ok(MsgTrackingIqDepA {
             sender_id: None,
             channel: _buf.read_u8()?,
@@ -592,16 +581,14 @@ pub struct TrackingChannelStateDepA {
 }
 
 impl TrackingChannelStateDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelStateDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelStateDepA, ::Error> {
         Ok(TrackingChannelStateDepA {
             state: _buf.read_u8()?,
             prn: _buf.read_u8()?,
             cn0: _buf.read_f32::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(
-        buf: &mut &[u8],
-    ) -> Result<Vec<TrackingChannelStateDepA>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelStateDepA>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(TrackingChannelStateDepA::parse(buf)?);
@@ -612,7 +599,7 @@ impl TrackingChannelStateDepA {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<TrackingChannelStateDepA>, ::parser::MessageError> {
+    ) -> Result<Vec<TrackingChannelStateDepA>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(TrackingChannelStateDepA::parse(buf)?);
@@ -634,7 +621,7 @@ pub struct MsgTrackingStateDepA {
 }
 
 impl MsgTrackingStateDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDepA, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDepA, ::Error> {
         Ok(MsgTrackingStateDepA {
             sender_id: None,
             states: TrackingChannelStateDepA::parse_array(_buf)?,
@@ -669,16 +656,14 @@ pub struct TrackingChannelStateDepB {
 }
 
 impl TrackingChannelStateDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelStateDepB, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelStateDepB, ::Error> {
         Ok(TrackingChannelStateDepB {
             state: _buf.read_u8()?,
             sid: GnssSignalDep::parse(_buf)?,
             cn0: _buf.read_f32::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(
-        buf: &mut &[u8],
-    ) -> Result<Vec<TrackingChannelStateDepB>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelStateDepB>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(TrackingChannelStateDepB::parse(buf)?);
@@ -689,7 +674,7 @@ impl TrackingChannelStateDepB {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<TrackingChannelStateDepB>, ::parser::MessageError> {
+    ) -> Result<Vec<TrackingChannelStateDepB>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(TrackingChannelStateDepB::parse(buf)?);
@@ -711,7 +696,7 @@ pub struct MsgTrackingStateDepB {
 }
 
 impl MsgTrackingStateDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDepB, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDepB, ::Error> {
         Ok(MsgTrackingStateDepB {
             sender_id: None,
             states: TrackingChannelStateDepB::parse_array(_buf)?,

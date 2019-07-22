@@ -48,7 +48,7 @@ pub struct MsgImuRaw {
 }
 
 impl MsgImuRaw {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuRaw, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuRaw, ::Error> {
         Ok(MsgImuRaw {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -93,7 +93,7 @@ pub struct MsgImuAux {
 }
 
 impl MsgImuAux {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuAux, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuAux, ::Error> {
         Ok(MsgImuAux {
             sender_id: None,
             imu_type: _buf.read_u8()?,

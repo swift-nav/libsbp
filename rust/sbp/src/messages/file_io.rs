@@ -50,7 +50,7 @@ pub struct MsgFileioReadReq {
 }
 
 impl MsgFileioReadReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadReq, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadReq, ::Error> {
         Ok(MsgFileioReadReq {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
@@ -91,7 +91,7 @@ pub struct MsgFileioReadResp {
 }
 
 impl MsgFileioReadResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadResp, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadResp, ::Error> {
         Ok(MsgFileioReadResp {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
@@ -137,7 +137,7 @@ pub struct MsgFileioReadDirReq {
 }
 
 impl MsgFileioReadDirReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadDirReq, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadDirReq, ::Error> {
         Ok(MsgFileioReadDirReq {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
@@ -178,7 +178,7 @@ pub struct MsgFileioReadDirResp {
 }
 
 impl MsgFileioReadDirResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadDirResp, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadDirResp, ::Error> {
         Ok(MsgFileioReadDirResp {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
@@ -214,7 +214,7 @@ pub struct MsgFileioRemove {
 }
 
 impl MsgFileioRemove {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioRemove, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioRemove, ::Error> {
         Ok(MsgFileioRemove {
             sender_id: None,
             filename: ::parser::read_string(_buf)?,
@@ -259,7 +259,7 @@ pub struct MsgFileioWriteReq {
 }
 
 impl MsgFileioWriteReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteReq, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteReq, ::Error> {
         Ok(MsgFileioWriteReq {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
@@ -298,7 +298,7 @@ pub struct MsgFileioWriteResp {
 }
 
 impl MsgFileioWriteResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteResp, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteResp, ::Error> {
         Ok(MsgFileioWriteResp {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
@@ -333,7 +333,7 @@ pub struct MsgFileioConfigReq {
 }
 
 impl MsgFileioConfigReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigReq, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigReq, ::Error> {
         Ok(MsgFileioConfigReq {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
@@ -375,7 +375,7 @@ pub struct MsgFileioConfigResp {
 }
 
 impl MsgFileioConfigResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigResp, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigResp, ::Error> {
         Ok(MsgFileioConfigResp {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,

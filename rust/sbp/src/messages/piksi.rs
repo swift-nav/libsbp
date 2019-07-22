@@ -32,7 +32,7 @@ pub struct MsgAlmanac {
 }
 
 impl MsgAlmanac {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanac, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanac, ::Error> {
         Ok(MsgAlmanac { sender_id: None })
     }
 }
@@ -60,7 +60,7 @@ pub struct MsgSetTime {
 }
 
 impl MsgSetTime {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSetTime, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSetTime, ::Error> {
         Ok(MsgSetTime { sender_id: None })
     }
 }
@@ -90,7 +90,7 @@ pub struct MsgReset {
 }
 
 impl MsgReset {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgReset, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgReset, ::Error> {
         Ok(MsgReset {
             sender_id: None,
             flags: _buf.read_u32::<LittleEndian>()?,
@@ -121,7 +121,7 @@ pub struct MsgResetDep {
 }
 
 impl MsgResetDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgResetDep, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgResetDep, ::Error> {
         Ok(MsgResetDep { sender_id: None })
     }
 }
@@ -150,7 +150,7 @@ pub struct MsgCwResults {
 }
 
 impl MsgCwResults {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCwResults, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCwResults, ::Error> {
         Ok(MsgCwResults { sender_id: None })
     }
 }
@@ -179,7 +179,7 @@ pub struct MsgCwStart {
 }
 
 impl MsgCwStart {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCwStart, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCwStart, ::Error> {
         Ok(MsgCwStart { sender_id: None })
     }
 }
@@ -209,7 +209,7 @@ pub struct MsgResetFilters {
 }
 
 impl MsgResetFilters {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgResetFilters, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgResetFilters, ::Error> {
         Ok(MsgResetFilters {
             sender_id: None,
             filter: _buf.read_u8()?,
@@ -239,7 +239,7 @@ pub struct MsgInitBaseDep {
 }
 
 impl MsgInitBaseDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgInitBaseDep, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgInitBaseDep, ::Error> {
         Ok(MsgInitBaseDep { sender_id: None })
     }
 }
@@ -275,7 +275,7 @@ pub struct MsgThreadState {
 }
 
 impl MsgThreadState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgThreadState, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgThreadState, ::Error> {
         Ok(MsgThreadState {
             sender_id: None,
             name: ::parser::read_string_limit(_buf, 20)?,
@@ -320,7 +320,7 @@ pub struct UARTChannel {
 }
 
 impl UARTChannel {
-    pub fn parse(_buf: &mut &[u8]) -> Result<UARTChannel, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<UARTChannel, ::Error> {
         Ok(UARTChannel {
             tx_throughput: _buf.read_f32::<LittleEndian>()?,
             rx_throughput: _buf.read_f32::<LittleEndian>()?,
@@ -330,7 +330,7 @@ impl UARTChannel {
             rx_buffer_level: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<UARTChannel>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<UARTChannel>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(UARTChannel::parse(buf)?);
@@ -338,10 +338,7 @@ impl UARTChannel {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<UARTChannel>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<UARTChannel>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(UARTChannel::parse(buf)?);
@@ -373,7 +370,7 @@ pub struct Period {
 }
 
 impl Period {
-    pub fn parse(_buf: &mut &[u8]) -> Result<Period, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<Period, ::Error> {
         Ok(Period {
             avg: _buf.read_i32::<LittleEndian>()?,
             pmin: _buf.read_i32::<LittleEndian>()?,
@@ -381,7 +378,7 @@ impl Period {
             current: _buf.read_i32::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<Period>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<Period>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(Period::parse(buf)?);
@@ -389,10 +386,7 @@ impl Period {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<Period>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<Period>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(Period::parse(buf)?);
@@ -423,7 +417,7 @@ pub struct Latency {
 }
 
 impl Latency {
-    pub fn parse(_buf: &mut &[u8]) -> Result<Latency, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<Latency, ::Error> {
         Ok(Latency {
             avg: _buf.read_i32::<LittleEndian>()?,
             lmin: _buf.read_i32::<LittleEndian>()?,
@@ -431,7 +425,7 @@ impl Latency {
             current: _buf.read_i32::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<Latency>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<Latency>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(Latency::parse(buf)?);
@@ -439,10 +433,7 @@ impl Latency {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<Latency>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<Latency>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(Latency::parse(buf)?);
@@ -480,7 +471,7 @@ pub struct MsgUartState {
 }
 
 impl MsgUartState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUartState, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUartState, ::Error> {
         Ok(MsgUartState {
             sender_id: None,
             uart_a: UARTChannel::parse(_buf)?,
@@ -522,7 +513,7 @@ pub struct MsgUartStateDepa {
 }
 
 impl MsgUartStateDepa {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUartStateDepa, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUartStateDepa, ::Error> {
         Ok(MsgUartStateDepa {
             sender_id: None,
             uart_a: UARTChannel::parse(_buf)?,
@@ -560,7 +551,7 @@ pub struct MsgIarState {
 }
 
 impl MsgIarState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgIarState, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgIarState, ::Error> {
         Ok(MsgIarState {
             sender_id: None,
             num_hyps: _buf.read_u32::<LittleEndian>()?,
@@ -595,7 +586,7 @@ pub struct MsgMaskSatellite {
 }
 
 impl MsgMaskSatellite {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMaskSatellite, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMaskSatellite, ::Error> {
         Ok(MsgMaskSatellite {
             sender_id: None,
             mask: _buf.read_u8()?,
@@ -630,7 +621,7 @@ pub struct MsgMaskSatelliteDep {
 }
 
 impl MsgMaskSatelliteDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMaskSatelliteDep, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMaskSatelliteDep, ::Error> {
         Ok(MsgMaskSatelliteDep {
             sender_id: None,
             mask: _buf.read_u8()?,
@@ -673,7 +664,7 @@ pub struct MsgDeviceMonitor {
 }
 
 impl MsgDeviceMonitor {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDeviceMonitor, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDeviceMonitor, ::Error> {
         Ok(MsgDeviceMonitor {
             sender_id: None,
             dev_vin: _buf.read_i16::<LittleEndian>()?,
@@ -713,7 +704,7 @@ pub struct MsgCommandReq {
 }
 
 impl MsgCommandReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCommandReq, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCommandReq, ::Error> {
         Ok(MsgCommandReq {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
@@ -749,7 +740,7 @@ pub struct MsgCommandResp {
 }
 
 impl MsgCommandResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCommandResp, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCommandResp, ::Error> {
         Ok(MsgCommandResp {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
@@ -787,7 +778,7 @@ pub struct MsgCommandOutput {
 }
 
 impl MsgCommandOutput {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCommandOutput, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCommandOutput, ::Error> {
         Ok(MsgCommandOutput {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
@@ -819,7 +810,7 @@ pub struct MsgNetworkStateReq {
 }
 
 impl MsgNetworkStateReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNetworkStateReq, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNetworkStateReq, ::Error> {
         Ok(MsgNetworkStateReq { sender_id: None })
     }
 }
@@ -864,7 +855,7 @@ pub struct MsgNetworkStateResp {
 }
 
 impl MsgNetworkStateResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNetworkStateResp, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNetworkStateResp, ::Error> {
         Ok(MsgNetworkStateResp {
             sender_id: None,
             ipv4_address: ::parser::read_u8_array_limit(_buf, 4)?,
@@ -915,7 +906,7 @@ pub struct NetworkUsage {
 }
 
 impl NetworkUsage {
-    pub fn parse(_buf: &mut &[u8]) -> Result<NetworkUsage, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<NetworkUsage, ::Error> {
         Ok(NetworkUsage {
             duration: _buf.read_u64::<LittleEndian>()?,
             total_bytes: _buf.read_u64::<LittleEndian>()?,
@@ -924,7 +915,7 @@ impl NetworkUsage {
             interface_name: ::parser::read_string_limit(_buf, 16)?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<NetworkUsage>, ::parser::MessageError> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<NetworkUsage>, ::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(NetworkUsage::parse(buf)?);
@@ -932,10 +923,7 @@ impl NetworkUsage {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
-        buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<NetworkUsage>, ::parser::MessageError> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<NetworkUsage>, ::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(NetworkUsage::parse(buf)?);
@@ -957,7 +945,7 @@ pub struct MsgNetworkBandwidthUsage {
 }
 
 impl MsgNetworkBandwidthUsage {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNetworkBandwidthUsage, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNetworkBandwidthUsage, ::Error> {
         Ok(MsgNetworkBandwidthUsage {
             sender_id: None,
             interfaces: NetworkUsage::parse_array(_buf)?,
@@ -995,7 +983,7 @@ pub struct MsgCellModemStatus {
 }
 
 impl MsgCellModemStatus {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCellModemStatus, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCellModemStatus, ::Error> {
         Ok(MsgCellModemStatus {
             sender_id: None,
             signal_strength: _buf.read_i8()?,
@@ -1041,7 +1029,7 @@ pub struct MsgSpecanDep {
 }
 
 impl MsgSpecanDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSpecanDep, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSpecanDep, ::Error> {
         Ok(MsgSpecanDep {
             sender_id: None,
             channel_tag: _buf.read_u16::<LittleEndian>()?,
@@ -1091,7 +1079,7 @@ pub struct MsgSpecan {
 }
 
 impl MsgSpecan {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSpecan, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSpecan, ::Error> {
         Ok(MsgSpecan {
             sender_id: None,
             channel_tag: _buf.read_u16::<LittleEndian>()?,
@@ -1136,7 +1124,7 @@ pub struct MsgFrontEndGain {
 }
 
 impl MsgFrontEndGain {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFrontEndGain, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFrontEndGain, ::Error> {
         Ok(MsgFrontEndGain {
             sender_id: None,
             rf_gain: ::parser::read_s8_array_limit(_buf, 8)?,

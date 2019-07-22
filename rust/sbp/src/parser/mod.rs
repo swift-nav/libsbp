@@ -97,44 +97,27 @@ impl Parser {
     }
 }
 
-pub enum MessageError {
-    ParseError,
-    IoError(io::Error),
-}
-
-impl From<io::Error> for MessageError {
-    fn from(error: io::Error) -> Self {
-        MessageError::IoError(error)
-    }
-}
-
-impl From<MessageError> for ::Error {
-    fn from(_: MessageError) -> Self {
-        ::Error::ParseError
-    }
-}
-
 impl From<io::Error> for ::Error {
     fn from(error: io::Error) -> Self {
         ::Error::IoError(error)
     }
 }
 
-pub fn read_string(buf: &mut Read) -> Result<String, MessageError> {
+pub fn read_string(buf: &mut Read) -> Result<String, ::Error> {
     let mut s = String::new();
     buf.read_to_string(&mut s)?;
     Ok(s)
 }
 
-pub fn read_string_limit(buf: &mut Read, n: u64) -> Result<String, MessageError> {
+pub fn read_string_limit(buf: &mut Read, n: u64) -> Result<String, ::Error> {
     read_string(&mut buf.take(n))
 }
 
-pub fn read_u8_array(buf: &mut &[u8]) -> Result<Vec<u8>, MessageError> {
+pub fn read_u8_array(buf: &mut &[u8]) -> Result<Vec<u8>, ::Error> {
     Ok(buf.to_vec())
 }
 
-pub fn read_u8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u8>, MessageError> {
+pub fn read_u8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u8>, ::Error> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_u8()?);
@@ -142,7 +125,7 @@ pub fn read_u8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u8>, Message
     Ok(v)
 }
 
-pub fn read_s8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i8>, MessageError> {
+pub fn read_s8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i8>, ::Error> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_i8()?);
@@ -150,7 +133,7 @@ pub fn read_s8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i8>, Message
     Ok(v)
 }
 
-pub fn read_s16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i16>, MessageError> {
+pub fn read_s16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i16>, ::Error> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_i16::<LittleEndian>()?);
@@ -158,7 +141,7 @@ pub fn read_s16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i16>, Messa
     Ok(v)
 }
 
-pub fn read_u16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u16>, MessageError> {
+pub fn read_u16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u16>, ::Error> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_u16::<LittleEndian>()?);
@@ -166,7 +149,7 @@ pub fn read_u16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u16>, Messa
     Ok(v)
 }
 
-pub fn read_float_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f32>, MessageError> {
+pub fn read_float_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f32>, ::Error> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_f32::<LittleEndian>()?);
@@ -174,7 +157,7 @@ pub fn read_float_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f32>, Mes
     Ok(v)
 }
 
-pub fn read_double_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f64>, MessageError> {
+pub fn read_double_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f64>, ::Error> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_f64::<LittleEndian>()?);

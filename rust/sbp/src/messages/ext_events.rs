@@ -41,7 +41,7 @@ pub struct MsgExtEvent {
 }
 
 impl MsgExtEvent {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgExtEvent, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgExtEvent, ::Error> {
         Ok(MsgExtEvent {
             sender_id: None,
             wn: _buf.read_u16::<LittleEndian>()?,

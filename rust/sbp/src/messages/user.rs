@@ -31,7 +31,7 @@ pub struct MsgUserData {
 }
 
 impl MsgUserData {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUserData, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUserData, ::Error> {
         Ok(MsgUserData {
             sender_id: None,
             contents: ::parser::read_u8_array(_buf)?,

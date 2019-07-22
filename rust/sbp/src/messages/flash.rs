@@ -45,7 +45,7 @@ pub struct MsgFlashProgram {
 }
 
 impl MsgFlashProgram {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashProgram, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashProgram, ::Error> {
         Ok(MsgFlashProgram {
             sender_id: None,
             target: _buf.read_u8()?,
@@ -83,7 +83,7 @@ pub struct MsgFlashDone {
 }
 
 impl MsgFlashDone {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashDone, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashDone, ::Error> {
         Ok(MsgFlashDone {
             sender_id: None,
             response: _buf.read_u8()?,
@@ -125,7 +125,7 @@ pub struct MsgFlashReadReq {
 }
 
 impl MsgFlashReadReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashReadReq, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashReadReq, ::Error> {
         Ok(MsgFlashReadReq {
             sender_id: None,
             target: _buf.read_u8()?,
@@ -169,7 +169,7 @@ pub struct MsgFlashReadResp {
 }
 
 impl MsgFlashReadResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashReadResp, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashReadResp, ::Error> {
         Ok(MsgFlashReadResp {
             sender_id: None,
             target: _buf.read_u8()?,
@@ -209,7 +209,7 @@ pub struct MsgFlashErase {
 }
 
 impl MsgFlashErase {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashErase, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashErase, ::Error> {
         Ok(MsgFlashErase {
             sender_id: None,
             target: _buf.read_u8()?,
@@ -243,7 +243,7 @@ pub struct MsgStmFlashLockSector {
 }
 
 impl MsgStmFlashLockSector {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmFlashLockSector, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmFlashLockSector, ::Error> {
         Ok(MsgStmFlashLockSector {
             sender_id: None,
             sector: _buf.read_u32::<LittleEndian>()?,
@@ -276,7 +276,7 @@ pub struct MsgStmFlashUnlockSector {
 }
 
 impl MsgStmFlashUnlockSector {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmFlashUnlockSector, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmFlashUnlockSector, ::Error> {
         Ok(MsgStmFlashUnlockSector {
             sender_id: None,
             sector: _buf.read_u32::<LittleEndian>()?,
@@ -310,7 +310,7 @@ pub struct MsgStmUniqueIdReq {
 }
 
 impl MsgStmUniqueIdReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmUniqueIdReq, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmUniqueIdReq, ::Error> {
         Ok(MsgStmUniqueIdReq { sender_id: None })
     }
 }
@@ -343,7 +343,7 @@ pub struct MsgStmUniqueIdResp {
 }
 
 impl MsgStmUniqueIdResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmUniqueIdResp, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmUniqueIdResp, ::Error> {
         Ok(MsgStmUniqueIdResp {
             sender_id: None,
             stm_id: ::parser::read_u8_array_limit(_buf, 12)?,
@@ -376,7 +376,7 @@ pub struct MsgM25FlashWriteStatus {
 }
 
 impl MsgM25FlashWriteStatus {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgM25FlashWriteStatus, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgM25FlashWriteStatus, ::Error> {
         Ok(MsgM25FlashWriteStatus {
             sender_id: None,
             status: ::parser::read_u8_array_limit(_buf, 1)?,

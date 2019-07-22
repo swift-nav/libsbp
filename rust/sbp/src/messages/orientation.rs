@@ -39,7 +39,7 @@ pub struct MsgBaselineHeading {
 }
 
 impl MsgBaselineHeading {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineHeading, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineHeading, ::Error> {
         Ok(MsgBaselineHeading {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -96,7 +96,7 @@ pub struct MsgOrientQuat {
 }
 
 impl MsgOrientQuat {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOrientQuat, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOrientQuat, ::Error> {
         Ok(MsgOrientQuat {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -155,7 +155,7 @@ pub struct MsgOrientEuler {
 }
 
 impl MsgOrientEuler {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOrientEuler, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOrientEuler, ::Error> {
         Ok(MsgOrientEuler {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -210,7 +210,7 @@ pub struct MsgAngularRate {
 }
 
 impl MsgAngularRate {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAngularRate, ::parser::MessageError> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAngularRate, ::Error> {
         Ok(MsgAngularRate {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
