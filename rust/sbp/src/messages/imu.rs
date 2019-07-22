@@ -12,39 +12,39 @@
 // Automatically generated from yaml/swiftnav/sbp/imu.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-// Inertial Measurement Unit (IMU) messages.
+/// Inertial Measurement Unit (IMU) messages.
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 
-// Raw IMU data
-//
-// Raw data from the Inertial Measurement Unit, containing accelerometer and
-// gyroscope readings. The sense of the measurements are to be aligned with
-// the indications on the device itself. Measurement units, which are specific to the
-// device hardware and settings, are communicated via the MSG_IMU_AUX message.
-//
+/// Raw IMU data
+///
+/// Raw data from the Inertial Measurement Unit, containing accelerometer and
+/// gyroscope readings. The sense of the measurements are to be aligned with
+/// the indications on the device itself. Measurement units, which are specific to the
+/// device hardware and settings, are communicated via the MSG_IMU_AUX message.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgImuRaw {
     pub sender_id: Option<u16>,
+    /// Milliseconds since start of GPS week. If the high bit is set, the time
+    /// is unknown or invalid.
     pub tow: u32,
-    // ^ Milliseconds since start of GPS week. If the high bit is set, the time
-    // is unknown or invalid.
+    /// Milliseconds since start of GPS week, fractional part
     pub tow_f: u8,
-    // ^ Milliseconds since start of GPS week, fractional part
+    /// Acceleration in the IMU frame X axis
     pub acc_x: i16,
-    // ^ Acceleration in the IMU frame X axis
+    /// Acceleration in the IMU frame Y axis
     pub acc_y: i16,
-    // ^ Acceleration in the IMU frame Y axis
+    /// Acceleration in the IMU frame Z axis
     pub acc_z: i16,
-    // ^ Acceleration in the IMU frame Z axis
+    /// Angular rate around IMU frame X axis
     pub gyr_x: i16,
-    // ^ Angular rate around IMU frame X axis
+    /// Angular rate around IMU frame Y axis
     pub gyr_y: i16,
-    // ^ Angular rate around IMU frame Y axis
+    /// Angular rate around IMU frame Z axis
     pub gyr_z: i16,
-    // ^ Angular rate around IMU frame Z axis
 }
 
 impl MsgImuRaw {
@@ -74,22 +74,22 @@ impl super::SBPMessage for MsgImuRaw {
     }
 }
 
-// Auxiliary IMU data
-//
-// Auxiliary data specific to a particular IMU. The `imu_type` field will
-// always be consistent but the rest of the payload is device specific and
-// depends on the value of `imu_type`.
-//
+/// Auxiliary IMU data
+///
+/// Auxiliary data specific to a particular IMU. The `imu_type` field will
+/// always be consistent but the rest of the payload is device specific and
+/// depends on the value of `imu_type`.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgImuAux {
     pub sender_id: Option<u16>,
+    /// IMU type
     pub imu_type: u8,
-    // ^ IMU type
+    /// Raw IMU temperature
     pub temp: i16,
-    // ^ Raw IMU temperature
+    /// IMU configuration
     pub imu_conf: u8,
-    // ^ IMU configuration
 }
 
 impl MsgImuAux {

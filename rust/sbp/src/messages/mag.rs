@@ -12,30 +12,30 @@
 // Automatically generated from yaml/swiftnav/sbp/mag.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-// Magnetometer (mag) messages.
+/// Magnetometer (mag) messages.
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 
-// Raw magnetometer data
-//
-// Raw data from the magnetometer.
-//
+/// Raw magnetometer data
+///
+/// Raw data from the magnetometer.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgMagRaw {
     pub sender_id: Option<u16>,
+    /// Milliseconds since start of GPS week. If the high bit is set, the time
+    /// is unknown or invalid.
     pub tow: u32,
-    // ^ Milliseconds since start of GPS week. If the high bit is set, the time
-    // is unknown or invalid.
+    /// Milliseconds since start of GPS week, fractional part
     pub tow_f: u8,
-    // ^ Milliseconds since start of GPS week, fractional part
+    /// Magnetic field in the body frame X axis
     pub mag_x: i16,
-    // ^ Magnetic field in the body frame X axis
+    /// Magnetic field in the body frame Y axis
     pub mag_y: i16,
-    // ^ Magnetic field in the body frame Y axis
+    /// Magnetic field in the body frame Z axis
     pub mag_z: i16,
-    // ^ Magnetic field in the body frame Z axis
 }
 
 impl MsgMagRaw {

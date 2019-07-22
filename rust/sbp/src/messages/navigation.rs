@@ -12,57 +12,57 @@
 // Automatically generated from yaml/swiftnav/sbp/navigation.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-// Geodetic navigation messages reporting GPS time, position, velocity,
-// and baseline position solutions. For position solutions, these
-// messages define several different position solutions: single-point
-// (SPP), RTK, and pseudo-absolute position solutions.
-//
-// The SPP is the standalone, absolute GPS position solution using only
-// a single receiver. The RTK solution is the differential GPS
-// solution, which can use either a fixed/integer or floating carrier
-// phase ambiguity. The pseudo-absolute position solution uses a
-// user-provided, well-surveyed base station position (if available)
-// and the RTK solution in tandem.
-//
-// When the inertial navigation mode indicates that the IMU is used,
-// all messages are reported in the vehicle body frame as defined by
-// device settings.  By default, the vehicle body frame is configured to be
-// coincident with the antenna phase center.  When there is no inertial
-// navigation, the solution will be reported at the phase center of the antenna.
-// There is no inertial navigation capability on Piksi Multi or Duro.
+/// Geodetic navigation messages reporting GPS time, position, velocity,
+/// and baseline position solutions. For position solutions, these
+/// messages define several different position solutions: single-point
+/// (SPP), RTK, and pseudo-absolute position solutions.
+///
+/// The SPP is the standalone, absolute GPS position solution using only
+/// a single receiver. The RTK solution is the differential GPS
+/// solution, which can use either a fixed/integer or floating carrier
+/// phase ambiguity. The pseudo-absolute position solution uses a
+/// user-provided, well-surveyed base station position (if available)
+/// and the RTK solution in tandem.
+///
+/// When the inertial navigation mode indicates that the IMU is used,
+/// all messages are reported in the vehicle body frame as defined by
+/// device settings.  By default, the vehicle body frame is configured to be
+/// coincident with the antenna phase center.  When there is no inertial
+/// navigation, the solution will be reported at the phase center of the antenna.
+/// There is no inertial navigation capability on Piksi Multi or Duro.
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 
-// GPS Time
-//
-// This message reports the GPS time, representing the time since
-// the GPS epoch began on midnight January 6, 1980 UTC. GPS time
-// counts the weeks and seconds of the week. The weeks begin at the
-// Saturday/Sunday transition. GPS week 0 began at the beginning of
-// the GPS time scale.
-//
-// Within each week number, the GPS time of the week is between
-// between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
-// does not accumulate leap seconds, and as of now, has a small
-// offset from UTC. In a message stream, this message precedes a
-// set of other navigation messages referenced to the same time
-// (but lacking the ns field) and indicates a more precise time of
-// these messages.
-//
+/// GPS Time
+///
+/// This message reports the GPS time, representing the time since
+/// the GPS epoch began on midnight January 6, 1980 UTC. GPS time
+/// counts the weeks and seconds of the week. The weeks begin at the
+/// Saturday/Sunday transition. GPS week 0 began at the beginning of
+/// the GPS time scale.
+///
+/// Within each week number, the GPS time of the week is between
+/// between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
+/// does not accumulate leap seconds, and as of now, has a small
+/// offset from UTC. In a message stream, this message precedes a
+/// set of other navigation messages referenced to the same time
+/// (but lacking the ns field) and indicates a more precise time of
+/// these messages.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGPSTime {
     pub sender_id: Option<u16>,
+    /// GPS week number
     pub wn: u16,
-    // ^ GPS week number
+    /// GPS time of week rounded to the nearest millisecond
     pub tow: u32,
-    // ^ GPS time of week rounded to the nearest millisecond
+    /// Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
+    /// 500000)
     pub ns_residual: i32,
-    // ^ Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
-    // 500000)
+    /// Status flags (reserved)
     pub flags: u8,
-    // ^ Status flags (reserved)
 }
 
 impl MsgGPSTime {
@@ -88,33 +88,33 @@ impl super::SBPMessage for MsgGPSTime {
     }
 }
 
-// UTC Time
-//
-// This message reports the Universal Coordinated Time (UTC).  Note the flags
-// which indicate the source of the UTC offset value and source of the time fix.
-//
+/// UTC Time
+///
+/// This message reports the Universal Coordinated Time (UTC).  Note the flags
+/// which indicate the source of the UTC offset value and source of the time fix.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgUtcTime {
     pub sender_id: Option<u16>,
+    /// Indicates source and time validity
     pub flags: u8,
-    // ^ Indicates source and time validity
+    /// GPS time of week rounded to the nearest millisecond
     pub tow: u32,
-    // ^ GPS time of week rounded to the nearest millisecond
+    /// Year
     pub year: u16,
-    // ^ Year
+    /// Month (range 1 .. 12)
     pub month: u8,
-    // ^ Month (range 1 .. 12)
+    /// days in the month (range 1-31)
     pub day: u8,
-    // ^ days in the month (range 1-31)
+    /// hours of day (range 0-23)
     pub hours: u8,
-    // ^ hours of day (range 0-23)
+    /// minutes of hour (range 0-59)
     pub minutes: u8,
-    // ^ minutes of hour (range 0-59)
+    /// seconds of minute (range 0-60) rounded down
     pub seconds: u8,
-    // ^ seconds of minute (range 0-60) rounded down
+    /// nanoseconds of second (range 0-999999999)
     pub ns: u32,
-    // ^ nanoseconds of second (range 0-999999999)
 }
 
 impl MsgUtcTime {
@@ -145,31 +145,31 @@ impl super::SBPMessage for MsgUtcTime {
     }
 }
 
-// Dilution of Precision
-//
-// This dilution of precision (DOP) message describes the effect of
-// navigation satellite geometry on positional measurement
-// precision.  The flags field indicated whether the DOP reported
-// corresponds to differential or SPP solution.
-//
+/// Dilution of Precision
+///
+/// This dilution of precision (DOP) message describes the effect of
+/// navigation satellite geometry on positional measurement
+/// precision.  The flags field indicated whether the DOP reported
+/// corresponds to differential or SPP solution.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgDops {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// Geometric Dilution of Precision
     pub gdop: u16,
-    // ^ Geometric Dilution of Precision
+    /// Position Dilution of Precision
     pub pdop: u16,
-    // ^ Position Dilution of Precision
+    /// Time Dilution of Precision
     pub tdop: u16,
-    // ^ Time Dilution of Precision
+    /// Horizontal Dilution of Precision
     pub hdop: u16,
-    // ^ Horizontal Dilution of Precision
+    /// Vertical Dilution of Precision
     pub vdop: u16,
-    // ^ Vertical Dilution of Precision
+    /// Indicates the position solution with which the DOPS message corresponds
     pub flags: u8,
-    // ^ Indicates the position solution with which the DOPS message corresponds
 }
 
 impl MsgDops {
@@ -198,35 +198,35 @@ impl super::SBPMessage for MsgDops {
     }
 }
 
-// Single-point position in ECEF
-//
-// The position solution message reports absolute Earth Centered
-// Earth Fixed (ECEF) coordinates and the status (single point vs
-// pseudo-absolute RTK) of the position solution. If the rover
-// receiver knows the surveyed position of the base station and has
-// an RTK solution, this reports a pseudo-absolute position
-// solution using the base station position and the rover's RTK
-// baseline vector. The full GPS time is given by the preceding
-// MSG_GPS_TIME with the matching time-of-week (tow).
-//
+/// Single-point position in ECEF
+///
+/// The position solution message reports absolute Earth Centered
+/// Earth Fixed (ECEF) coordinates and the status (single point vs
+/// pseudo-absolute RTK) of the position solution. If the rover
+/// receiver knows the surveyed position of the base station and has
+/// an RTK solution, this reports a pseudo-absolute position
+/// solution using the base station position and the rover's RTK
+/// baseline vector. The full GPS time is given by the preceding
+/// MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEF {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// ECEF X coordinate
     pub x: f64,
-    // ^ ECEF X coordinate
+    /// ECEF Y coordinate
     pub y: f64,
-    // ^ ECEF Y coordinate
+    /// ECEF Z coordinate
     pub z: f64,
-    // ^ ECEF Z coordinate
+    /// Position estimated standard deviation
     pub accuracy: u16,
-    // ^ Position estimated standard deviation
+    /// Number of satellites used in solution
     pub n_sats: u8,
-    // ^ Number of satellites used in solution
+    /// Status flags
     pub flags: u8,
-    // ^ Status flags
 }
 
 impl MsgPosECEF {
@@ -255,46 +255,46 @@ impl super::SBPMessage for MsgPosECEF {
     }
 }
 
-// Single-point position in ECEF
-//
-// The position solution message reports absolute Earth Centered
-// Earth Fixed (ECEF) coordinates and the status (single point vs
-// pseudo-absolute RTK) of the position solution. The message also
-// reports the upper triangular portion of the 3x3 covariance matrix.
-// If the receiver knows the surveyed position of the base station and has
-// an RTK solution, this reports a pseudo-absolute position
-// solution using the base station position and the rover's RTK
-// baseline vector. The full GPS time is given by the preceding
-// MSG_GPS_TIME with the matching time-of-week (tow).
-//
+/// Single-point position in ECEF
+///
+/// The position solution message reports absolute Earth Centered
+/// Earth Fixed (ECEF) coordinates and the status (single point vs
+/// pseudo-absolute RTK) of the position solution. The message also
+/// reports the upper triangular portion of the 3x3 covariance matrix.
+/// If the receiver knows the surveyed position of the base station and has
+/// an RTK solution, this reports a pseudo-absolute position
+/// solution using the base station position and the rover's RTK
+/// baseline vector. The full GPS time is given by the preceding
+/// MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEFCov {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// ECEF X coordinate
     pub x: f64,
-    // ^ ECEF X coordinate
+    /// ECEF Y coordinate
     pub y: f64,
-    // ^ ECEF Y coordinate
+    /// ECEF Z coordinate
     pub z: f64,
-    // ^ ECEF Z coordinate
+    /// Estimated variance of x
     pub cov_x_x: f32,
-    // ^ Estimated variance of x
+    /// Estimated covariance of x and y
     pub cov_x_y: f32,
-    // ^ Estimated covariance of x and y
+    /// Estimated covariance of x and z
     pub cov_x_z: f32,
-    // ^ Estimated covariance of x and z
+    /// Estimated variance of y
     pub cov_y_y: f32,
-    // ^ Estimated variance of y
+    /// Estimated covariance of y and z
     pub cov_y_z: f32,
-    // ^ Estimated covariance of y and z
+    /// Estimated variance of z
     pub cov_z_z: f32,
-    // ^ Estimated variance of z
+    /// Number of satellites used in solution
     pub n_sats: u8,
-    // ^ Number of satellites used in solution
+    /// Status flags
     pub flags: u8,
-    // ^ Status flags
 }
 
 impl MsgPosECEFCov {
@@ -328,37 +328,37 @@ impl super::SBPMessage for MsgPosECEFCov {
     }
 }
 
-// Geodetic Position
-//
-// This position solution message reports the absolute geodetic
-// coordinates and the status (single point vs pseudo-absolute RTK)
-// of the position solution. If the rover receiver knows the
-// surveyed position of the base station and has an RTK solution,
-// this reports a pseudo-absolute position solution using the base
-// station position and the rover's RTK baseline vector. The full
-// GPS time is given by the preceding MSG_GPS_TIME with the
-// matching time-of-week (tow).
-//
+/// Geodetic Position
+///
+/// This position solution message reports the absolute geodetic
+/// coordinates and the status (single point vs pseudo-absolute RTK)
+/// of the position solution. If the rover receiver knows the
+/// surveyed position of the base station and has an RTK solution,
+/// this reports a pseudo-absolute position solution using the base
+/// station position and the rover's RTK baseline vector. The full
+/// GPS time is given by the preceding MSG_GPS_TIME with the
+/// matching time-of-week (tow).
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosLLH {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// Latitude
     pub lat: f64,
-    // ^ Latitude
+    /// Longitude
     pub lon: f64,
-    // ^ Longitude
+    /// Height above WGS84 ellipsoid
     pub height: f64,
-    // ^ Height above WGS84 ellipsoid
+    /// Horizontal position estimated standard deviation
     pub h_accuracy: u16,
-    // ^ Horizontal position estimated standard deviation
+    /// Vertical position estimated standard deviation
     pub v_accuracy: u16,
-    // ^ Vertical position estimated standard deviation
+    /// Number of satellites used in solution.
     pub n_sats: u8,
-    // ^ Number of satellites used in solution.
+    /// Status flags
     pub flags: u8,
-    // ^ Status flags
 }
 
 impl MsgPosLLH {
@@ -388,45 +388,45 @@ impl super::SBPMessage for MsgPosLLH {
     }
 }
 
-// Geodetic Position
-//
-// This position solution message reports the absolute geodetic
-// coordinates and the status (single point vs pseudo-absolute RTK)
-// of the position solution as well as the upper triangle of the 3x3
-// covariance matrix.  The position information and Fix Mode flags should
-// follow the MSG_POS_LLH message.  Since the covariance matrix is computed
-// in the local-level North, East, Down frame, the covariance terms follow
-// with that convention. Thus, covariances are reported against the "downward"
-// measurement and care should be taken with the sign convention.
-//
+/// Geodetic Position
+///
+/// This position solution message reports the absolute geodetic
+/// coordinates and the status (single point vs pseudo-absolute RTK)
+/// of the position solution as well as the upper triangle of the 3x3
+/// covariance matrix.  The position information and Fix Mode flags should
+/// follow the MSG_POS_LLH message.  Since the covariance matrix is computed
+/// in the local-level North, East, Down frame, the covariance terms follow
+/// with that convention. Thus, covariances are reported against the "downward"
+/// measurement and care should be taken with the sign convention.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosLLHCov {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// Latitude
     pub lat: f64,
-    // ^ Latitude
+    /// Longitude
     pub lon: f64,
-    // ^ Longitude
+    /// Height above WGS84 ellipsoid
     pub height: f64,
-    // ^ Height above WGS84 ellipsoid
+    /// Estimated variance of northing
     pub cov_n_n: f32,
-    // ^ Estimated variance of northing
+    /// Covariance of northing and easting
     pub cov_n_e: f32,
-    // ^ Covariance of northing and easting
+    /// Covariance of northing and downward measurement
     pub cov_n_d: f32,
-    // ^ Covariance of northing and downward measurement
+    /// Estimated variance of easting
     pub cov_e_e: f32,
-    // ^ Estimated variance of easting
+    /// Covariance of easting and downward measurement
     pub cov_e_d: f32,
-    // ^ Covariance of easting and downward measurement
+    /// Estimated variance of downward measurement
     pub cov_d_d: f32,
-    // ^ Estimated variance of downward measurement
+    /// Number of satellites used in solution.
     pub n_sats: u8,
-    // ^ Number of satellites used in solution.
+    /// Status flags
     pub flags: u8,
-    // ^ Status flags
 }
 
 impl MsgPosLLHCov {
@@ -460,32 +460,32 @@ impl super::SBPMessage for MsgPosLLHCov {
     }
 }
 
-// Baseline Position in ECEF
-//
-// This message reports the baseline solution in Earth Centered
-// Earth Fixed (ECEF) coordinates. This baseline is the relative
-// vector distance from the base station to the rover receiver. The
-// full GPS time is given by the preceding MSG_GPS_TIME with the
-// matching time-of-week (tow).
-//
+/// Baseline Position in ECEF
+///
+/// This message reports the baseline solution in Earth Centered
+/// Earth Fixed (ECEF) coordinates. This baseline is the relative
+/// vector distance from the base station to the rover receiver. The
+/// full GPS time is given by the preceding MSG_GPS_TIME with the
+/// matching time-of-week (tow).
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineECEF {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// Baseline ECEF X coordinate
     pub x: i32,
-    // ^ Baseline ECEF X coordinate
+    /// Baseline ECEF Y coordinate
     pub y: i32,
-    // ^ Baseline ECEF Y coordinate
+    /// Baseline ECEF Z coordinate
     pub z: i32,
-    // ^ Baseline ECEF Z coordinate
+    /// Position estimated standard deviation
     pub accuracy: u16,
-    // ^ Position estimated standard deviation
+    /// Number of satellites used in solution
     pub n_sats: u8,
-    // ^ Number of satellites used in solution
+    /// Status flags
     pub flags: u8,
-    // ^ Status flags
 }
 
 impl MsgBaselineECEF {
@@ -514,35 +514,35 @@ impl super::SBPMessage for MsgBaselineECEF {
     }
 }
 
-// Baseline in NED
-//
-// This message reports the baseline solution in North East Down
-// (NED) coordinates. This baseline is the relative vector distance
-// from the base station to the rover receiver, and NED coordinate
-// system is defined at the local WGS84 tangent plane centered at the
-// base station position.  The full GPS time is given by the
-// preceding MSG_GPS_TIME with the matching time-of-week (tow).
-//
+/// Baseline in NED
+///
+/// This message reports the baseline solution in North East Down
+/// (NED) coordinates. This baseline is the relative vector distance
+/// from the base station to the rover receiver, and NED coordinate
+/// system is defined at the local WGS84 tangent plane centered at the
+/// base station position.  The full GPS time is given by the
+/// preceding MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineNED {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// Baseline North coordinate
     pub n: i32,
-    // ^ Baseline North coordinate
+    /// Baseline East coordinate
     pub e: i32,
-    // ^ Baseline East coordinate
+    /// Baseline Down coordinate
     pub d: i32,
-    // ^ Baseline Down coordinate
+    /// Horizontal position estimated standard deviation
     pub h_accuracy: u16,
-    // ^ Horizontal position estimated standard deviation
+    /// Vertical position estimated standard deviation
     pub v_accuracy: u16,
-    // ^ Vertical position estimated standard deviation
+    /// Number of satellites used in solution
     pub n_sats: u8,
-    // ^ Number of satellites used in solution
+    /// Status flags
     pub flags: u8,
-    // ^ Status flags
 }
 
 impl MsgBaselineNED {
@@ -572,30 +572,30 @@ impl super::SBPMessage for MsgBaselineNED {
     }
 }
 
-// Velocity in ECEF
-//
-// This message reports the velocity in Earth Centered Earth Fixed
-// (ECEF) coordinates. The full GPS time is given by the preceding
-// MSG_GPS_TIME with the matching time-of-week (tow).
-//
+/// Velocity in ECEF
+///
+/// This message reports the velocity in Earth Centered Earth Fixed
+/// (ECEF) coordinates. The full GPS time is given by the preceding
+/// MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelECEF {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// Velocity ECEF X coordinate
     pub x: i32,
-    // ^ Velocity ECEF X coordinate
+    /// Velocity ECEF Y coordinate
     pub y: i32,
-    // ^ Velocity ECEF Y coordinate
+    /// Velocity ECEF Z coordinate
     pub z: i32,
-    // ^ Velocity ECEF Z coordinate
+    /// Velocity estimated standard deviation
     pub accuracy: u16,
-    // ^ Velocity estimated standard deviation
+    /// Number of satellites used in solution
     pub n_sats: u8,
-    // ^ Number of satellites used in solution
+    /// Status flags
     pub flags: u8,
-    // ^ Status flags
 }
 
 impl MsgVelECEF {
@@ -624,40 +624,40 @@ impl super::SBPMessage for MsgVelECEF {
     }
 }
 
-// Velocity in ECEF
-//
-// This message reports the velocity in Earth Centered Earth Fixed
-// (ECEF) coordinates. The full GPS time is given by the preceding
-// MSG_GPS_TIME with the matching time-of-week (tow).
-//
+/// Velocity in ECEF
+///
+/// This message reports the velocity in Earth Centered Earth Fixed
+/// (ECEF) coordinates. The full GPS time is given by the preceding
+/// MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelECEFCov {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// Velocity ECEF X coordinate
     pub x: i32,
-    // ^ Velocity ECEF X coordinate
+    /// Velocity ECEF Y coordinate
     pub y: i32,
-    // ^ Velocity ECEF Y coordinate
+    /// Velocity ECEF Z coordinate
     pub z: i32,
-    // ^ Velocity ECEF Z coordinate
+    /// Estimated variance of x
     pub cov_x_x: f32,
-    // ^ Estimated variance of x
+    /// Estimated covariance of x and y
     pub cov_x_y: f32,
-    // ^ Estimated covariance of x and y
+    /// Estimated covariance of x and z
     pub cov_x_z: f32,
-    // ^ Estimated covariance of x and z
+    /// Estimated variance of y
     pub cov_y_y: f32,
-    // ^ Estimated variance of y
+    /// Estimated covariance of y and z
     pub cov_y_z: f32,
-    // ^ Estimated covariance of y and z
+    /// Estimated variance of z
     pub cov_z_z: f32,
-    // ^ Estimated variance of z
+    /// Number of satellites used in solution
     pub n_sats: u8,
-    // ^ Number of satellites used in solution
+    /// Status flags
     pub flags: u8,
-    // ^ Status flags
 }
 
 impl MsgVelECEFCov {
@@ -691,33 +691,33 @@ impl super::SBPMessage for MsgVelECEFCov {
     }
 }
 
-// Velocity in NED
-//
-// This message reports the velocity in local North East Down (NED)
-// coordinates. The NED coordinate system is defined as the local WGS84
-// tangent plane centered at the current position. The full GPS time is
-// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
-//
+/// Velocity in NED
+///
+/// This message reports the velocity in local North East Down (NED)
+/// coordinates. The NED coordinate system is defined as the local WGS84
+/// tangent plane centered at the current position. The full GPS time is
+/// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelNED {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// Velocity North coordinate
     pub n: i32,
-    // ^ Velocity North coordinate
+    /// Velocity East coordinate
     pub e: i32,
-    // ^ Velocity East coordinate
+    /// Velocity Down coordinate
     pub d: i32,
-    // ^ Velocity Down coordinate
+    /// Horizontal velocity estimated standard deviation
     pub h_accuracy: u16,
-    // ^ Horizontal velocity estimated standard deviation
+    /// Vertical velocity estimated standard deviation
     pub v_accuracy: u16,
-    // ^ Vertical velocity estimated standard deviation
+    /// Number of satellites used in solution
     pub n_sats: u8,
-    // ^ Number of satellites used in solution
+    /// Status flags
     pub flags: u8,
-    // ^ Status flags
 }
 
 impl MsgVelNED {
@@ -747,43 +747,43 @@ impl super::SBPMessage for MsgVelNED {
     }
 }
 
-// Velocity in NED
-//
-// This message reports the velocity in local North East Down (NED)
-// coordinates. The NED coordinate system is defined as the local WGS84
-// tangent plane centered at the current position. The full GPS time is
-// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
-// This message is similar to the MSG_VEL_NED, but it includes the upper triangular
-// portion of the 3x3 covariance matrix.
-//
+/// Velocity in NED
+///
+/// This message reports the velocity in local North East Down (NED)
+/// coordinates. The NED coordinate system is defined as the local WGS84
+/// tangent plane centered at the current position. The full GPS time is
+/// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+/// This message is similar to the MSG_VEL_NED, but it includes the upper triangular
+/// portion of the 3x3 covariance matrix.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelNEDCov {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// Velocity North coordinate
     pub n: i32,
-    // ^ Velocity North coordinate
+    /// Velocity East coordinate
     pub e: i32,
-    // ^ Velocity East coordinate
+    /// Velocity Down coordinate
     pub d: i32,
-    // ^ Velocity Down coordinate
+    /// Estimated variance of northward measurement
     pub cov_n_n: f32,
-    // ^ Estimated variance of northward measurement
+    /// Covariance of northward and eastward measurement
     pub cov_n_e: f32,
-    // ^ Covariance of northward and eastward measurement
+    /// Covariance of northward and downward measurement
     pub cov_n_d: f32,
-    // ^ Covariance of northward and downward measurement
+    /// Estimated variance of eastward measurement
     pub cov_e_e: f32,
-    // ^ Estimated variance of eastward measurement
+    /// Covariance of eastward and downward measurement
     pub cov_e_d: f32,
-    // ^ Covariance of eastward and downward measurement
+    /// Estimated variance of downward measurement
     pub cov_d_d: f32,
-    // ^ Estimated variance of downward measurement
+    /// Number of satellites used in solution
     pub n_sats: u8,
-    // ^ Number of satellites used in solution
+    /// Status flags
     pub flags: u8,
-    // ^ Status flags
 }
 
 impl MsgVelNEDCov {
@@ -817,45 +817,45 @@ impl super::SBPMessage for MsgVelNEDCov {
     }
 }
 
-// Velocity in User Frame
-//
-// This message reports the velocity in the Vehicle Body Frame. By convention,
-// the x-axis should point out the nose of the vehicle and represent the forward
-// direction, while as the y-axis should point out the right hand side of the vehicle.
-// Since this is a right handed system, z should point out the bottom of the vehicle.
-// The orientation and origin of the Vehicle Body Frame are specified via the device settings.
-// The full GPS time is given by the preceding MSG_GPS_TIME with the
-// matching time-of-week (tow). This message is only produced by inertial versions of Swift
-// products and is not available from Piksi Multi or Duro.
-//
+/// Velocity in User Frame
+///
+/// This message reports the velocity in the Vehicle Body Frame. By convention,
+/// the x-axis should point out the nose of the vehicle and represent the forward
+/// direction, while as the y-axis should point out the right hand side of the vehicle.
+/// Since this is a right handed system, z should point out the bottom of the vehicle.
+/// The orientation and origin of the Vehicle Body Frame are specified via the device settings.
+/// The full GPS time is given by the preceding MSG_GPS_TIME with the
+/// matching time-of-week (tow). This message is only produced by inertial versions of Swift
+/// products and is not available from Piksi Multi or Duro.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelBody {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// Velocity in x direction
     pub x: i32,
-    // ^ Velocity in x direction
+    /// Velocity in y direction
     pub y: i32,
-    // ^ Velocity in y direction
+    /// Velocity in z direction
     pub z: i32,
-    // ^ Velocity in z direction
+    /// Estimated variance of x
     pub cov_x_x: f32,
-    // ^ Estimated variance of x
+    /// Covariance of x and y
     pub cov_x_y: f32,
-    // ^ Covariance of x and y
+    /// Covariance of x and z
     pub cov_x_z: f32,
-    // ^ Covariance of x and z
+    /// Estimated variance of y
     pub cov_y_y: f32,
-    // ^ Estimated variance of y
+    /// Covariance of y and z
     pub cov_y_z: f32,
-    // ^ Covariance of y and z
+    /// Estimated variance of z
     pub cov_z_z: f32,
-    // ^ Estimated variance of z
+    /// Number of satellites used in solution
     pub n_sats: u8,
-    // ^ Number of satellites used in solution
+    /// Status flags
     pub flags: u8,
-    // ^ Status flags
 }
 
 impl MsgVelBody {
@@ -889,19 +889,19 @@ impl super::SBPMessage for MsgVelBody {
     }
 }
 
-// Age of corrections
-//
-// This message reports the Age of the corrections used for the current
-// Differential solution
-//
+/// Age of corrections
+///
+/// This message reports the Age of the corrections used for the current
+/// Differential solution
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAgeCorrections {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// Age of the corrections (0xFFFF indicates invalid)
     pub age: u16,
-    // ^ Age of the corrections (0xFFFF indicates invalid)
 }
 
 impl MsgAgeCorrections {
@@ -925,35 +925,35 @@ impl super::SBPMessage for MsgAgeCorrections {
     }
 }
 
-// GPS Time (v1.0)
-//
-// This message reports the GPS time, representing the time since
-// the GPS epoch began on midnight January 6, 1980 UTC. GPS time
-// counts the weeks and seconds of the week. The weeks begin at the
-// Saturday/Sunday transition. GPS week 0 began at the beginning of
-// the GPS time scale.
-//
-// Within each week number, the GPS time of the week is between
-// between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
-// does not accumulate leap seconds, and as of now, has a small
-// offset from UTC. In a message stream, this message precedes a
-// set of other navigation messages referenced to the same time
-// (but lacking the ns field) and indicates a more precise time of
-// these messages.
-//
+/// GPS Time (v1.0)
+///
+/// This message reports the GPS time, representing the time since
+/// the GPS epoch began on midnight January 6, 1980 UTC. GPS time
+/// counts the weeks and seconds of the week. The weeks begin at the
+/// Saturday/Sunday transition. GPS week 0 began at the beginning of
+/// the GPS time scale.
+///
+/// Within each week number, the GPS time of the week is between
+/// between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
+/// does not accumulate leap seconds, and as of now, has a small
+/// offset from UTC. In a message stream, this message precedes a
+/// set of other navigation messages referenced to the same time
+/// (but lacking the ns field) and indicates a more precise time of
+/// these messages.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGPSTimeDepA {
     pub sender_id: Option<u16>,
+    /// GPS week number
     pub wn: u16,
-    // ^ GPS week number
+    /// GPS time of week rounded to the nearest millisecond
     pub tow: u32,
-    // ^ GPS time of week rounded to the nearest millisecond
+    /// Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
+    /// 500000)
     pub ns_residual: i32,
-    // ^ Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
-    // 500000)
+    /// Status flags (reserved)
     pub flags: u8,
-    // ^ Status flags (reserved)
 }
 
 impl MsgGPSTimeDepA {
@@ -979,28 +979,28 @@ impl super::SBPMessage for MsgGPSTimeDepA {
     }
 }
 
-// Dilution of Precision
-//
-// This dilution of precision (DOP) message describes the effect of
-// navigation satellite geometry on positional measurement
-// precision.
-//
+/// Dilution of Precision
+///
+/// This dilution of precision (DOP) message describes the effect of
+/// navigation satellite geometry on positional measurement
+/// precision.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgDopsDepA {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// Geometric Dilution of Precision
     pub gdop: u16,
-    // ^ Geometric Dilution of Precision
+    /// Position Dilution of Precision
     pub pdop: u16,
-    // ^ Position Dilution of Precision
+    /// Time Dilution of Precision
     pub tdop: u16,
-    // ^ Time Dilution of Precision
+    /// Horizontal Dilution of Precision
     pub hdop: u16,
-    // ^ Horizontal Dilution of Precision
+    /// Vertical Dilution of Precision
     pub vdop: u16,
-    // ^ Vertical Dilution of Precision
 }
 
 impl MsgDopsDepA {
@@ -1028,35 +1028,35 @@ impl super::SBPMessage for MsgDopsDepA {
     }
 }
 
-// Single-point position in ECEF
-//
-// The position solution message reports absolute Earth Centered
-// Earth Fixed (ECEF) coordinates and the status (single point vs
-// pseudo-absolute RTK) of the position solution. If the rover
-// receiver knows the surveyed position of the base station and has
-// an RTK solution, this reports a pseudo-absolute position
-// solution using the base station position and the rover's RTK
-// baseline vector. The full GPS time is given by the preceding
-// MSG_GPS_TIME with the matching time-of-week (tow).
-//
+/// Single-point position in ECEF
+///
+/// The position solution message reports absolute Earth Centered
+/// Earth Fixed (ECEF) coordinates and the status (single point vs
+/// pseudo-absolute RTK) of the position solution. If the rover
+/// receiver knows the surveyed position of the base station and has
+/// an RTK solution, this reports a pseudo-absolute position
+/// solution using the base station position and the rover's RTK
+/// baseline vector. The full GPS time is given by the preceding
+/// MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEFDepA {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// ECEF X coordinate
     pub x: f64,
-    // ^ ECEF X coordinate
+    /// ECEF Y coordinate
     pub y: f64,
-    // ^ ECEF Y coordinate
+    /// ECEF Z coordinate
     pub z: f64,
-    // ^ ECEF Z coordinate
+    /// Position accuracy estimate (not implemented). Defaults to 0.
     pub accuracy: u16,
-    // ^ Position accuracy estimate (not implemented). Defaults to 0.
+    /// Number of satellites used in solution
     pub n_sats: u8,
-    // ^ Number of satellites used in solution
+    /// Status flags
     pub flags: u8,
-    // ^ Status flags
 }
 
 impl MsgPosECEFDepA {
@@ -1085,37 +1085,37 @@ impl super::SBPMessage for MsgPosECEFDepA {
     }
 }
 
-// Geodetic Position
-//
-// This position solution message reports the absolute geodetic
-// coordinates and the status (single point vs pseudo-absolute RTK)
-// of the position solution. If the rover receiver knows the
-// surveyed position of the base station and has an RTK solution,
-// this reports a pseudo-absolute position solution using the base
-// station position and the rover's RTK baseline vector. The full
-// GPS time is given by the preceding MSG_GPS_TIME with the
-// matching time-of-week (tow).
-//
+/// Geodetic Position
+///
+/// This position solution message reports the absolute geodetic
+/// coordinates and the status (single point vs pseudo-absolute RTK)
+/// of the position solution. If the rover receiver knows the
+/// surveyed position of the base station and has an RTK solution,
+/// this reports a pseudo-absolute position solution using the base
+/// station position and the rover's RTK baseline vector. The full
+/// GPS time is given by the preceding MSG_GPS_TIME with the
+/// matching time-of-week (tow).
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosLLHDepA {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// Latitude
     pub lat: f64,
-    // ^ Latitude
+    /// Longitude
     pub lon: f64,
-    // ^ Longitude
+    /// Height
     pub height: f64,
-    // ^ Height
+    /// Horizontal position accuracy estimate (not implemented). Defaults to 0.
     pub h_accuracy: u16,
-    // ^ Horizontal position accuracy estimate (not implemented). Defaults to 0.
+    /// Vertical position accuracy estimate (not implemented). Defaults to 0.
     pub v_accuracy: u16,
-    // ^ Vertical position accuracy estimate (not implemented). Defaults to 0.
+    /// Number of satellites used in solution.
     pub n_sats: u8,
-    // ^ Number of satellites used in solution.
+    /// Status flags
     pub flags: u8,
-    // ^ Status flags
 }
 
 impl MsgPosLLHDepA {
@@ -1145,32 +1145,32 @@ impl super::SBPMessage for MsgPosLLHDepA {
     }
 }
 
-// Baseline Position in ECEF
-//
-// This message reports the baseline solution in Earth Centered
-// Earth Fixed (ECEF) coordinates. This baseline is the relative
-// vector distance from the base station to the rover receiver. The
-// full GPS time is given by the preceding MSG_GPS_TIME with the
-// matching time-of-week (tow).
-//
+/// Baseline Position in ECEF
+///
+/// This message reports the baseline solution in Earth Centered
+/// Earth Fixed (ECEF) coordinates. This baseline is the relative
+/// vector distance from the base station to the rover receiver. The
+/// full GPS time is given by the preceding MSG_GPS_TIME with the
+/// matching time-of-week (tow).
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineECEFDepA {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// Baseline ECEF X coordinate
     pub x: i32,
-    // ^ Baseline ECEF X coordinate
+    /// Baseline ECEF Y coordinate
     pub y: i32,
-    // ^ Baseline ECEF Y coordinate
+    /// Baseline ECEF Z coordinate
     pub z: i32,
-    // ^ Baseline ECEF Z coordinate
+    /// Position accuracy estimate
     pub accuracy: u16,
-    // ^ Position accuracy estimate
+    /// Number of satellites used in solution
     pub n_sats: u8,
-    // ^ Number of satellites used in solution
+    /// Status flags
     pub flags: u8,
-    // ^ Status flags
 }
 
 impl MsgBaselineECEFDepA {
@@ -1199,35 +1199,35 @@ impl super::SBPMessage for MsgBaselineECEFDepA {
     }
 }
 
-// Baseline in NED
-//
-// This message reports the baseline solution in North East Down
-// (NED) coordinates. This baseline is the relative vector distance
-// from the base station to the rover receiver, and NED coordinate
-// system is defined at the local WGS84 tangent plane centered at the
-// base station position.  The full GPS time is given by the
-// preceding MSG_GPS_TIME with the matching time-of-week (tow).
-//
+/// Baseline in NED
+///
+/// This message reports the baseline solution in North East Down
+/// (NED) coordinates. This baseline is the relative vector distance
+/// from the base station to the rover receiver, and NED coordinate
+/// system is defined at the local WGS84 tangent plane centered at the
+/// base station position.  The full GPS time is given by the
+/// preceding MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineNEDDepA {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// Baseline North coordinate
     pub n: i32,
-    // ^ Baseline North coordinate
+    /// Baseline East coordinate
     pub e: i32,
-    // ^ Baseline East coordinate
+    /// Baseline Down coordinate
     pub d: i32,
-    // ^ Baseline Down coordinate
+    /// Horizontal position accuracy estimate (not implemented). Defaults to 0.
     pub h_accuracy: u16,
-    // ^ Horizontal position accuracy estimate (not implemented). Defaults to 0.
+    /// Vertical position accuracy estimate (not implemented). Defaults to 0.
     pub v_accuracy: u16,
-    // ^ Vertical position accuracy estimate (not implemented). Defaults to 0.
+    /// Number of satellites used in solution
     pub n_sats: u8,
-    // ^ Number of satellites used in solution
+    /// Status flags
     pub flags: u8,
-    // ^ Status flags
 }
 
 impl MsgBaselineNEDDepA {
@@ -1257,30 +1257,30 @@ impl super::SBPMessage for MsgBaselineNEDDepA {
     }
 }
 
-// Velocity in ECEF
-//
-// This message reports the velocity in Earth Centered Earth Fixed
-// (ECEF) coordinates. The full GPS time is given by the preceding
-// MSG_GPS_TIME with the matching time-of-week (tow).
-//
+/// Velocity in ECEF
+///
+/// This message reports the velocity in Earth Centered Earth Fixed
+/// (ECEF) coordinates. The full GPS time is given by the preceding
+/// MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelECEFDepA {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// Velocity ECEF X coordinate
     pub x: i32,
-    // ^ Velocity ECEF X coordinate
+    /// Velocity ECEF Y coordinate
     pub y: i32,
-    // ^ Velocity ECEF Y coordinate
+    /// Velocity ECEF Z coordinate
     pub z: i32,
-    // ^ Velocity ECEF Z coordinate
+    /// Velocity accuracy estimate (not implemented). Defaults to 0.
     pub accuracy: u16,
-    // ^ Velocity accuracy estimate (not implemented). Defaults to 0.
+    /// Number of satellites used in solution
     pub n_sats: u8,
-    // ^ Number of satellites used in solution
+    /// Status flags (reserved)
     pub flags: u8,
-    // ^ Status flags (reserved)
 }
 
 impl MsgVelECEFDepA {
@@ -1309,33 +1309,33 @@ impl super::SBPMessage for MsgVelECEFDepA {
     }
 }
 
-// Velocity in NED
-//
-// This message reports the velocity in local North East Down (NED)
-// coordinates. The NED coordinate system is defined as the local WGS84
-// tangent plane centered at the current position. The full GPS time is
-// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
-//
+/// Velocity in NED
+///
+/// This message reports the velocity in local North East Down (NED)
+/// coordinates. The NED coordinate system is defined as the local WGS84
+/// tangent plane centered at the current position. The full GPS time is
+/// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelNEDDepA {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// Velocity North coordinate
     pub n: i32,
-    // ^ Velocity North coordinate
+    /// Velocity East coordinate
     pub e: i32,
-    // ^ Velocity East coordinate
+    /// Velocity Down coordinate
     pub d: i32,
-    // ^ Velocity Down coordinate
+    /// Horizontal velocity accuracy estimate (not implemented). Defaults to 0.
     pub h_accuracy: u16,
-    // ^ Horizontal velocity accuracy estimate (not implemented). Defaults to 0.
+    /// Vertical velocity accuracy estimate (not implemented). Defaults to 0.
     pub v_accuracy: u16,
-    // ^ Vertical velocity accuracy estimate (not implemented). Defaults to 0.
+    /// Number of satellites used in solution
     pub n_sats: u8,
-    // ^ Number of satellites used in solution
+    /// Status flags (reserved)
     pub flags: u8,
-    // ^ Status flags (reserved)
 }
 
 impl MsgVelNEDDepA {
@@ -1365,24 +1365,24 @@ impl super::SBPMessage for MsgVelNEDDepA {
     }
 }
 
-// Heading relative to True North
-//
-// This message reports the baseline heading pointing from the base station
-// to the rover relative to True North. The full GPS time is given by the
-// preceding MSG_GPS_TIME with the matching time-of-week (tow).
-//
+/// Heading relative to True North
+///
+/// This message reports the baseline heading pointing from the base station
+/// to the rover relative to True North. The full GPS time is given by the
+/// preceding MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineHeadingDepA {
     pub sender_id: Option<u16>,
+    /// GPS Time of Week
     pub tow: u32,
-    // ^ GPS Time of Week
+    /// Heading
     pub heading: u32,
-    // ^ Heading
+    /// Number of satellites used in solution
     pub n_sats: u8,
-    // ^ Number of satellites used in solution
+    /// Status flags
     pub flags: u8,
-    // ^ Status flags
 }
 
 impl MsgBaselineHeadingDepA {

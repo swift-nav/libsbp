@@ -12,25 +12,25 @@
 // Automatically generated from yaml/swiftnav/sbp/logging.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-// Logging and debugging messages from the device.
+/// Logging and debugging messages from the device.
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 
-// Plaintext logging messages with levels
-//
-// This message contains a human-readable payload string from the
-// device containing errors, warnings and informational messages at
-// ERROR, WARNING, DEBUG, INFO logging levels.
-//
+/// Plaintext logging messages with levels
+///
+/// This message contains a human-readable payload string from the
+/// device containing errors, warnings and informational messages at
+/// ERROR, WARNING, DEBUG, INFO logging levels.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLog {
     pub sender_id: Option<u16>,
+    /// Logging level
     pub level: u8,
-    // ^ Logging level
+    /// Human-readable string
     pub text: String,
-    // ^ Human-readable string
 }
 
 impl MsgLog {
@@ -54,26 +54,26 @@ impl super::SBPMessage for MsgLog {
     }
 }
 
-// Wrapper for FWD a separate stream of information over SBP
-//
-// This message provides the ability to forward messages over SBP.  This may take the form
-// of wrapping up SBP messages received by Piksi for logging purposes or wrapping
-// another protocol with SBP.
-//
-// The source identifier indicates from what interface a forwarded stream derived.
-// The protocol identifier identifies what the expected protocol the forwarded msg contains.
-// Protocol 0 represents SBP and the remaining values are implementation defined.
-//
+/// Wrapper for FWD a separate stream of information over SBP
+///
+/// This message provides the ability to forward messages over SBP.  This may take the form
+/// of wrapping up SBP messages received by Piksi for logging purposes or wrapping
+/// another protocol with SBP.
+///
+/// The source identifier indicates from what interface a forwarded stream derived.
+/// The protocol identifier identifies what the expected protocol the forwarded msg contains.
+/// Protocol 0 represents SBP and the remaining values are implementation defined.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFwd {
     pub sender_id: Option<u16>,
+    /// source identifier
     pub source: u8,
-    // ^ source identifier
+    /// protocol identifier
     pub protocol: u8,
-    // ^ protocol identifier
+    /// variable length wrapped binary message
     pub fwd_payload: String,
-    // ^ variable length wrapped binary message
 }
 
 impl MsgFwd {
@@ -98,16 +98,16 @@ impl super::SBPMessage for MsgFwd {
     }
 }
 
-// Deprecated
-//
-// Deprecated.
-//
+/// Deprecated
+///
+/// Deprecated.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPrintDep {
     pub sender_id: Option<u16>,
+    /// Human-readable string
     pub text: String,
-    // ^ Human-readable string
 }
 
 impl MsgPrintDep {

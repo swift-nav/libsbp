@@ -12,24 +12,24 @@
 // Automatically generated from yaml/swiftnav/sbp/ssr.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-// Precise State Space Representation (SSR) corrections format
+/// Precise State Space Representation (SSR) corrections format
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
 
-// SSR code biases corrections for a particular satellite.
-//
-// Code biases are to be added to pseudorange.
-// The corrections are conform with typical RTCMv3 MT1059 and 1065.
-//
+/// SSR code biases corrections for a particular satellite.
+///
+/// Code biases are to be added to pseudorange.
+/// The corrections conform with typical RTCMv3 MT1059 and 1065.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct CodeBiasesContent {
+    /// Signal constellation, band and code
     pub code: u8,
-    // ^ Signal constellation, band and code
+    /// Code bias value
     pub value: i16,
-    // ^ Code bias value
 }
 
 impl CodeBiasesContent {
@@ -59,25 +59,25 @@ impl CodeBiasesContent {
     }
 }
 
-// SSR phase biases corrections for a particular satellite.
-//
-// Phase biases are to be added to carrier phase measurements.
-// The corrections are conform with typical RTCMv3 MT1059 and 1065.
-//
+/// SSR phase biases corrections for a particular satellite.
+///
+/// Phase biases are to be added to carrier phase measurements.
+/// The corrections conform with typical RTCMv3 MT1059 and 1065.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct PhaseBiasesContent {
+    /// Signal constellation, band and code
     pub code: u8,
-    // ^ Signal constellation, band and code
+    /// Indicator for integer property
     pub integer_indicator: u8,
-    // ^ Indicator for integer property
+    /// Indicator for two groups of Wide-Lane(s) integer property
     pub widelane_integer_indicator: u8,
-    // ^ Indicator for two groups of Wide-Lane(s) integer property
+    /// Signal phase discontinuity counter. Increased for every discontinuity in
+    /// phase.
     pub discontinuity_counter: u8,
-    // ^ Signal phase discontinuity counter. Increased for every discontinuity in
-    // phase.
+    /// Phase bias for specified signal
     pub bias: i32,
-    // ^ Phase bias for specified signal
 }
 
 impl PhaseBiasesContent {
@@ -110,34 +110,36 @@ impl PhaseBiasesContent {
     }
 }
 
-// Header for MSG_SSR_STEC_CORRECTION message
-//
-// A full set of STEC information will likely span multiple SBP
-// messages, since SBP message a limited to 255 bytes.  The header
-// is used to tie multiple SBP messages into a sequence.
-//
+/// Header for MSG_SSR_STEC_CORRECTION message
+///
+/// A full set of STEC information will likely span multiple SBP
+/// messages, since SBP message a limited to 255 bytes.  The header
+/// is used to tie multiple SBP messages into a sequence.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct STECHeader {
-    pub time: GPSTime,
-    // ^ GNSS time of the STEC data
+    /// GNSS reference time of the correction
+    pub time: GPSTimeSec,
+    /// Number of messages in the dataset
     pub num_msgs: u8,
-    // ^ Number of messages in the dataset
+    /// Position of this message in the dataset
     pub seq_num: u8,
-    // ^ Position of this message in the dataset
-    pub ssr_update_interval: u16,
-    // ^ update interval in seconds
+    /// Update interval between consecutive corrections. Encoded following RTCM
+    /// DF391 specification.
+    pub update_interval: u8,
+    /// IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    /// indicate a change in the SSR generating configuration.
     pub iod_ssr: u8,
-    // ^ range 0 - 15
 }
 
 impl STECHeader {
     pub fn parse(_buf: &mut &[u8]) -> Result<STECHeader, ::parser::MessageError> {
         Ok(STECHeader {
-            time: GPSTime::parse(_buf)?,
+            time: GPSTimeSec::parse(_buf)?,
             num_msgs: _buf.read_u8()?,
             seq_num: _buf.read_u8()?,
-            ssr_update_interval: _buf.read_u16::<LittleEndian>()?,
+            update_interval: _buf.read_u8()?,
             iod_ssr: _buf.read_u8()?,
         })
     }
@@ -161,38 +163,41 @@ impl STECHeader {
     }
 }
 
-// Header for MSG_SSR_GRIDDED_CORRECTION
-//
-// The 3GPP message contains nested variable length arrays
-// which are not suppported in SBP, so each grid point will
-// be identified by the index.
-//
+/// Header for MSG_SSR_GRIDDED_CORRECTION
+///
+/// The 3GPP message contains nested variable length arrays
+/// which are not suppported in SBP, so each grid point will
+/// be identified by the index.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct GriddedCorrectionHeader {
-    pub time: GPSTime,
-    // ^ GNSS time of the STEC data
+    /// GNSS reference time of the correction
+    pub time: GPSTimeSec,
+    /// Number of messages in the dataset
     pub num_msgs: u16,
-    // ^ Number of messages in the dataset
+    /// Position of this message in the dataset
     pub seq_num: u16,
-    // ^ Position of this message in the dataset
-    pub ssr_update_interval: u16,
-    // ^ update interval in seconds
+    /// Update interval between consecutive corrections. Encoded following RTCM
+    /// DF391 specification.
+    pub update_interval: u8,
+    /// IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    /// indicate a change in the SSR generating configuration.
     pub iod_ssr: u8,
-    // ^ range 0 - 15
-    pub tropo_quality: u8,
-    // ^ troposphere quality indicator
+    /// Quality of the troposphere data. Encoded following RTCM DF389
+    /// specifcation but as TECU instead of m.
+    pub tropo_quality_indicator: u8,
 }
 
 impl GriddedCorrectionHeader {
     pub fn parse(_buf: &mut &[u8]) -> Result<GriddedCorrectionHeader, ::parser::MessageError> {
         Ok(GriddedCorrectionHeader {
-            time: GPSTime::parse(_buf)?,
+            time: GPSTimeSec::parse(_buf)?,
             num_msgs: _buf.read_u16::<LittleEndian>()?,
             seq_num: _buf.read_u16::<LittleEndian>()?,
-            ssr_update_interval: _buf.read_u16::<LittleEndian>()?,
+            update_interval: _buf.read_u8()?,
             iod_ssr: _buf.read_u8()?,
-            tropo_quality: _buf.read_u8()?,
+            tropo_quality_indicator: _buf.read_u8()?,
         })
     }
     pub fn parse_array(
@@ -217,19 +222,20 @@ impl GriddedCorrectionHeader {
     }
 }
 
-// None
-//
-// STEC for the given satellite.
-//
+/// None
+///
+/// STEC polynomial for the given satellite.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct STECSatElement {
+    /// Unique space vehicle identifier
     pub sv_id: SvId,
-    // ^ Unique space vehicle identifier
+    /// Quality of the STEC data. Encoded following RTCM DF389 specifcation but
+    /// as TECU instead of m.
     pub stec_quality_indicator: u8,
-    // ^ quality of STEC data
+    /// Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
     pub stec_coeff: Vec<i16>,
-    // ^ coefficents of the STEC polynomial
 }
 
 impl STECSatElement {
@@ -260,17 +266,17 @@ impl STECSatElement {
     }
 }
 
-// troposphere delay correction
-//
-// Contains wet vertical and hydrostatic vertical delay
-//
+/// None
+///
+/// Troposphere delays at the grid point.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct TroposphericDelayCorrection {
+    /// Hydrostatic vertical delay
     pub hydro: i16,
-    // ^ hydrostatic vertical delay
+    /// Wet vertical delay
     pub wet: i8,
-    // ^ wet vertical delay
 }
 
 impl TroposphericDelayCorrection {
@@ -302,17 +308,17 @@ impl TroposphericDelayCorrection {
     }
 }
 
-// None
-//
-// STEC residual
-//
+/// None
+///
+/// STEC residual for the given satellite at the grid point.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct STECResidual {
+    /// space vehicle identifier
     pub sv_id: SvId,
-    // ^ space vehicle identifier
+    /// STEC residual
     pub residual: i16,
-    // ^ STEC residual
 }
 
 impl STECResidual {
@@ -342,20 +348,20 @@ impl STECResidual {
     }
 }
 
-// Grid datum for troposphere and STEC residuals
-//
-// Contains one tropo datum, plus STEC residuals for each space
-// vehicle
-//
+/// Correction data for a single grid point.
+///
+/// Contains one tropo delay, plus STEC residuals for each satellite at the
+/// grid point.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct GridElement {
+    /// Index of the grid point
     pub index: u16,
-    // ^ index of the grid point
+    /// Wet and hydrostatic vertical delays
     pub tropo_delay_correction: TroposphericDelayCorrection,
-    // ^ Wet and Hydrostatic Vertical Delay
-    pub STEC_residuals: Vec<STECResidual>,
-    // ^ STEC Residual for the given space vehicle
+    /// STEC residuals for each satellite
+    pub stec_residuals: Vec<STECResidual>,
 }
 
 impl GridElement {
@@ -363,7 +369,7 @@ impl GridElement {
         Ok(GridElement {
             index: _buf.read_u16::<LittleEndian>()?,
             tropo_delay_correction: TroposphericDelayCorrection::parse(_buf)?,
-            STEC_residuals: STECResidual::parse_array(_buf)?,
+            stec_residuals: STECResidual::parse_array(_buf)?,
         })
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GridElement>, ::parser::MessageError> {
@@ -386,26 +392,26 @@ impl GridElement {
     }
 }
 
-// Defines the grid for STEC and tropo grid messages
-//
-// Defines the grid for STEC and tropo grid messages.
-// Also includes an RLE encoded validity list.
-//
+/// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
+///
+/// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
+/// Also includes an RLE encoded validity list.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct GridDefinitionHeader {
+    /// inverse of region size
     pub region_size_inverse: u8,
-    // ^ inverse of region size
+    /// area width; see spec for details
     pub area_width: u16,
-    // ^ area width; see spec for details
+    /// encoded latitude of the northwest corner of the grid
     pub lat_nw_corner_enc: u16,
-    // ^ encoded latitude of the northwest corner of the grid
+    /// encoded longitude of the northwest corner of the grid
     pub lon_nw_corner_enc: u16,
-    // ^ encoded longitude of the northwest corner of the grid
+    /// Number of messages in the dataset
     pub num_msgs: u8,
-    // ^ Number of messages in the dataset
+    /// Postion of this message in the dataset
     pub seq_num: u8,
-    // ^ Postion of this message in the dataset
 }
 
 impl GridDefinitionHeader {
@@ -441,46 +447,47 @@ impl GridDefinitionHeader {
     }
 }
 
-// Precise orbit and clock correction
-//
-// The precise orbit and clock correction message is
-// to be applied as a delta correction to broadcast
-// ephemeris and is typically an equivalent to the 1060
-// and 1066 RTCM message types
-//
+/// Precise orbit and clock correction
+///
+/// The precise orbit and clock correction message is
+/// to be applied as a delta correction to broadcast
+/// ephemeris and is typically an equivalent to the 1060
+/// and 1066 RTCM message types
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrOrbitClock {
     pub sender_id: Option<u16>,
+    /// GNSS reference time of the correction
     pub time: GPSTimeSec,
-    // ^ GNSS reference time of the correction
+    /// GNSS signal identifier (16 bit)
     pub sid: GnssSignal,
-    // ^ GNSS signal identifier (16 bit)
+    /// Update interval between consecutive corrections. Encoded following RTCM
+    /// DF391 specification.
     pub update_interval: u8,
-    // ^ Update interval between consecutive corrections
+    /// IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    /// indicate a change in the SSR generating configuration
     pub iod_ssr: u8,
-    // ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
-    // indicate a change in the SSR generating configuration
+    /// Issue of broadcast ephemeris data or IODCRC (Beidou)
     pub iod: u32,
-    // ^ Issue of broadcast ephemeris data or IODCRC (Beidou)
+    /// Orbit radial delta correction
     pub radial: i32,
-    // ^ Orbit radial delta correction
+    /// Orbit along delta correction
     pub along: i32,
-    // ^ Orbit along delta correction
+    /// Orbit along delta correction
     pub cross: i32,
-    // ^ Orbit along delta correction
+    /// Velocity of orbit radial delta correction
     pub dot_radial: i32,
-    // ^ Velocity of orbit radial delta correction
+    /// Velocity of orbit along delta correction
     pub dot_along: i32,
-    // ^ Velocity of orbit along delta correction
+    /// Velocity of orbit cross delta correction
     pub dot_cross: i32,
-    // ^ Velocity of orbit cross delta correction
+    /// C0 polynomial coefficient for correction of broadcast satellite clock
     pub c0: i32,
-    // ^ C0 polynomial coefficient for correction of broadcast satellite clock
+    /// C1 polynomial coefficient for correction of broadcast satellite clock
     pub c1: i32,
-    // ^ C1 polynomial coefficient for correction of broadcast satellite clock
+    /// C2 polynomial coefficient for correction of broadcast satellite clock
     pub c2: i32,
-    // ^ C2 polynomial coefficient for correction of broadcast satellite clock
 }
 
 impl MsgSsrOrbitClock {
@@ -516,46 +523,47 @@ impl super::SBPMessage for MsgSsrOrbitClock {
     }
 }
 
-// Precise orbit and clock correction
-//
-// The precise orbit and clock correction message is
-// to be applied as a delta correction to broadcast
-// ephemeris and is typically an equivalent to the 1060
-// and 1066 RTCM message types
-//
+/// Precise orbit and clock correction
+///
+/// The precise orbit and clock correction message is
+/// to be applied as a delta correction to broadcast
+/// ephemeris and is typically an equivalent to the 1060
+/// and 1066 RTCM message types
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrOrbitClockDepA {
     pub sender_id: Option<u16>,
+    /// GNSS reference time of the correction
     pub time: GPSTimeSec,
-    // ^ GNSS reference time of the correction
+    /// GNSS signal identifier (16 bit)
     pub sid: GnssSignal,
-    // ^ GNSS signal identifier (16 bit)
+    /// Update interval between consecutive corrections. Encoded following RTCM
+    /// DF391 specification.
     pub update_interval: u8,
-    // ^ Update interval between consecutive corrections
+    /// IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    /// indicate a change in the SSR generating configuration
     pub iod_ssr: u8,
-    // ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
-    // indicate a change in the SSR generating configuration
+    /// Issue of broadcast ephemeris data
     pub iod: u8,
-    // ^ Issue of broadcast ephemeris data
+    /// Orbit radial delta correction
     pub radial: i32,
-    // ^ Orbit radial delta correction
+    /// Orbit along delta correction
     pub along: i32,
-    // ^ Orbit along delta correction
+    /// Orbit along delta correction
     pub cross: i32,
-    // ^ Orbit along delta correction
+    /// Velocity of orbit radial delta correction
     pub dot_radial: i32,
-    // ^ Velocity of orbit radial delta correction
+    /// Velocity of orbit along delta correction
     pub dot_along: i32,
-    // ^ Velocity of orbit along delta correction
+    /// Velocity of orbit cross delta correction
     pub dot_cross: i32,
-    // ^ Velocity of orbit cross delta correction
+    /// C0 polynomial coefficient for correction of broadcast satellite clock
     pub c0: i32,
-    // ^ C0 polynomial coefficient for correction of broadcast satellite clock
+    /// C1 polynomial coefficient for correction of broadcast satellite clock
     pub c1: i32,
-    // ^ C1 polynomial coefficient for correction of broadcast satellite clock
+    /// C2 polynomial coefficient for correction of broadcast satellite clock
     pub c2: i32,
-    // ^ C2 polynomial coefficient for correction of broadcast satellite clock
 }
 
 impl MsgSsrOrbitClockDepA {
@@ -591,28 +599,29 @@ impl super::SBPMessage for MsgSsrOrbitClockDepA {
     }
 }
 
-// Precise code biases correction
-//
-// The precise code biases message is to be added
-// to the pseudorange of the corresponding signal
-// to get corrected pseudorange. It is typically
-// an equivalent to the 1059 and 1065 RTCM message types
-//
+/// Precise code biases correction
+///
+/// The precise code biases message is to be added
+/// to the pseudorange of the corresponding signal
+/// to get corrected pseudorange. It is typically
+/// an equivalent to the 1059 and 1065 RTCM message types
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrCodeBiases {
     pub sender_id: Option<u16>,
+    /// GNSS reference time of the correction
     pub time: GPSTimeSec,
-    // ^ GNSS reference time of the correction
+    /// GNSS signal identifier (16 bit)
     pub sid: GnssSignal,
-    // ^ GNSS signal identifier (16 bit)
+    /// Update interval between consecutive corrections. Encoded following RTCM
+    /// DF391 specification.
     pub update_interval: u8,
-    // ^ Update interval between consecutive corrections
+    /// IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    /// indicate a change in the SSR generating configuration
     pub iod_ssr: u8,
-    // ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
-    // indicate a change in the SSR generating configuration
+    /// Code biases for the different satellite signals
     pub biases: Vec<CodeBiasesContent>,
-    // ^ Code biases for the different satellite signals
 }
 
 impl MsgSsrCodeBiases {
@@ -639,38 +648,39 @@ impl super::SBPMessage for MsgSsrCodeBiases {
     }
 }
 
-// Precise phase biases correction
-//
-// The precise phase biases message contains the biases
-// to be added to the carrier phase of the corresponding
-// signal to get corrected carrier phase measurement, as
-// well as the satellite yaw angle to be applied to compute
-// the phase wind-up correction.
-// It is typically an equivalent to the 1265 RTCM message types
-//
+/// Precise phase biases correction
+///
+/// The precise phase biases message contains the biases
+/// to be added to the carrier phase of the corresponding
+/// signal to get corrected carrier phase measurement, as
+/// well as the satellite yaw angle to be applied to compute
+/// the phase wind-up correction.
+/// It is typically an equivalent to the 1265 RTCM message types
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrPhaseBiases {
     pub sender_id: Option<u16>,
+    /// GNSS reference time of the correction
     pub time: GPSTimeSec,
-    // ^ GNSS reference time of the correction
+    /// GNSS signal identifier (16 bit)
     pub sid: GnssSignal,
-    // ^ GNSS signal identifier (16 bit)
+    /// Update interval between consecutive corrections. Encoded following RTCM
+    /// DF391 specification.
     pub update_interval: u8,
-    // ^ Update interval between consecutive corrections
+    /// IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    /// indicate a change in the SSR generating configuration
     pub iod_ssr: u8,
-    // ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
-    // indicate a change in the SSR generating configuration
+    /// Indicator for the dispersive phase biases property.
     pub dispersive_bias: u8,
-    // ^ Indicator for the dispersive phase biases property.
+    /// Consistency indicator for Melbourne-Wubbena linear combinations
     pub mw_consistency: u8,
-    // ^ Consistency indicator for Melbourne-Wubbena linear combinations
+    /// Satellite yaw angle
     pub yaw: u16,
-    // ^ Satellite yaw angle
+    /// Satellite yaw angle rate
     pub yaw_rate: i8,
-    // ^ Satellite yaw angle rate
+    /// Phase biases corrections for a satellite being tracked.
     pub biases: Vec<PhaseBiasesContent>,
-    // ^ Phase biases corrections for a satellite being tracked.
 }
 
 impl MsgSsrPhaseBiases {
@@ -701,21 +711,21 @@ impl super::SBPMessage for MsgSsrPhaseBiases {
     }
 }
 
-// Slant Total Electron Content
-//
-// The STEC per space vehicle, given as polynomial approximation for
-// a given grid.  This should be combined with SSR-GriddedCorrection
-// message to get the state space representation of the atmospheric
-// delay.
-//
+/// Slant Total Electron Content
+///
+/// The STEC per space vehicle, given as polynomial approximation for
+/// a given grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION
+/// message to get the state space representation of the atmospheric
+/// delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrStecCorrection {
     pub sender_id: Option<u16>,
+    /// Header of a STEC message
     pub header: STECHeader,
-    // ^ Header of a STEC message
+    /// Array of STEC information for each space vehicle
     pub stec_sat_list: Vec<STECSatElement>,
-    // ^ Array of STEC information for each space vehicle
 }
 
 impl MsgSsrStecCorrection {
@@ -739,18 +749,19 @@ impl super::SBPMessage for MsgSsrStecCorrection {
     }
 }
 
-// Gridded troposphere and STEC residuals
-//
-// STEC residuals are per space vehicle, tropo is not.
-//
+/// Gridded troposphere and STEC residuals
+///
+/// STEC residuals are per space vehicle, tropo is not.
+/// It is typically equivalent to the QZSS CLAS Sub Type 9 messages
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGriddedCorrection {
     pub sender_id: Option<u16>,
+    /// Header of a Gridded Correction message
     pub header: GriddedCorrectionHeader,
-    // ^ Header of a Gridded Correction message
+    /// Tropo and STEC residuals for the given grid point
     pub element: GridElement,
-    // ^ Tropo and STEC residuals for the given grid point
 }
 
 impl MsgSsrGriddedCorrection {
@@ -774,21 +785,21 @@ impl super::SBPMessage for MsgSsrGriddedCorrection {
     }
 }
 
-// None
-//
-// Definition of the grid for STEC and tropo messages
-//
+/// None
+///
+/// Definition of the grid for STEC and tropo messages
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGridDefinition {
     pub sender_id: Option<u16>,
+    /// Header of a Gridded Correction message
     pub header: GridDefinitionHeader,
-    // ^ Header of a Gridded Correction message
+    /// Run Length Encode list of quadrants that contain valid data. The spec
+    /// describes the encoding scheme in detail, but essentially the index of
+    /// the quadrants that contain transitions between valid and invalid (and
+    /// vice versa) are encoded as u8 integers.
     pub rle_list: Vec<u8>,
-    // ^ Run Length Encode list of quadrants that contain valid data. The spec
-    // describes the encoding scheme in detail, but essentially the index of
-    // the quadrants that contain transitions between valid and invalid (and
-    // vice versa) are encoded as u8 integers.
 }
 
 impl MsgSsrGridDefinition {

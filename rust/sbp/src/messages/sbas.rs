@@ -12,29 +12,29 @@
 // Automatically generated from yaml/swiftnav/sbp/sbas.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-// SBAS data
+/// SBAS data
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
 
-// Raw SBAS data
-//
-// This message is sent once per second per SBAS satellite. ME checks the
-// parity of the data block and sends only blocks that pass the check.
-//
+/// Raw SBAS data
+///
+/// This message is sent once per second per SBAS satellite. ME checks the
+/// parity of the data block and sends only blocks that pass the check.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSbasRaw {
     pub sender_id: Option<u16>,
+    /// GNSS signal identifier.
     pub sid: GnssSignal,
-    // ^ GNSS signal identifier.
+    /// GPS time-of-week at the start of the data block.
     pub tow: u32,
-    // ^ GPS time-of-week at the start of the data block.
+    /// SBAS message type (0-63)
     pub message_type: u8,
-    // ^ SBAS message type (0-63)
+    /// Raw SBAS data field of 212 bits (last byte padded with zeros).
     pub data: Vec<u8>,
-    // ^ Raw SBAS data field of 212 bits (last byte padded with zeros).
 }
 
 impl MsgSbasRaw {

@@ -12,22 +12,22 @@
 // Automatically generated from yaml/swiftnav/sbp/user.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-// Messages reserved for use by the user.
+/// Messages reserved for use by the user.
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 
-// User data
-//
-// This message can contain any application specific user data up to a
-// maximum length of 255 bytes per message.
-//
+/// User data
+///
+/// This message can contain any application specific user data up to a
+/// maximum length of 255 bytes per message.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgUserData {
     pub sender_id: Option<u16>,
+    /// User data payload
     pub contents: Vec<u8>,
-    // ^ User data payload
 }
 
 impl MsgUserData {

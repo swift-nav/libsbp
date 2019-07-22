@@ -12,69 +12,69 @@
 // Automatically generated from yaml/swiftnav/sbp/tracking.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-// Satellite code and carrier-phase tracking messages from the device.
+/// Satellite code and carrier-phase tracking messages from the device.
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
 
-// Detailed signal tracking channel states. DEPRECATED.
-//
-// The tracking message returns a set tracking channel parameters for a
-// single tracking channel useful for debugging issues.
-//
+/// Detailed signal tracking channel states. DEPRECATED.
+///
+/// The tracking message returns a set tracking channel parameters for a
+/// single tracking channel useful for debugging issues.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDetailedDepA {
     pub sender_id: Option<u16>,
+    /// Receiver clock time.
     pub recv_time: u64,
-    // ^ Receiver clock time.
+    /// Time of transmission of signal from satellite. TOW only valid when TOW
+    /// status is decoded or propagated. WN only valid when week number valid
+    /// flag is set.
     pub tot: GPSTime,
-    // ^ Time of transmission of signal from satellite. TOW only valid when TOW
-    // status is decoded or propagated. WN only valid when week number valid
-    // flag is set.
+    /// Pseudorange observation. Valid only when pseudorange valid flag is set.
     pub P: u32,
-    // ^ Pseudorange observation. Valid only when pseudorange valid flag is set.
+    /// Pseudorange observation standard deviation. Valid only when pseudorange
+    /// valid flag is set.
     pub P_std: u16,
-    // ^ Pseudorange observation standard deviation. Valid only when pseudorange
-    // valid flag is set.
+    /// Carrier phase observation with typical sign convention. Valid only when
+    /// PLL pessimistic lock is achieved.
     pub L: CarrierPhase,
-    // ^ Carrier phase observation with typical sign convention. Valid only when
-    // PLL pessimistic lock is achieved.
+    /// Carrier-to-Noise density
     pub cn0: u8,
-    // ^ Carrier-to-Noise density
+    /// Lock time. It is encoded according to DF402 from the RTCM 10403.2
+    /// Amendment 2 specification. Valid values range from 0 to 15.
     pub lock: u16,
-    // ^ Lock time. It is encoded according to DF402 from the RTCM 10403.2
-    // Amendment 2 specification. Valid values range from 0 to 15.
+    /// GNSS signal identifier.
     pub sid: GnssSignal,
-    // ^ GNSS signal identifier.
+    /// Carrier Doppler frequency.
     pub doppler: i32,
-    // ^ Carrier Doppler frequency.
+    /// Carrier Doppler frequency standard deviation.
     pub doppler_std: u16,
-    // ^ Carrier Doppler frequency standard deviation.
+    /// Number of seconds of continuous tracking. Specifies how much time signal
+    /// is in continuous track.
     pub uptime: u32,
-    // ^ Number of seconds of continuous tracking. Specifies how much time signal
-    // is in continuous track.
+    /// TCXO clock offset. Valid only when valid clock valid flag is set.
     pub clock_offset: i16,
-    // ^ TCXO clock offset. Valid only when valid clock valid flag is set.
+    /// TCXO clock drift. Valid only when valid clock valid flag is set.
     pub clock_drift: i16,
-    // ^ TCXO clock drift. Valid only when valid clock valid flag is set.
+    /// Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
     pub corr_spacing: u16,
-    // ^ Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
+    /// Acceleration. Valid only when acceleration valid flag is set.
     pub acceleration: i8,
-    // ^ Acceleration. Valid only when acceleration valid flag is set.
+    /// Synchronization status flags.
     pub sync_flags: u8,
-    // ^ Synchronization status flags.
+    /// TOW status flags.
     pub tow_flags: u8,
-    // ^ TOW status flags.
+    /// Tracking loop status flags.
     pub track_flags: u8,
-    // ^ Tracking loop status flags.
+    /// Navigation data status flags.
     pub nav_flags: u8,
-    // ^ Navigation data status flags.
+    /// Parameters sets flags.
     pub pset_flags: u8,
-    // ^ Parameters sets flags.
+    /// Miscellaneous flags.
     pub misc_flags: u8,
-    // ^ Miscellaneous flags.
 }
 
 impl MsgTrackingStateDetailedDepA {
@@ -117,62 +117,62 @@ impl super::SBPMessage for MsgTrackingStateDetailedDepA {
     }
 }
 
-// Deprecated
-//
-// Deprecated.
-//
+/// Deprecated
+///
+/// Deprecated.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDetailedDep {
     pub sender_id: Option<u16>,
+    /// Receiver clock time.
     pub recv_time: u64,
-    // ^ Receiver clock time.
+    /// Time of transmission of signal from satellite. TOW only valid when TOW
+    /// status is decoded or propagated. WN only valid when week number valid
+    /// flag is set.
     pub tot: GPSTimeDep,
-    // ^ Time of transmission of signal from satellite. TOW only valid when TOW
-    // status is decoded or propagated. WN only valid when week number valid
-    // flag is set.
+    /// Pseudorange observation. Valid only when pseudorange valid flag is set.
     pub P: u32,
-    // ^ Pseudorange observation. Valid only when pseudorange valid flag is set.
+    /// Pseudorange observation standard deviation. Valid only when pseudorange
+    /// valid flag is set.
     pub P_std: u16,
-    // ^ Pseudorange observation standard deviation. Valid only when pseudorange
-    // valid flag is set.
+    /// Carrier phase observation with typical sign convention. Valid only when
+    /// PLL pessimistic lock is achieved.
     pub L: CarrierPhase,
-    // ^ Carrier phase observation with typical sign convention. Valid only when
-    // PLL pessimistic lock is achieved.
+    /// Carrier-to-Noise density
     pub cn0: u8,
-    // ^ Carrier-to-Noise density
+    /// Lock time. It is encoded according to DF402 from the RTCM 10403.2
+    /// Amendment 2 specification. Valid values range from 0 to 15.
     pub lock: u16,
-    // ^ Lock time. It is encoded according to DF402 from the RTCM 10403.2
-    // Amendment 2 specification. Valid values range from 0 to 15.
+    /// GNSS signal identifier.
     pub sid: GnssSignalDep,
-    // ^ GNSS signal identifier.
+    /// Carrier Doppler frequency.
     pub doppler: i32,
-    // ^ Carrier Doppler frequency.
+    /// Carrier Doppler frequency standard deviation.
     pub doppler_std: u16,
-    // ^ Carrier Doppler frequency standard deviation.
+    /// Number of seconds of continuous tracking. Specifies how much time signal
+    /// is in continuous track.
     pub uptime: u32,
-    // ^ Number of seconds of continuous tracking. Specifies how much time signal
-    // is in continuous track.
+    /// TCXO clock offset. Valid only when valid clock valid flag is set.
     pub clock_offset: i16,
-    // ^ TCXO clock offset. Valid only when valid clock valid flag is set.
+    /// TCXO clock drift. Valid only when valid clock valid flag is set.
     pub clock_drift: i16,
-    // ^ TCXO clock drift. Valid only when valid clock valid flag is set.
+    /// Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
     pub corr_spacing: u16,
-    // ^ Early-Prompt (EP) and Prompt-Late (PL) correlators spacing.
+    /// Acceleration. Valid only when acceleration valid flag is set.
     pub acceleration: i8,
-    // ^ Acceleration. Valid only when acceleration valid flag is set.
+    /// Synchronization status flags.
     pub sync_flags: u8,
-    // ^ Synchronization status flags.
+    /// TOW status flags.
     pub tow_flags: u8,
-    // ^ TOW status flags.
+    /// Tracking loop status flags.
     pub track_flags: u8,
-    // ^ Tracking loop status flags.
+    /// Navigation data status flags.
     pub nav_flags: u8,
-    // ^ Navigation data status flags.
+    /// Parameters sets flags.
     pub pset_flags: u8,
-    // ^ Parameters sets flags.
+    /// Miscellaneous flags.
     pub misc_flags: u8,
-    // ^ Miscellaneous flags.
 }
 
 impl MsgTrackingStateDetailedDep {
@@ -215,20 +215,20 @@ impl super::SBPMessage for MsgTrackingStateDetailedDep {
     }
 }
 
-// Signal tracking channel state
-//
-// Tracking channel state for a specific satellite signal and
-// measured signal power.
-//
+/// Signal tracking channel state
+///
+/// Tracking channel state for a specific satellite signal and
+/// measured signal power.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelState {
+    /// GNSS signal being tracked
     pub sid: GnssSignal,
-    // ^ GNSS signal being tracked
+    /// Frequency channel number (GLONASS only)
     pub fcn: u8,
-    // ^ Frequency channel number (GLONASS only)
+    /// Carrier-to-Noise density.  Zero implies invalid cn0.
     pub cn0: u8,
-    // ^ Carrier-to-Noise density.  Zero implies invalid cn0.
 }
 
 impl TrackingChannelState {
@@ -261,18 +261,18 @@ impl TrackingChannelState {
     }
 }
 
-// Signal tracking channel states
-//
-// The tracking message returns a variable-length array of tracking
-// channel states. It reports status and carrier-to-noise density
-// measurements for all tracked satellites.
-//
+/// Signal tracking channel states
+///
+/// The tracking message returns a variable-length array of tracking
+/// channel states. It reports status and carrier-to-noise density
+/// measurements for all tracked satellites.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingState {
     pub sender_id: Option<u16>,
+    /// Signal tracking channel state
     pub states: Vec<TrackingChannelState>,
-    // ^ Signal tracking channel state
 }
 
 impl MsgTrackingState {
@@ -295,22 +295,22 @@ impl super::SBPMessage for MsgTrackingState {
     }
 }
 
-// Measurement Engine signal tracking channel state
-//
-// Measurement Engine tracking channel state for a specific satellite signal
-// and measured signal power.
-// The mesid field for Glonass can either
-// carry the FCN as 100 + FCN where FCN is in [-7, +6] or
-// the Slot ID (from 1 to 28)
-//
+/// Measurement Engine signal tracking channel state
+///
+/// Measurement Engine tracking channel state for a specific satellite signal
+/// and measured signal power.
+/// The mesid field for Glonass can either
+/// carry the FCN as 100 + FCN where FCN is in [-7, +6] or
+/// the Slot ID (from 1 to 28)
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MeasurementState {
+    /// Measurement Engine GNSS signal being tracked (carries either Glonass FCN
+    /// or SLOT)
     pub mesid: GnssSignal,
-    // ^ Measurement Engine GNSS signal being tracked (carries either Glonass FCN
-    // or SLOT)
+    /// Carrier-to-Noise density.  Zero implies invalid cn0.
     pub cn0: u8,
-    // ^ Carrier-to-Noise density.  Zero implies invalid cn0.
 }
 
 impl MeasurementState {
@@ -340,18 +340,18 @@ impl MeasurementState {
     }
 }
 
-// Measurement Engine signal tracking channel states
-//
-// The tracking message returns a variable-length array of tracking
-// channel states. It reports status and carrier-to-noise density
-// measurements for all tracked satellites.
-//
+/// Measurement Engine signal tracking channel states
+///
+/// The tracking message returns a variable-length array of tracking
+/// channel states. It reports status and carrier-to-noise density
+/// measurements for all tracked satellites.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgMeasurementState {
     pub sender_id: Option<u16>,
+    /// ME signal tracking channel state
     pub states: Vec<MeasurementState>,
-    // ^ ME signal tracking channel state
 }
 
 impl MsgMeasurementState {
@@ -374,17 +374,17 @@ impl super::SBPMessage for MsgMeasurementState {
     }
 }
 
-// Complex correlation structure
-//
-// Structure containing in-phase and quadrature correlation components.
-//
+/// Complex correlation structure
+///
+/// Structure containing in-phase and quadrature correlation components.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelCorrelation {
+    /// In-phase correlation
     pub I: i16,
-    // ^ In-phase correlation
+    /// Quadrature correlation
     pub Q: i16,
-    // ^ Quadrature correlation
 }
 
 impl TrackingChannelCorrelation {
@@ -416,21 +416,21 @@ impl TrackingChannelCorrelation {
     }
 }
 
-// Tracking channel correlations
-//
-// When enabled, a tracking channel can output the correlations at each
-// update interval.
-//
+/// Tracking channel correlations
+///
+/// When enabled, a tracking channel can output the correlations at each
+/// update interval.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingIq {
     pub sender_id: Option<u16>,
+    /// Tracking channel of origin
     pub channel: u8,
-    // ^ Tracking channel of origin
+    /// GNSS signal identifier
     pub sid: GnssSignal,
-    // ^ GNSS signal identifier
+    /// Early, Prompt and Late correlations
     pub corrs: Vec<TrackingChannelCorrelation>,
-    // ^ Early, Prompt and Late correlations
 }
 
 impl MsgTrackingIq {
@@ -455,17 +455,17 @@ impl super::SBPMessage for MsgTrackingIq {
     }
 }
 
-// Complex correlation structure
-//
-// Structure containing in-phase and quadrature correlation components.
-//
+/// Complex correlation structure
+///
+/// Structure containing in-phase and quadrature correlation components.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelCorrelationDep {
+    /// In-phase correlation
     pub I: i32,
-    // ^ In-phase correlation
+    /// Quadrature correlation
     pub Q: i32,
-    // ^ Quadrature correlation
 }
 
 impl TrackingChannelCorrelationDep {
@@ -499,21 +499,21 @@ impl TrackingChannelCorrelationDep {
     }
 }
 
-// Tracking channel correlations
-//
-// When enabled, a tracking channel can output the correlations at each
-// update interval.
-//
+/// Tracking channel correlations
+///
+/// When enabled, a tracking channel can output the correlations at each
+/// update interval.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingIqDepB {
     pub sender_id: Option<u16>,
+    /// Tracking channel of origin
     pub channel: u8,
-    // ^ Tracking channel of origin
+    /// GNSS signal identifier
     pub sid: GnssSignal,
-    // ^ GNSS signal identifier
+    /// Early, Prompt and Late correlations
     pub corrs: Vec<TrackingChannelCorrelationDep>,
-    // ^ Early, Prompt and Late correlations
 }
 
 impl MsgTrackingIqDepB {
@@ -538,20 +538,20 @@ impl super::SBPMessage for MsgTrackingIqDepB {
     }
 }
 
-// Deprecated
-//
-// Deprecated.
-//
+/// Deprecated
+///
+/// Deprecated.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingIqDepA {
     pub sender_id: Option<u16>,
+    /// Tracking channel of origin
     pub channel: u8,
-    // ^ Tracking channel of origin
+    /// GNSS signal identifier
     pub sid: GnssSignalDep,
-    // ^ GNSS signal identifier
+    /// Early, Prompt and Late correlations
     pub corrs: Vec<TrackingChannelCorrelationDep>,
-    // ^ Early, Prompt and Late correlations
 }
 
 impl MsgTrackingIqDepA {
@@ -576,19 +576,19 @@ impl super::SBPMessage for MsgTrackingIqDepA {
     }
 }
 
-// Deprecated
-//
-// Deprecated.
-//
+/// Deprecated
+///
+/// Deprecated.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelStateDepA {
+    /// Status of tracking channel
     pub state: u8,
-    // ^ Status of tracking channel
+    /// PRN-1 being tracked
     pub prn: u8,
-    // ^ PRN-1 being tracked
+    /// Carrier-to-noise density
     pub cn0: f32,
-    // ^ Carrier-to-noise density
 }
 
 impl TrackingChannelStateDepA {
@@ -621,16 +621,16 @@ impl TrackingChannelStateDepA {
     }
 }
 
-// Deprecated
-//
-// Deprecated.
-//
+/// Deprecated
+///
+/// Deprecated.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDepA {
     pub sender_id: Option<u16>,
+    /// Satellite tracking channel state
     pub states: Vec<TrackingChannelStateDepA>,
-    // ^ Satellite tracking channel state
 }
 
 impl MsgTrackingStateDepA {
@@ -653,19 +653,19 @@ impl super::SBPMessage for MsgTrackingStateDepA {
     }
 }
 
-// Deprecated.
-//
-// Deprecated.
-//
+/// Deprecated.
+///
+/// Deprecated.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelStateDepB {
+    /// Status of tracking channel
     pub state: u8,
-    // ^ Status of tracking channel
+    /// GNSS signal being tracked
     pub sid: GnssSignalDep,
-    // ^ GNSS signal being tracked
+    /// Carrier-to-noise density
     pub cn0: f32,
-    // ^ Carrier-to-noise density
 }
 
 impl TrackingChannelStateDepB {
@@ -698,16 +698,16 @@ impl TrackingChannelStateDepB {
     }
 }
 
-// Deprecated.
-//
-// Deprecated.
-//
+/// Deprecated.
+///
+/// Deprecated.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDepB {
     pub sender_id: Option<u16>,
+    /// Signal tracking channel state
     pub states: Vec<TrackingChannelStateDepB>,
-    // ^ Signal tracking channel state
 }
 
 impl MsgTrackingStateDepB {

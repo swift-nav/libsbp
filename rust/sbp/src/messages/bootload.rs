@@ -12,21 +12,21 @@
 // Automatically generated from yaml/swiftnav/sbp/bootload.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-// Messages for the bootloading configuration of a Piksi 2.3.1.  This message
-// group does not apply to Piksi Multi.
-//
-// Note that some of these messages share the same message type ID for both the
-// host request and the device response.
+/// Messages for the bootloading configuration of a Piksi 2.3.1.  This message
+/// group does not apply to Piksi Multi.
+///
+/// Note that some of these messages share the same message type ID for both the
+/// host request and the device response.
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 
-// Bootloading handshake request (host => device)
-//
-// The handshake message request from the host establishes a
-// handshake between the device bootloader and the host. The
-// response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
-//
+/// Bootloading handshake request (host => device)
+///
+/// The handshake message request from the host establishes a
+/// handshake between the device bootloader and the host. The
+/// response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeReq {
@@ -50,22 +50,22 @@ impl super::SBPMessage for MsgBootloaderHandshakeReq {
     }
 }
 
-// Bootloading handshake response (host <= device)
-//
-// The handshake message response from the device establishes a
-// handshake between the device bootloader and the host. The
-// request from the host is MSG_BOOTLOADER_HANDSHAKE_REQ.  The
-// payload contains the bootloader version number and the SBP
-// protocol version number.
-//
+/// Bootloading handshake response (host <= device)
+///
+/// The handshake message response from the device establishes a
+/// handshake between the device bootloader and the host. The
+/// request from the host is MSG_BOOTLOADER_HANDSHAKE_REQ.  The
+/// payload contains the bootloader version number and the SBP
+/// protocol version number.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeResp {
     pub sender_id: Option<u16>,
+    /// Bootloader flags
     pub flags: u32,
-    // ^ Bootloader flags
+    /// Bootloader version number
     pub version: String,
-    // ^ Bootloader version number
 }
 
 impl MsgBootloaderHandshakeResp {
@@ -89,16 +89,16 @@ impl super::SBPMessage for MsgBootloaderHandshakeResp {
     }
 }
 
-// Bootloader jump to application (host => device)
-//
-// The host initiates the bootloader to jump to the application.
-//
+/// Bootloader jump to application (host => device)
+///
+/// The host initiates the bootloader to jump to the application.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderJumpToApp {
     pub sender_id: Option<u16>,
+    /// Ignored by the device
     pub jump: u8,
-    // ^ Ignored by the device
 }
 
 impl MsgBootloaderJumpToApp {
@@ -121,15 +121,15 @@ impl super::SBPMessage for MsgBootloaderJumpToApp {
     }
 }
 
-// Read FPGA device ID over UART request (host => device)
-//
-// The device message from the host reads a unique device
-// identifier from the SwiftNAP, an FPGA. The host requests the ID
-// by sending a MSG_NAP_DEVICE_DNA_REQ message. The device
-// responds with a MSG_NAP_DEVICE_DNA_RESP message with the
-// device ID in the payload. Note that this ID is tied to the FPGA,
-// and not related to the Piksi's serial number.
-//
+/// Read FPGA device ID over UART request (host => device)
+///
+/// The device message from the host reads a unique device
+/// identifier from the SwiftNAP, an FPGA. The host requests the ID
+/// by sending a MSG_NAP_DEVICE_DNA_REQ message. The device
+/// responds with a MSG_NAP_DEVICE_DNA_RESP message with the
+/// device ID in the payload. Note that this ID is tied to the FPGA,
+/// and not related to the Piksi's serial number.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgNapDeviceDnaReq {
@@ -153,21 +153,21 @@ impl super::SBPMessage for MsgNapDeviceDnaReq {
     }
 }
 
-// Read FPGA device ID over UART response (host <= device)
-//
-// The device message from the host reads a unique device
-// identifier from the SwiftNAP, an FPGA. The host requests the ID
-// by sending a MSG_NAP_DEVICE_DNA_REQ message. The device
-// responds with a MSG_NAP_DEVICE_DNA_RESP messagage with the
-// device ID in the payload. Note that this ID is tied to the FPGA,
-// and not related to the Piksi's serial number.
-//
+/// Read FPGA device ID over UART response (host <= device)
+///
+/// The device message from the host reads a unique device
+/// identifier from the SwiftNAP, an FPGA. The host requests the ID
+/// by sending a MSG_NAP_DEVICE_DNA_REQ message. The device
+/// responds with a MSG_NAP_DEVICE_DNA_RESP messagage with the
+/// device ID in the payload. Note that this ID is tied to the FPGA,
+/// and not related to the Piksi's serial number.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgNapDeviceDnaResp {
     pub sender_id: Option<u16>,
+    /// 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on the right.
     pub dna: Vec<u8>,
-    // ^ 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on the right.
 }
 
 impl MsgNapDeviceDnaResp {
@@ -190,16 +190,16 @@ impl super::SBPMessage for MsgNapDeviceDnaResp {
     }
 }
 
-// Deprecated
-//
-// Deprecated.
-//
+/// Deprecated
+///
+/// Deprecated.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeDepA {
     pub sender_id: Option<u16>,
+    /// Version number string (not NULL terminated)
     pub handshake: Vec<u8>,
-    // ^ Version number string (not NULL terminated)
 }
 
 impl MsgBootloaderHandshakeDepA {

@@ -12,24 +12,24 @@
 // Automatically generated from yaml/swiftnav/sbp/observation.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-// Satellite observation messages from the device.
+/// Satellite observation messages from the device.
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
 
-// Header for observation message.
-//
-// Header of a GNSS observation message.
-//
+/// Header for observation message.
+///
+/// Header of a GNSS observation message.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct ObservationHeader {
+    /// GNSS time of this observation
     pub t: GPSTime,
-    // ^ GNSS time of this observation
+    /// Total number of observations. First nibble is the size of the sequence
+    /// (n), second nibble is the zero-indexed counter (ith packet of n)
     pub n_obs: u8,
-    // ^ Total number of observations. First nibble is the size of the sequence
-    // (n), second nibble is the zero-indexed counter (ith packet of n)
 }
 
 impl ObservationHeader {
@@ -59,20 +59,20 @@ impl ObservationHeader {
     }
 }
 
-// GNSS doppler measurement.
-//
-// Doppler measurement in Hz represented as a 24-bit
-// fixed point number with Q16.8 layout, i.e. 16-bits of whole
-// doppler and 8-bits of fractional doppler. This doppler is defined
-// as positive for approaching satellites.
-//
+/// GNSS doppler measurement.
+///
+/// Doppler measurement in Hz represented as a 24-bit
+/// fixed point number with Q16.8 layout, i.e. 16-bits of whole
+/// doppler and 8-bits of fractional doppler. This doppler is defined
+/// as positive for approaching satellites.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct Doppler {
+    /// Doppler whole Hz
     pub i: i16,
-    // ^ Doppler whole Hz
+    /// Doppler fractional part
     pub f: u8,
-    // ^ Doppler fractional part
 }
 
 impl Doppler {
@@ -102,40 +102,40 @@ impl Doppler {
     }
 }
 
-// GNSS observations for a particular satellite signal.
-//
-// Pseudorange and carrier phase observation for a satellite being tracked.
-// The observations are interoperable with 3rd party receivers and conform with
-// typical RTCM 3.1 message GPS/GLO observations.
-//
-// Carrier phase observations are not guaranteed to be aligned to the RINEX 3
-// or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
-// peformed.
-//
+/// GNSS observations for a particular satellite signal.
+///
+/// Pseudorange and carrier phase observation for a satellite being tracked.
+/// The observations are interoperable with 3rd party receivers and conform with
+/// typical RTCM 3.1 message GPS/GLO observations.
+///
+/// Carrier phase observations are not guaranteed to be aligned to the RINEX 3
+/// or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
+/// peformed.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct PackedObsContent {
+    /// Pseudorange observation
     pub P: u32,
-    // ^ Pseudorange observation
+    /// Carrier phase observation with typical sign convention.
     pub L: CarrierPhase,
-    // ^ Carrier phase observation with typical sign convention.
+    /// Doppler observation with typical sign convention.
     pub D: Doppler,
-    // ^ Doppler observation with typical sign convention.
+    /// Carrier-to-Noise density.  Zero implies invalid cn0.
     pub cn0: u8,
-    // ^ Carrier-to-Noise density.  Zero implies invalid cn0.
+    /// Lock timer. This value gives an indication of the time for which a
+    /// signal has maintained continuous phase lock. Whenever a signal has lost
+    /// and regained lock, this value is reset to zero. It is encoded according
+    /// to DF402 from the RTCM 10403.2 Amendment 2 specification.  Valid values
+    /// range from 0 to 15 and the most significant nibble is reserved for
+    /// future use.
     pub lock: u8,
-    // ^ Lock timer. This value gives an indication of the time for which a
-    // signal has maintained continuous phase lock. Whenever a signal has lost
-    // and regained lock, this value is reset to zero. It is encoded according
-    // to DF402 from the RTCM 10403.2 Amendment 2 specification.  Valid values
-    // range from 0 to 15 and the most significant nibble is reserved for
-    // future use.
+    /// Measurement status flags. A bit field of flags providing the status of
+    /// this observation.  If this field is 0 it means only the Cn0 estimate for
+    /// the signal is valid.
     pub flags: u8,
-    // ^ Measurement status flags. A bit field of flags providing the status of
-    // this observation.  If this field is 0 it means only the Cn0 estimate for
-    // the signal is valid.
+    /// GNSS signal identifier (16 bit)
     pub sid: GnssSignal,
-    // ^ GNSS signal identifier (16 bit)
 }
 
 impl PackedObsContent {
@@ -170,34 +170,34 @@ impl PackedObsContent {
     }
 }
 
-// Network correction for a particular satellite signal.
-//
-// Pseudorange and carrier phase network corrections for a satellite signal.
-//
+/// Network correction for a particular satellite signal.
+///
+/// Pseudorange and carrier phase network corrections for a satellite signal.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct PackedOsrContent {
+    /// Pseudorange observation
     pub P: u32,
-    // ^ Pseudorange observation
+    /// Carrier phase observation with typical sign convention.
     pub L: CarrierPhase,
-    // ^ Carrier phase observation with typical sign convention.
+    /// Lock timer. This value gives an indication of the time for which a
+    /// signal has maintained continuous phase lock. Whenever a signal has lost
+    /// and regained lock, this value is reset to zero. It is encoded according
+    /// to DF402 from the RTCM 10403.2 Amendment 2 specification.  Valid values
+    /// range from 0 to 15 and the most significant nibble is reserved for
+    /// future use.
     pub lock: u8,
-    // ^ Lock timer. This value gives an indication of the time for which a
-    // signal has maintained continuous phase lock. Whenever a signal has lost
-    // and regained lock, this value is reset to zero. It is encoded according
-    // to DF402 from the RTCM 10403.2 Amendment 2 specification.  Valid values
-    // range from 0 to 15 and the most significant nibble is reserved for
-    // future use.
+    /// Correction flags.
     pub flags: u8,
-    // ^ Correction flags.
+    /// GNSS signal identifier (16 bit)
     pub sid: GnssSignal,
-    // ^ GNSS signal identifier (16 bit)
+    /// Slant ionospheric correction standard deviation
     pub iono_std: u16,
-    // ^ Slant ionospheric correction standard deviation
+    /// Slant tropospheric correction standard deviation
     pub tropo_std: u16,
-    // ^ Slant tropospheric correction standard deviation
+    /// Orbit/clock/bias correction projected on range standard deviation
     pub range_std: u16,
-    // ^ Orbit/clock/bias correction projected on range standard deviation
 }
 
 impl PackedOsrContent {
@@ -233,24 +233,24 @@ impl PackedOsrContent {
     }
 }
 
-// GPS satellite observations
-//
-// The GPS observations message reports all the raw pseudorange and
-// carrier phase observations for the satellites being tracked by
-// the device. Carrier phase observation here is represented as a
-// 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
-// whole cycles and 8-bits of fractional cycles). The observations
-// are be interoperable with 3rd party receivers and conform
-// with typical RTCMv3 GNSS observations.
-//
+/// GPS satellite observations
+///
+/// The GPS observations message reports all the raw pseudorange and
+/// carrier phase observations for the satellites being tracked by
+/// the device. Carrier phase observation here is represented as a
+/// 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
+/// whole cycles and 8-bits of fractional cycles). The observations
+/// are be interoperable with 3rd party receivers and conform
+/// with typical RTCMv3 GNSS observations.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgObs {
     pub sender_id: Option<u16>,
+    /// Header of a GPS observation message
     pub header: ObservationHeader,
-    // ^ Header of a GPS observation message
+    /// Pseudorange and carrier phase observation for a satellite being tracked.
     pub obs: Vec<PackedObsContent>,
-    // ^ Pseudorange and carrier phase observation for a satellite being tracked.
 }
 
 impl MsgObs {
@@ -274,24 +274,24 @@ impl super::SBPMessage for MsgObs {
     }
 }
 
-// Base station position
-//
-// The base station position message is the position reported by
-// the base station itself. It is used for pseudo-absolute RTK
-// positioning, and is required to be a high-accuracy surveyed
-// location of the base station. Any error here will result in an
-// error in the pseudo-absolute position output.
-//
+/// Base station position
+///
+/// The base station position message is the position reported by
+/// the base station itself. It is used for pseudo-absolute RTK
+/// positioning, and is required to be a high-accuracy surveyed
+/// location of the base station. Any error here will result in an
+/// error in the pseudo-absolute position output.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBasePosLLH {
     pub sender_id: Option<u16>,
+    /// Latitude
     pub lat: f64,
-    // ^ Latitude
+    /// Longitude
     pub lon: f64,
-    // ^ Longitude
+    /// Height
     pub height: f64,
-    // ^ Height
 }
 
 impl MsgBasePosLLH {
@@ -316,25 +316,25 @@ impl super::SBPMessage for MsgBasePosLLH {
     }
 }
 
-// Base station position in ECEF
-//
-// The base station position message is the position reported by
-// the base station itself in absolute Earth Centered Earth Fixed
-// coordinates. It is used for pseudo-absolute RTK positioning, and
-// is required to be a high-accuracy surveyed location of the base
-// station. Any error here will result in an error in the
-// pseudo-absolute position output.
-//
+/// Base station position in ECEF
+///
+/// The base station position message is the position reported by
+/// the base station itself in absolute Earth Centered Earth Fixed
+/// coordinates. It is used for pseudo-absolute RTK positioning, and
+/// is required to be a high-accuracy surveyed location of the base
+/// station. Any error here will result in an error in the
+/// pseudo-absolute position output.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBasePosECEF {
     pub sender_id: Option<u16>,
+    /// ECEF X coodinate
     pub x: f64,
-    // ^ ECEF X coodinate
+    /// ECEF Y coordinate
     pub y: f64,
-    // ^ ECEF Y coordinate
+    /// ECEF Z coordinate
     pub z: f64,
-    // ^ ECEF Z coordinate
 }
 
 impl MsgBasePosECEF {
@@ -362,19 +362,19 @@ impl super::SBPMessage for MsgBasePosECEF {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct EphemerisCommonContent {
+    /// GNSS signal identifier (16 bit)
     pub sid: GnssSignal,
-    // ^ GNSS signal identifier (16 bit)
+    /// Time of Ephemerides
     pub toe: GPSTimeSec,
-    // ^ Time of Ephemerides
+    /// User Range Accuracy
     pub ura: f32,
-    // ^ User Range Accuracy
+    /// Curve fit interval
     pub fit_interval: u32,
-    // ^ Curve fit interval
+    /// Status of ephemeris, 1 = valid, 0 = invalid
     pub valid: u8,
-    // ^ Status of ephemeris, 1 = valid, 0 = invalid
+    /// Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 SBAS: 0
+    /// = valid, non-zero = invalid GLO: 0 = valid, non-zero = invalid
     pub health_bits: u8,
-    // ^ Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 SBAS: 0
-    // = valid, non-zero = invalid GLO: 0 = valid, non-zero = invalid
 }
 
 impl EphemerisCommonContent {
@@ -413,19 +413,19 @@ impl EphemerisCommonContent {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct EphemerisCommonContentDepB {
+    /// GNSS signal identifier (16 bit)
     pub sid: GnssSignal,
-    // ^ GNSS signal identifier (16 bit)
+    /// Time of Ephemerides
     pub toe: GPSTimeSec,
-    // ^ Time of Ephemerides
+    /// User Range Accuracy
     pub ura: f64,
-    // ^ User Range Accuracy
+    /// Curve fit interval
     pub fit_interval: u32,
-    // ^ Curve fit interval
+    /// Status of ephemeris, 1 = valid, 0 = invalid
     pub valid: u8,
-    // ^ Status of ephemeris, 1 = valid, 0 = invalid
+    /// Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 Others:
+    /// 0 = valid, non-zero = invalid
     pub health_bits: u8,
-    // ^ Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 Others:
-    // 0 = valid, non-zero = invalid
 }
 
 impl EphemerisCommonContentDepB {
@@ -464,19 +464,19 @@ impl EphemerisCommonContentDepB {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct EphemerisCommonContentDepA {
+    /// GNSS signal identifier
     pub sid: GnssSignalDep,
-    // ^ GNSS signal identifier
+    /// Time of Ephemerides
     pub toe: GPSTimeDep,
-    // ^ Time of Ephemerides
+    /// User Range Accuracy
     pub ura: f64,
-    // ^ User Range Accuracy
+    /// Curve fit interval
     pub fit_interval: u32,
-    // ^ Curve fit interval
+    /// Status of ephemeris, 1 = valid, 0 = invalid
     pub valid: u8,
-    // ^ Status of ephemeris, 1 = valid, 0 = invalid
+    /// Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 SBAS: 0
+    /// = valid, non-zero = invalid GLO: 0 = valid, non-zero = invalid
     pub health_bits: u8,
-    // ^ Satellite health status. GPS: ICD-GPS-200, chapter 20.3.3.3.1.4 SBAS: 0
-    // = valid, non-zero = invalid GLO: 0 = valid, non-zero = invalid
 }
 
 impl EphemerisCommonContentDepA {
@@ -512,68 +512,68 @@ impl EphemerisCommonContentDepA {
     }
 }
 
-// Satellite broadcast ephemeris for GPS
-//
-// The ephemeris message returns a set of satellite orbit
-// parameters that is used to calculate GPS satellite position,
-// velocity, and clock offset. Please see the Navstar GPS
-// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-// 20-III) for more details.
-//
+/// Satellite broadcast ephemeris for GPS
+///
+/// The ephemeris message returns a set of satellite orbit
+/// parameters that is used to calculate GPS satellite position,
+/// velocity, and clock offset. Please see the Navstar GPS
+/// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
+/// 20-III) for more details.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGPSDepE {
     pub sender_id: Option<u16>,
+    /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepA,
-    // ^ Values common for all ephemeris types
+    /// Group delay differential between L1 and L2
     pub tgd: f64,
-    // ^ Group delay differential between L1 and L2
+    /// Amplitude of the sine harmonic correction term to the orbit radius
     pub c_rs: f64,
-    // ^ Amplitude of the sine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the orbit radius
     pub c_rc: f64,
-    // ^ Amplitude of the cosine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the argument of
+    /// latitude
     pub c_uc: f64,
-    // ^ Amplitude of the cosine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the sine harmonic correction term to the argument of
+    /// latitude
     pub c_us: f64,
-    // ^ Amplitude of the sine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the cosine harmonic correction term to the angle of
+    /// inclination
     pub c_ic: f64,
-    // ^ Amplitude of the cosine harmonic correction term to the angle of
-    // inclination
+    /// Amplitude of the sine harmonic correction term to the angle of
+    /// inclination
     pub c_is: f64,
-    // ^ Amplitude of the sine harmonic correction term to the angle of
-    // inclination
+    /// Mean motion difference
     pub dn: f64,
-    // ^ Mean motion difference
+    /// Mean anomaly at reference time
     pub m0: f64,
-    // ^ Mean anomaly at reference time
+    /// Eccentricity of satellite orbit
     pub ecc: f64,
-    // ^ Eccentricity of satellite orbit
+    /// Square root of the semi-major axis of orbit
     pub sqrta: f64,
-    // ^ Square root of the semi-major axis of orbit
+    /// Longitude of ascending node of orbit plane at weekly epoch
     pub omega0: f64,
-    // ^ Longitude of ascending node of orbit plane at weekly epoch
+    /// Rate of right ascension
     pub omegadot: f64,
-    // ^ Rate of right ascension
+    /// Argument of perigee
     pub w: f64,
-    // ^ Argument of perigee
+    /// Inclination
     pub inc: f64,
-    // ^ Inclination
+    /// Inclination first derivative
     pub inc_dot: f64,
-    // ^ Inclination first derivative
+    /// Polynomial clock correction coefficient (clock bias)
     pub af0: f64,
-    // ^ Polynomial clock correction coefficient (clock bias)
+    /// Polynomial clock correction coefficient (clock drift)
     pub af1: f64,
-    // ^ Polynomial clock correction coefficient (clock drift)
+    /// Polynomial clock correction coefficient (rate of clock drift)
     pub af2: f64,
-    // ^ Polynomial clock correction coefficient (rate of clock drift)
+    /// Clock reference
     pub toc: GPSTimeDep,
-    // ^ Clock reference
+    /// Issue of ephemeris data
     pub iode: u8,
-    // ^ Issue of ephemeris data
+    /// Issue of clock data
     pub iodc: u16,
-    // ^ Issue of clock data
 }
 
 impl MsgEphemerisGPSDepE {
@@ -618,65 +618,65 @@ impl super::SBPMessage for MsgEphemerisGPSDepE {
     }
 }
 
-// Deprecated
-//
-// This observation message has been deprecated in favor of
-// ephemeris message using floats for size reduction.
-//
+/// Deprecated
+///
+/// This observation message has been deprecated in favor of
+/// ephemeris message using floats for size reduction.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGPSDepF {
     pub sender_id: Option<u16>,
+    /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepB,
-    // ^ Values common for all ephemeris types
+    /// Group delay differential between L1 and L2
     pub tgd: f64,
-    // ^ Group delay differential between L1 and L2
+    /// Amplitude of the sine harmonic correction term to the orbit radius
     pub c_rs: f64,
-    // ^ Amplitude of the sine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the orbit radius
     pub c_rc: f64,
-    // ^ Amplitude of the cosine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the argument of
+    /// latitude
     pub c_uc: f64,
-    // ^ Amplitude of the cosine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the sine harmonic correction term to the argument of
+    /// latitude
     pub c_us: f64,
-    // ^ Amplitude of the sine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the cosine harmonic correction term to the angle of
+    /// inclination
     pub c_ic: f64,
-    // ^ Amplitude of the cosine harmonic correction term to the angle of
-    // inclination
+    /// Amplitude of the sine harmonic correction term to the angle of
+    /// inclination
     pub c_is: f64,
-    // ^ Amplitude of the sine harmonic correction term to the angle of
-    // inclination
+    /// Mean motion difference
     pub dn: f64,
-    // ^ Mean motion difference
+    /// Mean anomaly at reference time
     pub m0: f64,
-    // ^ Mean anomaly at reference time
+    /// Eccentricity of satellite orbit
     pub ecc: f64,
-    // ^ Eccentricity of satellite orbit
+    /// Square root of the semi-major axis of orbit
     pub sqrta: f64,
-    // ^ Square root of the semi-major axis of orbit
+    /// Longitude of ascending node of orbit plane at weekly epoch
     pub omega0: f64,
-    // ^ Longitude of ascending node of orbit plane at weekly epoch
+    /// Rate of right ascension
     pub omegadot: f64,
-    // ^ Rate of right ascension
+    /// Argument of perigee
     pub w: f64,
-    // ^ Argument of perigee
+    /// Inclination
     pub inc: f64,
-    // ^ Inclination
+    /// Inclination first derivative
     pub inc_dot: f64,
-    // ^ Inclination first derivative
+    /// Polynomial clock correction coefficient (clock bias)
     pub af0: f64,
-    // ^ Polynomial clock correction coefficient (clock bias)
+    /// Polynomial clock correction coefficient (clock drift)
     pub af1: f64,
-    // ^ Polynomial clock correction coefficient (clock drift)
+    /// Polynomial clock correction coefficient (rate of clock drift)
     pub af2: f64,
-    // ^ Polynomial clock correction coefficient (rate of clock drift)
+    /// Clock reference
     pub toc: GPSTimeSec,
-    // ^ Clock reference
+    /// Issue of ephemeris data
     pub iode: u8,
-    // ^ Issue of ephemeris data
+    /// Issue of clock data
     pub iodc: u16,
-    // ^ Issue of clock data
 }
 
 impl MsgEphemerisGPSDepF {
@@ -721,68 +721,68 @@ impl super::SBPMessage for MsgEphemerisGPSDepF {
     }
 }
 
-// Satellite broadcast ephemeris for GPS
-//
-// The ephemeris message returns a set of satellite orbit
-// parameters that is used to calculate GPS satellite position,
-// velocity, and clock offset. Please see the Navstar GPS
-// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-// 20-III) for more details.
-//
+/// Satellite broadcast ephemeris for GPS
+///
+/// The ephemeris message returns a set of satellite orbit
+/// parameters that is used to calculate GPS satellite position,
+/// velocity, and clock offset. Please see the Navstar GPS
+/// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
+/// 20-III) for more details.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGPS {
     pub sender_id: Option<u16>,
+    /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
-    // ^ Values common for all ephemeris types
+    /// Group delay differential between L1 and L2
     pub tgd: f32,
-    // ^ Group delay differential between L1 and L2
+    /// Amplitude of the sine harmonic correction term to the orbit radius
     pub c_rs: f32,
-    // ^ Amplitude of the sine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the orbit radius
     pub c_rc: f32,
-    // ^ Amplitude of the cosine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the argument of
+    /// latitude
     pub c_uc: f32,
-    // ^ Amplitude of the cosine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the sine harmonic correction term to the argument of
+    /// latitude
     pub c_us: f32,
-    // ^ Amplitude of the sine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the cosine harmonic correction term to the angle of
+    /// inclination
     pub c_ic: f32,
-    // ^ Amplitude of the cosine harmonic correction term to the angle of
-    // inclination
+    /// Amplitude of the sine harmonic correction term to the angle of
+    /// inclination
     pub c_is: f32,
-    // ^ Amplitude of the sine harmonic correction term to the angle of
-    // inclination
+    /// Mean motion difference
     pub dn: f64,
-    // ^ Mean motion difference
+    /// Mean anomaly at reference time
     pub m0: f64,
-    // ^ Mean anomaly at reference time
+    /// Eccentricity of satellite orbit
     pub ecc: f64,
-    // ^ Eccentricity of satellite orbit
+    /// Square root of the semi-major axis of orbit
     pub sqrta: f64,
-    // ^ Square root of the semi-major axis of orbit
+    /// Longitude of ascending node of orbit plane at weekly epoch
     pub omega0: f64,
-    // ^ Longitude of ascending node of orbit plane at weekly epoch
+    /// Rate of right ascension
     pub omegadot: f64,
-    // ^ Rate of right ascension
+    /// Argument of perigee
     pub w: f64,
-    // ^ Argument of perigee
+    /// Inclination
     pub inc: f64,
-    // ^ Inclination
+    /// Inclination first derivative
     pub inc_dot: f64,
-    // ^ Inclination first derivative
+    /// Polynomial clock correction coefficient (clock bias)
     pub af0: f32,
-    // ^ Polynomial clock correction coefficient (clock bias)
+    /// Polynomial clock correction coefficient (clock drift)
     pub af1: f32,
-    // ^ Polynomial clock correction coefficient (clock drift)
+    /// Polynomial clock correction coefficient (rate of clock drift)
     pub af2: f32,
-    // ^ Polynomial clock correction coefficient (rate of clock drift)
+    /// Clock reference
     pub toc: GPSTimeSec,
-    // ^ Clock reference
+    /// Issue of ephemeris data
     pub iode: u8,
-    // ^ Issue of ephemeris data
+    /// Issue of clock data
     pub iodc: u16,
-    // ^ Issue of clock data
 }
 
 impl MsgEphemerisGPS {
@@ -827,66 +827,66 @@ impl super::SBPMessage for MsgEphemerisGPS {
     }
 }
 
-// Satellite broadcast ephemeris for QZSS
-//
-// The ephemeris message returns a set of satellite orbit
-// parameters that is used to calculate QZSS satellite position,
-// velocity, and clock offset.
-//
+/// Satellite broadcast ephemeris for QZSS
+///
+/// The ephemeris message returns a set of satellite orbit
+/// parameters that is used to calculate QZSS satellite position,
+/// velocity, and clock offset.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisQzss {
     pub sender_id: Option<u16>,
+    /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
-    // ^ Values common for all ephemeris types
+    /// Group delay differential between L1 and L2
     pub tgd: f32,
-    // ^ Group delay differential between L1 and L2
+    /// Amplitude of the sine harmonic correction term to the orbit radius
     pub c_rs: f32,
-    // ^ Amplitude of the sine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the orbit radius
     pub c_rc: f32,
-    // ^ Amplitude of the cosine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the argument of
+    /// latitude
     pub c_uc: f32,
-    // ^ Amplitude of the cosine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the sine harmonic correction term to the argument of
+    /// latitude
     pub c_us: f32,
-    // ^ Amplitude of the sine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the cosine harmonic correction term to the angle of
+    /// inclination
     pub c_ic: f32,
-    // ^ Amplitude of the cosine harmonic correction term to the angle of
-    // inclination
+    /// Amplitude of the sine harmonic correction term to the angle of
+    /// inclination
     pub c_is: f32,
-    // ^ Amplitude of the sine harmonic correction term to the angle of
-    // inclination
+    /// Mean motion difference
     pub dn: f64,
-    // ^ Mean motion difference
+    /// Mean anomaly at reference time
     pub m0: f64,
-    // ^ Mean anomaly at reference time
+    /// Eccentricity of satellite orbit
     pub ecc: f64,
-    // ^ Eccentricity of satellite orbit
+    /// Square root of the semi-major axis of orbit
     pub sqrta: f64,
-    // ^ Square root of the semi-major axis of orbit
+    /// Longitude of ascending node of orbit plane at weekly epoch
     pub omega0: f64,
-    // ^ Longitude of ascending node of orbit plane at weekly epoch
+    /// Rate of right ascension
     pub omegadot: f64,
-    // ^ Rate of right ascension
+    /// Argument of perigee
     pub w: f64,
-    // ^ Argument of perigee
+    /// Inclination
     pub inc: f64,
-    // ^ Inclination
+    /// Inclination first derivative
     pub inc_dot: f64,
-    // ^ Inclination first derivative
+    /// Polynomial clock correction coefficient (clock bias)
     pub af0: f32,
-    // ^ Polynomial clock correction coefficient (clock bias)
+    /// Polynomial clock correction coefficient (clock drift)
     pub af1: f32,
-    // ^ Polynomial clock correction coefficient (clock drift)
+    /// Polynomial clock correction coefficient (rate of clock drift)
     pub af2: f32,
-    // ^ Polynomial clock correction coefficient (rate of clock drift)
+    /// Clock reference
     pub toc: GPSTimeSec,
-    // ^ Clock reference
+    /// Issue of ephemeris data
     pub iode: u8,
-    // ^ Issue of ephemeris data
+    /// Issue of clock data
     pub iodc: u16,
-    // ^ Issue of clock data
 }
 
 impl MsgEphemerisQzss {
@@ -931,69 +931,69 @@ impl super::SBPMessage for MsgEphemerisQzss {
     }
 }
 
-// Satellite broadcast ephemeris for BDS
-//
-// The ephemeris message returns a set of satellite orbit
-// parameters that is used to calculate BDS satellite position,
-// velocity, and clock offset. Please see the BeiDou Navigation
-// Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
-//
+/// Satellite broadcast ephemeris for BDS
+///
+/// The ephemeris message returns a set of satellite orbit
+/// parameters that is used to calculate BDS satellite position,
+/// velocity, and clock offset. Please see the BeiDou Navigation
+/// Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisBds {
     pub sender_id: Option<u16>,
+    /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
-    // ^ Values common for all ephemeris types
+    /// Group delay differential for B1
     pub tgd1: f32,
-    // ^ Group delay differential for B1
+    /// Group delay differential for B2
     pub tgd2: f32,
-    // ^ Group delay differential for B2
+    /// Amplitude of the sine harmonic correction term to the orbit radius
     pub c_rs: f32,
-    // ^ Amplitude of the sine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the orbit radius
     pub c_rc: f32,
-    // ^ Amplitude of the cosine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the argument of
+    /// latitude
     pub c_uc: f32,
-    // ^ Amplitude of the cosine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the sine harmonic correction term to the argument of
+    /// latitude
     pub c_us: f32,
-    // ^ Amplitude of the sine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the cosine harmonic correction term to the angle of
+    /// inclination
     pub c_ic: f32,
-    // ^ Amplitude of the cosine harmonic correction term to the angle of
-    // inclination
+    /// Amplitude of the sine harmonic correction term to the angle of
+    /// inclination
     pub c_is: f32,
-    // ^ Amplitude of the sine harmonic correction term to the angle of
-    // inclination
+    /// Mean motion difference
     pub dn: f64,
-    // ^ Mean motion difference
+    /// Mean anomaly at reference time
     pub m0: f64,
-    // ^ Mean anomaly at reference time
+    /// Eccentricity of satellite orbit
     pub ecc: f64,
-    // ^ Eccentricity of satellite orbit
+    /// Square root of the semi-major axis of orbit
     pub sqrta: f64,
-    // ^ Square root of the semi-major axis of orbit
+    /// Longitude of ascending node of orbit plane at weekly epoch
     pub omega0: f64,
-    // ^ Longitude of ascending node of orbit plane at weekly epoch
+    /// Rate of right ascension
     pub omegadot: f64,
-    // ^ Rate of right ascension
+    /// Argument of perigee
     pub w: f64,
-    // ^ Argument of perigee
+    /// Inclination
     pub inc: f64,
-    // ^ Inclination
+    /// Inclination first derivative
     pub inc_dot: f64,
-    // ^ Inclination first derivative
+    /// Polynomial clock correction coefficient (clock bias)
     pub af0: f64,
-    // ^ Polynomial clock correction coefficient (clock bias)
+    /// Polynomial clock correction coefficient (clock drift)
     pub af1: f32,
-    // ^ Polynomial clock correction coefficient (clock drift)
+    /// Polynomial clock correction coefficient (rate of clock drift)
     pub af2: f32,
-    // ^ Polynomial clock correction coefficient (rate of clock drift)
+    /// Clock reference
     pub toc: GPSTimeSec,
-    // ^ Clock reference
+    /// Issue of ephemeris data
     pub iode: u8,
-    // ^ Issue of ephemeris data
+    /// Issue of clock data
     pub iodc: u16,
-    // ^ Issue of clock data
 }
 
 impl MsgEphemerisBds {
@@ -1039,67 +1039,67 @@ impl super::SBPMessage for MsgEphemerisBds {
     }
 }
 
-// Deprecated
-//
-// This observation message has been deprecated in favor of
-// an ephemeris message with explicit source of NAV data.
-//
+/// Deprecated
+///
+/// This observation message has been deprecated in favor of
+/// an ephemeris message with explicit source of NAV data.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGalDepA {
     pub sender_id: Option<u16>,
+    /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
-    // ^ Values common for all ephemeris types
+    /// E1-E5a Broadcast Group Delay
     pub bgd_e1e5a: f32,
-    // ^ E1-E5a Broadcast Group Delay
+    /// E1-E5b Broadcast Group Delay
     pub bgd_e1e5b: f32,
-    // ^ E1-E5b Broadcast Group Delay
+    /// Amplitude of the sine harmonic correction term to the orbit radius
     pub c_rs: f32,
-    // ^ Amplitude of the sine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the orbit radius
     pub c_rc: f32,
-    // ^ Amplitude of the cosine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the argument of
+    /// latitude
     pub c_uc: f32,
-    // ^ Amplitude of the cosine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the sine harmonic correction term to the argument of
+    /// latitude
     pub c_us: f32,
-    // ^ Amplitude of the sine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the cosine harmonic correction term to the angle of
+    /// inclination
     pub c_ic: f32,
-    // ^ Amplitude of the cosine harmonic correction term to the angle of
-    // inclination
+    /// Amplitude of the sine harmonic correction term to the angle of
+    /// inclination
     pub c_is: f32,
-    // ^ Amplitude of the sine harmonic correction term to the angle of
-    // inclination
+    /// Mean motion difference
     pub dn: f64,
-    // ^ Mean motion difference
+    /// Mean anomaly at reference time
     pub m0: f64,
-    // ^ Mean anomaly at reference time
+    /// Eccentricity of satellite orbit
     pub ecc: f64,
-    // ^ Eccentricity of satellite orbit
+    /// Square root of the semi-major axis of orbit
     pub sqrta: f64,
-    // ^ Square root of the semi-major axis of orbit
+    /// Longitude of ascending node of orbit plane at weekly epoch
     pub omega0: f64,
-    // ^ Longitude of ascending node of orbit plane at weekly epoch
+    /// Rate of right ascension
     pub omegadot: f64,
-    // ^ Rate of right ascension
+    /// Argument of perigee
     pub w: f64,
-    // ^ Argument of perigee
+    /// Inclination
     pub inc: f64,
-    // ^ Inclination
+    /// Inclination first derivative
     pub inc_dot: f64,
-    // ^ Inclination first derivative
+    /// Polynomial clock correction coefficient (clock bias)
     pub af0: f64,
-    // ^ Polynomial clock correction coefficient (clock bias)
+    /// Polynomial clock correction coefficient (clock drift)
     pub af1: f64,
-    // ^ Polynomial clock correction coefficient (clock drift)
+    /// Polynomial clock correction coefficient (rate of clock drift)
     pub af2: f32,
-    // ^ Polynomial clock correction coefficient (rate of clock drift)
+    /// Clock reference
     pub toc: GPSTimeSec,
-    // ^ Clock reference
+    /// Issue of ephemeris data
     pub iode: u16,
-    // ^ Issue of ephemeris data
+    /// Issue of clock data
     pub iodc: u16,
-    // ^ Issue of clock data
 }
 
 impl MsgEphemerisGalDepA {
@@ -1145,71 +1145,71 @@ impl super::SBPMessage for MsgEphemerisGalDepA {
     }
 }
 
-// Satellite broadcast ephemeris for Galileo
-//
-// The ephemeris message returns a set of satellite orbit
-// parameters that is used to calculate Galileo satellite position,
-// velocity, and clock offset. Please see the Signal In Space ICD
-// OS SIS ICD, Issue 1.3, December 2016 for more details.
-//
+/// Satellite broadcast ephemeris for Galileo
+///
+/// The ephemeris message returns a set of satellite orbit
+/// parameters that is used to calculate Galileo satellite position,
+/// velocity, and clock offset. Please see the Signal In Space ICD
+/// OS SIS ICD, Issue 1.3, December 2016 for more details.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGal {
     pub sender_id: Option<u16>,
+    /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
-    // ^ Values common for all ephemeris types
+    /// E1-E5a Broadcast Group Delay
     pub bgd_e1e5a: f32,
-    // ^ E1-E5a Broadcast Group Delay
+    /// E1-E5b Broadcast Group Delay
     pub bgd_e1e5b: f32,
-    // ^ E1-E5b Broadcast Group Delay
+    /// Amplitude of the sine harmonic correction term to the orbit radius
     pub c_rs: f32,
-    // ^ Amplitude of the sine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the orbit radius
     pub c_rc: f32,
-    // ^ Amplitude of the cosine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the argument of
+    /// latitude
     pub c_uc: f32,
-    // ^ Amplitude of the cosine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the sine harmonic correction term to the argument of
+    /// latitude
     pub c_us: f32,
-    // ^ Amplitude of the sine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the cosine harmonic correction term to the angle of
+    /// inclination
     pub c_ic: f32,
-    // ^ Amplitude of the cosine harmonic correction term to the angle of
-    // inclination
+    /// Amplitude of the sine harmonic correction term to the angle of
+    /// inclination
     pub c_is: f32,
-    // ^ Amplitude of the sine harmonic correction term to the angle of
-    // inclination
+    /// Mean motion difference
     pub dn: f64,
-    // ^ Mean motion difference
+    /// Mean anomaly at reference time
     pub m0: f64,
-    // ^ Mean anomaly at reference time
+    /// Eccentricity of satellite orbit
     pub ecc: f64,
-    // ^ Eccentricity of satellite orbit
+    /// Square root of the semi-major axis of orbit
     pub sqrta: f64,
-    // ^ Square root of the semi-major axis of orbit
+    /// Longitude of ascending node of orbit plane at weekly epoch
     pub omega0: f64,
-    // ^ Longitude of ascending node of orbit plane at weekly epoch
+    /// Rate of right ascension
     pub omegadot: f64,
-    // ^ Rate of right ascension
+    /// Argument of perigee
     pub w: f64,
-    // ^ Argument of perigee
+    /// Inclination
     pub inc: f64,
-    // ^ Inclination
+    /// Inclination first derivative
     pub inc_dot: f64,
-    // ^ Inclination first derivative
+    /// Polynomial clock correction coefficient (clock bias)
     pub af0: f64,
-    // ^ Polynomial clock correction coefficient (clock bias)
+    /// Polynomial clock correction coefficient (clock drift)
     pub af1: f64,
-    // ^ Polynomial clock correction coefficient (clock drift)
+    /// Polynomial clock correction coefficient (rate of clock drift)
     pub af2: f32,
-    // ^ Polynomial clock correction coefficient (rate of clock drift)
+    /// Clock reference
     pub toc: GPSTimeSec,
-    // ^ Clock reference
+    /// Issue of ephemeris data
     pub iode: u16,
-    // ^ Issue of ephemeris data
+    /// Issue of clock data
     pub iodc: u16,
-    // ^ Issue of clock data
+    /// 0=I/NAV, 1=F/NAV, ...
     pub source: u8,
-    // ^ 0=I/NAV, 1=F/NAV, ...
 }
 
 impl MsgEphemerisGal {
@@ -1260,18 +1260,18 @@ impl super::SBPMessage for MsgEphemerisGal {
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbasDepA {
     pub sender_id: Option<u16>,
+    /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepA,
-    // ^ Values common for all ephemeris types
+    /// Position of the GEO at time toe
     pub pos: Vec<f64>,
-    // ^ Position of the GEO at time toe
+    /// Velocity of the GEO at time toe
     pub vel: Vec<f64>,
-    // ^ Velocity of the GEO at time toe
+    /// Acceleration of the GEO at time toe
     pub acc: Vec<f64>,
-    // ^ Acceleration of the GEO at time toe
+    /// Time offset of the GEO clock w.r.t. SBAS Network Time
     pub a_gf0: f64,
-    // ^ Time offset of the GEO clock w.r.t. SBAS Network Time
+    /// Drift of the GEO clock w.r.t. SBAS Network Time
     pub a_gf1: f64,
-    // ^ Drift of the GEO clock w.r.t. SBAS Network Time
 }
 
 impl MsgEphemerisSbasDepA {
@@ -1299,30 +1299,30 @@ impl super::SBPMessage for MsgEphemerisSbasDepA {
     }
 }
 
-// Satellite broadcast ephemeris for GLO
-//
-// The ephemeris message returns a set of satellite orbit
-// parameters that is used to calculate GLO satellite position,
-// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-// Characteristics of words of immediate information (ephemeris parameters)"
-// for more details.
-//
+/// Satellite broadcast ephemeris for GLO
+///
+/// The ephemeris message returns a set of satellite orbit
+/// parameters that is used to calculate GLO satellite position,
+/// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
+/// Characteristics of words of immediate information (ephemeris parameters)"
+/// for more details.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepA {
     pub sender_id: Option<u16>,
+    /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepA,
-    // ^ Values common for all ephemeris types
+    /// Relative deviation of predicted carrier frequency from nominal
     pub gamma: f64,
-    // ^ Relative deviation of predicted carrier frequency from nominal
+    /// Correction to the SV time
     pub tau: f64,
-    // ^ Correction to the SV time
+    /// Position of the SV at tb in PZ-90.02 coordinates system
     pub pos: Vec<f64>,
-    // ^ Position of the SV at tb in PZ-90.02 coordinates system
+    /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
     pub vel: Vec<f64>,
-    // ^ Velocity vector of the SV at tb in PZ-90.02 coordinates system
+    /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
     pub acc: Vec<f64>,
-    // ^ Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
 }
 
 impl MsgEphemerisGloDepA {
@@ -1350,27 +1350,27 @@ impl super::SBPMessage for MsgEphemerisGloDepA {
     }
 }
 
-// Deprecated
-//
-// This observation message has been deprecated in favor of
-// ephemeris message using floats for size reduction.
-//
+/// Deprecated
+///
+/// This observation message has been deprecated in favor of
+/// ephemeris message using floats for size reduction.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbasDepB {
     pub sender_id: Option<u16>,
+    /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepB,
-    // ^ Values common for all ephemeris types
+    /// Position of the GEO at time toe
     pub pos: Vec<f64>,
-    // ^ Position of the GEO at time toe
+    /// Velocity of the GEO at time toe
     pub vel: Vec<f64>,
-    // ^ Velocity of the GEO at time toe
+    /// Acceleration of the GEO at time toe
     pub acc: Vec<f64>,
-    // ^ Acceleration of the GEO at time toe
+    /// Time offset of the GEO clock w.r.t. SBAS Network Time
     pub a_gf0: f64,
-    // ^ Time offset of the GEO clock w.r.t. SBAS Network Time
+    /// Drift of the GEO clock w.r.t. SBAS Network Time
     pub a_gf1: f64,
-    // ^ Drift of the GEO clock w.r.t. SBAS Network Time
 }
 
 impl MsgEphemerisSbasDepB {
@@ -1402,18 +1402,18 @@ impl super::SBPMessage for MsgEphemerisSbasDepB {
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbas {
     pub sender_id: Option<u16>,
+    /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
-    // ^ Values common for all ephemeris types
+    /// Position of the GEO at time toe
     pub pos: Vec<f64>,
-    // ^ Position of the GEO at time toe
+    /// Velocity of the GEO at time toe
     pub vel: Vec<f32>,
-    // ^ Velocity of the GEO at time toe
+    /// Acceleration of the GEO at time toe
     pub acc: Vec<f32>,
-    // ^ Acceleration of the GEO at time toe
+    /// Time offset of the GEO clock w.r.t. SBAS Network Time
     pub a_gf0: f32,
-    // ^ Time offset of the GEO clock w.r.t. SBAS Network Time
+    /// Drift of the GEO clock w.r.t. SBAS Network Time
     pub a_gf1: f32,
-    // ^ Drift of the GEO clock w.r.t. SBAS Network Time
 }
 
 impl MsgEphemerisSbas {
@@ -1441,30 +1441,30 @@ impl super::SBPMessage for MsgEphemerisSbas {
     }
 }
 
-// Satellite broadcast ephemeris for GLO
-//
-// The ephemeris message returns a set of satellite orbit
-// parameters that is used to calculate GLO satellite position,
-// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-// Characteristics of words of immediate information (ephemeris parameters)"
-// for more details.
-//
+/// Satellite broadcast ephemeris for GLO
+///
+/// The ephemeris message returns a set of satellite orbit
+/// parameters that is used to calculate GLO satellite position,
+/// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
+/// Characteristics of words of immediate information (ephemeris parameters)"
+/// for more details.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepB {
     pub sender_id: Option<u16>,
+    /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepB,
-    // ^ Values common for all ephemeris types
+    /// Relative deviation of predicted carrier frequency from nominal
     pub gamma: f64,
-    // ^ Relative deviation of predicted carrier frequency from nominal
+    /// Correction to the SV time
     pub tau: f64,
-    // ^ Correction to the SV time
+    /// Position of the SV at tb in PZ-90.02 coordinates system
     pub pos: Vec<f64>,
-    // ^ Position of the SV at tb in PZ-90.02 coordinates system
+    /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
     pub vel: Vec<f64>,
-    // ^ Velocity vector of the SV at tb in PZ-90.02 coordinates system
+    /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
     pub acc: Vec<f64>,
-    // ^ Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
 }
 
 impl MsgEphemerisGloDepB {
@@ -1492,34 +1492,34 @@ impl super::SBPMessage for MsgEphemerisGloDepB {
     }
 }
 
-// Satellite broadcast ephemeris for GLO
-//
-// The ephemeris message returns a set of satellite orbit
-// parameters that is used to calculate GLO satellite position,
-// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-// Characteristics of words of immediate information (ephemeris parameters)"
-// for more details.
-//
+/// Satellite broadcast ephemeris for GLO
+///
+/// The ephemeris message returns a set of satellite orbit
+/// parameters that is used to calculate GLO satellite position,
+/// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
+/// Characteristics of words of immediate information (ephemeris parameters)"
+/// for more details.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepC {
     pub sender_id: Option<u16>,
+    /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepB,
-    // ^ Values common for all ephemeris types
+    /// Relative deviation of predicted carrier frequency from nominal
     pub gamma: f64,
-    // ^ Relative deviation of predicted carrier frequency from nominal
+    /// Correction to the SV time
     pub tau: f64,
-    // ^ Correction to the SV time
+    /// Equipment delay between L1 and L2
     pub d_tau: f64,
-    // ^ Equipment delay between L1 and L2
+    /// Position of the SV at tb in PZ-90.02 coordinates system
     pub pos: Vec<f64>,
-    // ^ Position of the SV at tb in PZ-90.02 coordinates system
+    /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
     pub vel: Vec<f64>,
-    // ^ Velocity vector of the SV at tb in PZ-90.02 coordinates system
+    /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
     pub acc: Vec<f64>,
-    // ^ Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
+    /// Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
     pub fcn: u8,
-    // ^ Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
 }
 
 impl MsgEphemerisGloDepC {
@@ -1549,33 +1549,33 @@ impl super::SBPMessage for MsgEphemerisGloDepC {
     }
 }
 
-// Deprecated
-//
-// This observation message has been deprecated in favor of
-// ephemeris message using floats for size reduction.
-//
+/// Deprecated
+///
+/// This observation message has been deprecated in favor of
+/// ephemeris message using floats for size reduction.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepD {
     pub sender_id: Option<u16>,
+    /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepB,
-    // ^ Values common for all ephemeris types
+    /// Relative deviation of predicted carrier frequency from nominal
     pub gamma: f64,
-    // ^ Relative deviation of predicted carrier frequency from nominal
+    /// Correction to the SV time
     pub tau: f64,
-    // ^ Correction to the SV time
+    /// Equipment delay between L1 and L2
     pub d_tau: f64,
-    // ^ Equipment delay between L1 and L2
+    /// Position of the SV at tb in PZ-90.02 coordinates system
     pub pos: Vec<f64>,
-    // ^ Position of the SV at tb in PZ-90.02 coordinates system
+    /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
     pub vel: Vec<f64>,
-    // ^ Velocity vector of the SV at tb in PZ-90.02 coordinates system
+    /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
     pub acc: Vec<f64>,
-    // ^ Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
+    /// Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
     pub fcn: u8,
-    // ^ Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
+    /// Issue of ephemeris data
     pub iod: u8,
-    // ^ Issue of ephemeris data
 }
 
 impl MsgEphemerisGloDepD {
@@ -1606,36 +1606,36 @@ impl super::SBPMessage for MsgEphemerisGloDepD {
     }
 }
 
-// Satellite broadcast ephemeris for GLO
-//
-// The ephemeris message returns a set of satellite orbit
-// parameters that is used to calculate GLO satellite position,
-// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
-// Characteristics of words of immediate information (ephemeris parameters)"
-// for more details.
-//
+/// Satellite broadcast ephemeris for GLO
+///
+/// The ephemeris message returns a set of satellite orbit
+/// parameters that is used to calculate GLO satellite position,
+/// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
+/// Characteristics of words of immediate information (ephemeris parameters)"
+/// for more details.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGlo {
     pub sender_id: Option<u16>,
+    /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
-    // ^ Values common for all ephemeris types
+    /// Relative deviation of predicted carrier frequency from nominal
     pub gamma: f32,
-    // ^ Relative deviation of predicted carrier frequency from nominal
+    /// Correction to the SV time
     pub tau: f32,
-    // ^ Correction to the SV time
+    /// Equipment delay between L1 and L2
     pub d_tau: f32,
-    // ^ Equipment delay between L1 and L2
+    /// Position of the SV at tb in PZ-90.02 coordinates system
     pub pos: Vec<f64>,
-    // ^ Position of the SV at tb in PZ-90.02 coordinates system
+    /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
     pub vel: Vec<f64>,
-    // ^ Velocity vector of the SV at tb in PZ-90.02 coordinates system
+    /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
     pub acc: Vec<f32>,
-    // ^ Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
+    /// Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
     pub fcn: u8,
-    // ^ Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
+    /// Issue of ephemeris data
     pub iod: u8,
-    // ^ Issue of ephemeris data
 }
 
 impl MsgEphemerisGlo {
@@ -1666,80 +1666,80 @@ impl super::SBPMessage for MsgEphemerisGlo {
     }
 }
 
-// Satellite broadcast ephemeris
-//
-// The ephemeris message returns a set of satellite orbit
-// parameters that is used to calculate GPS satellite position,
-// velocity, and clock offset. Please see the Navstar GPS
-// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-// 20-III) for more details.
-//
+/// Satellite broadcast ephemeris
+///
+/// The ephemeris message returns a set of satellite orbit
+/// parameters that is used to calculate GPS satellite position,
+/// velocity, and clock offset. Please see the Navstar GPS
+/// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
+/// 20-III) for more details.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepD {
     pub sender_id: Option<u16>,
+    /// Group delay differential between L1 and L2
     pub tgd: f64,
-    // ^ Group delay differential between L1 and L2
+    /// Amplitude of the sine harmonic correction term to the orbit radius
     pub c_rs: f64,
-    // ^ Amplitude of the sine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the orbit radius
     pub c_rc: f64,
-    // ^ Amplitude of the cosine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the argument of
+    /// latitude
     pub c_uc: f64,
-    // ^ Amplitude of the cosine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the sine harmonic correction term to the argument of
+    /// latitude
     pub c_us: f64,
-    // ^ Amplitude of the sine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the cosine harmonic correction term to the angle of
+    /// inclination
     pub c_ic: f64,
-    // ^ Amplitude of the cosine harmonic correction term to the angle of
-    // inclination
+    /// Amplitude of the sine harmonic correction term to the angle of
+    /// inclination
     pub c_is: f64,
-    // ^ Amplitude of the sine harmonic correction term to the angle of
-    // inclination
+    /// Mean motion difference
     pub dn: f64,
-    // ^ Mean motion difference
+    /// Mean anomaly at reference time
     pub m0: f64,
-    // ^ Mean anomaly at reference time
+    /// Eccentricity of satellite orbit
     pub ecc: f64,
-    // ^ Eccentricity of satellite orbit
+    /// Square root of the semi-major axis of orbit
     pub sqrta: f64,
-    // ^ Square root of the semi-major axis of orbit
+    /// Longitude of ascending node of orbit plane at weekly epoch
     pub omega0: f64,
-    // ^ Longitude of ascending node of orbit plane at weekly epoch
+    /// Rate of right ascension
     pub omegadot: f64,
-    // ^ Rate of right ascension
+    /// Argument of perigee
     pub w: f64,
-    // ^ Argument of perigee
+    /// Inclination
     pub inc: f64,
-    // ^ Inclination
+    /// Inclination first derivative
     pub inc_dot: f64,
-    // ^ Inclination first derivative
+    /// Polynomial clock correction coefficient (clock bias)
     pub af0: f64,
-    // ^ Polynomial clock correction coefficient (clock bias)
+    /// Polynomial clock correction coefficient (clock drift)
     pub af1: f64,
-    // ^ Polynomial clock correction coefficient (clock drift)
+    /// Polynomial clock correction coefficient (rate of clock drift)
     pub af2: f64,
-    // ^ Polynomial clock correction coefficient (rate of clock drift)
+    /// Time of week
     pub toe_tow: f64,
-    // ^ Time of week
+    /// Week number
     pub toe_wn: u16,
-    // ^ Week number
+    /// Clock reference time of week
     pub toc_tow: f64,
-    // ^ Clock reference time of week
+    /// Clock reference week number
     pub toc_wn: u16,
-    // ^ Clock reference week number
+    /// Is valid?
     pub valid: u8,
-    // ^ Is valid?
+    /// Satellite is healthy?
     pub healthy: u8,
-    // ^ Satellite is healthy?
+    /// GNSS signal identifier
     pub sid: GnssSignalDep,
-    // ^ GNSS signal identifier
+    /// Issue of ephemeris data
     pub iode: u8,
-    // ^ Issue of ephemeris data
+    /// Issue of clock data
     pub iodc: u16,
-    // ^ Issue of clock data
+    /// Reserved field
     pub reserved: u32,
-    // ^ Reserved field
 }
 
 impl MsgEphemerisDepD {
@@ -1790,70 +1790,70 @@ impl super::SBPMessage for MsgEphemerisDepD {
     }
 }
 
-// Deprecated
-//
-// Deprecated.
-//
+/// Deprecated
+///
+/// Deprecated.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepA {
     pub sender_id: Option<u16>,
+    /// Group delay differential between L1 and L2
     pub tgd: f64,
-    // ^ Group delay differential between L1 and L2
+    /// Amplitude of the sine harmonic correction term to the orbit radius
     pub c_rs: f64,
-    // ^ Amplitude of the sine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the orbit radius
     pub c_rc: f64,
-    // ^ Amplitude of the cosine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the argument of
+    /// latitude
     pub c_uc: f64,
-    // ^ Amplitude of the cosine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the sine harmonic correction term to the argument of
+    /// latitude
     pub c_us: f64,
-    // ^ Amplitude of the sine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the cosine harmonic correction term to the angle of
+    /// inclination
     pub c_ic: f64,
-    // ^ Amplitude of the cosine harmonic correction term to the angle of
-    // inclination
+    /// Amplitude of the sine harmonic correction term to the angle of
+    /// inclination
     pub c_is: f64,
-    // ^ Amplitude of the sine harmonic correction term to the angle of
-    // inclination
+    /// Mean motion difference
     pub dn: f64,
-    // ^ Mean motion difference
+    /// Mean anomaly at reference time
     pub m0: f64,
-    // ^ Mean anomaly at reference time
+    /// Eccentricity of satellite orbit
     pub ecc: f64,
-    // ^ Eccentricity of satellite orbit
+    /// Square root of the semi-major axis of orbit
     pub sqrta: f64,
-    // ^ Square root of the semi-major axis of orbit
+    /// Longitude of ascending node of orbit plane at weekly epoch
     pub omega0: f64,
-    // ^ Longitude of ascending node of orbit plane at weekly epoch
+    /// Rate of right ascension
     pub omegadot: f64,
-    // ^ Rate of right ascension
+    /// Argument of perigee
     pub w: f64,
-    // ^ Argument of perigee
+    /// Inclination
     pub inc: f64,
-    // ^ Inclination
+    /// Inclination first derivative
     pub inc_dot: f64,
-    // ^ Inclination first derivative
+    /// Polynomial clock correction coefficient (clock bias)
     pub af0: f64,
-    // ^ Polynomial clock correction coefficient (clock bias)
+    /// Polynomial clock correction coefficient (clock drift)
     pub af1: f64,
-    // ^ Polynomial clock correction coefficient (clock drift)
+    /// Polynomial clock correction coefficient (rate of clock drift)
     pub af2: f64,
-    // ^ Polynomial clock correction coefficient (rate of clock drift)
+    /// Time of week
     pub toe_tow: f64,
-    // ^ Time of week
+    /// Week number
     pub toe_wn: u16,
-    // ^ Week number
+    /// Clock reference time of week
     pub toc_tow: f64,
-    // ^ Clock reference time of week
+    /// Clock reference week number
     pub toc_wn: u16,
-    // ^ Clock reference week number
+    /// Is valid?
     pub valid: u8,
-    // ^ Is valid?
+    /// Satellite is healthy?
     pub healthy: u8,
-    // ^ Satellite is healthy?
+    /// PRN being tracked
     pub prn: u8,
-    // ^ PRN being tracked
 }
 
 impl MsgEphemerisDepA {
@@ -1901,72 +1901,72 @@ impl super::SBPMessage for MsgEphemerisDepA {
     }
 }
 
-// Deprecated
-//
-// Deprecated.
-//
+/// Deprecated
+///
+/// Deprecated.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepB {
     pub sender_id: Option<u16>,
+    /// Group delay differential between L1 and L2
     pub tgd: f64,
-    // ^ Group delay differential between L1 and L2
+    /// Amplitude of the sine harmonic correction term to the orbit radius
     pub c_rs: f64,
-    // ^ Amplitude of the sine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the orbit radius
     pub c_rc: f64,
-    // ^ Amplitude of the cosine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the argument of
+    /// latitude
     pub c_uc: f64,
-    // ^ Amplitude of the cosine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the sine harmonic correction term to the argument of
+    /// latitude
     pub c_us: f64,
-    // ^ Amplitude of the sine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the cosine harmonic correction term to the angle of
+    /// inclination
     pub c_ic: f64,
-    // ^ Amplitude of the cosine harmonic correction term to the angle of
-    // inclination
+    /// Amplitude of the sine harmonic correction term to the angle of
+    /// inclination
     pub c_is: f64,
-    // ^ Amplitude of the sine harmonic correction term to the angle of
-    // inclination
+    /// Mean motion difference
     pub dn: f64,
-    // ^ Mean motion difference
+    /// Mean anomaly at reference time
     pub m0: f64,
-    // ^ Mean anomaly at reference time
+    /// Eccentricity of satellite orbit
     pub ecc: f64,
-    // ^ Eccentricity of satellite orbit
+    /// Square root of the semi-major axis of orbit
     pub sqrta: f64,
-    // ^ Square root of the semi-major axis of orbit
+    /// Longitude of ascending node of orbit plane at weekly epoch
     pub omega0: f64,
-    // ^ Longitude of ascending node of orbit plane at weekly epoch
+    /// Rate of right ascension
     pub omegadot: f64,
-    // ^ Rate of right ascension
+    /// Argument of perigee
     pub w: f64,
-    // ^ Argument of perigee
+    /// Inclination
     pub inc: f64,
-    // ^ Inclination
+    /// Inclination first derivative
     pub inc_dot: f64,
-    // ^ Inclination first derivative
+    /// Polynomial clock correction coefficient (clock bias)
     pub af0: f64,
-    // ^ Polynomial clock correction coefficient (clock bias)
+    /// Polynomial clock correction coefficient (clock drift)
     pub af1: f64,
-    // ^ Polynomial clock correction coefficient (clock drift)
+    /// Polynomial clock correction coefficient (rate of clock drift)
     pub af2: f64,
-    // ^ Polynomial clock correction coefficient (rate of clock drift)
+    /// Time of week
     pub toe_tow: f64,
-    // ^ Time of week
+    /// Week number
     pub toe_wn: u16,
-    // ^ Week number
+    /// Clock reference time of week
     pub toc_tow: f64,
-    // ^ Clock reference time of week
+    /// Clock reference week number
     pub toc_wn: u16,
-    // ^ Clock reference week number
+    /// Is valid?
     pub valid: u8,
-    // ^ Is valid?
+    /// Satellite is healthy?
     pub healthy: u8,
-    // ^ Satellite is healthy?
+    /// PRN being tracked
     pub prn: u8,
-    // ^ PRN being tracked
+    /// Issue of ephemeris data
     pub iode: u8,
-    // ^ Issue of ephemeris data
 }
 
 impl MsgEphemerisDepB {
@@ -2015,80 +2015,80 @@ impl super::SBPMessage for MsgEphemerisDepB {
     }
 }
 
-// Satellite broadcast ephemeris
-//
-// The ephemeris message returns a set of satellite orbit
-// parameters that is used to calculate GPS satellite position,
-// velocity, and clock offset. Please see the Navstar GPS
-// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
-// 20-III) for more details.
-//
+/// Satellite broadcast ephemeris
+///
+/// The ephemeris message returns a set of satellite orbit
+/// parameters that is used to calculate GPS satellite position,
+/// velocity, and clock offset. Please see the Navstar GPS
+/// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
+/// 20-III) for more details.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepC {
     pub sender_id: Option<u16>,
+    /// Group delay differential between L1 and L2
     pub tgd: f64,
-    // ^ Group delay differential between L1 and L2
+    /// Amplitude of the sine harmonic correction term to the orbit radius
     pub c_rs: f64,
-    // ^ Amplitude of the sine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the orbit radius
     pub c_rc: f64,
-    // ^ Amplitude of the cosine harmonic correction term to the orbit radius
+    /// Amplitude of the cosine harmonic correction term to the argument of
+    /// latitude
     pub c_uc: f64,
-    // ^ Amplitude of the cosine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the sine harmonic correction term to the argument of
+    /// latitude
     pub c_us: f64,
-    // ^ Amplitude of the sine harmonic correction term to the argument of
-    // latitude
+    /// Amplitude of the cosine harmonic correction term to the angle of
+    /// inclination
     pub c_ic: f64,
-    // ^ Amplitude of the cosine harmonic correction term to the angle of
-    // inclination
+    /// Amplitude of the sine harmonic correction term to the angle of
+    /// inclination
     pub c_is: f64,
-    // ^ Amplitude of the sine harmonic correction term to the angle of
-    // inclination
+    /// Mean motion difference
     pub dn: f64,
-    // ^ Mean motion difference
+    /// Mean anomaly at reference time
     pub m0: f64,
-    // ^ Mean anomaly at reference time
+    /// Eccentricity of satellite orbit
     pub ecc: f64,
-    // ^ Eccentricity of satellite orbit
+    /// Square root of the semi-major axis of orbit
     pub sqrta: f64,
-    // ^ Square root of the semi-major axis of orbit
+    /// Longitude of ascending node of orbit plane at weekly epoch
     pub omega0: f64,
-    // ^ Longitude of ascending node of orbit plane at weekly epoch
+    /// Rate of right ascension
     pub omegadot: f64,
-    // ^ Rate of right ascension
+    /// Argument of perigee
     pub w: f64,
-    // ^ Argument of perigee
+    /// Inclination
     pub inc: f64,
-    // ^ Inclination
+    /// Inclination first derivative
     pub inc_dot: f64,
-    // ^ Inclination first derivative
+    /// Polynomial clock correction coefficient (clock bias)
     pub af0: f64,
-    // ^ Polynomial clock correction coefficient (clock bias)
+    /// Polynomial clock correction coefficient (clock drift)
     pub af1: f64,
-    // ^ Polynomial clock correction coefficient (clock drift)
+    /// Polynomial clock correction coefficient (rate of clock drift)
     pub af2: f64,
-    // ^ Polynomial clock correction coefficient (rate of clock drift)
+    /// Time of week
     pub toe_tow: f64,
-    // ^ Time of week
+    /// Week number
     pub toe_wn: u16,
-    // ^ Week number
+    /// Clock reference time of week
     pub toc_tow: f64,
-    // ^ Clock reference time of week
+    /// Clock reference week number
     pub toc_wn: u16,
-    // ^ Clock reference week number
+    /// Is valid?
     pub valid: u8,
-    // ^ Is valid?
+    /// Satellite is healthy?
     pub healthy: u8,
-    // ^ Satellite is healthy?
+    /// GNSS signal identifier
     pub sid: GnssSignalDep,
-    // ^ GNSS signal identifier
+    /// Issue of ephemeris data
     pub iode: u8,
-    // ^ Issue of ephemeris data
+    /// Issue of clock data
     pub iodc: u16,
-    // ^ Issue of clock data
+    /// Reserved field
     pub reserved: u32,
-    // ^ Reserved field
 }
 
 impl MsgEphemerisDepC {
@@ -2139,18 +2139,18 @@ impl super::SBPMessage for MsgEphemerisDepC {
     }
 }
 
-// Header for observation message.
-//
-// Header of a GPS observation message.
-//
+/// Header for observation message.
+///
+/// Header of a GPS observation message.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct ObservationHeaderDep {
+    /// GPS time of this observation
     pub t: GPSTimeDep,
-    // ^ GPS time of this observation
+    /// Total number of observations. First nibble is the size of the sequence
+    /// (n), second nibble is the zero-indexed counter (ith packet of n)
     pub n_obs: u8,
-    // ^ Total number of observations. First nibble is the size of the sequence
-    // (n), second nibble is the zero-indexed counter (ith packet of n)
 }
 
 impl ObservationHeaderDep {
@@ -2182,21 +2182,21 @@ impl ObservationHeaderDep {
     }
 }
 
-// GPS carrier phase measurement.
-//
-// Carrier phase measurement in cycles represented as a 40-bit
-// fixed point number with Q32.8 layout, i.e. 32-bits of whole
-// cycles and 8-bits of fractional cycles. This has the opposite
-// sign convention than a typical GPS receiver and the phase has
-// the opposite sign as the pseudorange.
-//
+/// GPS carrier phase measurement.
+///
+/// Carrier phase measurement in cycles represented as a 40-bit
+/// fixed point number with Q32.8 layout, i.e. 32-bits of whole
+/// cycles and 8-bits of fractional cycles. This has the opposite
+/// sign convention than a typical GPS receiver and the phase has
+/// the opposite sign as the pseudorange.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct CarrierPhaseDepA {
+    /// Carrier phase whole cycles
     pub i: i32,
-    // ^ Carrier phase whole cycles
+    /// Carrier phase fractional part
     pub f: u8,
-    // ^ Carrier phase fractional part
 }
 
 impl CarrierPhaseDepA {
@@ -2226,25 +2226,25 @@ impl CarrierPhaseDepA {
     }
 }
 
-// Deprecated
-//
-// Deprecated.
-//
+/// Deprecated
+///
+/// Deprecated.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct PackedObsContentDepA {
+    /// Pseudorange observation
     pub P: u32,
-    // ^ Pseudorange observation
+    /// Carrier phase observation with opposite sign from typical convention
     pub L: CarrierPhaseDepA,
-    // ^ Carrier phase observation with opposite sign from typical convention
+    /// Carrier-to-Noise density
     pub cn0: u8,
-    // ^ Carrier-to-Noise density
+    /// Lock indicator. This value changes whenever a satellite signal has lost
+    /// and regained lock, indicating that the carrier phase ambiguity may have
+    /// changed.
     pub lock: u16,
-    // ^ Lock indicator. This value changes whenever a satellite signal has lost
-    // and regained lock, indicating that the carrier phase ambiguity may have
-    // changed.
+    /// PRN-1 identifier of the satellite signal
     pub prn: u8,
-    // ^ PRN-1 identifier of the satellite signal
 }
 
 impl PackedObsContentDepA {
@@ -2279,26 +2279,26 @@ impl PackedObsContentDepA {
     }
 }
 
-// GPS observations for a particular satellite signal.
-//
-// Pseudorange and carrier phase observation for a satellite being
-// tracked.  Pseudoranges are referenced to a nominal pseudorange.
-//
+/// GPS observations for a particular satellite signal.
+///
+/// Pseudorange and carrier phase observation for a satellite being
+/// tracked.  Pseudoranges are referenced to a nominal pseudorange.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct PackedObsContentDepB {
+    /// Pseudorange observation
     pub P: u32,
-    // ^ Pseudorange observation
+    /// Carrier phase observation with opposite sign from typical convention.
     pub L: CarrierPhaseDepA,
-    // ^ Carrier phase observation with opposite sign from typical convention.
+    /// Carrier-to-Noise density
     pub cn0: u8,
-    // ^ Carrier-to-Noise density
+    /// Lock indicator. This value changes whenever a satellite signal has lost
+    /// and regained lock, indicating that the carrier phase ambiguity may have
+    /// changed.
     pub lock: u16,
-    // ^ Lock indicator. This value changes whenever a satellite signal has lost
-    // and regained lock, indicating that the carrier phase ambiguity may have
-    // changed.
+    /// GNSS signal identifier
     pub sid: GnssSignalDep,
-    // ^ GNSS signal identifier
 }
 
 impl PackedObsContentDepB {
@@ -2333,27 +2333,27 @@ impl PackedObsContentDepB {
     }
 }
 
-// GPS observations for a particular satellite signal.
-//
-// Pseudorange and carrier phase observation for a satellite being
-// tracked. The observations are be interoperable with 3rd party
-// receivers and conform with typical RTCMv3 GNSS observations.
-//
+/// GPS observations for a particular satellite signal.
+///
+/// Pseudorange and carrier phase observation for a satellite being
+/// tracked. The observations are be interoperable with 3rd party
+/// receivers and conform with typical RTCMv3 GNSS observations.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct PackedObsContentDepC {
+    /// Pseudorange observation
     pub P: u32,
-    // ^ Pseudorange observation
+    /// Carrier phase observation with typical sign convention.
     pub L: CarrierPhase,
-    // ^ Carrier phase observation with typical sign convention.
+    /// Carrier-to-Noise density
     pub cn0: u8,
-    // ^ Carrier-to-Noise density
+    /// Lock indicator. This value changes whenever a satellite signal has lost
+    /// and regained lock, indicating that the carrier phase ambiguity may have
+    /// changed.
     pub lock: u16,
-    // ^ Lock indicator. This value changes whenever a satellite signal has lost
-    // and regained lock, indicating that the carrier phase ambiguity may have
-    // changed.
+    /// GNSS signal identifier
     pub sid: GnssSignalDep,
-    // ^ GNSS signal identifier
 }
 
 impl PackedObsContentDepC {
@@ -2388,18 +2388,18 @@ impl PackedObsContentDepC {
     }
 }
 
-// Deprecated
-//
-// Deprecated.
-//
+/// Deprecated
+///
+/// Deprecated.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgObsDepA {
     pub sender_id: Option<u16>,
+    /// Header of a GPS observation message
     pub header: ObservationHeaderDep,
-    // ^ Header of a GPS observation message
+    /// Pseudorange and carrier phase observation for a satellite being tracked.
     pub obs: Vec<PackedObsContentDepA>,
-    // ^ Pseudorange and carrier phase observation for a satellite being tracked.
 }
 
 impl MsgObsDepA {
@@ -2423,23 +2423,23 @@ impl super::SBPMessage for MsgObsDepA {
     }
 }
 
-// Deprecated
-//
-// This observation message has been deprecated in favor of
-// observations that are more interoperable. This message
-// should be used for observations referenced to
-// a nominal pseudorange which are not interoperable with
-// most 3rd party GNSS receievers or typical RTCMv3
-// observations.
-//
+/// Deprecated
+///
+/// This observation message has been deprecated in favor of
+/// observations that are more interoperable. This message
+/// should be used for observations referenced to
+/// a nominal pseudorange which are not interoperable with
+/// most 3rd party GNSS receievers or typical RTCMv3
+/// observations.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgObsDepB {
     pub sender_id: Option<u16>,
+    /// Header of a GPS observation message
     pub header: ObservationHeaderDep,
-    // ^ Header of a GPS observation message
+    /// Pseudorange and carrier phase observation for a satellite being tracked.
     pub obs: Vec<PackedObsContentDepB>,
-    // ^ Pseudorange and carrier phase observation for a satellite being tracked.
 }
 
 impl MsgObsDepB {
@@ -2463,24 +2463,24 @@ impl super::SBPMessage for MsgObsDepB {
     }
 }
 
-// Deprecated
-//
-// The GPS observations message reports all the raw pseudorange and
-// carrier phase observations for the satellites being tracked by
-// the device. Carrier phase observation here is represented as a
-// 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
-// whole cycles and 8-bits of fractional cycles). The observations
-// are interoperable with 3rd party receivers and conform
-// with typical RTCMv3 GNSS observations.
-//
+/// Deprecated
+///
+/// The GPS observations message reports all the raw pseudorange and
+/// carrier phase observations for the satellites being tracked by
+/// the device. Carrier phase observation here is represented as a
+/// 40-bit fixed point number with Q32.8 layout (i.e. 32-bits of
+/// whole cycles and 8-bits of fractional cycles). The observations
+/// are interoperable with 3rd party receivers and conform
+/// with typical RTCMv3 GNSS observations.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgObsDepC {
     pub sender_id: Option<u16>,
+    /// Header of a GPS observation message
     pub header: ObservationHeaderDep,
-    // ^ Header of a GPS observation message
+    /// Pseudorange and carrier phase observation for a satellite being tracked.
     pub obs: Vec<PackedObsContentDepC>,
-    // ^ Pseudorange and carrier phase observation for a satellite being tracked.
 }
 
 impl MsgObsDepC {
@@ -2504,18 +2504,18 @@ impl super::SBPMessage for MsgObsDepC {
     }
 }
 
-// Iono corrections
-//
-// The ionospheric parameters which allow the "L1 only" or "L2 only" user to
-// utilize the ionospheric model for computation of the ionospheric delay.
-// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
-//
+/// Iono corrections
+///
+/// The ionospheric parameters which allow the "L1 only" or "L2 only" user to
+/// utilize the ionospheric model for computation of the ionospheric delay.
+/// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgIono {
     pub sender_id: Option<u16>,
+    /// Navigation Message Correction Table Valitidy Time
     pub t_nmct: GPSTimeSec,
-    // ^ Navigation Message Correction Table Valitidy Time
     pub a0: f64,
     pub a1: f64,
     pub a2: f64,
@@ -2554,18 +2554,18 @@ impl super::SBPMessage for MsgIono {
     }
 }
 
-// L2C capability mask
-//
-// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
-//
+/// L2C capability mask
+///
+/// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSvConfigurationGPSDep {
     pub sender_id: Option<u16>,
+    /// Navigation Message Correction Table Valitidy Time
     pub t_nmct: GPSTimeSec,
-    // ^ Navigation Message Correction Table Valitidy Time
+    /// L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
     pub l2c_mask: u32,
-    // ^ L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
 }
 
 impl MsgSvConfigurationGPSDep {
@@ -2592,38 +2592,38 @@ impl super::SBPMessage for MsgSvConfigurationGPSDep {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct GnssCapb {
+    /// GPS SV active mask
     pub gps_active: u64,
-    // ^ GPS SV active mask
+    /// GPS L2C active mask
     pub gps_l2c: u64,
-    // ^ GPS L2C active mask
+    /// GPS L5 active mask
     pub gps_l5: u64,
-    // ^ GPS L5 active mask
+    /// GLO active mask
     pub glo_active: u32,
-    // ^ GLO active mask
+    /// GLO L2OF active mask
     pub glo_l2of: u32,
-    // ^ GLO L2OF active mask
+    /// GLO L3 active mask
     pub glo_l3: u32,
-    // ^ GLO L3 active mask
+    /// SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
+    /// https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
     pub sbas_active: u64,
-    // ^ SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
-    // https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
+    /// SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
+    /// https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
     pub sbas_l5: u64,
-    // ^ SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
-    // https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
+    /// BDS active mask
     pub bds_active: u64,
-    // ^ BDS active mask
+    /// BDS D2NAV active mask
     pub bds_d2nav: u64,
-    // ^ BDS D2NAV active mask
+    /// BDS B2 active mask
     pub bds_b2: u64,
-    // ^ BDS B2 active mask
+    /// BDS B2A active mask
     pub bds_b2a: u64,
-    // ^ BDS B2A active mask
+    /// QZSS active mask
     pub qzss_active: u32,
-    // ^ QZSS active mask
+    /// GAL active mask
     pub gal_active: u64,
-    // ^ GAL active mask
+    /// GAL E5 active mask
     pub gal_e5: u64,
-    // ^ GAL E5 active mask
 }
 
 impl GnssCapb {
@@ -2670,10 +2670,10 @@ impl GnssCapb {
 #[allow(non_snake_case)]
 pub struct MsgGnssCapb {
     pub sender_id: Option<u16>,
+    /// Navigation Message Correction Table Validity Time
     pub t_nmct: GPSTimeSec,
-    // ^ Navigation Message Correction Table Validity Time
+    /// GNSS capabilities masks
     pub gc: GnssCapb,
-    // ^ GNSS capabilities masks
 }
 
 impl MsgGnssCapb {
@@ -2697,21 +2697,21 @@ impl super::SBPMessage for MsgGnssCapb {
     }
 }
 
-// Group Delay
-//
-// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
-//
+/// Group Delay
+///
+/// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGroupDelayDepA {
     pub sender_id: Option<u16>,
+    /// Data Predict Time of Week
     pub t_op: GPSTimeDep,
-    // ^ Data Predict Time of Week
+    /// Satellite number
     pub prn: u8,
-    // ^ Satellite number
+    /// bit-field indicating validity of the values, LSB indicating tgd validity
+    /// etc. 1 = value is valid, 0 = value is not valid.
     pub valid: u8,
-    // ^ bit-field indicating validity of the values, LSB indicating tgd validity
-    // etc. 1 = value is valid, 0 = value is not valid.
     pub tgd: i16,
     pub isc_l1ca: i16,
     pub isc_l2c: i16,
@@ -2742,21 +2742,21 @@ impl super::SBPMessage for MsgGroupDelayDepA {
     }
 }
 
-// Group Delay
-//
-// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
-//
+/// Group Delay
+///
+/// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGroupDelayDepB {
     pub sender_id: Option<u16>,
+    /// Data Predict Time of Week
     pub t_op: GPSTimeSec,
-    // ^ Data Predict Time of Week
+    /// GNSS signal identifier
     pub sid: GnssSignalDep,
-    // ^ GNSS signal identifier
+    /// bit-field indicating validity of the values, LSB indicating tgd validity
+    /// etc. 1 = value is valid, 0 = value is not valid.
     pub valid: u8,
-    // ^ bit-field indicating validity of the values, LSB indicating tgd validity
-    // etc. 1 = value is valid, 0 = value is not valid.
     pub tgd: i16,
     pub isc_l1ca: i16,
     pub isc_l2c: i16,
@@ -2787,21 +2787,21 @@ impl super::SBPMessage for MsgGroupDelayDepB {
     }
 }
 
-// Group Delay
-//
-// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
-//
+/// Group Delay
+///
+/// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGroupDelay {
     pub sender_id: Option<u16>,
+    /// Data Predict Time of Week
     pub t_op: GPSTimeSec,
-    // ^ Data Predict Time of Week
+    /// GNSS signal identifier
     pub sid: GnssSignal,
-    // ^ GNSS signal identifier
+    /// bit-field indicating validity of the values, LSB indicating tgd validity
+    /// etc. 1 = value is valid, 0 = value is not valid.
     pub valid: u8,
-    // ^ bit-field indicating validity of the values, LSB indicating tgd validity
-    // etc. 1 = value is valid, 0 = value is not valid.
     pub tgd: i16,
     pub isc_l1ca: i16,
     pub isc_l2c: i16,
@@ -2835,27 +2835,27 @@ impl super::SBPMessage for MsgGroupDelay {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct AlmanacCommonContent {
+    /// GNSS signal identifier
     pub sid: GnssSignal,
-    // ^ GNSS signal identifier
+    /// Reference time of almanac
     pub toa: GPSTimeSec,
-    // ^ Reference time of almanac
+    /// User Range Accuracy
     pub ura: f64,
-    // ^ User Range Accuracy
+    /// Curve fit interval
     pub fit_interval: u32,
-    // ^ Curve fit interval
+    /// Status of almanac, 1 = valid, 0 = invalid
     pub valid: u8,
-    // ^ Status of almanac, 1 = valid, 0 = invalid
+    /// Satellite health status for GPS:   - bits 5-7: NAV data health status.
+    /// See IS-GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits
+    /// 0-4: Signal health status. See IS-GPS-200H     Table 20-VIII. Codes for
+    /// Health of SV Signal     Components. Satellite health status for GLO:
+    /// See GLO ICD 5.1 table 5.1 for details   - bit 0: C(n), "unhealthy" flag
+    /// that is transmitted within     non-immediate data and indicates overall
+    /// constellation status     at the moment of almanac uploading.     '0'
+    /// indicates malfunction of n-satellite.     '1' indicates that n-satellite
+    /// is operational.   - bit 1: Bn(ln), '0' indicates the satellite is
+    /// operational     and suitable for navigation.
     pub health_bits: u8,
-    // ^ Satellite health status for GPS:   - bits 5-7: NAV data health status.
-    // See IS-GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits
-    // 0-4: Signal health status. See IS-GPS-200H     Table 20-VIII. Codes for
-    // Health of SV Signal     Components. Satellite health status for GLO:
-    // See GLO ICD 5.1 table 5.1 for details   - bit 0: C(n), "unhealthy" flag
-    // that is transmitted within     non-immediate data and indicates overall
-    // constellation status     at the moment of almanac uploading.     '0'
-    // indicates malfunction of n-satellite.     '1' indicates that n-satellite
-    // is operational.   - bit 1: Bn(ln), '0' indicates the satellite is
-    // operational     and suitable for navigation.
 }
 
 impl AlmanacCommonContent {
@@ -2894,27 +2894,27 @@ impl AlmanacCommonContent {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct AlmanacCommonContentDep {
+    /// GNSS signal identifier
     pub sid: GnssSignalDep,
-    // ^ GNSS signal identifier
+    /// Reference time of almanac
     pub toa: GPSTimeSec,
-    // ^ Reference time of almanac
+    /// User Range Accuracy
     pub ura: f64,
-    // ^ User Range Accuracy
+    /// Curve fit interval
     pub fit_interval: u32,
-    // ^ Curve fit interval
+    /// Status of almanac, 1 = valid, 0 = invalid
     pub valid: u8,
-    // ^ Status of almanac, 1 = valid, 0 = invalid
+    /// Satellite health status for GPS:   - bits 5-7: NAV data health status.
+    /// See IS-GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits
+    /// 0-4: Signal health status. See IS-GPS-200H     Table 20-VIII. Codes for
+    /// Health of SV Signal     Components. Satellite health status for GLO:
+    /// See GLO ICD 5.1 table 5.1 for details   - bit 0: C(n), "unhealthy" flag
+    /// that is transmitted within     non-immediate data and indicates overall
+    /// constellation status     at the moment of almanac uploading.     '0'
+    /// indicates malfunction of n-satellite.     '1' indicates that n-satellite
+    /// is operational.   - bit 1: Bn(ln), '0' indicates the satellite is
+    /// operational     and suitable for navigation.
     pub health_bits: u8,
-    // ^ Satellite health status for GPS:   - bits 5-7: NAV data health status.
-    // See IS-GPS-200H     Table 20-VII: NAV Data Health Indications.   - bits
-    // 0-4: Signal health status. See IS-GPS-200H     Table 20-VIII. Codes for
-    // Health of SV Signal     Components. Satellite health status for GLO:
-    // See GLO ICD 5.1 table 5.1 for details   - bit 0: C(n), "unhealthy" flag
-    // that is transmitted within     non-immediate data and indicates overall
-    // constellation status     at the moment of almanac uploading.     '0'
-    // indicates malfunction of n-satellite.     '1' indicates that n-satellite
-    // is operational.   - bit 1: Bn(ln), '0' indicates the satellite is
-    // operational     and suitable for navigation.
 }
 
 impl AlmanacCommonContentDep {
@@ -2950,37 +2950,37 @@ impl AlmanacCommonContentDep {
     }
 }
 
-// Satellite broadcast ephemeris for GPS
-//
-// The almanac message returns a set of satellite orbit parameters. Almanac
-// data is not very precise and is considered valid for up to several months.
-// Please see the Navstar GPS Space Segment/Navigation user interfaces
-// (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
-//
+/// Satellite broadcast ephemeris for GPS
+///
+/// The almanac message returns a set of satellite orbit parameters. Almanac
+/// data is not very precise and is considered valid for up to several months.
+/// Please see the Navstar GPS Space Segment/Navigation user interfaces
+/// (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGPSDep {
     pub sender_id: Option<u16>,
+    /// Values common for all almanac types
     pub common: AlmanacCommonContentDep,
-    // ^ Values common for all almanac types
+    /// Mean anomaly at reference time
     pub m0: f64,
-    // ^ Mean anomaly at reference time
+    /// Eccentricity of satellite orbit
     pub ecc: f64,
-    // ^ Eccentricity of satellite orbit
+    /// Square root of the semi-major axis of orbit
     pub sqrta: f64,
-    // ^ Square root of the semi-major axis of orbit
+    /// Longitude of ascending node of orbit plane at weekly epoch
     pub omega0: f64,
-    // ^ Longitude of ascending node of orbit plane at weekly epoch
+    /// Rate of right ascension
     pub omegadot: f64,
-    // ^ Rate of right ascension
+    /// Argument of perigee
     pub w: f64,
-    // ^ Argument of perigee
+    /// Inclination
     pub inc: f64,
-    // ^ Inclination
+    /// Polynomial clock correction coefficient (clock bias)
     pub af0: f64,
-    // ^ Polynomial clock correction coefficient (clock bias)
+    /// Polynomial clock correction coefficient (clock drift)
     pub af1: f64,
-    // ^ Polynomial clock correction coefficient (clock drift)
 }
 
 impl MsgAlmanacGPSDep {
@@ -3012,37 +3012,37 @@ impl super::SBPMessage for MsgAlmanacGPSDep {
     }
 }
 
-// Satellite broadcast ephemeris for GPS
-//
-// The almanac message returns a set of satellite orbit parameters. Almanac
-// data is not very precise and is considered valid for up to several months.
-// Please see the Navstar GPS Space Segment/Navigation user interfaces
-// (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
-//
+/// Satellite broadcast ephemeris for GPS
+///
+/// The almanac message returns a set of satellite orbit parameters. Almanac
+/// data is not very precise and is considered valid for up to several months.
+/// Please see the Navstar GPS Space Segment/Navigation user interfaces
+/// (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGPS {
     pub sender_id: Option<u16>,
+    /// Values common for all almanac types
     pub common: AlmanacCommonContent,
-    // ^ Values common for all almanac types
+    /// Mean anomaly at reference time
     pub m0: f64,
-    // ^ Mean anomaly at reference time
+    /// Eccentricity of satellite orbit
     pub ecc: f64,
-    // ^ Eccentricity of satellite orbit
+    /// Square root of the semi-major axis of orbit
     pub sqrta: f64,
-    // ^ Square root of the semi-major axis of orbit
+    /// Longitude of ascending node of orbit plane at weekly epoch
     pub omega0: f64,
-    // ^ Longitude of ascending node of orbit plane at weekly epoch
+    /// Rate of right ascension
     pub omegadot: f64,
-    // ^ Rate of right ascension
+    /// Argument of perigee
     pub w: f64,
-    // ^ Argument of perigee
+    /// Inclination
     pub inc: f64,
-    // ^ Inclination
+    /// Polynomial clock correction coefficient (clock bias)
     pub af0: f64,
-    // ^ Polynomial clock correction coefficient (clock bias)
+    /// Polynomial clock correction coefficient (clock drift)
     pub af1: f64,
-    // ^ Polynomial clock correction coefficient (clock drift)
 }
 
 impl MsgAlmanacGPS {
@@ -3074,34 +3074,34 @@ impl super::SBPMessage for MsgAlmanacGPS {
     }
 }
 
-// Satellite broadcast ephemeris for GLO
-//
-// The almanac message returns a set of satellite orbit parameters. Almanac
-// data is not very precise and is considered valid for up to several months.
-// Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
-// almanac" for details.
-//
+/// Satellite broadcast ephemeris for GLO
+///
+/// The almanac message returns a set of satellite orbit parameters. Almanac
+/// data is not very precise and is considered valid for up to several months.
+/// Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
+/// almanac" for details.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGloDep {
     pub sender_id: Option<u16>,
+    /// Values common for all almanac types
     pub common: AlmanacCommonContentDep,
-    // ^ Values common for all almanac types
+    /// Longitude of the first ascending node of the orbit in PZ-90.02
+    /// coordinate system
     pub lambda_na: f64,
-    // ^ Longitude of the first ascending node of the orbit in PZ-90.02
-    // coordinate system
+    /// Time of the first ascending node passage
     pub t_lambda_na: f64,
-    // ^ Time of the first ascending node passage
+    /// Value of inclination at instant of t_lambda
     pub i: f64,
-    // ^ Value of inclination at instant of t_lambda
+    /// Value of Draconian period at instant of t_lambda
     pub t: f64,
-    // ^ Value of Draconian period at instant of t_lambda
+    /// Rate of change of the Draconian period
     pub t_dot: f64,
-    // ^ Rate of change of the Draconian period
+    /// Eccentricity at instant of t_lambda
     pub epsilon: f64,
-    // ^ Eccentricity at instant of t_lambda
+    /// Argument of perigee at instant of t_lambda
     pub omega: f64,
-    // ^ Argument of perigee at instant of t_lambda
 }
 
 impl MsgAlmanacGloDep {
@@ -3131,34 +3131,34 @@ impl super::SBPMessage for MsgAlmanacGloDep {
     }
 }
 
-// Satellite broadcast ephemeris for GLO
-//
-// The almanac message returns a set of satellite orbit parameters. Almanac
-// data is not very precise and is considered valid for up to several months.
-// Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
-// almanac" for details.
-//
+/// Satellite broadcast ephemeris for GLO
+///
+/// The almanac message returns a set of satellite orbit parameters. Almanac
+/// data is not very precise and is considered valid for up to several months.
+/// Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
+/// almanac" for details.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGlo {
     pub sender_id: Option<u16>,
+    /// Values common for all almanac types
     pub common: AlmanacCommonContent,
-    // ^ Values common for all almanac types
+    /// Longitude of the first ascending node of the orbit in PZ-90.02
+    /// coordinate system
     pub lambda_na: f64,
-    // ^ Longitude of the first ascending node of the orbit in PZ-90.02
-    // coordinate system
+    /// Time of the first ascending node passage
     pub t_lambda_na: f64,
-    // ^ Time of the first ascending node passage
+    /// Value of inclination at instant of t_lambda
     pub i: f64,
-    // ^ Value of inclination at instant of t_lambda
+    /// Value of Draconian period at instant of t_lambda
     pub t: f64,
-    // ^ Value of Draconian period at instant of t_lambda
+    /// Rate of change of the Draconian period
     pub t_dot: f64,
-    // ^ Rate of change of the Draconian period
+    /// Eccentricity at instant of t_lambda
     pub epsilon: f64,
-    // ^ Eccentricity at instant of t_lambda
+    /// Argument of perigee at instant of t_lambda
     pub omega: f64,
-    // ^ Argument of perigee at instant of t_lambda
 }
 
 impl MsgAlmanacGlo {
@@ -3188,27 +3188,27 @@ impl super::SBPMessage for MsgAlmanacGlo {
     }
 }
 
-// GLONASS L1/L2 Code-Phase biases
-//
-// The GLONASS L1/L2 Code-Phase biases allows to perform
-// GPS+GLONASS integer ambiguity resolution for baselines
-// with mixed receiver types (e.g. receiver of different
-// manufacturers)
-//
+/// GLONASS L1/L2 Code-Phase biases
+///
+/// The GLONASS L1/L2 Code-Phase biases allows to perform
+/// GPS+GLONASS integer ambiguity resolution for baselines
+/// with mixed receiver types (e.g. receiver of different
+/// manufacturers)
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGloBiases {
     pub sender_id: Option<u16>,
+    /// GLONASS FDMA signals mask
     pub mask: u8,
-    // ^ GLONASS FDMA signals mask
+    /// GLONASS L1 C/A Code-Phase Bias
     pub l1ca_bias: i16,
-    // ^ GLONASS L1 C/A Code-Phase Bias
+    /// GLONASS L1 P Code-Phase Bias
     pub l1p_bias: i16,
-    // ^ GLONASS L1 P Code-Phase Bias
+    /// GLONASS L2 C/A Code-Phase Bias
     pub l2ca_bias: i16,
-    // ^ GLONASS L2 C/A Code-Phase Bias
+    /// GLONASS L2 P Code-Phase Bias
     pub l2p_bias: i16,
-    // ^ GLONASS L2 P Code-Phase Bias
 }
 
 impl MsgGloBiases {
@@ -3235,19 +3235,19 @@ impl super::SBPMessage for MsgGloBiases {
     }
 }
 
-// Satellite azimuth and elevation.
-//
-// Satellite azimuth and elevation.
-//
+/// Satellite azimuth and elevation.
+///
+/// Satellite azimuth and elevation.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct SvAzEl {
+    /// GNSS signal identifier
     pub sid: GnssSignal,
-    // ^ GNSS signal identifier
+    /// Azimuth angle (range 0..179)
     pub az: u8,
-    // ^ Azimuth angle (range 0..179)
+    /// Elevation angle (range -90..90)
     pub el: i8,
-    // ^ Elevation angle (range -90..90)
 }
 
 impl SvAzEl {
@@ -3278,17 +3278,17 @@ impl SvAzEl {
     }
 }
 
-// Satellite azimuths and elevations
-//
-// Azimuth and elevation angles of all the visible satellites
-// that the device does have ephemeris or almanac for.
-//
+/// Satellite azimuths and elevations
+///
+/// Azimuth and elevation angles of all the visible satellites
+/// that the device does have ephemeris or almanac for.
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSvAzEl {
     pub sender_id: Option<u16>,
+    /// Azimuth and elevation per satellite
     pub azel: Vec<SvAzEl>,
-    // ^ Azimuth and elevation per satellite
 }
 
 impl MsgSvAzEl {
@@ -3311,18 +3311,18 @@ impl super::SBPMessage for MsgSvAzEl {
     }
 }
 
-// OSR corrections
-//
-// The OSR message contains network corrections in an observation-like format
-//
+/// OSR corrections
+///
+/// The OSR message contains network corrections in an observation-like format
+///
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgOsr {
     pub sender_id: Option<u16>,
+    /// Header of a GPS observation message
     pub header: ObservationHeader,
-    // ^ Header of a GPS observation message
+    /// Network correction for a satellite signal.
     pub obs: Vec<PackedOsrContent>,
-    // ^ Network correction for a satellite signal.
 }
 
 impl MsgOsr {
