@@ -27,6 +27,7 @@ import sbpg.targets.protobuf as pb
 import sbpg.targets.python as py
 import sbpg.targets.pythonNG as pyNG
 import sbpg.targets.javascript as js
+import sbpg.targets.rust as rs
 
 def get_args():
   parser = argparse.ArgumentParser(description='Swift Navigation SBP generator.')
@@ -61,6 +62,9 @@ def get_args():
   parser.add_argument('--java',
                       action="store_true",
                       help='Target language: Java!')
+  parser.add_argument('--rust',
+                      action="store_true",
+                      help='Target language: Rust.')
   parser.add_argument('--latex',
                       action="store_true",
                       help='Target language: LaTeX.')
@@ -84,7 +88,7 @@ def main():
     # Parse and validate arguments.
     args = get_args().parse_args()
     verbose = args.verbose
-    assert args.pythonNG or args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.protobuf or args.java, \
+    assert args.pythonNG or args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.protobuf or args.java or args.rust, \
       "Please specify a target language."
     input_file = os.path.abspath(args.input_file[0])
     assert len(args.input_file) == 1
@@ -138,6 +142,8 @@ def main():
           hs.render_source(output_dir, parsed)
         elif args.java:
           java.render_source(output_dir, parsed)
+        elif args.rust:
+          rs.render_source(output_dir, parsed)
         elif args.protobuf:
           pb.render_source(output_dir, parsed)
       if args.c:
@@ -151,6 +157,9 @@ def main():
       elif args.java:
         parsed = [yaml.parse_spec(spec) for _, spec in file_index_items]
         java.render_table(output_dir, parsed)
+      elif args.rust:
+        parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
+        rs.render_mod(output_dir, parsed)
       elif args.test_c:
         test_c.render_check_suites(output_dir, all_specs)
         test_c.render_check_main(output_dir, all_specs)
