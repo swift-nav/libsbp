@@ -8,10 +8,11 @@
 #
 
 import warnings
-from setuptools import setup
+from setuptools import setup, find_packages
 
 import re
 import os
+import sys
 
 import subprocess
 
@@ -31,15 +32,7 @@ CLASSIFIERS = [
   'Programming Language :: Python :: 3.7',
 ]
 
-PACKAGES = [
-  'sbp',
-  'sbp.jit',
-  'sbp.client',
-  'sbp.client.drivers',
-  'sbp.client.loggers',
-  'sbp.client.util',
-  'sbp2json',
-]
+PACKAGES = find_packages(exclude=["tests", "bench", "tests.*", "sbp.jit"])
 
 PLATFORMS = [
   'linux',
@@ -158,32 +151,47 @@ def write_version_py(filename=VERSION_PY_PATH):
                                             is_released=IS_RELEASED))
 
 
+def exclude_jit_libs(lib):
+    if 'sbp.jit' in PACKAGES:
+        return False
+    excluded_libs = ['ujson', 'pybase64', 'numpy']
+    for excluded_lib in excluded_libs:
+        if excluded_lib in lib:
+            return True
+    return False
+
+
 if __name__ == "__main__":
 
     with open(os.path.join(setup_py_dir, 'README.rst')) as f:
         readme = f.read()
 
-    INSTALL_REQUIRES = []
-    with open(os.path.join(setup_py_dir, 'requirements.txt')) as f:
-        INSTALL_REQUIRES += [i.strip() for i in f.readlines()]
-
-    with open(os.path.join(setup_py_dir, 'test_requirements.txt')) as f:
-        TEST_REQUIRES = [i.strip() for i in f.readlines()]
-
-    with open(os.path.join(setup_py_dir, 'setup_requirements.txt')) as f:
-        SETUP_REQUIRES = [i.strip() for i in f.readlines()
-                          if 'setuptools' not in i]
-
     write_version_py()
 
     from sbp import __version__ as sbp_version
-    print("Building/installing libsbp version {} (read version: {})".format(sbp_version, VERSION))
+    print("Building/installing libsbp version {0} (read version: {1})".format(sbp_version, VERSION))
 
     ext_modules = None
 
     if not os.environ.get('LIBSBP_BUILD_ANY', None):
-        from sbp.jit.parse import cc
-        ext_modules = [cc.distutils_extension()]
+        try:
+            from sbp.jit.parse import cc
+            ext_modules = [cc.distutils_extension()]
+            PACKAGES.extend(['sbp.jit'])
+        except:
+            print('WARNING: sbp.jit will be unavailable, the setup script tried to compile the sbp.jit module...\n'
+                  'but it failed, this usually means that the LLVM libraries are not present (or supported) on\n'
+                  'this platform.  Try installing the LLVM library for this platform and re-installing.')
+    else:
+        print('Detected LIBSBP_BUILD_ANY, building without sbp.jit support...')
+
+    with open(os.path.join(setup_py_dir, 'requirements.txt')) as f:
+        INSTALL_REQUIRES = [i.strip() for i in f.readlines() if not exclude_jit_libs(i.strip())]
+
+    with open(os.path.join(setup_py_dir, 'test_requirements.txt')) as f:
+        TEST_REQUIRES = [i.strip() for i in f.readlines()]
+
+    print("Discovered packages: {0}".format(PACKAGES))
 
     setup(name='sbp',
           version=sbp_version,
