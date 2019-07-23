@@ -179,9 +179,11 @@ if __name__ == "__main__":
             ext_modules = [cc.distutils_extension()]
             PACKAGES.extend(['sbp.jit'])
         except:
-            print('WARNING: sbp.jit will be unavailable...')
+            print('WARNING: sbp.jit will be unavailable, the setup script tried to compile the sbp.jit module...\n'
+                  'but it failed, this usually means that the LLVM libraries are not present (or supported) on\n'
+                  'this platform.  Try installing the LLVM library for this platform and re-installing.')
     else:
-        print('Building without sbp.jit support...')
+        print('Detected LIBSBP_BUILD_ANY, building without sbp.jit support...')
 
     with open(os.path.join(setup_py_dir, 'requirements.txt')) as f:
         INSTALL_REQUIRES = [i.strip() for i in f.readlines() if not exclude_jit_libs(i.strip())]

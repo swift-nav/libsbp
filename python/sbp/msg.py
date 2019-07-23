@@ -42,6 +42,12 @@ parse_jit = None
 
 
 def try_import_jit():
+  '''
+  Try to import the pre-compiled version of the "jit" libraries for parsing SBP data.
+  This should only fail on systems that do not have support for Numba (or LLVM).  For
+  system where it does fail, we fall back to parsing without the pre-compile (or JIT
+  compiled) module.
+  '''
   parse_jit_name = "parse_jit_py{}".format(str(sys.version_info[0]) + str(sys.version_info[1]))
   if parse_jit_name in (name for loader, name, ispkg in iter_modules()):
     # found in sys.path
