@@ -13,6 +13,7 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 //! Messages reserved for use by the user.
+//!
 
 extern crate byteorder;
 #[allow(unused_imports)]

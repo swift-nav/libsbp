@@ -12,30 +12,33 @@
 // Automatically generated from yaml/swiftnav/sbp/settings.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-//!  Messages for reading, writing, and discovering device settings. Settings
+//!
+//! Messages for reading, writing, and discovering device settings. Settings
 //! with a "string" field have multiple values in this field delimited with a
 //! null character (the c style null terminator).  For instance, when querying
 //! the 'firmware_version' setting in the 'system_info' section, the following
 //! array of characters needs to be sent for the string field in
 //! MSG_SETTINGS_READ: "system_info\0firmware_version\0", where the delimiting
 //! null characters are specified with the escape sequence '\0' and all
-//! quotation marks should be omitted.    In the message descriptions below,
-//! the generic strings SECTION_SETTING and SETTING are used to refer to the
-//! two strings that comprise the identifier of an individual setting.In
-//! firmware_version example above, SECTION_SETTING is the 'system_info', and
-//! the SETTING portion is 'firmware_version'.   See the "Software Settings
-//! Manual" on support.swiftnav.com for detailed documentation about all
-//! settings and sections available for each Swift firmware version. Settings
-//! manuals are available for each firmware version at the following link:
-//! @@https://support.swiftnav.com/customer/en/portal/articles/2628580-piksi-
-//! multi-specifications#settings[Piksi Multi Specifications]. The latest
-//! settings document is also available at the following link:
-//! @@http://swiftnav.com/latest/piksi-multi-settings[Latest settings document]
-//! . See lastly @@https://github.com/swift-
-//! nav/piksi_tools/blob/master/piksi_tools/settings.py[settings.py] ,  the
-//! open source python command line utility for reading, writing, and saving
-//! settings in the piksi_tools repository on github as a helpful reference and
-//! example.
+//! quotation marks should be omitted.
+//!
+//!
+//! In the message descriptions below, the generic strings SECTION_SETTING and
+//! SETTING are used to refer to the two strings that comprise the identifier
+//! of an individual setting.In firmware_version example above, SECTION_SETTING
+//! is the 'system_info', and the SETTING portion is 'firmware_version'.
+//!
+//! See the "Software Settings Manual" on support.swiftnav.com for detailed
+//! documentation about all settings and sections available for each Swift
+//! firmware version. Settings manuals are available for each firmware version
+//! at the following link: @@https://support.swiftnav.com/customer/en/portal/articles/2628580-piksi-multi-specifications#settings[Piksi Multi Specifications].
+//! The latest settings document is also available at the following link:
+//! @@http://swiftnav.com/latest/piksi-multi-settings[Latest settings document] .
+//! See lastly @@https://github.com/swift-nav/piksi_tools/blob/master/piksi_tools/settings.py[settings.py] ,
+//! the open source python command line utility for reading, writing, and
+//! saving settings in the piksi_tools repository on github as a helpful
+//! reference and example.
+//!
 
 extern crate byteorder;
 #[allow(unused_imports)]

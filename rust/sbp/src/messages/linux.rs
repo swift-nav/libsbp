@@ -13,6 +13,7 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 //! Linux state monitoring.
+//!
 
 extern crate byteorder;
 #[allow(unused_imports)]

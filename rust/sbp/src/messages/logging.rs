@@ -13,6 +13,7 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 //! Logging and debugging messages from the device.
+//!
 
 extern crate byteorder;
 #[allow(unused_imports)]

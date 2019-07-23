@@ -217,57 +217,55 @@ pub enum SBP {
         sender_id: u16,
         payload: Vec<u8>,
     },
-    MsgAcqSvProfile(MsgAcqSvProfile),
-    MsgAcqSvProfileDep(MsgAcqSvProfileDep),
-    MsgSbasRaw(MsgSbasRaw),
-    MsgOdometry(MsgOdometry),
-    MsgTrackingStateDetailedDepA(MsgTrackingStateDetailedDepA),
-    MsgTrackingStateDetailedDep(MsgTrackingStateDetailedDep),
-    MsgTrackingState(MsgTrackingState),
-    MsgMeasurementState(MsgMeasurementState),
-    MsgTrackingIq(MsgTrackingIq),
-    MsgTrackingIqDepB(MsgTrackingIqDepB),
-    MsgTrackingIqDepA(MsgTrackingIqDepA),
-    MsgTrackingStateDepA(MsgTrackingStateDepA),
-    MsgTrackingStateDepB(MsgTrackingStateDepB),
-    MsgExtEvent(MsgExtEvent),
-    MsgFlashProgram(MsgFlashProgram),
-    MsgFlashDone(MsgFlashDone),
-    MsgFlashReadReq(MsgFlashReadReq),
-    MsgFlashReadResp(MsgFlashReadResp),
-    MsgFlashErase(MsgFlashErase),
-    MsgStmFlashLockSector(MsgStmFlashLockSector),
-    MsgStmFlashUnlockSector(MsgStmFlashUnlockSector),
-    MsgStmUniqueIdReq(MsgStmUniqueIdReq),
-    MsgStmUniqueIdResp(MsgStmUniqueIdResp),
-    MsgM25FlashWriteStatus(MsgM25FlashWriteStatus),
-    MsgMagRaw(MsgMagRaw),
-    MsgAngularRate(MsgAngularRate),
-    MsgNdbEvent(MsgNdbEvent),
-    MsgSsrOrbitClock(MsgSsrOrbitClock),
-    MsgSsrOrbitClockDepA(MsgSsrOrbitClockDepA),
-    MsgSsrCodeBiases(MsgSsrCodeBiases),
-    MsgSsrPhaseBiases(MsgSsrPhaseBiases),
-    MsgSsrStecCorrection(MsgSsrStecCorrection),
-    MsgSsrGriddedCorrection(MsgSsrGriddedCorrection),
-    MsgSsrGridDefinition(MsgSsrGridDefinition),
+    MsgUartState(MsgUartState),
+    MsgUartStateDepa(MsgUartStateDepa),
+    MsgResetDep(MsgResetDep),
+    MsgCwResults(MsgCwResults),
+    MsgCwStart(MsgCwStart),
+    MsgResetFilters(MsgResetFilters),
+    MsgInitBaseDep(MsgInitBaseDep),
+    MsgThreadState(MsgThreadState),
+    MsgCommandOutput(MsgCommandOutput),
+    MsgNetworkStateReq(MsgNetworkStateReq),
+    MsgNetworkStateResp(MsgNetworkStateResp),
+    MsgSpecan(MsgSpecan),
+    MsgFrontEndGain(MsgFrontEndGain),
     MsgLinuxCpuState(MsgLinuxCpuState),
+    MsgNetworkBandwidthUsage(MsgNetworkBandwidthUsage),
+    MsgCellModemStatus(MsgCellModemStatus),
+    MsgSpecanDep(MsgSpecanDep),
+    MsgLinuxProcessSocketCounts(MsgLinuxProcessSocketCounts),
+    MsgLinuxProcessSocketQueues(MsgLinuxProcessSocketQueues),
+    MsgLinuxSocketUsage(MsgLinuxSocketUsage),
     MsgLinuxMemState(MsgLinuxMemState),
     MsgLinuxSysState(MsgLinuxSysState),
-    MsgLinuxProcessSocketCounts(MsgLinuxProcessSocketCounts),
-    MsgBaselineHeading(MsgBaselineHeading),
-    MsgOrientQuat(MsgOrientQuat),
-    MsgOrientEuler(MsgOrientEuler),
-    MsgImuRaw(MsgImuRaw),
-    MsgImuAux(MsgImuAux),
+    MsgLinuxProcessFdCount(MsgLinuxProcessFdCount),
+    MsgLinuxProcessFdSummary(MsgLinuxProcessFdSummary),
+    MsgStartup(MsgStartup),
+    MsgDgnssStatus(MsgDgnssStatus),
+    MsgHeartbeat(MsgHeartbeat),
+    MsgIarState(MsgIarState),
+    MsgMaskSatellite(MsgMaskSatellite),
+    MsgMaskSatelliteDep(MsgMaskSatelliteDep),
+    MsgDeviceMonitor(MsgDeviceMonitor),
+    MsgCommandReq(MsgCommandReq),
+    MsgCommandResp(MsgCommandResp),
+    MsgNdbEvent(MsgNdbEvent),
+    MsgAlmanac(MsgAlmanac),
+    MsgSetTime(MsgSetTime),
+    MsgReset(MsgReset),
     MsgObs(MsgObs),
     MsgBasePosLLH(MsgBasePosLLH),
     MsgBasePosECEF(MsgBasePosECEF),
+    MsgInsStatus(MsgInsStatus),
+    MsgCsacTelemetry(MsgCsacTelemetry),
+    MsgCsacTelemetryLabels(MsgCsacTelemetryLabels),
+    MsgExtEvent(MsgExtEvent),
     MsgEphemerisGPSDepE(MsgEphemerisGPSDepE),
     MsgEphemerisGPSDepF(MsgEphemerisGPSDepF),
+    MsgEphemerisGPS(MsgEphemerisGPS),
     MsgEphemerisQzss(MsgEphemerisQzss),
     MsgEphemerisBds(MsgEphemerisBds),
-    MsgEphemerisGPS(MsgEphemerisGPS),
     MsgEphemerisGalDepA(MsgEphemerisGalDepA),
     MsgEphemerisGal(MsgEphemerisGal),
     MsgEphemerisSbasDepA(MsgEphemerisSbasDepA),
@@ -276,85 +274,12 @@ pub enum SBP {
     MsgEphemerisSbas(MsgEphemerisSbas),
     MsgEphemerisGloDepB(MsgEphemerisGloDepB),
     MsgEphemerisGloDepC(MsgEphemerisGloDepC),
-    MsgLinuxProcessSocketQueues(MsgLinuxProcessSocketQueues),
-    MsgLinuxSocketUsage(MsgLinuxSocketUsage),
-    MsgUtcTime(MsgUtcTime),
-    MsgDops(MsgDops),
-    MsgLinuxProcessFdCount(MsgLinuxProcessFdCount),
-    MsgLinuxProcessFdSummary(MsgLinuxProcessFdSummary),
-    MsgUserData(MsgUserData),
-    MsgGPSTime(MsgGPSTime),
-    MsgPosECEF(MsgPosECEF),
-    MsgPosECEFCov(MsgPosECEFCov),
-    MsgPosLLH(MsgPosLLH),
-    MsgPosLLHCov(MsgPosLLHCov),
-    MsgBaselineECEF(MsgBaselineECEF),
-    MsgBaselineNED(MsgBaselineNED),
-    MsgVelECEF(MsgVelECEF),
-    MsgVelECEFCov(MsgVelECEFCov),
-    MsgVelNED(MsgVelNED),
-    MsgVelNEDCov(MsgVelNEDCov),
     MsgEphemerisGloDepD(MsgEphemerisGloDepD),
-    MsgEphemerisGlo(MsgEphemerisGlo),
-    MsgEphemerisDepD(MsgEphemerisDepD),
-    MsgEphemerisDepA(MsgEphemerisDepA),
-    MsgEphemerisDepB(MsgEphemerisDepB),
-    MsgEphemerisDepC(MsgEphemerisDepC),
-    MsgInsStatus(MsgInsStatus),
-    MsgCsacTelemetry(MsgCsacTelemetry),
-    MsgCsacTelemetryLabels(MsgCsacTelemetryLabels),
-    MsgAlmanac(MsgAlmanac),
-    MsgSetTime(MsgSetTime),
-    MsgReset(MsgReset),
-    MsgResetDep(MsgResetDep),
-    MsgCwResults(MsgCwResults),
-    MsgCwStart(MsgCwStart),
-    MsgResetFilters(MsgResetFilters),
-    MsgInitBaseDep(MsgInitBaseDep),
-    MsgThreadState(MsgThreadState),
-    MsgUartState(MsgUartState),
-    MsgUartStateDepa(MsgUartStateDepa),
-    MsgIarState(MsgIarState),
-    MsgMaskSatellite(MsgMaskSatellite),
-    MsgMaskSatelliteDep(MsgMaskSatelliteDep),
-    MsgDeviceMonitor(MsgDeviceMonitor),
-    MsgCommandReq(MsgCommandReq),
-    MsgCommandResp(MsgCommandResp),
-    MsgCommandOutput(MsgCommandOutput),
-    MsgNetworkStateReq(MsgNetworkStateReq),
-    MsgNetworkStateResp(MsgNetworkStateResp),
-    MsgNetworkBandwidthUsage(MsgNetworkBandwidthUsage),
-    MsgCellModemStatus(MsgCellModemStatus),
-    MsgSpecanDep(MsgSpecanDep),
-    MsgSpecan(MsgSpecan),
-    MsgFrontEndGain(MsgFrontEndGain),
-    MsgAcqResult(MsgAcqResult),
-    MsgAcqResultDepC(MsgAcqResultDepC),
     MsgAcqResultDepB(MsgAcqResultDepB),
     MsgAcqResultDepA(MsgAcqResultDepA),
-    MsgVelBody(MsgVelBody),
-    MsgAgeCorrections(MsgAgeCorrections),
-    MsgGPSTimeDepA(MsgGPSTimeDepA),
-    MsgDopsDepA(MsgDopsDepA),
-    MsgPosECEFDepA(MsgPosECEFDepA),
-    MsgPosLLHDepA(MsgPosLLHDepA),
-    MsgBaselineECEFDepA(MsgBaselineECEFDepA),
-    MsgBaselineNEDDepA(MsgBaselineNEDDepA),
-    MsgVelECEFDepA(MsgVelECEFDepA),
-    MsgVelNEDDepA(MsgVelNEDDepA),
-    MsgBaselineHeadingDepA(MsgBaselineHeadingDepA),
-    MsgFileioReadReq(MsgFileioReadReq),
-    MsgFileioReadResp(MsgFileioReadResp),
-    MsgFileioReadDirReq(MsgFileioReadDirReq),
-    MsgFileioReadDirResp(MsgFileioReadDirResp),
-    MsgFileioRemove(MsgFileioRemove),
-    MsgFileioWriteReq(MsgFileioWriteReq),
-    MsgFileioWriteResp(MsgFileioWriteResp),
-    MsgFileioConfigReq(MsgFileioConfigReq),
-    MsgFileioConfigResp(MsgFileioConfigResp),
-    MsgLog(MsgLog),
-    MsgFwd(MsgFwd),
-    MsgPrintDep(MsgPrintDep),
+    MsgAcqSvProfile(MsgAcqSvProfile),
+    MsgAcqSvProfileDep(MsgAcqSvProfileDep),
+    MsgSbasRaw(MsgSbasRaw),
     MsgSettingsSave(MsgSettingsSave),
     MsgSettingsWrite(MsgSettingsWrite),
     MsgSettingsWriteResp(MsgSettingsWriteResp),
@@ -369,206 +294,206 @@ pub enum SBP {
     MsgBootloaderHandshakeResp(MsgBootloaderHandshakeResp),
     MsgBootloaderJumpToApp(MsgBootloaderJumpToApp),
     MsgNapDeviceDnaReq(MsgNapDeviceDnaReq),
-    MsgBootloaderHandshakeDepA(MsgBootloaderHandshakeDepA),
     MsgNapDeviceDnaResp(MsgNapDeviceDnaResp),
-    MsgDgnssStatus(MsgDgnssStatus),
-    MsgHeartbeat(MsgHeartbeat),
-    MsgStartup(MsgStartup),
+    MsgBootloaderHandshakeDepA(MsgBootloaderHandshakeDepA),
+    MsgFileioReadReq(MsgFileioReadReq),
+    MsgFileioReadResp(MsgFileioReadResp),
+    MsgFileioReadDirReq(MsgFileioReadDirReq),
+    MsgFileioReadDirResp(MsgFileioReadDirResp),
+    MsgFileioRemove(MsgFileioRemove),
+    MsgFileioWriteReq(MsgFileioWriteReq),
+    MsgFileioWriteResp(MsgFileioWriteResp),
+    MsgFileioConfigReq(MsgFileioConfigReq),
+    MsgFileioConfigResp(MsgFileioConfigResp),
+    MsgTrackingIq(MsgTrackingIq),
+    MsgTrackingIqDepB(MsgTrackingIqDepB),
+    MsgTrackingIqDepA(MsgTrackingIqDepA),
+    MsgTrackingStateDepA(MsgTrackingStateDepA),
+    MsgTrackingStateDepB(MsgTrackingStateDepB),
+    MsgLog(MsgLog),
+    MsgFwd(MsgFwd),
+    MsgPrintDep(MsgPrintDep),
+    MsgImuRaw(MsgImuRaw),
+    MsgImuAux(MsgImuAux),
+    MsgMagRaw(MsgMagRaw),
+    MsgSsrOrbitClock(MsgSsrOrbitClock),
+    MsgSsrOrbitClockDepA(MsgSsrOrbitClockDepA),
+    MsgSsrCodeBiases(MsgSsrCodeBiases),
+    MsgSsrPhaseBiases(MsgSsrPhaseBiases),
+    MsgSsrStecCorrection(MsgSsrStecCorrection),
+    MsgSsrGriddedCorrection(MsgSsrGriddedCorrection),
+    MsgSsrGridDefinition(MsgSsrGridDefinition),
+    MsgUserData(MsgUserData),
+    MsgAcqResult(MsgAcqResult),
+    MsgAcqResultDepC(MsgAcqResultDepC),
+    MsgVelECEFDepA(MsgVelECEFDepA),
+    MsgVelNEDDepA(MsgVelNEDDepA),
+    MsgBaselineHeadingDepA(MsgBaselineHeadingDepA),
+    MsgOdometry(MsgOdometry),
+    MsgBaselineHeading(MsgBaselineHeading),
+    MsgOrientQuat(MsgOrientQuat),
+    MsgOrientEuler(MsgOrientEuler),
+    MsgAngularRate(MsgAngularRate),
+    MsgTrackingStateDetailedDepA(MsgTrackingStateDetailedDepA),
+    MsgTrackingStateDetailedDep(MsgTrackingStateDetailedDep),
+    MsgTrackingState(MsgTrackingState),
+    MsgMeasurementState(MsgMeasurementState),
+    MsgPosECEF(MsgPosECEF),
+    MsgPosECEFCov(MsgPosECEFCov),
+    MsgPosLLH(MsgPosLLH),
+    MsgPosLLHCov(MsgPosLLHCov),
+    MsgBaselineECEF(MsgBaselineECEF),
+    MsgBaselineNED(MsgBaselineNED),
+    MsgVelECEF(MsgVelECEF),
+    MsgVelECEFCov(MsgVelECEFCov),
+    MsgVelNED(MsgVelNED),
+    MsgVelNEDCov(MsgVelNEDCov),
+    MsgVelBody(MsgVelBody),
+    MsgAgeCorrections(MsgAgeCorrections),
+    MsgGPSTimeDepA(MsgGPSTimeDepA),
+    MsgDopsDepA(MsgDopsDepA),
+    MsgPosECEFDepA(MsgPosECEFDepA),
+    MsgPosLLHDepA(MsgPosLLHDepA),
+    MsgBaselineECEFDepA(MsgBaselineECEFDepA),
+    MsgBaselineNEDDepA(MsgBaselineNEDDepA),
+    MsgGnssCapb(MsgGnssCapb),
+    MsgGroupDelayDepA(MsgGroupDelayDepA),
+    MsgGroupDelayDepB(MsgGroupDelayDepB),
+    MsgGroupDelay(MsgGroupDelay),
+    MsgAlmanacGPSDep(MsgAlmanacGPSDep),
+    MsgAlmanacGPS(MsgAlmanacGPS),
+    MsgAlmanacGloDep(MsgAlmanacGloDep),
+    MsgAlmanacGlo(MsgAlmanacGlo),
+    MsgGloBiases(MsgGloBiases),
+    MsgSvAzEl(MsgSvAzEl),
+    MsgOsr(MsgOsr),
+    MsgFlashProgram(MsgFlashProgram),
+    MsgFlashDone(MsgFlashDone),
+    MsgFlashReadReq(MsgFlashReadReq),
+    MsgFlashReadResp(MsgFlashReadResp),
+    MsgFlashErase(MsgFlashErase),
+    MsgStmFlashLockSector(MsgStmFlashLockSector),
+    MsgStmFlashUnlockSector(MsgStmFlashUnlockSector),
+    MsgStmUniqueIdReq(MsgStmUniqueIdReq),
+    MsgStmUniqueIdResp(MsgStmUniqueIdResp),
+    MsgM25FlashWriteStatus(MsgM25FlashWriteStatus),
+    MsgGPSTime(MsgGPSTime),
+    MsgUtcTime(MsgUtcTime),
+    MsgDops(MsgDops),
+    MsgEphemerisGlo(MsgEphemerisGlo),
+    MsgEphemerisDepD(MsgEphemerisDepD),
+    MsgEphemerisDepA(MsgEphemerisDepA),
+    MsgEphemerisDepB(MsgEphemerisDepB),
+    MsgEphemerisDepC(MsgEphemerisDepC),
     MsgObsDepA(MsgObsDepA),
     MsgObsDepB(MsgObsDepB),
     MsgObsDepC(MsgObsDepC),
     MsgIono(MsgIono),
     MsgSvConfigurationGPSDep(MsgSvConfigurationGPSDep),
-    MsgGnssCapb(MsgGnssCapb),
-    MsgAlmanacGPSDep(MsgAlmanacGPSDep),
-    MsgAlmanacGPS(MsgAlmanacGPS),
-    MsgGroupDelayDepA(MsgGroupDelayDepA),
-    MsgGroupDelayDepB(MsgGroupDelayDepB),
-    MsgGroupDelay(MsgGroupDelay),
-    MsgGloBiases(MsgGloBiases),
-    MsgSvAzEl(MsgSvAzEl),
-    MsgOsr(MsgOsr),
-    MsgAlmanacGloDep(MsgAlmanacGloDep),
-    MsgAlmanacGlo(MsgAlmanacGlo),
 }
 
 impl SBP {
     pub fn parse(msg_id: u16, sender_id: u16, payload: &mut &[u8]) -> Result<SBP, ::Error> {
         let x: Result<SBP, ::Error> = match msg_id {
-            46 => {
-                let mut msg = MsgAcqSvProfile::parse(payload)?;
+            29 => {
+                let mut msg = MsgUartState::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgAcqSvProfile(msg))
+                Ok(SBP::MsgUartState(msg))
             }
-            30 => {
-                let mut msg = MsgAcqSvProfileDep::parse(payload)?;
+            24 => {
+                let mut msg = MsgUartStateDepa::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgAcqSvProfileDep(msg))
+                Ok(SBP::MsgUartStateDepa(msg))
             }
-            30583 => {
-                let mut msg = MsgSbasRaw::parse(payload)?;
+            178 => {
+                let mut msg = MsgResetDep::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgSbasRaw(msg))
+                Ok(SBP::MsgResetDep(msg))
             }
-            2307 => {
-                let mut msg = MsgOdometry::parse(payload)?;
+            192 => {
+                let mut msg = MsgCwResults::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgOdometry(msg))
+                Ok(SBP::MsgCwResults(msg))
             }
-            33 => {
-                let mut msg = MsgTrackingStateDetailedDepA::parse(payload)?;
+            193 => {
+                let mut msg = MsgCwStart::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgTrackingStateDetailedDepA(msg))
+                Ok(SBP::MsgCwStart(msg))
             }
-            17 => {
-                let mut msg = MsgTrackingStateDetailedDep::parse(payload)?;
+            34 => {
+                let mut msg = MsgResetFilters::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgTrackingStateDetailedDep(msg))
+                Ok(SBP::MsgResetFilters(msg))
             }
-            65 => {
-                let mut msg = MsgTrackingState::parse(payload)?;
+            35 => {
+                let mut msg = MsgInitBaseDep::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgTrackingState(msg))
+                Ok(SBP::MsgInitBaseDep(msg))
             }
-            97 => {
-                let mut msg = MsgMeasurementState::parse(payload)?;
+            23 => {
+                let mut msg = MsgThreadState::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgMeasurementState(msg))
+                Ok(SBP::MsgThreadState(msg))
             }
-            45 => {
-                let mut msg = MsgTrackingIq::parse(payload)?;
+            188 => {
+                let mut msg = MsgCommandOutput::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgTrackingIq(msg))
+                Ok(SBP::MsgCommandOutput(msg))
             }
-            44 => {
-                let mut msg = MsgTrackingIqDepB::parse(payload)?;
+            186 => {
+                let mut msg = MsgNetworkStateReq::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgTrackingIqDepB(msg))
+                Ok(SBP::MsgNetworkStateReq(msg))
             }
-            28 => {
-                let mut msg = MsgTrackingIqDepA::parse(payload)?;
+            187 => {
+                let mut msg = MsgNetworkStateResp::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgTrackingIqDepA(msg))
+                Ok(SBP::MsgNetworkStateResp(msg))
             }
-            22 => {
-                let mut msg = MsgTrackingStateDepA::parse(payload)?;
+            81 => {
+                let mut msg = MsgSpecan::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgTrackingStateDepA(msg))
+                Ok(SBP::MsgSpecan(msg))
             }
-            19 => {
-                let mut msg = MsgTrackingStateDepB::parse(payload)?;
+            191 => {
+                let mut msg = MsgFrontEndGain::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgTrackingStateDepB(msg))
-            }
-            257 => {
-                let mut msg = MsgExtEvent::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgExtEvent(msg))
-            }
-            230 => {
-                let mut msg = MsgFlashProgram::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgFlashProgram(msg))
-            }
-            224 => {
-                let mut msg = MsgFlashDone::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgFlashDone(msg))
-            }
-            231 => {
-                let mut msg = MsgFlashReadReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgFlashReadReq(msg))
-            }
-            225 => {
-                let mut msg = MsgFlashReadResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgFlashReadResp(msg))
-            }
-            226 => {
-                let mut msg = MsgFlashErase::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgFlashErase(msg))
-            }
-            227 => {
-                let mut msg = MsgStmFlashLockSector::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgStmFlashLockSector(msg))
-            }
-            228 => {
-                let mut msg = MsgStmFlashUnlockSector::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgStmFlashUnlockSector(msg))
-            }
-            232 => {
-                let mut msg = MsgStmUniqueIdReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgStmUniqueIdReq(msg))
-            }
-            229 => {
-                let mut msg = MsgStmUniqueIdResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgStmUniqueIdResp(msg))
-            }
-            243 => {
-                let mut msg = MsgM25FlashWriteStatus::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgM25FlashWriteStatus(msg))
-            }
-            2306 => {
-                let mut msg = MsgMagRaw::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgMagRaw(msg))
-            }
-            546 => {
-                let mut msg = MsgAngularRate::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgAngularRate(msg))
-            }
-            1024 => {
-                let mut msg = MsgNdbEvent::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgNdbEvent(msg))
-            }
-            1501 => {
-                let mut msg = MsgSsrOrbitClock::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgSsrOrbitClock(msg))
-            }
-            1500 => {
-                let mut msg = MsgSsrOrbitClockDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgSsrOrbitClockDepA(msg))
-            }
-            1505 => {
-                let mut msg = MsgSsrCodeBiases::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgSsrCodeBiases(msg))
-            }
-            1510 => {
-                let mut msg = MsgSsrPhaseBiases::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgSsrPhaseBiases(msg))
-            }
-            1515 => {
-                let mut msg = MsgSsrStecCorrection::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgSsrStecCorrection(msg))
-            }
-            1520 => {
-                let mut msg = MsgSsrGriddedCorrection::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgSsrGriddedCorrection(msg))
-            }
-            1525 => {
-                let mut msg = MsgSsrGridDefinition::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgSsrGridDefinition(msg))
+                Ok(SBP::MsgFrontEndGain(msg))
             }
             32512 => {
                 let mut msg = MsgLinuxCpuState::parse(payload)?;
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgLinuxCpuState(msg))
+            }
+            189 => {
+                let mut msg = MsgNetworkBandwidthUsage::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgNetworkBandwidthUsage(msg))
+            }
+            190 => {
+                let mut msg = MsgCellModemStatus::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgCellModemStatus(msg))
+            }
+            80 => {
+                let mut msg = MsgSpecanDep::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgSpecanDep(msg))
+            }
+            32515 => {
+                let mut msg = MsgLinuxProcessSocketCounts::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgLinuxProcessSocketCounts(msg))
+            }
+            32516 => {
+                let mut msg = MsgLinuxProcessSocketQueues::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgLinuxProcessSocketQueues(msg))
+            }
+            32517 => {
+                let mut msg = MsgLinuxSocketUsage::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgLinuxSocketUsage(msg))
             }
             32513 => {
                 let mut msg = MsgLinuxMemState::parse(payload)?;
@@ -580,35 +505,80 @@ impl SBP {
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgLinuxSysState(msg))
             }
-            32515 => {
-                let mut msg = MsgLinuxProcessSocketCounts::parse(payload)?;
+            32518 => {
+                let mut msg = MsgLinuxProcessFdCount::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgLinuxProcessSocketCounts(msg))
+                Ok(SBP::MsgLinuxProcessFdCount(msg))
             }
-            527 => {
-                let mut msg = MsgBaselineHeading::parse(payload)?;
+            32519 => {
+                let mut msg = MsgLinuxProcessFdSummary::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgBaselineHeading(msg))
+                Ok(SBP::MsgLinuxProcessFdSummary(msg))
             }
-            544 => {
-                let mut msg = MsgOrientQuat::parse(payload)?;
+            65280 => {
+                let mut msg = MsgStartup::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgOrientQuat(msg))
+                Ok(SBP::MsgStartup(msg))
             }
-            545 => {
-                let mut msg = MsgOrientEuler::parse(payload)?;
+            65282 => {
+                let mut msg = MsgDgnssStatus::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgOrientEuler(msg))
+                Ok(SBP::MsgDgnssStatus(msg))
             }
-            2304 => {
-                let mut msg = MsgImuRaw::parse(payload)?;
+            65535 => {
+                let mut msg = MsgHeartbeat::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgImuRaw(msg))
+                Ok(SBP::MsgHeartbeat(msg))
             }
-            2305 => {
-                let mut msg = MsgImuAux::parse(payload)?;
+            25 => {
+                let mut msg = MsgIarState::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgImuAux(msg))
+                Ok(SBP::MsgIarState(msg))
+            }
+            43 => {
+                let mut msg = MsgMaskSatellite::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgMaskSatellite(msg))
+            }
+            27 => {
+                let mut msg = MsgMaskSatelliteDep::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgMaskSatelliteDep(msg))
+            }
+            181 => {
+                let mut msg = MsgDeviceMonitor::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgDeviceMonitor(msg))
+            }
+            184 => {
+                let mut msg = MsgCommandReq::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgCommandReq(msg))
+            }
+            185 => {
+                let mut msg = MsgCommandResp::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgCommandResp(msg))
+            }
+            1024 => {
+                let mut msg = MsgNdbEvent::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgNdbEvent(msg))
+            }
+            105 => {
+                let mut msg = MsgAlmanac::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgAlmanac(msg))
+            }
+            104 => {
+                let mut msg = MsgSetTime::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgSetTime(msg))
+            }
+            182 => {
+                let mut msg = MsgReset::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgReset(msg))
             }
             74 => {
                 let mut msg = MsgObs::parse(payload)?;
@@ -625,6 +595,26 @@ impl SBP {
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgBasePosECEF(msg))
             }
+            65283 => {
+                let mut msg = MsgInsStatus::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgInsStatus(msg))
+            }
+            65284 => {
+                let mut msg = MsgCsacTelemetry::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgCsacTelemetry(msg))
+            }
+            65285 => {
+                let mut msg = MsgCsacTelemetryLabels::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgCsacTelemetryLabels(msg))
+            }
+            257 => {
+                let mut msg = MsgExtEvent::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgExtEvent(msg))
+            }
             129 => {
                 let mut msg = MsgEphemerisGPSDepE::parse(payload)?;
                 msg.set_sender_id(sender_id);
@@ -635,6 +625,11 @@ impl SBP {
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgEphemerisGPSDepF(msg))
             }
+            138 => {
+                let mut msg = MsgEphemerisGPS::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgEphemerisGPS(msg))
+            }
             142 => {
                 let mut msg = MsgEphemerisQzss::parse(payload)?;
                 msg.set_sender_id(sender_id);
@@ -644,11 +639,6 @@ impl SBP {
                 let mut msg = MsgEphemerisBds::parse(payload)?;
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgEphemerisBds(msg))
-            }
-            138 => {
-                let mut msg = MsgEphemerisGPS::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgEphemerisGPS(msg))
             }
             149 => {
                 let mut msg = MsgEphemerisGalDepA::parse(payload)?;
@@ -690,275 +680,10 @@ impl SBP {
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgEphemerisGloDepC(msg))
             }
-            32516 => {
-                let mut msg = MsgLinuxProcessSocketQueues::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgLinuxProcessSocketQueues(msg))
-            }
-            32517 => {
-                let mut msg = MsgLinuxSocketUsage::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgLinuxSocketUsage(msg))
-            }
-            259 => {
-                let mut msg = MsgUtcTime::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgUtcTime(msg))
-            }
-            520 => {
-                let mut msg = MsgDops::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgDops(msg))
-            }
-            32518 => {
-                let mut msg = MsgLinuxProcessFdCount::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgLinuxProcessFdCount(msg))
-            }
-            32519 => {
-                let mut msg = MsgLinuxProcessFdSummary::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgLinuxProcessFdSummary(msg))
-            }
-            2048 => {
-                let mut msg = MsgUserData::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgUserData(msg))
-            }
-            258 => {
-                let mut msg = MsgGPSTime::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgGPSTime(msg))
-            }
-            521 => {
-                let mut msg = MsgPosECEF::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgPosECEF(msg))
-            }
-            532 => {
-                let mut msg = MsgPosECEFCov::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgPosECEFCov(msg))
-            }
-            522 => {
-                let mut msg = MsgPosLLH::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgPosLLH(msg))
-            }
-            529 => {
-                let mut msg = MsgPosLLHCov::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgPosLLHCov(msg))
-            }
-            523 => {
-                let mut msg = MsgBaselineECEF::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgBaselineECEF(msg))
-            }
-            524 => {
-                let mut msg = MsgBaselineNED::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgBaselineNED(msg))
-            }
-            525 => {
-                let mut msg = MsgVelECEF::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgVelECEF(msg))
-            }
-            533 => {
-                let mut msg = MsgVelECEFCov::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgVelECEFCov(msg))
-            }
-            526 => {
-                let mut msg = MsgVelNED::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgVelNED(msg))
-            }
-            530 => {
-                let mut msg = MsgVelNEDCov::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgVelNEDCov(msg))
-            }
             136 => {
                 let mut msg = MsgEphemerisGloDepD::parse(payload)?;
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgEphemerisGloDepD(msg))
-            }
-            139 => {
-                let mut msg = MsgEphemerisGlo::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgEphemerisGlo(msg))
-            }
-            128 => {
-                let mut msg = MsgEphemerisDepD::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgEphemerisDepD(msg))
-            }
-            26 => {
-                let mut msg = MsgEphemerisDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgEphemerisDepA(msg))
-            }
-            70 => {
-                let mut msg = MsgEphemerisDepB::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgEphemerisDepB(msg))
-            }
-            71 => {
-                let mut msg = MsgEphemerisDepC::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgEphemerisDepC(msg))
-            }
-            65283 => {
-                let mut msg = MsgInsStatus::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgInsStatus(msg))
-            }
-            65284 => {
-                let mut msg = MsgCsacTelemetry::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgCsacTelemetry(msg))
-            }
-            65285 => {
-                let mut msg = MsgCsacTelemetryLabels::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgCsacTelemetryLabels(msg))
-            }
-            105 => {
-                let mut msg = MsgAlmanac::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgAlmanac(msg))
-            }
-            104 => {
-                let mut msg = MsgSetTime::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgSetTime(msg))
-            }
-            182 => {
-                let mut msg = MsgReset::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgReset(msg))
-            }
-            178 => {
-                let mut msg = MsgResetDep::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgResetDep(msg))
-            }
-            192 => {
-                let mut msg = MsgCwResults::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgCwResults(msg))
-            }
-            193 => {
-                let mut msg = MsgCwStart::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgCwStart(msg))
-            }
-            34 => {
-                let mut msg = MsgResetFilters::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgResetFilters(msg))
-            }
-            35 => {
-                let mut msg = MsgInitBaseDep::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgInitBaseDep(msg))
-            }
-            23 => {
-                let mut msg = MsgThreadState::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgThreadState(msg))
-            }
-            29 => {
-                let mut msg = MsgUartState::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgUartState(msg))
-            }
-            24 => {
-                let mut msg = MsgUartStateDepa::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgUartStateDepa(msg))
-            }
-            25 => {
-                let mut msg = MsgIarState::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgIarState(msg))
-            }
-            43 => {
-                let mut msg = MsgMaskSatellite::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgMaskSatellite(msg))
-            }
-            27 => {
-                let mut msg = MsgMaskSatelliteDep::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgMaskSatelliteDep(msg))
-            }
-            181 => {
-                let mut msg = MsgDeviceMonitor::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgDeviceMonitor(msg))
-            }
-            184 => {
-                let mut msg = MsgCommandReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgCommandReq(msg))
-            }
-            185 => {
-                let mut msg = MsgCommandResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgCommandResp(msg))
-            }
-            188 => {
-                let mut msg = MsgCommandOutput::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgCommandOutput(msg))
-            }
-            186 => {
-                let mut msg = MsgNetworkStateReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgNetworkStateReq(msg))
-            }
-            187 => {
-                let mut msg = MsgNetworkStateResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgNetworkStateResp(msg))
-            }
-            189 => {
-                let mut msg = MsgNetworkBandwidthUsage::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgNetworkBandwidthUsage(msg))
-            }
-            190 => {
-                let mut msg = MsgCellModemStatus::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgCellModemStatus(msg))
-            }
-            80 => {
-                let mut msg = MsgSpecanDep::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgSpecanDep(msg))
-            }
-            81 => {
-                let mut msg = MsgSpecan::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgSpecan(msg))
-            }
-            191 => {
-                let mut msg = MsgFrontEndGain::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgFrontEndGain(msg))
-            }
-            47 => {
-                let mut msg = MsgAcqResult::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgAcqResult(msg))
-            }
-            31 => {
-                let mut msg = MsgAcqResultDepC::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgAcqResultDepC(msg))
             }
             20 => {
                 let mut msg = MsgAcqResultDepB::parse(payload)?;
@@ -970,120 +695,20 @@ impl SBP {
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgAcqResultDepA(msg))
             }
-            531 => {
-                let mut msg = MsgVelBody::parse(payload)?;
+            46 => {
+                let mut msg = MsgAcqSvProfile::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgVelBody(msg))
+                Ok(SBP::MsgAcqSvProfile(msg))
             }
-            528 => {
-                let mut msg = MsgAgeCorrections::parse(payload)?;
+            30 => {
+                let mut msg = MsgAcqSvProfileDep::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgAgeCorrections(msg))
+                Ok(SBP::MsgAcqSvProfileDep(msg))
             }
-            256 => {
-                let mut msg = MsgGPSTimeDepA::parse(payload)?;
+            30583 => {
+                let mut msg = MsgSbasRaw::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgGPSTimeDepA(msg))
-            }
-            518 => {
-                let mut msg = MsgDopsDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgDopsDepA(msg))
-            }
-            512 => {
-                let mut msg = MsgPosECEFDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgPosECEFDepA(msg))
-            }
-            513 => {
-                let mut msg = MsgPosLLHDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgPosLLHDepA(msg))
-            }
-            514 => {
-                let mut msg = MsgBaselineECEFDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgBaselineECEFDepA(msg))
-            }
-            515 => {
-                let mut msg = MsgBaselineNEDDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgBaselineNEDDepA(msg))
-            }
-            516 => {
-                let mut msg = MsgVelECEFDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgVelECEFDepA(msg))
-            }
-            517 => {
-                let mut msg = MsgVelNEDDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgVelNEDDepA(msg))
-            }
-            519 => {
-                let mut msg = MsgBaselineHeadingDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgBaselineHeadingDepA(msg))
-            }
-            168 => {
-                let mut msg = MsgFileioReadReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgFileioReadReq(msg))
-            }
-            163 => {
-                let mut msg = MsgFileioReadResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgFileioReadResp(msg))
-            }
-            169 => {
-                let mut msg = MsgFileioReadDirReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgFileioReadDirReq(msg))
-            }
-            170 => {
-                let mut msg = MsgFileioReadDirResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgFileioReadDirResp(msg))
-            }
-            172 => {
-                let mut msg = MsgFileioRemove::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgFileioRemove(msg))
-            }
-            173 => {
-                let mut msg = MsgFileioWriteReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgFileioWriteReq(msg))
-            }
-            171 => {
-                let mut msg = MsgFileioWriteResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgFileioWriteResp(msg))
-            }
-            4097 => {
-                let mut msg = MsgFileioConfigReq::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgFileioConfigReq(msg))
-            }
-            4098 => {
-                let mut msg = MsgFileioConfigResp::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgFileioConfigResp(msg))
-            }
-            1025 => {
-                let mut msg = MsgLog::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgLog(msg))
-            }
-            1026 => {
-                let mut msg = MsgFwd::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgFwd(msg))
-            }
-            16 => {
-                let mut msg = MsgPrintDep::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgPrintDep(msg))
+                Ok(SBP::MsgSbasRaw(msg))
             }
             161 => {
                 let mut msg = MsgSettingsSave::parse(payload)?;
@@ -1155,30 +780,460 @@ impl SBP {
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgNapDeviceDnaReq(msg))
             }
-            176 => {
-                let mut msg = MsgBootloaderHandshakeDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgBootloaderHandshakeDepA(msg))
-            }
             221 => {
                 let mut msg = MsgNapDeviceDnaResp::parse(payload)?;
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgNapDeviceDnaResp(msg))
             }
-            65282 => {
-                let mut msg = MsgDgnssStatus::parse(payload)?;
+            176 => {
+                let mut msg = MsgBootloaderHandshakeDepA::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgDgnssStatus(msg))
+                Ok(SBP::MsgBootloaderHandshakeDepA(msg))
             }
-            65535 => {
-                let mut msg = MsgHeartbeat::parse(payload)?;
+            168 => {
+                let mut msg = MsgFileioReadReq::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgHeartbeat(msg))
+                Ok(SBP::MsgFileioReadReq(msg))
             }
-            65280 => {
-                let mut msg = MsgStartup::parse(payload)?;
+            163 => {
+                let mut msg = MsgFileioReadResp::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgStartup(msg))
+                Ok(SBP::MsgFileioReadResp(msg))
+            }
+            169 => {
+                let mut msg = MsgFileioReadDirReq::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgFileioReadDirReq(msg))
+            }
+            170 => {
+                let mut msg = MsgFileioReadDirResp::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgFileioReadDirResp(msg))
+            }
+            172 => {
+                let mut msg = MsgFileioRemove::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgFileioRemove(msg))
+            }
+            173 => {
+                let mut msg = MsgFileioWriteReq::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgFileioWriteReq(msg))
+            }
+            171 => {
+                let mut msg = MsgFileioWriteResp::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgFileioWriteResp(msg))
+            }
+            4097 => {
+                let mut msg = MsgFileioConfigReq::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgFileioConfigReq(msg))
+            }
+            4098 => {
+                let mut msg = MsgFileioConfigResp::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgFileioConfigResp(msg))
+            }
+            45 => {
+                let mut msg = MsgTrackingIq::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgTrackingIq(msg))
+            }
+            44 => {
+                let mut msg = MsgTrackingIqDepB::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgTrackingIqDepB(msg))
+            }
+            28 => {
+                let mut msg = MsgTrackingIqDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgTrackingIqDepA(msg))
+            }
+            22 => {
+                let mut msg = MsgTrackingStateDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgTrackingStateDepA(msg))
+            }
+            19 => {
+                let mut msg = MsgTrackingStateDepB::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgTrackingStateDepB(msg))
+            }
+            1025 => {
+                let mut msg = MsgLog::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgLog(msg))
+            }
+            1026 => {
+                let mut msg = MsgFwd::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgFwd(msg))
+            }
+            16 => {
+                let mut msg = MsgPrintDep::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgPrintDep(msg))
+            }
+            2304 => {
+                let mut msg = MsgImuRaw::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgImuRaw(msg))
+            }
+            2305 => {
+                let mut msg = MsgImuAux::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgImuAux(msg))
+            }
+            2306 => {
+                let mut msg = MsgMagRaw::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgMagRaw(msg))
+            }
+            1501 => {
+                let mut msg = MsgSsrOrbitClock::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgSsrOrbitClock(msg))
+            }
+            1500 => {
+                let mut msg = MsgSsrOrbitClockDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgSsrOrbitClockDepA(msg))
+            }
+            1505 => {
+                let mut msg = MsgSsrCodeBiases::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgSsrCodeBiases(msg))
+            }
+            1510 => {
+                let mut msg = MsgSsrPhaseBiases::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgSsrPhaseBiases(msg))
+            }
+            1515 => {
+                let mut msg = MsgSsrStecCorrection::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgSsrStecCorrection(msg))
+            }
+            1520 => {
+                let mut msg = MsgSsrGriddedCorrection::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgSsrGriddedCorrection(msg))
+            }
+            1525 => {
+                let mut msg = MsgSsrGridDefinition::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgSsrGridDefinition(msg))
+            }
+            2048 => {
+                let mut msg = MsgUserData::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgUserData(msg))
+            }
+            47 => {
+                let mut msg = MsgAcqResult::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgAcqResult(msg))
+            }
+            31 => {
+                let mut msg = MsgAcqResultDepC::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgAcqResultDepC(msg))
+            }
+            516 => {
+                let mut msg = MsgVelECEFDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgVelECEFDepA(msg))
+            }
+            517 => {
+                let mut msg = MsgVelNEDDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgVelNEDDepA(msg))
+            }
+            519 => {
+                let mut msg = MsgBaselineHeadingDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgBaselineHeadingDepA(msg))
+            }
+            2307 => {
+                let mut msg = MsgOdometry::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgOdometry(msg))
+            }
+            527 => {
+                let mut msg = MsgBaselineHeading::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgBaselineHeading(msg))
+            }
+            544 => {
+                let mut msg = MsgOrientQuat::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgOrientQuat(msg))
+            }
+            545 => {
+                let mut msg = MsgOrientEuler::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgOrientEuler(msg))
+            }
+            546 => {
+                let mut msg = MsgAngularRate::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgAngularRate(msg))
+            }
+            33 => {
+                let mut msg = MsgTrackingStateDetailedDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgTrackingStateDetailedDepA(msg))
+            }
+            17 => {
+                let mut msg = MsgTrackingStateDetailedDep::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgTrackingStateDetailedDep(msg))
+            }
+            65 => {
+                let mut msg = MsgTrackingState::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgTrackingState(msg))
+            }
+            97 => {
+                let mut msg = MsgMeasurementState::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgMeasurementState(msg))
+            }
+            521 => {
+                let mut msg = MsgPosECEF::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgPosECEF(msg))
+            }
+            532 => {
+                let mut msg = MsgPosECEFCov::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgPosECEFCov(msg))
+            }
+            522 => {
+                let mut msg = MsgPosLLH::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgPosLLH(msg))
+            }
+            529 => {
+                let mut msg = MsgPosLLHCov::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgPosLLHCov(msg))
+            }
+            523 => {
+                let mut msg = MsgBaselineECEF::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgBaselineECEF(msg))
+            }
+            524 => {
+                let mut msg = MsgBaselineNED::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgBaselineNED(msg))
+            }
+            525 => {
+                let mut msg = MsgVelECEF::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgVelECEF(msg))
+            }
+            533 => {
+                let mut msg = MsgVelECEFCov::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgVelECEFCov(msg))
+            }
+            526 => {
+                let mut msg = MsgVelNED::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgVelNED(msg))
+            }
+            530 => {
+                let mut msg = MsgVelNEDCov::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgVelNEDCov(msg))
+            }
+            531 => {
+                let mut msg = MsgVelBody::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgVelBody(msg))
+            }
+            528 => {
+                let mut msg = MsgAgeCorrections::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgAgeCorrections(msg))
+            }
+            256 => {
+                let mut msg = MsgGPSTimeDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgGPSTimeDepA(msg))
+            }
+            518 => {
+                let mut msg = MsgDopsDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgDopsDepA(msg))
+            }
+            512 => {
+                let mut msg = MsgPosECEFDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgPosECEFDepA(msg))
+            }
+            513 => {
+                let mut msg = MsgPosLLHDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgPosLLHDepA(msg))
+            }
+            514 => {
+                let mut msg = MsgBaselineECEFDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgBaselineECEFDepA(msg))
+            }
+            515 => {
+                let mut msg = MsgBaselineNEDDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgBaselineNEDDepA(msg))
+            }
+            150 => {
+                let mut msg = MsgGnssCapb::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgGnssCapb(msg))
+            }
+            146 => {
+                let mut msg = MsgGroupDelayDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgGroupDelayDepA(msg))
+            }
+            147 => {
+                let mut msg = MsgGroupDelayDepB::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgGroupDelayDepB(msg))
+            }
+            148 => {
+                let mut msg = MsgGroupDelay::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgGroupDelay(msg))
+            }
+            112 => {
+                let mut msg = MsgAlmanacGPSDep::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgAlmanacGPSDep(msg))
+            }
+            114 => {
+                let mut msg = MsgAlmanacGPS::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgAlmanacGPS(msg))
+            }
+            113 => {
+                let mut msg = MsgAlmanacGloDep::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgAlmanacGloDep(msg))
+            }
+            115 => {
+                let mut msg = MsgAlmanacGlo::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgAlmanacGlo(msg))
+            }
+            117 => {
+                let mut msg = MsgGloBiases::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgGloBiases(msg))
+            }
+            151 => {
+                let mut msg = MsgSvAzEl::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgSvAzEl(msg))
+            }
+            1600 => {
+                let mut msg = MsgOsr::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgOsr(msg))
+            }
+            230 => {
+                let mut msg = MsgFlashProgram::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgFlashProgram(msg))
+            }
+            224 => {
+                let mut msg = MsgFlashDone::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgFlashDone(msg))
+            }
+            231 => {
+                let mut msg = MsgFlashReadReq::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgFlashReadReq(msg))
+            }
+            225 => {
+                let mut msg = MsgFlashReadResp::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgFlashReadResp(msg))
+            }
+            226 => {
+                let mut msg = MsgFlashErase::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgFlashErase(msg))
+            }
+            227 => {
+                let mut msg = MsgStmFlashLockSector::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgStmFlashLockSector(msg))
+            }
+            228 => {
+                let mut msg = MsgStmFlashUnlockSector::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgStmFlashUnlockSector(msg))
+            }
+            232 => {
+                let mut msg = MsgStmUniqueIdReq::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgStmUniqueIdReq(msg))
+            }
+            229 => {
+                let mut msg = MsgStmUniqueIdResp::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgStmUniqueIdResp(msg))
+            }
+            243 => {
+                let mut msg = MsgM25FlashWriteStatus::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgM25FlashWriteStatus(msg))
+            }
+            258 => {
+                let mut msg = MsgGPSTime::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgGPSTime(msg))
+            }
+            259 => {
+                let mut msg = MsgUtcTime::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgUtcTime(msg))
+            }
+            520 => {
+                let mut msg = MsgDops::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgDops(msg))
+            }
+            139 => {
+                let mut msg = MsgEphemerisGlo::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgEphemerisGlo(msg))
+            }
+            128 => {
+                let mut msg = MsgEphemerisDepD::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgEphemerisDepD(msg))
+            }
+            26 => {
+                let mut msg = MsgEphemerisDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgEphemerisDepA(msg))
+            }
+            70 => {
+                let mut msg = MsgEphemerisDepB::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgEphemerisDepB(msg))
+            }
+            71 => {
+                let mut msg = MsgEphemerisDepC::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgEphemerisDepC(msg))
             }
             69 => {
                 let mut msg = MsgObsDepA::parse(payload)?;
@@ -1204,61 +1259,6 @@ impl SBP {
                 let mut msg = MsgSvConfigurationGPSDep::parse(payload)?;
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgSvConfigurationGPSDep(msg))
-            }
-            150 => {
-                let mut msg = MsgGnssCapb::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgGnssCapb(msg))
-            }
-            112 => {
-                let mut msg = MsgAlmanacGPSDep::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgAlmanacGPSDep(msg))
-            }
-            114 => {
-                let mut msg = MsgAlmanacGPS::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgAlmanacGPS(msg))
-            }
-            146 => {
-                let mut msg = MsgGroupDelayDepA::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgGroupDelayDepA(msg))
-            }
-            147 => {
-                let mut msg = MsgGroupDelayDepB::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgGroupDelayDepB(msg))
-            }
-            148 => {
-                let mut msg = MsgGroupDelay::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgGroupDelay(msg))
-            }
-            117 => {
-                let mut msg = MsgGloBiases::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgGloBiases(msg))
-            }
-            151 => {
-                let mut msg = MsgSvAzEl::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgSvAzEl(msg))
-            }
-            1600 => {
-                let mut msg = MsgOsr::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgOsr(msg))
-            }
-            113 => {
-                let mut msg = MsgAlmanacGloDep::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgAlmanacGloDep(msg))
-            }
-            115 => {
-                let mut msg = MsgAlmanacGlo::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgAlmanacGlo(msg))
             }
             _ => Ok(SBP::Unknown {
                 msg_id: msg_id,

@@ -13,7 +13,7 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 
-//! (((description | replace("\n", " ") | wordwrap(width=75, wrapstring="\n //! "))))
+//! (((description | replace("\n", "\n//! "))))
 
 extern crate byteorder;
 #[allow(unused_imports)]

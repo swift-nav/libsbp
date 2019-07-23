@@ -13,9 +13,11 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 //! Messages for the bootloading configuration of a Piksi 2.3.1.  This message
-//! group does not apply to Piksi Multi.  Note that some of these messages
-//! share the same message type ID for both the host request and the device
-//! response.
+//! group does not apply to Piksi Multi.
+//!
+//! Note that some of these messages share the same message type ID for both the
+//! host request and the device response.
+//!
 
 extern crate byteorder;
 #[allow(unused_imports)]

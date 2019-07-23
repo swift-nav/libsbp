@@ -13,6 +13,7 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 //! Messages for logging NDB events.
+//!
 
 extern crate byteorder;
 #[allow(unused_imports)]
