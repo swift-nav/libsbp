@@ -21,7 +21,6 @@
   },
   "devDependencies": {
     "benchmark": "^2.1.4",
-    "lodash": "^4.17.13",
     "mocha": "^5.2.0",
     "request": "^2.88.0",
     "serialport": "^6.2.0",
