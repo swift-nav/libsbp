@@ -113,7 +113,7 @@ definitions:
         type: u8
         desc: |
           Quality of the troposphere data. Encoded following RTCM DF389
-          specifcation but as TECU instead of m.
+          specifcation in units of m.
 
  - STECSatElement:
     desc: STEC polynomial for the given satellite.
@@ -125,7 +125,7 @@ definitions:
         type: u8
         desc: |
           Quality of the STEC data. Encoded following RTCM DF389 specifcation
-          but as TECU instead of m.
+          but in units of TECU instead of m.
     - stec_coeff:
         type: array
         size: 4
@@ -136,15 +136,15 @@ definitions:
 
  - TroposphericDelayCorrection:
     desc: |
-      Troposphere delays at the grid point.
+      Troposphere vertical delays at the grid point.
     fields:
     - hydro:
         type: s16
-        units: 0.4 mm (add 2.3 m to get actual vert hydro delay)
+        units: 4 mm (add 2.3 m to get actual vertical hydro delay)
         desc: Hydrostatic vertical delay
     - wet:
         type: s8
-        units: 0.4 mm (add 0.252 m to get actual vert wet delay)
+        units: 4 mm (add 0.252 m to get actual vertical wet delay)
         desc: Wet vertical delay
 
  - STECResidual:
