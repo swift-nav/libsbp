@@ -75,12 +75,10 @@ definitions:
         desc: |
             Update interval between consecutive corrections. Encoded
             following RTCM DF391 specification.
-    - iod_ssr:
+    - iod_atmo:
         type: u8
         desc: |
-            IOD of the SSR correction. A change of Issue Of Data
-            SSR is used to indicate a change in the SSR
-            generating configuration.
+            IOD of the SSR atmospheric correction
 
  - GriddedCorrectionHeader:
     short_desc: Header for MSG_SSR_GRIDDED_CORRECTION
@@ -103,12 +101,10 @@ definitions:
         desc: |
             Update interval between consecutive corrections. Encoded
             following RTCM DF391 specification.
-    - iod_ssr:
+    - iod_atmo:
         type: u8
         desc: |
-            IOD of the SSR correction. A change of Issue Of Data
-            SSR is used to indicate a change in the SSR
-            generating configuration.
+            IOD of the SSR atmospheric correction
     - tropo_quality_indicator:
         type: u8
         desc: |
