@@ -179,18 +179,21 @@ definitions:
     fields:
     - region_size_inverse:
         type: u8
-        units: coded value - see spec
-        desc: inverse of region size
+        units: inverse degrees
+        desc: |
+          region_size (deg) = 10 / region_size_inverse
+          0 is an invalid value.
     - area_width:
         type: u16
-        units: coded value - 0 means not present (Swift convention)
-        desc: area width; see spec for details
+        desc: |
+          grid height (deg) = grid idth (deg) = area_width / region_size
+          0 is an invalid value.
     - lat_nw_corner_enc:
         type: u16
-        desc: encoded latitude of the northwest corner of the grid
+        desc: North-West corner latitdue (deg) = region_size * lat_nw_corner_enc - 90
     - lon_nw_corner_enc:
         type: u16
-        desc: encoded longitude of the northwest corner of the grid
+        desc: North-West corner longtitude (deg) = region_size * lon_nw_corner_enc - 180
     - num_msgs:
         type: u8
         desc: Number of messages in the dataset
@@ -448,7 +451,10 @@ definitions:
 
  - MSG_SSR_GRID_DEFINITION:
     id: 0x05F5
-    desc: Definition of the grid for STEC and tropo messages
+    short_desc: Definition of the grid for STEC and tropo messages
+    desc: |
+      Based on the 3GPP proposal R2-1906781 which is in turn based on
+      OMA-LPPe-ValidityArea from OMA-TS-LPPe–V2_0-20141202-C
     fields:
         - header:
             type: GridDefinitionHeader
