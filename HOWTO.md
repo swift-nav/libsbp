@@ -178,7 +178,7 @@ make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
 ```
 
 ...will produce and upload a `.whl` appropriate for that platform.  A
-wheel that targets any platform (but requires that `numba` be installed)
+wheel that targets any platform (this build disables Numba/Numpy support)
 can be produced and uploaded by running the following command:
 ```
 make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=... LIBSBP_BUILD_ANY=y
