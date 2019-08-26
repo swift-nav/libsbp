@@ -138,7 +138,11 @@ class Message(Definition):
     return fmt_repr(self)
 
   def __lt__(self, o):
-    return repr(self) < repr(o)
+    # Default Python 2 behavior according to:
+    #   https://yz.mit.edu/wp/default-behavior-of-pythons-cmp/
+    if self.__class__.__name__ == o.__class__.__name__:
+        return id(self) < id(o)
+    return self.__class__.__name__ < o.__class__.__name__
 
 class Struct(Definition):
   def __init__(self, defn):
