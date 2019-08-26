@@ -53,7 +53,7 @@ TYPE_MAP = {'u8': 'u8',
             'string': 'String'}
 
 def type_map(field):
-  if TYPE_MAP.has_key(field.type_id):
+  if field.type_id in TYPE_MAP:
     return TYPE_MAP[field.type_id]
   elif field.type_id == 'array':
     t = field.options['fill'].value
@@ -69,7 +69,7 @@ def parse_type(field):
   Function to pull a type from the binary payload.
   """
   if field.type_id == 'string':
-    if field.options.has_key('size'):
+    if 'size' in field.options:
       return "::parser::read_string_limit(_buf, %s)" % field.options['size'].value
     else:
       return "::parser::read_string(_buf)"
@@ -84,12 +84,12 @@ def parse_type(field):
     # Call function to build array
     t = field.options['fill'].value
     if t in TYPE_MAP.keys():
-      if field.options.has_key('size'):
+      if 'size' in field.options:
         return '::parser::read_%s_array_limit(_buf, %d)' % (t, field.options['size'].value)
       else:
         return '::parser::read_%s_array(_buf)' % t
     else:
-      if field.options.has_key('size'):
+      if 'size' in field.options:
         return '%s::parse_array_limit(_buf, %d)' % (t, field.options['size'].value)
       else:
         return '%s::parse_array(_buf)' % t
