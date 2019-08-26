@@ -170,7 +170,8 @@ mod tests {
             z: 631798,
         };
         let mut parser = ::parser::Parser::new();
-        // Iterate through the data until we hit something that is parsable
+        // Iterate through the data until we hit something that is
+        // parsable
         let sbp_result = parser.parse(&mut reader);
         assert!(sbp_result.is_ok());
         if let ::messages::SBP::MsgBaselineECEF(msg) = sbp_result.unwrap() {

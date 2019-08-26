@@ -29,8 +29,7 @@
 //! all messages are reported in the vehicle body frame as defined by
 //! device settings.  By default, the vehicle body frame is configured to be
 //! coincident with the antenna phase center.  When there is no inertial
-//! navigation, the solution will be reported at the phase center of the
-//! antenna.
+//! navigation, the solution will be reported at the phase center of the antenna.
 //! There is no inertial navigation capability on Piksi Multi or Duro.
 //!
 
@@ -97,8 +96,7 @@ impl super::SBPMessage for MsgGPSTime {
 /// UTC Time
 ///
 /// This message reports the Universal Coordinated Time (UTC).  Note the flags
-/// which indicate the source of the UTC offset value and source of the time
-/// fix.
+/// which indicate the source of the UTC offset value and source of the time fix.
 ///
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -771,8 +769,7 @@ impl super::SBPMessage for MsgVelNED {
 /// coordinates. The NED coordinate system is defined as the local WGS84
 /// tangent plane centered at the current position. The full GPS time is
 /// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
-/// This message is similar to the MSG_VEL_NED, but it includes the upper
-/// triangular
+/// This message is similar to the MSG_VEL_NED, but it includes the upper triangular
 /// portion of the 3x3 covariance matrix.
 ///
 #[derive(Debug)]
@@ -840,17 +837,12 @@ impl super::SBPMessage for MsgVelNEDCov {
 /// Velocity in User Frame
 ///
 /// This message reports the velocity in the Vehicle Body Frame. By convention,
-/// the x-axis should point out the nose of the vehicle and represent the
-/// forward
-/// direction, while as the y-axis should point out the right hand side of the
-/// vehicle.
-/// Since this is a right handed system, z should point out the bottom of the
-/// vehicle.
-/// The orientation and origin of the Vehicle Body Frame are specified via the
-/// device settings.
+/// the x-axis should point out the nose of the vehicle and represent the forward
+/// direction, while as the y-axis should point out the right hand side of the vehicle.
+/// Since this is a right handed system, z should point out the bottom of the vehicle.
+/// The orientation and origin of the Vehicle Body Frame are specified via the device settings.
 /// The full GPS time is given by the preceding MSG_GPS_TIME with the
-/// matching time-of-week (tow). This message is only produced by inertial
-/// versions of Swift
+/// matching time-of-week (tow). This message is only produced by inertial versions of Swift
 /// products and is not available from Piksi Multi or Duro.
 ///
 #[derive(Debug)]

@@ -33,14 +33,13 @@
 //! firmware version. Settings manuals are available for each firmware version
 //! at the following link:
 //! @@https://support.swiftnav.
-//! com/customer/en/portal/articles/2628580-piksi-multi-specifications#settings[Piksi
-//! Multi Specifications].
+//! com/customer/en/portal/articles/2628580-piksi-multi-specifications#settings[Piksi Multi
+//! Specifications].
 //! The latest settings document is also available at the following link:
-//! @@http://swiftnav.com/latest/piksi-multi-settings[Latest settings document]
-//! .
+//! @@http://swiftnav.com/latest/piksi-multi-settings[Latest settings document] .
 //! See lastly
-//! @@https://github.com/swift-nav/piksi_tools/blob/master/piksi_tools/settings.
-//! py[settings.py] ,
+//! @@https://github.com/swift-nav/piksi_tools/blob/master/piksi_tools/settings.py[settings.
+//! py] ,
 //! the open source python command line utility for reading, writing, and
 //! saving settings in the piksi_tools repository on github as a helpful
 //! reference and example.

@@ -1,4 +1,5 @@
-//! Simple parsing functionality for extracting SBP messages from binary streams
+//! Simple parsing functionality for extracting SBP
+//! messages from binary streams
 
 extern crate byteorder;
 extern crate nom;
@@ -10,11 +11,15 @@ use self::nom::sequence::tuple;
 use messages::SBP;
 use std::io::{self, Read};
 
-/// Attempts to extract a single SBP message from a data slice
+/// Attempts to extract a single SBP message from a data
+/// slice
 ///
-/// This function returns a tuple of a result and the number of  bytes processed
-/// from the slice. In regardless of the result the processed bytes should be
-/// removed from the slice before calling `frame()` again. If the result is a
+/// This function returns a tuple of a result and the
+/// number of  bytes processed
+/// from the slice. In regardless of the result the
+/// processed bytes should be
+/// removed from the slice before calling `frame()` again.
+/// If the result is a
 /// success then the SBP message has been fully validated.
 pub fn frame(input: &[u8]) -> (Result<SBP, ::Error>, usize) {
     let original_size = input.len();
@@ -51,8 +56,10 @@ pub fn frame(input: &[u8]) -> (Result<SBP, ::Error>, usize) {
 
 /// A basic parser for SBP messages
 ///
-/// This object reads data from a source and attempts to read SBP messages from
-/// the stream. A Parser buffers some data locally to reduce the number of
+/// This object reads data from a source and attempts to
+/// read SBP messages from
+/// the stream. A Parser buffers some data locally to
+/// reduce the number of
 /// calls to read data.
 pub struct Parser {
     buffer: Vec<u8>,
@@ -66,10 +73,13 @@ impl Parser {
         Parser { buffer: vec![0; 0] }
     }
 
-    /// Attempts to read a single SBP message from the input stream
+    /// Attempts to read a single SBP message from the
+    /// input stream
     ///
-    /// This function will read data from the input source as needed
-    /// until either a message is successfully parsed or an error occurs
+    /// This function will read data from the input source
+    /// as needed
+    /// until either a message is successfully parsed or an
+    /// error occurs
     pub fn parse<R: Read>(&mut self, input: &mut R) -> Result<SBP, ::Error> {
         if self.buffer.len() == 0 {
             self.read_more(input)?;
