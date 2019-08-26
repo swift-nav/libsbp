@@ -12,11 +12,13 @@
 // Automatically generated from yaml/swiftnav/sbp/system.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
+
 //! Standardized system messages from Swift Navigation devices.
 
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+
 
 /// System start-up message
 ///
@@ -58,6 +60,7 @@ impl super::SBPMessage for MsgStartup {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Status of received corrections
 ///
@@ -102,6 +105,7 @@ impl super::SBPMessage for MsgDgnssStatus {
     }
 }
 
+
 /// System heartbeat message
 ///
 /// The heartbeat message is sent periodically to inform the host
@@ -143,6 +147,7 @@ impl super::SBPMessage for MsgHeartbeat {
     }
 }
 
+
 /// Inertial Navigation System status message
 ///
 /// The INS status message describes the state of the operation
@@ -175,6 +180,7 @@ impl super::SBPMessage for MsgInsStatus {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Experimental telemetry message
 ///
@@ -213,6 +219,7 @@ impl super::SBPMessage for MsgCsacTelemetry {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Experimental telemetry message labels
 ///

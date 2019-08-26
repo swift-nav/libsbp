@@ -148,7 +148,7 @@ is used to tie multiple SBP messages into a sequence.
                'num_msgs',
                'seq_num',
                'update_interval',
-               'iod_ssr',
+               'iod_atmo',
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
@@ -161,8 +161,8 @@ is used to tie multiple SBP messages into a sequence.
     ret['seq_num'] = __seq_num
     (__update_interval, offset, length) = get_u8(buf, offset, length)
     ret['update_interval'] = __update_interval
-    (__iod_ssr, offset, length) = get_u8(buf, offset, length)
-    ret['iod_ssr'] = __iod_ssr
+    (__iod_atmo, offset, length) = get_u8(buf, offset, length)
+    ret['iod_atmo'] = __iod_atmo
     return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
@@ -173,7 +173,7 @@ is used to tie multiple SBP messages into a sequence.
     self.num_msgs = res['num_msgs']
     self.seq_num = res['seq_num']
     self.update_interval = res['update_interval']
-    self.iod_ssr = res['iod_ssr']
+    self.iod_atmo = res['iod_atmo']
     return res, off, length
 
   @classmethod
@@ -187,7 +187,7 @@ is used to tie multiple SBP messages into a sequence.
     ret += 1
     # update_interval: u8
     ret += 1
-    # iod_ssr: u8
+    # iod_atmo: u8
     ret += 1
     return ret
   
@@ -209,7 +209,7 @@ be identified by the index.
                'num_msgs',
                'seq_num',
                'update_interval',
-               'iod_ssr',
+               'iod_atmo',
                'tropo_quality_indicator',
                ]
   @classmethod
@@ -223,8 +223,8 @@ be identified by the index.
     ret['seq_num'] = __seq_num
     (__update_interval, offset, length) = get_u8(buf, offset, length)
     ret['update_interval'] = __update_interval
-    (__iod_ssr, offset, length) = get_u8(buf, offset, length)
-    ret['iod_ssr'] = __iod_ssr
+    (__iod_atmo, offset, length) = get_u8(buf, offset, length)
+    ret['iod_atmo'] = __iod_atmo
     (__tropo_quality_indicator, offset, length) = get_u8(buf, offset, length)
     ret['tropo_quality_indicator'] = __tropo_quality_indicator
     return ret, offset, length
@@ -237,7 +237,7 @@ be identified by the index.
     self.num_msgs = res['num_msgs']
     self.seq_num = res['seq_num']
     self.update_interval = res['update_interval']
-    self.iod_ssr = res['iod_ssr']
+    self.iod_atmo = res['iod_atmo']
     self.tropo_quality_indicator = res['tropo_quality_indicator']
     return res, off, length
 
@@ -252,7 +252,7 @@ be identified by the index.
     ret += 2
     # update_interval: u8
     ret += 1
-    # iod_ssr: u8
+    # iod_atmo: u8
     ret += 1
     # tropo_quality_indicator: u8
     ret += 1
@@ -312,7 +312,7 @@ class TroposphericDelayCorrection(object):
   of its fields.
 
   
-  Troposphere delays at the grid point.
+  Troposphere vertical delays at the grid point.
 
 
   """
@@ -982,7 +982,9 @@ class MsgSsrGridDefinition(SBP):
   of its fields.
 
   
-  Definition of the grid for STEC and tropo messages
+  Based on the 3GPP proposal R2-1906781 which is in turn based on
+OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
+
 
   """
   __slots__ = ['header',

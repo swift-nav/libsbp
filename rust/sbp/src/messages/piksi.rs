@@ -12,6 +12,7 @@
 // Automatically generated from yaml/swiftnav/sbp/piksi.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
+
 //! System health, configuration, and diagnostic messages specific to
 //! the Piksi L1 receiver, including a variety of legacy messages that
 //! may no longer be used.
@@ -21,6 +22,7 @@ extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
+
 
 /// Legacy message to load satellite almanac (host => Piksi)
 ///
@@ -50,6 +52,7 @@ impl super::SBPMessage for MsgAlmanac {
     }
 }
 
+
 /// Send GPS time from host (host => Piksi)
 ///
 /// This message sets up timing functionality using a coarse GPS
@@ -77,6 +80,7 @@ impl super::SBPMessage for MsgSetTime {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Reset the device (host => Piksi)
 ///
@@ -111,6 +115,7 @@ impl super::SBPMessage for MsgReset {
     }
 }
 
+
 /// Reset the device (host => Piksi)
 ///
 /// This message from the host resets the Piksi back into the
@@ -138,6 +143,7 @@ impl super::SBPMessage for MsgResetDep {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Legacy message for CW interference channel (Piksi => host)
 ///
@@ -168,6 +174,7 @@ impl super::SBPMessage for MsgCwResults {
     }
 }
 
+
 /// Legacy message for CW interference channel (host => Piksi)
 ///
 /// This is an unused legacy message from the host for starting
@@ -196,6 +203,7 @@ impl super::SBPMessage for MsgCwStart {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Reset IAR filters (host => Piksi)
 ///
@@ -230,6 +238,7 @@ impl super::SBPMessage for MsgResetFilters {
     }
 }
 
+
 /// Deprecated
 ///
 /// Deprecated
@@ -256,6 +265,7 @@ impl super::SBPMessage for MsgInitBaseDep {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// State of an RTOS thread
 ///
@@ -297,6 +307,7 @@ impl super::SBPMessage for MsgThreadState {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// State of the UART channel
 ///
@@ -349,6 +360,7 @@ impl UARTChannel {
     }
 }
 
+
 /// base station observation message receipt period
 ///
 /// Statistics on the period of observations received from the base
@@ -397,6 +409,7 @@ impl Period {
     }
 }
 
+
 /// Receiver-to-base station latency
 ///
 /// Statistics on the latency of observations received from the base
@@ -443,6 +456,7 @@ impl Latency {
         Ok(v)
     }
 }
+
 
 /// State of the UART channels
 ///
@@ -496,6 +510,7 @@ impl super::SBPMessage for MsgUartState {
     }
 }
 
+
 /// Deprecated
 ///
 /// Deprecated
@@ -537,6 +552,7 @@ impl super::SBPMessage for MsgUartStateDepa {
     }
 }
 
+
 /// State of the Integer Ambiguity Resolution (IAR) process
 ///
 /// This message reports the state of the Integer Ambiguity
@@ -571,6 +587,7 @@ impl super::SBPMessage for MsgIarState {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Mask a satellite from use in Piksi subsystems
 ///
@@ -608,6 +625,7 @@ impl super::SBPMessage for MsgMaskSatellite {
     }
 }
 
+
 /// Deprecated
 ///
 /// Deprecated.
@@ -642,6 +660,7 @@ impl super::SBPMessage for MsgMaskSatelliteDep {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Device temperature and voltage levels
 ///
@@ -689,6 +708,7 @@ impl super::SBPMessage for MsgDeviceMonitor {
     }
 }
 
+
 /// Execute a command (host => device)
 ///
 /// Request the recipient to execute an command.
@@ -726,6 +746,7 @@ impl super::SBPMessage for MsgCommandReq {
     }
 }
 
+
 /// Exit code from executed command (device => host)
 ///
 /// The response to MSG_COMMAND_REQ with the return code of
@@ -761,6 +782,7 @@ impl super::SBPMessage for MsgCommandResp {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Command output
 ///
@@ -800,6 +822,7 @@ impl super::SBPMessage for MsgCommandOutput {
     }
 }
 
+
 /// Request state of Piksi network interfaces
 ///
 /// Request state of Piksi network interfaces.
@@ -827,6 +850,7 @@ impl super::SBPMessage for MsgNetworkStateReq {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// State of network interface
 ///
@@ -883,6 +907,7 @@ impl super::SBPMessage for MsgNetworkStateResp {
     }
 }
 
+
 /// Bandwidth usage measurement for a single interface.
 ///
 /// The bandwidth usage for each interface can be reported
@@ -934,6 +959,7 @@ impl NetworkUsage {
     }
 }
 
+
 /// Bandwidth usage reporting message
 ///
 /// The bandwidth usage, a list of usage by interface.
@@ -965,6 +991,7 @@ impl super::SBPMessage for MsgNetworkBandwidthUsage {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Cell modem information update message
 ///
@@ -1005,6 +1032,7 @@ impl super::SBPMessage for MsgCellModemStatus {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Deprecated
 ///
@@ -1056,6 +1084,7 @@ impl super::SBPMessage for MsgSpecanDep {
     }
 }
 
+
 /// Spectrum analyzer
 ///
 /// Spectrum analyzer packet.
@@ -1106,14 +1135,20 @@ impl super::SBPMessage for MsgSpecan {
     }
 }
 
+
 /// RF AGC status
 ///
-/// This message describes the gain of each channel in the receiver frontend. Each
-/// gain is encoded as a non-dimensional percentage relative to the maximum range  
+/// This message describes the gain of each channel in the receiver frontend.
+/// Each
+/// gain is encoded as a non-dimensional percentage relative to the maximum
+/// range
 /// possible for the gain stage of the frontend. By convention, each gain array
-/// has 8 entries and the index of the array corresponding to the index of the rf channel
-/// in the frontend. A gain of 127 percent encodes that rf channel is not present in the hardware.
-/// A negative value implies an error for the particular gain stage as reported by the frontend.
+/// has 8 entries and the index of the array corresponding to the index of the
+/// rf channel
+/// in the frontend. A gain of 127 percent encodes that rf channel is not
+/// present in the hardware.
+/// A negative value implies an error for the particular gain stage as reported
+/// by the frontend.
 ///
 #[derive(Debug)]
 #[allow(non_snake_case)]

@@ -12,12 +12,14 @@
 // Automatically generated from yaml/swiftnav/sbp/observation.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
+
 //! Satellite observation messages from the device.
 
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
+
 
 /// Header for observation message.
 ///
@@ -56,6 +58,7 @@ impl ObservationHeader {
         Ok(v)
     }
 }
+
 
 /// GNSS doppler measurement.
 ///
@@ -96,6 +99,7 @@ impl Doppler {
         Ok(v)
     }
 }
+
 
 /// GNSS observations for a particular satellite signal.
 ///
@@ -162,6 +166,7 @@ impl PackedObsContent {
     }
 }
 
+
 /// Network correction for a particular satellite signal.
 ///
 /// Pseudorange and carrier phase network corrections for a satellite signal.
@@ -222,6 +227,7 @@ impl PackedOsrContent {
     }
 }
 
+
 /// GPS satellite observations
 ///
 /// The GPS observations message reports all the raw pseudorange and
@@ -262,6 +268,7 @@ impl super::SBPMessage for MsgObs {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Base station position
 ///
@@ -305,6 +312,7 @@ impl super::SBPMessage for MsgBasePosLLH {
     }
 }
 
+
 /// Base station position in ECEF
 ///
 /// The base station position message is the position reported by
@@ -347,6 +355,7 @@ impl super::SBPMessage for MsgBasePosECEF {
         self.sender_id = Some(new_id);
     }
 }
+
 
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -397,6 +406,7 @@ impl EphemerisCommonContent {
     }
 }
 
+
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct EphemerisCommonContentDepB {
@@ -446,6 +456,7 @@ impl EphemerisCommonContentDepB {
     }
 }
 
+
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct EphemerisCommonContentDepA {
@@ -494,6 +505,7 @@ impl EphemerisCommonContentDepA {
         Ok(v)
     }
 }
+
 
 /// Satellite broadcast ephemeris for GPS
 ///
@@ -601,6 +613,7 @@ impl super::SBPMessage for MsgEphemerisGPSDepE {
     }
 }
 
+
 /// Deprecated
 ///
 /// This observation message has been deprecated in favor of
@@ -703,6 +716,7 @@ impl super::SBPMessage for MsgEphemerisGPSDepF {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Satellite broadcast ephemeris for GPS
 ///
@@ -810,6 +824,7 @@ impl super::SBPMessage for MsgEphemerisGPS {
     }
 }
 
+
 /// Satellite broadcast ephemeris for QZSS
 ///
 /// The ephemeris message returns a set of satellite orbit
@@ -913,6 +928,7 @@ impl super::SBPMessage for MsgEphemerisQzss {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Satellite broadcast ephemeris for BDS
 ///
@@ -1022,6 +1038,7 @@ impl super::SBPMessage for MsgEphemerisBds {
     }
 }
 
+
 /// Deprecated
 ///
 /// This observation message has been deprecated in favor of
@@ -1127,6 +1144,7 @@ impl super::SBPMessage for MsgEphemerisGalDepA {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Satellite broadcast ephemeris for Galileo
 ///
@@ -1239,6 +1257,7 @@ impl super::SBPMessage for MsgEphemerisGal {
     }
 }
 
+
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbasDepA {
@@ -1281,6 +1300,7 @@ impl super::SBPMessage for MsgEphemerisSbasDepA {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Satellite broadcast ephemeris for GLO
 ///
@@ -1333,6 +1353,7 @@ impl super::SBPMessage for MsgEphemerisGloDepA {
     }
 }
 
+
 /// Deprecated
 ///
 /// This observation message has been deprecated in favor of
@@ -1381,6 +1402,7 @@ impl super::SBPMessage for MsgEphemerisSbasDepB {
     }
 }
 
+
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbas {
@@ -1423,6 +1445,7 @@ impl super::SBPMessage for MsgEphemerisSbas {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Satellite broadcast ephemeris for GLO
 ///
@@ -1474,6 +1497,7 @@ impl super::SBPMessage for MsgEphemerisGloDepB {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Satellite broadcast ephemeris for GLO
 ///
@@ -1532,6 +1556,7 @@ impl super::SBPMessage for MsgEphemerisGloDepC {
     }
 }
 
+
 /// Deprecated
 ///
 /// This observation message has been deprecated in favor of
@@ -1588,6 +1613,7 @@ impl super::SBPMessage for MsgEphemerisGloDepD {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Satellite broadcast ephemeris for GLO
 ///
@@ -1648,6 +1674,7 @@ impl super::SBPMessage for MsgEphemerisGlo {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Satellite broadcast ephemeris
 ///
@@ -1773,6 +1800,7 @@ impl super::SBPMessage for MsgEphemerisDepD {
     }
 }
 
+
 /// Deprecated
 ///
 /// Deprecated.
@@ -1883,6 +1911,7 @@ impl super::SBPMessage for MsgEphemerisDepA {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Deprecated
 ///
@@ -1997,6 +2026,7 @@ impl super::SBPMessage for MsgEphemerisDepB {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Satellite broadcast ephemeris
 ///
@@ -2122,6 +2152,7 @@ impl super::SBPMessage for MsgEphemerisDepC {
     }
 }
 
+
 /// Header for observation message.
 ///
 /// Header of a GPS observation message.
@@ -2163,6 +2194,7 @@ impl ObservationHeaderDep {
     }
 }
 
+
 /// GPS carrier phase measurement.
 ///
 /// Carrier phase measurement in cycles represented as a 40-bit
@@ -2203,6 +2235,7 @@ impl CarrierPhaseDepA {
         Ok(v)
     }
 }
+
 
 /// Deprecated
 ///
@@ -2255,6 +2288,7 @@ impl PackedObsContentDepA {
     }
 }
 
+
 /// GPS observations for a particular satellite signal.
 ///
 /// Pseudorange and carrier phase observation for a satellite being
@@ -2306,6 +2340,7 @@ impl PackedObsContentDepB {
         Ok(v)
     }
 }
+
 
 /// GPS observations for a particular satellite signal.
 ///
@@ -2360,6 +2395,7 @@ impl PackedObsContentDepC {
     }
 }
 
+
 /// Deprecated
 ///
 /// Deprecated.
@@ -2394,6 +2430,7 @@ impl super::SBPMessage for MsgObsDepA {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Deprecated
 ///
@@ -2435,6 +2472,7 @@ impl super::SBPMessage for MsgObsDepB {
     }
 }
 
+
 /// Deprecated
 ///
 /// The GPS observations message reports all the raw pseudorange and
@@ -2475,6 +2513,7 @@ impl super::SBPMessage for MsgObsDepC {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Iono corrections
 ///
@@ -2526,6 +2565,7 @@ impl super::SBPMessage for MsgIono {
     }
 }
 
+
 /// L2C capability mask
 ///
 /// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
@@ -2560,6 +2600,7 @@ impl super::SBPMessage for MsgSvConfigurationGPSDep {
         self.sender_id = Some(new_id);
     }
 }
+
 
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -2635,6 +2676,7 @@ impl GnssCapb {
     }
 }
 
+
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGnssCapb {
@@ -2665,6 +2707,7 @@ impl super::SBPMessage for MsgGnssCapb {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Group Delay
 ///
@@ -2711,6 +2754,7 @@ impl super::SBPMessage for MsgGroupDelayDepA {
     }
 }
 
+
 /// Group Delay
 ///
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
@@ -2756,6 +2800,7 @@ impl super::SBPMessage for MsgGroupDelayDepB {
     }
 }
 
+
 /// Group Delay
 ///
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
@@ -2800,6 +2845,7 @@ impl super::SBPMessage for MsgGroupDelay {
         self.sender_id = Some(new_id);
     }
 }
+
 
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -2858,6 +2904,7 @@ impl AlmanacCommonContent {
     }
 }
 
+
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct AlmanacCommonContentDep {
@@ -2914,6 +2961,7 @@ impl AlmanacCommonContentDep {
         Ok(v)
     }
 }
+
 
 /// Satellite broadcast ephemeris for GPS
 ///
@@ -2977,6 +3025,7 @@ impl super::SBPMessage for MsgAlmanacGPSDep {
     }
 }
 
+
 /// Satellite broadcast ephemeris for GPS
 ///
 /// The almanac message returns a set of satellite orbit parameters. Almanac
@@ -3039,6 +3088,7 @@ impl super::SBPMessage for MsgAlmanacGPS {
     }
 }
 
+
 /// Satellite broadcast ephemeris for GLO
 ///
 /// The almanac message returns a set of satellite orbit parameters. Almanac
@@ -3095,6 +3145,7 @@ impl super::SBPMessage for MsgAlmanacGloDep {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Satellite broadcast ephemeris for GLO
 ///
@@ -3153,6 +3204,7 @@ impl super::SBPMessage for MsgAlmanacGlo {
     }
 }
 
+
 /// GLONASS L1/L2 Code-Phase biases
 ///
 /// The GLONASS L1/L2 Code-Phase biases allows to perform
@@ -3200,6 +3252,7 @@ impl super::SBPMessage for MsgGloBiases {
     }
 }
 
+
 /// Satellite azimuth and elevation.
 ///
 /// Satellite azimuth and elevation.
@@ -3240,6 +3293,7 @@ impl SvAzEl {
     }
 }
 
+
 /// Satellite azimuths and elevations
 ///
 /// Azimuth and elevation angles of all the visible satellites
@@ -3272,6 +3326,7 @@ impl super::SBPMessage for MsgSvAzEl {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// OSR corrections
 ///

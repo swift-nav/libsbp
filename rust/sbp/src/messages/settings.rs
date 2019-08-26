@@ -12,7 +12,7 @@
 // Automatically generated from yaml/swiftnav/sbp/settings.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-//!
+
 //! Messages for reading, writing, and discovering device settings. Settings
 //! with a "string" field have multiple values in this field delimited with a
 //! null character (the c style null terminator).  For instance, when querying
@@ -31,10 +31,16 @@
 //! See the "Software Settings Manual" on support.swiftnav.com for detailed
 //! documentation about all settings and sections available for each Swift
 //! firmware version. Settings manuals are available for each firmware version
-//! at the following link: @@https://support.swiftnav.com/customer/en/portal/articles/2628580-piksi-multi-specifications#settings[Piksi Multi Specifications].
+//! at the following link:
+//! @@https://support.swiftnav.
+//! com/customer/en/portal/articles/2628580-piksi-multi-specifications#settings[Piksi
+//! Multi Specifications].
 //! The latest settings document is also available at the following link:
-//! @@http://swiftnav.com/latest/piksi-multi-settings[Latest settings document] .
-//! See lastly @@https://github.com/swift-nav/piksi_tools/blob/master/piksi_tools/settings.py[settings.py] ,
+//! @@http://swiftnav.com/latest/piksi-multi-settings[Latest settings document]
+//! .
+//! See lastly
+//! @@https://github.com/swift-nav/piksi_tools/blob/master/piksi_tools/settings.
+//! py[settings.py] ,
 //! the open source python command line utility for reading, writing, and
 //! saving settings in the piksi_tools repository on github as a helpful
 //! reference and example.
@@ -43,6 +49,7 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+
 
 /// Save settings to flash (host => device)
 ///
@@ -71,6 +78,7 @@ impl super::SBPMessage for MsgSettingsSave {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Write device configuration settings (host => device)
 ///
@@ -110,6 +118,7 @@ impl super::SBPMessage for MsgSettingsWrite {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Acknowledgement with status of MSG_SETTINGS_WRITE
 ///
@@ -153,6 +162,7 @@ impl super::SBPMessage for MsgSettingsWriteResp {
     }
 }
 
+
 /// Read device configuration settings (host => device)
 ///
 /// The setting message that reads the device configuration. The string
@@ -193,6 +203,7 @@ impl super::SBPMessage for MsgSettingsReadReq {
     }
 }
 
+
 /// Read device configuration settings (host <= device)
 ///
 /// The setting message wich which the device responds after a
@@ -232,6 +243,7 @@ impl super::SBPMessage for MsgSettingsReadResp {
     }
 }
 
+
 /// Read setting by direct index (host => device)
 ///
 /// The settings message for iterating through the settings
@@ -266,6 +278,7 @@ impl super::SBPMessage for MsgSettingsReadByIndexReq {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Read setting by direct index (host <= device)
 ///
@@ -313,6 +326,7 @@ impl super::SBPMessage for MsgSettingsReadByIndexResp {
     }
 }
 
+
 /// Finished reading settings (host <= device)
 ///
 /// The settings message for indicating end of the settings values.
@@ -339,6 +353,7 @@ impl super::SBPMessage for MsgSettingsReadByIndexDone {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Register setting and default value (device => host)
 ///
@@ -374,6 +389,7 @@ impl super::SBPMessage for MsgSettingsRegister {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Register setting and default value (device <= host)
 ///

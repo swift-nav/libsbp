@@ -454,7 +454,7 @@ definitions:
     short_desc: Definition of the grid for STEC and tropo messages
     desc: |
       Based on the 3GPP proposal R2-1906781 which is in turn based on
-      OMA-LPPe-ValidityArea from OMA-TS-LPPe–V2_0-20141202-C
+      OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
     fields:
         - header:
             type: GridDefinitionHeader

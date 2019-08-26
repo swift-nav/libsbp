@@ -12,12 +12,14 @@
 // Automatically generated from yaml/swiftnav/sbp/ssr.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
+
 //! Precise State Space Representation (SSR) corrections format
 
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
+
 
 /// SSR code biases corrections for a particular satellite.
 ///
@@ -56,6 +58,7 @@ impl CodeBiasesContent {
         Ok(v)
     }
 }
+
 
 /// SSR phase biases corrections for a particular satellite.
 ///
@@ -108,6 +111,7 @@ impl PhaseBiasesContent {
     }
 }
 
+
 /// Header for MSG_SSR_STEC_CORRECTION message
 ///
 /// A full set of STEC information will likely span multiple SBP
@@ -126,9 +130,8 @@ pub struct STECHeader {
     /// Update interval between consecutive corrections. Encoded following RTCM
     /// DF391 specification.
     pub update_interval: u8,
-    /// IOD of the SSR correction. A change of Issue Of Data SSR is used to
-    /// indicate a change in the SSR generating configuration.
-    pub iod_ssr: u8,
+    /// IOD of the SSR atmospheric correction
+    pub iod_atmo: u8,
 }
 
 impl STECHeader {
@@ -138,7 +141,7 @@ impl STECHeader {
             num_msgs: _buf.read_u8()?,
             seq_num: _buf.read_u8()?,
             update_interval: _buf.read_u8()?,
-            iod_ssr: _buf.read_u8()?,
+            iod_atmo: _buf.read_u8()?,
         })
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECHeader>, ::Error> {
@@ -158,6 +161,7 @@ impl STECHeader {
     }
 }
 
+
 /// Header for MSG_SSR_GRIDDED_CORRECTION
 ///
 /// The 3GPP message contains nested variable length arrays
@@ -176,11 +180,10 @@ pub struct GriddedCorrectionHeader {
     /// Update interval between consecutive corrections. Encoded following RTCM
     /// DF391 specification.
     pub update_interval: u8,
-    /// IOD of the SSR correction. A change of Issue Of Data SSR is used to
-    /// indicate a change in the SSR generating configuration.
-    pub iod_ssr: u8,
+    /// IOD of the SSR atmospheric correction
+    pub iod_atmo: u8,
     /// Quality of the troposphere data. Encoded following RTCM DF389
-    /// specifcation but as TECU instead of m.
+    /// specifcation in units of m.
     pub tropo_quality_indicator: u8,
 }
 
@@ -191,7 +194,7 @@ impl GriddedCorrectionHeader {
             num_msgs: _buf.read_u16::<LittleEndian>()?,
             seq_num: _buf.read_u16::<LittleEndian>()?,
             update_interval: _buf.read_u8()?,
-            iod_ssr: _buf.read_u8()?,
+            iod_atmo: _buf.read_u8()?,
             tropo_quality_indicator: _buf.read_u8()?,
         })
     }
@@ -215,6 +218,7 @@ impl GriddedCorrectionHeader {
     }
 }
 
+
 /// None
 ///
 /// STEC polynomial for the given satellite.
@@ -225,7 +229,7 @@ pub struct STECSatElement {
     /// Unique space vehicle identifier
     pub sv_id: SvId,
     /// Quality of the STEC data. Encoded following RTCM DF389 specifcation but
-    /// as TECU instead of m.
+    /// in units of TECU instead of m.
     pub stec_quality_indicator: u8,
     /// Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
     pub stec_coeff: Vec<i16>,
@@ -256,9 +260,10 @@ impl STECSatElement {
     }
 }
 
+
 /// None
 ///
-/// Troposphere delays at the grid point.
+/// Troposphere vertical delays at the grid point.
 ///
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -296,6 +301,7 @@ impl TroposphericDelayCorrection {
     }
 }
 
+
 /// None
 ///
 /// STEC residual for the given satellite at the grid point.
@@ -332,6 +338,7 @@ impl STECResidual {
         Ok(v)
     }
 }
+
 
 /// Correction data for a single grid point.
 ///
@@ -374,6 +381,7 @@ impl GridElement {
     }
 }
 
+
 /// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
 ///
 /// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
@@ -382,13 +390,15 @@ impl GridElement {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct GridDefinitionHeader {
-    /// inverse of region size
+    /// region_size (deg) = 10 / region_size_inverse 0 is an invalid value.
     pub region_size_inverse: u8,
-    /// area width; see spec for details
+    /// grid height (deg) = grid idth (deg) = area_width / region_size 0 is an
+    /// invalid value.
     pub area_width: u16,
-    /// encoded latitude of the northwest corner of the grid
+    /// North-West corner latitdue (deg) = region_size * lat_nw_corner_enc - 90
     pub lat_nw_corner_enc: u16,
-    /// encoded longitude of the northwest corner of the grid
+    /// North-West corner longtitude (deg) = region_size * lon_nw_corner_enc -
+    /// 180
     pub lon_nw_corner_enc: u16,
     /// Number of messages in the dataset
     pub num_msgs: u8,
@@ -426,6 +436,7 @@ impl GridDefinitionHeader {
         Ok(v)
     }
 }
+
 
 /// Precise orbit and clock correction
 ///
@@ -503,6 +514,7 @@ impl super::SBPMessage for MsgSsrOrbitClock {
     }
 }
 
+
 /// Precise orbit and clock correction
 ///
 /// The precise orbit and clock correction message is
@@ -579,6 +591,7 @@ impl super::SBPMessage for MsgSsrOrbitClockDepA {
     }
 }
 
+
 /// Precise code biases correction
 ///
 /// The precise code biases message is to be added
@@ -627,6 +640,7 @@ impl super::SBPMessage for MsgSsrCodeBiases {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Precise phase biases correction
 ///
@@ -691,6 +705,7 @@ impl super::SBPMessage for MsgSsrPhaseBiases {
     }
 }
 
+
 /// Slant Total Electron Content
 ///
 /// The STEC per space vehicle, given as polynomial approximation for
@@ -729,6 +744,7 @@ impl super::SBPMessage for MsgSsrStecCorrection {
     }
 }
 
+
 /// Gridded troposphere and STEC residuals
 ///
 /// STEC residuals are per space vehicle, tropo is not.
@@ -765,9 +781,11 @@ impl super::SBPMessage for MsgSsrGriddedCorrection {
     }
 }
 
-/// None
-///
+
 /// Definition of the grid for STEC and tropo messages
+///
+/// Based on the 3GPP proposal R2-1906781 which is in turn based on
+/// OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
 ///
 #[derive(Debug)]
 #[allow(non_snake_case)]

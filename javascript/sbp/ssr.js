@@ -113,8 +113,7 @@ PhaseBiasesContent.prototype.fieldSpec.push(['bias', 'writeInt32LE', 4]);
  * @field seq_num number (unsigned 8-bit int, 1 byte) Position of this message in the dataset
  * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections. Encoded following RTCM DF391
  *   specification.
- * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
- *   change in the SSR generating configuration.
+ * @field iod_atmo number (unsigned 8-bit int, 1 byte) IOD of the SSR atmospheric correction
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -134,13 +133,13 @@ STECHeader.prototype.parser = new Parser()
   .uint8('num_msgs')
   .uint8('seq_num')
   .uint8('update_interval')
-  .uint8('iod_ssr');
+  .uint8('iod_atmo');
 STECHeader.prototype.fieldSpec = [];
 STECHeader.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
 STECHeader.prototype.fieldSpec.push(['num_msgs', 'writeUInt8', 1]);
 STECHeader.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
 STECHeader.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
-STECHeader.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
+STECHeader.prototype.fieldSpec.push(['iod_atmo', 'writeUInt8', 1]);
 
 /**
  * SBP class for message fragment GriddedCorrectionHeader
@@ -154,10 +153,9 @@ STECHeader.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
  * @field seq_num number (unsigned 16-bit int, 2 bytes) Position of this message in the dataset
  * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections. Encoded following RTCM DF391
  *   specification.
- * @field iod_ssr number (unsigned 8-bit int, 1 byte) IOD of the SSR correction. A change of Issue Of Data SSR is used to indicate a
- *   change in the SSR generating configuration.
- * @field tropo_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the troposphere data. Encoded following RTCM DF389 specifcation but
- *   as TECU instead of m.
+ * @field iod_atmo number (unsigned 8-bit int, 1 byte) IOD of the SSR atmospheric correction
+ * @field tropo_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the troposphere data. Encoded following RTCM DF389 specifcation in
+ *   units of m.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -177,14 +175,14 @@ GriddedCorrectionHeader.prototype.parser = new Parser()
   .uint16('num_msgs')
   .uint16('seq_num')
   .uint8('update_interval')
-  .uint8('iod_ssr')
+  .uint8('iod_atmo')
   .uint8('tropo_quality_indicator');
 GriddedCorrectionHeader.prototype.fieldSpec = [];
 GriddedCorrectionHeader.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
 GriddedCorrectionHeader.prototype.fieldSpec.push(['num_msgs', 'writeUInt16LE', 2]);
 GriddedCorrectionHeader.prototype.fieldSpec.push(['seq_num', 'writeUInt16LE', 2]);
 GriddedCorrectionHeader.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
-GriddedCorrectionHeader.prototype.fieldSpec.push(['iod_ssr', 'writeUInt8', 1]);
+GriddedCorrectionHeader.prototype.fieldSpec.push(['iod_atmo', 'writeUInt8', 1]);
 GriddedCorrectionHeader.prototype.fieldSpec.push(['tropo_quality_indicator', 'writeUInt8', 1]);
 
 /**
@@ -194,8 +192,8 @@ GriddedCorrectionHeader.prototype.fieldSpec.push(['tropo_quality_indicator', 'wr
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field sv_id SvId Unique space vehicle identifier
- * @field stec_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the STEC data. Encoded following RTCM DF389 specifcation but as TECU
- *   instead of m.
+ * @field stec_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the STEC data. Encoded following RTCM DF389 specifcation but in units
+ *   of TECU instead of m.
  * @field stec_coeff array Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -223,7 +221,7 @@ STECSatElement.prototype.fieldSpec.push(['stec_coeff', 'array', 'writeInt16LE', 
 /**
  * SBP class for message fragment TroposphericDelayCorrection
  *
- * Troposphere delays at the grid point.
+ * Troposphere vertical delays at the grid point.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field hydro number (signed 16-bit int, 2 bytes) Hydrostatic vertical delay
@@ -318,10 +316,11 @@ GridElement.prototype.fieldSpec.push(['stec_residuals', 'array', STECResidual.pr
  * encoded validity list.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field region_size_inverse number (unsigned 8-bit int, 1 byte) inverse of region size
- * @field area_width number (unsigned 16-bit int, 2 bytes) area width; see spec for details
- * @field lat_nw_corner_enc number (unsigned 16-bit int, 2 bytes) encoded latitude of the northwest corner of the grid
- * @field lon_nw_corner_enc number (unsigned 16-bit int, 2 bytes) encoded longitude of the northwest corner of the grid
+ * @field region_size_inverse number (unsigned 8-bit int, 1 byte) region_size (deg) = 10 / region_size_inverse 0 is an invalid value.
+ * @field area_width number (unsigned 16-bit int, 2 bytes) grid height (deg) = grid idth (deg) = area_width / region_size 0 is an invalid
+ *   value.
+ * @field lat_nw_corner_enc number (unsigned 16-bit int, 2 bytes) North-West corner latitdue (deg) = region_size * lat_nw_corner_enc - 90
+ * @field lon_nw_corner_enc number (unsigned 16-bit int, 2 bytes) North-West corner longtitude (deg) = region_size * lon_nw_corner_enc - 180
  * @field num_msgs number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
  * @field seq_num number (unsigned 8-bit int, 1 byte) Postion of this message in the dataset
  *
@@ -659,7 +658,8 @@ MsgSsrGriddedCorrection.prototype.fieldSpec.push(['element', GridElement.prototy
 /**
  * SBP class for message MSG_SSR_GRID_DEFINITION (0x05F5).
  *
- * Definition of the grid for STEC and tropo messages
+ * Based on the 3GPP proposal R2-1906781 which is in turn based on OMA-LPPe-
+ * ValidityArea from OMA-TS-LPPe–V2_0-20141202-C
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header GridDefinitionHeader Header of a Gridded Correction message

@@ -12,6 +12,7 @@
 // Automatically generated from yaml/swiftnav/sbp/navigation.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
+
 //! Geodetic navigation messages reporting GPS time, position, velocity,
 //! and baseline position solutions. For position solutions, these
 //! messages define several different position solutions: single-point
@@ -28,13 +29,15 @@
 //! all messages are reported in the vehicle body frame as defined by
 //! device settings.  By default, the vehicle body frame is configured to be
 //! coincident with the antenna phase center.  When there is no inertial
-//! navigation, the solution will be reported at the phase center of the antenna.
+//! navigation, the solution will be reported at the phase center of the
+//! antenna.
 //! There is no inertial navigation capability on Piksi Multi or Duro.
 //!
 
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+
 
 /// GPS Time
 ///
@@ -90,10 +93,12 @@ impl super::SBPMessage for MsgGPSTime {
     }
 }
 
+
 /// UTC Time
 ///
 /// This message reports the Universal Coordinated Time (UTC).  Note the flags
-/// which indicate the source of the UTC offset value and source of the time fix.
+/// which indicate the source of the UTC offset value and source of the time
+/// fix.
 ///
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -147,6 +152,7 @@ impl super::SBPMessage for MsgUtcTime {
     }
 }
 
+
 /// Dilution of Precision
 ///
 /// This dilution of precision (DOP) message describes the effect of
@@ -199,6 +205,7 @@ impl super::SBPMessage for MsgDops {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Single-point position in ECEF
 ///
@@ -256,6 +263,7 @@ impl super::SBPMessage for MsgPosECEF {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Single-point position in ECEF
 ///
@@ -330,6 +338,7 @@ impl super::SBPMessage for MsgPosECEFCov {
     }
 }
 
+
 /// Geodetic Position
 ///
 /// This position solution message reports the absolute geodetic
@@ -389,6 +398,7 @@ impl super::SBPMessage for MsgPosLLH {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Geodetic Position
 ///
@@ -462,6 +472,7 @@ impl super::SBPMessage for MsgPosLLHCov {
     }
 }
 
+
 /// Baseline Position in ECEF
 ///
 /// This message reports the baseline solution in Earth Centered
@@ -515,6 +526,7 @@ impl super::SBPMessage for MsgBaselineECEF {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Baseline in NED
 ///
@@ -574,6 +586,7 @@ impl super::SBPMessage for MsgBaselineNED {
     }
 }
 
+
 /// Velocity in ECEF
 ///
 /// This message reports the velocity in Earth Centered Earth Fixed
@@ -625,6 +638,7 @@ impl super::SBPMessage for MsgVelECEF {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Velocity in ECEF
 ///
@@ -693,6 +707,7 @@ impl super::SBPMessage for MsgVelECEFCov {
     }
 }
 
+
 /// Velocity in NED
 ///
 /// This message reports the velocity in local North East Down (NED)
@@ -749,13 +764,15 @@ impl super::SBPMessage for MsgVelNED {
     }
 }
 
+
 /// Velocity in NED
 ///
 /// This message reports the velocity in local North East Down (NED)
 /// coordinates. The NED coordinate system is defined as the local WGS84
 /// tangent plane centered at the current position. The full GPS time is
 /// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
-/// This message is similar to the MSG_VEL_NED, but it includes the upper triangular
+/// This message is similar to the MSG_VEL_NED, but it includes the upper
+/// triangular
 /// portion of the 3x3 covariance matrix.
 ///
 #[derive(Debug)]
@@ -819,15 +836,21 @@ impl super::SBPMessage for MsgVelNEDCov {
     }
 }
 
+
 /// Velocity in User Frame
 ///
 /// This message reports the velocity in the Vehicle Body Frame. By convention,
-/// the x-axis should point out the nose of the vehicle and represent the forward
-/// direction, while as the y-axis should point out the right hand side of the vehicle.
-/// Since this is a right handed system, z should point out the bottom of the vehicle.
-/// The orientation and origin of the Vehicle Body Frame are specified via the device settings.
+/// the x-axis should point out the nose of the vehicle and represent the
+/// forward
+/// direction, while as the y-axis should point out the right hand side of the
+/// vehicle.
+/// Since this is a right handed system, z should point out the bottom of the
+/// vehicle.
+/// The orientation and origin of the Vehicle Body Frame are specified via the
+/// device settings.
 /// The full GPS time is given by the preceding MSG_GPS_TIME with the
-/// matching time-of-week (tow). This message is only produced by inertial versions of Swift
+/// matching time-of-week (tow). This message is only produced by inertial
+/// versions of Swift
 /// products and is not available from Piksi Multi or Duro.
 ///
 #[derive(Debug)]
@@ -891,6 +914,7 @@ impl super::SBPMessage for MsgVelBody {
     }
 }
 
+
 /// Age of corrections
 ///
 /// This message reports the Age of the corrections used for the current
@@ -926,6 +950,7 @@ impl super::SBPMessage for MsgAgeCorrections {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// GPS Time (v1.0)
 ///
@@ -981,6 +1006,7 @@ impl super::SBPMessage for MsgGPSTimeDepA {
     }
 }
 
+
 /// Dilution of Precision
 ///
 /// This dilution of precision (DOP) message describes the effect of
@@ -1029,6 +1055,7 @@ impl super::SBPMessage for MsgDopsDepA {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Single-point position in ECEF
 ///
@@ -1086,6 +1113,7 @@ impl super::SBPMessage for MsgPosECEFDepA {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Geodetic Position
 ///
@@ -1147,6 +1175,7 @@ impl super::SBPMessage for MsgPosLLHDepA {
     }
 }
 
+
 /// Baseline Position in ECEF
 ///
 /// This message reports the baseline solution in Earth Centered
@@ -1200,6 +1229,7 @@ impl super::SBPMessage for MsgBaselineECEFDepA {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Baseline in NED
 ///
@@ -1259,6 +1289,7 @@ impl super::SBPMessage for MsgBaselineNEDDepA {
     }
 }
 
+
 /// Velocity in ECEF
 ///
 /// This message reports the velocity in Earth Centered Earth Fixed
@@ -1310,6 +1341,7 @@ impl super::SBPMessage for MsgVelECEFDepA {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Velocity in NED
 ///
@@ -1366,6 +1398,7 @@ impl super::SBPMessage for MsgVelNEDDepA {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Heading relative to True North
 ///

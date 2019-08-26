@@ -12,17 +12,20 @@
 // Automatically generated from yaml/swiftnav/sbp/imu.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
+
 //! Inertial Measurement Unit (IMU) messages.
 
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 
+
 /// Raw IMU data
 ///
 /// Raw data from the Inertial Measurement Unit, containing accelerometer and
 /// gyroscope readings. The sense of the measurements are to be aligned with
-/// the indications on the device itself. Measurement units, which are specific to the
+/// the indications on the device itself. Measurement units, which are specific
+/// to the
 /// device hardware and settings, are communicated via the MSG_IMU_AUX message.
 ///
 #[derive(Debug)]
@@ -74,6 +77,7 @@ impl super::SBPMessage for MsgImuRaw {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Auxiliary IMU data
 ///

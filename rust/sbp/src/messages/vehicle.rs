@@ -12,18 +12,24 @@
 // Automatically generated from yaml/swiftnav/sbp/vehicle.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
+
 //! Messages from a vehicle.
 
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 
+
 /// Vehicle forward (x-axis) velocity
 ///
-/// Message representing the x component of vehicle velocity in the user frame at the odometry
-/// reference point(s) specified by the user. The offset for the odometry reference point and
-/// the definition and origin of the user frame are defined through the device settings interface.
-/// There are 4 possible user-defined sources of this message  which are labeled arbitrarily
+/// Message representing the x component of vehicle velocity in the user frame
+/// at the odometry
+/// reference point(s) specified by the user. The offset for the odometry
+/// reference point and
+/// the definition and origin of the user frame are defined through the device
+/// settings interface.
+/// There are 4 possible user-defined sources of this message  which are
+/// labeled arbitrarily
 /// source 0 through 3.
 ///
 #[derive(Debug)]
