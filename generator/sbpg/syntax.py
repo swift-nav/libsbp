@@ -137,6 +137,9 @@ class Message(Definition):
   def __repr__(self):
     return fmt_repr(self)
 
+  def __lt__(self, o):
+    return repr(self) < repr(o)
+
 class Struct(Definition):
   def __init__(self, defn):
     self.__dict__.update(defn.__dict__)

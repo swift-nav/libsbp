@@ -18,16 +18,6 @@ import argparse
 import os
 import pprint
 import sbpg.specs.yaml2 as yaml
-import sbpg.targets.c as c
-import sbpg.targets.test_c as test_c
-import sbpg.targets.java as java
-import sbpg.targets.latex as tex
-import sbpg.targets.haskell as hs
-import sbpg.targets.protobuf as pb
-import sbpg.targets.python as py
-import sbpg.targets.pythonNG as pyNG
-import sbpg.targets.javascript as js
-import sbpg.targets.rust as rs
 
 def get_args():
   parser = argparse.ArgumentParser(description='Swift Navigation SBP generator.')
@@ -89,15 +79,15 @@ def main():
     args = get_args().parse_args()
     verbose = args.verbose
     assert args.pythonNG or args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.protobuf or args.java or args.rust, \
-      "Please specify a target language."
+        "Please specify a target language."
     input_file = os.path.abspath(args.input_file[0])
     assert len(args.input_file) == 1
     assert os.path.exists(input_file), \
-      "Invalid input file: %s. Exiting!" % input_file
+        "Invalid input file: %s. Exiting!" % input_file
     output_dir = os.path.abspath(args.output_dir[0])
     assert len(args.output_dir) == 1, "Only 1 output directory at a time."
     assert os.path.exists(output_dir), \
-      "Invalid output directory: %s. Exiting!" % output_dir
+        "Invalid output directory: %s. Exiting!" % output_dir
     # Ingest, parse, and validate.
     test_mode = args.test_c
 
@@ -114,6 +104,7 @@ def main():
       pprint.pprint(list(file_index.keys()))
       print("Writing to %s" % output_dir)
     if args.latex:
+      import sbpg.targets.latex as tex
       parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
       tex.render_source(output_dir, parsed, args.release[0])
     else:
@@ -129,22 +120,31 @@ def main():
         if not parsed.render_source:
           continue
         if args.python:
+          import sbpg.targets.python as py
           py.render_source(output_dir, parsed)
         if args.pythonNG:
+          import sbpg.targets.pythonNG as pyNG
           pyNG.render_source(output_dir, parsed)
         elif args.javascript:
+          import sbpg.targets.javascript as js
           js.render_source(output_dir, parsed)
         elif args.c:
+          import sbpg.targets.c as c
           c.render_source(output_dir, parsed)
         elif args.test_c:
+          import sbpg.targets.test_c as test_c
           test_c.render_source(output_dir, parsed)
         elif args.haskell:
+          import sbpg.targets.haskell as hs
           hs.render_source(output_dir, parsed)
         elif args.java:
+          import sbpg.targets.java as java
           java.render_source(output_dir, parsed)
         elif args.rust:
+          import sbpg.targets.rust as rs
           rs.render_source(output_dir, parsed)
         elif args.protobuf:
+          import sbpg.targets.protobuf as pb
           pb.render_source(output_dir, parsed)
       if args.c:
         c.render_version(output_dir, args.release[0])
@@ -166,6 +166,7 @@ def main():
 
   except KeyboardInterrupt:
     pass
+
 
 if __name__ == '__main__':
   main()
