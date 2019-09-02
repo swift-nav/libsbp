@@ -69,9 +69,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 update_interval;    /**< Update interval between consecutive corrections. Encoded
 following RTCM DF391 specification.
  */
-  u8 iod_ssr;            /**< IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR
-generating configuration.
+  u8 iod_atmo;           /**< IOD of the SSR atmospheric correction
  */
 } stec_header_t;
 
@@ -89,12 +87,10 @@ typedef struct SBP_ATTR_PACKED {
   u8 update_interval;            /**< Update interval between consecutive corrections. Encoded
 following RTCM DF391 specification.
  */
-  u8 iod_ssr;                    /**< IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR
-generating configuration.
+  u8 iod_atmo;                   /**< IOD of the SSR atmospheric correction
  */
   u8 tropo_quality_indicator;    /**< Quality of the troposphere data. Encoded following RTCM DF389
-specifcation but as TECU instead of m.
+specifcation in units of m.
  */
 } gridded_correction_header_t;
 
@@ -106,7 +102,7 @@ specifcation but as TECU instead of m.
 typedef struct SBP_ATTR_PACKED {
   sv_id_t sv_id;                     /**< Unique space vehicle identifier */
   u8 stec_quality_indicator;    /**< Quality of the STEC data. Encoded following RTCM DF389 specifcation
-but as TECU instead of m.
+but in units of TECU instead of m.
  */
   s16 stec_coeff[4];             /**< Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
  [C00 = 0.05 TECU, others = 0.02 TECU/deg] */
@@ -115,11 +111,11 @@ but as TECU instead of m.
 
 /** None
  *
- * Troposphere delays at the grid point.
+ * Troposphere vertical delays at the grid point.
  */
 typedef struct SBP_ATTR_PACKED {
-  s16 hydro;    /**< Hydrostatic vertical delay [0.4 mm (add 2.3 m to get actual vert hydro delay)] */
-  s8 wet;      /**< Wet vertical delay [0.4 mm (add 0.252 m to get actual vert wet delay)] */
+  s16 hydro;    /**< Hydrostatic vertical delay [4 mm (add 2.3 m to get actual vertical hydro delay)] */
+  s8 wet;      /**< Wet vertical delay [4 mm (add 0.252 m to get actual vertical wet delay)] */
 } tropospheric_delay_correction_t;
 
 
@@ -151,10 +147,14 @@ typedef struct SBP_ATTR_PACKED {
  * Also includes an RLE encoded validity list.
  */
 typedef struct SBP_ATTR_PACKED {
-  u8 region_size_inverse;    /**< inverse of region size [coded value - see spec] */
-  u16 area_width;             /**< area width; see spec for details [coded value - 0 means not present (Swift convention)] */
-  u16 lat_nw_corner_enc;      /**< encoded latitude of the northwest corner of the grid */
-  u16 lon_nw_corner_enc;      /**< encoded longitude of the northwest corner of the grid */
+  u8 region_size_inverse;    /**< region_size (deg) = 10 / region_size_inverse
+0 is an invalid value.
+ [inverse degrees] */
+  u16 area_width;             /**< grid height (deg) = grid idth (deg) = area_width / region_size
+0 is an invalid value.
+ */
+  u16 lat_nw_corner_enc;      /**< North-West corner latitdue (deg) = region_size * lat_nw_corner_enc - 90 */
+  u16 lon_nw_corner_enc;      /**< North-West corner longtitude (deg) = region_size * lon_nw_corner_enc - 180 */
   u8 num_msgs;               /**< Number of messages in the dataset */
   u8 seq_num;                /**< Postion of this message in the dataset */
 } grid_definition_header_t;
@@ -302,9 +302,10 @@ typedef struct SBP_ATTR_PACKED {
 } msg_ssr_gridded_correction_t;
 
 
-/** None
+/** Definition of the grid for STEC and tropo messages
  *
-* Definition of the grid for STEC and tropo messages
+ * Based on the 3GPP proposal R2-1906781 which is in turn based on
+ * OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
  */
 #define SBP_MSG_SSR_GRID_DEFINITION    0x05F5
 typedef struct SBP_ATTR_PACKED {
