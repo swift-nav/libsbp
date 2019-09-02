@@ -12,6 +12,7 @@
 // Automatically generated from yaml/swiftnav/sbp/file_io.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
+
 //! Messages for using device's onboard flash filesystem
 //! functionality. This allows data to be stored persistently in the
 //! device's program flash with wear-levelling using a simple filesystem
@@ -25,6 +26,7 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+
 
 /// Read file from the file system (host => device)
 ///
@@ -74,6 +76,7 @@ impl super::SBPMessage for MsgFileioReadReq {
     }
 }
 
+
 /// File read from the file system (host <= device)
 ///
 /// The file read message reads a certain length (up to 255 bytes)
@@ -112,6 +115,7 @@ impl super::SBPMessage for MsgFileioReadResp {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// List files in a directory (host => device)
 ///
@@ -160,6 +164,7 @@ impl super::SBPMessage for MsgFileioReadDirReq {
     }
 }
 
+
 /// Files listed in a directory (host <= device)
 ///
 /// The read directory message lists the files in a directory on the
@@ -200,6 +205,7 @@ impl super::SBPMessage for MsgFileioReadDirResp {
     }
 }
 
+
 /// Delete a file from the file system (host => device)
 ///
 /// The file remove message deletes a file from the file system.
@@ -234,6 +240,7 @@ impl super::SBPMessage for MsgFileioRemove {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Write to file (host => device)
 ///
@@ -283,6 +290,7 @@ impl super::SBPMessage for MsgFileioWriteReq {
     }
 }
 
+
 /// File written to (host <= device)
 ///
 /// The file write message writes a certain length (up to 255 bytes)
@@ -319,6 +327,7 @@ impl super::SBPMessage for MsgFileioWriteResp {
     }
 }
 
+
 /// Request advice on the optimal configuration for FileIO.
 ///
 /// Requests advice on the optimal configuration for a FileIO
@@ -353,6 +362,7 @@ impl super::SBPMessage for MsgFileioConfigReq {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Response with advice on the optimal configuration for FileIO.
 

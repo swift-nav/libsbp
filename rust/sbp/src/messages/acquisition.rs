@@ -12,12 +12,14 @@
 // Automatically generated from yaml/swiftnav/sbp/acquisition.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
+
 //! Satellite acquisition messages from the device.
 
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
+
 
 /// Satellite acquisition result
 ///
@@ -64,6 +66,7 @@ impl super::SBPMessage for MsgAcqResult {
     }
 }
 
+
 /// Deprecated
 ///
 /// Deprecated.
@@ -104,6 +107,7 @@ impl super::SBPMessage for MsgAcqResultDepC {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Deprecated
 ///
@@ -147,6 +151,7 @@ impl super::SBPMessage for MsgAcqResultDepB {
     }
 }
 
+
 /// Deprecated
 ///
 /// Deprecated.
@@ -189,6 +194,7 @@ impl super::SBPMessage for MsgAcqResultDepA {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Acq perfomance measurement and debug
 ///
@@ -259,6 +265,7 @@ impl AcqSvProfile {
     }
 }
 
+
 /// Deprecated
 ///
 /// Deprecated.
@@ -326,6 +333,7 @@ impl AcqSvProfileDep {
     }
 }
 
+
 /// Acquisition perfomance measurement and debug
 ///
 /// The message describes all SV profiles during acquisition time.
@@ -358,6 +366,7 @@ impl super::SBPMessage for MsgAcqSvProfile {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Deprecated.
 ///

@@ -12,11 +12,13 @@
 // Automatically generated from yaml/swiftnav/sbp/imu.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
+
 //! Inertial Measurement Unit (IMU) messages.
 
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+
 
 /// Raw IMU data
 ///
@@ -74,6 +76,7 @@ impl super::SBPMessage for MsgImuRaw {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Auxiliary IMU data
 ///

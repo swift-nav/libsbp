@@ -12,6 +12,7 @@
 // Automatically generated from yaml/swiftnav/sbp/tracking.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
+
 //! Satellite code and carrier-phase tracking messages from the device.
 //!
 
@@ -19,6 +20,7 @@ extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
+
 
 /// Detailed signal tracking channel states. DEPRECATED.
 ///
@@ -119,6 +121,7 @@ impl super::SBPMessage for MsgTrackingStateDetailedDepA {
     }
 }
 
+
 /// Deprecated
 ///
 /// Deprecated.
@@ -217,6 +220,7 @@ impl super::SBPMessage for MsgTrackingStateDetailedDep {
     }
 }
 
+
 /// Signal tracking channel state
 ///
 /// Tracking channel state for a specific satellite signal and
@@ -261,6 +265,7 @@ impl TrackingChannelState {
     }
 }
 
+
 /// Signal tracking channel states
 ///
 /// The tracking message returns a variable-length array of tracking
@@ -294,6 +299,7 @@ impl super::SBPMessage for MsgTrackingState {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Measurement Engine signal tracking channel state
 ///
@@ -337,6 +343,7 @@ impl MeasurementState {
     }
 }
 
+
 /// Measurement Engine signal tracking channel states
 ///
 /// The tracking message returns a variable-length array of tracking
@@ -370,6 +377,7 @@ impl super::SBPMessage for MsgMeasurementState {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Complex correlation structure
 ///
@@ -411,6 +419,7 @@ impl TrackingChannelCorrelation {
     }
 }
 
+
 /// Tracking channel correlations
 ///
 /// When enabled, a tracking channel can output the correlations at each
@@ -449,6 +458,7 @@ impl super::SBPMessage for MsgTrackingIq {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Complex correlation structure
 ///
@@ -490,6 +500,7 @@ impl TrackingChannelCorrelationDep {
     }
 }
 
+
 /// Tracking channel correlations
 ///
 /// When enabled, a tracking channel can output the correlations at each
@@ -529,6 +540,7 @@ impl super::SBPMessage for MsgTrackingIqDepB {
     }
 }
 
+
 /// Deprecated
 ///
 /// Deprecated.
@@ -566,6 +578,7 @@ impl super::SBPMessage for MsgTrackingIqDepA {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Deprecated
 ///
@@ -610,6 +623,7 @@ impl TrackingChannelStateDepA {
     }
 }
 
+
 /// Deprecated
 ///
 /// Deprecated.
@@ -641,6 +655,7 @@ impl super::SBPMessage for MsgTrackingStateDepA {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Deprecated.
 ///
@@ -684,6 +699,7 @@ impl TrackingChannelStateDepB {
         Ok(v)
     }
 }
+
 
 /// Deprecated.
 ///

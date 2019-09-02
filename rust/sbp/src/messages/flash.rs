@@ -12,6 +12,7 @@
 // Automatically generated from yaml/swiftnav/sbp/flash.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
+
 //! Messages for reading/writing the device's onboard flash memory. Many
 //! of these messages target specific flash memory peripherals used in
 //! Swift Navigation devices: the STM32 flash and the M25Pxx FPGA
@@ -22,6 +23,7 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+
 
 /// Program flash addresses
 ///
@@ -69,6 +71,7 @@ impl super::SBPMessage for MsgFlashProgram {
     }
 }
 
+
 /// Flash response message (host <= device).
 ///
 /// This message defines success or failure codes for a variety of
@@ -103,6 +106,7 @@ impl super::SBPMessage for MsgFlashDone {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Read STM or M25 flash address request (host => device).
 ///
@@ -148,6 +152,7 @@ impl super::SBPMessage for MsgFlashReadReq {
     }
 }
 
+
 /// Read STM or M25 flash address response (host <= device).
 ///
 /// The flash read message reads a set of addresses of either the
@@ -192,6 +197,7 @@ impl super::SBPMessage for MsgFlashReadResp {
     }
 }
 
+
 /// Erase sector of device flash memory (host => device).
 ///
 /// The flash erase message from the host erases a sector of either
@@ -231,6 +237,7 @@ impl super::SBPMessage for MsgFlashErase {
     }
 }
 
+
 /// Lock sector of STM flash memory (host => device)
 ///
 /// The flash lock message locks a sector of the STM flash
@@ -263,6 +270,7 @@ impl super::SBPMessage for MsgStmFlashLockSector {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Unlock sector of STM flash memory (host => device)
 ///
@@ -297,6 +305,7 @@ impl super::SBPMessage for MsgStmFlashUnlockSector {
     }
 }
 
+
 /// Read device's hardcoded unique ID request (host => device)
 
 ///
@@ -327,6 +336,7 @@ impl super::SBPMessage for MsgStmUniqueIdReq {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Read device's hardcoded unique ID response (host <= device)
 
@@ -363,6 +373,7 @@ impl super::SBPMessage for MsgStmUniqueIdResp {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Write M25 flash status register (host => device)
 ///

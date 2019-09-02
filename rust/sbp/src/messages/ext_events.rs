@@ -12,6 +12,7 @@
 // Automatically generated from yaml/swiftnav/sbp/ext_events.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
+
 //! Messages reporting accurately-timestamped external events,
 //! e.g. camera shutter time.
 //!
@@ -19,6 +20,7 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+
 
 /// Reports timestamped external pin event
 ///

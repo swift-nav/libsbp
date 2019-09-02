@@ -12,6 +12,7 @@
 // Automatically generated from yaml/swiftnav/sbp/bootload.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
+
 //! Messages for the bootloading configuration of a Piksi 2.3.1.  This message
 //! group does not apply to Piksi Multi.
 //!
@@ -22,6 +23,7 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+
 
 /// Bootloading handshake request (host => device)
 ///
@@ -51,6 +53,7 @@ impl super::SBPMessage for MsgBootloaderHandshakeReq {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Bootloading handshake response (host <= device)
 ///
@@ -91,6 +94,7 @@ impl super::SBPMessage for MsgBootloaderHandshakeResp {
     }
 }
 
+
 /// Bootloader jump to application (host => device)
 ///
 /// The host initiates the bootloader to jump to the application.
@@ -123,6 +127,7 @@ impl super::SBPMessage for MsgBootloaderJumpToApp {
     }
 }
 
+
 /// Read FPGA device ID over UART request (host => device)
 ///
 /// The device message from the host reads a unique device
@@ -154,6 +159,7 @@ impl super::SBPMessage for MsgNapDeviceDnaReq {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Read FPGA device ID over UART response (host <= device)
 ///
@@ -191,6 +197,7 @@ impl super::SBPMessage for MsgNapDeviceDnaResp {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Deprecated
 ///

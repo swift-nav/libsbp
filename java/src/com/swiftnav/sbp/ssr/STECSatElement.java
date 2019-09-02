@@ -29,7 +29,7 @@ public class STECSatElement extends SBPStruct {
     public SvId sv_id;
     
     /** Quality of the STEC data. Encoded following RTCM DF389 specifcation
-but as TECU instead of m.
+but in units of TECU instead of m.
  */
     public int stec_quality_indicator;
     

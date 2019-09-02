@@ -12,12 +12,14 @@
 // Automatically generated from yaml/swiftnav/sbp/logging.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
+
 //! Logging and debugging messages from the device.
 //!
 
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+
 
 /// Plaintext logging messages with levels
 ///
@@ -55,6 +57,7 @@ impl super::SBPMessage for MsgLog {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Wrapper for FWD a separate stream of information over SBP
 ///
@@ -99,6 +102,7 @@ impl super::SBPMessage for MsgFwd {
         self.sender_id = Some(new_id);
     }
 }
+
 
 /// Deprecated
 ///
