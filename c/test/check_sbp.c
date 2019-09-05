@@ -78,6 +78,7 @@ void printy_callback(u16 sender_id, u8 len, u8 msg[], void* context)
 
 u32 n_callbacks_logged;
 u16 last_sender_id;
+u16 last_msg_type;
 u8 last_len;
 u8 last_msg[256];
 void* last_context;
@@ -101,6 +102,18 @@ void logging_callback(u16 sender_id, u8 len, u8 msg[], void* context)
   /*printy_callback(sender_id, len, msg);*/
 }
 
+void logging_allmsg_fn(u16 sender_id, u16 msg_type, u8 len, u8 msg[], void* context)
+{
+  n_callbacks_logged++;
+  last_sender_id = sender_id;
+  last_msg_type = msg_type;
+  last_len = len;
+  last_context = context;
+  memcpy(last_msg, msg, len);
+
+  /*printy_callback(sender_id, len, msg);*/
+}
+
 void test_callback(u16 sender_id, u8 len, u8 msg[], void* context)
 {
   /* Do nothing. */
@@ -113,6 +126,17 @@ void test_callback2(u16 sender_id, u8 len, u8 msg[], void* context)
 {
   /* Do nothing. */
   (void)sender_id;
+  (void)len;
+  (void)msg;
+  (void)context;
+}
+
+void test_allmsg_fn(u16 sender_id, u16 msg_type, u8 len, u8 msg[],
+                          void* context)
+{
+  /* Do nothing. */
+  (void)sender_id;
+  (void)msg_type;
   (void)len;
   (void)msg;
   (void)context;
@@ -451,6 +475,128 @@ START_TEST(test_callbacks)
 }
 END_TEST
 
+START_TEST(test_allmsg_corner_cases)
+{
+
+  sbp_state_t s;
+  sbp_state_init(&s);
+
+  /* Start with no callbacks registered.  */
+  sbp_remove_allmsg_fn(&s);
+
+  fail_unless(sbp_set_allmsg_fn(&s, 0, 0) == SBP_NULL_ERROR,
+      "sbp_register_callback should return an error if cb is NULL");
+
+  fail_unless(sbp_set_allmsg_fn(&s, &test_allmsg_fn, 0) == SBP_OK,
+      "sbp_set_allmsg_fn should work");
+
+  fail_unless(sbp_get_allmsg_fn(&s) == &test_allmsg_fn,
+      "sbp_get_allmsg_fn should work");
+
+  sbp_remove_allmsg_fn(&s);
+
+  fail_unless(sbp_get_allmsg_fn(&s) == 0,
+      "sbp_get_allmsg_fn should now fail");
+}
+END_TEST
+
+START_TEST(test_sbp_set_allmsg_cb)
+{
+  /* TODO: Tests with different read function behaviour. */
+
+  sbp_state_t s;
+  sbp_state_init(&s);
+  sbp_state_set_io_context(&s, &DUMMY_MEMORY_FOR_IO);
+  logging_reset();
+  dummy_reset();
+  u8 ret = sbp_set_allmsg_fn(&s, &logging_allmsg_fn, &DUMMY_MEMORY_FOR_CALLBACKS);
+  fail_unless(ret == SBP_OK,
+      "registering all callback didn't work");
+
+  u8 test_data[] = { 0x01, 0x02, 0x03, 0x04 };
+
+  sbp_send_message(&s, 0x2269, 0x42, sizeof(test_data), test_data, &dummy_write);
+
+  while (dummy_rd < dummy_wr) {
+    fail_unless(sbp_process(&s, &dummy_read) >= SBP_OK,
+        "sbp_process threw an error!");
+  }
+
+  fail_unless(n_callbacks_logged == 1,
+      "one callback should have been logged");
+  fail_unless(last_sender_id == 0x42,
+      "sender_id decoded incorrectly");
+  fail_unless(last_len == sizeof(test_data),
+      "len decoded incorrectly. len is %u", last_len);
+  fail_unless(last_msg_type == 0x2269,
+      "msg_id decoded incorrectly");
+  fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+        == 0,
+      "test data decoded incorrectly");
+  fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+      "context pointer incorrectly passed");
+
+  /* now add a regular callback and make sure BOTH were called for the same message*/
+  static sbp_msg_callbacks_node_t n;
+  logging_reset();
+  dummy_reset();
+  sbp_register_callback(&s, 0x2269, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+  sbp_send_message(&s, 0x2269, 0x42, sizeof(test_data), test_data, &dummy_write);
+
+  while (dummy_rd < dummy_wr) {
+    fail_unless(sbp_process(&s, &dummy_read) >= SBP_OK,
+        "sbp_process threw an error!");
+  }
+
+  /* should have two callbacks, one for all, one for normal */
+  fail_unless(n_callbacks_logged == 2,
+      "two callback should have been logged");
+  fail_unless(last_sender_id == 0x42,
+      "sender_id decoded incorrectly");
+  fail_unless(last_len == sizeof(test_data),
+      "len decoded incorrectly. len is %u", last_len);
+  fail_unless(last_msg_type == 0x2269,
+      "msg_id decoded incorrectly");
+  fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+        == 0,
+      "test data decoded incorrectly");
+  fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+      "context pointer incorrectly passed");
+
+  /* now remove the callback for all message types and make sure regular callback works */
+  logging_reset();
+  dummy_reset();
+  ret = sbp_remove_allmsg_fn(&s);
+  fail_unless(ret == SBP_OK,
+      "removing the all callback didn't work");
+  sbp_send_message(&s, 0x2269, 0x42, sizeof(test_data), test_data, &dummy_write);
+
+  while (dummy_rd < dummy_wr) {
+    fail_unless(sbp_process(&s, &dummy_read) >= SBP_OK,
+        "sbp_process threw an error!");
+  }
+  fail_unless(n_callbacks_logged == 1,
+      "one callbacks should have been logged");
+
+  /* now remove every callback */
+  logging_reset();
+  dummy_reset();
+  ret = sbp_remove_allmsg_fn(&s);
+  fail_unless(ret == SBP_OK,
+      "removing the all callback didn't work");
+  sbp_send_message(&s, 0x2269, 0x42, sizeof(test_data), test_data, &dummy_write);
+
+  while (dummy_rd < dummy_wr) {
+    fail_unless(sbp_process(&s, &dummy_read) >= SBP_OK,
+        "sbp_process threw an error!");
+  }
+  fail_unless(n_callbacks_logged == 1,
+      "one callbacks should have been logged");
+
+}
+END_TEST
+
 Suite* sbp_suite(void)
 {
   Suite *s = suite_create("SBP");
@@ -461,6 +607,8 @@ Suite* sbp_suite(void)
   tcase_add_test(tc_core, test_callbacks);
   tcase_add_test(tc_core, test_sbp_send_message);
   tcase_add_test(tc_core, test_sbp_process);
+  tcase_add_test(tc_core, test_allmsg_corner_cases);
+  tcase_add_test(tc_core, test_sbp_set_allmsg_cb);
 
   suite_add_tcase(s, tc_core);
 
