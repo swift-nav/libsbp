@@ -53,6 +53,21 @@
  *
  * where `SBP_MY_MSG_TYPE` is the numerical identifier of your message type.
  *
+ * If you'd like to call a function for EVERY sbp message, setup an allmsg function
+ * with the type sbp_allmsg_fn_t.  It must be of the form:
+ *
+ * ~~~
+ * void my_allmsg_fn(u16 sender_id, u16 msg_type, u8 len, u8 msg[], void *context)
+ * {
+ *   // Process msg.
+ * }
+ * ~~~
+ *
+ * Then register the allmsg callback with the SBP library as follows:
+ * ~~~
+ * sbp_register_allmsg_fn(&sbp_state, &my_allmsg_fn, &context);
+ * ~~~
+ *
  * You must now call sbp_process() periodically whenever you have received SBP
  * data to be processed, e.g. from the serial port. Remember sbp_process() may
  * not use all available data so keep calling sbp_process() until all the
@@ -227,6 +242,44 @@ s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node)
   return SBP_CALLBACK_ERROR;
 }
 
+/** Set a function to be called for ANY message type.
+ *
+ * \param s        pointer to sbp_state_t struct in use
+ * \param fn       Pointer to message callback function
+ * \param context  Pointer to context for callback function
+ * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` if fn is NULL
+ *
+ */
+s8 sbp_set_allmsg_fn(sbp_state_t *s, sbp_allmsg_fn_t fn, void *context) {
+  /* Check our callback function pointer isn't NULL. */
+  if (0 == fn) {
+    return SBP_NULL_ERROR;
+  }
+  s->allmsg_fn = fn;
+  s->allmsg_context = context;
+  return SBP_OK;
+}
+
+/** Retrieve the callback for ANY message type.
+ *
+ * \param s        pointer to sbp_state_t struct in use
+ * \return sbp_allmsg_fn_t* to allmsg fn pointer or NULL if none 
+ *
+ */
+sbp_allmsg_fn_t sbp_get_allmsg_fn(sbp_state_t *s) {
+  return s->allmsg_fn;
+}
+
+/** Remove allmsg function pointer and context.
+ *
+ * \return `SBP_OK` (0) if successful
+ */
+s8 sbp_remove_allmsg_fn(sbp_state_t *s) {
+  s->allmsg_fn = 0;
+  s->allmsg_context = 0;
+  return SBP_OK;
+}
+
 /** Clear all registered callbacks.
  * This is probably only useful for testing but who knows!
  */
@@ -252,6 +305,9 @@ void sbp_state_init(sbp_state_t *s)
 
   /* Clear the callbacks, if any, currently in s */
   sbp_clear_callbacks(s);
+
+  /* Clear the allmsg_fn, if any, currently set on s */
+  sbp_remove_allmsg_fn(s); 
 }
 
 
@@ -302,7 +358,8 @@ void sbp_state_set_io_context(sbp_state_t *s, void *context)
  * \return `SBP_OK` (0) if successful but no complete message yet,
  *         `SBP_OK_CALLBACK_EXECUTED` (1) if message decoded and callback executed,
  *         `SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no associated
- *         callback, and `SBP_CRC_ERROR` (-2) if a CRC error
+ *         callback, SBP_OK_ALLMSG_FN_EXECUTED_ONLY (3) if only the generic
+ *         callback for every msg was called, and `SBP_CRC_ERROR` (-2) if a CRC error
  *         has occurred. Thus can check for >0 to ensure good processing.
  */
 s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
@@ -412,6 +469,8 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
  * \return `SBP_OK_CALLBACK_EXECUTED` (1) if message decoded and callback executed,
  *         `SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no associated
  *         callback.
+ *         `SBP_OK_ALLMSG_FN_EXECUTED_ONLY` (3) if message decoded and only
+ *         allmsg callback was called
  */
 s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
                        u8 payload[]) {
@@ -421,6 +480,12 @@ s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
     if (node->msg_type == msg_type) {
       (*node->cb)(sender_id, msg_len, payload, node->context);
       ret = SBP_OK_CALLBACK_EXECUTED;
+    }
+  }
+  if (0 != s->allmsg_fn) {
+    (s->allmsg_fn)(sender_id, msg_type, msg_len, payload, s->allmsg_context);
+    if (ret == SBP_OK_CALLBACK_UNDEFINED) {
+      ret = SBP_OK_ALLMSG_FN_EXECUTED_ONLY;
     }
   }
   return ret;

@@ -28,6 +28,9 @@ extern "C" {
 #define SBP_OK_CALLBACK_EXECUTED 1
 /** Return value indicating message decoded with no associated callback in sbp_process. */
 #define SBP_OK_CALLBACK_UNDEFINED 2
+/** Return value indicating message decoded and only an all_msg function was
+ * executed. */
+#define SBP_OK_ALLMSG_FN_EXECUTED_ONLY 3
 /** Return value indicating an error with the callback (function defined). */
 #define SBP_CALLBACK_ERROR -1
 /** Return value indicating a CRC error. */
@@ -46,6 +49,8 @@ extern "C" {
 
 /** SBP callback function prototype definition. */
 typedef void (*sbp_msg_callback_t)(u16 sender_id, u8 len, u8 msg[], void *context);
+typedef void (*sbp_allmsg_fn_t)(u16 sender_id, u16 msg_type, u8 len, u8 msg[],
+                                void *context);
 
 /** SBP callback node.
  * Forms a linked list of callbacks.
@@ -76,12 +81,20 @@ typedef struct {
   u8 msg_buff[256];
   void* io_context;
   sbp_msg_callbacks_node_t* sbp_msg_callbacks_head;
+  sbp_allmsg_fn_t allmsg_fn;
+  void *allmsg_context;
 } sbp_state_t;
 
 /** \} */
 
+/* registers a callback to be called on a particular msg_type */
 s8 sbp_register_callback(sbp_state_t* s, u16 msg_type, sbp_msg_callback_t cb, void* context,
                          sbp_msg_callbacks_node_t *node);
+/* sets a function to be called on ANY deframed message */
+s8 sbp_set_allmsg_fn(sbp_state_t *s, sbp_allmsg_fn_t fn, void *context);
+/* gets the function to be called on ANY deframed message */
+sbp_allmsg_fn_t sbp_get_allmsg_fn(sbp_state_t *s);
+s8 sbp_remove_allmsg_fn(sbp_state_t *s);
 s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node);
 void sbp_clear_callbacks(sbp_state_t* s);
 void sbp_state_init(sbp_state_t *s);
