@@ -518,6 +518,41 @@ START_TEST(test_sbp_frame)
 }
 END_TEST
 
+START_TEST(test_sbp_all_msg)
+{
+  /* Tests registering for all messages */
+
+  sbp_state_t s;
+  sbp_state_init(&s);
+  sbp_state_set_io_context(&s, &DUMMY_MEMORY_FOR_IO);
+
+  static sbp_msg_callbacks_node_t n;
+
+  sbp_register_all_msg_callback(&s, &frame_logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+  u8 msg_1[] = { 0x01, 0x02, 0x03, 0x04 };
+  u8 msg_2[] = { 0x05, 0x06, 0x07 };
+
+  dummy_reset();
+  logging_reset();
+  sbp_send_message(&s, 0x2269, 0x42, sizeof(msg_1), msg_1, &dummy_write);
+  sbp_send_message(&s, 0x2270, 0x43, sizeof(msg_2), msg_2, &dummy_write);
+
+  while (dummy_rd < dummy_wr) {
+    fail_unless(sbp_process(&s, &dummy_read) >= SBP_OK,
+        "sbp_process threw an error!");
+  }
+
+  fail_unless(n_frame_callbacks_logged == 2,
+      "two frame callback should have been logged, %u were", n_frame_callbacks_logged);
+  fail_unless(last_frame_sender_id == 0x43,
+      "sender_id decoded incorrectly");
+  fail_unless(last_frame_payload_len == sizeof(msg_2),
+      "len decoded incorrectly");
+  fail_unless(last_frame_len == sizeof(msg_2) + 8,
+      "frame len decoded incorrectly");
+}
+END_TEST
 START_TEST(test_sbp_send_message)
 {
   /* TODO: Tests with different write function behaviour. */
@@ -736,6 +771,7 @@ Suite* sbp_suite(void)
   tcase_add_test(tc_core, test_sbp_process);
   tcase_add_test(tc_core, test_sbp_frame);
   tcase_add_test(tc_core, test_frame_callbacks);
+  tcase_add_test(tc_core, test_sbp_all_msg);
 
   suite_add_tcase(s, tc_core);
 
