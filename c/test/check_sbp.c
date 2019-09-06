@@ -553,6 +553,52 @@ START_TEST(test_sbp_all_msg)
       "frame len decoded incorrectly");
 }
 END_TEST
+
+START_TEST(test_sbp_big_msg)
+{
+  /* Tests registering for max size message (255) */
+
+  sbp_state_t s;
+  sbp_state_init(&s);
+  sbp_state_set_io_context(&s, &DUMMY_MEMORY_FOR_IO);
+
+  static sbp_msg_callbacks_node_t n;
+  static sbp_msg_callbacks_node_t n2;
+
+  sbp_register_frame_callback(&s, 0x2269, &frame_logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+  sbp_register_callback(&s, 0x2269, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+
+  u8 big_msg[255];
+  for(int i = 0; i < 255; i++) { big_msg[i]=i;}
+
+  dummy_reset();
+  logging_reset();
+  sbp_send_message(&s, 0x2269, 0x42, 255, big_msg, &dummy_write);
+
+  while (dummy_rd < dummy_wr) {
+    fail_unless(sbp_process(&s, &dummy_read) >= SBP_OK,
+        "sbp_process threw an error!");
+  }
+
+  fail_unless(n_frame_callbacks_logged == 1,
+      "one frame callback should have been logged, %u were", n_frame_callbacks_logged);
+  fail_unless(n_callbacks_logged == 1,
+      "one callbackx should have been logged, %u were", n_frame_callbacks_logged);
+  fail_unless(last_frame_sender_id == 0x42,
+      "sender_id decoded incorrectly");
+  fail_unless(last_frame_payload_len == 255,
+      "len decoded incorrectly");
+  fail_unless(last_frame_len == 255 + 8,
+      "frame len decoded incorrectly");
+  fail_unless(memcmp(&(last_frame[6]), big_msg, 255)
+        == 0,
+      "frame data decoded incorrectly (3) %x");
+  /* check that CRC wasn't chopped off */
+  fail_unless((last_frame[262]  == 0x35 && last_frame[261] == 0xA6),
+      "CRC was incorrect. Should be %x and was %x", 0x35A6,  *((u16*) &(last_frame[261])));
+}
+END_TEST
+
 START_TEST(test_sbp_send_message)
 {
   /* TODO: Tests with different write function behaviour. */
@@ -772,6 +818,7 @@ Suite* sbp_suite(void)
   tcase_add_test(tc_core, test_sbp_frame);
   tcase_add_test(tc_core, test_frame_callbacks);
   tcase_add_test(tc_core, test_sbp_all_msg);
+  tcase_add_test(tc_core, test_sbp_big_msg);
 
   suite_add_tcase(s, tc_core);
 
