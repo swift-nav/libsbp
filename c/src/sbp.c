@@ -147,100 +147,27 @@
  *
  * \{ */
 
- /** Register a frame callback for a msg_type.
+
+
+
+ /** Register any type of callback for a msg_type given the cb_type.
  *
  * \param s        Pointer to sbp_state
+ * \param msg_type message type on which to fire callback
+ *                 SBP_MSG_ALL will fire for every message only on frame
+ *                 callbacks.
  * \param cb       Pointer to message callback function
- * \param msg_type message type on which to fire frame callback
- *                 SBP_MSG_ALL will fire for every message
+ * \param cb_type  sbp_cb_type indicating what kind of cb is in use
  * \param context  Pointer to context for callback function
  * \param node     Statically allocated #sbp_msg_callbacks_node_t struct
  * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` if a usage error,
  *         `SBP_CALLBACK_ERROR` if the if callback was already
  *         registered for that message type.
  */
-s8 sbp_register_frame_callback(sbp_state_t *s, u16 msg_type,
-                               sbp_frame_callback_t cb, void *context,
-                               sbp_msg_callbacks_node_t *node) {
-  /* Check our callback function pointer isn't NULL. */
-  if (cb == 0)
-    return SBP_NULL_ERROR;
-
-  /* Check our callback node pointer isn't NULL. */
-  if (node == 0)
-    return SBP_NULL_ERROR;
-
-  for (sbp_msg_callbacks_node_t *n = s->sbp_msg_callbacks_head; n; n = n->next)
-    if (n->cb_type == SBP_FRAME_CALLBACK) {
-      if ((n == node) ||
-          (((sbp_frame_callback_t)n->cb == (sbp_frame_callback_t)cb) &&
-           (n->msg_type == msg_type) && (n->context == context))) {
-        return SBP_CALLBACK_ERROR;
-      }
-    }
-
-  /* Fill in our new sbp_msg_callback_node_t. */
-  node->msg_type = msg_type;
-  node->cb = (void*) cb;
-  node->context = context;
-  node->cb_type = SBP_FRAME_CALLBACK;
-  /* The next pointer is set to NULL, i.e. this
-   * will be the new end of the linked list.
-   */
-  node->next = 0;
-
-  /* If our linked list is empty then just
-   * add the new node to the start.
-   */
-  if (s->sbp_msg_callbacks_head == 0) {
-    s->sbp_msg_callbacks_head = node;
-    return SBP_OK;
-  }
-
-  /* Find the tail of our linked list and
-   * add our new node to the end.
-   */
-  sbp_msg_callbacks_node_t *p = s->sbp_msg_callbacks_head;
-  while (p->next)
-    p = p->next;
-
-  p->next = node;
-
-  return SBP_OK;
-}
-
-/** Register a frame callback for ANY message.
- *
- * \param s        Pointer to sbp_state
- * \param cb       Pointer to message callback function
- * \param context  Pointer to context for callback function
- * \param node     Statically allocated #sbp_msg_callbacks_node_t struct
- * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` if a usage error,
- *         `SBP_CALLBACK_ERROR` if the node already exists
- */
-
-s8 sbp_register_all_msg_callback(sbp_state_t *s, sbp_frame_callback_t cb,
-                                 void *context,
-                                 sbp_msg_callbacks_node_t *node) {
-  return sbp_register_frame_callback(s, SBP_MSG_ALL, cb, context, node);
-}
-
-/** Register a callback for a message type.
- * Register a callback that is called when a message
- * with type msg_type is received.
- *
- * \param s        Pointer to sbp_state
- * \param msg_type Message type associated with callback
- * \param cb       Pointer to message callback function
- * \param context  Pointer to context for callback function
- * \param node     Statically allocated #sbp_msg_callbacks_node_t struct
- * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` if a usage error,
- *         `SBP_CALLBACK_ERROR` if the callback was already
- *         registered for that message type.
- */
-s8 sbp_register_callback(sbp_state_t *s, u16 msg_type, sbp_msg_callback_t cb, void *context,
-                         sbp_msg_callbacks_node_t *node)
-{
+static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type,
+                                        void* cb, sbp_cb_type cb_type,
+                                        void *context,
+                                        sbp_msg_callbacks_node_t *node) {
   /* Check our callback function pointer isn't NULL. */
   if (cb == 0)
     return SBP_NULL_ERROR;
@@ -252,14 +179,14 @@ s8 sbp_register_callback(sbp_state_t *s, u16 msg_type, sbp_msg_callback_t cb, vo
   for (sbp_msg_callbacks_node_t *n = s->sbp_msg_callbacks_head; n; n = n->next)
     if ((n == node) ||
         ((n->cb == cb) && (n->msg_type == msg_type) &&
-         (n->context == context) && n->cb_type == SBP_TYPE_CALLBACK))
+         (n->context == context) && n->cb_type == cb_type))
       return SBP_CALLBACK_ERROR;
 
   /* Fill in our new sbp_msg_callback_node_t. */
   node->msg_type = msg_type;
   node->cb = cb;
   node->context = context;
-  node->cb_type = SBP_TYPE_CALLBACK;
+  node->cb_type = cb_type;
   /* The next pointer is set to NULL, i.e. this
    * will be the new end of the linked list.
    */
@@ -307,6 +234,58 @@ s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node)
     }
   }
   return SBP_CALLBACK_ERROR;
+}
+
+ /** Register a frame callback for a msg_type.
+ *
+ * \param s        Pointer to sbp_state
+ * \param cb       Pointer to message callback function
+ * \param msg_type message type on which to fire frame callback
+ *                 SBP_MSG_ALL will fire for every message
+ * \param context  Pointer to context for callback function
+ * \param node     Statically allocated #sbp_msg_callbacks_node_t struct
+ * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` if a usage error,
+ *         `SBP_CALLBACK_ERROR` if the if callback was already
+ *         registered for that message type.
+ */
+s8 sbp_register_frame_callback(sbp_state_t *s, u16 msg_type,
+                               sbp_frame_callback_t cb, void *context,
+                               sbp_msg_callbacks_node_t *node) {
+  return sbp_register_callback_generic(s, msg_type, cb, SBP_FRAME_CALLBACK, context, node);
+}
+
+/** Register a frame callback for ANY message.
+ *
+ * \param s        Pointer to sbp_state
+ * \param cb       Pointer to message callback function
+ * \param context  Pointer to context for callback function
+ * \param node     Statically allocated #sbp_msg_callbacks_node_t struct
+ * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` if a usage error,
+ *         `SBP_CALLBACK_ERROR` if the node already exists
+ */
+
+s8 sbp_register_all_msg_callback(sbp_state_t *s, sbp_frame_callback_t cb,
+                                 void *context,
+                                 sbp_msg_callbacks_node_t *node) {
+  return sbp_register_frame_callback(s, SBP_MSG_ALL, cb, context, node);
+}
+
+/** Register a callback for a message type.
+ * Register a callback that is called when a message
+ * with type msg_type is received.
+ *
+ * \param s        Pointer to sbp_state
+ * \param msg_type Message type associated with callback
+ * \param cb       Pointer to message callback function
+ * \param context  Pointer to context for callback function
+ * \param node     Statically allocated #sbp_msg_callbacks_node_t struct
+ * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` if a usage error,
+ *         `SBP_CALLBACK_ERROR` if the callback was already
+ *         registered for that message type.
+ */
+s8 sbp_register_callback(sbp_state_t *s, u16 msg_type, sbp_msg_callback_t cb, void *context,
+                         sbp_msg_callbacks_node_t *node) {
+  return sbp_register_callback_generic(s, msg_type, cb, SBP_TYPE_CALLBACK, context, node);
 }
 
 /** Clear all registered callbacks.
