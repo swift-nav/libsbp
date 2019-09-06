@@ -110,6 +110,8 @@ s8 sbp_register_callback(sbp_state_t* s, u16 msg_type, sbp_msg_callback_t cb, vo
 s8 sbp_register_frame_callback(sbp_state_t* s, u16 msg_type,
                                sbp_frame_callback_t cb, void* context,
                                sbp_msg_callbacks_node_t *node);
+s8 sbp_register_all_msg_callback(sbp_state_t *s, sbp_frame_callback_t cb,
+                                 void *context, sbp_msg_callbacks_node_t *node);
 s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node);
 void sbp_clear_callbacks(sbp_state_t* s);
 void sbp_state_init(sbp_state_t *s);

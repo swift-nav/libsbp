@@ -209,6 +209,22 @@ s8 sbp_register_frame_callback(sbp_state_t *s, u16 msg_type,
   return SBP_OK;
 }
 
+/** Register a frame callback for ANY message.
+ *
+ * \param s        Pointer to sbp_state
+ * \param cb       Pointer to message callback function
+ * \param context  Pointer to context for callback function
+ * \param node     Statically allocated #sbp_msg_callbacks_node_t struct
+ * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` if a usage error,
+ *         `SBP_CALLBACK_ERROR` if the node already exists
+ */
+
+s8 sbp_register_all_msg_callback(sbp_state_t *s, sbp_frame_callback_t cb,
+                                 void *context,
+                                 sbp_msg_callbacks_node_t *node) {
+  return sbp_register_frame_callback(s, SBP_MSG_ALL, cb, context, node);
+}
+
 /** Register a callback for a message type.
  * Register a callback that is called when a message
  * with type msg_type is received.
