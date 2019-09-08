@@ -327,6 +327,31 @@ void sbp_state_set_io_context(sbp_state_t *s, void *context)
   s->io_context = context;
 }
 
+/** Helper to fill frame buffer in context from read function and increment read count
+ * Will return SBP_OK on SUCCESS, otherwise the relevant error code
+ */
+static s8 sbp_state_read_to_frame_buffer(sbp_state_t *s,
+                                         s32 (*read)(u8 *buff, u32 n, void *context),
+                                         u8 to_read)
+{
+    u8 rd = (*read)(s->frame_buff + s->frame_len, to_read, s->io_context);
+    if (0 > rd) return SBP_READ_ERROR;
+    s->frame_len += rd;
+    s->n_read += rd;
+    return SBP_OK;
+}
+
+/** Reset frame buffer in context to zeros and reset length
+ */
+static void sbp_state_frame_buffer_clear(sbp_state_t *s)
+{
+    /* Note, library functions are not used to avoid more dependencies. */
+    for (int i = 0; i < sizeof(s->frame_buff); i++) {
+        s->frame_buff[i] = 0;
+    }
+    s->frame_len = 0;
+}
+
 /** Read and process SBP messages.
  * Reads bytes from an input source using the provided `read` function, decodes
  * the SBP framing and performs a CRC check on the message.
@@ -376,92 +401,89 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
   u8 temp;
   u16 crc;
   s32 rd = 0;
+  s8 ret = SBP_OK;
 
   switch (s->state) {
   case WAITING:
-    rd = (*read)(&temp, 1, s->io_context);
+    rd = (*read)(&temp, sizeof(temp), s->io_context);
     if (0 > rd) return SBP_READ_ERROR;
-    if (1 == rd)
+    if (sizeof(temp) == rd)
       if (temp == SBP_PREAMBLE) {
+        /* set frame_buff and n_read to 0 after each preamble. */
+        sbp_state_frame_buffer_clear(s);
+        s->frame_buff[s->frame_len++] = temp;
         s->n_read = 0;
-        /* set frame_buff to 0 after each preamble.
-         * Note, library functions are not used to avoid more dependencies. */
-        for (int i = 0; i < 255; i++) {
-          s->frame_buff[i] = 0;
-        }
-        s->frame_buff[0] = temp;
         s->state = GET_TYPE;
       }
     break;
 
   case GET_TYPE:
-    rd = (*read)((u8*)&(s->msg_type) + s->n_read, 2-s->n_read, s->io_context);
-    if (0 > rd) return SBP_READ_ERROR;
-    s->n_read += rd;
-    if (s->n_read >= 2) {
+    ret = sbp_state_read_to_frame_buffer(s, read, sizeof(s->msg_type)-s->n_read);
+    if (ret != SBP_OK) return ret;
+    if (s->n_read >= sizeof(s->msg_type)) {
       /* Swap bytes to little endian. */
+      s->msg_type = (s->frame_buff[SBP_FRAME_OFFSET_MSGTYPE] +
+                    (s->frame_buff[SBP_FRAME_OFFSET_MSGTYPE + 1] << 8));
       s->n_read = 0;
       s->state = GET_SENDER;
-      s->frame_buff[1] = s->msg_type & 0xFF;
-      s->frame_buff[2] = (s->msg_type >> 8) & 0xFF;
     }
     break;
 
   case GET_SENDER:
-    rd = (*read)((u8*)&(s->sender_id) + s->n_read, 2-s->n_read, s->io_context);
-    if (0 > rd) return SBP_READ_ERROR;
-    s->n_read += rd;
-    if (s->n_read >= 2) {
+    ret = sbp_state_read_to_frame_buffer(s, read, sizeof(s->sender_id)-s->n_read);
+    if (ret != SBP_OK) return ret;
+    if (s->n_read >= sizeof(s->sender_id)) {
       /* Swap bytes to little endian. */
+      s->sender_id = (s->frame_buff[SBP_FRAME_OFFSET_SENDERID] +
+                     (s->frame_buff[SBP_FRAME_OFFSET_SENDERID + 1] << 8));
+      s->n_read = 0;
       s->state = GET_LEN;
-      s->frame_buff[3] = s->sender_id & 0xFF;
-      s->frame_buff[4] = (s->sender_id >> 8) & 0xFF;
     }
     break;
 
   case GET_LEN:
-    rd = (*read)(&(s->msg_len), 1, s->io_context);
-    if (0 > rd) return SBP_READ_ERROR;
-    if (1 == rd) {
+    ret = sbp_state_read_to_frame_buffer(s, read, sizeof(s->msg_len)-s->n_read);
+    if (ret != SBP_OK) return ret;
+    if (s->n_read == sizeof(s->msg_len)) {
+      s->msg_len = s->frame_buff[SBP_FRAME_OFFSET_MSGLEN];
       s->n_read = 0;
       s->state = GET_MSG;
-      s->frame_buff[5] = s->msg_len;
-      /* length of frame is msg_len + header_len + 2 for CRC */
-      s->frame_len = s->msg_len + SBP_HEADER_LEN + SBP_CRC_LEN;
     }
     break;
 
   case GET_MSG:
     /* Not received whole message yet, try and read some more. */
-    rd = (*read)(&(s->msg_buff[s->n_read]), s->msg_len - s->n_read, s->io_context);
-    if (0 > rd) return SBP_READ_ERROR;
-    s->n_read += rd;
+    ret = sbp_state_read_to_frame_buffer(s, read, s->msg_len - s->n_read);
+    if (ret != SBP_OK) return ret;
     if (s->msg_len - s->n_read <= 0) {
       s->n_read = 0;
       s->state = GET_CRC;
-      for (int i = 0; i < s->msg_len; i++)
-        s->frame_buff[SBP_HEADER_LEN + i] = s->msg_buff[i];
     }
     break;
 
   case GET_CRC:
-    rd = (*read)((u8*)&(s->crc) + s->n_read, 2-s->n_read, s->io_context);
-    if (0 > rd) return SBP_READ_ERROR;
-    s->n_read += rd;
-    if (s->n_read >= 2) {
+    ret = sbp_state_read_to_frame_buffer(s, read, SBP_CRC_LEN - s->n_read);
+    if (ret != SBP_OK) return ret;
+    if (s->n_read >= SBP_CRC_LEN) {
       s->state = WAITING;
 
+      /* length of frame is msg_len + header_len + 2 for CRC */
+      u16 expected_frame_len = SBP_HEADER_LEN + s->msg_len + SBP_CRC_LEN;
+      if (expected_frame_len != s->frame_len) {
+        return SBP_READ_TOO_MANY_ERROR;
+      }
       /* Swap bytes to little endian. */
-      crc = crc16_ccitt((u8*)&(s->msg_type), 2, 0);
-      crc = crc16_ccitt((u8*)&(s->sender_id), 2, crc);
-      crc = crc16_ccitt(&(s->msg_len), 1, crc);
-      crc = crc16_ccitt(s->msg_buff, s->msg_len, crc);
+      s->crc = (s->frame_buff[SBP_FRAME_OFFSET_CRC(s->msg_len)] +
+               (s->frame_buff[SBP_FRAME_OFFSET_CRC(s->msg_len) + 1] << 8));
+      crc = crc16_ccitt((u8*)&(s->msg_type), sizeof(s->msg_type), 0);
+      crc = crc16_ccitt((u8*)&(s->sender_id), sizeof(s->sender_id), crc);
+      crc = crc16_ccitt(&(s->msg_len), sizeof(s->msg_len), crc);
+      crc = crc16_ccitt(SBP_FRAME_MSG_PAYLOAD(s->frame_buff), s->msg_len, crc);
       if (s->crc == crc) {
-        s->frame_buff[SBP_HEADER_LEN + s->msg_len] = crc & 0xFF;
-        s->frame_buff[SBP_HEADER_LEN + s->msg_len + 1] = (crc >> 8) & 0xFF;
         /* Message complete, process frame callbacks and msg_type callbacks. */
-        s8 ret = sbp_process_frame(s, s->sender_id, s->msg_type, s->msg_len, s->msg_buff,
-                          s->frame_len, s->frame_buff, SBP_CALLBACK_ALL_MASK);
+        ret = sbp_process_frame(s, s->sender_id, s->msg_type,
+                                s->msg_len, SBP_FRAME_MSG_PAYLOAD(s->frame_buff),
+                                s->frame_len, s->frame_buff, SBP_CALLBACK_ALL_MASK);
         return ret;
       } else {
         return SBP_CRC_ERROR;

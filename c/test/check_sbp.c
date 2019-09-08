@@ -556,7 +556,7 @@ END_TEST
 
 START_TEST(test_sbp_big_msg)
 {
-  /* Tests registering for max size message (255) */
+  /* Tests registering for max size message SBP_MAX_PAYLOAD_LEN (255) */
 
   sbp_state_t s;
   sbp_state_init(&s);
@@ -568,16 +568,18 @@ START_TEST(test_sbp_big_msg)
   sbp_register_frame_callback(&s, 0x2269, &frame_logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
   sbp_register_callback(&s, 0x2269, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-  u8 big_msg[255];
-  for(int i = 0; i < 255; i++) { big_msg[i]=i;}
+  u8 big_msg[SBP_MAX_PAYLOAD_LEN];
+  for(int i = 0; i < sizeof(big_msg); i++) { big_msg[i]=i;}
 
   dummy_reset();
   logging_reset();
-  sbp_send_message(&s, 0x2269, 0x42, 255, big_msg, &dummy_write);
+  sbp_send_message(&s, 0x2269, 0x42, sizeof(big_msg), big_msg, &dummy_write);
 
+  s8 ret = SBP_OK;
   while (dummy_rd < dummy_wr) {
-    fail_unless(sbp_process(&s, &dummy_read) >= SBP_OK,
-        "sbp_process threw an error!");
+    ret = sbp_process(&s, &dummy_read);
+    fail_unless(ret >= SBP_OK,
+        "sbp_process threw an error! error_code: %d", ret);
   }
 
   fail_unless(n_frame_callbacks_logged == 1,
@@ -586,11 +588,11 @@ START_TEST(test_sbp_big_msg)
       "one callbackx should have been logged, %u were", n_frame_callbacks_logged);
   fail_unless(last_frame_sender_id == 0x42,
       "sender_id decoded incorrectly");
-  fail_unless(last_frame_payload_len == 255,
+  fail_unless(last_frame_payload_len == sizeof(big_msg),
       "len decoded incorrectly");
-  fail_unless(last_frame_len == 255 + 8,
+  fail_unless(last_frame_len == SBP_MAX_FRAME_LEN,
       "frame len decoded incorrectly");
-  fail_unless(memcmp(&(last_frame[6]), big_msg, 255)
+  fail_unless(memcmp(SBP_FRAME_MSG_PAYLOAD(last_frame), big_msg, sizeof(big_msg))
         == 0,
       "frame data decoded incorrectly (3) %x");
   /* check that CRC wasn't chopped off */
@@ -791,9 +793,9 @@ START_TEST(test_frame_callbacks)
 
   fail_unless(sbp_find_callback(&s, 0x7788) == 0,
       "sbp_find_callback should return NULL if callback not registered (2)");
-  
+
   /* Clear all the registered callbacks and check they can no longer be found. */
-  
+
   sbp_clear_callbacks(&s);
 
   fail_unless(sbp_find_callback(&s, 0x1234) == 0,
