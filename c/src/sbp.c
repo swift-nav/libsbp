@@ -459,15 +459,9 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
       if (s->crc == crc) {
         s->frame_buff[SBP_HEADER_LEN + s->msg_len] = crc & 0xFF;
         s->frame_buff[SBP_HEADER_LEN + s->msg_len + 1] = (crc >> 8) & 0xFF;
-        /* Message complete, process frame callbacks, then msg_type callbacks.
-         * Note, return code is ignored from sbp_process_frame.
-         * In future, it may be wise to add new return codes for the truth
-         * table of both process function return codes. For now, we return only
-         * sbp_process_payload's return code for backwards compatibility. */
-        sbp_process_frame(s, s->sender_id, s->msg_type, s->msg_len, s->msg_buff,
-                          s->frame_len, s->frame_buff);
-        s8 ret = sbp_process_payload(s, s->sender_id, s->msg_type, s->msg_len,
-                                     s->msg_buff);
+        /* Message complete, process frame callbacks and msg_type callbacks. */
+        s8 ret = sbp_process_frame(s, s->sender_id, s->msg_type, s->msg_len, s->msg_buff,
+                          s->frame_len, s->frame_buff, SBP_CALLBACK_ALL_MASK);
         return ret;
       } else {
         return SBP_CRC_ERROR;
@@ -498,16 +492,8 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
  */
 s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
                        u8 payload[]) {
-  s8 ret = SBP_OK_CALLBACK_UNDEFINED;
-  sbp_msg_callbacks_node_t *node;
-  for (node = s->sbp_msg_callbacks_head; node; node = node->next) {
-    if (node->cb_type == SBP_TYPE_CALLBACK && node->msg_type == msg_type) {
-      ((sbp_msg_callback_t)(node->cb))(sender_id, msg_len, payload,
-                                       node->context);
-      ret = SBP_OK_CALLBACK_EXECUTED;
-    }
-  }
-  return ret;
+  return sbp_process_frame(s, sender_id, msg_type, msg_len, payload,
+                          0, 0, SBP_CALLBACK_FLAG(SBP_TYPE_CALLBACK));
 }
 
 
@@ -523,21 +509,41 @@ s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
  * \param payload SBP message payload
  * \param frame_len length of ENTIRE frame (from header to CRC).  Max of 263.
  * \param frame pointer to the entire sbp frame on the sbp_state_t struct
+ * \param cb_mask bitmask defining which callbacks to include or exclude from
+ *                processing. Use SBP_CALLBACK_ALL_MASK for all callback types,
+ *                or construct custom mask using SBP_CALLBACK_FLAG(cb_type)
  * \return `SBP_OK_CALLBACK_EXECUTED` (1) if message decoded and callback executed
- *          SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no 
+ *          SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no
  *          associated callback.
  */
 s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
-                     u8 payload_len, u8 payload[], u16 frame_len, u8 frame[]) {
+                     u8 payload_len, u8 payload[],
+                     u16 frame_len, u8 frame[],
+                     u8 cb_mask) {
   s8 ret = SBP_OK_CALLBACK_UNDEFINED;
   sbp_msg_callbacks_node_t *node;
   for (node = s->sbp_msg_callbacks_head; node; node = node->next) {
-    if (node->cb_type == SBP_FRAME_CALLBACK &&
+    if ((SBP_CALLBACK_FLAG(node->cb_type) & cb_mask) &&
         ((node->msg_type == msg_type) || (node->msg_type == SBP_MSG_ALL))) {
-      ((sbp_frame_callback_t)(node->cb))(sender_id, msg_type, payload_len,
-                                         payload, frame_len, frame,
-                                         node->context);
-      ret = SBP_OK_CALLBACK_EXECUTED;
+        switch (node->cb_type) {
+        case SBP_FRAME_CALLBACK:
+        {
+            ((sbp_frame_callback_t)(node->cb))(sender_id, msg_type, payload_len,
+            payload, frame_len, frame,
+            node->context);
+            ret = SBP_OK_CALLBACK_EXECUTED;
+        } break;
+        case SBP_TYPE_CALLBACK:
+        {
+            ((sbp_msg_callback_t)(node->cb))(sender_id, payload_len, payload,
+            node->context);
+            ret = SBP_OK_CALLBACK_EXECUTED;
+        } break;
+        default:
+        {
+            // NOP
+        };
+        }
     }
   }
   return ret;

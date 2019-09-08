@@ -66,10 +66,15 @@ typedef void (*sbp_frame_callback_t)(u16 sender_id, u16 msg_type,
  * This enum is stored on each sbp_msg_callback_node struct to identify how
  * to cast the callback function pointer stored within.
  */
-enum sbp_cb_type{
-  SBP_TYPE_CALLBACK,
-  SBP_FRAME_CALLBACK
+enum sbp_cb_type {
+  SBP_TYPE_CALLBACK = 0,
+  SBP_FRAME_CALLBACK,
+  SBP_CALLBACK_TYPE_COUNT
 };
+
+#define SBP_CALLBACK_FLAG(cb_type) (1u << (cb_type))
+#define SBP_CALLBACK_ALL_MASK \
+  ((SBP_CALLBACK_FLAG(SBP_CALLBACK_TYPE_COUNT)) - 1)
 
 typedef enum sbp_cb_type sbp_cb_type;
 /** SBP callback node.
@@ -124,7 +129,7 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void* context));
 s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
     u8 payload[]);
 s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
-                     u8 payload_len, u8 payload[], u16 frame_len, u8 frame[]);
+                     u8 payload_len, u8 payload[], u16 frame_len, u8 frame[], u8 cb_mask);
 s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *payload,
                     s32 (*write)(u8 *buff, u32 n, void* context));
 
