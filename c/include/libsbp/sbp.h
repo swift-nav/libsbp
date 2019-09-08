@@ -47,6 +47,10 @@ extern "C" {
 #define SBP_HEADER_LEN 6
 /** CRC length in bytes. */
 #define SBP_CRC_LEN 2
+/** Max payload length in bytes. */
+#define SBP_MAX_PAYLOAD_LEN (UINT8_MAX)
+/** Max frame length in bytes. */
+#define SBP_MAX_FRAME_LEN (SBP_HEADER_LEN + SBP_MAX_PAYLOAD_LEN + SBP_CRC_LEN)
 /** SBP_MSG_ID to use to register frame callback for ALL messages. */
 #define SBP_MSG_ALL 0
 
@@ -97,8 +101,8 @@ typedef struct {
   u8 msg_len;
   u16 frame_len;
   u8 n_read;
-  u8 msg_buff[256];
-  u8 frame_buff[256 + 8];
+  u8 msg_buff[SBP_MAX_PAYLOAD_LEN];
+  u8 frame_buff[SBP_MAX_FRAME_LEN];
   void* io_context;
   sbp_msg_callbacks_node_t* sbp_msg_callbacks_head;
 } sbp_state_t;
