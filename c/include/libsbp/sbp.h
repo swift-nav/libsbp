@@ -43,8 +43,36 @@ extern "C" {
 
 /** Default sender ID. Intended for messages sent from the host to the device. */
 #define SBP_SENDER_ID 0x42
+/** Header length in bytes. */
+#define SBP_HEADER_LEN 6
+/** CRC length in bytes. */
+#define SBP_CRC_LEN 2
+/** Max payload length in bytes. */
+#define SBP_MAX_PAYLOAD_LEN (UINT8_MAX)
+/** Max frame length in bytes. */
+#define SBP_MAX_FRAME_LEN (SBP_HEADER_LEN + SBP_MAX_PAYLOAD_LEN + SBP_CRC_LEN)
 
-/** SBP callback function prototype definition. */
+/** Frame offset for the preamble. */
+#define SBP_FRAME_OFFSET_PREAMBLE (0u)
+/** Frame offset for the preamble. */
+#define SBP_FRAME_OFFSET_MSGTYPE (SBP_FRAME_OFFSET_PREAMBLE + sizeof(u8))
+/** Frame offset for the preamble. */
+#define SBP_FRAME_OFFSET_SENDERID (SBP_FRAME_OFFSET_MSGTYPE + sizeof(u16))
+/** Frame offset for the preamble. */
+#define SBP_FRAME_OFFSET_MSGLEN (SBP_FRAME_OFFSET_SENDERID + sizeof(u16))
+/** Frame offset for the preamble. */
+#define SBP_FRAME_OFFSET_MSG (SBP_FRAME_OFFSET_MSGLEN + sizeof(u8))
+/** Frame offset for the CRC is a function of msg length. */
+#define SBP_FRAME_OFFSET_CRC(msg_len) (SBP_FRAME_OFFSET_MSG + msg_len)
+#define SBP_FRAME_CALC_LEN(msg_len) (SBP_HEADER_LEN + msg_len + SBP_CRC_LEN)
+
+/** Get message payload pointer from frame */
+#define SBP_FRAME_MSG_PAYLOAD(frame_ptr) (&(frame_ptr[SBP_FRAME_OFFSET_MSG]))
+
+/** SBP_MSG_ID to use to register frame callback for ALL messages. */
+#define SBP_MSG_ALL 0
+
+/** SBP callback function prototype definitions. */
 typedef void (*sbp_msg_callback_t)(u16 sender_id, u8 len, u8 msg[], void *context);
 
 /** SBP callback node.
