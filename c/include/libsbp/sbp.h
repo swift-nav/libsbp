@@ -23,23 +23,23 @@ extern "C" {
  * \{ */
 
 /** Return value indicating success. */
-#define SBP_OK              0
+#define SBP_OK                    0
 /** Return value indicating message decoded and callback executed by sbp_process. */
-#define SBP_OK_CALLBACK_EXECUTED 1
+#define SBP_OK_CALLBACK_EXECUTED  1
 /** Return value indicating message decoded with no associated callback in sbp_process. */
 #define SBP_OK_CALLBACK_UNDEFINED 2
 /** Return value indicating an error with the callback (function defined). */
-#define SBP_CALLBACK_ERROR -1
+#define SBP_CALLBACK_ERROR       -1
 /** Return value indicating a CRC error. */
-#define SBP_CRC_ERROR      -2
+#define SBP_CRC_ERROR            -2
 /** Return value indicating an error occured whilst sending an SBP message. */
-#define SBP_SEND_ERROR     -3
+#define SBP_SEND_ERROR           -3
 /** Return value indicating an error occured because an argument was NULL. */
-#define SBP_NULL_ERROR     -4
+#define SBP_NULL_ERROR           -4
 /** Return value indicating an error occured in the write() operation. */
-#define SBP_WRITE_ERROR     -5
+#define SBP_WRITE_ERROR          -5
 /** Return value indicating an error occured in the read() operation. */
-#define SBP_READ_ERROR     -6
+#define SBP_READ_ERROR           -6
 
 /** Default sender ID. Intended for messages sent from the host to the device. */
 #define SBP_SENDER_ID 0x42
@@ -77,7 +77,8 @@ typedef void (*sbp_msg_callback_t)(u16 sender_id, u8 len, u8 msg[], void *contex
 
 /** SBP callback node.
  * Forms a linked list of callbacks.
- * \note Must be statically allocated for use with sbp_register_callback().
+ * \note Must be statically allocated for use with sbp_register_callback()
+ *       and sbp_register_frame_callback().
  */
 typedef struct sbp_msg_callbacks_node {
   u16 msg_type;                        /**< Message ID associated with callback. */
