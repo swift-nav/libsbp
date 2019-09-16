@@ -28,10 +28,19 @@
  * ---------
  *
  * First setup a callback for the message you will be receiving. Our callback
- * function must have type #sbp_msg_callback_t, i.e. it must be of the form:
+ * function must have type #sbp_msg_callback_t or #sbp_msg_frame_callback_t,
+ * i.e. it must be of the form:
  *
  * ~~~
  * void my_callback(u16 sender_id, u8 len, u8 msg[], void *context)
+ * {
+ *   // Process msg.
+ * }
+ * ~~~
+ * or
+ * ~~~
+ * void my_frame_callback(u16 sender_id, u16 msg_type, u8 payload_len,
+ *                         u8 payload[], u16 frame_len, u8 frame[], void *context)
  * {
  *   // Process msg.
  * }
@@ -49,6 +58,11 @@
  *
  * ~~~
  * sbp_register_callback(&sbp_state, SBP_MY_MSG_TYPE, &my_callback, &context, &my_callback_node);
+ * ~~~
+ * or
+ * ~~~
+ * sbp_register_frame_callback(&sbp_state, SBP_MY_MSG_TYPE, &my_frame_callback,
+ *                             &context, &my_callback_node);
  * ~~~
  *
  * where `SBP_MY_MSG_TYPE` is the numerical identifier of your message type.
@@ -147,16 +161,20 @@
  *
  * \{ */
 
-/** Register a callback for a message type.
- * Register a callback that is called when a message
- * with type msg_type is received.
+/** Register a callback for a particular msg_type, specifying the cb_type.
  *
- * \param msg_type Message type associated with callback
+ * \param s        Pointer to sbp_state
+ * \param msg_type Message type on which to fire callback.
+ *                 SBP_MSG_ALL will fire for every message, but only
+ *                 for callbacks of type SBP_FRAME_CALLBACK.
  * \param cb       Pointer to message callback function
+ * \param cb_type  sbp_cb_type indicating what kind of cb is in use.
+ *                 (e.g SBP_PAYLOAD_CALLBACK or SBP_FRAME_CALLBACK)
  * \param context  Pointer to context for callback function
  * \param node     Statically allocated #sbp_msg_callbacks_node_t struct
- * \return `SBP_OK` (0) if successful, `SBP_CALLBACK_ERROR` if callback was
- *         already registered for that message type.
+ * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` on usage errors,
+ *         `SBP_CALLBACK_ERROR` if the if callback was already
+ *         registered for that message type.
  */
 static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type,
                                         void* cb, sbp_cb_type cb_type,
@@ -376,8 +394,8 @@ static u16 sbp_u8_array_to_u16(u8 *array_start)
  *
  * When an SBP message is successfully received then the list of callbacks is
  * searched for a callback corresponding to the received message type. If a
- * callback is found then it is called with the ID of the sender, the message
- * length and the message payload data buffer as arguments.
+ * callback is found then it is called with its respective arguments depending
+ * on its cb_type.
  *
  * \note sbp_process will always call `read` with n > 0
  *       (aka it will attempt to always read something)
@@ -399,7 +417,7 @@ static u16 sbp_u8_array_to_u16(u8 *array_start)
  * function so the caller should loop until all bytes available from the input
  * source have been consumed.
  *
- * \param s State structure
+ * \param s    State structure
  * \param read Function pointer to a function that reads `n` bytes from the
  *             input source into `buff` and returns the number of bytes
  *             successfully read.
@@ -505,15 +523,15 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
   return SBP_OK;
 }
 
-/** Directly process a SBP message.
+/** Directly process an SBP message.
  * If a SBP message has already been decoded (for example, from a binary
  * stream or from a JSON log file) use this function to directly process it.
  *
- * \param s State structure
+ * \param s         State structure
  * \param sender_id SBP message sender id
- * \param msg_type SBP message type
- * \param msg_len SBP message length
- * \param payload SBP message payload
+ * \param msg_type  SBP message type
+ * \param msg_len   SBP message length
+ * \param payload   SBP message payload
  * \return `SBP_OK_CALLBACK_EXECUTED` (1) if message decoded and callback executed,
  *         `SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no associated
  *         callback.
