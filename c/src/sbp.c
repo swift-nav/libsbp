@@ -158,9 +158,10 @@
  * \return `SBP_OK` (0) if successful, `SBP_CALLBACK_ERROR` if callback was
  *         already registered for that message type.
  */
-s8 sbp_register_callback(sbp_state_t *s, u16 msg_type, sbp_msg_callback_t cb, void *context,
-                         sbp_msg_callbacks_node_t *node)
-{
+static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type,
+                                        void* cb, sbp_cb_type cb_type,
+                                        void *context,
+                                        sbp_msg_callbacks_node_t *node) {
   /* Check our callback function pointer isn't NULL. */
   if (cb == 0)
     return SBP_NULL_ERROR;
@@ -171,13 +172,15 @@ s8 sbp_register_callback(sbp_state_t *s, u16 msg_type, sbp_msg_callback_t cb, vo
 
   for (sbp_msg_callbacks_node_t *n = s->sbp_msg_callbacks_head; n; n = n->next)
     if ((n == node) ||
-        ((n->cb == cb) && (n->msg_type == msg_type) && (n->context == context)))
+        ((n->cb == cb) && (n->msg_type == msg_type) &&
+         (n->context == context) && n->cb_type == cb_type))
       return SBP_CALLBACK_ERROR;
 
   /* Fill in our new sbp_msg_callback_node_t. */
   node->msg_type = msg_type;
   node->cb = cb;
   node->context = context;
+  node->cb_type = cb_type;
   /* The next pointer is set to NULL, i.e. this
    * will be the new end of the linked list.
    */
@@ -227,6 +230,61 @@ s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node)
   return SBP_CALLBACK_ERROR;
 }
 
+ /** Register a frame callback for a msg_type.
+ *
+ * \param s        Pointer to sbp_state
+ * \param cb       Pointer to message callback function
+ * \param msg_type Message type on which to fire frame callback,
+ *                 SBP_MSG_ALL will fire for every message
+ * \param context  Pointer to context for callback function
+ * \param node     Statically allocated #sbp_msg_callbacks_node_t struct
+ * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` on usage errors,
+ *         `SBP_CALLBACK_ERROR` if the if callback was already
+ *         registered for that message type.
+ */
+s8 sbp_register_frame_callback(sbp_state_t *s, u16 msg_type,
+                               sbp_frame_callback_t cb, void *context,
+                               sbp_msg_callbacks_node_t *node) {
+  return sbp_register_callback_generic(s, msg_type, cb, SBP_FRAME_CALLBACK, context, node);
+}
+
+/** Register a frame callback for ANY message.
+ *
+ * \param s        Pointer to sbp_state
+ * \param cb       Pointer to message callback function
+ * \param context  Pointer to context for callback function
+ * \param node     Statically allocated #sbp_msg_callbacks_node_t struct
+ * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` if a usage error,
+ *         `SBP_CALLBACK_ERROR` if the node already exists
+ */
+
+s8 sbp_register_all_msg_callback(sbp_state_t *s, sbp_frame_callback_t cb,
+                                 void *context,
+                                 sbp_msg_callbacks_node_t *node) {
+  return sbp_register_frame_callback(s, SBP_MSG_ALL, cb, context, node);
+}
+
+/** Register a payload callback for a message type.
+ *
+ * Register a payload callback that is called when a message
+ * with type msg_type is received. Note, this might better
+ * be called sbp_register_payload_callback, but is left
+ * as sbp_register_callback for backwards compatibility.
+ *
+ * \param s        Pointer to sbp_state
+ * \param msg_type Message type associated with callback
+ * \param cb       Pointer to message callback function
+ * \param context  Pointer to context for callback function
+ * \param node     Statically allocated #sbp_msg_callbacks_node_t struct
+ * \return `SBP_OK` (0) if successful, `SBP_NULL_ERROR` on usage errors,
+ *         `SBP_CALLBACK_ERROR` if the callback was already
+ *         registered for that message type.
+ */
+s8 sbp_register_callback(sbp_state_t *s, u16 msg_type, sbp_msg_callback_t cb, void *context,
+                         sbp_msg_callbacks_node_t *node) {
+  return sbp_register_callback_generic(s, msg_type, cb, SBP_PAYLOAD_CALLBACK, context, node);
+}
+
 /** Clear all registered callbacks.
  * This is probably only useful for testing but who knows!
  */
@@ -264,6 +322,52 @@ void sbp_state_init(sbp_state_t *s)
 void sbp_state_set_io_context(sbp_state_t *s, void *context)
 {
   s->io_context = context;
+}
+
+/** Helper function to fill frame buffer. Uses the `read` function and its
+ * context to read into the `frame_buff` stored on the sbp_state.
+ * Increments the n_read counter (number of bytes read for current read
+ * operation) and the `frame_len` counter (total number of  bytes read into
+ * frame_buff), both stored on the sbp_state.
+ * \param s       State structure
+ * \param *read   Function pointer to a function that reads `n` bytes from the
+ *                input source into `buff` and returns the number of bytes
+ *                successfully read.
+ * \param to_read number of bytes to read.
+ * \return `SBP_OK` (0) if successful,
+ *         `SBP_READ_ERROR` (-6) if no bytes could be read or read function
+ *         returned error code.
+ */
+static s8 sbp_state_read_to_frame_buffer(sbp_state_t *s,
+                                         s32 (*read)(u8 *buff, u32 n, void *context),
+                                         u8 to_read)
+{
+    u8 rd = (*read)(s->frame_buff + s->frame_len, to_read, s->io_context);
+    if (0 > rd) return SBP_READ_ERROR;
+    s->frame_len += rd;
+    s->n_read += rd;
+    return SBP_OK;
+}
+
+/** Reset frame buffer on the sbp_state to zeros and reset frame length counter.
+ */
+static void sbp_state_frame_buffer_clear(sbp_state_t *s)
+{
+    /* Note, library functions are not used to avoid more dependencies. */
+    for (int i = 0; i < sizeof(s->frame_buff); i++) {
+        s->frame_buff[i] = 0;
+    }
+    s->frame_len = 0;
+}
+
+
+/** Helper to convert a array of 2 bytes in network byte order
+ *  to the platform's representation of a u16 without
+ *  needing to use the word endian
+ */
+static u16 sbp_u8_array_to_u16(u8 *array_start)
+{
+  return (u16) array_start[0] + ((u16) array_start[1] << 8);
 }
 
 /** Read and process SBP messages.
@@ -315,43 +419,47 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
   u8 temp;
   u16 crc;
   s32 rd = 0;
+  s8 ret = SBP_OK;
 
   switch (s->state) {
   case WAITING:
-    rd = (*read)(&temp, 1, s->io_context);
+    rd = (*read)(&temp, sizeof(temp), s->io_context);
     if (0 > rd) return SBP_READ_ERROR;
-    if (1 == rd)
+    if (sizeof(temp) == rd)
       if (temp == SBP_PREAMBLE) {
+        /* set frame_buff and n_read to 0 after each preamble. */
+        sbp_state_frame_buffer_clear(s);
+        s->frame_buff[s->frame_len++] = temp;
         s->n_read = 0;
         s->state = GET_TYPE;
       }
     break;
 
   case GET_TYPE:
-    rd = (*read)((u8*)&(s->msg_type) + s->n_read, 2-s->n_read, s->io_context);
-    if (0 > rd) return SBP_READ_ERROR;
-    s->n_read += rd;
-    if (s->n_read >= 2) {
-      /* Swap bytes to little endian. */
+    ret = sbp_state_read_to_frame_buffer(s, read, sizeof(s->msg_type)-s->n_read);
+    if (ret != SBP_OK) return ret;
+    if (s->n_read >= sizeof(s->msg_type)) {
+      s->msg_type =  sbp_u8_array_to_u16(&(s->frame_buff[SBP_FRAME_OFFSET_MSGTYPE]));
       s->n_read = 0;
       s->state = GET_SENDER;
     }
     break;
 
   case GET_SENDER:
-    rd = (*read)((u8*)&(s->sender_id) + s->n_read, 2-s->n_read, s->io_context);
-    if (0 > rd) return SBP_READ_ERROR;
-    s->n_read += rd;
-    if (s->n_read >= 2) {
-      /* Swap bytes to little endian. */
+    ret = sbp_state_read_to_frame_buffer(s, read, sizeof(s->sender_id)-s->n_read);
+    if (ret != SBP_OK) return ret;
+    if (s->n_read >= sizeof(s->sender_id)) {
+      s->sender_id = sbp_u8_array_to_u16(&(s->frame_buff[SBP_FRAME_OFFSET_SENDERID]));
+      s->n_read = 0;
       s->state = GET_LEN;
     }
     break;
 
   case GET_LEN:
-    rd = (*read)(&(s->msg_len), 1, s->io_context);
-    if (0 > rd) return SBP_READ_ERROR;
-    if (1 == rd) {
+    ret = sbp_state_read_to_frame_buffer(s, read, sizeof(s->msg_len)-s->n_read);
+    if (ret != SBP_OK) return ret;
+    if (s->n_read == sizeof(s->msg_len)) {
+      s->msg_len = s->frame_buff[SBP_FRAME_OFFSET_MSGLEN];
       s->n_read = 0;
       s->state = GET_MSG;
     }
@@ -359,9 +467,8 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
 
   case GET_MSG:
     /* Not received whole message yet, try and read some more. */
-    rd = (*read)(&(s->msg_buff[s->n_read]), s->msg_len - s->n_read, s->io_context);
-    if (0 > rd) return SBP_READ_ERROR;
-    s->n_read += rd;
+    ret = sbp_state_read_to_frame_buffer(s, read, s->msg_len - s->n_read);
+    if (ret != SBP_OK) return ret;
     if (s->msg_len - s->n_read <= 0) {
       s->n_read = 0;
       s->state = GET_CRC;
@@ -369,22 +476,20 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
     break;
 
   case GET_CRC:
-    rd = (*read)((u8*)&(s->crc) + s->n_read, 2-s->n_read, s->io_context);
-    if (0 > rd) return SBP_READ_ERROR;
-    s->n_read += rd;
-    if (s->n_read >= 2) {
+    ret = sbp_state_read_to_frame_buffer(s, read, SBP_CRC_LEN - s->n_read);
+    if (ret != SBP_OK) return ret;
+    if (s->n_read >= SBP_CRC_LEN) {
       s->state = WAITING;
-
-      /* Swap bytes to little endian. */
-      crc = crc16_ccitt((u8*)&(s->msg_type), 2, 0);
-      crc = crc16_ccitt((u8*)&(s->sender_id), 2, crc);
-      crc = crc16_ccitt(&(s->msg_len), 1, crc);
-      crc = crc16_ccitt(s->msg_buff, s->msg_len, crc);
+      s->crc = sbp_u8_array_to_u16(&(s->frame_buff[SBP_FRAME_OFFSET_CRC(s->msg_len)]));
+      crc = crc16_ccitt((u8*)&(s->msg_type), sizeof(s->msg_type), 0);
+      crc = crc16_ccitt((u8*)&(s->sender_id), sizeof(s->sender_id), crc);
+      crc = crc16_ccitt(&(s->msg_len), sizeof(s->msg_len), crc);
+      crc = crc16_ccitt(SBP_FRAME_MSG_PAYLOAD(s->frame_buff), s->msg_len, crc);
       if (s->crc == crc) {
-
-        /* Message complete, process it. */
-        s8 ret = sbp_process_payload(s, s->sender_id, s->msg_type, s->msg_len,
-                                     s->msg_buff);
+        /* Message complete, process frame callbacks and payload callbacks. */
+        ret = sbp_process_frame(s, s->sender_id, s->msg_type,
+                                s->msg_len, SBP_FRAME_MSG_PAYLOAD(s->frame_buff),
+                                s->frame_len, s->frame_buff, SBP_CALLBACK_ALL_MASK);
         return ret;
       } else {
         return SBP_CRC_ERROR;
@@ -415,12 +520,59 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
  */
 s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
                        u8 payload[]) {
+  return sbp_process_frame(s, sender_id, msg_type, msg_len, payload,
+                          0, 0, SBP_CALLBACK_FLAG(SBP_PAYLOAD_CALLBACK));
+}
+
+
+/** Directly process an SBP frame.
+ * Use this function to directly process the entire SBP frame after
+ * it is succesfully deframed and the CRC has passed. It will fire any
+ * callbacks registered for the message which match the cb_mask.
+ *
+ * \param s           State structure
+ * \param sender_id   SBP message sender id
+ * \param msg_type    SBP message type. Type SBP_MSG_ALL will fire for all messages.
+ * \param payload_len SBP message length
+ * \param payload     SBP Message payload
+ * \param frame_len   Length of ENTIRE frame (from header to CRC).  Max of 263.
+ * \param frame       Pointer to the entire SBP frame (stored on state struct)
+ * \param cb_mask     Bitmask defining which callbacks to include/exclude from
+ *                    processing. Use SBP_CALLBACK_ALL_MASK for all callback
+ *                    types or construct custom mask using
+ *                    SBP_CALLBACK_FLAG(cb_type).
+ * \return `SBP_OK_CALLBACK_EXECUTED` (1) if message decoded and callback executed
+ *          SBP_OK_CALLBACK_UNDEFINED` (2) if message decoded with no
+ *          associated callback.
+ */
+s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
+                     u8 payload_len, u8 payload[],
+                     u16 frame_len, u8 frame[],
+                     u8 cb_mask) {
   s8 ret = SBP_OK_CALLBACK_UNDEFINED;
   sbp_msg_callbacks_node_t *node;
   for (node = s->sbp_msg_callbacks_head; node; node = node->next) {
-    if (node->msg_type == msg_type) {
-      (*node->cb)(sender_id, msg_len, payload, node->context);
-      ret = SBP_OK_CALLBACK_EXECUTED;
+    if ((SBP_CALLBACK_FLAG(node->cb_type) & cb_mask) &&
+        ((node->msg_type == msg_type) || (node->msg_type == SBP_MSG_ALL))) {
+        switch (node->cb_type) {
+        case SBP_FRAME_CALLBACK:
+        {
+            ((sbp_frame_callback_t)(node->cb))(sender_id, msg_type, payload_len,
+            payload, frame_len, frame,
+            node->context);
+            ret = SBP_OK_CALLBACK_EXECUTED;
+        } break;
+        case SBP_PAYLOAD_CALLBACK:
+        {
+            ((sbp_msg_callback_t)(node->cb))(sender_id, payload_len, payload,
+            node->context);
+            ret = SBP_OK_CALLBACK_EXECUTED;
+        } break;
+        default:
+        {
+            // NOP
+        };
+        }
     }
   }
   return ret;
