@@ -1539,7 +1539,7 @@ int msg_ndb_event_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_nd
   json_bufp += snprintf(out_str, json_end - json_bufp, "{\"msg_type\": %u, \"sender\": %u, \"length\": %u", msg_type, sender_id, msg_len);
 
   
-  json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"recv_time\": ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "%lu", in->recv_time);
+  json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"recv_time\": ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "%llu", in->recv_time);
   
   json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"event\": ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "%hhu", in->event);
   
@@ -3736,9 +3736,9 @@ int network_usage_t_to_json_str( network_usage_t * in, uint64_t max_len, char* o
   (void) json_end;
   (void) json_bufp;json_bufp += snprintf(out_str, json_end - json_bufp, "{");
 
-  json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"duration\": ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "%lu", in->duration);
+  json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"duration\": ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "%llu", in->duration);
   
-  json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"total_bytes\": ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "%lu", in->total_bytes);
+  json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"total_bytes\": ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "%llu", in->total_bytes);
   
   json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"rx_bytes\": ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "%u", in->rx_bytes);
   
@@ -4493,7 +4493,7 @@ int msg_tracking_state_detailed_dep_a_t_to_json_str( u16 sender_id, u16 msg_type
   json_bufp += snprintf(out_str, json_end - json_bufp, "{\"msg_type\": %u, \"sender\": %u, \"length\": %u", msg_type, sender_id, msg_len);
 
   
-  json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"recv_time\": ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "%lu", in->recv_time);
+  json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"recv_time\": ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "%llu", in->recv_time);
   
   json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"tot\": ");json_bufp += sbp_gps_time_t_to_json_str(&in->tot, json_end - json_bufp, json_bufp);
   
@@ -4554,7 +4554,7 @@ int msg_tracking_state_detailed_dep_t_to_json_str( u16 sender_id, u16 msg_type, 
   json_bufp += snprintf(out_str, json_end - json_bufp, "{\"msg_type\": %u, \"sender\": %u, \"length\": %u", msg_type, sender_id, msg_len);
 
   
-  json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"recv_time\": ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "%lu", in->recv_time);
+  json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"recv_time\": ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "%llu", in->recv_time);
   
   json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"tot\": ");json_bufp += gps_time_dep_t_to_json_str(&in->tot, json_end - json_bufp, json_bufp);
   
