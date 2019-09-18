@@ -18,6 +18,7 @@ set(libsbp_HEADERS
   "${PROJECT_SOURCE_DIR}/include/libsbp/piksi.h"
   "${PROJECT_SOURCE_DIR}/include/libsbp/sbas.h"
   "${PROJECT_SOURCE_DIR}/include/libsbp/sbp.h"
+  "${PROJECT_SOURCE_DIR}/include/libsbp/sbp2json.h"
   "${PROJECT_SOURCE_DIR}/include/libsbp/settings.h"
   "${PROJECT_SOURCE_DIR}/include/libsbp/ssr.h"
   "${PROJECT_SOURCE_DIR}/include/libsbp/system.h"
