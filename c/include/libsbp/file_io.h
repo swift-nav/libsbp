@@ -53,7 +53,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 chunk_size;    /**< Chunk size to read [bytes] */
   char filename[0];   /**< Name of the file to read from */
 } msg_fileio_read_req_t;
-
+int msg_fileio_read_req_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_fileio_read_req_t * in, uint64_t max_len, char* out_str);
 
 /** File read from the file system (host <= device)
  *
@@ -68,7 +68,7 @@ typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Read sequence number */
   u8 contents[0]; /**< Contents of read file */
 } msg_fileio_read_resp_t;
-
+int msg_fileio_read_resp_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_fileio_read_resp_t * in, uint64_t max_len, char* out_str);
 
 /** List files in a directory (host => device)
  *
@@ -90,7 +90,7 @@ typedef struct SBP_ATTR_PACKED {
  */
   char dirname[0];  /**< Name of the directory to list */
 } msg_fileio_read_dir_req_t;
-
+int msg_fileio_read_dir_req_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_fileio_read_dir_req_t * in, uint64_t max_len, char* out_str);
 
 /** Files listed in a directory (host <= device)
  *
@@ -106,7 +106,7 @@ typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Read sequence number */
   u8 contents[0]; /**< Contents of read directory */
 } msg_fileio_read_dir_resp_t;
-
+int msg_fileio_read_dir_resp_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_fileio_read_dir_resp_t * in, uint64_t max_len, char* out_str);
 
 /** Delete a file from the file system (host => device)
  *
@@ -119,7 +119,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   char filename[0]; /**< Name of the file to delete */
 } msg_fileio_remove_t;
-
+int msg_fileio_remove_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_fileio_remove_t * in, uint64_t max_len, char* out_str);
 
 /** Write to file (host => device)
  *
@@ -139,7 +139,7 @@ typedef struct SBP_ATTR_PACKED {
   char filename[0]; /**< Name of the file to write to */
   u8 data[0];     /**< Variable-length array of data to write */
 } msg_fileio_write_req_t;
-
+int msg_fileio_write_req_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_fileio_write_req_t * in, uint64_t max_len, char* out_str);
 
 /** File written to (host <= device)
  *
@@ -153,7 +153,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Write sequence number */
 } msg_fileio_write_resp_t;
-
+int msg_fileio_write_resp_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_fileio_write_resp_t * in, uint64_t max_len, char* out_str);
 
 /** Request advice on the optimal configuration for FileIO.
  *
@@ -166,7 +166,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Advice sequence number */
 } msg_fileio_config_req_t;
-
+int msg_fileio_config_req_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_fileio_config_req_t * in, uint64_t max_len, char* out_str);
 
 /** Response with advice on the optimal configuration for FileIO.
 
@@ -183,7 +183,7 @@ typedef struct SBP_ATTR_PACKED {
   u32 batch_size;        /**< The number of SBP packets sent in one PDU */
   u32 fileio_version;    /**< The version of FileIO that is supported */
 } msg_fileio_config_resp_t;
-
+int msg_fileio_config_resp_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_fileio_config_resp_t * in, uint64_t max_len, char* out_str);
 
 /** \} */
 

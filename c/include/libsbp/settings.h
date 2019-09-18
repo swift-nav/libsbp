@@ -59,7 +59,7 @@ SBP_PACK_START
  * configuration to its onboard flash memory file system.
  */
 #define SBP_MSG_SETTINGS_SAVE               0x00A1
-
+int msg_settings_save_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void * in, uint64_t max_len, char* out_str);
 
 /** Write device configuration settings (host => device)
  *
@@ -77,7 +77,7 @@ typedef struct SBP_ATTR_PACKED {
 "SECTION_SETTING\0SETTING\0VALUE\0"
  */
 } msg_settings_write_t;
-
+int msg_settings_write_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_settings_write_t * in, uint64_t max_len, char* out_str);
 
 /** Acknowledgement with status of MSG_SETTINGS_WRITE
  *
@@ -96,7 +96,7 @@ typedef struct SBP_ATTR_PACKED {
 "SECTION_SETTING\0SETTING\0VALUE\0" 
  */
 } msg_settings_write_resp_t;
-
+int msg_settings_write_resp_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_settings_write_resp_t * in, uint64_t max_len, char* out_str);
 
 /** Read device configuration settings (host => device)
  *
@@ -115,7 +115,7 @@ typedef struct SBP_ATTR_PACKED {
 "SECTION_SETTING\0SETTING\0"
  */
 } msg_settings_read_req_t;
-
+int msg_settings_read_req_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_settings_read_req_t * in, uint64_t max_len, char* out_str);
 
 /** Read device configuration settings (host <= device)
  *
@@ -134,7 +134,7 @@ typedef struct SBP_ATTR_PACKED {
  
  */
 } msg_settings_read_resp_t;
-
+int msg_settings_read_resp_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_settings_read_resp_t * in, uint64_t max_len, char* out_str);
 
 /** Read setting by direct index (host => device)
  *
@@ -148,7 +148,7 @@ typedef struct SBP_ATTR_PACKED {
 0 to length(settings)
  */
 } msg_settings_read_by_index_req_t;
-
+int msg_settings_read_by_index_req_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_settings_read_by_index_req_t * in, uint64_t max_len, char* out_str);
 
 /** Read setting by direct index (host <= device)
  *
@@ -172,14 +172,14 @@ typedef struct SBP_ATTR_PACKED {
 "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
  */
 } msg_settings_read_by_index_resp_t;
-
+int msg_settings_read_by_index_resp_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_settings_read_by_index_resp_t * in, uint64_t max_len, char* out_str);
 
 /** Finished reading settings (host <= device)
  *
  * The settings message for indicating end of the settings values.
  */
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_DONE 0x00A6
-
+int msg_settings_read_by_index_done_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, void * in, uint64_t max_len, char* out_str);
 
 /** Register setting and default value (device => host)
  *
@@ -193,7 +193,7 @@ typedef struct SBP_ATTR_PACKED {
 "SECTION_SETTING\0SETTING\0VALUE".
  */
 } msg_settings_register_t;
-
+int msg_settings_register_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_settings_register_t * in, uint64_t max_len, char* out_str);
 
 /** Register setting and default value (device <= host)
  *
@@ -210,7 +210,7 @@ typedef struct SBP_ATTR_PACKED {
 according to the status field.
  */
 } msg_settings_register_resp_t;
-
+int msg_settings_register_resp_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_settings_register_resp_t * in, uint64_t max_len, char* out_str);
 
 /** \} */
 

@@ -41,7 +41,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 startup_type;    /**< Startup type */
   u16 reserved;        /**< Reserved */
 } msg_startup_t;
-
+int msg_startup_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_startup_t * in, uint64_t max_len, char* out_str);
 
 /** Status of received corrections
  *
@@ -56,7 +56,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 num_signals;    /**< Number of signals from base station */
   char source[0];      /**< Corrections source string */
 } msg_dgnss_status_t;
-
+int msg_dgnss_status_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_dgnss_status_t * in, uint64_t max_len, char* out_str);
 
 /** System heartbeat message
  *
@@ -75,7 +75,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u32 flags;    /**< Status flags */
 } msg_heartbeat_t;
-
+int msg_heartbeat_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_heartbeat_t * in, uint64_t max_len, char* out_str);
 
 /** Inertial Navigation System status message
  *
@@ -86,7 +86,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u32 flags;    /**< Status flags */
 } msg_ins_status_t;
-
+int msg_ins_status_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ins_status_t * in, uint64_t max_len, char* out_str);
 
 /** Experimental telemetry message
  *
@@ -99,7 +99,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 id;           /**< Index representing the type of telemetry in use.  It is implemention defined. */
   char telemetry[0]; /**< Comma separated list of values as defined by the index */
 } msg_csac_telemetry_t;
-
+int msg_csac_telemetry_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_csac_telemetry_t * in, uint64_t max_len, char* out_str);
 
 /** Experimental telemetry message labels
  *
@@ -112,7 +112,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 id;                  /**< Index representing the type of telemetry in use.  It is implemention defined. */
   char telemetry_labels[0]; /**< Comma separated list of telemetry field values */
 } msg_csac_telemetry_labels_t;
-
+int msg_csac_telemetry_labels_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_csac_telemetry_labels_t * in, uint64_t max_len, char* out_str);
 
 /** \} */
 

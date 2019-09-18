@@ -131,6 +131,7 @@ def main():
         elif args.c:
           import sbpg.targets.c as c
           c.render_source(output_dir, parsed)
+          c.render_c2json(output_dir, all_specs)
         elif args.test_c:
           import sbpg.targets.test_c as test_c
           test_c.render_source(output_dir, parsed)

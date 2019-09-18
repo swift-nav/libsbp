@@ -38,7 +38,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 code;     /**< Signal constellation, band and code */
   s16 value;    /**< Code bias value [0.01 m] */
 } code_biases_content_t;
-
+int code_biases_content_t_to_json_str( code_biases_content_t * in, uint64_t max_len, char* out_str);
 
 /** SSR phase biases corrections for a particular satellite.
  *
@@ -54,7 +54,7 @@ Increased for every discontinuity in phase.
  */
   s32 bias;                          /**< Phase bias for specified signal [0.1 mm] */
 } phase_biases_content_t;
-
+int phase_biases_content_t_to_json_str( phase_biases_content_t * in, uint64_t max_len, char* out_str);
 
 /** Header for MSG_SSR_STEC_CORRECTION message
  *
@@ -72,7 +72,7 @@ following RTCM DF391 specification.
   u8 iod_atmo;           /**< IOD of the SSR atmospheric correction
  */
 } stec_header_t;
-
+int stec_header_t_to_json_str( stec_header_t * in, uint64_t max_len, char* out_str);
 
 /** Header for MSG_SSR_GRIDDED_CORRECTION
  *
@@ -93,7 +93,7 @@ following RTCM DF391 specification.
 specifcation in units of m.
  */
 } gridded_correction_header_t;
-
+int gridded_correction_header_t_to_json_str( gridded_correction_header_t * in, uint64_t max_len, char* out_str);
 
 /** None
  *
@@ -107,7 +107,7 @@ but in units of TECU instead of m.
   s16 stec_coeff[4];             /**< Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
  [C00 = 0.05 TECU, others = 0.02 TECU/deg] */
 } stec_sat_element_t;
-
+int stec_sat_element_t_to_json_str( stec_sat_element_t * in, uint64_t max_len, char* out_str);
 
 /** None
  *
@@ -117,7 +117,7 @@ typedef struct SBP_ATTR_PACKED {
   s16 hydro;    /**< Hydrostatic vertical delay [4 mm (add 2.3 m to get actual vertical hydro delay)] */
   s8 wet;      /**< Wet vertical delay [4 mm (add 0.252 m to get actual vertical wet delay)] */
 } tropospheric_delay_correction_t;
-
+int tropospheric_delay_correction_t_to_json_str( tropospheric_delay_correction_t * in, uint64_t max_len, char* out_str);
 
 /** None
  *
@@ -127,7 +127,7 @@ typedef struct SBP_ATTR_PACKED {
   sv_id_t sv_id;       /**< space vehicle identifier */
   s16 residual;    /**< STEC residual [0.04 TECU] */
 } stec_residual_t;
-
+int stec_residual_t_to_json_str( stec_residual_t * in, uint64_t max_len, char* out_str);
 
 /** Correction data for a single grid point.
  *
@@ -139,7 +139,7 @@ typedef struct SBP_ATTR_PACKED {
   tropospheric_delay_correction_t tropo_delay_correction;    /**< Wet and hydrostatic vertical delays */
   stec_residual_t stec_residuals[0];         /**< STEC residuals for each satellite */
 } grid_element_t;
-
+int grid_element_t_to_json_str( grid_element_t * in, uint64_t max_len, char* out_str);
 
 /** Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
  *
@@ -158,7 +158,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 num_msgs;               /**< Number of messages in the dataset */
   u8 seq_num;                /**< Postion of this message in the dataset */
 } grid_definition_header_t;
-
+int grid_definition_header_t_to_json_str( grid_definition_header_t * in, uint64_t max_len, char* out_str);
 
 /** Precise orbit and clock correction
  *
@@ -189,7 +189,7 @@ generating configuration
   s32 c1;                 /**< C1 polynomial coefficient for correction of broadcast satellite clock [0.001 mm/s] */
   s32 c2;                 /**< C2 polynomial coefficient for correction of broadcast satellite clock [0.00002 mm/s^-2] */
 } msg_ssr_orbit_clock_t;
-
+int msg_ssr_orbit_clock_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ssr_orbit_clock_t * in, uint64_t max_len, char* out_str);
 
 /** Precise orbit and clock correction
  *
@@ -220,7 +220,7 @@ generating configuration
   s32 c1;                 /**< C1 polynomial coefficient for correction of broadcast satellite clock [0.001 mm/s] */
   s32 c2;                 /**< C2 polynomial coefficient for correction of broadcast satellite clock [0.00002 mm/s^-2] */
 } msg_ssr_orbit_clock_dep_a_t;
-
+int msg_ssr_orbit_clock_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ssr_orbit_clock_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Precise code biases correction
  *
@@ -242,7 +242,7 @@ generating configuration
  */
   code_biases_content_t biases[0];          /**< Code biases for the different satellite signals */
 } msg_ssr_code_biases_t;
-
+int msg_ssr_code_biases_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ssr_code_biases_t * in, uint64_t max_len, char* out_str);
 
 /** Precise phase biases correction
  *
@@ -274,7 +274,7 @@ generating configuration
 satellite being tracked.
  */
 } msg_ssr_phase_biases_t;
-
+int msg_ssr_phase_biases_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ssr_phase_biases_t * in, uint64_t max_len, char* out_str);
 
 /** Slant Total Electron Content
  *
@@ -288,7 +288,7 @@ typedef struct SBP_ATTR_PACKED {
   stec_header_t header;           /**< Header of a STEC message */
   stec_sat_element_t stec_sat_list[0]; /**< Array of STEC information for each space vehicle */
 } msg_ssr_stec_correction_t;
-
+int msg_ssr_stec_correction_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ssr_stec_correction_t * in, uint64_t max_len, char* out_str);
 
 /** Gridded troposphere and STEC residuals
  *
@@ -300,7 +300,7 @@ typedef struct SBP_ATTR_PACKED {
   gridded_correction_header_t header;     /**< Header of a Gridded Correction message */
   grid_element_t element;    /**< Tropo and STEC residuals for the given grid point */
 } msg_ssr_gridded_correction_t;
-
+int msg_ssr_gridded_correction_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ssr_gridded_correction_t * in, uint64_t max_len, char* out_str);
 
 /** Definition of the grid for STEC and tropo messages
  *
@@ -316,7 +316,7 @@ essentially the index of the quadrants that contain transitions between
 valid and invalid (and vice versa) are encoded as u8 integers.
  */
 } msg_ssr_grid_definition_t;
-
+int msg_ssr_grid_definition_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ssr_grid_definition_t * in, uint64_t max_len, char* out_str);
 
 /** \} */
 

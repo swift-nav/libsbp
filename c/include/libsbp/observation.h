@@ -40,7 +40,7 @@ of the sequence (n), second nibble is the zero-indexed
 counter (ith packet of n)
  */
 } observation_header_t;
-
+int observation_header_t_to_json_str( observation_header_t * in, uint64_t max_len, char* out_str);
 
 /** GNSS doppler measurement.
  *
@@ -53,7 +53,7 @@ typedef struct SBP_ATTR_PACKED {
   s16 i;    /**< Doppler whole Hz [Hz] */
   u8 f;    /**< Doppler fractional part [Hz / 256] */
 } doppler_t;
-
+int doppler_t_to_json_str( doppler_t * in, uint64_t max_len, char* out_str);
 
 /** GNSS observations for a particular satellite signal.
  *
@@ -83,7 +83,7 @@ estimate for the signal is valid.
  */
   sbp_gnss_signal_t sid;      /**< GNSS signal identifier (16 bit) */
 } packed_obs_content_t;
-
+int packed_obs_content_t_to_json_str( packed_obs_content_t * in, uint64_t max_len, char* out_str);
 
 /** Network correction for a particular satellite signal.
  *
@@ -106,7 +106,7 @@ from 0 to 15 and the most significant nibble is reserved for future use.
   u16 tropo_std;    /**< Slant tropospheric correction standard deviation [5 mm] */
   u16 range_std;    /**< Orbit/clock/bias correction projected on range standard deviation [5 mm] */
 } packed_osr_content_t;
-
+int packed_osr_content_t_to_json_str( packed_osr_content_t * in, uint64_t max_len, char* out_str);
 
 /** GPS satellite observations
  *
@@ -125,7 +125,7 @@ typedef struct SBP_ATTR_PACKED {
 satellite being tracked.
  */
 } msg_obs_t;
-
+int msg_obs_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_obs_t * in, uint64_t max_len, char* out_str);
 
 /** Base station position
  *
@@ -141,7 +141,7 @@ typedef struct SBP_ATTR_PACKED {
   double lon;       /**< Longitude [deg] */
   double height;    /**< Height [m] */
 } msg_base_pos_llh_t;
-
+int msg_base_pos_llh_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_base_pos_llh_t * in, uint64_t max_len, char* out_str);
 
 /** Base station position in ECEF
  *
@@ -158,7 +158,7 @@ typedef struct SBP_ATTR_PACKED {
   double y;    /**< ECEF Y coordinate [m] */
   double z;    /**< ECEF Z coordinate [m] */
 } msg_base_pos_ecef_t;
-
+int msg_base_pos_ecef_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_base_pos_ecef_t * in, uint64_t max_len, char* out_str);
 
 typedef struct SBP_ATTR_PACKED {
   sbp_gnss_signal_t sid;             /**< GNSS signal identifier (16 bit) */
@@ -172,7 +172,7 @@ SBAS: 0 = valid, non-zero = invalid
 GLO: 0 = valid, non-zero = invalid
  */
 } ephemeris_common_content_t;
-
+int ephemeris_common_content_t_to_json_str( ephemeris_common_content_t * in, uint64_t max_len, char* out_str);
 
 typedef struct SBP_ATTR_PACKED {
   sbp_gnss_signal_t sid;             /**< GNSS signal identifier (16 bit) */
@@ -185,7 +185,7 @@ GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
 Others: 0 = valid, non-zero = invalid
  */
 } ephemeris_common_content_dep_b_t;
-
+int ephemeris_common_content_dep_b_t_to_json_str( ephemeris_common_content_dep_b_t * in, uint64_t max_len, char* out_str);
 
 typedef struct SBP_ATTR_PACKED {
   gnss_signal_dep_t sid;             /**< GNSS signal identifier */
@@ -199,7 +199,7 @@ SBAS: 0 = valid, non-zero = invalid
 GLO: 0 = valid, non-zero = invalid
  */
 } ephemeris_common_content_dep_a_t;
-
+int ephemeris_common_content_dep_a_t_to_json_str( ephemeris_common_content_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Satellite broadcast ephemeris for GPS
  *
@@ -235,7 +235,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 iode;        /**< Issue of ephemeris data */
   u16 iodc;        /**< Issue of clock data */
 } msg_ephemeris_gps_dep_e_t;
-
+int msg_ephemeris_gps_dep_e_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_gps_dep_e_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
@@ -268,7 +268,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 iode;        /**< Issue of ephemeris data */
   u16 iodc;        /**< Issue of clock data */
 } msg_ephemeris_gps_dep_f_t;
-
+int msg_ephemeris_gps_dep_f_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_gps_dep_f_t * in, uint64_t max_len, char* out_str);
 
 /** Satellite broadcast ephemeris for GPS
  *
@@ -304,7 +304,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 iode;        /**< Issue of ephemeris data */
   u16 iodc;        /**< Issue of clock data */
 } msg_ephemeris_gps_t;
-
+int msg_ephemeris_gps_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_gps_t * in, uint64_t max_len, char* out_str);
 
 /** Satellite broadcast ephemeris for QZSS
  *
@@ -338,7 +338,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 iode;        /**< Issue of ephemeris data */
   u16 iodc;        /**< Issue of clock data */
 } msg_ephemeris_qzss_t;
-
+int msg_ephemeris_qzss_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_qzss_t * in, uint64_t max_len, char* out_str);
 
 /** Satellite broadcast ephemeris for BDS
  *
@@ -374,7 +374,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 iode;        /**< Issue of ephemeris data */
   u16 iodc;        /**< Issue of clock data */
 } msg_ephemeris_bds_t;
-
+int msg_ephemeris_bds_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_bds_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
@@ -408,7 +408,7 @@ typedef struct SBP_ATTR_PACKED {
   u16 iode;         /**< Issue of ephemeris data */
   u16 iodc;         /**< Issue of clock data */
 } msg_ephemeris_gal_dep_a_t;
-
+int msg_ephemeris_gal_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_gal_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Satellite broadcast ephemeris for Galileo
  *
@@ -445,7 +445,7 @@ typedef struct SBP_ATTR_PACKED {
   u16 iodc;         /**< Issue of clock data */
   u8 source;       /**< 0=I/NAV, 1=F/NAV, ... */
 } msg_ephemeris_gal_t;
-
+int msg_ephemeris_gal_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_gal_t * in, uint64_t max_len, char* out_str);
 
 #define SBP_MSG_EPHEMERIS_SBAS_DEP_A     0x0082
 typedef struct SBP_ATTR_PACKED {
@@ -456,7 +456,7 @@ typedef struct SBP_ATTR_PACKED {
   double a_gf0;     /**< Time offset of the GEO clock w.r.t. SBAS Network Time [s] */
   double a_gf1;     /**< Drift of the GEO clock w.r.t. SBAS Network Time [s/s] */
 } msg_ephemeris_sbas_dep_a_t;
-
+int msg_ephemeris_sbas_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_sbas_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Satellite broadcast ephemeris for GLO
  *
@@ -475,7 +475,7 @@ typedef struct SBP_ATTR_PACKED {
   double vel[3];    /**< Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s] */
   double acc[3];    /**< Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2] */
 } msg_ephemeris_glo_dep_a_t;
-
+int msg_ephemeris_glo_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_glo_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
@@ -491,7 +491,7 @@ typedef struct SBP_ATTR_PACKED {
   double a_gf0;     /**< Time offset of the GEO clock w.r.t. SBAS Network Time [s] */
   double a_gf1;     /**< Drift of the GEO clock w.r.t. SBAS Network Time [s/s] */
 } msg_ephemeris_sbas_dep_b_t;
-
+int msg_ephemeris_sbas_dep_b_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_sbas_dep_b_t * in, uint64_t max_len, char* out_str);
 
 #define SBP_MSG_EPHEMERIS_SBAS           0x008C
 typedef struct SBP_ATTR_PACKED {
@@ -502,7 +502,7 @@ typedef struct SBP_ATTR_PACKED {
   float a_gf0;     /**< Time offset of the GEO clock w.r.t. SBAS Network Time [s] */
   float a_gf1;     /**< Drift of the GEO clock w.r.t. SBAS Network Time [s/s] */
 } msg_ephemeris_sbas_t;
-
+int msg_ephemeris_sbas_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_sbas_t * in, uint64_t max_len, char* out_str);
 
 /** Satellite broadcast ephemeris for GLO
  *
@@ -521,7 +521,7 @@ typedef struct SBP_ATTR_PACKED {
   double vel[3];    /**< Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s] */
   double acc[3];    /**< Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2] */
 } msg_ephemeris_glo_dep_b_t;
-
+int msg_ephemeris_glo_dep_b_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_glo_dep_b_t * in, uint64_t max_len, char* out_str);
 
 /** Satellite broadcast ephemeris for GLO
  *
@@ -542,7 +542,7 @@ typedef struct SBP_ATTR_PACKED {
   double acc[3];    /**< Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2] */
   u8 fcn;       /**< Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
 } msg_ephemeris_glo_dep_c_t;
-
+int msg_ephemeris_glo_dep_c_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_glo_dep_c_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
@@ -561,7 +561,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 fcn;       /**< Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
   u8 iod;       /**< Issue of ephemeris data */
 } msg_ephemeris_glo_dep_d_t;
-
+int msg_ephemeris_glo_dep_d_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_glo_dep_d_t * in, uint64_t max_len, char* out_str);
 
 /** Satellite broadcast ephemeris for GLO
  *
@@ -583,7 +583,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 fcn;       /**< Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
   u8 iod;       /**< Issue of ephemeris data */
 } msg_ephemeris_glo_t;
-
+int msg_ephemeris_glo_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_glo_t * in, uint64_t max_len, char* out_str);
 
 /** Satellite broadcast ephemeris
  *
@@ -625,7 +625,7 @@ typedef struct SBP_ATTR_PACKED {
   u16 iodc;        /**< Issue of clock data */
   u32 reserved;    /**< Reserved field */
 } msg_ephemeris_dep_d_t;
-
+int msg_ephemeris_dep_d_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_dep_d_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
@@ -660,7 +660,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 healthy;     /**< Satellite is healthy? */
   u8 prn;         /**< PRN being tracked */
 } msg_ephemeris_dep_a_t;
-
+int msg_ephemeris_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
@@ -696,7 +696,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 prn;         /**< PRN being tracked */
   u8 iode;        /**< Issue of ephemeris data */
 } msg_ephemeris_dep_b_t;
-
+int msg_ephemeris_dep_b_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_dep_b_t * in, uint64_t max_len, char* out_str);
 
 /** Satellite broadcast ephemeris
  *
@@ -738,7 +738,7 @@ typedef struct SBP_ATTR_PACKED {
   u16 iodc;        /**< Issue of clock data */
   u32 reserved;    /**< Reserved field */
 } msg_ephemeris_dep_c_t;
-
+int msg_ephemeris_dep_c_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ephemeris_dep_c_t * in, uint64_t max_len, char* out_str);
 
 /** Header for observation message.
  *
@@ -751,7 +751,7 @@ of the sequence (n), second nibble is the zero-indexed
 counter (ith packet of n)
  */
 } observation_header_dep_t;
-
+int observation_header_dep_t_to_json_str( observation_header_dep_t * in, uint64_t max_len, char* out_str);
 
 /** GPS carrier phase measurement.
  *
@@ -765,7 +765,7 @@ typedef struct SBP_ATTR_PACKED {
   s32 i;    /**< Carrier phase whole cycles [cycles] */
   u8 f;    /**< Carrier phase fractional part [cycles / 256] */
 } carrier_phase_dep_a_t;
-
+int carrier_phase_dep_a_t_to_json_str( carrier_phase_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
@@ -781,7 +781,7 @@ carrier phase ambiguity may have changed.
  */
   u8 prn;     /**< PRN-1 identifier of the satellite signal */
 } packed_obs_content_dep_a_t;
-
+int packed_obs_content_dep_a_t_to_json_str( packed_obs_content_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** GPS observations for a particular satellite signal.
  *
@@ -798,7 +798,7 @@ carrier phase ambiguity may have changed.
  */
   gnss_signal_dep_t sid;     /**< GNSS signal identifier */
 } packed_obs_content_dep_b_t;
-
+int packed_obs_content_dep_b_t_to_json_str( packed_obs_content_dep_b_t * in, uint64_t max_len, char* out_str);
 
 /** GPS observations for a particular satellite signal.
  *
@@ -816,7 +816,7 @@ carrier phase ambiguity may have changed.
  */
   gnss_signal_dep_t sid;     /**< GNSS signal identifier */
 } packed_obs_content_dep_c_t;
-
+int packed_obs_content_dep_c_t_to_json_str( packed_obs_content_dep_c_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
@@ -829,7 +829,7 @@ typedef struct SBP_ATTR_PACKED {
 satellite being tracked.
  */
 } msg_obs_dep_a_t;
-
+int msg_obs_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_obs_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
@@ -847,7 +847,7 @@ typedef struct SBP_ATTR_PACKED {
 satellite being tracked.
  */
 } msg_obs_dep_b_t;
-
+int msg_obs_dep_b_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_obs_dep_b_t * in, uint64_t max_len, char* out_str);
 
 /** Deprecated
  *
@@ -866,7 +866,7 @@ typedef struct SBP_ATTR_PACKED {
 satellite being tracked.
  */
 } msg_obs_dep_c_t;
-
+int msg_obs_dep_c_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_obs_dep_c_t * in, uint64_t max_len, char* out_str);
 
 /** Iono corrections
  *
@@ -886,7 +886,7 @@ typedef struct SBP_ATTR_PACKED {
   double b2;       
   double b3;       
 } msg_iono_t;
-
+int msg_iono_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_iono_t * in, uint64_t max_len, char* out_str);
 
 /** L2C capability mask
  *
@@ -897,7 +897,7 @@ typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t t_nmct;      /**< Navigation Message Correction Table Valitidy Time */
   u32 l2c_mask;    /**< L2C capability mask, SV32 bit being MSB, SV1 bit being LSB */
 } msg_sv_configuration_gps_dep_t;
-
+int msg_sv_configuration_gps_dep_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_sv_configuration_gps_dep_t * in, uint64_t max_len, char* out_str);
 
 typedef struct SBP_ATTR_PACKED {
   u64 gps_active;     /**< GPS SV active mask */
@@ -920,14 +920,14 @@ https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
   u64 gal_active;     /**< GAL active mask */
   u64 gal_e5;         /**< GAL E5 active mask */
 } gnss_capb_t;
-
+int gnss_capb_t_to_json_str( gnss_capb_t * in, uint64_t max_len, char* out_str);
 
 #define SBP_MSG_GNSS_CAPB                0x0096
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t t_nmct;    /**< Navigation Message Correction Table Validity Time */
   gnss_capb_t gc;        /**< GNSS capabilities masks */
 } msg_gnss_capb_t;
-
+int msg_gnss_capb_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_gnss_capb_t * in, uint64_t max_len, char* out_str);
 
 /** Group Delay
  *
@@ -945,7 +945,7 @@ LSB indicating tgd validity etc.
   s16 isc_l1ca;   
   s16 isc_l2c;    
 } msg_group_delay_dep_a_t;
-
+int msg_group_delay_dep_a_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_group_delay_dep_a_t * in, uint64_t max_len, char* out_str);
 
 /** Group Delay
  *
@@ -963,7 +963,7 @@ LSB indicating tgd validity etc.
   s16 isc_l1ca;   
   s16 isc_l2c;    
 } msg_group_delay_dep_b_t;
-
+int msg_group_delay_dep_b_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_group_delay_dep_b_t * in, uint64_t max_len, char* out_str);
 
 /** Group Delay
  *
@@ -981,7 +981,7 @@ LSB indicating tgd validity etc.
   s16 isc_l1ca;   
   s16 isc_l2c;    
 } msg_group_delay_t;
-
+int msg_group_delay_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_group_delay_t * in, uint64_t max_len, char* out_str);
 
 typedef struct SBP_ATTR_PACKED {
   sbp_gnss_signal_t sid;             /**< GNSS signal identifier */
@@ -1006,7 +1006,7 @@ Satellite health status for GLO:
     and suitable for navigation.
  */
 } almanac_common_content_t;
-
+int almanac_common_content_t_to_json_str( almanac_common_content_t * in, uint64_t max_len, char* out_str);
 
 typedef struct SBP_ATTR_PACKED {
   gnss_signal_dep_t sid;             /**< GNSS signal identifier */
@@ -1031,7 +1031,7 @@ Satellite health status for GLO:
     and suitable for navigation.
  */
 } almanac_common_content_dep_t;
-
+int almanac_common_content_dep_t_to_json_str( almanac_common_content_dep_t * in, uint64_t max_len, char* out_str);
 
 /** Satellite broadcast ephemeris for GPS
  *
@@ -1053,7 +1053,7 @@ typedef struct SBP_ATTR_PACKED {
   double af0;         /**< Polynomial clock correction coefficient (clock bias) [s] */
   double af1;         /**< Polynomial clock correction coefficient (clock drift) [s/s] */
 } msg_almanac_gps_dep_t;
-
+int msg_almanac_gps_dep_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_almanac_gps_dep_t * in, uint64_t max_len, char* out_str);
 
 /** Satellite broadcast ephemeris for GPS
  *
@@ -1075,7 +1075,7 @@ typedef struct SBP_ATTR_PACKED {
   double af0;         /**< Polynomial clock correction coefficient (clock bias) [s] */
   double af1;         /**< Polynomial clock correction coefficient (clock drift) [s/s] */
 } msg_almanac_gps_t;
-
+int msg_almanac_gps_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_almanac_gps_t * in, uint64_t max_len, char* out_str);
 
 /** Satellite broadcast ephemeris for GLO
  *
@@ -1097,7 +1097,7 @@ coordinate system
   double epsilon;        /**< Eccentricity at instant of t_lambda */
   double omega;          /**< Argument of perigee at instant of t_lambda [rad] */
 } msg_almanac_glo_dep_t;
-
+int msg_almanac_glo_dep_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_almanac_glo_dep_t * in, uint64_t max_len, char* out_str);
 
 /** Satellite broadcast ephemeris for GLO
  *
@@ -1119,7 +1119,7 @@ coordinate system
   double epsilon;        /**< Eccentricity at instant of t_lambda */
   double omega;          /**< Argument of perigee at instant of t_lambda [rad] */
 } msg_almanac_glo_t;
-
+int msg_almanac_glo_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_almanac_glo_t * in, uint64_t max_len, char* out_str);
 
 /** GLONASS L1/L2 Code-Phase biases
  *
@@ -1136,7 +1136,7 @@ typedef struct SBP_ATTR_PACKED {
   s16 l2ca_bias;    /**< GLONASS L2 C/A Code-Phase Bias [m * 0.02] */
   s16 l2p_bias;     /**< GLONASS L2 P Code-Phase Bias [m * 0.02] */
 } msg_glo_biases_t;
-
+int msg_glo_biases_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_glo_biases_t * in, uint64_t max_len, char* out_str);
 
 /** Satellite azimuth and elevation.
  *
@@ -1147,7 +1147,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 az;     /**< Azimuth angle (range 0..179) [deg * 2] */
   s8 el;     /**< Elevation angle (range -90..90) [deg] */
 } sv_az_el_t;
-
+int sv_az_el_t_to_json_str( sv_az_el_t * in, uint64_t max_len, char* out_str);
 
 /** Satellite azimuths and elevations
  *
@@ -1158,7 +1158,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   sv_az_el_t azel[0]; /**< Azimuth and elevation per satellite */
 } msg_sv_az_el_t;
-
+int msg_sv_az_el_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_sv_az_el_t * in, uint64_t max_len, char* out_str);
 
 /** OSR corrections
  *
@@ -1171,7 +1171,7 @@ typedef struct SBP_ATTR_PACKED {
 satellite signal.
  */
 } msg_osr_t;
-
+int msg_osr_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_osr_t * in, uint64_t max_len, char* out_str);
 
 /** \} */
 

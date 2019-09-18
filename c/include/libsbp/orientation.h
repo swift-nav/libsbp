@@ -42,7 +42,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;     /**< Number of satellites used in solution */
   u8 flags;      /**< Status flags */
 } msg_baseline_heading_t;
-
+int msg_baseline_heading_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_baseline_heading_t * in, uint64_t max_len, char* out_str);
 
 /** Quaternion 4 component vector
  *
@@ -65,7 +65,7 @@ typedef struct SBP_ATTR_PACKED {
   float z_accuracy;    /**< Estimated standard deviation of z [N/A] */
   u8 flags;         /**< Status flags */
 } msg_orient_quat_t;
-
+int msg_orient_quat_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_orient_quat_t * in, uint64_t max_len, char* out_str);
 
 /** Euler angles
  *
@@ -86,7 +86,7 @@ typedef struct SBP_ATTR_PACKED {
   float yaw_accuracy;      /**< Estimated standard deviation of yaw [degrees] */
   u8 flags;             /**< Status flags */
 } msg_orient_euler_t;
-
+int msg_orient_euler_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_orient_euler_t * in, uint64_t max_len, char* out_str);
 
 /** Vehicle Body Frame instantaneous angular rates
  *
@@ -108,7 +108,7 @@ typedef struct SBP_ATTR_PACKED {
   s32 z;        /**< angular rate about z axis [microdegrees/s] */
   u8 flags;    /**< Status flags */
 } msg_angular_rate_t;
-
+int msg_angular_rate_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_angular_rate_t * in, uint64_t max_len, char* out_str);
 
 /** \} */
 

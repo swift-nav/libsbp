@@ -43,7 +43,7 @@ time is unknown or invalid.
   s16 mag_y;    /**< Magnetic field in the body frame Y axis [microteslas] */
   s16 mag_z;    /**< Magnetic field in the body frame Z axis [microteslas] */
 } msg_mag_raw_t;
-
+int msg_mag_raw_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_mag_raw_t * in, uint64_t max_len, char* out_str);
 
 /** \} */
 

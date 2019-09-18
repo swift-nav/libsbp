@@ -41,7 +41,7 @@ typedef struct SBP_ATTR_PACKED {
   char tname[15];  /**< fixed length string representing the thread name */
   char cmdline[0]; /**< the command line (as much as it fits in the remaining packet) */
 } msg_linux_cpu_state_t;
-
+int msg_linux_cpu_state_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_linux_cpu_state_t * in, uint64_t max_len, char* out_str);
 
 /** List CPU state on the system
  *
@@ -56,7 +56,7 @@ typedef struct SBP_ATTR_PACKED {
   char tname[15];  /**< fixed length string representing the thread name */
   char cmdline[0]; /**< the command line (as much as it fits in the remaining packet) */
 } msg_linux_mem_state_t;
-
+int msg_linux_mem_state_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_linux_mem_state_t * in, uint64_t max_len, char* out_str);
 
 /** CPU, Memory and Process Starts/Stops
  *
@@ -71,7 +71,7 @@ typedef struct SBP_ATTR_PACKED {
   u16 procs_stopping;    /**< number of processes that stopped during collection phase */
   u16 pid_count;         /**< the count of processes on the system */
 } msg_linux_sys_state_t;
-
+int msg_linux_sys_state_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_linux_sys_state_t * in, uint64_t max_len, char* out_str);
 
 /** A list of processes with high socket counts
  *
@@ -94,7 +94,7 @@ typedef struct SBP_ATTR_PACKED {
  */
   char cmdline[0];       /**< the command line of the process in question */
 } msg_linux_process_socket_counts_t;
-
+int msg_linux_process_socket_counts_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_linux_process_socket_counts_t * in, uint64_t max_len, char* out_str);
 
 /** A list of processes with deep socket queues
  *
@@ -121,7 +121,7 @@ of the connection.
  */
   char cmdline[0];            /**< the command line of the process in question */
 } msg_linux_process_socket_queues_t;
-
+int msg_linux_process_socket_queues_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_linux_process_socket_queues_t * in, uint64_t max_len, char* out_str);
 
 /** Summary of socket usage across the system
  *
@@ -138,7 +138,7 @@ the first entry corresponds to the first enabled bit in `types_reported`.
 the first entry corresponds to the first enabled bit in `types_reported`.
  */
 } msg_linux_socket_usage_t;
-
+int msg_linux_socket_usage_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_linux_socket_usage_t * in, uint64_t max_len, char* out_str);
 
 /** Summary of processes with large amounts of open file descriptors
  *
@@ -151,7 +151,7 @@ typedef struct SBP_ATTR_PACKED {
   u16 fd_count;    /**< a count of the number of file descriptors opened by the process */
   char cmdline[0];  /**< the command line of the process in question */
 } msg_linux_process_fd_count_t;
-
+int msg_linux_process_fd_count_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_linux_process_fd_count_t * in, uint64_t max_len, char* out_str);
 
 /** Summary of open file descriptors on the system
  *
@@ -166,7 +166,7 @@ name whose count it being reported.  That is, in C string
 syntax "32\0/var/log/syslog\012\0/tmp/foo\0" with the end
 of the list being 2 NULL terminators in a row. */
 } msg_linux_process_fd_summary_t;
-
+int msg_linux_process_fd_summary_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_linux_process_fd_summary_t * in, uint64_t max_len, char* out_str);
 
 /** \} */
 

@@ -53,6 +53,16 @@ typedef struct SBP_ATTR_PACKED {
 } (((m.identifier|convert)));
 ((*- endif *))
 
+((*- if m.fields *))
+((*- set in_ptr_type=(((m.identifier|convert))) *))
+((*- else *))
+((*- set in_ptr_type="void" *))
+((*- endif *))
+((*- if m.sbp_id *))
+int (((m.identifier|convert)))_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, (((in_ptr_type))) * in, uint64_t max_len, char* out_str);
+((*- else *))
+int (((m.identifier|convert)))_to_json_str( (((in_ptr_type))) * in, uint64_t max_len, char* out_str);
+((*- endif *))
 ((* endfor *))
 /** \} */
 
