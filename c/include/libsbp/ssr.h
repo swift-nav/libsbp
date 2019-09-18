@@ -129,18 +129,6 @@ typedef struct SBP_ATTR_PACKED {
 } stec_residual_t;
 int stec_residual_t_to_json_str( stec_residual_t * in, uint64_t max_len, char* out_str);
 
-/** Correction data for a single grid point.
- *
- * Contains one tropo delay, plus STEC residuals for each satellite at the
- * grid point.
- */
-typedef struct SBP_ATTR_PACKED {
-  u16 index;                     /**< Index of the grid point */
-  tropospheric_delay_correction_t tropo_delay_correction;    /**< Wet and hydrostatic vertical delays */
-  stec_residual_t stec_residuals[0];         /**< STEC residuals for each satellite */
-} grid_element_t;
-int grid_element_t_to_json_str( grid_element_t * in, uint64_t max_len, char* out_str);
-
 /** Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
  *
  * Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
@@ -297,8 +285,10 @@ int msg_ssr_stec_correction_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_l
  */
 #define SBP_MSG_SSR_GRIDDED_CORRECTION 0x05F0
 typedef struct SBP_ATTR_PACKED {
-  gridded_correction_header_t header;     /**< Header of a Gridded Correction message */
-  grid_element_t element;    /**< Tropo and STEC residuals for the given grid point */
+  gridded_correction_header_t header;                    /**< Header of a Gridded Correction message */
+  u16 index;                     /**< Index of the grid point */
+  tropospheric_delay_correction_t tropo_delay_correction;    /**< Wet and hydrostatic vertical delays */
+  stec_residual_t stec_residuals[0];         /**< STEC residuals for each satellite */
 } msg_ssr_gridded_correction_t;
 int msg_ssr_gridded_correction_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_ssr_gridded_correction_t * in, uint64_t max_len, char* out_str);
 

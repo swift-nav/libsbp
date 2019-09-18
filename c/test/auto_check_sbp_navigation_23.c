@@ -136,6 +136,10 @@ START_TEST( test_auto_check_sbp_navigation_23 )
     fail_unless(msg->n == 1, "incorrect value for n, expected 1, is %d", msg->n);
     fail_unless(msg->n_sats == 10, "incorrect value for n_sats, expected 10, is %d", msg->n_sats);
     fail_unless(msg->tow == 100, "incorrect value for tow, expected 100, is %d", msg->tow);
+    // print to string
+    char test_str[1024];
+    msg_vel_ned_cov_t_to_json_str( last_sender_id, 0x212, last_len, ( msg_vel_ned_cov_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

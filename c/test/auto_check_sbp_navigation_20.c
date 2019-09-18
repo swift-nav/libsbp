@@ -137,6 +137,10 @@ START_TEST( test_auto_check_sbp_navigation_20 )
     fail_unless(msg->x == 0, "incorrect value for x, expected 0, is %d", msg->x);
     fail_unless(msg->y == 0, "incorrect value for y, expected 0, is %d", msg->y);
     fail_unless(msg->z == 6, "incorrect value for z, expected 6, is %d", msg->z);
+    // print to string
+    char test_str[1024];
+    msg_vel_ecef_cov_t_to_json_str( last_sender_id, 0x215, last_len, ( msg_vel_ecef_cov_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

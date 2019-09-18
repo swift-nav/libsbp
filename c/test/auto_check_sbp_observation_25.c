@@ -168,6 +168,10 @@ START_TEST( test_auto_check_sbp_observation_25 )
     fail_unless(msg->obs[4].sid.code == 0, "incorrect value for obs[4].sid.code, expected 0, is %d", msg->obs[4].sid.code);
     fail_unless(msg->obs[4].sid.reserved == 0, "incorrect value for obs[4].sid.reserved, expected 0, is %d", msg->obs[4].sid.reserved);
     fail_unless(msg->obs[4].sid.sat == 12, "incorrect value for obs[4].sid.sat, expected 12, is %d", msg->obs[4].sid.sat);
+    // print to string
+    char test_str[1024];
+    msg_obs_dep_c_t_to_json_str( last_sender_id, 0x49, last_len, ( msg_obs_dep_c_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -235,6 +239,10 @@ START_TEST( test_auto_check_sbp_observation_25 )
     fail_unless(msg->obs[2].sid.code == 0, "incorrect value for obs[2].sid.code, expected 0, is %d", msg->obs[2].sid.code);
     fail_unless(msg->obs[2].sid.reserved == 0, "incorrect value for obs[2].sid.reserved, expected 0, is %d", msg->obs[2].sid.reserved);
     fail_unless(msg->obs[2].sid.sat == 29, "incorrect value for obs[2].sid.sat, expected 29, is %d", msg->obs[2].sid.sat);
+    // print to string
+    char test_str[1024];
+    msg_obs_dep_c_t_to_json_str( last_sender_id, 0x49, last_len, ( msg_obs_dep_c_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -318,6 +326,10 @@ START_TEST( test_auto_check_sbp_observation_25 )
     fail_unless(msg->obs[4].sid.code == 0, "incorrect value for obs[4].sid.code, expected 0, is %d", msg->obs[4].sid.code);
     fail_unless(msg->obs[4].sid.reserved == 0, "incorrect value for obs[4].sid.reserved, expected 0, is %d", msg->obs[4].sid.reserved);
     fail_unless(msg->obs[4].sid.sat == 12, "incorrect value for obs[4].sid.sat, expected 12, is %d", msg->obs[4].sid.sat);
+    // print to string
+    char test_str[1024];
+    msg_obs_dep_c_t_to_json_str( last_sender_id, 0x49, last_len, ( msg_obs_dep_c_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -385,6 +397,10 @@ START_TEST( test_auto_check_sbp_observation_25 )
     fail_unless(msg->obs[2].sid.code == 0, "incorrect value for obs[2].sid.code, expected 0, is %d", msg->obs[2].sid.code);
     fail_unless(msg->obs[2].sid.reserved == 0, "incorrect value for obs[2].sid.reserved, expected 0, is %d", msg->obs[2].sid.reserved);
     fail_unless(msg->obs[2].sid.sat == 29, "incorrect value for obs[2].sid.sat, expected 29, is %d", msg->obs[2].sid.sat);
+    // print to string
+    char test_str[1024];
+    msg_obs_dep_c_t_to_json_str( last_sender_id, 0x49, last_len, ( msg_obs_dep_c_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -468,6 +484,10 @@ START_TEST( test_auto_check_sbp_observation_25 )
     fail_unless(msg->obs[4].sid.code == 0, "incorrect value for obs[4].sid.code, expected 0, is %d", msg->obs[4].sid.code);
     fail_unless(msg->obs[4].sid.reserved == 0, "incorrect value for obs[4].sid.reserved, expected 0, is %d", msg->obs[4].sid.reserved);
     fail_unless(msg->obs[4].sid.sat == 12, "incorrect value for obs[4].sid.sat, expected 12, is %d", msg->obs[4].sid.sat);
+    // print to string
+    char test_str[1024];
+    msg_obs_dep_c_t_to_json_str( last_sender_id, 0x49, last_len, ( msg_obs_dep_c_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

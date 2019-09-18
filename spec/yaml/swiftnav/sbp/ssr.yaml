@@ -154,23 +154,6 @@ definitions:
         units: 0.04 TECU
         desc: STEC residual
 
- - GridElement:
-    short_desc: Correction data for a single grid point.
-    desc: |
-      Contains one tropo delay, plus STEC residuals for each satellite at the
-      grid point.
-    fields:
-    - index:
-        type: u16
-        desc: Index of the grid point
-    - tropo_delay_correction:
-        type: TroposphericDelayCorrection
-        desc: Wet and hydrostatic vertical delays
-    - stec_residuals:
-        type: array
-        fill: STECResidual
-        desc: STEC residuals for each satellite
-
  - GridDefinitionHeader:
     short_desc: Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
     desc: |
@@ -444,9 +427,16 @@ definitions:
         - header:
             type: GriddedCorrectionHeader
             desc: Header of a Gridded Correction message
-        - element:
-            type: GridElement
-            desc: Tropo and STEC residuals for the given grid point
+        - index:
+            type: u16
+            desc: Index of the grid point
+        - tropo_delay_correction:
+            type: TroposphericDelayCorrection
+            desc: Wet and hydrostatic vertical delays
+        - stec_residuals:
+            type: array
+            fill: STECResidual
+            desc: STEC residuals for each satellite
 
 
  - MSG_SSR_GRID_DEFINITION:

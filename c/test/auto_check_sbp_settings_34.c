@@ -127,6 +127,10 @@ START_TEST( test_auto_check_sbp_settings_34 )
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->index == 0, "incorrect value for index, expected 0, is %d", msg->index);
     fail_unless(strstr(msg->setting, ((char []){(char)116,(char)101,(char)108,(char)101,(char)109,(char)101,(char)116,(char)114,(char)121,(char)95,(char)114,(char)97,(char)100,(char)105,(char)111,(char)0,(char)99,(char)111,(char)110,(char)102,(char)105,(char)103,(char)117,(char)114,(char)97,(char)116,(char)105,(char)111,(char)110,(char)95,(char)115,(char)116,(char)114,(char)105,(char)110,(char)103,(char)0,(char)65,(char)84,(char)38,(char)70,(char)44,(char)65,(char)84,(char)83,(char)49,(char)61,(char)49,(char)49,(char)53,(char)44,(char)65,(char)84,(char)83,(char)50,(char)61,(char)49,(char)50,(char)56,(char)44,(char)65,(char)84,(char)83,(char)53,(char)61,(char)48,(char)44,(char)65,(char)84,(char)38,(char)87,(char)44,(char)65,(char)84,(char)90,(char)0,0})) != NULL, "incorrect value for msg->setting, expected string '%s', is '%s'", ((char []){(char)116,(char)101,(char)108,(char)101,(char)109,(char)101,(char)116,(char)114,(char)121,(char)95,(char)114,(char)97,(char)100,(char)105,(char)111,(char)0,(char)99,(char)111,(char)110,(char)102,(char)105,(char)103,(char)117,(char)114,(char)97,(char)116,(char)105,(char)111,(char)110,(char)95,(char)115,(char)116,(char)114,(char)105,(char)110,(char)103,(char)0,(char)65,(char)84,(char)38,(char)70,(char)44,(char)65,(char)84,(char)83,(char)49,(char)61,(char)49,(char)49,(char)53,(char)44,(char)65,(char)84,(char)83,(char)50,(char)61,(char)49,(char)50,(char)56,(char)44,(char)65,(char)84,(char)83,(char)53,(char)61,(char)48,(char)44,(char)65,(char)84,(char)38,(char)87,(char)44,(char)65,(char)84,(char)90,(char)0,0}), msg->setting);
+    // print to string
+    char test_str[1024];
+    msg_settings_read_by_index_resp_t_to_json_str( last_sender_id, 0xa7, last_len, ( msg_settings_read_by_index_resp_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -169,6 +173,10 @@ START_TEST( test_auto_check_sbp_settings_34 )
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->index == 1, "incorrect value for index, expected 1, is %d", msg->index);
     fail_unless(strstr(msg->setting, ((char []){(char)117,(char)97,(char)114,(char)116,(char)95,(char)102,(char)116,(char)100,(char)105,(char)0,(char)109,(char)111,(char)100,(char)101,(char)0,(char)83,(char)66,(char)80,(char)0,(char)101,(char)110,(char)117,(char)109,(char)58,(char)83,(char)66,(char)80,(char)44,(char)78,(char)77,(char)69,(char)65,(char)0,0})) != NULL, "incorrect value for msg->setting, expected string '%s', is '%s'", ((char []){(char)117,(char)97,(char)114,(char)116,(char)95,(char)102,(char)116,(char)100,(char)105,(char)0,(char)109,(char)111,(char)100,(char)101,(char)0,(char)83,(char)66,(char)80,(char)0,(char)101,(char)110,(char)117,(char)109,(char)58,(char)83,(char)66,(char)80,(char)44,(char)78,(char)77,(char)69,(char)65,(char)0,0}), msg->setting);
+    // print to string
+    char test_str[1024];
+    msg_settings_read_by_index_resp_t_to_json_str( last_sender_id, 0xa7, last_len, ( msg_settings_read_by_index_resp_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -211,6 +219,10 @@ START_TEST( test_auto_check_sbp_settings_34 )
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->index == 2, "incorrect value for index, expected 2, is %d", msg->index);
     fail_unless(strstr(msg->setting, ((char []){(char)117,(char)97,(char)114,(char)116,(char)95,(char)102,(char)116,(char)100,(char)105,(char)0,(char)115,(char)98,(char)112,(char)95,(char)109,(char)101,(char)115,(char)115,(char)97,(char)103,(char)101,(char)95,(char)109,(char)97,(char)115,(char)107,(char)0,(char)54,(char)53,(char)53,(char)51,(char)53,(char)0,0})) != NULL, "incorrect value for msg->setting, expected string '%s', is '%s'", ((char []){(char)117,(char)97,(char)114,(char)116,(char)95,(char)102,(char)116,(char)100,(char)105,(char)0,(char)115,(char)98,(char)112,(char)95,(char)109,(char)101,(char)115,(char)115,(char)97,(char)103,(char)101,(char)95,(char)109,(char)97,(char)115,(char)107,(char)0,(char)54,(char)53,(char)53,(char)51,(char)53,(char)0,0}), msg->setting);
+    // print to string
+    char test_str[1024];
+    msg_settings_read_by_index_resp_t_to_json_str( last_sender_id, 0xa7, last_len, ( msg_settings_read_by_index_resp_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -253,6 +265,10 @@ START_TEST( test_auto_check_sbp_settings_34 )
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->index == 3, "incorrect value for index, expected 3, is %d", msg->index);
     fail_unless(strstr(msg->setting, ((char []){(char)117,(char)97,(char)114,(char)116,(char)95,(char)102,(char)116,(char)100,(char)105,(char)0,(char)98,(char)97,(char)117,(char)100,(char)114,(char)97,(char)116,(char)101,(char)0,(char)49,(char)48,(char)48,(char)48,(char)48,(char)48,(char)48,(char)0,0})) != NULL, "incorrect value for msg->setting, expected string '%s', is '%s'", ((char []){(char)117,(char)97,(char)114,(char)116,(char)95,(char)102,(char)116,(char)100,(char)105,(char)0,(char)98,(char)97,(char)117,(char)100,(char)114,(char)97,(char)116,(char)101,(char)0,(char)49,(char)48,(char)48,(char)48,(char)48,(char)48,(char)48,(char)0,0}), msg->setting);
+    // print to string
+    char test_str[1024];
+    msg_settings_read_by_index_resp_t_to_json_str( last_sender_id, 0xa7, last_len, ( msg_settings_read_by_index_resp_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -295,6 +311,10 @@ START_TEST( test_auto_check_sbp_settings_34 )
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->index == 4, "incorrect value for index, expected 4, is %d", msg->index);
     fail_unless(strstr(msg->setting, ((char []){(char)117,(char)97,(char)114,(char)116,(char)95,(char)117,(char)97,(char)114,(char)116,(char)97,(char)0,(char)109,(char)111,(char)100,(char)101,(char)0,(char)83,(char)66,(char)80,(char)0,(char)101,(char)110,(char)117,(char)109,(char)58,(char)83,(char)66,(char)80,(char)44,(char)78,(char)77,(char)69,(char)65,(char)0,0})) != NULL, "incorrect value for msg->setting, expected string '%s', is '%s'", ((char []){(char)117,(char)97,(char)114,(char)116,(char)95,(char)117,(char)97,(char)114,(char)116,(char)97,(char)0,(char)109,(char)111,(char)100,(char)101,(char)0,(char)83,(char)66,(char)80,(char)0,(char)101,(char)110,(char)117,(char)109,(char)58,(char)83,(char)66,(char)80,(char)44,(char)78,(char)77,(char)69,(char)65,(char)0,0}), msg->setting);
+    // print to string
+    char test_str[1024];
+    msg_settings_read_by_index_resp_t_to_json_str( last_sender_id, 0xa7, last_len, ( msg_settings_read_by_index_resp_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

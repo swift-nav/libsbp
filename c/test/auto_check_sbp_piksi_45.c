@@ -128,6 +128,10 @@ START_TEST( test_auto_check_sbp_piksi_45 )
     fail_unless(msg->cpu == 0, "incorrect value for cpu, expected 0, is %d", msg->cpu);
     fail_unless(strstr(msg->name, ((char []){(char)109,(char)97,(char)105,(char)110,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)109,(char)97,(char)105,(char)110,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
     fail_unless(msg->stack_free == 2452, "incorrect value for stack_free, expected 2452, is %d", msg->stack_free);
+    // print to string
+    char test_str[1024];
+    msg_thread_state_t_to_json_str( last_sender_id, 0x17, last_len, ( msg_thread_state_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -171,6 +175,10 @@ START_TEST( test_auto_check_sbp_piksi_45 )
     fail_unless(msg->cpu == 484, "incorrect value for cpu, expected 484, is %d", msg->cpu);
     fail_unless(strstr(msg->name, ((char []){(char)105,(char)100,(char)108,(char)101,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)105,(char)100,(char)108,(char)101,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
     fail_unless(msg->stack_free == 36, "incorrect value for stack_free, expected 36, is %d", msg->stack_free);
+    // print to string
+    char test_str[1024];
+    msg_thread_state_t_to_json_str( last_sender_id, 0x17, last_len, ( msg_thread_state_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -214,6 +222,10 @@ START_TEST( test_auto_check_sbp_piksi_45 )
     fail_unless(msg->cpu == 394, "incorrect value for cpu, expected 394, is %d", msg->cpu);
     fail_unless(strstr(msg->name, ((char []){(char)78,(char)65,(char)80,(char)32,(char)73,(char)83,(char)82,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)78,(char)65,(char)80,(char)32,(char)73,(char)83,(char)82,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
     fail_unless(msg->stack_free == 1884, "incorrect value for stack_free, expected 1884, is %d", msg->stack_free);
+    // print to string
+    char test_str[1024];
+    msg_thread_state_t_to_json_str( last_sender_id, 0x17, last_len, ( msg_thread_state_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -257,6 +269,10 @@ START_TEST( test_auto_check_sbp_piksi_45 )
     fail_unless(msg->cpu == 1, "incorrect value for cpu, expected 1, is %d", msg->cpu);
     fail_unless(strstr(msg->name, ((char []){(char)83,(char)66,(char)80,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)83,(char)66,(char)80,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
     fail_unless(msg->stack_free == 3076, "incorrect value for stack_free, expected 3076, is %d", msg->stack_free);
+    // print to string
+    char test_str[1024];
+    msg_thread_state_t_to_json_str( last_sender_id, 0x17, last_len, ( msg_thread_state_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -300,6 +316,10 @@ START_TEST( test_auto_check_sbp_piksi_45 )
     fail_unless(msg->cpu == 10, "incorrect value for cpu, expected 10, is %d", msg->cpu);
     fail_unless(strstr(msg->name, ((char []){(char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)97,(char)99,(char)113,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)97,(char)99,(char)113,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
     fail_unless(msg->stack_free == 2428, "incorrect value for stack_free, expected 2428, is %d", msg->stack_free);
+    // print to string
+    char test_str[1024];
+    msg_thread_state_t_to_json_str( last_sender_id, 0x17, last_len, ( msg_thread_state_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -343,6 +363,10 @@ START_TEST( test_auto_check_sbp_piksi_45 )
     fail_unless(msg->cpu == 0, "incorrect value for cpu, expected 0, is %d", msg->cpu);
     fail_unless(strstr(msg->name, ((char []){(char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)116,(char)114,(char)97,(char)99,(char)107,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)116,(char)114,(char)97,(char)99,(char)107,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
     fail_unless(msg->stack_free == 2332, "incorrect value for stack_free, expected 2332, is %d", msg->stack_free);
+    // print to string
+    char test_str[1024];
+    msg_thread_state_t_to_json_str( last_sender_id, 0x17, last_len, ( msg_thread_state_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -405,6 +429,10 @@ START_TEST( test_auto_check_sbp_piksi_45 )
     fail_unless((msg->uart_ftdi.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_ftdi.rx_throughput, expected 0.0, is %f", msg->uart_ftdi.rx_throughput);
     fail_unless(msg->uart_ftdi.tx_buffer_level == 15, "incorrect value for uart_ftdi.tx_buffer_level, expected 15, is %d", msg->uart_ftdi.tx_buffer_level);
     fail_unless((msg->uart_ftdi.tx_throughput*100 - 11.6000003815*100) < 0.05, "incorrect value for uart_ftdi.tx_throughput, expected 11.6000003815, is %f", msg->uart_ftdi.tx_throughput);
+    // print to string
+    char test_str[1024];
+    msg_uart_state_depa_t_to_json_str( last_sender_id, 0x18, last_len, ( msg_uart_state_depa_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -467,6 +495,10 @@ START_TEST( test_auto_check_sbp_piksi_45 )
     fail_unless((msg->uart_ftdi.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_ftdi.rx_throughput, expected 0.0, is %f", msg->uart_ftdi.rx_throughput);
     fail_unless(msg->uart_ftdi.tx_buffer_level == 0, "incorrect value for uart_ftdi.tx_buffer_level, expected 0, is %d", msg->uart_ftdi.tx_buffer_level);
     fail_unless((msg->uart_ftdi.tx_throughput*100 - 0.0659999996424*100) < 0.05, "incorrect value for uart_ftdi.tx_throughput, expected 0.0659999996424, is %f", msg->uart_ftdi.tx_throughput);
+    // print to string
+    char test_str[1024];
+    msg_uart_state_depa_t_to_json_str( last_sender_id, 0x18, last_len, ( msg_uart_state_depa_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -529,6 +561,10 @@ START_TEST( test_auto_check_sbp_piksi_45 )
     fail_unless((msg->uart_ftdi.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_ftdi.rx_throughput, expected 0.0, is %f", msg->uart_ftdi.rx_throughput);
     fail_unless(msg->uart_ftdi.tx_buffer_level == 10, "incorrect value for uart_ftdi.tx_buffer_level, expected 10, is %d", msg->uart_ftdi.tx_buffer_level);
     fail_unless((msg->uart_ftdi.tx_throughput*100 - 0.138999998569*100) < 0.05, "incorrect value for uart_ftdi.tx_throughput, expected 0.138999998569, is %f", msg->uart_ftdi.tx_throughput);
+    // print to string
+    char test_str[1024];
+    msg_uart_state_depa_t_to_json_str( last_sender_id, 0x18, last_len, ( msg_uart_state_depa_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -591,6 +627,10 @@ START_TEST( test_auto_check_sbp_piksi_45 )
     fail_unless((msg->uart_ftdi.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_ftdi.rx_throughput, expected 0.0, is %f", msg->uart_ftdi.rx_throughput);
     fail_unless(msg->uart_ftdi.tx_buffer_level == 0, "incorrect value for uart_ftdi.tx_buffer_level, expected 0, is %d", msg->uart_ftdi.tx_buffer_level);
     fail_unless((msg->uart_ftdi.tx_throughput*100 - 0.0659999996424*100) < 0.05, "incorrect value for uart_ftdi.tx_throughput, expected 0.0659999996424, is %f", msg->uart_ftdi.tx_throughput);
+    // print to string
+    char test_str[1024];
+    msg_uart_state_depa_t_to_json_str( last_sender_id, 0x18, last_len, ( msg_uart_state_depa_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -653,6 +693,10 @@ START_TEST( test_auto_check_sbp_piksi_45 )
     fail_unless((msg->uart_ftdi.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_ftdi.rx_throughput, expected 0.0, is %f", msg->uart_ftdi.rx_throughput);
     fail_unless(msg->uart_ftdi.tx_buffer_level == 38, "incorrect value for uart_ftdi.tx_buffer_level, expected 38, is %d", msg->uart_ftdi.tx_buffer_level);
     fail_unless((msg->uart_ftdi.tx_throughput*100 - 0.493999987841*100) < 0.05, "incorrect value for uart_ftdi.tx_throughput, expected 0.493999987841, is %f", msg->uart_ftdi.tx_throughput);
+    // print to string
+    char test_str[1024];
+    msg_uart_state_depa_t_to_json_str( last_sender_id, 0x18, last_len, ( msg_uart_state_depa_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -715,6 +759,10 @@ START_TEST( test_auto_check_sbp_piksi_45 )
     fail_unless((msg->uart_ftdi.rx_throughput*100 - 0.0*100) < 0.05, "incorrect value for uart_ftdi.rx_throughput, expected 0.0, is %f", msg->uart_ftdi.rx_throughput);
     fail_unless(msg->uart_ftdi.tx_buffer_level == 50, "incorrect value for uart_ftdi.tx_buffer_level, expected 50, is %d", msg->uart_ftdi.tx_buffer_level);
     fail_unless((msg->uart_ftdi.tx_throughput*100 - 1.31500005722*100) < 0.05, "incorrect value for uart_ftdi.tx_throughput, expected 1.31500005722, is %f", msg->uart_ftdi.tx_throughput);
+    // print to string
+    char test_str[1024];
+    msg_uart_state_depa_t_to_json_str( last_sender_id, 0x18, last_len, ( msg_uart_state_depa_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -756,6 +804,10 @@ START_TEST( test_auto_check_sbp_piksi_45 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->num_hyps == 0, "incorrect value for num_hyps, expected 0, is %d", msg->num_hyps);
+    // print to string
+    char test_str[1024];
+    msg_iar_state_t_to_json_str( last_sender_id, 0x19, last_len, ( msg_iar_state_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -797,6 +849,10 @@ START_TEST( test_auto_check_sbp_piksi_45 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->num_hyps == 1, "incorrect value for num_hyps, expected 1, is %d", msg->num_hyps);
+    // print to string
+    char test_str[1024];
+    msg_iar_state_t_to_json_str( last_sender_id, 0x19, last_len, ( msg_iar_state_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -838,6 +894,10 @@ START_TEST( test_auto_check_sbp_piksi_45 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->num_hyps == 729, "incorrect value for num_hyps, expected 729, is %d", msg->num_hyps);
+    // print to string
+    char test_str[1024];
+    msg_iar_state_t_to_json_str( last_sender_id, 0x19, last_len, ( msg_iar_state_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -879,6 +939,10 @@ START_TEST( test_auto_check_sbp_piksi_45 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->num_hyps == 728, "incorrect value for num_hyps, expected 728, is %d", msg->num_hyps);
+    // print to string
+    char test_str[1024];
+    msg_iar_state_t_to_json_str( last_sender_id, 0x19, last_len, ( msg_iar_state_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -920,6 +984,10 @@ START_TEST( test_auto_check_sbp_piksi_45 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->num_hyps == 727, "incorrect value for num_hyps, expected 727, is %d", msg->num_hyps);
+    // print to string
+    char test_str[1024];
+    msg_iar_state_t_to_json_str( last_sender_id, 0x19, last_len, ( msg_iar_state_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -961,6 +1029,10 @@ START_TEST( test_auto_check_sbp_piksi_45 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->num_hyps == 723, "incorrect value for num_hyps, expected 723, is %d", msg->num_hyps);
+    // print to string
+    char test_str[1024];
+    msg_iar_state_t_to_json_str( last_sender_id, 0x19, last_len, ( msg_iar_state_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

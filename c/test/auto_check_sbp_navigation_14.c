@@ -132,6 +132,10 @@ START_TEST( test_auto_check_sbp_navigation_14 )
     fail_unless((msg->x*100 - -2700354.59129*100) < 0.05, "incorrect value for x, expected -2700354.59129, is %f", msg->x);
     fail_unless((msg->y*100 - -4292510.76404*100) < 0.05, "incorrect value for y, expected -4292510.76404, is %f", msg->y);
     fail_unless((msg->z*100 - 3855357.97726*100) < 0.05, "incorrect value for z, expected 3855357.97726, is %f", msg->z);
+    // print to string
+    char test_str[1024];
+    msg_pos_ecef_dep_a_t_to_json_str( last_sender_id, 0x200, last_len, ( msg_pos_ecef_dep_a_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -179,6 +183,10 @@ START_TEST( test_auto_check_sbp_navigation_14 )
     fail_unless((msg->x*100 - -2700356.32851*100) < 0.05, "incorrect value for x, expected -2700356.32851, is %f", msg->x);
     fail_unless((msg->y*100 - -4292509.92874*100) < 0.05, "incorrect value for y, expected -4292509.92874, is %f", msg->y);
     fail_unless((msg->z*100 - 3855357.50117*100) < 0.05, "incorrect value for z, expected 3855357.50117, is %f", msg->z);
+    // print to string
+    char test_str[1024];
+    msg_pos_ecef_dep_a_t_to_json_str( last_sender_id, 0x200, last_len, ( msg_pos_ecef_dep_a_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -226,6 +234,10 @@ START_TEST( test_auto_check_sbp_navigation_14 )
     fail_unless((msg->x*100 - -2700357.48558*100) < 0.05, "incorrect value for x, expected -2700357.48558, is %f", msg->x);
     fail_unless((msg->y*100 - -4292509.80415*100) < 0.05, "incorrect value for y, expected -4292509.80415, is %f", msg->y);
     fail_unless((msg->z*100 - 3855356.51797*100) < 0.05, "incorrect value for z, expected 3855356.51797, is %f", msg->z);
+    // print to string
+    char test_str[1024];
+    msg_pos_ecef_dep_a_t_to_json_str( last_sender_id, 0x200, last_len, ( msg_pos_ecef_dep_a_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -273,6 +285,10 @@ START_TEST( test_auto_check_sbp_navigation_14 )
     fail_unless((msg->x*100 - -2700356.03495*100) < 0.05, "incorrect value for x, expected -2700356.03495, is %f", msg->x);
     fail_unless((msg->y*100 - -4292510.18761*100) < 0.05, "incorrect value for y, expected -4292510.18761, is %f", msg->y);
     fail_unless((msg->z*100 - 3855357.41857*100) < 0.05, "incorrect value for z, expected 3855357.41857, is %f", msg->z);
+    // print to string
+    char test_str[1024];
+    msg_pos_ecef_dep_a_t_to_json_str( last_sender_id, 0x200, last_len, ( msg_pos_ecef_dep_a_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -320,6 +336,10 @@ START_TEST( test_auto_check_sbp_navigation_14 )
     fail_unless((msg->x*100 - -2700355.99131*100) < 0.05, "incorrect value for x, expected -2700355.99131, is %f", msg->x);
     fail_unless((msg->y*100 - -4292509.94694*100) < 0.05, "incorrect value for y, expected -4292509.94694, is %f", msg->y);
     fail_unless((msg->z*100 - 3855359.09249*100) < 0.05, "incorrect value for z, expected 3855359.09249, is %f", msg->z);
+    // print to string
+    char test_str[1024];
+    msg_pos_ecef_dep_a_t_to_json_str( last_sender_id, 0x200, last_len, ( msg_pos_ecef_dep_a_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

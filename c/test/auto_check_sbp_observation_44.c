@@ -170,6 +170,10 @@ START_TEST( test_auto_check_sbp_observation_44 )
     fail_unless(msg->obs[6].cn0 == 52, "incorrect value for obs[6].cn0, expected 52, is %d", msg->obs[6].cn0);
     fail_unless(msg->obs[6].lock == 15074, "incorrect value for obs[6].lock, expected 15074, is %d", msg->obs[6].lock);
     fail_unless(msg->obs[6].prn == 30, "incorrect value for obs[6].prn, expected 30, is %d", msg->obs[6].prn);
+    // print to string
+    char test_str[1024];
+    msg_obs_dep_a_t_to_json_str( last_sender_id, 0x45, last_len, ( msg_obs_dep_a_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -219,6 +223,10 @@ START_TEST( test_auto_check_sbp_observation_44 )
     fail_unless(msg->obs[0].cn0 == 62, "incorrect value for obs[0].cn0, expected 62, is %d", msg->obs[0].cn0);
     fail_unless(msg->obs[0].lock == 64062, "incorrect value for obs[0].lock, expected 64062, is %d", msg->obs[0].lock);
     fail_unless(msg->obs[0].prn == 31, "incorrect value for obs[0].prn, expected 31, is %d", msg->obs[0].prn);
+    // print to string
+    char test_str[1024];
+    msg_obs_dep_a_t_to_json_str( last_sender_id, 0x45, last_len, ( msg_obs_dep_a_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -304,6 +312,10 @@ START_TEST( test_auto_check_sbp_observation_44 )
     fail_unless(msg->obs[6].cn0 == 52, "incorrect value for obs[6].cn0, expected 52, is %d", msg->obs[6].cn0);
     fail_unless(msg->obs[6].lock == 15074, "incorrect value for obs[6].lock, expected 15074, is %d", msg->obs[6].lock);
     fail_unless(msg->obs[6].prn == 30, "incorrect value for obs[6].prn, expected 30, is %d", msg->obs[6].prn);
+    // print to string
+    char test_str[1024];
+    msg_obs_dep_a_t_to_json_str( last_sender_id, 0x45, last_len, ( msg_obs_dep_a_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -353,6 +365,10 @@ START_TEST( test_auto_check_sbp_observation_44 )
     fail_unless(msg->obs[0].cn0 == 63, "incorrect value for obs[0].cn0, expected 63, is %d", msg->obs[0].cn0);
     fail_unless(msg->obs[0].lock == 64062, "incorrect value for obs[0].lock, expected 64062, is %d", msg->obs[0].lock);
     fail_unless(msg->obs[0].prn == 31, "incorrect value for obs[0].prn, expected 31, is %d", msg->obs[0].prn);
+    // print to string
+    char test_str[1024];
+    msg_obs_dep_a_t_to_json_str( last_sender_id, 0x45, last_len, ( msg_obs_dep_a_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -426,6 +442,10 @@ START_TEST( test_auto_check_sbp_observation_44 )
     fail_unless(msg->obs[4].cn0 == 56, "incorrect value for obs[4].cn0, expected 56, is %d", msg->obs[4].cn0);
     fail_unless(msg->obs[4].lock == 22736, "incorrect value for obs[4].lock, expected 22736, is %d", msg->obs[4].lock);
     fail_unless(msg->obs[4].prn == 30, "incorrect value for obs[4].prn, expected 30, is %d", msg->obs[4].prn);
+    // print to string
+    char test_str[1024];
+    msg_obs_dep_a_t_to_json_str( last_sender_id, 0x45, last_len, ( msg_obs_dep_a_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -499,6 +519,10 @@ START_TEST( test_auto_check_sbp_observation_44 )
     fail_unless(msg->obs[4].cn0 == 56, "incorrect value for obs[4].cn0, expected 56, is %d", msg->obs[4].cn0);
     fail_unless(msg->obs[4].lock == 22736, "incorrect value for obs[4].lock, expected 22736, is %d", msg->obs[4].lock);
     fail_unless(msg->obs[4].prn == 30, "incorrect value for obs[4].prn, expected 30, is %d", msg->obs[4].prn);
+    // print to string
+    char test_str[1024];
+    msg_obs_dep_a_t_to_json_str( last_sender_id, 0x45, last_len, ( msg_obs_dep_a_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -566,6 +590,10 @@ START_TEST( test_auto_check_sbp_observation_44 )
     fail_unless(msg->toe_wn == 1838, "incorrect value for toe_wn, expected 1838, is %d", msg->toe_wn);
     fail_unless(msg->valid == 1, "incorrect value for valid, expected 1, is %d", msg->valid);
     fail_unless((msg->w*100 - 1.05250472004*100) < 0.05, "incorrect value for w, expected 1.05250472004, is %f", msg->w);
+    // print to string
+    char test_str[1024];
+    msg_ephemeris_dep_b_t_to_json_str( last_sender_id, 0x46, last_len, ( msg_ephemeris_dep_b_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -633,6 +661,10 @@ START_TEST( test_auto_check_sbp_observation_44 )
     fail_unless(msg->toe_wn == 1838, "incorrect value for toe_wn, expected 1838, is %d", msg->toe_wn);
     fail_unless(msg->valid == 1, "incorrect value for valid, expected 1, is %d", msg->valid);
     fail_unless((msg->w*100 - -1.97360228379*100) < 0.05, "incorrect value for w, expected -1.97360228379, is %f", msg->w);
+    // print to string
+    char test_str[1024];
+    msg_ephemeris_dep_b_t_to_json_str( last_sender_id, 0x46, last_len, ( msg_ephemeris_dep_b_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -700,6 +732,10 @@ START_TEST( test_auto_check_sbp_observation_44 )
     fail_unless(msg->toe_wn == 1838, "incorrect value for toe_wn, expected 1838, is %d", msg->toe_wn);
     fail_unless(msg->valid == 1, "incorrect value for valid, expected 1, is %d", msg->valid);
     fail_unless((msg->w*100 - 0.378735666146*100) < 0.05, "incorrect value for w, expected 0.378735666146, is %f", msg->w);
+    // print to string
+    char test_str[1024];
+    msg_ephemeris_dep_b_t_to_json_str( last_sender_id, 0x46, last_len, ( msg_ephemeris_dep_b_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -767,6 +803,10 @@ START_TEST( test_auto_check_sbp_observation_44 )
     fail_unless(msg->toe_wn == 1838, "incorrect value for toe_wn, expected 1838, is %d", msg->toe_wn);
     fail_unless(msg->valid == 1, "incorrect value for valid, expected 1, is %d", msg->valid);
     fail_unless((msg->w*100 - -1.97360228379*100) < 0.05, "incorrect value for w, expected -1.97360228379, is %f", msg->w);
+    // print to string
+    char test_str[1024];
+    msg_ephemeris_dep_b_t_to_json_str( last_sender_id, 0x46, last_len, ( msg_ephemeris_dep_b_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -834,6 +874,10 @@ START_TEST( test_auto_check_sbp_observation_44 )
     fail_unless(msg->toe_wn == 1838, "incorrect value for toe_wn, expected 1838, is %d", msg->toe_wn);
     fail_unless(msg->valid == 1, "incorrect value for valid, expected 1, is %d", msg->valid);
     fail_unless((msg->w*100 - -2.70212414527*100) < 0.05, "incorrect value for w, expected -2.70212414527, is %f", msg->w);
+    // print to string
+    char test_str[1024];
+    msg_ephemeris_dep_b_t_to_json_str( last_sender_id, 0x46, last_len, ( msg_ephemeris_dep_b_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -901,6 +945,10 @@ START_TEST( test_auto_check_sbp_observation_44 )
     fail_unless(msg->toe_wn == 1838, "incorrect value for toe_wn, expected 1838, is %d", msg->toe_wn);
     fail_unless(msg->valid == 1, "incorrect value for valid, expected 1, is %d", msg->valid);
     fail_unless((msg->w*100 - -0.523790171609*100) < 0.05, "incorrect value for w, expected -0.523790171609, is %f", msg->w);
+    // print to string
+    char test_str[1024];
+    msg_ephemeris_dep_b_t_to_json_str( last_sender_id, 0x46, last_len, ( msg_ephemeris_dep_b_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

@@ -129,6 +129,10 @@ START_TEST( test_auto_check_sbp_system_35 )
     fail_unless(msg->latency == 50, "incorrect value for latency, expected 50, is %d", msg->latency);
     fail_unless(msg->num_signals == 12, "incorrect value for num_signals, expected 12, is %d", msg->num_signals);
     fail_unless(strstr(msg->source, ((char []){(char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107,0})) != NULL, "incorrect value for msg->source, expected string '%s', is '%s'", ((char []){(char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107,0}), msg->source);
+    // print to string
+    char test_str[1024];
+    msg_dgnss_status_t_to_json_str( last_sender_id, 0xff02, last_len, ( msg_dgnss_status_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

@@ -145,6 +145,10 @@ START_TEST( test_(((s.suite_name))) )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     ((*- for f in t.fieldskeys *))(((compare_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
+    // print to string
+    char test_str[1024];
+    (((t.msg_type_name|convert)))_to_json_str( last_sender_id, (((t.msg_type))), last_len, ( (((t.msg_type_name|convert)))* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
     ((*- endif *))
   }
   ((*- endfor *))

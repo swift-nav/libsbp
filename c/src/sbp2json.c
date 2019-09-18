@@ -4994,31 +4994,6 @@ int stec_residual_t_to_json_str( stec_residual_t * in, uint64_t max_len, char* o
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
   return json_bufp - out_str;}
  
-int grid_element_t_to_json_str( grid_element_t * in, uint64_t max_len, char* out_str) {
-  (void) in;
-  (void) out_str;
-  (void) max_len;
-     
-  char * const json_end = (char*) out_str + max_len;
-  char * json_bufp = (char*) out_str;
-  (void) json_end;
-  (void) json_bufp;json_bufp += snprintf(out_str, json_end - json_bufp, "{");
-
-  json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"index\": ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "%hu", in->index);
-  
-  json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"tropo_delay_correction\": ");json_bufp += tropospheric_delay_correction_t_to_json_str(&in->tropo_delay_correction, json_end - json_bufp, json_bufp);
-  
-  json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"stec_residuals\": ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "[");
-  uint8_t msg_array_offset = (uint8_t *)&(in->stec_residuals) - (uint8_t *)in;
-  uint8_t msg_array_size = msg_len - msg_array_offset;
-  uint8_t msg_array_count = msg_array_size / sizeof( stec_residual_t );
-  for (int i=0; i < msg_array_count; i++) {
-    if (i != 0){
-      json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");
-    }json_bufp += stec_residual_t_to_json_str(&(in->stec_residuals)[i], json_end - json_bufp, json_bufp);}
-  json_bufp += snprintf(json_bufp, json_end - json_bufp, "]");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
-  return json_bufp - out_str;}
- 
 int grid_definition_header_t_to_json_str( grid_definition_header_t * in, uint64_t max_len, char* out_str) {
   (void) in;
   (void) out_str;
@@ -5249,8 +5224,19 @@ int msg_ssr_gridded_correction_t_to_json_str( u16 sender_id, u16 msg_type, u8 ms
   
   json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"header\": ");json_bufp += gridded_correction_header_t_to_json_str(&in->header, json_end - json_bufp, json_bufp);
   
-  json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"element\": ");json_bufp += grid_element_t_to_json_str(&in->element, json_end - json_bufp, json_bufp);
-  json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
+  json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"index\": ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "%hu", in->index);
+  
+  json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"tropo_delay_correction\": ");json_bufp += tropospheric_delay_correction_t_to_json_str(&in->tropo_delay_correction, json_end - json_bufp, json_bufp);
+  
+  json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"stec_residuals\": ");json_bufp += snprintf(json_bufp, json_end - json_bufp, "[");
+  uint8_t msg_array_offset = (uint8_t *)&(in->stec_residuals) - (uint8_t *)in;
+  uint8_t msg_array_size = msg_len - msg_array_offset;
+  uint8_t msg_array_count = msg_array_size / sizeof( stec_residual_t );
+  for (int i=0; i < msg_array_count; i++) {
+    if (i != 0){
+      json_bufp += snprintf(json_bufp, json_end - json_bufp, ", ");
+    }json_bufp += stec_residual_t_to_json_str(&(in->stec_residuals)[i], json_end - json_bufp, json_bufp);}
+  json_bufp += snprintf(json_bufp, json_end - json_bufp, "]");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
   return json_bufp - out_str;}
  #define MSG_05F5_TO_JSON msg_ssr_grid_definition_t_to_json_str
 

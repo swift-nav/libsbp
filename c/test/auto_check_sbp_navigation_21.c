@@ -132,6 +132,10 @@ START_TEST( test_auto_check_sbp_navigation_21 )
     fail_unless(msg->x == 3034, "incorrect value for x, expected 3034, is %d", msg->x);
     fail_unless(msg->y == -2682, "incorrect value for y, expected -2682, is %d", msg->y);
     fail_unless(msg->z == -861, "incorrect value for z, expected -861, is %d", msg->z);
+    // print to string
+    char test_str[1024];
+    msg_vel_ecef_dep_a_t_to_json_str( last_sender_id, 0x204, last_len, ( msg_vel_ecef_dep_a_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -179,6 +183,10 @@ START_TEST( test_auto_check_sbp_navigation_21 )
     fail_unless(msg->x == 2884, "incorrect value for x, expected 2884, is %d", msg->x);
     fail_unless(msg->y == -2536, "incorrect value for y, expected -2536, is %d", msg->y);
     fail_unless(msg->z == -804, "incorrect value for z, expected -804, is %d", msg->z);
+    // print to string
+    char test_str[1024];
+    msg_vel_ecef_dep_a_t_to_json_str( last_sender_id, 0x204, last_len, ( msg_vel_ecef_dep_a_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -226,6 +234,10 @@ START_TEST( test_auto_check_sbp_navigation_21 )
     fail_unless(msg->x == 2837, "incorrect value for x, expected 2837, is %d", msg->x);
     fail_unless(msg->y == -2483, "incorrect value for y, expected -2483, is %d", msg->y);
     fail_unless(msg->z == -777, "incorrect value for z, expected -777, is %d", msg->z);
+    // print to string
+    char test_str[1024];
+    msg_vel_ecef_dep_a_t_to_json_str( last_sender_id, 0x204, last_len, ( msg_vel_ecef_dep_a_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -273,6 +285,10 @@ START_TEST( test_auto_check_sbp_navigation_21 )
     fail_unless(msg->x == 2937, "incorrect value for x, expected 2937, is %d", msg->x);
     fail_unless(msg->y == -2558, "incorrect value for y, expected -2558, is %d", msg->y);
     fail_unless(msg->z == -790, "incorrect value for z, expected -790, is %d", msg->z);
+    // print to string
+    char test_str[1024];
+    msg_vel_ecef_dep_a_t_to_json_str( last_sender_id, 0x204, last_len, ( msg_vel_ecef_dep_a_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -320,6 +336,10 @@ START_TEST( test_auto_check_sbp_navigation_21 )
     fail_unless(msg->x == 2847, "incorrect value for x, expected 2847, is %d", msg->x);
     fail_unless(msg->y == -2467, "incorrect value for y, expected -2467, is %d", msg->y);
     fail_unless(msg->z == -752, "incorrect value for z, expected -752, is %d", msg->z);
+    // print to string
+    char test_str[1024];
+    msg_vel_ecef_dep_a_t_to_json_str( last_sender_id, 0x204, last_len, ( msg_vel_ecef_dep_a_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

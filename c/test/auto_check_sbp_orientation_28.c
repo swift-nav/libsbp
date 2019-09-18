@@ -133,6 +133,10 @@ START_TEST( test_auto_check_sbp_orientation_28 )
     fail_unless(msg->tow == 1, "incorrect value for tow, expected 1, is %d", msg->tow);
     fail_unless(msg->yaw == 8, "incorrect value for yaw, expected 8, is %d", msg->yaw);
     fail_unless(msg->yaw_accuracy == 7, "incorrect value for yaw_accuracy, expected 7, is %d", msg->yaw_accuracy);
+    // print to string
+    char test_str[1024];
+    msg_orient_euler_t_to_json_str( last_sender_id, 0x221, last_len, ( msg_orient_euler_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

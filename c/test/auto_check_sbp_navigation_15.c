@@ -133,6 +133,10 @@ START_TEST( test_auto_check_sbp_navigation_15 )
     fail_unless(msg->n_sats == 14, "incorrect value for n_sats, expected 14, is %d", msg->n_sats);
     fail_unless(msg->tow == 326825000, "incorrect value for tow, expected 326825000, is %d", msg->tow);
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    // print to string
+    char test_str[1024];
+    msg_pos_llh_t_to_json_str( last_sender_id, 0x20a, last_len, ( msg_pos_llh_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -181,6 +185,10 @@ START_TEST( test_auto_check_sbp_navigation_15 )
     fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
     fail_unless(msg->tow == 326826000, "incorrect value for tow, expected 326826000, is %d", msg->tow);
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    // print to string
+    char test_str[1024];
+    msg_pos_llh_t_to_json_str( last_sender_id, 0x20a, last_len, ( msg_pos_llh_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -229,6 +237,10 @@ START_TEST( test_auto_check_sbp_navigation_15 )
     fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
     fail_unless(msg->tow == 326827000, "incorrect value for tow, expected 326827000, is %d", msg->tow);
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    // print to string
+    char test_str[1024];
+    msg_pos_llh_t_to_json_str( last_sender_id, 0x20a, last_len, ( msg_pos_llh_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -277,6 +289,10 @@ START_TEST( test_auto_check_sbp_navigation_15 )
     fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
     fail_unless(msg->tow == 326828000, "incorrect value for tow, expected 326828000, is %d", msg->tow);
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    // print to string
+    char test_str[1024];
+    msg_pos_llh_t_to_json_str( last_sender_id, 0x20a, last_len, ( msg_pos_llh_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -325,6 +341,10 @@ START_TEST( test_auto_check_sbp_navigation_15 )
     fail_unless(msg->n_sats == 15, "incorrect value for n_sats, expected 15, is %d", msg->n_sats);
     fail_unless(msg->tow == 326829000, "incorrect value for tow, expected 326829000, is %d", msg->tow);
     fail_unless(msg->v_accuracy == 0, "incorrect value for v_accuracy, expected 0, is %d", msg->v_accuracy);
+    // print to string
+    char test_str[1024];
+    msg_pos_llh_t_to_json_str( last_sender_id, 0x20a, last_len, ( msg_pos_llh_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

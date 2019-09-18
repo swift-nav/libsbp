@@ -135,6 +135,10 @@ START_TEST( test_auto_check_sbp_orientation_29 )
     fail_unless(msg->y_accuracy == 8, "incorrect value for y_accuracy, expected 8, is %d", msg->y_accuracy);
     fail_unless(msg->z == 4, "incorrect value for z, expected 4, is %d", msg->z);
     fail_unless(msg->z_accuracy == 3, "incorrect value for z_accuracy, expected 3, is %d", msg->z_accuracy);
+    // print to string
+    char test_str[1024];
+    msg_orient_quat_t_to_json_str( last_sender_id, 0x220, last_len, ( msg_orient_quat_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

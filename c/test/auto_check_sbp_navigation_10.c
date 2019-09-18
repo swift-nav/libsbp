@@ -129,6 +129,10 @@ START_TEST( test_auto_check_sbp_navigation_10 )
     fail_unless(msg->ns_residual == 166900, "incorrect value for ns_residual, expected 166900, is %d", msg->ns_residual);
     fail_unless(msg->tow == 326825000, "incorrect value for tow, expected 326825000, is %d", msg->tow);
     fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
+    // print to string
+    char test_str[1024];
+    msg_gps_time_t_to_json_str( last_sender_id, 0x102, last_len, ( msg_gps_time_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -173,6 +177,10 @@ START_TEST( test_auto_check_sbp_navigation_10 )
     fail_unless(msg->ns_residual == 256638, "incorrect value for ns_residual, expected 256638, is %d", msg->ns_residual);
     fail_unless(msg->tow == 326825500, "incorrect value for tow, expected 326825500, is %d", msg->tow);
     fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
+    // print to string
+    char test_str[1024];
+    msg_gps_time_t_to_json_str( last_sender_id, 0x102, last_len, ( msg_gps_time_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -217,6 +225,10 @@ START_TEST( test_auto_check_sbp_navigation_10 )
     fail_unless(msg->ns_residual == 265345, "incorrect value for ns_residual, expected 265345, is %d", msg->ns_residual);
     fail_unless(msg->tow == 326826000, "incorrect value for tow, expected 326826000, is %d", msg->tow);
     fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
+    // print to string
+    char test_str[1024];
+    msg_gps_time_t_to_json_str( last_sender_id, 0x102, last_len, ( msg_gps_time_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -261,6 +273,10 @@ START_TEST( test_auto_check_sbp_navigation_10 )
     fail_unless(msg->ns_residual == 314505, "incorrect value for ns_residual, expected 314505, is %d", msg->ns_residual);
     fail_unless(msg->tow == 326826500, "incorrect value for tow, expected 326826500, is %d", msg->tow);
     fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
+    // print to string
+    char test_str[1024];
+    msg_gps_time_t_to_json_str( last_sender_id, 0x102, last_len, ( msg_gps_time_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -305,6 +321,10 @@ START_TEST( test_auto_check_sbp_navigation_10 )
     fail_unless(msg->ns_residual == 362933, "incorrect value for ns_residual, expected 362933, is %d", msg->ns_residual);
     fail_unless(msg->tow == 326827000, "incorrect value for tow, expected 326827000, is %d", msg->tow);
     fail_unless(msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", msg->wn);
+    // print to string
+    char test_str[1024];
+    msg_gps_time_t_to_json_str( last_sender_id, 0x102, last_len, ( msg_gps_time_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

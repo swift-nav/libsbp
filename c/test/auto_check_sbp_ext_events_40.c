@@ -130,6 +130,10 @@ START_TEST( test_auto_check_sbp_ext_events_40 )
     fail_unless(msg->pin == 0, "incorrect value for pin, expected 0, is %d", msg->pin);
     fail_unless(msg->tow == 254924999, "incorrect value for tow, expected 254924999, is %d", msg->tow);
     fail_unless(msg->wn == 1840, "incorrect value for wn, expected 1840, is %d", msg->wn);
+    // print to string
+    char test_str[1024];
+    msg_ext_event_t_to_json_str( last_sender_id, 0x101, last_len, ( msg_ext_event_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

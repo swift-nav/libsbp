@@ -137,6 +137,10 @@ START_TEST( test_auto_check_sbp_navigation_16 )
     fail_unless(msg->lon == 7, "incorrect value for lon, expected 7, is %d", msg->lon);
     fail_unless(msg->n_sats == 5, "incorrect value for n_sats, expected 5, is %d", msg->n_sats);
     fail_unless(msg->tow == 7, "incorrect value for tow, expected 7, is %d", msg->tow);
+    // print to string
+    char test_str[1024];
+    msg_pos_llh_cov_t_to_json_str( last_sender_id, 0x211, last_len, ( msg_pos_llh_cov_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST

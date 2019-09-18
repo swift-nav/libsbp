@@ -150,6 +150,10 @@ START_TEST( test_auto_check_sbp_tracking_49 )
     fail_unless(msg->tow_flags == 0, "incorrect value for tow_flags, expected 0, is %d", msg->tow_flags);
     fail_unless(msg->track_flags == 11, "incorrect value for track_flags, expected 11, is %d", msg->track_flags);
     fail_unless(msg->uptime == 1, "incorrect value for uptime, expected 1, is %d", msg->uptime);
+    // print to string
+    char test_str[1024];
+    msg_tracking_state_detailed_dep_t_to_json_str( last_sender_id, 0x11, last_len, ( msg_tracking_state_detailed_dep_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -215,6 +219,10 @@ START_TEST( test_auto_check_sbp_tracking_49 )
     fail_unless(msg->tow_flags == 0, "incorrect value for tow_flags, expected 0, is %d", msg->tow_flags);
     fail_unless(msg->track_flags == 11, "incorrect value for track_flags, expected 11, is %d", msg->track_flags);
     fail_unless(msg->uptime == 1, "incorrect value for uptime, expected 1, is %d", msg->uptime);
+    // print to string
+    char test_str[1024];
+    msg_tracking_state_detailed_dep_t_to_json_str( last_sender_id, 0x11, last_len, ( msg_tracking_state_detailed_dep_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -280,6 +288,10 @@ START_TEST( test_auto_check_sbp_tracking_49 )
     fail_unless(msg->tow_flags == 0, "incorrect value for tow_flags, expected 0, is %d", msg->tow_flags);
     fail_unless(msg->track_flags == 11, "incorrect value for track_flags, expected 11, is %d", msg->track_flags);
     fail_unless(msg->uptime == 2, "incorrect value for uptime, expected 2, is %d", msg->uptime);
+    // print to string
+    char test_str[1024];
+    msg_tracking_state_detailed_dep_t_to_json_str( last_sender_id, 0x11, last_len, ( msg_tracking_state_detailed_dep_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -345,6 +357,10 @@ START_TEST( test_auto_check_sbp_tracking_49 )
     fail_unless(msg->tow_flags == 0, "incorrect value for tow_flags, expected 0, is %d", msg->tow_flags);
     fail_unless(msg->track_flags == 11, "incorrect value for track_flags, expected 11, is %d", msg->track_flags);
     fail_unless(msg->uptime == 2, "incorrect value for uptime, expected 2, is %d", msg->uptime);
+    // print to string
+    char test_str[1024];
+    msg_tracking_state_detailed_dep_t_to_json_str( last_sender_id, 0x11, last_len, ( msg_tracking_state_detailed_dep_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
   // Test successful parsing of a message
   {
@@ -410,6 +426,10 @@ START_TEST( test_auto_check_sbp_tracking_49 )
     fail_unless(msg->tow_flags == 0, "incorrect value for tow_flags, expected 0, is %d", msg->tow_flags);
     fail_unless(msg->track_flags == 11, "incorrect value for track_flags, expected 11, is %d", msg->track_flags);
     fail_unless(msg->uptime == 3, "incorrect value for uptime, expected 3, is %d", msg->uptime);
+    // print to string
+    char test_str[1024];
+    msg_tracking_state_detailed_dep_t_to_json_str( last_sender_id, 0x11, last_len, ( msg_tracking_state_detailed_dep_t* ) msg, 1024, test_str);
+    fprintf(stdout, "%s\n", test_str);
   }
 }
 END_TEST
