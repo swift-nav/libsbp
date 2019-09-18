@@ -7,7 +7,7 @@ else (CMAKE_CROSSCOMPILING)
     message(STATUS "Skipping unit tests, Check library not found!")
   else (NOT CHECK_FOUND)
 
-    if(LIBSBP_BUILTIN_PTHREADS) # In Android's libc implementation (bionic), pthreads is not a separate library
+    if (LIBSBP_BUILTIN_PTHREADS) # In Android's libc implementation (bionic), pthreads is not a separate library
       set(TEST_LIBS ${TEST_LIBS} ${CHECK_LIBRARIES} sbp m)
     else()
       set(TEST_LIBS ${TEST_LIBS} ${CHECK_LIBRARIES} pthread sbp m)
