@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- Inertial Measurement Unit (IMU) messages.
+-- \<Inertial Measurement Unit (IMU) messages.\>
 
 module SwiftNav.SBP.Imu
   ( module SwiftNav.SBP.Imu

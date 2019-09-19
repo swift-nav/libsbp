@@ -11,9 +11,9 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- System health, configuration, and diagnostic messages specific to the Piksi
--- L1 receiver, including a variety of legacy messages that may no longer be
--- used.
+-- \<System health, configuration, and diagnostic messages specific to the
+-- Piksi L1 receiver, including a variety of legacy messages that may no longer
+-- be used. \>
 
 module SwiftNav.SBP.Piksi
   ( module SwiftNav.SBP.Piksi

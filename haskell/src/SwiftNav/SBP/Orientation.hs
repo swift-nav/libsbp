@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- Orientation Messages
+-- \<Orientation Messages\>
 
 module SwiftNav.SBP.Orientation
   ( module SwiftNav.SBP.Orientation

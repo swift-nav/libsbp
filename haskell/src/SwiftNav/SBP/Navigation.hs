@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- Geodetic navigation messages reporting GPS time, position, velocity, and
+-- \<Geodetic navigation messages reporting GPS time, position, velocity, and
 -- baseline position solutions. For position solutions, these messages define
 -- several different position solutions: single-point (SPP), RTK, and pseudo-
 -- absolute position solutions.  The SPP is the standalone, absolute GPS
@@ -25,6 +25,7 @@
 -- coincident with the antenna phase center.  When there is no inertial
 -- navigation, the solution will be reported at the phase center of the
 -- antenna. There is no inertial navigation capability on Piksi Multi or Duro.
+-- \>
 
 module SwiftNav.SBP.Navigation
   ( module SwiftNav.SBP.Navigation

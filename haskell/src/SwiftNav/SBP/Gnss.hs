@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- Various structs shared between modules
+-- \<Various structs shared between modules\>
 
 module SwiftNav.SBP.Gnss
   ( module SwiftNav.SBP.Gnss

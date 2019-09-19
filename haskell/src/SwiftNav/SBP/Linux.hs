@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- Linux state monitoring.
+-- \<Linux state monitoring. \>
 
 module SwiftNav.SBP.Linux
   ( module SwiftNav.SBP.Linux
