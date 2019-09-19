@@ -3,5 +3,3 @@ pyftdi==0.13.*
 pylibftdi
 pyserial
 requests==2.20.*
-numpy==1.16.*
-pybase64
