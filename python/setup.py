@@ -154,7 +154,7 @@ def write_version_py(filename=VERSION_PY_PATH):
 def exclude_jit_libs(lib):
     if 'sbp.jit' in PACKAGES:
         return False
-    excluded_libs = ['ujson', 'pybase64', 'numpy']
+    excluded_libs = ['rapidjson', 'pybase64', 'numpy']
     for excluded_lib in excluded_libs:
         if excluded_lib in lib:
             return True

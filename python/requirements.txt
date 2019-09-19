@@ -5,4 +5,4 @@ pyserial
 requests==2.20.*
 numpy==1.16.*
 pybase64
-ujson
+python-rapidjson==0.8.0
