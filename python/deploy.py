@@ -9,8 +9,6 @@ import tempfile
 import subprocess
 
 #CP27MU = "2.7u"
-
-AMD64_PY_VERSION = ["3.5", "3.6", "3.7"]
 ALL_PY_VERSIONS = ["3.4", "3.5", "3.6", "3.7"]
 AMD64_PY_VERSION = ["3.5", "3.6", "3.7"]
 
