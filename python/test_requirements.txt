@@ -4,4 +4,3 @@ cov-core==1.15.0
 coverage==4.4.1
 tox
 pyyaml
-python-rapidjson==0.8.0
