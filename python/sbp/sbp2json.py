@@ -23,10 +23,10 @@ try:
 except ImportError:
     NONUMPY = True
 
-DEFAULT_JSON='ujson'
-JSON_CHOICES=['json', 'ujson']
+DEFAULT_JSON='rapidjson'
+JSON_CHOICES=['json', 'rapidjson']
 try:
-    import ujson
+    import rapidjson
 except ImportError:
     DEFAULT_JSON='json'
     JSON_CHOICES=['json']
@@ -64,8 +64,8 @@ def get_args():
     parser = base_cl_options()
     args = parser.parse_args()
 
-    if args.mode == 'ujson' and len(sys.argv) > 3:
-        print('ERROR: ujson mode does not support given arguments')
+    if args.mode == 'rapidjson' and len(sys.argv) > 3:
+        print('ERROR: rapidjson mode does not support given arguments')
         parser.print_help()
         return None
 
@@ -157,8 +157,8 @@ def dump(args, res):
                          sort_keys=args.sort_keys,
                          separators=(',', ':'),
                          cls=encoder_cls))
-    elif 'ujson' == args.mode:
-        sys.stdout.write(ujson.dumps(get_jsonable(res)))
+    elif 'rapidjson' == args.mode:
+        sys.stdout.write(rapidjson.dumps(get_jsonable(res)))
     sys.stdout.write("\n")
 
 
