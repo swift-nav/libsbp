@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- Satellite code and carrier-phase tracking messages from the device.
+-- \<Satellite code and carrier-phase tracking messages from the device. \>
 
 module SwiftNav.SBP.Tracking
   ( module SwiftNav.SBP.Tracking

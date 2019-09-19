@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- Precise State Space Representation (SSR) corrections format
+-- \<Precise State Space Representation (SSR) corrections format\>
 
 module SwiftNav.SBP.Ssr
   ( module SwiftNav.SBP.Ssr
@@ -647,7 +647,7 @@ msgSsrGridDefinition = 0x05F5
 -- | SBP class for message MSG_SSR_GRID_DEFINITION (0x05F5).
 --
 -- Based on the 3GPP proposal R2-1906781 which is in turn based on OMA-LPPe-
--- ValidityArea from OMA-TS-LPPe–V2_0-20141202-C
+-- ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
 data MsgSsrGridDefinition = MsgSsrGridDefinition
   { _msgSsrGridDefinition_header :: !GridDefinitionHeader
     -- ^ Header of a Gridded Correction message

@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- Standardized system messages from Swift Navigation devices.
+-- \<Standardized system messages from Swift Navigation devices.\>
 
 module SwiftNav.SBP.System
   ( module SwiftNav.SBP.System

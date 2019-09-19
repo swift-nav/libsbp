@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- Satellite observation messages from the device.
+-- \<Satellite observation messages from the device.\>
 
 module SwiftNav.SBP.Observation
   ( module SwiftNav.SBP.Observation

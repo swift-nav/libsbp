@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- Satellite acquisition messages from the device.
+-- \<Satellite acquisition messages from the device.\>
 
 module SwiftNav.SBP.Acquisition
   ( module SwiftNav.SBP.Acquisition
