@@ -125,6 +125,7 @@ typedef struct {
   u16 frame_len;
   u8 n_read;
   u8 frame_buff[SBP_MAX_FRAME_LEN];
+  u8* msg_buff;
   void* io_context;
   sbp_msg_callbacks_node_t* sbp_msg_callbacks_head;
 } sbp_state_t;

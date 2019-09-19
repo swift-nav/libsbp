@@ -814,13 +814,41 @@ START_TEST(test_frame_callbacks)
 }
 END_TEST
 
+START_TEST(test_msg_buff_backwards_compatibility)
+{
+  /* TODO: Tests with different read function behaviour. */
+
+  sbp_state_t s;
+  sbp_state_init(&s);
+  sbp_state_set_io_context(&s, &DUMMY_MEMORY_FOR_IO);
+
+  static sbp_msg_callbacks_node_t n;
+
+  sbp_register_callback(&s, 0x2269, &test_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+
+  u8 test_data[] = { 0x01, 0x02, 0x03, 0x04 };
+
+  dummy_reset();
+  sbp_send_message(&s, 0x2269, 0x42, sizeof(test_data), test_data, &dummy_write);
+
+  while (dummy_rd < dummy_wr) {
+    fail_unless(sbp_process(&s, &dummy_read) >= SBP_OK,
+        "sbp_process threw an error!");
+  }
+   fail_unless(s.msg_buff[0] == 0x01, "msg_buff backwards compatibility broken!");
+   fail_unless(s.msg_buff[1] == 0x02, "msg_buff backwards compatibility broken!");
+   fail_unless(s.msg_buff[2] == 0x03, "msg_buff backwards compatibility broken!");
+   fail_unless(s.msg_buff[3] == 0x04, "msg_buff backwards compatibility broken!");
+}
+END_TEST
+
 Suite* sbp_suite(void)
 {
   Suite *s = suite_create("SBP");
 
   TCase *tc_core = tcase_create("Core");
 
-
+  tcase_add_test(tc_core, test_msg_buff_backwards_compatibility);
   tcase_add_test(tc_core, test_callbacks);
   tcase_add_test(tc_core, test_sbp_send_message);
   tcase_add_test(tc_core, test_sbp_process);

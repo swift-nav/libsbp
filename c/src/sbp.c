@@ -325,6 +325,7 @@ void sbp_state_init(sbp_state_t *s)
 
   /* Set the IO context pointer, passed to read and write functions, to NULL. */
   s->io_context = 0;
+  s->msg_buff = &(s->frame_buff[6]);
 
   /* Clear the callbacks, if any, currently in s */
   sbp_clear_callbacks(s);
