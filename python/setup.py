@@ -154,7 +154,7 @@ def write_version_py(filename=VERSION_PY_PATH):
 def exclude_jit_libs(lib):
     if 'sbp.jit' in PACKAGES:
         return False
-    excluded_libs = ['ujson', 'pybase64', 'numpy']
+    excluded_libs = ['python-rapidjson', 'pybase64', 'numpy']
     for excluded_lib in excluded_libs:
         if excluded_lib in lib:
             return True
@@ -185,8 +185,12 @@ if __name__ == "__main__":
     else:
         print('Detected LIBSBP_BUILD_ANY, building without sbp.jit support...')
 
-    with open(os.path.join(setup_py_dir, 'requirements.txt')) as f:
-        INSTALL_REQUIRES = [i.strip() for i in f.readlines() if not exclude_jit_libs(i.strip())]
+    if sys.version_info.major == 2 and sys.version_info.minor == 7:
+        with open(os.path.join(setup_py_dir, 'requirements27.txt')) as f:
+            INSTALL_REQUIRES = [i.strip() for i in f.readlines() if not exclude_jit_libs(i.strip())]
+    else:
+        with open(os.path.join(setup_py_dir, 'requirements.txt')) as f:
+            INSTALL_REQUIRES = [i.strip() for i in f.readlines() if not exclude_jit_libs(i.strip())]
 
     with open(os.path.join(setup_py_dir, 'test_requirements.txt')) as f:
         TEST_REQUIRES = [i.strip() for i in f.readlines()]
