@@ -30,7 +30,7 @@ import org.json.JSONArray;
  * fields.
  *
  * Based on the 3GPP proposal R2-1906781 which is in turn based on
- * OMA-LPPe-ValidityArea from OMA-TS-LPPe–V2_0-20141202-C */
+ * OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C */
 
 public class MsgSsrGridDefinition extends SBPMessage {
     public static final int TYPE = 0x05F5;
