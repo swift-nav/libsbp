@@ -95,7 +95,7 @@ def build_wheel_native(conda_dir, deploy_dir, py_version):
 
     subprocess.check_call(["apt-get", "update"])
 
-    if py_version.startswith == "3.":
+    if py_version.startswith("3."):
         subprocess.check_call(["apt-get", "install", "-y",
             "python3", "python3-pip", "python3-dev", "python3-setuptools"
         ])
@@ -118,9 +118,16 @@ def build_wheel_native(conda_dir, deploy_dir, py_version):
     subprocess.check_call([
         python, "-m",
         "pip", "install", "--ignore-installed",
-        "-r", "requirements.txt",
-        "-r", "setup_requirements.txt",
         "-r", "test_requirements.txt"
+    ])
+
+    suffix = "" if py_version.startswith("3.") else "27"
+
+    subprocess.check_call([
+        python, "-m",
+        "pip", "install", "--ignore-installed",
+        "-r", "requirements{}.txt".format(suffix),
+        "-r", "setup_requirements{}.txt".format(suffix),
     ])
 
     run_bdist(conda_dir, deploy_dir, py_version,
@@ -265,9 +272,17 @@ def build_wheel_conda(conda_dir, deploy_dir, py_version):
     subprocess.check_call([
         "conda", "run", "-p", conda_dir] + DASHDASH + [
         "pip", "install", "--ignore-installed", 
-        "-r", "requirements.txt",
         "-r", "setup_requirements.txt",
         "-r", "test_requirements.txt",
+    ])
+
+    suffix = "" if py_version.startswith("3.") else "27"
+
+    subprocess.check_call([
+        "conda", "run", "-p", conda_dir] + DASHDASH + [
+        "pip", "install", "--ignore-installed", 
+        "-r", "requirements{}.txt".format(suffix),
+        "-r", "setup_requirements{}.txt".format(suffix),
     ])
 
     run_bdist(conda_dir, deploy_dir, py_version, use_conda=True)
@@ -277,9 +292,7 @@ def build_native_on_arm(py_version):
     if platform.system() != "Linux":
         return False
     return platform.machine().startswith("arm")
-    #if not platform.machine().startswith("arm"):
-    #    return False
-    #return py_version == "3.5" or py_version == "3.7"
+
 
 def build_wheel(conda_dir, deploy_dir, py_version):
     if build_native_on_arm(py_version):
