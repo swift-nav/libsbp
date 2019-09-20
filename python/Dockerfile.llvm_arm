@@ -19,12 +19,12 @@ RUN \
                         libatlas-base-dev libsqlite3-dev tk-dev libgdbm-dev \
                         libc6-dev
 
-ENV LLVM_BRANCH=release_60
+ENV LLVM_BRANCH=release_70
 ENV LLVM_URL=https://github.com/llvm-mirror/llvm.git
 ENV CLANG_URL=https://github.com/llvm-mirror/clang.git
 
 RUN \
-     echo '>>> Building LLVM 6.0...' \
+     echo '>>> Building LLVM 7.0...' \
   && git clone --depth=1 --single-branch -b ${LLVM_BRANCH} ${LLVM_URL} /tmp/llvm \
   && git clone --depth=1 --single-branch -b ${LLVM_BRANCH} ${CLANG_URL} /tmp/llvm/tools/clang \
   && mkdir -p /tmp/llvm/build \
