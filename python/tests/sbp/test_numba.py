@@ -1,14 +1,22 @@
-import numba as nb
-import numpy as np
+import sys
+import pytest
 
-from sbp.file_io import MsgFileioWriteReq
+if sys.version_info >= (3, 0):
 
-from sbp.jit.msg import unpack_payload
+    import numba as nb
+    import numpy as np
 
-from sbp.jit.msg import get_string
-from sbp.jit.msg import get_fixed_string
+    from sbp.file_io import MsgFileioWriteReq
 
-from sbp.jit.table import dispatch
+    from sbp.jit.msg import unpack_payload
+
+    from sbp.jit.msg import get_string
+    from sbp.jit.msg import get_fixed_string
+
+    from sbp.jit.table import dispatch
+
+
+skip_on_py2 = pytest.mark.skipif(sys.version_info < (3, 0), reason="requires python 3")
 
 
 def _mk_string(val, null='\x00'):
@@ -16,6 +24,7 @@ def _mk_string(val, null='\x00'):
     return np.array(ba, dtype=np.uint8)
 
 
+@skip_on_py2
 def test_get_string():
     s = _mk_string('thisisastring')
     out, offset, length = get_string(s, 0, len(s))
@@ -23,6 +32,7 @@ def test_get_string():
     assert out == 'thisisastring'
 
 
+@skip_on_py2
 def test_get_string_no_null():
     s = _mk_string('thisisastring', null=None)
     out, offset, length = get_string(s, 0, len(s))
@@ -30,6 +40,7 @@ def test_get_string_no_null():
     assert out == 'thisisastring'
 
 
+@skip_on_py2
 def test_get_string_offset_no_null():
     s = _mk_string('________thisisastring', null=None)
     out, offset, length = get_string(s, 8, len(s) - 8)
@@ -37,6 +48,7 @@ def test_get_string_offset_no_null():
     assert out == 'thisisastring'
 
 
+@skip_on_py2
 def test_get_string_offset():
     s = _mk_string('________thisisastring')
     out, offset, length = get_string(s, 8, len(s))
@@ -44,6 +56,7 @@ def test_get_string_offset():
     assert out == 'thisisastring'
 
 
+@skip_on_py2
 def test_get_fixed_string():
     s = 'main\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
     a = np.fromstring(s, dtype=np.uint8)
@@ -52,6 +65,7 @@ def test_get_fixed_string():
     assert out == s
 
 
+@skip_on_py2
 def test_get_fixed_string_offset():
     s = _mk_string('________thisisastring')
     out, offset, length = get_fixed_string(6)(s, 8, len(s))
@@ -59,6 +73,7 @@ def test_get_fixed_string_offset():
     assert out == 'thisis'
 
 
+@skip_on_py2
 def test_parse():
 
     header_len = 6
@@ -89,6 +104,7 @@ def test_parse():
     assert bytearray(res['data']) == bytearray(data)
 
 
+@skip_on_py2
 def test_jit():
     @nb.jit('Tuple((Tuple((u2,u2)),u2))()', nopython=True, nogil=True)
     def func():
