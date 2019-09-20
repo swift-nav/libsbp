@@ -231,4 +231,7 @@ def module_main():
     args = get_args()
     if not args:
         sys.exit(1)
-    sbp_main(args)
+    try:
+        sbp_main(args)
+    except KeyboardInterrupt:
+        pass

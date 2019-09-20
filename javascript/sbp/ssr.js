@@ -659,7 +659,7 @@ MsgSsrGriddedCorrection.prototype.fieldSpec.push(['element', GridElement.prototy
  * SBP class for message MSG_SSR_GRID_DEFINITION (0x05F5).
  *
  * Based on the 3GPP proposal R2-1906781 which is in turn based on OMA-LPPe-
- * ValidityArea from OMA-TS-LPPe–V2_0-20141202-C
+ * ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header GridDefinitionHeader Header of a Gridded Correction message

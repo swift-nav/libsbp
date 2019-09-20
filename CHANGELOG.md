@@ -1,5 +1,15 @@
 # Change Log
 
+## [v2.7.1](https://github.com/swift-nav/libsbp/tree/v2.7.1)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.7.0...v2.7.1)
+
+- Ignore CTRL-C in Python sbp2json
+
+**Merged pull requests:**
+
+- Remove explicit Python 2 build in dist/deploy sciprt [\#731](https://github.com/swift-nav/libsbp/pull/731)
+
 ## [v2.7.0](https://github.com/swift-nav/libsbp/tree/v2.7.0) (2019-09-19)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.5...v2.7.0)
 
