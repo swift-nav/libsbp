@@ -1,14 +1,18 @@
+import io
+import json
 import os
 import sys
 
-import io
-
-import json
-
 import decimal as dec
 
+from datetime import (datetime, timezone)
+
 from sbp import msg as msg_nojit
+from sbp.navigation import SBP_MSG_UTC_TIME
 from sbp.table import dispatch as dispatch_nojit
+
+CURRENT_MSG_INDEX = 0
+LAST_UTC_TIME = datetime.fromtimestamp(0, timezone.utc)
 
 NORM = os.environ.get('NOJIT') is not None
 try:
@@ -38,11 +42,17 @@ except NameError:
 
 dec.getcontext().rounding = dec.ROUND_HALF_UP
 
+# A fake UUID to emulate Swift Console output
+FAKE_UUID = 'd8c9e0be-08aa-4a49-80a3-5951d2e247fa'
 
 def base_cl_options():
     import argparse
     parser = argparse.ArgumentParser(prog="sbp2json", description="Swift Navigation SBP to JSON parser")
-    parser.add_argument('--mode', type=str, choices=JSON_CHOICES, default=DEFAULT_JSON)
+    parser.add_argument('--mode', type=str, choices=JSON_CHOICES, default=DEFAULT_JSON,
+                        help=("select which JSON library to use, supports the built-in json module "
+                              "and python-rapidjson (if installed)"))
+    parser.add_argument('--annotate', action='store_true',
+                        help="wrap JSON output with a timestamp, simulating Swift Console output")
 
     group_json = parser.add_argument_group('json specific arguments')
     group_json.add_argument(
@@ -140,10 +150,40 @@ class SbpJSONEncoder(json.JSONEncoder):
             self.skipkeys, _one_shot)
         return _iterencode(o, 0)
 
-def get_jsonable(res):
-    if hasattr(res, 'to_json_dict'):
-        return res.to_json_dict()
-    return res
+
+def store_time_from_msg(m):
+    global LAST_UTC_TIME
+    time_valid_mask = 0b00000111
+    # Use any time as long as it's not invalid
+    if (m.flags & time_valid_mask) == 0:
+        return
+    NS_PER_MS = 1000
+    LAST_UTC_TIME = datetime(
+        m.year, m.month, m.day, m.hours, m.minutes,
+        m.seconds, m.ns // NS_PER_MS, timezone.utc)
+
+
+def get_jsonable(args, res):
+    global CURRENT_MSG_INDEX
+    def _get_jsonable(res):
+        if hasattr(res, 'to_json_dict'):
+            return res.to_json_dict()
+        return res
+    if args.annotate:
+        data = _get_jsonable(res)
+        # Should warn that this will corrupt Linux system monitor messages
+        if 'index' in data:
+            data['index_orig'] = data['index']
+        data['index'] = CURRENT_MSG_INDEX
+        CURRENT_MSG_INDEX += 1
+        return {
+            'data': data,
+            'time': LAST_UTC_TIME.isoformat(),
+            'session-uid': FAKE_UUID
+        }
+    else:
+        return _get_jsonable(res)
+
 
 def dump(args, res):
     if 'json' == args.mode:
@@ -152,13 +192,13 @@ def dump(args, res):
             encoder_cls=SbpJSONEncoder
         else:
             encoder_cls=None
-        sys.stdout.write(json.dumps(get_jsonable(res),
+        sys.stdout.write(json.dumps(get_jsonable(args, res),
                          allow_nan=False,
                          sort_keys=args.sort_keys,
                          separators=(',', ':'),
                          cls=encoder_cls))
     elif 'rapidjson' == args.mode:
-        sys.stdout.write(rapidjson.dumps(get_jsonable(res)))
+        sys.stdout.write(rapidjson.dumps(get_jsonable(args, res)))
     sys.stdout.write("\n")
 
 
@@ -212,6 +252,9 @@ def sbp_main(args):
                 except StreamError:
                     break
                 m = dispatch_nojit(m)
+                if args.annotate:
+                    if m.msg_type == SBP_MSG_UTC_TIME:
+                        store_time_from_msg(m)
                 dump(args, m)
                 consumed = header_len + m.length + 2
             else:
