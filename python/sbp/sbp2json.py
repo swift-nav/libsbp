@@ -12,7 +12,7 @@ from sbp.navigation import SBP_MSG_UTC_TIME
 from sbp.table import dispatch as dispatch_nojit
 
 CURRENT_MSG_INDEX = 0
-LAST_UTC_TIME = datetime.fromtimestamp(0, timezone.utc)
+LAST_UTC_TIME = datetime.fromtimestamp(0)
 
 NORM = os.environ.get('NOJIT') is not None
 try:
@@ -160,7 +160,7 @@ def store_time_from_msg(m):
     NS_PER_MS = 1000
     LAST_UTC_TIME = datetime(
         m.year, m.month, m.day, m.hours, m.minutes,
-        m.seconds, m.ns // NS_PER_MS, timezone.utc)
+        m.seconds, m.ns // NS_PER_MS)
 
 
 def get_jsonable(args, res):
@@ -178,7 +178,7 @@ def get_jsonable(args, res):
         CURRENT_MSG_INDEX += 1
         return {
             'data': data,
-            'time': LAST_UTC_TIME.isoformat(),
+            'time': LAST_UTC_TIME.isoformat() + 'Z',
             'session-uid': FAKE_UUID
         }
     else:
