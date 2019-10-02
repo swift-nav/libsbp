@@ -11,7 +11,6 @@ from sbp import msg as msg_nojit
 from sbp.navigation import SBP_MSG_UTC_TIME
 from sbp.table import dispatch as dispatch_nojit
 
-CURRENT_MSG_INDEX = 0
 LAST_UTC_TIME = datetime.fromtimestamp(0)
 
 NORM = os.environ.get('NOJIT') is not None
@@ -164,18 +163,12 @@ def store_time_from_msg(m):
 
 
 def get_jsonable(args, res):
-    global CURRENT_MSG_INDEX
     def _get_jsonable(res):
         if hasattr(res, 'to_json_dict'):
             return res.to_json_dict()
         return res
     if args.annotate:
         data = _get_jsonable(res)
-        # Should warn that this will corrupt Linux system monitor messages
-        if 'index' in data:
-            data['index_orig'] = data['index']
-        data['index'] = CURRENT_MSG_INDEX
-        CURRENT_MSG_INDEX += 1
         return {
             'data': data,
             'time': LAST_UTC_TIME.isoformat() + 'Z',
