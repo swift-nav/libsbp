@@ -1,0 +1,36 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#PackedObsContent",
+  "title":"PackedObsContent",
+  "description":"Pseudorange and carrier phase observation for a satellite being tracked.,\nThe observations are interoperable with 3rd party receivers and conform with,\ntypical RTCM 3.1 message GPS/GLO observations.,\n,\nCarrier phase observations are not guaranteed to be aligned to the RINEX 3,\nor RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently,\npeformed.\n",
+  "type": "object",
+  "properties": {
+    "P": {"type": "integer"},
+    "L": {"$ref": "CarrierPhase.json"},
+    "D": {"$ref": "Doppler.json"},
+    "cn0": {"type": "integer"},
+    "lock": {"type": "integer"},
+    "flags": {"type": "integer"},
+    "sid": {"$ref": "GnssSignal.json"}
+  },
+  "required": [
+    "P",
+    "L",
+    "D",
+    "cn0",
+    "lock",
+    "flags",
+    "sid"
+  ]
+}

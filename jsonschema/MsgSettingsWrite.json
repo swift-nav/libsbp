@@ -1,0 +1,24 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgSettingsWrite",
+  "title":"MsgSettingsWrite",
+  "description":"The setting message writes the device configuration for a particular,\nsetting via A NULL-terminated and NULL-delimited string with contents,\n\"SECTION_SETTING\\0SETTING\\0VALUE\\0\" where the '\\0' escape sequence denotes ,\nthe NULL character and where quotation marks are omitted. A device will,\nonly process to this message when it is received from sender ID 0x42.,\nAn example string that could be sent to a device is,\n\"solution\\0soln_freq\\010\\0\".\n",
+  "type": "object",
+  "properties": {
+    "setting": {"type": "string"}
+  },
+  "required": [
+    "setting"
+  ]
+}

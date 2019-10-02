@@ -1,0 +1,26 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgSsrGridDefinition",
+  "title":"MsgSsrGridDefinition",
+  "description":"Based on the 3GPP proposal R2-1906781 which is in turn based on,\nOMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C\n",
+  "type": "object",
+  "properties": {
+    "header": {"$ref": "GridDefinitionHeader.json"},
+    "rle_list": {"type": "array", "items": {"type": "integer"}}
+  },
+  "required": [
+    "header",
+    "rle_list"
+  ]
+}

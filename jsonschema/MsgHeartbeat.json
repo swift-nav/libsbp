@@ -1,0 +1,24 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgHeartbeat",
+  "title":"MsgHeartbeat",
+  "description":"The heartbeat message is sent periodically to inform the host,\nor other attached devices that the system is running. It is,\nused to monitor system malfunctions. It also contains status,\nflags that indicate to the host the status of the system and,\nwhether it is operating correctly. Currently, the expected,\nheartbeat interval is 1 sec.,\n,\nThe system error flag is used to indicate that an error has,\noccurred in the system. To determine the source of the error,,\nthe remaining error flags should be inspected.\n",
+  "type": "object",
+  "properties": {
+    "flags": {"type": "integer"}
+  },
+  "required": [
+    "flags"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgSsrPhaseBiases",
+  "title":"MsgSsrPhaseBiases",
+  "description":"The precise phase biases message contains the biases,\nto be added to the carrier phase of the corresponding,\nsignal to get corrected carrier phase measurement, as,\nwell as the satellite yaw angle to be applied to compute,\nthe phase wind-up correction.,\nIt is typically an equivalent to the 1265 RTCM message types\n",
+  "type": "object",
+  "properties": {
+    "time": {"$ref": "GpsTimeSec.json"},
+    "sid": {"$ref": "GnssSignal.json"},
+    "update_interval": {"type": "integer"},
+    "iod_ssr": {"type": "integer"},
+    "dispersive_bias": {"type": "integer"},
+    "mw_consistency": {"type": "integer"},
+    "yaw": {"type": "integer"},
+    "yaw_rate": {"type": "integer"},
+    "biases": {"type": "array", "items": {"$ref": "PhaseBiasesContent.json"}}
+  },
+  "required": [
+    "time",
+    "sid",
+    "update_interval",
+    "iod_ssr",
+    "dispersive_bias",
+    "mw_consistency",
+    "yaw",
+    "yaw_rate",
+    "biases"
+  ]
+}

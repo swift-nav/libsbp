@@ -1,0 +1,24 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgStmUniqueIdResp",
+  "title":"MsgStmUniqueIdResp",
+  "description":"This message reads the device's hardcoded unique ID. The host,\nrequests the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device,\nresponds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique,\nID in the payload..\n",
+  "type": "object",
+  "properties": {
+    "stm_id": {"type": "array", "items": {"type": "integer"}}
+  },
+  "required": [
+    "stm_id"
+  ]
+}

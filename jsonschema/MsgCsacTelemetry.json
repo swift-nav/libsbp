@@ -1,0 +1,26 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgCsacTelemetry",
+  "title":"MsgCsacTelemetry",
+  "description":"The CSAC telemetry message has an implementation defined telemetry string,\nfrom a device. It is not produced or available on general Swift Products.,\nIt is intended to be a low rate message for status purposes.\n",
+  "type": "object",
+  "properties": {
+    "id": {"type": "integer"},
+    "telemetry": {"type": "string"}
+  },
+  "required": [
+    "id",
+    "telemetry"
+  ]
+}

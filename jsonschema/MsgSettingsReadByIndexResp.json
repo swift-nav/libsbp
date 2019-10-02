@@ -1,0 +1,26 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgSettingsReadByIndexResp",
+  "title":"MsgSettingsReadByIndexResp",
+  "description":"The settings message that reports the value of a setting at an index.,\n,\nIn the string field, it reports NULL-terminated and delimited string,\nwith contents \"SECTION_SETTING\\0SETTING\\0VALUE\\0FORMAT_TYPE\\0\". where,\nthe '\\0' escape sequence denotes the NULL character and where quotation,\nmarks are omitted. The FORMAT_TYPE field is optional and denotes,\npossible string values of the setting as a hint to the user. If,\nincluded, the format type portion of the string has the format,\n\"enum:value1,value2,value3\". An example string that could be sent from,\nthe device is \"simulator\\0enabled\\0True\\0enum:True,False\\0\"\n",
+  "type": "object",
+  "properties": {
+    "index": {"type": "integer"},
+    "setting": {"type": "string"}
+  },
+  "required": [
+    "index",
+    "setting"
+  ]
+}

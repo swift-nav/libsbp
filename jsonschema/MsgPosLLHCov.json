@@ -1,0 +1,46 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgPosLLHCov",
+  "title":"MsgPosLLHCov",
+  "description":"This position solution message reports the absolute geodetic,\ncoordinates and the status (single point vs pseudo-absolute RTK),\nof the position solution as well as the upper triangle of the 3x3,\ncovariance matrix.  The position information and Fix Mode flags should,\nfollow the MSG_POS_LLH message.  Since the covariance matrix is computed,\nin the local-level North, East, Down frame, the covariance terms follow,\nwith that convention. Thus, covariances are reported against the \"downward\",\nmeasurement and care should be taken with the sign convention.\n",
+  "type": "object",
+  "properties": {
+    "tow": {"type": "integer"},
+    "lat": {"type": "number"},
+    "lon": {"type": "number"},
+    "height": {"type": "number"},
+    "cov_n_n": {"type": "number"},
+    "cov_n_e": {"type": "number"},
+    "cov_n_d": {"type": "number"},
+    "cov_e_e": {"type": "number"},
+    "cov_e_d": {"type": "number"},
+    "cov_d_d": {"type": "number"},
+    "n_sats": {"type": "integer"},
+    "flags": {"type": "integer"}
+  },
+  "required": [
+    "tow",
+    "lat",
+    "lon",
+    "height",
+    "cov_n_n",
+    "cov_n_e",
+    "cov_n_d",
+    "cov_e_e",
+    "cov_e_d",
+    "cov_d_d",
+    "n_sats",
+    "flags"
+  ]
+}

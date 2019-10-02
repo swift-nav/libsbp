@@ -1,0 +1,26 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgFrontEndGain",
+  "title":"MsgFrontEndGain",
+  "description":"This message describes the gain of each channel in the receiver frontend. Each ,\ngain is encoded as a non-dimensional percentage relative to the maximum range  ,\npossible for the gain stage of the frontend. By convention, each gain array ,\nhas 8 entries and the index of the array corresponding to the index of the rf channel ,\nin the frontend. A gain of 127 percent encodes that rf channel is not present in the hardware.,\nA negative value implies an error for the particular gain stage as reported by the frontend.\n",
+  "type": "object",
+  "properties": {
+    "rf_gain": {"type": "array", "items": {"type": "integer"}},
+    "if_gain": {"type": "array", "items": {"type": "integer"}}
+  },
+  "required": [
+    "rf_gain",
+    "if_gain"
+  ]
+}

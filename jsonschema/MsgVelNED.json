@@ -1,0 +1,38 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgVelNED",
+  "title":"MsgVelNED",
+  "description":"This message reports the velocity in local North East Down (NED),\ncoordinates. The NED coordinate system is defined as the local WGS84,\ntangent plane centered at the current position. The full GPS time is,\ngiven by the preceding MSG_GPS_TIME with the matching time-of-week (tow).\n",
+  "type": "object",
+  "properties": {
+    "tow": {"type": "integer"},
+    "n": {"type": "integer"},
+    "e": {"type": "integer"},
+    "d": {"type": "integer"},
+    "h_accuracy": {"type": "integer"},
+    "v_accuracy": {"type": "integer"},
+    "n_sats": {"type": "integer"},
+    "flags": {"type": "integer"}
+  },
+  "required": [
+    "tow",
+    "n",
+    "e",
+    "d",
+    "h_accuracy",
+    "v_accuracy",
+    "n_sats",
+    "flags"
+  ]
+}

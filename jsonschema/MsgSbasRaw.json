@@ -1,0 +1,30 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgSbasRaw",
+  "title":"MsgSbasRaw",
+  "description":"This message is sent once per second per SBAS satellite. ME checks the,\nparity of the data block and sends only blocks that pass the check.\n",
+  "type": "object",
+  "properties": {
+    "sid": {"$ref": "GnssSignal.json"},
+    "tow": {"type": "integer"},
+    "message_type": {"type": "integer"},
+    "data": {"type": "array", "items": {"type": "integer"}}
+  },
+  "required": [
+    "sid",
+    "tow",
+    "message_type",
+    "data"
+  ]
+}

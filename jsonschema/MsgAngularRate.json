@@ -1,0 +1,32 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgAngularRate",
+  "title":"MsgAngularRate",
+  "description":"This message reports the orientation rates in the vehicle body frame. ,\nThe values represent the measurements a strapped down gyroscope would ,\nmake and are not equivalent to the time derivative of the Euler angles.,\nThe orientation and origin of the user frame is specified via device settings.,\nBy convention, the vehicle x-axis is expected to be aligned with the forward,\ndirection, while the vehicle y-axis is expected to be aligned with the right,\ndirection, and the vehicle z-axis should be aligned with the down direction.,\nThis message will only be available in future INS versions of Swift Products ,\nand is not produced by Piksi Multi or Duro.\n",
+  "type": "object",
+  "properties": {
+    "tow": {"type": "integer"},
+    "x": {"type": "integer"},
+    "y": {"type": "integer"},
+    "z": {"type": "integer"},
+    "flags": {"type": "integer"}
+  },
+  "required": [
+    "tow",
+    "x",
+    "y",
+    "z",
+    "flags"
+  ]
+}
