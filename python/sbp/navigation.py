@@ -3155,6 +3155,128 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
     d.update(j)
     return d
     
+SBP_MSG_PROTECTION_LEVEL = 0x0216
+class MsgProtectionLevel(SBP):
+  """SBP class for message MSG_PROTECTION_LEVEL (0x0216).
+
+  You can have MSG_PROTECTION_LEVEL inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the local vertical and horizontal protection levels
+associated with a given LLH position solution. The full GPS time is given
+by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS Time of Week
+  vpl : int
+    Vertical protection level
+  hpl : int
+    Horizontal protection level
+  lat : double
+    Latitude
+  lon : double
+    Longitude
+  height : double
+    Height
+  flags : int
+    Status flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'vpl' / construct.Int16ul,
+                   'hpl' / construct.Int16ul,
+                   'lat' / construct.Float64l,
+                   'lon' / construct.Float64l,
+                   'height' / construct.Float64l,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'tow',
+               'vpl',
+               'hpl',
+               'lat',
+               'lon',
+               'height',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgProtectionLevel,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgProtectionLevel, self).__init__()
+      self.msg_type = SBP_MSG_PROTECTION_LEVEL
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.vpl = kwargs.pop('vpl')
+      self.hpl = kwargs.pop('hpl')
+      self.lat = kwargs.pop('lat')
+      self.lon = kwargs.pop('lon')
+      self.height = kwargs.pop('height')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgProtectionLevel.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgProtectionLevel(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgProtectionLevel._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgProtectionLevel._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgProtectionLevel._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgProtectionLevel, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x0102: MsgGPSTime,
@@ -3181,4 +3303,5 @@ msg_classes = {
   0x0204: MsgVelECEFDepA,
   0x0205: MsgVelNEDDepA,
   0x0207: MsgBaselineHeadingDepA,
+  0x0216: MsgProtectionLevel,
 }
