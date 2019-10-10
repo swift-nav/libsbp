@@ -1370,3 +1370,51 @@ definitions:
                     values:
                         - 0: Float RTK
                         - 1: Fixed RTK
+
+ - MSG_PROTECTION_LEVEL:
+    public: false
+    id: 0x0216
+    short_desc: Computed Position and Protection Level
+    desc: |
+      This message reports the local vertical and horizontal protection levels
+      associated with a given LLH position solution. The full GPS time is given
+      by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - vpl:
+              type: u16
+              units: cm
+              desc: Vertical protection level
+          - hpl:
+              type: u16
+              units: cm
+              desc: Horizontal protection level
+          - lat:
+              type: double
+              units: deg
+              desc: Latitude
+          - lon:
+              type: double
+              units: deg
+              desc: Longitude
+          - height:
+              type: double
+              units: m
+              desc: Height
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 0-2:
+                    desc: Target Integrity Risk (TIR) Level
+                    values:
+                        - 0: Safe state, protection level shall not be used for safety-critical application
+                        - 1: TIR Level 1
+                        - 2: TIR Level 2
+                        - 3: TIR Level 3
+                - 3-7:
+                    desc: Reserved
+
