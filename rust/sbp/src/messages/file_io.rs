@@ -12,7 +12,6 @@
 // Automatically generated from yaml/swiftnav/sbp/file_io.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 //! Messages for using device's onboard flash filesystem
 //! functionality. This allows data to be stored persistently in the
 //! device's program flash with wear-levelling using a simple filesystem
@@ -27,6 +26,44 @@ extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 
+/// File read from the file system (host <= device)
+///
+/// The file read message reads a certain length (up to 255 bytes)
+/// from a given offset into a file, and returns the data in a
+/// message where the message length field indicates how many bytes
+/// were succesfully read. The sequence number in the response is
+/// preserved from the request.
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgFileioReadResp {
+    pub sender_id: Option<u16>,
+    /// Read sequence number
+    pub sequence: u32,
+    /// Contents of read file
+    pub contents: Vec<u8>,
+}
+
+impl MsgFileioReadResp {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadResp, ::Error> {
+        Ok(MsgFileioReadResp {
+            sender_id: None,
+            sequence: _buf.read_u32::<LittleEndian>()?,
+            contents: ::parser::read_u8_array(_buf)?,
+        })
+    }
+}
+impl super::SBPMessage for MsgFileioReadResp {
+    const MSG_ID: u16 = 163;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 /// Read file from the file system (host => device)
 ///
@@ -76,47 +113,6 @@ impl super::SBPMessage for MsgFileioReadReq {
     }
 }
 
-
-/// File read from the file system (host <= device)
-///
-/// The file read message reads a certain length (up to 255 bytes)
-/// from a given offset into a file, and returns the data in a
-/// message where the message length field indicates how many bytes
-/// were succesfully read. The sequence number in the response is
-/// preserved from the request.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgFileioReadResp {
-    pub sender_id: Option<u16>,
-    /// Read sequence number
-    pub sequence: u32,
-    /// Contents of read file
-    pub contents: Vec<u8>,
-}
-
-impl MsgFileioReadResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadResp, ::Error> {
-        Ok(MsgFileioReadResp {
-            sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
-            contents: ::parser::read_u8_array(_buf)?,
-        })
-    }
-}
-impl super::SBPMessage for MsgFileioReadResp {
-    const MSG_ID: u16 = 163;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-
 /// List files in a directory (host => device)
 ///
 /// The read directory message lists the files in a directory on the
@@ -164,7 +160,6 @@ impl super::SBPMessage for MsgFileioReadDirReq {
     }
 }
 
-
 /// Files listed in a directory (host <= device)
 ///
 /// The read directory message lists the files in a directory on the
@@ -205,6 +200,41 @@ impl super::SBPMessage for MsgFileioReadDirResp {
     }
 }
 
+/// File written to (host <= device)
+///
+/// The file write message writes a certain length (up to 255 bytes)
+/// of data to a file at a given offset. The message is a copy of the
+/// original MSG_FILEIO_WRITE_REQ message to check integrity of the
+/// write. The sequence number in the response is preserved from the
+/// request.
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgFileioWriteResp {
+    pub sender_id: Option<u16>,
+    /// Write sequence number
+    pub sequence: u32,
+}
+
+impl MsgFileioWriteResp {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteResp, ::Error> {
+        Ok(MsgFileioWriteResp {
+            sender_id: None,
+            sequence: _buf.read_u32::<LittleEndian>()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgFileioWriteResp {
+    const MSG_ID: u16 = 171;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 /// Delete a file from the file system (host => device)
 ///
@@ -240,7 +270,6 @@ impl super::SBPMessage for MsgFileioRemove {
         self.sender_id = Some(new_id);
     }
 }
-
 
 /// Write to file (host => device)
 ///
@@ -290,44 +319,6 @@ impl super::SBPMessage for MsgFileioWriteReq {
     }
 }
 
-
-/// File written to (host <= device)
-///
-/// The file write message writes a certain length (up to 255 bytes)
-/// of data to a file at a given offset. The message is a copy of the
-/// original MSG_FILEIO_WRITE_REQ message to check integrity of the
-/// write. The sequence number in the response is preserved from the
-/// request.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgFileioWriteResp {
-    pub sender_id: Option<u16>,
-    /// Write sequence number
-    pub sequence: u32,
-}
-
-impl MsgFileioWriteResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteResp, ::Error> {
-        Ok(MsgFileioWriteResp {
-            sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
-        })
-    }
-}
-impl super::SBPMessage for MsgFileioWriteResp {
-    const MSG_ID: u16 = 171;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-
 /// Request advice on the optimal configuration for FileIO.
 ///
 /// Requests advice on the optimal configuration for a FileIO
@@ -362,7 +353,6 @@ impl super::SBPMessage for MsgFileioConfigReq {
         self.sender_id = Some(new_id);
     }
 }
-
 
 /// Response with advice on the optimal configuration for FileIO.
 

@@ -12,14 +12,12 @@
 // Automatically generated from yaml/swiftnav/sbp/ssr.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 //! Precise State Space Representation (SSR) corrections format
 
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
-
 
 /// SSR code biases corrections for a particular satellite.
 ///
@@ -58,7 +56,6 @@ impl CodeBiasesContent {
         Ok(v)
     }
 }
-
 
 /// SSR phase biases corrections for a particular satellite.
 ///
@@ -111,7 +108,6 @@ impl PhaseBiasesContent {
     }
 }
 
-
 /// Header for MSG_SSR_STEC_CORRECTION message
 ///
 /// A full set of STEC information will likely span multiple SBP
@@ -160,7 +156,6 @@ impl STECHeader {
         Ok(v)
     }
 }
-
 
 /// Header for MSG_SSR_GRIDDED_CORRECTION
 ///
@@ -218,7 +213,6 @@ impl GriddedCorrectionHeader {
     }
 }
 
-
 /// None
 ///
 /// STEC polynomial for the given satellite.
@@ -260,7 +254,6 @@ impl STECSatElement {
     }
 }
 
-
 /// None
 ///
 /// Troposphere vertical delays at the grid point.
@@ -301,7 +294,6 @@ impl TroposphericDelayCorrection {
     }
 }
 
-
 /// None
 ///
 /// STEC residual for the given satellite at the grid point.
@@ -338,7 +330,6 @@ impl STECResidual {
         Ok(v)
     }
 }
-
 
 /// Correction data for a single grid point.
 ///
@@ -380,7 +371,6 @@ impl GridElement {
         Ok(v)
     }
 }
-
 
 /// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
 ///
@@ -436,84 +426,6 @@ impl GridDefinitionHeader {
         Ok(v)
     }
 }
-
-
-/// Precise orbit and clock correction
-///
-/// The precise orbit and clock correction message is
-/// to be applied as a delta correction to broadcast
-/// ephemeris and is typically an equivalent to the 1060
-/// and 1066 RTCM message types
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgSsrOrbitClock {
-    pub sender_id: Option<u16>,
-    /// GNSS reference time of the correction
-    pub time: GPSTimeSec,
-    /// GNSS signal identifier (16 bit)
-    pub sid: GnssSignal,
-    /// Update interval between consecutive corrections. Encoded following RTCM
-    /// DF391 specification.
-    pub update_interval: u8,
-    /// IOD of the SSR correction. A change of Issue Of Data SSR is used to
-    /// indicate a change in the SSR generating configuration
-    pub iod_ssr: u8,
-    /// Issue of broadcast ephemeris data or IODCRC (Beidou)
-    pub iod: u32,
-    /// Orbit radial delta correction
-    pub radial: i32,
-    /// Orbit along delta correction
-    pub along: i32,
-    /// Orbit along delta correction
-    pub cross: i32,
-    /// Velocity of orbit radial delta correction
-    pub dot_radial: i32,
-    /// Velocity of orbit along delta correction
-    pub dot_along: i32,
-    /// Velocity of orbit cross delta correction
-    pub dot_cross: i32,
-    /// C0 polynomial coefficient for correction of broadcast satellite clock
-    pub c0: i32,
-    /// C1 polynomial coefficient for correction of broadcast satellite clock
-    pub c1: i32,
-    /// C2 polynomial coefficient for correction of broadcast satellite clock
-    pub c2: i32,
-}
-
-impl MsgSsrOrbitClock {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrOrbitClock, ::Error> {
-        Ok(MsgSsrOrbitClock {
-            sender_id: None,
-            time: GPSTimeSec::parse(_buf)?,
-            sid: GnssSignal::parse(_buf)?,
-            update_interval: _buf.read_u8()?,
-            iod_ssr: _buf.read_u8()?,
-            iod: _buf.read_u32::<LittleEndian>()?,
-            radial: _buf.read_i32::<LittleEndian>()?,
-            along: _buf.read_i32::<LittleEndian>()?,
-            cross: _buf.read_i32::<LittleEndian>()?,
-            dot_radial: _buf.read_i32::<LittleEndian>()?,
-            dot_along: _buf.read_i32::<LittleEndian>()?,
-            dot_cross: _buf.read_i32::<LittleEndian>()?,
-            c0: _buf.read_i32::<LittleEndian>()?,
-            c1: _buf.read_i32::<LittleEndian>()?,
-            c2: _buf.read_i32::<LittleEndian>()?,
-        })
-    }
-}
-impl super::SBPMessage for MsgSsrOrbitClock {
-    const MSG_ID: u16 = 1501;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
 
 /// Precise orbit and clock correction
 ///
@@ -591,6 +503,81 @@ impl super::SBPMessage for MsgSsrOrbitClockDepA {
     }
 }
 
+/// Precise orbit and clock correction
+///
+/// The precise orbit and clock correction message is
+/// to be applied as a delta correction to broadcast
+/// ephemeris and is typically an equivalent to the 1060
+/// and 1066 RTCM message types
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgSsrOrbitClock {
+    pub sender_id: Option<u16>,
+    /// GNSS reference time of the correction
+    pub time: GPSTimeSec,
+    /// GNSS signal identifier (16 bit)
+    pub sid: GnssSignal,
+    /// Update interval between consecutive corrections. Encoded following RTCM
+    /// DF391 specification.
+    pub update_interval: u8,
+    /// IOD of the SSR correction. A change of Issue Of Data SSR is used to
+    /// indicate a change in the SSR generating configuration
+    pub iod_ssr: u8,
+    /// Issue of broadcast ephemeris data or IODCRC (Beidou)
+    pub iod: u32,
+    /// Orbit radial delta correction
+    pub radial: i32,
+    /// Orbit along delta correction
+    pub along: i32,
+    /// Orbit along delta correction
+    pub cross: i32,
+    /// Velocity of orbit radial delta correction
+    pub dot_radial: i32,
+    /// Velocity of orbit along delta correction
+    pub dot_along: i32,
+    /// Velocity of orbit cross delta correction
+    pub dot_cross: i32,
+    /// C0 polynomial coefficient for correction of broadcast satellite clock
+    pub c0: i32,
+    /// C1 polynomial coefficient for correction of broadcast satellite clock
+    pub c1: i32,
+    /// C2 polynomial coefficient for correction of broadcast satellite clock
+    pub c2: i32,
+}
+
+impl MsgSsrOrbitClock {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrOrbitClock, ::Error> {
+        Ok(MsgSsrOrbitClock {
+            sender_id: None,
+            time: GPSTimeSec::parse(_buf)?,
+            sid: GnssSignal::parse(_buf)?,
+            update_interval: _buf.read_u8()?,
+            iod_ssr: _buf.read_u8()?,
+            iod: _buf.read_u32::<LittleEndian>()?,
+            radial: _buf.read_i32::<LittleEndian>()?,
+            along: _buf.read_i32::<LittleEndian>()?,
+            cross: _buf.read_i32::<LittleEndian>()?,
+            dot_radial: _buf.read_i32::<LittleEndian>()?,
+            dot_along: _buf.read_i32::<LittleEndian>()?,
+            dot_cross: _buf.read_i32::<LittleEndian>()?,
+            c0: _buf.read_i32::<LittleEndian>()?,
+            c1: _buf.read_i32::<LittleEndian>()?,
+            c2: _buf.read_i32::<LittleEndian>()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgSsrOrbitClock {
+    const MSG_ID: u16 = 1501;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 /// Precise code biases correction
 ///
@@ -640,7 +627,6 @@ impl super::SBPMessage for MsgSsrCodeBiases {
         self.sender_id = Some(new_id);
     }
 }
-
 
 /// Precise phase biases correction
 ///
@@ -705,7 +691,6 @@ impl super::SBPMessage for MsgSsrPhaseBiases {
     }
 }
 
-
 /// Slant Total Electron Content
 ///
 /// The STEC per space vehicle, given as polynomial approximation for
@@ -744,7 +729,6 @@ impl super::SBPMessage for MsgSsrStecCorrection {
     }
 }
 
-
 /// Gridded troposphere and STEC residuals
 ///
 /// STEC residuals are per space vehicle, tropo is not.
@@ -780,7 +764,6 @@ impl super::SBPMessage for MsgSsrGriddedCorrection {
         self.sender_id = Some(new_id);
     }
 }
-
 
 /// Definition of the grid for STEC and tropo messages
 ///

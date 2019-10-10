@@ -12,13 +12,11 @@
 // Automatically generated from yaml/swiftnav/sbp/system.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 //! Standardized system messages from Swift Navigation devices.
 
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-
 
 /// System start-up message
 ///
@@ -60,7 +58,6 @@ impl super::SBPMessage for MsgStartup {
         self.sender_id = Some(new_id);
     }
 }
-
 
 /// Status of received corrections
 ///
@@ -105,49 +102,6 @@ impl super::SBPMessage for MsgDgnssStatus {
     }
 }
 
-
-/// System heartbeat message
-///
-/// The heartbeat message is sent periodically to inform the host
-/// or other attached devices that the system is running. It is
-/// used to monitor system malfunctions. It also contains status
-/// flags that indicate to the host the status of the system and
-/// whether it is operating correctly. Currently, the expected
-/// heartbeat interval is 1 sec.
-///
-/// The system error flag is used to indicate that an error has
-/// occurred in the system. To determine the source of the error,
-/// the remaining error flags should be inspected.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgHeartbeat {
-    pub sender_id: Option<u16>,
-    /// Status flags
-    pub flags: u32,
-}
-
-impl MsgHeartbeat {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgHeartbeat, ::Error> {
-        Ok(MsgHeartbeat {
-            sender_id: None,
-            flags: _buf.read_u32::<LittleEndian>()?,
-        })
-    }
-}
-impl super::SBPMessage for MsgHeartbeat {
-    const MSG_ID: u16 = 65535;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-
 /// Inertial Navigation System status message
 ///
 /// The INS status message describes the state of the operation
@@ -180,7 +134,6 @@ impl super::SBPMessage for MsgInsStatus {
         self.sender_id = Some(new_id);
     }
 }
-
 
 /// Experimental telemetry message
 ///
@@ -220,7 +173,6 @@ impl super::SBPMessage for MsgCsacTelemetry {
     }
 }
 
-
 /// Experimental telemetry message labels
 ///
 /// The CSAC telemetry message provides labels for each member of the string
@@ -249,6 +201,47 @@ impl MsgCsacTelemetryLabels {
 }
 impl super::SBPMessage for MsgCsacTelemetryLabels {
     const MSG_ID: u16 = 65285;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// System heartbeat message
+///
+/// The heartbeat message is sent periodically to inform the host
+/// or other attached devices that the system is running. It is
+/// used to monitor system malfunctions. It also contains status
+/// flags that indicate to the host the status of the system and
+/// whether it is operating correctly. Currently, the expected
+/// heartbeat interval is 1 sec.
+///
+/// The system error flag is used to indicate that an error has
+/// occurred in the system. To determine the source of the error,
+/// the remaining error flags should be inspected.
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgHeartbeat {
+    pub sender_id: Option<u16>,
+    /// Status flags
+    pub flags: u32,
+}
+
+impl MsgHeartbeat {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgHeartbeat, ::Error> {
+        Ok(MsgHeartbeat {
+            sender_id: None,
+            flags: _buf.read_u32::<LittleEndian>()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgHeartbeat {
+    const MSG_ID: u16 = 65535;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id

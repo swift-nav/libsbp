@@ -12,13 +12,11 @@
 // Automatically generated from yaml/swiftnav/sbp/orientation.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 //! Orientation Messages
 
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-
 
 /// Heading relative to True North
 ///
@@ -63,7 +61,6 @@ impl super::SBPMessage for MsgBaselineHeading {
         self.sender_id = Some(new_id);
     }
 }
-
 
 /// Quaternion 4 component vector
 ///
@@ -128,7 +125,6 @@ impl super::SBPMessage for MsgOrientQuat {
     }
 }
 
-
 /// Euler angles
 ///
 /// This message reports the yaw, pitch, and roll angles of the vehicle body frame.
@@ -185,7 +181,6 @@ impl super::SBPMessage for MsgOrientEuler {
         self.sender_id = Some(new_id);
     }
 }
-
 
 /// Vehicle Body Frame instantaneous angular rates
 ///

@@ -12,7 +12,6 @@
 // Automatically generated from yaml/swiftnav/sbp/logging.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 //! Logging and debugging messages from the device.
 //!
 
@@ -20,6 +19,37 @@ extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 
+/// Deprecated
+///
+/// Deprecated.
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgPrintDep {
+    pub sender_id: Option<u16>,
+    /// Human-readable string
+    pub text: String,
+}
+
+impl MsgPrintDep {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPrintDep, ::Error> {
+        Ok(MsgPrintDep {
+            sender_id: None,
+            text: ::parser::read_string(_buf)?,
+        })
+    }
+}
+impl super::SBPMessage for MsgPrintDep {
+    const MSG_ID: u16 = 16;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 /// Plaintext logging messages with levels
 ///
@@ -58,7 +88,6 @@ impl super::SBPMessage for MsgLog {
     }
 }
 
-
 /// Wrapper for FWD a separate stream of information over SBP
 ///
 /// This message provides the ability to forward messages over SBP.  This may take the form
@@ -93,39 +122,6 @@ impl MsgFwd {
 }
 impl super::SBPMessage for MsgFwd {
     const MSG_ID: u16 = 1026;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-
-/// Deprecated
-///
-/// Deprecated.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgPrintDep {
-    pub sender_id: Option<u16>,
-    /// Human-readable string
-    pub text: String,
-}
-
-impl MsgPrintDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPrintDep, ::Error> {
-        Ok(MsgPrintDep {
-            sender_id: None,
-            text: ::parser::read_string(_buf)?,
-        })
-    }
-}
-impl super::SBPMessage for MsgPrintDep {
-    const MSG_ID: u16 = 16;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id

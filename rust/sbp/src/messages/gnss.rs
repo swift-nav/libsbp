@@ -12,13 +12,11 @@
 // Automatically generated from yaml/swiftnav/sbp/gnss.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 //! Various structs shared between modules
 
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-
 
 /// Represents all the relevant information about the signal
 ///
@@ -58,7 +56,6 @@ impl GnssSignal {
     }
 }
 
-
 /// Space vehicle identifier
 ///
 /// A (Constellation ID, satellite ID) tuple that uniquely identifies
@@ -96,7 +93,6 @@ impl SvId {
         Ok(v)
     }
 }
-
 
 /// Deprecated
 ///
@@ -140,7 +136,6 @@ impl GnssSignalDep {
     }
 }
 
-
 /// Millisecond-accurate GPS time
 ///
 /// A wire-appropriate GPS time, defined as the number of
@@ -180,7 +175,6 @@ impl GPSTimeDep {
     }
 }
 
-
 /// Whole second accurate GPS time
 ///
 /// A GPS time, defined as the number of
@@ -219,7 +213,6 @@ impl GPSTimeSec {
         Ok(v)
     }
 }
-
 
 /// Nanosecond-accurate receiver clock time
 ///
@@ -264,7 +257,6 @@ impl GPSTime {
         Ok(v)
     }
 }
-
 
 /// GNSS carrier phase measurement.
 ///

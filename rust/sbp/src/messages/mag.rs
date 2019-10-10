@@ -12,13 +12,11 @@
 // Automatically generated from yaml/swiftnav/sbp/mag.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 //! Magnetometer (mag) messages.
 
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-
 
 /// Raw magnetometer data
 ///
