@@ -12,7 +12,7 @@
 // Automatically generated from yaml/swiftnav/sbp/settings.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
+//!
 //! Messages for reading, writing, and discovering device settings. Settings
 //! with a "string" field have multiple values in this field delimited with a
 //! null character (the c style null terminator).  For instance, when querying
@@ -31,15 +31,10 @@
 //! See the "Software Settings Manual" on support.swiftnav.com for detailed
 //! documentation about all settings and sections available for each Swift
 //! firmware version. Settings manuals are available for each firmware version
-//! at the following link:
-//! @@https://support.swiftnav.
-//! com/customer/en/portal/articles/2628580-piksi-multi-specifications#settings[Piksi Multi
-//! Specifications].
+//! at the following link: @@https://support.swiftnav.com/customer/en/portal/articles/2628580-piksi-multi-specifications#settings[Piksi Multi Specifications].
 //! The latest settings document is also available at the following link:
 //! @@http://swiftnav.com/latest/piksi-multi-settings[Latest settings document] .
-//! See lastly
-//! @@https://github.com/swift-nav/piksi_tools/blob/master/piksi_tools/settings.py[settings.
-//! py] ,
+//! See lastly @@https://github.com/swift-nav/piksi_tools/blob/master/piksi_tools/settings.py[settings.py] ,
 //! the open source python command line utility for reading, writing, and
 //! saving settings in the piksi_tools repository on github as a helpful
 //! reference and example.
@@ -48,36 +43,6 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-
-
-/// Save settings to flash (host => device)
-///
-/// The save settings message persists the device's current settings
-/// configuration to its onboard flash memory file system.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgSettingsSave {
-    pub sender_id: Option<u16>,
-}
-
-impl MsgSettingsSave {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsSave, ::Error> {
-        Ok(MsgSettingsSave { sender_id: None })
-    }
-}
-impl super::SBPMessage for MsgSettingsSave {
-    const MSG_ID: u16 = 161;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
 
 /// Write device configuration settings (host => device)
 ///
@@ -118,39 +83,24 @@ impl super::SBPMessage for MsgSettingsWrite {
     }
 }
 
-
-/// Acknowledgement with status of MSG_SETTINGS_WRITE
+/// Save settings to flash (host => device)
 ///
-/// Return the status of a write request with the new value of the
-/// setting.  If the requested value is rejected, the current value
-/// will be returned. The string field is a NULL-terminated and NULL-delimited
-/// string with contents "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0'
-/// escape sequence denotes the NULL character and where quotation marks
-/// are omitted. An example string that could be sent from device is
-/// "solution\0soln_freq\010\0".
+/// The save settings message persists the device's current settings
+/// configuration to its onboard flash memory file system.
 ///
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgSettingsWriteResp {
+pub struct MsgSettingsSave {
     pub sender_id: Option<u16>,
-    /// Write status
-    pub status: u8,
-    /// A NULL-terminated and delimited string with contents
-    /// "SECTION_SETTING\0SETTING\0VALUE\0"
-    pub setting: String,
 }
 
-impl MsgSettingsWriteResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWriteResp, ::Error> {
-        Ok(MsgSettingsWriteResp {
-            sender_id: None,
-            status: _buf.read_u8()?,
-            setting: ::parser::read_string(_buf)?,
-        })
+impl MsgSettingsSave {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsSave, ::Error> {
+        Ok(MsgSettingsSave { sender_id: None })
     }
 }
-impl super::SBPMessage for MsgSettingsWriteResp {
-    const MSG_ID: u16 = 175;
+impl super::SBPMessage for MsgSettingsSave {
+    const MSG_ID: u16 = 161;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -161,6 +111,40 @@ impl super::SBPMessage for MsgSettingsWriteResp {
     }
 }
 
+/// Read setting by direct index (host => device)
+///
+/// The settings message for iterating through the settings
+/// values. A device will respond to this message with a
+/// "MSG_SETTINGS_READ_BY_INDEX_RESP".
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgSettingsReadByIndexReq {
+    pub sender_id: Option<u16>,
+    /// An index into the device settings, with values ranging from 0 to
+    /// length(settings)
+    pub index: u16,
+}
+
+impl MsgSettingsReadByIndexReq {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexReq, ::Error> {
+        Ok(MsgSettingsReadByIndexReq {
+            sender_id: None,
+            index: _buf.read_u16::<LittleEndian>()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgSettingsReadByIndexReq {
+    const MSG_ID: u16 = 162;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 /// Read device configuration settings (host => device)
 ///
@@ -202,7 +186,6 @@ impl super::SBPMessage for MsgSettingsReadReq {
     }
 }
 
-
 /// Read device configuration settings (host <= device)
 ///
 /// The setting message wich which the device responds after a
@@ -242,32 +225,23 @@ impl super::SBPMessage for MsgSettingsReadResp {
     }
 }
 
-
-/// Read setting by direct index (host => device)
+/// Finished reading settings (host <= device)
 ///
-/// The settings message for iterating through the settings
-/// values. A device will respond to this message with a
-/// "MSG_SETTINGS_READ_BY_INDEX_RESP".
+/// The settings message for indicating end of the settings values.
 ///
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgSettingsReadByIndexReq {
+pub struct MsgSettingsReadByIndexDone {
     pub sender_id: Option<u16>,
-    /// An index into the device settings, with values ranging from 0 to
-    /// length(settings)
-    pub index: u16,
 }
 
-impl MsgSettingsReadByIndexReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexReq, ::Error> {
-        Ok(MsgSettingsReadByIndexReq {
-            sender_id: None,
-            index: _buf.read_u16::<LittleEndian>()?,
-        })
+impl MsgSettingsReadByIndexDone {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexDone, ::Error> {
+        Ok(MsgSettingsReadByIndexDone { sender_id: None })
     }
 }
-impl super::SBPMessage for MsgSettingsReadByIndexReq {
-    const MSG_ID: u16 = 162;
+impl super::SBPMessage for MsgSettingsReadByIndexDone {
+    const MSG_ID: u16 = 166;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -277,7 +251,6 @@ impl super::SBPMessage for MsgSettingsReadByIndexReq {
         self.sender_id = Some(new_id);
     }
 }
-
 
 /// Read setting by direct index (host <= device)
 ///
@@ -325,35 +298,6 @@ impl super::SBPMessage for MsgSettingsReadByIndexResp {
     }
 }
 
-
-/// Finished reading settings (host <= device)
-///
-/// The settings message for indicating end of the settings values.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgSettingsReadByIndexDone {
-    pub sender_id: Option<u16>,
-}
-
-impl MsgSettingsReadByIndexDone {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexDone, ::Error> {
-        Ok(MsgSettingsReadByIndexDone { sender_id: None })
-    }
-}
-impl super::SBPMessage for MsgSettingsReadByIndexDone {
-    const MSG_ID: u16 = 166;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-
 /// Register setting and default value (device => host)
 ///
 /// This message registers the presence and default value of a setting
@@ -389,6 +333,47 @@ impl super::SBPMessage for MsgSettingsRegister {
     }
 }
 
+/// Acknowledgement with status of MSG_SETTINGS_WRITE
+///
+/// Return the status of a write request with the new value of the
+/// setting.  If the requested value is rejected, the current value
+/// will be returned. The string field is a NULL-terminated and NULL-delimited
+/// string with contents "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0'
+/// escape sequence denotes the NULL character and where quotation marks
+/// are omitted. An example string that could be sent from device is
+/// "solution\0soln_freq\010\0".
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgSettingsWriteResp {
+    pub sender_id: Option<u16>,
+    /// Write status
+    pub status: u8,
+    /// A NULL-terminated and delimited string with contents
+    /// "SECTION_SETTING\0SETTING\0VALUE\0"
+    pub setting: String,
+}
+
+impl MsgSettingsWriteResp {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWriteResp, ::Error> {
+        Ok(MsgSettingsWriteResp {
+            sender_id: None,
+            status: _buf.read_u8()?,
+            setting: ::parser::read_string(_buf)?,
+        })
+    }
+}
+impl super::SBPMessage for MsgSettingsWriteResp {
+    const MSG_ID: u16 = 175;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 /// Register setting and default value (device <= host)
 ///

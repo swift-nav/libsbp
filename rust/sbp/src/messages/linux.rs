@@ -12,14 +12,12 @@
 // Automatically generated from yaml/swiftnav/sbp/linux.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 //! Linux state monitoring.
 //!
 
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-
 
 /// List CPU state on the system
 ///
@@ -66,7 +64,6 @@ impl super::SBPMessage for MsgLinuxCpuState {
     }
 }
 
-
 /// List CPU state on the system
 ///
 /// This message indicates the process state of the top 10 heaviest
@@ -111,7 +108,6 @@ impl super::SBPMessage for MsgLinuxMemState {
         self.sender_id = Some(new_id);
     }
 }
-
 
 /// CPU, Memory and Process Starts/Stops
 ///
@@ -159,7 +155,6 @@ impl super::SBPMessage for MsgLinuxSysState {
         self.sender_id = Some(new_id);
     }
 }
-
 
 /// A list of processes with high socket counts
 ///
@@ -211,7 +206,6 @@ impl super::SBPMessage for MsgLinuxProcessSocketCounts {
         self.sender_id = Some(new_id);
     }
 }
-
 
 /// A list of processes with deep socket queues
 ///
@@ -271,7 +265,6 @@ impl super::SBPMessage for MsgLinuxProcessSocketQueues {
     }
 }
 
-
 /// Summary of socket usage across the system
 ///
 /// Summaries the socket usage across the system.
@@ -317,7 +310,6 @@ impl super::SBPMessage for MsgLinuxSocketUsage {
     }
 }
 
-
 /// Summary of processes with large amounts of open file descriptors
 ///
 /// Top 10 list of processes with a large number of open file descriptors.
@@ -358,7 +350,6 @@ impl super::SBPMessage for MsgLinuxProcessFdCount {
         self.sender_id = Some(new_id);
     }
 }
-
 
 /// Summary of open file descriptors on the system
 ///

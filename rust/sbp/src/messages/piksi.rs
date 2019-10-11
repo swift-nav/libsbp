@@ -12,7 +12,6 @@
 // Automatically generated from yaml/swiftnav/sbp/piksi.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 //! System health, configuration, and diagnostic messages specific to
 //! the Piksi L1 receiver, including a variety of legacy messages that
 //! may no longer be used.
@@ -22,292 +21,6 @@ extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
-
-
-/// Legacy message to load satellite almanac (host => Piksi)
-///
-/// This is a legacy message for sending and loading a satellite
-/// alamanac onto the Piksi's flash memory from the host.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgAlmanac {
-    pub sender_id: Option<u16>,
-}
-
-impl MsgAlmanac {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanac, ::Error> {
-        Ok(MsgAlmanac { sender_id: None })
-    }
-}
-impl super::SBPMessage for MsgAlmanac {
-    const MSG_ID: u16 = 105;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-
-/// Send GPS time from host (host => Piksi)
-///
-/// This message sets up timing functionality using a coarse GPS
-/// time estimate sent by the host.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgSetTime {
-    pub sender_id: Option<u16>,
-}
-
-impl MsgSetTime {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSetTime, ::Error> {
-        Ok(MsgSetTime { sender_id: None })
-    }
-}
-impl super::SBPMessage for MsgSetTime {
-    const MSG_ID: u16 = 104;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-
-/// Reset the device (host => Piksi)
-///
-/// This message from the host resets the Piksi back into the
-/// bootloader.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgReset {
-    pub sender_id: Option<u16>,
-    /// Reset flags
-    pub flags: u32,
-}
-
-impl MsgReset {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgReset, ::Error> {
-        Ok(MsgReset {
-            sender_id: None,
-            flags: _buf.read_u32::<LittleEndian>()?,
-        })
-    }
-}
-impl super::SBPMessage for MsgReset {
-    const MSG_ID: u16 = 182;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-
-/// Reset the device (host => Piksi)
-///
-/// This message from the host resets the Piksi back into the
-/// bootloader.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgResetDep {
-    pub sender_id: Option<u16>,
-}
-
-impl MsgResetDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgResetDep, ::Error> {
-        Ok(MsgResetDep { sender_id: None })
-    }
-}
-impl super::SBPMessage for MsgResetDep {
-    const MSG_ID: u16 = 178;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-
-/// Legacy message for CW interference channel (Piksi => host)
-///
-/// This is an unused legacy message for result reporting from the
-/// CW interference channel on the SwiftNAP. This message will be
-/// removed in a future release.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgCwResults {
-    pub sender_id: Option<u16>,
-}
-
-impl MsgCwResults {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCwResults, ::Error> {
-        Ok(MsgCwResults { sender_id: None })
-    }
-}
-impl super::SBPMessage for MsgCwResults {
-    const MSG_ID: u16 = 192;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-
-/// Legacy message for CW interference channel (host => Piksi)
-///
-/// This is an unused legacy message from the host for starting
-/// the CW interference channel on the SwiftNAP. This message will
-/// be removed in a future release.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgCwStart {
-    pub sender_id: Option<u16>,
-}
-
-impl MsgCwStart {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCwStart, ::Error> {
-        Ok(MsgCwStart { sender_id: None })
-    }
-}
-impl super::SBPMessage for MsgCwStart {
-    const MSG_ID: u16 = 193;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-
-/// Reset IAR filters (host => Piksi)
-///
-/// This message resets either the DGNSS Kalman filters or Integer
-/// Ambiguity Resolution (IAR) process.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgResetFilters {
-    pub sender_id: Option<u16>,
-    /// Filter flags
-    pub filter: u8,
-}
-
-impl MsgResetFilters {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgResetFilters, ::Error> {
-        Ok(MsgResetFilters {
-            sender_id: None,
-            filter: _buf.read_u8()?,
-        })
-    }
-}
-impl super::SBPMessage for MsgResetFilters {
-    const MSG_ID: u16 = 34;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-
-/// Deprecated
-///
-/// Deprecated
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgInitBaseDep {
-    pub sender_id: Option<u16>,
-}
-
-impl MsgInitBaseDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgInitBaseDep, ::Error> {
-        Ok(MsgInitBaseDep { sender_id: None })
-    }
-}
-impl super::SBPMessage for MsgInitBaseDep {
-    const MSG_ID: u16 = 35;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-
-/// State of an RTOS thread
-///
-/// The thread usage message from the device reports real-time
-/// operating system (RTOS) thread usage statistics for the named
-/// thread. The reported percentage values must be normalized.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgThreadState {
-    pub sender_id: Option<u16>,
-    /// Thread name (NULL terminated)
-    pub name: String,
-    /// Percentage cpu use for this thread. Values range from 0 - 1000 and needs
-    /// to be renormalized to 100
-    pub cpu: u16,
-    /// Free stack space for this thread
-    pub stack_free: u32,
-}
-
-impl MsgThreadState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgThreadState, ::Error> {
-        Ok(MsgThreadState {
-            sender_id: None,
-            name: ::parser::read_string_limit(_buf, 20)?,
-            cpu: _buf.read_u16::<LittleEndian>()?,
-            stack_free: _buf.read_u32::<LittleEndian>()?,
-        })
-    }
-}
-impl super::SBPMessage for MsgThreadState {
-    const MSG_ID: u16 = 23;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
 
 /// State of the UART channel
 ///
@@ -360,7 +73,6 @@ impl UARTChannel {
     }
 }
 
-
 /// base station observation message receipt period
 ///
 /// Statistics on the period of observations received from the base
@@ -409,7 +121,6 @@ impl Period {
     }
 }
 
-
 /// Receiver-to-base station latency
 ///
 /// Statistics on the latency of observations received from the base
@@ -457,6 +168,208 @@ impl Latency {
     }
 }
 
+/// Bandwidth usage measurement for a single interface.
+///
+/// The bandwidth usage for each interface can be reported
+/// within this struct and utilize multiple fields to fully
+/// specify the type of traffic that is being tracked. As
+/// either the interval of collection or the collection time
+/// may vary, both a timestamp and period field is provided,
+/// though may not necessarily be populated with a value.
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct NetworkUsage {
+    /// Duration over which the measurement was collected
+    pub duration: u64,
+    /// Number of bytes handled in total within period
+    pub total_bytes: u64,
+    /// Number of bytes transmitted within period
+    pub rx_bytes: u32,
+    /// Number of bytes received within period
+    pub tx_bytes: u32,
+    /// Interface Name
+    pub interface_name: String,
+}
+
+impl NetworkUsage {
+    pub fn parse(_buf: &mut &[u8]) -> Result<NetworkUsage, ::Error> {
+        Ok(NetworkUsage {
+            duration: _buf.read_u64::<LittleEndian>()?,
+            total_bytes: _buf.read_u64::<LittleEndian>()?,
+            rx_bytes: _buf.read_u32::<LittleEndian>()?,
+            tx_bytes: _buf.read_u32::<LittleEndian>()?,
+            interface_name: ::parser::read_string_limit(_buf, 16)?,
+        })
+    }
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<NetworkUsage>, ::Error> {
+        let mut v = Vec::new();
+        while buf.len() > 0 {
+            v.push(NetworkUsage::parse(buf)?);
+        }
+        Ok(v)
+    }
+
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<NetworkUsage>, ::Error> {
+        let mut v = Vec::new();
+        for _ in 0..n {
+            v.push(NetworkUsage::parse(buf)?);
+        }
+        Ok(v)
+    }
+}
+
+/// State of an RTOS thread
+///
+/// The thread usage message from the device reports real-time
+/// operating system (RTOS) thread usage statistics for the named
+/// thread. The reported percentage values must be normalized.
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgThreadState {
+    pub sender_id: Option<u16>,
+    /// Thread name (NULL terminated)
+    pub name: String,
+    /// Percentage cpu use for this thread. Values range from 0 - 1000 and needs
+    /// to be renormalized to 100
+    pub cpu: u16,
+    /// Free stack space for this thread
+    pub stack_free: u32,
+}
+
+impl MsgThreadState {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgThreadState, ::Error> {
+        Ok(MsgThreadState {
+            sender_id: None,
+            name: ::parser::read_string_limit(_buf, 20)?,
+            cpu: _buf.read_u16::<LittleEndian>()?,
+            stack_free: _buf.read_u32::<LittleEndian>()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgThreadState {
+    const MSG_ID: u16 = 23;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// Deprecated
+///
+/// Deprecated
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgUartStateDepa {
+    pub sender_id: Option<u16>,
+    /// State of UART A
+    pub uart_a: UARTChannel,
+    /// State of UART B
+    pub uart_b: UARTChannel,
+    /// State of UART FTDI (USB logger)
+    pub uart_ftdi: UARTChannel,
+    /// UART communication latency
+    pub latency: Latency,
+}
+
+impl MsgUartStateDepa {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUartStateDepa, ::Error> {
+        Ok(MsgUartStateDepa {
+            sender_id: None,
+            uart_a: UARTChannel::parse(_buf)?,
+            uart_b: UARTChannel::parse(_buf)?,
+            uart_ftdi: UARTChannel::parse(_buf)?,
+            latency: Latency::parse(_buf)?,
+        })
+    }
+}
+impl super::SBPMessage for MsgUartStateDepa {
+    const MSG_ID: u16 = 24;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// State of the Integer Ambiguity Resolution (IAR) process
+///
+/// This message reports the state of the Integer Ambiguity
+/// Resolution (IAR) process, which resolves unknown integer
+/// ambiguities from double-differenced carrier-phase measurements
+/// from satellite observations.
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgIarState {
+    pub sender_id: Option<u16>,
+    /// Number of integer ambiguity hypotheses remaining
+    pub num_hyps: u32,
+}
+
+impl MsgIarState {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgIarState, ::Error> {
+        Ok(MsgIarState {
+            sender_id: None,
+            num_hyps: _buf.read_u32::<LittleEndian>()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgIarState {
+    const MSG_ID: u16 = 25;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// Deprecated
+///
+/// Deprecated.
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgMaskSatelliteDep {
+    pub sender_id: Option<u16>,
+    /// Mask of systems that should ignore this satellite.
+    pub mask: u8,
+    /// GNSS signal for which the mask is applied
+    pub sid: GnssSignalDep,
+}
+
+impl MsgMaskSatelliteDep {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMaskSatelliteDep, ::Error> {
+        Ok(MsgMaskSatelliteDep {
+            sender_id: None,
+            mask: _buf.read_u8()?,
+            sid: GnssSignalDep::parse(_buf)?,
+        })
+    }
+}
+impl super::SBPMessage for MsgMaskSatelliteDep {
+    const MSG_ID: u16 = 27;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 /// State of the UART channels
 ///
@@ -510,38 +423,29 @@ impl super::SBPMessage for MsgUartState {
     }
 }
 
-
-/// Deprecated
+/// Reset IAR filters (host => Piksi)
 ///
-/// Deprecated
+/// This message resets either the DGNSS Kalman filters or Integer
+/// Ambiguity Resolution (IAR) process.
 ///
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgUartStateDepa {
+pub struct MsgResetFilters {
     pub sender_id: Option<u16>,
-    /// State of UART A
-    pub uart_a: UARTChannel,
-    /// State of UART B
-    pub uart_b: UARTChannel,
-    /// State of UART FTDI (USB logger)
-    pub uart_ftdi: UARTChannel,
-    /// UART communication latency
-    pub latency: Latency,
+    /// Filter flags
+    pub filter: u8,
 }
 
-impl MsgUartStateDepa {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUartStateDepa, ::Error> {
-        Ok(MsgUartStateDepa {
+impl MsgResetFilters {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgResetFilters, ::Error> {
+        Ok(MsgResetFilters {
             sender_id: None,
-            uart_a: UARTChannel::parse(_buf)?,
-            uart_b: UARTChannel::parse(_buf)?,
-            uart_ftdi: UARTChannel::parse(_buf)?,
-            latency: Latency::parse(_buf)?,
+            filter: _buf.read_u8()?,
         })
     }
 }
-impl super::SBPMessage for MsgUartStateDepa {
-    const MSG_ID: u16 = 24;
+impl super::SBPMessage for MsgResetFilters {
+    const MSG_ID: u16 = 34;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -552,32 +456,23 @@ impl super::SBPMessage for MsgUartStateDepa {
     }
 }
 
-
-/// State of the Integer Ambiguity Resolution (IAR) process
+/// Deprecated
 ///
-/// This message reports the state of the Integer Ambiguity
-/// Resolution (IAR) process, which resolves unknown integer
-/// ambiguities from double-differenced carrier-phase measurements
-/// from satellite observations.
+/// Deprecated
 ///
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgIarState {
+pub struct MsgInitBaseDep {
     pub sender_id: Option<u16>,
-    /// Number of integer ambiguity hypotheses remaining
-    pub num_hyps: u32,
 }
 
-impl MsgIarState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgIarState, ::Error> {
-        Ok(MsgIarState {
-            sender_id: None,
-            num_hyps: _buf.read_u32::<LittleEndian>()?,
-        })
+impl MsgInitBaseDep {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgInitBaseDep, ::Error> {
+        Ok(MsgInitBaseDep { sender_id: None })
     }
 }
-impl super::SBPMessage for MsgIarState {
-    const MSG_ID: u16 = 25;
+impl super::SBPMessage for MsgInitBaseDep {
+    const MSG_ID: u16 = 35;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -587,7 +482,6 @@ impl super::SBPMessage for MsgIarState {
         self.sender_id = Some(new_id);
     }
 }
-
 
 /// Mask a satellite from use in Piksi subsystems
 ///
@@ -625,32 +519,46 @@ impl super::SBPMessage for MsgMaskSatellite {
     }
 }
 
-
 /// Deprecated
 ///
 /// Deprecated.
 ///
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgMaskSatelliteDep {
+pub struct MsgSpecanDep {
     pub sender_id: Option<u16>,
-    /// Mask of systems that should ignore this satellite.
-    pub mask: u8,
-    /// GNSS signal for which the mask is applied
-    pub sid: GnssSignalDep,
+    /// Channel ID
+    pub channel_tag: u16,
+    /// Receiver time of this observation
+    pub t: GPSTimeDep,
+    /// Reference frequency of this packet
+    pub freq_ref: f32,
+    /// Frequency step of points in this packet
+    pub freq_step: f32,
+    /// Reference amplitude of this packet
+    pub amplitude_ref: f32,
+    /// Amplitude unit value of points in this packet
+    pub amplitude_unit: f32,
+    /// Amplitude values (in the above units) of points in this packet
+    pub amplitude_value: Vec<u8>,
 }
 
-impl MsgMaskSatelliteDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMaskSatelliteDep, ::Error> {
-        Ok(MsgMaskSatelliteDep {
+impl MsgSpecanDep {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSpecanDep, ::Error> {
+        Ok(MsgSpecanDep {
             sender_id: None,
-            mask: _buf.read_u8()?,
-            sid: GnssSignalDep::parse(_buf)?,
+            channel_tag: _buf.read_u16::<LittleEndian>()?,
+            t: GPSTimeDep::parse(_buf)?,
+            freq_ref: _buf.read_f32::<LittleEndian>()?,
+            freq_step: _buf.read_f32::<LittleEndian>()?,
+            amplitude_ref: _buf.read_f32::<LittleEndian>()?,
+            amplitude_unit: _buf.read_f32::<LittleEndian>()?,
+            amplitude_value: ::parser::read_u8_array(_buf)?,
         })
     }
 }
-impl super::SBPMessage for MsgMaskSatelliteDep {
-    const MSG_ID: u16 = 27;
+impl super::SBPMessage for MsgSpecanDep {
+    const MSG_ID: u16 = 80;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -661,6 +569,139 @@ impl super::SBPMessage for MsgMaskSatelliteDep {
     }
 }
 
+/// Spectrum analyzer
+///
+/// Spectrum analyzer packet.
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgSpecan {
+    pub sender_id: Option<u16>,
+    /// Channel ID
+    pub channel_tag: u16,
+    /// Receiver time of this observation
+    pub t: GPSTime,
+    /// Reference frequency of this packet
+    pub freq_ref: f32,
+    /// Frequency step of points in this packet
+    pub freq_step: f32,
+    /// Reference amplitude of this packet
+    pub amplitude_ref: f32,
+    /// Amplitude unit value of points in this packet
+    pub amplitude_unit: f32,
+    /// Amplitude values (in the above units) of points in this packet
+    pub amplitude_value: Vec<u8>,
+}
+
+impl MsgSpecan {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSpecan, ::Error> {
+        Ok(MsgSpecan {
+            sender_id: None,
+            channel_tag: _buf.read_u16::<LittleEndian>()?,
+            t: GPSTime::parse(_buf)?,
+            freq_ref: _buf.read_f32::<LittleEndian>()?,
+            freq_step: _buf.read_f32::<LittleEndian>()?,
+            amplitude_ref: _buf.read_f32::<LittleEndian>()?,
+            amplitude_unit: _buf.read_f32::<LittleEndian>()?,
+            amplitude_value: ::parser::read_u8_array(_buf)?,
+        })
+    }
+}
+impl super::SBPMessage for MsgSpecan {
+    const MSG_ID: u16 = 81;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// Send GPS time from host (host => Piksi)
+///
+/// This message sets up timing functionality using a coarse GPS
+/// time estimate sent by the host.
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgSetTime {
+    pub sender_id: Option<u16>,
+}
+
+impl MsgSetTime {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSetTime, ::Error> {
+        Ok(MsgSetTime { sender_id: None })
+    }
+}
+impl super::SBPMessage for MsgSetTime {
+    const MSG_ID: u16 = 104;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// Legacy message to load satellite almanac (host => Piksi)
+///
+/// This is a legacy message for sending and loading a satellite
+/// alamanac onto the Piksi's flash memory from the host.
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgAlmanac {
+    pub sender_id: Option<u16>,
+}
+
+impl MsgAlmanac {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanac, ::Error> {
+        Ok(MsgAlmanac { sender_id: None })
+    }
+}
+impl super::SBPMessage for MsgAlmanac {
+    const MSG_ID: u16 = 105;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// Reset the device (host => Piksi)
+///
+/// This message from the host resets the Piksi back into the
+/// bootloader.
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgResetDep {
+    pub sender_id: Option<u16>,
+}
+
+impl MsgResetDep {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgResetDep, ::Error> {
+        Ok(MsgResetDep { sender_id: None })
+    }
+}
+impl super::SBPMessage for MsgResetDep {
+    const MSG_ID: u16 = 178;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 /// Device temperature and voltage levels
 ///
@@ -708,6 +749,38 @@ impl super::SBPMessage for MsgDeviceMonitor {
     }
 }
 
+/// Reset the device (host => Piksi)
+///
+/// This message from the host resets the Piksi back into the
+/// bootloader.
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgReset {
+    pub sender_id: Option<u16>,
+    /// Reset flags
+    pub flags: u32,
+}
+
+impl MsgReset {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgReset, ::Error> {
+        Ok(MsgReset {
+            sender_id: None,
+            flags: _buf.read_u32::<LittleEndian>()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgReset {
+    const MSG_ID: u16 = 182;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 /// Execute a command (host => device)
 ///
@@ -746,7 +819,6 @@ impl super::SBPMessage for MsgCommandReq {
     }
 }
 
-
 /// Exit code from executed command (device => host)
 ///
 /// The response to MSG_COMMAND_REQ with the return code of
@@ -783,46 +855,6 @@ impl super::SBPMessage for MsgCommandResp {
     }
 }
 
-
-/// Command output
-///
-/// Returns the standard output and standard error of the
-/// command requested by MSG_COMMAND_REQ.
-/// The sequence number can be used to filter for filtering
-/// the correct command.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgCommandOutput {
-    pub sender_id: Option<u16>,
-    /// Sequence number
-    pub sequence: u32,
-    /// Line of standard output or standard error
-    pub line: String,
-}
-
-impl MsgCommandOutput {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCommandOutput, ::Error> {
-        Ok(MsgCommandOutput {
-            sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
-            line: ::parser::read_string(_buf)?,
-        })
-    }
-}
-impl super::SBPMessage for MsgCommandOutput {
-    const MSG_ID: u16 = 188;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-
 /// Request state of Piksi network interfaces
 ///
 /// Request state of Piksi network interfaces.
@@ -850,7 +882,6 @@ impl super::SBPMessage for MsgNetworkStateReq {
         self.sender_id = Some(new_id);
     }
 }
-
 
 /// State of network interface
 ///
@@ -907,58 +938,43 @@ impl super::SBPMessage for MsgNetworkStateResp {
     }
 }
 
-
-/// Bandwidth usage measurement for a single interface.
+/// Command output
 ///
-/// The bandwidth usage for each interface can be reported
-/// within this struct and utilize multiple fields to fully
-/// specify the type of traffic that is being tracked. As
-/// either the interval of collection or the collection time
-/// may vary, both a timestamp and period field is provided,
-/// though may not necessarily be populated with a value.
+/// Returns the standard output and standard error of the
+/// command requested by MSG_COMMAND_REQ.
+/// The sequence number can be used to filter for filtering
+/// the correct command.
 ///
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct NetworkUsage {
-    /// Duration over which the measurement was collected
-    pub duration: u64,
-    /// Number of bytes handled in total within period
-    pub total_bytes: u64,
-    /// Number of bytes transmitted within period
-    pub rx_bytes: u32,
-    /// Number of bytes received within period
-    pub tx_bytes: u32,
-    /// Interface Name
-    pub interface_name: String,
+pub struct MsgCommandOutput {
+    pub sender_id: Option<u16>,
+    /// Sequence number
+    pub sequence: u32,
+    /// Line of standard output or standard error
+    pub line: String,
 }
 
-impl NetworkUsage {
-    pub fn parse(_buf: &mut &[u8]) -> Result<NetworkUsage, ::Error> {
-        Ok(NetworkUsage {
-            duration: _buf.read_u64::<LittleEndian>()?,
-            total_bytes: _buf.read_u64::<LittleEndian>()?,
-            rx_bytes: _buf.read_u32::<LittleEndian>()?,
-            tx_bytes: _buf.read_u32::<LittleEndian>()?,
-            interface_name: ::parser::read_string_limit(_buf, 16)?,
+impl MsgCommandOutput {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCommandOutput, ::Error> {
+        Ok(MsgCommandOutput {
+            sender_id: None,
+            sequence: _buf.read_u32::<LittleEndian>()?,
+            line: ::parser::read_string(_buf)?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<NetworkUsage>, ::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(NetworkUsage::parse(buf)?);
-        }
-        Ok(v)
+}
+impl super::SBPMessage for MsgCommandOutput {
+    const MSG_ID: u16 = 188;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<NetworkUsage>, ::Error> {
-        let mut v = Vec::new();
-        for _ in 0..n {
-            v.push(NetworkUsage::parse(buf)?);
-        }
-        Ok(v)
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
     }
 }
-
 
 /// Bandwidth usage reporting message
 ///
@@ -991,7 +1007,6 @@ impl super::SBPMessage for MsgNetworkBandwidthUsage {
         self.sender_id = Some(new_id);
     }
 }
-
 
 /// Cell modem information update message
 ///
@@ -1033,119 +1048,14 @@ impl super::SBPMessage for MsgCellModemStatus {
     }
 }
 
-
-/// Deprecated
-///
-/// Deprecated.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgSpecanDep {
-    pub sender_id: Option<u16>,
-    /// Channel ID
-    pub channel_tag: u16,
-    /// Receiver time of this observation
-    pub t: GPSTimeDep,
-    /// Reference frequency of this packet
-    pub freq_ref: f32,
-    /// Frequency step of points in this packet
-    pub freq_step: f32,
-    /// Reference amplitude of this packet
-    pub amplitude_ref: f32,
-    /// Amplitude unit value of points in this packet
-    pub amplitude_unit: f32,
-    /// Amplitude values (in the above units) of points in this packet
-    pub amplitude_value: Vec<u8>,
-}
-
-impl MsgSpecanDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSpecanDep, ::Error> {
-        Ok(MsgSpecanDep {
-            sender_id: None,
-            channel_tag: _buf.read_u16::<LittleEndian>()?,
-            t: GPSTimeDep::parse(_buf)?,
-            freq_ref: _buf.read_f32::<LittleEndian>()?,
-            freq_step: _buf.read_f32::<LittleEndian>()?,
-            amplitude_ref: _buf.read_f32::<LittleEndian>()?,
-            amplitude_unit: _buf.read_f32::<LittleEndian>()?,
-            amplitude_value: ::parser::read_u8_array(_buf)?,
-        })
-    }
-}
-impl super::SBPMessage for MsgSpecanDep {
-    const MSG_ID: u16 = 80;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-
-/// Spectrum analyzer
-///
-/// Spectrum analyzer packet.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgSpecan {
-    pub sender_id: Option<u16>,
-    /// Channel ID
-    pub channel_tag: u16,
-    /// Receiver time of this observation
-    pub t: GPSTime,
-    /// Reference frequency of this packet
-    pub freq_ref: f32,
-    /// Frequency step of points in this packet
-    pub freq_step: f32,
-    /// Reference amplitude of this packet
-    pub amplitude_ref: f32,
-    /// Amplitude unit value of points in this packet
-    pub amplitude_unit: f32,
-    /// Amplitude values (in the above units) of points in this packet
-    pub amplitude_value: Vec<u8>,
-}
-
-impl MsgSpecan {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSpecan, ::Error> {
-        Ok(MsgSpecan {
-            sender_id: None,
-            channel_tag: _buf.read_u16::<LittleEndian>()?,
-            t: GPSTime::parse(_buf)?,
-            freq_ref: _buf.read_f32::<LittleEndian>()?,
-            freq_step: _buf.read_f32::<LittleEndian>()?,
-            amplitude_ref: _buf.read_f32::<LittleEndian>()?,
-            amplitude_unit: _buf.read_f32::<LittleEndian>()?,
-            amplitude_value: ::parser::read_u8_array(_buf)?,
-        })
-    }
-}
-impl super::SBPMessage for MsgSpecan {
-    const MSG_ID: u16 = 81;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-
 /// RF AGC status
 ///
 /// This message describes the gain of each channel in the receiver frontend. Each
-/// gain is encoded as a non-dimensional percentage relative to the maximum range
+/// gain is encoded as a non-dimensional percentage relative to the maximum range  
 /// possible for the gain stage of the frontend. By convention, each gain array
 /// has 8 entries and the index of the array corresponding to the index of the rf channel
-/// in the frontend. A gain of 127 percent encodes that rf channel is not present in the
-/// hardware.
-/// A negative value implies an error for the particular gain stage as reported by the
-/// frontend.
+/// in the frontend. A gain of 127 percent encodes that rf channel is not present in the hardware.
+/// A negative value implies an error for the particular gain stage as reported by the frontend.
 ///
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1168,6 +1078,64 @@ impl MsgFrontEndGain {
 }
 impl super::SBPMessage for MsgFrontEndGain {
     const MSG_ID: u16 = 191;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// Legacy message for CW interference channel (Piksi => host)
+///
+/// This is an unused legacy message for result reporting from the
+/// CW interference channel on the SwiftNAP. This message will be
+/// removed in a future release.
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgCwResults {
+    pub sender_id: Option<u16>,
+}
+
+impl MsgCwResults {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCwResults, ::Error> {
+        Ok(MsgCwResults { sender_id: None })
+    }
+}
+impl super::SBPMessage for MsgCwResults {
+    const MSG_ID: u16 = 192;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// Legacy message for CW interference channel (host => Piksi)
+///
+/// This is an unused legacy message from the host for starting
+/// the CW interference channel on the SwiftNAP. This message will
+/// be removed in a future release.
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgCwStart {
+    pub sender_id: Option<u16>,
+}
+
+impl MsgCwStart {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCwStart, ::Error> {
+        Ok(MsgCwStart { sender_id: None })
+    }
+}
+impl super::SBPMessage for MsgCwStart {
+    const MSG_ID: u16 = 193;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id

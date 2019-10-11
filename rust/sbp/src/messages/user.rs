@@ -12,14 +12,12 @@
 // Automatically generated from yaml/swiftnav/sbp/user.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 //! Messages reserved for use by the user.
 //!
 
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-
 
 /// User data
 ///
