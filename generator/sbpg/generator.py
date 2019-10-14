@@ -148,6 +148,8 @@ def main():
           pb.render_source(output_dir, parsed)
       if args.c:
         c.render_version(output_dir, args.release[0])
+        parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
+        c.render_traits(output_dir, parsed)
       elif args.python:
         py.render_version(output_dir, args.release[0])
       elif args.haskell:
