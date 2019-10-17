@@ -85,6 +85,7 @@ import com.swiftnav.sbp.navigation.MsgBaselineNEDDepA;
 import com.swiftnav.sbp.navigation.MsgVelECEFDepA;
 import com.swiftnav.sbp.navigation.MsgVelNEDDepA;
 import com.swiftnav.sbp.navigation.MsgBaselineHeadingDepA;
+import com.swiftnav.sbp.navigation.MsgProtectionLevel;
 import com.swiftnav.sbp.ndb.MsgNdbEvent;
 import com.swiftnav.sbp.observation.MsgObs;
 import com.swiftnav.sbp.observation.MsgBasePosLLH;
@@ -332,6 +333,8 @@ final class MessageTable {
                 return new MsgVelNEDDepA(msg);
             case MsgBaselineHeadingDepA.TYPE:
                 return new MsgBaselineHeadingDepA(msg);
+            case MsgProtectionLevel.TYPE:
+                return new MsgProtectionLevel(msg);
             case MsgNdbEvent.TYPE:
                 return new MsgNdbEvent(msg);
             case MsgObs.TYPE:

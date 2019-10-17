@@ -1354,3 +1354,52 @@ instance Binary MsgBaselineHeadingDepA where
 $(makeSBP 'msgBaselineHeadingDepA ''MsgBaselineHeadingDepA)
 $(makeJSON "_msgBaselineHeadingDepA_" ''MsgBaselineHeadingDepA)
 $(makeLenses ''MsgBaselineHeadingDepA)
+
+msgProtectionLevel :: Word16
+msgProtectionLevel = 0x0216
+
+-- | SBP class for message MSG_PROTECTION_LEVEL (0x0216).
+--
+-- This message reports the local vertical and horizontal protection levels
+-- associated with a given LLH position solution. The full GPS time is given by
+-- the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+data MsgProtectionLevel = MsgProtectionLevel
+  { _msgProtectionLevel_tow  :: !Word32
+    -- ^ GPS Time of Week
+  , _msgProtectionLevel_vpl  :: !Word16
+    -- ^ Vertical protection level
+  , _msgProtectionLevel_hpl  :: !Word16
+    -- ^ Horizontal protection level
+  , _msgProtectionLevel_lat  :: !Double
+    -- ^ Latitude
+  , _msgProtectionLevel_lon  :: !Double
+    -- ^ Longitude
+  , _msgProtectionLevel_height :: !Double
+    -- ^ Height
+  , _msgProtectionLevel_flags :: !Word8
+    -- ^ Status flags
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgProtectionLevel where
+  get = do
+    _msgProtectionLevel_tow <- getWord32le
+    _msgProtectionLevel_vpl <- getWord16le
+    _msgProtectionLevel_hpl <- getWord16le
+    _msgProtectionLevel_lat <- getFloat64le
+    _msgProtectionLevel_lon <- getFloat64le
+    _msgProtectionLevel_height <- getFloat64le
+    _msgProtectionLevel_flags <- getWord8
+    pure MsgProtectionLevel {..}
+
+  put MsgProtectionLevel {..} = do
+    putWord32le _msgProtectionLevel_tow
+    putWord16le _msgProtectionLevel_vpl
+    putWord16le _msgProtectionLevel_hpl
+    putFloat64le _msgProtectionLevel_lat
+    putFloat64le _msgProtectionLevel_lon
+    putFloat64le _msgProtectionLevel_height
+    putWord8 _msgProtectionLevel_flags
+
+$(makeSBP 'msgProtectionLevel ''MsgProtectionLevel)
+$(makeJSON "_msgProtectionLevel_" ''MsgProtectionLevel)
+$(makeLenses ''MsgProtectionLevel)

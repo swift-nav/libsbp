@@ -1409,3 +1409,55 @@ impl super::SBPMessage for MsgVelECEFCov {
         self.sender_id = Some(new_id);
     }
 }
+
+/// Computed Position and Protection Level
+///
+/// This message reports the local vertical and horizontal protection levels
+/// associated with a given LLH position solution. The full GPS time is given
+/// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgProtectionLevel {
+    pub sender_id: Option<u16>,
+    /// GPS Time of Week
+    pub tow: u32,
+    /// Vertical protection level
+    pub vpl: u16,
+    /// Horizontal protection level
+    pub hpl: u16,
+    /// Latitude
+    pub lat: f64,
+    /// Longitude
+    pub lon: f64,
+    /// Height
+    pub height: f64,
+    /// Status flags
+    pub flags: u8,
+}
+
+impl MsgProtectionLevel {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgProtectionLevel, ::Error> {
+        Ok(MsgProtectionLevel {
+            sender_id: None,
+            tow: _buf.read_u32::<LittleEndian>()?,
+            vpl: _buf.read_u16::<LittleEndian>()?,
+            hpl: _buf.read_u16::<LittleEndian>()?,
+            lat: _buf.read_f64::<LittleEndian>()?,
+            lon: _buf.read_f64::<LittleEndian>()?,
+            height: _buf.read_f64::<LittleEndian>()?,
+            flags: _buf.read_u8()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgProtectionLevel {
+    const MSG_ID: u16 = 534;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}

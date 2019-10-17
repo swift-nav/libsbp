@@ -342,3 +342,19 @@ message MsgAgeCorrections {
     uint32 tow = 1;
     uint32 age = 2;
 }
+
+/** Computed Position and Protection Level
+ *
+ * This message reports the local vertical and horizontal protection levels
+ * associated with a given LLH position solution. The full GPS time is given
+ * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+message MsgProtectionLevel {
+    uint32 tow = 1;
+    uint32 vpl = 2;
+    uint32 hpl = 3;
+    double lat = 4;
+    double lon = 5;
+    double height = 6;
+    uint32 flags = 7;
+}

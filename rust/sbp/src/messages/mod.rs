@@ -91,6 +91,7 @@ use self::navigation::MsgPosECEFDepA;
 use self::navigation::MsgPosLLH;
 use self::navigation::MsgPosLLHCov;
 use self::navigation::MsgPosLLHDepA;
+use self::navigation::MsgProtectionLevel;
 use self::navigation::MsgUtcTime;
 use self::navigation::MsgVelBody;
 use self::navigation::MsgVelECEF;
@@ -354,6 +355,7 @@ pub enum SBP {
     MsgVelBody(MsgVelBody),
     MsgPosECEFCov(MsgPosECEFCov),
     MsgVelECEFCov(MsgVelECEFCov),
+    MsgProtectionLevel(MsgProtectionLevel),
     MsgOrientQuat(MsgOrientQuat),
     MsgOrientEuler(MsgOrientEuler),
     MsgAngularRate(MsgAngularRate),
@@ -1079,6 +1081,11 @@ impl SBP {
                 let mut msg = MsgVelECEFCov::parse(payload)?;
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgVelECEFCov(msg))
+            }
+            534 => {
+                let mut msg = MsgProtectionLevel::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgProtectionLevel(msg))
             }
             544 => {
                 let mut msg = MsgOrientQuat::parse(payload)?;
