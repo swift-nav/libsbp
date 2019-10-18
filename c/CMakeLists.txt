@@ -12,6 +12,7 @@ swift_create_project_options(
     TEST_PACKAGES "Check"
     )
 include(CodeCoverage)
+include(TestTargets)
 add_code_coverage_all_targets()
 
 ##########################################################
