@@ -8,27 +8,27 @@
 //   const codeBiasesContent = Convert.toCodeBiasesContent(json);
 //   const doppler = Convert.toDoppler(json);
 //   const ephemerisCommonContent = Convert.toEphemerisCommonContent(json);
-//   const gpsTime = Convert.toGpsTime(json);
-//   const gpsTimeSEC = Convert.toGpsTimeSEC(json);
 //   const gnssCapb = Convert.toGnssCapb(json);
 //   const gnssSignal = Convert.toGnssSignal(json);
+//   const gpsTime = Convert.toGpsTime(json);
+//   const gpsTimeSEC = Convert.toGpsTimeSEC(json);
+//   const griddedCorrectionHeader = Convert.toGriddedCorrectionHeader(json);
 //   const gridDefinitionHeader = Convert.toGridDefinitionHeader(json);
 //   const gridElement = Convert.toGridElement(json);
-//   const griddedCorrectionHeader = Convert.toGriddedCorrectionHeader(json);
 //   const latency = Convert.toLatency(json);
 //   const measurementState = Convert.toMeasurementState(json);
 //   const msgAcqResult = Convert.toMsgAcqResult(json);
 //   const msgAcqSvProfile = Convert.toMsgAcqSvProfile(json);
 //   const msgAgeCorrections = Convert.toMsgAgeCorrections(json);
-//   const msgAlmanac = Convert.toMsgAlmanac(json);
-//   const msgAlmanacGPS = Convert.toMsgAlmanacGPS(json);
 //   const msgAlmanacGlo = Convert.toMsgAlmanacGlo(json);
+//   const msgAlmanacGPS = Convert.toMsgAlmanacGPS(json);
+//   const msgAlmanac = Convert.toMsgAlmanac(json);
 //   const msgAngularRate = Convert.toMsgAngularRate(json);
-//   const msgBasePosECEF = Convert.toMsgBasePosECEF(json);
-//   const msgBasePosLLH = Convert.toMsgBasePosLLH(json);
 //   const msgBaselineECEF = Convert.toMsgBaselineECEF(json);
 //   const msgBaselineHeading = Convert.toMsgBaselineHeading(json);
 //   const msgBaselineNED = Convert.toMsgBaselineNED(json);
+//   const msgBasePosECEF = Convert.toMsgBasePosECEF(json);
+//   const msgBasePosLLH = Convert.toMsgBasePosLLH(json);
 //   const msgBootloaderHandshakeReq = Convert.toMsgBootloaderHandshakeReq(json);
 //   const msgBootloaderHandshakeResp = Convert.toMsgBootloaderHandshakeResp(json);
 //   const msgBootloaderJumpToApp = Convert.toMsgBootloaderJumpToApp(json);
@@ -44,9 +44,9 @@
 //   const msgDgnssStatus = Convert.toMsgDgnssStatus(json);
 //   const msgDops = Convert.toMsgDops(json);
 //   const msgEphemerisBds = Convert.toMsgEphemerisBds(json);
-//   const msgEphemerisGPS = Convert.toMsgEphemerisGPS(json);
 //   const msgEphemerisGal = Convert.toMsgEphemerisGal(json);
 //   const msgEphemerisGlo = Convert.toMsgEphemerisGlo(json);
+//   const msgEphemerisGPS = Convert.toMsgEphemerisGPS(json);
 //   const msgEphemerisQzss = Convert.toMsgEphemerisQzss(json);
 //   const msgEphemerisSbas = Convert.toMsgEphemerisSbas(json);
 //   const msgEXTEvent = Convert.toMsgEXTEvent(json);
@@ -66,9 +66,9 @@
 //   const msgFlashReadResp = Convert.toMsgFlashReadResp(json);
 //   const msgFrontEndGain = Convert.toMsgFrontEndGain(json);
 //   const msgFwd = Convert.toMsgFwd(json);
-//   const msgGPSTime = Convert.toMsgGPSTime(json);
 //   const msgGloBiases = Convert.toMsgGloBiases(json);
 //   const msgGnssCapb = Convert.toMsgGnssCapb(json);
+//   const msgGPSTime = Convert.toMsgGPSTime(json);
 //   const msgGroupDelay = Convert.toMsgGroupDelay(json);
 //   const msgHeartbeat = Convert.toMsgHeartbeat(json);
 //   const msgIarState = Convert.toMsgIarState(json);
@@ -100,12 +100,12 @@
 //   const msgOrientEuler = Convert.toMsgOrientEuler(json);
 //   const msgOrientQuat = Convert.toMsgOrientQuat(json);
 //   const msgOsr = Convert.toMsgOsr(json);
-//   const msgPosECEF = Convert.toMsgPosECEF(json);
 //   const msgPosECEFCov = Convert.toMsgPosECEFCov(json);
-//   const msgPosLLH = Convert.toMsgPosLLH(json);
+//   const msgPosECEF = Convert.toMsgPosECEF(json);
 //   const msgPosLLHCov = Convert.toMsgPosLLHCov(json);
-//   const msgReset = Convert.toMsgReset(json);
+//   const msgPosLLH = Convert.toMsgPosLLH(json);
 //   const msgResetFilters = Convert.toMsgResetFilters(json);
+//   const msgReset = Convert.toMsgReset(json);
 //   const msgSbasRaw = Convert.toMsgSbasRaw(json);
 //   const msgSetTime = Convert.toMsgSetTime(json);
 //   const msgSettingsReadByIndexDone = Convert.toMsgSettingsReadByIndexDone(json);
@@ -120,8 +120,8 @@
 //   const msgSettingsWriteResp = Convert.toMsgSettingsWriteResp(json);
 //   const msgSpecan = Convert.toMsgSpecan(json);
 //   const msgSsrCodeBiases = Convert.toMsgSsrCodeBiases(json);
-//   const msgSsrGridDefinition = Convert.toMsgSsrGridDefinition(json);
 //   const msgSsrGriddedCorrection = Convert.toMsgSsrGriddedCorrection(json);
+//   const msgSsrGridDefinition = Convert.toMsgSsrGridDefinition(json);
 //   const msgSsrOrbitClock = Convert.toMsgSsrOrbitClock(json);
 //   const msgSsrPhaseBiases = Convert.toMsgSsrPhaseBiases(json);
 //   const msgSsrStecCorrection = Convert.toMsgSsrStecCorrection(json);
@@ -138,10 +138,10 @@
 //   const msgUserData = Convert.toMsgUserData(json);
 //   const msgUTCTime = Convert.toMsgUTCTime(json);
 //   const msgVelBody = Convert.toMsgVelBody(json);
-//   const msgVelECEF = Convert.toMsgVelECEF(json);
 //   const msgVelECEFCov = Convert.toMsgVelECEFCov(json);
-//   const msgVelNED = Convert.toMsgVelNED(json);
+//   const msgVelECEF = Convert.toMsgVelECEF(json);
 //   const msgVelNEDCov = Convert.toMsgVelNEDCov(json);
+//   const msgVelNED = Convert.toMsgVelNED(json);
 //   const networkUsage = Convert.toNetworkUsage(json);
 //   const observationHeader = Convert.toObservationHeader(json);
 //   const packedObsContent = Convert.toPackedObsContent(json);
@@ -211,22 +211,6 @@ function ephemerisCommonContentToJson(value) {
     return JSON.stringify(uncast(value, r("EphemerisCommonContent")), null, 2);
 }
 
-function toGpsTime(json) {
-    return cast(JSON.parse(json), r("GpsTime"));
-}
-
-function gpsTimeToJson(value) {
-    return JSON.stringify(uncast(value, r("GpsTime")), null, 2);
-}
-
-function toGpsTimeSEC(json) {
-    return cast(JSON.parse(json), r("GpsTimeSEC"));
-}
-
-function gpsTimeSECToJson(value) {
-    return JSON.stringify(uncast(value, r("GpsTimeSEC")), null, 2);
-}
-
 function toGnssCapb(json) {
     return cast(JSON.parse(json), r("GnssCapb"));
 }
@@ -243,6 +227,30 @@ function gnssSignalToJson(value) {
     return JSON.stringify(uncast(value, r("GnssSignal")), null, 2);
 }
 
+function toGpsTime(json) {
+    return cast(JSON.parse(json), r("GpsTime"));
+}
+
+function gpsTimeToJson(value) {
+    return JSON.stringify(uncast(value, r("GpsTime")), null, 2);
+}
+
+function toGpsTimeSEC(json) {
+    return cast(JSON.parse(json), r("GpsTimeSEC"));
+}
+
+function gpsTimeSECToJson(value) {
+    return JSON.stringify(uncast(value, r("GpsTimeSEC")), null, 2);
+}
+
+function toGriddedCorrectionHeader(json) {
+    return cast(JSON.parse(json), r("GriddedCorrectionHeader"));
+}
+
+function griddedCorrectionHeaderToJson(value) {
+    return JSON.stringify(uncast(value, r("GriddedCorrectionHeader")), null, 2);
+}
+
 function toGridDefinitionHeader(json) {
     return cast(JSON.parse(json), r("GridDefinitionHeader"));
 }
@@ -257,14 +265,6 @@ function toGridElement(json) {
 
 function gridElementToJson(value) {
     return JSON.stringify(uncast(value, r("GridElement")), null, 2);
-}
-
-function toGriddedCorrectionHeader(json) {
-    return cast(JSON.parse(json), r("GriddedCorrectionHeader"));
-}
-
-function griddedCorrectionHeaderToJson(value) {
-    return JSON.stringify(uncast(value, r("GriddedCorrectionHeader")), null, 2);
 }
 
 function toLatency(json) {
@@ -307,12 +307,12 @@ function msgAgeCorrectionsToJson(value) {
     return JSON.stringify(uncast(value, r("MsgAgeCorrections")), null, 2);
 }
 
-function toMsgAlmanac(json) {
-    return cast(JSON.parse(json), m("any"));
+function toMsgAlmanacGlo(json) {
+    return cast(JSON.parse(json), r("MsgAlmanacGlo"));
 }
 
-function msgAlmanacToJson(value) {
-    return JSON.stringify(uncast(value, m("any")), null, 2);
+function msgAlmanacGloToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgAlmanacGlo")), null, 2);
 }
 
 function toMsgAlmanacGPS(json) {
@@ -323,12 +323,12 @@ function msgAlmanacGPSToJson(value) {
     return JSON.stringify(uncast(value, r("MsgAlmanacGPS")), null, 2);
 }
 
-function toMsgAlmanacGlo(json) {
-    return cast(JSON.parse(json), r("MsgAlmanacGlo"));
+function toMsgAlmanac(json) {
+    return cast(JSON.parse(json), m("any"));
 }
 
-function msgAlmanacGloToJson(value) {
-    return JSON.stringify(uncast(value, r("MsgAlmanacGlo")), null, 2);
+function msgAlmanacToJson(value) {
+    return JSON.stringify(uncast(value, m("any")), null, 2);
 }
 
 function toMsgAngularRate(json) {
@@ -337,22 +337,6 @@ function toMsgAngularRate(json) {
 
 function msgAngularRateToJson(value) {
     return JSON.stringify(uncast(value, r("MsgAngularRate")), null, 2);
-}
-
-function toMsgBasePosECEF(json) {
-    return cast(JSON.parse(json), r("MsgBasePosECEF"));
-}
-
-function msgBasePosECEFToJson(value) {
-    return JSON.stringify(uncast(value, r("MsgBasePosECEF")), null, 2);
-}
-
-function toMsgBasePosLLH(json) {
-    return cast(JSON.parse(json), r("MsgBasePosLLH"));
-}
-
-function msgBasePosLLHToJson(value) {
-    return JSON.stringify(uncast(value, r("MsgBasePosLLH")), null, 2);
 }
 
 function toMsgBaselineECEF(json) {
@@ -377,6 +361,22 @@ function toMsgBaselineNED(json) {
 
 function msgBaselineNEDToJson(value) {
     return JSON.stringify(uncast(value, r("MsgBaselineNED")), null, 2);
+}
+
+function toMsgBasePosECEF(json) {
+    return cast(JSON.parse(json), r("MsgBasePosECEF"));
+}
+
+function msgBasePosECEFToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgBasePosECEF")), null, 2);
+}
+
+function toMsgBasePosLLH(json) {
+    return cast(JSON.parse(json), r("MsgBasePosLLH"));
+}
+
+function msgBasePosLLHToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgBasePosLLH")), null, 2);
 }
 
 function toMsgBootloaderHandshakeReq(json) {
@@ -499,14 +499,6 @@ function msgEphemerisBdsToJson(value) {
     return JSON.stringify(uncast(value, r("MsgEphemerisBds")), null, 2);
 }
 
-function toMsgEphemerisGPS(json) {
-    return cast(JSON.parse(json), r("MsgEphemerisGPS"));
-}
-
-function msgEphemerisGPSToJson(value) {
-    return JSON.stringify(uncast(value, r("MsgEphemerisGPS")), null, 2);
-}
-
 function toMsgEphemerisGal(json) {
     return cast(JSON.parse(json), r("MsgEphemerisGal"));
 }
@@ -521,6 +513,14 @@ function toMsgEphemerisGlo(json) {
 
 function msgEphemerisGloToJson(value) {
     return JSON.stringify(uncast(value, r("MsgEphemerisGlo")), null, 2);
+}
+
+function toMsgEphemerisGPS(json) {
+    return cast(JSON.parse(json), r("MsgEphemerisGPS"));
+}
+
+function msgEphemerisGPSToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgEphemerisGPS")), null, 2);
 }
 
 function toMsgEphemerisQzss(json) {
@@ -675,14 +675,6 @@ function msgFwdToJson(value) {
     return JSON.stringify(uncast(value, r("MsgFwd")), null, 2);
 }
 
-function toMsgGPSTime(json) {
-    return cast(JSON.parse(json), r("MsgGPSTime"));
-}
-
-function msgGPSTimeToJson(value) {
-    return JSON.stringify(uncast(value, r("MsgGPSTime")), null, 2);
-}
-
 function toMsgGloBiases(json) {
     return cast(JSON.parse(json), r("MsgGloBiases"));
 }
@@ -697,6 +689,14 @@ function toMsgGnssCapb(json) {
 
 function msgGnssCapbToJson(value) {
     return JSON.stringify(uncast(value, r("MsgGnssCapb")), null, 2);
+}
+
+function toMsgGPSTime(json) {
+    return cast(JSON.parse(json), r("MsgGPSTime"));
+}
+
+function msgGPSTimeToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgGPSTime")), null, 2);
 }
 
 function toMsgGroupDelay(json) {
@@ -947,14 +947,6 @@ function msgOsrToJson(value) {
     return JSON.stringify(uncast(value, r("MsgOsr")), null, 2);
 }
 
-function toMsgPosECEF(json) {
-    return cast(JSON.parse(json), r("MsgPosECEF"));
-}
-
-function msgPosECEFToJson(value) {
-    return JSON.stringify(uncast(value, r("MsgPosECEF")), null, 2);
-}
-
 function toMsgPosECEFCov(json) {
     return cast(JSON.parse(json), r("MsgPosECEFCov"));
 }
@@ -963,12 +955,12 @@ function msgPosECEFCovToJson(value) {
     return JSON.stringify(uncast(value, r("MsgPosECEFCov")), null, 2);
 }
 
-function toMsgPosLLH(json) {
-    return cast(JSON.parse(json), r("MsgPosLLH"));
+function toMsgPosECEF(json) {
+    return cast(JSON.parse(json), r("MsgPosECEF"));
 }
 
-function msgPosLLHToJson(value) {
-    return JSON.stringify(uncast(value, r("MsgPosLLH")), null, 2);
+function msgPosECEFToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgPosECEF")), null, 2);
 }
 
 function toMsgPosLLHCov(json) {
@@ -979,12 +971,12 @@ function msgPosLLHCovToJson(value) {
     return JSON.stringify(uncast(value, r("MsgPosLLHCov")), null, 2);
 }
 
-function toMsgReset(json) {
-    return cast(JSON.parse(json), r("MsgReset"));
+function toMsgPosLLH(json) {
+    return cast(JSON.parse(json), r("MsgPosLLH"));
 }
 
-function msgResetToJson(value) {
-    return JSON.stringify(uncast(value, r("MsgReset")), null, 2);
+function msgPosLLHToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgPosLLH")), null, 2);
 }
 
 function toMsgResetFilters(json) {
@@ -993,6 +985,14 @@ function toMsgResetFilters(json) {
 
 function msgResetFiltersToJson(value) {
     return JSON.stringify(uncast(value, r("MsgResetFilters")), null, 2);
+}
+
+function toMsgReset(json) {
+    return cast(JSON.parse(json), r("MsgReset"));
+}
+
+function msgResetToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgReset")), null, 2);
 }
 
 function toMsgSbasRaw(json) {
@@ -1107,20 +1107,20 @@ function msgSsrCodeBiasesToJson(value) {
     return JSON.stringify(uncast(value, r("MsgSsrCodeBiases")), null, 2);
 }
 
-function toMsgSsrGridDefinition(json) {
-    return cast(JSON.parse(json), r("MsgSsrGridDefinition"));
-}
-
-function msgSsrGridDefinitionToJson(value) {
-    return JSON.stringify(uncast(value, r("MsgSsrGridDefinition")), null, 2);
-}
-
 function toMsgSsrGriddedCorrection(json) {
     return cast(JSON.parse(json), r("MsgSsrGriddedCorrection"));
 }
 
 function msgSsrGriddedCorrectionToJson(value) {
     return JSON.stringify(uncast(value, r("MsgSsrGriddedCorrection")), null, 2);
+}
+
+function toMsgSsrGridDefinition(json) {
+    return cast(JSON.parse(json), r("MsgSsrGridDefinition"));
+}
+
+function msgSsrGridDefinitionToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgSsrGridDefinition")), null, 2);
 }
 
 function toMsgSsrOrbitClock(json) {
@@ -1251,14 +1251,6 @@ function msgVelBodyToJson(value) {
     return JSON.stringify(uncast(value, r("MsgVelBody")), null, 2);
 }
 
-function toMsgVelECEF(json) {
-    return cast(JSON.parse(json), r("MsgVelECEF"));
-}
-
-function msgVelECEFToJson(value) {
-    return JSON.stringify(uncast(value, r("MsgVelECEF")), null, 2);
-}
-
 function toMsgVelECEFCov(json) {
     return cast(JSON.parse(json), r("MsgVelECEFCov"));
 }
@@ -1267,12 +1259,12 @@ function msgVelECEFCovToJson(value) {
     return JSON.stringify(uncast(value, r("MsgVelECEFCov")), null, 2);
 }
 
-function toMsgVelNED(json) {
-    return cast(JSON.parse(json), r("MsgVelNED"));
+function toMsgVelECEF(json) {
+    return cast(JSON.parse(json), r("MsgVelECEF"));
 }
 
-function msgVelNEDToJson(value) {
-    return JSON.stringify(uncast(value, r("MsgVelNED")), null, 2);
+function msgVelECEFToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgVelECEF")), null, 2);
 }
 
 function toMsgVelNEDCov(json) {
@@ -1281,6 +1273,14 @@ function toMsgVelNEDCov(json) {
 
 function msgVelNEDCovToJson(value) {
     return JSON.stringify(uncast(value, r("MsgVelNEDCov")), null, 2);
+}
+
+function toMsgVelNED(json) {
+    return cast(JSON.parse(json), r("MsgVelNED"));
+}
+
+function msgVelNEDToJson(value) {
+    return JSON.stringify(uncast(value, r("MsgVelNED")), null, 2);
 }
 
 function toNetworkUsage(json) {
@@ -1533,15 +1533,6 @@ function r(name) {
 }
 
 const typeMap = {
-    "GpsTime": o([
-        { json: "ns_residual", js: "ns_residual", typ: 0 },
-        { json: "tow", js: "tow", typ: 0 },
-        { json: "wn", js: "wn", typ: 0 },
-    ], "any"),
-    "GpsTimeSEC": o([
-        { json: "tow", js: "tow", typ: 0 },
-        { json: "wn", js: "wn", typ: 0 },
-    ], "any"),
     "MsgAcqResult": o([
         { json: "cf", js: "cf", typ: 3.14 },
         { json: "cn0", js: "cn0", typ: 3.14 },
@@ -1573,6 +1564,28 @@ const typeMap = {
         { json: "age", js: "age", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
     ], "any"),
+    "MsgAlmanacGlo": o([
+        { json: "common", js: "common", typ: r("AlmanacCommonContent") },
+        { json: "epsilon", js: "epsilon", typ: 3.14 },
+        { json: "i", js: "i", typ: 3.14 },
+        { json: "lambda_na", js: "lambda_na", typ: 3.14 },
+        { json: "omega", js: "omega", typ: 3.14 },
+        { json: "t", js: "t", typ: 3.14 },
+        { json: "t_dot", js: "t_dot", typ: 3.14 },
+        { json: "t_lambda_na", js: "t_lambda_na", typ: 3.14 },
+    ], "any"),
+    "AlmanacCommonContent": o([
+        { json: "fit_interval", js: "fit_interval", typ: 0 },
+        { json: "health_bits", js: "health_bits", typ: 0 },
+        { json: "sid", js: "sid", typ: r("GnssSignal") },
+        { json: "toa", js: "toa", typ: r("GpsTimeSEC") },
+        { json: "ura", js: "ura", typ: 3.14 },
+        { json: "valid", js: "valid", typ: 0 },
+    ], "any"),
+    "GpsTimeSEC": o([
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "wn", js: "wn", typ: 0 },
+    ], "any"),
     "MsgAlmanacGPS": o([
         { json: "af0", js: "af0", typ: 3.14 },
         { json: "af1", js: "af1", typ: 3.14 },
@@ -1585,44 +1598,12 @@ const typeMap = {
         { json: "sqrta", js: "sqrta", typ: 3.14 },
         { json: "w", js: "w", typ: 3.14 },
     ], "any"),
-    "AlmanacCommonContent": o([
-        { json: "fit_interval", js: "fit_interval", typ: 0 },
-        { json: "health_bits", js: "health_bits", typ: 0 },
-        { json: "sid", js: "sid", typ: r("GnssSignal") },
-        { json: "toa", js: "toa", typ: r("ToaObject") },
-        { json: "ura", js: "ura", typ: 3.14 },
-        { json: "valid", js: "valid", typ: 0 },
-    ], "any"),
-    "ToaObject": o([
-        { json: "tow", js: "tow", typ: 0 },
-        { json: "wn", js: "wn", typ: 0 },
-    ], "any"),
-    "MsgAlmanacGlo": o([
-        { json: "common", js: "common", typ: r("AlmanacCommonContent") },
-        { json: "epsilon", js: "epsilon", typ: 3.14 },
-        { json: "i", js: "i", typ: 3.14 },
-        { json: "lambda_na", js: "lambda_na", typ: 3.14 },
-        { json: "omega", js: "omega", typ: 3.14 },
-        { json: "t", js: "t", typ: 3.14 },
-        { json: "t_dot", js: "t_dot", typ: 3.14 },
-        { json: "t_lambda_na", js: "t_lambda_na", typ: 3.14 },
-    ], "any"),
     "MsgAngularRate": o([
         { json: "flags", js: "flags", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
         { json: "x", js: "x", typ: 0 },
         { json: "y", js: "y", typ: 0 },
         { json: "z", js: "z", typ: 0 },
-    ], "any"),
-    "MsgBasePosECEF": o([
-        { json: "x", js: "x", typ: 3.14 },
-        { json: "y", js: "y", typ: 3.14 },
-        { json: "z", js: "z", typ: 3.14 },
-    ], "any"),
-    "MsgBasePosLLH": o([
-        { json: "height", js: "height", typ: 3.14 },
-        { json: "lat", js: "lat", typ: 3.14 },
-        { json: "lon", js: "lon", typ: 3.14 },
     ], "any"),
     "MsgBaselineECEF": o([
         { json: "accuracy", js: "accuracy", typ: 0 },
@@ -1648,6 +1629,16 @@ const typeMap = {
         { json: "n_sats", js: "n_sats", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
         { json: "v_accuracy", js: "v_accuracy", typ: 0 },
+    ], "any"),
+    "MsgBasePosECEF": o([
+        { json: "x", js: "x", typ: 3.14 },
+        { json: "y", js: "y", typ: 3.14 },
+        { json: "z", js: "z", typ: 3.14 },
+    ], "any"),
+    "MsgBasePosLLH": o([
+        { json: "height", js: "height", typ: 3.14 },
+        { json: "lat", js: "lat", typ: 3.14 },
+        { json: "lon", js: "lon", typ: 3.14 },
     ], "any"),
     "MsgBootloaderHandshakeResp": o([
         { json: "flags", js: "flags", typ: 0 },
@@ -1725,41 +1716,16 @@ const typeMap = {
         { json: "sqrta", js: "sqrta", typ: 3.14 },
         { json: "tgd1", js: "tgd1", typ: 3.14 },
         { json: "tgd2", js: "tgd2", typ: 3.14 },
-        { json: "toc", js: "toc", typ: r("ToaObject") },
+        { json: "toc", js: "toc", typ: r("GpsTimeSEC") },
         { json: "w", js: "w", typ: 3.14 },
     ], "any"),
     "EphemerisCommonContent": o([
         { json: "fit_interval", js: "fit_interval", typ: 0 },
         { json: "health_bits", js: "health_bits", typ: 0 },
         { json: "sid", js: "sid", typ: r("GnssSignal") },
-        { json: "toe", js: "toe", typ: r("ToaObject") },
+        { json: "toe", js: "toe", typ: r("GpsTimeSEC") },
         { json: "ura", js: "ura", typ: 3.14 },
         { json: "valid", js: "valid", typ: 0 },
-    ], "any"),
-    "MsgEphemerisGPS": o([
-        { json: "af0", js: "af0", typ: 3.14 },
-        { json: "af1", js: "af1", typ: 3.14 },
-        { json: "af2", js: "af2", typ: 3.14 },
-        { json: "c_ic", js: "c_ic", typ: 3.14 },
-        { json: "c_is", js: "c_is", typ: 3.14 },
-        { json: "c_rc", js: "c_rc", typ: 3.14 },
-        { json: "c_rs", js: "c_rs", typ: 3.14 },
-        { json: "c_uc", js: "c_uc", typ: 3.14 },
-        { json: "c_us", js: "c_us", typ: 3.14 },
-        { json: "common", js: "common", typ: r("EphemerisCommonContent") },
-        { json: "dn", js: "dn", typ: 3.14 },
-        { json: "ecc", js: "ecc", typ: 3.14 },
-        { json: "inc", js: "inc", typ: 3.14 },
-        { json: "inc_dot", js: "inc_dot", typ: 3.14 },
-        { json: "iodc", js: "iodc", typ: 0 },
-        { json: "iode", js: "iode", typ: 0 },
-        { json: "m0", js: "m0", typ: 3.14 },
-        { json: "omega0", js: "omega0", typ: 3.14 },
-        { json: "omegadot", js: "omegadot", typ: 3.14 },
-        { json: "sqrta", js: "sqrta", typ: 3.14 },
-        { json: "tgd", js: "tgd", typ: 3.14 },
-        { json: "toc", js: "toc", typ: r("ToaObject") },
-        { json: "w", js: "w", typ: 3.14 },
     ], "any"),
     "MsgEphemerisGal": o([
         { json: "af0", js: "af0", typ: 3.14 },
@@ -1785,7 +1751,7 @@ const typeMap = {
         { json: "omegadot", js: "omegadot", typ: 3.14 },
         { json: "source", js: "source", typ: 0 },
         { json: "sqrta", js: "sqrta", typ: 3.14 },
-        { json: "toc", js: "toc", typ: r("ToaObject") },
+        { json: "toc", js: "toc", typ: r("GpsTimeSEC") },
         { json: "w", js: "w", typ: 3.14 },
     ], "any"),
     "MsgEphemerisGlo": o([
@@ -1798,6 +1764,31 @@ const typeMap = {
         { json: "pos", js: "pos", typ: a(3.14) },
         { json: "tau", js: "tau", typ: 3.14 },
         { json: "vel", js: "vel", typ: a(3.14) },
+    ], "any"),
+    "MsgEphemerisGPS": o([
+        { json: "af0", js: "af0", typ: 3.14 },
+        { json: "af1", js: "af1", typ: 3.14 },
+        { json: "af2", js: "af2", typ: 3.14 },
+        { json: "c_ic", js: "c_ic", typ: 3.14 },
+        { json: "c_is", js: "c_is", typ: 3.14 },
+        { json: "c_rc", js: "c_rc", typ: 3.14 },
+        { json: "c_rs", js: "c_rs", typ: 3.14 },
+        { json: "c_uc", js: "c_uc", typ: 3.14 },
+        { json: "c_us", js: "c_us", typ: 3.14 },
+        { json: "common", js: "common", typ: r("EphemerisCommonContent") },
+        { json: "dn", js: "dn", typ: 3.14 },
+        { json: "ecc", js: "ecc", typ: 3.14 },
+        { json: "inc", js: "inc", typ: 3.14 },
+        { json: "inc_dot", js: "inc_dot", typ: 3.14 },
+        { json: "iodc", js: "iodc", typ: 0 },
+        { json: "iode", js: "iode", typ: 0 },
+        { json: "m0", js: "m0", typ: 3.14 },
+        { json: "omega0", js: "omega0", typ: 3.14 },
+        { json: "omegadot", js: "omegadot", typ: 3.14 },
+        { json: "sqrta", js: "sqrta", typ: 3.14 },
+        { json: "tgd", js: "tgd", typ: 3.14 },
+        { json: "toc", js: "toc", typ: r("GpsTimeSEC") },
+        { json: "w", js: "w", typ: 3.14 },
     ], "any"),
     "MsgEphemerisQzss": o([
         { json: "af0", js: "af0", typ: 3.14 },
@@ -1821,7 +1812,7 @@ const typeMap = {
         { json: "omegadot", js: "omegadot", typ: 3.14 },
         { json: "sqrta", js: "sqrta", typ: 3.14 },
         { json: "tgd", js: "tgd", typ: 3.14 },
-        { json: "toc", js: "toc", typ: r("ToaObject") },
+        { json: "toc", js: "toc", typ: r("GpsTimeSEC") },
         { json: "w", js: "w", typ: 3.14 },
     ], "any"),
     "MsgEphemerisSbas": o([
@@ -1911,12 +1902,6 @@ const typeMap = {
         { json: "protocol", js: "protocol", typ: 0 },
         { json: "source", js: "source", typ: 0 },
     ], "any"),
-    "MsgGPSTime": o([
-        { json: "flags", js: "flags", typ: 0 },
-        { json: "ns_residual", js: "ns_residual", typ: 0 },
-        { json: "tow", js: "tow", typ: 0 },
-        { json: "wn", js: "wn", typ: 0 },
-    ], "any"),
     "MsgGloBiases": o([
         { json: "l1ca_bias", js: "l1ca_bias", typ: 0 },
         { json: "l1p_bias", js: "l1p_bias", typ: 0 },
@@ -1926,7 +1911,7 @@ const typeMap = {
     ], "any"),
     "MsgGnssCapb": o([
         { json: "gc", js: "gc", typ: r("GnssCapb") },
-        { json: "t_nmct", js: "t_nmct", typ: r("ToaObject") },
+        { json: "t_nmct", js: "t_nmct", typ: r("GpsTimeSEC") },
     ], "any"),
     "GnssCapb": o([
         { json: "bds_active", js: "bds_active", typ: 0 },
@@ -1945,11 +1930,17 @@ const typeMap = {
         { json: "sbas_active", js: "sbas_active", typ: 0 },
         { json: "sbas_l5", js: "sbas_l5", typ: 0 },
     ], "any"),
+    "MsgGPSTime": o([
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "ns_residual", js: "ns_residual", typ: 0 },
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "wn", js: "wn", typ: 0 },
+    ], "any"),
     "MsgGroupDelay": o([
         { json: "isc_l1ca", js: "isc_l1ca", typ: 0 },
         { json: "isc_l2c", js: "isc_l2c", typ: 0 },
         { json: "sid", js: "sid", typ: r("GnssSignal") },
-        { json: "t_op", js: "t_op", typ: r("ToaObject") },
+        { json: "t_op", js: "t_op", typ: r("GpsTimeSEC") },
         { json: "tgd", js: "tgd", typ: 0 },
         { json: "valid", js: "valid", typ: 0 },
     ], "any"),
@@ -1986,7 +1977,7 @@ const typeMap = {
         { json: "b1", js: "b1", typ: 3.14 },
         { json: "b2", js: "b2", typ: 3.14 },
         { json: "b3", js: "b3", typ: 3.14 },
-        { json: "t_nmct", js: "t_nmct", typ: r("ToaObject") },
+        { json: "t_nmct", js: "t_nmct", typ: r("GpsTimeSEC") },
     ], "any"),
     "MsgLinuxCPUState": o([
         { json: "cmdline", js: "cmdline", typ: "" },
@@ -2108,9 +2099,9 @@ const typeMap = {
     ], "any"),
     "ObservationHeader": o([
         { json: "n_obs", js: "n_obs", typ: 0 },
-        { json: "t", js: "t", typ: r("TObject") },
+        { json: "t", js: "t", typ: r("GpsTime") },
     ], "any"),
-    "TObject": o([
+    "GpsTime": o([
         { json: "ns_residual", js: "ns_residual", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
         { json: "wn", js: "wn", typ: 0 },
@@ -2173,15 +2164,6 @@ const typeMap = {
         { json: "sid", js: "sid", typ: r("GnssSignal") },
         { json: "tropo_std", js: "tropo_std", typ: 0 },
     ], "any"),
-    "MsgPosECEF": o([
-        { json: "accuracy", js: "accuracy", typ: 0 },
-        { json: "flags", js: "flags", typ: 0 },
-        { json: "n_sats", js: "n_sats", typ: 0 },
-        { json: "tow", js: "tow", typ: 0 },
-        { json: "x", js: "x", typ: 3.14 },
-        { json: "y", js: "y", typ: 3.14 },
-        { json: "z", js: "z", typ: 3.14 },
-    ], "any"),
     "MsgPosECEFCov": o([
         { json: "cov_x_x", js: "cov_x_x", typ: 3.14 },
         { json: "cov_x_y", js: "cov_x_y", typ: 3.14 },
@@ -2196,15 +2178,14 @@ const typeMap = {
         { json: "y", js: "y", typ: 3.14 },
         { json: "z", js: "z", typ: 3.14 },
     ], "any"),
-    "MsgPosLLH": o([
+    "MsgPosECEF": o([
+        { json: "accuracy", js: "accuracy", typ: 0 },
         { json: "flags", js: "flags", typ: 0 },
-        { json: "h_accuracy", js: "h_accuracy", typ: 0 },
-        { json: "height", js: "height", typ: 3.14 },
-        { json: "lat", js: "lat", typ: 3.14 },
-        { json: "lon", js: "lon", typ: 3.14 },
         { json: "n_sats", js: "n_sats", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
-        { json: "v_accuracy", js: "v_accuracy", typ: 0 },
+        { json: "x", js: "x", typ: 3.14 },
+        { json: "y", js: "y", typ: 3.14 },
+        { json: "z", js: "z", typ: 3.14 },
     ], "any"),
     "MsgPosLLHCov": o([
         { json: "cov_d_d", js: "cov_d_d", typ: 3.14 },
@@ -2220,11 +2201,21 @@ const typeMap = {
         { json: "n_sats", js: "n_sats", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
     ], "any"),
-    "MsgReset": o([
+    "MsgPosLLH": o([
         { json: "flags", js: "flags", typ: 0 },
+        { json: "h_accuracy", js: "h_accuracy", typ: 0 },
+        { json: "height", js: "height", typ: 3.14 },
+        { json: "lat", js: "lat", typ: 3.14 },
+        { json: "lon", js: "lon", typ: 3.14 },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "v_accuracy", js: "v_accuracy", typ: 0 },
     ], "any"),
     "MsgResetFilters": o([
         { json: "filter", js: "filter", typ: 0 },
+    ], "any"),
+    "MsgReset": o([
+        { json: "flags", js: "flags", typ: 0 },
     ], "any"),
     "MsgSbasRaw": o([
         { json: "data", js: "data", typ: a(0) },
@@ -2266,30 +2257,18 @@ const typeMap = {
         { json: "channel_tag", js: "channel_tag", typ: 0 },
         { json: "freq_ref", js: "freq_ref", typ: 3.14 },
         { json: "freq_step", js: "freq_step", typ: 3.14 },
-        { json: "t", js: "t", typ: r("TObject") },
+        { json: "t", js: "t", typ: r("GpsTime") },
     ], "any"),
     "MsgSsrCodeBiases": o([
         { json: "biases", js: "biases", typ: a(r("CodeBiasesContent")) },
         { json: "iod_ssr", js: "iod_ssr", typ: 0 },
         { json: "sid", js: "sid", typ: r("GnssSignal") },
-        { json: "time", js: "time", typ: r("ToaObject") },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
         { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
     "CodeBiasesContent": o([
         { json: "code", js: "code", typ: 0 },
         { json: "value", js: "value", typ: 0 },
-    ], "any"),
-    "MsgSsrGridDefinition": o([
-        { json: "header", js: "header", typ: r("GridDefinitionHeader") },
-        { json: "rle_list", js: "rle_list", typ: a(0) },
-    ], "any"),
-    "GridDefinitionHeader": o([
-        { json: "area_width", js: "area_width", typ: 0 },
-        { json: "lat_nw_corner_enc", js: "lat_nw_corner_enc", typ: 0 },
-        { json: "lon_nw_corner_enc", js: "lon_nw_corner_enc", typ: 0 },
-        { json: "num_msgs", js: "num_msgs", typ: 0 },
-        { json: "region_size_inverse", js: "region_size_inverse", typ: 0 },
-        { json: "seq_num", js: "seq_num", typ: 0 },
     ], "any"),
     "MsgSsrGriddedCorrection": o([
         { json: "element", js: "element", typ: r("GridElement") },
@@ -2316,9 +2295,21 @@ const typeMap = {
         { json: "iod_atmo", js: "iod_atmo", typ: 0 },
         { json: "num_msgs", js: "num_msgs", typ: 0 },
         { json: "seq_num", js: "seq_num", typ: 0 },
-        { json: "time", js: "time", typ: r("ToaObject") },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
         { json: "tropo_quality_indicator", js: "tropo_quality_indicator", typ: 0 },
         { json: "update_interval", js: "update_interval", typ: 0 },
+    ], "any"),
+    "MsgSsrGridDefinition": o([
+        { json: "header", js: "header", typ: r("GridDefinitionHeader") },
+        { json: "rle_list", js: "rle_list", typ: a(0) },
+    ], "any"),
+    "GridDefinitionHeader": o([
+        { json: "area_width", js: "area_width", typ: 0 },
+        { json: "lat_nw_corner_enc", js: "lat_nw_corner_enc", typ: 0 },
+        { json: "lon_nw_corner_enc", js: "lon_nw_corner_enc", typ: 0 },
+        { json: "num_msgs", js: "num_msgs", typ: 0 },
+        { json: "region_size_inverse", js: "region_size_inverse", typ: 0 },
+        { json: "seq_num", js: "seq_num", typ: 0 },
     ], "any"),
     "MsgSsrOrbitClock": o([
         { json: "along", js: "along", typ: 0 },
@@ -2333,7 +2324,7 @@ const typeMap = {
         { json: "iod_ssr", js: "iod_ssr", typ: 0 },
         { json: "radial", js: "radial", typ: 0 },
         { json: "sid", js: "sid", typ: r("GnssSignal") },
-        { json: "time", js: "time", typ: r("ToaObject") },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
         { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
     "MsgSsrPhaseBiases": o([
@@ -2342,7 +2333,7 @@ const typeMap = {
         { json: "iod_ssr", js: "iod_ssr", typ: 0 },
         { json: "mw_consistency", js: "mw_consistency", typ: 0 },
         { json: "sid", js: "sid", typ: r("GnssSignal") },
-        { json: "time", js: "time", typ: r("ToaObject") },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
         { json: "update_interval", js: "update_interval", typ: 0 },
         { json: "yaw", js: "yaw", typ: 0 },
         { json: "yaw_rate", js: "yaw_rate", typ: 0 },
@@ -2362,7 +2353,7 @@ const typeMap = {
         { json: "iod_atmo", js: "iod_atmo", typ: 0 },
         { json: "num_msgs", js: "num_msgs", typ: 0 },
         { json: "seq_num", js: "seq_num", typ: 0 },
-        { json: "time", js: "time", typ: r("ToaObject") },
+        { json: "time", js: "time", typ: r("GpsTimeSEC") },
         { json: "update_interval", js: "update_interval", typ: 0 },
     ], "any"),
     "STECSatElement": o([
@@ -2468,15 +2459,6 @@ const typeMap = {
         { json: "y", js: "y", typ: 0 },
         { json: "z", js: "z", typ: 0 },
     ], "any"),
-    "MsgVelECEF": o([
-        { json: "accuracy", js: "accuracy", typ: 0 },
-        { json: "flags", js: "flags", typ: 0 },
-        { json: "n_sats", js: "n_sats", typ: 0 },
-        { json: "tow", js: "tow", typ: 0 },
-        { json: "x", js: "x", typ: 0 },
-        { json: "y", js: "y", typ: 0 },
-        { json: "z", js: "z", typ: 0 },
-    ], "any"),
     "MsgVelECEFCov": o([
         { json: "cov_x_x", js: "cov_x_x", typ: 3.14 },
         { json: "cov_x_y", js: "cov_x_y", typ: 3.14 },
@@ -2491,15 +2473,14 @@ const typeMap = {
         { json: "y", js: "y", typ: 0 },
         { json: "z", js: "z", typ: 0 },
     ], "any"),
-    "MsgVelNED": o([
-        { json: "d", js: "d", typ: 0 },
-        { json: "e", js: "e", typ: 0 },
+    "MsgVelECEF": o([
+        { json: "accuracy", js: "accuracy", typ: 0 },
         { json: "flags", js: "flags", typ: 0 },
-        { json: "h_accuracy", js: "h_accuracy", typ: 0 },
-        { json: "n", js: "n", typ: 0 },
         { json: "n_sats", js: "n_sats", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
-        { json: "v_accuracy", js: "v_accuracy", typ: 0 },
+        { json: "x", js: "x", typ: 0 },
+        { json: "y", js: "y", typ: 0 },
+        { json: "z", js: "z", typ: 0 },
     ], "any"),
     "MsgVelNEDCov": o([
         { json: "cov_d_d", js: "cov_d_d", typ: 3.14 },
@@ -2514,6 +2495,16 @@ const typeMap = {
         { json: "n", js: "n", typ: 0 },
         { json: "n_sats", js: "n_sats", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
+    ], "any"),
+    "MsgVelNED": o([
+        { json: "d", js: "d", typ: 0 },
+        { json: "e", js: "e", typ: 0 },
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "h_accuracy", js: "h_accuracy", typ: 0 },
+        { json: "n", js: "n", typ: 0 },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "v_accuracy", js: "v_accuracy", typ: 0 },
     ], "any"),
 };
 
@@ -2530,20 +2521,20 @@ module.exports = {
     "toDoppler": toDoppler,
     "ephemerisCommonContentToJson": ephemerisCommonContentToJson,
     "toEphemerisCommonContent": toEphemerisCommonContent,
-    "gpsTimeToJson": gpsTimeToJson,
-    "toGpsTime": toGpsTime,
-    "gpsTimeSECToJson": gpsTimeSECToJson,
-    "toGpsTimeSEC": toGpsTimeSEC,
     "gnssCapbToJson": gnssCapbToJson,
     "toGnssCapb": toGnssCapb,
     "gnssSignalToJson": gnssSignalToJson,
     "toGnssSignal": toGnssSignal,
+    "gpsTimeToJson": gpsTimeToJson,
+    "toGpsTime": toGpsTime,
+    "gpsTimeSECToJson": gpsTimeSECToJson,
+    "toGpsTimeSEC": toGpsTimeSEC,
+    "griddedCorrectionHeaderToJson": griddedCorrectionHeaderToJson,
+    "toGriddedCorrectionHeader": toGriddedCorrectionHeader,
     "gridDefinitionHeaderToJson": gridDefinitionHeaderToJson,
     "toGridDefinitionHeader": toGridDefinitionHeader,
     "gridElementToJson": gridElementToJson,
     "toGridElement": toGridElement,
-    "griddedCorrectionHeaderToJson": griddedCorrectionHeaderToJson,
-    "toGriddedCorrectionHeader": toGriddedCorrectionHeader,
     "latencyToJson": latencyToJson,
     "toLatency": toLatency,
     "measurementStateToJson": measurementStateToJson,
@@ -2554,24 +2545,24 @@ module.exports = {
     "toMsgAcqSvProfile": toMsgAcqSvProfile,
     "msgAgeCorrectionsToJson": msgAgeCorrectionsToJson,
     "toMsgAgeCorrections": toMsgAgeCorrections,
-    "msgAlmanacToJson": msgAlmanacToJson,
-    "toMsgAlmanac": toMsgAlmanac,
-    "msgAlmanacGPSToJson": msgAlmanacGPSToJson,
-    "toMsgAlmanacGPS": toMsgAlmanacGPS,
     "msgAlmanacGloToJson": msgAlmanacGloToJson,
     "toMsgAlmanacGlo": toMsgAlmanacGlo,
+    "msgAlmanacGPSToJson": msgAlmanacGPSToJson,
+    "toMsgAlmanacGPS": toMsgAlmanacGPS,
+    "msgAlmanacToJson": msgAlmanacToJson,
+    "toMsgAlmanac": toMsgAlmanac,
     "msgAngularRateToJson": msgAngularRateToJson,
     "toMsgAngularRate": toMsgAngularRate,
-    "msgBasePosECEFToJson": msgBasePosECEFToJson,
-    "toMsgBasePosECEF": toMsgBasePosECEF,
-    "msgBasePosLLHToJson": msgBasePosLLHToJson,
-    "toMsgBasePosLLH": toMsgBasePosLLH,
     "msgBaselineECEFToJson": msgBaselineECEFToJson,
     "toMsgBaselineECEF": toMsgBaselineECEF,
     "msgBaselineHeadingToJson": msgBaselineHeadingToJson,
     "toMsgBaselineHeading": toMsgBaselineHeading,
     "msgBaselineNEDToJson": msgBaselineNEDToJson,
     "toMsgBaselineNED": toMsgBaselineNED,
+    "msgBasePosECEFToJson": msgBasePosECEFToJson,
+    "toMsgBasePosECEF": toMsgBasePosECEF,
+    "msgBasePosLLHToJson": msgBasePosLLHToJson,
+    "toMsgBasePosLLH": toMsgBasePosLLH,
     "msgBootloaderHandshakeReqToJson": msgBootloaderHandshakeReqToJson,
     "toMsgBootloaderHandshakeReq": toMsgBootloaderHandshakeReq,
     "msgBootloaderHandshakeRespToJson": msgBootloaderHandshakeRespToJson,
@@ -2602,12 +2593,12 @@ module.exports = {
     "toMsgDops": toMsgDops,
     "msgEphemerisBdsToJson": msgEphemerisBdsToJson,
     "toMsgEphemerisBds": toMsgEphemerisBds,
-    "msgEphemerisGPSToJson": msgEphemerisGPSToJson,
-    "toMsgEphemerisGPS": toMsgEphemerisGPS,
     "msgEphemerisGalToJson": msgEphemerisGalToJson,
     "toMsgEphemerisGal": toMsgEphemerisGal,
     "msgEphemerisGloToJson": msgEphemerisGloToJson,
     "toMsgEphemerisGlo": toMsgEphemerisGlo,
+    "msgEphemerisGPSToJson": msgEphemerisGPSToJson,
+    "toMsgEphemerisGPS": toMsgEphemerisGPS,
     "msgEphemerisQzssToJson": msgEphemerisQzssToJson,
     "toMsgEphemerisQzss": toMsgEphemerisQzss,
     "msgEphemerisSbasToJson": msgEphemerisSbasToJson,
@@ -2646,12 +2637,12 @@ module.exports = {
     "toMsgFrontEndGain": toMsgFrontEndGain,
     "msgFwdToJson": msgFwdToJson,
     "toMsgFwd": toMsgFwd,
-    "msgGPSTimeToJson": msgGPSTimeToJson,
-    "toMsgGPSTime": toMsgGPSTime,
     "msgGloBiasesToJson": msgGloBiasesToJson,
     "toMsgGloBiases": toMsgGloBiases,
     "msgGnssCapbToJson": msgGnssCapbToJson,
     "toMsgGnssCapb": toMsgGnssCapb,
+    "msgGPSTimeToJson": msgGPSTimeToJson,
+    "toMsgGPSTime": toMsgGPSTime,
     "msgGroupDelayToJson": msgGroupDelayToJson,
     "toMsgGroupDelay": toMsgGroupDelay,
     "msgHeartbeatToJson": msgHeartbeatToJson,
@@ -2714,18 +2705,18 @@ module.exports = {
     "toMsgOrientQuat": toMsgOrientQuat,
     "msgOsrToJson": msgOsrToJson,
     "toMsgOsr": toMsgOsr,
-    "msgPosECEFToJson": msgPosECEFToJson,
-    "toMsgPosECEF": toMsgPosECEF,
     "msgPosECEFCovToJson": msgPosECEFCovToJson,
     "toMsgPosECEFCov": toMsgPosECEFCov,
-    "msgPosLLHToJson": msgPosLLHToJson,
-    "toMsgPosLLH": toMsgPosLLH,
+    "msgPosECEFToJson": msgPosECEFToJson,
+    "toMsgPosECEF": toMsgPosECEF,
     "msgPosLLHCovToJson": msgPosLLHCovToJson,
     "toMsgPosLLHCov": toMsgPosLLHCov,
-    "msgResetToJson": msgResetToJson,
-    "toMsgReset": toMsgReset,
+    "msgPosLLHToJson": msgPosLLHToJson,
+    "toMsgPosLLH": toMsgPosLLH,
     "msgResetFiltersToJson": msgResetFiltersToJson,
     "toMsgResetFilters": toMsgResetFilters,
+    "msgResetToJson": msgResetToJson,
+    "toMsgReset": toMsgReset,
     "msgSbasRawToJson": msgSbasRawToJson,
     "toMsgSbasRaw": toMsgSbasRaw,
     "msgSetTimeToJson": msgSetTimeToJson,
@@ -2754,10 +2745,10 @@ module.exports = {
     "toMsgSpecan": toMsgSpecan,
     "msgSsrCodeBiasesToJson": msgSsrCodeBiasesToJson,
     "toMsgSsrCodeBiases": toMsgSsrCodeBiases,
-    "msgSsrGridDefinitionToJson": msgSsrGridDefinitionToJson,
-    "toMsgSsrGridDefinition": toMsgSsrGridDefinition,
     "msgSsrGriddedCorrectionToJson": msgSsrGriddedCorrectionToJson,
     "toMsgSsrGriddedCorrection": toMsgSsrGriddedCorrection,
+    "msgSsrGridDefinitionToJson": msgSsrGridDefinitionToJson,
+    "toMsgSsrGridDefinition": toMsgSsrGridDefinition,
     "msgSsrOrbitClockToJson": msgSsrOrbitClockToJson,
     "toMsgSsrOrbitClock": toMsgSsrOrbitClock,
     "msgSsrPhaseBiasesToJson": msgSsrPhaseBiasesToJson,
@@ -2790,14 +2781,14 @@ module.exports = {
     "toMsgUTCTime": toMsgUTCTime,
     "msgVelBodyToJson": msgVelBodyToJson,
     "toMsgVelBody": toMsgVelBody,
-    "msgVelECEFToJson": msgVelECEFToJson,
-    "toMsgVelECEF": toMsgVelECEF,
     "msgVelECEFCovToJson": msgVelECEFCovToJson,
     "toMsgVelECEFCov": toMsgVelECEFCov,
-    "msgVelNEDToJson": msgVelNEDToJson,
-    "toMsgVelNED": toMsgVelNED,
+    "msgVelECEFToJson": msgVelECEFToJson,
+    "toMsgVelECEF": toMsgVelECEF,
     "msgVelNEDCovToJson": msgVelNEDCovToJson,
     "toMsgVelNEDCov": toMsgVelNEDCov,
+    "msgVelNEDToJson": msgVelNEDToJson,
+    "toMsgVelNED": toMsgVelNED,
     "networkUsageToJson": networkUsageToJson,
     "toNetworkUsage": toNetworkUsage,
     "observationHeaderToJson": observationHeaderToJson,

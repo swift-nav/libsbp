@@ -5,7 +5,7 @@
 -- add these imports
 --
 --     import Json.Decode exposing (decodeString)`);
---     import QuickType exposing (acqSvProfile, almanacCommonContent, carrierPhase, codeBiasesContent, doppler, ephemerisCommonContent, gpsTime, gpsTimeSEC, gnssCapb, gnssSignal, gridDefinitionHeader, gridElement, griddedCorrectionHeader, latency, measurementState, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanac, msgAlmanacGPS, msgAlmanacGlo, msgAngularRate, msgBasePosECEF, msgBasePosLLH, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEphemerisBds, msgEphemerisGPS, msgEphemerisGal, msgEphemerisGlo, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGPSTime, msgGloBiases, msgGnssCapb, msgGroupDelay, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEF, msgPosECEFCov, msgPosLLH, msgPosLLHCov, msgReset, msgResetFilters, msgSbasRaw, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSpecan, msgSsrCodeBiases, msgSsrGridDefinition, msgSsrGriddedCorrection, msgSsrOrbitClock, msgSsrPhaseBiases, msgSsrStecCorrection, msgStartup, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCTime, msgVelBody, msgVelECEF, msgVelECEFCov, msgVelNED, msgVelNEDCov, networkUsage, observationHeader, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecSatElement, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, uartChannel)
+--     import SbpModule exposing (acqSvProfile, almanacCommonContent, carrierPhase, codeBiasesContent, doppler, ephemerisCommonContent, gnssCapb, gnssSignal, gpsTime, gpsTimeSEC, griddedCorrectionHeader, gridDefinitionHeader, gridElement, latency, measurementState, msgAcqResult, msgAcqSvProfile, msgAgeCorrections, msgAlmanacGlo, msgAlmanacGPS, msgAlmanac, msgAngularRate, msgBaselineECEF, msgBaselineHeading, msgBaselineNED, msgBasePosECEF, msgBasePosLLH, msgBootloaderHandshakeReq, msgBootloaderHandshakeResp, msgBootloaderJumpToApp, msgCellModemStatus, msgCommandOutput, msgCommandReq, msgCommandResp, msgCsacTelemetry, msgCsacTelemetryLabels, msgCwResults, msgCwStart, msgDeviceMonitor, msgDgnssStatus, msgDops, msgEphemerisBds, msgEphemerisGal, msgEphemerisGlo, msgEphemerisGPS, msgEphemerisQzss, msgEphemerisSbas, msgEXTEvent, msgFileioConfigReq, msgFileioConfigResp, msgFileioReadDirReq, msgFileioReadDirResp, msgFileioReadReq, msgFileioReadResp, msgFileioRemove, msgFileioWriteReq, msgFileioWriteResp, msgFlashDone, msgFlashErase, msgFlashProgram, msgFlashReadReq, msgFlashReadResp, msgFrontEndGain, msgFwd, msgGloBiases, msgGnssCapb, msgGPSTime, msgGroupDelay, msgHeartbeat, msgIarState, msgImuAux, msgImuRaw, msgInsStatus, msgIono, msgLinuxCPUState, msgLinuxMemState, msgLinuxProcessFdCount, msgLinuxProcessFdSummary, msgLinuxProcessSocketCounts, msgLinuxProcessSocketQueues, msgLinuxSocketUsage, msgLinuxSysState, msgLog, msgM25FlashWriteStatus, msgMagRaw, msgMaskSatellite, msgMeasurementState, msgNapDeviceDnaReq, msgNapDeviceDnaResp, msgNdbEvent, msgNetworkBandwidthUsage, msgNetworkStateReq, msgNetworkStateResp, msgObs, msgOdometry, msgOrientEuler, msgOrientQuat, msgOsr, msgPosECEFCov, msgPosECEF, msgPosLLHCov, msgPosLLH, msgResetFilters, msgReset, msgSbasRaw, msgSetTime, msgSettingsReadByIndexDone, msgSettingsReadByIndexReq, msgSettingsReadByIndexResp, msgSettingsReadReq, msgSettingsReadResp, msgSettingsRegister, msgSettingsRegisterResp, msgSettingsSave, msgSettingsWrite, msgSettingsWriteResp, msgSpecan, msgSsrCodeBiases, msgSsrGriddedCorrection, msgSsrGridDefinition, msgSsrOrbitClock, msgSsrPhaseBiases, msgSsrStecCorrection, msgStartup, msgStmFlashLockSector, msgStmFlashUnlockSector, msgStmUniqueIDReq, msgStmUniqueIDResp, msgSvAzEl, msgThreadState, msgTrackingIq, msgTrackingState, msgUARTState, msgUserData, msgUTCTime, msgVelBody, msgVelECEFCov, msgVelECEF, msgVelNEDCov, msgVelNED, networkUsage, observationHeader, packedObsContent, packedOsrContent, period, phaseBiasesContent, stecHeader, stecResidual, stecSatElement, svAzEl, svID, trackingChannelCorrelation, trackingChannelState, troposphericDelayCorrection, uartChannel)
 --
 -- and you're off to the races with
 --
@@ -15,27 +15,27 @@
 --     decodeString codeBiasesContent myJsonString
 --     decodeString doppler myJsonString
 --     decodeString ephemerisCommonContent myJsonString
---     decodeString gpsTime myJsonString
---     decodeString gpsTimeSEC myJsonString
 --     decodeString gnssCapb myJsonString
 --     decodeString gnssSignal myJsonString
+--     decodeString gpsTime myJsonString
+--     decodeString gpsTimeSEC myJsonString
+--     decodeString griddedCorrectionHeader myJsonString
 --     decodeString gridDefinitionHeader myJsonString
 --     decodeString gridElement myJsonString
---     decodeString griddedCorrectionHeader myJsonString
 --     decodeString latency myJsonString
 --     decodeString measurementState myJsonString
 --     decodeString msgAcqResult myJsonString
 --     decodeString msgAcqSvProfile myJsonString
 --     decodeString msgAgeCorrections myJsonString
---     decodeString msgAlmanac myJsonString
---     decodeString msgAlmanacGPS myJsonString
 --     decodeString msgAlmanacGlo myJsonString
+--     decodeString msgAlmanacGPS myJsonString
+--     decodeString msgAlmanac myJsonString
 --     decodeString msgAngularRate myJsonString
---     decodeString msgBasePosECEF myJsonString
---     decodeString msgBasePosLLH myJsonString
 --     decodeString msgBaselineECEF myJsonString
 --     decodeString msgBaselineHeading myJsonString
 --     decodeString msgBaselineNED myJsonString
+--     decodeString msgBasePosECEF myJsonString
+--     decodeString msgBasePosLLH myJsonString
 --     decodeString msgBootloaderHandshakeReq myJsonString
 --     decodeString msgBootloaderHandshakeResp myJsonString
 --     decodeString msgBootloaderJumpToApp myJsonString
@@ -51,9 +51,9 @@
 --     decodeString msgDgnssStatus myJsonString
 --     decodeString msgDops myJsonString
 --     decodeString msgEphemerisBds myJsonString
---     decodeString msgEphemerisGPS myJsonString
 --     decodeString msgEphemerisGal myJsonString
 --     decodeString msgEphemerisGlo myJsonString
+--     decodeString msgEphemerisGPS myJsonString
 --     decodeString msgEphemerisQzss myJsonString
 --     decodeString msgEphemerisSbas myJsonString
 --     decodeString msgEXTEvent myJsonString
@@ -73,9 +73,9 @@
 --     decodeString msgFlashReadResp myJsonString
 --     decodeString msgFrontEndGain myJsonString
 --     decodeString msgFwd myJsonString
---     decodeString msgGPSTime myJsonString
 --     decodeString msgGloBiases myJsonString
 --     decodeString msgGnssCapb myJsonString
+--     decodeString msgGPSTime myJsonString
 --     decodeString msgGroupDelay myJsonString
 --     decodeString msgHeartbeat myJsonString
 --     decodeString msgIarState myJsonString
@@ -107,12 +107,12 @@
 --     decodeString msgOrientEuler myJsonString
 --     decodeString msgOrientQuat myJsonString
 --     decodeString msgOsr myJsonString
---     decodeString msgPosECEF myJsonString
 --     decodeString msgPosECEFCov myJsonString
---     decodeString msgPosLLH myJsonString
+--     decodeString msgPosECEF myJsonString
 --     decodeString msgPosLLHCov myJsonString
---     decodeString msgReset myJsonString
+--     decodeString msgPosLLH myJsonString
 --     decodeString msgResetFilters myJsonString
+--     decodeString msgReset myJsonString
 --     decodeString msgSbasRaw myJsonString
 --     decodeString msgSetTime myJsonString
 --     decodeString msgSettingsReadByIndexDone myJsonString
@@ -127,8 +127,8 @@
 --     decodeString msgSettingsWriteResp myJsonString
 --     decodeString msgSpecan myJsonString
 --     decodeString msgSsrCodeBiases myJsonString
---     decodeString msgSsrGridDefinition myJsonString
 --     decodeString msgSsrGriddedCorrection myJsonString
+--     decodeString msgSsrGridDefinition myJsonString
 --     decodeString msgSsrOrbitClock myJsonString
 --     decodeString msgSsrPhaseBiases myJsonString
 --     decodeString msgSsrStecCorrection myJsonString
@@ -145,10 +145,10 @@
 --     decodeString msgUserData myJsonString
 --     decodeString msgUTCTime myJsonString
 --     decodeString msgVelBody myJsonString
---     decodeString msgVelECEF myJsonString
 --     decodeString msgVelECEFCov myJsonString
---     decodeString msgVelNED myJsonString
+--     decodeString msgVelECEF myJsonString
 --     decodeString msgVelNEDCov myJsonString
+--     decodeString msgVelNED myJsonString
 --     decodeString networkUsage myJsonString
 --     decodeString observationHeader myJsonString
 --     decodeString packedObsContent myJsonString
@@ -165,7 +165,7 @@
 --     decodeString troposphericDelayCorrection myJsonString
 --     decodeString uartChannel myJsonString
 
-module QuickType exposing
+module SbpModule exposing
     ( AcqSvProfile
     , acqSvProfileToString
     , acqSvProfile
@@ -184,27 +184,27 @@ module QuickType exposing
     , EphemerisCommonContent
     , ephemerisCommonContentToString
     , ephemerisCommonContent
-    , GpsTime
-    , gpsTimeToString
-    , gpsTime
-    , GpsTimeSEC
-    , gpsTimeSECToString
-    , gpsTimeSEC
     , GnssCapb
     , gnssCapbToString
     , gnssCapb
     , GnssSignal
     , gnssSignalToString
     , gnssSignal
+    , GpsTime
+    , gpsTimeToString
+    , gpsTime
+    , GpsTimeSEC
+    , gpsTimeSECToString
+    , gpsTimeSEC
+    , GriddedCorrectionHeader
+    , griddedCorrectionHeaderToString
+    , griddedCorrectionHeader
     , GridDefinitionHeader
     , gridDefinitionHeaderToString
     , gridDefinitionHeader
     , GridElement
     , gridElementToString
     , gridElement
-    , GriddedCorrectionHeader
-    , griddedCorrectionHeaderToString
-    , griddedCorrectionHeader
     , Latency
     , latencyToString
     , latency
@@ -220,24 +220,18 @@ module QuickType exposing
     , MsgAgeCorrections
     , msgAgeCorrectionsToString
     , msgAgeCorrections
-    , MsgAlmanac
-    , msgAlmanacToString
-    , msgAlmanac
-    , MsgAlmanacGPS
-    , msgAlmanacGPSToString
-    , msgAlmanacGPS
     , MsgAlmanacGlo
     , msgAlmanacGloToString
     , msgAlmanacGlo
+    , MsgAlmanacGPS
+    , msgAlmanacGPSToString
+    , msgAlmanacGPS
+    , MsgAlmanac
+    , msgAlmanacToString
+    , msgAlmanac
     , MsgAngularRate
     , msgAngularRateToString
     , msgAngularRate
-    , MsgBasePosECEF
-    , msgBasePosECEFToString
-    , msgBasePosECEF
-    , MsgBasePosLLH
-    , msgBasePosLLHToString
-    , msgBasePosLLH
     , MsgBaselineECEF
     , msgBaselineECEFToString
     , msgBaselineECEF
@@ -247,6 +241,12 @@ module QuickType exposing
     , MsgBaselineNED
     , msgBaselineNEDToString
     , msgBaselineNED
+    , MsgBasePosECEF
+    , msgBasePosECEFToString
+    , msgBasePosECEF
+    , MsgBasePosLLH
+    , msgBasePosLLHToString
+    , msgBasePosLLH
     , MsgBootloaderHandshakeReq
     , msgBootloaderHandshakeReqToString
     , msgBootloaderHandshakeReq
@@ -292,15 +292,15 @@ module QuickType exposing
     , MsgEphemerisBds
     , msgEphemerisBdsToString
     , msgEphemerisBds
-    , MsgEphemerisGPS
-    , msgEphemerisGPSToString
-    , msgEphemerisGPS
     , MsgEphemerisGal
     , msgEphemerisGalToString
     , msgEphemerisGal
     , MsgEphemerisGlo
     , msgEphemerisGloToString
     , msgEphemerisGlo
+    , MsgEphemerisGPS
+    , msgEphemerisGPSToString
+    , msgEphemerisGPS
     , MsgEphemerisQzss
     , msgEphemerisQzssToString
     , msgEphemerisQzss
@@ -358,15 +358,15 @@ module QuickType exposing
     , MsgFwd
     , msgFwdToString
     , msgFwd
-    , MsgGPSTime
-    , msgGPSTimeToString
-    , msgGPSTime
     , MsgGloBiases
     , msgGloBiasesToString
     , msgGloBiases
     , MsgGnssCapb
     , msgGnssCapbToString
     , msgGnssCapb
+    , MsgGPSTime
+    , msgGPSTimeToString
+    , msgGPSTime
     , MsgGroupDelay
     , msgGroupDelayToString
     , msgGroupDelay
@@ -460,24 +460,24 @@ module QuickType exposing
     , MsgOsr
     , msgOsrToString
     , msgOsr
-    , MsgPosECEF
-    , msgPosECEFToString
-    , msgPosECEF
     , MsgPosECEFCov
     , msgPosECEFCovToString
     , msgPosECEFCov
-    , MsgPosLLH
-    , msgPosLLHToString
-    , msgPosLLH
+    , MsgPosECEF
+    , msgPosECEFToString
+    , msgPosECEF
     , MsgPosLLHCov
     , msgPosLLHCovToString
     , msgPosLLHCov
-    , MsgReset
-    , msgResetToString
-    , msgReset
+    , MsgPosLLH
+    , msgPosLLHToString
+    , msgPosLLH
     , MsgResetFilters
     , msgResetFiltersToString
     , msgResetFilters
+    , MsgReset
+    , msgResetToString
+    , msgReset
     , MsgSbasRaw
     , msgSbasRawToString
     , msgSbasRaw
@@ -520,12 +520,12 @@ module QuickType exposing
     , MsgSsrCodeBiases
     , msgSsrCodeBiasesToString
     , msgSsrCodeBiases
-    , MsgSsrGridDefinition
-    , msgSsrGridDefinitionToString
-    , msgSsrGridDefinition
     , MsgSsrGriddedCorrection
     , msgSsrGriddedCorrectionToString
     , msgSsrGriddedCorrection
+    , MsgSsrGridDefinition
+    , msgSsrGridDefinitionToString
+    , msgSsrGridDefinition
     , MsgSsrOrbitClock
     , msgSsrOrbitClockToString
     , msgSsrOrbitClock
@@ -574,18 +574,18 @@ module QuickType exposing
     , MsgVelBody
     , msgVelBodyToString
     , msgVelBody
-    , MsgVelECEF
-    , msgVelECEFToString
-    , msgVelECEF
     , MsgVelECEFCov
     , msgVelECEFCovToString
     , msgVelECEFCov
-    , MsgVelNED
-    , msgVelNEDToString
-    , msgVelNED
+    , MsgVelECEF
+    , msgVelECEFToString
+    , msgVelECEF
     , MsgVelNEDCov
     , msgVelNEDCovToString
     , msgVelNEDCov
+    , MsgVelNED
+    , msgVelNEDToString
+    , msgVelNED
     , NetworkUsage
     , networkUsageToString
     , networkUsage
@@ -631,8 +631,6 @@ module QuickType exposing
     , UARTChannel
     , uartChannelToString
     , uartChannel
-    , ToaClass
-    , TClass
     )
 
 import Json.Decode as Jdec
@@ -660,26 +658,6 @@ type alias MsgSettingsReadByIndexDone = Dict String Jdec.Value
 type alias MsgSettingsSave = Dict String Jdec.Value
 
 type alias MsgStmUniqueIDReq = Dict String Jdec.Value
-
-{-| A wire-appropriate receiver clock time, defined as the time,
-since the beginning of the week on the Saturday/Sunday,
-transition. In most cases, observations are epoch aligned,
-so ns field will be 0.
--}
-type alias GpsTime =
-    { nsResidual : Int
-    , tow : Int
-    , wn : Int
-    }
-
-{-| A GPS time, defined as the number of,
-seconds since beginning of the week on the Saturday/Sunday,
-transition.
--}
-type alias GpsTimeSEC =
-    { tow : Int
-    , wn : Int
-    }
 
 {-| This message describes the results from an attempted GPS signal,
 acquisition search for a satellite PRN over a code phase/carrier,
@@ -736,6 +714,40 @@ type alias MsgAgeCorrections =
 
 {-| The almanac message returns a set of satellite orbit parameters. Almanac,
 data is not very precise and is considered valid for up to several months.,
+Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and,
+almanac" for details.
+-}
+type alias MsgAlmanacGlo =
+    { common : AlmanacCommonContent
+    , epsilon : Float
+    , i : Float
+    , lambdaNa : Float
+    , omega : Float
+    , t : Float
+    , tDot : Float
+    , tLambdaNa : Float
+    }
+
+type alias AlmanacCommonContent =
+    { fitInterval : Int
+    , healthBits : Int
+    , sid : GnssSignal
+    , toa : GpsTimeSEC
+    , ura : Float
+    , valid : Int
+    }
+
+{-| A GPS time, defined as the number of,
+seconds since beginning of the week on the Saturday/Sunday,
+transition.
+-}
+type alias GpsTimeSEC =
+    { tow : Int
+    , wn : Int
+    }
+
+{-| The almanac message returns a set of satellite orbit parameters. Almanac,
+data is not very precise and is considered valid for up to several months.,
 Please see the Navstar GPS Space Segment/Navigation user interfaces,
 (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
 -}
@@ -750,40 +762,6 @@ type alias MsgAlmanacGPS =
     , omegadot : Float
     , sqrta : Float
     , w : Float
-    }
-
-type alias AlmanacCommonContent =
-    { fitInterval : Int
-    , healthBits : Int
-    , sid : GnssSignal
-    , toa : ToaClass
-    , ura : Float
-    , valid : Int
-    }
-
-{-| A GPS time, defined as the number of,
-seconds since beginning of the week on the Saturday/Sunday,
-transition.
--}
-type alias ToaClass =
-    { tow : Int
-    , wn : Int
-    }
-
-{-| The almanac message returns a set of satellite orbit parameters. Almanac,
-data is not very precise and is considered valid for up to several months.,
-Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and,
-almanac" for details.
--}
-type alias MsgAlmanacGlo =
-    { common : AlmanacCommonContent
-    , epsilon : Float
-    , i : Float
-    , lambdaNa : Float
-    , omega : Float
-    , t : Float
-    , tDot : Float
-    , tLambdaNa : Float
     }
 
 {-| This message reports the orientation rates in the vehicle body frame. ,
@@ -802,31 +780,6 @@ type alias MsgAngularRate =
     , x : Int
     , y : Int
     , z : Int
-    }
-
-{-| The base station position message is the position reported by,
-the base station itself in absolute Earth Centered Earth Fixed,
-coordinates. It is used for pseudo-absolute RTK positioning, and,
-is required to be a high-accuracy surveyed location of the base,
-station. Any error here will result in an error in the,
-pseudo-absolute position output.
--}
-type alias MsgBasePosECEF =
-    { x : Float
-    , y : Float
-    , z : Float
-    }
-
-{-| The base station position message is the position reported by,
-the base station itself. It is used for pseudo-absolute RTK,
-positioning, and is required to be a high-accuracy surveyed,
-location of the base station. Any error here will result in an,
-error in the pseudo-absolute position output.
--}
-type alias MsgBasePosLLH =
-    { height : Float
-    , lat : Float
-    , lon : Float
     }
 
 {-| This message reports the baseline solution in Earth Centered,
@@ -873,6 +826,31 @@ type alias MsgBaselineNED =
     , nSats : Int
     , tow : Int
     , vAccuracy : Int
+    }
+
+{-| The base station position message is the position reported by,
+the base station itself in absolute Earth Centered Earth Fixed,
+coordinates. It is used for pseudo-absolute RTK positioning, and,
+is required to be a high-accuracy surveyed location of the base,
+station. Any error here will result in an error in the,
+pseudo-absolute position output.
+-}
+type alias MsgBasePosECEF =
+    { x : Float
+    , y : Float
+    , z : Float
+    }
+
+{-| The base station position message is the position reported by,
+the base station itself. It is used for pseudo-absolute RTK,
+positioning, and is required to be a high-accuracy surveyed,
+location of the base station. Any error here will result in an,
+error in the pseudo-absolute position output.
+-}
+type alias MsgBasePosLLH =
+    { height : Float
+    , lat : Float
+    , lon : Float
     }
 
 {-| The handshake message response from the device establishes a,
@@ -1011,7 +989,7 @@ type alias MsgEphemerisBds =
     , sqrta : Float
     , tgd1 : Float
     , tgd2 : Float
-    , toc : ToaClass
+    , toc : GpsTimeSEC
     , w : Float
     }
 
@@ -1019,41 +997,9 @@ type alias EphemerisCommonContent =
     { fitInterval : Int
     , healthBits : Int
     , sid : GnssSignal
-    , toe : ToaClass
+    , toe : GpsTimeSEC
     , ura : Float
     , valid : Int
-    }
-
-{-| The ephemeris message returns a set of satellite orbit,
-parameters that is used to calculate GPS satellite position,,
-velocity, and clock offset. Please see the Navstar GPS,
-Space Segment/Navigation user interfaces (ICD-GPS-200, Table,
-20-III) for more details.
--}
-type alias MsgEphemerisGPS =
-    { af0 : Float
-    , af1 : Float
-    , af2 : Float
-    , cIC : Float
-    , cIs : Float
-    , cRC : Float
-    , cRs : Float
-    , cUc : Float
-    , cUs : Float
-    , common : EphemerisCommonContent
-    , dn : Float
-    , ecc : Float
-    , inc : Float
-    , incDot : Float
-    , iodc : Int
-    , iode : Int
-    , m0 : Float
-    , omega0 : Float
-    , omegadot : Float
-    , sqrta : Float
-    , tgd : Float
-    , toc : ToaClass
-    , w : Float
     }
 
 {-| The ephemeris message returns a set of satellite orbit,
@@ -1085,7 +1031,7 @@ type alias MsgEphemerisGal =
     , omegadot : Float
     , source : Int
     , sqrta : Float
-    , toc : ToaClass
+    , toc : GpsTimeSEC
     , w : Float
     }
 
@@ -1105,6 +1051,38 @@ type alias MsgEphemerisGlo =
     , pos : Array Float
     , tau : Float
     , vel : Array Float
+    }
+
+{-| The ephemeris message returns a set of satellite orbit,
+parameters that is used to calculate GPS satellite position,,
+velocity, and clock offset. Please see the Navstar GPS,
+Space Segment/Navigation user interfaces (ICD-GPS-200, Table,
+20-III) for more details.
+-}
+type alias MsgEphemerisGPS =
+    { af0 : Float
+    , af1 : Float
+    , af2 : Float
+    , cIC : Float
+    , cIs : Float
+    , cRC : Float
+    , cRs : Float
+    , cUc : Float
+    , cUs : Float
+    , common : EphemerisCommonContent
+    , dn : Float
+    , ecc : Float
+    , inc : Float
+    , incDot : Float
+    , iodc : Int
+    , iode : Int
+    , m0 : Float
+    , omega0 : Float
+    , omegadot : Float
+    , sqrta : Float
+    , tgd : Float
+    , toc : GpsTimeSEC
+    , w : Float
     }
 
 {-| The ephemeris message returns a set of satellite orbit,
@@ -1133,7 +1111,7 @@ type alias MsgEphemerisQzss =
     , omegadot : Float
     , sqrta : Float
     , tgd : Float
-    , toc : ToaClass
+    , toc : GpsTimeSEC
     , w : Float
     }
 
@@ -1360,6 +1338,42 @@ type alias MsgFwd =
     , source : Int
     }
 
+{-| The GLONASS L1/L2 Code-Phase biases allows to perform,
+GPS+GLONASS integer ambiguity resolution for baselines,
+with mixed receiver types (e.g. receiver of different,
+manufacturers)
+-}
+type alias MsgGloBiases =
+    { l1CABias : Int
+    , l1PBias : Int
+    , l2CABias : Int
+    , l2PBias : Int
+    , mask : Int
+    }
+
+type alias MsgGnssCapb =
+    { gc : GnssCapb
+    , tNmct : GpsTimeSEC
+    }
+
+type alias GnssCapb =
+    { bdsActive : Int
+    , bdsB2 : Int
+    , bdsB2A : Int
+    , bdsD2Nav : Int
+    , galActive : Int
+    , galE5 : Int
+    , gloActive : Int
+    , gloL2Of : Int
+    , gloL3 : Int
+    , gpsActive : Int
+    , gpsL2C : Int
+    , gpsL5 : Int
+    , qzssActive : Int
+    , sbasActive : Int
+    , sbasL5 : Int
+    }
+
 {-| This message reports the GPS time, representing the time since,
 the GPS epoch began on midnight January 6, 1980 UTC. GPS time,
 counts the weeks and seconds of the week. The weeks begin at the,
@@ -1381,48 +1395,12 @@ type alias MsgGPSTime =
     , wn : Int
     }
 
-{-| The GLONASS L1/L2 Code-Phase biases allows to perform,
-GPS+GLONASS integer ambiguity resolution for baselines,
-with mixed receiver types (e.g. receiver of different,
-manufacturers)
--}
-type alias MsgGloBiases =
-    { l1CABias : Int
-    , l1PBias : Int
-    , l2CABias : Int
-    , l2PBias : Int
-    , mask : Int
-    }
-
-type alias MsgGnssCapb =
-    { gc : GnssCapb
-    , tNmct : ToaClass
-    }
-
-type alias GnssCapb =
-    { bdsActive : Int
-    , bdsB2 : Int
-    , bdsB2A : Int
-    , bdsD2Nav : Int
-    , galActive : Int
-    , galE5 : Int
-    , gloActive : Int
-    , gloL2Of : Int
-    , gloL3 : Int
-    , gpsActive : Int
-    , gpsL2C : Int
-    , gpsL5 : Int
-    , qzssActive : Int
-    , sbasActive : Int
-    , sbasL5 : Int
-    }
-
 {-| Please see ICD-GPS-200 (30.3.3.3.1.1) for more details. -}
 type alias MsgGroupDelay =
     { iscL1CA : Int
     , iscL2C : Int
     , sid : GnssSignal
-    , tOp : ToaClass
+    , tOp : GpsTimeSEC
     , tgd : Int
     , valid : Int
     }
@@ -1497,7 +1475,7 @@ type alias MsgIono =
     , b1 : Float
     , b2 : Float
     , b3 : Float
-    , tNmct : ToaClass
+    , tNmct : GpsTimeSEC
     }
 
 {-| This message indicates the process state of the top 10 heaviest,
@@ -1704,7 +1682,7 @@ type alias MsgObs =
 {-| Header of a GNSS observation message. -}
 type alias ObservationHeader =
     { nObs : Int
-    , t : TClass
+    , t : GpsTime
     }
 
 {-| A wire-appropriate receiver clock time, defined as the time,
@@ -1712,7 +1690,7 @@ since the beginning of the week on the Saturday/Sunday,
 transition. In most cases, observations are epoch aligned,
 so ns field will be 0.
 -}
-type alias TClass =
+type alias GpsTime =
     { nsResidual : Int
     , tow : Int
     , wn : Int
@@ -1832,25 +1810,6 @@ type alias PackedOsrContent =
 
 {-| The position solution message reports absolute Earth Centered,
 Earth Fixed (ECEF) coordinates and the status (single point vs,
-pseudo-absolute RTK) of the position solution. If the rover,
-receiver knows the surveyed position of the base station and has,
-an RTK solution, this reports a pseudo-absolute position,
-solution using the base station position and the rover's RTK,
-baseline vector. The full GPS time is given by the preceding,
-MSG_GPS_TIME with the matching time-of-week (tow).
--}
-type alias MsgPosECEF =
-    { accuracy : Int
-    , flags : Int
-    , nSats : Int
-    , tow : Int
-    , x : Float
-    , y : Float
-    , z : Float
-    }
-
-{-| The position solution message reports absolute Earth Centered,
-Earth Fixed (ECEF) coordinates and the status (single point vs,
 pseudo-absolute RTK) of the position solution. The message also,
 reports the upper triangular portion of the 3x3 covariance matrix.,
 If the receiver knows the surveyed position of the base station and has,
@@ -1874,24 +1833,23 @@ type alias MsgPosECEFCov =
     , z : Float
     }
 
-{-| This position solution message reports the absolute geodetic,
-coordinates and the status (single point vs pseudo-absolute RTK),
-of the position solution. If the rover receiver knows the,
-surveyed position of the base station and has an RTK solution,,
-this reports a pseudo-absolute position solution using the base,
-station position and the rover's RTK baseline vector. The full,
-GPS time is given by the preceding MSG_GPS_TIME with the,
-matching time-of-week (tow).
+{-| The position solution message reports absolute Earth Centered,
+Earth Fixed (ECEF) coordinates and the status (single point vs,
+pseudo-absolute RTK) of the position solution. If the rover,
+receiver knows the surveyed position of the base station and has,
+an RTK solution, this reports a pseudo-absolute position,
+solution using the base station position and the rover's RTK,
+baseline vector. The full GPS time is given by the preceding,
+MSG_GPS_TIME with the matching time-of-week (tow).
 -}
-type alias MsgPosLLH =
-    { flags : Int
-    , hAccuracy : Int
-    , height : Float
-    , lat : Float
-    , lon : Float
+type alias MsgPosECEF =
+    { accuracy : Int
+    , flags : Int
     , nSats : Int
     , tow : Int
-    , vAccuracy : Int
+    , x : Float
+    , y : Float
+    , z : Float
     }
 
 {-| This position solution message reports the absolute geodetic,
@@ -1918,11 +1876,24 @@ type alias MsgPosLLHCov =
     , tow : Int
     }
 
-{-| This message from the host resets the Piksi back into the,
-bootloader.
+{-| This position solution message reports the absolute geodetic,
+coordinates and the status (single point vs pseudo-absolute RTK),
+of the position solution. If the rover receiver knows the,
+surveyed position of the base station and has an RTK solution,,
+this reports a pseudo-absolute position solution using the base,
+station position and the rover's RTK baseline vector. The full,
+GPS time is given by the preceding MSG_GPS_TIME with the,
+matching time-of-week (tow).
 -}
-type alias MsgReset =
+type alias MsgPosLLH =
     { flags : Int
+    , hAccuracy : Int
+    , height : Float
+    , lat : Float
+    , lon : Float
+    , nSats : Int
+    , tow : Int
+    , vAccuracy : Int
     }
 
 {-| This message resets either the DGNSS Kalman filters or Integer,
@@ -1930,6 +1901,13 @@ Ambiguity Resolution (IAR) process.
 -}
 type alias MsgResetFilters =
     { filter : Int
+    }
+
+{-| This message from the host resets the Piksi back into the,
+bootloader.
+-}
+type alias MsgReset =
+    { flags : Int
     }
 
 {-| This message is sent once per second per SBAS satellite. ME checks the,
@@ -2042,7 +2020,7 @@ type alias MsgSpecan =
     , channelTag : Int
     , freqRef : Float
     , freqStep : Float
-    , t : TClass
+    , t : GpsTime
     }
 
 {-| The precise code biases message is to be added,
@@ -2054,7 +2032,7 @@ type alias MsgSsrCodeBiases =
     { biases : Array CodeBiasesContent
     , iodSsr : Int
     , sid : GnssSignal
-    , time : ToaClass
+    , time : GpsTimeSEC
     , updateInterval : Int
     }
 
@@ -2064,26 +2042,6 @@ The corrections conform with typical RTCMv3 MT1059 and 1065.
 type alias CodeBiasesContent =
     { code : Int
     , value : Int
-    }
-
-{-| Based on the 3GPP proposal R2-1906781 which is in turn based on,
-OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
--}
-type alias MsgSsrGridDefinition =
-    { header : GridDefinitionHeader
-    , rleList : Array Int
-    }
-
-{-| Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.,
-Also includes an RLE encoded validity list.
--}
-type alias GridDefinitionHeader =
-    { areaWidth : Int
-    , latNwCornerEnc : Int
-    , lonNwCornerEnc : Int
-    , numMsgs : Int
-    , regionSizeInverse : Int
-    , seqNum : Int
     }
 
 {-| STEC residuals are per space vehicle, tropo is not.,
@@ -2131,9 +2089,29 @@ type alias GriddedCorrectionHeader =
     { iodAtmo : Int
     , numMsgs : Int
     , seqNum : Int
-    , time : ToaClass
+    , time : GpsTimeSEC
     , tropoQualityIndicator : Int
     , updateInterval : Int
+    }
+
+{-| Based on the 3GPP proposal R2-1906781 which is in turn based on,
+OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
+-}
+type alias MsgSsrGridDefinition =
+    { header : GridDefinitionHeader
+    , rleList : Array Int
+    }
+
+{-| Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.,
+Also includes an RLE encoded validity list.
+-}
+type alias GridDefinitionHeader =
+    { areaWidth : Int
+    , latNwCornerEnc : Int
+    , lonNwCornerEnc : Int
+    , numMsgs : Int
+    , regionSizeInverse : Int
+    , seqNum : Int
     }
 
 {-| The precise orbit and clock correction message is,
@@ -2154,7 +2132,7 @@ type alias MsgSsrOrbitClock =
     , iodSsr : Int
     , radial : Int
     , sid : GnssSignal
-    , time : ToaClass
+    , time : GpsTimeSEC
     , updateInterval : Int
     }
 
@@ -2171,7 +2149,7 @@ type alias MsgSsrPhaseBiases =
     , iodSsr : Int
     , mwConsistency : Int
     , sid : GnssSignal
-    , time : ToaClass
+    , time : GpsTimeSEC
     , updateInterval : Int
     , yaw : Int
     , yawRate : Int
@@ -2206,7 +2184,7 @@ type alias STECHeader =
     { iodAtmo : Int
     , numMsgs : Int
     , seqNum : Int
-    , time : ToaClass
+    , time : GpsTimeSEC
     , updateInterval : Int
     }
 
@@ -2415,20 +2393,6 @@ type alias MsgVelBody =
 (ECEF) coordinates. The full GPS time is given by the preceding,
 MSG_GPS_TIME with the matching time-of-week (tow).
 -}
-type alias MsgVelECEF =
-    { accuracy : Int
-    , flags : Int
-    , nSats : Int
-    , tow : Int
-    , x : Int
-    , y : Int
-    , z : Int
-    }
-
-{-| This message reports the velocity in Earth Centered Earth Fixed,
-(ECEF) coordinates. The full GPS time is given by the preceding,
-MSG_GPS_TIME with the matching time-of-week (tow).
--}
 type alias MsgVelECEFCov =
     { covXX : Float
     , covXY : Float
@@ -2444,20 +2408,18 @@ type alias MsgVelECEFCov =
     , z : Int
     }
 
-{-| This message reports the velocity in local North East Down (NED),
-coordinates. The NED coordinate system is defined as the local WGS84,
-tangent plane centered at the current position. The full GPS time is,
-given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+{-| This message reports the velocity in Earth Centered Earth Fixed,
+(ECEF) coordinates. The full GPS time is given by the preceding,
+MSG_GPS_TIME with the matching time-of-week (tow).
 -}
-type alias MsgVelNED =
-    { d : Int
-    , e : Int
+type alias MsgVelECEF =
+    { accuracy : Int
     , flags : Int
-    , hAccuracy : Int
-    , n : Int
     , nSats : Int
     , tow : Int
-    , vAccuracy : Int
+    , x : Int
+    , y : Int
+    , z : Int
     }
 
 {-| This message reports the velocity in local North East Down (NED),
@@ -2482,6 +2444,22 @@ type alias MsgVelNEDCov =
     , tow : Int
     }
 
+{-| This message reports the velocity in local North East Down (NED),
+coordinates. The NED coordinate system is defined as the local WGS84,
+tangent plane centered at the current position. The full GPS time is,
+given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+-}
+type alias MsgVelNED =
+    { d : Int
+    , e : Int
+    , flags : Int
+    , hAccuracy : Int
+    , n : Int
+    , nSats : Int
+    , tow : Int
+    , vAccuracy : Int
+    }
+
 -- decoders and encoders
 
 acqSvProfileToString : AcqSvProfile -> String
@@ -2502,26 +2480,26 @@ dopplerToString r = Jenc.encode 0 (encodeDoppler r)
 ephemerisCommonContentToString : EphemerisCommonContent -> String
 ephemerisCommonContentToString r = Jenc.encode 0 (encodeEphemerisCommonContent r)
 
-gpsTimeToString : GpsTime -> String
-gpsTimeToString r = Jenc.encode 0 (encodeGpsTime r)
-
-gpsTimeSECToString : GpsTimeSEC -> String
-gpsTimeSECToString r = Jenc.encode 0 (encodeGpsTimeSEC r)
-
 gnssCapbToString : GnssCapb -> String
 gnssCapbToString r = Jenc.encode 0 (encodeGnssCapb r)
 
 gnssSignalToString : GnssSignal -> String
 gnssSignalToString r = Jenc.encode 0 (encodeGnssSignal r)
 
+gpsTimeToString : GpsTime -> String
+gpsTimeToString r = Jenc.encode 0 (encodeGpsTime r)
+
+gpsTimeSECToString : GpsTimeSEC -> String
+gpsTimeSECToString r = Jenc.encode 0 (encodeGpsTimeSEC r)
+
+griddedCorrectionHeaderToString : GriddedCorrectionHeader -> String
+griddedCorrectionHeaderToString r = Jenc.encode 0 (encodeGriddedCorrectionHeader r)
+
 gridDefinitionHeaderToString : GridDefinitionHeader -> String
 gridDefinitionHeaderToString r = Jenc.encode 0 (encodeGridDefinitionHeader r)
 
 gridElementToString : GridElement -> String
 gridElementToString r = Jenc.encode 0 (encodeGridElement r)
-
-griddedCorrectionHeaderToString : GriddedCorrectionHeader -> String
-griddedCorrectionHeaderToString r = Jenc.encode 0 (encodeGriddedCorrectionHeader r)
 
 latencyToString : Latency -> String
 latencyToString r = Jenc.encode 0 (encodeLatency r)
@@ -2538,26 +2516,20 @@ msgAcqSvProfileToString r = Jenc.encode 0 (encodeMsgAcqSvProfile r)
 msgAgeCorrectionsToString : MsgAgeCorrections -> String
 msgAgeCorrectionsToString r = Jenc.encode 0 (encodeMsgAgeCorrections r)
 
+msgAlmanacGloToString : MsgAlmanacGlo -> String
+msgAlmanacGloToString r = Jenc.encode 0 (encodeMsgAlmanacGlo r)
+
+msgAlmanacGPSToString : MsgAlmanacGPS -> String
+msgAlmanacGPSToString r = Jenc.encode 0 (encodeMsgAlmanacGPS r)
+
 msgAlmanac : Jdec.Decoder MsgAlmanac
 msgAlmanac = Jdec.dict Jdec.value
 
 msgAlmanacToString : MsgAlmanac -> String
 msgAlmanacToString r = Jenc.encode 0 (makeDictEncoder identity r)
 
-msgAlmanacGPSToString : MsgAlmanacGPS -> String
-msgAlmanacGPSToString r = Jenc.encode 0 (encodeMsgAlmanacGPS r)
-
-msgAlmanacGloToString : MsgAlmanacGlo -> String
-msgAlmanacGloToString r = Jenc.encode 0 (encodeMsgAlmanacGlo r)
-
 msgAngularRateToString : MsgAngularRate -> String
 msgAngularRateToString r = Jenc.encode 0 (encodeMsgAngularRate r)
-
-msgBasePosECEFToString : MsgBasePosECEF -> String
-msgBasePosECEFToString r = Jenc.encode 0 (encodeMsgBasePosECEF r)
-
-msgBasePosLLHToString : MsgBasePosLLH -> String
-msgBasePosLLHToString r = Jenc.encode 0 (encodeMsgBasePosLLH r)
 
 msgBaselineECEFToString : MsgBaselineECEF -> String
 msgBaselineECEFToString r = Jenc.encode 0 (encodeMsgBaselineECEF r)
@@ -2567,6 +2539,12 @@ msgBaselineHeadingToString r = Jenc.encode 0 (encodeMsgBaselineHeading r)
 
 msgBaselineNEDToString : MsgBaselineNED -> String
 msgBaselineNEDToString r = Jenc.encode 0 (encodeMsgBaselineNED r)
+
+msgBasePosECEFToString : MsgBasePosECEF -> String
+msgBasePosECEFToString r = Jenc.encode 0 (encodeMsgBasePosECEF r)
+
+msgBasePosLLHToString : MsgBasePosLLH -> String
+msgBasePosLLHToString r = Jenc.encode 0 (encodeMsgBasePosLLH r)
 
 msgBootloaderHandshakeReq : Jdec.Decoder MsgBootloaderHandshakeReq
 msgBootloaderHandshakeReq = Jdec.dict Jdec.value
@@ -2622,14 +2600,14 @@ msgDopsToString r = Jenc.encode 0 (encodeMsgDops r)
 msgEphemerisBdsToString : MsgEphemerisBds -> String
 msgEphemerisBdsToString r = Jenc.encode 0 (encodeMsgEphemerisBds r)
 
-msgEphemerisGPSToString : MsgEphemerisGPS -> String
-msgEphemerisGPSToString r = Jenc.encode 0 (encodeMsgEphemerisGPS r)
-
 msgEphemerisGalToString : MsgEphemerisGal -> String
 msgEphemerisGalToString r = Jenc.encode 0 (encodeMsgEphemerisGal r)
 
 msgEphemerisGloToString : MsgEphemerisGlo -> String
 msgEphemerisGloToString r = Jenc.encode 0 (encodeMsgEphemerisGlo r)
+
+msgEphemerisGPSToString : MsgEphemerisGPS -> String
+msgEphemerisGPSToString r = Jenc.encode 0 (encodeMsgEphemerisGPS r)
 
 msgEphemerisQzssToString : MsgEphemerisQzss -> String
 msgEphemerisQzssToString r = Jenc.encode 0 (encodeMsgEphemerisQzss r)
@@ -2688,14 +2666,14 @@ msgFrontEndGainToString r = Jenc.encode 0 (encodeMsgFrontEndGain r)
 msgFwdToString : MsgFwd -> String
 msgFwdToString r = Jenc.encode 0 (encodeMsgFwd r)
 
-msgGPSTimeToString : MsgGPSTime -> String
-msgGPSTimeToString r = Jenc.encode 0 (encodeMsgGPSTime r)
-
 msgGloBiasesToString : MsgGloBiases -> String
 msgGloBiasesToString r = Jenc.encode 0 (encodeMsgGloBiases r)
 
 msgGnssCapbToString : MsgGnssCapb -> String
 msgGnssCapbToString r = Jenc.encode 0 (encodeMsgGnssCapb r)
+
+msgGPSTimeToString : MsgGPSTime -> String
+msgGPSTimeToString r = Jenc.encode 0 (encodeMsgGPSTime r)
 
 msgGroupDelayToString : MsgGroupDelay -> String
 msgGroupDelayToString r = Jenc.encode 0 (encodeMsgGroupDelay r)
@@ -2796,23 +2774,23 @@ msgOrientQuatToString r = Jenc.encode 0 (encodeMsgOrientQuat r)
 msgOsrToString : MsgOsr -> String
 msgOsrToString r = Jenc.encode 0 (encodeMsgOsr r)
 
-msgPosECEFToString : MsgPosECEF -> String
-msgPosECEFToString r = Jenc.encode 0 (encodeMsgPosECEF r)
-
 msgPosECEFCovToString : MsgPosECEFCov -> String
 msgPosECEFCovToString r = Jenc.encode 0 (encodeMsgPosECEFCov r)
 
-msgPosLLHToString : MsgPosLLH -> String
-msgPosLLHToString r = Jenc.encode 0 (encodeMsgPosLLH r)
+msgPosECEFToString : MsgPosECEF -> String
+msgPosECEFToString r = Jenc.encode 0 (encodeMsgPosECEF r)
 
 msgPosLLHCovToString : MsgPosLLHCov -> String
 msgPosLLHCovToString r = Jenc.encode 0 (encodeMsgPosLLHCov r)
 
-msgResetToString : MsgReset -> String
-msgResetToString r = Jenc.encode 0 (encodeMsgReset r)
+msgPosLLHToString : MsgPosLLH -> String
+msgPosLLHToString r = Jenc.encode 0 (encodeMsgPosLLH r)
 
 msgResetFiltersToString : MsgResetFilters -> String
 msgResetFiltersToString r = Jenc.encode 0 (encodeMsgResetFilters r)
+
+msgResetToString : MsgReset -> String
+msgResetToString r = Jenc.encode 0 (encodeMsgReset r)
 
 msgSbasRawToString : MsgSbasRaw -> String
 msgSbasRawToString r = Jenc.encode 0 (encodeMsgSbasRaw r)
@@ -2865,11 +2843,11 @@ msgSpecanToString r = Jenc.encode 0 (encodeMsgSpecan r)
 msgSsrCodeBiasesToString : MsgSsrCodeBiases -> String
 msgSsrCodeBiasesToString r = Jenc.encode 0 (encodeMsgSsrCodeBiases r)
 
-msgSsrGridDefinitionToString : MsgSsrGridDefinition -> String
-msgSsrGridDefinitionToString r = Jenc.encode 0 (encodeMsgSsrGridDefinition r)
-
 msgSsrGriddedCorrectionToString : MsgSsrGriddedCorrection -> String
 msgSsrGriddedCorrectionToString r = Jenc.encode 0 (encodeMsgSsrGriddedCorrection r)
+
+msgSsrGridDefinitionToString : MsgSsrGridDefinition -> String
+msgSsrGridDefinitionToString r = Jenc.encode 0 (encodeMsgSsrGridDefinition r)
 
 msgSsrOrbitClockToString : MsgSsrOrbitClock -> String
 msgSsrOrbitClockToString r = Jenc.encode 0 (encodeMsgSsrOrbitClock r)
@@ -2922,17 +2900,17 @@ msgUTCTimeToString r = Jenc.encode 0 (encodeMsgUTCTime r)
 msgVelBodyToString : MsgVelBody -> String
 msgVelBodyToString r = Jenc.encode 0 (encodeMsgVelBody r)
 
-msgVelECEFToString : MsgVelECEF -> String
-msgVelECEFToString r = Jenc.encode 0 (encodeMsgVelECEF r)
-
 msgVelECEFCovToString : MsgVelECEFCov -> String
 msgVelECEFCovToString r = Jenc.encode 0 (encodeMsgVelECEFCov r)
 
-msgVelNEDToString : MsgVelNED -> String
-msgVelNEDToString r = Jenc.encode 0 (encodeMsgVelNED r)
+msgVelECEFToString : MsgVelECEF -> String
+msgVelECEFToString r = Jenc.encode 0 (encodeMsgVelECEF r)
 
 msgVelNEDCovToString : MsgVelNEDCov -> String
 msgVelNEDCovToString r = Jenc.encode 0 (encodeMsgVelNEDCov r)
+
+msgVelNEDToString : MsgVelNED -> String
+msgVelNEDToString r = Jenc.encode 0 (encodeMsgVelNED r)
 
 networkUsageToString : NetworkUsage -> String
 networkUsageToString r = Jenc.encode 0 (encodeNetworkUsage r)
@@ -2978,34 +2956,6 @@ troposphericDelayCorrectionToString r = Jenc.encode 0 (encodeTroposphericDelayCo
 
 uartChannelToString : UARTChannel -> String
 uartChannelToString r = Jenc.encode 0 (encodeUARTChannel r)
-
-gpsTime : Jdec.Decoder GpsTime
-gpsTime =
-    Jpipe.decode GpsTime
-        |> Jpipe.required "ns_residual" Jdec.int
-        |> Jpipe.required "tow" Jdec.int
-        |> Jpipe.required "wn" Jdec.int
-
-encodeGpsTime : GpsTime -> Jenc.Value
-encodeGpsTime x =
-    Jenc.object
-        [ ("ns_residual", Jenc.int x.nsResidual)
-        , ("tow", Jenc.int x.tow)
-        , ("wn", Jenc.int x.wn)
-        ]
-
-gpsTimeSEC : Jdec.Decoder GpsTimeSEC
-gpsTimeSEC =
-    Jpipe.decode GpsTimeSEC
-        |> Jpipe.required "tow" Jdec.int
-        |> Jpipe.required "wn" Jdec.int
-
-encodeGpsTimeSEC : GpsTimeSEC -> Jenc.Value
-encodeGpsTimeSEC x =
-    Jenc.object
-        [ ("tow", Jenc.int x.tow)
-        , ("wn", Jenc.int x.wn)
-        ]
 
 msgAcqResult : Jdec.Decoder MsgAcqResult
 msgAcqResult =
@@ -3094,6 +3044,65 @@ encodeMsgAgeCorrections x =
         , ("tow", Jenc.int x.tow)
         ]
 
+msgAlmanacGlo : Jdec.Decoder MsgAlmanacGlo
+msgAlmanacGlo =
+    Jpipe.decode MsgAlmanacGlo
+        |> Jpipe.required "common" almanacCommonContent
+        |> Jpipe.required "epsilon" Jdec.float
+        |> Jpipe.required "i" Jdec.float
+        |> Jpipe.required "lambda_na" Jdec.float
+        |> Jpipe.required "omega" Jdec.float
+        |> Jpipe.required "t" Jdec.float
+        |> Jpipe.required "t_dot" Jdec.float
+        |> Jpipe.required "t_lambda_na" Jdec.float
+
+encodeMsgAlmanacGlo : MsgAlmanacGlo -> Jenc.Value
+encodeMsgAlmanacGlo x =
+    Jenc.object
+        [ ("common", encodeAlmanacCommonContent x.common)
+        , ("epsilon", Jenc.float x.epsilon)
+        , ("i", Jenc.float x.i)
+        , ("lambda_na", Jenc.float x.lambdaNa)
+        , ("omega", Jenc.float x.omega)
+        , ("t", Jenc.float x.t)
+        , ("t_dot", Jenc.float x.tDot)
+        , ("t_lambda_na", Jenc.float x.tLambdaNa)
+        ]
+
+almanacCommonContent : Jdec.Decoder AlmanacCommonContent
+almanacCommonContent =
+    Jpipe.decode AlmanacCommonContent
+        |> Jpipe.required "fit_interval" Jdec.int
+        |> Jpipe.required "health_bits" Jdec.int
+        |> Jpipe.required "sid" gnssSignal
+        |> Jpipe.required "toa" gpsTimeSEC
+        |> Jpipe.required "ura" Jdec.float
+        |> Jpipe.required "valid" Jdec.int
+
+encodeAlmanacCommonContent : AlmanacCommonContent -> Jenc.Value
+encodeAlmanacCommonContent x =
+    Jenc.object
+        [ ("fit_interval", Jenc.int x.fitInterval)
+        , ("health_bits", Jenc.int x.healthBits)
+        , ("sid", encodeGnssSignal x.sid)
+        , ("toa", encodeGpsTimeSEC x.toa)
+        , ("ura", Jenc.float x.ura)
+        , ("valid", Jenc.int x.valid)
+        ]
+
+gpsTimeSEC : Jdec.Decoder GpsTimeSEC
+gpsTimeSEC =
+    Jpipe.decode GpsTimeSEC
+        |> Jpipe.required "tow" Jdec.int
+        |> Jpipe.required "wn" Jdec.int
+
+encodeGpsTimeSEC : GpsTimeSEC -> Jenc.Value
+encodeGpsTimeSEC x =
+    Jenc.object
+        [ ("tow", Jenc.int x.tow)
+        , ("wn", Jenc.int x.wn)
+        ]
+
 msgAlmanacGPS : Jdec.Decoder MsgAlmanacGPS
 msgAlmanacGPS =
     Jpipe.decode MsgAlmanacGPS
@@ -3123,65 +3132,6 @@ encodeMsgAlmanacGPS x =
         , ("w", Jenc.float x.w)
         ]
 
-almanacCommonContent : Jdec.Decoder AlmanacCommonContent
-almanacCommonContent =
-    Jpipe.decode AlmanacCommonContent
-        |> Jpipe.required "fit_interval" Jdec.int
-        |> Jpipe.required "health_bits" Jdec.int
-        |> Jpipe.required "sid" gnssSignal
-        |> Jpipe.required "toa" toaClass
-        |> Jpipe.required "ura" Jdec.float
-        |> Jpipe.required "valid" Jdec.int
-
-encodeAlmanacCommonContent : AlmanacCommonContent -> Jenc.Value
-encodeAlmanacCommonContent x =
-    Jenc.object
-        [ ("fit_interval", Jenc.int x.fitInterval)
-        , ("health_bits", Jenc.int x.healthBits)
-        , ("sid", encodeGnssSignal x.sid)
-        , ("toa", encodeToaClass x.toa)
-        , ("ura", Jenc.float x.ura)
-        , ("valid", Jenc.int x.valid)
-        ]
-
-toaClass : Jdec.Decoder ToaClass
-toaClass =
-    Jpipe.decode ToaClass
-        |> Jpipe.required "tow" Jdec.int
-        |> Jpipe.required "wn" Jdec.int
-
-encodeToaClass : ToaClass -> Jenc.Value
-encodeToaClass x =
-    Jenc.object
-        [ ("tow", Jenc.int x.tow)
-        , ("wn", Jenc.int x.wn)
-        ]
-
-msgAlmanacGlo : Jdec.Decoder MsgAlmanacGlo
-msgAlmanacGlo =
-    Jpipe.decode MsgAlmanacGlo
-        |> Jpipe.required "common" almanacCommonContent
-        |> Jpipe.required "epsilon" Jdec.float
-        |> Jpipe.required "i" Jdec.float
-        |> Jpipe.required "lambda_na" Jdec.float
-        |> Jpipe.required "omega" Jdec.float
-        |> Jpipe.required "t" Jdec.float
-        |> Jpipe.required "t_dot" Jdec.float
-        |> Jpipe.required "t_lambda_na" Jdec.float
-
-encodeMsgAlmanacGlo : MsgAlmanacGlo -> Jenc.Value
-encodeMsgAlmanacGlo x =
-    Jenc.object
-        [ ("common", encodeAlmanacCommonContent x.common)
-        , ("epsilon", Jenc.float x.epsilon)
-        , ("i", Jenc.float x.i)
-        , ("lambda_na", Jenc.float x.lambdaNa)
-        , ("omega", Jenc.float x.omega)
-        , ("t", Jenc.float x.t)
-        , ("t_dot", Jenc.float x.tDot)
-        , ("t_lambda_na", Jenc.float x.tLambdaNa)
-        ]
-
 msgAngularRate : Jdec.Decoder MsgAngularRate
 msgAngularRate =
     Jpipe.decode MsgAngularRate
@@ -3199,36 +3149,6 @@ encodeMsgAngularRate x =
         , ("x", Jenc.int x.x)
         , ("y", Jenc.int x.y)
         , ("z", Jenc.int x.z)
-        ]
-
-msgBasePosECEF : Jdec.Decoder MsgBasePosECEF
-msgBasePosECEF =
-    Jpipe.decode MsgBasePosECEF
-        |> Jpipe.required "x" Jdec.float
-        |> Jpipe.required "y" Jdec.float
-        |> Jpipe.required "z" Jdec.float
-
-encodeMsgBasePosECEF : MsgBasePosECEF -> Jenc.Value
-encodeMsgBasePosECEF x =
-    Jenc.object
-        [ ("x", Jenc.float x.x)
-        , ("y", Jenc.float x.y)
-        , ("z", Jenc.float x.z)
-        ]
-
-msgBasePosLLH : Jdec.Decoder MsgBasePosLLH
-msgBasePosLLH =
-    Jpipe.decode MsgBasePosLLH
-        |> Jpipe.required "height" Jdec.float
-        |> Jpipe.required "lat" Jdec.float
-        |> Jpipe.required "lon" Jdec.float
-
-encodeMsgBasePosLLH : MsgBasePosLLH -> Jenc.Value
-encodeMsgBasePosLLH x =
-    Jenc.object
-        [ ("height", Jenc.float x.height)
-        , ("lat", Jenc.float x.lat)
-        , ("lon", Jenc.float x.lon)
         ]
 
 msgBaselineECEF : Jdec.Decoder MsgBaselineECEF
@@ -3294,6 +3214,36 @@ encodeMsgBaselineNED x =
         , ("n_sats", Jenc.int x.nSats)
         , ("tow", Jenc.int x.tow)
         , ("v_accuracy", Jenc.int x.vAccuracy)
+        ]
+
+msgBasePosECEF : Jdec.Decoder MsgBasePosECEF
+msgBasePosECEF =
+    Jpipe.decode MsgBasePosECEF
+        |> Jpipe.required "x" Jdec.float
+        |> Jpipe.required "y" Jdec.float
+        |> Jpipe.required "z" Jdec.float
+
+encodeMsgBasePosECEF : MsgBasePosECEF -> Jenc.Value
+encodeMsgBasePosECEF x =
+    Jenc.object
+        [ ("x", Jenc.float x.x)
+        , ("y", Jenc.float x.y)
+        , ("z", Jenc.float x.z)
+        ]
+
+msgBasePosLLH : Jdec.Decoder MsgBasePosLLH
+msgBasePosLLH =
+    Jpipe.decode MsgBasePosLLH
+        |> Jpipe.required "height" Jdec.float
+        |> Jpipe.required "lat" Jdec.float
+        |> Jpipe.required "lon" Jdec.float
+
+encodeMsgBasePosLLH : MsgBasePosLLH -> Jenc.Value
+encodeMsgBasePosLLH x =
+    Jenc.object
+        [ ("height", Jenc.float x.height)
+        , ("lat", Jenc.float x.lat)
+        , ("lon", Jenc.float x.lon)
         ]
 
 msgBootloaderHandshakeResp : Jdec.Decoder MsgBootloaderHandshakeResp
@@ -3482,7 +3432,7 @@ msgEphemerisBds =
         |> Jpipe.required "sqrta" Jdec.float
         |> Jpipe.required "tgd1" Jdec.float
         |> Jpipe.required "tgd2" Jdec.float
-        |> Jpipe.required "toc" toaClass
+        |> Jpipe.required "toc" gpsTimeSEC
         |> Jpipe.required "w" Jdec.float
 
 encodeMsgEphemerisBds : MsgEphemerisBds -> Jenc.Value
@@ -3510,7 +3460,7 @@ encodeMsgEphemerisBds x =
         , ("sqrta", Jenc.float x.sqrta)
         , ("tgd1", Jenc.float x.tgd1)
         , ("tgd2", Jenc.float x.tgd2)
-        , ("toc", encodeToaClass x.toc)
+        , ("toc", encodeGpsTimeSEC x.toc)
         , ("w", Jenc.float x.w)
         ]
 
@@ -3520,7 +3470,7 @@ ephemerisCommonContent =
         |> Jpipe.required "fit_interval" Jdec.int
         |> Jpipe.required "health_bits" Jdec.int
         |> Jpipe.required "sid" gnssSignal
-        |> Jpipe.required "toe" toaClass
+        |> Jpipe.required "toe" gpsTimeSEC
         |> Jpipe.required "ura" Jdec.float
         |> Jpipe.required "valid" Jdec.int
 
@@ -3530,64 +3480,9 @@ encodeEphemerisCommonContent x =
         [ ("fit_interval", Jenc.int x.fitInterval)
         , ("health_bits", Jenc.int x.healthBits)
         , ("sid", encodeGnssSignal x.sid)
-        , ("toe", encodeToaClass x.toe)
+        , ("toe", encodeGpsTimeSEC x.toe)
         , ("ura", Jenc.float x.ura)
         , ("valid", Jenc.int x.valid)
-        ]
-
-msgEphemerisGPS : Jdec.Decoder MsgEphemerisGPS
-msgEphemerisGPS =
-    Jpipe.decode MsgEphemerisGPS
-        |> Jpipe.required "af0" Jdec.float
-        |> Jpipe.required "af1" Jdec.float
-        |> Jpipe.required "af2" Jdec.float
-        |> Jpipe.required "c_ic" Jdec.float
-        |> Jpipe.required "c_is" Jdec.float
-        |> Jpipe.required "c_rc" Jdec.float
-        |> Jpipe.required "c_rs" Jdec.float
-        |> Jpipe.required "c_uc" Jdec.float
-        |> Jpipe.required "c_us" Jdec.float
-        |> Jpipe.required "common" ephemerisCommonContent
-        |> Jpipe.required "dn" Jdec.float
-        |> Jpipe.required "ecc" Jdec.float
-        |> Jpipe.required "inc" Jdec.float
-        |> Jpipe.required "inc_dot" Jdec.float
-        |> Jpipe.required "iodc" Jdec.int
-        |> Jpipe.required "iode" Jdec.int
-        |> Jpipe.required "m0" Jdec.float
-        |> Jpipe.required "omega0" Jdec.float
-        |> Jpipe.required "omegadot" Jdec.float
-        |> Jpipe.required "sqrta" Jdec.float
-        |> Jpipe.required "tgd" Jdec.float
-        |> Jpipe.required "toc" toaClass
-        |> Jpipe.required "w" Jdec.float
-
-encodeMsgEphemerisGPS : MsgEphemerisGPS -> Jenc.Value
-encodeMsgEphemerisGPS x =
-    Jenc.object
-        [ ("af0", Jenc.float x.af0)
-        , ("af1", Jenc.float x.af1)
-        , ("af2", Jenc.float x.af2)
-        , ("c_ic", Jenc.float x.cIC)
-        , ("c_is", Jenc.float x.cIs)
-        , ("c_rc", Jenc.float x.cRC)
-        , ("c_rs", Jenc.float x.cRs)
-        , ("c_uc", Jenc.float x.cUc)
-        , ("c_us", Jenc.float x.cUs)
-        , ("common", encodeEphemerisCommonContent x.common)
-        , ("dn", Jenc.float x.dn)
-        , ("ecc", Jenc.float x.ecc)
-        , ("inc", Jenc.float x.inc)
-        , ("inc_dot", Jenc.float x.incDot)
-        , ("iodc", Jenc.int x.iodc)
-        , ("iode", Jenc.int x.iode)
-        , ("m0", Jenc.float x.m0)
-        , ("omega0", Jenc.float x.omega0)
-        , ("omegadot", Jenc.float x.omegadot)
-        , ("sqrta", Jenc.float x.sqrta)
-        , ("tgd", Jenc.float x.tgd)
-        , ("toc", encodeToaClass x.toc)
-        , ("w", Jenc.float x.w)
         ]
 
 msgEphemerisGal : Jdec.Decoder MsgEphemerisGal
@@ -3616,7 +3511,7 @@ msgEphemerisGal =
         |> Jpipe.required "omegadot" Jdec.float
         |> Jpipe.required "source" Jdec.int
         |> Jpipe.required "sqrta" Jdec.float
-        |> Jpipe.required "toc" toaClass
+        |> Jpipe.required "toc" gpsTimeSEC
         |> Jpipe.required "w" Jdec.float
 
 encodeMsgEphemerisGal : MsgEphemerisGal -> Jenc.Value
@@ -3645,7 +3540,7 @@ encodeMsgEphemerisGal x =
         , ("omegadot", Jenc.float x.omegadot)
         , ("source", Jenc.int x.source)
         , ("sqrta", Jenc.float x.sqrta)
-        , ("toc", encodeToaClass x.toc)
+        , ("toc", encodeGpsTimeSEC x.toc)
         , ("w", Jenc.float x.w)
         ]
 
@@ -3676,6 +3571,61 @@ encodeMsgEphemerisGlo x =
         , ("vel", makeArrayEncoder Jenc.float x.vel)
         ]
 
+msgEphemerisGPS : Jdec.Decoder MsgEphemerisGPS
+msgEphemerisGPS =
+    Jpipe.decode MsgEphemerisGPS
+        |> Jpipe.required "af0" Jdec.float
+        |> Jpipe.required "af1" Jdec.float
+        |> Jpipe.required "af2" Jdec.float
+        |> Jpipe.required "c_ic" Jdec.float
+        |> Jpipe.required "c_is" Jdec.float
+        |> Jpipe.required "c_rc" Jdec.float
+        |> Jpipe.required "c_rs" Jdec.float
+        |> Jpipe.required "c_uc" Jdec.float
+        |> Jpipe.required "c_us" Jdec.float
+        |> Jpipe.required "common" ephemerisCommonContent
+        |> Jpipe.required "dn" Jdec.float
+        |> Jpipe.required "ecc" Jdec.float
+        |> Jpipe.required "inc" Jdec.float
+        |> Jpipe.required "inc_dot" Jdec.float
+        |> Jpipe.required "iodc" Jdec.int
+        |> Jpipe.required "iode" Jdec.int
+        |> Jpipe.required "m0" Jdec.float
+        |> Jpipe.required "omega0" Jdec.float
+        |> Jpipe.required "omegadot" Jdec.float
+        |> Jpipe.required "sqrta" Jdec.float
+        |> Jpipe.required "tgd" Jdec.float
+        |> Jpipe.required "toc" gpsTimeSEC
+        |> Jpipe.required "w" Jdec.float
+
+encodeMsgEphemerisGPS : MsgEphemerisGPS -> Jenc.Value
+encodeMsgEphemerisGPS x =
+    Jenc.object
+        [ ("af0", Jenc.float x.af0)
+        , ("af1", Jenc.float x.af1)
+        , ("af2", Jenc.float x.af2)
+        , ("c_ic", Jenc.float x.cIC)
+        , ("c_is", Jenc.float x.cIs)
+        , ("c_rc", Jenc.float x.cRC)
+        , ("c_rs", Jenc.float x.cRs)
+        , ("c_uc", Jenc.float x.cUc)
+        , ("c_us", Jenc.float x.cUs)
+        , ("common", encodeEphemerisCommonContent x.common)
+        , ("dn", Jenc.float x.dn)
+        , ("ecc", Jenc.float x.ecc)
+        , ("inc", Jenc.float x.inc)
+        , ("inc_dot", Jenc.float x.incDot)
+        , ("iodc", Jenc.int x.iodc)
+        , ("iode", Jenc.int x.iode)
+        , ("m0", Jenc.float x.m0)
+        , ("omega0", Jenc.float x.omega0)
+        , ("omegadot", Jenc.float x.omegadot)
+        , ("sqrta", Jenc.float x.sqrta)
+        , ("tgd", Jenc.float x.tgd)
+        , ("toc", encodeGpsTimeSEC x.toc)
+        , ("w", Jenc.float x.w)
+        ]
+
 msgEphemerisQzss : Jdec.Decoder MsgEphemerisQzss
 msgEphemerisQzss =
     Jpipe.decode MsgEphemerisQzss
@@ -3700,7 +3650,7 @@ msgEphemerisQzss =
         |> Jpipe.required "omegadot" Jdec.float
         |> Jpipe.required "sqrta" Jdec.float
         |> Jpipe.required "tgd" Jdec.float
-        |> Jpipe.required "toc" toaClass
+        |> Jpipe.required "toc" gpsTimeSEC
         |> Jpipe.required "w" Jdec.float
 
 encodeMsgEphemerisQzss : MsgEphemerisQzss -> Jenc.Value
@@ -3727,7 +3677,7 @@ encodeMsgEphemerisQzss x =
         , ("omegadot", Jenc.float x.omegadot)
         , ("sqrta", Jenc.float x.sqrta)
         , ("tgd", Jenc.float x.tgd)
-        , ("toc", encodeToaClass x.toc)
+        , ("toc", encodeGpsTimeSEC x.toc)
         , ("w", Jenc.float x.w)
         ]
 
@@ -3995,23 +3945,6 @@ encodeMsgFwd x =
         , ("source", Jenc.int x.source)
         ]
 
-msgGPSTime : Jdec.Decoder MsgGPSTime
-msgGPSTime =
-    Jpipe.decode MsgGPSTime
-        |> Jpipe.required "flags" Jdec.int
-        |> Jpipe.required "ns_residual" Jdec.int
-        |> Jpipe.required "tow" Jdec.int
-        |> Jpipe.required "wn" Jdec.int
-
-encodeMsgGPSTime : MsgGPSTime -> Jenc.Value
-encodeMsgGPSTime x =
-    Jenc.object
-        [ ("flags", Jenc.int x.flags)
-        , ("ns_residual", Jenc.int x.nsResidual)
-        , ("tow", Jenc.int x.tow)
-        , ("wn", Jenc.int x.wn)
-        ]
-
 msgGloBiases : Jdec.Decoder MsgGloBiases
 msgGloBiases =
     Jpipe.decode MsgGloBiases
@@ -4035,13 +3968,13 @@ msgGnssCapb : Jdec.Decoder MsgGnssCapb
 msgGnssCapb =
     Jpipe.decode MsgGnssCapb
         |> Jpipe.required "gc" gnssCapb
-        |> Jpipe.required "t_nmct" toaClass
+        |> Jpipe.required "t_nmct" gpsTimeSEC
 
 encodeMsgGnssCapb : MsgGnssCapb -> Jenc.Value
 encodeMsgGnssCapb x =
     Jenc.object
         [ ("gc", encodeGnssCapb x.gc)
-        , ("t_nmct", encodeToaClass x.tNmct)
+        , ("t_nmct", encodeGpsTimeSEC x.tNmct)
         ]
 
 gnssCapb : Jdec.Decoder GnssCapb
@@ -4083,13 +4016,30 @@ encodeGnssCapb x =
         , ("sbas_l5", Jenc.int x.sbasL5)
         ]
 
+msgGPSTime : Jdec.Decoder MsgGPSTime
+msgGPSTime =
+    Jpipe.decode MsgGPSTime
+        |> Jpipe.required "flags" Jdec.int
+        |> Jpipe.required "ns_residual" Jdec.int
+        |> Jpipe.required "tow" Jdec.int
+        |> Jpipe.required "wn" Jdec.int
+
+encodeMsgGPSTime : MsgGPSTime -> Jenc.Value
+encodeMsgGPSTime x =
+    Jenc.object
+        [ ("flags", Jenc.int x.flags)
+        , ("ns_residual", Jenc.int x.nsResidual)
+        , ("tow", Jenc.int x.tow)
+        , ("wn", Jenc.int x.wn)
+        ]
+
 msgGroupDelay : Jdec.Decoder MsgGroupDelay
 msgGroupDelay =
     Jpipe.decode MsgGroupDelay
         |> Jpipe.required "isc_l1ca" Jdec.int
         |> Jpipe.required "isc_l2c" Jdec.int
         |> Jpipe.required "sid" gnssSignal
-        |> Jpipe.required "t_op" toaClass
+        |> Jpipe.required "t_op" gpsTimeSEC
         |> Jpipe.required "tgd" Jdec.int
         |> Jpipe.required "valid" Jdec.int
 
@@ -4099,7 +4049,7 @@ encodeMsgGroupDelay x =
         [ ("isc_l1ca", Jenc.int x.iscL1CA)
         , ("isc_l2c", Jenc.int x.iscL2C)
         , ("sid", encodeGnssSignal x.sid)
-        , ("t_op", encodeToaClass x.tOp)
+        , ("t_op", encodeGpsTimeSEC x.tOp)
         , ("tgd", Jenc.int x.tgd)
         , ("valid", Jenc.int x.valid)
         ]
@@ -4188,7 +4138,7 @@ msgIono =
         |> Jpipe.required "b1" Jdec.float
         |> Jpipe.required "b2" Jdec.float
         |> Jpipe.required "b3" Jdec.float
-        |> Jpipe.required "t_nmct" toaClass
+        |> Jpipe.required "t_nmct" gpsTimeSEC
 
 encodeMsgIono : MsgIono -> Jenc.Value
 encodeMsgIono x =
@@ -4201,7 +4151,7 @@ encodeMsgIono x =
         , ("b1", Jenc.float x.b1)
         , ("b2", Jenc.float x.b2)
         , ("b3", Jenc.float x.b3)
-        , ("t_nmct", encodeToaClass x.tNmct)
+        , ("t_nmct", encodeGpsTimeSEC x.tNmct)
         ]
 
 msgLinuxCPUState : Jdec.Decoder MsgLinuxCPUState
@@ -4544,24 +4494,24 @@ observationHeader : Jdec.Decoder ObservationHeader
 observationHeader =
     Jpipe.decode ObservationHeader
         |> Jpipe.required "n_obs" Jdec.int
-        |> Jpipe.required "t" tClass
+        |> Jpipe.required "t" gpsTime
 
 encodeObservationHeader : ObservationHeader -> Jenc.Value
 encodeObservationHeader x =
     Jenc.object
         [ ("n_obs", Jenc.int x.nObs)
-        , ("t", encodeTClass x.t)
+        , ("t", encodeGpsTime x.t)
         ]
 
-tClass : Jdec.Decoder TClass
-tClass =
-    Jpipe.decode TClass
+gpsTime : Jdec.Decoder GpsTime
+gpsTime =
+    Jpipe.decode GpsTime
         |> Jpipe.required "ns_residual" Jdec.int
         |> Jpipe.required "tow" Jdec.int
         |> Jpipe.required "wn" Jdec.int
 
-encodeTClass : TClass -> Jenc.Value
-encodeTClass x =
+encodeGpsTime : GpsTime -> Jenc.Value
+encodeGpsTime x =
     Jenc.object
         [ ("ns_residual", Jenc.int x.nsResidual)
         , ("tow", Jenc.int x.tow)
@@ -4724,29 +4674,6 @@ encodePackedOsrContent x =
         , ("tropo_std", Jenc.int x.tropoStd)
         ]
 
-msgPosECEF : Jdec.Decoder MsgPosECEF
-msgPosECEF =
-    Jpipe.decode MsgPosECEF
-        |> Jpipe.required "accuracy" Jdec.int
-        |> Jpipe.required "flags" Jdec.int
-        |> Jpipe.required "n_sats" Jdec.int
-        |> Jpipe.required "tow" Jdec.int
-        |> Jpipe.required "x" Jdec.float
-        |> Jpipe.required "y" Jdec.float
-        |> Jpipe.required "z" Jdec.float
-
-encodeMsgPosECEF : MsgPosECEF -> Jenc.Value
-encodeMsgPosECEF x =
-    Jenc.object
-        [ ("accuracy", Jenc.int x.accuracy)
-        , ("flags", Jenc.int x.flags)
-        , ("n_sats", Jenc.int x.nSats)
-        , ("tow", Jenc.int x.tow)
-        , ("x", Jenc.float x.x)
-        , ("y", Jenc.float x.y)
-        , ("z", Jenc.float x.z)
-        ]
-
 msgPosECEFCov : Jdec.Decoder MsgPosECEFCov
 msgPosECEFCov =
     Jpipe.decode MsgPosECEFCov
@@ -4780,29 +4707,27 @@ encodeMsgPosECEFCov x =
         , ("z", Jenc.float x.z)
         ]
 
-msgPosLLH : Jdec.Decoder MsgPosLLH
-msgPosLLH =
-    Jpipe.decode MsgPosLLH
+msgPosECEF : Jdec.Decoder MsgPosECEF
+msgPosECEF =
+    Jpipe.decode MsgPosECEF
+        |> Jpipe.required "accuracy" Jdec.int
         |> Jpipe.required "flags" Jdec.int
-        |> Jpipe.required "h_accuracy" Jdec.int
-        |> Jpipe.required "height" Jdec.float
-        |> Jpipe.required "lat" Jdec.float
-        |> Jpipe.required "lon" Jdec.float
         |> Jpipe.required "n_sats" Jdec.int
         |> Jpipe.required "tow" Jdec.int
-        |> Jpipe.required "v_accuracy" Jdec.int
+        |> Jpipe.required "x" Jdec.float
+        |> Jpipe.required "y" Jdec.float
+        |> Jpipe.required "z" Jdec.float
 
-encodeMsgPosLLH : MsgPosLLH -> Jenc.Value
-encodeMsgPosLLH x =
+encodeMsgPosECEF : MsgPosECEF -> Jenc.Value
+encodeMsgPosECEF x =
     Jenc.object
-        [ ("flags", Jenc.int x.flags)
-        , ("h_accuracy", Jenc.int x.hAccuracy)
-        , ("height", Jenc.float x.height)
-        , ("lat", Jenc.float x.lat)
-        , ("lon", Jenc.float x.lon)
+        [ ("accuracy", Jenc.int x.accuracy)
+        , ("flags", Jenc.int x.flags)
         , ("n_sats", Jenc.int x.nSats)
         , ("tow", Jenc.int x.tow)
-        , ("v_accuracy", Jenc.int x.vAccuracy)
+        , ("x", Jenc.float x.x)
+        , ("y", Jenc.float x.y)
+        , ("z", Jenc.float x.z)
         ]
 
 msgPosLLHCov : Jdec.Decoder MsgPosLLHCov
@@ -4838,15 +4763,29 @@ encodeMsgPosLLHCov x =
         , ("tow", Jenc.int x.tow)
         ]
 
-msgReset : Jdec.Decoder MsgReset
-msgReset =
-    Jpipe.decode MsgReset
+msgPosLLH : Jdec.Decoder MsgPosLLH
+msgPosLLH =
+    Jpipe.decode MsgPosLLH
         |> Jpipe.required "flags" Jdec.int
+        |> Jpipe.required "h_accuracy" Jdec.int
+        |> Jpipe.required "height" Jdec.float
+        |> Jpipe.required "lat" Jdec.float
+        |> Jpipe.required "lon" Jdec.float
+        |> Jpipe.required "n_sats" Jdec.int
+        |> Jpipe.required "tow" Jdec.int
+        |> Jpipe.required "v_accuracy" Jdec.int
 
-encodeMsgReset : MsgReset -> Jenc.Value
-encodeMsgReset x =
+encodeMsgPosLLH : MsgPosLLH -> Jenc.Value
+encodeMsgPosLLH x =
     Jenc.object
         [ ("flags", Jenc.int x.flags)
+        , ("h_accuracy", Jenc.int x.hAccuracy)
+        , ("height", Jenc.float x.height)
+        , ("lat", Jenc.float x.lat)
+        , ("lon", Jenc.float x.lon)
+        , ("n_sats", Jenc.int x.nSats)
+        , ("tow", Jenc.int x.tow)
+        , ("v_accuracy", Jenc.int x.vAccuracy)
         ]
 
 msgResetFilters : Jdec.Decoder MsgResetFilters
@@ -4858,6 +4797,17 @@ encodeMsgResetFilters : MsgResetFilters -> Jenc.Value
 encodeMsgResetFilters x =
     Jenc.object
         [ ("filter", Jenc.int x.filter)
+        ]
+
+msgReset : Jdec.Decoder MsgReset
+msgReset =
+    Jpipe.decode MsgReset
+        |> Jpipe.required "flags" Jdec.int
+
+encodeMsgReset : MsgReset -> Jenc.Value
+encodeMsgReset x =
+    Jenc.object
+        [ ("flags", Jenc.int x.flags)
         ]
 
 msgSbasRaw : Jdec.Decoder MsgSbasRaw
@@ -4980,7 +4930,7 @@ msgSpecan =
         |> Jpipe.required "channel_tag" Jdec.int
         |> Jpipe.required "freq_ref" Jdec.float
         |> Jpipe.required "freq_step" Jdec.float
-        |> Jpipe.required "t" tClass
+        |> Jpipe.required "t" gpsTime
 
 encodeMsgSpecan : MsgSpecan -> Jenc.Value
 encodeMsgSpecan x =
@@ -4991,7 +4941,7 @@ encodeMsgSpecan x =
         , ("channel_tag", Jenc.int x.channelTag)
         , ("freq_ref", Jenc.float x.freqRef)
         , ("freq_step", Jenc.float x.freqStep)
-        , ("t", encodeTClass x.t)
+        , ("t", encodeGpsTime x.t)
         ]
 
 msgSsrCodeBiases : Jdec.Decoder MsgSsrCodeBiases
@@ -5000,7 +4950,7 @@ msgSsrCodeBiases =
         |> Jpipe.required "biases" (Jdec.array codeBiasesContent)
         |> Jpipe.required "iod_ssr" Jdec.int
         |> Jpipe.required "sid" gnssSignal
-        |> Jpipe.required "time" toaClass
+        |> Jpipe.required "time" gpsTimeSEC
         |> Jpipe.required "update_interval" Jdec.int
 
 encodeMsgSsrCodeBiases : MsgSsrCodeBiases -> Jenc.Value
@@ -5009,7 +4959,7 @@ encodeMsgSsrCodeBiases x =
         [ ("biases", makeArrayEncoder encodeCodeBiasesContent x.biases)
         , ("iod_ssr", Jenc.int x.iodSsr)
         , ("sid", encodeGnssSignal x.sid)
-        , ("time", encodeToaClass x.time)
+        , ("time", encodeGpsTimeSEC x.time)
         , ("update_interval", Jenc.int x.updateInterval)
         ]
 
@@ -5024,40 +4974,6 @@ encodeCodeBiasesContent x =
     Jenc.object
         [ ("code", Jenc.int x.code)
         , ("value", Jenc.int x.value)
-        ]
-
-msgSsrGridDefinition : Jdec.Decoder MsgSsrGridDefinition
-msgSsrGridDefinition =
-    Jpipe.decode MsgSsrGridDefinition
-        |> Jpipe.required "header" gridDefinitionHeader
-        |> Jpipe.required "rle_list" (Jdec.array Jdec.int)
-
-encodeMsgSsrGridDefinition : MsgSsrGridDefinition -> Jenc.Value
-encodeMsgSsrGridDefinition x =
-    Jenc.object
-        [ ("header", encodeGridDefinitionHeader x.header)
-        , ("rle_list", makeArrayEncoder Jenc.int x.rleList)
-        ]
-
-gridDefinitionHeader : Jdec.Decoder GridDefinitionHeader
-gridDefinitionHeader =
-    Jpipe.decode GridDefinitionHeader
-        |> Jpipe.required "area_width" Jdec.int
-        |> Jpipe.required "lat_nw_corner_enc" Jdec.int
-        |> Jpipe.required "lon_nw_corner_enc" Jdec.int
-        |> Jpipe.required "num_msgs" Jdec.int
-        |> Jpipe.required "region_size_inverse" Jdec.int
-        |> Jpipe.required "seq_num" Jdec.int
-
-encodeGridDefinitionHeader : GridDefinitionHeader -> Jenc.Value
-encodeGridDefinitionHeader x =
-    Jenc.object
-        [ ("area_width", Jenc.int x.areaWidth)
-        , ("lat_nw_corner_enc", Jenc.int x.latNwCornerEnc)
-        , ("lon_nw_corner_enc", Jenc.int x.lonNwCornerEnc)
-        , ("num_msgs", Jenc.int x.numMsgs)
-        , ("region_size_inverse", Jenc.int x.regionSizeInverse)
-        , ("seq_num", Jenc.int x.seqNum)
         ]
 
 msgSsrGriddedCorrection : Jdec.Decoder MsgSsrGriddedCorrection
@@ -5133,7 +5049,7 @@ griddedCorrectionHeader =
         |> Jpipe.required "iod_atmo" Jdec.int
         |> Jpipe.required "num_msgs" Jdec.int
         |> Jpipe.required "seq_num" Jdec.int
-        |> Jpipe.required "time" toaClass
+        |> Jpipe.required "time" gpsTimeSEC
         |> Jpipe.required "tropo_quality_indicator" Jdec.int
         |> Jpipe.required "update_interval" Jdec.int
 
@@ -5143,9 +5059,43 @@ encodeGriddedCorrectionHeader x =
         [ ("iod_atmo", Jenc.int x.iodAtmo)
         , ("num_msgs", Jenc.int x.numMsgs)
         , ("seq_num", Jenc.int x.seqNum)
-        , ("time", encodeToaClass x.time)
+        , ("time", encodeGpsTimeSEC x.time)
         , ("tropo_quality_indicator", Jenc.int x.tropoQualityIndicator)
         , ("update_interval", Jenc.int x.updateInterval)
+        ]
+
+msgSsrGridDefinition : Jdec.Decoder MsgSsrGridDefinition
+msgSsrGridDefinition =
+    Jpipe.decode MsgSsrGridDefinition
+        |> Jpipe.required "header" gridDefinitionHeader
+        |> Jpipe.required "rle_list" (Jdec.array Jdec.int)
+
+encodeMsgSsrGridDefinition : MsgSsrGridDefinition -> Jenc.Value
+encodeMsgSsrGridDefinition x =
+    Jenc.object
+        [ ("header", encodeGridDefinitionHeader x.header)
+        , ("rle_list", makeArrayEncoder Jenc.int x.rleList)
+        ]
+
+gridDefinitionHeader : Jdec.Decoder GridDefinitionHeader
+gridDefinitionHeader =
+    Jpipe.decode GridDefinitionHeader
+        |> Jpipe.required "area_width" Jdec.int
+        |> Jpipe.required "lat_nw_corner_enc" Jdec.int
+        |> Jpipe.required "lon_nw_corner_enc" Jdec.int
+        |> Jpipe.required "num_msgs" Jdec.int
+        |> Jpipe.required "region_size_inverse" Jdec.int
+        |> Jpipe.required "seq_num" Jdec.int
+
+encodeGridDefinitionHeader : GridDefinitionHeader -> Jenc.Value
+encodeGridDefinitionHeader x =
+    Jenc.object
+        [ ("area_width", Jenc.int x.areaWidth)
+        , ("lat_nw_corner_enc", Jenc.int x.latNwCornerEnc)
+        , ("lon_nw_corner_enc", Jenc.int x.lonNwCornerEnc)
+        , ("num_msgs", Jenc.int x.numMsgs)
+        , ("region_size_inverse", Jenc.int x.regionSizeInverse)
+        , ("seq_num", Jenc.int x.seqNum)
         ]
 
 msgSsrOrbitClock : Jdec.Decoder MsgSsrOrbitClock
@@ -5163,7 +5113,7 @@ msgSsrOrbitClock =
         |> Jpipe.required "iod_ssr" Jdec.int
         |> Jpipe.required "radial" Jdec.int
         |> Jpipe.required "sid" gnssSignal
-        |> Jpipe.required "time" toaClass
+        |> Jpipe.required "time" gpsTimeSEC
         |> Jpipe.required "update_interval" Jdec.int
 
 encodeMsgSsrOrbitClock : MsgSsrOrbitClock -> Jenc.Value
@@ -5181,7 +5131,7 @@ encodeMsgSsrOrbitClock x =
         , ("iod_ssr", Jenc.int x.iodSsr)
         , ("radial", Jenc.int x.radial)
         , ("sid", encodeGnssSignal x.sid)
-        , ("time", encodeToaClass x.time)
+        , ("time", encodeGpsTimeSEC x.time)
         , ("update_interval", Jenc.int x.updateInterval)
         ]
 
@@ -5193,7 +5143,7 @@ msgSsrPhaseBiases =
         |> Jpipe.required "iod_ssr" Jdec.int
         |> Jpipe.required "mw_consistency" Jdec.int
         |> Jpipe.required "sid" gnssSignal
-        |> Jpipe.required "time" toaClass
+        |> Jpipe.required "time" gpsTimeSEC
         |> Jpipe.required "update_interval" Jdec.int
         |> Jpipe.required "yaw" Jdec.int
         |> Jpipe.required "yaw_rate" Jdec.int
@@ -5206,7 +5156,7 @@ encodeMsgSsrPhaseBiases x =
         , ("iod_ssr", Jenc.int x.iodSsr)
         , ("mw_consistency", Jenc.int x.mwConsistency)
         , ("sid", encodeGnssSignal x.sid)
-        , ("time", encodeToaClass x.time)
+        , ("time", encodeGpsTimeSEC x.time)
         , ("update_interval", Jenc.int x.updateInterval)
         , ("yaw", Jenc.int x.yaw)
         , ("yaw_rate", Jenc.int x.yawRate)
@@ -5250,7 +5200,7 @@ stecHeader =
         |> Jpipe.required "iod_atmo" Jdec.int
         |> Jpipe.required "num_msgs" Jdec.int
         |> Jpipe.required "seq_num" Jdec.int
-        |> Jpipe.required "time" toaClass
+        |> Jpipe.required "time" gpsTimeSEC
         |> Jpipe.required "update_interval" Jdec.int
 
 encodeSTECHeader : STECHeader -> Jenc.Value
@@ -5259,7 +5209,7 @@ encodeSTECHeader x =
         [ ("iod_atmo", Jenc.int x.iodAtmo)
         , ("num_msgs", Jenc.int x.numMsgs)
         , ("seq_num", Jenc.int x.seqNum)
-        , ("time", encodeToaClass x.time)
+        , ("time", encodeGpsTimeSEC x.time)
         , ("update_interval", Jenc.int x.updateInterval)
         ]
 
@@ -5564,29 +5514,6 @@ encodeMsgVelBody x =
         , ("z", Jenc.int x.z)
         ]
 
-msgVelECEF : Jdec.Decoder MsgVelECEF
-msgVelECEF =
-    Jpipe.decode MsgVelECEF
-        |> Jpipe.required "accuracy" Jdec.int
-        |> Jpipe.required "flags" Jdec.int
-        |> Jpipe.required "n_sats" Jdec.int
-        |> Jpipe.required "tow" Jdec.int
-        |> Jpipe.required "x" Jdec.int
-        |> Jpipe.required "y" Jdec.int
-        |> Jpipe.required "z" Jdec.int
-
-encodeMsgVelECEF : MsgVelECEF -> Jenc.Value
-encodeMsgVelECEF x =
-    Jenc.object
-        [ ("accuracy", Jenc.int x.accuracy)
-        , ("flags", Jenc.int x.flags)
-        , ("n_sats", Jenc.int x.nSats)
-        , ("tow", Jenc.int x.tow)
-        , ("x", Jenc.int x.x)
-        , ("y", Jenc.int x.y)
-        , ("z", Jenc.int x.z)
-        ]
-
 msgVelECEFCov : Jdec.Decoder MsgVelECEFCov
 msgVelECEFCov =
     Jpipe.decode MsgVelECEFCov
@@ -5620,29 +5547,27 @@ encodeMsgVelECEFCov x =
         , ("z", Jenc.int x.z)
         ]
 
-msgVelNED : Jdec.Decoder MsgVelNED
-msgVelNED =
-    Jpipe.decode MsgVelNED
-        |> Jpipe.required "d" Jdec.int
-        |> Jpipe.required "e" Jdec.int
+msgVelECEF : Jdec.Decoder MsgVelECEF
+msgVelECEF =
+    Jpipe.decode MsgVelECEF
+        |> Jpipe.required "accuracy" Jdec.int
         |> Jpipe.required "flags" Jdec.int
-        |> Jpipe.required "h_accuracy" Jdec.int
-        |> Jpipe.required "n" Jdec.int
         |> Jpipe.required "n_sats" Jdec.int
         |> Jpipe.required "tow" Jdec.int
-        |> Jpipe.required "v_accuracy" Jdec.int
+        |> Jpipe.required "x" Jdec.int
+        |> Jpipe.required "y" Jdec.int
+        |> Jpipe.required "z" Jdec.int
 
-encodeMsgVelNED : MsgVelNED -> Jenc.Value
-encodeMsgVelNED x =
+encodeMsgVelECEF : MsgVelECEF -> Jenc.Value
+encodeMsgVelECEF x =
     Jenc.object
-        [ ("d", Jenc.int x.d)
-        , ("e", Jenc.int x.e)
+        [ ("accuracy", Jenc.int x.accuracy)
         , ("flags", Jenc.int x.flags)
-        , ("h_accuracy", Jenc.int x.hAccuracy)
-        , ("n", Jenc.int x.n)
         , ("n_sats", Jenc.int x.nSats)
         , ("tow", Jenc.int x.tow)
-        , ("v_accuracy", Jenc.int x.vAccuracy)
+        , ("x", Jenc.int x.x)
+        , ("y", Jenc.int x.y)
+        , ("z", Jenc.int x.z)
         ]
 
 msgVelNEDCov : Jdec.Decoder MsgVelNEDCov
@@ -5676,6 +5601,31 @@ encodeMsgVelNEDCov x =
         , ("n", Jenc.int x.n)
         , ("n_sats", Jenc.int x.nSats)
         , ("tow", Jenc.int x.tow)
+        ]
+
+msgVelNED : Jdec.Decoder MsgVelNED
+msgVelNED =
+    Jpipe.decode MsgVelNED
+        |> Jpipe.required "d" Jdec.int
+        |> Jpipe.required "e" Jdec.int
+        |> Jpipe.required "flags" Jdec.int
+        |> Jpipe.required "h_accuracy" Jdec.int
+        |> Jpipe.required "n" Jdec.int
+        |> Jpipe.required "n_sats" Jdec.int
+        |> Jpipe.required "tow" Jdec.int
+        |> Jpipe.required "v_accuracy" Jdec.int
+
+encodeMsgVelNED : MsgVelNED -> Jenc.Value
+encodeMsgVelNED x =
+    Jenc.object
+        [ ("d", Jenc.int x.d)
+        , ("e", Jenc.int x.e)
+        , ("flags", Jenc.int x.flags)
+        , ("h_accuracy", Jenc.int x.hAccuracy)
+        , ("n", Jenc.int x.n)
+        , ("n_sats", Jenc.int x.nSats)
+        , ("tow", Jenc.int x.tow)
+        , ("v_accuracy", Jenc.int x.vAccuracy)
         ]
 
 --- encoder helpers
