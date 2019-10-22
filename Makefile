@@ -41,26 +41,26 @@ help:
 	@echo "(Please read before using!)"
 	@echo
 	@echo "Please use \`make <target>' where <target> is one of"
-	@echo "  help      		to display this help message"
-	@echo "  all       		to make SBP clients across all languages"
-	@echo "  clean     		to remove any output files"
-	@echo "  c         		to make C headers"
-	@echo "  dist      		to distribute packages"
-	@echo "  docs      		to make HTML and pdf documentation"
-	@echo "  html      		to make all HTML language docs"
-	@echo "  pdf       		to make SBP LaTeX datasheet"
-	@echo "  python    		to make Python bindings"
-	@echo "  pythonNG  		to make Python (JIT) bindings"
-	@echo "  haskell   		to make Haskell bindings"
-	@echo "  java      		to make Java bindings"
-	@echo "  rust      		to make Rust bindings"
-	@echo "  protobuf  		to make Protocol Buffer bindings"
+	@echo "  help         to display this help message"
+	@echo "  all          to make SBP clients across all languages"
+	@echo "  clean        to remove any output files"
+	@echo "  c            to make C headers"
+	@echo "  dist         to distribute packages"
+	@echo "  docs         to make HTML and pdf documentation"
+	@echo "  html         to make all HTML language docs"
+	@echo "  pdf          to make SBP LaTeX datasheet"
+	@echo "  python       to make Python bindings"
+	@echo "  pythonNG     to make Python (JIT) bindings"
+	@echo "  haskell      to make Haskell bindings"
+	@echo "  java         to make Java bindings"
+	@echo "  rust         to make Rust bindings"
+	@echo "  protobuf     to make Protocol Buffer bindings"
 	@echo "  jsonschema   to make JSON Schema definitions"
-	@echo "  release   		to handle some release tasks"
-	@echo "  test      		to run all tests"
+	@echo "  release      to handle some release tasks"
+	@echo "  test         to run all tests"
 	@echo
 	@echo "JSON Schema specific targets:" 
-	@echo "  quicktype-typescript		generate TypeScript module from JSON Schema"
+	@echo "  quicktype-typescript   generate TypeScript module from JSON Schema"
 	@echo "  quicktype-javascript   generate JavaScript module from JSON Schema"
 	@echo "  quicktype-elm          generate Elm module from JSON Schema"
 	@echo
@@ -322,15 +322,15 @@ test-jsonschema:
 	$(call announce-end,"Finished running JSON Schema tests")
 
 test-quicktype-typescript:
-	$(call announce-begin,"Running TypeScript JSON Schema tests")
+	$(call announce-begin,"Running TypeScript JSON Schema tests [not yet implemented]")
 	$(call announce-end,"Finished running TypeScript JSON Schema tests")
 
 test-quicktype-javascript:
-	$(call announce-begin,"Running JavaScript JSON Schema tests")
+	$(call announce-begin,"Running JavaScript JSON Schema tests [not yet implemented]")
 	$(call announce-end,"Finished running JavaScript JSON Schema tests")
 
 test-quicktype-elm:
-	$(call announce-begin,"Running Elm JSON Schema tests")
+	$(call announce-begin,"Running Elm JSON Schema tests [not yet implemented]")
 	$(call announce-end,"Finished running Elm JSON Schema tests")
 
 dist-python:

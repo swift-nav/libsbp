@@ -164,6 +164,17 @@ Ubuntu 16.04.
    pay special attention to any downstream projects or users that may
    have issues or regressions as a consequence of the release version.
 
+# Installing QuickType
+
+For web clients we generate JSON schema definitions of the SBP message.
+This allows web clients to build "native" objects out of SBP JSON.
+We use the quick [QuickType](https://github.com/quicktype/quicktype) tool
+to generate libraries for JavaScript, TypeScript, and Elm.
+
+In order to run the `make quicktype-*` target you need to install the
+quicktype tool first.  No particular version of this tool is required
+at the moment.
+
 # Distributing Python
 
 Python distribution requires compilation for the JIT accelerated `sbp.jit`
