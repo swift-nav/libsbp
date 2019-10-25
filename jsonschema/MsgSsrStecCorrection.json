@@ -1,0 +1,26 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgSsrStecCorrection",
+  "title":"MsgSsrStecCorrection",
+  "description":"The STEC per space vehicle, given as polynomial approximation for,\na given grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION,\nmessage to get the state space representation of the atmospheric,\ndelay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages\n",
+  "type": "object",
+  "properties": {
+    "header": {"$ref": "STECHeader.json"},
+    "stec_sat_list": {"type": "array", "items": {"$ref": "STECSatElement.json"}}
+  },
+  "required": [
+    "header",
+    "stec_sat_list"
+  ]
+}

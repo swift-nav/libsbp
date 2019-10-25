@@ -1,0 +1,26 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MeasurementState",
+  "title":"MeasurementState",
+  "description":"Measurement Engine tracking channel state for a specific satellite signal,\nand measured signal power.,\nThe mesid field for Glonass can either,\ncarry the FCN as 100 + FCN where FCN is in [-7, +6] or,\nthe Slot ID (from 1 to 28)\n",
+  "type": "object",
+  "properties": {
+    "mesid": {"$ref": "GnssSignal.json"},
+    "cn0": {"type": "integer"}
+  },
+  "required": [
+    "mesid",
+    "cn0"
+  ]
+}

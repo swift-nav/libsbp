@@ -1,0 +1,38 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgPosLLH",
+  "title":"MsgPosLLH",
+  "description":"This position solution message reports the absolute geodetic,\ncoordinates and the status (single point vs pseudo-absolute RTK),\nof the position solution. If the rover receiver knows the,\nsurveyed position of the base station and has an RTK solution,,\nthis reports a pseudo-absolute position solution using the base,\nstation position and the rover's RTK baseline vector. The full,\nGPS time is given by the preceding MSG_GPS_TIME with the,\nmatching time-of-week (tow).\n",
+  "type": "object",
+  "properties": {
+    "tow": {"type": "integer"},
+    "lat": {"type": "number"},
+    "lon": {"type": "number"},
+    "height": {"type": "number"},
+    "h_accuracy": {"type": "integer"},
+    "v_accuracy": {"type": "integer"},
+    "n_sats": {"type": "integer"},
+    "flags": {"type": "integer"}
+  },
+  "required": [
+    "tow",
+    "lat",
+    "lon",
+    "height",
+    "h_accuracy",
+    "v_accuracy",
+    "n_sats",
+    "flags"
+  ]
+}

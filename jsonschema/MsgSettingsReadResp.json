@@ -1,0 +1,24 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgSettingsReadResp",
+  "title":"MsgSettingsReadResp",
+  "description":"The setting message wich which the device responds after a,\nMSG_SETTING_READ_REQ is sent to device. The string field is a,\nNULL-terminated and NULL-delimited string with contents,\n\"SECTION_SETTING\\0SETTING\\0VALUE\\0\" where the '\\0' escape sequence,\ndenotes the NULL character and where quotation marks are omitted. An,\nexample string that could be sent from device is,\n\"solution\\0soln_freq\\010\\0\".\n",
+  "type": "object",
+  "properties": {
+    "setting": {"type": "string"}
+  },
+  "required": [
+    "setting"
+  ]
+}

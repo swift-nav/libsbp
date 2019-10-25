@@ -1,0 +1,42 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgOrientQuat",
+  "title":"MsgOrientQuat",
+  "description":"This message reports the quaternion vector describing the vehicle body frame's orientation,\nwith respect to a local-level NED frame. The components of the vector should sum to a unit,\nvector assuming that the LSB of each component as a value of 2^-31. This message will only,\nbe available in future INS versions of Swift Products and is not produced by Piksi Multi ,\nor Duro.\n",
+  "type": "object",
+  "properties": {
+    "tow": {"type": "integer"},
+    "w": {"type": "integer"},
+    "x": {"type": "integer"},
+    "y": {"type": "integer"},
+    "z": {"type": "integer"},
+    "w_accuracy": {"type": "number"},
+    "x_accuracy": {"type": "number"},
+    "y_accuracy": {"type": "number"},
+    "z_accuracy": {"type": "number"},
+    "flags": {"type": "integer"}
+  },
+  "required": [
+    "tow",
+    "w",
+    "x",
+    "y",
+    "z",
+    "w_accuracy",
+    "x_accuracy",
+    "y_accuracy",
+    "z_accuracy",
+    "flags"
+  ]
+}

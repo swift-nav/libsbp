@@ -1,0 +1,38 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgNetworkStateResp",
+  "title":"MsgNetworkStateResp",
+  "description":"The state of a network interface on the Piksi.,\nData is made to reflect output of ifaddrs struct returned by getifaddrs,\nin c.\n",
+  "type": "object",
+  "properties": {
+    "ipv4_address": {"type": "array", "items": {"type": "integer"}},
+    "ipv4_mask_size": {"type": "integer"},
+    "ipv6_address": {"type": "array", "items": {"type": "integer"}},
+    "ipv6_mask_size": {"type": "integer"},
+    "rx_bytes": {"type": "integer"},
+    "tx_bytes": {"type": "integer"},
+    "interface_name": {"type": "string"},
+    "flags": {"type": "integer"}
+  },
+  "required": [
+    "ipv4_address",
+    "ipv4_mask_size",
+    "ipv6_address",
+    "ipv6_mask_size",
+    "rx_bytes",
+    "tx_bytes",
+    "interface_name",
+    "flags"
+  ]
+}

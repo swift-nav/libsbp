@@ -1,0 +1,32 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgGloBiases",
+  "title":"MsgGloBiases",
+  "description":"The GLONASS L1/L2 Code-Phase biases allows to perform,\nGPS+GLONASS integer ambiguity resolution for baselines,\nwith mixed receiver types (e.g. receiver of different,\nmanufacturers)\n",
+  "type": "object",
+  "properties": {
+    "mask": {"type": "integer"},
+    "l1ca_bias": {"type": "integer"},
+    "l1p_bias": {"type": "integer"},
+    "l2ca_bias": {"type": "integer"},
+    "l2p_bias": {"type": "integer"}
+  },
+  "required": [
+    "mask",
+    "l1ca_bias",
+    "l1p_bias",
+    "l2ca_bias",
+    "l2p_bias"
+  ]
+}

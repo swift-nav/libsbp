@@ -1,0 +1,50 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgSsrOrbitClock",
+  "title":"MsgSsrOrbitClock",
+  "description":"The precise orbit and clock correction message is,\nto be applied as a delta correction to broadcast,\nephemeris and is typically an equivalent to the 1060,\nand 1066 RTCM message types\n",
+  "type": "object",
+  "properties": {
+    "time": {"$ref": "GpsTimeSec.json"},
+    "sid": {"$ref": "GnssSignal.json"},
+    "update_interval": {"type": "integer"},
+    "iod_ssr": {"type": "integer"},
+    "iod": {"type": "integer"},
+    "radial": {"type": "integer"},
+    "along": {"type": "integer"},
+    "cross": {"type": "integer"},
+    "dot_radial": {"type": "integer"},
+    "dot_along": {"type": "integer"},
+    "dot_cross": {"type": "integer"},
+    "c0": {"type": "integer"},
+    "c1": {"type": "integer"},
+    "c2": {"type": "integer"}
+  },
+  "required": [
+    "time",
+    "sid",
+    "update_interval",
+    "iod_ssr",
+    "iod",
+    "radial",
+    "along",
+    "cross",
+    "dot_radial",
+    "dot_along",
+    "dot_cross",
+    "c0",
+    "c1",
+    "c2"
+  ]
+}

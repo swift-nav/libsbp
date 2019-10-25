@@ -1,0 +1,32 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#STECHeader",
+  "title":"STECHeader",
+  "description":"A full set of STEC information will likely span multiple SBP,\nmessages, since SBP message a limited to 255 bytes.  The header,\nis used to tie multiple SBP messages into a sequence.\n",
+  "type": "object",
+  "properties": {
+    "time": {"$ref": "GpsTimeSec.json"},
+    "num_msgs": {"type": "integer"},
+    "seq_num": {"type": "integer"},
+    "update_interval": {"type": "integer"},
+    "iod_atmo": {"type": "integer"}
+  },
+  "required": [
+    "time",
+    "num_msgs",
+    "seq_num",
+    "update_interval",
+    "iod_atmo"
+  ]
+}

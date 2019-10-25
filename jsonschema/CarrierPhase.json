@@ -1,0 +1,26 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#CarrierPhase",
+  "title":"CarrierPhase",
+  "description":"Carrier phase measurement in cycles represented as a 40-bit,\nfixed point number with Q32.8 layout, i.e. 32-bits of whole,\ncycles and 8-bits of fractional cycles. This phase has the,\nsame sign as the pseudorange.\n",
+  "type": "object",
+  "properties": {
+    "i": {"type": "integer"},
+    "f": {"type": "integer"}
+  },
+  "required": [
+    "i",
+    "f"
+  ]
+}

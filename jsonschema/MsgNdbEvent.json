@@ -1,0 +1,38 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgNdbEvent",
+  "title":"MsgNdbEvent",
+  "description":"This message is sent out when an object is stored into NDB. If needed,\nmessage could also be sent out when fetching an object from NDB.\n",
+  "type": "object",
+  "properties": {
+    "recv_time": {"type": "integer"},
+    "event": {"type": "integer"},
+    "object_type": {"type": "integer"},
+    "result": {"type": "integer"},
+    "data_source": {"type": "integer"},
+    "object_sid": {"$ref": "GnssSignal.json"},
+    "src_sid": {"$ref": "GnssSignal.json"},
+    "original_sender": {"type": "integer"}
+  },
+  "required": [
+    "recv_time",
+    "event",
+    "object_type",
+    "result",
+    "data_source",
+    "object_sid",
+    "src_sid",
+    "original_sender"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgPosECEFCov",
+  "title":"MsgPosECEFCov",
+  "description":"The position solution message reports absolute Earth Centered,\nEarth Fixed (ECEF) coordinates and the status (single point vs,\npseudo-absolute RTK) of the position solution. The message also,\nreports the upper triangular portion of the 3x3 covariance matrix.,\nIf the receiver knows the surveyed position of the base station and has,\nan RTK solution, this reports a pseudo-absolute position,\nsolution using the base station position and the rover's RTK,\nbaseline vector. The full GPS time is given by the preceding,\nMSG_GPS_TIME with the matching time-of-week (tow).\n",
+  "type": "object",
+  "properties": {
+    "tow": {"type": "integer"},
+    "x": {"type": "number"},
+    "y": {"type": "number"},
+    "z": {"type": "number"},
+    "cov_x_x": {"type": "number"},
+    "cov_x_y": {"type": "number"},
+    "cov_x_z": {"type": "number"},
+    "cov_y_y": {"type": "number"},
+    "cov_y_z": {"type": "number"},
+    "cov_z_z": {"type": "number"},
+    "n_sats": {"type": "integer"},
+    "flags": {"type": "integer"}
+  },
+  "required": [
+    "tow",
+    "x",
+    "y",
+    "z",
+    "cov_x_x",
+    "cov_x_y",
+    "cov_x_z",
+    "cov_y_y",
+    "cov_y_z",
+    "cov_z_z",
+    "n_sats",
+    "flags"
+  ]
+}

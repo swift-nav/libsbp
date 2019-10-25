@@ -1,0 +1,26 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgCommandReq",
+  "title":"MsgCommandReq",
+  "description":"Request the recipient to execute an command.,\nOutput will be sent in MSG_LOG messages, and the exit,\ncode will be returned with MSG_COMMAND_RESP.\n",
+  "type": "object",
+  "properties": {
+    "sequence": {"type": "integer"},
+    "command": {"type": "string"}
+  },
+  "required": [
+    "sequence",
+    "command"
+  ]
+}
