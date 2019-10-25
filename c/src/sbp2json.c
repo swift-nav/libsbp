@@ -332,7 +332,7 @@ int msg_bootloader_handshake_resp_t_to_json_str( u16 sender_id, u16 msg_type, u8
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -503,7 +503,7 @@ int msg_fileio_read_req_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, 
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -567,7 +567,7 @@ int msg_fileio_read_dir_req_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_l
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -627,7 +627,7 @@ int msg_fileio_remove_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, ms
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -661,7 +661,7 @@ int msg_fileio_write_req_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len,
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");
@@ -1097,7 +1097,7 @@ int msg_linux_cpu_state_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, 
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");
@@ -1108,7 +1108,7 @@ int msg_linux_cpu_state_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, 
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -1144,7 +1144,7 @@ int msg_linux_mem_state_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, 
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");
@@ -1155,7 +1155,7 @@ int msg_linux_mem_state_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, 
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -1207,7 +1207,7 @@ int msg_linux_process_socket_counts_t_to_json_str( u16 sender_id, u16 msg_type, 
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -1249,7 +1249,7 @@ int msg_linux_process_socket_queues_t_to_json_str( u16 sender_id, u16 msg_type, 
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");
@@ -1260,7 +1260,7 @@ int msg_linux_process_socket_queues_t_to_json_str( u16 sender_id, u16 msg_type, 
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -1333,7 +1333,7 @@ int msg_linux_process_fd_count_t_to_json_str( u16 sender_id, u16 msg_type, u8 ms
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -1365,7 +1365,7 @@ int msg_linux_process_fd_summary_t_to_json_str( u16 sender_id, u16 msg_type, u8 
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -1412,7 +1412,7 @@ int msg_log_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_log_t * 
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -1446,7 +1446,7 @@ int msg_fwd_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_fwd_t * 
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -1476,7 +1476,7 @@ int msg_print_dep_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_pr
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -4010,7 +4010,7 @@ int msg_thread_state_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");
@@ -4193,7 +4193,7 @@ int msg_command_req_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg_
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -4237,7 +4237,7 @@ int msg_command_output_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, m
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -4308,7 +4308,7 @@ int msg_network_state_resp_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_le
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");
@@ -4341,7 +4341,7 @@ int network_usage_t_to_json_str( network_usage_t * in, uint64_t max_len, char* o
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -4650,7 +4650,7 @@ int msg_settings_write_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, m
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -4682,7 +4682,7 @@ int msg_settings_write_resp_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_l
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -4712,7 +4712,7 @@ int msg_settings_read_req_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -4742,7 +4742,7 @@ int msg_settings_read_resp_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_le
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -4786,7 +4786,7 @@ int msg_settings_read_by_index_resp_t_to_json_str( u16 sender_id, u16 msg_type, 
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -4835,7 +4835,7 @@ int msg_settings_register_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -4867,7 +4867,7 @@ int msg_settings_register_resp_t_to_json_str( u16 sender_id, u16 msg_type, u8 ms
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -5326,7 +5326,7 @@ int msg_dgnss_status_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, msg
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -5382,7 +5382,7 @@ int msg_csac_telemetry_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg_len, m
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");
@@ -5414,7 +5414,7 @@ int msg_csac_telemetry_labels_t_to_json_str( u16 sender_id, u16 msg_type, u8 msg
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");json_bufp += snprintf(json_bufp, json_end - json_bufp, "}");

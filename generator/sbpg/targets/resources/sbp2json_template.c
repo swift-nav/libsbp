@@ -93,7 +93,7 @@ int (((m.identifier|convert)))_to_json_str( (((in_ptr_type))) * in, uint64_t max
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");
@@ -105,7 +105,7 @@ int (((m.identifier|convert)))_to_json_str( (((in_ptr_type))) * in, uint64_t max
     json_bufp += snprintf(json_bufp, json_end - json_bufp, "%c", c);
     }
     else {
-    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\\\u00%02x", c);
+    json_bufp += snprintf(json_bufp, json_end - json_bufp, "\\u00%02x", c);
     }
   }
   json_bufp += snprintf(json_bufp, json_end - json_bufp, "\"");
