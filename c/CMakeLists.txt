@@ -11,6 +11,9 @@ swift_create_project_options(
     HAS_DOCS
     TEST_PACKAGES "Check"
     )
+include(CodeCoverage)
+include(TestTargets)
+add_code_coverage_all_targets()
 
 ##########################################################
 # Set some reasonable default compiler flags.

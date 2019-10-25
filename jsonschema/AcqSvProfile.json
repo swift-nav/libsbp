@@ -1,0 +1,46 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#AcqSvProfile",
+  "title":"AcqSvProfile",
+  "description":"Profile for a specific SV for debugging purposes,\nThe message describes SV profile during acquisition time.,\nThe message is used to debug and measure the performance.\n",
+  "type": "object",
+  "properties": {
+    "job_type": {"type": "integer"},
+    "status": {"type": "integer"},
+    "cn0": {"type": "integer"},
+    "int_time": {"type": "integer"},
+    "sid": {"$ref": "GnssSignal.json"},
+    "bin_width": {"type": "integer"},
+    "timestamp": {"type": "integer"},
+    "time_spent": {"type": "integer"},
+    "cf_min": {"type": "integer"},
+    "cf_max": {"type": "integer"},
+    "cf": {"type": "integer"},
+    "cp": {"type": "integer"}
+  },
+  "required": [
+    "job_type",
+    "status",
+    "cn0",
+    "int_time",
+    "sid",
+    "bin_width",
+    "timestamp",
+    "time_spent",
+    "cf_min",
+    "cf_max",
+    "cf",
+    "cp"
+  ]
+}

@@ -589,6 +589,24 @@ typedef struct SBP_ATTR_PACKED {
 } msg_baseline_heading_dep_a_t;
 
 
+/** Computed Position and Protection Level
+ *
+ * This message reports the local vertical and horizontal protection levels
+ * associated with a given LLH position solution. The full GPS time is given
+ * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+#define SBP_MSG_PROTECTION_LEVEL       0x0216
+typedef struct SBP_ATTR_PACKED {
+  u32 tow;       /**< GPS Time of Week [ms] */
+  u16 vpl;       /**< Vertical protection level [cm] */
+  u16 hpl;       /**< Horizontal protection level [cm] */
+  double lat;       /**< Latitude [deg] */
+  double lon;       /**< Longitude [deg] */
+  double height;    /**< Height [m] */
+  u8 flags;     /**< Status flags */
+} msg_protection_level_t;
+
+
 /** \} */
 
 SBP_PACK_END

@@ -18,6 +18,7 @@ from sbpg.utils import markdown_links
 
 MESSAGES_TEMPLATE_NAME = "sbp_messages_template.h"
 VERSION_TEMPLATE_NAME = "sbp_version_template.h"
+MESSAGE_TRAITS_TEMPLATE_NAME = "sbp_message_traits_template.h"
 
 def commentify(value):
   """
@@ -85,6 +86,7 @@ def mk_size(field):
   else:
     return '%s;' % field.identifier
 
+
 JENV.filters['commentify'] = commentify
 JENV.filters['mk_id'] = mk_id
 JENV.filters['mk_size'] = mk_size
@@ -112,3 +114,22 @@ def render_version(output_dir, release):
   py_template = JENV.get_template(VERSION_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(major=major, minor=minor, patch=patch))
+
+def render_traits(output_dir, package_specs):
+  msgs = []
+  includes = []
+  for package_spec in package_specs:
+    if not package_spec.render_source:
+      continue
+    name = package_spec.identifier.split('.', 2)[2]
+    if name != 'types' and name != 'base':
+      includes.append(name)
+    for m in package_spec.definitions:
+      if m.static and m.sbp_id:
+        msgs.append(m)
+  destination_filename = "%s/cpp/message_traits.h" % output_dir
+  py_template = JENV.get_template(MESSAGE_TRAITS_TEMPLATE_NAME)
+  with open(destination_filename, 'w') as f:
+    f.write(py_template.render(packages=package_specs,
+                               msgs=sorted(msgs, key=lambda msg: msg.sbp_id),
+                               includes=sorted(includes)))

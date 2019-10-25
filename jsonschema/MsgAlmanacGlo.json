@@ -1,0 +1,38 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgAlmanacGlo",
+  "title":"MsgAlmanacGlo",
+  "description":"The almanac message returns a set of satellite orbit parameters. Almanac,\ndata is not very precise and is considered valid for up to several months.,\nPlease see the GLO ICD 5.1 \"Chapter 4.5 Non-immediate information and,\nalmanac\" for details.\n",
+  "type": "object",
+  "properties": {
+    "common": {"$ref": "AlmanacCommonContent.json"},
+    "lambda_na": {"type": "number"},
+    "t_lambda_na": {"type": "number"},
+    "i": {"type": "number"},
+    "t": {"type": "number"},
+    "t_dot": {"type": "number"},
+    "epsilon": {"type": "number"},
+    "omega": {"type": "number"}
+  },
+  "required": [
+    "common",
+    "lambda_na",
+    "t_lambda_na",
+    "i",
+    "t",
+    "t_dot",
+    "epsilon",
+    "omega"
+  ]
+}

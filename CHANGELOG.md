@@ -1,5 +1,43 @@
 # Change Log
 
+## [v2.7.1](https://github.com/swift-nav/libsbp/tree/v2.7.1)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.7.0...v2.7.1)
+
+- Ignore CTRL-C in Python sbp2json
+
+**Merged pull requests:**
+
+- Remove explicit Python 2 build in dist/deploy sciprt [\#731](https://github.com/swift-nav/libsbp/pull/731)
+
+## [v2.7.0](https://github.com/swift-nav/libsbp/tree/v2.7.0) (2019-09-19)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.5...v2.7.0)
+
+**Merged pull requests:**
+
+- libsbp version 2.7.0 [\#730](https://github.com/swift-nav/libsbp/pull/730)
+- Replace ujson with rapidjson \[STA-1009\] [\#729](https://github.com/swift-nav/libsbp/pull/729)
+- Make a msg\_buff pointer for backwards compatibility [\#728](https://github.com/swift-nav/libsbp/pull/728)
+- Remove OWNERS.md file. [\#726](https://github.com/swift-nav/libsbp/pull/726)
+- Frame callback implementation & tests [\#725](https://github.com/swift-nav/libsbp/pull/725)
+- JSONLogIterator - Fix the iteration if the JSON is already unwrapped [\#724](https://github.com/swift-nav/libsbp/pull/724)
+- Dynamic import generator output modules [\#722](https://github.com/swift-nav/libsbp/pull/722)
+- Changing java CRC16 class modifiers to enable external access \(\#720\) [\#721](https://github.com/swift-nav/libsbp/pull/721)
+- ORI-594 Fix up SSR atmospherics documentation [\#719](https://github.com/swift-nav/libsbp/pull/719)
+- Remove lodash from JavaScript deps [\#717](https://github.com/swift-nav/libsbp/pull/717)
+- Initial rust implementation [\#714](https://github.com/swift-nav/libsbp/pull/714)
+- Remove redundant field. [\#713](https://github.com/swift-nav/libsbp/pull/713)
+- Support running w/o Numba/Numpy installed [\#712](https://github.com/swift-nav/libsbp/pull/712)
+- Add code coverage \[ESD-1407\] [\#710](https://github.com/swift-nav/libsbp/pull/710)
+- Update requests to resolve security issue [\#708](https://github.com/swift-nav/libsbp/pull/708)
+
+## [v2.6.5](https://github.com/swift-nav/libsbp/tree/v2.6.5) (2019-07-03)
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.4...v2.6.5)
+
+**Merged pull requests:**
+
+- Pin minor rev versions, security fix for requests [\#709](https://github.com/swift-nav/libsbp/pull/709)
+
 ## [v2.6.4](https://github.com/swift-nav/libsbp/tree/v2.6.4) (2019-06-27)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.3...v2.6.4)
 

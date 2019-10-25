@@ -145,8 +145,30 @@ definitions:
             type: u32
             desc: Status flags
             fields:
-              - 8-31:
+              - 29-31:
+                  desc: INS Type
+                  values:
+                      - 0: Smoothpose Loosely Coupled
+                      - 1: Other Loosely Coupled
+                      - 2: Reserved
+                      - 3: Reserved
+                      - 4: Reserved
+                      - 5: Reserved
+                      - 6: Reserved
+                      - 7: Reserved
+              - 11-28:
                   desc: Reserved
+              - 10:
+                  desc: Odometry Synch
+                  values:
+                      - 0: Odometry timestamp nominal
+                      - 1: Odometry timestamp out of bounds
+              - 8-9:
+                  desc: Odometry status
+                  values:
+                      - 0: No Odometry
+                      - 1: Odometry received within last second
+                      - 2: Odometry not received within last second
               - 4-7:
                   desc:  INS Error
                   values:

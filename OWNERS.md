@@ -1,4 +1,0 @@
-- [@swift-nav/skylark](https://github.com/orgs/swift-nav/teams/skylark)
-- [@JoshuaGross](https://github.com/JoshuaGross)
-- [@mfine](https://github.com/mfine)
-- [@mookerji](https://github.com/mookerji)

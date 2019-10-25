@@ -1,4 +1,4 @@
-FROM swiftnav/llvm-arm-stretch:2019.06.26
+FROM swiftnav/llvm-arm-stretch:2019.09.19
 
 ARG JOBS=8
 
@@ -169,3 +169,5 @@ RUN \
   && rm -rf /tmp/openssl.tgz \
   && rm -rf /tmp/openssl-build-${OPENSSLVER} \
   && rm /tmp/get-pip.py
+
+RUN [ "cross-build-end" ]

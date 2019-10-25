@@ -34,19 +34,14 @@ public class STECHeader extends SBPStruct {
     /** Position of this message in the dataset */
     public int seq_num;
     
-    /** update interval */
-    public int ssr_update_interval;
-    
     /** Update interval between consecutive corrections. Encoded
 following RTCM DF391 specification.
  */
     public int update_interval;
     
-    /** IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR
-generating configuration.
+    /** IOD of the SSR atmospheric correction
  */
-    public int iod_ssr;
+    public int iod_atmo;
     
 
     public STECHeader () {}
@@ -57,9 +52,8 @@ generating configuration.
         time = new GPSTimeSec().parse(parser);
         num_msgs = parser.getU8();
         seq_num = parser.getU8();
-        ssr_update_interval = parser.getU8();
         update_interval = parser.getU8();
-        iod_ssr = parser.getU8();
+        iod_atmo = parser.getU8();
         return this;
     }
 
@@ -69,9 +63,8 @@ generating configuration.
         time.build(builder);
         builder.putU8(num_msgs);
         builder.putU8(seq_num);
-        builder.putU8(ssr_update_interval);
         builder.putU8(update_interval);
-        builder.putU8(iod_ssr);
+        builder.putU8(iod_atmo);
     }
 
     @Override
@@ -80,9 +73,8 @@ generating configuration.
         obj.put("time", time.toJSON());
         obj.put("num_msgs", num_msgs);
         obj.put("seq_num", seq_num);
-        obj.put("ssr_update_interval", ssr_update_interval);
         obj.put("update_interval", update_interval);
-        obj.put("iod_ssr", iod_ssr);
+        obj.put("iod_atmo", iod_atmo);
         return obj;
     }
 }

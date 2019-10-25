@@ -1,0 +1,38 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgImuRaw",
+  "title":"MsgImuRaw",
+  "description":"Raw data from the Inertial Measurement Unit, containing accelerometer and,\ngyroscope readings. The sense of the measurements are to be aligned with ,\nthe indications on the device itself. Measurement units, which are specific to the,\ndevice hardware and settings, are communicated via the MSG_IMU_AUX message.\n",
+  "type": "object",
+  "properties": {
+    "tow": {"type": "integer"},
+    "tow_f": {"type": "integer"},
+    "acc_x": {"type": "integer"},
+    "acc_y": {"type": "integer"},
+    "acc_z": {"type": "integer"},
+    "gyr_x": {"type": "integer"},
+    "gyr_y": {"type": "integer"},
+    "gyr_z": {"type": "integer"}
+  },
+  "required": [
+    "tow",
+    "tow_f",
+    "acc_x",
+    "acc_y",
+    "acc_z",
+    "gyr_x",
+    "gyr_y",
+    "gyr_z"
+  ]
+}

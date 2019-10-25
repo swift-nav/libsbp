@@ -25,16 +25,20 @@ import com.swiftnav.sbp.SBPStruct;
 
 public class GridDefinitionHeader extends SBPStruct {
     
-    /** inverse of region size */
+    /** region_size (deg) = 10 / region_size_inverse
+0 is an invalid value.
+ */
     public int region_size_inverse;
     
-    /** area width; see spec for details */
+    /** grid height (deg) = grid idth (deg) = area_width / region_size
+0 is an invalid value.
+ */
     public int area_width;
     
-    /** encoded latitude of the northwest corner of the grid */
+    /** North-West corner latitdue (deg) = region_size * lat_nw_corner_enc - 90 */
     public int lat_nw_corner_enc;
     
-    /** encoded longitude of the northwest corner of the grid */
+    /** North-West corner longtitude (deg) = region_size * lon_nw_corner_enc - 180 */
     public int lon_nw_corner_enc;
     
     /** Number of messages in the dataset */

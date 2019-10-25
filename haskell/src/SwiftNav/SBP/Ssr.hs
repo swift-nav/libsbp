@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- Precise State Space Representation (SSR) corrections format
+-- \<Precise State Space Representation (SSR) corrections format\>
 
 module SwiftNav.SBP.Ssr
   ( module SwiftNav.SBP.Ssr
@@ -103,20 +103,17 @@ $(makeLenses ''PhaseBiasesContent)
 -- SBP message a limited to 255 bytes.  The header is used to tie multiple SBP
 -- messages into a sequence.
 data STECHeader = STECHeader
-  { _sTECHeader_time              :: !GpsTimeSec
+  { _sTECHeader_time          :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
-  , _sTECHeader_num_msgs          :: !Word8
+  , _sTECHeader_num_msgs      :: !Word8
     -- ^ Number of messages in the dataset
-  , _sTECHeader_seq_num           :: !Word8
+  , _sTECHeader_seq_num       :: !Word8
     -- ^ Position of this message in the dataset
-  , _sTECHeader_ssr_update_interval :: !Word8
-    -- ^ update interval
-  , _sTECHeader_update_interval   :: !Word8
+  , _sTECHeader_update_interval :: !Word8
     -- ^ Update interval between consecutive corrections. Encoded following RTCM
     -- DF391 specification.
-  , _sTECHeader_iod_ssr           :: !Word8
-    -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
-    -- indicate a change in the SSR generating configuration.
+  , _sTECHeader_iod_atmo      :: !Word8
+    -- ^ IOD of the SSR atmospheric correction
   } deriving ( Show, Read, Eq )
 
 instance Binary STECHeader where
@@ -124,18 +121,16 @@ instance Binary STECHeader where
     _sTECHeader_time <- get
     _sTECHeader_num_msgs <- getWord8
     _sTECHeader_seq_num <- getWord8
-    _sTECHeader_ssr_update_interval <- getWord8
     _sTECHeader_update_interval <- getWord8
-    _sTECHeader_iod_ssr <- getWord8
+    _sTECHeader_iod_atmo <- getWord8
     pure STECHeader {..}
 
   put STECHeader {..} = do
     put _sTECHeader_time
     putWord8 _sTECHeader_num_msgs
     putWord8 _sTECHeader_seq_num
-    putWord8 _sTECHeader_ssr_update_interval
     putWord8 _sTECHeader_update_interval
-    putWord8 _sTECHeader_iod_ssr
+    putWord8 _sTECHeader_iod_atmo
 
 $(makeJSON "_sTECHeader_" ''STECHeader)
 $(makeLenses ''STECHeader)
@@ -154,12 +149,11 @@ data GriddedCorrectionHeader = GriddedCorrectionHeader
   , _griddedCorrectionHeader_update_interval       :: !Word8
     -- ^ Update interval between consecutive corrections. Encoded following RTCM
     -- DF391 specification.
-  , _griddedCorrectionHeader_iod_ssr               :: !Word8
-    -- ^ IOD of the SSR correction. A change of Issue Of Data SSR is used to
-    -- indicate a change in the SSR generating configuration.
+  , _griddedCorrectionHeader_iod_atmo              :: !Word8
+    -- ^ IOD of the SSR atmospheric correction
   , _griddedCorrectionHeader_tropo_quality_indicator :: !Word8
     -- ^ Quality of the troposphere data. Encoded following RTCM DF389
-    -- specifcation but as TECU instead of m.
+    -- specifcation in units of m.
   } deriving ( Show, Read, Eq )
 
 instance Binary GriddedCorrectionHeader where
@@ -168,7 +162,7 @@ instance Binary GriddedCorrectionHeader where
     _griddedCorrectionHeader_num_msgs <- getWord16le
     _griddedCorrectionHeader_seq_num <- getWord16le
     _griddedCorrectionHeader_update_interval <- getWord8
-    _griddedCorrectionHeader_iod_ssr <- getWord8
+    _griddedCorrectionHeader_iod_atmo <- getWord8
     _griddedCorrectionHeader_tropo_quality_indicator <- getWord8
     pure GriddedCorrectionHeader {..}
 
@@ -177,7 +171,7 @@ instance Binary GriddedCorrectionHeader where
     putWord16le _griddedCorrectionHeader_num_msgs
     putWord16le _griddedCorrectionHeader_seq_num
     putWord8 _griddedCorrectionHeader_update_interval
-    putWord8 _griddedCorrectionHeader_iod_ssr
+    putWord8 _griddedCorrectionHeader_iod_atmo
     putWord8 _griddedCorrectionHeader_tropo_quality_indicator
 
 $(makeJSON "_griddedCorrectionHeader_" ''GriddedCorrectionHeader)
@@ -191,7 +185,7 @@ data STECSatElement = STECSatElement
     -- ^ Unique space vehicle identifier
   , _sTECSatElement_stec_quality_indicator :: !Word8
     -- ^ Quality of the STEC data. Encoded following RTCM DF389 specifcation but
-    -- as TECU instead of m.
+    -- in units of TECU instead of m.
   , _sTECSatElement_stec_coeff           :: ![Int16]
     -- ^ Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
   } deriving ( Show, Read, Eq )
@@ -213,7 +207,7 @@ $(makeLenses ''STECSatElement)
 
 -- | TroposphericDelayCorrection.
 --
--- Troposphere delays at the grid point.
+-- Troposphere vertical delays at the grid point.
 data TroposphericDelayCorrection = TroposphericDelayCorrection
   { _troposphericDelayCorrection_hydro :: !Int16
     -- ^ Hydrostatic vertical delay
@@ -291,13 +285,15 @@ $(makeLenses ''GridElement)
 -- RLE encoded validity list.
 data GridDefinitionHeader = GridDefinitionHeader
   { _gridDefinitionHeader_region_size_inverse :: !Word8
-    -- ^ inverse of region size
+    -- ^ region_size (deg) = 10 / region_size_inverse 0 is an invalid value.
   , _gridDefinitionHeader_area_width        :: !Word16
-    -- ^ area width; see spec for details
+    -- ^ grid height (deg) = grid idth (deg) = area_width / region_size 0 is an
+    -- invalid value.
   , _gridDefinitionHeader_lat_nw_corner_enc :: !Word16
-    -- ^ encoded latitude of the northwest corner of the grid
+    -- ^ North-West corner latitdue (deg) = region_size * lat_nw_corner_enc - 90
   , _gridDefinitionHeader_lon_nw_corner_enc :: !Word16
-    -- ^ encoded longitude of the northwest corner of the grid
+    -- ^ North-West corner longtitude (deg) = region_size * lon_nw_corner_enc -
+    -- 180
   , _gridDefinitionHeader_num_msgs          :: !Word8
     -- ^ Number of messages in the dataset
   , _gridDefinitionHeader_seq_num           :: !Word8
@@ -650,7 +646,8 @@ msgSsrGridDefinition = 0x05F5
 
 -- | SBP class for message MSG_SSR_GRID_DEFINITION (0x05F5).
 --
--- Definition of the grid for STEC and tropo messages
+-- Based on the 3GPP proposal R2-1906781 which is in turn based on OMA-LPPe-
+-- ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
 data MsgSsrGridDefinition = MsgSsrGridDefinition
   { _msgSsrGridDefinition_header :: !GridDefinitionHeader
     -- ^ Header of a Gridded Correction message

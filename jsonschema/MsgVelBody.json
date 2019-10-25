@@ -1,0 +1,46 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgVelBody",
+  "title":"MsgVelBody",
+  "description":"This message reports the velocity in the Vehicle Body Frame. By convention,,\nthe x-axis should point out the nose of the vehicle and represent the forward,\ndirection, while as the y-axis should point out the right hand side of the vehicle.,\nSince this is a right handed system, z should point out the bottom of the vehicle.,\nThe orientation and origin of the Vehicle Body Frame are specified via the device settings.,\nThe full GPS time is given by the preceding MSG_GPS_TIME with the,\nmatching time-of-week (tow). This message is only produced by inertial versions of Swift,\nproducts and is not available from Piksi Multi or Duro.\n",
+  "type": "object",
+  "properties": {
+    "tow": {"type": "integer"},
+    "x": {"type": "integer"},
+    "y": {"type": "integer"},
+    "z": {"type": "integer"},
+    "cov_x_x": {"type": "number"},
+    "cov_x_y": {"type": "number"},
+    "cov_x_z": {"type": "number"},
+    "cov_y_y": {"type": "number"},
+    "cov_y_z": {"type": "number"},
+    "cov_z_z": {"type": "number"},
+    "n_sats": {"type": "integer"},
+    "flags": {"type": "integer"}
+  },
+  "required": [
+    "tow",
+    "x",
+    "y",
+    "z",
+    "cov_x_x",
+    "cov_x_y",
+    "cov_x_z",
+    "cov_y_y",
+    "cov_y_z",
+    "cov_z_z",
+    "n_sats",
+    "flags"
+  ]
+}

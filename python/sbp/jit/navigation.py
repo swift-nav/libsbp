@@ -1999,6 +1999,80 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ret += 1
     return ret
   
+SBP_MSG_PROTECTION_LEVEL = 0x0216
+class MsgProtectionLevel(SBP):
+  """SBP class for message MSG_PROTECTION_LEVEL (0x0216).
+
+  You can have MSG_PROTECTION_LEVEL inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the local vertical and horizontal protection levels
+associated with a given LLH position solution. The full GPS time is given
+by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+
+
+  """
+  __slots__ = ['tow',
+               'vpl',
+               'hpl',
+               'lat',
+               'lon',
+               'height',
+               'flags',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__vpl, offset, length) = get_u16(buf, offset, length)
+    ret['vpl'] = __vpl
+    (__hpl, offset, length) = get_u16(buf, offset, length)
+    ret['hpl'] = __hpl
+    (__lat, offset, length) = get_f64(buf, offset, length)
+    ret['lat'] = __lat
+    (__lon, offset, length) = get_f64(buf, offset, length)
+    ret['lon'] = __lon
+    (__height, offset, length) = get_f64(buf, offset, length)
+    ret['height'] = __height
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.tow = res['tow']
+    self.vpl = res['vpl']
+    self.hpl = res['hpl']
+    self.lat = res['lat']
+    self.lon = res['lon']
+    self.height = res['height']
+    self.flags = res['flags']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tow: u32
+    ret += 4
+    # vpl: u16
+    ret += 2
+    # hpl: u16
+    ret += 2
+    # lat: double
+    ret += 8
+    # lon: double
+    ret += 8
+    # height: double
+    ret += 8
+    # flags: u8
+    ret += 1
+    return ret
+  
 
 msg_classes = {
   0x0102: MsgGPSTime,
@@ -2025,4 +2099,5 @@ msg_classes = {
   0x0204: MsgVelECEFDepA,
   0x0205: MsgVelNEDDepA,
   0x0207: MsgBaselineHeadingDepA,
+  0x0216: MsgProtectionLevel,
 }

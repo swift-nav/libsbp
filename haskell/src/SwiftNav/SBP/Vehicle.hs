@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- Messages from a vehicle.
+-- \<Messages from a vehicle.\>
 
 module SwiftNav.SBP.Vehicle
   ( module SwiftNav.SBP.Vehicle

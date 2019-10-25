@@ -1,0 +1,38 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#PackedOsrContent",
+  "title":"PackedOsrContent",
+  "description":"Pseudorange and carrier phase network corrections for a satellite signal.\n",
+  "type": "object",
+  "properties": {
+    "P": {"type": "integer"},
+    "L": {"$ref": "CarrierPhase.json"},
+    "lock": {"type": "integer"},
+    "flags": {"type": "integer"},
+    "sid": {"$ref": "GnssSignal.json"},
+    "iono_std": {"type": "integer"},
+    "tropo_std": {"type": "integer"},
+    "range_std": {"type": "integer"}
+  },
+  "required": [
+    "P",
+    "L",
+    "lock",
+    "flags",
+    "sid",
+    "iono_std",
+    "tropo_std",
+    "range_std"
+  ]
+}

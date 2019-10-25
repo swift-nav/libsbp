@@ -10,6 +10,7 @@ addons:
     - check
     - doxygen
     - cmake
+    - lcov
     - gradle
     - libgmp-dev
 
@@ -62,7 +63,24 @@ matrix:
         - sudo pip install --upgrade Sphinx
         - npm install -g mocha
         - npm install
-      script: make test-c test-haskell test-java test-javascript
+      script:
+        - make test-c
+        - make test-haskell
+        - make test-java
+        - make test-javascript
+    - env:
+        - TRAVIS_TARGET=codecov
+        - CMAKEFLAGS="-DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug"
+      script:
+        - make test-c
+      after_success:
+        bash <(curl -s https://codecov.io/bash) -s c/build || echo "Codecov did not collect coverage reports";
+    - env:
+      language: rust
+      rust:
+        - stable
+      script:
+        - make test-rust
 
 deploy:
   provider: releases

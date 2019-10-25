@@ -1,0 +1,16 @@
+[package]
+name = "sbp"
+version = "0.1.0"
+description = "Rust native implementation of SBP (Swift Binary Protocol) for communicating with devices made by Swift Navigation"
+authors = ["Swift Navigation <dev@swiftnav.com>"]
+repository = "https://github.com/swift-nav/libsbp"
+license = "LGPL-3.0"
+categories = ["parsing"]
+
+[dependencies]
+byteorder = "1.2.1"
+crc16 = "*"
+nom = "5.0.0"
+
+[badges]
+travis-ci = { repository = "swift-nav/libsbp" }

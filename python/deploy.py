@@ -8,9 +8,9 @@ import platform
 import tempfile
 import subprocess
 
-CP27MU = "2.7u"
-ALL_PY_VERSIONS = ["2.7", CP27MU, "3.4", "3.5", "3.6", "3.7"]
-AMD64_PY_VERSION = ["2.7", "3.5", "3.6", "3.7"]
+#CP27MU = "2.7u"
+ALL_PY_VERSIONS = ["3.4", "3.5", "3.6", "3.7"]
+AMD64_PY_VERSION = ["3.5", "3.6", "3.7"]
 
 SKIP_PY_VERS = os.environ.get("SKIP_PY_VERS", "").split(",") 
 
@@ -51,11 +51,11 @@ else:
 
 def twine_upload(conda_dir, wheel, py_version="3.7", use_conda=True):
 
-    if platform.machine().startswith("arm") and py_version == CP27MU:
-        cmd_prefix = ["/opt/cp27mu/bin/python2.7", "-m"]
-        if use_conda:
-            raise RuntimeError("Conda with Python {} is not supported on ARM".format(py_version))
-    elif platform.machine().startswith("arm") and py_version in ALL_PY_VERSIONS:
+#    if platform.machine().startswith("arm") and py_version == CP27MU:
+#        cmd_prefix = ["/opt/cp27mu/bin/python2.7", "-m"]
+#        if use_conda:
+#            raise RuntimeError("Conda with Python {} is not supported on ARM".format(py_version))
+    if platform.machine().startswith("arm") and py_version in ALL_PY_VERSIONS:
         cmd_prefix = ["/usr/local/bin/python{}".format(py_version), "-m"]
         if use_conda:
             raise RuntimeError("Conda with Python {} is not supported on ARM".format(py_version))
@@ -84,9 +84,9 @@ def build_wheel_native(conda_dir, deploy_dir, py_version):
     py_version_prefix = "/usr/local"
     py_version_suffix = py_version
 
-    if py_version == CP27MU:
-        py_version_prefix = "/opt/cp27mu"
-        py_version_suffix = "2.7"
+#    if py_version == CP27MU:
+#        py_version_prefix = "/opt/cp27mu"
+#        py_version_suffix = "2.7"
 
     if py_version not in ALL_PY_VERSIONS:
         raise RuntimeError("Unsupported Python version")
@@ -95,7 +95,7 @@ def build_wheel_native(conda_dir, deploy_dir, py_version):
 
     subprocess.check_call(["apt-get", "update"])
 
-    if py_version.startswith == "3.":
+    if py_version.startswith("3."):
         subprocess.check_call(["apt-get", "install", "-y",
             "python3", "python3-pip", "python3-dev", "python3-setuptools"
         ])
@@ -118,9 +118,16 @@ def build_wheel_native(conda_dir, deploy_dir, py_version):
     subprocess.check_call([
         python, "-m",
         "pip", "install", "--ignore-installed",
-        "-r", "requirements.txt",
-        "-r", "setup_requirements.txt",
         "-r", "test_requirements.txt"
+    ])
+
+    suffix = "" if py_version.startswith("3.") else "27"
+
+    subprocess.check_call([
+        python, "-m",
+        "pip", "install", "--ignore-installed",
+        "-r", "requirements{}.txt".format(suffix),
+        "-r", "setup_requirements{}.txt".format(suffix),
     ])
 
     run_bdist(conda_dir, deploy_dir, py_version,
@@ -248,11 +255,11 @@ def build_wheel_conda(conda_dir, deploy_dir, py_version):
         "pip", "install", "twine", "numpy"
     ])
 
-    if py_version.startswith("2.7"):
-        subprocess.check_call([
-            "conda", "run", "-p", conda_dir] + DASHDASH + [
-            "pip", "install", "enum34"
-        ])
+#    if py_version.startswith("2.7"):
+#        subprocess.check_call([
+#            "conda", "run", "-p", conda_dir] + DASHDASH + [
+#            "pip", "install", "enum34"
+#        ])
 
     if platform.system() == "Linux" and platform.machine().startswith("x86"):
         subprocess.check_call([
@@ -265,9 +272,17 @@ def build_wheel_conda(conda_dir, deploy_dir, py_version):
     subprocess.check_call([
         "conda", "run", "-p", conda_dir] + DASHDASH + [
         "pip", "install", "--ignore-installed", 
-        "-r", "requirements.txt",
         "-r", "setup_requirements.txt",
         "-r", "test_requirements.txt",
+    ])
+
+    suffix = "" if py_version.startswith("3.") else "27"
+
+    subprocess.check_call([
+        "conda", "run", "-p", conda_dir] + DASHDASH + [
+        "pip", "install", "--ignore-installed", 
+        "-r", "requirements{}.txt".format(suffix),
+        "-r", "setup_requirements{}.txt".format(suffix),
     ])
 
     run_bdist(conda_dir, deploy_dir, py_version, use_conda=True)
@@ -277,9 +292,7 @@ def build_native_on_arm(py_version):
     if platform.system() != "Linux":
         return False
     return platform.machine().startswith("arm")
-    #if not platform.machine().startswith("arm"):
-    #    return False
-    #return py_version == "3.5" or py_version == "3.7"
+
 
 def build_wheel(conda_dir, deploy_dir, py_version):
     if build_native_on_arm(py_version):

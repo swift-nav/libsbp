@@ -18,7 +18,7 @@ SBP_PATCH_VERSION := $(word 3, $(subst ., , $(SBP_VERSION)))
 
 CHANGELOG_MAX_ISSUES := 100
 
-.PHONY: help test release dist silly all docs pdf html c deps-c gen-c test-c python deps-python gen-python test-python javascript deps-javascript gen-javascript test-javascript java deps-java gen-java test-java haskell deps-haskell gen-haskell test-haskell haskell deps-protobuf gen-protobuf test-protobuf verify-prereq-generator verify-prereq-c verify-prereq-javascript verify-prereq-python verify-prereq-java verify-prereq-haskell verify-prereq-protobuf mapping
+.PHONY: help test release dist clean all docs pdf html c deps-c gen-c test-c python deps-python gen-python test-python javascript deps-javascript gen-javascript test-javascript java deps-java gen-java test-java haskell deps-haskell gen-haskell test-haskell haskell deps-protobuf gen-protobuf test-protobuf verify-prereq-generator verify-prereq-c verify-prereq-javascript verify-prereq-python verify-prereq-java verify-prereq-haskell verify-prereq-protobuf mapping rust deps-rust gen-rust test-rust deps-jsonschema gen-jsonschema test-jsonschema verify-prereq-jsonschema deps-quicktype-typescript gen-quicktype-typescript test-quicktype-typescript verify-prereq-quicktype-typescript deps-quicktype-javascript gen-quicktype-javascript test-quicktype-javascript verify-prereq-quicktype-javascript deps-quicktype-elm gen-quicktype-elm test-quicktype-elm verify-prereq-quicktype-elm 
 
 # Functions
 define announce-begin
@@ -41,23 +41,34 @@ help:
 	@echo "(Please read before using!)"
 	@echo
 	@echo "Please use \`make <target>' where <target> is one of"
-	@echo "  help      to display this help message"
-	@echo "  all       to make SBP clients across all languages"
-	@echo "  c         to make C headers"
-	@echo "  dist      to distribute packages"
-	@echo "  docs      to make HTML and pdf documentation"
-	@echo "  html      to make all HTML language docs"
-	@echo "  pdf       to make SBP LaTeX datasheet"
-	@echo "  python    to make Python bindings"
-	@echo "  pythonNG  to make Python (JIT) bindings"
-	@echo "  haskell   to make Haskell bindings"
-	@echo "  java      to make Java bindings"
-	@echo "  protobuf  to make Protocol Buffer bindings"
-	@echo "  release   to handle some release tasks"
-	@echo "  test      to run all tests"
+	@echo "  help         to display this help message"
+	@echo "  all          to make SBP clients across all languages"
+	@echo "  clean        to remove any output files"
+	@echo "  c            to make C headers"
+	@echo "  dist         to distribute packages"
+	@echo "  docs         to make HTML and pdf documentation"
+	@echo "  html         to make all HTML language docs"
+	@echo "  pdf          to make SBP LaTeX datasheet"
+	@echo "  python       to make Python bindings"
+	@echo "  pythonNG     to make Python (JIT) bindings"
+	@echo "  haskell      to make Haskell bindings"
+	@echo "  java         to make Java bindings"
+	@echo "  rust         to make Rust bindings"
+	@echo "  protobuf     to make Protocol Buffer bindings"
+	@echo "  jsonschema   to make JSON Schema definitions"
+	@echo "  release      to handle some release tasks"
+	@echo "  test         to run all tests"
+	@echo
+	@echo "JSON Schema specific targets:" 
+	@echo "  quicktype-typescript   generate TypeScript module from JSON Schema"
+	@echo "  quicktype-javascript   generate JavaScript module from JSON Schema"
+	@echo "  quicktype-elm          generate Elm module from JSON Schema"
 	@echo
 
-all: c python pythonNG javascript java docs haskell protobuf
+all: c python pythonNG javascript java docs haskell protobuf rust
+clean:
+	@echo "Removing the ./c/build directory..."
+	rm -r $(SWIFTNAV_ROOT)/c/build
 docs: verify-prereq-docs pdf html
 
 c:          deps-c          gen-c          test-c
@@ -66,7 +77,13 @@ pythonNG:   deps-python     gen-pythonNG
 javascript: deps-javascript gen-javascript test-javascript
 java:       deps-java       gen-java       test-java
 haskell:    deps-haskell    gen-haskell    test-haskell
+rust:       deps-rust       gen-rust       test-rust
 protobuf:   deps-protobuf   gen-protobuf   test-protobuf
+jsonschema: deps-jsonschema gen-jsonschema test-jsonschema
+
+quicktype-typescript: deps-quicktype-typescript gen-quicktype-typescript 	test-quicktype-typescript
+quicktype-javascript: deps-quicktype-javascript gen-quicktype-javascript 	test-quicktype-javascript
+quicktype-elm: 				deps-quicktype-elm 				gen-quicktype-elm 				test-quicktype-elm
 
 # Prerequisite verification
 verify-prereq-generator:
@@ -96,7 +113,14 @@ verify-prereq-java: verify-prereq-generator
 
 verify-prereq-haskell: verify-prereq-generator
 
-verify-prereq-protobuf: verify-prereq-generator
+verify-prereq-rust: ;
+
+verify-prereq-protobuf: ;
+
+verify-prereq-jsonschema: ;
+
+verify-prereq-quicktype:
+	@command -v quicktype 1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`quicktype\` but it's not installed. Aborting.\n\nHave you installed quicktype? See the generator README (Installing instructions) at \`generator/README.md\` for setup instructions.\n"; exit 1; }
 
 verify-prereq-docs: verify-prereq-generator
 	@command -v pdflatex  1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`pdflatex\` but it's not installed. Aborting.\n\nHave you installed pdflatex? See the generator readme (Installing instructions) at \`generator/README.md\` for setup instructions.\n"; exit 1; }
@@ -118,7 +142,17 @@ deps-java: verify-prereq-java
 
 deps-haskell: verify-prereq-haskell
 
+deps-rust: verify-prereq-rust
+
 deps-protobuf: verify-prereq-protobuf
+
+deps-jsonschema: verify-prereq-jsonschema
+
+deps-quicktype-typescript: verify-prereq-quicktype
+
+deps-quicktype-javascript: verify-prereq-quicktype
+
+deps-quicktype-elm: verify-prereq-quicktype
 
 # Generators
 
@@ -188,6 +222,16 @@ gen-haskell:
 					--haskell
 	$(call announce-begin,"Finished generating Haskell bindings")
 
+gen-rust:
+	$(call announce-begin,"Generating Rust bindings")
+	cd $(SWIFTNAV_ROOT)/generator; \
+	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
+					-o $(SWIFTNAV_ROOT)/rust/ \
+					-r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
+					--rust
+	cd $(SWIFTNAV_ROOT)/rust/sbp && cargo fmt
+	$(call announce-begin,"Finished generating Rust bindings")
+
 gen-protobuf:
 	$(call announce-begin,"Generating Protocol Buffers bindings")
 	cd $(SWIFTNAV_ROOT)/generator; \
@@ -197,10 +241,33 @@ gen-protobuf:
 					--protobuf
 	$(call announce-begin,"Finished generating Protocol Buffers bindings")
 
+gen-jsonschema:
+	$(call announce-begin,"Generating JSON Schema definitions")
+	cd $(SWIFTNAV_ROOT)/generator; \
+	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
+					-o $(SWIFTNAV_ROOT)/jsonschema/ \
+					-r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
+					--jsonschema
+	$(call announce-begin,"Finished generating JSON Schema definitions")
+
+gen-quicktype-typescript:
+	$(call announce-begin,"Generating TypeScript module from JSON Schema")
+	(cd jsonschema; quicktype -l typescript --src-lang schema *.json >../sbpjson/typescript/SbpJson.ts)
+	$(call announce-begin,"Finished generating TypeScript module from JSON Schema definitions")
+
+gen-quicktype-javascript:
+	$(call announce-begin,"Generating JavaScript module from JSON Schema")
+	(cd jsonschema; quicktype -l javascript --src-lang schema *.json >../sbpjson/javascript/SbpModule.js)
+	$(call announce-begin,"Finished generating JavaScript module from JSON Schema definitions")
+
+gen-quicktype-elm:
+	$(call announce-begin,"Generating Elm module from JSON Schema")
+	(cd jsonschema; quicktype -l elm --module SbpJson --src-lang schema *.json >../sbpjson/elm/SbpModule.elm)
+	$(call announce-begin,"Finished generating Elm module from JSON Schema definitions")
 
 # Testers
 
-test: test-all-begin test-c test-java test-python test-haskell test-javascript test-all-end
+test: test-all-begin test-c test-java test-python test-haskell test-javascript test-rust test-all-end
 
 test-all-begin:
 	$(call announce-begin,"Running all tests")
@@ -212,7 +279,7 @@ test-c:
 	$(call announce-begin,"Running C tests")
 	cd $(SWIFTNAV_ROOT)/c; \
 	mkdir -p build/ && cd build/; \
-	cmake ../; \
+	cmake $(CMAKEFLAGS) ../; \
 	make
 	$(call announce-end,"Finished running C tests")
 
@@ -241,13 +308,34 @@ test-haskell:
 	cd $(SWIFTNAV_ROOT)/haskell/ && stack build --test --allow-different-user
 	$(call announce-end,"Finished running Haskell tests")
 
+test-rust:
+	$(call announce-begin,"Running Rust tests")
+	cd $(SWIFTNAV_ROOT)/rust/sbp && cargo test --verbose
+	$(call announce-end,"Finished running Rust tests")
+
 test-protobuf:
 	$(call announce-begin,"Running Protocol Buffer tests")
 	$(call announce-end,"Finished running Protocol Buffer tests")
 
+test-jsonschema:
+	$(call announce-begin,"Running JSON Schema tests")
+	$(call announce-end,"Finished running JSON Schema tests")
+
+test-quicktype-typescript:
+	$(call announce-begin,"Running TypeScript JSON Schema tests [not yet implemented]")
+	$(call announce-end,"Finished running TypeScript JSON Schema tests")
+
+test-quicktype-javascript:
+	$(call announce-begin,"Running JavaScript JSON Schema tests [not yet implemented]")
+	$(call announce-end,"Finished running JavaScript JSON Schema tests")
+
+test-quicktype-elm:
+	$(call announce-begin,"Running Elm JSON Schema tests [not yet implemented]")
+	$(call announce-end,"Finished running Elm JSON Schema tests")
+
 dist-python:
 	$(call announce-begin,"Deploying Python package")
-	make -C $(SWIFTNAV_ROOT)/python SBP_VERSION="$(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION)" deploy 
+	make -C $(SWIFTNAV_ROOT)/python SBP_VERSION="$(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION)" deploy
 	$(call announce-end,"Finished deploying Python package")
 
 dist-javascript:

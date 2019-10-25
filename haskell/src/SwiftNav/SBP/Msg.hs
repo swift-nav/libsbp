@@ -176,6 +176,7 @@ data SBPMsg =
    | SBPMsgPosLlhCov MsgPosLlhCov Msg
    | SBPMsgPosLlhDepA MsgPosLlhDepA Msg
    | SBPMsgPrintDep MsgPrintDep Msg
+   | SBPMsgProtectionLevel MsgProtectionLevel Msg
    | SBPMsgReset MsgReset Msg
    | SBPMsgResetDep MsgResetDep Msg
    | SBPMsgResetFilters MsgResetFilters Msg
@@ -362,6 +363,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgPosLlhCov = SBPMsgPosLlhCov (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosLlhDepA = SBPMsgPosLlhDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPrintDep = SBPMsgPrintDep (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgProtectionLevel = SBPMsgProtectionLevel (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgReset = SBPMsgReset (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgResetDep = SBPMsgResetDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgResetFilters = SBPMsgResetFilters (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -540,6 +542,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgPosLlhCov _ m) = put m
       encoder (SBPMsgPosLlhDepA _ m) = put m
       encoder (SBPMsgPrintDep _ m) = put m
+      encoder (SBPMsgProtectionLevel _ m) = put m
       encoder (SBPMsgReset _ m) = put m
       encoder (SBPMsgResetDep _ m) = put m
       encoder (SBPMsgResetFilters _ m) = put m
@@ -722,6 +725,7 @@ instance FromJSON SBPMsg where
         | msgType == msgPosLlhCov = SBPMsgPosLlhCov <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosLlhDepA = SBPMsgPosLlhDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPrintDep = SBPMsgPrintDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgProtectionLevel = SBPMsgProtectionLevel <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgReset = SBPMsgReset <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgResetDep = SBPMsgResetDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgResetFilters = SBPMsgResetFilters <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -905,6 +909,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgPosLlhCov n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosLlhDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPrintDep n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgProtectionLevel n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgReset n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgResetDep _ m) = toJSON m
   toJSON (SBPMsgResetFilters n m) = toJSON n <<>> toJSON m
@@ -1082,6 +1087,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgPosLlhCov n m) = SBPMsgPosLlhCov n <$> f m
   msg f (SBPMsgPosLlhDepA n m) = SBPMsgPosLlhDepA n <$> f m
   msg f (SBPMsgPrintDep n m) = SBPMsgPrintDep n <$> f m
+  msg f (SBPMsgProtectionLevel n m) = SBPMsgProtectionLevel n <$> f m
   msg f (SBPMsgReset n m) = SBPMsgReset n <$> f m
   msg f (SBPMsgResetDep n m) = SBPMsgResetDep n <$> f m
   msg f (SBPMsgResetFilters n m) = SBPMsgResetFilters n <$> f m

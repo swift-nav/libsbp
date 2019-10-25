@@ -143,16 +143,12 @@ is used to tie multiple SBP messages into a sequence.
     Number of messages in the dataset
   seq_num : int
     Position of this message in the dataset
-  ssr_update_interval : int
-    update interval
   update_interval : int
     Update interval between consecutive corrections. Encoded
 following RTCM DF391 specification.
 
-  iod_ssr : int
-    IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR
-generating configuration.
+  iod_atmo : int
+    IOD of the SSR atmospheric correction
 
 
   """
@@ -160,16 +156,14 @@ generating configuration.
                      'time' / construct.Struct(GPSTimeSec._parser),
                      'num_msgs' / construct.Int8ul,
                      'seq_num' / construct.Int8ul,
-                     'ssr_update_interval' / construct.Int8ul,
                      'update_interval' / construct.Int8ul,
-                     'iod_ssr' / construct.Int8ul,))
+                     'iod_atmo' / construct.Int8ul,))
   __slots__ = [
                'time',
                'num_msgs',
                'seq_num',
-               'ssr_update_interval',
                'update_interval',
-               'iod_ssr',
+               'iod_atmo',
               ]
 
   def __init__(self, payload=None, **kwargs):
@@ -179,9 +173,8 @@ generating configuration.
       self.time = kwargs.pop('time')
       self.num_msgs = kwargs.pop('num_msgs')
       self.seq_num = kwargs.pop('seq_num')
-      self.ssr_update_interval = kwargs.pop('ssr_update_interval')
       self.update_interval = kwargs.pop('update_interval')
-      self.iod_ssr = kwargs.pop('iod_ssr')
+      self.iod_atmo = kwargs.pop('iod_atmo')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -215,14 +208,12 @@ be identified by the index.
     Update interval between consecutive corrections. Encoded
 following RTCM DF391 specification.
 
-  iod_ssr : int
-    IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR
-generating configuration.
+  iod_atmo : int
+    IOD of the SSR atmospheric correction
 
   tropo_quality_indicator : int
     Quality of the troposphere data. Encoded following RTCM DF389
-specifcation but as TECU instead of m.
+specifcation in units of m.
 
 
   """
@@ -231,14 +222,14 @@ specifcation but as TECU instead of m.
                      'num_msgs' / construct.Int16ul,
                      'seq_num' / construct.Int16ul,
                      'update_interval' / construct.Int8ul,
-                     'iod_ssr' / construct.Int8ul,
+                     'iod_atmo' / construct.Int8ul,
                      'tropo_quality_indicator' / construct.Int8ul,))
   __slots__ = [
                'time',
                'num_msgs',
                'seq_num',
                'update_interval',
-               'iod_ssr',
+               'iod_atmo',
                'tropo_quality_indicator',
               ]
 
@@ -250,7 +241,7 @@ specifcation but as TECU instead of m.
       self.num_msgs = kwargs.pop('num_msgs')
       self.seq_num = kwargs.pop('seq_num')
       self.update_interval = kwargs.pop('update_interval')
-      self.iod_ssr = kwargs.pop('iod_ssr')
+      self.iod_atmo = kwargs.pop('iod_atmo')
       self.tropo_quality_indicator = kwargs.pop('tropo_quality_indicator')
 
   def __repr__(self):
@@ -276,7 +267,7 @@ class STECSatElement(object):
     Unique space vehicle identifier
   stec_quality_indicator : int
     Quality of the STEC data. Encoded following RTCM DF389 specifcation
-but as TECU instead of m.
+but in units of TECU instead of m.
 
   stec_coeff : array
     Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
@@ -316,7 +307,7 @@ but as TECU instead of m.
 class TroposphericDelayCorrection(object):
   """TroposphericDelayCorrection.
   
-  Troposphere delays at the grid point.
+  Troposphere vertical delays at the grid point.
 
   
   Parameters
@@ -451,13 +442,17 @@ Also includes an RLE encoded validity list.
   Parameters
   ----------
   region_size_inverse : int
-    inverse of region size
+    region_size (deg) = 10 / region_size_inverse
+0 is an invalid value.
+
   area_width : int
-    area width; see spec for details
+    grid height (deg) = grid idth (deg) = area_width / region_size
+0 is an invalid value.
+
   lat_nw_corner_enc : int
-    encoded latitude of the northwest corner of the grid
+    North-West corner latitdue (deg) = region_size * lat_nw_corner_enc - 90
   lon_nw_corner_enc : int
-    encoded longitude of the northwest corner of the grid
+    North-West corner longtitude (deg) = region_size * lon_nw_corner_enc - 180
   num_msgs : int
     Number of messages in the dataset
   seq_num : int
@@ -1294,7 +1289,9 @@ class MsgSsrGridDefinition(SBP):
   of its fields.
 
   
-  Definition of the grid for STEC and tropo messages
+  Based on the 3GPP proposal R2-1906781 which is in turn based on
+OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
+
 
   Parameters
   ----------

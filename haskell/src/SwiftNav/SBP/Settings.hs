@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
---  Messages for reading, writing, and discovering device settings. Settings
+-- \< Messages for reading, writing, and discovering device settings. Settings
 -- with a "string" field have multiple values in this field delimited with a
 -- null character (the c style null terminator).  For instance, when querying
 -- the 'firmware_version' setting in the 'system_info' section, the following
@@ -32,7 +32,7 @@
 -- settings . See lastly https://github.com/swift-
 -- nav/piksi_tools/blob/master/piksi_tools/settings.py ,  the open source
 -- python command line utility for reading, writing, and saving settings in the
--- piksi_tools repository on github as a helpful reference and example.
+-- piksi_tools repository on github as a helpful reference and example. \>
 
 module SwiftNav.SBP.Settings
   ( module SwiftNav.SBP.Settings

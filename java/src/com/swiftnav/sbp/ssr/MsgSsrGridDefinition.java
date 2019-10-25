@@ -29,7 +29,8 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
-* Definition of the grid for STEC and tropo messages */
+ * Based on the 3GPP proposal R2-1906781 which is in turn based on
+ * OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C */
 
 public class MsgSsrGridDefinition extends SBPMessage {
     public static final int TYPE = 0x05F5;

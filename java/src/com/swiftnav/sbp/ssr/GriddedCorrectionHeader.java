@@ -39,14 +39,12 @@ following RTCM DF391 specification.
  */
     public int update_interval;
     
-    /** IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR
-generating configuration.
+    /** IOD of the SSR atmospheric correction
  */
-    public int iod_ssr;
+    public int iod_atmo;
     
     /** Quality of the troposphere data. Encoded following RTCM DF389
-specifcation but as TECU instead of m.
+specifcation in units of m.
  */
     public int tropo_quality_indicator;
     
@@ -60,7 +58,7 @@ specifcation but as TECU instead of m.
         num_msgs = parser.getU16();
         seq_num = parser.getU16();
         update_interval = parser.getU8();
-        iod_ssr = parser.getU8();
+        iod_atmo = parser.getU8();
         tropo_quality_indicator = parser.getU8();
         return this;
     }
@@ -72,7 +70,7 @@ specifcation but as TECU instead of m.
         builder.putU16(num_msgs);
         builder.putU16(seq_num);
         builder.putU8(update_interval);
-        builder.putU8(iod_ssr);
+        builder.putU8(iod_atmo);
         builder.putU8(tropo_quality_indicator);
     }
 
@@ -83,7 +81,7 @@ specifcation but as TECU instead of m.
         obj.put("num_msgs", num_msgs);
         obj.put("seq_num", seq_num);
         obj.put("update_interval", update_interval);
-        obj.put("iod_ssr", iod_ssr);
+        obj.put("iod_atmo", iod_atmo);
         obj.put("tropo_quality_indicator", tropo_quality_indicator);
         return obj;
     }

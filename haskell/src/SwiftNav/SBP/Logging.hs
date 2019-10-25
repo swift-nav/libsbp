@@ -11,7 +11,7 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- Logging and debugging messages from the device.
+-- \<Logging and debugging messages from the device. \>
 
 module SwiftNav.SBP.Logging
   ( module SwiftNav.SBP.Logging
