@@ -20,5 +20,9 @@ socat piksi:55555 | python -m sbp2json
 The libraries here are generated use [JSON Schema][3] in combination with the
 [QuickType][4] tool to injest the output of these `sbp2json` tools and produce
 "native" objects which allow users to fully utilize whatever type checking
-there language provides.  This also enables "developer assistance" technologies
+their language provides.  This also enables "developer assistance" technologies
 like Intellisense for exploring SBP message types during development.
+
+See [javascript/README.md](../javascript/README.md) for a quick usage example.
+Also see [HOWTO.md](../HOWTO.md) for information on how to update these
+definitions if needed.

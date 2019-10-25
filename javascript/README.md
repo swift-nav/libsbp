@@ -39,7 +39,7 @@ For example, in JavaScript, this is be possible:
 
 ```js
 
-import { Convert, MsgVelNED} from "./SbpModule.ts";
+import { Convert, MsgVelNED} from "./SbpJson";
 
 const json = getJsonBlob();
 
