@@ -252,17 +252,17 @@ gen-jsonschema:
 
 gen-quicktype-typescript:
 	$(call announce-begin,"Generating TypeScript module from JSON Schema")
-	(cd jsonschema; quicktype -l typescript --src-lang schema *.json >../sbp2json/typescript/SbpModule.ts)
+	(cd jsonschema; quicktype -l typescript --src-lang schema *.json >../sbpjson/typescript/SbpJson.ts)
 	$(call announce-begin,"Finished generating TypeScript module from JSON Schema definitions")
 
 gen-quicktype-javascript:
 	$(call announce-begin,"Generating JavaScript module from JSON Schema")
-	(cd jsonschema; quicktype -l javascript --src-lang schema *.json >../sbp2json/javascript/SbpModule.js)
+	(cd jsonschema; quicktype -l javascript --src-lang schema *.json >../sbpjson/javascript/SbpModule.js)
 	$(call announce-begin,"Finished generating JavaScript module from JSON Schema definitions")
 
 gen-quicktype-elm:
 	$(call announce-begin,"Generating Elm module from JSON Schema")
-	(cd jsonschema; quicktype -l elm --module SbpModule --src-lang schema *.json >../sbp2json/elm/SbpModule.elm)
+	(cd jsonschema; quicktype -l elm --module SbpJson --src-lang schema *.json >../sbpjson/elm/SbpModule.elm)
 	$(call announce-begin,"Finished generating Elm module from JSON Schema definitions")
 
 # Testers
