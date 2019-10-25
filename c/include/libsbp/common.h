@@ -14,9 +14,11 @@
 #ifndef LIBSBP_COMMON_H
 #define LIBSBP_COMMON_H
 
+#ifndef _RUSTC_BINDGEN_
 #include <stdint.h>
 #include <stdbool.h>
 #include <inttypes.h>
+#endif
 
 /* Should match guard in libswiftnav/common.h */
 #ifndef COMMON_INT_TYPES
@@ -28,6 +30,7 @@
  * `int` which can lead to portability issues between different platforms.
  * \{ */
 
+#ifndef _RUSTC_BINDGEN_
 /** Signed 8-bit integer. */
 typedef int8_t s8;
 /** Signed 16-bit integer. */
@@ -44,6 +47,7 @@ typedef uint16_t u16;
 typedef uint32_t u32;
 /** Unsigned 64-bit integer. */
 typedef uint64_t u64;
+#endif
 
 #endif
 
