@@ -19,7 +19,7 @@ echo "Python" $time_py
 time_hs=$(TIMEFORMAT="%R"; { time $1/sbp2json < $TESTDATA_ROOT/long.sbp > $TESTDATA_ROOT/long_hask.json; } 2>&1)
 echo "Haskell" $time_hs
 
-threshold=1.5
+threshold=1.51
 perf_diff=$(echo "$time_py / $time_hs" | bc -l)
 
 if (( $(echo "$perf_diff > $threshold" | bc -l) )); then
