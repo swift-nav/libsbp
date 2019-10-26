@@ -373,7 +373,7 @@ static s8 sbp_state_read_to_frame_buffer(sbp_state_t *s,
 static void sbp_state_frame_buffer_clear(sbp_state_t *s)
 {
     /* Note, library functions are not used to avoid more dependencies. */
-    for (size_t i = 0; i < sizeof(s->frame_buff); i++) {
+    for (u32 i = 0; i < sizeof(s->frame_buff); i++) {
         s->frame_buff[i] = 0;
     }
     s->frame_len = 0;
