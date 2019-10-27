@@ -7,7 +7,6 @@ addons:
   apt:
     packages:
     - build-essential
-    - check
     - doxygen
     - cmake
     - lcov
