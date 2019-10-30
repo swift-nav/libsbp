@@ -55,6 +55,9 @@ def get_args():
   parser.add_argument('--rust',
                       action="store_true",
                       help='Target language: Rust.')
+  parser.add_argument('--test-rust',
+                      action="store_true",
+                      help='Target language: Rust tests.')
   parser.add_argument('--latex',
                       action="store_true",
                       help='Target language: LaTeX.')
@@ -81,7 +84,7 @@ def main():
     # Parse and validate arguments.
     args = get_args().parse_args()
     verbose = args.verbose
-    assert args.jsonschema or args.pythonNG or args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.protobuf or args.java or args.rust, \
+    assert args.jsonschema or args.pythonNG or args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.protobuf or args.java or args.rust or args.test_rust, \
         "Please specify a target language."
     input_file = os.path.abspath(args.input_file[0])
     assert len(args.input_file) == 1
@@ -92,7 +95,7 @@ def main():
     assert os.path.exists(output_dir), \
         "Invalid output directory: %s. Exiting!" % output_dir
     # Ingest, parse, and validate.
-    test_mode = args.test_c
+    test_mode = args.test_c or args.test_rust
 
     if test_mode:
       file_index = yaml.resolve_test_deps(*yaml.get_files(input_file))
@@ -146,6 +149,9 @@ def main():
         elif args.rust:
           import sbpg.targets.rust as rs
           rs.render_source(output_dir, parsed)
+        elif args.test_rust:
+          import sbpg.targets.test_rust as test_rs
+          test_rs.render_source(output_dir, parsed)
         elif args.protobuf:
           import sbpg.targets.protobuf as pb
           pb.render_source(output_dir, parsed)
