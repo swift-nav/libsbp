@@ -204,7 +204,7 @@ use self::tracking::MsgTrackingStateDetailedDepA;
 use self::user::MsgUserData;
 use self::vehicle::MsgOdometry;
 
-trait SBPMessage {
+pub trait SBPMessage {
     const MSG_ID: u16;
 
     fn get_sender_id(&self) -> Option<u16>;
