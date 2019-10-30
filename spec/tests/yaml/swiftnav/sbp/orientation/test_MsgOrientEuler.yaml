@@ -3,7 +3,7 @@ generated_on: 2017-12-11 15:00:35.829852
 package: sbp.orientation
 tests:
 - msg:
-    fields: {flags: 3, pitch: 2, roll: 1, tow: 1, pitch_accuracy: 3, roll_accuracy: 7, yaw_accuracy: 7,
+    fields: {flags: 3, pitch: 2, roll: 1, tow: 1, pitch_accuracy: 3.0, roll_accuracy: 7.0, yaw_accuracy: 7.0,
       yaw: 8}
     module: sbp.orientation
     name: MsgOrientEuler

@@ -6,17 +6,17 @@ tests:
 
 - msg:
     fields:
-       cov_e_d: 1
-       cov_e_e: 1
+       cov_e_d: 1.0
+       cov_e_e: 1.0
        n_sats: 10
-       cov_n_n: 1
-       cov_n_e: 1
+       cov_n_n: 1.0
+       cov_n_e: 1.0
        tow: 100
        n: 1
-       cov_n_d: 1
+       cov_n_d: 1.0
        flags: 0
        e: 1
-       cov_d_d: 1
+       cov_d_d: 1.0
     module: sbp.navigation
     name: MsgVelNEDCov
   msg_type: '0x212'
