@@ -35,6 +35,8 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// GPS Time (v1.0)
 ///
@@ -52,6 +54,7 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 /// (but lacking the ns field) and indicates a more precise time of
 /// these messages.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGPSTimeDepA {
@@ -68,7 +71,7 @@ pub struct MsgGPSTimeDepA {
 }
 
 impl MsgGPSTimeDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTimeDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTimeDepA, crate::Error> {
         Ok(MsgGPSTimeDepA {
             sender_id: None,
             wn: _buf.read_u16::<LittleEndian>()?,
@@ -106,6 +109,7 @@ impl super::SBPMessage for MsgGPSTimeDepA {
 /// (but lacking the ns field) and indicates a more precise time of
 /// these messages.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGPSTime {
@@ -122,7 +126,7 @@ pub struct MsgGPSTime {
 }
 
 impl MsgGPSTime {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTime, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTime, crate::Error> {
         Ok(MsgGPSTime {
             sender_id: None,
             wn: _buf.read_u16::<LittleEndian>()?,
@@ -149,6 +153,7 @@ impl super::SBPMessage for MsgGPSTime {
 /// This message reports the Universal Coordinated Time (UTC).  Note the flags
 /// which indicate the source of the UTC offset value and source of the time fix.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgUtcTime {
@@ -174,7 +179,7 @@ pub struct MsgUtcTime {
 }
 
 impl MsgUtcTime {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUtcTime, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUtcTime, crate::Error> {
         Ok(MsgUtcTime {
             sender_id: None,
             flags: _buf.read_u8()?,
@@ -212,6 +217,7 @@ impl super::SBPMessage for MsgUtcTime {
 /// baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEFDepA {
@@ -233,7 +239,7 @@ pub struct MsgPosECEFDepA {
 }
 
 impl MsgPosECEFDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFDepA, crate::Error> {
         Ok(MsgPosECEFDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -269,6 +275,7 @@ impl super::SBPMessage for MsgPosECEFDepA {
 /// GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosLLHDepA {
@@ -292,7 +299,7 @@ pub struct MsgPosLLHDepA {
 }
 
 impl MsgPosLLHDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHDepA, crate::Error> {
         Ok(MsgPosLLHDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -326,6 +333,7 @@ impl super::SBPMessage for MsgPosLLHDepA {
 /// full GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineECEFDepA {
@@ -347,7 +355,7 @@ pub struct MsgBaselineECEFDepA {
 }
 
 impl MsgBaselineECEFDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineECEFDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineECEFDepA, crate::Error> {
         Ok(MsgBaselineECEFDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -381,6 +389,7 @@ impl super::SBPMessage for MsgBaselineECEFDepA {
 /// base station position.  The full GPS time is given by the
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineNEDDepA {
@@ -404,7 +413,7 @@ pub struct MsgBaselineNEDDepA {
 }
 
 impl MsgBaselineNEDDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNEDDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNEDDepA, crate::Error> {
         Ok(MsgBaselineNEDDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -436,6 +445,7 @@ impl super::SBPMessage for MsgBaselineNEDDepA {
 /// (ECEF) coordinates. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelECEFDepA {
@@ -457,7 +467,7 @@ pub struct MsgVelECEFDepA {
 }
 
 impl MsgVelECEFDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFDepA, crate::Error> {
         Ok(MsgVelECEFDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -489,6 +499,7 @@ impl super::SBPMessage for MsgVelECEFDepA {
 /// tangent plane centered at the current position. The full GPS time is
 /// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelNEDDepA {
@@ -512,7 +523,7 @@ pub struct MsgVelNEDDepA {
 }
 
 impl MsgVelNEDDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDDepA, crate::Error> {
         Ok(MsgVelNEDDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -544,6 +555,7 @@ impl super::SBPMessage for MsgVelNEDDepA {
 /// navigation satellite geometry on positional measurement
 /// precision.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgDopsDepA {
@@ -563,7 +575,7 @@ pub struct MsgDopsDepA {
 }
 
 impl MsgDopsDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDopsDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDopsDepA, crate::Error> {
         Ok(MsgDopsDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -593,6 +605,7 @@ impl super::SBPMessage for MsgDopsDepA {
 /// to the rover relative to True North. The full GPS time is given by the
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineHeadingDepA {
@@ -608,7 +621,7 @@ pub struct MsgBaselineHeadingDepA {
 }
 
 impl MsgBaselineHeadingDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineHeadingDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineHeadingDepA, crate::Error> {
         Ok(MsgBaselineHeadingDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -637,6 +650,7 @@ impl super::SBPMessage for MsgBaselineHeadingDepA {
 /// precision.  The flags field indicated whether the DOP reported
 /// corresponds to differential or SPP solution.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgDops {
@@ -658,7 +672,7 @@ pub struct MsgDops {
 }
 
 impl MsgDops {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDops, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDops, crate::Error> {
         Ok(MsgDops {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -694,6 +708,7 @@ impl super::SBPMessage for MsgDops {
 /// baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEF {
@@ -715,7 +730,7 @@ pub struct MsgPosECEF {
 }
 
 impl MsgPosECEF {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEF, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEF, crate::Error> {
         Ok(MsgPosECEF {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -751,6 +766,7 @@ impl super::SBPMessage for MsgPosECEF {
 /// GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosLLH {
@@ -774,7 +790,7 @@ pub struct MsgPosLLH {
 }
 
 impl MsgPosLLH {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLH, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLH, crate::Error> {
         Ok(MsgPosLLH {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -808,6 +824,7 @@ impl super::SBPMessage for MsgPosLLH {
 /// full GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineECEF {
@@ -829,7 +846,7 @@ pub struct MsgBaselineECEF {
 }
 
 impl MsgBaselineECEF {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineECEF, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineECEF, crate::Error> {
         Ok(MsgBaselineECEF {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -863,6 +880,7 @@ impl super::SBPMessage for MsgBaselineECEF {
 /// base station position.  The full GPS time is given by the
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineNED {
@@ -886,7 +904,7 @@ pub struct MsgBaselineNED {
 }
 
 impl MsgBaselineNED {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNED, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNED, crate::Error> {
         Ok(MsgBaselineNED {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -918,6 +936,7 @@ impl super::SBPMessage for MsgBaselineNED {
 /// (ECEF) coordinates. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelECEF {
@@ -939,7 +958,7 @@ pub struct MsgVelECEF {
 }
 
 impl MsgVelECEF {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEF, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEF, crate::Error> {
         Ok(MsgVelECEF {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -971,6 +990,7 @@ impl super::SBPMessage for MsgVelECEF {
 /// tangent plane centered at the current position. The full GPS time is
 /// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelNED {
@@ -994,7 +1014,7 @@ pub struct MsgVelNED {
 }
 
 impl MsgVelNED {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNED, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNED, crate::Error> {
         Ok(MsgVelNED {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -1025,6 +1045,7 @@ impl super::SBPMessage for MsgVelNED {
 /// This message reports the Age of the corrections used for the current
 /// Differential solution
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAgeCorrections {
@@ -1036,7 +1057,7 @@ pub struct MsgAgeCorrections {
 }
 
 impl MsgAgeCorrections {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAgeCorrections, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAgeCorrections, crate::Error> {
         Ok(MsgAgeCorrections {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -1067,6 +1088,7 @@ impl super::SBPMessage for MsgAgeCorrections {
 /// with that convention. Thus, covariances are reported against the "downward"
 /// measurement and care should be taken with the sign convention.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosLLHCov {
@@ -1098,7 +1120,7 @@ pub struct MsgPosLLHCov {
 }
 
 impl MsgPosLLHCov {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHCov, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHCov, crate::Error> {
         Ok(MsgPosLLHCov {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -1137,6 +1159,7 @@ impl super::SBPMessage for MsgPosLLHCov {
 /// This message is similar to the MSG_VEL_NED, but it includes the upper triangular
 /// portion of the 3x3 covariance matrix.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelNEDCov {
@@ -1168,7 +1191,7 @@ pub struct MsgVelNEDCov {
 }
 
 impl MsgVelNEDCov {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDCov, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDCov, crate::Error> {
         Ok(MsgVelNEDCov {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -1209,6 +1232,7 @@ impl super::SBPMessage for MsgVelNEDCov {
 /// matching time-of-week (tow). This message is only produced by inertial versions of Swift
 /// products and is not available from Piksi Multi or Duro.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelBody {
@@ -1240,7 +1264,7 @@ pub struct MsgVelBody {
 }
 
 impl MsgVelBody {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelBody, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelBody, crate::Error> {
         Ok(MsgVelBody {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -1282,6 +1306,7 @@ impl super::SBPMessage for MsgVelBody {
 /// baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEFCov {
@@ -1313,7 +1338,7 @@ pub struct MsgPosECEFCov {
 }
 
 impl MsgPosECEFCov {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFCov, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFCov, crate::Error> {
         Ok(MsgPosECEFCov {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -1349,6 +1374,7 @@ impl super::SBPMessage for MsgPosECEFCov {
 /// (ECEF) coordinates. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelECEFCov {
@@ -1380,7 +1406,7 @@ pub struct MsgVelECEFCov {
 }
 
 impl MsgVelECEFCov {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFCov, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFCov, crate::Error> {
         Ok(MsgVelECEFCov {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -1416,6 +1442,7 @@ impl super::SBPMessage for MsgVelECEFCov {
 /// associated with a given LLH position solution. The full GPS time is given
 /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgProtectionLevel {
@@ -1437,7 +1464,7 @@ pub struct MsgProtectionLevel {
 }
 
 impl MsgProtectionLevel {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgProtectionLevel, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgProtectionLevel, crate::Error> {
         Ok(MsgProtectionLevel {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,

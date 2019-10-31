@@ -22,6 +22,8 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// Flash response message (host <= device).
 ///
@@ -30,6 +32,7 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 /// and write messages, such as MSG_FLASH_READ_REQ, or
 /// MSG_FLASH_PROGRAM, may return this message on failure.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFlashDone {
@@ -39,7 +42,7 @@ pub struct MsgFlashDone {
 }
 
 impl MsgFlashDone {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashDone, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashDone, crate::Error> {
         Ok(MsgFlashDone {
             sender_id: None,
             response: _buf.read_u8()?,
@@ -68,6 +71,7 @@ impl super::SBPMessage for MsgFlashDone {
 /// FLASH_INVALID_ADDR (3) if the address is outside of the allowed
 /// range.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFlashReadResp {
@@ -81,11 +85,11 @@ pub struct MsgFlashReadResp {
 }
 
 impl MsgFlashReadResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashReadResp, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashReadResp, crate::Error> {
         Ok(MsgFlashReadResp {
             sender_id: None,
             target: _buf.read_u8()?,
-            addr_start: ::parser::read_u8_array_limit(_buf, 3)?,
+            addr_start: crate::parser::read_u8_array_limit(_buf, 3)?,
             addr_len: _buf.read_u8()?,
         })
     }
@@ -110,6 +114,7 @@ impl super::SBPMessage for MsgFlashReadResp {
 /// on success or FLASH_INVALID_FLASH (1) if the flash specified is
 /// invalid.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFlashErase {
@@ -121,7 +126,7 @@ pub struct MsgFlashErase {
 }
 
 impl MsgFlashErase {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashErase, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashErase, crate::Error> {
         Ok(MsgFlashErase {
             sender_id: None,
             target: _buf.read_u8()?,
@@ -146,6 +151,7 @@ impl super::SBPMessage for MsgFlashErase {
 /// The flash lock message locks a sector of the STM flash
 /// memory. The device replies with a MSG_FLASH_DONE message.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgStmFlashLockSector {
@@ -155,7 +161,7 @@ pub struct MsgStmFlashLockSector {
 }
 
 impl MsgStmFlashLockSector {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmFlashLockSector, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmFlashLockSector, crate::Error> {
         Ok(MsgStmFlashLockSector {
             sender_id: None,
             sector: _buf.read_u32::<LittleEndian>()?,
@@ -179,6 +185,7 @@ impl super::SBPMessage for MsgStmFlashLockSector {
 /// The flash unlock message unlocks a sector of the STM flash
 /// memory. The device replies with a MSG_FLASH_DONE message.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgStmFlashUnlockSector {
@@ -188,7 +195,7 @@ pub struct MsgStmFlashUnlockSector {
 }
 
 impl MsgStmFlashUnlockSector {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmFlashUnlockSector, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmFlashUnlockSector, crate::Error> {
         Ok(MsgStmFlashUnlockSector {
             sender_id: None,
             sector: _buf.read_u32::<LittleEndian>()?,
@@ -215,6 +222,7 @@ impl super::SBPMessage for MsgStmFlashUnlockSector {
 /// responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
 /// ID in the payload..
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgStmUniqueIdResp {
@@ -224,10 +232,10 @@ pub struct MsgStmUniqueIdResp {
 }
 
 impl MsgStmUniqueIdResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmUniqueIdResp, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmUniqueIdResp, crate::Error> {
         Ok(MsgStmUniqueIdResp {
             sender_id: None,
-            stm_id: ::parser::read_u8_array_limit(_buf, 12)?,
+            stm_id: crate::parser::read_u8_array_limit(_buf, 12)?,
         })
     }
 }
@@ -252,6 +260,7 @@ impl super::SBPMessage for MsgStmUniqueIdResp {
 /// is exceeded. Note that the sector-containing addresses must be
 /// erased before addresses can be programmed.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFlashProgram {
@@ -267,13 +276,13 @@ pub struct MsgFlashProgram {
 }
 
 impl MsgFlashProgram {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashProgram, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashProgram, crate::Error> {
         Ok(MsgFlashProgram {
             sender_id: None,
             target: _buf.read_u8()?,
-            addr_start: ::parser::read_u8_array_limit(_buf, 3)?,
+            addr_start: crate::parser::read_u8_array_limit(_buf, 3)?,
             addr_len: _buf.read_u8()?,
-            data: ::parser::read_u8_array(_buf)?,
+            data: crate::parser::read_u8_array(_buf)?,
         })
     }
 }
@@ -299,6 +308,7 @@ impl super::SBPMessage for MsgFlashProgram {
 /// FLASH_INVALID_ADDR (3) if the address is outside of the allowed
 /// range.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFlashReadReq {
@@ -312,11 +322,11 @@ pub struct MsgFlashReadReq {
 }
 
 impl MsgFlashReadReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashReadReq, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashReadReq, crate::Error> {
         Ok(MsgFlashReadReq {
             sender_id: None,
             target: _buf.read_u8()?,
-            addr_start: ::parser::read_u8_array_limit(_buf, 3)?,
+            addr_start: crate::parser::read_u8_array_limit(_buf, 3)?,
             addr_len: _buf.read_u8()?,
         })
     }
@@ -341,6 +351,7 @@ impl super::SBPMessage for MsgFlashReadReq {
 /// responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
 /// ID in the payload.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgStmUniqueIdReq {
@@ -348,7 +359,7 @@ pub struct MsgStmUniqueIdReq {
 }
 
 impl MsgStmUniqueIdReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmUniqueIdReq, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmUniqueIdReq, crate::Error> {
         Ok(MsgStmUniqueIdReq { sender_id: None })
     }
 }
@@ -369,6 +380,7 @@ impl super::SBPMessage for MsgStmUniqueIdReq {
 /// The flash status message writes to the 8-bit M25 flash status
 /// register. The device replies with a MSG_FLASH_DONE message.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgM25FlashWriteStatus {
@@ -378,10 +390,10 @@ pub struct MsgM25FlashWriteStatus {
 }
 
 impl MsgM25FlashWriteStatus {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgM25FlashWriteStatus, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgM25FlashWriteStatus, crate::Error> {
         Ok(MsgM25FlashWriteStatus {
             sender_id: None,
-            status: ::parser::read_u8_array_limit(_buf, 1)?,
+            status: crate::parser::read_u8_array_limit(_buf, 1)?,
         })
     }
 }

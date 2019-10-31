@@ -43,6 +43,8 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// Write device configuration settings (host => device)
 ///
@@ -54,6 +56,7 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 /// An example string that could be sent to a device is
 /// "solution\0soln_freq\010\0".
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsWrite {
@@ -64,10 +67,10 @@ pub struct MsgSettingsWrite {
 }
 
 impl MsgSettingsWrite {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWrite, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWrite, crate::Error> {
         Ok(MsgSettingsWrite {
             sender_id: None,
-            setting: ::parser::read_string(_buf)?,
+            setting: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -88,6 +91,7 @@ impl super::SBPMessage for MsgSettingsWrite {
 /// The save settings message persists the device's current settings
 /// configuration to its onboard flash memory file system.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsSave {
@@ -95,7 +99,7 @@ pub struct MsgSettingsSave {
 }
 
 impl MsgSettingsSave {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsSave, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsSave, crate::Error> {
         Ok(MsgSettingsSave { sender_id: None })
     }
 }
@@ -117,6 +121,7 @@ impl super::SBPMessage for MsgSettingsSave {
 /// values. A device will respond to this message with a
 /// "MSG_SETTINGS_READ_BY_INDEX_RESP".
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsReadByIndexReq {
@@ -127,7 +132,7 @@ pub struct MsgSettingsReadByIndexReq {
 }
 
 impl MsgSettingsReadByIndexReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexReq, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexReq, crate::Error> {
         Ok(MsgSettingsReadByIndexReq {
             sender_id: None,
             index: _buf.read_u16::<LittleEndian>()?,
@@ -157,6 +162,7 @@ impl super::SBPMessage for MsgSettingsReadByIndexReq {
 /// sender ID 0x42. A device should respond with a MSG_SETTINGS_READ_RESP
 /// message (msg_id 0x00A5).
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsReadReq {
@@ -167,10 +173,10 @@ pub struct MsgSettingsReadReq {
 }
 
 impl MsgSettingsReadReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadReq, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadReq, crate::Error> {
         Ok(MsgSettingsReadReq {
             sender_id: None,
-            setting: ::parser::read_string(_buf)?,
+            setting: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -196,6 +202,7 @@ impl super::SBPMessage for MsgSettingsReadReq {
 /// example string that could be sent from device is
 /// "solution\0soln_freq\010\0".
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsReadResp {
@@ -206,10 +213,10 @@ pub struct MsgSettingsReadResp {
 }
 
 impl MsgSettingsReadResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadResp, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadResp, crate::Error> {
         Ok(MsgSettingsReadResp {
             sender_id: None,
-            setting: ::parser::read_string(_buf)?,
+            setting: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -229,6 +236,7 @@ impl super::SBPMessage for MsgSettingsReadResp {
 ///
 /// The settings message for indicating end of the settings values.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsReadByIndexDone {
@@ -236,7 +244,7 @@ pub struct MsgSettingsReadByIndexDone {
 }
 
 impl MsgSettingsReadByIndexDone {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexDone, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexDone, crate::Error> {
         Ok(MsgSettingsReadByIndexDone { sender_id: None })
     }
 }
@@ -265,6 +273,7 @@ impl super::SBPMessage for MsgSettingsReadByIndexDone {
 /// "enum:value1,value2,value3". An example string that could be sent from
 /// the device is "simulator\0enabled\0True\0enum:True,False\0"
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsReadByIndexResp {
@@ -278,11 +287,11 @@ pub struct MsgSettingsReadByIndexResp {
 }
 
 impl MsgSettingsReadByIndexResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexResp, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexResp, crate::Error> {
         Ok(MsgSettingsReadByIndexResp {
             sender_id: None,
             index: _buf.read_u16::<LittleEndian>()?,
-            setting: ::parser::read_string(_buf)?,
+            setting: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -304,6 +313,7 @@ impl super::SBPMessage for MsgSettingsReadByIndexResp {
 /// with a settings daemon.  The host should reply with MSG_SETTINGS_WRITE
 /// for this setting to set the initial value.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsRegister {
@@ -314,10 +324,10 @@ pub struct MsgSettingsRegister {
 }
 
 impl MsgSettingsRegister {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsRegister, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsRegister, crate::Error> {
         Ok(MsgSettingsRegister {
             sender_id: None,
-            setting: ::parser::read_string(_buf)?,
+            setting: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -343,6 +353,7 @@ impl super::SBPMessage for MsgSettingsRegister {
 /// are omitted. An example string that could be sent from device is
 /// "solution\0soln_freq\010\0".
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsWriteResp {
@@ -355,11 +366,11 @@ pub struct MsgSettingsWriteResp {
 }
 
 impl MsgSettingsWriteResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWriteResp, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWriteResp, crate::Error> {
         Ok(MsgSettingsWriteResp {
             sender_id: None,
             status: _buf.read_u8()?,
-            setting: ::parser::read_string(_buf)?,
+            setting: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -382,6 +393,7 @@ impl super::SBPMessage for MsgSettingsWriteResp {
 /// was already registered or is available in the permanent setting storage
 /// and had a different value.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsRegisterResp {
@@ -395,11 +407,11 @@ pub struct MsgSettingsRegisterResp {
 }
 
 impl MsgSettingsRegisterResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsRegisterResp, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsRegisterResp, crate::Error> {
         Ok(MsgSettingsRegisterResp {
             sender_id: None,
             status: _buf.read_u8()?,
-            setting: ::parser::read_string(_buf)?,
+            setting: crate::parser::read_string(_buf)?,
         })
     }
 }

@@ -17,6 +17,8 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// Heading relative to True North
 ///
@@ -25,6 +27,7 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended
 /// that time-matched RTK mode is used when the base station is moving.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineHeading {
@@ -40,7 +43,7 @@ pub struct MsgBaselineHeading {
 }
 
 impl MsgBaselineHeading {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineHeading, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineHeading, crate::Error> {
         Ok(MsgBaselineHeading {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -70,6 +73,7 @@ impl super::SBPMessage for MsgBaselineHeading {
 /// be available in future INS versions of Swift Products and is not produced by Piksi Multi
 /// or Duro.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgOrientQuat {
@@ -97,7 +101,7 @@ pub struct MsgOrientQuat {
 }
 
 impl MsgOrientQuat {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOrientQuat, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOrientQuat, crate::Error> {
         Ok(MsgOrientQuat {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -133,6 +137,7 @@ impl super::SBPMessage for MsgOrientQuat {
 /// to the vehicle body frame.  This message will only be available in future
 /// INS versions of Swift Products and is not produced by Piksi Multi or Duro.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgOrientEuler {
@@ -156,7 +161,7 @@ pub struct MsgOrientEuler {
 }
 
 impl MsgOrientEuler {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOrientEuler, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOrientEuler, crate::Error> {
         Ok(MsgOrientEuler {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -194,6 +199,7 @@ impl super::SBPMessage for MsgOrientEuler {
 /// This message will only be available in future INS versions of Swift Products
 /// and is not produced by Piksi Multi or Duro.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAngularRate {
@@ -211,7 +217,7 @@ pub struct MsgAngularRate {
 }
 
 impl MsgAngularRate {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAngularRate, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAngularRate, crate::Error> {
         Ok(MsgAngularRate {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,

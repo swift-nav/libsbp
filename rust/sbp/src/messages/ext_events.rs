@@ -19,12 +19,15 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// Reports timestamped external pin event
 ///
 /// Reports detection of an external event, the GPS time it occurred,
 /// which pin it was and whether it was rising or falling.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgExtEvent {
@@ -43,7 +46,7 @@ pub struct MsgExtEvent {
 }
 
 impl MsgExtEvent {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgExtEvent, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgExtEvent, crate::Error> {
         Ok(MsgExtEvent {
             sender_id: None,
             wn: _buf.read_u16::<LittleEndian>()?,

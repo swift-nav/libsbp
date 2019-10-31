@@ -19,12 +19,15 @@ extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// Signal tracking channel state
 ///
 /// Tracking channel state for a specific satellite signal and
 /// measured signal power.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelState {
@@ -37,14 +40,14 @@ pub struct TrackingChannelState {
 }
 
 impl TrackingChannelState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelState, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelState, crate::Error> {
         Ok(TrackingChannelState {
             sid: GnssSignal::parse(_buf)?,
             fcn: _buf.read_u8()?,
             cn0: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelState>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelState>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(TrackingChannelState::parse(buf)?);
@@ -55,7 +58,7 @@ impl TrackingChannelState {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<TrackingChannelState>, ::Error> {
+    ) -> Result<Vec<TrackingChannelState>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(TrackingChannelState::parse(buf)?);
@@ -72,6 +75,7 @@ impl TrackingChannelState {
 /// carry the FCN as 100 + FCN where FCN is in [-7, +6] or
 /// the Slot ID (from 1 to 28)
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MeasurementState {
@@ -83,13 +87,13 @@ pub struct MeasurementState {
 }
 
 impl MeasurementState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MeasurementState, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MeasurementState, crate::Error> {
         Ok(MeasurementState {
             mesid: GnssSignal::parse(_buf)?,
             cn0: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<MeasurementState>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<MeasurementState>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(MeasurementState::parse(buf)?);
@@ -97,7 +101,10 @@ impl MeasurementState {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<MeasurementState>, ::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<MeasurementState>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(MeasurementState::parse(buf)?);
@@ -110,6 +117,7 @@ impl MeasurementState {
 ///
 /// Structure containing in-phase and quadrature correlation components.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelCorrelation {
@@ -120,13 +128,13 @@ pub struct TrackingChannelCorrelation {
 }
 
 impl TrackingChannelCorrelation {
-    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelCorrelation, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelCorrelation, crate::Error> {
         Ok(TrackingChannelCorrelation {
             I: _buf.read_i16::<LittleEndian>()?,
             Q: _buf.read_i16::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelCorrelation>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelCorrelation>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(TrackingChannelCorrelation::parse(buf)?);
@@ -137,7 +145,7 @@ impl TrackingChannelCorrelation {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<TrackingChannelCorrelation>, ::Error> {
+    ) -> Result<Vec<TrackingChannelCorrelation>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(TrackingChannelCorrelation::parse(buf)?);
@@ -150,6 +158,7 @@ impl TrackingChannelCorrelation {
 ///
 /// Structure containing in-phase and quadrature correlation components.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelCorrelationDep {
@@ -160,13 +169,15 @@ pub struct TrackingChannelCorrelationDep {
 }
 
 impl TrackingChannelCorrelationDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelCorrelationDep, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelCorrelationDep, crate::Error> {
         Ok(TrackingChannelCorrelationDep {
             I: _buf.read_i32::<LittleEndian>()?,
             Q: _buf.read_i32::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelCorrelationDep>, ::Error> {
+    pub fn parse_array(
+        buf: &mut &[u8],
+    ) -> Result<Vec<TrackingChannelCorrelationDep>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(TrackingChannelCorrelationDep::parse(buf)?);
@@ -177,7 +188,7 @@ impl TrackingChannelCorrelationDep {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<TrackingChannelCorrelationDep>, ::Error> {
+    ) -> Result<Vec<TrackingChannelCorrelationDep>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(TrackingChannelCorrelationDep::parse(buf)?);
@@ -190,6 +201,7 @@ impl TrackingChannelCorrelationDep {
 ///
 /// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelStateDepA {
@@ -202,14 +214,14 @@ pub struct TrackingChannelStateDepA {
 }
 
 impl TrackingChannelStateDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelStateDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelStateDepA, crate::Error> {
         Ok(TrackingChannelStateDepA {
             state: _buf.read_u8()?,
             prn: _buf.read_u8()?,
             cn0: _buf.read_f32::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelStateDepA>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelStateDepA>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(TrackingChannelStateDepA::parse(buf)?);
@@ -220,7 +232,7 @@ impl TrackingChannelStateDepA {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<TrackingChannelStateDepA>, ::Error> {
+    ) -> Result<Vec<TrackingChannelStateDepA>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(TrackingChannelStateDepA::parse(buf)?);
@@ -233,6 +245,7 @@ impl TrackingChannelStateDepA {
 ///
 /// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelStateDepB {
@@ -245,14 +258,14 @@ pub struct TrackingChannelStateDepB {
 }
 
 impl TrackingChannelStateDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelStateDepB, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelStateDepB, crate::Error> {
         Ok(TrackingChannelStateDepB {
             state: _buf.read_u8()?,
             sid: GnssSignalDep::parse(_buf)?,
             cn0: _buf.read_f32::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelStateDepB>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelStateDepB>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(TrackingChannelStateDepB::parse(buf)?);
@@ -263,7 +276,7 @@ impl TrackingChannelStateDepB {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<TrackingChannelStateDepB>, ::Error> {
+    ) -> Result<Vec<TrackingChannelStateDepB>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(TrackingChannelStateDepB::parse(buf)?);
@@ -276,6 +289,7 @@ impl TrackingChannelStateDepB {
 ///
 /// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDetailedDep {
@@ -331,7 +345,7 @@ pub struct MsgTrackingStateDetailedDep {
 }
 
 impl MsgTrackingStateDetailedDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDetailedDep, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDetailedDep, crate::Error> {
         Ok(MsgTrackingStateDetailedDep {
             sender_id: None,
             recv_time: _buf.read_u64::<LittleEndian>()?,
@@ -374,6 +388,7 @@ impl super::SBPMessage for MsgTrackingStateDetailedDep {
 ///
 /// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDepB {
@@ -383,7 +398,7 @@ pub struct MsgTrackingStateDepB {
 }
 
 impl MsgTrackingStateDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDepB, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDepB, crate::Error> {
         Ok(MsgTrackingStateDepB {
             sender_id: None,
             states: TrackingChannelStateDepB::parse_array(_buf)?,
@@ -406,6 +421,7 @@ impl super::SBPMessage for MsgTrackingStateDepB {
 ///
 /// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDepA {
@@ -415,7 +431,7 @@ pub struct MsgTrackingStateDepA {
 }
 
 impl MsgTrackingStateDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDepA, crate::Error> {
         Ok(MsgTrackingStateDepA {
             sender_id: None,
             states: TrackingChannelStateDepA::parse_array(_buf)?,
@@ -438,6 +454,7 @@ impl super::SBPMessage for MsgTrackingStateDepA {
 ///
 /// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingIqDepA {
@@ -451,7 +468,7 @@ pub struct MsgTrackingIqDepA {
 }
 
 impl MsgTrackingIqDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIqDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIqDepA, crate::Error> {
         Ok(MsgTrackingIqDepA {
             sender_id: None,
             channel: _buf.read_u8()?,
@@ -477,6 +494,7 @@ impl super::SBPMessage for MsgTrackingIqDepA {
 /// The tracking message returns a set tracking channel parameters for a
 /// single tracking channel useful for debugging issues.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDetailedDepA {
@@ -532,7 +550,7 @@ pub struct MsgTrackingStateDetailedDepA {
 }
 
 impl MsgTrackingStateDetailedDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDetailedDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDetailedDepA, crate::Error> {
         Ok(MsgTrackingStateDetailedDepA {
             sender_id: None,
             recv_time: _buf.read_u64::<LittleEndian>()?,
@@ -576,6 +594,7 @@ impl super::SBPMessage for MsgTrackingStateDetailedDepA {
 /// When enabled, a tracking channel can output the correlations at each
 /// update interval.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingIqDepB {
@@ -589,7 +608,7 @@ pub struct MsgTrackingIqDepB {
 }
 
 impl MsgTrackingIqDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIqDepB, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIqDepB, crate::Error> {
         Ok(MsgTrackingIqDepB {
             sender_id: None,
             channel: _buf.read_u8()?,
@@ -615,6 +634,7 @@ impl super::SBPMessage for MsgTrackingIqDepB {
 /// When enabled, a tracking channel can output the correlations at each
 /// update interval.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingIq {
@@ -628,7 +648,7 @@ pub struct MsgTrackingIq {
 }
 
 impl MsgTrackingIq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIq, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIq, crate::Error> {
         Ok(MsgTrackingIq {
             sender_id: None,
             channel: _buf.read_u8()?,
@@ -655,6 +675,7 @@ impl super::SBPMessage for MsgTrackingIq {
 /// channel states. It reports status and carrier-to-noise density
 /// measurements for all tracked satellites.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingState {
@@ -664,7 +685,7 @@ pub struct MsgTrackingState {
 }
 
 impl MsgTrackingState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingState, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingState, crate::Error> {
         Ok(MsgTrackingState {
             sender_id: None,
             states: TrackingChannelState::parse_array(_buf)?,
@@ -689,6 +710,7 @@ impl super::SBPMessage for MsgTrackingState {
 /// channel states. It reports status and carrier-to-noise density
 /// measurements for all tracked satellites.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgMeasurementState {
@@ -698,7 +720,7 @@ pub struct MsgMeasurementState {
 }
 
 impl MsgMeasurementState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMeasurementState, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMeasurementState, crate::Error> {
         Ok(MsgMeasurementState {
             sender_id: None,
             states: MeasurementState::parse_array(_buf)?,
