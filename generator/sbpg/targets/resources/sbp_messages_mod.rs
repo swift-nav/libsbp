@@ -20,6 +20,9 @@ use self::(((p.identifier|mod_name)))::(((m.identifier|camel_case)));
 ((*- endfor *))
 ((*- endfor *))
 
+#[cfg(feature = "serialize")]
+use serde::{Serialize, Deserialize};
+
 pub trait SBPMessage {
     const MSG_ID: u16;
 
@@ -27,6 +30,7 @@ pub trait SBPMessage {
     fn set_sender_id(&mut self, new_id: u16);
 }
 
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 pub enum SBP {
     Unknown { msg_id: u16, sender_id: u16, payload: Vec<u8> },

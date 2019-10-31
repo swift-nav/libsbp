@@ -18,6 +18,8 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian,ReadBytesExt};
+#[cfg(feature = "serialize")]
+use serde::{Serialize, Deserialize};
 
 ((*- for i in includes *))
 use super::(((i)))::*;
@@ -30,6 +32,7 @@ use super::(((i)))::*;
 (((m.desc|commentify)))
 ///
 ((*- endif *))
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct (((m.identifier|camel_case))) {
