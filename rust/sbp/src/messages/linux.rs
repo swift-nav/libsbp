@@ -18,12 +18,15 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// List CPU state on the system
 ///
 /// This message indicates the process state of the top 10 heaviest
 /// consumers of CPU on the system.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxCpuState {
@@ -41,14 +44,14 @@ pub struct MsgLinuxCpuState {
 }
 
 impl MsgLinuxCpuState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxCpuState, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxCpuState, crate::Error> {
         Ok(MsgLinuxCpuState {
             sender_id: None,
             index: _buf.read_u8()?,
             pid: _buf.read_u16::<LittleEndian>()?,
             pcpu: _buf.read_u8()?,
-            tname: ::parser::read_string_limit(_buf, 15)?,
-            cmdline: ::parser::read_string(_buf)?,
+            tname: crate::parser::read_string_limit(_buf, 15)?,
+            cmdline: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -69,6 +72,7 @@ impl super::SBPMessage for MsgLinuxCpuState {
 /// This message indicates the process state of the top 10 heaviest
 /// consumers of memory on the system.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxMemState {
@@ -86,14 +90,14 @@ pub struct MsgLinuxMemState {
 }
 
 impl MsgLinuxMemState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxMemState, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxMemState, crate::Error> {
         Ok(MsgLinuxMemState {
             sender_id: None,
             index: _buf.read_u8()?,
             pid: _buf.read_u16::<LittleEndian>()?,
             pmem: _buf.read_u8()?,
-            tname: ::parser::read_string_limit(_buf, 15)?,
-            cmdline: ::parser::read_string(_buf)?,
+            tname: crate::parser::read_string_limit(_buf, 15)?,
+            cmdline: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -113,6 +117,7 @@ impl super::SBPMessage for MsgLinuxMemState {
 ///
 /// This presents a summary of CPU and memory utilization.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxSysState {
@@ -132,7 +137,7 @@ pub struct MsgLinuxSysState {
 }
 
 impl MsgLinuxSysState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSysState, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSysState, crate::Error> {
         Ok(MsgLinuxSysState {
             sender_id: None,
             mem_total: _buf.read_u16::<LittleEndian>()?,
@@ -160,6 +165,7 @@ impl super::SBPMessage for MsgLinuxSysState {
 ///
 /// Top 10 list of processes with high socket counts.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxProcessSocketCounts {
@@ -183,7 +189,7 @@ pub struct MsgLinuxProcessSocketCounts {
 }
 
 impl MsgLinuxProcessSocketCounts {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessSocketCounts, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessSocketCounts, crate::Error> {
         Ok(MsgLinuxProcessSocketCounts {
             sender_id: None,
             index: _buf.read_u8()?,
@@ -191,7 +197,7 @@ impl MsgLinuxProcessSocketCounts {
             socket_count: _buf.read_u16::<LittleEndian>()?,
             socket_types: _buf.read_u16::<LittleEndian>()?,
             socket_states: _buf.read_u16::<LittleEndian>()?,
-            cmdline: ::parser::read_string(_buf)?,
+            cmdline: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -211,6 +217,7 @@ impl super::SBPMessage for MsgLinuxProcessSocketCounts {
 ///
 /// Top 10 list of sockets with deep queues.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxProcessSocketQueues {
@@ -239,7 +246,7 @@ pub struct MsgLinuxProcessSocketQueues {
 }
 
 impl MsgLinuxProcessSocketQueues {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessSocketQueues, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessSocketQueues, crate::Error> {
         Ok(MsgLinuxProcessSocketQueues {
             sender_id: None,
             index: _buf.read_u8()?,
@@ -248,8 +255,8 @@ impl MsgLinuxProcessSocketQueues {
             send_queued: _buf.read_u16::<LittleEndian>()?,
             socket_types: _buf.read_u16::<LittleEndian>()?,
             socket_states: _buf.read_u16::<LittleEndian>()?,
-            address_of_largest: ::parser::read_string_limit(_buf, 64)?,
-            cmdline: ::parser::read_string(_buf)?,
+            address_of_largest: crate::parser::read_string_limit(_buf, 64)?,
+            cmdline: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -269,6 +276,7 @@ impl super::SBPMessage for MsgLinuxProcessSocketQueues {
 ///
 /// Summaries the socket usage across the system.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxSocketUsage {
@@ -288,13 +296,13 @@ pub struct MsgLinuxSocketUsage {
 }
 
 impl MsgLinuxSocketUsage {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSocketUsage, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSocketUsage, crate::Error> {
         Ok(MsgLinuxSocketUsage {
             sender_id: None,
             avg_queue_depth: _buf.read_u32::<LittleEndian>()?,
             max_queue_depth: _buf.read_u32::<LittleEndian>()?,
-            socket_state_counts: ::parser::read_u16_array_limit(_buf, 16)?,
-            socket_type_counts: ::parser::read_u16_array_limit(_buf, 16)?,
+            socket_state_counts: crate::parser::read_u16_array_limit(_buf, 16)?,
+            socket_type_counts: crate::parser::read_u16_array_limit(_buf, 16)?,
         })
     }
 }
@@ -314,6 +322,7 @@ impl super::SBPMessage for MsgLinuxSocketUsage {
 ///
 /// Top 10 list of processes with a large number of open file descriptors.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxProcessFdCount {
@@ -329,13 +338,13 @@ pub struct MsgLinuxProcessFdCount {
 }
 
 impl MsgLinuxProcessFdCount {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessFdCount, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessFdCount, crate::Error> {
         Ok(MsgLinuxProcessFdCount {
             sender_id: None,
             index: _buf.read_u8()?,
             pid: _buf.read_u16::<LittleEndian>()?,
             fd_count: _buf.read_u16::<LittleEndian>()?,
-            cmdline: ::parser::read_string(_buf)?,
+            cmdline: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -355,6 +364,7 @@ impl super::SBPMessage for MsgLinuxProcessFdCount {
 ///
 /// Summary of open file descriptors on the system.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxProcessFdSummary {
@@ -370,11 +380,11 @@ pub struct MsgLinuxProcessFdSummary {
 }
 
 impl MsgLinuxProcessFdSummary {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessFdSummary, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessFdSummary, crate::Error> {
         Ok(MsgLinuxProcessFdSummary {
             sender_id: None,
             sys_fd_count: _buf.read_u32::<LittleEndian>()?,
-            most_opened: ::parser::read_string(_buf)?,
+            most_opened: crate::parser::read_string(_buf)?,
         })
     }
 }

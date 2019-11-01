@@ -18,11 +18,14 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// Deprecated
 ///
 /// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPrintDep {
@@ -32,10 +35,10 @@ pub struct MsgPrintDep {
 }
 
 impl MsgPrintDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPrintDep, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPrintDep, crate::Error> {
         Ok(MsgPrintDep {
             sender_id: None,
-            text: ::parser::read_string(_buf)?,
+            text: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -57,6 +60,7 @@ impl super::SBPMessage for MsgPrintDep {
 /// device containing errors, warnings and informational messages at
 /// ERROR, WARNING, DEBUG, INFO logging levels.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLog {
@@ -68,11 +72,11 @@ pub struct MsgLog {
 }
 
 impl MsgLog {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLog, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLog, crate::Error> {
         Ok(MsgLog {
             sender_id: None,
             level: _buf.read_u8()?,
-            text: ::parser::read_string(_buf)?,
+            text: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -98,6 +102,7 @@ impl super::SBPMessage for MsgLog {
 /// The protocol identifier identifies what the expected protocol the forwarded msg contains.
 /// Protocol 0 represents SBP and the remaining values are implementation defined.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFwd {
@@ -111,12 +116,12 @@ pub struct MsgFwd {
 }
 
 impl MsgFwd {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFwd, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFwd, crate::Error> {
         Ok(MsgFwd {
             sender_id: None,
             source: _buf.read_u8()?,
             protocol: _buf.read_u8()?,
-            fwd_payload: ::parser::read_string(_buf)?,
+            fwd_payload: crate::parser::read_string(_buf)?,
         })
     }
 }

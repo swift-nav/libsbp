@@ -17,7 +17,7 @@ mod tests {
             0x28u8, 0xf4, 0x7a, 0x13, 0x96, 0x62, 0xee, 0xff, 0xbe, 0x40, 0x14, 0x00, 0xf6, 0xa3,
             0x09, 0x00, 0x00, 0x00, 0x0e, 0x00,
         ];
-        let baseline_ecef_expectation = ::messages::navigation::MsgBaselineECEF {
+        let baseline_ecef_expectation = crate::messages::navigation::MsgBaselineECEF {
             sender_id: Some(1234),
             accuracy: 0,
             flags: 0,
@@ -27,9 +27,9 @@ mod tests {
             y: 1327294,
             z: 631798,
         };
-        let sbp_result = ::messages::SBP::parse(0x20b, 1234, &mut &baseline_ecef_payload[..]);
+        let sbp_result = crate::messages::SBP::parse(0x20b, 1234, &mut &baseline_ecef_payload[..]);
         assert!(sbp_result.is_ok());
-        if let ::messages::SBP::MsgBaselineECEF(msg) = sbp_result.unwrap() {
+        if let crate::messages::SBP::MsgBaselineECEF(msg) = sbp_result.unwrap() {
             assert_eq!(msg.sender_id, baseline_ecef_expectation.sender_id);
             assert_eq!(msg.accuracy, baseline_ecef_expectation.accuracy);
             assert_eq!(msg.flags, baseline_ecef_expectation.flags);
@@ -49,7 +49,7 @@ mod tests {
             0x55u8, 0x0b, 0x02, 0xd3, 0x88, 0x14, 0x28, 0xf4, 0x7a, 0x13, 0x96, 0x62, 0xee, 0xff,
             0xbe, 0x40, 0x14, 0x00, 0xf6, 0xa3, 0x09, 0x00, 0x00, 0x00, 0x0e, 0x00, 0xdb, 0xbf,
         ];
-        let baseline_ecef_expectation = ::messages::navigation::MsgBaselineECEF {
+        let baseline_ecef_expectation = crate::messages::navigation::MsgBaselineECEF {
             sender_id: Some(0x88d3),
             accuracy: 0,
             flags: 0,
@@ -59,9 +59,9 @@ mod tests {
             y: 1327294,
             z: 631798,
         };
-        let (sbp_result, _remaining_data) = ::parser::frame(&packet[..]);
+        let (sbp_result, _remaining_data) = crate::parser::frame(&packet[..]);
         assert!(sbp_result.is_ok());
-        if let ::messages::SBP::MsgBaselineECEF(msg) = sbp_result.unwrap() {
+        if let crate::messages::SBP::MsgBaselineECEF(msg) = sbp_result.unwrap() {
             assert_eq!(msg.sender_id, baseline_ecef_expectation.sender_id);
             assert_eq!(msg.accuracy, baseline_ecef_expectation.accuracy);
             assert_eq!(msg.flags, baseline_ecef_expectation.flags);
@@ -83,7 +83,7 @@ mod tests {
             0x00, 0xdb, 0xbf, 0xde, 0xad, 0xbe, 0xef,
         ];
         let mut reader = std::io::Cursor::new(packet);
-        let baseline_ecef_expectation = ::messages::navigation::MsgBaselineECEF {
+        let baseline_ecef_expectation = crate::messages::navigation::MsgBaselineECEF {
             sender_id: Some(0x88d3),
             accuracy: 0,
             flags: 0,
@@ -93,12 +93,12 @@ mod tests {
             y: 1327294,
             z: 631798,
         };
-        let mut parser = ::parser::Parser::new();
+        let mut parser = crate::parser::Parser::new();
         // Iterate through the data until we hit something that is
         // parsable
         let sbp_result = parser.parse(&mut reader);
         assert!(sbp_result.is_ok());
-        if let ::messages::SBP::MsgBaselineECEF(msg) = sbp_result.unwrap() {
+        if let crate::messages::SBP::MsgBaselineECEF(msg) = sbp_result.unwrap() {
             assert_eq!(msg.sender_id, baseline_ecef_expectation.sender_id);
             assert_eq!(msg.accuracy, baseline_ecef_expectation.accuracy);
             assert_eq!(msg.flags, baseline_ecef_expectation.flags);

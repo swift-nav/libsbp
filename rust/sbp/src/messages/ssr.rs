@@ -18,12 +18,15 @@ extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// SSR code biases corrections for a particular satellite.
 ///
 /// Code biases are to be added to pseudorange.
 /// The corrections conform with typical RTCMv3 MT1059 and 1065.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct CodeBiasesContent {
@@ -34,13 +37,13 @@ pub struct CodeBiasesContent {
 }
 
 impl CodeBiasesContent {
-    pub fn parse(_buf: &mut &[u8]) -> Result<CodeBiasesContent, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<CodeBiasesContent, crate::Error> {
         Ok(CodeBiasesContent {
             code: _buf.read_u8()?,
             value: _buf.read_i16::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CodeBiasesContent>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CodeBiasesContent>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(CodeBiasesContent::parse(buf)?);
@@ -48,7 +51,10 @@ impl CodeBiasesContent {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<CodeBiasesContent>, ::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<CodeBiasesContent>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(CodeBiasesContent::parse(buf)?);
@@ -62,6 +68,7 @@ impl CodeBiasesContent {
 /// Phase biases are to be added to carrier phase measurements.
 /// The corrections conform with typical RTCMv3 MT1059 and 1065.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct PhaseBiasesContent {
@@ -79,7 +86,7 @@ pub struct PhaseBiasesContent {
 }
 
 impl PhaseBiasesContent {
-    pub fn parse(_buf: &mut &[u8]) -> Result<PhaseBiasesContent, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<PhaseBiasesContent, crate::Error> {
         Ok(PhaseBiasesContent {
             code: _buf.read_u8()?,
             integer_indicator: _buf.read_u8()?,
@@ -88,7 +95,7 @@ impl PhaseBiasesContent {
             bias: _buf.read_i32::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PhaseBiasesContent>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PhaseBiasesContent>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(PhaseBiasesContent::parse(buf)?);
@@ -99,7 +106,7 @@ impl PhaseBiasesContent {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<PhaseBiasesContent>, ::Error> {
+    ) -> Result<Vec<PhaseBiasesContent>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(PhaseBiasesContent::parse(buf)?);
@@ -114,6 +121,7 @@ impl PhaseBiasesContent {
 /// messages, since SBP message a limited to 255 bytes.  The header
 /// is used to tie multiple SBP messages into a sequence.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct STECHeader {
@@ -131,7 +139,7 @@ pub struct STECHeader {
 }
 
 impl STECHeader {
-    pub fn parse(_buf: &mut &[u8]) -> Result<STECHeader, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<STECHeader, crate::Error> {
         Ok(STECHeader {
             time: GPSTimeSec::parse(_buf)?,
             num_msgs: _buf.read_u8()?,
@@ -140,7 +148,7 @@ impl STECHeader {
             iod_atmo: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECHeader>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECHeader>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(STECHeader::parse(buf)?);
@@ -148,7 +156,7 @@ impl STECHeader {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<STECHeader>, ::Error> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<STECHeader>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(STECHeader::parse(buf)?);
@@ -163,6 +171,7 @@ impl STECHeader {
 /// which are not suppported in SBP, so each grid point will
 /// be identified by the index.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct GriddedCorrectionHeader {
@@ -183,7 +192,7 @@ pub struct GriddedCorrectionHeader {
 }
 
 impl GriddedCorrectionHeader {
-    pub fn parse(_buf: &mut &[u8]) -> Result<GriddedCorrectionHeader, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<GriddedCorrectionHeader, crate::Error> {
         Ok(GriddedCorrectionHeader {
             time: GPSTimeSec::parse(_buf)?,
             num_msgs: _buf.read_u16::<LittleEndian>()?,
@@ -193,7 +202,7 @@ impl GriddedCorrectionHeader {
             tropo_quality_indicator: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GriddedCorrectionHeader>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GriddedCorrectionHeader>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(GriddedCorrectionHeader::parse(buf)?);
@@ -204,7 +213,7 @@ impl GriddedCorrectionHeader {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<GriddedCorrectionHeader>, ::Error> {
+    ) -> Result<Vec<GriddedCorrectionHeader>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(GriddedCorrectionHeader::parse(buf)?);
@@ -217,6 +226,7 @@ impl GriddedCorrectionHeader {
 ///
 /// STEC polynomial for the given satellite.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct STECSatElement {
@@ -230,14 +240,14 @@ pub struct STECSatElement {
 }
 
 impl STECSatElement {
-    pub fn parse(_buf: &mut &[u8]) -> Result<STECSatElement, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<STECSatElement, crate::Error> {
         Ok(STECSatElement {
             sv_id: SvId::parse(_buf)?,
             stec_quality_indicator: _buf.read_u8()?,
-            stec_coeff: ::parser::read_s16_array_limit(_buf, 4)?,
+            stec_coeff: crate::parser::read_s16_array_limit(_buf, 4)?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECSatElement>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECSatElement>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(STECSatElement::parse(buf)?);
@@ -245,7 +255,10 @@ impl STECSatElement {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<STECSatElement>, ::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<STECSatElement>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(STECSatElement::parse(buf)?);
@@ -258,6 +271,7 @@ impl STECSatElement {
 ///
 /// Troposphere vertical delays at the grid point.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct TroposphericDelayCorrection {
@@ -268,13 +282,13 @@ pub struct TroposphericDelayCorrection {
 }
 
 impl TroposphericDelayCorrection {
-    pub fn parse(_buf: &mut &[u8]) -> Result<TroposphericDelayCorrection, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<TroposphericDelayCorrection, crate::Error> {
         Ok(TroposphericDelayCorrection {
             hydro: _buf.read_i16::<LittleEndian>()?,
             wet: _buf.read_i8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TroposphericDelayCorrection>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TroposphericDelayCorrection>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(TroposphericDelayCorrection::parse(buf)?);
@@ -285,7 +299,7 @@ impl TroposphericDelayCorrection {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<TroposphericDelayCorrection>, ::Error> {
+    ) -> Result<Vec<TroposphericDelayCorrection>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(TroposphericDelayCorrection::parse(buf)?);
@@ -298,6 +312,7 @@ impl TroposphericDelayCorrection {
 ///
 /// STEC residual for the given satellite at the grid point.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct STECResidual {
@@ -308,13 +323,13 @@ pub struct STECResidual {
 }
 
 impl STECResidual {
-    pub fn parse(_buf: &mut &[u8]) -> Result<STECResidual, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<STECResidual, crate::Error> {
         Ok(STECResidual {
             sv_id: SvId::parse(_buf)?,
             residual: _buf.read_i16::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECResidual>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECResidual>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(STECResidual::parse(buf)?);
@@ -322,7 +337,7 @@ impl STECResidual {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<STECResidual>, ::Error> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<STECResidual>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(STECResidual::parse(buf)?);
@@ -336,6 +351,7 @@ impl STECResidual {
 /// Contains one tropo delay, plus STEC residuals for each satellite at the
 /// grid point.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct GridElement {
@@ -348,14 +364,14 @@ pub struct GridElement {
 }
 
 impl GridElement {
-    pub fn parse(_buf: &mut &[u8]) -> Result<GridElement, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<GridElement, crate::Error> {
         Ok(GridElement {
             index: _buf.read_u16::<LittleEndian>()?,
             tropo_delay_correction: TroposphericDelayCorrection::parse(_buf)?,
             stec_residuals: STECResidual::parse_array(_buf)?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GridElement>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GridElement>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(GridElement::parse(buf)?);
@@ -363,7 +379,7 @@ impl GridElement {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GridElement>, ::Error> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GridElement>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(GridElement::parse(buf)?);
@@ -377,6 +393,7 @@ impl GridElement {
 /// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
 /// Also includes an RLE encoded validity list.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct GridDefinitionHeader {
@@ -397,7 +414,7 @@ pub struct GridDefinitionHeader {
 }
 
 impl GridDefinitionHeader {
-    pub fn parse(_buf: &mut &[u8]) -> Result<GridDefinitionHeader, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<GridDefinitionHeader, crate::Error> {
         Ok(GridDefinitionHeader {
             region_size_inverse: _buf.read_u8()?,
             area_width: _buf.read_u16::<LittleEndian>()?,
@@ -407,7 +424,7 @@ impl GridDefinitionHeader {
             seq_num: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GridDefinitionHeader>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GridDefinitionHeader>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(GridDefinitionHeader::parse(buf)?);
@@ -418,7 +435,7 @@ impl GridDefinitionHeader {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<GridDefinitionHeader>, ::Error> {
+    ) -> Result<Vec<GridDefinitionHeader>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(GridDefinitionHeader::parse(buf)?);
@@ -434,6 +451,7 @@ impl GridDefinitionHeader {
 /// ephemeris and is typically an equivalent to the 1060
 /// and 1066 RTCM message types
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrOrbitClockDepA {
@@ -471,7 +489,7 @@ pub struct MsgSsrOrbitClockDepA {
 }
 
 impl MsgSsrOrbitClockDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrOrbitClockDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrOrbitClockDepA, crate::Error> {
         Ok(MsgSsrOrbitClockDepA {
             sender_id: None,
             time: GPSTimeSec::parse(_buf)?,
@@ -510,6 +528,7 @@ impl super::SBPMessage for MsgSsrOrbitClockDepA {
 /// ephemeris and is typically an equivalent to the 1060
 /// and 1066 RTCM message types
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrOrbitClock {
@@ -547,7 +566,7 @@ pub struct MsgSsrOrbitClock {
 }
 
 impl MsgSsrOrbitClock {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrOrbitClock, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrOrbitClock, crate::Error> {
         Ok(MsgSsrOrbitClock {
             sender_id: None,
             time: GPSTimeSec::parse(_buf)?,
@@ -586,6 +605,7 @@ impl super::SBPMessage for MsgSsrOrbitClock {
 /// to get corrected pseudorange. It is typically
 /// an equivalent to the 1059 and 1065 RTCM message types
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrCodeBiases {
@@ -605,7 +625,7 @@ pub struct MsgSsrCodeBiases {
 }
 
 impl MsgSsrCodeBiases {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrCodeBiases, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrCodeBiases, crate::Error> {
         Ok(MsgSsrCodeBiases {
             sender_id: None,
             time: GPSTimeSec::parse(_buf)?,
@@ -637,6 +657,7 @@ impl super::SBPMessage for MsgSsrCodeBiases {
 /// the phase wind-up correction.
 /// It is typically an equivalent to the 1265 RTCM message types
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrPhaseBiases {
@@ -664,7 +685,7 @@ pub struct MsgSsrPhaseBiases {
 }
 
 impl MsgSsrPhaseBiases {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrPhaseBiases, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrPhaseBiases, crate::Error> {
         Ok(MsgSsrPhaseBiases {
             sender_id: None,
             time: GPSTimeSec::parse(_buf)?,
@@ -698,6 +719,7 @@ impl super::SBPMessage for MsgSsrPhaseBiases {
 /// message to get the state space representation of the atmospheric
 /// delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrStecCorrection {
@@ -709,7 +731,7 @@ pub struct MsgSsrStecCorrection {
 }
 
 impl MsgSsrStecCorrection {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrStecCorrection, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrStecCorrection, crate::Error> {
         Ok(MsgSsrStecCorrection {
             sender_id: None,
             header: STECHeader::parse(_buf)?,
@@ -734,6 +756,7 @@ impl super::SBPMessage for MsgSsrStecCorrection {
 /// STEC residuals are per space vehicle, tropo is not.
 /// It is typically equivalent to the QZSS CLAS Sub Type 9 messages
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGriddedCorrection {
@@ -745,7 +768,7 @@ pub struct MsgSsrGriddedCorrection {
 }
 
 impl MsgSsrGriddedCorrection {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGriddedCorrection, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGriddedCorrection, crate::Error> {
         Ok(MsgSsrGriddedCorrection {
             sender_id: None,
             header: GriddedCorrectionHeader::parse(_buf)?,
@@ -770,6 +793,7 @@ impl super::SBPMessage for MsgSsrGriddedCorrection {
 /// Based on the 3GPP proposal R2-1906781 which is in turn based on
 /// OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGridDefinition {
@@ -784,11 +808,11 @@ pub struct MsgSsrGridDefinition {
 }
 
 impl MsgSsrGridDefinition {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGridDefinition, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGridDefinition, crate::Error> {
         Ok(MsgSsrGridDefinition {
             sender_id: None,
             header: GridDefinitionHeader::parse(_buf)?,
-            rle_list: ::parser::read_u8_array(_buf)?,
+            rle_list: crate::parser::read_u8_array(_buf)?,
         })
     }
 }

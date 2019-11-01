@@ -25,6 +25,8 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// File read from the file system (host <= device)
 ///
@@ -34,6 +36,7 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 /// were succesfully read. The sequence number in the response is
 /// preserved from the request.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadResp {
@@ -45,11 +48,11 @@ pub struct MsgFileioReadResp {
 }
 
 impl MsgFileioReadResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadResp, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadResp, crate::Error> {
         Ok(MsgFileioReadResp {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
-            contents: ::parser::read_u8_array(_buf)?,
+            contents: crate::parser::read_u8_array(_buf)?,
         })
     }
 }
@@ -76,6 +79,7 @@ impl super::SBPMessage for MsgFileioReadResp {
 /// print "Invalid fileio read message". A device will only respond
 /// to this message when it is received from sender ID 0x42.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadReq {
@@ -91,13 +95,13 @@ pub struct MsgFileioReadReq {
 }
 
 impl MsgFileioReadReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadReq, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadReq, crate::Error> {
         Ok(MsgFileioReadReq {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             offset: _buf.read_u32::<LittleEndian>()?,
             chunk_size: _buf.read_u8()?,
-            filename: ::parser::read_string(_buf)?,
+            filename: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -126,6 +130,7 @@ impl super::SBPMessage for MsgFileioReadReq {
 /// A device will only respond to this message when it is received
 /// from sender ID 0x42.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadDirReq {
@@ -139,12 +144,12 @@ pub struct MsgFileioReadDirReq {
 }
 
 impl MsgFileioReadDirReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadDirReq, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadDirReq, crate::Error> {
         Ok(MsgFileioReadDirReq {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             offset: _buf.read_u32::<LittleEndian>()?,
-            dirname: ::parser::read_string(_buf)?,
+            dirname: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -169,6 +174,7 @@ impl super::SBPMessage for MsgFileioReadDirReq {
 /// entry containing just the character 0xFF. The sequence number in
 /// the response is preserved from the request.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadDirResp {
@@ -180,11 +186,11 @@ pub struct MsgFileioReadDirResp {
 }
 
 impl MsgFileioReadDirResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadDirResp, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadDirResp, crate::Error> {
         Ok(MsgFileioReadDirResp {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
-            contents: ::parser::read_u8_array(_buf)?,
+            contents: crate::parser::read_u8_array(_buf)?,
         })
     }
 }
@@ -208,6 +214,7 @@ impl super::SBPMessage for MsgFileioReadDirResp {
 /// write. The sequence number in the response is preserved from the
 /// request.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioWriteResp {
@@ -217,7 +224,7 @@ pub struct MsgFileioWriteResp {
 }
 
 impl MsgFileioWriteResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteResp, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteResp, crate::Error> {
         Ok(MsgFileioWriteResp {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
@@ -243,6 +250,7 @@ impl super::SBPMessage for MsgFileioWriteResp {
 /// print "Invalid fileio remove message". A device will only
 /// process this message when it is received from sender ID 0x42.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioRemove {
@@ -252,10 +260,10 @@ pub struct MsgFileioRemove {
 }
 
 impl MsgFileioRemove {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioRemove, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioRemove, crate::Error> {
         Ok(MsgFileioRemove {
             sender_id: None,
-            filename: ::parser::read_string(_buf)?,
+            filename: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -282,6 +290,7 @@ impl super::SBPMessage for MsgFileioRemove {
 /// only  process this message when it is received from sender ID
 /// 0x42.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioWriteReq {
@@ -297,13 +306,13 @@ pub struct MsgFileioWriteReq {
 }
 
 impl MsgFileioWriteReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteReq, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteReq, crate::Error> {
         Ok(MsgFileioWriteReq {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             offset: _buf.read_u32::<LittleEndian>()?,
-            filename: ::parser::read_string(_buf)?,
-            data: ::parser::read_u8_array(_buf)?,
+            filename: crate::parser::read_string(_buf)?,
+            data: crate::parser::read_u8_array(_buf)?,
         })
     }
 }
@@ -326,6 +335,7 @@ impl super::SBPMessage for MsgFileioWriteReq {
 /// throughput by supporting a large window of FileIO data
 /// that can be in-flight during read or write operations.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioConfigReq {
@@ -335,7 +345,7 @@ pub struct MsgFileioConfigReq {
 }
 
 impl MsgFileioConfigReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigReq, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigReq, crate::Error> {
         Ok(MsgFileioConfigReq {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
@@ -362,6 +372,7 @@ impl super::SBPMessage for MsgFileioConfigReq {
 /// throughput by supporting a large window of FileIO data
 /// that can be in-flight during read or write operations.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioConfigResp {
@@ -377,7 +388,7 @@ pub struct MsgFileioConfigResp {
 }
 
 impl MsgFileioConfigResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigResp, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigResp, crate::Error> {
         Ok(MsgFileioConfigResp {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,

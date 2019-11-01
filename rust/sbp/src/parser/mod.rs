@@ -8,7 +8,7 @@ use self::nom::bytes::complete::is_a;
 use self::nom::multi::length_data;
 use self::nom::number::complete::{le_u16, le_u8};
 use self::nom::sequence::tuple;
-use messages::SBP;
+use crate::messages::SBP;
 use std::io::{self, Read};
 
 /// Attempts to extract a single SBP message from a data
@@ -21,7 +21,7 @@ use std::io::{self, Read};
 /// removed from the slice before calling `frame()` again.
 /// If the result is a
 /// success then the SBP message has been fully validated.
-pub fn frame(input: &[u8]) -> (Result<SBP, ::Error>, usize) {
+pub fn frame(input: &[u8]) -> (Result<SBP, crate::Error>, usize) {
     let original_size = input.len();
     let preamble = is_a("\x55");
     let payload = length_data(le_u8);
@@ -42,15 +42,15 @@ pub fn frame(input: &[u8]) -> (Result<SBP, ::Error>, usize) {
                     bytes_read,
                 )
             } else {
-                (Err(::Error::ParseError), 1)
+                (Err(crate::Error::ParseError), 1)
             }
         }
         // Act like we didn't read anything
-        Err(self::nom::Err::Incomplete(_)) => (Err(::Error::NotEnoughData), 0),
+        Err(self::nom::Err::Incomplete(_)) => (Err(crate::Error::NotEnoughData), 0),
         // Act like we only read a single byte
-        Err(self::nom::Err::Error((_, _))) => (Err(::Error::ParseError), 1),
+        Err(self::nom::Err::Error((_, _))) => (Err(crate::Error::ParseError), 1),
         // Act like we didn't read anything
-        Err(self::nom::Err::Failure((_, _))) => (Err(::Error::UnrecoverableFailure), 0),
+        Err(self::nom::Err::Failure((_, _))) => (Err(crate::Error::UnrecoverableFailure), 0),
     }
 }
 
@@ -80,7 +80,7 @@ impl Parser {
     /// as needed
     /// until either a message is successfully parsed or an
     /// error occurs
-    pub fn parse<R: Read>(&mut self, input: &mut R) -> Result<SBP, ::Error> {
+    pub fn parse<R: Read>(&mut self, input: &mut R) -> Result<SBP, crate::Error> {
         if self.buffer.len() == 0 {
             self.read_more(input)?;
         }
@@ -88,9 +88,9 @@ impl Parser {
         let result = loop {
             match self.parse_remaining() {
                 Ok(msg) => break Ok(msg),
-                Err(::Error::NotEnoughData) => {
+                Err(crate::Error::NotEnoughData) => {
                     if let Err(e) = self.read_more(input) {
-                        break Err(::Error::IoError(e));
+                        break Err(crate::Error::IoError(e));
                     }
                 }
                 Err(e) => break Err(e),
@@ -107,7 +107,7 @@ impl Parser {
         Ok(read_bytes)
     }
 
-    fn parse_remaining(&mut self) -> Result<SBP, ::Error> {
+    fn parse_remaining(&mut self) -> Result<SBP, crate::Error> {
         loop {
             let result = frame(&self.buffer);
 
@@ -116,7 +116,7 @@ impl Parser {
                     self.buffer = self.buffer[bytes_read..].to_vec();
                     break Ok(msg);
                 }
-                (Err(::Error::ParseError), bytes_read) => {
+                (Err(crate::Error::ParseError), bytes_read) => {
                     self.buffer = self.buffer[bytes_read..].to_vec();
                 }
                 (Err(e), _bytes_read) => break Err(e),
@@ -125,27 +125,27 @@ impl Parser {
     }
 }
 
-impl From<io::Error> for ::Error {
+impl From<io::Error> for crate::Error {
     fn from(error: io::Error) -> Self {
-        ::Error::IoError(error)
+        crate::Error::IoError(error)
     }
 }
 
-pub fn read_string(buf: &mut Read) -> Result<String, ::Error> {
+pub fn read_string(buf: &mut dyn Read) -> Result<String, crate::Error> {
     let mut s = String::new();
     buf.read_to_string(&mut s)?;
     Ok(s)
 }
 
-pub fn read_string_limit(buf: &mut Read, n: u64) -> Result<String, ::Error> {
+pub fn read_string_limit(buf: &mut dyn Read, n: u64) -> Result<String, crate::Error> {
     read_string(&mut buf.take(n))
 }
 
-pub fn read_u8_array(buf: &mut &[u8]) -> Result<Vec<u8>, ::Error> {
+pub fn read_u8_array(buf: &mut &[u8]) -> Result<Vec<u8>, crate::Error> {
     Ok(buf.to_vec())
 }
 
-pub fn read_u8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u8>, ::Error> {
+pub fn read_u8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u8>, crate::Error> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_u8()?);
@@ -153,7 +153,7 @@ pub fn read_u8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u8>, ::Error
     Ok(v)
 }
 
-pub fn read_s8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i8>, ::Error> {
+pub fn read_s8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i8>, crate::Error> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_i8()?);
@@ -161,7 +161,7 @@ pub fn read_s8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i8>, ::Error
     Ok(v)
 }
 
-pub fn read_s16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i16>, ::Error> {
+pub fn read_s16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i16>, crate::Error> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_i16::<LittleEndian>()?);
@@ -169,7 +169,7 @@ pub fn read_s16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i16>, ::Err
     Ok(v)
 }
 
-pub fn read_u16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u16>, ::Error> {
+pub fn read_u16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u16>, crate::Error> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_u16::<LittleEndian>()?);
@@ -177,7 +177,7 @@ pub fn read_u16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u16>, ::Err
     Ok(v)
 }
 
-pub fn read_float_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f32>, ::Error> {
+pub fn read_float_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f32>, crate::Error> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_f32::<LittleEndian>()?);
@@ -185,7 +185,7 @@ pub fn read_float_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f32>, ::E
     Ok(v)
 }
 
-pub fn read_double_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f64>, ::Error> {
+pub fn read_double_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f64>, crate::Error> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_f64::<LittleEndian>()?);

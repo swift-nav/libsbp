@@ -18,12 +18,15 @@ extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// Raw SBAS data
 ///
 /// This message is sent once per second per SBAS satellite. ME checks the
 /// parity of the data block and sends only blocks that pass the check.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSbasRaw {
@@ -39,13 +42,13 @@ pub struct MsgSbasRaw {
 }
 
 impl MsgSbasRaw {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSbasRaw, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSbasRaw, crate::Error> {
         Ok(MsgSbasRaw {
             sender_id: None,
             sid: GnssSignal::parse(_buf)?,
             tow: _buf.read_u32::<LittleEndian>()?,
             message_type: _buf.read_u8()?,
-            data: ::parser::read_u8_array_limit(_buf, 27)?,
+            data: crate::parser::read_u8_array_limit(_buf, 27)?,
         })
     }
 }

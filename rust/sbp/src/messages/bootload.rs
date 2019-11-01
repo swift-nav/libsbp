@@ -22,11 +22,14 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// Deprecated
 ///
 /// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeDepA {
@@ -36,10 +39,10 @@ pub struct MsgBootloaderHandshakeDepA {
 }
 
 impl MsgBootloaderHandshakeDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeDepA, crate::Error> {
         Ok(MsgBootloaderHandshakeDepA {
             sender_id: None,
-            handshake: ::parser::read_u8_array(_buf)?,
+            handshake: crate::parser::read_u8_array(_buf)?,
         })
     }
 }
@@ -59,6 +62,7 @@ impl super::SBPMessage for MsgBootloaderHandshakeDepA {
 ///
 /// The host initiates the bootloader to jump to the application.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderJumpToApp {
@@ -68,7 +72,7 @@ pub struct MsgBootloaderJumpToApp {
 }
 
 impl MsgBootloaderJumpToApp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderJumpToApp, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderJumpToApp, crate::Error> {
         Ok(MsgBootloaderJumpToApp {
             sender_id: None,
             jump: _buf.read_u8()?,
@@ -93,6 +97,7 @@ impl super::SBPMessage for MsgBootloaderJumpToApp {
 /// handshake between the device bootloader and the host. The
 /// response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeReq {
@@ -100,7 +105,7 @@ pub struct MsgBootloaderHandshakeReq {
 }
 
 impl MsgBootloaderHandshakeReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeReq, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeReq, crate::Error> {
         Ok(MsgBootloaderHandshakeReq { sender_id: None })
     }
 }
@@ -124,6 +129,7 @@ impl super::SBPMessage for MsgBootloaderHandshakeReq {
 /// payload contains the bootloader version number and the SBP
 /// protocol version number.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeResp {
@@ -135,11 +141,11 @@ pub struct MsgBootloaderHandshakeResp {
 }
 
 impl MsgBootloaderHandshakeResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeResp, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeResp, crate::Error> {
         Ok(MsgBootloaderHandshakeResp {
             sender_id: None,
             flags: _buf.read_u32::<LittleEndian>()?,
-            version: ::parser::read_string(_buf)?,
+            version: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -164,6 +170,7 @@ impl super::SBPMessage for MsgBootloaderHandshakeResp {
 /// device ID in the payload. Note that this ID is tied to the FPGA,
 /// and not related to the Piksi's serial number.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgNapDeviceDnaResp {
@@ -173,10 +180,10 @@ pub struct MsgNapDeviceDnaResp {
 }
 
 impl MsgNapDeviceDnaResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaResp, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaResp, crate::Error> {
         Ok(MsgNapDeviceDnaResp {
             sender_id: None,
-            dna: ::parser::read_u8_array_limit(_buf, 8)?,
+            dna: crate::parser::read_u8_array_limit(_buf, 8)?,
         })
     }
 }
@@ -201,6 +208,7 @@ impl super::SBPMessage for MsgNapDeviceDnaResp {
 /// device ID in the payload. Note that this ID is tied to the FPGA,
 /// and not related to the Piksi's serial number.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgNapDeviceDnaReq {
@@ -208,7 +216,7 @@ pub struct MsgNapDeviceDnaReq {
 }
 
 impl MsgNapDeviceDnaReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaReq, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaReq, crate::Error> {
         Ok(MsgNapDeviceDnaReq { sender_id: None })
     }
 }

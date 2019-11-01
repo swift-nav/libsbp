@@ -18,6 +18,8 @@ extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// Acq perfomance measurement and debug
 ///
@@ -25,6 +27,7 @@ use super::gnss::*;
 /// The message describes SV profile during acquisition time.
 /// The message is used to debug and measure the performance.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct AcqSvProfile {
@@ -55,7 +58,7 @@ pub struct AcqSvProfile {
 }
 
 impl AcqSvProfile {
-    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfile, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfile, crate::Error> {
         Ok(AcqSvProfile {
             job_type: _buf.read_u8()?,
             status: _buf.read_u8()?,
@@ -71,7 +74,7 @@ impl AcqSvProfile {
             cp: _buf.read_u32::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfile>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfile>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(AcqSvProfile::parse(buf)?);
@@ -79,7 +82,7 @@ impl AcqSvProfile {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<AcqSvProfile>, ::Error> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<AcqSvProfile>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(AcqSvProfile::parse(buf)?);
@@ -92,6 +95,7 @@ impl AcqSvProfile {
 ///
 /// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct AcqSvProfileDep {
@@ -122,7 +126,7 @@ pub struct AcqSvProfileDep {
 }
 
 impl AcqSvProfileDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfileDep, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfileDep, crate::Error> {
         Ok(AcqSvProfileDep {
             job_type: _buf.read_u8()?,
             status: _buf.read_u8()?,
@@ -138,7 +142,7 @@ impl AcqSvProfileDep {
             cp: _buf.read_u32::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfileDep>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfileDep>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(AcqSvProfileDep::parse(buf)?);
@@ -146,7 +150,10 @@ impl AcqSvProfileDep {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<AcqSvProfileDep>, ::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<AcqSvProfileDep>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(AcqSvProfileDep::parse(buf)?);
@@ -159,6 +166,7 @@ impl AcqSvProfileDep {
 ///
 /// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepB {
@@ -175,7 +183,7 @@ pub struct MsgAcqResultDepB {
 }
 
 impl MsgAcqResultDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepB, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepB, crate::Error> {
         Ok(MsgAcqResultDepB {
             sender_id: None,
             snr: _buf.read_f32::<LittleEndian>()?,
@@ -201,6 +209,7 @@ impl super::SBPMessage for MsgAcqResultDepB {
 ///
 /// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepA {
@@ -218,7 +227,7 @@ pub struct MsgAcqResultDepA {
 }
 
 impl MsgAcqResultDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepA, crate::Error> {
         Ok(MsgAcqResultDepA {
             sender_id: None,
             snr: _buf.read_f32::<LittleEndian>()?,
@@ -244,6 +253,7 @@ impl super::SBPMessage for MsgAcqResultDepA {
 ///
 /// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqSvProfileDep {
@@ -253,7 +263,7 @@ pub struct MsgAcqSvProfileDep {
 }
 
 impl MsgAcqSvProfileDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfileDep, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfileDep, crate::Error> {
         Ok(MsgAcqSvProfileDep {
             sender_id: None,
             acq_sv_profile: AcqSvProfileDep::parse_array(_buf)?,
@@ -276,6 +286,7 @@ impl super::SBPMessage for MsgAcqSvProfileDep {
 ///
 /// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepC {
@@ -291,7 +302,7 @@ pub struct MsgAcqResultDepC {
 }
 
 impl MsgAcqResultDepC {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepC, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepC, crate::Error> {
         Ok(MsgAcqResultDepC {
             sender_id: None,
             cn0: _buf.read_f32::<LittleEndian>()?,
@@ -318,6 +329,7 @@ impl super::SBPMessage for MsgAcqResultDepC {
 /// The message describes all SV profiles during acquisition time.
 /// The message is used to debug and measure the performance.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqSvProfile {
@@ -327,7 +339,7 @@ pub struct MsgAcqSvProfile {
 }
 
 impl MsgAcqSvProfile {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfile, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfile, crate::Error> {
         Ok(MsgAcqSvProfile {
             sender_id: None,
             acq_sv_profile: AcqSvProfile::parse_array(_buf)?,
@@ -354,6 +366,7 @@ impl super::SBPMessage for MsgAcqSvProfile {
 /// acquisition search space with the best carrier-to-noise (CN/0)
 /// ratio.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResult {
@@ -369,7 +382,7 @@ pub struct MsgAcqResult {
 }
 
 impl MsgAcqResult {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResult, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResult, crate::Error> {
         Ok(MsgAcqResult {
             sender_id: None,
             cn0: _buf.read_f32::<LittleEndian>()?,

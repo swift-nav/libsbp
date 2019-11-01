@@ -18,11 +18,14 @@ extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// Header for observation message.
 ///
 /// Header of a GNSS observation message.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct ObservationHeader {
@@ -34,13 +37,13 @@ pub struct ObservationHeader {
 }
 
 impl ObservationHeader {
-    pub fn parse(_buf: &mut &[u8]) -> Result<ObservationHeader, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<ObservationHeader, crate::Error> {
         Ok(ObservationHeader {
             t: GPSTime::parse(_buf)?,
             n_obs: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<ObservationHeader>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<ObservationHeader>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(ObservationHeader::parse(buf)?);
@@ -48,7 +51,10 @@ impl ObservationHeader {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<ObservationHeader>, ::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<ObservationHeader>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(ObservationHeader::parse(buf)?);
@@ -64,6 +70,7 @@ impl ObservationHeader {
 /// doppler and 8-bits of fractional doppler. This doppler is defined
 /// as positive for approaching satellites.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct Doppler {
@@ -74,13 +81,13 @@ pub struct Doppler {
 }
 
 impl Doppler {
-    pub fn parse(_buf: &mut &[u8]) -> Result<Doppler, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<Doppler, crate::Error> {
         Ok(Doppler {
             i: _buf.read_i16::<LittleEndian>()?,
             f: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<Doppler>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<Doppler>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(Doppler::parse(buf)?);
@@ -88,7 +95,7 @@ impl Doppler {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<Doppler>, ::Error> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<Doppler>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(Doppler::parse(buf)?);
@@ -107,6 +114,7 @@ impl Doppler {
 /// or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
 /// peformed.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct PackedObsContent {
@@ -134,7 +142,7 @@ pub struct PackedObsContent {
 }
 
 impl PackedObsContent {
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContent, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContent, crate::Error> {
         Ok(PackedObsContent {
             P: _buf.read_u32::<LittleEndian>()?,
             L: CarrierPhase::parse(_buf)?,
@@ -145,7 +153,7 @@ impl PackedObsContent {
             sid: GnssSignal::parse(_buf)?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContent>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContent>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(PackedObsContent::parse(buf)?);
@@ -153,7 +161,10 @@ impl PackedObsContent {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<PackedObsContent>, ::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<PackedObsContent>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(PackedObsContent::parse(buf)?);
@@ -166,6 +177,7 @@ impl PackedObsContent {
 ///
 /// Pseudorange and carrier phase network corrections for a satellite signal.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct PackedOsrContent {
@@ -193,7 +205,7 @@ pub struct PackedOsrContent {
 }
 
 impl PackedOsrContent {
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedOsrContent, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<PackedOsrContent, crate::Error> {
         Ok(PackedOsrContent {
             P: _buf.read_u32::<LittleEndian>()?,
             L: CarrierPhase::parse(_buf)?,
@@ -205,7 +217,7 @@ impl PackedOsrContent {
             range_std: _buf.read_u16::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedOsrContent>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedOsrContent>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(PackedOsrContent::parse(buf)?);
@@ -213,7 +225,10 @@ impl PackedOsrContent {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<PackedOsrContent>, ::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<PackedOsrContent>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(PackedOsrContent::parse(buf)?);
@@ -222,6 +237,7 @@ impl PackedOsrContent {
     }
 }
 
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct EphemerisCommonContent {
@@ -241,7 +257,7 @@ pub struct EphemerisCommonContent {
 }
 
 impl EphemerisCommonContent {
-    pub fn parse(_buf: &mut &[u8]) -> Result<EphemerisCommonContent, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<EphemerisCommonContent, crate::Error> {
         Ok(EphemerisCommonContent {
             sid: GnssSignal::parse(_buf)?,
             toe: GPSTimeSec::parse(_buf)?,
@@ -251,7 +267,7 @@ impl EphemerisCommonContent {
             health_bits: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<EphemerisCommonContent>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<EphemerisCommonContent>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(EphemerisCommonContent::parse(buf)?);
@@ -262,7 +278,7 @@ impl EphemerisCommonContent {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<EphemerisCommonContent>, ::Error> {
+    ) -> Result<Vec<EphemerisCommonContent>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(EphemerisCommonContent::parse(buf)?);
@@ -271,6 +287,7 @@ impl EphemerisCommonContent {
     }
 }
 
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct EphemerisCommonContentDepB {
@@ -290,7 +307,7 @@ pub struct EphemerisCommonContentDepB {
 }
 
 impl EphemerisCommonContentDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<EphemerisCommonContentDepB, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<EphemerisCommonContentDepB, crate::Error> {
         Ok(EphemerisCommonContentDepB {
             sid: GnssSignal::parse(_buf)?,
             toe: GPSTimeSec::parse(_buf)?,
@@ -300,7 +317,7 @@ impl EphemerisCommonContentDepB {
             health_bits: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<EphemerisCommonContentDepB>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<EphemerisCommonContentDepB>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(EphemerisCommonContentDepB::parse(buf)?);
@@ -311,7 +328,7 @@ impl EphemerisCommonContentDepB {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<EphemerisCommonContentDepB>, ::Error> {
+    ) -> Result<Vec<EphemerisCommonContentDepB>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(EphemerisCommonContentDepB::parse(buf)?);
@@ -320,6 +337,7 @@ impl EphemerisCommonContentDepB {
     }
 }
 
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct EphemerisCommonContentDepA {
@@ -339,7 +357,7 @@ pub struct EphemerisCommonContentDepA {
 }
 
 impl EphemerisCommonContentDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<EphemerisCommonContentDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<EphemerisCommonContentDepA, crate::Error> {
         Ok(EphemerisCommonContentDepA {
             sid: GnssSignalDep::parse(_buf)?,
             toe: GPSTimeDep::parse(_buf)?,
@@ -349,7 +367,7 @@ impl EphemerisCommonContentDepA {
             health_bits: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<EphemerisCommonContentDepA>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<EphemerisCommonContentDepA>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(EphemerisCommonContentDepA::parse(buf)?);
@@ -360,7 +378,7 @@ impl EphemerisCommonContentDepA {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<EphemerisCommonContentDepA>, ::Error> {
+    ) -> Result<Vec<EphemerisCommonContentDepA>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(EphemerisCommonContentDepA::parse(buf)?);
@@ -373,6 +391,7 @@ impl EphemerisCommonContentDepA {
 ///
 /// Header of a GPS observation message.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct ObservationHeaderDep {
@@ -384,13 +403,13 @@ pub struct ObservationHeaderDep {
 }
 
 impl ObservationHeaderDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<ObservationHeaderDep, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<ObservationHeaderDep, crate::Error> {
         Ok(ObservationHeaderDep {
             t: GPSTimeDep::parse(_buf)?,
             n_obs: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<ObservationHeaderDep>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<ObservationHeaderDep>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(ObservationHeaderDep::parse(buf)?);
@@ -401,7 +420,7 @@ impl ObservationHeaderDep {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<ObservationHeaderDep>, ::Error> {
+    ) -> Result<Vec<ObservationHeaderDep>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(ObservationHeaderDep::parse(buf)?);
@@ -418,6 +437,7 @@ impl ObservationHeaderDep {
 /// sign convention than a typical GPS receiver and the phase has
 /// the opposite sign as the pseudorange.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct CarrierPhaseDepA {
@@ -428,13 +448,13 @@ pub struct CarrierPhaseDepA {
 }
 
 impl CarrierPhaseDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<CarrierPhaseDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<CarrierPhaseDepA, crate::Error> {
         Ok(CarrierPhaseDepA {
             i: _buf.read_i32::<LittleEndian>()?,
             f: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CarrierPhaseDepA>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CarrierPhaseDepA>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(CarrierPhaseDepA::parse(buf)?);
@@ -442,7 +462,10 @@ impl CarrierPhaseDepA {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<CarrierPhaseDepA>, ::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<CarrierPhaseDepA>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(CarrierPhaseDepA::parse(buf)?);
@@ -455,6 +478,7 @@ impl CarrierPhaseDepA {
 ///
 /// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct PackedObsContentDepA {
@@ -473,7 +497,7 @@ pub struct PackedObsContentDepA {
 }
 
 impl PackedObsContentDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContentDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContentDepA, crate::Error> {
         Ok(PackedObsContentDepA {
             P: _buf.read_u32::<LittleEndian>()?,
             L: CarrierPhaseDepA::parse(_buf)?,
@@ -482,7 +506,7 @@ impl PackedObsContentDepA {
             prn: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContentDepA>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContentDepA>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(PackedObsContentDepA::parse(buf)?);
@@ -493,7 +517,7 @@ impl PackedObsContentDepA {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<PackedObsContentDepA>, ::Error> {
+    ) -> Result<Vec<PackedObsContentDepA>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(PackedObsContentDepA::parse(buf)?);
@@ -507,6 +531,7 @@ impl PackedObsContentDepA {
 /// Pseudorange and carrier phase observation for a satellite being
 /// tracked.  Pseudoranges are referenced to a nominal pseudorange.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct PackedObsContentDepB {
@@ -525,7 +550,7 @@ pub struct PackedObsContentDepB {
 }
 
 impl PackedObsContentDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContentDepB, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContentDepB, crate::Error> {
         Ok(PackedObsContentDepB {
             P: _buf.read_u32::<LittleEndian>()?,
             L: CarrierPhaseDepA::parse(_buf)?,
@@ -534,7 +559,7 @@ impl PackedObsContentDepB {
             sid: GnssSignalDep::parse(_buf)?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContentDepB>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContentDepB>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(PackedObsContentDepB::parse(buf)?);
@@ -545,7 +570,7 @@ impl PackedObsContentDepB {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<PackedObsContentDepB>, ::Error> {
+    ) -> Result<Vec<PackedObsContentDepB>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(PackedObsContentDepB::parse(buf)?);
@@ -560,6 +585,7 @@ impl PackedObsContentDepB {
 /// tracked. The observations are be interoperable with 3rd party
 /// receivers and conform with typical RTCMv3 GNSS observations.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct PackedObsContentDepC {
@@ -578,7 +604,7 @@ pub struct PackedObsContentDepC {
 }
 
 impl PackedObsContentDepC {
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContentDepC, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContentDepC, crate::Error> {
         Ok(PackedObsContentDepC {
             P: _buf.read_u32::<LittleEndian>()?,
             L: CarrierPhase::parse(_buf)?,
@@ -587,7 +613,7 @@ impl PackedObsContentDepC {
             sid: GnssSignalDep::parse(_buf)?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContentDepC>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContentDepC>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(PackedObsContentDepC::parse(buf)?);
@@ -598,7 +624,7 @@ impl PackedObsContentDepC {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<PackedObsContentDepC>, ::Error> {
+    ) -> Result<Vec<PackedObsContentDepC>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(PackedObsContentDepC::parse(buf)?);
@@ -607,6 +633,7 @@ impl PackedObsContentDepC {
     }
 }
 
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct GnssCapb {
@@ -645,7 +672,7 @@ pub struct GnssCapb {
 }
 
 impl GnssCapb {
-    pub fn parse(_buf: &mut &[u8]) -> Result<GnssCapb, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<GnssCapb, crate::Error> {
         Ok(GnssCapb {
             gps_active: _buf.read_u64::<LittleEndian>()?,
             gps_l2c: _buf.read_u64::<LittleEndian>()?,
@@ -664,7 +691,7 @@ impl GnssCapb {
             gal_e5: _buf.read_u64::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssCapb>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssCapb>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(GnssCapb::parse(buf)?);
@@ -672,7 +699,7 @@ impl GnssCapb {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GnssCapb>, ::Error> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GnssCapb>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(GnssCapb::parse(buf)?);
@@ -681,6 +708,7 @@ impl GnssCapb {
     }
 }
 
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct AlmanacCommonContent {
@@ -708,7 +736,7 @@ pub struct AlmanacCommonContent {
 }
 
 impl AlmanacCommonContent {
-    pub fn parse(_buf: &mut &[u8]) -> Result<AlmanacCommonContent, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<AlmanacCommonContent, crate::Error> {
         Ok(AlmanacCommonContent {
             sid: GnssSignal::parse(_buf)?,
             toa: GPSTimeSec::parse(_buf)?,
@@ -718,7 +746,7 @@ impl AlmanacCommonContent {
             health_bits: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AlmanacCommonContent>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AlmanacCommonContent>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(AlmanacCommonContent::parse(buf)?);
@@ -729,7 +757,7 @@ impl AlmanacCommonContent {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<AlmanacCommonContent>, ::Error> {
+    ) -> Result<Vec<AlmanacCommonContent>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(AlmanacCommonContent::parse(buf)?);
@@ -738,6 +766,7 @@ impl AlmanacCommonContent {
     }
 }
 
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct AlmanacCommonContentDep {
@@ -765,7 +794,7 @@ pub struct AlmanacCommonContentDep {
 }
 
 impl AlmanacCommonContentDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<AlmanacCommonContentDep, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<AlmanacCommonContentDep, crate::Error> {
         Ok(AlmanacCommonContentDep {
             sid: GnssSignalDep::parse(_buf)?,
             toa: GPSTimeSec::parse(_buf)?,
@@ -775,7 +804,7 @@ impl AlmanacCommonContentDep {
             health_bits: _buf.read_u8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AlmanacCommonContentDep>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AlmanacCommonContentDep>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(AlmanacCommonContentDep::parse(buf)?);
@@ -786,7 +815,7 @@ impl AlmanacCommonContentDep {
     pub fn parse_array_limit(
         buf: &mut &[u8],
         n: usize,
-    ) -> Result<Vec<AlmanacCommonContentDep>, ::Error> {
+    ) -> Result<Vec<AlmanacCommonContentDep>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(AlmanacCommonContentDep::parse(buf)?);
@@ -799,6 +828,7 @@ impl AlmanacCommonContentDep {
 ///
 /// Satellite azimuth and elevation.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct SvAzEl {
@@ -811,14 +841,14 @@ pub struct SvAzEl {
 }
 
 impl SvAzEl {
-    pub fn parse(_buf: &mut &[u8]) -> Result<SvAzEl, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<SvAzEl, crate::Error> {
         Ok(SvAzEl {
             sid: GnssSignal::parse(_buf)?,
             az: _buf.read_u8()?,
             el: _buf.read_i8()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SvAzEl>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SvAzEl>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(SvAzEl::parse(buf)?);
@@ -826,7 +856,7 @@ impl SvAzEl {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<SvAzEl>, ::Error> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<SvAzEl>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(SvAzEl::parse(buf)?);
@@ -839,6 +869,7 @@ impl SvAzEl {
 ///
 /// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepA {
@@ -902,7 +933,7 @@ pub struct MsgEphemerisDepA {
 }
 
 impl MsgEphemerisDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepA, crate::Error> {
         Ok(MsgEphemerisDepA {
             sender_id: None,
             tgd: _buf.read_f64::<LittleEndian>()?,
@@ -955,6 +986,7 @@ impl super::SBPMessage for MsgEphemerisDepA {
 /// most 3rd party GNSS receievers or typical RTCMv3
 /// observations.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgObsDepB {
@@ -966,7 +998,7 @@ pub struct MsgObsDepB {
 }
 
 impl MsgObsDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepB, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepB, crate::Error> {
         Ok(MsgObsDepB {
             sender_id: None,
             header: ObservationHeaderDep::parse(_buf)?,
@@ -994,6 +1026,7 @@ impl super::SBPMessage for MsgObsDepB {
 /// location of the base station. Any error here will result in an
 /// error in the pseudo-absolute position output.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBasePosLLH {
@@ -1007,7 +1040,7 @@ pub struct MsgBasePosLLH {
 }
 
 impl MsgBasePosLLH {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBasePosLLH, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBasePosLLH, crate::Error> {
         Ok(MsgBasePosLLH {
             sender_id: None,
             lat: _buf.read_f64::<LittleEndian>()?,
@@ -1032,6 +1065,7 @@ impl super::SBPMessage for MsgBasePosLLH {
 ///
 /// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgObsDepA {
@@ -1043,7 +1077,7 @@ pub struct MsgObsDepA {
 }
 
 impl MsgObsDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepA, crate::Error> {
         Ok(MsgObsDepA {
             sender_id: None,
             header: ObservationHeaderDep::parse(_buf)?,
@@ -1067,6 +1101,7 @@ impl super::SBPMessage for MsgObsDepA {
 ///
 /// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepB {
@@ -1132,7 +1167,7 @@ pub struct MsgEphemerisDepB {
 }
 
 impl MsgEphemerisDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepB, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepB, crate::Error> {
         Ok(MsgEphemerisDepB {
             sender_id: None,
             tgd: _buf.read_f64::<LittleEndian>()?,
@@ -1185,6 +1220,7 @@ impl super::SBPMessage for MsgEphemerisDepB {
 /// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
 /// 20-III) for more details.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepC {
@@ -1254,7 +1290,7 @@ pub struct MsgEphemerisDepC {
 }
 
 impl MsgEphemerisDepC {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepC, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepC, crate::Error> {
         Ok(MsgEphemerisDepC {
             sender_id: None,
             tgd: _buf.read_f64::<LittleEndian>()?,
@@ -1310,6 +1346,7 @@ impl super::SBPMessage for MsgEphemerisDepC {
 /// station. Any error here will result in an error in the
 /// pseudo-absolute position output.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBasePosECEF {
@@ -1323,7 +1360,7 @@ pub struct MsgBasePosECEF {
 }
 
 impl MsgBasePosECEF {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBasePosECEF, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBasePosECEF, crate::Error> {
         Ok(MsgBasePosECEF {
             sender_id: None,
             x: _buf.read_f64::<LittleEndian>()?,
@@ -1354,6 +1391,7 @@ impl super::SBPMessage for MsgBasePosECEF {
 /// are interoperable with 3rd party receivers and conform
 /// with typical RTCMv3 GNSS observations.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgObsDepC {
@@ -1365,7 +1403,7 @@ pub struct MsgObsDepC {
 }
 
 impl MsgObsDepC {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepC, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepC, crate::Error> {
         Ok(MsgObsDepC {
             sender_id: None,
             header: ObservationHeaderDep::parse(_buf)?,
@@ -1395,6 +1433,7 @@ impl super::SBPMessage for MsgObsDepC {
 /// are be interoperable with 3rd party receivers and conform
 /// with typical RTCMv3 GNSS observations.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgObs {
@@ -1406,7 +1445,7 @@ pub struct MsgObs {
 }
 
 impl MsgObs {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObs, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObs, crate::Error> {
         Ok(MsgObs {
             sender_id: None,
             header: ObservationHeader::parse(_buf)?,
@@ -1433,6 +1472,7 @@ impl super::SBPMessage for MsgObs {
 /// Please see the Navstar GPS Space Segment/Navigation user interfaces
 /// (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGPSDep {
@@ -1460,7 +1500,7 @@ pub struct MsgAlmanacGPSDep {
 }
 
 impl MsgAlmanacGPSDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGPSDep, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGPSDep, crate::Error> {
         Ok(MsgAlmanacGPSDep {
             sender_id: None,
             common: AlmanacCommonContentDep::parse(_buf)?,
@@ -1495,6 +1535,7 @@ impl super::SBPMessage for MsgAlmanacGPSDep {
 /// Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
 /// almanac" for details.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGloDep {
@@ -1519,7 +1560,7 @@ pub struct MsgAlmanacGloDep {
 }
 
 impl MsgAlmanacGloDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGloDep, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGloDep, crate::Error> {
         Ok(MsgAlmanacGloDep {
             sender_id: None,
             common: AlmanacCommonContentDep::parse(_buf)?,
@@ -1552,6 +1593,7 @@ impl super::SBPMessage for MsgAlmanacGloDep {
 /// Please see the Navstar GPS Space Segment/Navigation user interfaces
 /// (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGPS {
@@ -1579,7 +1621,7 @@ pub struct MsgAlmanacGPS {
 }
 
 impl MsgAlmanacGPS {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGPS, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGPS, crate::Error> {
         Ok(MsgAlmanacGPS {
             sender_id: None,
             common: AlmanacCommonContent::parse(_buf)?,
@@ -1614,6 +1656,7 @@ impl super::SBPMessage for MsgAlmanacGPS {
 /// Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
 /// almanac" for details.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGlo {
@@ -1638,7 +1681,7 @@ pub struct MsgAlmanacGlo {
 }
 
 impl MsgAlmanacGlo {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGlo, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGlo, crate::Error> {
         Ok(MsgAlmanacGlo {
             sender_id: None,
             common: AlmanacCommonContent::parse(_buf)?,
@@ -1671,6 +1714,7 @@ impl super::SBPMessage for MsgAlmanacGlo {
 /// with mixed receiver types (e.g. receiver of different
 /// manufacturers)
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGloBiases {
@@ -1688,7 +1732,7 @@ pub struct MsgGloBiases {
 }
 
 impl MsgGloBiases {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGloBiases, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGloBiases, crate::Error> {
         Ok(MsgGloBiases {
             sender_id: None,
             mask: _buf.read_u8()?,
@@ -1719,6 +1763,7 @@ impl super::SBPMessage for MsgGloBiases {
 /// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
 /// 20-III) for more details.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepD {
@@ -1788,7 +1833,7 @@ pub struct MsgEphemerisDepD {
 }
 
 impl MsgEphemerisDepD {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepD, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepD, crate::Error> {
         Ok(MsgEphemerisDepD {
             sender_id: None,
             tgd: _buf.read_f64::<LittleEndian>()?,
@@ -1843,6 +1888,7 @@ impl super::SBPMessage for MsgEphemerisDepD {
 /// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
 /// 20-III) for more details.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGPSDepE {
@@ -1900,7 +1946,7 @@ pub struct MsgEphemerisGPSDepE {
 }
 
 impl MsgEphemerisGPSDepE {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPSDepE, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPSDepE, crate::Error> {
         Ok(MsgEphemerisGPSDepE {
             sender_id: None,
             common: EphemerisCommonContentDepA::parse(_buf)?,
@@ -1941,6 +1987,7 @@ impl super::SBPMessage for MsgEphemerisGPSDepE {
     }
 }
 
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbasDepA {
@@ -1960,13 +2007,13 @@ pub struct MsgEphemerisSbasDepA {
 }
 
 impl MsgEphemerisSbasDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbasDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbasDepA, crate::Error> {
         Ok(MsgEphemerisSbasDepA {
             sender_id: None,
             common: EphemerisCommonContentDepA::parse(_buf)?,
-            pos: ::parser::read_double_array_limit(_buf, 3)?,
-            vel: ::parser::read_double_array_limit(_buf, 3)?,
-            acc: ::parser::read_double_array_limit(_buf, 3)?,
+            pos: crate::parser::read_double_array_limit(_buf, 3)?,
+            vel: crate::parser::read_double_array_limit(_buf, 3)?,
+            acc: crate::parser::read_double_array_limit(_buf, 3)?,
             a_gf0: _buf.read_f64::<LittleEndian>()?,
             a_gf1: _buf.read_f64::<LittleEndian>()?,
         })
@@ -1992,6 +2039,7 @@ impl super::SBPMessage for MsgEphemerisSbasDepA {
 /// Characteristics of words of immediate information (ephemeris parameters)"
 /// for more details.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepA {
@@ -2011,15 +2059,15 @@ pub struct MsgEphemerisGloDepA {
 }
 
 impl MsgEphemerisGloDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepA, crate::Error> {
         Ok(MsgEphemerisGloDepA {
             sender_id: None,
             common: EphemerisCommonContentDepA::parse(_buf)?,
             gamma: _buf.read_f64::<LittleEndian>()?,
             tau: _buf.read_f64::<LittleEndian>()?,
-            pos: ::parser::read_double_array_limit(_buf, 3)?,
-            vel: ::parser::read_double_array_limit(_buf, 3)?,
-            acc: ::parser::read_double_array_limit(_buf, 3)?,
+            pos: crate::parser::read_double_array_limit(_buf, 3)?,
+            vel: crate::parser::read_double_array_limit(_buf, 3)?,
+            acc: crate::parser::read_double_array_limit(_buf, 3)?,
         })
     }
 }
@@ -2040,6 +2088,7 @@ impl super::SBPMessage for MsgEphemerisGloDepA {
 /// This observation message has been deprecated in favor of
 /// ephemeris message using floats for size reduction.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbasDepB {
@@ -2059,13 +2108,13 @@ pub struct MsgEphemerisSbasDepB {
 }
 
 impl MsgEphemerisSbasDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbasDepB, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbasDepB, crate::Error> {
         Ok(MsgEphemerisSbasDepB {
             sender_id: None,
             common: EphemerisCommonContentDepB::parse(_buf)?,
-            pos: ::parser::read_double_array_limit(_buf, 3)?,
-            vel: ::parser::read_double_array_limit(_buf, 3)?,
-            acc: ::parser::read_double_array_limit(_buf, 3)?,
+            pos: crate::parser::read_double_array_limit(_buf, 3)?,
+            vel: crate::parser::read_double_array_limit(_buf, 3)?,
+            acc: crate::parser::read_double_array_limit(_buf, 3)?,
             a_gf0: _buf.read_f64::<LittleEndian>()?,
             a_gf1: _buf.read_f64::<LittleEndian>()?,
         })
@@ -2091,6 +2140,7 @@ impl super::SBPMessage for MsgEphemerisSbasDepB {
 /// Characteristics of words of immediate information (ephemeris parameters)"
 /// for more details.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepB {
@@ -2110,15 +2160,15 @@ pub struct MsgEphemerisGloDepB {
 }
 
 impl MsgEphemerisGloDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepB, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepB, crate::Error> {
         Ok(MsgEphemerisGloDepB {
             sender_id: None,
             common: EphemerisCommonContentDepB::parse(_buf)?,
             gamma: _buf.read_f64::<LittleEndian>()?,
             tau: _buf.read_f64::<LittleEndian>()?,
-            pos: ::parser::read_double_array_limit(_buf, 3)?,
-            vel: ::parser::read_double_array_limit(_buf, 3)?,
-            acc: ::parser::read_double_array_limit(_buf, 3)?,
+            pos: crate::parser::read_double_array_limit(_buf, 3)?,
+            vel: crate::parser::read_double_array_limit(_buf, 3)?,
+            acc: crate::parser::read_double_array_limit(_buf, 3)?,
         })
     }
 }
@@ -2139,6 +2189,7 @@ impl super::SBPMessage for MsgEphemerisGloDepB {
 /// This observation message has been deprecated in favor of
 /// ephemeris message using floats for size reduction.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGPSDepF {
@@ -2196,7 +2247,7 @@ pub struct MsgEphemerisGPSDepF {
 }
 
 impl MsgEphemerisGPSDepF {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPSDepF, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPSDepF, crate::Error> {
         Ok(MsgEphemerisGPSDepF {
             sender_id: None,
             common: EphemerisCommonContentDepB::parse(_buf)?,
@@ -2245,6 +2296,7 @@ impl super::SBPMessage for MsgEphemerisGPSDepF {
 /// Characteristics of words of immediate information (ephemeris parameters)"
 /// for more details.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepC {
@@ -2268,16 +2320,16 @@ pub struct MsgEphemerisGloDepC {
 }
 
 impl MsgEphemerisGloDepC {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepC, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepC, crate::Error> {
         Ok(MsgEphemerisGloDepC {
             sender_id: None,
             common: EphemerisCommonContentDepB::parse(_buf)?,
             gamma: _buf.read_f64::<LittleEndian>()?,
             tau: _buf.read_f64::<LittleEndian>()?,
             d_tau: _buf.read_f64::<LittleEndian>()?,
-            pos: ::parser::read_double_array_limit(_buf, 3)?,
-            vel: ::parser::read_double_array_limit(_buf, 3)?,
-            acc: ::parser::read_double_array_limit(_buf, 3)?,
+            pos: crate::parser::read_double_array_limit(_buf, 3)?,
+            vel: crate::parser::read_double_array_limit(_buf, 3)?,
+            acc: crate::parser::read_double_array_limit(_buf, 3)?,
             fcn: _buf.read_u8()?,
         })
     }
@@ -2299,6 +2351,7 @@ impl super::SBPMessage for MsgEphemerisGloDepC {
 /// This observation message has been deprecated in favor of
 /// ephemeris message using floats for size reduction.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepD {
@@ -2324,16 +2377,16 @@ pub struct MsgEphemerisGloDepD {
 }
 
 impl MsgEphemerisGloDepD {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepD, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepD, crate::Error> {
         Ok(MsgEphemerisGloDepD {
             sender_id: None,
             common: EphemerisCommonContentDepB::parse(_buf)?,
             gamma: _buf.read_f64::<LittleEndian>()?,
             tau: _buf.read_f64::<LittleEndian>()?,
             d_tau: _buf.read_f64::<LittleEndian>()?,
-            pos: ::parser::read_double_array_limit(_buf, 3)?,
-            vel: ::parser::read_double_array_limit(_buf, 3)?,
-            acc: ::parser::read_double_array_limit(_buf, 3)?,
+            pos: crate::parser::read_double_array_limit(_buf, 3)?,
+            vel: crate::parser::read_double_array_limit(_buf, 3)?,
+            acc: crate::parser::read_double_array_limit(_buf, 3)?,
             fcn: _buf.read_u8()?,
             iod: _buf.read_u8()?,
         })
@@ -2358,6 +2411,7 @@ impl super::SBPMessage for MsgEphemerisGloDepD {
 /// velocity, and clock offset. Please see the BeiDou Navigation
 /// Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisBds {
@@ -2417,7 +2471,7 @@ pub struct MsgEphemerisBds {
 }
 
 impl MsgEphemerisBds {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisBds, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisBds, crate::Error> {
         Ok(MsgEphemerisBds {
             sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
@@ -2467,6 +2521,7 @@ impl super::SBPMessage for MsgEphemerisBds {
 /// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
 /// 20-III) for more details.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGPS {
@@ -2524,7 +2579,7 @@ pub struct MsgEphemerisGPS {
 }
 
 impl MsgEphemerisGPS {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPS, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPS, crate::Error> {
         Ok(MsgEphemerisGPS {
             sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
@@ -2573,6 +2628,7 @@ impl super::SBPMessage for MsgEphemerisGPS {
 /// Characteristics of words of immediate information (ephemeris parameters)"
 /// for more details.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGlo {
@@ -2598,16 +2654,16 @@ pub struct MsgEphemerisGlo {
 }
 
 impl MsgEphemerisGlo {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGlo, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGlo, crate::Error> {
         Ok(MsgEphemerisGlo {
             sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
             gamma: _buf.read_f32::<LittleEndian>()?,
             tau: _buf.read_f32::<LittleEndian>()?,
             d_tau: _buf.read_f32::<LittleEndian>()?,
-            pos: ::parser::read_double_array_limit(_buf, 3)?,
-            vel: ::parser::read_double_array_limit(_buf, 3)?,
-            acc: ::parser::read_float_array_limit(_buf, 3)?,
+            pos: crate::parser::read_double_array_limit(_buf, 3)?,
+            vel: crate::parser::read_double_array_limit(_buf, 3)?,
+            acc: crate::parser::read_float_array_limit(_buf, 3)?,
             fcn: _buf.read_u8()?,
             iod: _buf.read_u8()?,
         })
@@ -2625,6 +2681,7 @@ impl super::SBPMessage for MsgEphemerisGlo {
     }
 }
 
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbas {
@@ -2644,13 +2701,13 @@ pub struct MsgEphemerisSbas {
 }
 
 impl MsgEphemerisSbas {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbas, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbas, crate::Error> {
         Ok(MsgEphemerisSbas {
             sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
-            pos: ::parser::read_double_array_limit(_buf, 3)?,
-            vel: ::parser::read_float_array_limit(_buf, 3)?,
-            acc: ::parser::read_float_array_limit(_buf, 3)?,
+            pos: crate::parser::read_double_array_limit(_buf, 3)?,
+            vel: crate::parser::read_float_array_limit(_buf, 3)?,
+            acc: crate::parser::read_float_array_limit(_buf, 3)?,
             a_gf0: _buf.read_f32::<LittleEndian>()?,
             a_gf1: _buf.read_f32::<LittleEndian>()?,
         })
@@ -2675,6 +2732,7 @@ impl super::SBPMessage for MsgEphemerisSbas {
 /// velocity, and clock offset. Please see the Signal In Space ICD
 /// OS SIS ICD, Issue 1.3, December 2016 for more details.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGal {
@@ -2736,7 +2794,7 @@ pub struct MsgEphemerisGal {
 }
 
 impl MsgEphemerisGal {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGal, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGal, crate::Error> {
         Ok(MsgEphemerisGal {
             sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
@@ -2785,6 +2843,7 @@ impl super::SBPMessage for MsgEphemerisGal {
 /// parameters that is used to calculate QZSS satellite position,
 /// velocity, and clock offset.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisQzss {
@@ -2842,7 +2901,7 @@ pub struct MsgEphemerisQzss {
 }
 
 impl MsgEphemerisQzss {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisQzss, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisQzss, crate::Error> {
         Ok(MsgEphemerisQzss {
             sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
@@ -2889,6 +2948,7 @@ impl super::SBPMessage for MsgEphemerisQzss {
 /// utilize the ionospheric model for computation of the ionospheric delay.
 /// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgIono {
@@ -2906,7 +2966,7 @@ pub struct MsgIono {
 }
 
 impl MsgIono {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgIono, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgIono, crate::Error> {
         Ok(MsgIono {
             sender_id: None,
             t_nmct: GPSTimeSec::parse(_buf)?,
@@ -2937,6 +2997,7 @@ impl super::SBPMessage for MsgIono {
 ///
 /// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSvConfigurationGPSDep {
@@ -2948,7 +3009,7 @@ pub struct MsgSvConfigurationGPSDep {
 }
 
 impl MsgSvConfigurationGPSDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSvConfigurationGPSDep, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSvConfigurationGPSDep, crate::Error> {
         Ok(MsgSvConfigurationGPSDep {
             sender_id: None,
             t_nmct: GPSTimeSec::parse(_buf)?,
@@ -2972,6 +3033,7 @@ impl super::SBPMessage for MsgSvConfigurationGPSDep {
 ///
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGroupDelayDepA {
@@ -2989,7 +3051,7 @@ pub struct MsgGroupDelayDepA {
 }
 
 impl MsgGroupDelayDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelayDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelayDepA, crate::Error> {
         Ok(MsgGroupDelayDepA {
             sender_id: None,
             t_op: GPSTimeDep::parse(_buf)?,
@@ -3017,6 +3079,7 @@ impl super::SBPMessage for MsgGroupDelayDepA {
 ///
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGroupDelayDepB {
@@ -3034,7 +3097,7 @@ pub struct MsgGroupDelayDepB {
 }
 
 impl MsgGroupDelayDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelayDepB, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelayDepB, crate::Error> {
         Ok(MsgGroupDelayDepB {
             sender_id: None,
             t_op: GPSTimeSec::parse(_buf)?,
@@ -3062,6 +3125,7 @@ impl super::SBPMessage for MsgGroupDelayDepB {
 ///
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGroupDelay {
@@ -3079,7 +3143,7 @@ pub struct MsgGroupDelay {
 }
 
 impl MsgGroupDelay {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelay, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelay, crate::Error> {
         Ok(MsgGroupDelay {
             sender_id: None,
             t_op: GPSTimeSec::parse(_buf)?,
@@ -3108,6 +3172,7 @@ impl super::SBPMessage for MsgGroupDelay {
 /// This observation message has been deprecated in favor of
 /// an ephemeris message with explicit source of NAV data.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGalDepA {
@@ -3167,7 +3232,7 @@ pub struct MsgEphemerisGalDepA {
 }
 
 impl MsgEphemerisGalDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGalDepA, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGalDepA, crate::Error> {
         Ok(MsgEphemerisGalDepA {
             sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
@@ -3209,6 +3274,7 @@ impl super::SBPMessage for MsgEphemerisGalDepA {
     }
 }
 
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGnssCapb {
@@ -3220,7 +3286,7 @@ pub struct MsgGnssCapb {
 }
 
 impl MsgGnssCapb {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGnssCapb, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGnssCapb, crate::Error> {
         Ok(MsgGnssCapb {
             sender_id: None,
             t_nmct: GPSTimeSec::parse(_buf)?,
@@ -3245,6 +3311,7 @@ impl super::SBPMessage for MsgGnssCapb {
 /// Azimuth and elevation angles of all the visible satellites
 /// that the device does have ephemeris or almanac for.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSvAzEl {
@@ -3254,7 +3321,7 @@ pub struct MsgSvAzEl {
 }
 
 impl MsgSvAzEl {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSvAzEl, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSvAzEl, crate::Error> {
         Ok(MsgSvAzEl {
             sender_id: None,
             azel: SvAzEl::parse_array(_buf)?,
@@ -3277,6 +3344,7 @@ impl super::SBPMessage for MsgSvAzEl {
 ///
 /// The OSR message contains network corrections in an observation-like format
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgOsr {
@@ -3288,7 +3356,7 @@ pub struct MsgOsr {
 }
 
 impl MsgOsr {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOsr, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOsr, crate::Error> {
         Ok(MsgOsr {
             sender_id: None,
             header: ObservationHeader::parse(_buf)?,

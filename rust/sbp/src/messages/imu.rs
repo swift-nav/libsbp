@@ -17,6 +17,8 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// Raw IMU data
 ///
@@ -25,6 +27,7 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 /// the indications on the device itself. Measurement units, which are specific to the
 /// device hardware and settings, are communicated via the MSG_IMU_AUX message.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgImuRaw {
@@ -49,7 +52,7 @@ pub struct MsgImuRaw {
 }
 
 impl MsgImuRaw {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuRaw, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuRaw, crate::Error> {
         Ok(MsgImuRaw {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -81,6 +84,7 @@ impl super::SBPMessage for MsgImuRaw {
 /// always be consistent but the rest of the payload is device specific and
 /// depends on the value of `imu_type`.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgImuAux {
@@ -94,7 +98,7 @@ pub struct MsgImuAux {
 }
 
 impl MsgImuAux {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuAux, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuAux, crate::Error> {
         Ok(MsgImuAux {
             sender_id: None,
             imu_type: _buf.read_u8()?,

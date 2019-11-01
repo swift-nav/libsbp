@@ -17,6 +17,8 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// Vehicle forward (x-axis) velocity
 ///
@@ -26,6 +28,7 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 /// There are 4 possible user-defined sources of this message  which are labeled arbitrarily
 /// source 0 through 3.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgOdometry {
@@ -41,7 +44,7 @@ pub struct MsgOdometry {
 }
 
 impl MsgOdometry {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOdometry, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOdometry, crate::Error> {
         Ok(MsgOdometry {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
