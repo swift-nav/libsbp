@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2015-2018 Swift Navigation Inc.
+// Copyright (C) 2019 Swift Navigation Inc.
 // Contact: Swift Navigation <dev@swiftnav.com>
 //
 // This source is subject to the license found in the file 'LICENSE' which must
@@ -14,25 +14,9 @@
 extern crate sbp;
 use sbp::messages::SBPMessage;
 
-trait AlmostEq {
-    fn almost_eq(self, rhs: Self) -> bool;
-}
-
-impl AlmostEq for f32 {
-    fn almost_eq(self, rhs: Self) -> bool {
-        const ULP: f32 = 5.0;
-        ((self - rhs).abs() <= (std::f32::EPSILON * (self + rhs).abs() * ULP))
-            || ((self - rhs).abs() < std::f32::MIN)
-    }
-}
-
-impl AlmostEq for f64 {
-    fn almost_eq(self, rhs: Self) -> bool {
-        const ULP: f64 = 5.0;
-        ((self - rhs).abs() <= (std::f64::EPSILON * (self + rhs).abs() * ULP))
-            || ((self - rhs).abs() < std::f64::MIN)
-    }
-}
+mod common;
+#[allow(unused_imports)]
+use common::AlmostEq;
 
 #[test]
 fn test_auto_check_sbp_orientation_29() {

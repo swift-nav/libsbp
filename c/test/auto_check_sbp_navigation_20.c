@@ -125,12 +125,12 @@ START_TEST( test_auto_check_sbp_navigation_20 )
     msg_vel_ecef_cov_t* msg = ( msg_vel_ecef_cov_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->cov_x_x == 2, "incorrect value for cov_x_x, expected 2, is %d", msg->cov_x_x);
-    fail_unless(msg->cov_x_y == 2, "incorrect value for cov_x_y, expected 2, is %d", msg->cov_x_y);
-    fail_unless(msg->cov_x_z == 2, "incorrect value for cov_x_z, expected 2, is %d", msg->cov_x_z);
-    fail_unless(msg->cov_y_y == 2, "incorrect value for cov_y_y, expected 2, is %d", msg->cov_y_y);
-    fail_unless(msg->cov_y_z == 1, "incorrect value for cov_y_z, expected 1, is %d", msg->cov_y_z);
-    fail_unless(msg->cov_z_z == 3, "incorrect value for cov_z_z, expected 3, is %d", msg->cov_z_z);
+    fail_unless((msg->cov_x_x*100 - 2.0*100) < 0.05, "incorrect value for cov_x_x, expected 2.0, is %f", msg->cov_x_x);
+    fail_unless((msg->cov_x_y*100 - 2.0*100) < 0.05, "incorrect value for cov_x_y, expected 2.0, is %f", msg->cov_x_y);
+    fail_unless((msg->cov_x_z*100 - 2.0*100) < 0.05, "incorrect value for cov_x_z, expected 2.0, is %f", msg->cov_x_z);
+    fail_unless((msg->cov_y_y*100 - 2.0*100) < 0.05, "incorrect value for cov_y_y, expected 2.0, is %f", msg->cov_y_y);
+    fail_unless((msg->cov_y_z*100 - 1.0*100) < 0.05, "incorrect value for cov_y_z, expected 1.0, is %f", msg->cov_y_z);
+    fail_unless((msg->cov_z_z*100 - 3.0*100) < 0.05, "incorrect value for cov_z_z, expected 3.0, is %f", msg->cov_z_z);
     fail_unless(msg->flags == 4, "incorrect value for flags, expected 4, is %d", msg->flags);
     fail_unless(msg->n_sats == 3, "incorrect value for n_sats, expected 3, is %d", msg->n_sats);
     fail_unless(msg->tow == 2, "incorrect value for tow, expected 2, is %d", msg->tow);
