@@ -20,7 +20,7 @@ use self::(((p.identifier|mod_name)))::(((m.identifier|camel_case)));
 ((*- endfor *))
 ((*- endfor *))
 
-trait SBPMessage {
+pub trait SBPMessage {
     const MSG_ID: u16;
 
     fn get_sender_id(&self) -> Option<u16>;

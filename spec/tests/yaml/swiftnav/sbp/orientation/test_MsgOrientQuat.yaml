@@ -3,7 +3,7 @@ generated_on: 2017-12-11 15:00:35.827076
 package: sbp.orientation
 tests:
 - msg:
-    fields: {w_accuracy: 3, x_accuracy: 4, y_accuracy: 8, z_accuracy: 3, flags: 1, tow: 0, w: 3, x: 7,
+    fields: {w_accuracy: 3.0, x_accuracy: 4.0, y_accuracy: 8.0, z_accuracy: 3.0, flags: 1, tow: 0, w: 3, x: 7,
       y: 8, z: 4}
     module: sbp.orientation
     name: MsgOrientQuat

@@ -125,16 +125,16 @@ START_TEST( test_auto_check_sbp_navigation_16 )
     msg_pos_llh_cov_t* msg = ( msg_pos_llh_cov_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->cov_d_d == 2, "incorrect value for cov_d_d, expected 2, is %d", msg->cov_d_d);
-    fail_unless(msg->cov_e_d == 1, "incorrect value for cov_e_d, expected 1, is %d", msg->cov_e_d);
-    fail_unless(msg->cov_e_e == 6, "incorrect value for cov_e_e, expected 6, is %d", msg->cov_e_e);
-    fail_unless(msg->cov_n_d == 8, "incorrect value for cov_n_d, expected 8, is %d", msg->cov_n_d);
-    fail_unless(msg->cov_n_e == 5, "incorrect value for cov_n_e, expected 5, is %d", msg->cov_n_e);
-    fail_unless(msg->cov_n_n == 7, "incorrect value for cov_n_n, expected 7, is %d", msg->cov_n_n);
+    fail_unless((msg->cov_d_d*100 - 2.0*100) < 0.05, "incorrect value for cov_d_d, expected 2.0, is %f", msg->cov_d_d);
+    fail_unless((msg->cov_e_d*100 - 1.0*100) < 0.05, "incorrect value for cov_e_d, expected 1.0, is %f", msg->cov_e_d);
+    fail_unless((msg->cov_e_e*100 - 6.0*100) < 0.05, "incorrect value for cov_e_e, expected 6.0, is %f", msg->cov_e_e);
+    fail_unless((msg->cov_n_d*100 - 8.0*100) < 0.05, "incorrect value for cov_n_d, expected 8.0, is %f", msg->cov_n_d);
+    fail_unless((msg->cov_n_e*100 - 5.0*100) < 0.05, "incorrect value for cov_n_e, expected 5.0, is %f", msg->cov_n_e);
+    fail_unless((msg->cov_n_n*100 - 7.0*100) < 0.05, "incorrect value for cov_n_n, expected 7.0, is %f", msg->cov_n_n);
     fail_unless(msg->flags == 5, "incorrect value for flags, expected 5, is %d", msg->flags);
-    fail_unless(msg->height == 0, "incorrect value for height, expected 0, is %d", msg->height);
-    fail_unless(msg->lat == 0, "incorrect value for lat, expected 0, is %d", msg->lat);
-    fail_unless(msg->lon == 7, "incorrect value for lon, expected 7, is %d", msg->lon);
+    fail_unless((msg->height*100 - 0.0*100) < 0.05, "incorrect value for height, expected 0.0, is %f", msg->height);
+    fail_unless((msg->lat*100 - 0.0*100) < 0.05, "incorrect value for lat, expected 0.0, is %f", msg->lat);
+    fail_unless((msg->lon*100 - 7.0*100) < 0.05, "incorrect value for lon, expected 7.0, is %f", msg->lon);
     fail_unless(msg->n_sats == 5, "incorrect value for n_sats, expected 5, is %d", msg->n_sats);
     fail_unless(msg->tow == 7, "incorrect value for tow, expected 7, is %d", msg->tow);
   }

@@ -88,13 +88,13 @@ START_TEST( test_(((s.suite_name))) )
   //
 
     ((*- macro compare_value(prefix, value) *))
-    ((*- if value is stringType *))
+    ((*- if value is string_type *))
     fail_unless(strstr(msg->(((prefix))), (((value|str_escape)))) != NULL, "incorrect value for msg->(((prefix))), expected string '%s', is '%s'", (((value|str_escape))), msg->(((prefix))));
-    ((*- elif value is arrayType *))
-    ((*- for ff in value *))((( compare_value( (((prefix))) + '[' + (((loop.index0|toStr))) + ']', (((ff))) ) )))((*- endfor *))
-    ((*- elif value is dictType *))
+    ((*- elif value is array_type *))
+    ((*- for ff in value *))((( compare_value( (((prefix))) + '[' + (((loop.index0|to_str))) + ']', (((ff))) ) )))((*- endfor *))
+    ((*- elif value is dict_type *))
     ((*- for k in (((value|sorted))) *))((( compare_value( (((prefix))) + '.' + (((k))), (((value[k]))) ) )))((*- endfor *))
-    ((*- elif value is floatType *))((=
+    ((*- elif value is float_type *))((=
         Note: the ("%.12g"|format(value)|float) filter is intended to keep float
         literal precision unchanged whether generated under Python 2.7 or 3.x. =))
     fail_unless((msg->(((prefix)))*100 - ((("%.12g"|format(value)|float)))*100) < 0.05, "incorrect value for (((prefix))), expected ((("%.12g"|format(value)|float))), is %f", msg->(((prefix))));
