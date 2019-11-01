@@ -113,7 +113,9 @@ verify-prereq-java: verify-prereq-generator
 
 verify-prereq-haskell: verify-prereq-generator
 
-verify-prereq-rust: ;
+verify-prereq-rust:
+	@command -v cargo   1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`cargo\` but it's not installed. Aborting.\n\nHave you installed Rust? See the Rust readme at \`rust/README.md\` for setup instructions.\n"; exit 1; }
+	@command -v rustfmt 1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`rustfmt\` but it's not installed. Aborting.\n\nHave you installed Rust? See the Rust readme at \`rust/README.md\` for setup instructions.\n"; exit 1; }
 
 verify-prereq-protobuf: ;
 
