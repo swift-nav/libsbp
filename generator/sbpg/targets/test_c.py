@@ -15,6 +15,7 @@ Generator for c tests target.
 
 from sbpg.targets.templating import *
 from sbpg.targets.c import *
+from sbpg.targets.common import *
 import base64
 
 TEST_TEMPLATE_NAME = "sbp_c_test.c.j2"
@@ -24,26 +25,8 @@ CHECK_MAIN_TEMPLATE_NAME = "sbp_c_main.c.j2"
 def b64_decode(field):
     return base64.standard_b64decode(field)
 
-def stringType(value):
-    return type(value) == str
-
-def arrayType(value):
-    return type(value) == list
-
-def dictType(value):
-    return type(value) == dict
-
-def floatType(value):
-    return type(value) == float
-
-def isEmpty(value):
-    return len(value) == 0
-
 def strEscape(value):
     return "((char []){" + ",".join(["(char)" + str(ord(ch)) for ch in value]) + ",0})"
-
-def toStr(value):
-    return str(value)
 
 JENV.filters['commentify'] = commentify
 JENV.filters['mk_id'] = mk_id
@@ -51,14 +34,14 @@ JENV.filters['mk_size'] = mk_size
 JENV.filters['convert'] = convert
 JENV.filters['type'] = type
 JENV.filters['str_escape'] = strEscape
-JENV.filters['toStr'] = toStr
+JENV.filters['to_str'] = to_str
 JENV.filters['sorted'] = sorted
 
-JENV.tests['stringType'] = stringType
-JENV.tests['arrayType'] = arrayType
-JENV.tests['dictType'] = dictType
-JENV.tests['floatType'] = floatType
-JENV.tests['empty'] = isEmpty
+JENV.tests['string_type'] = string_type
+JENV.tests['array_type'] = array_type
+JENV.tests['dict_type'] = dict_type
+JENV.tests['float_type'] = float_type
+JENV.tests['empty'] = is_empty
 
 def render_source(output_dir, package_spec):
   """

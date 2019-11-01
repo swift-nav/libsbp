@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# Copyright (C) 2015 Swift Navigation Inc.
-# Contact: Joshua Gross <josh@swiftnav.com>
+# Copyright (C) 2019 Swift Navigation Inc.
+# Contact: Swift NAvigation <dev@swiftnav.com>
 #
 # This source is subject to the license found in the file 'LICENSE' which must
 # be be distributed together with this source. All other rights reserved.
@@ -10,57 +10,39 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 """
-Generator for c tests target.
+Generator for rust tests target.
 """
 
 from sbpg.targets.templating import *
 from sbpg.targets.rust import *
+from sbpg.targets.common import *
 import base64
 
 TEST_TEMPLATE_NAME = "sbp_tests_template.rs"
-#CHECK_SUITES_TEMPLATE_NAME = "sbp_c_suites.h.j2"
-#CHECK_MAIN_TEMPLATE_NAME = "sbp_c_main.c.j2"
 
 def b64_decode(field):
     print("Decoding '{}'".format(field))
     b = base64.standard_b64decode(field)
     return [ str(ord(ch)) for ch in b ]
 
-def stringType(value):
-    return type(value) == str
 
-def arrayType(value):
-    return type(value) == list
-
-def dictType(value):
-    return type(value) == dict
-
-def floatType(value):
-    return type(value) == float
-
-def isEmpty(value):
-    return len(value) == 0
-
-def strEscape(value):
+def str_escape(value):
     return "\"{}\".to_string()".format(value)
 
-def toStr(value):
-    return str(value)
-
-def modName(value):
+def mod_name(value):
     return value.split('.')[1]
 
 JENV.filters['b64_decode'] = b64_decode
-JENV.filters['toStr'] = toStr
-JENV.filters['str_escape'] = strEscape
+JENV.filters['to_str'] = to_str
+JENV.filters['str_escape'] = str_escape
 JENV.filters['sorted'] = sorted
-JENV.filters['modName'] = modName
+JENV.filters['mod_name'] = mod_name
 
-JENV.tests['stringType'] = stringType
-JENV.tests['arrayType'] = arrayType
-JENV.tests['dictType'] = dictType
-JENV.tests['floatType'] = floatType
-JENV.tests['empty'] = isEmpty
+JENV.tests['string_type'] = string_type
+JENV.tests['array_type'] = array_type
+JENV.tests['dict_type'] = dict_type
+JENV.tests['float_type'] = float_type
+JENV.tests['empty'] = is_empty
 
 def render_source(output_dir, package_spec):
   """
@@ -75,18 +57,4 @@ def render_source(output_dir, package_spec):
                                pkg_name=package_spec.package,
                                include=package_spec.package.split('.')[1],
                                filepath="/".join(package_spec.filepath) + ".yaml"))
-
-
-#def render_check_suites(output_dir, all_package_specs):
-#  destination_filename = "%s/%s.h" % (output_dir, "check_suites")
-#  py_template = JENV.get_template(CHECK_SUITES_TEMPLATE_NAME)
-#  with open(destination_filename, 'w') as f:
-#    f.write(py_template.render(package_suites=all_package_specs))
-
-
-#def render_check_main(output_dir, all_package_specs):
-#  destination_filename = "%s/%s.c" % (output_dir, "check_main")
-#  py_template = JENV.get_template(CHECK_MAIN_TEMPLATE_NAME)
-#  with open(destination_filename, 'w') as f:
-#    f.write(py_template.render(package_suites=all_package_specs))
 

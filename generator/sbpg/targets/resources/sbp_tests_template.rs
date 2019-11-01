@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2015-2018 Swift Navigation Inc.
+// Copyright (C) 2019 Swift Navigation Inc.
 // Contact: Swift Navigation <dev@swiftnav.com>
 //
 // This source is subject to the license found in the file 'LICENSE' which must
@@ -14,32 +14,18 @@
 extern crate sbp;
 use sbp::messages::SBPMessage;
 
-trait AlmostEq {
-    fn almost_eq(self, rhs: Self) -> bool;
-}
-
-impl AlmostEq for f32 {
-    fn almost_eq(self, rhs: Self) -> bool {
-        const ULP: f32 = 5.0;
-        ((self - rhs).abs() <= (std::f32::EPSILON * (self + rhs).abs() * ULP)) || ((self - rhs).abs() < std::f32::MIN)
-    }
-}
-
-impl AlmostEq for f64 {
-    fn almost_eq(self, rhs: Self) -> bool {
-        const ULP: f64 = 5.0;
-        ((self - rhs).abs() <= (std::f64::EPSILON * (self + rhs).abs() * ULP)) || ((self - rhs).abs() < std::f64::MIN)
-    }
-}
+mod common;
+#[allow(unused_imports)]
+use common::AlmostEq;
 
 ((*- macro compare_value(prefix, value) *))
-((*- if value is stringType *))
+((*- if value is string_type *))
 assert_eq!(msg.(((prefix))), (((value|str_escape))), "incorrect value for msg.(((prefix))), expected string '{}', is '{}'", (((value|str_escape))), msg.(((prefix))));
-((*- elif value is arrayType *))
-((*- for ff in value *))((( compare_value( (((prefix))) + '[' + (((loop.index0|toStr))) + ']', (((ff))) ) )))((*- endfor *))
-((*- elif value is dictType *))
+((*- elif value is array_type *))
+((*- for ff in value *))((( compare_value( (((prefix))) + '[' + (((loop.index0|to_str))) + ']', (((ff))) ) )))((*- endfor *))
+((*- elif value is dict_type *))
 ((*- for k in (((value|sorted))) *))((( compare_value( (((prefix))) + '.' + (((k))), (((value[k]))) ) )))((*- endfor *))
-((*- elif value is floatType *))((=
+((*- elif value is float_type *))((=
     Note: the ("%.17e"|format(value)) filter is intended to preserve float
     literal precision accross all value ranges. =))
 assert!(msg.(((prefix))).almost_eq( ((("%.17e"|format(value)))) ), "incorrect value for (((prefix))), expected ((("%.17e"|format(value)))), is {:e}", msg.(((prefix))));
@@ -53,7 +39,7 @@ fn test_(((s.suite_name)))()
 {
     ((*- for t in s.tests *))
     {
-        use sbp::messages::(((t.msg.module|modName)))::(((t.msg.name)));
+        use sbp::messages::(((t.msg.module|mod_name)))::(((t.msg.name)));
         let payload : Vec<u8> = vec![ ((*- for p in t.packet_as_byte_array *))(((p))),((*- endfor *)) ];
 
         assert_eq!( (((t.msg.name)))::MSG_ID, (((t.msg_type))), "Incorrect message type, expected (((t.msg_type))), is {}", (((t.msg.name)))::MSG_ID);
@@ -74,3 +60,4 @@ fn test_(((s.suite_name)))()
     }
     ((*- endfor *))
 }
+
