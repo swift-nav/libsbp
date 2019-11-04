@@ -28,36 +28,32 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "serialize")]
 use serde::{Deserialize, Serialize};
 
-/// File read from the file system (host <= device)
+/// Request advice on the optimal configuration for FileIO.
 ///
-/// The file read message reads a certain length (up to 255 bytes)
-/// from a given offset into a file, and returns the data in a
-/// message where the message length field indicates how many bytes
-/// were succesfully read. The sequence number in the response is
-/// preserved from the request.
+/// Requests advice on the optimal configuration for a FileIO
+/// transfer.  Newer version of FileIO can support greater
+/// throughput by supporting a large window of FileIO data
+/// that can be in-flight during read or write operations.
 ///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgFileioReadResp {
+pub struct MsgFileioConfigReq {
     pub sender_id: Option<u16>,
-    /// Read sequence number
+    /// Advice sequence number
     pub sequence: u32,
-    /// Contents of read file
-    pub contents: Vec<u8>,
 }
 
-impl MsgFileioReadResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadResp, crate::Error> {
-        Ok(MsgFileioReadResp {
+impl MsgFileioConfigReq {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigReq, crate::Error> {
+        Ok(MsgFileioConfigReq {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
-            contents: crate::parser::read_u8_array(_buf)?,
         })
     }
 }
-impl super::SBPMessage for MsgFileioReadResp {
-    const MSG_ID: u16 = 163;
+impl super::SBPMessage for MsgFileioConfigReq {
+    const MSG_ID: u16 = 4097;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -68,45 +64,42 @@ impl super::SBPMessage for MsgFileioReadResp {
     }
 }
 
-/// Read file from the file system (host => device)
+/// Response with advice on the optimal configuration for FileIO.
+
 ///
-/// The file read message reads a certain length (up to 255 bytes)
-/// from a given offset into a file, and returns the data in a
-/// MSG_FILEIO_READ_RESP message where the message length field
-/// indicates how many bytes were succesfully read.The sequence
-/// number in the request will be returned in the response.
-/// If the message is invalid, a followup MSG_PRINT message will
-/// print "Invalid fileio read message". A device will only respond
-/// to this message when it is received from sender ID 0x42.
+/// The advice on the optimal configuration for a FileIO
+/// transfer.  Newer version of FileIO can support greater
+/// throughput by supporting a large window of FileIO data
+/// that can be in-flight during read or write operations.
 ///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgFileioReadReq {
+pub struct MsgFileioConfigResp {
     pub sender_id: Option<u16>,
-    /// Read sequence number
+    /// Advice sequence number
     pub sequence: u32,
-    /// File offset
-    pub offset: u32,
-    /// Chunk size to read
-    pub chunk_size: u8,
-    /// Name of the file to read from
-    pub filename: String,
+    /// The number of SBP packets in the data in-flight window
+    pub window_size: u32,
+    /// The number of SBP packets sent in one PDU
+    pub batch_size: u32,
+    /// The version of FileIO that is supported
+    pub fileio_version: u32,
 }
 
-impl MsgFileioReadReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadReq, crate::Error> {
-        Ok(MsgFileioReadReq {
+impl MsgFileioConfigResp {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigResp, crate::Error> {
+        Ok(MsgFileioConfigResp {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
-            offset: _buf.read_u32::<LittleEndian>()?,
-            chunk_size: _buf.read_u8()?,
-            filename: crate::parser::read_string(_buf)?,
+            window_size: _buf.read_u32::<LittleEndian>()?,
+            batch_size: _buf.read_u32::<LittleEndian>()?,
+            fileio_version: _buf.read_u32::<LittleEndian>()?,
         })
     }
 }
-impl super::SBPMessage for MsgFileioReadReq {
-    const MSG_ID: u16 = 168;
+impl super::SBPMessage for MsgFileioConfigResp {
+    const MSG_ID: u16 = 4098;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -206,33 +199,85 @@ impl super::SBPMessage for MsgFileioReadDirResp {
     }
 }
 
-/// File written to (host <= device)
+/// Read file from the file system (host => device)
 ///
-/// The file write message writes a certain length (up to 255 bytes)
-/// of data to a file at a given offset. The message is a copy of the
-/// original MSG_FILEIO_WRITE_REQ message to check integrity of the
-/// write. The sequence number in the response is preserved from the
-/// request.
+/// The file read message reads a certain length (up to 255 bytes)
+/// from a given offset into a file, and returns the data in a
+/// MSG_FILEIO_READ_RESP message where the message length field
+/// indicates how many bytes were succesfully read.The sequence
+/// number in the request will be returned in the response.
+/// If the message is invalid, a followup MSG_PRINT message will
+/// print "Invalid fileio read message". A device will only respond
+/// to this message when it is received from sender ID 0x42.
 ///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgFileioWriteResp {
+pub struct MsgFileioReadReq {
     pub sender_id: Option<u16>,
-    /// Write sequence number
+    /// Read sequence number
     pub sequence: u32,
+    /// File offset
+    pub offset: u32,
+    /// Chunk size to read
+    pub chunk_size: u8,
+    /// Name of the file to read from
+    pub filename: String,
 }
 
-impl MsgFileioWriteResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteResp, crate::Error> {
-        Ok(MsgFileioWriteResp {
+impl MsgFileioReadReq {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadReq, crate::Error> {
+        Ok(MsgFileioReadReq {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
+            offset: _buf.read_u32::<LittleEndian>()?,
+            chunk_size: _buf.read_u8()?,
+            filename: crate::parser::read_string(_buf)?,
         })
     }
 }
-impl super::SBPMessage for MsgFileioWriteResp {
-    const MSG_ID: u16 = 171;
+impl super::SBPMessage for MsgFileioReadReq {
+    const MSG_ID: u16 = 168;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// File read from the file system (host <= device)
+///
+/// The file read message reads a certain length (up to 255 bytes)
+/// from a given offset into a file, and returns the data in a
+/// message where the message length field indicates how many bytes
+/// were succesfully read. The sequence number in the response is
+/// preserved from the request.
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgFileioReadResp {
+    pub sender_id: Option<u16>,
+    /// Read sequence number
+    pub sequence: u32,
+    /// Contents of read file
+    pub contents: Vec<u8>,
+}
+
+impl MsgFileioReadResp {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadResp, crate::Error> {
+        Ok(MsgFileioReadResp {
+            sender_id: None,
+            sequence: _buf.read_u32::<LittleEndian>()?,
+            contents: crate::parser::read_u8_array(_buf)?,
+        })
+    }
+}
+impl super::SBPMessage for MsgFileioReadResp {
+    const MSG_ID: u16 = 163;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -328,78 +373,33 @@ impl super::SBPMessage for MsgFileioWriteReq {
     }
 }
 
-/// Request advice on the optimal configuration for FileIO.
+/// File written to (host <= device)
 ///
-/// Requests advice on the optimal configuration for a FileIO
-/// transfer.  Newer version of FileIO can support greater
-/// throughput by supporting a large window of FileIO data
-/// that can be in-flight during read or write operations.
+/// The file write message writes a certain length (up to 255 bytes)
+/// of data to a file at a given offset. The message is a copy of the
+/// original MSG_FILEIO_WRITE_REQ message to check integrity of the
+/// write. The sequence number in the response is preserved from the
+/// request.
 ///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgFileioConfigReq {
+pub struct MsgFileioWriteResp {
     pub sender_id: Option<u16>,
-    /// Advice sequence number
+    /// Write sequence number
     pub sequence: u32,
 }
 
-impl MsgFileioConfigReq {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigReq, crate::Error> {
-        Ok(MsgFileioConfigReq {
+impl MsgFileioWriteResp {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteResp, crate::Error> {
+        Ok(MsgFileioWriteResp {
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
         })
     }
 }
-impl super::SBPMessage for MsgFileioConfigReq {
-    const MSG_ID: u16 = 4097;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-/// Response with advice on the optimal configuration for FileIO.
-
-///
-/// The advice on the optimal configuration for a FileIO
-/// transfer.  Newer version of FileIO can support greater
-/// throughput by supporting a large window of FileIO data
-/// that can be in-flight during read or write operations.
-///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgFileioConfigResp {
-    pub sender_id: Option<u16>,
-    /// Advice sequence number
-    pub sequence: u32,
-    /// The number of SBP packets in the data in-flight window
-    pub window_size: u32,
-    /// The number of SBP packets sent in one PDU
-    pub batch_size: u32,
-    /// The version of FileIO that is supported
-    pub fileio_version: u32,
-}
-
-impl MsgFileioConfigResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigResp, crate::Error> {
-        Ok(MsgFileioConfigResp {
-            sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
-            window_size: _buf.read_u32::<LittleEndian>()?,
-            batch_size: _buf.read_u32::<LittleEndian>()?,
-            fileio_version: _buf.read_u32::<LittleEndian>()?,
-        })
-    }
-}
-impl super::SBPMessage for MsgFileioConfigResp {
-    const MSG_ID: u16 = 4098;
+impl super::SBPMessage for MsgFileioWriteResp {
+    const MSG_ID: u16 = 171;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id

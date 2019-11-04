@@ -114,7 +114,7 @@ def render_source(output_dir, package_spec):
   if 'types' in includes:
     del includes[includes.index('types')]
   with open(destination_filename, 'w') as f:
-    f.write(py_template.render(msgs=sorted(package_spec.definitions, key=lambda msg: msg.sbp_id),
+    f.write(py_template.render(msgs=sorted(package_spec.definitions, key=lambda msg: msg.identifier),
                                pkg_name=name,
                                filepath="/".join(package_spec.filepath) + ".yaml",
                                description=package_spec.description,
