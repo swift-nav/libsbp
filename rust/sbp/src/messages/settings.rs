@@ -46,65 +46,24 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "serialize")]
 use serde::{Deserialize, Serialize};
 
-/// Write device configuration settings (host => device)
+/// Finished reading settings (host <= device)
 ///
-/// The setting message writes the device configuration for a particular
-/// setting via A NULL-terminated and NULL-delimited string with contents
-/// "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes
-/// the NULL character and where quotation marks are omitted. A device will
-/// only process to this message when it is received from sender ID 0x42.
-/// An example string that could be sent to a device is
-/// "solution\0soln_freq\010\0".
+/// The settings message for indicating end of the settings values.
 ///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgSettingsWrite {
-    pub sender_id: Option<u16>,
-    /// A NULL-terminated and NULL-delimited string with contents
-    /// "SECTION_SETTING\0SETTING\0VALUE\0"
-    pub setting: String,
-}
-
-impl MsgSettingsWrite {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWrite, crate::Error> {
-        Ok(MsgSettingsWrite {
-            sender_id: None,
-            setting: crate::parser::read_string(_buf)?,
-        })
-    }
-}
-impl super::SBPMessage for MsgSettingsWrite {
-    const MSG_ID: u16 = 160;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-/// Save settings to flash (host => device)
-///
-/// The save settings message persists the device's current settings
-/// configuration to its onboard flash memory file system.
-///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgSettingsSave {
+pub struct MsgSettingsReadByIndexDone {
     pub sender_id: Option<u16>,
 }
 
-impl MsgSettingsSave {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsSave, crate::Error> {
-        Ok(MsgSettingsSave { sender_id: None })
+impl MsgSettingsReadByIndexDone {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexDone, crate::Error> {
+        Ok(MsgSettingsReadByIndexDone { sender_id: None })
     }
 }
-impl super::SBPMessage for MsgSettingsSave {
-    const MSG_ID: u16 = 161;
+impl super::SBPMessage for MsgSettingsReadByIndexDone {
+    const MSG_ID: u16 = 166;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -141,6 +100,53 @@ impl MsgSettingsReadByIndexReq {
 }
 impl super::SBPMessage for MsgSettingsReadByIndexReq {
     const MSG_ID: u16 = 162;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// Read setting by direct index (host <= device)
+///
+/// The settings message that reports the value of a setting at an index.
+///
+/// In the string field, it reports NULL-terminated and delimited string
+/// with contents "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0". where
+/// the '\0' escape sequence denotes the NULL character and where quotation
+/// marks are omitted. The FORMAT_TYPE field is optional and denotes
+/// possible string values of the setting as a hint to the user. If
+/// included, the format type portion of the string has the format
+/// "enum:value1,value2,value3". An example string that could be sent from
+/// the device is "simulator\0enabled\0True\0enum:True,False\0"
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgSettingsReadByIndexResp {
+    pub sender_id: Option<u16>,
+    /// An index into the device settings, with values ranging from 0 to
+    /// length(settings)
+    pub index: u16,
+    /// A NULL-terminated and delimited string with contents
+    /// "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
+    pub setting: String,
+}
+
+impl MsgSettingsReadByIndexResp {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexResp, crate::Error> {
+        Ok(MsgSettingsReadByIndexResp {
+            sender_id: None,
+            index: _buf.read_u16::<LittleEndian>()?,
+            setting: crate::parser::read_string(_buf)?,
+        })
+    }
+}
+impl super::SBPMessage for MsgSettingsReadByIndexResp {
+    const MSG_ID: u16 = 167;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -232,81 +238,6 @@ impl super::SBPMessage for MsgSettingsReadResp {
     }
 }
 
-/// Finished reading settings (host <= device)
-///
-/// The settings message for indicating end of the settings values.
-///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgSettingsReadByIndexDone {
-    pub sender_id: Option<u16>,
-}
-
-impl MsgSettingsReadByIndexDone {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexDone, crate::Error> {
-        Ok(MsgSettingsReadByIndexDone { sender_id: None })
-    }
-}
-impl super::SBPMessage for MsgSettingsReadByIndexDone {
-    const MSG_ID: u16 = 166;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-/// Read setting by direct index (host <= device)
-///
-/// The settings message that reports the value of a setting at an index.
-///
-/// In the string field, it reports NULL-terminated and delimited string
-/// with contents "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0". where
-/// the '\0' escape sequence denotes the NULL character and where quotation
-/// marks are omitted. The FORMAT_TYPE field is optional and denotes
-/// possible string values of the setting as a hint to the user. If
-/// included, the format type portion of the string has the format
-/// "enum:value1,value2,value3". An example string that could be sent from
-/// the device is "simulator\0enabled\0True\0enum:True,False\0"
-///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgSettingsReadByIndexResp {
-    pub sender_id: Option<u16>,
-    /// An index into the device settings, with values ranging from 0 to
-    /// length(settings)
-    pub index: u16,
-    /// A NULL-terminated and delimited string with contents
-    /// "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
-    pub setting: String,
-}
-
-impl MsgSettingsReadByIndexResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexResp, crate::Error> {
-        Ok(MsgSettingsReadByIndexResp {
-            sender_id: None,
-            index: _buf.read_u16::<LittleEndian>()?,
-            setting: crate::parser::read_string(_buf)?,
-        })
-    }
-}
-impl super::SBPMessage for MsgSettingsReadByIndexResp {
-    const MSG_ID: u16 = 167;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
 /// Register setting and default value (device => host)
 ///
 /// This message registers the presence and default value of a setting
@@ -333,6 +264,116 @@ impl MsgSettingsRegister {
 }
 impl super::SBPMessage for MsgSettingsRegister {
     const MSG_ID: u16 = 174;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// Register setting and default value (device <= host)
+///
+/// This message responds to setting registration with the effective value.
+/// The effective value shall differ from the given default value if setting
+/// was already registered or is available in the permanent setting storage
+/// and had a different value.
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgSettingsRegisterResp {
+    pub sender_id: Option<u16>,
+    /// Register status
+    pub status: u8,
+    /// A NULL-terminated and delimited string with contents
+    /// "SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined
+    /// according to the status field.
+    pub setting: String,
+}
+
+impl MsgSettingsRegisterResp {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsRegisterResp, crate::Error> {
+        Ok(MsgSettingsRegisterResp {
+            sender_id: None,
+            status: _buf.read_u8()?,
+            setting: crate::parser::read_string(_buf)?,
+        })
+    }
+}
+impl super::SBPMessage for MsgSettingsRegisterResp {
+    const MSG_ID: u16 = 431;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// Save settings to flash (host => device)
+///
+/// The save settings message persists the device's current settings
+/// configuration to its onboard flash memory file system.
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgSettingsSave {
+    pub sender_id: Option<u16>,
+}
+
+impl MsgSettingsSave {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsSave, crate::Error> {
+        Ok(MsgSettingsSave { sender_id: None })
+    }
+}
+impl super::SBPMessage for MsgSettingsSave {
+    const MSG_ID: u16 = 161;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// Write device configuration settings (host => device)
+///
+/// The setting message writes the device configuration for a particular
+/// setting via A NULL-terminated and NULL-delimited string with contents
+/// "SECTION_SETTING\0SETTING\0VALUE\0" where the '\0' escape sequence denotes
+/// the NULL character and where quotation marks are omitted. A device will
+/// only process to this message when it is received from sender ID 0x42.
+/// An example string that could be sent to a device is
+/// "solution\0soln_freq\010\0".
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgSettingsWrite {
+    pub sender_id: Option<u16>,
+    /// A NULL-terminated and NULL-delimited string with contents
+    /// "SECTION_SETTING\0SETTING\0VALUE\0"
+    pub setting: String,
+}
+
+impl MsgSettingsWrite {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWrite, crate::Error> {
+        Ok(MsgSettingsWrite {
+            sender_id: None,
+            setting: crate::parser::read_string(_buf)?,
+        })
+    }
+}
+impl super::SBPMessage for MsgSettingsWrite {
+    const MSG_ID: u16 = 160;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -376,47 +417,6 @@ impl MsgSettingsWriteResp {
 }
 impl super::SBPMessage for MsgSettingsWriteResp {
     const MSG_ID: u16 = 175;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-/// Register setting and default value (device <= host)
-///
-/// This message responds to setting registration with the effective value.
-/// The effective value shall differ from the given default value if setting
-/// was already registered or is available in the permanent setting storage
-/// and had a different value.
-///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgSettingsRegisterResp {
-    pub sender_id: Option<u16>,
-    /// Register status
-    pub status: u8,
-    /// A NULL-terminated and delimited string with contents
-    /// "SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined
-    /// according to the status field.
-    pub setting: String,
-}
-
-impl MsgSettingsRegisterResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsRegisterResp, crate::Error> {
-        Ok(MsgSettingsRegisterResp {
-            sender_id: None,
-            status: _buf.read_u8()?,
-            setting: crate::parser::read_string(_buf)?,
-        })
-    }
-}
-impl super::SBPMessage for MsgSettingsRegisterResp {
-    const MSG_ID: u16 = 431;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
