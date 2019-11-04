@@ -55,38 +55,6 @@ impl super::SBPMessage for MsgBootloaderHandshakeDepA {
     }
 }
 
-/// Bootloader jump to application (host => device)
-///
-/// The host initiates the bootloader to jump to the application.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgBootloaderJumpToApp {
-    pub sender_id: Option<u16>,
-    /// Ignored by the device
-    pub jump: u8,
-}
-
-impl MsgBootloaderJumpToApp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderJumpToApp, ::Error> {
-        Ok(MsgBootloaderJumpToApp {
-            sender_id: None,
-            jump: _buf.read_u8()?,
-        })
-    }
-}
-impl super::SBPMessage for MsgBootloaderJumpToApp {
-    const MSG_ID: u16 = 177;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
 /// Bootloading handshake request (host => device)
 ///
 /// The handshake message request from the host establishes a
@@ -155,33 +123,28 @@ impl super::SBPMessage for MsgBootloaderHandshakeResp {
     }
 }
 
-/// Read FPGA device ID over UART response (host <= device)
+/// Bootloader jump to application (host => device)
 ///
-/// The device message from the host reads a unique device
-/// identifier from the SwiftNAP, an FPGA. The host requests the ID
-/// by sending a MSG_NAP_DEVICE_DNA_REQ message. The device
-/// responds with a MSG_NAP_DEVICE_DNA_RESP messagage with the
-/// device ID in the payload. Note that this ID is tied to the FPGA,
-/// and not related to the Piksi's serial number.
+/// The host initiates the bootloader to jump to the application.
 ///
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgNapDeviceDnaResp {
+pub struct MsgBootloaderJumpToApp {
     pub sender_id: Option<u16>,
-    /// 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on the right.
-    pub dna: Vec<u8>,
+    /// Ignored by the device
+    pub jump: u8,
 }
 
-impl MsgNapDeviceDnaResp {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaResp, ::Error> {
-        Ok(MsgNapDeviceDnaResp {
+impl MsgBootloaderJumpToApp {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderJumpToApp, ::Error> {
+        Ok(MsgBootloaderJumpToApp {
             sender_id: None,
-            dna: ::parser::read_u8_array_limit(_buf, 8)?,
+            jump: _buf.read_u8()?,
         })
     }
 }
-impl super::SBPMessage for MsgNapDeviceDnaResp {
-    const MSG_ID: u16 = 221;
+impl super::SBPMessage for MsgBootloaderJumpToApp {
+    const MSG_ID: u16 = 177;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -214,6 +177,43 @@ impl MsgNapDeviceDnaReq {
 }
 impl super::SBPMessage for MsgNapDeviceDnaReq {
     const MSG_ID: u16 = 222;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// Read FPGA device ID over UART response (host <= device)
+///
+/// The device message from the host reads a unique device
+/// identifier from the SwiftNAP, an FPGA. The host requests the ID
+/// by sending a MSG_NAP_DEVICE_DNA_REQ message. The device
+/// responds with a MSG_NAP_DEVICE_DNA_RESP messagage with the
+/// device ID in the payload. Note that this ID is tied to the FPGA,
+/// and not related to the Piksi's serial number.
+///
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgNapDeviceDnaResp {
+    pub sender_id: Option<u16>,
+    /// 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on the right.
+    pub dna: Vec<u8>,
+}
+
+impl MsgNapDeviceDnaResp {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaResp, ::Error> {
+        Ok(MsgNapDeviceDnaResp {
+            sender_id: None,
+            dna: ::parser::read_u8_array_limit(_buf, 8)?,
+        })
+    }
+}
+impl super::SBPMessage for MsgNapDeviceDnaResp {
+    const MSG_ID: u16 = 221;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id

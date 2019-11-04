@@ -19,28 +19,40 @@ extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 
-/// Deprecated
+/// Wrapper for FWD a separate stream of information over SBP
 ///
-/// Deprecated.
+/// This message provides the ability to forward messages over SBP.  This may take the form
+/// of wrapping up SBP messages received by Piksi for logging purposes or wrapping
+/// another protocol with SBP.
+///
+/// The source identifier indicates from what interface a forwarded stream derived.
+/// The protocol identifier identifies what the expected protocol the forwarded msg contains.
+/// Protocol 0 represents SBP and the remaining values are implementation defined.
 ///
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgPrintDep {
+pub struct MsgFwd {
     pub sender_id: Option<u16>,
-    /// Human-readable string
-    pub text: String,
+    /// source identifier
+    pub source: u8,
+    /// protocol identifier
+    pub protocol: u8,
+    /// variable length wrapped binary message
+    pub fwd_payload: String,
 }
 
-impl MsgPrintDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPrintDep, ::Error> {
-        Ok(MsgPrintDep {
+impl MsgFwd {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFwd, ::Error> {
+        Ok(MsgFwd {
             sender_id: None,
-            text: ::parser::read_string(_buf)?,
+            source: _buf.read_u8()?,
+            protocol: _buf.read_u8()?,
+            fwd_payload: ::parser::read_string(_buf)?,
         })
     }
 }
-impl super::SBPMessage for MsgPrintDep {
-    const MSG_ID: u16 = 16;
+impl super::SBPMessage for MsgFwd {
+    const MSG_ID: u16 = 1026;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -88,40 +100,28 @@ impl super::SBPMessage for MsgLog {
     }
 }
 
-/// Wrapper for FWD a separate stream of information over SBP
+/// Deprecated
 ///
-/// This message provides the ability to forward messages over SBP.  This may take the form
-/// of wrapping up SBP messages received by Piksi for logging purposes or wrapping
-/// another protocol with SBP.
-///
-/// The source identifier indicates from what interface a forwarded stream derived.
-/// The protocol identifier identifies what the expected protocol the forwarded msg contains.
-/// Protocol 0 represents SBP and the remaining values are implementation defined.
+/// Deprecated.
 ///
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgFwd {
+pub struct MsgPrintDep {
     pub sender_id: Option<u16>,
-    /// source identifier
-    pub source: u8,
-    /// protocol identifier
-    pub protocol: u8,
-    /// variable length wrapped binary message
-    pub fwd_payload: String,
+    /// Human-readable string
+    pub text: String,
 }
 
-impl MsgFwd {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFwd, ::Error> {
-        Ok(MsgFwd {
+impl MsgPrintDep {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPrintDep, ::Error> {
+        Ok(MsgPrintDep {
             sender_id: None,
-            source: _buf.read_u8()?,
-            protocol: _buf.read_u8()?,
-            fwd_payload: ::parser::read_string(_buf)?,
+            text: ::parser::read_string(_buf)?,
         })
     }
 }
-impl super::SBPMessage for MsgFwd {
-    const MSG_ID: u16 = 1026;
+impl super::SBPMessage for MsgPrintDep {
+    const MSG_ID: u16 = 16;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
