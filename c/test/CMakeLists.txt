@@ -1,5 +1,5 @@
 find_package(Threads)
-set(TEST_LIBS ${TEST_LIBS} check Threads::Threads sbp m)
+set(TEST_LIBS ${TEST_LIBS} Check::check Threads::Threads sbp m)
 
 # Check needs to be linked against Librt on Linux
 if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
