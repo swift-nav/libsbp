@@ -19,16 +19,17 @@ fn main() {
     let mut port = serialport::open_with_settings("/dev/ttyUSB0", &s)
         .expect("open failed");
 
+    let mut parser = sbp::parser::Parser::new();
     loop {
-        match sbp::client::parser::parse(&mut port) {
+        match parser.parse(&mut port) {
             Ok(SBP::MsgLog(x)) =>
                 println!("{}", x.text),
             Ok(SBP::MsgPosLLH(x)) =>
                 println!("{} {} {}", x.lat, x.lon, x.height),
             Ok(_) => (),
 
-            Err(Error::InvalidPreamble) => (),
-            Err(Error::CRCMismatch) => (),
+            Err(Error::NotEnoughData) => (),
+            Err(Error::UnrecoverableFailure) => (),
             Err(Error::ParseError) => (),
             Err(Error::IoError(ref x)) if x.kind() == std::io::ErrorKind::TimedOut => (),
 

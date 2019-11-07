@@ -85,7 +85,7 @@ impl Parser {
             self.read_more(input)?;
         }
 
-        let result = loop {
+        loop {
             match self.parse_remaining() {
                 Ok(msg) => break Ok(msg),
                 Err(crate::Error::NotEnoughData) => {
@@ -95,14 +95,15 @@ impl Parser {
                 }
                 Err(e) => break Err(e),
             };
-        };
-
-        result
+        }
     }
 
     fn read_more<R: Read>(&mut self, input: &mut R) -> Result<usize, std::io::Error> {
         let mut local_buffer = vec![0; Parser::BUF_SIZE];
         let read_bytes = input.read(local_buffer.as_mut())?;
+        if read_bytes == 0 {
+            return Err(std::io::Error::new(std::io::ErrorKind::UnexpectedEof, ""));
+        }
         self.buffer.extend_from_slice(&local_buffer[..read_bytes]);
         Ok(read_bytes)
     }
@@ -117,9 +118,17 @@ impl Parser {
                     break Ok(msg);
                 }
                 (Err(crate::Error::ParseError), bytes_read) => {
-                    self.buffer = self.buffer[bytes_read..].to_vec();
+                    if bytes_read >= self.buffer.len() {
+                        self.buffer.clear()
+                    } else {
+                        self.buffer = self.buffer[bytes_read..].to_vec();
+                    }
                 }
                 (Err(e), _bytes_read) => break Err(e),
+            }
+
+            if self.buffer.is_empty() {
+                break Err(crate::Error::NotEnoughData)
             }
         }
     }
