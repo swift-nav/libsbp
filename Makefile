@@ -319,6 +319,8 @@ test-haskell:
 test-rust:
 	$(call announce-begin,"Running Rust tests")
 	cd $(SWIFTNAV_ROOT)/rust/sbp && cargo test --verbose
+	$(call announce-begin,"Building Rust example")
+	cd $(SWIFTNAV_ROOT)/rust/example && cargo build --verbose
 	$(call announce-end,"Finished running Rust tests")
 
 test-protobuf:
