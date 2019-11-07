@@ -5,12 +5,46 @@
 pub mod messages;
 pub mod parser;
 
+use std::result;
+use std::error;
+use std::fmt;
+
+pub type Result<T> = result::Result<T, Error>;
+
 #[derive(Debug)]
 pub enum Error {
     ParseError,
     NotEnoughData,
     UnrecoverableFailure,
     IoError(std::io::Error),
+}
+
+impl fmt::Display for Error {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Error::ParseError => write!(f, "Parse Error"),
+            Error::NotEnoughData => write!(f, "Not enough data"),
+            Error::UnrecoverableFailure => write!(f, "Unrecoverage Failure"),
+            Error::IoError(err) => write!(f, "IO Error: {}", err),
+        }
+    }
+}
+
+impl error::Error for Error {
+    fn description(&self) -> &str {
+        match self {
+            Error::ParseError => "An error occured during parsing",
+            Error::NotEnoughData => "Not enough data available to parse a message",
+            Error::UnrecoverableFailure => "An unrecoverage failure was encountered",
+            Error::IoError(err) => err.description(),
+        }
+    }
+}
+
+impl From<std::io::Error> for Error {
+    fn from(err: std::io::Error) -> Error {
+        Error::IoError(err)
+    }
 }
 
 #[cfg(test)]
