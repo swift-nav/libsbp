@@ -75,6 +75,9 @@ matrix:
       after_success:
         bash <(curl -s https://codecov.io/bash) -s c/build || echo "Codecov did not collect coverage reports";
     - env:
+      before_install:
+        - sudo apt-get -qq update
+        - sudo apt-get install libudev-dev
       language: rust
       rust:
         - stable
