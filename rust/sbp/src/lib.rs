@@ -1,3 +1,7 @@
+//! Native implementation of decoding of SBP (Swift Binary Protocol) used by products
+//! made by Swift Navigation. For language agnostic description of the protocol please
+//! see the protocol specification documentation at https://github.com/swift-nav/libsbp/tree/master/docs
+
 pub mod messages;
 pub mod parser;
 
