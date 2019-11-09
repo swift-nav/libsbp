@@ -58,7 +58,9 @@ impl MsgExtEvent {
     }
 }
 impl super::SBPMessage for MsgExtEvent {
-    const MSG_ID: u16 = 257;
+    fn get_message_type(&self) -> u16 {
+        257
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -66,5 +68,26 @@ impl super::SBPMessage for MsgExtEvent {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgExtEvent {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.wn.append_to_sbp_buffer(buf);
+        self.tow.append_to_sbp_buffer(buf);
+        self.ns_residual.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+        self.pin.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.wn.sbp_size();
+        size += self.tow.sbp_size();
+        size += self.ns_residual.sbp_size();
+        size += self.flags.sbp_size();
+        size += self.pin.sbp_size();
+        size
     }
 }

@@ -21,7 +21,6 @@ use common::AlmostEq;
 #[test]
 fn test_auto_check_sbp_observation_44() {
     {
-        use sbp::messages::observation::MsgObsDepA;
         let payload: Vec<u8> = vec![
             85, 69, 0, 195, 4, 98, 56, 158, 67, 24, 46, 7, 32, 56, 235, 249, 121, 244, 114, 255,
             255, 33, 46, 67, 218, 0, 238, 203, 70, 124, 22, 25, 3, 0, 98, 43, 184, 157, 2, 176,
@@ -31,20 +30,19 @@ fn test_auto_check_sbp_observation_44() {
             255, 255, 31, 52, 226, 58, 30, 23, 217,
         ];
 
-        assert_eq!(
-            MsgObsDepA::MSG_ID,
-            0x45,
-            "Incorrect message type, expected 0x45, is {}",
-            MsgObsDepA::MSG_ID
-        );
-
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgObsDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x45,
+                    "Incorrect message type, expected 0x45, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -277,30 +275,31 @@ fn test_auto_check_sbp_observation_44() {
                     msg.obs[6].prn
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgObsDepA"),
+            _ => panic!("Invalid message type! Expected a MsgObsDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::observation::MsgObsDepA;
         let payload: Vec<u8> = vec![
             85, 69, 0, 195, 4, 20, 56, 158, 67, 24, 46, 7, 33, 84, 52, 164, 117, 102, 32, 0, 0,
             147, 62, 62, 250, 31, 234, 14,
         ];
-
-        assert_eq!(
-            MsgObsDepA::MSG_ID,
-            0x45,
-            "Incorrect message type, expected 0x45, is {}",
-            MsgObsDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgObsDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x45,
+                    "Incorrect message type, expected 0x45, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -353,11 +352,13 @@ fn test_auto_check_sbp_observation_44() {
                     msg.obs[0].prn
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgObsDepA"),
+            _ => panic!("Invalid message type! Expected a MsgObsDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::observation::MsgObsDepA;
         let payload: Vec<u8> = vec![
             85, 69, 0, 195, 4, 98, 0, 159, 67, 24, 46, 7, 32, 32, 209, 249, 121, 145, 114, 255,
             255, 141, 45, 67, 218, 0, 177, 128, 70, 124, 79, 27, 3, 0, 159, 44, 184, 157, 2, 59,
@@ -367,20 +368,19 @@ fn test_auto_check_sbp_observation_44() {
             255, 129, 52, 226, 58, 30, 200, 119,
         ];
 
-        assert_eq!(
-            MsgObsDepA::MSG_ID,
-            0x45,
-            "Incorrect message type, expected 0x45, is {}",
-            MsgObsDepA::MSG_ID
-        );
-
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgObsDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x45,
+                    "Incorrect message type, expected 0x45, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -613,30 +613,31 @@ fn test_auto_check_sbp_observation_44() {
                     msg.obs[6].prn
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgObsDepA"),
+            _ => panic!("Invalid message type! Expected a MsgObsDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::observation::MsgObsDepA;
         let payload: Vec<u8> = vec![
             85, 69, 0, 195, 4, 20, 0, 159, 67, 24, 46, 7, 33, 49, 19, 164, 117, 120, 32, 0, 0, 222,
             63, 62, 250, 31, 11, 231,
         ];
-
-        assert_eq!(
-            MsgObsDepA::MSG_ID,
-            0x45,
-            "Incorrect message type, expected 0x45, is {}",
-            MsgObsDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgObsDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x45,
+                    "Incorrect message type, expected 0x45, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -689,11 +690,13 @@ fn test_auto_check_sbp_observation_44() {
                     msg.obs[0].prn
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgObsDepA"),
+            _ => panic!("Invalid message type! Expected a MsgObsDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::observation::MsgObsDepA;
         let payload: Vec<u8> = vec![
             85, 69, 0, 195, 4, 72, 96, 162, 68, 24, 46, 7, 16, 87, 132, 217, 121, 121, 148, 255,
             255, 189, 43, 175, 147, 0, 132, 64, 200, 125, 106, 31, 254, 255, 1, 41, 14, 177, 3,
@@ -702,20 +705,19 @@ fn test_auto_check_sbp_observation_44() {
             43, 107,
         ];
 
-        assert_eq!(
-            MsgObsDepA::MSG_ID,
-            0x45,
-            "Incorrect message type, expected 0x45, is {}",
-            MsgObsDepA::MSG_ID
-        );
-
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgObsDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x45,
+                    "Incorrect message type, expected 0x45, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -888,11 +890,13 @@ fn test_auto_check_sbp_observation_44() {
                     msg.obs[4].prn
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgObsDepA"),
+            _ => panic!("Invalid message type! Expected a MsgObsDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::observation::MsgObsDepA;
         let payload: Vec<u8> = vec![
             85, 69, 0, 195, 4, 72, 40, 163, 68, 24, 46, 7, 16, 132, 107, 217, 121, 14, 148, 255,
             255, 1, 44, 175, 147, 0, 129, 66, 200, 125, 148, 29, 254, 255, 153, 41, 14, 177, 3,
@@ -901,20 +905,19 @@ fn test_auto_check_sbp_observation_44() {
             30, 1, 175,
         ];
 
-        assert_eq!(
-            MsgObsDepA::MSG_ID,
-            0x45,
-            "Incorrect message type, expected 0x45, is {}",
-            MsgObsDepA::MSG_ID
-        );
-
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgObsDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x45,
+                    "Incorrect message type, expected 0x45, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -1087,11 +1090,13 @@ fn test_auto_check_sbp_observation_44() {
                     msg.obs[4].prn
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgObsDepA"),
+            _ => panic!("Invalid message type! Expected a MsgObsDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::observation::MsgEphemerisDepB;
         let payload: Vec<u8> = vec![
             85, 70, 0, 195, 4, 176, 0, 0, 0, 0, 0, 0, 60, 190, 0, 0, 0, 0, 0, 186, 82, 192, 0, 0,
             0, 0, 0, 76, 109, 64, 0, 0, 0, 0, 0, 132, 208, 190, 0, 0, 0, 0, 0, 254, 220, 62, 0, 0,
@@ -1104,20 +1109,19 @@ fn test_auto_check_sbp_observation_44() {
             1, 1, 3, 0, 225, 156,
         ];
 
-        assert_eq!(
-            MsgEphemerisDepB::MSG_ID,
-            0x46,
-            "Incorrect message type, expected 0x46, is {}",
-            MsgEphemerisDepB::MSG_ID
-        );
-
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgEphemerisDepB(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x46,
+                    "Incorrect message type, expected 0x46, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -1260,11 +1264,13 @@ fn test_auto_check_sbp_observation_44() {
                     msg.w
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgEphemerisDepB"),
+            _ => panic!("Invalid message type! Expected a MsgEphemerisDepB"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::observation::MsgEphemerisDepB;
         let payload: Vec<u8> = vec![
             85, 70, 0, 195, 4, 176, 0, 0, 0, 0, 0, 0, 68, 190, 0, 0, 0, 0, 0, 72, 66, 64, 0, 0, 0,
             0, 128, 188, 115, 64, 0, 0, 0, 0, 0, 80, 193, 62, 0, 0, 0, 0, 0, 164, 204, 62, 0, 0, 0,
@@ -1277,20 +1283,19 @@ fn test_auto_check_sbp_observation_44() {
             1, 13, 0, 180, 21,
         ];
 
-        assert_eq!(
-            MsgEphemerisDepB::MSG_ID,
-            0x46,
-            "Incorrect message type, expected 0x46, is {}",
-            MsgEphemerisDepB::MSG_ID
-        );
-
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgEphemerisDepB(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x46,
+                    "Incorrect message type, expected 0x46, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -1433,11 +1438,13 @@ fn test_auto_check_sbp_observation_44() {
                     msg.w
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgEphemerisDepB"),
+            _ => panic!("Invalid message type! Expected a MsgEphemerisDepB"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::observation::MsgEphemerisDepB;
         let payload: Vec<u8> = vec![
             85, 70, 0, 195, 4, 176, 0, 0, 0, 0, 0, 0, 56, 62, 0, 0, 0, 0, 0, 40, 81, 192, 0, 0, 0,
             0, 0, 129, 109, 64, 0, 0, 0, 0, 0, 28, 205, 190, 0, 0, 0, 0, 0, 76, 223, 62, 0, 0, 0,
@@ -1450,20 +1457,19 @@ fn test_auto_check_sbp_observation_44() {
             1, 0, 0, 222, 152,
         ];
 
-        assert_eq!(
-            MsgEphemerisDepB::MSG_ID,
-            0x46,
-            "Incorrect message type, expected 0x46, is {}",
-            MsgEphemerisDepB::MSG_ID
-        );
-
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgEphemerisDepB(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x46,
+                    "Incorrect message type, expected 0x46, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -1606,11 +1612,13 @@ fn test_auto_check_sbp_observation_44() {
                     msg.w
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgEphemerisDepB"),
+            _ => panic!("Invalid message type! Expected a MsgEphemerisDepB"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::observation::MsgEphemerisDepB;
         let payload: Vec<u8> = vec![
             85, 70, 0, 195, 4, 176, 0, 0, 0, 0, 0, 0, 68, 190, 0, 0, 0, 0, 0, 72, 66, 64, 0, 0, 0,
             0, 128, 188, 115, 64, 0, 0, 0, 0, 0, 80, 193, 62, 0, 0, 0, 0, 0, 164, 204, 62, 0, 0, 0,
@@ -1623,20 +1631,19 @@ fn test_auto_check_sbp_observation_44() {
             1, 13, 0, 180, 21,
         ];
 
-        assert_eq!(
-            MsgEphemerisDepB::MSG_ID,
-            0x46,
-            "Incorrect message type, expected 0x46, is {}",
-            MsgEphemerisDepB::MSG_ID
-        );
-
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgEphemerisDepB(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x46,
+                    "Incorrect message type, expected 0x46, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -1779,11 +1786,13 @@ fn test_auto_check_sbp_observation_44() {
                     msg.w
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgEphemerisDepB"),
+            _ => panic!("Invalid message type! Expected a MsgEphemerisDepB"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::observation::MsgEphemerisDepB;
         let payload: Vec<u8> = vec![
             85, 70, 0, 195, 4, 176, 0, 0, 0, 0, 0, 128, 85, 190, 0, 0, 0, 0, 0, 156, 69, 64, 0, 0,
             0, 0, 128, 19, 115, 64, 0, 0, 0, 0, 0, 160, 193, 62, 0, 0, 0, 0, 0, 152, 207, 62, 0, 0,
@@ -1796,20 +1805,19 @@ fn test_auto_check_sbp_observation_44() {
             7, 1, 1, 22, 0, 99, 61,
         ];
 
-        assert_eq!(
-            MsgEphemerisDepB::MSG_ID,
-            0x46,
-            "Incorrect message type, expected 0x46, is {}",
-            MsgEphemerisDepB::MSG_ID
-        );
-
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgEphemerisDepB(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x46,
+                    "Incorrect message type, expected 0x46, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -1952,11 +1960,13 @@ fn test_auto_check_sbp_observation_44() {
                     msg.w
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgEphemerisDepB"),
+            _ => panic!("Invalid message type! Expected a MsgEphemerisDepB"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::observation::MsgEphemerisDepB;
         let payload: Vec<u8> = vec![
             85, 70, 0, 195, 4, 176, 0, 0, 0, 0, 0, 0, 77, 190, 0, 0, 0, 0, 0, 122, 83, 192, 0, 0,
             0, 0, 0, 233, 110, 64, 0, 0, 0, 0, 0, 60, 207, 190, 0, 0, 0, 0, 0, 28, 222, 62, 0, 0,
@@ -1969,20 +1979,19 @@ fn test_auto_check_sbp_observation_44() {
             46, 7, 1, 1, 30, 0, 170, 33,
         ];
 
-        assert_eq!(
-            MsgEphemerisDepB::MSG_ID,
-            0x46,
-            "Incorrect message type, expected 0x46, is {}",
-            MsgEphemerisDepB::MSG_ID
-        );
-
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgEphemerisDepB(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x46,
+                    "Incorrect message type, expected 0x46, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -2125,7 +2134,10 @@ fn test_auto_check_sbp_observation_44() {
                     msg.w
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgEphemerisDepB"),
+            _ => panic!("Invalid message type! Expected a MsgEphemerisDepB"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
 }

@@ -21,26 +21,24 @@ use common::AlmostEq;
 #[test]
 fn test_auto_check_sbp_orientation_28() {
     {
-        use sbp::messages::orientation::MsgOrientEuler;
         let payload: Vec<u8> = vec![
             85, 33, 2, 66, 0, 29, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 8, 0, 0, 0, 0, 0, 224, 64, 0,
             0, 64, 64, 0, 0, 224, 64, 3, 44, 226,
         ];
-
-        assert_eq!(
-            MsgOrientEuler::MSG_ID,
-            0x221,
-            "Incorrect message type, expected 0x221, is {}",
-            MsgOrientEuler::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgOrientEuler(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x221,
+                    "Incorrect message type, expected 0x221, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x42,
@@ -88,7 +86,10 @@ fn test_auto_check_sbp_orientation_28() {
                     msg.yaw_accuracy
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgOrientEuler"),
+            _ => panic!("Invalid message type! Expected a MsgOrientEuler"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
 }

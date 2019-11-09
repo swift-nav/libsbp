@@ -63,6 +63,21 @@ impl CodeBiasesContent {
     }
 }
 
+impl crate::serialize::SbpSerialize for CodeBiasesContent {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.code.append_to_sbp_buffer(buf);
+        self.value.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.code.sbp_size();
+        size += self.value.sbp_size();
+        size
+    }
+}
+
 /// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
 ///
 /// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
@@ -119,6 +134,29 @@ impl GridDefinitionHeader {
     }
 }
 
+impl crate::serialize::SbpSerialize for GridDefinitionHeader {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.region_size_inverse.append_to_sbp_buffer(buf);
+        self.area_width.append_to_sbp_buffer(buf);
+        self.lat_nw_corner_enc.append_to_sbp_buffer(buf);
+        self.lon_nw_corner_enc.append_to_sbp_buffer(buf);
+        self.num_msgs.append_to_sbp_buffer(buf);
+        self.seq_num.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.region_size_inverse.sbp_size();
+        size += self.area_width.sbp_size();
+        size += self.lat_nw_corner_enc.sbp_size();
+        size += self.lon_nw_corner_enc.sbp_size();
+        size += self.num_msgs.sbp_size();
+        size += self.seq_num.sbp_size();
+        size
+    }
+}
+
 /// Correction data for a single grid point.
 ///
 /// Contains one tropo delay, plus STEC residuals for each satellite at the
@@ -158,6 +196,23 @@ impl GridElement {
             v.push(GridElement::parse(buf)?);
         }
         Ok(v)
+    }
+}
+
+impl crate::serialize::SbpSerialize for GridElement {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.index.append_to_sbp_buffer(buf);
+        self.tropo_delay_correction.append_to_sbp_buffer(buf);
+        self.stec_residuals.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.index.sbp_size();
+        size += self.tropo_delay_correction.sbp_size();
+        size += self.stec_residuals.sbp_size();
+        size
     }
 }
 
@@ -218,6 +273,29 @@ impl GriddedCorrectionHeader {
     }
 }
 
+impl crate::serialize::SbpSerialize for GriddedCorrectionHeader {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.time.append_to_sbp_buffer(buf);
+        self.num_msgs.append_to_sbp_buffer(buf);
+        self.seq_num.append_to_sbp_buffer(buf);
+        self.update_interval.append_to_sbp_buffer(buf);
+        self.iod_atmo.append_to_sbp_buffer(buf);
+        self.tropo_quality_indicator.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.time.sbp_size();
+        size += self.num_msgs.sbp_size();
+        size += self.seq_num.sbp_size();
+        size += self.update_interval.sbp_size();
+        size += self.iod_atmo.sbp_size();
+        size += self.tropo_quality_indicator.sbp_size();
+        size
+    }
+}
+
 /// Precise code biases correction
 ///
 /// The precise code biases message is to be added
@@ -257,7 +335,9 @@ impl MsgSsrCodeBiases {
     }
 }
 impl super::SBPMessage for MsgSsrCodeBiases {
-    const MSG_ID: u16 = 1505;
+    fn get_message_type(&self) -> u16 {
+        1505
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -265,6 +345,27 @@ impl super::SBPMessage for MsgSsrCodeBiases {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSsrCodeBiases {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.time.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+        self.update_interval.append_to_sbp_buffer(buf);
+        self.iod_ssr.append_to_sbp_buffer(buf);
+        self.biases.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.time.sbp_size();
+        size += self.sid.sbp_size();
+        size += self.update_interval.sbp_size();
+        size += self.iod_ssr.sbp_size();
+        size += self.biases.sbp_size();
+        size
     }
 }
 
@@ -294,7 +395,9 @@ impl MsgSsrGriddedCorrection {
     }
 }
 impl super::SBPMessage for MsgSsrGriddedCorrection {
-    const MSG_ID: u16 = 1520;
+    fn get_message_type(&self) -> u16 {
+        1520
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -302,6 +405,21 @@ impl super::SBPMessage for MsgSsrGriddedCorrection {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrection {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.header.append_to_sbp_buffer(buf);
+        self.element.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.header.sbp_size();
+        size += self.element.sbp_size();
+        size
     }
 }
 
@@ -334,7 +452,9 @@ impl MsgSsrGridDefinition {
     }
 }
 impl super::SBPMessage for MsgSsrGridDefinition {
-    const MSG_ID: u16 = 1525;
+    fn get_message_type(&self) -> u16 {
+        1525
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -342,6 +462,21 @@ impl super::SBPMessage for MsgSsrGridDefinition {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSsrGridDefinition {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.header.append_to_sbp_buffer(buf);
+        self.rle_list.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.header.sbp_size();
+        size += self.rle_list.sbp_size();
+        size
     }
 }
 
@@ -411,7 +546,9 @@ impl MsgSsrOrbitClock {
     }
 }
 impl super::SBPMessage for MsgSsrOrbitClock {
-    const MSG_ID: u16 = 1501;
+    fn get_message_type(&self) -> u16 {
+        1501
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -419,6 +556,45 @@ impl super::SBPMessage for MsgSsrOrbitClock {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSsrOrbitClock {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.time.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+        self.update_interval.append_to_sbp_buffer(buf);
+        self.iod_ssr.append_to_sbp_buffer(buf);
+        self.iod.append_to_sbp_buffer(buf);
+        self.radial.append_to_sbp_buffer(buf);
+        self.along.append_to_sbp_buffer(buf);
+        self.cross.append_to_sbp_buffer(buf);
+        self.dot_radial.append_to_sbp_buffer(buf);
+        self.dot_along.append_to_sbp_buffer(buf);
+        self.dot_cross.append_to_sbp_buffer(buf);
+        self.c0.append_to_sbp_buffer(buf);
+        self.c1.append_to_sbp_buffer(buf);
+        self.c2.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.time.sbp_size();
+        size += self.sid.sbp_size();
+        size += self.update_interval.sbp_size();
+        size += self.iod_ssr.sbp_size();
+        size += self.iod.sbp_size();
+        size += self.radial.sbp_size();
+        size += self.along.sbp_size();
+        size += self.cross.sbp_size();
+        size += self.dot_radial.sbp_size();
+        size += self.dot_along.sbp_size();
+        size += self.dot_cross.sbp_size();
+        size += self.c0.sbp_size();
+        size += self.c1.sbp_size();
+        size += self.c2.sbp_size();
+        size
     }
 }
 
@@ -488,7 +664,9 @@ impl MsgSsrOrbitClockDepA {
     }
 }
 impl super::SBPMessage for MsgSsrOrbitClockDepA {
-    const MSG_ID: u16 = 1500;
+    fn get_message_type(&self) -> u16 {
+        1500
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -496,6 +674,45 @@ impl super::SBPMessage for MsgSsrOrbitClockDepA {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSsrOrbitClockDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.time.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+        self.update_interval.append_to_sbp_buffer(buf);
+        self.iod_ssr.append_to_sbp_buffer(buf);
+        self.iod.append_to_sbp_buffer(buf);
+        self.radial.append_to_sbp_buffer(buf);
+        self.along.append_to_sbp_buffer(buf);
+        self.cross.append_to_sbp_buffer(buf);
+        self.dot_radial.append_to_sbp_buffer(buf);
+        self.dot_along.append_to_sbp_buffer(buf);
+        self.dot_cross.append_to_sbp_buffer(buf);
+        self.c0.append_to_sbp_buffer(buf);
+        self.c1.append_to_sbp_buffer(buf);
+        self.c2.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.time.sbp_size();
+        size += self.sid.sbp_size();
+        size += self.update_interval.sbp_size();
+        size += self.iod_ssr.sbp_size();
+        size += self.iod.sbp_size();
+        size += self.radial.sbp_size();
+        size += self.along.sbp_size();
+        size += self.cross.sbp_size();
+        size += self.dot_radial.sbp_size();
+        size += self.dot_along.sbp_size();
+        size += self.dot_cross.sbp_size();
+        size += self.c0.sbp_size();
+        size += self.c1.sbp_size();
+        size += self.c2.sbp_size();
+        size
     }
 }
 
@@ -552,7 +769,9 @@ impl MsgSsrPhaseBiases {
     }
 }
 impl super::SBPMessage for MsgSsrPhaseBiases {
-    const MSG_ID: u16 = 1510;
+    fn get_message_type(&self) -> u16 {
+        1510
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -560,6 +779,35 @@ impl super::SBPMessage for MsgSsrPhaseBiases {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSsrPhaseBiases {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.time.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+        self.update_interval.append_to_sbp_buffer(buf);
+        self.iod_ssr.append_to_sbp_buffer(buf);
+        self.dispersive_bias.append_to_sbp_buffer(buf);
+        self.mw_consistency.append_to_sbp_buffer(buf);
+        self.yaw.append_to_sbp_buffer(buf);
+        self.yaw_rate.append_to_sbp_buffer(buf);
+        self.biases.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.time.sbp_size();
+        size += self.sid.sbp_size();
+        size += self.update_interval.sbp_size();
+        size += self.iod_ssr.sbp_size();
+        size += self.dispersive_bias.sbp_size();
+        size += self.mw_consistency.sbp_size();
+        size += self.yaw.sbp_size();
+        size += self.yaw_rate.sbp_size();
+        size += self.biases.sbp_size();
+        size
     }
 }
 
@@ -591,7 +839,9 @@ impl MsgSsrStecCorrection {
     }
 }
 impl super::SBPMessage for MsgSsrStecCorrection {
-    const MSG_ID: u16 = 1515;
+    fn get_message_type(&self) -> u16 {
+        1515
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -599,6 +849,21 @@ impl super::SBPMessage for MsgSsrStecCorrection {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSsrStecCorrection {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.header.append_to_sbp_buffer(buf);
+        self.stec_sat_list.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.header.sbp_size();
+        size += self.stec_sat_list.sbp_size();
+        size
     }
 }
 
@@ -654,6 +919,27 @@ impl PhaseBiasesContent {
     }
 }
 
+impl crate::serialize::SbpSerialize for PhaseBiasesContent {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.code.append_to_sbp_buffer(buf);
+        self.integer_indicator.append_to_sbp_buffer(buf);
+        self.widelane_integer_indicator.append_to_sbp_buffer(buf);
+        self.discontinuity_counter.append_to_sbp_buffer(buf);
+        self.bias.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.code.sbp_size();
+        size += self.integer_indicator.sbp_size();
+        size += self.widelane_integer_indicator.sbp_size();
+        size += self.discontinuity_counter.sbp_size();
+        size += self.bias.sbp_size();
+        size
+    }
+}
+
 /// Header for MSG_SSR_STEC_CORRECTION message
 ///
 /// A full set of STEC information will likely span multiple SBP
@@ -704,6 +990,27 @@ impl STECHeader {
     }
 }
 
+impl crate::serialize::SbpSerialize for STECHeader {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.time.append_to_sbp_buffer(buf);
+        self.num_msgs.append_to_sbp_buffer(buf);
+        self.seq_num.append_to_sbp_buffer(buf);
+        self.update_interval.append_to_sbp_buffer(buf);
+        self.iod_atmo.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.time.sbp_size();
+        size += self.num_msgs.sbp_size();
+        size += self.seq_num.sbp_size();
+        size += self.update_interval.sbp_size();
+        size += self.iod_atmo.sbp_size();
+        size
+    }
+}
+
 /// None
 ///
 /// STEC residual for the given satellite at the grid point.
@@ -739,6 +1046,21 @@ impl STECResidual {
             v.push(STECResidual::parse(buf)?);
         }
         Ok(v)
+    }
+}
+
+impl crate::serialize::SbpSerialize for STECResidual {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sv_id.append_to_sbp_buffer(buf);
+        self.residual.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sv_id.sbp_size();
+        size += self.residual.sbp_size();
+        size
     }
 }
 
@@ -787,6 +1109,23 @@ impl STECSatElement {
     }
 }
 
+impl crate::serialize::SbpSerialize for STECSatElement {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sv_id.append_to_sbp_buffer(buf);
+        self.stec_quality_indicator.append_to_sbp_buffer(buf);
+        self.stec_coeff.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sv_id.sbp_size();
+        size += self.stec_quality_indicator.sbp_size();
+        size += self.stec_coeff.sbp_size();
+        size
+    }
+}
+
 /// None
 ///
 /// Troposphere vertical delays at the grid point.
@@ -825,5 +1164,20 @@ impl TroposphericDelayCorrection {
             v.push(TroposphericDelayCorrection::parse(buf)?);
         }
         Ok(v)
+    }
+}
+
+impl crate::serialize::SbpSerialize for TroposphericDelayCorrection {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.hydro.append_to_sbp_buffer(buf);
+        self.wet.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.hydro.sbp_size();
+        size += self.wet.sbp_size();
+        size
     }
 }

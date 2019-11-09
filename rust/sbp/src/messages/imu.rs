@@ -50,7 +50,9 @@ impl MsgImuAux {
     }
 }
 impl super::SBPMessage for MsgImuAux {
-    const MSG_ID: u16 = 2305;
+    fn get_message_type(&self) -> u16 {
+        2305
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -58,6 +60,23 @@ impl super::SBPMessage for MsgImuAux {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgImuAux {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.imu_type.append_to_sbp_buffer(buf);
+        self.temp.append_to_sbp_buffer(buf);
+        self.imu_conf.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.imu_type.sbp_size();
+        size += self.temp.sbp_size();
+        size += self.imu_conf.sbp_size();
+        size
     }
 }
 
@@ -108,7 +127,9 @@ impl MsgImuRaw {
     }
 }
 impl super::SBPMessage for MsgImuRaw {
-    const MSG_ID: u16 = 2304;
+    fn get_message_type(&self) -> u16 {
+        2304
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -116,5 +137,32 @@ impl super::SBPMessage for MsgImuRaw {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgImuRaw {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.tow_f.append_to_sbp_buffer(buf);
+        self.acc_x.append_to_sbp_buffer(buf);
+        self.acc_y.append_to_sbp_buffer(buf);
+        self.acc_z.append_to_sbp_buffer(buf);
+        self.gyr_x.append_to_sbp_buffer(buf);
+        self.gyr_y.append_to_sbp_buffer(buf);
+        self.gyr_z.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.tow_f.sbp_size();
+        size += self.acc_x.sbp_size();
+        size += self.acc_y.sbp_size();
+        size += self.acc_z.sbp_size();
+        size += self.gyr_x.sbp_size();
+        size += self.gyr_y.sbp_size();
+        size += self.gyr_z.sbp_size();
+        size
     }
 }

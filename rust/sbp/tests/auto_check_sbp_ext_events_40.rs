@@ -21,25 +21,23 @@ use common::AlmostEq;
 #[test]
 fn test_auto_check_sbp_ext_events_40() {
     {
-        use sbp::messages::ext_events::MsgExtEvent;
         let payload: Vec<u8> = vec![
             85, 1, 1, 245, 6, 12, 48, 7, 199, 216, 49, 15, 202, 65, 15, 0, 3, 0, 62, 204,
         ];
-
-        assert_eq!(
-            MsgExtEvent::MSG_ID,
-            0x101,
-            "Incorrect message type, expected 0x101, is {}",
-            MsgExtEvent::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgExtEvent(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x101,
+                    "Incorrect message type, expected 0x101, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x6f5,
@@ -72,7 +70,10 @@ fn test_auto_check_sbp_ext_events_40() {
                     msg.wn
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgExtEvent"),
+            _ => panic!("Invalid message type! Expected a MsgExtEvent"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
 }

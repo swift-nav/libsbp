@@ -21,26 +21,24 @@ use common::AlmostEq;
 #[test]
 fn test_auto_check_sbp_navigation_7() {
     {
-        use sbp::messages::navigation::MsgBaselineNEDDepA;
         let payload: Vec<u8> = vec![
             85, 3, 2, 246, 215, 22, 20, 46, 39, 0, 243, 134, 254, 255, 234, 153, 255, 255, 0, 0, 0,
             0, 0, 0, 0, 0, 9, 1, 93, 193,
         ];
-
-        assert_eq!(
-            MsgBaselineNEDDepA::MSG_ID,
-            0x203,
-            "Incorrect message type, expected 0x203, is {}",
-            MsgBaselineNEDDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgBaselineNEDDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x203,
+                    "Incorrect message type, expected 0x203, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
@@ -84,30 +82,31 @@ fn test_auto_check_sbp_navigation_7() {
                     msg.v_accuracy
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgBaselineNEDDepA"),
+            _ => panic!("Invalid message type! Expected a MsgBaselineNEDDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::navigation::MsgBaselineNEDDepA;
         let payload: Vec<u8> = vec![
             85, 3, 2, 246, 215, 22, 120, 46, 39, 0, 139, 134, 254, 255, 109, 155, 255, 255, 0, 0,
             0, 0, 0, 0, 0, 0, 9, 1, 38, 39,
         ];
-
-        assert_eq!(
-            MsgBaselineNEDDepA::MSG_ID,
-            0x203,
-            "Incorrect message type, expected 0x203, is {}",
-            MsgBaselineNEDDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgBaselineNEDDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x203,
+                    "Incorrect message type, expected 0x203, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
@@ -151,30 +150,31 @@ fn test_auto_check_sbp_navigation_7() {
                     msg.v_accuracy
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgBaselineNEDDepA"),
+            _ => panic!("Invalid message type! Expected a MsgBaselineNEDDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::navigation::MsgBaselineNEDDepA;
         let payload: Vec<u8> = vec![
             85, 3, 2, 246, 215, 22, 220, 46, 39, 0, 37, 134, 254, 255, 240, 156, 255, 255, 0, 0, 0,
             0, 0, 0, 0, 0, 9, 1, 58, 133,
         ];
-
-        assert_eq!(
-            MsgBaselineNEDDepA::MSG_ID,
-            0x203,
-            "Incorrect message type, expected 0x203, is {}",
-            MsgBaselineNEDDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgBaselineNEDDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x203,
+                    "Incorrect message type, expected 0x203, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
@@ -218,30 +218,31 @@ fn test_auto_check_sbp_navigation_7() {
                     msg.v_accuracy
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgBaselineNEDDepA"),
+            _ => panic!("Invalid message type! Expected a MsgBaselineNEDDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::navigation::MsgBaselineNEDDepA;
         let payload: Vec<u8> = vec![
             85, 3, 2, 246, 215, 22, 64, 47, 39, 0, 193, 133, 254, 255, 115, 158, 255, 255, 0, 0, 0,
             0, 0, 0, 0, 0, 9, 1, 56, 214,
         ];
-
-        assert_eq!(
-            MsgBaselineNEDDepA::MSG_ID,
-            0x203,
-            "Incorrect message type, expected 0x203, is {}",
-            MsgBaselineNEDDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgBaselineNEDDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x203,
+                    "Incorrect message type, expected 0x203, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
@@ -285,30 +286,31 @@ fn test_auto_check_sbp_navigation_7() {
                     msg.v_accuracy
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgBaselineNEDDepA"),
+            _ => panic!("Invalid message type! Expected a MsgBaselineNEDDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::navigation::MsgBaselineNEDDepA;
         let payload: Vec<u8> = vec![
             85, 3, 2, 246, 215, 22, 164, 47, 39, 0, 93, 133, 254, 255, 246, 159, 255, 255, 0, 0, 0,
             0, 0, 0, 0, 0, 9, 1, 234, 244,
         ];
-
-        assert_eq!(
-            MsgBaselineNEDDepA::MSG_ID,
-            0x203,
-            "Incorrect message type, expected 0x203, is {}",
-            MsgBaselineNEDDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgBaselineNEDDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x203,
+                    "Incorrect message type, expected 0x203, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
@@ -352,7 +354,10 @@ fn test_auto_check_sbp_navigation_7() {
                     msg.v_accuracy
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgBaselineNEDDepA"),
+            _ => panic!("Invalid message type! Expected a MsgBaselineNEDDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
 }

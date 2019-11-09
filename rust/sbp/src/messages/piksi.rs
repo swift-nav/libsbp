@@ -72,6 +72,25 @@ impl Latency {
     }
 }
 
+impl crate::serialize::SbpSerialize for Latency {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.avg.append_to_sbp_buffer(buf);
+        self.lmin.append_to_sbp_buffer(buf);
+        self.lmax.append_to_sbp_buffer(buf);
+        self.current.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.avg.sbp_size();
+        size += self.lmin.sbp_size();
+        size += self.lmax.sbp_size();
+        size += self.current.sbp_size();
+        size
+    }
+}
+
 /// Legacy message to load satellite almanac (host => Piksi)
 ///
 /// This is a legacy message for sending and loading a satellite
@@ -90,7 +109,9 @@ impl MsgAlmanac {
     }
 }
 impl super::SBPMessage for MsgAlmanac {
-    const MSG_ID: u16 = 105;
+    fn get_message_type(&self) -> u16 {
+        105
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -98,6 +119,15 @@ impl super::SBPMessage for MsgAlmanac {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgAlmanac {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+
+    fn sbp_size(&self) -> usize {
+        0
     }
 }
 
@@ -131,7 +161,9 @@ impl MsgCellModemStatus {
     }
 }
 impl super::SBPMessage for MsgCellModemStatus {
-    const MSG_ID: u16 = 190;
+    fn get_message_type(&self) -> u16 {
+        190
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -139,6 +171,23 @@ impl super::SBPMessage for MsgCellModemStatus {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgCellModemStatus {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.signal_strength.append_to_sbp_buffer(buf);
+        self.signal_error_rate.append_to_sbp_buffer(buf);
+        self.reserved.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.signal_strength.sbp_size();
+        size += self.signal_error_rate.sbp_size();
+        size += self.reserved.sbp_size();
+        size
     }
 }
 
@@ -170,7 +219,9 @@ impl MsgCommandOutput {
     }
 }
 impl super::SBPMessage for MsgCommandOutput {
-    const MSG_ID: u16 = 188;
+    fn get_message_type(&self) -> u16 {
+        188
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -178,6 +229,21 @@ impl super::SBPMessage for MsgCommandOutput {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgCommandOutput {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sequence.append_to_sbp_buffer(buf);
+        self.line.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sequence.sbp_size();
+        size += self.line.sbp_size();
+        size
     }
 }
 
@@ -208,7 +274,9 @@ impl MsgCommandReq {
     }
 }
 impl super::SBPMessage for MsgCommandReq {
-    const MSG_ID: u16 = 184;
+    fn get_message_type(&self) -> u16 {
+        184
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -216,6 +284,21 @@ impl super::SBPMessage for MsgCommandReq {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgCommandReq {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sequence.append_to_sbp_buffer(buf);
+        self.command.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sequence.sbp_size();
+        size += self.command.sbp_size();
+        size
     }
 }
 
@@ -245,7 +328,9 @@ impl MsgCommandResp {
     }
 }
 impl super::SBPMessage for MsgCommandResp {
-    const MSG_ID: u16 = 185;
+    fn get_message_type(&self) -> u16 {
+        185
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -253,6 +338,21 @@ impl super::SBPMessage for MsgCommandResp {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgCommandResp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sequence.append_to_sbp_buffer(buf);
+        self.code.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sequence.sbp_size();
+        size += self.code.sbp_size();
+        size
     }
 }
 
@@ -275,7 +375,9 @@ impl MsgCwResults {
     }
 }
 impl super::SBPMessage for MsgCwResults {
-    const MSG_ID: u16 = 192;
+    fn get_message_type(&self) -> u16 {
+        192
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -283,6 +385,15 @@ impl super::SBPMessage for MsgCwResults {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgCwResults {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+
+    fn sbp_size(&self) -> usize {
+        0
     }
 }
 
@@ -305,7 +416,9 @@ impl MsgCwStart {
     }
 }
 impl super::SBPMessage for MsgCwStart {
-    const MSG_ID: u16 = 193;
+    fn get_message_type(&self) -> u16 {
+        193
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -313,6 +426,15 @@ impl super::SBPMessage for MsgCwStart {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgCwStart {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+
+    fn sbp_size(&self) -> usize {
+        0
     }
 }
 
@@ -352,7 +474,9 @@ impl MsgDeviceMonitor {
     }
 }
 impl super::SBPMessage for MsgDeviceMonitor {
-    const MSG_ID: u16 = 181;
+    fn get_message_type(&self) -> u16 {
+        181
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -360,6 +484,27 @@ impl super::SBPMessage for MsgDeviceMonitor {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgDeviceMonitor {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.dev_vin.append_to_sbp_buffer(buf);
+        self.cpu_vint.append_to_sbp_buffer(buf);
+        self.cpu_vaux.append_to_sbp_buffer(buf);
+        self.cpu_temperature.append_to_sbp_buffer(buf);
+        self.fe_temperature.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.dev_vin.sbp_size();
+        size += self.cpu_vint.sbp_size();
+        size += self.cpu_vaux.sbp_size();
+        size += self.cpu_temperature.sbp_size();
+        size += self.fe_temperature.sbp_size();
+        size
     }
 }
 
@@ -393,7 +538,9 @@ impl MsgFrontEndGain {
     }
 }
 impl super::SBPMessage for MsgFrontEndGain {
-    const MSG_ID: u16 = 191;
+    fn get_message_type(&self) -> u16 {
+        191
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -401,6 +548,21 @@ impl super::SBPMessage for MsgFrontEndGain {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFrontEndGain {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.rf_gain.append_to_sbp_buffer(buf);
+        self.if_gain.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.rf_gain.sbp_size();
+        size += self.if_gain.sbp_size();
+        size
     }
 }
 
@@ -429,7 +591,9 @@ impl MsgIarState {
     }
 }
 impl super::SBPMessage for MsgIarState {
-    const MSG_ID: u16 = 25;
+    fn get_message_type(&self) -> u16 {
+        25
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -437,6 +601,19 @@ impl super::SBPMessage for MsgIarState {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgIarState {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.num_hyps.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.num_hyps.sbp_size();
+        size
     }
 }
 
@@ -457,7 +634,9 @@ impl MsgInitBaseDep {
     }
 }
 impl super::SBPMessage for MsgInitBaseDep {
-    const MSG_ID: u16 = 35;
+    fn get_message_type(&self) -> u16 {
+        35
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -465,6 +644,15 @@ impl super::SBPMessage for MsgInitBaseDep {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgInitBaseDep {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+
+    fn sbp_size(&self) -> usize {
+        0
     }
 }
 
@@ -494,7 +682,9 @@ impl MsgMaskSatellite {
     }
 }
 impl super::SBPMessage for MsgMaskSatellite {
-    const MSG_ID: u16 = 43;
+    fn get_message_type(&self) -> u16 {
+        43
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -502,6 +692,21 @@ impl super::SBPMessage for MsgMaskSatellite {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgMaskSatellite {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.mask.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.mask.sbp_size();
+        size += self.sid.sbp_size();
+        size
     }
 }
 
@@ -530,7 +735,9 @@ impl MsgMaskSatelliteDep {
     }
 }
 impl super::SBPMessage for MsgMaskSatelliteDep {
-    const MSG_ID: u16 = 27;
+    fn get_message_type(&self) -> u16 {
+        27
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -538,6 +745,21 @@ impl super::SBPMessage for MsgMaskSatelliteDep {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgMaskSatelliteDep {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.mask.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.mask.sbp_size();
+        size += self.sid.sbp_size();
+        size
     }
 }
 
@@ -563,7 +785,9 @@ impl MsgNetworkBandwidthUsage {
     }
 }
 impl super::SBPMessage for MsgNetworkBandwidthUsage {
-    const MSG_ID: u16 = 189;
+    fn get_message_type(&self) -> u16 {
+        189
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -571,6 +795,19 @@ impl super::SBPMessage for MsgNetworkBandwidthUsage {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgNetworkBandwidthUsage {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.interfaces.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.interfaces.sbp_size();
+        size
     }
 }
 
@@ -592,7 +829,9 @@ impl MsgNetworkStateReq {
     }
 }
 impl super::SBPMessage for MsgNetworkStateReq {
-    const MSG_ID: u16 = 186;
+    fn get_message_type(&self) -> u16 {
+        186
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -600,6 +839,15 @@ impl super::SBPMessage for MsgNetworkStateReq {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgNetworkStateReq {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+
+    fn sbp_size(&self) -> usize {
+        0
     }
 }
 
@@ -648,7 +896,9 @@ impl MsgNetworkStateResp {
     }
 }
 impl super::SBPMessage for MsgNetworkStateResp {
-    const MSG_ID: u16 = 187;
+    fn get_message_type(&self) -> u16 {
+        187
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -656,6 +906,33 @@ impl super::SBPMessage for MsgNetworkStateResp {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgNetworkStateResp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.ipv4_address.append_to_sbp_buffer(buf);
+        self.ipv4_mask_size.append_to_sbp_buffer(buf);
+        self.ipv6_address.append_to_sbp_buffer(buf);
+        self.ipv6_mask_size.append_to_sbp_buffer(buf);
+        self.rx_bytes.append_to_sbp_buffer(buf);
+        self.tx_bytes.append_to_sbp_buffer(buf);
+        self.interface_name.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.ipv4_address.sbp_size();
+        size += self.ipv4_mask_size.sbp_size();
+        size += self.ipv6_address.sbp_size();
+        size += self.ipv6_mask_size.sbp_size();
+        size += self.rx_bytes.sbp_size();
+        size += self.tx_bytes.sbp_size();
+        size += self.interface_name.sbp_size();
+        size += self.flags.sbp_size();
+        size
     }
 }
 
@@ -682,7 +959,9 @@ impl MsgReset {
     }
 }
 impl super::SBPMessage for MsgReset {
-    const MSG_ID: u16 = 182;
+    fn get_message_type(&self) -> u16 {
+        182
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -690,6 +969,19 @@ impl super::SBPMessage for MsgReset {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgReset {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.flags.sbp_size();
+        size
     }
 }
 
@@ -711,7 +1003,9 @@ impl MsgResetDep {
     }
 }
 impl super::SBPMessage for MsgResetDep {
-    const MSG_ID: u16 = 178;
+    fn get_message_type(&self) -> u16 {
+        178
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -719,6 +1013,15 @@ impl super::SBPMessage for MsgResetDep {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgResetDep {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+
+    fn sbp_size(&self) -> usize {
+        0
     }
 }
 
@@ -745,7 +1048,9 @@ impl MsgResetFilters {
     }
 }
 impl super::SBPMessage for MsgResetFilters {
-    const MSG_ID: u16 = 34;
+    fn get_message_type(&self) -> u16 {
+        34
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -753,6 +1058,19 @@ impl super::SBPMessage for MsgResetFilters {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgResetFilters {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.filter.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.filter.sbp_size();
+        size
     }
 }
 
@@ -774,7 +1092,9 @@ impl MsgSetTime {
     }
 }
 impl super::SBPMessage for MsgSetTime {
-    const MSG_ID: u16 = 104;
+    fn get_message_type(&self) -> u16 {
+        104
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -782,6 +1102,15 @@ impl super::SBPMessage for MsgSetTime {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSetTime {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+
+    fn sbp_size(&self) -> usize {
+        0
     }
 }
 
@@ -825,7 +1154,9 @@ impl MsgSpecan {
     }
 }
 impl super::SBPMessage for MsgSpecan {
-    const MSG_ID: u16 = 81;
+    fn get_message_type(&self) -> u16 {
+        81
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -833,6 +1164,31 @@ impl super::SBPMessage for MsgSpecan {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSpecan {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.channel_tag.append_to_sbp_buffer(buf);
+        self.t.append_to_sbp_buffer(buf);
+        self.freq_ref.append_to_sbp_buffer(buf);
+        self.freq_step.append_to_sbp_buffer(buf);
+        self.amplitude_ref.append_to_sbp_buffer(buf);
+        self.amplitude_unit.append_to_sbp_buffer(buf);
+        self.amplitude_value.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.channel_tag.sbp_size();
+        size += self.t.sbp_size();
+        size += self.freq_ref.sbp_size();
+        size += self.freq_step.sbp_size();
+        size += self.amplitude_ref.sbp_size();
+        size += self.amplitude_unit.sbp_size();
+        size += self.amplitude_value.sbp_size();
+        size
     }
 }
 
@@ -876,7 +1232,9 @@ impl MsgSpecanDep {
     }
 }
 impl super::SBPMessage for MsgSpecanDep {
-    const MSG_ID: u16 = 80;
+    fn get_message_type(&self) -> u16 {
+        80
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -884,6 +1242,31 @@ impl super::SBPMessage for MsgSpecanDep {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSpecanDep {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.channel_tag.append_to_sbp_buffer(buf);
+        self.t.append_to_sbp_buffer(buf);
+        self.freq_ref.append_to_sbp_buffer(buf);
+        self.freq_step.append_to_sbp_buffer(buf);
+        self.amplitude_ref.append_to_sbp_buffer(buf);
+        self.amplitude_unit.append_to_sbp_buffer(buf);
+        self.amplitude_value.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.channel_tag.sbp_size();
+        size += self.t.sbp_size();
+        size += self.freq_ref.sbp_size();
+        size += self.freq_step.sbp_size();
+        size += self.amplitude_ref.sbp_size();
+        size += self.amplitude_unit.sbp_size();
+        size += self.amplitude_value.sbp_size();
+        size
     }
 }
 
@@ -918,7 +1301,9 @@ impl MsgThreadState {
     }
 }
 impl super::SBPMessage for MsgThreadState {
-    const MSG_ID: u16 = 23;
+    fn get_message_type(&self) -> u16 {
+        23
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -926,6 +1311,23 @@ impl super::SBPMessage for MsgThreadState {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgThreadState {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.name.append_to_sbp_buffer(buf);
+        self.cpu.append_to_sbp_buffer(buf);
+        self.stack_free.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.name.sbp_size();
+        size += self.cpu.sbp_size();
+        size += self.stack_free.sbp_size();
+        size
     }
 }
 
@@ -971,7 +1373,9 @@ impl MsgUartState {
     }
 }
 impl super::SBPMessage for MsgUartState {
-    const MSG_ID: u16 = 29;
+    fn get_message_type(&self) -> u16 {
+        29
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -979,6 +1383,27 @@ impl super::SBPMessage for MsgUartState {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgUartState {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.uart_a.append_to_sbp_buffer(buf);
+        self.uart_b.append_to_sbp_buffer(buf);
+        self.uart_ftdi.append_to_sbp_buffer(buf);
+        self.latency.append_to_sbp_buffer(buf);
+        self.obs_period.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.uart_a.sbp_size();
+        size += self.uart_b.sbp_size();
+        size += self.uart_ftdi.sbp_size();
+        size += self.latency.sbp_size();
+        size += self.obs_period.sbp_size();
+        size
     }
 }
 
@@ -1013,7 +1438,9 @@ impl MsgUartStateDepa {
     }
 }
 impl super::SBPMessage for MsgUartStateDepa {
-    const MSG_ID: u16 = 24;
+    fn get_message_type(&self) -> u16 {
+        24
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1021,6 +1448,25 @@ impl super::SBPMessage for MsgUartStateDepa {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgUartStateDepa {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.uart_a.append_to_sbp_buffer(buf);
+        self.uart_b.append_to_sbp_buffer(buf);
+        self.uart_ftdi.append_to_sbp_buffer(buf);
+        self.latency.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.uart_a.sbp_size();
+        size += self.uart_b.sbp_size();
+        size += self.uart_ftdi.sbp_size();
+        size += self.latency.sbp_size();
+        size
     }
 }
 
@@ -1076,6 +1522,27 @@ impl NetworkUsage {
     }
 }
 
+impl crate::serialize::SbpSerialize for NetworkUsage {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.duration.append_to_sbp_buffer(buf);
+        self.total_bytes.append_to_sbp_buffer(buf);
+        self.rx_bytes.append_to_sbp_buffer(buf);
+        self.tx_bytes.append_to_sbp_buffer(buf);
+        self.interface_name.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.duration.sbp_size();
+        size += self.total_bytes.sbp_size();
+        size += self.rx_bytes.sbp_size();
+        size += self.tx_bytes.sbp_size();
+        size += self.interface_name.sbp_size();
+        size
+    }
+}
+
 /// base station observation message receipt period
 ///
 /// Statistics on the period of observations received from the base
@@ -1122,6 +1589,25 @@ impl Period {
             v.push(Period::parse(buf)?);
         }
         Ok(v)
+    }
+}
+
+impl crate::serialize::SbpSerialize for Period {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.avg.append_to_sbp_buffer(buf);
+        self.pmin.append_to_sbp_buffer(buf);
+        self.pmax.append_to_sbp_buffer(buf);
+        self.current.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.avg.sbp_size();
+        size += self.pmin.sbp_size();
+        size += self.pmax.sbp_size();
+        size += self.current.sbp_size();
+        size
     }
 }
 
@@ -1174,5 +1660,28 @@ impl UARTChannel {
             v.push(UARTChannel::parse(buf)?);
         }
         Ok(v)
+    }
+}
+
+impl crate::serialize::SbpSerialize for UARTChannel {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tx_throughput.append_to_sbp_buffer(buf);
+        self.rx_throughput.append_to_sbp_buffer(buf);
+        self.crc_error_count.append_to_sbp_buffer(buf);
+        self.io_error_count.append_to_sbp_buffer(buf);
+        self.tx_buffer_level.append_to_sbp_buffer(buf);
+        self.rx_buffer_level.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tx_throughput.sbp_size();
+        size += self.rx_throughput.sbp_size();
+        size += self.crc_error_count.sbp_size();
+        size += self.io_error_count.sbp_size();
+        size += self.tx_buffer_level.sbp_size();
+        size += self.rx_buffer_level.sbp_size();
+        size
     }
 }

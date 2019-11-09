@@ -21,25 +21,23 @@ use common::AlmostEq;
 #[test]
 fn test_auto_check_sbp_acquisition_38() {
     {
-        use sbp::messages::acquisition::MsgAcqResultDepA;
         let payload: Vec<u8> = vec![
             85, 21, 0, 195, 4, 13, 0, 0, 104, 65, 0, 192, 53, 68, 198, 199, 0, 70, 8, 2, 68,
         ];
-
-        assert_eq!(
-            MsgAcqResultDepA::MSG_ID,
-            0x15,
-            "Incorrect message type, expected 0x15, is {}",
-            MsgAcqResultDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgAcqResultDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x15,
+                    "Incorrect message type, expected 0x15, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -67,29 +65,30 @@ fn test_auto_check_sbp_acquisition_38() {
                     msg.snr
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgAcqResultDepA"),
+            _ => panic!("Invalid message type! Expected a MsgAcqResultDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::acquisition::MsgAcqResultDepA;
         let payload: Vec<u8> = vec![
             85, 21, 0, 195, 4, 13, 205, 204, 116, 65, 0, 192, 179, 67, 33, 81, 59, 68, 9, 219, 27,
         ];
-
-        assert_eq!(
-            MsgAcqResultDepA::MSG_ID,
-            0x15,
-            "Incorrect message type, expected 0x15, is {}",
-            MsgAcqResultDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgAcqResultDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x15,
+                    "Incorrect message type, expected 0x15, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -117,29 +116,30 @@ fn test_auto_check_sbp_acquisition_38() {
                     msg.snr
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgAcqResultDepA"),
+            _ => panic!("Invalid message type! Expected a MsgAcqResultDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::acquisition::MsgAcqResultDepA;
         let payload: Vec<u8> = vec![
             85, 21, 0, 195, 4, 13, 205, 204, 144, 65, 0, 0, 34, 66, 57, 237, 202, 197, 11, 150, 35,
         ];
-
-        assert_eq!(
-            MsgAcqResultDepA::MSG_ID,
-            0x15,
-            "Incorrect message type, expected 0x15, is {}",
-            MsgAcqResultDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgAcqResultDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x15,
+                    "Incorrect message type, expected 0x15, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -167,30 +167,31 @@ fn test_auto_check_sbp_acquisition_38() {
                     msg.snr
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgAcqResultDepA"),
+            _ => panic!("Invalid message type! Expected a MsgAcqResultDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::acquisition::MsgAcqResultDepA;
         let payload: Vec<u8> = vec![
             85, 21, 0, 195, 4, 13, 205, 204, 116, 65, 0, 32, 9, 68, 129, 193, 121, 196, 12, 146,
             118,
         ];
-
-        assert_eq!(
-            MsgAcqResultDepA::MSG_ID,
-            0x15,
-            "Incorrect message type, expected 0x15, is {}",
-            MsgAcqResultDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgAcqResultDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x15,
+                    "Incorrect message type, expected 0x15, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -218,29 +219,30 @@ fn test_auto_check_sbp_acquisition_38() {
                     msg.snr
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgAcqResultDepA"),
+            _ => panic!("Invalid message type! Expected a MsgAcqResultDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::acquisition::MsgAcqResultDepA;
         let payload: Vec<u8> = vec![
             85, 21, 0, 195, 4, 13, 205, 204, 116, 65, 0, 32, 67, 68, 228, 74, 148, 69, 14, 23, 75,
         ];
-
-        assert_eq!(
-            MsgAcqResultDepA::MSG_ID,
-            0x15,
-            "Incorrect message type, expected 0x15, is {}",
-            MsgAcqResultDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgAcqResultDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x15,
+                    "Incorrect message type, expected 0x15, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -268,29 +270,30 @@ fn test_auto_check_sbp_acquisition_38() {
                     msg.snr
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgAcqResultDepA"),
+            _ => panic!("Invalid message type! Expected a MsgAcqResultDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::acquisition::MsgAcqResultDepA;
         let payload: Vec<u8> = vec![
             85, 21, 0, 195, 4, 13, 228, 56, 35, 67, 0, 32, 18, 68, 129, 193, 249, 195, 0, 204, 207,
         ];
-
-        assert_eq!(
-            MsgAcqResultDepA::MSG_ID,
-            0x15,
-            "Incorrect message type, expected 0x15, is {}",
-            MsgAcqResultDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgAcqResultDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x15,
+                    "Incorrect message type, expected 0x15, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -318,7 +321,10 @@ fn test_auto_check_sbp_acquisition_38() {
                     msg.snr
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgAcqResultDepA"),
+            _ => panic!("Invalid message type! Expected a MsgAcqResultDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
 }

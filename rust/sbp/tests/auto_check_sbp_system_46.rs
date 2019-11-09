@@ -21,23 +21,21 @@ use common::AlmostEq;
 #[test]
 fn test_auto_check_sbp_system_46() {
     {
-        use sbp::messages::system::MsgStartup;
         let payload: Vec<u8> = vec![85, 0, 255, 195, 4, 4, 0, 0, 0, 0, 127, 181];
-
-        assert_eq!(
-            MsgStartup::MSG_ID,
-            0xff00,
-            "Incorrect message type, expected 0xff00, is {}",
-            MsgStartup::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgStartup(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0xff00,
+                    "Incorrect message type, expected 0xff00, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -50,27 +48,28 @@ fn test_auto_check_sbp_system_46() {
                     msg.reserved
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgStartup"),
+            _ => panic!("Invalid message type! Expected a MsgStartup"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::system::MsgHeartbeat;
         let payload: Vec<u8> = vec![85, 255, 255, 195, 4, 4, 0, 0, 0, 0, 66, 57];
-
-        assert_eq!(
-            MsgHeartbeat::MSG_ID,
-            0xffff,
-            "Incorrect message type, expected 0xffff, is {}",
-            MsgHeartbeat::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgHeartbeat(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0xffff,
+                    "Incorrect message type, expected 0xffff, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -83,7 +82,10 @@ fn test_auto_check_sbp_system_46() {
                     msg.flags
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgHeartbeat"),
+            _ => panic!("Invalid message type! Expected a MsgHeartbeat"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
 }

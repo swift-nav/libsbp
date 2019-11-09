@@ -50,7 +50,9 @@ impl MsgFlashDone {
     }
 }
 impl super::SBPMessage for MsgFlashDone {
-    const MSG_ID: u16 = 224;
+    fn get_message_type(&self) -> u16 {
+        224
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -58,6 +60,19 @@ impl super::SBPMessage for MsgFlashDone {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFlashDone {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.response.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.response.sbp_size();
+        size
     }
 }
 
@@ -90,7 +105,9 @@ impl MsgFlashErase {
     }
 }
 impl super::SBPMessage for MsgFlashErase {
-    const MSG_ID: u16 = 226;
+    fn get_message_type(&self) -> u16 {
+        226
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -98,6 +115,21 @@ impl super::SBPMessage for MsgFlashErase {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFlashErase {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.target.append_to_sbp_buffer(buf);
+        self.sector_num.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.target.sbp_size();
+        size += self.sector_num.sbp_size();
+        size
     }
 }
 
@@ -137,7 +169,9 @@ impl MsgFlashProgram {
     }
 }
 impl super::SBPMessage for MsgFlashProgram {
-    const MSG_ID: u16 = 230;
+    fn get_message_type(&self) -> u16 {
+        230
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -145,6 +179,25 @@ impl super::SBPMessage for MsgFlashProgram {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFlashProgram {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.target.append_to_sbp_buffer(buf);
+        self.addr_start.append_to_sbp_buffer(buf);
+        self.addr_len.append_to_sbp_buffer(buf);
+        self.data.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.target.sbp_size();
+        size += self.addr_start.sbp_size();
+        size += self.addr_len.sbp_size();
+        size += self.data.sbp_size();
+        size
     }
 }
 
@@ -182,7 +235,9 @@ impl MsgFlashReadReq {
     }
 }
 impl super::SBPMessage for MsgFlashReadReq {
-    const MSG_ID: u16 = 231;
+    fn get_message_type(&self) -> u16 {
+        231
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -190,6 +245,23 @@ impl super::SBPMessage for MsgFlashReadReq {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFlashReadReq {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.target.append_to_sbp_buffer(buf);
+        self.addr_start.append_to_sbp_buffer(buf);
+        self.addr_len.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.target.sbp_size();
+        size += self.addr_start.sbp_size();
+        size += self.addr_len.sbp_size();
+        size
     }
 }
 
@@ -227,7 +299,9 @@ impl MsgFlashReadResp {
     }
 }
 impl super::SBPMessage for MsgFlashReadResp {
-    const MSG_ID: u16 = 225;
+    fn get_message_type(&self) -> u16 {
+        225
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -235,6 +309,23 @@ impl super::SBPMessage for MsgFlashReadResp {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFlashReadResp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.target.append_to_sbp_buffer(buf);
+        self.addr_start.append_to_sbp_buffer(buf);
+        self.addr_len.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.target.sbp_size();
+        size += self.addr_start.sbp_size();
+        size += self.addr_len.sbp_size();
+        size
     }
 }
 
@@ -261,7 +352,9 @@ impl MsgM25FlashWriteStatus {
     }
 }
 impl super::SBPMessage for MsgM25FlashWriteStatus {
-    const MSG_ID: u16 = 243;
+    fn get_message_type(&self) -> u16 {
+        243
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -269,6 +362,19 @@ impl super::SBPMessage for MsgM25FlashWriteStatus {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgM25FlashWriteStatus {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.status.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.status.sbp_size();
+        size
     }
 }
 
@@ -295,7 +401,9 @@ impl MsgStmFlashLockSector {
     }
 }
 impl super::SBPMessage for MsgStmFlashLockSector {
-    const MSG_ID: u16 = 227;
+    fn get_message_type(&self) -> u16 {
+        227
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -303,6 +411,19 @@ impl super::SBPMessage for MsgStmFlashLockSector {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgStmFlashLockSector {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sector.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sector.sbp_size();
+        size
     }
 }
 
@@ -329,7 +450,9 @@ impl MsgStmFlashUnlockSector {
     }
 }
 impl super::SBPMessage for MsgStmFlashUnlockSector {
-    const MSG_ID: u16 = 228;
+    fn get_message_type(&self) -> u16 {
+        228
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -337,6 +460,19 @@ impl super::SBPMessage for MsgStmFlashUnlockSector {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgStmFlashUnlockSector {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sector.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sector.sbp_size();
+        size
     }
 }
 
@@ -361,7 +497,9 @@ impl MsgStmUniqueIdReq {
     }
 }
 impl super::SBPMessage for MsgStmUniqueIdReq {
-    const MSG_ID: u16 = 232;
+    fn get_message_type(&self) -> u16 {
+        232
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -369,6 +507,15 @@ impl super::SBPMessage for MsgStmUniqueIdReq {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgStmUniqueIdReq {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+
+    fn sbp_size(&self) -> usize {
+        0
     }
 }
 
@@ -398,7 +545,9 @@ impl MsgStmUniqueIdResp {
     }
 }
 impl super::SBPMessage for MsgStmUniqueIdResp {
-    const MSG_ID: u16 = 229;
+    fn get_message_type(&self) -> u16 {
+        229
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -406,5 +555,18 @@ impl super::SBPMessage for MsgStmUniqueIdResp {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgStmUniqueIdResp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.stm_id.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.stm_id.sbp_size();
+        size
     }
 }

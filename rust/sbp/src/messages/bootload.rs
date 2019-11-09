@@ -47,7 +47,9 @@ impl MsgBootloaderHandshakeDepA {
     }
 }
 impl super::SBPMessage for MsgBootloaderHandshakeDepA {
-    const MSG_ID: u16 = 176;
+    fn get_message_type(&self) -> u16 {
+        176
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -55,6 +57,19 @@ impl super::SBPMessage for MsgBootloaderHandshakeDepA {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.handshake.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.handshake.sbp_size();
+        size
     }
 }
 
@@ -77,7 +92,9 @@ impl MsgBootloaderHandshakeReq {
     }
 }
 impl super::SBPMessage for MsgBootloaderHandshakeReq {
-    const MSG_ID: u16 = 179;
+    fn get_message_type(&self) -> u16 {
+        179
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -85,6 +102,15 @@ impl super::SBPMessage for MsgBootloaderHandshakeReq {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeReq {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+
+    fn sbp_size(&self) -> usize {
+        0
     }
 }
 
@@ -117,7 +143,9 @@ impl MsgBootloaderHandshakeResp {
     }
 }
 impl super::SBPMessage for MsgBootloaderHandshakeResp {
-    const MSG_ID: u16 = 180;
+    fn get_message_type(&self) -> u16 {
+        180
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -125,6 +153,21 @@ impl super::SBPMessage for MsgBootloaderHandshakeResp {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeResp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.flags.append_to_sbp_buffer(buf);
+        self.version.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.flags.sbp_size();
+        size += self.version.sbp_size();
+        size
     }
 }
 
@@ -150,7 +193,9 @@ impl MsgBootloaderJumpToApp {
     }
 }
 impl super::SBPMessage for MsgBootloaderJumpToApp {
-    const MSG_ID: u16 = 177;
+    fn get_message_type(&self) -> u16 {
+        177
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -158,6 +203,19 @@ impl super::SBPMessage for MsgBootloaderJumpToApp {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgBootloaderJumpToApp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.jump.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.jump.sbp_size();
+        size
     }
 }
 
@@ -183,7 +241,9 @@ impl MsgNapDeviceDnaReq {
     }
 }
 impl super::SBPMessage for MsgNapDeviceDnaReq {
-    const MSG_ID: u16 = 222;
+    fn get_message_type(&self) -> u16 {
+        222
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -191,6 +251,15 @@ impl super::SBPMessage for MsgNapDeviceDnaReq {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgNapDeviceDnaReq {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+
+    fn sbp_size(&self) -> usize {
+        0
     }
 }
 
@@ -221,7 +290,9 @@ impl MsgNapDeviceDnaResp {
     }
 }
 impl super::SBPMessage for MsgNapDeviceDnaResp {
-    const MSG_ID: u16 = 221;
+    fn get_message_type(&self) -> u16 {
+        221
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -229,5 +300,18 @@ impl super::SBPMessage for MsgNapDeviceDnaResp {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgNapDeviceDnaResp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.dna.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.dna.sbp_size();
+        size
     }
 }

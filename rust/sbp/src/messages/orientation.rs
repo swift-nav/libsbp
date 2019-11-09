@@ -62,7 +62,9 @@ impl MsgAngularRate {
     }
 }
 impl super::SBPMessage for MsgAngularRate {
-    const MSG_ID: u16 = 546;
+    fn get_message_type(&self) -> u16 {
+        546
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -70,6 +72,27 @@ impl super::SBPMessage for MsgAngularRate {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgAngularRate {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.x.append_to_sbp_buffer(buf);
+        self.y.append_to_sbp_buffer(buf);
+        self.z.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.x.sbp_size();
+        size += self.y.sbp_size();
+        size += self.z.sbp_size();
+        size += self.flags.sbp_size();
+        size
     }
 }
 
@@ -107,7 +130,9 @@ impl MsgBaselineHeading {
     }
 }
 impl super::SBPMessage for MsgBaselineHeading {
-    const MSG_ID: u16 = 527;
+    fn get_message_type(&self) -> u16 {
+        527
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -115,6 +140,25 @@ impl super::SBPMessage for MsgBaselineHeading {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgBaselineHeading {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.heading.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.heading.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
     }
 }
 
@@ -165,7 +209,9 @@ impl MsgOrientEuler {
     }
 }
 impl super::SBPMessage for MsgOrientEuler {
-    const MSG_ID: u16 = 545;
+    fn get_message_type(&self) -> u16 {
+        545
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -173,6 +219,33 @@ impl super::SBPMessage for MsgOrientEuler {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgOrientEuler {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.roll.append_to_sbp_buffer(buf);
+        self.pitch.append_to_sbp_buffer(buf);
+        self.yaw.append_to_sbp_buffer(buf);
+        self.roll_accuracy.append_to_sbp_buffer(buf);
+        self.pitch_accuracy.append_to_sbp_buffer(buf);
+        self.yaw_accuracy.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.roll.sbp_size();
+        size += self.pitch.sbp_size();
+        size += self.yaw.sbp_size();
+        size += self.roll_accuracy.sbp_size();
+        size += self.pitch_accuracy.sbp_size();
+        size += self.yaw_accuracy.sbp_size();
+        size += self.flags.sbp_size();
+        size
     }
 }
 
@@ -229,7 +302,9 @@ impl MsgOrientQuat {
     }
 }
 impl super::SBPMessage for MsgOrientQuat {
-    const MSG_ID: u16 = 544;
+    fn get_message_type(&self) -> u16 {
+        544
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -237,5 +312,36 @@ impl super::SBPMessage for MsgOrientQuat {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgOrientQuat {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.w.append_to_sbp_buffer(buf);
+        self.x.append_to_sbp_buffer(buf);
+        self.y.append_to_sbp_buffer(buf);
+        self.z.append_to_sbp_buffer(buf);
+        self.w_accuracy.append_to_sbp_buffer(buf);
+        self.x_accuracy.append_to_sbp_buffer(buf);
+        self.y_accuracy.append_to_sbp_buffer(buf);
+        self.z_accuracy.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.w.sbp_size();
+        size += self.x.sbp_size();
+        size += self.y.sbp_size();
+        size += self.z.sbp_size();
+        size += self.w_accuracy.sbp_size();
+        size += self.x_accuracy.sbp_size();
+        size += self.y_accuracy.sbp_size();
+        size += self.z_accuracy.sbp_size();
+        size += self.flags.sbp_size();
+        size
     }
 }

@@ -21,25 +21,23 @@ use common::AlmostEq;
 #[test]
 fn test_auto_check_sbp_navigation_8() {
     {
-        use sbp::messages::navigation::MsgDops;
         let payload: Vec<u8> = vec![
             85, 8, 2, 66, 0, 15, 100, 0, 0, 0, 2, 0, 6, 0, 5, 0, 5, 0, 5, 0, 0, 244, 4,
         ];
-
-        assert_eq!(
-            MsgDops::MSG_ID,
-            0x208,
-            "Incorrect message type, expected 0x208, is {}",
-            MsgDops::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgDops(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x208,
+                    "Incorrect message type, expected 0x208, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x42,
@@ -82,7 +80,10 @@ fn test_auto_check_sbp_navigation_8() {
                     msg.vdop
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgDops"),
+            _ => panic!("Invalid message type! Expected a MsgDops"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
 }

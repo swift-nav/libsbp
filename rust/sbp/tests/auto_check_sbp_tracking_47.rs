@@ -21,7 +21,6 @@ use common::AlmostEq;
 #[test]
 fn test_auto_check_sbp_tracking_47() {
     {
-        use sbp::messages::tracking::MsgTrackingStateDepA;
         let payload: Vec<u8> = vec![
             85, 22, 0, 195, 4, 66, 1, 0, 204, 177, 51, 65, 1, 2, 198, 4, 39, 65, 1, 3, 219, 182,
             27, 65, 1, 7, 132, 120, 101, 65, 1, 10, 91, 91, 251, 64, 1, 13, 42, 37, 163, 64, 1, 22,
@@ -29,20 +28,19 @@ fn test_auto_check_sbp_tracking_47() {
             135, 64, 1, 6, 100, 59, 223, 64, 17, 225,
         ];
 
-        assert_eq!(
-            MsgTrackingStateDepA::MSG_ID,
-            0x16,
-            "Incorrect message type, expected 0x16, is {}",
-            MsgTrackingStateDepA::MSG_ID
-        );
-
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgTrackingStateDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x16,
+                    "Incorrect message type, expected 0x16, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -215,14 +213,13 @@ fn test_auto_check_sbp_tracking_47() {
                     msg.states[10].state
                 );
             }
-            _ => assert!(
-                false,
-                "Invalid message type! Expected a MsgTrackingStateDepA"
-            ),
+            _ => panic!("Invalid message type! Expected a MsgTrackingStateDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::tracking::MsgTrackingStateDepA;
         let payload: Vec<u8> = vec![
             85, 22, 0, 195, 4, 66, 1, 0, 216, 57, 48, 65, 1, 2, 145, 41, 46, 65, 1, 3, 4, 26, 34,
             65, 1, 7, 177, 67, 109, 65, 1, 10, 61, 80, 249, 64, 1, 13, 250, 199, 155, 64, 1, 22,
@@ -230,20 +227,19 @@ fn test_auto_check_sbp_tracking_47() {
             120, 64, 1, 6, 183, 247, 129, 64, 168, 173,
         ];
 
-        assert_eq!(
-            MsgTrackingStateDepA::MSG_ID,
-            0x16,
-            "Incorrect message type, expected 0x16, is {}",
-            MsgTrackingStateDepA::MSG_ID
-        );
-
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgTrackingStateDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x16,
+                    "Incorrect message type, expected 0x16, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -416,14 +412,13 @@ fn test_auto_check_sbp_tracking_47() {
                     msg.states[10].state
                 );
             }
-            _ => assert!(
-                false,
-                "Invalid message type! Expected a MsgTrackingStateDepA"
-            ),
+            _ => panic!("Invalid message type! Expected a MsgTrackingStateDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::tracking::MsgTrackingStateDepA;
         let payload: Vec<u8> = vec![
             85, 22, 0, 195, 4, 66, 1, 0, 141, 76, 60, 65, 1, 2, 69, 139, 46, 65, 1, 3, 146, 27, 30,
             65, 1, 7, 235, 56, 97, 65, 1, 10, 141, 213, 243, 64, 1, 13, 250, 170, 166, 64, 1, 22,
@@ -431,20 +426,19 @@ fn test_auto_check_sbp_tracking_47() {
             132, 64, 1, 6, 49, 214, 54, 64, 110, 179,
         ];
 
-        assert_eq!(
-            MsgTrackingStateDepA::MSG_ID,
-            0x16,
-            "Incorrect message type, expected 0x16, is {}",
-            MsgTrackingStateDepA::MSG_ID
-        );
-
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgTrackingStateDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x16,
+                    "Incorrect message type, expected 0x16, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -617,14 +611,13 @@ fn test_auto_check_sbp_tracking_47() {
                     msg.states[10].state
                 );
             }
-            _ => assert!(
-                false,
-                "Invalid message type! Expected a MsgTrackingStateDepA"
-            ),
+            _ => panic!("Invalid message type! Expected a MsgTrackingStateDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::tracking::MsgTrackingStateDepA;
         let payload: Vec<u8> = vec![
             85, 22, 0, 195, 4, 66, 1, 0, 55, 143, 120, 66, 0, 0, 0, 0, 128, 191, 0, 0, 0, 0, 128,
             191, 0, 0, 0, 0, 128, 191, 0, 0, 0, 0, 128, 191, 0, 0, 0, 0, 128, 191, 0, 0, 0, 0, 128,
@@ -632,20 +625,19 @@ fn test_auto_check_sbp_tracking_47() {
             191, 248, 89,
         ];
 
-        assert_eq!(
-            MsgTrackingStateDepA::MSG_ID,
-            0x16,
-            "Incorrect message type, expected 0x16, is {}",
-            MsgTrackingStateDepA::MSG_ID
-        );
-
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgTrackingStateDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x16,
+                    "Incorrect message type, expected 0x16, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -814,14 +806,13 @@ fn test_auto_check_sbp_tracking_47() {
                     msg.states[10].state
                 );
             }
-            _ => assert!(
-                false,
-                "Invalid message type! Expected a MsgTrackingStateDepA"
-            ),
+            _ => panic!("Invalid message type! Expected a MsgTrackingStateDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::tracking::MsgTrackingStateDepA;
         let payload: Vec<u8> = vec![
             85, 22, 0, 195, 4, 66, 1, 0, 218, 14, 19, 66, 1, 2, 210, 3, 21, 65, 1, 3, 234, 214,
             134, 65, 0, 0, 0, 0, 128, 191, 0, 0, 0, 0, 128, 191, 0, 0, 0, 0, 128, 191, 0, 0, 0, 0,
@@ -829,20 +820,19 @@ fn test_auto_check_sbp_tracking_47() {
             128, 191, 84, 101,
         ];
 
-        assert_eq!(
-            MsgTrackingStateDepA::MSG_ID,
-            0x16,
-            "Incorrect message type, expected 0x16, is {}",
-            MsgTrackingStateDepA::MSG_ID
-        );
-
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgTrackingStateDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x16,
+                    "Incorrect message type, expected 0x16, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -1011,14 +1001,13 @@ fn test_auto_check_sbp_tracking_47() {
                     msg.states[10].state
                 );
             }
-            _ => assert!(
-                false,
-                "Invalid message type! Expected a MsgTrackingStateDepA"
-            ),
+            _ => panic!("Invalid message type! Expected a MsgTrackingStateDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::tracking::MsgTrackingStateDepA;
         let payload: Vec<u8> = vec![
             85, 22, 0, 195, 4, 66, 1, 0, 98, 39, 219, 65, 1, 2, 0, 0, 56, 64, 1, 3, 121, 123, 7,
             65, 0, 0, 0, 0, 128, 191, 0, 0, 0, 0, 128, 191, 0, 0, 0, 0, 128, 191, 0, 0, 0, 0, 128,
@@ -1026,20 +1015,19 @@ fn test_auto_check_sbp_tracking_47() {
             191, 37, 123,
         ];
 
-        assert_eq!(
-            MsgTrackingStateDepA::MSG_ID,
-            0x16,
-            "Incorrect message type, expected 0x16, is {}",
-            MsgTrackingStateDepA::MSG_ID
-        );
-
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgTrackingStateDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x16,
+                    "Incorrect message type, expected 0x16, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -1208,10 +1196,10 @@ fn test_auto_check_sbp_tracking_47() {
                     msg.states[10].state
                 );
             }
-            _ => assert!(
-                false,
-                "Invalid message type! Expected a MsgTrackingStateDepA"
-            ),
+            _ => panic!("Invalid message type! Expected a MsgTrackingStateDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
 }

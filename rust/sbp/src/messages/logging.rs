@@ -55,7 +55,9 @@ impl MsgFwd {
     }
 }
 impl super::SBPMessage for MsgFwd {
-    const MSG_ID: u16 = 1026;
+    fn get_message_type(&self) -> u16 {
+        1026
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -63,6 +65,23 @@ impl super::SBPMessage for MsgFwd {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFwd {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.source.append_to_sbp_buffer(buf);
+        self.protocol.append_to_sbp_buffer(buf);
+        self.fwd_payload.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.source.sbp_size();
+        size += self.protocol.sbp_size();
+        size += self.fwd_payload.sbp_size();
+        size
     }
 }
 
@@ -93,7 +112,9 @@ impl MsgLog {
     }
 }
 impl super::SBPMessage for MsgLog {
-    const MSG_ID: u16 = 1025;
+    fn get_message_type(&self) -> u16 {
+        1025
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -101,6 +122,21 @@ impl super::SBPMessage for MsgLog {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgLog {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.level.append_to_sbp_buffer(buf);
+        self.text.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.level.sbp_size();
+        size += self.text.sbp_size();
+        size
     }
 }
 
@@ -126,7 +162,9 @@ impl MsgPrintDep {
     }
 }
 impl super::SBPMessage for MsgPrintDep {
-    const MSG_ID: u16 = 16;
+    fn get_message_type(&self) -> u16 {
+        16
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -134,5 +172,18 @@ impl super::SBPMessage for MsgPrintDep {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgPrintDep {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.text.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.text.sbp_size();
+        size
     }
 }

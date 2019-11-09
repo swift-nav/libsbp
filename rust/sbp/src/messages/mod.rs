@@ -27,6 +27,7 @@ pub mod settings;
 pub mod ssr;
 pub mod system;
 pub mod tracking;
+pub mod unknown;
 pub mod user;
 pub mod vehicle;
 use self::acquisition::MsgAcqResult;
@@ -201,15 +202,16 @@ use self::tracking::MsgTrackingStateDepA;
 use self::tracking::MsgTrackingStateDepB;
 use self::tracking::MsgTrackingStateDetailedDep;
 use self::tracking::MsgTrackingStateDetailedDepA;
+use self::unknown::Unknown;
 use self::user::MsgUserData;
 use self::vehicle::MsgOdometry;
 
+use crate::serialize::SbpSerialize;
 #[cfg(feature = "serialize")]
 use serde::{Deserialize, Serialize};
 
-pub trait SBPMessage {
-    const MSG_ID: u16;
-
+pub trait SBPMessage: SbpSerialize {
+    fn get_message_type(&self) -> u16;
     fn get_sender_id(&self) -> Option<u16>;
     fn set_sender_id(&mut self, new_id: u16);
 }
@@ -217,11 +219,6 @@ pub trait SBPMessage {
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 pub enum SBP {
-    Unknown {
-        msg_id: u16,
-        sender_id: u16,
-        payload: Vec<u8>,
-    },
     MsgPrintDep(MsgPrintDep),
     MsgTrackingStateDetailedDep(MsgTrackingStateDetailedDep),
     MsgTrackingStateDepB(MsgTrackingStateDepB),
@@ -396,6 +393,7 @@ pub enum SBP {
     MsgCsacTelemetry(MsgCsacTelemetry),
     MsgCsacTelemetryLabels(MsgCsacTelemetryLabels),
     MsgHeartbeat(MsgHeartbeat),
+    Unknown(Unknown),
 }
 
 impl SBP {
@@ -1271,15 +1269,195 @@ impl SBP {
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgHeartbeat(msg))
             }
-            _ => Ok(SBP::Unknown {
+            _ => Ok(SBP::Unknown(Unknown {
                 msg_id: msg_id,
                 sender_id: sender_id,
                 payload: payload.to_vec(),
-            }),
+            })),
         };
         match x {
             Ok(x) => Ok(x),
             Err(_) => Err(crate::Error::ParseError),
+        }
+    }
+
+    pub fn as_sbp_message<'a>(&'a self) -> &dyn SBPMessage {
+        match self {
+            SBP::MsgPrintDep(msg) => msg,
+            SBP::MsgTrackingStateDetailedDep(msg) => msg,
+            SBP::MsgTrackingStateDepB(msg) => msg,
+            SBP::MsgAcqResultDepB(msg) => msg,
+            SBP::MsgAcqResultDepA(msg) => msg,
+            SBP::MsgTrackingStateDepA(msg) => msg,
+            SBP::MsgThreadState(msg) => msg,
+            SBP::MsgUartStateDepa(msg) => msg,
+            SBP::MsgIarState(msg) => msg,
+            SBP::MsgEphemerisDepA(msg) => msg,
+            SBP::MsgMaskSatelliteDep(msg) => msg,
+            SBP::MsgTrackingIqDepA(msg) => msg,
+            SBP::MsgUartState(msg) => msg,
+            SBP::MsgAcqSvProfileDep(msg) => msg,
+            SBP::MsgAcqResultDepC(msg) => msg,
+            SBP::MsgTrackingStateDetailedDepA(msg) => msg,
+            SBP::MsgResetFilters(msg) => msg,
+            SBP::MsgInitBaseDep(msg) => msg,
+            SBP::MsgMaskSatellite(msg) => msg,
+            SBP::MsgTrackingIqDepB(msg) => msg,
+            SBP::MsgTrackingIq(msg) => msg,
+            SBP::MsgAcqSvProfile(msg) => msg,
+            SBP::MsgAcqResult(msg) => msg,
+            SBP::MsgTrackingState(msg) => msg,
+            SBP::MsgObsDepB(msg) => msg,
+            SBP::MsgBasePosLLH(msg) => msg,
+            SBP::MsgObsDepA(msg) => msg,
+            SBP::MsgEphemerisDepB(msg) => msg,
+            SBP::MsgEphemerisDepC(msg) => msg,
+            SBP::MsgBasePosECEF(msg) => msg,
+            SBP::MsgObsDepC(msg) => msg,
+            SBP::MsgObs(msg) => msg,
+            SBP::MsgSpecanDep(msg) => msg,
+            SBP::MsgSpecan(msg) => msg,
+            SBP::MsgMeasurementState(msg) => msg,
+            SBP::MsgSetTime(msg) => msg,
+            SBP::MsgAlmanac(msg) => msg,
+            SBP::MsgAlmanacGPSDep(msg) => msg,
+            SBP::MsgAlmanacGloDep(msg) => msg,
+            SBP::MsgAlmanacGPS(msg) => msg,
+            SBP::MsgAlmanacGlo(msg) => msg,
+            SBP::MsgGloBiases(msg) => msg,
+            SBP::MsgEphemerisDepD(msg) => msg,
+            SBP::MsgEphemerisGPSDepE(msg) => msg,
+            SBP::MsgEphemerisSbasDepA(msg) => msg,
+            SBP::MsgEphemerisGloDepA(msg) => msg,
+            SBP::MsgEphemerisSbasDepB(msg) => msg,
+            SBP::MsgEphemerisGloDepB(msg) => msg,
+            SBP::MsgEphemerisGPSDepF(msg) => msg,
+            SBP::MsgEphemerisGloDepC(msg) => msg,
+            SBP::MsgEphemerisGloDepD(msg) => msg,
+            SBP::MsgEphemerisBds(msg) => msg,
+            SBP::MsgEphemerisGPS(msg) => msg,
+            SBP::MsgEphemerisGlo(msg) => msg,
+            SBP::MsgEphemerisSbas(msg) => msg,
+            SBP::MsgEphemerisGal(msg) => msg,
+            SBP::MsgEphemerisQzss(msg) => msg,
+            SBP::MsgIono(msg) => msg,
+            SBP::MsgSvConfigurationGPSDep(msg) => msg,
+            SBP::MsgGroupDelayDepA(msg) => msg,
+            SBP::MsgGroupDelayDepB(msg) => msg,
+            SBP::MsgGroupDelay(msg) => msg,
+            SBP::MsgEphemerisGalDepA(msg) => msg,
+            SBP::MsgGnssCapb(msg) => msg,
+            SBP::MsgSvAzEl(msg) => msg,
+            SBP::MsgSettingsWrite(msg) => msg,
+            SBP::MsgSettingsSave(msg) => msg,
+            SBP::MsgSettingsReadByIndexReq(msg) => msg,
+            SBP::MsgFileioReadResp(msg) => msg,
+            SBP::MsgSettingsReadReq(msg) => msg,
+            SBP::MsgSettingsReadResp(msg) => msg,
+            SBP::MsgSettingsReadByIndexDone(msg) => msg,
+            SBP::MsgSettingsReadByIndexResp(msg) => msg,
+            SBP::MsgFileioReadReq(msg) => msg,
+            SBP::MsgFileioReadDirReq(msg) => msg,
+            SBP::MsgFileioReadDirResp(msg) => msg,
+            SBP::MsgFileioWriteResp(msg) => msg,
+            SBP::MsgFileioRemove(msg) => msg,
+            SBP::MsgFileioWriteReq(msg) => msg,
+            SBP::MsgSettingsRegister(msg) => msg,
+            SBP::MsgSettingsWriteResp(msg) => msg,
+            SBP::MsgBootloaderHandshakeDepA(msg) => msg,
+            SBP::MsgBootloaderJumpToApp(msg) => msg,
+            SBP::MsgResetDep(msg) => msg,
+            SBP::MsgBootloaderHandshakeReq(msg) => msg,
+            SBP::MsgBootloaderHandshakeResp(msg) => msg,
+            SBP::MsgDeviceMonitor(msg) => msg,
+            SBP::MsgReset(msg) => msg,
+            SBP::MsgCommandReq(msg) => msg,
+            SBP::MsgCommandResp(msg) => msg,
+            SBP::MsgNetworkStateReq(msg) => msg,
+            SBP::MsgNetworkStateResp(msg) => msg,
+            SBP::MsgCommandOutput(msg) => msg,
+            SBP::MsgNetworkBandwidthUsage(msg) => msg,
+            SBP::MsgCellModemStatus(msg) => msg,
+            SBP::MsgFrontEndGain(msg) => msg,
+            SBP::MsgCwResults(msg) => msg,
+            SBP::MsgCwStart(msg) => msg,
+            SBP::MsgNapDeviceDnaResp(msg) => msg,
+            SBP::MsgNapDeviceDnaReq(msg) => msg,
+            SBP::MsgFlashDone(msg) => msg,
+            SBP::MsgFlashReadResp(msg) => msg,
+            SBP::MsgFlashErase(msg) => msg,
+            SBP::MsgStmFlashLockSector(msg) => msg,
+            SBP::MsgStmFlashUnlockSector(msg) => msg,
+            SBP::MsgStmUniqueIdResp(msg) => msg,
+            SBP::MsgFlashProgram(msg) => msg,
+            SBP::MsgFlashReadReq(msg) => msg,
+            SBP::MsgStmUniqueIdReq(msg) => msg,
+            SBP::MsgM25FlashWriteStatus(msg) => msg,
+            SBP::MsgGPSTimeDepA(msg) => msg,
+            SBP::MsgExtEvent(msg) => msg,
+            SBP::MsgGPSTime(msg) => msg,
+            SBP::MsgUtcTime(msg) => msg,
+            SBP::MsgSettingsRegisterResp(msg) => msg,
+            SBP::MsgPosECEFDepA(msg) => msg,
+            SBP::MsgPosLLHDepA(msg) => msg,
+            SBP::MsgBaselineECEFDepA(msg) => msg,
+            SBP::MsgBaselineNEDDepA(msg) => msg,
+            SBP::MsgVelECEFDepA(msg) => msg,
+            SBP::MsgVelNEDDepA(msg) => msg,
+            SBP::MsgDopsDepA(msg) => msg,
+            SBP::MsgBaselineHeadingDepA(msg) => msg,
+            SBP::MsgDops(msg) => msg,
+            SBP::MsgPosECEF(msg) => msg,
+            SBP::MsgPosLLH(msg) => msg,
+            SBP::MsgBaselineECEF(msg) => msg,
+            SBP::MsgBaselineNED(msg) => msg,
+            SBP::MsgVelECEF(msg) => msg,
+            SBP::MsgVelNED(msg) => msg,
+            SBP::MsgBaselineHeading(msg) => msg,
+            SBP::MsgAgeCorrections(msg) => msg,
+            SBP::MsgPosLLHCov(msg) => msg,
+            SBP::MsgVelNEDCov(msg) => msg,
+            SBP::MsgVelBody(msg) => msg,
+            SBP::MsgPosECEFCov(msg) => msg,
+            SBP::MsgVelECEFCov(msg) => msg,
+            SBP::MsgProtectionLevel(msg) => msg,
+            SBP::MsgOrientQuat(msg) => msg,
+            SBP::MsgOrientEuler(msg) => msg,
+            SBP::MsgAngularRate(msg) => msg,
+            SBP::MsgNdbEvent(msg) => msg,
+            SBP::MsgLog(msg) => msg,
+            SBP::MsgFwd(msg) => msg,
+            SBP::MsgSsrOrbitClockDepA(msg) => msg,
+            SBP::MsgSsrOrbitClock(msg) => msg,
+            SBP::MsgSsrCodeBiases(msg) => msg,
+            SBP::MsgSsrPhaseBiases(msg) => msg,
+            SBP::MsgSsrStecCorrection(msg) => msg,
+            SBP::MsgSsrGriddedCorrection(msg) => msg,
+            SBP::MsgSsrGridDefinition(msg) => msg,
+            SBP::MsgOsr(msg) => msg,
+            SBP::MsgUserData(msg) => msg,
+            SBP::MsgImuRaw(msg) => msg,
+            SBP::MsgImuAux(msg) => msg,
+            SBP::MsgMagRaw(msg) => msg,
+            SBP::MsgOdometry(msg) => msg,
+            SBP::MsgFileioConfigReq(msg) => msg,
+            SBP::MsgFileioConfigResp(msg) => msg,
+            SBP::MsgSbasRaw(msg) => msg,
+            SBP::MsgLinuxCpuState(msg) => msg,
+            SBP::MsgLinuxMemState(msg) => msg,
+            SBP::MsgLinuxSysState(msg) => msg,
+            SBP::MsgLinuxProcessSocketCounts(msg) => msg,
+            SBP::MsgLinuxProcessSocketQueues(msg) => msg,
+            SBP::MsgLinuxSocketUsage(msg) => msg,
+            SBP::MsgLinuxProcessFdCount(msg) => msg,
+            SBP::MsgLinuxProcessFdSummary(msg) => msg,
+            SBP::MsgStartup(msg) => msg,
+            SBP::MsgDgnssStatus(msg) => msg,
+            SBP::MsgInsStatus(msg) => msg,
+            SBP::MsgCsacTelemetry(msg) => msg,
+            SBP::MsgCsacTelemetryLabels(msg) => msg,
+            SBP::MsgHeartbeat(msg) => msg,
+            SBP::Unknown(msg) => msg,
         }
     }
 }
