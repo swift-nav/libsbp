@@ -26,6 +26,7 @@ use serde::{Deserialize, Serialize};
 /// Profile for a specific SV for debugging purposes
 /// The message describes SV profile during acquisition time.
 /// The message is used to debug and measure the performance.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -90,9 +91,45 @@ impl AcqSvProfile {
     }
 }
 
+impl crate::serialize::SbpSerialize for AcqSvProfile {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.job_type.append_to_sbp_buffer(buf);
+        self.status.append_to_sbp_buffer(buf);
+        self.cn0.append_to_sbp_buffer(buf);
+        self.int_time.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+        self.bin_width.append_to_sbp_buffer(buf);
+        self.timestamp.append_to_sbp_buffer(buf);
+        self.time_spent.append_to_sbp_buffer(buf);
+        self.cf_min.append_to_sbp_buffer(buf);
+        self.cf_max.append_to_sbp_buffer(buf);
+        self.cf.append_to_sbp_buffer(buf);
+        self.cp.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.job_type.sbp_size();
+        size += self.status.sbp_size();
+        size += self.cn0.sbp_size();
+        size += self.int_time.sbp_size();
+        size += self.sid.sbp_size();
+        size += self.bin_width.sbp_size();
+        size += self.timestamp.sbp_size();
+        size += self.time_spent.sbp_size();
+        size += self.cf_min.sbp_size();
+        size += self.cf_max.sbp_size();
+        size += self.cf.sbp_size();
+        size += self.cp.sbp_size();
+        size
+    }
+}
+
 /// Deprecated
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -160,6 +197,41 @@ impl AcqSvProfileDep {
     }
 }
 
+impl crate::serialize::SbpSerialize for AcqSvProfileDep {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.job_type.append_to_sbp_buffer(buf);
+        self.status.append_to_sbp_buffer(buf);
+        self.cn0.append_to_sbp_buffer(buf);
+        self.int_time.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+        self.bin_width.append_to_sbp_buffer(buf);
+        self.timestamp.append_to_sbp_buffer(buf);
+        self.time_spent.append_to_sbp_buffer(buf);
+        self.cf_min.append_to_sbp_buffer(buf);
+        self.cf_max.append_to_sbp_buffer(buf);
+        self.cf.append_to_sbp_buffer(buf);
+        self.cp.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.job_type.sbp_size();
+        size += self.status.sbp_size();
+        size += self.cn0.sbp_size();
+        size += self.int_time.sbp_size();
+        size += self.sid.sbp_size();
+        size += self.bin_width.sbp_size();
+        size += self.timestamp.sbp_size();
+        size += self.time_spent.sbp_size();
+        size += self.cf_min.sbp_size();
+        size += self.cf_max.sbp_size();
+        size += self.cf.sbp_size();
+        size += self.cp.sbp_size();
+        size
+    }
+}
+
 /// Satellite acquisition result
 ///
 /// This message describes the results from an attempted GPS signal
@@ -167,6 +239,7 @@ impl AcqSvProfileDep {
 /// frequency range. It contains the parameters of the point in the
 /// acquisition search space with the best carrier-to-noise (CN/0)
 /// ratio.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -194,7 +267,9 @@ impl MsgAcqResult {
     }
 }
 impl super::SBPMessage for MsgAcqResult {
-    const MSG_ID: u16 = 47;
+    fn get_message_type(&self) -> u16 {
+        47
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -205,9 +280,29 @@ impl super::SBPMessage for MsgAcqResult {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgAcqResult {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.cn0.append_to_sbp_buffer(buf);
+        self.cp.append_to_sbp_buffer(buf);
+        self.cf.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.cn0.sbp_size();
+        size += self.cp.sbp_size();
+        size += self.cf.sbp_size();
+        size += self.sid.sbp_size();
+        size
+    }
+}
+
 /// Deprecated
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -237,7 +332,9 @@ impl MsgAcqResultDepA {
     }
 }
 impl super::SBPMessage for MsgAcqResultDepA {
-    const MSG_ID: u16 = 21;
+    fn get_message_type(&self) -> u16 {
+        21
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -248,9 +345,29 @@ impl super::SBPMessage for MsgAcqResultDepA {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgAcqResultDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.snr.append_to_sbp_buffer(buf);
+        self.cp.append_to_sbp_buffer(buf);
+        self.cf.append_to_sbp_buffer(buf);
+        self.prn.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.snr.sbp_size();
+        size += self.cp.sbp_size();
+        size += self.cf.sbp_size();
+        size += self.prn.sbp_size();
+        size
+    }
+}
+
 /// Deprecated
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -279,7 +396,9 @@ impl MsgAcqResultDepB {
     }
 }
 impl super::SBPMessage for MsgAcqResultDepB {
-    const MSG_ID: u16 = 20;
+    fn get_message_type(&self) -> u16 {
+        20
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -290,9 +409,29 @@ impl super::SBPMessage for MsgAcqResultDepB {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgAcqResultDepB {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.snr.append_to_sbp_buffer(buf);
+        self.cp.append_to_sbp_buffer(buf);
+        self.cf.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.snr.sbp_size();
+        size += self.cp.sbp_size();
+        size += self.cf.sbp_size();
+        size += self.sid.sbp_size();
+        size
+    }
+}
+
 /// Deprecated
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -320,7 +459,9 @@ impl MsgAcqResultDepC {
     }
 }
 impl super::SBPMessage for MsgAcqResultDepC {
-    const MSG_ID: u16 = 31;
+    fn get_message_type(&self) -> u16 {
+        31
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -331,10 +472,30 @@ impl super::SBPMessage for MsgAcqResultDepC {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgAcqResultDepC {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.cn0.append_to_sbp_buffer(buf);
+        self.cp.append_to_sbp_buffer(buf);
+        self.cf.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.cn0.sbp_size();
+        size += self.cp.sbp_size();
+        size += self.cf.sbp_size();
+        size += self.sid.sbp_size();
+        size
+    }
+}
+
 /// Acquisition perfomance measurement and debug
 ///
 /// The message describes all SV profiles during acquisition time.
 /// The message is used to debug and measure the performance.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -353,7 +514,9 @@ impl MsgAcqSvProfile {
     }
 }
 impl super::SBPMessage for MsgAcqSvProfile {
-    const MSG_ID: u16 = 46;
+    fn get_message_type(&self) -> u16 {
+        46
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -364,9 +527,23 @@ impl super::SBPMessage for MsgAcqSvProfile {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgAcqSvProfile {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.acq_sv_profile.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.acq_sv_profile.sbp_size();
+        size
+    }
+}
+
 /// Deprecated.
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -385,7 +562,9 @@ impl MsgAcqSvProfileDep {
     }
 }
 impl super::SBPMessage for MsgAcqSvProfileDep {
-    const MSG_ID: u16 = 30;
+    fn get_message_type(&self) -> u16 {
+        30
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -393,5 +572,18 @@ impl super::SBPMessage for MsgAcqSvProfileDep {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgAcqSvProfileDep {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.acq_sv_profile.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.acq_sv_profile.sbp_size();
+        size
     }
 }

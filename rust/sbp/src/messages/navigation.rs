@@ -42,6 +42,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// This message reports the Age of the corrections used for the current
 /// Differential solution
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -63,7 +64,9 @@ impl MsgAgeCorrections {
     }
 }
 impl super::SBPMessage for MsgAgeCorrections {
-    const MSG_ID: u16 = 528;
+    fn get_message_type(&self) -> u16 {
+        528
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -74,6 +77,21 @@ impl super::SBPMessage for MsgAgeCorrections {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgAgeCorrections {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.age.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.age.sbp_size();
+        size
+    }
+}
+
 /// Baseline Position in ECEF
 ///
 /// This message reports the baseline solution in Earth Centered
@@ -81,6 +99,7 @@ impl super::SBPMessage for MsgAgeCorrections {
 /// vector distance from the base station to the rover receiver. The
 /// full GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -117,7 +136,9 @@ impl MsgBaselineECEF {
     }
 }
 impl super::SBPMessage for MsgBaselineECEF {
-    const MSG_ID: u16 = 523;
+    fn get_message_type(&self) -> u16 {
+        523
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -128,6 +149,31 @@ impl super::SBPMessage for MsgBaselineECEF {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgBaselineECEF {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.x.append_to_sbp_buffer(buf);
+        self.y.append_to_sbp_buffer(buf);
+        self.z.append_to_sbp_buffer(buf);
+        self.accuracy.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.x.sbp_size();
+        size += self.y.sbp_size();
+        size += self.z.sbp_size();
+        size += self.accuracy.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Baseline Position in ECEF
 ///
 /// This message reports the baseline solution in Earth Centered
@@ -135,6 +181,7 @@ impl super::SBPMessage for MsgBaselineECEF {
 /// vector distance from the base station to the rover receiver. The
 /// full GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -171,7 +218,9 @@ impl MsgBaselineECEFDepA {
     }
 }
 impl super::SBPMessage for MsgBaselineECEFDepA {
-    const MSG_ID: u16 = 514;
+    fn get_message_type(&self) -> u16 {
+        514
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -182,11 +231,37 @@ impl super::SBPMessage for MsgBaselineECEFDepA {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgBaselineECEFDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.x.append_to_sbp_buffer(buf);
+        self.y.append_to_sbp_buffer(buf);
+        self.z.append_to_sbp_buffer(buf);
+        self.accuracy.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.x.sbp_size();
+        size += self.y.sbp_size();
+        size += self.z.sbp_size();
+        size += self.accuracy.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Heading relative to True North
 ///
 /// This message reports the baseline heading pointing from the base station
 /// to the rover relative to True North. The full GPS time is given by the
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -214,7 +289,9 @@ impl MsgBaselineHeadingDepA {
     }
 }
 impl super::SBPMessage for MsgBaselineHeadingDepA {
-    const MSG_ID: u16 = 519;
+    fn get_message_type(&self) -> u16 {
+        519
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -222,6 +299,25 @@ impl super::SBPMessage for MsgBaselineHeadingDepA {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgBaselineHeadingDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.heading.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.heading.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
     }
 }
 
@@ -233,6 +329,7 @@ impl super::SBPMessage for MsgBaselineHeadingDepA {
 /// system is defined at the local WGS84 tangent plane centered at the
 /// base station position.  The full GPS time is given by the
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -272,7 +369,9 @@ impl MsgBaselineNED {
     }
 }
 impl super::SBPMessage for MsgBaselineNED {
-    const MSG_ID: u16 = 524;
+    fn get_message_type(&self) -> u16 {
+        524
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -280,6 +379,33 @@ impl super::SBPMessage for MsgBaselineNED {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgBaselineNED {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.n.append_to_sbp_buffer(buf);
+        self.e.append_to_sbp_buffer(buf);
+        self.d.append_to_sbp_buffer(buf);
+        self.h_accuracy.append_to_sbp_buffer(buf);
+        self.v_accuracy.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.n.sbp_size();
+        size += self.e.sbp_size();
+        size += self.d.sbp_size();
+        size += self.h_accuracy.sbp_size();
+        size += self.v_accuracy.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
     }
 }
 
@@ -291,6 +417,7 @@ impl super::SBPMessage for MsgBaselineNED {
 /// system is defined at the local WGS84 tangent plane centered at the
 /// base station position.  The full GPS time is given by the
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -330,7 +457,9 @@ impl MsgBaselineNEDDepA {
     }
 }
 impl super::SBPMessage for MsgBaselineNEDDepA {
-    const MSG_ID: u16 = 515;
+    fn get_message_type(&self) -> u16 {
+        515
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -341,12 +470,40 @@ impl super::SBPMessage for MsgBaselineNEDDepA {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgBaselineNEDDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.n.append_to_sbp_buffer(buf);
+        self.e.append_to_sbp_buffer(buf);
+        self.d.append_to_sbp_buffer(buf);
+        self.h_accuracy.append_to_sbp_buffer(buf);
+        self.v_accuracy.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.n.sbp_size();
+        size += self.e.sbp_size();
+        size += self.d.sbp_size();
+        size += self.h_accuracy.sbp_size();
+        size += self.v_accuracy.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Dilution of Precision
 ///
 /// This dilution of precision (DOP) message describes the effect of
 /// navigation satellite geometry on positional measurement
 /// precision.  The flags field indicated whether the DOP reported
 /// corresponds to differential or SPP solution.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -383,7 +540,9 @@ impl MsgDops {
     }
 }
 impl super::SBPMessage for MsgDops {
-    const MSG_ID: u16 = 520;
+    fn get_message_type(&self) -> u16 {
+        520
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -394,11 +553,37 @@ impl super::SBPMessage for MsgDops {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgDops {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.gdop.append_to_sbp_buffer(buf);
+        self.pdop.append_to_sbp_buffer(buf);
+        self.tdop.append_to_sbp_buffer(buf);
+        self.hdop.append_to_sbp_buffer(buf);
+        self.vdop.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.gdop.sbp_size();
+        size += self.pdop.sbp_size();
+        size += self.tdop.sbp_size();
+        size += self.hdop.sbp_size();
+        size += self.vdop.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Dilution of Precision
 ///
 /// This dilution of precision (DOP) message describes the effect of
 /// navigation satellite geometry on positional measurement
 /// precision.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -432,7 +617,9 @@ impl MsgDopsDepA {
     }
 }
 impl super::SBPMessage for MsgDopsDepA {
-    const MSG_ID: u16 = 518;
+    fn get_message_type(&self) -> u16 {
+        518
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -440,6 +627,29 @@ impl super::SBPMessage for MsgDopsDepA {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgDopsDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.gdop.append_to_sbp_buffer(buf);
+        self.pdop.append_to_sbp_buffer(buf);
+        self.tdop.append_to_sbp_buffer(buf);
+        self.hdop.append_to_sbp_buffer(buf);
+        self.vdop.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.gdop.sbp_size();
+        size += self.pdop.sbp_size();
+        size += self.tdop.sbp_size();
+        size += self.hdop.sbp_size();
+        size += self.vdop.sbp_size();
+        size
     }
 }
 
@@ -458,6 +668,7 @@ impl super::SBPMessage for MsgDopsDepA {
 /// set of other navigation messages referenced to the same time
 /// (but lacking the ns field) and indicates a more precise time of
 /// these messages.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -486,7 +697,9 @@ impl MsgGPSTime {
     }
 }
 impl super::SBPMessage for MsgGPSTime {
-    const MSG_ID: u16 = 258;
+    fn get_message_type(&self) -> u16 {
+        258
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -494,6 +707,25 @@ impl super::SBPMessage for MsgGPSTime {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgGPSTime {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.wn.append_to_sbp_buffer(buf);
+        self.tow.append_to_sbp_buffer(buf);
+        self.ns_residual.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.wn.sbp_size();
+        size += self.tow.sbp_size();
+        size += self.ns_residual.sbp_size();
+        size += self.flags.sbp_size();
+        size
     }
 }
 
@@ -512,6 +744,7 @@ impl super::SBPMessage for MsgGPSTime {
 /// set of other navigation messages referenced to the same time
 /// (but lacking the ns field) and indicates a more precise time of
 /// these messages.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -540,7 +773,9 @@ impl MsgGPSTimeDepA {
     }
 }
 impl super::SBPMessage for MsgGPSTimeDepA {
-    const MSG_ID: u16 = 256;
+    fn get_message_type(&self) -> u16 {
+        256
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -548,6 +783,25 @@ impl super::SBPMessage for MsgGPSTimeDepA {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgGPSTimeDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.wn.append_to_sbp_buffer(buf);
+        self.tow.append_to_sbp_buffer(buf);
+        self.ns_residual.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.wn.sbp_size();
+        size += self.tow.sbp_size();
+        size += self.ns_residual.sbp_size();
+        size += self.flags.sbp_size();
+        size
     }
 }
 
@@ -561,6 +815,7 @@ impl super::SBPMessage for MsgGPSTimeDepA {
 /// solution using the base station position and the rover's RTK
 /// baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -597,7 +852,9 @@ impl MsgPosECEF {
     }
 }
 impl super::SBPMessage for MsgPosECEF {
-    const MSG_ID: u16 = 521;
+    fn get_message_type(&self) -> u16 {
+        521
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -605,6 +862,31 @@ impl super::SBPMessage for MsgPosECEF {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgPosECEF {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.x.append_to_sbp_buffer(buf);
+        self.y.append_to_sbp_buffer(buf);
+        self.z.append_to_sbp_buffer(buf);
+        self.accuracy.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.x.sbp_size();
+        size += self.y.sbp_size();
+        size += self.z.sbp_size();
+        size += self.accuracy.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
     }
 }
 
@@ -619,6 +901,7 @@ impl super::SBPMessage for MsgPosECEF {
 /// solution using the base station position and the rover's RTK
 /// baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -670,7 +953,9 @@ impl MsgPosECEFCov {
     }
 }
 impl super::SBPMessage for MsgPosECEFCov {
-    const MSG_ID: u16 = 532;
+    fn get_message_type(&self) -> u16 {
+        532
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -678,6 +963,41 @@ impl super::SBPMessage for MsgPosECEFCov {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgPosECEFCov {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.x.append_to_sbp_buffer(buf);
+        self.y.append_to_sbp_buffer(buf);
+        self.z.append_to_sbp_buffer(buf);
+        self.cov_x_x.append_to_sbp_buffer(buf);
+        self.cov_x_y.append_to_sbp_buffer(buf);
+        self.cov_x_z.append_to_sbp_buffer(buf);
+        self.cov_y_y.append_to_sbp_buffer(buf);
+        self.cov_y_z.append_to_sbp_buffer(buf);
+        self.cov_z_z.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.x.sbp_size();
+        size += self.y.sbp_size();
+        size += self.z.sbp_size();
+        size += self.cov_x_x.sbp_size();
+        size += self.cov_x_y.sbp_size();
+        size += self.cov_x_z.sbp_size();
+        size += self.cov_y_y.sbp_size();
+        size += self.cov_y_z.sbp_size();
+        size += self.cov_z_z.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
     }
 }
 
@@ -691,6 +1011,7 @@ impl super::SBPMessage for MsgPosECEFCov {
 /// solution using the base station position and the rover's RTK
 /// baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -727,7 +1048,9 @@ impl MsgPosECEFDepA {
     }
 }
 impl super::SBPMessage for MsgPosECEFDepA {
-    const MSG_ID: u16 = 512;
+    fn get_message_type(&self) -> u16 {
+        512
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -735,6 +1058,31 @@ impl super::SBPMessage for MsgPosECEFDepA {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgPosECEFDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.x.append_to_sbp_buffer(buf);
+        self.y.append_to_sbp_buffer(buf);
+        self.z.append_to_sbp_buffer(buf);
+        self.accuracy.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.x.sbp_size();
+        size += self.y.sbp_size();
+        size += self.z.sbp_size();
+        size += self.accuracy.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
     }
 }
 
@@ -748,6 +1096,7 @@ impl super::SBPMessage for MsgPosECEFDepA {
 /// station position and the rover's RTK baseline vector. The full
 /// GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -787,7 +1136,9 @@ impl MsgPosLLH {
     }
 }
 impl super::SBPMessage for MsgPosLLH {
-    const MSG_ID: u16 = 522;
+    fn get_message_type(&self) -> u16 {
+        522
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -795,6 +1146,33 @@ impl super::SBPMessage for MsgPosLLH {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgPosLLH {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.lat.append_to_sbp_buffer(buf);
+        self.lon.append_to_sbp_buffer(buf);
+        self.height.append_to_sbp_buffer(buf);
+        self.h_accuracy.append_to_sbp_buffer(buf);
+        self.v_accuracy.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.lat.sbp_size();
+        size += self.lon.sbp_size();
+        size += self.height.sbp_size();
+        size += self.h_accuracy.sbp_size();
+        size += self.v_accuracy.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
     }
 }
 
@@ -808,6 +1186,7 @@ impl super::SBPMessage for MsgPosLLH {
 /// in the local-level North, East, Down frame, the covariance terms follow
 /// with that convention. Thus, covariances are reported against the "downward"
 /// measurement and care should be taken with the sign convention.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -859,7 +1238,9 @@ impl MsgPosLLHCov {
     }
 }
 impl super::SBPMessage for MsgPosLLHCov {
-    const MSG_ID: u16 = 529;
+    fn get_message_type(&self) -> u16 {
+        529
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -867,6 +1248,41 @@ impl super::SBPMessage for MsgPosLLHCov {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgPosLLHCov {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.lat.append_to_sbp_buffer(buf);
+        self.lon.append_to_sbp_buffer(buf);
+        self.height.append_to_sbp_buffer(buf);
+        self.cov_n_n.append_to_sbp_buffer(buf);
+        self.cov_n_e.append_to_sbp_buffer(buf);
+        self.cov_n_d.append_to_sbp_buffer(buf);
+        self.cov_e_e.append_to_sbp_buffer(buf);
+        self.cov_e_d.append_to_sbp_buffer(buf);
+        self.cov_d_d.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.lat.sbp_size();
+        size += self.lon.sbp_size();
+        size += self.height.sbp_size();
+        size += self.cov_n_n.sbp_size();
+        size += self.cov_n_e.sbp_size();
+        size += self.cov_n_d.sbp_size();
+        size += self.cov_e_e.sbp_size();
+        size += self.cov_e_d.sbp_size();
+        size += self.cov_d_d.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
     }
 }
 
@@ -880,6 +1296,7 @@ impl super::SBPMessage for MsgPosLLHCov {
 /// station position and the rover's RTK baseline vector. The full
 /// GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -919,7 +1336,9 @@ impl MsgPosLLHDepA {
     }
 }
 impl super::SBPMessage for MsgPosLLHDepA {
-    const MSG_ID: u16 = 513;
+    fn get_message_type(&self) -> u16 {
+        513
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -930,11 +1349,39 @@ impl super::SBPMessage for MsgPosLLHDepA {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgPosLLHDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.lat.append_to_sbp_buffer(buf);
+        self.lon.append_to_sbp_buffer(buf);
+        self.height.append_to_sbp_buffer(buf);
+        self.h_accuracy.append_to_sbp_buffer(buf);
+        self.v_accuracy.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.lat.sbp_size();
+        size += self.lon.sbp_size();
+        size += self.height.sbp_size();
+        size += self.h_accuracy.sbp_size();
+        size += self.v_accuracy.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Computed Position and Protection Level
 ///
 /// This message reports the local vertical and horizontal protection levels
 /// associated with a given LLH position solution. The full GPS time is given
 /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -971,7 +1418,9 @@ impl MsgProtectionLevel {
     }
 }
 impl super::SBPMessage for MsgProtectionLevel {
-    const MSG_ID: u16 = 534;
+    fn get_message_type(&self) -> u16 {
+        534
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -982,10 +1431,36 @@ impl super::SBPMessage for MsgProtectionLevel {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgProtectionLevel {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.vpl.append_to_sbp_buffer(buf);
+        self.hpl.append_to_sbp_buffer(buf);
+        self.lat.append_to_sbp_buffer(buf);
+        self.lon.append_to_sbp_buffer(buf);
+        self.height.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.vpl.sbp_size();
+        size += self.hpl.sbp_size();
+        size += self.lat.sbp_size();
+        size += self.lon.sbp_size();
+        size += self.height.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// UTC Time
 ///
 /// This message reports the Universal Coordinated Time (UTC).  Note the flags
 /// which indicate the source of the UTC offset value and source of the time fix.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1028,7 +1503,9 @@ impl MsgUtcTime {
     }
 }
 impl super::SBPMessage for MsgUtcTime {
-    const MSG_ID: u16 = 259;
+    fn get_message_type(&self) -> u16 {
+        259
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1036,6 +1513,35 @@ impl super::SBPMessage for MsgUtcTime {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgUtcTime {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.flags.append_to_sbp_buffer(buf);
+        self.tow.append_to_sbp_buffer(buf);
+        self.year.append_to_sbp_buffer(buf);
+        self.month.append_to_sbp_buffer(buf);
+        self.day.append_to_sbp_buffer(buf);
+        self.hours.append_to_sbp_buffer(buf);
+        self.minutes.append_to_sbp_buffer(buf);
+        self.seconds.append_to_sbp_buffer(buf);
+        self.ns.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.flags.sbp_size();
+        size += self.tow.sbp_size();
+        size += self.year.sbp_size();
+        size += self.month.sbp_size();
+        size += self.day.sbp_size();
+        size += self.hours.sbp_size();
+        size += self.minutes.sbp_size();
+        size += self.seconds.sbp_size();
+        size += self.ns.sbp_size();
+        size
     }
 }
 
@@ -1049,6 +1555,7 @@ impl super::SBPMessage for MsgUtcTime {
 /// The full GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow). This message is only produced by inertial versions of Swift
 /// products and is not available from Piksi Multi or Duro.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1100,7 +1607,9 @@ impl MsgVelBody {
     }
 }
 impl super::SBPMessage for MsgVelBody {
-    const MSG_ID: u16 = 531;
+    fn get_message_type(&self) -> u16 {
+        531
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1111,11 +1620,47 @@ impl super::SBPMessage for MsgVelBody {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgVelBody {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.x.append_to_sbp_buffer(buf);
+        self.y.append_to_sbp_buffer(buf);
+        self.z.append_to_sbp_buffer(buf);
+        self.cov_x_x.append_to_sbp_buffer(buf);
+        self.cov_x_y.append_to_sbp_buffer(buf);
+        self.cov_x_z.append_to_sbp_buffer(buf);
+        self.cov_y_y.append_to_sbp_buffer(buf);
+        self.cov_y_z.append_to_sbp_buffer(buf);
+        self.cov_z_z.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.x.sbp_size();
+        size += self.y.sbp_size();
+        size += self.z.sbp_size();
+        size += self.cov_x_x.sbp_size();
+        size += self.cov_x_y.sbp_size();
+        size += self.cov_x_z.sbp_size();
+        size += self.cov_y_y.sbp_size();
+        size += self.cov_y_z.sbp_size();
+        size += self.cov_z_z.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Velocity in ECEF
 ///
 /// This message reports the velocity in Earth Centered Earth Fixed
 /// (ECEF) coordinates. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1152,7 +1697,9 @@ impl MsgVelECEF {
     }
 }
 impl super::SBPMessage for MsgVelECEF {
-    const MSG_ID: u16 = 525;
+    fn get_message_type(&self) -> u16 {
+        525
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1163,11 +1710,37 @@ impl super::SBPMessage for MsgVelECEF {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgVelECEF {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.x.append_to_sbp_buffer(buf);
+        self.y.append_to_sbp_buffer(buf);
+        self.z.append_to_sbp_buffer(buf);
+        self.accuracy.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.x.sbp_size();
+        size += self.y.sbp_size();
+        size += self.z.sbp_size();
+        size += self.accuracy.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Velocity in ECEF
 ///
 /// This message reports the velocity in Earth Centered Earth Fixed
 /// (ECEF) coordinates. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1219,7 +1792,9 @@ impl MsgVelECEFCov {
     }
 }
 impl super::SBPMessage for MsgVelECEFCov {
-    const MSG_ID: u16 = 533;
+    fn get_message_type(&self) -> u16 {
+        533
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1230,11 +1805,47 @@ impl super::SBPMessage for MsgVelECEFCov {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgVelECEFCov {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.x.append_to_sbp_buffer(buf);
+        self.y.append_to_sbp_buffer(buf);
+        self.z.append_to_sbp_buffer(buf);
+        self.cov_x_x.append_to_sbp_buffer(buf);
+        self.cov_x_y.append_to_sbp_buffer(buf);
+        self.cov_x_z.append_to_sbp_buffer(buf);
+        self.cov_y_y.append_to_sbp_buffer(buf);
+        self.cov_y_z.append_to_sbp_buffer(buf);
+        self.cov_z_z.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.x.sbp_size();
+        size += self.y.sbp_size();
+        size += self.z.sbp_size();
+        size += self.cov_x_x.sbp_size();
+        size += self.cov_x_y.sbp_size();
+        size += self.cov_x_z.sbp_size();
+        size += self.cov_y_y.sbp_size();
+        size += self.cov_y_z.sbp_size();
+        size += self.cov_z_z.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Velocity in ECEF
 ///
 /// This message reports the velocity in Earth Centered Earth Fixed
 /// (ECEF) coordinates. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1271,7 +1882,9 @@ impl MsgVelECEFDepA {
     }
 }
 impl super::SBPMessage for MsgVelECEFDepA {
-    const MSG_ID: u16 = 516;
+    fn get_message_type(&self) -> u16 {
+        516
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1282,12 +1895,38 @@ impl super::SBPMessage for MsgVelECEFDepA {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgVelECEFDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.x.append_to_sbp_buffer(buf);
+        self.y.append_to_sbp_buffer(buf);
+        self.z.append_to_sbp_buffer(buf);
+        self.accuracy.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.x.sbp_size();
+        size += self.y.sbp_size();
+        size += self.z.sbp_size();
+        size += self.accuracy.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Velocity in NED
 ///
 /// This message reports the velocity in local North East Down (NED)
 /// coordinates. The NED coordinate system is defined as the local WGS84
 /// tangent plane centered at the current position. The full GPS time is
 /// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1327,7 +1966,9 @@ impl MsgVelNED {
     }
 }
 impl super::SBPMessage for MsgVelNED {
-    const MSG_ID: u16 = 526;
+    fn get_message_type(&self) -> u16 {
+        526
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1335,6 +1976,33 @@ impl super::SBPMessage for MsgVelNED {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgVelNED {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.n.append_to_sbp_buffer(buf);
+        self.e.append_to_sbp_buffer(buf);
+        self.d.append_to_sbp_buffer(buf);
+        self.h_accuracy.append_to_sbp_buffer(buf);
+        self.v_accuracy.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.n.sbp_size();
+        size += self.e.sbp_size();
+        size += self.d.sbp_size();
+        size += self.h_accuracy.sbp_size();
+        size += self.v_accuracy.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
     }
 }
 
@@ -1346,6 +2014,7 @@ impl super::SBPMessage for MsgVelNED {
 /// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 /// This message is similar to the MSG_VEL_NED, but it includes the upper triangular
 /// portion of the 3x3 covariance matrix.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1397,7 +2066,9 @@ impl MsgVelNEDCov {
     }
 }
 impl super::SBPMessage for MsgVelNEDCov {
-    const MSG_ID: u16 = 530;
+    fn get_message_type(&self) -> u16 {
+        530
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1408,12 +2079,48 @@ impl super::SBPMessage for MsgVelNEDCov {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgVelNEDCov {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.n.append_to_sbp_buffer(buf);
+        self.e.append_to_sbp_buffer(buf);
+        self.d.append_to_sbp_buffer(buf);
+        self.cov_n_n.append_to_sbp_buffer(buf);
+        self.cov_n_e.append_to_sbp_buffer(buf);
+        self.cov_n_d.append_to_sbp_buffer(buf);
+        self.cov_e_e.append_to_sbp_buffer(buf);
+        self.cov_e_d.append_to_sbp_buffer(buf);
+        self.cov_d_d.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.n.sbp_size();
+        size += self.e.sbp_size();
+        size += self.d.sbp_size();
+        size += self.cov_n_n.sbp_size();
+        size += self.cov_n_e.sbp_size();
+        size += self.cov_n_d.sbp_size();
+        size += self.cov_e_e.sbp_size();
+        size += self.cov_e_d.sbp_size();
+        size += self.cov_d_d.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Velocity in NED
 ///
 /// This message reports the velocity in local North East Down (NED)
 /// coordinates. The NED coordinate system is defined as the local WGS84
 /// tangent plane centered at the current position. The full GPS time is
 /// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1453,7 +2160,9 @@ impl MsgVelNEDDepA {
     }
 }
 impl super::SBPMessage for MsgVelNEDDepA {
-    const MSG_ID: u16 = 517;
+    fn get_message_type(&self) -> u16 {
+        517
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1461,5 +2170,32 @@ impl super::SBPMessage for MsgVelNEDDepA {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgVelNEDDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.n.append_to_sbp_buffer(buf);
+        self.e.append_to_sbp_buffer(buf);
+        self.d.append_to_sbp_buffer(buf);
+        self.h_accuracy.append_to_sbp_buffer(buf);
+        self.v_accuracy.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.n.sbp_size();
+        size += self.e.sbp_size();
+        size += self.d.sbp_size();
+        size += self.h_accuracy.sbp_size();
+        size += self.v_accuracy.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
     }
 }

@@ -26,6 +26,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// This message is sent out when an object is stored into NDB. If needed
 /// message could also be sent out when fetching an object from NDB.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -71,7 +72,9 @@ impl MsgNdbEvent {
     }
 }
 impl super::SBPMessage for MsgNdbEvent {
-    const MSG_ID: u16 = 1024;
+    fn get_message_type(&self) -> u16 {
+        1024
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -79,5 +82,32 @@ impl super::SBPMessage for MsgNdbEvent {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgNdbEvent {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.recv_time.append_to_sbp_buffer(buf);
+        self.event.append_to_sbp_buffer(buf);
+        self.object_type.append_to_sbp_buffer(buf);
+        self.result.append_to_sbp_buffer(buf);
+        self.data_source.append_to_sbp_buffer(buf);
+        self.object_sid.append_to_sbp_buffer(buf);
+        self.src_sid.append_to_sbp_buffer(buf);
+        self.original_sender.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.recv_time.sbp_size();
+        size += self.event.sbp_size();
+        size += self.object_type.sbp_size();
+        size += self.result.sbp_size();
+        size += self.data_source.sbp_size();
+        size += self.object_sid.sbp_size();
+        size += self.src_sid.sbp_size();
+        size += self.original_sender.sbp_size();
+        size
     }
 }

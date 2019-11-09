@@ -9,8 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/test_bootload.yaml by
-// generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/test_bootload.yaml by generate.py. Do not modify by hand!
 
 extern crate sbp;
 use sbp::messages::SBPMessage;
@@ -22,23 +21,21 @@ use common::AlmostEq;
 #[test]
 fn test_auto_check_sbp_bootload_39() {
     {
-        use sbp::messages::bootload::MsgBootloaderHandshakeResp;
         let payload: Vec<u8> = vec![85, 180, 0, 0, 0, 9, 0, 0, 0, 0, 118, 49, 46, 50, 10, 201, 1];
-
-        assert_eq!(
-            MsgBootloaderHandshakeResp::MSG_ID,
-            0xb4,
-            "Incorrect message type, expected 0xb4, is {}",
-            MsgBootloaderHandshakeResp::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgBootloaderHandshakeResp(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0xb4,
+                    "Incorrect message type, expected 0xb4, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x0,
@@ -62,30 +59,28 @@ fn test_auto_check_sbp_bootload_39() {
                     msg.version
                 );
             }
-            _ => assert!(
-                false,
-                "Invalid message type! Expected a MsgBootloaderHandshakeResp"
-            ),
+            _ => panic!("Invalid message type! Expected a MsgBootloaderHandshakeResp"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::bootload::MsgBootloaderHandshakeDepA;
         let payload: Vec<u8> = vec![85, 176, 0, 195, 4, 4, 118, 49, 46, 50, 1, 206];
-
-        assert_eq!(
-            MsgBootloaderHandshakeDepA::MSG_ID,
-            0xb0,
-            "Incorrect message type, expected 0xb0, is {}",
-            MsgBootloaderHandshakeDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgBootloaderHandshakeDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0xb0,
+                    "Incorrect message type, expected 0xb0, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x4c3,
@@ -113,10 +108,10 @@ fn test_auto_check_sbp_bootload_39() {
                     msg.handshake[3]
                 );
             }
-            _ => assert!(
-                false,
-                "Invalid message type! Expected a MsgBootloaderHandshakeDepA"
-            ),
+            _ => panic!("Invalid message type! Expected a MsgBootloaderHandshakeDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
 }

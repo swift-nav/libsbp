@@ -9,9 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgVelNEDDepA.yaml by generate.py. Do not
-// modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgVelNEDDepA.yaml by generate.py. Do not modify by hand!
 
 extern crate sbp;
 use sbp::messages::SBPMessage;
@@ -23,26 +21,24 @@ use common::AlmostEq;
 #[test]
 fn test_auto_check_sbp_navigation_24() {
     {
-        use sbp::messages::navigation::MsgVelNEDDepA;
         let payload: Vec<u8> = vec![
             85, 5, 2, 246, 215, 22, 20, 46, 39, 0, 198, 251, 255, 255, 156, 15, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 9, 0, 161, 92,
         ];
-
-        assert_eq!(
-            MsgVelNEDDepA::MSG_ID,
-            0x205,
-            "Incorrect message type, expected 0x205, is {}",
-            MsgVelNEDDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgVelNEDDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x205,
+                    "Incorrect message type, expected 0x205, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
@@ -86,30 +82,31 @@ fn test_auto_check_sbp_navigation_24() {
                     msg.v_accuracy
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgVelNEDDepA"),
+            _ => panic!("Invalid message type! Expected a MsgVelNEDDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::navigation::MsgVelNEDDepA;
         let payload: Vec<u8> = vec![
             85, 5, 2, 246, 215, 22, 120, 46, 39, 0, 14, 252, 255, 255, 207, 14, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 9, 0, 125, 160,
         ];
-
-        assert_eq!(
-            MsgVelNEDDepA::MSG_ID,
-            0x205,
-            "Incorrect message type, expected 0x205, is {}",
-            MsgVelNEDDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgVelNEDDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x205,
+                    "Incorrect message type, expected 0x205, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
@@ -153,30 +150,31 @@ fn test_auto_check_sbp_navigation_24() {
                     msg.v_accuracy
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgVelNEDDepA"),
+            _ => panic!("Invalid message type! Expected a MsgVelNEDDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::navigation::MsgVelNEDDepA;
         let payload: Vec<u8> = vec![
             85, 5, 2, 246, 215, 22, 220, 46, 39, 0, 48, 252, 255, 255, 140, 14, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 9, 0, 179, 135,
         ];
-
-        assert_eq!(
-            MsgVelNEDDepA::MSG_ID,
-            0x205,
-            "Incorrect message type, expected 0x205, is {}",
-            MsgVelNEDDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgVelNEDDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x205,
+                    "Incorrect message type, expected 0x205, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
@@ -220,30 +218,31 @@ fn test_auto_check_sbp_navigation_24() {
                     msg.v_accuracy
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgVelNEDDepA"),
+            _ => panic!("Invalid message type! Expected a MsgVelNEDDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::navigation::MsgVelNEDDepA;
         let payload: Vec<u8> = vec![
             85, 5, 2, 246, 215, 22, 64, 47, 39, 0, 32, 252, 255, 255, 8, 15, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 9, 0, 51, 177,
         ];
-
-        assert_eq!(
-            MsgVelNEDDepA::MSG_ID,
-            0x205,
-            "Incorrect message type, expected 0x205, is {}",
-            MsgVelNEDDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgVelNEDDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x205,
+                    "Incorrect message type, expected 0x205, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
@@ -287,30 +286,31 @@ fn test_auto_check_sbp_navigation_24() {
                     msg.v_accuracy
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgVelNEDDepA"),
+            _ => panic!("Invalid message type! Expected a MsgVelNEDDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::navigation::MsgVelNEDDepA;
         let payload: Vec<u8> = vec![
             85, 5, 2, 246, 215, 22, 164, 47, 39, 0, 80, 252, 255, 255, 140, 14, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 9, 0, 23, 0,
         ];
-
-        assert_eq!(
-            MsgVelNEDDepA::MSG_ID,
-            0x205,
-            "Incorrect message type, expected 0x205, is {}",
-            MsgVelNEDDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgVelNEDDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x205,
+                    "Incorrect message type, expected 0x205, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
@@ -354,7 +354,10 @@ fn test_auto_check_sbp_navigation_24() {
                     msg.v_accuracy
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgVelNEDDepA"),
+            _ => panic!("Invalid message type! Expected a MsgVelNEDDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
 }

@@ -9,9 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgVelBody.yaml by generate.py. Do not modify
-// by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgVelBody.yaml by generate.py. Do not modify by hand!
 
 extern crate sbp;
 use sbp::messages::SBPMessage;
@@ -23,26 +21,24 @@ use common::AlmostEq;
 #[test]
 fn test_auto_check_sbp_navigation_18() {
     {
-        use sbp::messages::navigation::MsgVelBody;
         let payload: Vec<u8> = vec![
             85, 19, 2, 66, 0, 42, 1, 0, 0, 0, 4, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             160, 64, 0, 0, 224, 64, 0, 0, 224, 64, 0, 0, 64, 64, 0, 0, 0, 64, 3, 8, 120, 144,
         ];
-
-        assert_eq!(
-            MsgVelBody::MSG_ID,
-            0x213,
-            "Incorrect message type, expected 0x213, is {}",
-            MsgVelBody::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgVelBody(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x213,
+                    "Incorrect message type, expected 0x213, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x42,
@@ -98,7 +94,10 @@ fn test_auto_check_sbp_navigation_18() {
                 assert_eq!(msg.y, 2, "incorrect value for y, expected 2, is {}", msg.y);
                 assert_eq!(msg.z, 1, "incorrect value for z, expected 1, is {}", msg.z);
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgVelBody"),
+            _ => panic!("Invalid message type! Expected a MsgVelBody"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
 }

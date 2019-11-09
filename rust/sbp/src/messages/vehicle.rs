@@ -24,9 +24,10 @@ use serde::{Deserialize, Serialize};
 ///
 /// Message representing the x component of vehicle velocity in the user frame at the odometry
 /// reference point(s) specified by the user. The offset for the odometry reference point and
-/// the definition and origin of the user frame are defined through the device settings
-/// interface. There are 4 possible user-defined sources of this message  which are labeled
-/// arbitrarily source 0 through 3.
+/// the definition and origin of the user frame are defined through the device settings interface.
+/// There are 4 possible user-defined sources of this message  which are labeled arbitrarily
+/// source 0 through 3.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -53,7 +54,9 @@ impl MsgOdometry {
     }
 }
 impl super::SBPMessage for MsgOdometry {
-    const MSG_ID: u16 = 2307;
+    fn get_message_type(&self) -> u16 {
+        2307
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -61,5 +64,22 @@ impl super::SBPMessage for MsgOdometry {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgOdometry {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.velocity.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.velocity.sbp_size();
+        size += self.flags.sbp_size();
+        size
     }
 }

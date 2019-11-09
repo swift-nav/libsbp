@@ -31,6 +31,7 @@ use serde::{Deserialize, Serialize};
 /// direction, and the vehicle z-axis should be aligned with the down direction.
 /// This message will only be available in future INS versions of Swift Products
 /// and is not produced by Piksi Multi or Duro.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -61,7 +62,9 @@ impl MsgAngularRate {
     }
 }
 impl super::SBPMessage for MsgAngularRate {
-    const MSG_ID: u16 = 546;
+    fn get_message_type(&self) -> u16 {
+        546
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -72,12 +75,34 @@ impl super::SBPMessage for MsgAngularRate {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgAngularRate {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.x.append_to_sbp_buffer(buf);
+        self.y.append_to_sbp_buffer(buf);
+        self.z.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.x.sbp_size();
+        size += self.y.sbp_size();
+        size += self.z.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Heading relative to True North
 ///
 /// This message reports the baseline heading pointing from the base station
 /// to the rover relative to True North. The full GPS time is given by the
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended
 /// that time-matched RTK mode is used when the base station is moving.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -105,7 +130,9 @@ impl MsgBaselineHeading {
     }
 }
 impl super::SBPMessage for MsgBaselineHeading {
-    const MSG_ID: u16 = 527;
+    fn get_message_type(&self) -> u16 {
+        527
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -116,6 +143,25 @@ impl super::SBPMessage for MsgBaselineHeading {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgBaselineHeading {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.heading.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.heading.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Euler angles
 ///
 /// This message reports the yaw, pitch, and roll angles of the vehicle body frame.
@@ -123,6 +169,7 @@ impl super::SBPMessage for MsgBaselineHeading {
 /// in order to rotate the from a frame aligned with the local-level NED frame
 /// to the vehicle body frame.  This message will only be available in future
 /// INS versions of Swift Products and is not produced by Piksi Multi or Duro.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -162,7 +209,9 @@ impl MsgOrientEuler {
     }
 }
 impl super::SBPMessage for MsgOrientEuler {
-    const MSG_ID: u16 = 545;
+    fn get_message_type(&self) -> u16 {
+        545
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -173,6 +222,33 @@ impl super::SBPMessage for MsgOrientEuler {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgOrientEuler {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.roll.append_to_sbp_buffer(buf);
+        self.pitch.append_to_sbp_buffer(buf);
+        self.yaw.append_to_sbp_buffer(buf);
+        self.roll_accuracy.append_to_sbp_buffer(buf);
+        self.pitch_accuracy.append_to_sbp_buffer(buf);
+        self.yaw_accuracy.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.roll.sbp_size();
+        size += self.pitch.sbp_size();
+        size += self.yaw.sbp_size();
+        size += self.roll_accuracy.sbp_size();
+        size += self.pitch_accuracy.sbp_size();
+        size += self.yaw_accuracy.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Quaternion 4 component vector
 ///
 /// This message reports the quaternion vector describing the vehicle body frame's orientation
@@ -180,6 +256,7 @@ impl super::SBPMessage for MsgOrientEuler {
 /// vector assuming that the LSB of each component as a value of 2^-31. This message will only
 /// be available in future INS versions of Swift Products and is not produced by Piksi Multi
 /// or Duro.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -225,7 +302,9 @@ impl MsgOrientQuat {
     }
 }
 impl super::SBPMessage for MsgOrientQuat {
-    const MSG_ID: u16 = 544;
+    fn get_message_type(&self) -> u16 {
+        544
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -233,5 +312,36 @@ impl super::SBPMessage for MsgOrientQuat {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgOrientQuat {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.w.append_to_sbp_buffer(buf);
+        self.x.append_to_sbp_buffer(buf);
+        self.y.append_to_sbp_buffer(buf);
+        self.z.append_to_sbp_buffer(buf);
+        self.w_accuracy.append_to_sbp_buffer(buf);
+        self.x_accuracy.append_to_sbp_buffer(buf);
+        self.y_accuracy.append_to_sbp_buffer(buf);
+        self.z_accuracy.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.w.sbp_size();
+        size += self.x.sbp_size();
+        size += self.y.sbp_size();
+        size += self.z.sbp_size();
+        size += self.w_accuracy.sbp_size();
+        size += self.x_accuracy.sbp_size();
+        size += self.y_accuracy.sbp_size();
+        size += self.z_accuracy.sbp_size();
+        size += self.flags.sbp_size();
+        size
     }
 }

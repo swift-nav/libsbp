@@ -49,6 +49,7 @@ use serde::{Deserialize, Serialize};
 /// Finished reading settings (host <= device)
 ///
 /// The settings message for indicating end of the settings values.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -62,7 +63,9 @@ impl MsgSettingsReadByIndexDone {
     }
 }
 impl super::SBPMessage for MsgSettingsReadByIndexDone {
-    const MSG_ID: u16 = 166;
+    fn get_message_type(&self) -> u16 {
+        166
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -73,11 +76,21 @@ impl super::SBPMessage for MsgSettingsReadByIndexDone {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgSettingsReadByIndexDone {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+
+    fn sbp_size(&self) -> usize {
+        0
+    }
+}
+
 /// Read setting by direct index (host => device)
 ///
 /// The settings message for iterating through the settings
 /// values. A device will respond to this message with a
 /// "MSG_SETTINGS_READ_BY_INDEX_RESP".
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -97,7 +110,9 @@ impl MsgSettingsReadByIndexReq {
     }
 }
 impl super::SBPMessage for MsgSettingsReadByIndexReq {
-    const MSG_ID: u16 = 162;
+    fn get_message_type(&self) -> u16 {
+        162
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -105,6 +120,19 @@ impl super::SBPMessage for MsgSettingsReadByIndexReq {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSettingsReadByIndexReq {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.index.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.index.sbp_size();
+        size
     }
 }
 
@@ -120,6 +148,7 @@ impl super::SBPMessage for MsgSettingsReadByIndexReq {
 /// included, the format type portion of the string has the format
 /// "enum:value1,value2,value3". An example string that could be sent from
 /// the device is "simulator\0enabled\0True\0enum:True,False\0"
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -143,7 +172,9 @@ impl MsgSettingsReadByIndexResp {
     }
 }
 impl super::SBPMessage for MsgSettingsReadByIndexResp {
-    const MSG_ID: u16 = 167;
+    fn get_message_type(&self) -> u16 {
+        167
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -151,6 +182,21 @@ impl super::SBPMessage for MsgSettingsReadByIndexResp {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSettingsReadByIndexResp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.index.append_to_sbp_buffer(buf);
+        self.setting.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.index.sbp_size();
+        size += self.setting.sbp_size();
+        size
     }
 }
 
@@ -164,6 +210,7 @@ impl super::SBPMessage for MsgSettingsReadByIndexResp {
 /// device will only respond to this message when it is received from
 /// sender ID 0x42. A device should respond with a MSG_SETTINGS_READ_RESP
 /// message (msg_id 0x00A5).
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -183,7 +230,9 @@ impl MsgSettingsReadReq {
     }
 }
 impl super::SBPMessage for MsgSettingsReadReq {
-    const MSG_ID: u16 = 164;
+    fn get_message_type(&self) -> u16 {
+        164
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -191,6 +240,19 @@ impl super::SBPMessage for MsgSettingsReadReq {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSettingsReadReq {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.setting.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.setting.sbp_size();
+        size
     }
 }
 
@@ -203,6 +265,7 @@ impl super::SBPMessage for MsgSettingsReadReq {
 /// denotes the NULL character and where quotation marks are omitted. An
 /// example string that could be sent from device is
 /// "solution\0soln_freq\010\0".
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -222,7 +285,9 @@ impl MsgSettingsReadResp {
     }
 }
 impl super::SBPMessage for MsgSettingsReadResp {
-    const MSG_ID: u16 = 165;
+    fn get_message_type(&self) -> u16 {
+        165
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -233,11 +298,25 @@ impl super::SBPMessage for MsgSettingsReadResp {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgSettingsReadResp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.setting.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.setting.sbp_size();
+        size
+    }
+}
+
 /// Register setting and default value (device => host)
 ///
 /// This message registers the presence and default value of a setting
 /// with a settings daemon.  The host should reply with MSG_SETTINGS_WRITE
 /// for this setting to set the initial value.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -257,7 +336,9 @@ impl MsgSettingsRegister {
     }
 }
 impl super::SBPMessage for MsgSettingsRegister {
-    const MSG_ID: u16 = 174;
+    fn get_message_type(&self) -> u16 {
+        174
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -268,12 +349,26 @@ impl super::SBPMessage for MsgSettingsRegister {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgSettingsRegister {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.setting.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.setting.sbp_size();
+        size
+    }
+}
+
 /// Register setting and default value (device <= host)
 ///
 /// This message responds to setting registration with the effective value.
 /// The effective value shall differ from the given default value if setting
 /// was already registered or is available in the permanent setting storage
 /// and had a different value.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -297,7 +392,9 @@ impl MsgSettingsRegisterResp {
     }
 }
 impl super::SBPMessage for MsgSettingsRegisterResp {
-    const MSG_ID: u16 = 431;
+    fn get_message_type(&self) -> u16 {
+        431
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -308,10 +405,26 @@ impl super::SBPMessage for MsgSettingsRegisterResp {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgSettingsRegisterResp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.status.append_to_sbp_buffer(buf);
+        self.setting.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.status.sbp_size();
+        size += self.setting.sbp_size();
+        size
+    }
+}
+
 /// Save settings to flash (host => device)
 ///
 /// The save settings message persists the device's current settings
 /// configuration to its onboard flash memory file system.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -325,7 +438,9 @@ impl MsgSettingsSave {
     }
 }
 impl super::SBPMessage for MsgSettingsSave {
-    const MSG_ID: u16 = 161;
+    fn get_message_type(&self) -> u16 {
+        161
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -333,6 +448,15 @@ impl super::SBPMessage for MsgSettingsSave {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSettingsSave {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+
+    fn sbp_size(&self) -> usize {
+        0
     }
 }
 
@@ -345,6 +469,7 @@ impl super::SBPMessage for MsgSettingsSave {
 /// only process to this message when it is received from sender ID 0x42.
 /// An example string that could be sent to a device is
 /// "solution\0soln_freq\010\0".
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -364,7 +489,9 @@ impl MsgSettingsWrite {
     }
 }
 impl super::SBPMessage for MsgSettingsWrite {
-    const MSG_ID: u16 = 160;
+    fn get_message_type(&self) -> u16 {
+        160
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -372,6 +499,19 @@ impl super::SBPMessage for MsgSettingsWrite {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSettingsWrite {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.setting.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.setting.sbp_size();
+        size
     }
 }
 
@@ -384,6 +524,7 @@ impl super::SBPMessage for MsgSettingsWrite {
 /// escape sequence denotes the NULL character and where quotation marks
 /// are omitted. An example string that could be sent from device is
 /// "solution\0soln_freq\010\0".
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -406,7 +547,9 @@ impl MsgSettingsWriteResp {
     }
 }
 impl super::SBPMessage for MsgSettingsWriteResp {
-    const MSG_ID: u16 = 175;
+    fn get_message_type(&self) -> u16 {
+        175
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -414,5 +557,20 @@ impl super::SBPMessage for MsgSettingsWriteResp {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSettingsWriteResp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.status.append_to_sbp_buffer(buf);
+        self.setting.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.status.sbp_size();
+        size += self.setting.sbp_size();
+        size
     }
 }

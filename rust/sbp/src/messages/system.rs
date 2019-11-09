@@ -25,6 +25,7 @@ use serde::{Deserialize, Serialize};
 /// The CSAC telemetry message has an implementation defined telemetry string
 /// from a device. It is not produced or available on general Swift Products.
 /// It is intended to be a low rate message for status purposes.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -47,7 +48,9 @@ impl MsgCsacTelemetry {
     }
 }
 impl super::SBPMessage for MsgCsacTelemetry {
-    const MSG_ID: u16 = 65284;
+    fn get_message_type(&self) -> u16 {
+        65284
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -58,11 +61,27 @@ impl super::SBPMessage for MsgCsacTelemetry {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgCsacTelemetry {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.id.append_to_sbp_buffer(buf);
+        self.telemetry.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.id.sbp_size();
+        size += self.telemetry.sbp_size();
+        size
+    }
+}
+
 /// Experimental telemetry message labels
 ///
 /// The CSAC telemetry message provides labels for each member of the string
 /// produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
 /// rate than the MSG_CSAC_TELEMETRY.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -85,7 +104,9 @@ impl MsgCsacTelemetryLabels {
     }
 }
 impl super::SBPMessage for MsgCsacTelemetryLabels {
-    const MSG_ID: u16 = 65285;
+    fn get_message_type(&self) -> u16 {
+        65285
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -96,11 +117,27 @@ impl super::SBPMessage for MsgCsacTelemetryLabels {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgCsacTelemetryLabels {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.id.append_to_sbp_buffer(buf);
+        self.telemetry_labels.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.id.sbp_size();
+        size += self.telemetry_labels.sbp_size();
+        size
+    }
+}
+
 /// Status of received corrections
 ///
 /// This message provides information about the receipt of Differential
 /// corrections.  It is expected to be sent with each receipt of a complete
 /// corrections packet.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -128,7 +165,9 @@ impl MsgDgnssStatus {
     }
 }
 impl super::SBPMessage for MsgDgnssStatus {
-    const MSG_ID: u16 = 65282;
+    fn get_message_type(&self) -> u16 {
+        65282
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -136,6 +175,25 @@ impl super::SBPMessage for MsgDgnssStatus {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgDgnssStatus {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.flags.append_to_sbp_buffer(buf);
+        self.latency.append_to_sbp_buffer(buf);
+        self.num_signals.append_to_sbp_buffer(buf);
+        self.source.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.flags.sbp_size();
+        size += self.latency.sbp_size();
+        size += self.num_signals.sbp_size();
+        size += self.source.sbp_size();
+        size
     }
 }
 
@@ -151,6 +209,7 @@ impl super::SBPMessage for MsgDgnssStatus {
 /// The system error flag is used to indicate that an error has
 /// occurred in the system. To determine the source of the error,
 /// the remaining error flags should be inspected.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -169,7 +228,9 @@ impl MsgHeartbeat {
     }
 }
 impl super::SBPMessage for MsgHeartbeat {
-    const MSG_ID: u16 = 65535;
+    fn get_message_type(&self) -> u16 {
+        65535
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -180,10 +241,24 @@ impl super::SBPMessage for MsgHeartbeat {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgHeartbeat {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Inertial Navigation System status message
 ///
 /// The INS status message describes the state of the operation
 /// and initialization of the inertial navigation system.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -202,7 +277,9 @@ impl MsgInsStatus {
     }
 }
 impl super::SBPMessage for MsgInsStatus {
-    const MSG_ID: u16 = 65283;
+    fn get_message_type(&self) -> u16 {
+        65283
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -213,12 +290,26 @@ impl super::SBPMessage for MsgInsStatus {
     }
 }
 
+impl crate::serialize::SbpSerialize for MsgInsStatus {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// System start-up message
 ///
 /// The system start-up message is sent once on system
 /// start-up. It notifies the host or other attached devices that
 /// the system has started and is now ready to respond to commands
 /// or configuration requests.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -243,7 +334,9 @@ impl MsgStartup {
     }
 }
 impl super::SBPMessage for MsgStartup {
-    const MSG_ID: u16 = 65280;
+    fn get_message_type(&self) -> u16 {
+        65280
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -251,5 +344,22 @@ impl super::SBPMessage for MsgStartup {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgStartup {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.cause.append_to_sbp_buffer(buf);
+        self.startup_type.append_to_sbp_buffer(buf);
+        self.reserved.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.cause.sbp_size();
+        size += self.startup_type.sbp_size();
+        size += self.reserved.sbp_size();
+        size
     }
 }
