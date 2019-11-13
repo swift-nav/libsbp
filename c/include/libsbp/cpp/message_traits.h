@@ -37,8 +37,14 @@
 
 namespace sbp {
 
+/**
+ * Type traits containing meta-information for each SBP message type.
+ *
+ * These are only meant to be used by the C++ library at compile time.
+ * These are automatically generated, DO NOT EDIT.
+ */
 template<typename>
-struct MessageTraits { };
+struct MessageTraits;
 
 
 template<>
@@ -800,6 +806,12 @@ struct MessageTraits<msg_pos_ecef_cov_t> {
 template<>
 struct MessageTraits<msg_vel_ecef_cov_t> {
   static constexpr u16 id = 533;
+};
+
+
+template<>
+struct MessageTraits<msg_protection_level_t> {
+  static constexpr u16 id = 534;
 };
 
 
