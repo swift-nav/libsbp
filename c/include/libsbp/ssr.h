@@ -114,8 +114,11 @@ but in units of TECU instead of m.
  * Troposphere vertical delays at the grid point.
  */
 typedef struct SBP_ATTR_PACKED {
-  s16 hydro;    /**< Hydrostatic vertical delay [4 mm (add 2.3 m to get actual vertical hydro delay)] */
-  s8 wet;      /**< Wet vertical delay [4 mm (add 0.252 m to get actual vertical wet delay)] */
+  s16 hydro;     /**< Hydrostatic vertical delay [4 mm (add 2.3 m to get actual vertical hydro delay)] */
+  s8 wet;       /**< Wet vertical delay [4 mm (add 0.252 m to get actual vertical wet delay)] */
+  u8 stddev;    /**< stddev [modified DF389 scale; class is upper 3 bits, value is lower 5
+stddev <= (3^class * (1 + value/16) - 1) mm
+] */
 } tropospheric_delay_correction_t;
 
 
@@ -126,6 +129,9 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   sv_id_t sv_id;       /**< space vehicle identifier */
   s16 residual;    /**< STEC residual [0.04 TECU] */
+  u8 stddev;      /**< stddev [modified DF389 scale; class is upper 3 bits, value is lower 5
+stddev <= (3^class * (1 + value/16) - 1) / 10 TECU
+] */
 } stec_residual_t;
 
 

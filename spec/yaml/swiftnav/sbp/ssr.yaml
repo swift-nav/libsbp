@@ -142,6 +142,12 @@ definitions:
         type: s8
         units: 4 mm (add 0.252 m to get actual vertical wet delay)
         desc: Wet vertical delay
+    - stddev:
+        type: u8
+        units: |
+          modified DF389 scale; class is upper 3 bits, value is lower 5
+          stddev <= (3^class * (1 + value/16) - 1) mm
+        desc: stddev
 
  - STECResidual:
     desc: STEC residual for the given satellite at the grid point.
@@ -153,6 +159,12 @@ definitions:
         type: s16
         units: 0.04 TECU
         desc: STEC residual
+    - stddev:
+        type: u8
+        units: |
+          modified DF389 scale; class is upper 3 bits, value is lower 5
+          stddev <= (3^class * (1 + value/16) - 1) / 10 TECU
+        desc: stddev
 
  - GridElement:
     short_desc: Correction data for a single grid point.
