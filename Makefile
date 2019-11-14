@@ -395,6 +395,7 @@ release:
 	github_changelog_generator --no-author \
 				   --max-issues $(CHANGELOG_MAX_ISSUES) \
 				   -t $(CHANGELOG_GITHUB_TOKEN)$ \
+				   --user swift-nav --project libsbp \
 				   -o DRAFT_CHANGELOG.md \
 				   swift-nav/libsbp
 	$(call announce-end,"Added CHANGELOG details to DRAFT_CHANGELOG.md!")
