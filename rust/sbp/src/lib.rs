@@ -5,9 +5,9 @@
 pub mod messages;
 pub mod parser;
 
-use std::result;
 use std::error;
 use std::fmt;
+use std::result;
 
 pub type Result<T> = result::Result<T, Error>;
 

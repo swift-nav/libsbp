@@ -25,7 +25,6 @@ use serde::{Deserialize, Serialize};
 ///
 /// This message is sent once per second per SBAS satellite. ME checks the
 /// parity of the data block and sends only blocks that pass the check.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]

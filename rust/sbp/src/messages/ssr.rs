@@ -25,7 +25,6 @@ use serde::{Deserialize, Serialize};
 ///
 /// Code biases are to be added to pseudorange.
 /// The corrections conform with typical RTCMv3 MT1059 and 1065.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -67,7 +66,6 @@ impl CodeBiasesContent {
 ///
 /// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
 /// Also includes an RLE encoded validity list.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -123,7 +121,6 @@ impl GridDefinitionHeader {
 ///
 /// Contains one tropo delay, plus STEC residuals for each satellite at the
 /// grid point.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -166,7 +163,6 @@ impl GridElement {
 /// The 3GPP message contains nested variable length arrays
 /// which are not suppported in SBP, so each grid point will
 /// be identified by the index.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -224,7 +220,6 @@ impl GriddedCorrectionHeader {
 /// to the pseudorange of the corresponding signal
 /// to get corrected pseudorange. It is typically
 /// an equivalent to the 1059 and 1065 RTCM message types
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -272,7 +267,6 @@ impl super::SBPMessage for MsgSsrCodeBiases {
 ///
 /// STEC residuals are per space vehicle, tropo is not.
 /// It is typically equivalent to the QZSS CLAS Sub Type 9 messages
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -309,7 +303,6 @@ impl super::SBPMessage for MsgSsrGriddedCorrection {
 ///
 /// Based on the 3GPP proposal R2-1906781 which is in turn based on
 /// OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -351,7 +344,6 @@ impl super::SBPMessage for MsgSsrGridDefinition {
 /// to be applied as a delta correction to broadcast
 /// ephemeris and is typically an equivalent to the 1060
 /// and 1066 RTCM message types
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -428,7 +420,6 @@ impl super::SBPMessage for MsgSsrOrbitClock {
 /// to be applied as a delta correction to broadcast
 /// ephemeris and is typically an equivalent to the 1060
 /// and 1066 RTCM message types
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -507,7 +498,6 @@ impl super::SBPMessage for MsgSsrOrbitClockDepA {
 /// well as the satellite yaw angle to be applied to compute
 /// the phase wind-up correction.
 /// It is typically an equivalent to the 1265 RTCM message types
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -569,7 +559,6 @@ impl super::SBPMessage for MsgSsrPhaseBiases {
 /// a given grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION
 /// message to get the state space representation of the atmospheric
 /// delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -606,7 +595,6 @@ impl super::SBPMessage for MsgSsrStecCorrection {
 ///
 /// Phase biases are to be added to carrier phase measurements.
 /// The corrections conform with typical RTCMv3 MT1059 and 1065.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -659,7 +647,6 @@ impl PhaseBiasesContent {
 /// A full set of STEC information will likely span multiple SBP
 /// messages, since SBP message a limited to 255 bytes.  The header
 /// is used to tie multiple SBP messages into a sequence.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -707,7 +694,6 @@ impl STECHeader {
 /// None
 ///
 /// STEC residual for the given satellite at the grid point.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -745,7 +731,6 @@ impl STECResidual {
 /// None
 ///
 /// STEC polynomial for the given satellite.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -790,7 +775,6 @@ impl STECSatElement {
 /// None
 ///
 /// Troposphere vertical delays at the grid point.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]

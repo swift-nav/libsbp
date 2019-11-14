@@ -49,7 +49,6 @@ use serde::{Deserialize, Serialize};
 /// Finished reading settings (host <= device)
 ///
 /// The settings message for indicating end of the settings values.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -79,7 +78,6 @@ impl super::SBPMessage for MsgSettingsReadByIndexDone {
 /// The settings message for iterating through the settings
 /// values. A device will respond to this message with a
 /// "MSG_SETTINGS_READ_BY_INDEX_RESP".
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -122,7 +120,6 @@ impl super::SBPMessage for MsgSettingsReadByIndexReq {
 /// included, the format type portion of the string has the format
 /// "enum:value1,value2,value3". An example string that could be sent from
 /// the device is "simulator\0enabled\0True\0enum:True,False\0"
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -167,7 +164,6 @@ impl super::SBPMessage for MsgSettingsReadByIndexResp {
 /// device will only respond to this message when it is received from
 /// sender ID 0x42. A device should respond with a MSG_SETTINGS_READ_RESP
 /// message (msg_id 0x00A5).
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -207,7 +203,6 @@ impl super::SBPMessage for MsgSettingsReadReq {
 /// denotes the NULL character and where quotation marks are omitted. An
 /// example string that could be sent from device is
 /// "solution\0soln_freq\010\0".
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -243,7 +238,6 @@ impl super::SBPMessage for MsgSettingsReadResp {
 /// This message registers the presence and default value of a setting
 /// with a settings daemon.  The host should reply with MSG_SETTINGS_WRITE
 /// for this setting to set the initial value.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -280,7 +274,6 @@ impl super::SBPMessage for MsgSettingsRegister {
 /// The effective value shall differ from the given default value if setting
 /// was already registered or is available in the permanent setting storage
 /// and had a different value.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -319,7 +312,6 @@ impl super::SBPMessage for MsgSettingsRegisterResp {
 ///
 /// The save settings message persists the device's current settings
 /// configuration to its onboard flash memory file system.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -353,7 +345,6 @@ impl super::SBPMessage for MsgSettingsSave {
 /// only process to this message when it is received from sender ID 0x42.
 /// An example string that could be sent to a device is
 /// "solution\0soln_freq\010\0".
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -393,7 +384,6 @@ impl super::SBPMessage for MsgSettingsWrite {
 /// escape sequence denotes the NULL character and where quotation marks
 /// are omitted. An example string that could be sent from device is
 /// "solution\0soln_freq\010\0".
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]

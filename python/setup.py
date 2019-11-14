@@ -59,7 +59,7 @@ def read_release_version():
 
 
 MAJOR, MINOR, PATCH = read_release_version()
-IS_RELEASED = False
+IS_RELEASED = os.environ.get('IS_RELEASED', '') != ''
 
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, PATCH)
 

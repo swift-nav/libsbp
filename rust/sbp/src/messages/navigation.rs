@@ -42,7 +42,6 @@ use serde::{Deserialize, Serialize};
 ///
 /// This message reports the Age of the corrections used for the current
 /// Differential solution
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -82,7 +81,6 @@ impl super::SBPMessage for MsgAgeCorrections {
 /// vector distance from the base station to the rover receiver. The
 /// full GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -137,7 +135,6 @@ impl super::SBPMessage for MsgBaselineECEF {
 /// vector distance from the base station to the rover receiver. The
 /// full GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -190,7 +187,6 @@ impl super::SBPMessage for MsgBaselineECEFDepA {
 /// This message reports the baseline heading pointing from the base station
 /// to the rover relative to True North. The full GPS time is given by the
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -237,7 +233,6 @@ impl super::SBPMessage for MsgBaselineHeadingDepA {
 /// system is defined at the local WGS84 tangent plane centered at the
 /// base station position.  The full GPS time is given by the
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -296,7 +291,6 @@ impl super::SBPMessage for MsgBaselineNED {
 /// system is defined at the local WGS84 tangent plane centered at the
 /// base station position.  The full GPS time is given by the
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -353,7 +347,6 @@ impl super::SBPMessage for MsgBaselineNEDDepA {
 /// navigation satellite geometry on positional measurement
 /// precision.  The flags field indicated whether the DOP reported
 /// corresponds to differential or SPP solution.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -406,7 +399,6 @@ impl super::SBPMessage for MsgDops {
 /// This dilution of precision (DOP) message describes the effect of
 /// navigation satellite geometry on positional measurement
 /// precision.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -466,7 +458,6 @@ impl super::SBPMessage for MsgDopsDepA {
 /// set of other navigation messages referenced to the same time
 /// (but lacking the ns field) and indicates a more precise time of
 /// these messages.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -521,7 +512,6 @@ impl super::SBPMessage for MsgGPSTime {
 /// set of other navigation messages referenced to the same time
 /// (but lacking the ns field) and indicates a more precise time of
 /// these messages.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -571,7 +561,6 @@ impl super::SBPMessage for MsgGPSTimeDepA {
 /// solution using the base station position and the rover's RTK
 /// baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -630,7 +619,6 @@ impl super::SBPMessage for MsgPosECEF {
 /// solution using the base station position and the rover's RTK
 /// baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -703,7 +691,6 @@ impl super::SBPMessage for MsgPosECEFCov {
 /// solution using the base station position and the rover's RTK
 /// baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -761,7 +748,6 @@ impl super::SBPMessage for MsgPosECEFDepA {
 /// station position and the rover's RTK baseline vector. The full
 /// GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -822,7 +808,6 @@ impl super::SBPMessage for MsgPosLLH {
 /// in the local-level North, East, Down frame, the covariance terms follow
 /// with that convention. Thus, covariances are reported against the "downward"
 /// measurement and care should be taken with the sign convention.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -895,7 +880,6 @@ impl super::SBPMessage for MsgPosLLHCov {
 /// station position and the rover's RTK baseline vector. The full
 /// GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -951,7 +935,6 @@ impl super::SBPMessage for MsgPosLLHDepA {
 /// This message reports the local vertical and horizontal protection levels
 /// associated with a given LLH position solution. The full GPS time is given
 /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1003,7 +986,6 @@ impl super::SBPMessage for MsgProtectionLevel {
 ///
 /// This message reports the Universal Coordinated Time (UTC).  Note the flags
 /// which indicate the source of the UTC offset value and source of the time fix.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1067,7 +1049,6 @@ impl super::SBPMessage for MsgUtcTime {
 /// The full GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow). This message is only produced by inertial versions of Swift
 /// products and is not available from Piksi Multi or Duro.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1135,7 +1116,6 @@ impl super::SBPMessage for MsgVelBody {
 /// This message reports the velocity in Earth Centered Earth Fixed
 /// (ECEF) coordinates. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1188,7 +1168,6 @@ impl super::SBPMessage for MsgVelECEF {
 /// This message reports the velocity in Earth Centered Earth Fixed
 /// (ECEF) coordinates. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1256,7 +1235,6 @@ impl super::SBPMessage for MsgVelECEFCov {
 /// This message reports the velocity in Earth Centered Earth Fixed
 /// (ECEF) coordinates. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1310,7 +1288,6 @@ impl super::SBPMessage for MsgVelECEFDepA {
 /// coordinates. The NED coordinate system is defined as the local WGS84
 /// tangent plane centered at the current position. The full GPS time is
 /// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1369,7 +1346,6 @@ impl super::SBPMessage for MsgVelNED {
 /// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 /// This message is similar to the MSG_VEL_NED, but it includes the upper triangular
 /// portion of the 3x3 covariance matrix.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1438,7 +1414,6 @@ impl super::SBPMessage for MsgVelNEDCov {
 /// coordinates. The NED coordinate system is defined as the local WGS84
 /// tangent plane centered at the current position. The full GPS time is
 /// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]

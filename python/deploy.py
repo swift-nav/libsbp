@@ -48,6 +48,7 @@ if platform.system() == "Linux" and platform.python_version().startswith("3.4"):
 else:
     DASHDASH = []
 
+os.environ['IS_RELEASED'] = 'y'
 
 def twine_upload(conda_dir, wheel, py_version="3.7", use_conda=True):
 
@@ -185,10 +186,10 @@ def run_bdist(conda_dir,
     for dirent in glob.glob("module/build/*"):
         shutil.rmtree(dirent) if os.path.isdir(dirent) else os.unlink(dirent)
 
-    with open("module/setup.py", "rb") as fp:
-        data = fp.read()
-    with open("module/setup.py", "wb") as fp:
-        fp.write(data.replace(b"IS_RELEASED = False", b"IS_RELEASED = True"))
+#    with open("module/setup.py", "rb") as fp:
+#        data = fp.read()
+#    with open("module/setup.py", "wb") as fp:
+#        fp.write(data.replace(b"IS_RELEASED = False", b"IS_RELEASED = True"))
 
     os.chdir("module")
 

@@ -26,7 +26,6 @@ use serde::{Deserialize, Serialize};
 ///
 /// Reports detection of an external event, the GPS time it occurred,
 /// which pin it was and whether it was rising or falling.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]

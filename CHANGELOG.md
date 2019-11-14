@@ -1,5 +1,36 @@
 # Change Log
 
+## [v2.7.3](https://github.com/swift-nav/libsbp/tree/v2.7.3)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.7.1...v2.7.3)
+
+**Closed issues:**
+
+- sbp2rinex does not generate valid rinex when using toJson\(\) method from SBPMessage.java  [\#720](https://github.com/swift-nav/libsbp/issues/720)
+
+**Merged pull requests:**
+
+- Allow max reconnects to be specified as a parameter \[ESD-1603\] \[TTI-2\] [\#756](https://github.com/swift-nav/libsbp/pull/756)
+- Miscellaneous clean up of Rust bindings [\#754](https://github.com/swift-nav/libsbp/pull/754)
+- Get rust example building [\#753](https://github.com/swift-nav/libsbp/pull/753)
+- Cannot compare int and NoneType in python3 [\#752](https://github.com/swift-nav/libsbp/pull/752)
+- Added check for a couple of needed commands to build rust. [\#750](https://github.com/swift-nav/libsbp/pull/750)
+- Added typescript module declaration file [\#749](https://github.com/swift-nav/libsbp/pull/749)
+- Changed C++ wrapper to not require non-const access to the buffer when sending [\#748](https://github.com/swift-nav/libsbp/pull/748)
+- Added optional serialize feature to rust crate [\#747](https://github.com/swift-nav/libsbp/pull/747)
+- Update check [\#746](https://github.com/swift-nav/libsbp/pull/746)
+- Add unit tests for Rust [\#745](https://github.com/swift-nav/libsbp/pull/745)
+- Fix compiler warnings found in libsettings build [\#743](https://github.com/swift-nav/libsbp/pull/743)
+- Import libcheck as submodule [\#742](https://github.com/swift-nav/libsbp/pull/742)
+- Use common test targets module [\#740](https://github.com/swift-nav/libsbp/pull/740)
+- Add C++ support [\#739](https://github.com/swift-nav/libsbp/pull/739)
+- Fix Rust generation to generate in the same order [\#738](https://github.com/swift-nav/libsbp/pull/738)
+- \[STAR-789\] Add proposed Protection Level message [\#737](https://github.com/swift-nav/libsbp/pull/737)
+- Star 833 [\#736](https://github.com/swift-nav/libsbp/pull/736)
+- Generate JSON schema definitions for web clients [\#735](https://github.com/swift-nav/libsbp/pull/735)
+- Update libsbp ARM builders [\#733](https://github.com/swift-nav/libsbp/pull/733)
+- Modify to work with Rust's bindgen [\#706](https://github.com/swift-nav/libsbp/pull/706)
+
 ## [v2.7.1](https://github.com/swift-nav/libsbp/tree/v2.7.1)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.7.0...v2.7.1)

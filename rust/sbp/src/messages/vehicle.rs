@@ -24,10 +24,9 @@ use serde::{Deserialize, Serialize};
 ///
 /// Message representing the x component of vehicle velocity in the user frame at the odometry
 /// reference point(s) specified by the user. The offset for the odometry reference point and
-/// the definition and origin of the user frame are defined through the device settings interface.
-/// There are 4 possible user-defined sources of this message  which are labeled arbitrarily
-/// source 0 through 3.
-///
+/// the definition and origin of the user frame are defined through the device settings
+/// interface. There are 4 possible user-defined sources of this message  which are labeled
+/// arbitrarily source 0 through 3.
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]

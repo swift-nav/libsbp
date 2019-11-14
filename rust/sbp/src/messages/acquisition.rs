@@ -26,7 +26,6 @@ use serde::{Deserialize, Serialize};
 /// Profile for a specific SV for debugging purposes
 /// The message describes SV profile during acquisition time.
 /// The message is used to debug and measure the performance.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -94,7 +93,6 @@ impl AcqSvProfile {
 /// Deprecated
 ///
 /// Deprecated.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -169,7 +167,6 @@ impl AcqSvProfileDep {
 /// frequency range. It contains the parameters of the point in the
 /// acquisition search space with the best carrier-to-noise (CN/0)
 /// ratio.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -211,7 +208,6 @@ impl super::SBPMessage for MsgAcqResult {
 /// Deprecated
 ///
 /// Deprecated.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -255,7 +251,6 @@ impl super::SBPMessage for MsgAcqResultDepA {
 /// Deprecated
 ///
 /// Deprecated.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -298,7 +293,6 @@ impl super::SBPMessage for MsgAcqResultDepB {
 /// Deprecated
 ///
 /// Deprecated.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -341,7 +335,6 @@ impl super::SBPMessage for MsgAcqResultDepC {
 ///
 /// The message describes all SV profiles during acquisition time.
 /// The message is used to debug and measure the performance.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -374,7 +367,6 @@ impl super::SBPMessage for MsgAcqSvProfile {
 /// Deprecated.
 ///
 /// Deprecated.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
