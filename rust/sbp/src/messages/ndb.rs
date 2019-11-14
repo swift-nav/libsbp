@@ -26,7 +26,6 @@ use serde::{Deserialize, Serialize};
 ///
 /// This message is sent out when an object is stored into NDB. If needed
 /// message could also be sent out when fetching an object from NDB.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]

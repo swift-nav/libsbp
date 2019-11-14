@@ -31,7 +31,6 @@ use serde::{Deserialize, Serialize};
 /// compared to the current GPS time calculated locally by the
 /// receiver to give a precise measurement of the end-to-end
 /// communication latency in the system.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -76,7 +75,6 @@ impl Latency {
 ///
 /// This is a legacy message for sending and loading a satellite
 /// alamanac onto the Piksi's flash memory from the host.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -106,7 +104,6 @@ impl super::SBPMessage for MsgAlmanac {
 /// If a cell modem is present on a piksi device, this message
 /// will be send periodically to update the host on the status
 /// of the modem and its various parameters.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -148,7 +145,6 @@ impl super::SBPMessage for MsgCellModemStatus {
 /// command requested by MSG_COMMAND_REQ.
 /// The sequence number can be used to filter for filtering
 /// the correct command.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -186,7 +182,6 @@ impl super::SBPMessage for MsgCommandOutput {
 /// Request the recipient to execute an command.
 /// Output will be sent in MSG_LOG messages, and the exit
 /// code will be returned with MSG_COMMAND_RESP.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -223,7 +218,6 @@ impl super::SBPMessage for MsgCommandReq {
 ///
 /// The response to MSG_COMMAND_REQ with the return code of
 /// the command.  A return code of zero indicates success.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -261,7 +255,6 @@ impl super::SBPMessage for MsgCommandResp {
 /// This is an unused legacy message for result reporting from the
 /// CW interference channel on the SwiftNAP. This message will be
 /// removed in a future release.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -291,7 +284,6 @@ impl super::SBPMessage for MsgCwResults {
 /// This is an unused legacy message from the host for starting
 /// the CW interference channel on the SwiftNAP. This message will
 /// be removed in a future release.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -321,7 +313,6 @@ impl super::SBPMessage for MsgCwStart {
 /// This message contains temperature and voltage level measurements from the
 /// processor's monitoring system and the RF frontend die temperature if
 /// available.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -369,9 +360,9 @@ impl super::SBPMessage for MsgDeviceMonitor {
 /// gain is encoded as a non-dimensional percentage relative to the maximum range  
 /// possible for the gain stage of the frontend. By convention, each gain array
 /// has 8 entries and the index of the array corresponding to the index of the rf channel
-/// in the frontend. A gain of 127 percent encodes that rf channel is not present in the hardware.
-/// A negative value implies an error for the particular gain stage as reported by the frontend.
-///
+/// in the frontend. A gain of 127 percent encodes that rf channel is not present in the
+/// hardware. A negative value implies an error for the particular gain stage as reported by
+/// the frontend.
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -410,7 +401,6 @@ impl super::SBPMessage for MsgFrontEndGain {
 /// Resolution (IAR) process, which resolves unknown integer
 /// ambiguities from double-differenced carrier-phase measurements
 /// from satellite observations.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -443,7 +433,6 @@ impl super::SBPMessage for MsgIarState {
 /// Deprecated
 ///
 /// Deprecated
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -472,7 +461,6 @@ impl super::SBPMessage for MsgInitBaseDep {
 ///
 /// This message allows setting a mask to prevent a particular satellite
 /// from being used in various Piksi subsystems.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -508,7 +496,6 @@ impl super::SBPMessage for MsgMaskSatellite {
 /// Deprecated
 ///
 /// Deprecated.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -544,7 +531,6 @@ impl super::SBPMessage for MsgMaskSatelliteDep {
 /// Bandwidth usage reporting message
 ///
 /// The bandwidth usage, a list of usage by interface.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -578,7 +564,6 @@ impl super::SBPMessage for MsgNetworkBandwidthUsage {
 ///
 /// Request state of Piksi network interfaces.
 /// Output will be sent in MSG_NETWORK_STATE_RESP messages
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -608,7 +593,6 @@ impl super::SBPMessage for MsgNetworkStateReq {
 /// The state of a network interface on the Piksi.
 /// Data is made to reflect output of ifaddrs struct returned by getifaddrs
 /// in c.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -663,7 +647,6 @@ impl super::SBPMessage for MsgNetworkStateResp {
 ///
 /// This message from the host resets the Piksi back into the
 /// bootloader.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -697,7 +680,6 @@ impl super::SBPMessage for MsgReset {
 ///
 /// This message from the host resets the Piksi back into the
 /// bootloader.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -726,7 +708,6 @@ impl super::SBPMessage for MsgResetDep {
 ///
 /// This message resets either the DGNSS Kalman filters or Integer
 /// Ambiguity Resolution (IAR) process.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -760,7 +741,6 @@ impl super::SBPMessage for MsgResetFilters {
 ///
 /// This message sets up timing functionality using a coarse GPS
 /// time estimate sent by the host.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -788,7 +768,6 @@ impl super::SBPMessage for MsgSetTime {
 /// Spectrum analyzer
 ///
 /// Spectrum analyzer packet.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -839,7 +818,6 @@ impl super::SBPMessage for MsgSpecan {
 /// Deprecated
 ///
 /// Deprecated.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -892,7 +870,6 @@ impl super::SBPMessage for MsgSpecanDep {
 /// The thread usage message from the device reports real-time
 /// operating system (RTOS) thread usage statistics for the named
 /// thread. The reported percentage values must be normalized.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -940,7 +917,6 @@ impl super::SBPMessage for MsgThreadState {
 /// health of the differential corrections link. Latency provides
 /// the timeliness of received base observations while the
 /// period indicates their likelihood of transmission.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -985,7 +961,6 @@ impl super::SBPMessage for MsgUartState {
 /// Deprecated
 ///
 /// Deprecated
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1032,7 +1007,6 @@ impl super::SBPMessage for MsgUartStateDepa {
 /// either the interval of collection or the collection time
 /// may vary, both a timestamp and period field is provided,
 /// though may not necessarily be populated with a value.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1084,7 +1058,6 @@ impl NetworkUsage {
 /// This measurement provides a proxy for link quality as incomplete
 /// or missing sets will increase the period.  Long periods
 /// can cause momentary RTK solution outages.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1130,7 +1103,6 @@ impl Period {
 /// Throughput, utilization, and error counts on the RX/TX buffers
 /// of this UART channel. The reported percentage values must
 /// be normalized.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]

@@ -25,7 +25,6 @@ use serde::{Deserialize, Serialize};
 ///
 /// This message can contain any application specific user data up to a
 /// maximum length of 255 bytes per message.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]

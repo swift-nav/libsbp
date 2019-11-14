@@ -103,7 +103,10 @@ impl Parser {
         let mut local_buffer = vec![0; Parser::BUF_SIZE];
         let read_bytes = input.read(local_buffer.as_mut())?;
         if read_bytes == 0 {
-            return Err(crate::Error::IoError(std::io::Error::new(std::io::ErrorKind::UnexpectedEof, "")));
+            return Err(crate::Error::IoError(std::io::Error::new(
+                std::io::ErrorKind::UnexpectedEof,
+                "",
+            )));
         }
         self.buffer.extend_from_slice(&local_buffer[..read_bytes]);
         Ok(read_bytes)
@@ -129,7 +132,7 @@ impl Parser {
             }
 
             if self.buffer.is_empty() {
-                break Err(crate::Error::NotEnoughData)
+                break Err(crate::Error::NotEnoughData);
             }
         }
     }

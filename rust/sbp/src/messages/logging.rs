@@ -30,7 +30,6 @@ use serde::{Deserialize, Serialize};
 /// The source identifier indicates from what interface a forwarded stream derived.
 /// The protocol identifier identifies what the expected protocol the forwarded msg contains.
 /// Protocol 0 represents SBP and the remaining values are implementation defined.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -71,7 +70,6 @@ impl super::SBPMessage for MsgFwd {
 /// This message contains a human-readable payload string from the
 /// device containing errors, warnings and informational messages at
 /// ERROR, WARNING, DEBUG, INFO logging levels.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -107,7 +105,6 @@ impl super::SBPMessage for MsgLog {
 /// Deprecated
 ///
 /// Deprecated.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]

@@ -26,7 +26,6 @@ use serde::{Deserialize, Serialize};
 /// fixed point number with Q32.8 layout, i.e. 32-bits of whole
 /// cycles and 8-bits of fractional cycles. This phase has the
 /// same sign as the pseudorange.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -67,7 +66,6 @@ impl CarrierPhase {
 /// since the beginning of the week on the Saturday/Sunday
 /// transition. In most cases, observations are epoch aligned
 /// so ns field will be 0.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -111,7 +109,6 @@ impl GPSTime {
 /// A wire-appropriate GPS time, defined as the number of
 /// milliseconds since beginning of the week on the Saturday/Sunday
 /// transition.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -151,7 +148,6 @@ impl GPSTimeDep {
 /// A GPS time, defined as the number of
 /// seconds since beginning of the week on the Saturday/Sunday
 /// transition.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -189,7 +185,6 @@ impl GPSTimeSec {
 /// Represents all the relevant information about the signal
 ///
 /// Signal identifier containing constellation, band, and satellite identifier
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -228,7 +223,6 @@ impl GnssSignal {
 /// Deprecated
 ///
 /// Deprecated.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -275,7 +269,6 @@ impl GnssSignalDep {
 ///
 /// A (Constellation ID, satellite ID) tuple that uniquely identifies
 /// a space vehicle
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]

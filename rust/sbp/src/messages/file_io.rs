@@ -34,7 +34,6 @@ use serde::{Deserialize, Serialize};
 /// transfer.  Newer version of FileIO can support greater
 /// throughput by supporting a large window of FileIO data
 /// that can be in-flight during read or write operations.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -71,7 +70,6 @@ impl super::SBPMessage for MsgFileioConfigReq {
 /// transfer.  Newer version of FileIO can support greater
 /// throughput by supporting a large window of FileIO data
 /// that can be in-flight during read or write operations.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -122,7 +120,6 @@ impl super::SBPMessage for MsgFileioConfigResp {
 /// MSG_PRINT message will print "Invalid fileio read message".
 /// A device will only respond to this message when it is received
 /// from sender ID 0x42.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -166,7 +163,6 @@ impl super::SBPMessage for MsgFileioReadDirReq {
 /// multiple SBP packets and the end of the list is identified by an
 /// entry containing just the character 0xFF. The sequence number in
 /// the response is preserved from the request.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -209,7 +205,6 @@ impl super::SBPMessage for MsgFileioReadDirResp {
 /// If the message is invalid, a followup MSG_PRINT message will
 /// print "Invalid fileio read message". A device will only respond
 /// to this message when it is received from sender ID 0x42.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -255,7 +250,6 @@ impl super::SBPMessage for MsgFileioReadReq {
 /// message where the message length field indicates how many bytes
 /// were succesfully read. The sequence number in the response is
 /// preserved from the request.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -294,7 +288,6 @@ impl super::SBPMessage for MsgFileioReadResp {
 /// If the message is invalid, a followup MSG_PRINT message will
 /// print "Invalid fileio remove message". A device will only
 /// process this message when it is received from sender ID 0x42.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -334,7 +327,6 @@ impl super::SBPMessage for MsgFileioRemove {
 /// message will print "Invalid fileio write message". A device will
 /// only  process this message when it is received from sender ID
 /// 0x42.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -380,7 +372,6 @@ impl super::SBPMessage for MsgFileioWriteReq {
 /// original MSG_FILEIO_WRITE_REQ message to check integrity of the
 /// write. The sequence number in the response is preserved from the
 /// request.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]

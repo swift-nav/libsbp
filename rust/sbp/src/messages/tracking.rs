@@ -27,7 +27,6 @@ use serde::{Deserialize, Serialize};
 /// The tracking message returns a variable-length array of tracking
 /// channel states. It reports status and carrier-to-noise density
 /// measurements for all tracked satellites.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -61,7 +60,6 @@ impl super::SBPMessage for MsgMeasurementState {
 ///
 /// When enabled, a tracking channel can output the correlations at each
 /// update interval.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -100,7 +98,6 @@ impl super::SBPMessage for MsgTrackingIq {
 /// Deprecated
 ///
 /// Deprecated.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -140,7 +137,6 @@ impl super::SBPMessage for MsgTrackingIqDepA {
 ///
 /// When enabled, a tracking channel can output the correlations at each
 /// update interval.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -181,7 +177,6 @@ impl super::SBPMessage for MsgTrackingIqDepB {
 /// The tracking message returns a variable-length array of tracking
 /// channel states. It reports status and carrier-to-noise density
 /// measurements for all tracked satellites.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -214,7 +209,6 @@ impl super::SBPMessage for MsgTrackingState {
 /// Deprecated
 ///
 /// Deprecated.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -247,7 +241,6 @@ impl super::SBPMessage for MsgTrackingStateDepA {
 /// Deprecated.
 ///
 /// Deprecated.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -280,7 +273,6 @@ impl super::SBPMessage for MsgTrackingStateDepB {
 /// Deprecated
 ///
 /// Deprecated.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -380,7 +372,6 @@ impl super::SBPMessage for MsgTrackingStateDetailedDep {
 ///
 /// The tracking message returns a set tracking channel parameters for a
 /// single tracking channel useful for debugging issues.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -483,7 +474,6 @@ impl super::SBPMessage for MsgTrackingStateDetailedDepA {
 /// The mesid field for Glonass can either
 /// carry the FCN as 100 + FCN where FCN is in [-7, +6] or
 /// the Slot ID (from 1 to 28)
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -525,7 +515,6 @@ impl MeasurementState {
 /// Complex correlation structure
 ///
 /// Structure containing in-phase and quadrature correlation components.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -566,7 +555,6 @@ impl TrackingChannelCorrelation {
 /// Complex correlation structure
 ///
 /// Structure containing in-phase and quadrature correlation components.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -610,7 +598,6 @@ impl TrackingChannelCorrelationDep {
 ///
 /// Tracking channel state for a specific satellite signal and
 /// measured signal power.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -654,7 +641,6 @@ impl TrackingChannelState {
 /// Deprecated
 ///
 /// Deprecated.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -698,7 +684,6 @@ impl TrackingChannelStateDepA {
 /// Deprecated.
 ///
 /// Deprecated.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]

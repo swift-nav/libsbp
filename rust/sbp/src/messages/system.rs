@@ -25,7 +25,6 @@ use serde::{Deserialize, Serialize};
 /// The CSAC telemetry message has an implementation defined telemetry string
 /// from a device. It is not produced or available on general Swift Products.
 /// It is intended to be a low rate message for status purposes.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -64,7 +63,6 @@ impl super::SBPMessage for MsgCsacTelemetry {
 /// The CSAC telemetry message provides labels for each member of the string
 /// produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
 /// rate than the MSG_CSAC_TELEMETRY.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -103,7 +101,6 @@ impl super::SBPMessage for MsgCsacTelemetryLabels {
 /// This message provides information about the receipt of Differential
 /// corrections.  It is expected to be sent with each receipt of a complete
 /// corrections packet.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -154,7 +151,6 @@ impl super::SBPMessage for MsgDgnssStatus {
 /// The system error flag is used to indicate that an error has
 /// occurred in the system. To determine the source of the error,
 /// the remaining error flags should be inspected.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -188,7 +184,6 @@ impl super::SBPMessage for MsgHeartbeat {
 ///
 /// The INS status message describes the state of the operation
 /// and initialization of the inertial navigation system.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -224,7 +219,6 @@ impl super::SBPMessage for MsgInsStatus {
 /// start-up. It notifies the host or other attached devices that
 /// the system has started and is now ready to respond to commands
 /// or configuration requests.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]

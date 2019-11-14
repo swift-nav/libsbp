@@ -23,7 +23,6 @@ use serde::{Deserialize, Serialize};
 /// Raw magnetometer data
 ///
 /// Raw data from the magnetometer.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]

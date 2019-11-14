@@ -25,7 +25,6 @@ use serde::{Deserialize, Serialize};
 ///
 /// This message indicates the process state of the top 10 heaviest
 /// consumers of CPU on the system.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -71,7 +70,6 @@ impl super::SBPMessage for MsgLinuxCpuState {
 ///
 /// This message indicates the process state of the top 10 heaviest
 /// consumers of memory on the system.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -116,7 +114,6 @@ impl super::SBPMessage for MsgLinuxMemState {
 /// Summary of processes with large amounts of open file descriptors
 ///
 /// Top 10 list of processes with a large number of open file descriptors.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -158,7 +155,6 @@ impl super::SBPMessage for MsgLinuxProcessFdCount {
 /// Summary of open file descriptors on the system
 ///
 /// Summary of open file descriptors on the system.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -198,7 +194,6 @@ impl super::SBPMessage for MsgLinuxProcessFdSummary {
 /// A list of processes with high socket counts
 ///
 /// Top 10 list of processes with high socket counts.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -250,7 +245,6 @@ impl super::SBPMessage for MsgLinuxProcessSocketCounts {
 /// A list of processes with deep socket queues
 ///
 /// Top 10 list of sockets with deep queues.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -309,7 +303,6 @@ impl super::SBPMessage for MsgLinuxProcessSocketQueues {
 /// Summary of socket usage across the system
 ///
 /// Summaries the socket usage across the system.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -355,7 +348,6 @@ impl super::SBPMessage for MsgLinuxSocketUsage {
 /// CPU, Memory and Process Starts/Stops
 ///
 /// This presents a summary of CPU and memory utilization.
-///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
