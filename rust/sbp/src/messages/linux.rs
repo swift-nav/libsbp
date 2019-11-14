@@ -18,12 +18,15 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// List CPU state on the system
 ///
 /// This message indicates the process state of the top 10 heaviest
 /// consumers of CPU on the system.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxCpuState {
@@ -41,14 +44,14 @@ pub struct MsgLinuxCpuState {
 }
 
 impl MsgLinuxCpuState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxCpuState, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxCpuState, crate::Error> {
         Ok(MsgLinuxCpuState {
             sender_id: None,
             index: _buf.read_u8()?,
             pid: _buf.read_u16::<LittleEndian>()?,
             pcpu: _buf.read_u8()?,
-            tname: ::parser::read_string_limit(_buf, 15)?,
-            cmdline: ::parser::read_string(_buf)?,
+            tname: crate::parser::read_string_limit(_buf, 15)?,
+            cmdline: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -69,6 +72,7 @@ impl super::SBPMessage for MsgLinuxCpuState {
 /// This message indicates the process state of the top 10 heaviest
 /// consumers of memory on the system.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxMemState {
@@ -86,14 +90,14 @@ pub struct MsgLinuxMemState {
 }
 
 impl MsgLinuxMemState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxMemState, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxMemState, crate::Error> {
         Ok(MsgLinuxMemState {
             sender_id: None,
             index: _buf.read_u8()?,
             pid: _buf.read_u16::<LittleEndian>()?,
             pmem: _buf.read_u8()?,
-            tname: ::parser::read_string_limit(_buf, 15)?,
-            cmdline: ::parser::read_string(_buf)?,
+            tname: crate::parser::read_string_limit(_buf, 15)?,
+            cmdline: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -109,43 +113,78 @@ impl super::SBPMessage for MsgLinuxMemState {
     }
 }
 
-/// CPU, Memory and Process Starts/Stops
+/// Summary of processes with large amounts of open file descriptors
 ///
-/// This presents a summary of CPU and memory utilization.
+/// Top 10 list of processes with a large number of open file descriptors.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgLinuxSysState {
+pub struct MsgLinuxProcessFdCount {
     pub sender_id: Option<u16>,
-    /// total system memory
-    pub mem_total: u16,
-    /// percent of total cpu currently utilized
-    pub pcpu: u8,
-    /// percent of total memory currently utilized
-    pub pmem: u8,
-    /// number of processes that started during collection phase
-    pub procs_starting: u16,
-    /// number of processes that stopped during collection phase
-    pub procs_stopping: u16,
-    /// the count of processes on the system
-    pub pid_count: u16,
+    /// sequence of this status message, values from 0-9
+    pub index: u8,
+    /// the PID of the process in question
+    pub pid: u16,
+    /// a count of the number of file descriptors opened by the process
+    pub fd_count: u16,
+    /// the command line of the process in question
+    pub cmdline: String,
 }
 
-impl MsgLinuxSysState {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSysState, ::Error> {
-        Ok(MsgLinuxSysState {
+impl MsgLinuxProcessFdCount {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessFdCount, crate::Error> {
+        Ok(MsgLinuxProcessFdCount {
             sender_id: None,
-            mem_total: _buf.read_u16::<LittleEndian>()?,
-            pcpu: _buf.read_u8()?,
-            pmem: _buf.read_u8()?,
-            procs_starting: _buf.read_u16::<LittleEndian>()?,
-            procs_stopping: _buf.read_u16::<LittleEndian>()?,
-            pid_count: _buf.read_u16::<LittleEndian>()?,
+            index: _buf.read_u8()?,
+            pid: _buf.read_u16::<LittleEndian>()?,
+            fd_count: _buf.read_u16::<LittleEndian>()?,
+            cmdline: crate::parser::read_string(_buf)?,
         })
     }
 }
-impl super::SBPMessage for MsgLinuxSysState {
-    const MSG_ID: u16 = 32514;
+impl super::SBPMessage for MsgLinuxProcessFdCount {
+    const MSG_ID: u16 = 32518;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// Summary of open file descriptors on the system
+///
+/// Summary of open file descriptors on the system.
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgLinuxProcessFdSummary {
+    pub sender_id: Option<u16>,
+    /// count of total FDs open on the system
+    pub sys_fd_count: u32,
+    /// A null delimited list of strings which alternates between a string
+    /// representation of the process count and the file name whose count it
+    /// being reported.  That is, in C string syntax
+    /// "32\0/var/log/syslog\012\0/tmp/foo\0" with the end of the list being 2
+    /// NULL terminators in a row.
+    pub most_opened: String,
+}
+
+impl MsgLinuxProcessFdSummary {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessFdSummary, crate::Error> {
+        Ok(MsgLinuxProcessFdSummary {
+            sender_id: None,
+            sys_fd_count: _buf.read_u32::<LittleEndian>()?,
+            most_opened: crate::parser::read_string(_buf)?,
+        })
+    }
+}
+impl super::SBPMessage for MsgLinuxProcessFdSummary {
+    const MSG_ID: u16 = 32519;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -160,6 +199,7 @@ impl super::SBPMessage for MsgLinuxSysState {
 ///
 /// Top 10 list of processes with high socket counts.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxProcessSocketCounts {
@@ -183,7 +223,7 @@ pub struct MsgLinuxProcessSocketCounts {
 }
 
 impl MsgLinuxProcessSocketCounts {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessSocketCounts, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessSocketCounts, crate::Error> {
         Ok(MsgLinuxProcessSocketCounts {
             sender_id: None,
             index: _buf.read_u8()?,
@@ -191,7 +231,7 @@ impl MsgLinuxProcessSocketCounts {
             socket_count: _buf.read_u16::<LittleEndian>()?,
             socket_types: _buf.read_u16::<LittleEndian>()?,
             socket_states: _buf.read_u16::<LittleEndian>()?,
-            cmdline: ::parser::read_string(_buf)?,
+            cmdline: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -211,6 +251,7 @@ impl super::SBPMessage for MsgLinuxProcessSocketCounts {
 ///
 /// Top 10 list of sockets with deep queues.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxProcessSocketQueues {
@@ -239,7 +280,7 @@ pub struct MsgLinuxProcessSocketQueues {
 }
 
 impl MsgLinuxProcessSocketQueues {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessSocketQueues, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessSocketQueues, crate::Error> {
         Ok(MsgLinuxProcessSocketQueues {
             sender_id: None,
             index: _buf.read_u8()?,
@@ -248,8 +289,8 @@ impl MsgLinuxProcessSocketQueues {
             send_queued: _buf.read_u16::<LittleEndian>()?,
             socket_types: _buf.read_u16::<LittleEndian>()?,
             socket_states: _buf.read_u16::<LittleEndian>()?,
-            address_of_largest: ::parser::read_string_limit(_buf, 64)?,
-            cmdline: ::parser::read_string(_buf)?,
+            address_of_largest: crate::parser::read_string_limit(_buf, 64)?,
+            cmdline: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -269,6 +310,7 @@ impl super::SBPMessage for MsgLinuxProcessSocketQueues {
 ///
 /// Summaries the socket usage across the system.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxSocketUsage {
@@ -288,13 +330,13 @@ pub struct MsgLinuxSocketUsage {
 }
 
 impl MsgLinuxSocketUsage {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSocketUsage, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSocketUsage, crate::Error> {
         Ok(MsgLinuxSocketUsage {
             sender_id: None,
             avg_queue_depth: _buf.read_u32::<LittleEndian>()?,
             max_queue_depth: _buf.read_u32::<LittleEndian>()?,
-            socket_state_counts: ::parser::read_u16_array_limit(_buf, 16)?,
-            socket_type_counts: ::parser::read_u16_array_limit(_buf, 16)?,
+            socket_state_counts: crate::parser::read_u16_array_limit(_buf, 16)?,
+            socket_type_counts: crate::parser::read_u16_array_limit(_buf, 16)?,
         })
     }
 }
@@ -310,76 +352,44 @@ impl super::SBPMessage for MsgLinuxSocketUsage {
     }
 }
 
-/// Summary of processes with large amounts of open file descriptors
+/// CPU, Memory and Process Starts/Stops
 ///
-/// Top 10 list of processes with a large number of open file descriptors.
+/// This presents a summary of CPU and memory utilization.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgLinuxProcessFdCount {
+pub struct MsgLinuxSysState {
     pub sender_id: Option<u16>,
-    /// sequence of this status message, values from 0-9
-    pub index: u8,
-    /// the PID of the process in question
-    pub pid: u16,
-    /// a count of the number of file descriptors opened by the process
-    pub fd_count: u16,
-    /// the command line of the process in question
-    pub cmdline: String,
+    /// total system memory
+    pub mem_total: u16,
+    /// percent of total cpu currently utilized
+    pub pcpu: u8,
+    /// percent of total memory currently utilized
+    pub pmem: u8,
+    /// number of processes that started during collection phase
+    pub procs_starting: u16,
+    /// number of processes that stopped during collection phase
+    pub procs_stopping: u16,
+    /// the count of processes on the system
+    pub pid_count: u16,
 }
 
-impl MsgLinuxProcessFdCount {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessFdCount, ::Error> {
-        Ok(MsgLinuxProcessFdCount {
+impl MsgLinuxSysState {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSysState, crate::Error> {
+        Ok(MsgLinuxSysState {
             sender_id: None,
-            index: _buf.read_u8()?,
-            pid: _buf.read_u16::<LittleEndian>()?,
-            fd_count: _buf.read_u16::<LittleEndian>()?,
-            cmdline: ::parser::read_string(_buf)?,
+            mem_total: _buf.read_u16::<LittleEndian>()?,
+            pcpu: _buf.read_u8()?,
+            pmem: _buf.read_u8()?,
+            procs_starting: _buf.read_u16::<LittleEndian>()?,
+            procs_stopping: _buf.read_u16::<LittleEndian>()?,
+            pid_count: _buf.read_u16::<LittleEndian>()?,
         })
     }
 }
-impl super::SBPMessage for MsgLinuxProcessFdCount {
-    const MSG_ID: u16 = 32518;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-/// Summary of open file descriptors on the system
-///
-/// Summary of open file descriptors on the system.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgLinuxProcessFdSummary {
-    pub sender_id: Option<u16>,
-    /// count of total FDs open on the system
-    pub sys_fd_count: u32,
-    /// A null delimited list of strings which alternates between a string
-    /// representation of the process count and the file name whose count it
-    /// being reported.  That is, in C string syntax
-    /// "32\0/var/log/syslog\012\0/tmp/foo\0" with the end of the list being 2
-    /// NULL terminators in a row.
-    pub most_opened: String,
-}
-
-impl MsgLinuxProcessFdSummary {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessFdSummary, ::Error> {
-        Ok(MsgLinuxProcessFdSummary {
-            sender_id: None,
-            sys_fd_count: _buf.read_u32::<LittleEndian>()?,
-            most_opened: ::parser::read_string(_buf)?,
-        })
-    }
-}
-impl super::SBPMessage for MsgLinuxProcessFdSummary {
-    const MSG_ID: u16 = 32519;
+impl super::SBPMessage for MsgLinuxSysState {
+    const MSG_ID: u16 = 32514;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id

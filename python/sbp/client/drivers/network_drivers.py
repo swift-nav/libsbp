@@ -41,7 +41,13 @@ class TCPDriver(BaseDriver):
 
     """
 
-    def __init__(self, host, port, timeout=5, raise_initial_timeout=False, reconnect=False):
+    def __init__(self,
+                 host,
+                 port,
+                 timeout=5,
+                 raise_initial_timeout=False,
+                 reconnect=False,
+                 max_reconnect=MAX_RECONNECT_RETRIES):
         self._address = (host, port)
         print((host, port))
         self._create_connection = partial(socket.create_connection,
@@ -53,6 +59,7 @@ class TCPDriver(BaseDriver):
         self._write_lock = threading.Lock()
         self._reconnect_count = 0
         self._reconnect_supported = reconnect
+        self._max_reconnect = max_reconnect
 
     def _connect(self, timeout_raises=False):
         while True:
@@ -67,7 +74,7 @@ class TCPDriver(BaseDriver):
         if not self._reconnect_supported:
             raise exc
         while True:
-            if self._reconnect_count >= MAX_RECONNECT_RETRIES:
+            if self._reconnect_count >= self._max_reconnect:
                 raise exc
             try:
                 self._connect(timeout_raises=True)

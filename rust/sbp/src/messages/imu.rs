@@ -17,6 +17,49 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
+
+/// Auxiliary IMU data
+///
+/// Auxiliary data specific to a particular IMU. The `imu_type` field will
+/// always be consistent but the rest of the payload is device specific and
+/// depends on the value of `imu_type`.
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgImuAux {
+    pub sender_id: Option<u16>,
+    /// IMU type
+    pub imu_type: u8,
+    /// Raw IMU temperature
+    pub temp: i16,
+    /// IMU configuration
+    pub imu_conf: u8,
+}
+
+impl MsgImuAux {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuAux, crate::Error> {
+        Ok(MsgImuAux {
+            sender_id: None,
+            imu_type: _buf.read_u8()?,
+            temp: _buf.read_i16::<LittleEndian>()?,
+            imu_conf: _buf.read_u8()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgImuAux {
+    const MSG_ID: u16 = 2305;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
 
 /// Raw IMU data
 ///
@@ -25,6 +68,7 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 /// the indications on the device itself. Measurement units, which are specific to the
 /// device hardware and settings, are communicated via the MSG_IMU_AUX message.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgImuRaw {
@@ -49,7 +93,7 @@ pub struct MsgImuRaw {
 }
 
 impl MsgImuRaw {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuRaw, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuRaw, crate::Error> {
         Ok(MsgImuRaw {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -65,46 +109,6 @@ impl MsgImuRaw {
 }
 impl super::SBPMessage for MsgImuRaw {
     const MSG_ID: u16 = 2304;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-/// Auxiliary IMU data
-///
-/// Auxiliary data specific to a particular IMU. The `imu_type` field will
-/// always be consistent but the rest of the payload is device specific and
-/// depends on the value of `imu_type`.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgImuAux {
-    pub sender_id: Option<u16>,
-    /// IMU type
-    pub imu_type: u8,
-    /// Raw IMU temperature
-    pub temp: i16,
-    /// IMU configuration
-    pub imu_conf: u8,
-}
-
-impl MsgImuAux {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuAux, ::Error> {
-        Ok(MsgImuAux {
-            sender_id: None,
-            imu_type: _buf.read_u8()?,
-            temp: _buf.read_i16::<LittleEndian>()?,
-            imu_conf: _buf.read_u8()?,
-        })
-    }
-}
-impl super::SBPMessage for MsgImuAux {
-    const MSG_ID: u16 = 2305;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id

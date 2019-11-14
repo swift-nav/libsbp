@@ -17,123 +17,8 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-
-/// System start-up message
-///
-/// The system start-up message is sent once on system
-/// start-up. It notifies the host or other attached devices that
-/// the system has started and is now ready to respond to commands
-/// or configuration requests.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgStartup {
-    pub sender_id: Option<u16>,
-    /// Cause of startup
-    pub cause: u8,
-    /// Startup type
-    pub startup_type: u8,
-    /// Reserved
-    pub reserved: u16,
-}
-
-impl MsgStartup {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStartup, ::Error> {
-        Ok(MsgStartup {
-            sender_id: None,
-            cause: _buf.read_u8()?,
-            startup_type: _buf.read_u8()?,
-            reserved: _buf.read_u16::<LittleEndian>()?,
-        })
-    }
-}
-impl super::SBPMessage for MsgStartup {
-    const MSG_ID: u16 = 65280;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-/// Status of received corrections
-///
-/// This message provides information about the receipt of Differential
-/// corrections.  It is expected to be sent with each receipt of a complete
-/// corrections packet.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgDgnssStatus {
-    pub sender_id: Option<u16>,
-    /// Status flags
-    pub flags: u8,
-    /// Latency of observation receipt
-    pub latency: u16,
-    /// Number of signals from base station
-    pub num_signals: u8,
-    /// Corrections source string
-    pub source: String,
-}
-
-impl MsgDgnssStatus {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDgnssStatus, ::Error> {
-        Ok(MsgDgnssStatus {
-            sender_id: None,
-            flags: _buf.read_u8()?,
-            latency: _buf.read_u16::<LittleEndian>()?,
-            num_signals: _buf.read_u8()?,
-            source: ::parser::read_string(_buf)?,
-        })
-    }
-}
-impl super::SBPMessage for MsgDgnssStatus {
-    const MSG_ID: u16 = 65282;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-/// Inertial Navigation System status message
-///
-/// The INS status message describes the state of the operation
-/// and initialization of the inertial navigation system.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgInsStatus {
-    pub sender_id: Option<u16>,
-    /// Status flags
-    pub flags: u32,
-}
-
-impl MsgInsStatus {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgInsStatus, ::Error> {
-        Ok(MsgInsStatus {
-            sender_id: None,
-            flags: _buf.read_u32::<LittleEndian>()?,
-        })
-    }
-}
-impl super::SBPMessage for MsgInsStatus {
-    const MSG_ID: u16 = 65283;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// Experimental telemetry message
 ///
@@ -141,6 +26,7 @@ impl super::SBPMessage for MsgInsStatus {
 /// from a device. It is not produced or available on general Swift Products.
 /// It is intended to be a low rate message for status purposes.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgCsacTelemetry {
@@ -153,11 +39,11 @@ pub struct MsgCsacTelemetry {
 }
 
 impl MsgCsacTelemetry {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCsacTelemetry, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCsacTelemetry, crate::Error> {
         Ok(MsgCsacTelemetry {
             sender_id: None,
             id: _buf.read_u8()?,
-            telemetry: ::parser::read_string(_buf)?,
+            telemetry: crate::parser::read_string(_buf)?,
         })
     }
 }
@@ -179,6 +65,7 @@ impl super::SBPMessage for MsgCsacTelemetry {
 /// produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
 /// rate than the MSG_CSAC_TELEMETRY.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgCsacTelemetryLabels {
@@ -191,16 +78,60 @@ pub struct MsgCsacTelemetryLabels {
 }
 
 impl MsgCsacTelemetryLabels {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCsacTelemetryLabels, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCsacTelemetryLabels, crate::Error> {
         Ok(MsgCsacTelemetryLabels {
             sender_id: None,
             id: _buf.read_u8()?,
-            telemetry_labels: ::parser::read_string(_buf)?,
+            telemetry_labels: crate::parser::read_string(_buf)?,
         })
     }
 }
 impl super::SBPMessage for MsgCsacTelemetryLabels {
     const MSG_ID: u16 = 65285;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// Status of received corrections
+///
+/// This message provides information about the receipt of Differential
+/// corrections.  It is expected to be sent with each receipt of a complete
+/// corrections packet.
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgDgnssStatus {
+    pub sender_id: Option<u16>,
+    /// Status flags
+    pub flags: u8,
+    /// Latency of observation receipt
+    pub latency: u16,
+    /// Number of signals from base station
+    pub num_signals: u8,
+    /// Corrections source string
+    pub source: String,
+}
+
+impl MsgDgnssStatus {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDgnssStatus, crate::Error> {
+        Ok(MsgDgnssStatus {
+            sender_id: None,
+            flags: _buf.read_u8()?,
+            latency: _buf.read_u16::<LittleEndian>()?,
+            num_signals: _buf.read_u8()?,
+            source: crate::parser::read_string(_buf)?,
+        })
+    }
+}
+impl super::SBPMessage for MsgDgnssStatus {
+    const MSG_ID: u16 = 65282;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -224,6 +155,7 @@ impl super::SBPMessage for MsgCsacTelemetryLabels {
 /// occurred in the system. To determine the source of the error,
 /// the remaining error flags should be inspected.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgHeartbeat {
@@ -233,7 +165,7 @@ pub struct MsgHeartbeat {
 }
 
 impl MsgHeartbeat {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgHeartbeat, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgHeartbeat, crate::Error> {
         Ok(MsgHeartbeat {
             sender_id: None,
             flags: _buf.read_u32::<LittleEndian>()?,
@@ -242,6 +174,82 @@ impl MsgHeartbeat {
 }
 impl super::SBPMessage for MsgHeartbeat {
     const MSG_ID: u16 = 65535;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// Inertial Navigation System status message
+///
+/// The INS status message describes the state of the operation
+/// and initialization of the inertial navigation system.
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgInsStatus {
+    pub sender_id: Option<u16>,
+    /// Status flags
+    pub flags: u32,
+}
+
+impl MsgInsStatus {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgInsStatus, crate::Error> {
+        Ok(MsgInsStatus {
+            sender_id: None,
+            flags: _buf.read_u32::<LittleEndian>()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgInsStatus {
+    const MSG_ID: u16 = 65283;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// System start-up message
+///
+/// The system start-up message is sent once on system
+/// start-up. It notifies the host or other attached devices that
+/// the system has started and is now ready to respond to commands
+/// or configuration requests.
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgStartup {
+    pub sender_id: Option<u16>,
+    /// Cause of startup
+    pub cause: u8,
+    /// Startup type
+    pub startup_type: u8,
+    /// Reserved
+    pub reserved: u16,
+}
+
+impl MsgStartup {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStartup, crate::Error> {
+        Ok(MsgStartup {
+            sender_id: None,
+            cause: _buf.read_u8()?,
+            startup_type: _buf.read_u8()?,
+            reserved: _buf.read_u16::<LittleEndian>()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgStartup {
+    const MSG_ID: u16 = 65280;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id

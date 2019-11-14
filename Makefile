@@ -113,7 +113,9 @@ verify-prereq-java: verify-prereq-generator
 
 verify-prereq-haskell: verify-prereq-generator
 
-verify-prereq-rust: ;
+verify-prereq-rust:
+	@command -v cargo   1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`cargo\` but it's not installed. Aborting.\n\nHave you installed Rust? See the Rust readme at \`rust/README.md\` for setup instructions.\n"; exit 1; }
+	@command -v rustfmt 1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`rustfmt\` but it's not installed. Aborting.\n\nHave you installed Rust? See the Rust readme at \`rust/README.md\` for setup instructions.\n"; exit 1; }
 
 verify-prereq-protobuf: ;
 
@@ -229,6 +231,14 @@ gen-rust:
 					-o $(SWIFTNAV_ROOT)/rust/ \
 					-r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
 					--rust
+
+	$(call announce-begin,"Generating Rust tests")
+	cd $(SWIFTNAV_ROOT)/generator; \
+	$(SBP_GEN_BIN) -i $(SBP_TESTS_SPEC_DIR) \
+	-o $(SWIFTNAV_ROOT)/rust/sbp/tests/ \
+                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
+	               --test-rust
+	
 	cd $(SWIFTNAV_ROOT)/rust/sbp && cargo fmt
 	$(call announce-begin,"Finished generating Rust bindings")
 
@@ -311,6 +321,8 @@ test-haskell:
 test-rust:
 	$(call announce-begin,"Running Rust tests")
 	cd $(SWIFTNAV_ROOT)/rust/sbp && cargo test --verbose
+	$(call announce-begin,"Building Rust example")
+	cd $(SWIFTNAV_ROOT)/rust/example && cargo build --verbose
 	$(call announce-end,"Finished running Rust tests")
 
 test-protobuf:

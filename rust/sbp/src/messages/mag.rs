@@ -17,11 +17,14 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// Raw magnetometer data
 ///
 /// Raw data from the magnetometer.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgMagRaw {
@@ -40,7 +43,7 @@ pub struct MsgMagRaw {
 }
 
 impl MsgMagRaw {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMagRaw, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMagRaw, crate::Error> {
         Ok(MsgMagRaw {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,

@@ -18,6 +18,8 @@ extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// Acq perfomance measurement and debug
 ///
@@ -25,6 +27,7 @@ use super::gnss::*;
 /// The message describes SV profile during acquisition time.
 /// The message is used to debug and measure the performance.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct AcqSvProfile {
@@ -55,7 +58,7 @@ pub struct AcqSvProfile {
 }
 
 impl AcqSvProfile {
-    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfile, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfile, crate::Error> {
         Ok(AcqSvProfile {
             job_type: _buf.read_u8()?,
             status: _buf.read_u8()?,
@@ -71,7 +74,7 @@ impl AcqSvProfile {
             cp: _buf.read_u32::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfile>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfile>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(AcqSvProfile::parse(buf)?);
@@ -79,7 +82,7 @@ impl AcqSvProfile {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<AcqSvProfile>, ::Error> {
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<AcqSvProfile>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(AcqSvProfile::parse(buf)?);
@@ -92,6 +95,7 @@ impl AcqSvProfile {
 ///
 /// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct AcqSvProfileDep {
@@ -122,7 +126,7 @@ pub struct AcqSvProfileDep {
 }
 
 impl AcqSvProfileDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfileDep, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfileDep, crate::Error> {
         Ok(AcqSvProfileDep {
             job_type: _buf.read_u8()?,
             status: _buf.read_u8()?,
@@ -138,7 +142,7 @@ impl AcqSvProfileDep {
             cp: _buf.read_u32::<LittleEndian>()?,
         })
     }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfileDep>, ::Error> {
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfileDep>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
             v.push(AcqSvProfileDep::parse(buf)?);
@@ -146,7 +150,10 @@ impl AcqSvProfileDep {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<AcqSvProfileDep>, ::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<AcqSvProfileDep>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
             v.push(AcqSvProfileDep::parse(buf)?);
@@ -155,10 +162,101 @@ impl AcqSvProfileDep {
     }
 }
 
+/// Satellite acquisition result
+///
+/// This message describes the results from an attempted GPS signal
+/// acquisition search for a satellite PRN over a code phase/carrier
+/// frequency range. It contains the parameters of the point in the
+/// acquisition search space with the best carrier-to-noise (CN/0)
+/// ratio.
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgAcqResult {
+    pub sender_id: Option<u16>,
+    /// CN/0 of best point
+    pub cn0: f32,
+    /// Code phase of best point
+    pub cp: f32,
+    /// Carrier frequency of best point
+    pub cf: f32,
+    /// GNSS signal for which acquisition was attempted
+    pub sid: GnssSignal,
+}
+
+impl MsgAcqResult {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResult, crate::Error> {
+        Ok(MsgAcqResult {
+            sender_id: None,
+            cn0: _buf.read_f32::<LittleEndian>()?,
+            cp: _buf.read_f32::<LittleEndian>()?,
+            cf: _buf.read_f32::<LittleEndian>()?,
+            sid: GnssSignal::parse(_buf)?,
+        })
+    }
+}
+impl super::SBPMessage for MsgAcqResult {
+    const MSG_ID: u16 = 47;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
 /// Deprecated
 ///
 /// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgAcqResultDepA {
+    pub sender_id: Option<u16>,
+    /// SNR of best point. Currently dimensonless, but will have units of dB Hz
+    /// in the revision of this message.
+    pub snr: f32,
+    /// Code phase of best point
+    pub cp: f32,
+    /// Carrier frequency of best point
+    pub cf: f32,
+    /// PRN-1 identifier of the satellite signal for which acquisition was
+    /// attempted
+    pub prn: u8,
+}
+
+impl MsgAcqResultDepA {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepA, crate::Error> {
+        Ok(MsgAcqResultDepA {
+            sender_id: None,
+            snr: _buf.read_f32::<LittleEndian>()?,
+            cp: _buf.read_f32::<LittleEndian>()?,
+            cf: _buf.read_f32::<LittleEndian>()?,
+            prn: _buf.read_u8()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgAcqResultDepA {
+    const MSG_ID: u16 = 21;
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+}
+
+/// Deprecated
+///
+/// Deprecated.
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepB {
@@ -175,7 +273,7 @@ pub struct MsgAcqResultDepB {
 }
 
 impl MsgAcqResultDepB {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepB, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepB, crate::Error> {
         Ok(MsgAcqResultDepB {
             sender_id: None,
             snr: _buf.read_f32::<LittleEndian>()?,
@@ -201,81 +299,7 @@ impl super::SBPMessage for MsgAcqResultDepB {
 ///
 /// Deprecated.
 ///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgAcqResultDepA {
-    pub sender_id: Option<u16>,
-    /// SNR of best point. Currently dimensonless, but will have units of dB Hz
-    /// in the revision of this message.
-    pub snr: f32,
-    /// Code phase of best point
-    pub cp: f32,
-    /// Carrier frequency of best point
-    pub cf: f32,
-    /// PRN-1 identifier of the satellite signal for which acquisition was
-    /// attempted
-    pub prn: u8,
-}
-
-impl MsgAcqResultDepA {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepA, ::Error> {
-        Ok(MsgAcqResultDepA {
-            sender_id: None,
-            snr: _buf.read_f32::<LittleEndian>()?,
-            cp: _buf.read_f32::<LittleEndian>()?,
-            cf: _buf.read_f32::<LittleEndian>()?,
-            prn: _buf.read_u8()?,
-        })
-    }
-}
-impl super::SBPMessage for MsgAcqResultDepA {
-    const MSG_ID: u16 = 21;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-/// Deprecated.
-///
-/// Deprecated.
-///
-#[derive(Debug)]
-#[allow(non_snake_case)]
-pub struct MsgAcqSvProfileDep {
-    pub sender_id: Option<u16>,
-    /// SV profiles during acquisition time
-    pub acq_sv_profile: Vec<AcqSvProfileDep>,
-}
-
-impl MsgAcqSvProfileDep {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfileDep, ::Error> {
-        Ok(MsgAcqSvProfileDep {
-            sender_id: None,
-            acq_sv_profile: AcqSvProfileDep::parse_array(_buf)?,
-        })
-    }
-}
-impl super::SBPMessage for MsgAcqSvProfileDep {
-    const MSG_ID: u16 = 30;
-
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-}
-
-/// Deprecated
-///
-/// Deprecated.
-///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepC {
@@ -291,7 +315,7 @@ pub struct MsgAcqResultDepC {
 }
 
 impl MsgAcqResultDepC {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepC, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepC, crate::Error> {
         Ok(MsgAcqResultDepC {
             sender_id: None,
             cn0: _buf.read_f32::<LittleEndian>()?,
@@ -318,6 +342,7 @@ impl super::SBPMessage for MsgAcqResultDepC {
 /// The message describes all SV profiles during acquisition time.
 /// The message is used to debug and measure the performance.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqSvProfile {
@@ -327,7 +352,7 @@ pub struct MsgAcqSvProfile {
 }
 
 impl MsgAcqSvProfile {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfile, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfile, crate::Error> {
         Ok(MsgAcqSvProfile {
             sender_id: None,
             acq_sv_profile: AcqSvProfile::parse_array(_buf)?,
@@ -346,41 +371,29 @@ impl super::SBPMessage for MsgAcqSvProfile {
     }
 }
 
-/// Satellite acquisition result
+/// Deprecated.
 ///
-/// This message describes the results from an attempted GPS signal
-/// acquisition search for a satellite PRN over a code phase/carrier
-/// frequency range. It contains the parameters of the point in the
-/// acquisition search space with the best carrier-to-noise (CN/0)
-/// ratio.
+/// Deprecated.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgAcqResult {
+pub struct MsgAcqSvProfileDep {
     pub sender_id: Option<u16>,
-    /// CN/0 of best point
-    pub cn0: f32,
-    /// Code phase of best point
-    pub cp: f32,
-    /// Carrier frequency of best point
-    pub cf: f32,
-    /// GNSS signal for which acquisition was attempted
-    pub sid: GnssSignal,
+    /// SV profiles during acquisition time
+    pub acq_sv_profile: Vec<AcqSvProfileDep>,
 }
 
-impl MsgAcqResult {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResult, ::Error> {
-        Ok(MsgAcqResult {
+impl MsgAcqSvProfileDep {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfileDep, crate::Error> {
+        Ok(MsgAcqSvProfileDep {
             sender_id: None,
-            cn0: _buf.read_f32::<LittleEndian>()?,
-            cp: _buf.read_f32::<LittleEndian>()?,
-            cf: _buf.read_f32::<LittleEndian>()?,
-            sid: GnssSignal::parse(_buf)?,
+            acq_sv_profile: AcqSvProfileDep::parse_array(_buf)?,
         })
     }
 }
-impl super::SBPMessage for MsgAcqResult {
-    const MSG_ID: u16 = 47;
+impl super::SBPMessage for MsgAcqSvProfileDep {
+    const MSG_ID: u16 = 30;
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id

@@ -20,13 +20,17 @@ use self::(((p.identifier|mod_name)))::(((m.identifier|camel_case)));
 ((*- endfor *))
 ((*- endfor *))
 
-trait SBPMessage {
+#[cfg(feature = "serialize")]
+use serde::{Serialize, Deserialize};
+
+pub trait SBPMessage {
     const MSG_ID: u16;
 
     fn get_sender_id(&self) -> Option<u16>;
     fn set_sender_id(&mut self, new_id: u16);
 }
 
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 pub enum SBP {
     Unknown { msg_id: u16, sender_id: u16, payload: Vec<u8> },
@@ -36,8 +40,8 @@ pub enum SBP {
 }
 
 impl SBP {
-    pub fn parse(msg_id: u16, sender_id: u16, payload: &mut &[u8]) -> Result<SBP, ::Error> {
-        let x: Result<SBP, ::Error> = match msg_id {
+    pub fn parse(msg_id: u16, sender_id: u16, payload: &mut &[u8]) -> Result<SBP, crate::Error> {
+        let x: Result<SBP, crate::Error> = match msg_id {
             ((*- for m in msgs *))
             (((m.sbp_id))) => {
                 let mut msg = (((m.identifier|camel_case)))::parse(payload)?;
@@ -49,7 +53,7 @@ impl SBP {
         };
         match x {
             Ok(x) => Ok(x),
-            Err(_) => Err(::Error::ParseError),
+            Err(_) => Err(crate::Error::ParseError),
         }
     }
 }

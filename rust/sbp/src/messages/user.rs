@@ -18,12 +18,15 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
 
 /// User data
 ///
 /// This message can contain any application specific user data up to a
 /// maximum length of 255 bytes per message.
 ///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgUserData {
@@ -33,10 +36,10 @@ pub struct MsgUserData {
 }
 
 impl MsgUserData {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUserData, ::Error> {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUserData, crate::Error> {
         Ok(MsgUserData {
             sender_id: None,
-            contents: ::parser::read_u8_array(_buf)?,
+            contents: crate::parser::read_u8_array(_buf)?,
         })
     }
 }
