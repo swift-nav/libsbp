@@ -4,6 +4,7 @@
 
 pub mod messages;
 pub mod parser;
+pub mod serialize;
 
 use std::result;
 use std::error;
