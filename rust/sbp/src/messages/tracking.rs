@@ -57,6 +57,11 @@ impl super::SBPMessage for MsgMeasurementState {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgMeasurementState {
@@ -111,6 +116,11 @@ impl super::SBPMessage for MsgTrackingIq {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
     }
 }
 
@@ -169,6 +179,11 @@ impl super::SBPMessage for MsgTrackingIqDepA {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
     }
 }
 
@@ -229,6 +244,11 @@ impl super::SBPMessage for MsgTrackingIqDepB {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgTrackingIqDepB {
@@ -283,6 +303,11 @@ impl super::SBPMessage for MsgTrackingState {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgTrackingState {
@@ -331,6 +356,11 @@ impl super::SBPMessage for MsgTrackingStateDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgTrackingStateDepA {
@@ -378,6 +408,11 @@ impl super::SBPMessage for MsgTrackingStateDepB {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
     }
 }
 
@@ -492,6 +527,11 @@ impl super::SBPMessage for MsgTrackingStateDetailedDep {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
     }
 }
 
@@ -647,6 +687,11 @@ impl super::SBPMessage for MsgTrackingStateDetailedDepA {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
     }
 }
 

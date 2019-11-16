@@ -278,6 +278,11 @@ impl super::SBPMessage for MsgAcqResult {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgAcqResult {
@@ -343,6 +348,11 @@ impl super::SBPMessage for MsgAcqResultDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgAcqResultDepA {
@@ -407,6 +417,11 @@ impl super::SBPMessage for MsgAcqResultDepB {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgAcqResultDepB {
@@ -470,6 +485,11 @@ impl super::SBPMessage for MsgAcqResultDepC {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgAcqResultDepC {
@@ -525,6 +545,11 @@ impl super::SBPMessage for MsgAcqSvProfile {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgAcqSvProfile {
@@ -572,6 +597,11 @@ impl super::SBPMessage for MsgAcqSvProfileDep {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
     }
 }
 

@@ -67,6 +67,11 @@ impl super::SBPMessage for MsgLinuxCpuState {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgLinuxCpuState {
@@ -136,6 +141,11 @@ impl super::SBPMessage for MsgLinuxMemState {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgLinuxMemState {
@@ -201,6 +211,11 @@ impl super::SBPMessage for MsgLinuxProcessFdCount {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgLinuxProcessFdCount {
@@ -261,6 +276,11 @@ impl super::SBPMessage for MsgLinuxProcessFdSummary {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
     }
 }
 
@@ -330,6 +350,11 @@ impl super::SBPMessage for MsgLinuxProcessSocketCounts {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
     }
 }
 
@@ -415,6 +440,11 @@ impl super::SBPMessage for MsgLinuxProcessSocketQueues {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgLinuxProcessSocketQueues {
@@ -490,6 +520,11 @@ impl super::SBPMessage for MsgLinuxSocketUsage {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgLinuxSocketUsage {
@@ -558,6 +593,11 @@ impl super::SBPMessage for MsgLinuxSysState {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
     }
 }
 

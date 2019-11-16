@@ -64,6 +64,11 @@ impl super::SBPMessage for MsgFileioConfigReq {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgFileioConfigReq {
@@ -124,6 +129,11 @@ impl super::SBPMessage for MsgFileioConfigResp {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
     }
 }
 
@@ -194,6 +204,11 @@ impl super::SBPMessage for MsgFileioReadDirReq {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgFileioReadDirReq {
@@ -253,6 +268,11 @@ impl super::SBPMessage for MsgFileioReadDirResp {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
     }
 }
 
@@ -320,6 +340,11 @@ impl super::SBPMessage for MsgFileioReadReq {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgFileioReadReq {
@@ -381,6 +406,11 @@ impl super::SBPMessage for MsgFileioReadResp {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgFileioReadResp {
@@ -433,6 +463,11 @@ impl super::SBPMessage for MsgFileioRemove {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
     }
 }
 
@@ -498,6 +533,11 @@ impl super::SBPMessage for MsgFileioWriteReq {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgFileioWriteReq {
@@ -555,6 +595,11 @@ impl super::SBPMessage for MsgFileioWriteResp {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
     }
 }
 
