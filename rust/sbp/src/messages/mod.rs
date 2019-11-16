@@ -206,6 +206,7 @@ use self::unknown::Unknown;
 use self::user::MsgUserData;
 use self::vehicle::MsgOdometry;
 
+use crate::framer::FramerError;
 use crate::serialize::SbpSerialize;
 #[cfg(feature = "serialize")]
 use serde::{Deserialize, Serialize};
@@ -214,6 +215,7 @@ pub trait SBPMessage: SbpSerialize {
     fn get_message_type(&self) -> u16;
     fn get_sender_id(&self) -> Option<u16>;
     fn set_sender_id(&mut self, new_id: u16);
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, FramerError>;
 }
 
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
