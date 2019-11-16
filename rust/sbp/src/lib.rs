@@ -154,6 +154,8 @@ mod tests {
 
     #[test]
     fn making_frame() {
+        use crate::messages::SBPMessage;
+
         let msg = crate::messages::system::MsgStartup {
             sender_id: Some(250),
             cause: 1,
@@ -161,7 +163,7 @@ mod tests {
             reserved: 0,
         };
 
-        let frame = crate::framer::to_frame(&msg).unwrap();
+        let frame = msg.to_frame().unwrap();
 
         let expected_frame = b"\x55\x00\xFF\xFA\x00\x04\x01\x2D\x00\x00\xBC\x73";
 
