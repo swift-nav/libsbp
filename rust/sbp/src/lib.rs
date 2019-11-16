@@ -4,6 +4,7 @@
 
 pub mod messages;
 pub mod parser;
+pub mod serialize;
 
 use std::error;
 use std::fmt;
