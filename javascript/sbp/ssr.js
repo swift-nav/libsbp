@@ -226,6 +226,7 @@ STECSatElement.prototype.fieldSpec.push(['stec_coeff', 'array', 'writeInt16LE', 
  * Fields in the SBP payload (`sbp.payload`):
  * @field hydro number (signed 16-bit int, 2 bytes) Hydrostatic vertical delay
  * @field wet number (signed 8-bit int, 1 byte) Wet vertical delay
+ * @field stddev number (unsigned 8-bit int, 1 byte) stddev
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -242,10 +243,12 @@ TroposphericDelayCorrection.prototype.constructor = TroposphericDelayCorrection;
 TroposphericDelayCorrection.prototype.parser = new Parser()
   .endianess('little')
   .int16('hydro')
-  .int8('wet');
+  .int8('wet')
+  .uint8('stddev');
 TroposphericDelayCorrection.prototype.fieldSpec = [];
 TroposphericDelayCorrection.prototype.fieldSpec.push(['hydro', 'writeInt16LE', 2]);
 TroposphericDelayCorrection.prototype.fieldSpec.push(['wet', 'writeInt8', 1]);
+TroposphericDelayCorrection.prototype.fieldSpec.push(['stddev', 'writeUInt8', 1]);
 
 /**
  * SBP class for message fragment STECResidual
@@ -255,6 +258,7 @@ TroposphericDelayCorrection.prototype.fieldSpec.push(['wet', 'writeInt8', 1]);
  * Fields in the SBP payload (`sbp.payload`):
  * @field sv_id SvId space vehicle identifier
  * @field residual number (signed 16-bit int, 2 bytes) STEC residual
+ * @field stddev number (unsigned 8-bit int, 1 byte) stddev
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -271,10 +275,12 @@ STECResidual.prototype.constructor = STECResidual;
 STECResidual.prototype.parser = new Parser()
   .endianess('little')
   .nest('sv_id', { type: SvId.prototype.parser })
-  .int16('residual');
+  .int16('residual')
+  .uint8('stddev');
 STECResidual.prototype.fieldSpec = [];
 STECResidual.prototype.fieldSpec.push(['sv_id', SvId.prototype.fieldSpec]);
 STECResidual.prototype.fieldSpec.push(['residual', 'writeInt16LE', 2]);
+STECResidual.prototype.fieldSpec.push(['stddev', 'writeUInt8', 1]);
 
 /**
  * SBP class for message fragment GridElement

@@ -90,6 +90,7 @@ message STECSatElement {
 message TroposphericDelayCorrection {
     sint32 hydro = 1;
     sint32 wet = 2;
+    uint32 stddev = 3;
 }
 
 /** None
@@ -99,6 +100,7 @@ message TroposphericDelayCorrection {
 message STECResidual {
     SvId sv_id = 1;
     sint32 residual = 2;
+    uint32 stddev = 3;
 }
 
 /** Correction data for a single grid point.

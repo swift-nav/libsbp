@@ -211,19 +211,23 @@ $(makeLenses ''STECSatElement)
 data TroposphericDelayCorrection = TroposphericDelayCorrection
   { _troposphericDelayCorrection_hydro :: !Int16
     -- ^ Hydrostatic vertical delay
-  , _troposphericDelayCorrection_wet :: !Int8
+  , _troposphericDelayCorrection_wet  :: !Int8
     -- ^ Wet vertical delay
+  , _troposphericDelayCorrection_stddev :: !Word8
+    -- ^ stddev
   } deriving ( Show, Read, Eq )
 
 instance Binary TroposphericDelayCorrection where
   get = do
     _troposphericDelayCorrection_hydro <- fromIntegral <$> getWord16le
     _troposphericDelayCorrection_wet <- fromIntegral <$> getWord8
+    _troposphericDelayCorrection_stddev <- getWord8
     pure TroposphericDelayCorrection {..}
 
   put TroposphericDelayCorrection {..} = do
     (putWord16le . fromIntegral) _troposphericDelayCorrection_hydro
     (putWord8 . fromIntegral) _troposphericDelayCorrection_wet
+    putWord8 _troposphericDelayCorrection_stddev
 
 $(makeJSON "_troposphericDelayCorrection_" ''TroposphericDelayCorrection)
 $(makeLenses ''TroposphericDelayCorrection)
@@ -236,17 +240,21 @@ data STECResidual = STECResidual
     -- ^ space vehicle identifier
   , _sTECResidual_residual :: !Int16
     -- ^ STEC residual
+  , _sTECResidual_stddev :: !Word8
+    -- ^ stddev
   } deriving ( Show, Read, Eq )
 
 instance Binary STECResidual where
   get = do
     _sTECResidual_sv_id <- get
     _sTECResidual_residual <- fromIntegral <$> getWord16le
+    _sTECResidual_stddev <- getWord8
     pure STECResidual {..}
 
   put STECResidual {..} = do
     put _sTECResidual_sv_id
     (putWord16le . fromIntegral) _sTECResidual_residual
+    putWord8 _sTECResidual_stddev
 
 $(makeJSON "_sTECResidual_" ''STECResidual)
 $(makeLenses ''STECResidual)

@@ -1058,6 +1058,8 @@ pub struct STECResidual {
     pub sv_id: SvId,
     /// STEC residual
     pub residual: i16,
+    /// stddev
+    pub stddev: u8,
 }
 
 impl STECResidual {
@@ -1065,6 +1067,7 @@ impl STECResidual {
         Ok(STECResidual {
             sv_id: SvId::parse(_buf)?,
             residual: _buf.read_i16::<LittleEndian>()?,
+            stddev: _buf.read_u8()?,
         })
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECResidual>, crate::Error> {
@@ -1089,12 +1092,14 @@ impl crate::serialize::SbpSerialize for STECResidual {
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.sv_id.append_to_sbp_buffer(buf);
         self.residual.append_to_sbp_buffer(buf);
+        self.stddev.append_to_sbp_buffer(buf);
     }
 
     fn sbp_size(&self) -> usize {
         let mut size = 0;
         size += self.sv_id.sbp_size();
         size += self.residual.sbp_size();
+        size += self.stddev.sbp_size();
         size
     }
 }
@@ -1173,6 +1178,8 @@ pub struct TroposphericDelayCorrection {
     pub hydro: i16,
     /// Wet vertical delay
     pub wet: i8,
+    /// stddev
+    pub stddev: u8,
 }
 
 impl TroposphericDelayCorrection {
@@ -1180,6 +1187,7 @@ impl TroposphericDelayCorrection {
         Ok(TroposphericDelayCorrection {
             hydro: _buf.read_i16::<LittleEndian>()?,
             wet: _buf.read_i8()?,
+            stddev: _buf.read_u8()?,
         })
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TroposphericDelayCorrection>, crate::Error> {
@@ -1207,12 +1215,14 @@ impl crate::serialize::SbpSerialize for TroposphericDelayCorrection {
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.hydro.append_to_sbp_buffer(buf);
         self.wet.append_to_sbp_buffer(buf);
+        self.stddev.append_to_sbp_buffer(buf);
     }
 
     fn sbp_size(&self) -> usize {
         let mut size = 0;
         size += self.hydro.sbp_size();
         size += self.wet.sbp_size();
+        size += self.stddev.sbp_size();
         size
     }
 }

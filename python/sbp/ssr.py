@@ -316,14 +316,18 @@ class TroposphericDelayCorrection(object):
     Hydrostatic vertical delay
   wet : int
     Wet vertical delay
+  stddev : int
+    stddev
 
   """
   _parser = construct.Embedded(construct.Struct(
                      'hydro' / construct.Int16sl,
-                     'wet' / construct.Int8sl,))
+                     'wet' / construct.Int8sl,
+                     'stddev' / construct.Int8ul,))
   __slots__ = [
                'hydro',
                'wet',
+               'stddev',
               ]
 
   def __init__(self, payload=None, **kwargs):
@@ -332,6 +336,7 @@ class TroposphericDelayCorrection(object):
     else:
       self.hydro = kwargs.pop('hydro')
       self.wet = kwargs.pop('wet')
+      self.stddev = kwargs.pop('stddev')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -356,14 +361,18 @@ class STECResidual(object):
     space vehicle identifier
   residual : int
     STEC residual
+  stddev : int
+    stddev
 
   """
   _parser = construct.Embedded(construct.Struct(
                      'sv_id' / construct.Struct(SvId._parser),
-                     'residual' / construct.Int16sl,))
+                     'residual' / construct.Int16sl,
+                     'stddev' / construct.Int8ul,))
   __slots__ = [
                'sv_id',
                'residual',
+               'stddev',
               ]
 
   def __init__(self, payload=None, **kwargs):
@@ -372,6 +381,7 @@ class STECResidual(object):
     else:
       self.sv_id = kwargs.pop('sv_id')
       self.residual = kwargs.pop('residual')
+      self.stddev = kwargs.pop('stddev')
 
   def __repr__(self):
     return fmt_repr(self)

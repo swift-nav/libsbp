@@ -318,6 +318,7 @@ class TroposphericDelayCorrection(object):
   """
   __slots__ = ['hydro',
                'wet',
+               'stddev',
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
@@ -326,6 +327,8 @@ class TroposphericDelayCorrection(object):
     ret['hydro'] = __hydro
     (__wet, offset, length) = get_s8(buf, offset, length)
     ret['wet'] = __wet
+    (__stddev, offset, length) = get_u8(buf, offset, length)
+    ret['stddev'] = __stddev
     return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
@@ -334,6 +337,7 @@ class TroposphericDelayCorrection(object):
       return {}, offset, length
     self.hydro = res['hydro']
     self.wet = res['wet']
+    self.stddev = res['stddev']
     return res, off, length
 
   @classmethod
@@ -342,6 +346,8 @@ class TroposphericDelayCorrection(object):
     # hydro: s16
     ret += 2
     # wet: s8
+    ret += 1
+    # stddev: u8
     ret += 1
     return ret
   
@@ -358,6 +364,7 @@ class STECResidual(object):
   """
   __slots__ = ['sv_id',
                'residual',
+               'stddev',
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
@@ -366,6 +373,8 @@ class STECResidual(object):
     ret['sv_id'] = __sv_id
     (__residual, offset, length) = get_s16(buf, offset, length)
     ret['residual'] = __residual
+    (__stddev, offset, length) = get_u8(buf, offset, length)
+    ret['stddev'] = __stddev
     return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
@@ -374,6 +383,7 @@ class STECResidual(object):
       return {}, offset, length
     self.sv_id = res['sv_id']
     self.residual = res['residual']
+    self.stddev = res['stddev']
     return res, off, length
 
   @classmethod
@@ -383,6 +393,8 @@ class STECResidual(object):
     ret += SvId._payload_size()
     # residual: s16
     ret += 2
+    # stddev: u8
+    ret += 1
     return ret
   
 class GridElement(object):
