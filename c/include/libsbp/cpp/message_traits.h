@@ -881,6 +881,7 @@ struct MessageTraits<msg_ssr_stec_correction_t> {
 };
 
 
+
 template<>
 struct MessageTraits<msg_ssr_grid_definition_t> {
   static constexpr u16 id = 1525;

@@ -433,6 +433,52 @@ impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrection {
     }
 }
 
+/// Gridded troposphere and STEC residuals
+///
+/// This is here to make sure no one reuses this message ID.
+/// This was the ID of the old message before the structure
+/// was changed.
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgSsrGriddedCorrectionDeprecated {
+    pub sender_id: Option<u16>,
+}
+
+impl MsgSsrGriddedCorrectionDeprecated {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGriddedCorrectionDeprecated, crate::Error> {
+        Ok(MsgSsrGriddedCorrectionDeprecated { sender_id: None })
+    }
+}
+impl super::SBPMessage for MsgSsrGriddedCorrectionDeprecated {
+    fn get_message_type(&self) -> u16 {
+        1520
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrectionDeprecated {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+
+    fn sbp_size(&self) -> usize {
+        0
+    }
+}
+
 /// Definition of the grid for STEC and tropo messages
 ///
 /// Based on the 3GPP proposal R2-1906781 which is in turn based on

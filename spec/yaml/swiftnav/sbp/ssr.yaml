@@ -163,7 +163,7 @@ definitions:
         type: u8
         units: |
           modified DF389 scale; class is upper 3 bits, value is lower 5
-          stddev <= (3^class * (1 + value/16) - 1) / 10 TECU
+          stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
         desc: stddev
 
  - GridElement:
@@ -446,20 +446,13 @@ definitions:
             fill: STECSatElement
             desc: Array of STEC information for each space vehicle
 
- - MSG_SSR_GRIDDED_CORRECTION:
-    id: 0x05FA
+ - MSG_SSR_GRIDDED_CORRECTION_DEPRECATED:
+    id: 0x05F0
     short_desc: Gridded troposphere and STEC residuals
     desc: |
-      STEC residuals are per space vehicle, tropo is not.
-      It is typically equivalent to the QZSS CLAS Sub Type 9 messages
-    fields:
-        - header:
-            type: GriddedCorrectionHeader
-            desc: Header of a Gridded Correction message
-        - element:
-            type: GridElement
-            desc: Tropo and STEC residuals for the given grid point
-
+      This is here to make sure no one reuses this message ID.
+      This was the ID of the old message before the structure
+      was changed.
 
  - MSG_SSR_GRID_DEFINITION:
     id: 0x05F5
@@ -479,3 +472,17 @@ definitions:
               The spec describes the encoding scheme in detail, but
               essentially the index of the quadrants that contain transitions between
               valid and invalid (and vice versa) are encoded as u8 integers.
+
+ - MSG_SSR_GRIDDED_CORRECTION:
+    id: 0x05FA
+    short_desc: Gridded troposphere and STEC residuals
+    desc: |
+      STEC residuals are per space vehicle, tropo is not.
+      It is typically equivalent to the QZSS CLAS Sub Type 9 messages
+    fields:
+        - header:
+            type: GriddedCorrectionHeader
+            desc: Header of a Gridded Correction message
+        - element:
+            type: GridElement
+            desc: Tropo and STEC residuals for the given grid point

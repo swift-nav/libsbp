@@ -170,8 +170,9 @@ import com.swiftnav.sbp.ssr.MsgSsrOrbitClockDepA;
 import com.swiftnav.sbp.ssr.MsgSsrCodeBiases;
 import com.swiftnav.sbp.ssr.MsgSsrPhaseBiases;
 import com.swiftnav.sbp.ssr.MsgSsrStecCorrection;
-import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrection;
+import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrectionDeprecated;
 import com.swiftnav.sbp.ssr.MsgSsrGridDefinition;
+import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrection;
 import com.swiftnav.sbp.system.MsgStartup;
 import com.swiftnav.sbp.system.MsgDgnssStatus;
 import com.swiftnav.sbp.system.MsgHeartbeat;
@@ -503,10 +504,12 @@ final class MessageTable {
                 return new MsgSsrPhaseBiases(msg);
             case MsgSsrStecCorrection.TYPE:
                 return new MsgSsrStecCorrection(msg);
-            case MsgSsrGriddedCorrection.TYPE:
-                return new MsgSsrGriddedCorrection(msg);
+            case MsgSsrGriddedCorrectionDeprecated.TYPE:
+                return new MsgSsrGriddedCorrectionDeprecated(msg);
             case MsgSsrGridDefinition.TYPE:
                 return new MsgSsrGridDefinition(msg);
+            case MsgSsrGriddedCorrection.TYPE:
+                return new MsgSsrGriddedCorrection(msg);
             case MsgStartup.TYPE:
                 return new MsgStartup(msg);
             case MsgDgnssStatus.TYPE:

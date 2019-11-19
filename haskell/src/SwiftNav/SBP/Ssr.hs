@@ -621,33 +621,25 @@ $(makeSBP 'msgSsrStecCorrection ''MsgSsrStecCorrection)
 $(makeJSON "_msgSsrStecCorrection_" ''MsgSsrStecCorrection)
 $(makeLenses ''MsgSsrStecCorrection)
 
-msgSsrGriddedCorrection :: Word16
-msgSsrGriddedCorrection = 0x05FA
+msgSsrGriddedCorrectionDeprecated :: Word16
+msgSsrGriddedCorrectionDeprecated = 0x05F0
 
--- | SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
+-- | SBP class for message MSG_SSR_GRIDDED_CORRECTION_DEPRECATED (0x05F0).
 --
--- STEC residuals are per space vehicle, tropo is not. It is typically
--- equivalent to the QZSS CLAS Sub Type 9 messages
-data MsgSsrGriddedCorrection = MsgSsrGriddedCorrection
-  { _msgSsrGriddedCorrection_header :: !GriddedCorrectionHeader
-    -- ^ Header of a Gridded Correction message
-  , _msgSsrGriddedCorrection_element :: !GridElement
-    -- ^ Tropo and STEC residuals for the given grid point
-  } deriving ( Show, Read, Eq )
+-- This is here to make sure no one reuses this message ID. This was the ID of
+-- the old message before the structure was changed.
+data MsgSsrGriddedCorrectionDeprecated = MsgSsrGriddedCorrectionDeprecated
+  deriving ( Show, Read, Eq )
 
-instance Binary MsgSsrGriddedCorrection where
-  get = do
-    _msgSsrGriddedCorrection_header <- get
-    _msgSsrGriddedCorrection_element <- get
-    pure MsgSsrGriddedCorrection {..}
+instance Binary MsgSsrGriddedCorrectionDeprecated where
+  get =
+    pure MsgSsrGriddedCorrectionDeprecated
 
-  put MsgSsrGriddedCorrection {..} = do
-    put _msgSsrGriddedCorrection_header
-    put _msgSsrGriddedCorrection_element
-
-$(makeSBP 'msgSsrGriddedCorrection ''MsgSsrGriddedCorrection)
-$(makeJSON "_msgSsrGriddedCorrection_" ''MsgSsrGriddedCorrection)
-$(makeLenses ''MsgSsrGriddedCorrection)
+  put MsgSsrGriddedCorrectionDeprecated =
+    pure ()
+$(makeSBP 'msgSsrGriddedCorrectionDeprecated ''MsgSsrGriddedCorrectionDeprecated)
+$(makeJSON "_msgSsrGriddedCorrectionDeprecated_" ''MsgSsrGriddedCorrectionDeprecated)
+$(makeLenses ''MsgSsrGriddedCorrectionDeprecated)
 
 msgSsrGridDefinition :: Word16
 msgSsrGridDefinition = 0x05F5
@@ -679,3 +671,31 @@ instance Binary MsgSsrGridDefinition where
 $(makeSBP 'msgSsrGridDefinition ''MsgSsrGridDefinition)
 $(makeJSON "_msgSsrGridDefinition_" ''MsgSsrGridDefinition)
 $(makeLenses ''MsgSsrGridDefinition)
+
+msgSsrGriddedCorrection :: Word16
+msgSsrGriddedCorrection = 0x05FA
+
+-- | SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
+--
+-- STEC residuals are per space vehicle, tropo is not. It is typically
+-- equivalent to the QZSS CLAS Sub Type 9 messages
+data MsgSsrGriddedCorrection = MsgSsrGriddedCorrection
+  { _msgSsrGriddedCorrection_header :: !GriddedCorrectionHeader
+    -- ^ Header of a Gridded Correction message
+  , _msgSsrGriddedCorrection_element :: !GridElement
+    -- ^ Tropo and STEC residuals for the given grid point
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrGriddedCorrection where
+  get = do
+    _msgSsrGriddedCorrection_header <- get
+    _msgSsrGriddedCorrection_element <- get
+    pure MsgSsrGriddedCorrection {..}
+
+  put MsgSsrGriddedCorrection {..} = do
+    put _msgSsrGriddedCorrection_header
+    put _msgSsrGriddedCorrection_element
+
+$(makeSBP 'msgSsrGriddedCorrection ''MsgSsrGriddedCorrection)
+$(makeJSON "_msgSsrGriddedCorrection_" ''MsgSsrGriddedCorrection)
+$(makeLenses ''MsgSsrGriddedCorrection)
