@@ -18,5 +18,8 @@ crc16 = "*"
 nom = "5.0.0"
 serde = { version = "1.0", features = ["derive"], optional = true }
 
+[dev-dependencies]
+serialport = "2.1.0"
+
 [badges]
 travis-ci = { repository = "swift-nav/libsbp" }
