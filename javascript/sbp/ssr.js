@@ -631,7 +631,7 @@ MsgSsrStecCorrection.prototype.fieldSpec.push(['header', STECHeader.prototype.fi
 MsgSsrStecCorrection.prototype.fieldSpec.push(['stec_sat_list', 'array', STECSatElement.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
- * SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05F0).
+ * SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
  *
  * STEC residuals are per space vehicle, tropo is not. It is typically equivalent
  * to the QZSS CLAS Sub Type 9 messages
@@ -651,7 +651,7 @@ var MsgSsrGriddedCorrection = function (sbp, fields) {
 };
 MsgSsrGriddedCorrection.prototype = Object.create(SBP.prototype);
 MsgSsrGriddedCorrection.prototype.messageType = "MSG_SSR_GRIDDED_CORRECTION";
-MsgSsrGriddedCorrection.prototype.msg_type = 0x05F0;
+MsgSsrGriddedCorrection.prototype.msg_type = 0x05FA;
 MsgSsrGriddedCorrection.prototype.constructor = MsgSsrGriddedCorrection;
 MsgSsrGriddedCorrection.prototype.parser = new Parser()
   .endianess('little')
@@ -715,7 +715,7 @@ module.exports = {
   MsgSsrPhaseBiases: MsgSsrPhaseBiases,
   0x05EB: MsgSsrStecCorrection,
   MsgSsrStecCorrection: MsgSsrStecCorrection,
-  0x05F0: MsgSsrGriddedCorrection,
+  0x05FA: MsgSsrGriddedCorrection,
   MsgSsrGriddedCorrection: MsgSsrGriddedCorrection,
   0x05F5: MsgSsrGridDefinition,
   MsgSsrGridDefinition: MsgSsrGridDefinition,

@@ -401,7 +401,7 @@ impl MsgSsrGriddedCorrection {
 }
 impl super::SBPMessage for MsgSsrGriddedCorrection {
     fn get_message_type(&self) -> u16 {
-        1520
+        1530
     }
 
     fn get_sender_id(&self) -> Option<u16> {

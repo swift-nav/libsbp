@@ -370,8 +370,8 @@ pub enum SBP {
     MsgSsrCodeBiases(MsgSsrCodeBiases),
     MsgSsrPhaseBiases(MsgSsrPhaseBiases),
     MsgSsrStecCorrection(MsgSsrStecCorrection),
-    MsgSsrGriddedCorrection(MsgSsrGriddedCorrection),
     MsgSsrGridDefinition(MsgSsrGridDefinition),
+    MsgSsrGriddedCorrection(MsgSsrGriddedCorrection),
     MsgOsr(MsgOsr),
     MsgUserData(MsgUserData),
     MsgImuRaw(MsgImuRaw),
@@ -1146,15 +1146,15 @@ impl SBP {
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgSsrStecCorrection(msg))
             }
-            1520 => {
-                let mut msg = MsgSsrGriddedCorrection::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgSsrGriddedCorrection(msg))
-            }
             1525 => {
                 let mut msg = MsgSsrGridDefinition::parse(payload)?;
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgSsrGridDefinition(msg))
+            }
+            1530 => {
+                let mut msg = MsgSsrGriddedCorrection::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgSsrGriddedCorrection(msg))
             }
             1600 => {
                 let mut msg = MsgOsr::parse(payload)?;
@@ -1434,8 +1434,8 @@ impl SBP {
             SBP::MsgSsrCodeBiases(msg) => msg,
             SBP::MsgSsrPhaseBiases(msg) => msg,
             SBP::MsgSsrStecCorrection(msg) => msg,
-            SBP::MsgSsrGriddedCorrection(msg) => msg,
             SBP::MsgSsrGridDefinition(msg) => msg,
+            SBP::MsgSsrGriddedCorrection(msg) => msg,
             SBP::MsgOsr(msg) => msg,
             SBP::MsgUserData(msg) => msg,
             SBP::MsgImuRaw(msg) => msg,

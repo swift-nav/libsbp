@@ -942,9 +942,9 @@ delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
     ret += 247
     return ret
   
-SBP_MSG_SSR_GRIDDED_CORRECTION = 0x05F0
+SBP_MSG_SSR_GRIDDED_CORRECTION = 0x05FA
 class MsgSsrGriddedCorrection(SBP):
-  """SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05F0).
+  """SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
 
   You can have MSG_SSR_GRIDDED_CORRECTION inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -1035,6 +1035,6 @@ msg_classes = {
   0x05E1: MsgSsrCodeBiases,
   0x05E6: MsgSsrPhaseBiases,
   0x05EB: MsgSsrStecCorrection,
-  0x05F0: MsgSsrGriddedCorrection,
+  0x05FA: MsgSsrGriddedCorrection,
   0x05F5: MsgSsrGridDefinition,
 }

@@ -622,9 +622,9 @@ $(makeJSON "_msgSsrStecCorrection_" ''MsgSsrStecCorrection)
 $(makeLenses ''MsgSsrStecCorrection)
 
 msgSsrGriddedCorrection :: Word16
-msgSsrGriddedCorrection = 0x05F0
+msgSsrGriddedCorrection = 0x05FA
 
--- | SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05F0).
+-- | SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
 --
 -- STEC residuals are per space vehicle, tropo is not. It is typically
 -- equivalent to the QZSS CLAS Sub Type 9 messages

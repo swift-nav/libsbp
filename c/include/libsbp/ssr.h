@@ -301,7 +301,7 @@ typedef struct SBP_ATTR_PACKED {
  * STEC residuals are per space vehicle, tropo is not.
  * It is typically equivalent to the QZSS CLAS Sub Type 9 messages
  */
-#define SBP_MSG_SSR_GRIDDED_CORRECTION 0x05F0
+#define SBP_MSG_SSR_GRIDDED_CORRECTION 0x05FA
 typedef struct SBP_ATTR_PACKED {
   gridded_correction_header_t header;     /**< Header of a Gridded Correction message */
   grid_element_t element;    /**< Tropo and STEC residuals for the given grid point */
