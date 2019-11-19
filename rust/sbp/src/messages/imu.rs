@@ -25,6 +25,7 @@ use serde::{Deserialize, Serialize};
 /// Auxiliary data specific to a particular IMU. The `imu_type` field will
 /// always be consistent but the rest of the payload is device specific and
 /// depends on the value of `imu_type`.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -49,7 +50,9 @@ impl MsgImuAux {
     }
 }
 impl super::SBPMessage for MsgImuAux {
-    const MSG_ID: u16 = 2305;
+    fn get_message_type(&self) -> u16 {
+        2305
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -57,6 +60,28 @@ impl super::SBPMessage for MsgImuAux {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgImuAux {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.imu_type.append_to_sbp_buffer(buf);
+        self.temp.append_to_sbp_buffer(buf);
+        self.imu_conf.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.imu_type.sbp_size();
+        size += self.temp.sbp_size();
+        size += self.imu_conf.sbp_size();
+        size
     }
 }
 
@@ -66,6 +91,7 @@ impl super::SBPMessage for MsgImuAux {
 /// gyroscope readings. The sense of the measurements are to be aligned with
 /// the indications on the device itself. Measurement units, which are specific to the
 /// device hardware and settings, are communicated via the MSG_IMU_AUX message.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -106,7 +132,9 @@ impl MsgImuRaw {
     }
 }
 impl super::SBPMessage for MsgImuRaw {
-    const MSG_ID: u16 = 2304;
+    fn get_message_type(&self) -> u16 {
+        2304
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -114,5 +142,37 @@ impl super::SBPMessage for MsgImuRaw {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgImuRaw {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.tow_f.append_to_sbp_buffer(buf);
+        self.acc_x.append_to_sbp_buffer(buf);
+        self.acc_y.append_to_sbp_buffer(buf);
+        self.acc_z.append_to_sbp_buffer(buf);
+        self.gyr_x.append_to_sbp_buffer(buf);
+        self.gyr_y.append_to_sbp_buffer(buf);
+        self.gyr_z.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.tow_f.sbp_size();
+        size += self.acc_x.sbp_size();
+        size += self.acc_y.sbp_size();
+        size += self.acc_z.sbp_size();
+        size += self.gyr_x.sbp_size();
+        size += self.gyr_y.sbp_size();
+        size += self.gyr_z.sbp_size();
+        size
     }
 }

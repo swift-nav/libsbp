@@ -9,8 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/vehicle/test_MsgOdometry.yaml
-// by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/vehicle/test_MsgOdometry.yaml by generate.py. Do not modify by hand!
 
 extern crate sbp;
 use sbp::messages::SBPMessage;
@@ -22,23 +21,21 @@ use common::AlmostEq;
 #[test]
 fn test_auto_check_sbp_vehicle_50() {
     {
-        use sbp::messages::vehicle::MsgOdometry;
         let payload: Vec<u8> = vec![85, 3, 9, 66, 0, 9, 8, 0, 0, 0, 7, 0, 0, 0, 1, 52, 99];
-
-        assert_eq!(
-            MsgOdometry::MSG_ID,
-            0x903,
-            "Incorrect message type, expected 0x903, is {}",
-            MsgOdometry::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgOdometry(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x903,
+                    "Incorrect message type, expected 0x903, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x42,
@@ -61,7 +58,10 @@ fn test_auto_check_sbp_vehicle_50() {
                     msg.velocity
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgOdometry"),
+            _ => panic!("Invalid message type! Expected a MsgOdometry"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
 }

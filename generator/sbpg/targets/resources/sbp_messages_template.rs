@@ -21,6 +21,7 @@ use self::byteorder::{LittleEndian,ReadBytesExt};
 #[cfg(feature = "serialize")]
 use serde::{Serialize, Deserialize};
 
+
 ((*- for i in includes *))
 use super::(((i)))::*;
 ((*- endfor *))
@@ -80,7 +81,9 @@ impl (((m.identifier|camel_case))) {
 
 ((*- if m.sbp_id *))
 impl super::SBPMessage for (((m.identifier|camel_case))) {
-    const MSG_ID: u16 = (((m.sbp_id)));
+    fn get_message_type(&self) -> u16 {
+        (((m.sbp_id)))
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -89,7 +92,32 @@ impl super::SBPMessage for (((m.identifier|camel_case))) {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
 }
 ((*- endif *))
 
+impl crate::serialize::SbpSerialize for (((m.identifier|camel_case))) {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        ((*- for f in m.fields *))
+        self.(((f.identifier))).append_to_sbp_buffer(buf);
+        ((*- endfor *))
+    }
+
+    fn sbp_size(&self) -> usize {
+        ((*- if not m.fields *))
+        0
+        ((*- else *))
+        let mut size = 0;
+        ((*- for f in m.fields *))
+        size += self.(((f.identifier))).sbp_size();
+        ((*- endfor *))
+        size
+        ((*- endif *))
+    }
+}
 ((* endfor *))

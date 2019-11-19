@@ -31,6 +31,7 @@ use serde::{Deserialize, Serialize};
 /// flash memory requests from the host to the device. Flash read
 /// and write messages, such as MSG_FLASH_READ_REQ, or
 /// MSG_FLASH_PROGRAM, may return this message on failure.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -49,7 +50,9 @@ impl MsgFlashDone {
     }
 }
 impl super::SBPMessage for MsgFlashDone {
-    const MSG_ID: u16 = 224;
+    fn get_message_type(&self) -> u16 {
+        224
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -57,6 +60,24 @@ impl super::SBPMessage for MsgFlashDone {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFlashDone {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.response.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.response.sbp_size();
+        size
     }
 }
 
@@ -67,6 +88,7 @@ impl super::SBPMessage for MsgFlashDone {
 /// MSG_FLASH_DONE message containing the return code - FLASH_OK (0)
 /// on success or FLASH_INVALID_FLASH (1) if the flash specified is
 /// invalid.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -88,7 +110,9 @@ impl MsgFlashErase {
     }
 }
 impl super::SBPMessage for MsgFlashErase {
-    const MSG_ID: u16 = 226;
+    fn get_message_type(&self) -> u16 {
+        226
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -96,6 +120,26 @@ impl super::SBPMessage for MsgFlashErase {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFlashErase {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.target.append_to_sbp_buffer(buf);
+        self.sector_num.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.target.sbp_size();
+        size += self.sector_num.sbp_size();
+        size
     }
 }
 
@@ -107,6 +151,7 @@ impl super::SBPMessage for MsgFlashErase {
 /// on success, or FLASH_INVALID_LEN (2) if the maximum write size
 /// is exceeded. Note that the sector-containing addresses must be
 /// erased before addresses can be programmed.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -134,7 +179,9 @@ impl MsgFlashProgram {
     }
 }
 impl super::SBPMessage for MsgFlashProgram {
-    const MSG_ID: u16 = 230;
+    fn get_message_type(&self) -> u16 {
+        230
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -142,6 +189,30 @@ impl super::SBPMessage for MsgFlashProgram {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFlashProgram {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.target.append_to_sbp_buffer(buf);
+        self.addr_start.append_to_sbp_buffer(buf);
+        self.addr_len.append_to_sbp_buffer(buf);
+        self.data.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.target.sbp_size();
+        size += self.addr_start.sbp_size();
+        size += self.addr_len.sbp_size();
+        size += self.data.sbp_size();
+        size
     }
 }
 
@@ -154,6 +225,7 @@ impl super::SBPMessage for MsgFlashProgram {
 /// FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
 /// FLASH_INVALID_ADDR (3) if the address is outside of the allowed
 /// range.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -178,7 +250,9 @@ impl MsgFlashReadReq {
     }
 }
 impl super::SBPMessage for MsgFlashReadReq {
-    const MSG_ID: u16 = 231;
+    fn get_message_type(&self) -> u16 {
+        231
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -186,6 +260,28 @@ impl super::SBPMessage for MsgFlashReadReq {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFlashReadReq {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.target.append_to_sbp_buffer(buf);
+        self.addr_start.append_to_sbp_buffer(buf);
+        self.addr_len.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.target.sbp_size();
+        size += self.addr_start.sbp_size();
+        size += self.addr_len.sbp_size();
+        size
     }
 }
 
@@ -198,6 +294,7 @@ impl super::SBPMessage for MsgFlashReadReq {
 /// FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
 /// FLASH_INVALID_ADDR (3) if the address is outside of the allowed
 /// range.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -222,7 +319,9 @@ impl MsgFlashReadResp {
     }
 }
 impl super::SBPMessage for MsgFlashReadResp {
-    const MSG_ID: u16 = 225;
+    fn get_message_type(&self) -> u16 {
+        225
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -231,12 +330,35 @@ impl super::SBPMessage for MsgFlashReadResp {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFlashReadResp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.target.append_to_sbp_buffer(buf);
+        self.addr_start.append_to_sbp_buffer(buf);
+        self.addr_len.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.target.sbp_size();
+        size += self.addr_start.sbp_size();
+        size += self.addr_len.sbp_size();
+        size
+    }
 }
 
 /// Write M25 flash status register (host => device)
 ///
 /// The flash status message writes to the 8-bit M25 flash status
 /// register. The device replies with a MSG_FLASH_DONE message.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -255,7 +377,9 @@ impl MsgM25FlashWriteStatus {
     }
 }
 impl super::SBPMessage for MsgM25FlashWriteStatus {
-    const MSG_ID: u16 = 243;
+    fn get_message_type(&self) -> u16 {
+        243
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -264,12 +388,31 @@ impl super::SBPMessage for MsgM25FlashWriteStatus {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgM25FlashWriteStatus {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.status.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.status.sbp_size();
+        size
+    }
 }
 
 /// Lock sector of STM flash memory (host => device)
 ///
 /// The flash lock message locks a sector of the STM flash
 /// memory. The device replies with a MSG_FLASH_DONE message.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -288,7 +431,9 @@ impl MsgStmFlashLockSector {
     }
 }
 impl super::SBPMessage for MsgStmFlashLockSector {
-    const MSG_ID: u16 = 227;
+    fn get_message_type(&self) -> u16 {
+        227
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -297,12 +442,31 @@ impl super::SBPMessage for MsgStmFlashLockSector {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgStmFlashLockSector {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sector.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sector.sbp_size();
+        size
+    }
 }
 
 /// Unlock sector of STM flash memory (host => device)
 ///
 /// The flash unlock message unlocks a sector of the STM flash
 /// memory. The device replies with a MSG_FLASH_DONE message.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -321,7 +485,9 @@ impl MsgStmFlashUnlockSector {
     }
 }
 impl super::SBPMessage for MsgStmFlashUnlockSector {
-    const MSG_ID: u16 = 228;
+    fn get_message_type(&self) -> u16 {
+        228
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -329,6 +495,24 @@ impl super::SBPMessage for MsgStmFlashUnlockSector {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgStmFlashUnlockSector {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sector.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sector.sbp_size();
+        size
     }
 }
 
@@ -339,6 +523,7 @@ impl super::SBPMessage for MsgStmFlashUnlockSector {
 /// requests the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device
 /// responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
 /// ID in the payload.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -352,7 +537,9 @@ impl MsgStmUniqueIdReq {
     }
 }
 impl super::SBPMessage for MsgStmUniqueIdReq {
-    const MSG_ID: u16 = 232;
+    fn get_message_type(&self) -> u16 {
+        232
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -360,6 +547,20 @@ impl super::SBPMessage for MsgStmUniqueIdReq {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgStmUniqueIdReq {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+
+    fn sbp_size(&self) -> usize {
+        0
     }
 }
 
@@ -370,6 +571,7 @@ impl super::SBPMessage for MsgStmUniqueIdReq {
 /// requests the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device
 /// responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
 /// ID in the payload..
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -388,7 +590,9 @@ impl MsgStmUniqueIdResp {
     }
 }
 impl super::SBPMessage for MsgStmUniqueIdResp {
-    const MSG_ID: u16 = 229;
+    fn get_message_type(&self) -> u16 {
+        229
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -396,5 +600,23 @@ impl super::SBPMessage for MsgStmUniqueIdResp {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgStmUniqueIdResp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.stm_id.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.stm_id.sbp_size();
+        size
     }
 }

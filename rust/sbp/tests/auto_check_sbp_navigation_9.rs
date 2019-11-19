@@ -9,9 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgDopsDepA.yaml by generate.py. Do not modify
-// by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgDopsDepA.yaml by generate.py. Do not modify by hand!
 
 extern crate sbp;
 use sbp::messages::SBPMessage;
@@ -23,25 +21,23 @@ use common::AlmostEq;
 #[test]
 fn test_auto_check_sbp_navigation_9() {
     {
-        use sbp::messages::navigation::MsgDopsDepA;
         let payload: Vec<u8> = vec![
             85, 6, 2, 246, 215, 14, 8, 48, 39, 0, 180, 0, 190, 0, 170, 0, 160, 0, 150, 0, 121, 170,
         ];
-
-        assert_eq!(
-            MsgDopsDepA::MSG_ID,
-            0x206,
-            "Incorrect message type, expected 0x206, is {}",
-            MsgDopsDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgDopsDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x206,
+                    "Incorrect message type, expected 0x206, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
@@ -79,29 +75,30 @@ fn test_auto_check_sbp_navigation_9() {
                     msg.vdop
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgDopsDepA"),
+            _ => panic!("Invalid message type! Expected a MsgDopsDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::navigation::MsgDopsDepA;
         let payload: Vec<u8> = vec![
             85, 6, 2, 246, 215, 14, 240, 51, 39, 0, 180, 0, 190, 0, 170, 0, 160, 0, 150, 0, 78, 169,
         ];
-
-        assert_eq!(
-            MsgDopsDepA::MSG_ID,
-            0x206,
-            "Incorrect message type, expected 0x206, is {}",
-            MsgDopsDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgDopsDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x206,
+                    "Incorrect message type, expected 0x206, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
@@ -139,29 +136,30 @@ fn test_auto_check_sbp_navigation_9() {
                     msg.vdop
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgDopsDepA"),
+            _ => panic!("Invalid message type! Expected a MsgDopsDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::navigation::MsgDopsDepA;
         let payload: Vec<u8> = vec![
             85, 6, 2, 246, 215, 14, 216, 55, 39, 0, 180, 0, 190, 0, 170, 0, 160, 0, 150, 0, 71, 218,
         ];
-
-        assert_eq!(
-            MsgDopsDepA::MSG_ID,
-            0x206,
-            "Incorrect message type, expected 0x206, is {}",
-            MsgDopsDepA::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgDopsDepA(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x206,
+                    "Incorrect message type, expected 0x206, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0xd7f6,
@@ -199,7 +197,10 @@ fn test_auto_check_sbp_navigation_9() {
                     msg.vdop
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgDopsDepA"),
+            _ => panic!("Invalid message type! Expected a MsgDopsDepA"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
 }

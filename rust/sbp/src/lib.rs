@@ -2,8 +2,10 @@
 //! made by Swift Navigation. For language agnostic description of the protocol please
 //! see the protocol specification documentation at https://github.com/swift-nav/libsbp/tree/master/docs
 
+pub mod framer;
 pub mod messages;
 pub mod parser;
+pub mod serialize;
 
 use std::error;
 use std::fmt;
@@ -148,5 +150,23 @@ mod tests {
         } else {
             assert!(false);
         }
+    }
+
+    #[test]
+    fn making_frame() {
+        use crate::messages::SBPMessage;
+
+        let msg = crate::messages::system::MsgStartup {
+            sender_id: Some(250),
+            cause: 1,
+            startup_type: 45,
+            reserved: 0,
+        };
+
+        let frame = msg.to_frame().unwrap();
+
+        let expected_frame = b"\x55\x00\xFF\xFA\x00\x04\x01\x2D\x00\x00\xBC\x73";
+
+        assert_eq!(frame, expected_frame);
     }
 }

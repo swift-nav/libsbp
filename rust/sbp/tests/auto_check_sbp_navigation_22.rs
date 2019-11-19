@@ -9,9 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from
-// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgVelNED.yaml by generate.py. Do not modify by
-// hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgVelNED.yaml by generate.py. Do not modify by hand!
 
 extern crate sbp;
 use sbp::messages::SBPMessage;
@@ -23,26 +21,24 @@ use common::AlmostEq;
 #[test]
 fn test_auto_check_sbp_navigation_22() {
     {
-        use sbp::messages::navigation::MsgVelNED;
         let payload: Vec<u8> = vec![
             85, 14, 2, 211, 136, 22, 40, 244, 122, 19, 3, 0, 0, 0, 252, 255, 255, 255, 243, 255,
             255, 255, 0, 0, 0, 0, 14, 0, 86, 209,
         ];
-
-        assert_eq!(
-            MsgVelNED::MSG_ID,
-            0x20e,
-            "Incorrect message type, expected 0x20e, is {}",
-            MsgVelNED::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgVelNED(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x20e,
+                    "Incorrect message type, expected 0x20e, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
@@ -86,30 +82,31 @@ fn test_auto_check_sbp_navigation_22() {
                     msg.v_accuracy
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgVelNED"),
+            _ => panic!("Invalid message type! Expected a MsgVelNED"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::navigation::MsgVelNED;
         let payload: Vec<u8> = vec![
             85, 14, 2, 211, 136, 22, 28, 246, 122, 19, 252, 255, 255, 255, 255, 255, 255, 255, 232,
             255, 255, 255, 0, 0, 0, 0, 15, 0, 16, 228,
         ];
-
-        assert_eq!(
-            MsgVelNED::MSG_ID,
-            0x20e,
-            "Incorrect message type, expected 0x20e, is {}",
-            MsgVelNED::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgVelNED(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x20e,
+                    "Incorrect message type, expected 0x20e, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
@@ -157,30 +154,31 @@ fn test_auto_check_sbp_navigation_22() {
                     msg.v_accuracy
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgVelNED"),
+            _ => panic!("Invalid message type! Expected a MsgVelNED"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::navigation::MsgVelNED;
         let payload: Vec<u8> = vec![
             85, 14, 2, 211, 136, 22, 16, 248, 122, 19, 0, 0, 0, 0, 253, 255, 255, 255, 244, 255,
             255, 255, 0, 0, 0, 0, 15, 0, 11, 164,
         ];
-
-        assert_eq!(
-            MsgVelNED::MSG_ID,
-            0x20e,
-            "Incorrect message type, expected 0x20e, is {}",
-            MsgVelNED::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgVelNED(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x20e,
+                    "Incorrect message type, expected 0x20e, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
@@ -224,30 +222,31 @@ fn test_auto_check_sbp_navigation_22() {
                     msg.v_accuracy
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgVelNED"),
+            _ => panic!("Invalid message type! Expected a MsgVelNED"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::navigation::MsgVelNED;
         let payload: Vec<u8> = vec![
             85, 14, 2, 211, 136, 22, 4, 250, 122, 19, 2, 0, 0, 0, 3, 0, 0, 0, 232, 255, 255, 255,
             0, 0, 0, 0, 15, 0, 152, 208,
         ];
-
-        assert_eq!(
-            MsgVelNED::MSG_ID,
-            0x20e,
-            "Incorrect message type, expected 0x20e, is {}",
-            MsgVelNED::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgVelNED(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x20e,
+                    "Incorrect message type, expected 0x20e, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
@@ -287,30 +286,31 @@ fn test_auto_check_sbp_navigation_22() {
                     msg.v_accuracy
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgVelNED"),
+            _ => panic!("Invalid message type! Expected a MsgVelNED"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
     {
-        use sbp::messages::navigation::MsgVelNED;
         let payload: Vec<u8> = vec![
             85, 14, 2, 211, 136, 22, 248, 251, 122, 19, 1, 0, 0, 0, 0, 0, 0, 0, 235, 255, 255, 255,
             0, 0, 0, 0, 15, 0, 182, 120,
         ];
-
-        assert_eq!(
-            MsgVelNED::MSG_ID,
-            0x20e,
-            "Incorrect message type, expected 0x20e, is {}",
-            MsgVelNED::MSG_ID
-        );
 
         // Test the round trip payload parsing
         let mut parser = sbp::parser::Parser::new();
         let msg_result = parser.parse(&mut &payload[..]);
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
-        match sbp_msg {
+        match &sbp_msg {
             sbp::messages::SBP::MsgVelNED(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x20e,
+                    "Incorrect message type, expected 0x20e, is {}",
+                    msg.get_message_type()
+                );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
                     sender_id, 0x88d3,
@@ -350,7 +350,10 @@ fn test_auto_check_sbp_navigation_22() {
                     msg.v_accuracy
                 );
             }
-            _ => assert!(false, "Invalid message type! Expected a MsgVelNED"),
+            _ => panic!("Invalid message type! Expected a MsgVelNED"),
         };
+
+        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
+        assert_eq!(frame, payload);
     }
 }

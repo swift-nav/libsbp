@@ -28,6 +28,7 @@ use serde::{Deserialize, Serialize};
 /// Deprecated
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -46,7 +47,9 @@ impl MsgBootloaderHandshakeDepA {
     }
 }
 impl super::SBPMessage for MsgBootloaderHandshakeDepA {
-    const MSG_ID: u16 = 176;
+    fn get_message_type(&self) -> u16 {
+        176
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -55,6 +58,24 @@ impl super::SBPMessage for MsgBootloaderHandshakeDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.handshake.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.handshake.sbp_size();
+        size
+    }
 }
 
 /// Bootloading handshake request (host => device)
@@ -62,6 +83,7 @@ impl super::SBPMessage for MsgBootloaderHandshakeDepA {
 /// The handshake message request from the host establishes a
 /// handshake between the device bootloader and the host. The
 /// response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -75,7 +97,9 @@ impl MsgBootloaderHandshakeReq {
     }
 }
 impl super::SBPMessage for MsgBootloaderHandshakeReq {
-    const MSG_ID: u16 = 179;
+    fn get_message_type(&self) -> u16 {
+        179
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -83,6 +107,20 @@ impl super::SBPMessage for MsgBootloaderHandshakeReq {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeReq {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+
+    fn sbp_size(&self) -> usize {
+        0
     }
 }
 
@@ -93,6 +131,7 @@ impl super::SBPMessage for MsgBootloaderHandshakeReq {
 /// request from the host is MSG_BOOTLOADER_HANDSHAKE_REQ.  The
 /// payload contains the bootloader version number and the SBP
 /// protocol version number.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -114,7 +153,9 @@ impl MsgBootloaderHandshakeResp {
     }
 }
 impl super::SBPMessage for MsgBootloaderHandshakeResp {
-    const MSG_ID: u16 = 180;
+    fn get_message_type(&self) -> u16 {
+        180
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -123,11 +164,32 @@ impl super::SBPMessage for MsgBootloaderHandshakeResp {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeResp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.flags.append_to_sbp_buffer(buf);
+        self.version.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.flags.sbp_size();
+        size += self.version.sbp_size();
+        size
+    }
 }
 
 /// Bootloader jump to application (host => device)
 ///
 /// The host initiates the bootloader to jump to the application.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -146,7 +208,9 @@ impl MsgBootloaderJumpToApp {
     }
 }
 impl super::SBPMessage for MsgBootloaderJumpToApp {
-    const MSG_ID: u16 = 177;
+    fn get_message_type(&self) -> u16 {
+        177
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -154,6 +218,24 @@ impl super::SBPMessage for MsgBootloaderJumpToApp {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgBootloaderJumpToApp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.jump.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.jump.sbp_size();
+        size
     }
 }
 
@@ -165,6 +247,7 @@ impl super::SBPMessage for MsgBootloaderJumpToApp {
 /// responds with a MSG_NAP_DEVICE_DNA_RESP message with the
 /// device ID in the payload. Note that this ID is tied to the FPGA,
 /// and not related to the Piksi's serial number.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -178,7 +261,9 @@ impl MsgNapDeviceDnaReq {
     }
 }
 impl super::SBPMessage for MsgNapDeviceDnaReq {
-    const MSG_ID: u16 = 222;
+    fn get_message_type(&self) -> u16 {
+        222
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -186,6 +271,20 @@ impl super::SBPMessage for MsgNapDeviceDnaReq {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgNapDeviceDnaReq {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+
+    fn sbp_size(&self) -> usize {
+        0
     }
 }
 
@@ -197,6 +296,7 @@ impl super::SBPMessage for MsgNapDeviceDnaReq {
 /// responds with a MSG_NAP_DEVICE_DNA_RESP messagage with the
 /// device ID in the payload. Note that this ID is tied to the FPGA,
 /// and not related to the Piksi's serial number.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -215,7 +315,9 @@ impl MsgNapDeviceDnaResp {
     }
 }
 impl super::SBPMessage for MsgNapDeviceDnaResp {
-    const MSG_ID: u16 = 221;
+    fn get_message_type(&self) -> u16 {
+        221
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -223,5 +325,23 @@ impl super::SBPMessage for MsgNapDeviceDnaResp {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgNapDeviceDnaResp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.dna.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.dna.sbp_size();
+        size
     }
 }

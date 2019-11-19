@@ -34,6 +34,7 @@ use serde::{Deserialize, Serialize};
 /// transfer.  Newer version of FileIO can support greater
 /// throughput by supporting a large window of FileIO data
 /// that can be in-flight during read or write operations.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -52,7 +53,9 @@ impl MsgFileioConfigReq {
     }
 }
 impl super::SBPMessage for MsgFileioConfigReq {
-    const MSG_ID: u16 = 4097;
+    fn get_message_type(&self) -> u16 {
+        4097
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -60,6 +63,24 @@ impl super::SBPMessage for MsgFileioConfigReq {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFileioConfigReq {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sequence.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sequence.sbp_size();
+        size
     }
 }
 
@@ -70,6 +91,7 @@ impl super::SBPMessage for MsgFileioConfigReq {
 /// transfer.  Newer version of FileIO can support greater
 /// throughput by supporting a large window of FileIO data
 /// that can be in-flight during read or write operations.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -97,7 +119,9 @@ impl MsgFileioConfigResp {
     }
 }
 impl super::SBPMessage for MsgFileioConfigResp {
-    const MSG_ID: u16 = 4098;
+    fn get_message_type(&self) -> u16 {
+        4098
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -105,6 +129,30 @@ impl super::SBPMessage for MsgFileioConfigResp {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFileioConfigResp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sequence.append_to_sbp_buffer(buf);
+        self.window_size.append_to_sbp_buffer(buf);
+        self.batch_size.append_to_sbp_buffer(buf);
+        self.fileio_version.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sequence.sbp_size();
+        size += self.window_size.sbp_size();
+        size += self.batch_size.sbp_size();
+        size += self.fileio_version.sbp_size();
+        size
     }
 }
 
@@ -120,6 +168,7 @@ impl super::SBPMessage for MsgFileioConfigResp {
 /// MSG_PRINT message will print "Invalid fileio read message".
 /// A device will only respond to this message when it is received
 /// from sender ID 0x42.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -144,7 +193,9 @@ impl MsgFileioReadDirReq {
     }
 }
 impl super::SBPMessage for MsgFileioReadDirReq {
-    const MSG_ID: u16 = 169;
+    fn get_message_type(&self) -> u16 {
+        169
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -152,6 +203,28 @@ impl super::SBPMessage for MsgFileioReadDirReq {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFileioReadDirReq {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sequence.append_to_sbp_buffer(buf);
+        self.offset.append_to_sbp_buffer(buf);
+        self.dirname.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sequence.sbp_size();
+        size += self.offset.sbp_size();
+        size += self.dirname.sbp_size();
+        size
     }
 }
 
@@ -163,6 +236,7 @@ impl super::SBPMessage for MsgFileioReadDirReq {
 /// multiple SBP packets and the end of the list is identified by an
 /// entry containing just the character 0xFF. The sequence number in
 /// the response is preserved from the request.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -184,7 +258,9 @@ impl MsgFileioReadDirResp {
     }
 }
 impl super::SBPMessage for MsgFileioReadDirResp {
-    const MSG_ID: u16 = 170;
+    fn get_message_type(&self) -> u16 {
+        170
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -192,6 +268,26 @@ impl super::SBPMessage for MsgFileioReadDirResp {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFileioReadDirResp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sequence.append_to_sbp_buffer(buf);
+        self.contents.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sequence.sbp_size();
+        size += self.contents.sbp_size();
+        size
     }
 }
 
@@ -205,6 +301,7 @@ impl super::SBPMessage for MsgFileioReadDirResp {
 /// If the message is invalid, a followup MSG_PRINT message will
 /// print "Invalid fileio read message". A device will only respond
 /// to this message when it is received from sender ID 0x42.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -232,7 +329,9 @@ impl MsgFileioReadReq {
     }
 }
 impl super::SBPMessage for MsgFileioReadReq {
-    const MSG_ID: u16 = 168;
+    fn get_message_type(&self) -> u16 {
+        168
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -240,6 +339,30 @@ impl super::SBPMessage for MsgFileioReadReq {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFileioReadReq {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sequence.append_to_sbp_buffer(buf);
+        self.offset.append_to_sbp_buffer(buf);
+        self.chunk_size.append_to_sbp_buffer(buf);
+        self.filename.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sequence.sbp_size();
+        size += self.offset.sbp_size();
+        size += self.chunk_size.sbp_size();
+        size += self.filename.sbp_size();
+        size
     }
 }
 
@@ -250,6 +373,7 @@ impl super::SBPMessage for MsgFileioReadReq {
 /// message where the message length field indicates how many bytes
 /// were succesfully read. The sequence number in the response is
 /// preserved from the request.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -271,7 +395,9 @@ impl MsgFileioReadResp {
     }
 }
 impl super::SBPMessage for MsgFileioReadResp {
-    const MSG_ID: u16 = 163;
+    fn get_message_type(&self) -> u16 {
+        163
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -279,6 +405,26 @@ impl super::SBPMessage for MsgFileioReadResp {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFileioReadResp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sequence.append_to_sbp_buffer(buf);
+        self.contents.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sequence.sbp_size();
+        size += self.contents.sbp_size();
+        size
     }
 }
 
@@ -288,6 +434,7 @@ impl super::SBPMessage for MsgFileioReadResp {
 /// If the message is invalid, a followup MSG_PRINT message will
 /// print "Invalid fileio remove message". A device will only
 /// process this message when it is received from sender ID 0x42.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -306,7 +453,9 @@ impl MsgFileioRemove {
     }
 }
 impl super::SBPMessage for MsgFileioRemove {
-    const MSG_ID: u16 = 172;
+    fn get_message_type(&self) -> u16 {
+        172
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -314,6 +463,24 @@ impl super::SBPMessage for MsgFileioRemove {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFileioRemove {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.filename.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.filename.sbp_size();
+        size
     }
 }
 
@@ -327,6 +494,7 @@ impl super::SBPMessage for MsgFileioRemove {
 /// message will print "Invalid fileio write message". A device will
 /// only  process this message when it is received from sender ID
 /// 0x42.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -354,7 +522,9 @@ impl MsgFileioWriteReq {
     }
 }
 impl super::SBPMessage for MsgFileioWriteReq {
-    const MSG_ID: u16 = 173;
+    fn get_message_type(&self) -> u16 {
+        173
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -362,6 +532,30 @@ impl super::SBPMessage for MsgFileioWriteReq {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFileioWriteReq {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sequence.append_to_sbp_buffer(buf);
+        self.offset.append_to_sbp_buffer(buf);
+        self.filename.append_to_sbp_buffer(buf);
+        self.data.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sequence.sbp_size();
+        size += self.offset.sbp_size();
+        size += self.filename.sbp_size();
+        size += self.data.sbp_size();
+        size
     }
 }
 
@@ -372,6 +566,7 @@ impl super::SBPMessage for MsgFileioWriteReq {
 /// original MSG_FILEIO_WRITE_REQ message to check integrity of the
 /// write. The sequence number in the response is preserved from the
 /// request.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -390,7 +585,9 @@ impl MsgFileioWriteResp {
     }
 }
 impl super::SBPMessage for MsgFileioWriteResp {
-    const MSG_ID: u16 = 171;
+    fn get_message_type(&self) -> u16 {
+        171
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -398,5 +595,23 @@ impl super::SBPMessage for MsgFileioWriteResp {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgFileioWriteResp {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sequence.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sequence.sbp_size();
+        size
     }
 }

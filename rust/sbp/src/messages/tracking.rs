@@ -27,6 +27,7 @@ use serde::{Deserialize, Serialize};
 /// The tracking message returns a variable-length array of tracking
 /// channel states. It reports status and carrier-to-noise density
 /// measurements for all tracked satellites.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -45,7 +46,9 @@ impl MsgMeasurementState {
     }
 }
 impl super::SBPMessage for MsgMeasurementState {
-    const MSG_ID: u16 = 97;
+    fn get_message_type(&self) -> u16 {
+        97
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -54,12 +57,31 @@ impl super::SBPMessage for MsgMeasurementState {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgMeasurementState {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.states.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.states.sbp_size();
+        size
+    }
 }
 
 /// Tracking channel correlations
 ///
 /// When enabled, a tracking channel can output the correlations at each
 /// update interval.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -84,7 +106,9 @@ impl MsgTrackingIq {
     }
 }
 impl super::SBPMessage for MsgTrackingIq {
-    const MSG_ID: u16 = 45;
+    fn get_message_type(&self) -> u16 {
+        45
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -93,11 +117,34 @@ impl super::SBPMessage for MsgTrackingIq {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgTrackingIq {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.channel.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+        self.corrs.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.channel.sbp_size();
+        size += self.sid.sbp_size();
+        size += self.corrs.sbp_size();
+        size
+    }
 }
 
 /// Deprecated
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -122,7 +169,9 @@ impl MsgTrackingIqDepA {
     }
 }
 impl super::SBPMessage for MsgTrackingIqDepA {
-    const MSG_ID: u16 = 28;
+    fn get_message_type(&self) -> u16 {
+        28
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -131,12 +180,35 @@ impl super::SBPMessage for MsgTrackingIqDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgTrackingIqDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.channel.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+        self.corrs.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.channel.sbp_size();
+        size += self.sid.sbp_size();
+        size += self.corrs.sbp_size();
+        size
+    }
 }
 
 /// Tracking channel correlations
 ///
 /// When enabled, a tracking channel can output the correlations at each
 /// update interval.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -161,7 +233,9 @@ impl MsgTrackingIqDepB {
     }
 }
 impl super::SBPMessage for MsgTrackingIqDepB {
-    const MSG_ID: u16 = 44;
+    fn get_message_type(&self) -> u16 {
+        44
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -170,6 +244,28 @@ impl super::SBPMessage for MsgTrackingIqDepB {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgTrackingIqDepB {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.channel.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+        self.corrs.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.channel.sbp_size();
+        size += self.sid.sbp_size();
+        size += self.corrs.sbp_size();
+        size
+    }
 }
 
 /// Signal tracking channel states
@@ -177,6 +273,7 @@ impl super::SBPMessage for MsgTrackingIqDepB {
 /// The tracking message returns a variable-length array of tracking
 /// channel states. It reports status and carrier-to-noise density
 /// measurements for all tracked satellites.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -195,7 +292,9 @@ impl MsgTrackingState {
     }
 }
 impl super::SBPMessage for MsgTrackingState {
-    const MSG_ID: u16 = 65;
+    fn get_message_type(&self) -> u16 {
+        65
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -204,11 +303,30 @@ impl super::SBPMessage for MsgTrackingState {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgTrackingState {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.states.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.states.sbp_size();
+        size
+    }
 }
 
 /// Deprecated
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -227,7 +345,9 @@ impl MsgTrackingStateDepA {
     }
 }
 impl super::SBPMessage for MsgTrackingStateDepA {
-    const MSG_ID: u16 = 22;
+    fn get_message_type(&self) -> u16 {
+        22
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -236,11 +356,30 @@ impl super::SBPMessage for MsgTrackingStateDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgTrackingStateDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.states.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.states.sbp_size();
+        size
+    }
 }
 
 /// Deprecated.
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -259,7 +398,9 @@ impl MsgTrackingStateDepB {
     }
 }
 impl super::SBPMessage for MsgTrackingStateDepB {
-    const MSG_ID: u16 = 19;
+    fn get_message_type(&self) -> u16 {
+        19
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -268,11 +409,30 @@ impl super::SBPMessage for MsgTrackingStateDepB {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgTrackingStateDepB {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.states.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.states.sbp_size();
+        size
+    }
 }
 
 /// Deprecated
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -357,7 +517,9 @@ impl MsgTrackingStateDetailedDep {
     }
 }
 impl super::SBPMessage for MsgTrackingStateDetailedDep {
-    const MSG_ID: u16 = 17;
+    fn get_message_type(&self) -> u16 {
+        17
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -366,12 +528,71 @@ impl super::SBPMessage for MsgTrackingStateDetailedDep {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgTrackingStateDetailedDep {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.recv_time.append_to_sbp_buffer(buf);
+        self.tot.append_to_sbp_buffer(buf);
+        self.P.append_to_sbp_buffer(buf);
+        self.P_std.append_to_sbp_buffer(buf);
+        self.L.append_to_sbp_buffer(buf);
+        self.cn0.append_to_sbp_buffer(buf);
+        self.lock.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+        self.doppler.append_to_sbp_buffer(buf);
+        self.doppler_std.append_to_sbp_buffer(buf);
+        self.uptime.append_to_sbp_buffer(buf);
+        self.clock_offset.append_to_sbp_buffer(buf);
+        self.clock_drift.append_to_sbp_buffer(buf);
+        self.corr_spacing.append_to_sbp_buffer(buf);
+        self.acceleration.append_to_sbp_buffer(buf);
+        self.sync_flags.append_to_sbp_buffer(buf);
+        self.tow_flags.append_to_sbp_buffer(buf);
+        self.track_flags.append_to_sbp_buffer(buf);
+        self.nav_flags.append_to_sbp_buffer(buf);
+        self.pset_flags.append_to_sbp_buffer(buf);
+        self.misc_flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.recv_time.sbp_size();
+        size += self.tot.sbp_size();
+        size += self.P.sbp_size();
+        size += self.P_std.sbp_size();
+        size += self.L.sbp_size();
+        size += self.cn0.sbp_size();
+        size += self.lock.sbp_size();
+        size += self.sid.sbp_size();
+        size += self.doppler.sbp_size();
+        size += self.doppler_std.sbp_size();
+        size += self.uptime.sbp_size();
+        size += self.clock_offset.sbp_size();
+        size += self.clock_drift.sbp_size();
+        size += self.corr_spacing.sbp_size();
+        size += self.acceleration.sbp_size();
+        size += self.sync_flags.sbp_size();
+        size += self.tow_flags.sbp_size();
+        size += self.track_flags.sbp_size();
+        size += self.nav_flags.sbp_size();
+        size += self.pset_flags.sbp_size();
+        size += self.misc_flags.sbp_size();
+        size
+    }
 }
 
 /// Detailed signal tracking channel states. DEPRECATED.
 ///
 /// The tracking message returns a set tracking channel parameters for a
 /// single tracking channel useful for debugging issues.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -456,7 +677,9 @@ impl MsgTrackingStateDetailedDepA {
     }
 }
 impl super::SBPMessage for MsgTrackingStateDetailedDepA {
-    const MSG_ID: u16 = 33;
+    fn get_message_type(&self) -> u16 {
+        33
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -464,6 +687,64 @@ impl super::SBPMessage for MsgTrackingStateDetailedDepA {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgTrackingStateDetailedDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.recv_time.append_to_sbp_buffer(buf);
+        self.tot.append_to_sbp_buffer(buf);
+        self.P.append_to_sbp_buffer(buf);
+        self.P_std.append_to_sbp_buffer(buf);
+        self.L.append_to_sbp_buffer(buf);
+        self.cn0.append_to_sbp_buffer(buf);
+        self.lock.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+        self.doppler.append_to_sbp_buffer(buf);
+        self.doppler_std.append_to_sbp_buffer(buf);
+        self.uptime.append_to_sbp_buffer(buf);
+        self.clock_offset.append_to_sbp_buffer(buf);
+        self.clock_drift.append_to_sbp_buffer(buf);
+        self.corr_spacing.append_to_sbp_buffer(buf);
+        self.acceleration.append_to_sbp_buffer(buf);
+        self.sync_flags.append_to_sbp_buffer(buf);
+        self.tow_flags.append_to_sbp_buffer(buf);
+        self.track_flags.append_to_sbp_buffer(buf);
+        self.nav_flags.append_to_sbp_buffer(buf);
+        self.pset_flags.append_to_sbp_buffer(buf);
+        self.misc_flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.recv_time.sbp_size();
+        size += self.tot.sbp_size();
+        size += self.P.sbp_size();
+        size += self.P_std.sbp_size();
+        size += self.L.sbp_size();
+        size += self.cn0.sbp_size();
+        size += self.lock.sbp_size();
+        size += self.sid.sbp_size();
+        size += self.doppler.sbp_size();
+        size += self.doppler_std.sbp_size();
+        size += self.uptime.sbp_size();
+        size += self.clock_offset.sbp_size();
+        size += self.clock_drift.sbp_size();
+        size += self.corr_spacing.sbp_size();
+        size += self.acceleration.sbp_size();
+        size += self.sync_flags.sbp_size();
+        size += self.tow_flags.sbp_size();
+        size += self.track_flags.sbp_size();
+        size += self.nav_flags.sbp_size();
+        size += self.pset_flags.sbp_size();
+        size += self.misc_flags.sbp_size();
+        size
     }
 }
 
@@ -474,6 +755,7 @@ impl super::SBPMessage for MsgTrackingStateDetailedDepA {
 /// The mesid field for Glonass can either
 /// carry the FCN as 100 + FCN where FCN is in [-7, +6] or
 /// the Slot ID (from 1 to 28)
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -512,9 +794,25 @@ impl MeasurementState {
     }
 }
 
+impl crate::serialize::SbpSerialize for MeasurementState {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.mesid.append_to_sbp_buffer(buf);
+        self.cn0.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.mesid.sbp_size();
+        size += self.cn0.sbp_size();
+        size
+    }
+}
+
 /// Complex correlation structure
 ///
 /// Structure containing in-phase and quadrature correlation components.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -552,9 +850,25 @@ impl TrackingChannelCorrelation {
     }
 }
 
+impl crate::serialize::SbpSerialize for TrackingChannelCorrelation {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.I.append_to_sbp_buffer(buf);
+        self.Q.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.I.sbp_size();
+        size += self.Q.sbp_size();
+        size
+    }
+}
+
 /// Complex correlation structure
 ///
 /// Structure containing in-phase and quadrature correlation components.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -594,10 +908,26 @@ impl TrackingChannelCorrelationDep {
     }
 }
 
+impl crate::serialize::SbpSerialize for TrackingChannelCorrelationDep {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.I.append_to_sbp_buffer(buf);
+        self.Q.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.I.sbp_size();
+        size += self.Q.sbp_size();
+        size
+    }
+}
+
 /// Signal tracking channel state
 ///
 /// Tracking channel state for a specific satellite signal and
 /// measured signal power.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -638,9 +968,27 @@ impl TrackingChannelState {
     }
 }
 
+impl crate::serialize::SbpSerialize for TrackingChannelState {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sid.append_to_sbp_buffer(buf);
+        self.fcn.append_to_sbp_buffer(buf);
+        self.cn0.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sid.sbp_size();
+        size += self.fcn.sbp_size();
+        size += self.cn0.sbp_size();
+        size
+    }
+}
+
 /// Deprecated
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -681,9 +1029,27 @@ impl TrackingChannelStateDepA {
     }
 }
 
+impl crate::serialize::SbpSerialize for TrackingChannelStateDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.state.append_to_sbp_buffer(buf);
+        self.prn.append_to_sbp_buffer(buf);
+        self.cn0.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.state.sbp_size();
+        size += self.prn.sbp_size();
+        size += self.cn0.sbp_size();
+        size
+    }
+}
+
 /// Deprecated.
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -721,5 +1087,22 @@ impl TrackingChannelStateDepB {
             v.push(TrackingChannelStateDepB::parse(buf)?);
         }
         Ok(v)
+    }
+}
+
+impl crate::serialize::SbpSerialize for TrackingChannelStateDepB {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.state.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+        self.cn0.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.state.sbp_size();
+        size += self.sid.sbp_size();
+        size += self.cn0.sbp_size();
+        size
     }
 }

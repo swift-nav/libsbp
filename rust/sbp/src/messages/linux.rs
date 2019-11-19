@@ -25,6 +25,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// This message indicates the process state of the top 10 heaviest
 /// consumers of CPU on the system.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -55,7 +56,9 @@ impl MsgLinuxCpuState {
     }
 }
 impl super::SBPMessage for MsgLinuxCpuState {
-    const MSG_ID: u16 = 32512;
+    fn get_message_type(&self) -> u16 {
+        32512
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -64,12 +67,39 @@ impl super::SBPMessage for MsgLinuxCpuState {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgLinuxCpuState {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.index.append_to_sbp_buffer(buf);
+        self.pid.append_to_sbp_buffer(buf);
+        self.pcpu.append_to_sbp_buffer(buf);
+        self.tname.append_to_sbp_buffer(buf);
+        self.cmdline.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.index.sbp_size();
+        size += self.pid.sbp_size();
+        size += self.pcpu.sbp_size();
+        size += self.tname.sbp_size();
+        size += self.cmdline.sbp_size();
+        size
+    }
 }
 
 /// List CPU state on the system
 ///
 /// This message indicates the process state of the top 10 heaviest
 /// consumers of memory on the system.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -100,7 +130,9 @@ impl MsgLinuxMemState {
     }
 }
 impl super::SBPMessage for MsgLinuxMemState {
-    const MSG_ID: u16 = 32513;
+    fn get_message_type(&self) -> u16 {
+        32513
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -109,11 +141,38 @@ impl super::SBPMessage for MsgLinuxMemState {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgLinuxMemState {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.index.append_to_sbp_buffer(buf);
+        self.pid.append_to_sbp_buffer(buf);
+        self.pmem.append_to_sbp_buffer(buf);
+        self.tname.append_to_sbp_buffer(buf);
+        self.cmdline.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.index.sbp_size();
+        size += self.pid.sbp_size();
+        size += self.pmem.sbp_size();
+        size += self.tname.sbp_size();
+        size += self.cmdline.sbp_size();
+        size
+    }
 }
 
 /// Summary of processes with large amounts of open file descriptors
 ///
 /// Top 10 list of processes with a large number of open file descriptors.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -141,7 +200,9 @@ impl MsgLinuxProcessFdCount {
     }
 }
 impl super::SBPMessage for MsgLinuxProcessFdCount {
-    const MSG_ID: u16 = 32518;
+    fn get_message_type(&self) -> u16 {
+        32518
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -150,11 +211,36 @@ impl super::SBPMessage for MsgLinuxProcessFdCount {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgLinuxProcessFdCount {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.index.append_to_sbp_buffer(buf);
+        self.pid.append_to_sbp_buffer(buf);
+        self.fd_count.append_to_sbp_buffer(buf);
+        self.cmdline.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.index.sbp_size();
+        size += self.pid.sbp_size();
+        size += self.fd_count.sbp_size();
+        size += self.cmdline.sbp_size();
+        size
+    }
 }
 
 /// Summary of open file descriptors on the system
 ///
 /// Summary of open file descriptors on the system.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -180,7 +266,9 @@ impl MsgLinuxProcessFdSummary {
     }
 }
 impl super::SBPMessage for MsgLinuxProcessFdSummary {
-    const MSG_ID: u16 = 32519;
+    fn get_message_type(&self) -> u16 {
+        32519
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -189,11 +277,32 @@ impl super::SBPMessage for MsgLinuxProcessFdSummary {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgLinuxProcessFdSummary {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sys_fd_count.append_to_sbp_buffer(buf);
+        self.most_opened.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sys_fd_count.sbp_size();
+        size += self.most_opened.sbp_size();
+        size
+    }
 }
 
 /// A list of processes with high socket counts
 ///
 /// Top 10 list of processes with high socket counts.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -231,7 +340,9 @@ impl MsgLinuxProcessSocketCounts {
     }
 }
 impl super::SBPMessage for MsgLinuxProcessSocketCounts {
-    const MSG_ID: u16 = 32515;
+    fn get_message_type(&self) -> u16 {
+        32515
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -240,11 +351,40 @@ impl super::SBPMessage for MsgLinuxProcessSocketCounts {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgLinuxProcessSocketCounts {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.index.append_to_sbp_buffer(buf);
+        self.pid.append_to_sbp_buffer(buf);
+        self.socket_count.append_to_sbp_buffer(buf);
+        self.socket_types.append_to_sbp_buffer(buf);
+        self.socket_states.append_to_sbp_buffer(buf);
+        self.cmdline.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.index.sbp_size();
+        size += self.pid.sbp_size();
+        size += self.socket_count.sbp_size();
+        size += self.socket_types.sbp_size();
+        size += self.socket_states.sbp_size();
+        size += self.cmdline.sbp_size();
+        size
+    }
 }
 
 /// A list of processes with deep socket queues
 ///
 /// Top 10 list of sockets with deep queues.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -289,7 +429,9 @@ impl MsgLinuxProcessSocketQueues {
     }
 }
 impl super::SBPMessage for MsgLinuxProcessSocketQueues {
-    const MSG_ID: u16 = 32516;
+    fn get_message_type(&self) -> u16 {
+        32516
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -298,11 +440,44 @@ impl super::SBPMessage for MsgLinuxProcessSocketQueues {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgLinuxProcessSocketQueues {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.index.append_to_sbp_buffer(buf);
+        self.pid.append_to_sbp_buffer(buf);
+        self.recv_queued.append_to_sbp_buffer(buf);
+        self.send_queued.append_to_sbp_buffer(buf);
+        self.socket_types.append_to_sbp_buffer(buf);
+        self.socket_states.append_to_sbp_buffer(buf);
+        self.address_of_largest.append_to_sbp_buffer(buf);
+        self.cmdline.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.index.sbp_size();
+        size += self.pid.sbp_size();
+        size += self.recv_queued.sbp_size();
+        size += self.send_queued.sbp_size();
+        size += self.socket_types.sbp_size();
+        size += self.socket_states.sbp_size();
+        size += self.address_of_largest.sbp_size();
+        size += self.cmdline.sbp_size();
+        size
+    }
 }
 
 /// Summary of socket usage across the system
 ///
 /// Summaries the socket usage across the system.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -334,7 +509,9 @@ impl MsgLinuxSocketUsage {
     }
 }
 impl super::SBPMessage for MsgLinuxSocketUsage {
-    const MSG_ID: u16 = 32517;
+    fn get_message_type(&self) -> u16 {
+        32517
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -343,11 +520,36 @@ impl super::SBPMessage for MsgLinuxSocketUsage {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgLinuxSocketUsage {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.avg_queue_depth.append_to_sbp_buffer(buf);
+        self.max_queue_depth.append_to_sbp_buffer(buf);
+        self.socket_state_counts.append_to_sbp_buffer(buf);
+        self.socket_type_counts.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.avg_queue_depth.sbp_size();
+        size += self.max_queue_depth.sbp_size();
+        size += self.socket_state_counts.sbp_size();
+        size += self.socket_type_counts.sbp_size();
+        size
+    }
 }
 
 /// CPU, Memory and Process Starts/Stops
 ///
 /// This presents a summary of CPU and memory utilization.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -381,7 +583,9 @@ impl MsgLinuxSysState {
     }
 }
 impl super::SBPMessage for MsgLinuxSysState {
-    const MSG_ID: u16 = 32514;
+    fn get_message_type(&self) -> u16 {
+        32514
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -389,5 +593,33 @@ impl super::SBPMessage for MsgLinuxSysState {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgLinuxSysState {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.mem_total.append_to_sbp_buffer(buf);
+        self.pcpu.append_to_sbp_buffer(buf);
+        self.pmem.append_to_sbp_buffer(buf);
+        self.procs_starting.append_to_sbp_buffer(buf);
+        self.procs_stopping.append_to_sbp_buffer(buf);
+        self.pid_count.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.mem_total.sbp_size();
+        size += self.pcpu.sbp_size();
+        size += self.pmem.sbp_size();
+        size += self.procs_starting.sbp_size();
+        size += self.procs_stopping.sbp_size();
+        size += self.pid_count.sbp_size();
+        size
     }
 }

@@ -79,6 +79,29 @@ impl AlmanacCommonContent {
     }
 }
 
+impl crate::serialize::SbpSerialize for AlmanacCommonContent {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sid.append_to_sbp_buffer(buf);
+        self.toa.append_to_sbp_buffer(buf);
+        self.ura.append_to_sbp_buffer(buf);
+        self.fit_interval.append_to_sbp_buffer(buf);
+        self.valid.append_to_sbp_buffer(buf);
+        self.health_bits.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sid.sbp_size();
+        size += self.toa.sbp_size();
+        size += self.ura.sbp_size();
+        size += self.fit_interval.sbp_size();
+        size += self.valid.sbp_size();
+        size += self.health_bits.sbp_size();
+        size
+    }
+}
+
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -137,6 +160,29 @@ impl AlmanacCommonContentDep {
     }
 }
 
+impl crate::serialize::SbpSerialize for AlmanacCommonContentDep {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sid.append_to_sbp_buffer(buf);
+        self.toa.append_to_sbp_buffer(buf);
+        self.ura.append_to_sbp_buffer(buf);
+        self.fit_interval.append_to_sbp_buffer(buf);
+        self.valid.append_to_sbp_buffer(buf);
+        self.health_bits.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sid.sbp_size();
+        size += self.toa.sbp_size();
+        size += self.ura.sbp_size();
+        size += self.fit_interval.sbp_size();
+        size += self.valid.sbp_size();
+        size += self.health_bits.sbp_size();
+        size
+    }
+}
+
 /// GPS carrier phase measurement.
 ///
 /// Carrier phase measurement in cycles represented as a 40-bit
@@ -144,6 +190,7 @@ impl AlmanacCommonContentDep {
 /// cycles and 8-bits of fractional cycles. This has the opposite
 /// sign convention than a typical GPS receiver and the phase has
 /// the opposite sign as the pseudorange.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -181,12 +228,28 @@ impl CarrierPhaseDepA {
     }
 }
 
+impl crate::serialize::SbpSerialize for CarrierPhaseDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.i.append_to_sbp_buffer(buf);
+        self.f.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.i.sbp_size();
+        size += self.f.sbp_size();
+        size
+    }
+}
+
 /// GNSS doppler measurement.
 ///
 /// Doppler measurement in Hz represented as a 24-bit
 /// fixed point number with Q16.8 layout, i.e. 16-bits of whole
 /// doppler and 8-bits of fractional doppler. This doppler is defined
 /// as positive for approaching satellites.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -218,6 +281,21 @@ impl Doppler {
             v.push(Doppler::parse(buf)?);
         }
         Ok(v)
+    }
+}
+
+impl crate::serialize::SbpSerialize for Doppler {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.i.append_to_sbp_buffer(buf);
+        self.f.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.i.sbp_size();
+        size += self.f.sbp_size();
+        size
     }
 }
 
@@ -271,6 +349,29 @@ impl EphemerisCommonContent {
     }
 }
 
+impl crate::serialize::SbpSerialize for EphemerisCommonContent {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sid.append_to_sbp_buffer(buf);
+        self.toe.append_to_sbp_buffer(buf);
+        self.ura.append_to_sbp_buffer(buf);
+        self.fit_interval.append_to_sbp_buffer(buf);
+        self.valid.append_to_sbp_buffer(buf);
+        self.health_bits.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sid.sbp_size();
+        size += self.toe.sbp_size();
+        size += self.ura.sbp_size();
+        size += self.fit_interval.sbp_size();
+        size += self.valid.sbp_size();
+        size += self.health_bits.sbp_size();
+        size
+    }
+}
+
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -321,6 +422,29 @@ impl EphemerisCommonContentDepA {
     }
 }
 
+impl crate::serialize::SbpSerialize for EphemerisCommonContentDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sid.append_to_sbp_buffer(buf);
+        self.toe.append_to_sbp_buffer(buf);
+        self.ura.append_to_sbp_buffer(buf);
+        self.fit_interval.append_to_sbp_buffer(buf);
+        self.valid.append_to_sbp_buffer(buf);
+        self.health_bits.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sid.sbp_size();
+        size += self.toe.sbp_size();
+        size += self.ura.sbp_size();
+        size += self.fit_interval.sbp_size();
+        size += self.valid.sbp_size();
+        size += self.health_bits.sbp_size();
+        size
+    }
+}
+
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -368,6 +492,29 @@ impl EphemerisCommonContentDepB {
             v.push(EphemerisCommonContentDepB::parse(buf)?);
         }
         Ok(v)
+    }
+}
+
+impl crate::serialize::SbpSerialize for EphemerisCommonContentDepB {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sid.append_to_sbp_buffer(buf);
+        self.toe.append_to_sbp_buffer(buf);
+        self.ura.append_to_sbp_buffer(buf);
+        self.fit_interval.append_to_sbp_buffer(buf);
+        self.valid.append_to_sbp_buffer(buf);
+        self.health_bits.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sid.sbp_size();
+        size += self.toe.sbp_size();
+        size += self.ura.sbp_size();
+        size += self.fit_interval.sbp_size();
+        size += self.valid.sbp_size();
+        size += self.health_bits.sbp_size();
+        size
     }
 }
 
@@ -446,12 +593,54 @@ impl GnssCapb {
     }
 }
 
+impl crate::serialize::SbpSerialize for GnssCapb {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.gps_active.append_to_sbp_buffer(buf);
+        self.gps_l2c.append_to_sbp_buffer(buf);
+        self.gps_l5.append_to_sbp_buffer(buf);
+        self.glo_active.append_to_sbp_buffer(buf);
+        self.glo_l2of.append_to_sbp_buffer(buf);
+        self.glo_l3.append_to_sbp_buffer(buf);
+        self.sbas_active.append_to_sbp_buffer(buf);
+        self.sbas_l5.append_to_sbp_buffer(buf);
+        self.bds_active.append_to_sbp_buffer(buf);
+        self.bds_d2nav.append_to_sbp_buffer(buf);
+        self.bds_b2.append_to_sbp_buffer(buf);
+        self.bds_b2a.append_to_sbp_buffer(buf);
+        self.qzss_active.append_to_sbp_buffer(buf);
+        self.gal_active.append_to_sbp_buffer(buf);
+        self.gal_e5.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.gps_active.sbp_size();
+        size += self.gps_l2c.sbp_size();
+        size += self.gps_l5.sbp_size();
+        size += self.glo_active.sbp_size();
+        size += self.glo_l2of.sbp_size();
+        size += self.glo_l3.sbp_size();
+        size += self.sbas_active.sbp_size();
+        size += self.sbas_l5.sbp_size();
+        size += self.bds_active.sbp_size();
+        size += self.bds_d2nav.sbp_size();
+        size += self.bds_b2.sbp_size();
+        size += self.bds_b2a.sbp_size();
+        size += self.qzss_active.sbp_size();
+        size += self.gal_active.sbp_size();
+        size += self.gal_e5.sbp_size();
+        size
+    }
+}
+
 /// Satellite broadcast ephemeris for GLO
 ///
 /// The almanac message returns a set of satellite orbit parameters. Almanac
 /// data is not very precise and is considered valid for up to several months.
 /// Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
 /// almanac" for details.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -492,7 +681,9 @@ impl MsgAlmanacGlo {
     }
 }
 impl super::SBPMessage for MsgAlmanacGlo {
-    const MSG_ID: u16 = 115;
+    fn get_message_type(&self) -> u16 {
+        115
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -500,6 +691,38 @@ impl super::SBPMessage for MsgAlmanacGlo {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgAlmanacGlo {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.common.append_to_sbp_buffer(buf);
+        self.lambda_na.append_to_sbp_buffer(buf);
+        self.t_lambda_na.append_to_sbp_buffer(buf);
+        self.i.append_to_sbp_buffer(buf);
+        self.t.append_to_sbp_buffer(buf);
+        self.t_dot.append_to_sbp_buffer(buf);
+        self.epsilon.append_to_sbp_buffer(buf);
+        self.omega.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.common.sbp_size();
+        size += self.lambda_na.sbp_size();
+        size += self.t_lambda_na.sbp_size();
+        size += self.i.sbp_size();
+        size += self.t.sbp_size();
+        size += self.t_dot.sbp_size();
+        size += self.epsilon.sbp_size();
+        size += self.omega.sbp_size();
+        size
     }
 }
 
@@ -509,6 +732,7 @@ impl super::SBPMessage for MsgAlmanacGlo {
 /// data is not very precise and is considered valid for up to several months.
 /// Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
 /// almanac" for details.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -549,7 +773,9 @@ impl MsgAlmanacGloDep {
     }
 }
 impl super::SBPMessage for MsgAlmanacGloDep {
-    const MSG_ID: u16 = 113;
+    fn get_message_type(&self) -> u16 {
+        113
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -557,6 +783,38 @@ impl super::SBPMessage for MsgAlmanacGloDep {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgAlmanacGloDep {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.common.append_to_sbp_buffer(buf);
+        self.lambda_na.append_to_sbp_buffer(buf);
+        self.t_lambda_na.append_to_sbp_buffer(buf);
+        self.i.append_to_sbp_buffer(buf);
+        self.t.append_to_sbp_buffer(buf);
+        self.t_dot.append_to_sbp_buffer(buf);
+        self.epsilon.append_to_sbp_buffer(buf);
+        self.omega.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.common.sbp_size();
+        size += self.lambda_na.sbp_size();
+        size += self.t_lambda_na.sbp_size();
+        size += self.i.sbp_size();
+        size += self.t.sbp_size();
+        size += self.t_dot.sbp_size();
+        size += self.epsilon.sbp_size();
+        size += self.omega.sbp_size();
+        size
     }
 }
 
@@ -566,6 +824,7 @@ impl super::SBPMessage for MsgAlmanacGloDep {
 /// data is not very precise and is considered valid for up to several months.
 /// Please see the Navstar GPS Space Segment/Navigation user interfaces
 /// (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -611,7 +870,9 @@ impl MsgAlmanacGPS {
     }
 }
 impl super::SBPMessage for MsgAlmanacGPS {
-    const MSG_ID: u16 = 114;
+    fn get_message_type(&self) -> u16 {
+        114
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -619,6 +880,42 @@ impl super::SBPMessage for MsgAlmanacGPS {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgAlmanacGPS {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.common.append_to_sbp_buffer(buf);
+        self.m0.append_to_sbp_buffer(buf);
+        self.ecc.append_to_sbp_buffer(buf);
+        self.sqrta.append_to_sbp_buffer(buf);
+        self.omega0.append_to_sbp_buffer(buf);
+        self.omegadot.append_to_sbp_buffer(buf);
+        self.w.append_to_sbp_buffer(buf);
+        self.inc.append_to_sbp_buffer(buf);
+        self.af0.append_to_sbp_buffer(buf);
+        self.af1.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.common.sbp_size();
+        size += self.m0.sbp_size();
+        size += self.ecc.sbp_size();
+        size += self.sqrta.sbp_size();
+        size += self.omega0.sbp_size();
+        size += self.omegadot.sbp_size();
+        size += self.w.sbp_size();
+        size += self.inc.sbp_size();
+        size += self.af0.sbp_size();
+        size += self.af1.sbp_size();
+        size
     }
 }
 
@@ -628,6 +925,7 @@ impl super::SBPMessage for MsgAlmanacGPS {
 /// data is not very precise and is considered valid for up to several months.
 /// Please see the Navstar GPS Space Segment/Navigation user interfaces
 /// (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -673,7 +971,9 @@ impl MsgAlmanacGPSDep {
     }
 }
 impl super::SBPMessage for MsgAlmanacGPSDep {
-    const MSG_ID: u16 = 112;
+    fn get_message_type(&self) -> u16 {
+        112
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -681,6 +981,42 @@ impl super::SBPMessage for MsgAlmanacGPSDep {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgAlmanacGPSDep {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.common.append_to_sbp_buffer(buf);
+        self.m0.append_to_sbp_buffer(buf);
+        self.ecc.append_to_sbp_buffer(buf);
+        self.sqrta.append_to_sbp_buffer(buf);
+        self.omega0.append_to_sbp_buffer(buf);
+        self.omegadot.append_to_sbp_buffer(buf);
+        self.w.append_to_sbp_buffer(buf);
+        self.inc.append_to_sbp_buffer(buf);
+        self.af0.append_to_sbp_buffer(buf);
+        self.af1.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.common.sbp_size();
+        size += self.m0.sbp_size();
+        size += self.ecc.sbp_size();
+        size += self.sqrta.sbp_size();
+        size += self.omega0.sbp_size();
+        size += self.omegadot.sbp_size();
+        size += self.w.sbp_size();
+        size += self.inc.sbp_size();
+        size += self.af0.sbp_size();
+        size += self.af1.sbp_size();
+        size
     }
 }
 
@@ -692,6 +1028,7 @@ impl super::SBPMessage for MsgAlmanacGPSDep {
 /// is required to be a high-accuracy surveyed location of the base
 /// station. Any error here will result in an error in the
 /// pseudo-absolute position output.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -716,7 +1053,9 @@ impl MsgBasePosECEF {
     }
 }
 impl super::SBPMessage for MsgBasePosECEF {
-    const MSG_ID: u16 = 72;
+    fn get_message_type(&self) -> u16 {
+        72
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -724,6 +1063,28 @@ impl super::SBPMessage for MsgBasePosECEF {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgBasePosECEF {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.x.append_to_sbp_buffer(buf);
+        self.y.append_to_sbp_buffer(buf);
+        self.z.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.x.sbp_size();
+        size += self.y.sbp_size();
+        size += self.z.sbp_size();
+        size
     }
 }
 
@@ -734,6 +1095,7 @@ impl super::SBPMessage for MsgBasePosECEF {
 /// positioning, and is required to be a high-accuracy surveyed
 /// location of the base station. Any error here will result in an
 /// error in the pseudo-absolute position output.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -758,7 +1120,9 @@ impl MsgBasePosLLH {
     }
 }
 impl super::SBPMessage for MsgBasePosLLH {
-    const MSG_ID: u16 = 68;
+    fn get_message_type(&self) -> u16 {
+        68
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -766,6 +1130,28 @@ impl super::SBPMessage for MsgBasePosLLH {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgBasePosLLH {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.lat.append_to_sbp_buffer(buf);
+        self.lon.append_to_sbp_buffer(buf);
+        self.height.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.lat.sbp_size();
+        size += self.lon.sbp_size();
+        size += self.height.sbp_size();
+        size
     }
 }
 
@@ -775,6 +1161,7 @@ impl super::SBPMessage for MsgBasePosLLH {
 /// parameters that is used to calculate BDS satellite position,
 /// velocity, and clock offset. Please see the BeiDou Navigation
 /// Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -866,7 +1253,9 @@ impl MsgEphemerisBds {
     }
 }
 impl super::SBPMessage for MsgEphemerisBds {
-    const MSG_ID: u16 = 137;
+    fn get_message_type(&self) -> u16 {
+        137
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -875,11 +1264,76 @@ impl super::SBPMessage for MsgEphemerisBds {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgEphemerisBds {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.common.append_to_sbp_buffer(buf);
+        self.tgd1.append_to_sbp_buffer(buf);
+        self.tgd2.append_to_sbp_buffer(buf);
+        self.c_rs.append_to_sbp_buffer(buf);
+        self.c_rc.append_to_sbp_buffer(buf);
+        self.c_uc.append_to_sbp_buffer(buf);
+        self.c_us.append_to_sbp_buffer(buf);
+        self.c_ic.append_to_sbp_buffer(buf);
+        self.c_is.append_to_sbp_buffer(buf);
+        self.dn.append_to_sbp_buffer(buf);
+        self.m0.append_to_sbp_buffer(buf);
+        self.ecc.append_to_sbp_buffer(buf);
+        self.sqrta.append_to_sbp_buffer(buf);
+        self.omega0.append_to_sbp_buffer(buf);
+        self.omegadot.append_to_sbp_buffer(buf);
+        self.w.append_to_sbp_buffer(buf);
+        self.inc.append_to_sbp_buffer(buf);
+        self.inc_dot.append_to_sbp_buffer(buf);
+        self.af0.append_to_sbp_buffer(buf);
+        self.af1.append_to_sbp_buffer(buf);
+        self.af2.append_to_sbp_buffer(buf);
+        self.toc.append_to_sbp_buffer(buf);
+        self.iode.append_to_sbp_buffer(buf);
+        self.iodc.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.common.sbp_size();
+        size += self.tgd1.sbp_size();
+        size += self.tgd2.sbp_size();
+        size += self.c_rs.sbp_size();
+        size += self.c_rc.sbp_size();
+        size += self.c_uc.sbp_size();
+        size += self.c_us.sbp_size();
+        size += self.c_ic.sbp_size();
+        size += self.c_is.sbp_size();
+        size += self.dn.sbp_size();
+        size += self.m0.sbp_size();
+        size += self.ecc.sbp_size();
+        size += self.sqrta.sbp_size();
+        size += self.omega0.sbp_size();
+        size += self.omegadot.sbp_size();
+        size += self.w.sbp_size();
+        size += self.inc.sbp_size();
+        size += self.inc_dot.sbp_size();
+        size += self.af0.sbp_size();
+        size += self.af1.sbp_size();
+        size += self.af2.sbp_size();
+        size += self.toc.sbp_size();
+        size += self.iode.sbp_size();
+        size += self.iodc.sbp_size();
+        size
+    }
 }
 
 /// Deprecated
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -977,7 +1431,9 @@ impl MsgEphemerisDepA {
     }
 }
 impl super::SBPMessage for MsgEphemerisDepA {
-    const MSG_ID: u16 = 26;
+    fn get_message_type(&self) -> u16 {
+        26
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -986,11 +1442,80 @@ impl super::SBPMessage for MsgEphemerisDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgEphemerisDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tgd.append_to_sbp_buffer(buf);
+        self.c_rs.append_to_sbp_buffer(buf);
+        self.c_rc.append_to_sbp_buffer(buf);
+        self.c_uc.append_to_sbp_buffer(buf);
+        self.c_us.append_to_sbp_buffer(buf);
+        self.c_ic.append_to_sbp_buffer(buf);
+        self.c_is.append_to_sbp_buffer(buf);
+        self.dn.append_to_sbp_buffer(buf);
+        self.m0.append_to_sbp_buffer(buf);
+        self.ecc.append_to_sbp_buffer(buf);
+        self.sqrta.append_to_sbp_buffer(buf);
+        self.omega0.append_to_sbp_buffer(buf);
+        self.omegadot.append_to_sbp_buffer(buf);
+        self.w.append_to_sbp_buffer(buf);
+        self.inc.append_to_sbp_buffer(buf);
+        self.inc_dot.append_to_sbp_buffer(buf);
+        self.af0.append_to_sbp_buffer(buf);
+        self.af1.append_to_sbp_buffer(buf);
+        self.af2.append_to_sbp_buffer(buf);
+        self.toe_tow.append_to_sbp_buffer(buf);
+        self.toe_wn.append_to_sbp_buffer(buf);
+        self.toc_tow.append_to_sbp_buffer(buf);
+        self.toc_wn.append_to_sbp_buffer(buf);
+        self.valid.append_to_sbp_buffer(buf);
+        self.healthy.append_to_sbp_buffer(buf);
+        self.prn.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tgd.sbp_size();
+        size += self.c_rs.sbp_size();
+        size += self.c_rc.sbp_size();
+        size += self.c_uc.sbp_size();
+        size += self.c_us.sbp_size();
+        size += self.c_ic.sbp_size();
+        size += self.c_is.sbp_size();
+        size += self.dn.sbp_size();
+        size += self.m0.sbp_size();
+        size += self.ecc.sbp_size();
+        size += self.sqrta.sbp_size();
+        size += self.omega0.sbp_size();
+        size += self.omegadot.sbp_size();
+        size += self.w.sbp_size();
+        size += self.inc.sbp_size();
+        size += self.inc_dot.sbp_size();
+        size += self.af0.sbp_size();
+        size += self.af1.sbp_size();
+        size += self.af2.sbp_size();
+        size += self.toe_tow.sbp_size();
+        size += self.toe_wn.sbp_size();
+        size += self.toc_tow.sbp_size();
+        size += self.toc_wn.sbp_size();
+        size += self.valid.sbp_size();
+        size += self.healthy.sbp_size();
+        size += self.prn.sbp_size();
+        size
+    }
 }
 
 /// Deprecated
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1091,7 +1616,9 @@ impl MsgEphemerisDepB {
     }
 }
 impl super::SBPMessage for MsgEphemerisDepB {
-    const MSG_ID: u16 = 70;
+    fn get_message_type(&self) -> u16 {
+        70
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1099,6 +1626,76 @@ impl super::SBPMessage for MsgEphemerisDepB {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgEphemerisDepB {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tgd.append_to_sbp_buffer(buf);
+        self.c_rs.append_to_sbp_buffer(buf);
+        self.c_rc.append_to_sbp_buffer(buf);
+        self.c_uc.append_to_sbp_buffer(buf);
+        self.c_us.append_to_sbp_buffer(buf);
+        self.c_ic.append_to_sbp_buffer(buf);
+        self.c_is.append_to_sbp_buffer(buf);
+        self.dn.append_to_sbp_buffer(buf);
+        self.m0.append_to_sbp_buffer(buf);
+        self.ecc.append_to_sbp_buffer(buf);
+        self.sqrta.append_to_sbp_buffer(buf);
+        self.omega0.append_to_sbp_buffer(buf);
+        self.omegadot.append_to_sbp_buffer(buf);
+        self.w.append_to_sbp_buffer(buf);
+        self.inc.append_to_sbp_buffer(buf);
+        self.inc_dot.append_to_sbp_buffer(buf);
+        self.af0.append_to_sbp_buffer(buf);
+        self.af1.append_to_sbp_buffer(buf);
+        self.af2.append_to_sbp_buffer(buf);
+        self.toe_tow.append_to_sbp_buffer(buf);
+        self.toe_wn.append_to_sbp_buffer(buf);
+        self.toc_tow.append_to_sbp_buffer(buf);
+        self.toc_wn.append_to_sbp_buffer(buf);
+        self.valid.append_to_sbp_buffer(buf);
+        self.healthy.append_to_sbp_buffer(buf);
+        self.prn.append_to_sbp_buffer(buf);
+        self.iode.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tgd.sbp_size();
+        size += self.c_rs.sbp_size();
+        size += self.c_rc.sbp_size();
+        size += self.c_uc.sbp_size();
+        size += self.c_us.sbp_size();
+        size += self.c_ic.sbp_size();
+        size += self.c_is.sbp_size();
+        size += self.dn.sbp_size();
+        size += self.m0.sbp_size();
+        size += self.ecc.sbp_size();
+        size += self.sqrta.sbp_size();
+        size += self.omega0.sbp_size();
+        size += self.omegadot.sbp_size();
+        size += self.w.sbp_size();
+        size += self.inc.sbp_size();
+        size += self.inc_dot.sbp_size();
+        size += self.af0.sbp_size();
+        size += self.af1.sbp_size();
+        size += self.af2.sbp_size();
+        size += self.toe_tow.sbp_size();
+        size += self.toe_wn.sbp_size();
+        size += self.toc_tow.sbp_size();
+        size += self.toc_wn.sbp_size();
+        size += self.valid.sbp_size();
+        size += self.healthy.sbp_size();
+        size += self.prn.sbp_size();
+        size += self.iode.sbp_size();
+        size
     }
 }
 
@@ -1109,6 +1706,7 @@ impl super::SBPMessage for MsgEphemerisDepB {
 /// velocity, and clock offset. Please see the Navstar GPS
 /// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
 /// 20-III) for more details.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1215,7 +1813,9 @@ impl MsgEphemerisDepC {
     }
 }
 impl super::SBPMessage for MsgEphemerisDepC {
-    const MSG_ID: u16 = 71;
+    fn get_message_type(&self) -> u16 {
+        71
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1223,6 +1823,80 @@ impl super::SBPMessage for MsgEphemerisDepC {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgEphemerisDepC {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tgd.append_to_sbp_buffer(buf);
+        self.c_rs.append_to_sbp_buffer(buf);
+        self.c_rc.append_to_sbp_buffer(buf);
+        self.c_uc.append_to_sbp_buffer(buf);
+        self.c_us.append_to_sbp_buffer(buf);
+        self.c_ic.append_to_sbp_buffer(buf);
+        self.c_is.append_to_sbp_buffer(buf);
+        self.dn.append_to_sbp_buffer(buf);
+        self.m0.append_to_sbp_buffer(buf);
+        self.ecc.append_to_sbp_buffer(buf);
+        self.sqrta.append_to_sbp_buffer(buf);
+        self.omega0.append_to_sbp_buffer(buf);
+        self.omegadot.append_to_sbp_buffer(buf);
+        self.w.append_to_sbp_buffer(buf);
+        self.inc.append_to_sbp_buffer(buf);
+        self.inc_dot.append_to_sbp_buffer(buf);
+        self.af0.append_to_sbp_buffer(buf);
+        self.af1.append_to_sbp_buffer(buf);
+        self.af2.append_to_sbp_buffer(buf);
+        self.toe_tow.append_to_sbp_buffer(buf);
+        self.toe_wn.append_to_sbp_buffer(buf);
+        self.toc_tow.append_to_sbp_buffer(buf);
+        self.toc_wn.append_to_sbp_buffer(buf);
+        self.valid.append_to_sbp_buffer(buf);
+        self.healthy.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+        self.iode.append_to_sbp_buffer(buf);
+        self.iodc.append_to_sbp_buffer(buf);
+        self.reserved.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tgd.sbp_size();
+        size += self.c_rs.sbp_size();
+        size += self.c_rc.sbp_size();
+        size += self.c_uc.sbp_size();
+        size += self.c_us.sbp_size();
+        size += self.c_ic.sbp_size();
+        size += self.c_is.sbp_size();
+        size += self.dn.sbp_size();
+        size += self.m0.sbp_size();
+        size += self.ecc.sbp_size();
+        size += self.sqrta.sbp_size();
+        size += self.omega0.sbp_size();
+        size += self.omegadot.sbp_size();
+        size += self.w.sbp_size();
+        size += self.inc.sbp_size();
+        size += self.inc_dot.sbp_size();
+        size += self.af0.sbp_size();
+        size += self.af1.sbp_size();
+        size += self.af2.sbp_size();
+        size += self.toe_tow.sbp_size();
+        size += self.toe_wn.sbp_size();
+        size += self.toc_tow.sbp_size();
+        size += self.toc_wn.sbp_size();
+        size += self.valid.sbp_size();
+        size += self.healthy.sbp_size();
+        size += self.sid.sbp_size();
+        size += self.iode.sbp_size();
+        size += self.iodc.sbp_size();
+        size += self.reserved.sbp_size();
+        size
     }
 }
 
@@ -1233,6 +1907,7 @@ impl super::SBPMessage for MsgEphemerisDepC {
 /// velocity, and clock offset. Please see the Navstar GPS
 /// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
 /// 20-III) for more details.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1339,7 +2014,9 @@ impl MsgEphemerisDepD {
     }
 }
 impl super::SBPMessage for MsgEphemerisDepD {
-    const MSG_ID: u16 = 128;
+    fn get_message_type(&self) -> u16 {
+        128
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1347,6 +2024,80 @@ impl super::SBPMessage for MsgEphemerisDepD {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgEphemerisDepD {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tgd.append_to_sbp_buffer(buf);
+        self.c_rs.append_to_sbp_buffer(buf);
+        self.c_rc.append_to_sbp_buffer(buf);
+        self.c_uc.append_to_sbp_buffer(buf);
+        self.c_us.append_to_sbp_buffer(buf);
+        self.c_ic.append_to_sbp_buffer(buf);
+        self.c_is.append_to_sbp_buffer(buf);
+        self.dn.append_to_sbp_buffer(buf);
+        self.m0.append_to_sbp_buffer(buf);
+        self.ecc.append_to_sbp_buffer(buf);
+        self.sqrta.append_to_sbp_buffer(buf);
+        self.omega0.append_to_sbp_buffer(buf);
+        self.omegadot.append_to_sbp_buffer(buf);
+        self.w.append_to_sbp_buffer(buf);
+        self.inc.append_to_sbp_buffer(buf);
+        self.inc_dot.append_to_sbp_buffer(buf);
+        self.af0.append_to_sbp_buffer(buf);
+        self.af1.append_to_sbp_buffer(buf);
+        self.af2.append_to_sbp_buffer(buf);
+        self.toe_tow.append_to_sbp_buffer(buf);
+        self.toe_wn.append_to_sbp_buffer(buf);
+        self.toc_tow.append_to_sbp_buffer(buf);
+        self.toc_wn.append_to_sbp_buffer(buf);
+        self.valid.append_to_sbp_buffer(buf);
+        self.healthy.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+        self.iode.append_to_sbp_buffer(buf);
+        self.iodc.append_to_sbp_buffer(buf);
+        self.reserved.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tgd.sbp_size();
+        size += self.c_rs.sbp_size();
+        size += self.c_rc.sbp_size();
+        size += self.c_uc.sbp_size();
+        size += self.c_us.sbp_size();
+        size += self.c_ic.sbp_size();
+        size += self.c_is.sbp_size();
+        size += self.dn.sbp_size();
+        size += self.m0.sbp_size();
+        size += self.ecc.sbp_size();
+        size += self.sqrta.sbp_size();
+        size += self.omega0.sbp_size();
+        size += self.omegadot.sbp_size();
+        size += self.w.sbp_size();
+        size += self.inc.sbp_size();
+        size += self.inc_dot.sbp_size();
+        size += self.af0.sbp_size();
+        size += self.af1.sbp_size();
+        size += self.af2.sbp_size();
+        size += self.toe_tow.sbp_size();
+        size += self.toe_wn.sbp_size();
+        size += self.toc_tow.sbp_size();
+        size += self.toc_wn.sbp_size();
+        size += self.valid.sbp_size();
+        size += self.healthy.sbp_size();
+        size += self.sid.sbp_size();
+        size += self.iode.sbp_size();
+        size += self.iodc.sbp_size();
+        size += self.reserved.sbp_size();
+        size
     }
 }
 
@@ -1356,6 +2107,7 @@ impl super::SBPMessage for MsgEphemerisDepD {
 /// parameters that is used to calculate Galileo satellite position,
 /// velocity, and clock offset. Please see the Signal In Space ICD
 /// OS SIS ICD, Issue 1.3, December 2016 for more details.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1450,7 +2202,9 @@ impl MsgEphemerisGal {
     }
 }
 impl super::SBPMessage for MsgEphemerisGal {
-    const MSG_ID: u16 = 141;
+    fn get_message_type(&self) -> u16 {
+        141
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1459,12 +2213,79 @@ impl super::SBPMessage for MsgEphemerisGal {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgEphemerisGal {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.common.append_to_sbp_buffer(buf);
+        self.bgd_e1e5a.append_to_sbp_buffer(buf);
+        self.bgd_e1e5b.append_to_sbp_buffer(buf);
+        self.c_rs.append_to_sbp_buffer(buf);
+        self.c_rc.append_to_sbp_buffer(buf);
+        self.c_uc.append_to_sbp_buffer(buf);
+        self.c_us.append_to_sbp_buffer(buf);
+        self.c_ic.append_to_sbp_buffer(buf);
+        self.c_is.append_to_sbp_buffer(buf);
+        self.dn.append_to_sbp_buffer(buf);
+        self.m0.append_to_sbp_buffer(buf);
+        self.ecc.append_to_sbp_buffer(buf);
+        self.sqrta.append_to_sbp_buffer(buf);
+        self.omega0.append_to_sbp_buffer(buf);
+        self.omegadot.append_to_sbp_buffer(buf);
+        self.w.append_to_sbp_buffer(buf);
+        self.inc.append_to_sbp_buffer(buf);
+        self.inc_dot.append_to_sbp_buffer(buf);
+        self.af0.append_to_sbp_buffer(buf);
+        self.af1.append_to_sbp_buffer(buf);
+        self.af2.append_to_sbp_buffer(buf);
+        self.toc.append_to_sbp_buffer(buf);
+        self.iode.append_to_sbp_buffer(buf);
+        self.iodc.append_to_sbp_buffer(buf);
+        self.source.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.common.sbp_size();
+        size += self.bgd_e1e5a.sbp_size();
+        size += self.bgd_e1e5b.sbp_size();
+        size += self.c_rs.sbp_size();
+        size += self.c_rc.sbp_size();
+        size += self.c_uc.sbp_size();
+        size += self.c_us.sbp_size();
+        size += self.c_ic.sbp_size();
+        size += self.c_is.sbp_size();
+        size += self.dn.sbp_size();
+        size += self.m0.sbp_size();
+        size += self.ecc.sbp_size();
+        size += self.sqrta.sbp_size();
+        size += self.omega0.sbp_size();
+        size += self.omegadot.sbp_size();
+        size += self.w.sbp_size();
+        size += self.inc.sbp_size();
+        size += self.inc_dot.sbp_size();
+        size += self.af0.sbp_size();
+        size += self.af1.sbp_size();
+        size += self.af2.sbp_size();
+        size += self.toc.sbp_size();
+        size += self.iode.sbp_size();
+        size += self.iodc.sbp_size();
+        size += self.source.sbp_size();
+        size
+    }
 }
 
 /// Deprecated
 ///
 /// This observation message has been deprecated in favor of
 /// an ephemeris message with explicit source of NAV data.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1556,7 +2377,9 @@ impl MsgEphemerisGalDepA {
     }
 }
 impl super::SBPMessage for MsgEphemerisGalDepA {
-    const MSG_ID: u16 = 149;
+    fn get_message_type(&self) -> u16 {
+        149
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1564,6 +2387,70 @@ impl super::SBPMessage for MsgEphemerisGalDepA {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgEphemerisGalDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.common.append_to_sbp_buffer(buf);
+        self.bgd_e1e5a.append_to_sbp_buffer(buf);
+        self.bgd_e1e5b.append_to_sbp_buffer(buf);
+        self.c_rs.append_to_sbp_buffer(buf);
+        self.c_rc.append_to_sbp_buffer(buf);
+        self.c_uc.append_to_sbp_buffer(buf);
+        self.c_us.append_to_sbp_buffer(buf);
+        self.c_ic.append_to_sbp_buffer(buf);
+        self.c_is.append_to_sbp_buffer(buf);
+        self.dn.append_to_sbp_buffer(buf);
+        self.m0.append_to_sbp_buffer(buf);
+        self.ecc.append_to_sbp_buffer(buf);
+        self.sqrta.append_to_sbp_buffer(buf);
+        self.omega0.append_to_sbp_buffer(buf);
+        self.omegadot.append_to_sbp_buffer(buf);
+        self.w.append_to_sbp_buffer(buf);
+        self.inc.append_to_sbp_buffer(buf);
+        self.inc_dot.append_to_sbp_buffer(buf);
+        self.af0.append_to_sbp_buffer(buf);
+        self.af1.append_to_sbp_buffer(buf);
+        self.af2.append_to_sbp_buffer(buf);
+        self.toc.append_to_sbp_buffer(buf);
+        self.iode.append_to_sbp_buffer(buf);
+        self.iodc.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.common.sbp_size();
+        size += self.bgd_e1e5a.sbp_size();
+        size += self.bgd_e1e5b.sbp_size();
+        size += self.c_rs.sbp_size();
+        size += self.c_rc.sbp_size();
+        size += self.c_uc.sbp_size();
+        size += self.c_us.sbp_size();
+        size += self.c_ic.sbp_size();
+        size += self.c_is.sbp_size();
+        size += self.dn.sbp_size();
+        size += self.m0.sbp_size();
+        size += self.ecc.sbp_size();
+        size += self.sqrta.sbp_size();
+        size += self.omega0.sbp_size();
+        size += self.omegadot.sbp_size();
+        size += self.w.sbp_size();
+        size += self.inc.sbp_size();
+        size += self.inc_dot.sbp_size();
+        size += self.af0.sbp_size();
+        size += self.af1.sbp_size();
+        size += self.af2.sbp_size();
+        size += self.toc.sbp_size();
+        size += self.iode.sbp_size();
+        size += self.iodc.sbp_size();
+        size
     }
 }
 
@@ -1574,6 +2461,7 @@ impl super::SBPMessage for MsgEphemerisGalDepA {
 /// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
 /// Characteristics of words of immediate information (ephemeris parameters)"
 /// for more details.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1616,7 +2504,9 @@ impl MsgEphemerisGlo {
     }
 }
 impl super::SBPMessage for MsgEphemerisGlo {
-    const MSG_ID: u16 = 139;
+    fn get_message_type(&self) -> u16 {
+        139
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1624,6 +2514,40 @@ impl super::SBPMessage for MsgEphemerisGlo {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgEphemerisGlo {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.common.append_to_sbp_buffer(buf);
+        self.gamma.append_to_sbp_buffer(buf);
+        self.tau.append_to_sbp_buffer(buf);
+        self.d_tau.append_to_sbp_buffer(buf);
+        self.pos.append_to_sbp_buffer(buf);
+        self.vel.append_to_sbp_buffer(buf);
+        self.acc.append_to_sbp_buffer(buf);
+        self.fcn.append_to_sbp_buffer(buf);
+        self.iod.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.common.sbp_size();
+        size += self.gamma.sbp_size();
+        size += self.tau.sbp_size();
+        size += self.d_tau.sbp_size();
+        size += self.pos.sbp_size();
+        size += self.vel.sbp_size();
+        size += self.acc.sbp_size();
+        size += self.fcn.sbp_size();
+        size += self.iod.sbp_size();
+        size
     }
 }
 
@@ -1634,6 +2558,7 @@ impl super::SBPMessage for MsgEphemerisGlo {
 /// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
 /// Characteristics of words of immediate information (ephemeris parameters)"
 /// for more details.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1667,7 +2592,9 @@ impl MsgEphemerisGloDepA {
     }
 }
 impl super::SBPMessage for MsgEphemerisGloDepA {
-    const MSG_ID: u16 = 131;
+    fn get_message_type(&self) -> u16 {
+        131
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1675,6 +2602,34 @@ impl super::SBPMessage for MsgEphemerisGloDepA {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgEphemerisGloDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.common.append_to_sbp_buffer(buf);
+        self.gamma.append_to_sbp_buffer(buf);
+        self.tau.append_to_sbp_buffer(buf);
+        self.pos.append_to_sbp_buffer(buf);
+        self.vel.append_to_sbp_buffer(buf);
+        self.acc.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.common.sbp_size();
+        size += self.gamma.sbp_size();
+        size += self.tau.sbp_size();
+        size += self.pos.sbp_size();
+        size += self.vel.sbp_size();
+        size += self.acc.sbp_size();
+        size
     }
 }
 
@@ -1685,6 +2640,7 @@ impl super::SBPMessage for MsgEphemerisGloDepA {
 /// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
 /// Characteristics of words of immediate information (ephemeris parameters)"
 /// for more details.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1718,7 +2674,9 @@ impl MsgEphemerisGloDepB {
     }
 }
 impl super::SBPMessage for MsgEphemerisGloDepB {
-    const MSG_ID: u16 = 133;
+    fn get_message_type(&self) -> u16 {
+        133
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1726,6 +2684,34 @@ impl super::SBPMessage for MsgEphemerisGloDepB {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgEphemerisGloDepB {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.common.append_to_sbp_buffer(buf);
+        self.gamma.append_to_sbp_buffer(buf);
+        self.tau.append_to_sbp_buffer(buf);
+        self.pos.append_to_sbp_buffer(buf);
+        self.vel.append_to_sbp_buffer(buf);
+        self.acc.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.common.sbp_size();
+        size += self.gamma.sbp_size();
+        size += self.tau.sbp_size();
+        size += self.pos.sbp_size();
+        size += self.vel.sbp_size();
+        size += self.acc.sbp_size();
+        size
     }
 }
 
@@ -1736,6 +2722,7 @@ impl super::SBPMessage for MsgEphemerisGloDepB {
 /// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
 /// Characteristics of words of immediate information (ephemeris parameters)"
 /// for more details.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1775,7 +2762,9 @@ impl MsgEphemerisGloDepC {
     }
 }
 impl super::SBPMessage for MsgEphemerisGloDepC {
-    const MSG_ID: u16 = 135;
+    fn get_message_type(&self) -> u16 {
+        135
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1784,12 +2773,45 @@ impl super::SBPMessage for MsgEphemerisGloDepC {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgEphemerisGloDepC {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.common.append_to_sbp_buffer(buf);
+        self.gamma.append_to_sbp_buffer(buf);
+        self.tau.append_to_sbp_buffer(buf);
+        self.d_tau.append_to_sbp_buffer(buf);
+        self.pos.append_to_sbp_buffer(buf);
+        self.vel.append_to_sbp_buffer(buf);
+        self.acc.append_to_sbp_buffer(buf);
+        self.fcn.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.common.sbp_size();
+        size += self.gamma.sbp_size();
+        size += self.tau.sbp_size();
+        size += self.d_tau.sbp_size();
+        size += self.pos.sbp_size();
+        size += self.vel.sbp_size();
+        size += self.acc.sbp_size();
+        size += self.fcn.sbp_size();
+        size
+    }
 }
 
 /// Deprecated
 ///
 /// This observation message has been deprecated in favor of
 /// ephemeris message using floats for size reduction.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1832,7 +2854,9 @@ impl MsgEphemerisGloDepD {
     }
 }
 impl super::SBPMessage for MsgEphemerisGloDepD {
-    const MSG_ID: u16 = 136;
+    fn get_message_type(&self) -> u16 {
+        136
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1840,6 +2864,40 @@ impl super::SBPMessage for MsgEphemerisGloDepD {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgEphemerisGloDepD {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.common.append_to_sbp_buffer(buf);
+        self.gamma.append_to_sbp_buffer(buf);
+        self.tau.append_to_sbp_buffer(buf);
+        self.d_tau.append_to_sbp_buffer(buf);
+        self.pos.append_to_sbp_buffer(buf);
+        self.vel.append_to_sbp_buffer(buf);
+        self.acc.append_to_sbp_buffer(buf);
+        self.fcn.append_to_sbp_buffer(buf);
+        self.iod.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.common.sbp_size();
+        size += self.gamma.sbp_size();
+        size += self.tau.sbp_size();
+        size += self.d_tau.sbp_size();
+        size += self.pos.sbp_size();
+        size += self.vel.sbp_size();
+        size += self.acc.sbp_size();
+        size += self.fcn.sbp_size();
+        size += self.iod.sbp_size();
+        size
     }
 }
 
@@ -1850,6 +2908,7 @@ impl super::SBPMessage for MsgEphemerisGloDepD {
 /// velocity, and clock offset. Please see the Navstar GPS
 /// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
 /// 20-III) for more details.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -1938,7 +2997,9 @@ impl MsgEphemerisGPS {
     }
 }
 impl super::SBPMessage for MsgEphemerisGPS {
-    const MSG_ID: u16 = 138;
+    fn get_message_type(&self) -> u16 {
+        138
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -1946,6 +3007,68 @@ impl super::SBPMessage for MsgEphemerisGPS {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgEphemerisGPS {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.common.append_to_sbp_buffer(buf);
+        self.tgd.append_to_sbp_buffer(buf);
+        self.c_rs.append_to_sbp_buffer(buf);
+        self.c_rc.append_to_sbp_buffer(buf);
+        self.c_uc.append_to_sbp_buffer(buf);
+        self.c_us.append_to_sbp_buffer(buf);
+        self.c_ic.append_to_sbp_buffer(buf);
+        self.c_is.append_to_sbp_buffer(buf);
+        self.dn.append_to_sbp_buffer(buf);
+        self.m0.append_to_sbp_buffer(buf);
+        self.ecc.append_to_sbp_buffer(buf);
+        self.sqrta.append_to_sbp_buffer(buf);
+        self.omega0.append_to_sbp_buffer(buf);
+        self.omegadot.append_to_sbp_buffer(buf);
+        self.w.append_to_sbp_buffer(buf);
+        self.inc.append_to_sbp_buffer(buf);
+        self.inc_dot.append_to_sbp_buffer(buf);
+        self.af0.append_to_sbp_buffer(buf);
+        self.af1.append_to_sbp_buffer(buf);
+        self.af2.append_to_sbp_buffer(buf);
+        self.toc.append_to_sbp_buffer(buf);
+        self.iode.append_to_sbp_buffer(buf);
+        self.iodc.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.common.sbp_size();
+        size += self.tgd.sbp_size();
+        size += self.c_rs.sbp_size();
+        size += self.c_rc.sbp_size();
+        size += self.c_uc.sbp_size();
+        size += self.c_us.sbp_size();
+        size += self.c_ic.sbp_size();
+        size += self.c_is.sbp_size();
+        size += self.dn.sbp_size();
+        size += self.m0.sbp_size();
+        size += self.ecc.sbp_size();
+        size += self.sqrta.sbp_size();
+        size += self.omega0.sbp_size();
+        size += self.omegadot.sbp_size();
+        size += self.w.sbp_size();
+        size += self.inc.sbp_size();
+        size += self.inc_dot.sbp_size();
+        size += self.af0.sbp_size();
+        size += self.af1.sbp_size();
+        size += self.af2.sbp_size();
+        size += self.toc.sbp_size();
+        size += self.iode.sbp_size();
+        size += self.iodc.sbp_size();
+        size
     }
 }
 
@@ -1956,6 +3079,7 @@ impl super::SBPMessage for MsgEphemerisGPS {
 /// velocity, and clock offset. Please see the Navstar GPS
 /// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
 /// 20-III) for more details.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -2044,7 +3168,9 @@ impl MsgEphemerisGPSDepE {
     }
 }
 impl super::SBPMessage for MsgEphemerisGPSDepE {
-    const MSG_ID: u16 = 129;
+    fn get_message_type(&self) -> u16 {
+        129
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -2053,12 +3179,75 @@ impl super::SBPMessage for MsgEphemerisGPSDepE {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgEphemerisGPSDepE {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.common.append_to_sbp_buffer(buf);
+        self.tgd.append_to_sbp_buffer(buf);
+        self.c_rs.append_to_sbp_buffer(buf);
+        self.c_rc.append_to_sbp_buffer(buf);
+        self.c_uc.append_to_sbp_buffer(buf);
+        self.c_us.append_to_sbp_buffer(buf);
+        self.c_ic.append_to_sbp_buffer(buf);
+        self.c_is.append_to_sbp_buffer(buf);
+        self.dn.append_to_sbp_buffer(buf);
+        self.m0.append_to_sbp_buffer(buf);
+        self.ecc.append_to_sbp_buffer(buf);
+        self.sqrta.append_to_sbp_buffer(buf);
+        self.omega0.append_to_sbp_buffer(buf);
+        self.omegadot.append_to_sbp_buffer(buf);
+        self.w.append_to_sbp_buffer(buf);
+        self.inc.append_to_sbp_buffer(buf);
+        self.inc_dot.append_to_sbp_buffer(buf);
+        self.af0.append_to_sbp_buffer(buf);
+        self.af1.append_to_sbp_buffer(buf);
+        self.af2.append_to_sbp_buffer(buf);
+        self.toc.append_to_sbp_buffer(buf);
+        self.iode.append_to_sbp_buffer(buf);
+        self.iodc.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.common.sbp_size();
+        size += self.tgd.sbp_size();
+        size += self.c_rs.sbp_size();
+        size += self.c_rc.sbp_size();
+        size += self.c_uc.sbp_size();
+        size += self.c_us.sbp_size();
+        size += self.c_ic.sbp_size();
+        size += self.c_is.sbp_size();
+        size += self.dn.sbp_size();
+        size += self.m0.sbp_size();
+        size += self.ecc.sbp_size();
+        size += self.sqrta.sbp_size();
+        size += self.omega0.sbp_size();
+        size += self.omegadot.sbp_size();
+        size += self.w.sbp_size();
+        size += self.inc.sbp_size();
+        size += self.inc_dot.sbp_size();
+        size += self.af0.sbp_size();
+        size += self.af1.sbp_size();
+        size += self.af2.sbp_size();
+        size += self.toc.sbp_size();
+        size += self.iode.sbp_size();
+        size += self.iodc.sbp_size();
+        size
+    }
 }
 
 /// Deprecated
 ///
 /// This observation message has been deprecated in favor of
 /// ephemeris message using floats for size reduction.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -2147,7 +3336,9 @@ impl MsgEphemerisGPSDepF {
     }
 }
 impl super::SBPMessage for MsgEphemerisGPSDepF {
-    const MSG_ID: u16 = 134;
+    fn get_message_type(&self) -> u16 {
+        134
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -2156,6 +3347,68 @@ impl super::SBPMessage for MsgEphemerisGPSDepF {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgEphemerisGPSDepF {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.common.append_to_sbp_buffer(buf);
+        self.tgd.append_to_sbp_buffer(buf);
+        self.c_rs.append_to_sbp_buffer(buf);
+        self.c_rc.append_to_sbp_buffer(buf);
+        self.c_uc.append_to_sbp_buffer(buf);
+        self.c_us.append_to_sbp_buffer(buf);
+        self.c_ic.append_to_sbp_buffer(buf);
+        self.c_is.append_to_sbp_buffer(buf);
+        self.dn.append_to_sbp_buffer(buf);
+        self.m0.append_to_sbp_buffer(buf);
+        self.ecc.append_to_sbp_buffer(buf);
+        self.sqrta.append_to_sbp_buffer(buf);
+        self.omega0.append_to_sbp_buffer(buf);
+        self.omegadot.append_to_sbp_buffer(buf);
+        self.w.append_to_sbp_buffer(buf);
+        self.inc.append_to_sbp_buffer(buf);
+        self.inc_dot.append_to_sbp_buffer(buf);
+        self.af0.append_to_sbp_buffer(buf);
+        self.af1.append_to_sbp_buffer(buf);
+        self.af2.append_to_sbp_buffer(buf);
+        self.toc.append_to_sbp_buffer(buf);
+        self.iode.append_to_sbp_buffer(buf);
+        self.iodc.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.common.sbp_size();
+        size += self.tgd.sbp_size();
+        size += self.c_rs.sbp_size();
+        size += self.c_rc.sbp_size();
+        size += self.c_uc.sbp_size();
+        size += self.c_us.sbp_size();
+        size += self.c_ic.sbp_size();
+        size += self.c_is.sbp_size();
+        size += self.dn.sbp_size();
+        size += self.m0.sbp_size();
+        size += self.ecc.sbp_size();
+        size += self.sqrta.sbp_size();
+        size += self.omega0.sbp_size();
+        size += self.omegadot.sbp_size();
+        size += self.w.sbp_size();
+        size += self.inc.sbp_size();
+        size += self.inc_dot.sbp_size();
+        size += self.af0.sbp_size();
+        size += self.af1.sbp_size();
+        size += self.af2.sbp_size();
+        size += self.toc.sbp_size();
+        size += self.iode.sbp_size();
+        size += self.iodc.sbp_size();
+        size
+    }
 }
 
 /// Satellite broadcast ephemeris for QZSS
@@ -2163,6 +3416,7 @@ impl super::SBPMessage for MsgEphemerisGPSDepF {
 /// The ephemeris message returns a set of satellite orbit
 /// parameters that is used to calculate QZSS satellite position,
 /// velocity, and clock offset.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -2251,7 +3505,9 @@ impl MsgEphemerisQzss {
     }
 }
 impl super::SBPMessage for MsgEphemerisQzss {
-    const MSG_ID: u16 = 142;
+    fn get_message_type(&self) -> u16 {
+        142
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -2259,6 +3515,68 @@ impl super::SBPMessage for MsgEphemerisQzss {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgEphemerisQzss {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.common.append_to_sbp_buffer(buf);
+        self.tgd.append_to_sbp_buffer(buf);
+        self.c_rs.append_to_sbp_buffer(buf);
+        self.c_rc.append_to_sbp_buffer(buf);
+        self.c_uc.append_to_sbp_buffer(buf);
+        self.c_us.append_to_sbp_buffer(buf);
+        self.c_ic.append_to_sbp_buffer(buf);
+        self.c_is.append_to_sbp_buffer(buf);
+        self.dn.append_to_sbp_buffer(buf);
+        self.m0.append_to_sbp_buffer(buf);
+        self.ecc.append_to_sbp_buffer(buf);
+        self.sqrta.append_to_sbp_buffer(buf);
+        self.omega0.append_to_sbp_buffer(buf);
+        self.omegadot.append_to_sbp_buffer(buf);
+        self.w.append_to_sbp_buffer(buf);
+        self.inc.append_to_sbp_buffer(buf);
+        self.inc_dot.append_to_sbp_buffer(buf);
+        self.af0.append_to_sbp_buffer(buf);
+        self.af1.append_to_sbp_buffer(buf);
+        self.af2.append_to_sbp_buffer(buf);
+        self.toc.append_to_sbp_buffer(buf);
+        self.iode.append_to_sbp_buffer(buf);
+        self.iodc.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.common.sbp_size();
+        size += self.tgd.sbp_size();
+        size += self.c_rs.sbp_size();
+        size += self.c_rc.sbp_size();
+        size += self.c_uc.sbp_size();
+        size += self.c_us.sbp_size();
+        size += self.c_ic.sbp_size();
+        size += self.c_is.sbp_size();
+        size += self.dn.sbp_size();
+        size += self.m0.sbp_size();
+        size += self.ecc.sbp_size();
+        size += self.sqrta.sbp_size();
+        size += self.omega0.sbp_size();
+        size += self.omegadot.sbp_size();
+        size += self.w.sbp_size();
+        size += self.inc.sbp_size();
+        size += self.inc_dot.sbp_size();
+        size += self.af0.sbp_size();
+        size += self.af1.sbp_size();
+        size += self.af2.sbp_size();
+        size += self.toc.sbp_size();
+        size += self.iode.sbp_size();
+        size += self.iodc.sbp_size();
+        size
     }
 }
 
@@ -2295,7 +3613,9 @@ impl MsgEphemerisSbas {
     }
 }
 impl super::SBPMessage for MsgEphemerisSbas {
-    const MSG_ID: u16 = 140;
+    fn get_message_type(&self) -> u16 {
+        140
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -2303,6 +3623,34 @@ impl super::SBPMessage for MsgEphemerisSbas {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgEphemerisSbas {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.common.append_to_sbp_buffer(buf);
+        self.pos.append_to_sbp_buffer(buf);
+        self.vel.append_to_sbp_buffer(buf);
+        self.acc.append_to_sbp_buffer(buf);
+        self.a_gf0.append_to_sbp_buffer(buf);
+        self.a_gf1.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.common.sbp_size();
+        size += self.pos.sbp_size();
+        size += self.vel.sbp_size();
+        size += self.acc.sbp_size();
+        size += self.a_gf0.sbp_size();
+        size += self.a_gf1.sbp_size();
+        size
     }
 }
 
@@ -2339,7 +3687,9 @@ impl MsgEphemerisSbasDepA {
     }
 }
 impl super::SBPMessage for MsgEphemerisSbasDepA {
-    const MSG_ID: u16 = 130;
+    fn get_message_type(&self) -> u16 {
+        130
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -2348,12 +3698,41 @@ impl super::SBPMessage for MsgEphemerisSbasDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgEphemerisSbasDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.common.append_to_sbp_buffer(buf);
+        self.pos.append_to_sbp_buffer(buf);
+        self.vel.append_to_sbp_buffer(buf);
+        self.acc.append_to_sbp_buffer(buf);
+        self.a_gf0.append_to_sbp_buffer(buf);
+        self.a_gf1.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.common.sbp_size();
+        size += self.pos.sbp_size();
+        size += self.vel.sbp_size();
+        size += self.acc.sbp_size();
+        size += self.a_gf0.sbp_size();
+        size += self.a_gf1.sbp_size();
+        size
+    }
 }
 
 /// Deprecated
 ///
 /// This observation message has been deprecated in favor of
 /// ephemeris message using floats for size reduction.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -2387,7 +3766,9 @@ impl MsgEphemerisSbasDepB {
     }
 }
 impl super::SBPMessage for MsgEphemerisSbasDepB {
-    const MSG_ID: u16 = 132;
+    fn get_message_type(&self) -> u16 {
+        132
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -2395,6 +3776,34 @@ impl super::SBPMessage for MsgEphemerisSbasDepB {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgEphemerisSbasDepB {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.common.append_to_sbp_buffer(buf);
+        self.pos.append_to_sbp_buffer(buf);
+        self.vel.append_to_sbp_buffer(buf);
+        self.acc.append_to_sbp_buffer(buf);
+        self.a_gf0.append_to_sbp_buffer(buf);
+        self.a_gf1.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.common.sbp_size();
+        size += self.pos.sbp_size();
+        size += self.vel.sbp_size();
+        size += self.acc.sbp_size();
+        size += self.a_gf0.sbp_size();
+        size += self.a_gf1.sbp_size();
+        size
     }
 }
 
@@ -2404,6 +3813,7 @@ impl super::SBPMessage for MsgEphemerisSbasDepB {
 /// GPS+GLONASS integer ambiguity resolution for baselines
 /// with mixed receiver types (e.g. receiver of different
 /// manufacturers)
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -2434,7 +3844,9 @@ impl MsgGloBiases {
     }
 }
 impl super::SBPMessage for MsgGloBiases {
-    const MSG_ID: u16 = 117;
+    fn get_message_type(&self) -> u16 {
+        117
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -2442,6 +3854,32 @@ impl super::SBPMessage for MsgGloBiases {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgGloBiases {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.mask.append_to_sbp_buffer(buf);
+        self.l1ca_bias.append_to_sbp_buffer(buf);
+        self.l1p_bias.append_to_sbp_buffer(buf);
+        self.l2ca_bias.append_to_sbp_buffer(buf);
+        self.l2p_bias.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.mask.sbp_size();
+        size += self.l1ca_bias.sbp_size();
+        size += self.l1p_bias.sbp_size();
+        size += self.l2ca_bias.sbp_size();
+        size += self.l2p_bias.sbp_size();
+        size
     }
 }
 
@@ -2466,7 +3904,9 @@ impl MsgGnssCapb {
     }
 }
 impl super::SBPMessage for MsgGnssCapb {
-    const MSG_ID: u16 = 150;
+    fn get_message_type(&self) -> u16 {
+        150
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -2475,11 +3915,32 @@ impl super::SBPMessage for MsgGnssCapb {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgGnssCapb {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.t_nmct.append_to_sbp_buffer(buf);
+        self.gc.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.t_nmct.sbp_size();
+        size += self.gc.sbp_size();
+        size
+    }
 }
 
 /// Group Delay
 ///
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -2511,7 +3972,9 @@ impl MsgGroupDelay {
     }
 }
 impl super::SBPMessage for MsgGroupDelay {
-    const MSG_ID: u16 = 148;
+    fn get_message_type(&self) -> u16 {
+        148
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -2520,11 +3983,40 @@ impl super::SBPMessage for MsgGroupDelay {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgGroupDelay {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.t_op.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+        self.valid.append_to_sbp_buffer(buf);
+        self.tgd.append_to_sbp_buffer(buf);
+        self.isc_l1ca.append_to_sbp_buffer(buf);
+        self.isc_l2c.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.t_op.sbp_size();
+        size += self.sid.sbp_size();
+        size += self.valid.sbp_size();
+        size += self.tgd.sbp_size();
+        size += self.isc_l1ca.sbp_size();
+        size += self.isc_l2c.sbp_size();
+        size
+    }
 }
 
 /// Group Delay
 ///
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -2556,7 +4048,9 @@ impl MsgGroupDelayDepA {
     }
 }
 impl super::SBPMessage for MsgGroupDelayDepA {
-    const MSG_ID: u16 = 146;
+    fn get_message_type(&self) -> u16 {
+        146
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -2565,11 +4059,40 @@ impl super::SBPMessage for MsgGroupDelayDepA {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgGroupDelayDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.t_op.append_to_sbp_buffer(buf);
+        self.prn.append_to_sbp_buffer(buf);
+        self.valid.append_to_sbp_buffer(buf);
+        self.tgd.append_to_sbp_buffer(buf);
+        self.isc_l1ca.append_to_sbp_buffer(buf);
+        self.isc_l2c.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.t_op.sbp_size();
+        size += self.prn.sbp_size();
+        size += self.valid.sbp_size();
+        size += self.tgd.sbp_size();
+        size += self.isc_l1ca.sbp_size();
+        size += self.isc_l2c.sbp_size();
+        size
+    }
 }
 
 /// Group Delay
 ///
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -2601,7 +4124,9 @@ impl MsgGroupDelayDepB {
     }
 }
 impl super::SBPMessage for MsgGroupDelayDepB {
-    const MSG_ID: u16 = 147;
+    fn get_message_type(&self) -> u16 {
+        147
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -2610,6 +4135,34 @@ impl super::SBPMessage for MsgGroupDelayDepB {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgGroupDelayDepB {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.t_op.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+        self.valid.append_to_sbp_buffer(buf);
+        self.tgd.append_to_sbp_buffer(buf);
+        self.isc_l1ca.append_to_sbp_buffer(buf);
+        self.isc_l2c.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.t_op.sbp_size();
+        size += self.sid.sbp_size();
+        size += self.valid.sbp_size();
+        size += self.tgd.sbp_size();
+        size += self.isc_l1ca.sbp_size();
+        size += self.isc_l2c.sbp_size();
+        size
+    }
 }
 
 /// Iono corrections
@@ -2617,6 +4170,7 @@ impl super::SBPMessage for MsgGroupDelayDepB {
 /// The ionospheric parameters which allow the "L1 only" or "L2 only" user to
 /// utilize the ionospheric model for computation of the ionospheric delay.
 /// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -2651,7 +4205,9 @@ impl MsgIono {
     }
 }
 impl super::SBPMessage for MsgIono {
-    const MSG_ID: u16 = 144;
+    fn get_message_type(&self) -> u16 {
+        144
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -2659,6 +4215,40 @@ impl super::SBPMessage for MsgIono {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgIono {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.t_nmct.append_to_sbp_buffer(buf);
+        self.a0.append_to_sbp_buffer(buf);
+        self.a1.append_to_sbp_buffer(buf);
+        self.a2.append_to_sbp_buffer(buf);
+        self.a3.append_to_sbp_buffer(buf);
+        self.b0.append_to_sbp_buffer(buf);
+        self.b1.append_to_sbp_buffer(buf);
+        self.b2.append_to_sbp_buffer(buf);
+        self.b3.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.t_nmct.sbp_size();
+        size += self.a0.sbp_size();
+        size += self.a1.sbp_size();
+        size += self.a2.sbp_size();
+        size += self.a3.sbp_size();
+        size += self.b0.sbp_size();
+        size += self.b1.sbp_size();
+        size += self.b2.sbp_size();
+        size += self.b3.sbp_size();
+        size
     }
 }
 
@@ -2671,6 +4261,7 @@ impl super::SBPMessage for MsgIono {
 /// whole cycles and 8-bits of fractional cycles). The observations
 /// are be interoperable with 3rd party receivers and conform
 /// with typical RTCMv3 GNSS observations.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -2692,7 +4283,9 @@ impl MsgObs {
     }
 }
 impl super::SBPMessage for MsgObs {
-    const MSG_ID: u16 = 74;
+    fn get_message_type(&self) -> u16 {
+        74
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -2701,11 +4294,32 @@ impl super::SBPMessage for MsgObs {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgObs {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.header.append_to_sbp_buffer(buf);
+        self.obs.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.header.sbp_size();
+        size += self.obs.sbp_size();
+        size
+    }
 }
 
 /// Deprecated
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -2727,7 +4341,9 @@ impl MsgObsDepA {
     }
 }
 impl super::SBPMessage for MsgObsDepA {
-    const MSG_ID: u16 = 69;
+    fn get_message_type(&self) -> u16 {
+        69
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -2735,6 +4351,26 @@ impl super::SBPMessage for MsgObsDepA {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgObsDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.header.append_to_sbp_buffer(buf);
+        self.obs.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.header.sbp_size();
+        size += self.obs.sbp_size();
+        size
     }
 }
 
@@ -2746,6 +4382,7 @@ impl super::SBPMessage for MsgObsDepA {
 /// a nominal pseudorange which are not interoperable with
 /// most 3rd party GNSS receievers or typical RTCMv3
 /// observations.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -2767,7 +4404,9 @@ impl MsgObsDepB {
     }
 }
 impl super::SBPMessage for MsgObsDepB {
-    const MSG_ID: u16 = 67;
+    fn get_message_type(&self) -> u16 {
+        67
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -2775,6 +4414,26 @@ impl super::SBPMessage for MsgObsDepB {
 
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgObsDepB {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.header.append_to_sbp_buffer(buf);
+        self.obs.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.header.sbp_size();
+        size += self.obs.sbp_size();
+        size
     }
 }
 
@@ -2787,6 +4446,7 @@ impl super::SBPMessage for MsgObsDepB {
 /// whole cycles and 8-bits of fractional cycles). The observations
 /// are interoperable with 3rd party receivers and conform
 /// with typical RTCMv3 GNSS observations.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -2808,7 +4468,9 @@ impl MsgObsDepC {
     }
 }
 impl super::SBPMessage for MsgObsDepC {
-    const MSG_ID: u16 = 73;
+    fn get_message_type(&self) -> u16 {
+        73
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -2817,11 +4479,32 @@ impl super::SBPMessage for MsgObsDepC {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgObsDepC {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.header.append_to_sbp_buffer(buf);
+        self.obs.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.header.sbp_size();
+        size += self.obs.sbp_size();
+        size
+    }
 }
 
 /// OSR corrections
 ///
 /// The OSR message contains network corrections in an observation-like format
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -2843,7 +4526,9 @@ impl MsgOsr {
     }
 }
 impl super::SBPMessage for MsgOsr {
-    const MSG_ID: u16 = 1600;
+    fn get_message_type(&self) -> u16 {
+        1600
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -2852,12 +4537,33 @@ impl super::SBPMessage for MsgOsr {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgOsr {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.header.append_to_sbp_buffer(buf);
+        self.obs.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.header.sbp_size();
+        size += self.obs.sbp_size();
+        size
+    }
 }
 
 /// Satellite azimuths and elevations
 ///
 /// Azimuth and elevation angles of all the visible satellites
 /// that the device does have ephemeris or almanac for.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -2876,7 +4582,9 @@ impl MsgSvAzEl {
     }
 }
 impl super::SBPMessage for MsgSvAzEl {
-    const MSG_ID: u16 = 151;
+    fn get_message_type(&self) -> u16 {
+        151
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -2885,11 +4593,30 @@ impl super::SBPMessage for MsgSvAzEl {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSvAzEl {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.azel.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.azel.sbp_size();
+        size
+    }
 }
 
 /// L2C capability mask
 ///
 /// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -2911,7 +4638,9 @@ impl MsgSvConfigurationGPSDep {
     }
 }
 impl super::SBPMessage for MsgSvConfigurationGPSDep {
-    const MSG_ID: u16 = 145;
+    fn get_message_type(&self) -> u16 {
+        145
+    }
 
     fn get_sender_id(&self) -> Option<u16> {
         self.sender_id
@@ -2920,11 +4649,32 @@ impl super::SBPMessage for MsgSvConfigurationGPSDep {
     fn set_sender_id(&mut self, new_id: u16) {
         self.sender_id = Some(new_id);
     }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSvConfigurationGPSDep {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.t_nmct.append_to_sbp_buffer(buf);
+        self.l2c_mask.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.t_nmct.sbp_size();
+        size += self.l2c_mask.sbp_size();
+        size
+    }
 }
 
 /// Header for observation message.
 ///
 /// Header of a GNSS observation message.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -2963,9 +4713,25 @@ impl ObservationHeader {
     }
 }
 
+impl crate::serialize::SbpSerialize for ObservationHeader {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.t.append_to_sbp_buffer(buf);
+        self.n_obs.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.t.sbp_size();
+        size += self.n_obs.sbp_size();
+        size
+    }
+}
+
 /// Header for observation message.
 ///
 /// Header of a GPS observation message.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -3004,6 +4770,21 @@ impl ObservationHeaderDep {
     }
 }
 
+impl crate::serialize::SbpSerialize for ObservationHeaderDep {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.t.append_to_sbp_buffer(buf);
+        self.n_obs.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.t.sbp_size();
+        size += self.n_obs.sbp_size();
+        size
+    }
+}
+
 /// GNSS observations for a particular satellite signal.
 ///
 /// Pseudorange and carrier phase observation for a satellite being tracked.
@@ -3013,6 +4794,7 @@ impl ObservationHeaderDep {
 /// Carrier phase observations are not guaranteed to be aligned to the RINEX 3
 /// or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
 /// peformed.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -3072,9 +4854,35 @@ impl PackedObsContent {
     }
 }
 
+impl crate::serialize::SbpSerialize for PackedObsContent {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.P.append_to_sbp_buffer(buf);
+        self.L.append_to_sbp_buffer(buf);
+        self.D.append_to_sbp_buffer(buf);
+        self.cn0.append_to_sbp_buffer(buf);
+        self.lock.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.P.sbp_size();
+        size += self.L.sbp_size();
+        size += self.D.sbp_size();
+        size += self.cn0.sbp_size();
+        size += self.lock.sbp_size();
+        size += self.flags.sbp_size();
+        size += self.sid.sbp_size();
+        size
+    }
+}
+
 /// Deprecated
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -3123,10 +4931,32 @@ impl PackedObsContentDepA {
     }
 }
 
+impl crate::serialize::SbpSerialize for PackedObsContentDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.P.append_to_sbp_buffer(buf);
+        self.L.append_to_sbp_buffer(buf);
+        self.cn0.append_to_sbp_buffer(buf);
+        self.lock.append_to_sbp_buffer(buf);
+        self.prn.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.P.sbp_size();
+        size += self.L.sbp_size();
+        size += self.cn0.sbp_size();
+        size += self.lock.sbp_size();
+        size += self.prn.sbp_size();
+        size
+    }
+}
+
 /// GPS observations for a particular satellite signal.
 ///
 /// Pseudorange and carrier phase observation for a satellite being
 /// tracked.  Pseudoranges are referenced to a nominal pseudorange.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -3175,11 +5005,33 @@ impl PackedObsContentDepB {
     }
 }
 
+impl crate::serialize::SbpSerialize for PackedObsContentDepB {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.P.append_to_sbp_buffer(buf);
+        self.L.append_to_sbp_buffer(buf);
+        self.cn0.append_to_sbp_buffer(buf);
+        self.lock.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.P.sbp_size();
+        size += self.L.sbp_size();
+        size += self.cn0.sbp_size();
+        size += self.lock.sbp_size();
+        size += self.sid.sbp_size();
+        size
+    }
+}
+
 /// GPS observations for a particular satellite signal.
 ///
 /// Pseudorange and carrier phase observation for a satellite being
 /// tracked. The observations are be interoperable with 3rd party
 /// receivers and conform with typical RTCMv3 GNSS observations.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -3228,9 +5080,31 @@ impl PackedObsContentDepC {
     }
 }
 
+impl crate::serialize::SbpSerialize for PackedObsContentDepC {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.P.append_to_sbp_buffer(buf);
+        self.L.append_to_sbp_buffer(buf);
+        self.cn0.append_to_sbp_buffer(buf);
+        self.lock.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.P.sbp_size();
+        size += self.L.sbp_size();
+        size += self.cn0.sbp_size();
+        size += self.lock.sbp_size();
+        size += self.sid.sbp_size();
+        size
+    }
+}
+
 /// Network correction for a particular satellite signal.
 ///
 /// Pseudorange and carrier phase network corrections for a satellite signal.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -3291,9 +5165,37 @@ impl PackedOsrContent {
     }
 }
 
+impl crate::serialize::SbpSerialize for PackedOsrContent {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.P.append_to_sbp_buffer(buf);
+        self.L.append_to_sbp_buffer(buf);
+        self.lock.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+        self.sid.append_to_sbp_buffer(buf);
+        self.iono_std.append_to_sbp_buffer(buf);
+        self.tropo_std.append_to_sbp_buffer(buf);
+        self.range_std.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.P.sbp_size();
+        size += self.L.sbp_size();
+        size += self.lock.sbp_size();
+        size += self.flags.sbp_size();
+        size += self.sid.sbp_size();
+        size += self.iono_std.sbp_size();
+        size += self.tropo_std.sbp_size();
+        size += self.range_std.sbp_size();
+        size
+    }
+}
+
 /// Satellite azimuth and elevation.
 ///
 /// Satellite azimuth and elevation.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -3328,5 +5230,22 @@ impl SvAzEl {
             v.push(SvAzEl::parse(buf)?);
         }
         Ok(v)
+    }
+}
+
+impl crate::serialize::SbpSerialize for SvAzEl {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sid.append_to_sbp_buffer(buf);
+        self.az.append_to_sbp_buffer(buf);
+        self.el.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sid.sbp_size();
+        size += self.az.sbp_size();
+        size += self.el.sbp_size();
+        size
     }
 }

@@ -26,6 +26,7 @@ use serde::{Deserialize, Serialize};
 /// fixed point number with Q32.8 layout, i.e. 32-bits of whole
 /// cycles and 8-bits of fractional cycles. This phase has the
 /// same sign as the pseudorange.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -60,12 +61,28 @@ impl CarrierPhase {
     }
 }
 
+impl crate::serialize::SbpSerialize for CarrierPhase {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.i.append_to_sbp_buffer(buf);
+        self.f.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.i.sbp_size();
+        size += self.f.sbp_size();
+        size
+    }
+}
+
 /// Nanosecond-accurate receiver clock time
 ///
 /// A wire-appropriate receiver clock time, defined as the time
 /// since the beginning of the week on the Saturday/Sunday
 /// transition. In most cases, observations are epoch aligned
 /// so ns field will be 0.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -104,11 +121,29 @@ impl GPSTime {
     }
 }
 
+impl crate::serialize::SbpSerialize for GPSTime {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.ns_residual.append_to_sbp_buffer(buf);
+        self.wn.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.ns_residual.sbp_size();
+        size += self.wn.sbp_size();
+        size
+    }
+}
+
 /// Millisecond-accurate GPS time
 ///
 /// A wire-appropriate GPS time, defined as the number of
 /// milliseconds since beginning of the week on the Saturday/Sunday
 /// transition.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -143,11 +178,27 @@ impl GPSTimeDep {
     }
 }
 
+impl crate::serialize::SbpSerialize for GPSTimeDep {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.wn.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.wn.sbp_size();
+        size
+    }
+}
+
 /// Whole second accurate GPS time
 ///
 /// A GPS time, defined as the number of
 /// seconds since beginning of the week on the Saturday/Sunday
 /// transition.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -182,9 +233,25 @@ impl GPSTimeSec {
     }
 }
 
+impl crate::serialize::SbpSerialize for GPSTimeSec {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.wn.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.wn.sbp_size();
+        size
+    }
+}
+
 /// Represents all the relevant information about the signal
 ///
 /// Signal identifier containing constellation, band, and satellite identifier
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -220,9 +287,25 @@ impl GnssSignal {
     }
 }
 
+impl crate::serialize::SbpSerialize for GnssSignal {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sat.append_to_sbp_buffer(buf);
+        self.code.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sat.sbp_size();
+        size += self.code.sbp_size();
+        size
+    }
+}
+
 /// Deprecated
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -265,10 +348,28 @@ impl GnssSignalDep {
     }
 }
 
+impl crate::serialize::SbpSerialize for GnssSignalDep {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sat.append_to_sbp_buffer(buf);
+        self.code.append_to_sbp_buffer(buf);
+        self.reserved.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sat.sbp_size();
+        size += self.code.sbp_size();
+        size += self.reserved.sbp_size();
+        size
+    }
+}
+
 /// Space vehicle identifier
 ///
 /// A (Constellation ID, satellite ID) tuple that uniquely identifies
 /// a space vehicle
+///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
@@ -300,5 +401,20 @@ impl SvId {
             v.push(SvId::parse(buf)?);
         }
         Ok(v)
+    }
+}
+
+impl crate::serialize::SbpSerialize for SvId {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.satId.append_to_sbp_buffer(buf);
+        self.constellation.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.satId.sbp_size();
+        size += self.constellation.sbp_size();
+        size
     }
 }
