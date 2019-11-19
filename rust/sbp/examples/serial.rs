@@ -1,3 +1,8 @@
+//! An example for how to parse SBP from a serial port
+//!
+//! Note that this example requires that you have `libudev` installed
+//! before you can compile it
+
 extern crate serialport;
 extern crate sbp;
 
