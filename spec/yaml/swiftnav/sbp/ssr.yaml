@@ -447,7 +447,7 @@ definitions:
             desc: Array of STEC information for each space vehicle
 
  - MSG_SSR_GRIDDED_CORRECTION:
-    id: 0x05F0
+    id: 0x05FA
     short_desc: Gridded troposphere and STEC residuals
     desc: |
       STEC residuals are per space vehicle, tropo is not.
