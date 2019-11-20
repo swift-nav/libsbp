@@ -40,7 +40,7 @@ public class MsgSsrGriddedCorrectionDepA extends SBPMessage {
     public GriddedCorrectionHeader header;
     
     /** Tropo and STEC residuals for the given grid point */
-    public GridElement element;
+    public GridElementDepA element;
     
 
     public MsgSsrGriddedCorrectionDepA (int sender) { super(sender, TYPE); }
@@ -54,7 +54,7 @@ public class MsgSsrGriddedCorrectionDepA extends SBPMessage {
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         header = new GriddedCorrectionHeader().parse(parser);
-        element = new GridElement().parse(parser);
+        element = new GridElementDepA().parse(parser);
     }
 
     @Override

@@ -85,7 +85,8 @@ message STECSatElement {
 
 /** None
  *
- * Troposphere vertical delays at the grid point.
+ * Troposphere vertical delays (mean and standard deviation) at the grid
+ * point.
  */
 message TroposphericDelayCorrection {
     sint32 hydro = 1;
@@ -95,7 +96,8 @@ message TroposphericDelayCorrection {
 
 /** None
  *
-* STEC residual for the given satellite at the grid point.
+ * STEC residual (mean and standard deviation) for the given satellite
+ * at the grid point,
  */
 message STECResidual {
     SvId sv_id = 1;
@@ -105,8 +107,8 @@ message STECResidual {
 
 /** Correction data for a single grid point.
  *
- * Contains one tropo delay, plus STEC residuals for each satellite at the
- * grid point.
+ * Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
+ * stddev) for each satellite at the grid point.
  */
 message GridElement {
     uint32 index = 1;

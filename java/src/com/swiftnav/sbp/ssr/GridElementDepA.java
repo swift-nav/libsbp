@@ -23,26 +23,26 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class GridElement extends SBPStruct {
+public class GridElementDepA extends SBPStruct {
     
     /** Index of the grid point */
     public int index;
     
-    /** Wet and hydrostatic vertical delays (mean, stddev) */
-    public TroposphericDelayCorrection tropo_delay_correction;
+    /** Wet and hydrostatic vertical delays */
+    public TroposphericDelayCorrectionDepA tropo_delay_correction;
     
-    /** STEC residuals for each satellite (mean, stddev) */
-    public STECResidual[] stec_residuals;
+    /** STEC residuals for each satellite */
+    public STECResidualDepA[] stec_residuals;
     
 
-    public GridElement () {}
+    public GridElementDepA () {}
 
     @Override
-    public GridElement parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public GridElementDepA parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         index = parser.getU16();
-        tropo_delay_correction = new TroposphericDelayCorrection().parse(parser);
-        stec_residuals = parser.getArray(STECResidual.class);
+        tropo_delay_correction = new TroposphericDelayCorrectionDepA().parse(parser);
+        stec_residuals = parser.getArray(STECResidualDepA.class);
         return this;
     }
 
