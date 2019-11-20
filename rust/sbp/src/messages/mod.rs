@@ -183,7 +183,7 @@ use self::settings::MsgSettingsWriteResp;
 use self::ssr::MsgSsrCodeBiases;
 use self::ssr::MsgSsrGridDefinition;
 use self::ssr::MsgSsrGriddedCorrection;
-use self::ssr::MsgSsrGriddedCorrectionDeprecated;
+use self::ssr::MsgSsrGriddedCorrectionDepA;
 use self::ssr::MsgSsrOrbitClock;
 use self::ssr::MsgSsrOrbitClockDepA;
 use self::ssr::MsgSsrPhaseBiases;
@@ -371,7 +371,7 @@ pub enum SBP {
     MsgSsrCodeBiases(MsgSsrCodeBiases),
     MsgSsrPhaseBiases(MsgSsrPhaseBiases),
     MsgSsrStecCorrection(MsgSsrStecCorrection),
-    MsgSsrGriddedCorrectionDeprecated(MsgSsrGriddedCorrectionDeprecated),
+    MsgSsrGriddedCorrectionDepA(MsgSsrGriddedCorrectionDepA),
     MsgSsrGridDefinition(MsgSsrGridDefinition),
     MsgSsrGriddedCorrection(MsgSsrGriddedCorrection),
     MsgOsr(MsgOsr),
@@ -1149,9 +1149,9 @@ impl SBP {
                 Ok(SBP::MsgSsrStecCorrection(msg))
             }
             1520 => {
-                let mut msg = MsgSsrGriddedCorrectionDeprecated::parse(payload)?;
+                let mut msg = MsgSsrGriddedCorrectionDepA::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgSsrGriddedCorrectionDeprecated(msg))
+                Ok(SBP::MsgSsrGriddedCorrectionDepA(msg))
             }
             1525 => {
                 let mut msg = MsgSsrGridDefinition::parse(payload)?;
@@ -1441,7 +1441,7 @@ impl SBP {
             SBP::MsgSsrCodeBiases(msg) => msg,
             SBP::MsgSsrPhaseBiases(msg) => msg,
             SBP::MsgSsrStecCorrection(msg) => msg,
-            SBP::MsgSsrGriddedCorrectionDeprecated(msg) => msg,
+            SBP::MsgSsrGriddedCorrectionDepA(msg) => msg,
             SBP::MsgSsrGridDefinition(msg) => msg,
             SBP::MsgSsrGriddedCorrection(msg) => msg,
             SBP::MsgOsr(msg) => msg,

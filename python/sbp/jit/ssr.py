@@ -942,52 +942,30 @@ delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
     ret += 247
     return ret
   
-SBP_MSG_SSR_GRIDDED_CORRECTION_DEPRECATED = 0x05F0
-class MsgSsrGriddedCorrectionDeprecated(SBP):
-  """SBP class for message MSG_SSR_GRIDDED_CORRECTION_DEPRECATED (0x05F0).
+SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A = 0x05F0
+class MsgSsrGriddedCorrectionDepA(SBP):
+  """SBP class for message MSG_SSR_GRIDDED_CORRECTION_DEP_A (0x05F0).
 
-  You can have MSG_SSR_GRIDDED_CORRECTION_DEPRECATED inherit its fields directly
+  You can have MSG_SSR_GRIDDED_CORRECTION_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
-  This is here to make sure no one reuses this message ID.
-This was the ID of the old message before the structure
-was changed.
-
-
-  """
-  __slots__ = []
-  def _unpack_members(self, buf, offset, length):
-    return {}, offset, length
-
-  def _payload_size(self):
-    return 0
-  
-SBP_MSG_SSR_GRID_DEFINITION = 0x05F5
-class MsgSsrGridDefinition(SBP):
-  """SBP class for message MSG_SSR_GRID_DEFINITION (0x05F5).
-
-  You can have MSG_SSR_GRID_DEFINITION inherit its fields directly
-  from an inherited SBP object, or construct it inline using a dict
-  of its fields.
-
-  
-  Based on the 3GPP proposal R2-1906781 which is in turn based on
-OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
+  This message was deprecated when variances (stddev)
+were added.
 
 
   """
   __slots__ = ['header',
-               'rle_list',
+               'element',
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
     ret = {}
-    (__header, offset, length) = GridDefinitionHeader.parse_members(buf, offset, length)
+    (__header, offset, length) = GriddedCorrectionHeader.parse_members(buf, offset, length)
     ret['header'] = __header
-    (__rle_list, offset, length) = get_array(get_u8)(buf, offset, length)
-    ret['rle_list'] = __rle_list
+    (__element, offset, length) = GridElement.parse_members(buf, offset, length)
+    ret['element'] = __element
     return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
@@ -995,16 +973,16 @@ OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
     if off == offset:
       return {}, offset, length
     self.header = res['header']
-    self.rle_list = res['rle_list']
+    self.element = res['element']
     return res, off, length
 
   @classmethod
   def _payload_size(self):
     ret = 0
-    # header: GridDefinitionHeader
-    ret += GridDefinitionHeader._payload_size()
-    # rle_list: array of u8
-    ret += 247
+    # header: GriddedCorrectionHeader
+    ret += GriddedCorrectionHeader._payload_size()
+    # element: GridElement
+    ret += GridElement._payload_size()
     return ret
   
 SBP_MSG_SSR_GRIDDED_CORRECTION = 0x05FA
@@ -1050,6 +1028,49 @@ It is typically equivalent to the QZSS CLAS Sub Type 9 messages
     ret += GridElement._payload_size()
     return ret
   
+SBP_MSG_SSR_GRID_DEFINITION = 0x05F5
+class MsgSsrGridDefinition(SBP):
+  """SBP class for message MSG_SSR_GRID_DEFINITION (0x05F5).
+
+  You can have MSG_SSR_GRID_DEFINITION inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Based on the 3GPP proposal R2-1906781 which is in turn based on
+OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
+
+
+  """
+  __slots__ = ['header',
+               'rle_list',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__header, offset, length) = GridDefinitionHeader.parse_members(buf, offset, length)
+    ret['header'] = __header
+    (__rle_list, offset, length) = get_array(get_u8)(buf, offset, length)
+    ret['rle_list'] = __rle_list
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.header = res['header']
+    self.rle_list = res['rle_list']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # header: GridDefinitionHeader
+    ret += GridDefinitionHeader._payload_size()
+    # rle_list: array of u8
+    ret += 247
+    return ret
+  
 
 msg_classes = {
   0x05DD: MsgSsrOrbitClock,
@@ -1057,7 +1078,7 @@ msg_classes = {
   0x05E1: MsgSsrCodeBiases,
   0x05E6: MsgSsrPhaseBiases,
   0x05EB: MsgSsrStecCorrection,
-  0x05F0: MsgSsrGriddedCorrectionDeprecated,
-  0x05F5: MsgSsrGridDefinition,
+  0x05F0: MsgSsrGriddedCorrectionDepA,
   0x05FA: MsgSsrGriddedCorrection,
+  0x05F5: MsgSsrGridDefinition,
 }

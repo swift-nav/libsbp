@@ -435,23 +435,30 @@ impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrection {
 
 /// Gridded troposphere and STEC residuals
 ///
-/// This is here to make sure no one reuses this message ID.
-/// This was the ID of the old message before the structure
-/// was changed.
+/// This message was deprecated when variances (stddev)
+/// were added.
 ///
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
-pub struct MsgSsrGriddedCorrectionDeprecated {
+pub struct MsgSsrGriddedCorrectionDepA {
     pub sender_id: Option<u16>,
+    /// Header of a Gridded Correction message
+    pub header: GriddedCorrectionHeader,
+    /// Tropo and STEC residuals for the given grid point
+    pub element: GridElement,
 }
 
-impl MsgSsrGriddedCorrectionDeprecated {
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGriddedCorrectionDeprecated, crate::Error> {
-        Ok(MsgSsrGriddedCorrectionDeprecated { sender_id: None })
+impl MsgSsrGriddedCorrectionDepA {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGriddedCorrectionDepA, crate::Error> {
+        Ok(MsgSsrGriddedCorrectionDepA {
+            sender_id: None,
+            header: GriddedCorrectionHeader::parse(_buf)?,
+            element: GridElement::parse(_buf)?,
+        })
     }
 }
-impl super::SBPMessage for MsgSsrGriddedCorrectionDeprecated {
+impl super::SBPMessage for MsgSsrGriddedCorrectionDepA {
     fn get_message_type(&self) -> u16 {
         1520
     }
@@ -470,12 +477,18 @@ impl super::SBPMessage for MsgSsrGriddedCorrectionDeprecated {
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrectionDeprecated {
+impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrectionDepA {
     #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.header.append_to_sbp_buffer(buf);
+        self.element.append_to_sbp_buffer(buf);
+    }
 
     fn sbp_size(&self) -> usize {
-        0
+        let mut size = 0;
+        size += self.header.sbp_size();
+        size += self.element.sbp_size();
+        size
     }
 }
 

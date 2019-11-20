@@ -631,27 +631,65 @@ MsgSsrStecCorrection.prototype.fieldSpec.push(['header', STECHeader.prototype.fi
 MsgSsrStecCorrection.prototype.fieldSpec.push(['stec_sat_list', 'array', STECSatElement.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
- * SBP class for message MSG_SSR_GRIDDED_CORRECTION_DEPRECATED (0x05F0).
+ * SBP class for message MSG_SSR_GRIDDED_CORRECTION_DEP_A (0x05F0).
  *
- * This is here to make sure no one reuses this message ID. This was the ID of the
- * old message before the structure was changed.
+ * This message was deprecated when variances (stddev) were added.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field header GriddedCorrectionHeader Header of a Gridded Correction message
+ * @field element GridElement Tropo and STEC residuals for the given grid point
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSsrGriddedCorrectionDeprecated = function (sbp, fields) {
+var MsgSsrGriddedCorrectionDepA = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_SSR_GRIDDED_CORRECTION_DEPRECATED";
+  this.messageType = "MSG_SSR_GRIDDED_CORRECTION_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgSsrGriddedCorrectionDeprecated.prototype = Object.create(SBP.prototype);
-MsgSsrGriddedCorrectionDeprecated.prototype.messageType = "MSG_SSR_GRIDDED_CORRECTION_DEPRECATED";
-MsgSsrGriddedCorrectionDeprecated.prototype.msg_type = 0x05F0;
-MsgSsrGriddedCorrectionDeprecated.prototype.constructor = MsgSsrGriddedCorrectionDeprecated;
-MsgSsrGriddedCorrectionDeprecated.prototype.parser = new Parser()
-  .endianess('little');
-MsgSsrGriddedCorrectionDeprecated.prototype.fieldSpec = [];
+MsgSsrGriddedCorrectionDepA.prototype = Object.create(SBP.prototype);
+MsgSsrGriddedCorrectionDepA.prototype.messageType = "MSG_SSR_GRIDDED_CORRECTION_DEP_A";
+MsgSsrGriddedCorrectionDepA.prototype.msg_type = 0x05F0;
+MsgSsrGriddedCorrectionDepA.prototype.constructor = MsgSsrGriddedCorrectionDepA;
+MsgSsrGriddedCorrectionDepA.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('header', { type: GriddedCorrectionHeader.prototype.parser })
+  .nest('element', { type: GridElement.prototype.parser });
+MsgSsrGriddedCorrectionDepA.prototype.fieldSpec = [];
+MsgSsrGriddedCorrectionDepA.prototype.fieldSpec.push(['header', GriddedCorrectionHeader.prototype.fieldSpec]);
+MsgSsrGriddedCorrectionDepA.prototype.fieldSpec.push(['element', GridElement.prototype.fieldSpec]);
+
+/**
+ * SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
+ *
+ * STEC residuals are per space vehicle, tropo is not. It is typically equivalent
+ * to the QZSS CLAS Sub Type 9 messages
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field header GriddedCorrectionHeader Header of a Gridded Correction message
+ * @field element GridElement Tropo and STEC residuals for the given grid point
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSsrGriddedCorrection = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_GRIDDED_CORRECTION";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrGriddedCorrection.prototype = Object.create(SBP.prototype);
+MsgSsrGriddedCorrection.prototype.messageType = "MSG_SSR_GRIDDED_CORRECTION";
+MsgSsrGriddedCorrection.prototype.msg_type = 0x05FA;
+MsgSsrGriddedCorrection.prototype.constructor = MsgSsrGriddedCorrection;
+MsgSsrGriddedCorrection.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('header', { type: GriddedCorrectionHeader.prototype.parser })
+  .nest('element', { type: GridElement.prototype.parser });
+MsgSsrGriddedCorrection.prototype.fieldSpec = [];
+MsgSsrGriddedCorrection.prototype.fieldSpec.push(['header', GriddedCorrectionHeader.prototype.fieldSpec]);
+MsgSsrGriddedCorrection.prototype.fieldSpec.push(['element', GridElement.prototype.fieldSpec]);
 
 /**
  * SBP class for message MSG_SSR_GRID_DEFINITION (0x05F5).
@@ -687,37 +725,6 @@ MsgSsrGridDefinition.prototype.fieldSpec = [];
 MsgSsrGridDefinition.prototype.fieldSpec.push(['header', GridDefinitionHeader.prototype.fieldSpec]);
 MsgSsrGridDefinition.prototype.fieldSpec.push(['rle_list', 'array', 'writeUInt8', function () { return 1; }, null]);
 
-/**
- * SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
- *
- * STEC residuals are per space vehicle, tropo is not. It is typically equivalent
- * to the QZSS CLAS Sub Type 9 messages
- *
- * Fields in the SBP payload (`sbp.payload`):
- * @field header GriddedCorrectionHeader Header of a Gridded Correction message
- * @field element GridElement Tropo and STEC residuals for the given grid point
- *
- * @param sbp An SBP object with a payload to be decoded.
- */
-var MsgSsrGriddedCorrection = function (sbp, fields) {
-  SBP.call(this, sbp);
-  this.messageType = "MSG_SSR_GRIDDED_CORRECTION";
-  this.fields = (fields || this.parser.parse(sbp.payload));
-
-  return this;
-};
-MsgSsrGriddedCorrection.prototype = Object.create(SBP.prototype);
-MsgSsrGriddedCorrection.prototype.messageType = "MSG_SSR_GRIDDED_CORRECTION";
-MsgSsrGriddedCorrection.prototype.msg_type = 0x05FA;
-MsgSsrGriddedCorrection.prototype.constructor = MsgSsrGriddedCorrection;
-MsgSsrGriddedCorrection.prototype.parser = new Parser()
-  .endianess('little')
-  .nest('header', { type: GriddedCorrectionHeader.prototype.parser })
-  .nest('element', { type: GridElement.prototype.parser });
-MsgSsrGriddedCorrection.prototype.fieldSpec = [];
-MsgSsrGriddedCorrection.prototype.fieldSpec.push(['header', GriddedCorrectionHeader.prototype.fieldSpec]);
-MsgSsrGriddedCorrection.prototype.fieldSpec.push(['element', GridElement.prototype.fieldSpec]);
-
 module.exports = {
   CodeBiasesContent: CodeBiasesContent,
   PhaseBiasesContent: PhaseBiasesContent,
@@ -738,10 +745,10 @@ module.exports = {
   MsgSsrPhaseBiases: MsgSsrPhaseBiases,
   0x05EB: MsgSsrStecCorrection,
   MsgSsrStecCorrection: MsgSsrStecCorrection,
-  0x05F0: MsgSsrGriddedCorrectionDeprecated,
-  MsgSsrGriddedCorrectionDeprecated: MsgSsrGriddedCorrectionDeprecated,
-  0x05F5: MsgSsrGridDefinition,
-  MsgSsrGridDefinition: MsgSsrGridDefinition,
+  0x05F0: MsgSsrGriddedCorrectionDepA,
+  MsgSsrGriddedCorrectionDepA: MsgSsrGriddedCorrectionDepA,
   0x05FA: MsgSsrGriddedCorrection,
   MsgSsrGriddedCorrection: MsgSsrGriddedCorrection,
+  0x05F5: MsgSsrGridDefinition,
+  MsgSsrGridDefinition: MsgSsrGridDefinition,
 }

@@ -1194,34 +1194,51 @@ delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
     d.update(j)
     return d
     
-SBP_MSG_SSR_GRIDDED_CORRECTION_DEPRECATED = 0x05F0
-class MsgSsrGriddedCorrectionDeprecated(SBP):
-  """SBP class for message MSG_SSR_GRIDDED_CORRECTION_DEPRECATED (0x05F0).
+SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A = 0x05F0
+class MsgSsrGriddedCorrectionDepA(SBP):
+  """SBP class for message MSG_SSR_GRIDDED_CORRECTION_DEP_A (0x05F0).
 
-  You can have MSG_SSR_GRIDDED_CORRECTION_DEPRECATED inherit its fields directly
+  You can have MSG_SSR_GRIDDED_CORRECTION_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
-  This is here to make sure no one reuses this message ID.
-This was the ID of the old message before the structure
-was changed.
+  This message was deprecated when variances (stddev)
+were added.
 
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  header : GriddedCorrectionHeader
+    Header of a Gridded Correction message
+  element : GridElement
+    Tropo and STEC residuals for the given grid point
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
-  __slots__ = []
+  _parser = construct.Struct(
+                   'header' / construct.Struct(GriddedCorrectionHeader._parser),
+                   'element' / construct.Struct(GridElement._parser),)
+  __slots__ = [
+               'header',
+               'element',
+              ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgSsrGriddedCorrectionDeprecated,
+      super( MsgSsrGriddedCorrectionDepA,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
-      self.payload = sbp.payload
+      self.from_binary(sbp.payload)
     else:
-      super( MsgSsrGriddedCorrectionDeprecated, self).__init__()
-      self.msg_type = SBP_MSG_SSR_GRIDDED_CORRECTION_DEPRECATED
+      super( MsgSsrGriddedCorrectionDepA, self).__init__()
+      self.msg_type = SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A
       self.sender = kwargs.pop('sender', SENDER_ID)
-      self.payload = b""
+      self.header = kwargs.pop('header')
+      self.element = kwargs.pop('element')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1232,14 +1249,142 @@ was changed.
 
     """
     d = json.loads(s)
-    return MsgSsrGriddedCorrectionDeprecated.from_json_dict(d)
+    return MsgSsrGriddedCorrectionDepA.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgSsrGriddedCorrectionDeprecated(sbp, **d)
+    return MsgSsrGriddedCorrectionDepA(sbp, **d)
 
  
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrGriddedCorrectionDepA._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrGriddedCorrectionDepA._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrGriddedCorrectionDepA._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrGriddedCorrectionDepA, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SSR_GRIDDED_CORRECTION = 0x05FA
+class MsgSsrGriddedCorrection(SBP):
+  """SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
+
+  You can have MSG_SSR_GRIDDED_CORRECTION inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  STEC residuals are per space vehicle, tropo is not.
+It is typically equivalent to the QZSS CLAS Sub Type 9 messages
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  header : GriddedCorrectionHeader
+    Header of a Gridded Correction message
+  element : GridElement
+    Tropo and STEC residuals for the given grid point
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'header' / construct.Struct(GriddedCorrectionHeader._parser),
+                   'element' / construct.Struct(GridElement._parser),)
+  __slots__ = [
+               'header',
+               'element',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSsrGriddedCorrection,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrGriddedCorrection, self).__init__()
+      self.msg_type = SBP_MSG_SSR_GRIDDED_CORRECTION
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.header = kwargs.pop('header')
+      self.element = kwargs.pop('element')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrGriddedCorrection.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrGriddedCorrection(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrGriddedCorrection._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrGriddedCorrection._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrGriddedCorrection._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrGriddedCorrection, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
     
 SBP_MSG_SSR_GRID_DEFINITION = 0x05F5
 class MsgSsrGridDefinition(SBP):
@@ -1341,102 +1486,6 @@ valid and invalid (and vice versa) are encoded as u8 integers.
     d.update(j)
     return d
     
-SBP_MSG_SSR_GRIDDED_CORRECTION = 0x05FA
-class MsgSsrGriddedCorrection(SBP):
-  """SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
-
-  You can have MSG_SSR_GRIDDED_CORRECTION inherit its fields directly
-  from an inherited SBP object, or construct it inline using a dict
-  of its fields.
-
-  
-  STEC residuals are per space vehicle, tropo is not.
-It is typically equivalent to the QZSS CLAS Sub Type 9 messages
-
-
-  Parameters
-  ----------
-  sbp : SBP
-    SBP parent object to inherit from.
-  header : GriddedCorrectionHeader
-    Header of a Gridded Correction message
-  element : GridElement
-    Tropo and STEC residuals for the given grid point
-  sender : int
-    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
-
-  """
-  _parser = construct.Struct(
-                   'header' / construct.Struct(GriddedCorrectionHeader._parser),
-                   'element' / construct.Struct(GridElement._parser),)
-  __slots__ = [
-               'header',
-               'element',
-              ]
-
-  def __init__(self, sbp=None, **kwargs):
-    if sbp:
-      super( MsgSsrGriddedCorrection,
-             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
-                            sbp.payload, sbp.crc)
-      self.from_binary(sbp.payload)
-    else:
-      super( MsgSsrGriddedCorrection, self).__init__()
-      self.msg_type = SBP_MSG_SSR_GRIDDED_CORRECTION
-      self.sender = kwargs.pop('sender', SENDER_ID)
-      self.header = kwargs.pop('header')
-      self.element = kwargs.pop('element')
-
-  def __repr__(self):
-    return fmt_repr(self)
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    return MsgSsrGriddedCorrection.from_json_dict(d)
-
-  @staticmethod
-  def from_json_dict(d):
-    sbp = SBP.from_json_dict(d)
-    return MsgSsrGriddedCorrection(sbp, **d)
-
- 
-  def from_binary(self, d):
-    """Given a binary payload d, update the appropriate payload fields of
-    the message.
-
-    """
-    p = MsgSsrGriddedCorrection._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    """Produce a framed/packed SBP message.
-
-    """
-    c = containerize(exclude_fields(self))
-    self.payload = MsgSsrGriddedCorrection._parser.build(c)
-    return self.pack()
-
-  def into_buffer(self, buf, offset):
-    """Produce a framed/packed SBP message into the provided buffer and offset.
-
-    """
-    self.payload = containerize(exclude_fields(self))
-    self.parser = MsgSsrGriddedCorrection._parser
-    self.stream_payload.reset(buf, offset)
-    return self.pack_into(buf, offset, self._build_payload)
-
-  def to_json_dict(self):
-    self.to_binary()
-    d = super( MsgSsrGriddedCorrection, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return d
-    
 
 msg_classes = {
   0x05DD: MsgSsrOrbitClock,
@@ -1444,7 +1493,7 @@ msg_classes = {
   0x05E1: MsgSsrCodeBiases,
   0x05E6: MsgSsrPhaseBiases,
   0x05EB: MsgSsrStecCorrection,
-  0x05F0: MsgSsrGriddedCorrectionDeprecated,
-  0x05F5: MsgSsrGridDefinition,
+  0x05F0: MsgSsrGriddedCorrectionDepA,
   0x05FA: MsgSsrGriddedCorrection,
+  0x05F5: MsgSsrGridDefinition,
 }
