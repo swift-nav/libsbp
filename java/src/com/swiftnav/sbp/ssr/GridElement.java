@@ -28,10 +28,10 @@ public class GridElement extends SBPStruct {
     /** Index of the grid point */
     public int index;
     
-    /** Wet and hydrostatic vertical delays (mean, stddev) */
+    /** Wet and hydrostatic vertical delays */
     public TroposphericDelayCorrection tropo_delay_correction;
     
-    /** STEC residuals for each satellite (mean, stddev) */
+    /** STEC residuals for each satellite */
     public STECResidual[] stec_residuals;
     
 

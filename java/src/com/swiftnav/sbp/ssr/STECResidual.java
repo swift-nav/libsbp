@@ -31,9 +31,6 @@ public class STECResidual extends SBPStruct {
     /** STEC residual */
     public int residual;
     
-    /** stddev */
-    public int stddev;
-    
 
     public STECResidual () {}
 
@@ -42,7 +39,6 @@ public class STECResidual extends SBPStruct {
         /* Parse fields from binary */
         sv_id = new SvId().parse(parser);
         residual = parser.getS16();
-        stddev = parser.getU8();
         return this;
     }
 
@@ -51,7 +47,6 @@ public class STECResidual extends SBPStruct {
         /* Build fields into binary */
         sv_id.build(builder);
         builder.putS16(residual);
-        builder.putU8(stddev);
     }
 
     @Override
@@ -59,7 +54,6 @@ public class STECResidual extends SBPStruct {
         JSONObject obj = new JSONObject();
         obj.put("sv_id", sv_id.toJSON());
         obj.put("residual", residual);
-        obj.put("stddev", stddev);
         return obj;
     }
 }

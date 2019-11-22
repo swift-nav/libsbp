@@ -31,9 +31,6 @@ public class TroposphericDelayCorrection extends SBPStruct {
     /** Wet vertical delay */
     public int wet;
     
-    /** stddev */
-    public int stddev;
-    
 
     public TroposphericDelayCorrection () {}
 
@@ -42,7 +39,6 @@ public class TroposphericDelayCorrection extends SBPStruct {
         /* Parse fields from binary */
         hydro = parser.getS16();
         wet = parser.getS8();
-        stddev = parser.getU8();
         return this;
     }
 
@@ -51,7 +47,6 @@ public class TroposphericDelayCorrection extends SBPStruct {
         /* Build fields into binary */
         builder.putS16(hydro);
         builder.putS8(wet);
-        builder.putU8(stddev);
     }
 
     @Override
@@ -59,7 +54,6 @@ public class TroposphericDelayCorrection extends SBPStruct {
         JSONObject obj = new JSONObject();
         obj.put("hydro", hydro);
         obj.put("wet", wet);
-        obj.put("stddev", stddev);
         return obj;
     }
 }
