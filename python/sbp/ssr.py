@@ -304,8 +304,8 @@ but in units of TECU instead of m.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return STECSatElement.build(d)
     
-class TroposphericDelayCorrectionDepA(object):
-  """TroposphericDelayCorrectionDepA.
+class TroposphericDelayCorrection(object):
+  """TroposphericDelayCorrection.
   
   Troposphere vertical delays at the grid point.
 
@@ -337,53 +337,6 @@ class TroposphericDelayCorrectionDepA(object):
     return fmt_repr(self)
   
   def from_binary(self, d):
-    p = TroposphericDelayCorrectionDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return TroposphericDelayCorrectionDepA.build(d)
-    
-class TroposphericDelayCorrection(object):
-  """TroposphericDelayCorrection.
-  
-  Troposphere vertical delays (mean and standard deviation) at the grid
-point.
-
-  
-  Parameters
-  ----------
-  hydro : int
-    Hydrostatic vertical delay
-  wet : int
-    Wet vertical delay
-  stddev : int
-    stddev
-
-  """
-  _parser = construct.Embedded(construct.Struct(
-                     'hydro' / construct.Int16sl,
-                     'wet' / construct.Int8sl,
-                     'stddev' / construct.Int8ul,))
-  __slots__ = [
-               'hydro',
-               'wet',
-               'stddev',
-              ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.hydro = kwargs.pop('hydro')
-      self.wet = kwargs.pop('wet')
-      self.stddev = kwargs.pop('stddev')
-
-  def __repr__(self):
-    return fmt_repr(self)
-  
-  def from_binary(self, d):
     p = TroposphericDelayCorrection._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
@@ -392,8 +345,8 @@ point.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return TroposphericDelayCorrection.build(d)
     
-class STECResidualDepA(object):
-  """STECResidualDepA.
+class STECResidual(object):
+  """STECResidual.
   
   STEC residual for the given satellite at the grid point.
   
@@ -424,53 +377,6 @@ class STECResidualDepA(object):
     return fmt_repr(self)
   
   def from_binary(self, d):
-    p = STECResidualDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return STECResidualDepA.build(d)
-    
-class STECResidual(object):
-  """STECResidual.
-  
-  STEC residual (mean and standard deviation) for the given satellite
-at the grid point,
-
-  
-  Parameters
-  ----------
-  sv_id : SvId
-    space vehicle identifier
-  residual : int
-    STEC residual
-  stddev : int
-    stddev
-
-  """
-  _parser = construct.Embedded(construct.Struct(
-                     'sv_id' / construct.Struct(SvId._parser),
-                     'residual' / construct.Int16sl,
-                     'stddev' / construct.Int8ul,))
-  __slots__ = [
-               'sv_id',
-               'residual',
-               'stddev',
-              ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.sv_id = kwargs.pop('sv_id')
-      self.residual = kwargs.pop('residual')
-      self.stddev = kwargs.pop('stddev')
-
-  def __repr__(self):
-    return fmt_repr(self)
-  
-  def from_binary(self, d):
     p = STECResidual._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
@@ -479,8 +385,8 @@ at the grid point,
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return STECResidual.build(d)
     
-class GridElementDepA(object):
-  """GridElementDepA.
+class GridElement(object):
+  """GridElement.
   
   Contains one tropo delay, plus STEC residuals for each satellite at the
 grid point.
@@ -490,57 +396,10 @@ grid point.
   ----------
   index : int
     Index of the grid point
-  tropo_delay_correction : TroposphericDelayCorrectionDepA
+  tropo_delay_correction : TroposphericDelayCorrection
     Wet and hydrostatic vertical delays
   stec_residuals : array
     STEC residuals for each satellite
-
-  """
-  _parser = construct.Embedded(construct.Struct(
-                     'index' / construct.Int16ul,
-                     'tropo_delay_correction' / construct.Struct(TroposphericDelayCorrectionDepA._parser),
-                     construct.GreedyRange('stec_residuals' / construct.Struct(STECResidualDepA._parser)),))
-  __slots__ = [
-               'index',
-               'tropo_delay_correction',
-               'stec_residuals',
-              ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.index = kwargs.pop('index')
-      self.tropo_delay_correction = kwargs.pop('tropo_delay_correction')
-      self.stec_residuals = kwargs.pop('stec_residuals')
-
-  def __repr__(self):
-    return fmt_repr(self)
-  
-  def from_binary(self, d):
-    p = GridElementDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GridElementDepA.build(d)
-    
-class GridElement(object):
-  """GridElement.
-  
-  Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
-stddev) for each satellite at the grid point.
-
-  
-  Parameters
-  ----------
-  index : int
-    Index of the grid point
-  tropo_delay_correction : TroposphericDelayCorrection
-    Wet and hydrostatic vertical delays (mean, stddev)
-  stec_residuals : array
-    STEC residuals for each satellite (mean, stddev)
 
   """
   _parser = construct.Embedded(construct.Struct(
@@ -1325,105 +1184,9 @@ delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
     d.update(j)
     return d
     
-SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A = 0x05F0
-class MsgSsrGriddedCorrectionDepA(SBP):
-  """SBP class for message MSG_SSR_GRIDDED_CORRECTION_DEP_A (0x05F0).
-
-  You can have MSG_SSR_GRIDDED_CORRECTION_DEP_A inherit its fields directly
-  from an inherited SBP object, or construct it inline using a dict
-  of its fields.
-
-  
-  This message was deprecated when variances (stddev)
-were added.
-
-
-  Parameters
-  ----------
-  sbp : SBP
-    SBP parent object to inherit from.
-  header : GriddedCorrectionHeader
-    Header of a Gridded Correction message
-  element : GridElementDepA
-    Tropo and STEC residuals for the given grid point
-  sender : int
-    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
-
-  """
-  _parser = construct.Struct(
-                   'header' / construct.Struct(GriddedCorrectionHeader._parser),
-                   'element' / construct.Struct(GridElementDepA._parser),)
-  __slots__ = [
-               'header',
-               'element',
-              ]
-
-  def __init__(self, sbp=None, **kwargs):
-    if sbp:
-      super( MsgSsrGriddedCorrectionDepA,
-             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
-                            sbp.payload, sbp.crc)
-      self.from_binary(sbp.payload)
-    else:
-      super( MsgSsrGriddedCorrectionDepA, self).__init__()
-      self.msg_type = SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A
-      self.sender = kwargs.pop('sender', SENDER_ID)
-      self.header = kwargs.pop('header')
-      self.element = kwargs.pop('element')
-
-  def __repr__(self):
-    return fmt_repr(self)
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    return MsgSsrGriddedCorrectionDepA.from_json_dict(d)
-
-  @staticmethod
-  def from_json_dict(d):
-    sbp = SBP.from_json_dict(d)
-    return MsgSsrGriddedCorrectionDepA(sbp, **d)
-
- 
-  def from_binary(self, d):
-    """Given a binary payload d, update the appropriate payload fields of
-    the message.
-
-    """
-    p = MsgSsrGriddedCorrectionDepA._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    """Produce a framed/packed SBP message.
-
-    """
-    c = containerize(exclude_fields(self))
-    self.payload = MsgSsrGriddedCorrectionDepA._parser.build(c)
-    return self.pack()
-
-  def into_buffer(self, buf, offset):
-    """Produce a framed/packed SBP message into the provided buffer and offset.
-
-    """
-    self.payload = containerize(exclude_fields(self))
-    self.parser = MsgSsrGriddedCorrectionDepA._parser
-    self.stream_payload.reset(buf, offset)
-    return self.pack_into(buf, offset, self._build_payload)
-
-  def to_json_dict(self):
-    self.to_binary()
-    d = super( MsgSsrGriddedCorrectionDepA, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return d
-    
-SBP_MSG_SSR_GRIDDED_CORRECTION = 0x05FA
+SBP_MSG_SSR_GRIDDED_CORRECTION = 0x05F0
 class MsgSsrGriddedCorrection(SBP):
-  """SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
+  """SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05F0).
 
   You can have MSG_SSR_GRIDDED_CORRECTION inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -1441,9 +1204,7 @@ It is typically equivalent to the QZSS CLAS Sub Type 9 messages
   header : GriddedCorrectionHeader
     Header of a Gridded Correction message
   element : GridElement
-    Tropo and STEC residuals for the given grid point (mean
-and standard deviation)
-
+    Tropo and STEC residuals for the given grid point
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -1626,7 +1387,6 @@ msg_classes = {
   0x05E1: MsgSsrCodeBiases,
   0x05E6: MsgSsrPhaseBiases,
   0x05EB: MsgSsrStecCorrection,
-  0x05F0: MsgSsrGriddedCorrectionDepA,
-  0x05FA: MsgSsrGriddedCorrection,
+  0x05F0: MsgSsrGriddedCorrection,
   0x05F5: MsgSsrGridDefinition,
 }
