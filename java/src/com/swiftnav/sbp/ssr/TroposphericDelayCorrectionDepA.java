@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class TroposphericDelayCorrection extends SBPStruct {
+public class TroposphericDelayCorrectionDepA extends SBPStruct {
     
     /** Hydrostatic vertical delay */
     public int hydro;
@@ -31,18 +31,14 @@ public class TroposphericDelayCorrection extends SBPStruct {
     /** Wet vertical delay */
     public int wet;
     
-    /** stddev */
-    public int stddev;
-    
 
-    public TroposphericDelayCorrection () {}
+    public TroposphericDelayCorrectionDepA () {}
 
     @Override
-    public TroposphericDelayCorrection parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public TroposphericDelayCorrectionDepA parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         hydro = parser.getS16();
         wet = parser.getS8();
-        stddev = parser.getU8();
         return this;
     }
 
@@ -51,7 +47,6 @@ public class TroposphericDelayCorrection extends SBPStruct {
         /* Build fields into binary */
         builder.putS16(hydro);
         builder.putS8(wet);
-        builder.putU8(stddev);
     }
 
     @Override
@@ -59,7 +54,6 @@ public class TroposphericDelayCorrection extends SBPStruct {
         JSONObject obj = new JSONObject();
         obj.put("hydro", hydro);
         obj.put("wet", wet);
-        obj.put("stddev", stddev);
         return obj;
     }
 }
