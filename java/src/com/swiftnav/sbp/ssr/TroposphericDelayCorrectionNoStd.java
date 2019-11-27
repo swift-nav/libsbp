@@ -23,43 +23,37 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class GridElementDepA extends SBPStruct {
+public class TroposphericDelayCorrectionNoStd extends SBPStruct {
     
-    /** Index of the grid point */
-    public int index;
+    /** Hydrostatic vertical delay */
+    public int hydro;
     
-    /** Wet and hydrostatic vertical delays */
-    public TroposphericDelayCorrectionDepA tropo_delay_correction;
-    
-    /** STEC residuals for each satellite */
-    public STECResidualDepA[] stec_residuals;
+    /** Wet vertical delay */
+    public int wet;
     
 
-    public GridElementDepA () {}
+    public TroposphericDelayCorrectionNoStd () {}
 
     @Override
-    public GridElementDepA parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public TroposphericDelayCorrectionNoStd parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        index = parser.getU16();
-        tropo_delay_correction = new TroposphericDelayCorrectionDepA().parse(parser);
-        stec_residuals = parser.getArray(STECResidualDepA.class);
+        hydro = parser.getS16();
+        wet = parser.getS8();
         return this;
     }
 
     @Override
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
-        builder.putU16(index);
-        tropo_delay_correction.build(builder);
-        builder.putArray(stec_residuals);
+        builder.putS16(hydro);
+        builder.putS8(wet);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
-        obj.put("index", index);
-        obj.put("tropo_delay_correction", tropo_delay_correction.toJSON());
-        obj.put("stec_residuals", SBPStruct.toJSONArray(stec_residuals));
+        obj.put("hydro", hydro);
+        obj.put("wet", wet);
         return obj;
     }
 }

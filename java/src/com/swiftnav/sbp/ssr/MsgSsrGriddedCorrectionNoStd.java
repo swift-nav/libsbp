@@ -23,16 +23,16 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_SSR_GRIDDED_CORRECTION_DEP_A (0x05F0).
+/** SBP class for message MSG_SSR_GRIDDED_CORRECTION_NO_STD (0x05F0).
  *
- * You can have MSG_SSR_GRIDDED_CORRECTION_DEP_A inherent its fields directly from
+ * You can have MSG_SSR_GRIDDED_CORRECTION_NO_STD inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
  * This message was deprecated when variances (stddev)
  * were added. */
 
-public class MsgSsrGriddedCorrectionDepA extends SBPMessage {
+public class MsgSsrGriddedCorrectionNoStd extends SBPMessage {
     public static final int TYPE = 0x05F0;
 
     
@@ -40,12 +40,12 @@ public class MsgSsrGriddedCorrectionDepA extends SBPMessage {
     public GriddedCorrectionHeader header;
     
     /** Tropo and STEC residuals for the given grid point */
-    public GridElementDepA element;
+    public GridElementNoStd element;
     
 
-    public MsgSsrGriddedCorrectionDepA (int sender) { super(sender, TYPE); }
-    public MsgSsrGriddedCorrectionDepA () { super(TYPE); }
-    public MsgSsrGriddedCorrectionDepA (SBPMessage msg) throws SBPBinaryException {
+    public MsgSsrGriddedCorrectionNoStd (int sender) { super(sender, TYPE); }
+    public MsgSsrGriddedCorrectionNoStd () { super(TYPE); }
+    public MsgSsrGriddedCorrectionNoStd (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -54,7 +54,7 @@ public class MsgSsrGriddedCorrectionDepA extends SBPMessage {
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         header = new GriddedCorrectionHeader().parse(parser);
-        element = new GridElementDepA().parse(parser);
+        element = new GridElementNoStd().parse(parser);
     }
 
     @Override

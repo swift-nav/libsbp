@@ -304,10 +304,10 @@ class STECSatElement(object):
     ret += 2 * 4
     return ret
   
-class TroposphericDelayCorrectionDepA(object):
-  """SBP class for message TroposphericDelayCorrectionDepA
+class TroposphericDelayCorrectionNoStd(object):
+  """SBP class for message TroposphericDelayCorrectionNoStd
 
-  You can have TroposphericDelayCorrectionDepA inherit its fields directly
+  You can have TroposphericDelayCorrectionNoStd inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -393,10 +393,10 @@ point.
     ret += 1
     return ret
   
-class STECResidualDepA(object):
-  """SBP class for message STECResidualDepA
+class STECResidualNoStd(object):
+  """SBP class for message STECResidualNoStd
 
-  You can have STECResidualDepA inherit its fields directly
+  You can have STECResidualNoStd inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -481,10 +481,10 @@ at the grid point,
     ret += 1
     return ret
   
-class GridElementDepA(object):
-  """SBP class for message GridElementDepA
+class GridElementNoStd(object):
+  """SBP class for message GridElementNoStd
 
-  You can have GridElementDepA inherit its fields directly
+  You can have GridElementNoStd inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -503,9 +503,9 @@ grid point.
     ret = {}
     (__index, offset, length) = get_u16(buf, offset, length)
     ret['index'] = __index
-    (__tropo_delay_correction, offset, length) = TroposphericDelayCorrectionDepA.parse_members(buf, offset, length)
+    (__tropo_delay_correction, offset, length) = TroposphericDelayCorrectionNoStd.parse_members(buf, offset, length)
     ret['tropo_delay_correction'] = __tropo_delay_correction
-    (__stec_residuals, offset, length) = get_array(STECResidualDepA.parse_members)(buf, offset, length)
+    (__stec_residuals, offset, length) = get_array(STECResidualNoStd.parse_members)(buf, offset, length)
     ret['stec_residuals'] = __stec_residuals
     return ret, offset, length
 
@@ -523,9 +523,9 @@ grid point.
     ret = 0
     # index: u16
     ret += 2
-    # tropo_delay_correction: TroposphericDelayCorrectionDepA
-    ret += TroposphericDelayCorrectionDepA._payload_size()
-    # stec_residuals: array of STECResidualDepA
+    # tropo_delay_correction: TroposphericDelayCorrectionNoStd
+    ret += TroposphericDelayCorrectionNoStd._payload_size()
+    # stec_residuals: array of STECResidualNoStd
     ret += 247
     return ret
   
@@ -1074,11 +1074,11 @@ delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
     ret += 247
     return ret
   
-SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A = 0x05F0
-class MsgSsrGriddedCorrectionDepA(SBP):
-  """SBP class for message MSG_SSR_GRIDDED_CORRECTION_DEP_A (0x05F0).
+SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD = 0x05F0
+class MsgSsrGriddedCorrectionNoStd(SBP):
+  """SBP class for message MSG_SSR_GRIDDED_CORRECTION_NO_STD (0x05F0).
 
-  You can have MSG_SSR_GRIDDED_CORRECTION_DEP_A inherit its fields directly
+  You can have MSG_SSR_GRIDDED_CORRECTION_NO_STD inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -1096,7 +1096,7 @@ were added.
     ret = {}
     (__header, offset, length) = GriddedCorrectionHeader.parse_members(buf, offset, length)
     ret['header'] = __header
-    (__element, offset, length) = GridElementDepA.parse_members(buf, offset, length)
+    (__element, offset, length) = GridElementNoStd.parse_members(buf, offset, length)
     ret['element'] = __element
     return ret, offset, length
 
@@ -1113,8 +1113,8 @@ were added.
     ret = 0
     # header: GriddedCorrectionHeader
     ret += GriddedCorrectionHeader._payload_size()
-    # element: GridElementDepA
-    ret += GridElementDepA._payload_size()
+    # element: GridElementNoStd
+    ret += GridElementNoStd._payload_size()
     return ret
   
 SBP_MSG_SSR_GRIDDED_CORRECTION = 0x05FA
@@ -1210,7 +1210,7 @@ msg_classes = {
   0x05E1: MsgSsrCodeBiases,
   0x05E6: MsgSsrPhaseBiases,
   0x05EB: MsgSsrStecCorrection,
-  0x05F0: MsgSsrGriddedCorrectionDepA,
+  0x05F0: MsgSsrGriddedCorrectionNoStd,
   0x05FA: MsgSsrGriddedCorrection,
   0x05F5: MsgSsrGridDefinition,
 }

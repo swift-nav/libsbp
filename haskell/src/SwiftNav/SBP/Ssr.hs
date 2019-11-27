@@ -205,28 +205,28 @@ instance Binary STECSatElement where
 $(makeJSON "_sTECSatElement_" ''STECSatElement)
 $(makeLenses ''STECSatElement)
 
--- | TroposphericDelayCorrectionDepA.
+-- | TroposphericDelayCorrectionNoStd.
 --
 -- Troposphere vertical delays at the grid point.
-data TroposphericDelayCorrectionDepA = TroposphericDelayCorrectionDepA
-  { _troposphericDelayCorrectionDepA_hydro :: !Int16
+data TroposphericDelayCorrectionNoStd = TroposphericDelayCorrectionNoStd
+  { _troposphericDelayCorrectionNoStd_hydro :: !Int16
     -- ^ Hydrostatic vertical delay
-  , _troposphericDelayCorrectionDepA_wet :: !Int8
+  , _troposphericDelayCorrectionNoStd_wet :: !Int8
     -- ^ Wet vertical delay
   } deriving ( Show, Read, Eq )
 
-instance Binary TroposphericDelayCorrectionDepA where
+instance Binary TroposphericDelayCorrectionNoStd where
   get = do
-    _troposphericDelayCorrectionDepA_hydro <- fromIntegral <$> getWord16le
-    _troposphericDelayCorrectionDepA_wet <- fromIntegral <$> getWord8
-    pure TroposphericDelayCorrectionDepA {..}
+    _troposphericDelayCorrectionNoStd_hydro <- fromIntegral <$> getWord16le
+    _troposphericDelayCorrectionNoStd_wet <- fromIntegral <$> getWord8
+    pure TroposphericDelayCorrectionNoStd {..}
 
-  put TroposphericDelayCorrectionDepA {..} = do
-    (putWord16le . fromIntegral) _troposphericDelayCorrectionDepA_hydro
-    (putWord8 . fromIntegral) _troposphericDelayCorrectionDepA_wet
+  put TroposphericDelayCorrectionNoStd {..} = do
+    (putWord16le . fromIntegral) _troposphericDelayCorrectionNoStd_hydro
+    (putWord8 . fromIntegral) _troposphericDelayCorrectionNoStd_wet
 
-$(makeJSON "_troposphericDelayCorrectionDepA_" ''TroposphericDelayCorrectionDepA)
-$(makeLenses ''TroposphericDelayCorrectionDepA)
+$(makeJSON "_troposphericDelayCorrectionNoStd_" ''TroposphericDelayCorrectionNoStd)
+$(makeLenses ''TroposphericDelayCorrectionNoStd)
 
 -- | TroposphericDelayCorrection.
 --
@@ -255,28 +255,28 @@ instance Binary TroposphericDelayCorrection where
 $(makeJSON "_troposphericDelayCorrection_" ''TroposphericDelayCorrection)
 $(makeLenses ''TroposphericDelayCorrection)
 
--- | STECResidualDepA.
+-- | STECResidualNoStd.
 --
 -- STEC residual for the given satellite at the grid point.
-data STECResidualDepA = STECResidualDepA
-  { _sTECResidualDepA_sv_id  :: !SvId
+data STECResidualNoStd = STECResidualNoStd
+  { _sTECResidualNoStd_sv_id  :: !SvId
     -- ^ space vehicle identifier
-  , _sTECResidualDepA_residual :: !Int16
+  , _sTECResidualNoStd_residual :: !Int16
     -- ^ STEC residual
   } deriving ( Show, Read, Eq )
 
-instance Binary STECResidualDepA where
+instance Binary STECResidualNoStd where
   get = do
-    _sTECResidualDepA_sv_id <- get
-    _sTECResidualDepA_residual <- fromIntegral <$> getWord16le
-    pure STECResidualDepA {..}
+    _sTECResidualNoStd_sv_id <- get
+    _sTECResidualNoStd_residual <- fromIntegral <$> getWord16le
+    pure STECResidualNoStd {..}
 
-  put STECResidualDepA {..} = do
-    put _sTECResidualDepA_sv_id
-    (putWord16le . fromIntegral) _sTECResidualDepA_residual
+  put STECResidualNoStd {..} = do
+    put _sTECResidualNoStd_sv_id
+    (putWord16le . fromIntegral) _sTECResidualNoStd_residual
 
-$(makeJSON "_sTECResidualDepA_" ''STECResidualDepA)
-$(makeLenses ''STECResidualDepA)
+$(makeJSON "_sTECResidualNoStd_" ''STECResidualNoStd)
+$(makeLenses ''STECResidualNoStd)
 
 -- | STECResidual.
 --
@@ -306,33 +306,33 @@ instance Binary STECResidual where
 $(makeJSON "_sTECResidual_" ''STECResidual)
 $(makeLenses ''STECResidual)
 
--- | GridElementDepA.
+-- | GridElementNoStd.
 --
 -- Contains one tropo delay, plus STEC residuals for each satellite at the grid
 -- point.
-data GridElementDepA = GridElementDepA
-  { _gridElementDepA_index                :: !Word16
+data GridElementNoStd = GridElementNoStd
+  { _gridElementNoStd_index                :: !Word16
     -- ^ Index of the grid point
-  , _gridElementDepA_tropo_delay_correction :: !TroposphericDelayCorrectionDepA
+  , _gridElementNoStd_tropo_delay_correction :: !TroposphericDelayCorrectionNoStd
     -- ^ Wet and hydrostatic vertical delays
-  , _gridElementDepA_stec_residuals       :: ![STECResidualDepA]
+  , _gridElementNoStd_stec_residuals       :: ![STECResidualNoStd]
     -- ^ STEC residuals for each satellite
   } deriving ( Show, Read, Eq )
 
-instance Binary GridElementDepA where
+instance Binary GridElementNoStd where
   get = do
-    _gridElementDepA_index <- getWord16le
-    _gridElementDepA_tropo_delay_correction <- get
-    _gridElementDepA_stec_residuals <- whileM (not <$> isEmpty) get
-    pure GridElementDepA {..}
+    _gridElementNoStd_index <- getWord16le
+    _gridElementNoStd_tropo_delay_correction <- get
+    _gridElementNoStd_stec_residuals <- whileM (not <$> isEmpty) get
+    pure GridElementNoStd {..}
 
-  put GridElementDepA {..} = do
-    putWord16le _gridElementDepA_index
-    put _gridElementDepA_tropo_delay_correction
-    mapM_ put _gridElementDepA_stec_residuals
+  put GridElementNoStd {..} = do
+    putWord16le _gridElementNoStd_index
+    put _gridElementNoStd_tropo_delay_correction
+    mapM_ put _gridElementNoStd_stec_residuals
 
-$(makeJSON "_gridElementDepA_" ''GridElementDepA)
-$(makeLenses ''GridElementDepA)
+$(makeJSON "_gridElementNoStd_" ''GridElementNoStd)
+$(makeLenses ''GridElementNoStd)
 
 -- | GridElement.
 --
@@ -696,32 +696,32 @@ $(makeSBP 'msgSsrStecCorrection ''MsgSsrStecCorrection)
 $(makeJSON "_msgSsrStecCorrection_" ''MsgSsrStecCorrection)
 $(makeLenses ''MsgSsrStecCorrection)
 
-msgSsrGriddedCorrectionDepA :: Word16
-msgSsrGriddedCorrectionDepA = 0x05F0
+msgSsrGriddedCorrectionNoStd :: Word16
+msgSsrGriddedCorrectionNoStd = 0x05F0
 
--- | SBP class for message MSG_SSR_GRIDDED_CORRECTION_DEP_A (0x05F0).
+-- | SBP class for message MSG_SSR_GRIDDED_CORRECTION_NO_STD (0x05F0).
 --
 -- This message was deprecated when variances (stddev) were added.
-data MsgSsrGriddedCorrectionDepA = MsgSsrGriddedCorrectionDepA
-  { _msgSsrGriddedCorrectionDepA_header :: !GriddedCorrectionHeader
+data MsgSsrGriddedCorrectionNoStd = MsgSsrGriddedCorrectionNoStd
+  { _msgSsrGriddedCorrectionNoStd_header :: !GriddedCorrectionHeader
     -- ^ Header of a Gridded Correction message
-  , _msgSsrGriddedCorrectionDepA_element :: !GridElementDepA
+  , _msgSsrGriddedCorrectionNoStd_element :: !GridElementNoStd
     -- ^ Tropo and STEC residuals for the given grid point
   } deriving ( Show, Read, Eq )
 
-instance Binary MsgSsrGriddedCorrectionDepA where
+instance Binary MsgSsrGriddedCorrectionNoStd where
   get = do
-    _msgSsrGriddedCorrectionDepA_header <- get
-    _msgSsrGriddedCorrectionDepA_element <- get
-    pure MsgSsrGriddedCorrectionDepA {..}
+    _msgSsrGriddedCorrectionNoStd_header <- get
+    _msgSsrGriddedCorrectionNoStd_element <- get
+    pure MsgSsrGriddedCorrectionNoStd {..}
 
-  put MsgSsrGriddedCorrectionDepA {..} = do
-    put _msgSsrGriddedCorrectionDepA_header
-    put _msgSsrGriddedCorrectionDepA_element
+  put MsgSsrGriddedCorrectionNoStd {..} = do
+    put _msgSsrGriddedCorrectionNoStd_header
+    put _msgSsrGriddedCorrectionNoStd_element
 
-$(makeSBP 'msgSsrGriddedCorrectionDepA ''MsgSsrGriddedCorrectionDepA)
-$(makeJSON "_msgSsrGriddedCorrectionDepA_" ''MsgSsrGriddedCorrectionDepA)
-$(makeLenses ''MsgSsrGriddedCorrectionDepA)
+$(makeSBP 'msgSsrGriddedCorrectionNoStd ''MsgSsrGriddedCorrectionNoStd)
+$(makeJSON "_msgSsrGriddedCorrectionNoStd_" ''MsgSsrGriddedCorrectionNoStd)
+$(makeLenses ''MsgSsrGriddedCorrectionNoStd)
 
 msgSsrGriddedCorrection :: Word16
 msgSsrGriddedCorrection = 0x05FA

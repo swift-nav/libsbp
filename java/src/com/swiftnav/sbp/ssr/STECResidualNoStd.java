@@ -23,37 +23,37 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class TroposphericDelayCorrectionDepA extends SBPStruct {
+public class STECResidualNoStd extends SBPStruct {
     
-    /** Hydrostatic vertical delay */
-    public int hydro;
+    /** space vehicle identifier */
+    public SvId sv_id;
     
-    /** Wet vertical delay */
-    public int wet;
+    /** STEC residual */
+    public int residual;
     
 
-    public TroposphericDelayCorrectionDepA () {}
+    public STECResidualNoStd () {}
 
     @Override
-    public TroposphericDelayCorrectionDepA parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public STECResidualNoStd parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        hydro = parser.getS16();
-        wet = parser.getS8();
+        sv_id = new SvId().parse(parser);
+        residual = parser.getS16();
         return this;
     }
 
     @Override
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
-        builder.putS16(hydro);
-        builder.putS8(wet);
+        sv_id.build(builder);
+        builder.putS16(residual);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
-        obj.put("hydro", hydro);
-        obj.put("wet", wet);
+        obj.put("sv_id", sv_id.toJSON());
+        obj.put("residual", residual);
         return obj;
     }
 }

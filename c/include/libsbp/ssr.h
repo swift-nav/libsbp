@@ -116,7 +116,7 @@ but in units of TECU instead of m.
 typedef struct SBP_ATTR_PACKED {
   s16 hydro;    /**< Hydrostatic vertical delay [4 mm (add 2.3 m to get actual vertical hydro delay)] */
   s8 wet;      /**< Wet vertical delay [4 mm (add 0.252 m to get actual vertical wet delay)] */
-} tropospheric_delay_correction_dep_a_t;
+} tropospheric_delay_correction_no_std_t;
 
 
 /** None
@@ -140,7 +140,7 @@ stddev <= (3^class * (1 + value/16) - 1) mm
 typedef struct SBP_ATTR_PACKED {
   sv_id_t sv_id;       /**< space vehicle identifier */
   s16 residual;    /**< STEC residual [0.04 TECU] */
-} stec_residual_dep_a_t;
+} stec_residual_no_std_t;
 
 
 /** None
@@ -164,9 +164,9 @@ stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
  */
 typedef struct SBP_ATTR_PACKED {
   u16 index;                     /**< Index of the grid point */
-  tropospheric_delay_correction_dep_a_t tropo_delay_correction;    /**< Wet and hydrostatic vertical delays */
-  stec_residual_dep_a_t stec_residuals[0];         /**< STEC residuals for each satellite */
-} grid_element_dep_a_t;
+  tropospheric_delay_correction_no_std_t tropo_delay_correction;    /**< Wet and hydrostatic vertical delays */
+  stec_residual_no_std_t stec_residuals[0];         /**< STEC residuals for each satellite */
+} grid_element_no_std_t;
 
 
 /** Correction data for a single grid point.
@@ -207,7 +207,7 @@ typedef struct SBP_ATTR_PACKED {
  * ephemeris and is typically an equivalent to the 1060
  * and 1066 RTCM message types
  */
-#define SBP_MSG_SSR_ORBIT_CLOCK              0x05DD
+#define SBP_MSG_SSR_ORBIT_CLOCK               0x05DD
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;               /**< GNSS reference time of the correction */
   sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
@@ -238,7 +238,7 @@ generating configuration
  * ephemeris and is typically an equivalent to the 1060
  * and 1066 RTCM message types
  */
-#define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A        0x05DC
+#define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A         0x05DC
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;               /**< GNSS reference time of the correction */
   sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
@@ -269,7 +269,7 @@ generating configuration
  * to get corrected pseudorange. It is typically
  * an equivalent to the 1059 and 1065 RTCM message types
  */
-#define SBP_MSG_SSR_CODE_BIASES              0x05E1
+#define SBP_MSG_SSR_CODE_BIASES               0x05E1
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;               /**< GNSS reference time of the correction */
   sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
@@ -293,7 +293,7 @@ generating configuration
  * the phase wind-up correction.
  * It is typically an equivalent to the 1265 RTCM message types
  */
-#define SBP_MSG_SSR_PHASE_BIASES             0x05E6
+#define SBP_MSG_SSR_PHASE_BIASES              0x05E6
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;               /**< GNSS reference time of the correction */
   sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
@@ -323,7 +323,7 @@ satellite being tracked.
  * message to get the state space representation of the atmospheric
  * delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
  */
-#define SBP_MSG_SSR_STEC_CORRECTION          0x05EB
+#define SBP_MSG_SSR_STEC_CORRECTION           0x05EB
 typedef struct SBP_ATTR_PACKED {
   stec_header_t header;           /**< Header of a STEC message */
   stec_sat_element_t stec_sat_list[0]; /**< Array of STEC information for each space vehicle */
@@ -335,11 +335,11 @@ typedef struct SBP_ATTR_PACKED {
  * This message was deprecated when variances (stddev)
  * were added.
  */
-#define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A 0x05F0
+#define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD 0x05F0
 typedef struct SBP_ATTR_PACKED {
   gridded_correction_header_t header;     /**< Header of a Gridded Correction message */
-  grid_element_dep_a_t element;    /**< Tropo and STEC residuals for the given grid point */
-} msg_ssr_gridded_correction_dep_a_t;
+  grid_element_no_std_t element;    /**< Tropo and STEC residuals for the given grid point */
+} msg_ssr_gridded_correction_no_std_t;
 
 
 /** Gridded troposphere and STEC residuals
@@ -347,7 +347,7 @@ typedef struct SBP_ATTR_PACKED {
  * STEC residuals are per space vehicle, tropo is not.
  * It is typically equivalent to the QZSS CLAS Sub Type 9 messages
  */
-#define SBP_MSG_SSR_GRIDDED_CORRECTION       0x05FA
+#define SBP_MSG_SSR_GRIDDED_CORRECTION        0x05FA
 typedef struct SBP_ATTR_PACKED {
   gridded_correction_header_t header;     /**< Header of a Gridded Correction message */
   grid_element_t element;    /**< Tropo and STEC residuals for the given grid point (mean
@@ -361,7 +361,7 @@ and standard deviation)
  * Based on the 3GPP proposal R2-1906781 which is in turn based on
  * OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
  */
-#define SBP_MSG_SSR_GRID_DEFINITION          0x05F5
+#define SBP_MSG_SSR_GRID_DEFINITION           0x05F5
 typedef struct SBP_ATTR_PACKED {
   grid_definition_header_t header;      /**< Header of a Gridded Correction message */
   u8 rle_list[0]; /**< Run Length Encode list of quadrants that contain valid data.

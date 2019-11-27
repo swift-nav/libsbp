@@ -304,8 +304,8 @@ but in units of TECU instead of m.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return STECSatElement.build(d)
     
-class TroposphericDelayCorrectionDepA(object):
-  """TroposphericDelayCorrectionDepA.
+class TroposphericDelayCorrectionNoStd(object):
+  """TroposphericDelayCorrectionNoStd.
   
   Troposphere vertical delays at the grid point.
 
@@ -337,13 +337,13 @@ class TroposphericDelayCorrectionDepA(object):
     return fmt_repr(self)
   
   def from_binary(self, d):
-    p = TroposphericDelayCorrectionDepA._parser.parse(d)
+    p = TroposphericDelayCorrectionNoStd._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return TroposphericDelayCorrectionDepA.build(d)
+    return TroposphericDelayCorrectionNoStd.build(d)
     
 class TroposphericDelayCorrection(object):
   """TroposphericDelayCorrection.
@@ -392,8 +392,8 @@ point.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return TroposphericDelayCorrection.build(d)
     
-class STECResidualDepA(object):
-  """STECResidualDepA.
+class STECResidualNoStd(object):
+  """STECResidualNoStd.
   
   STEC residual for the given satellite at the grid point.
   
@@ -424,13 +424,13 @@ class STECResidualDepA(object):
     return fmt_repr(self)
   
   def from_binary(self, d):
-    p = STECResidualDepA._parser.parse(d)
+    p = STECResidualNoStd._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return STECResidualDepA.build(d)
+    return STECResidualNoStd.build(d)
     
 class STECResidual(object):
   """STECResidual.
@@ -479,8 +479,8 @@ at the grid point,
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return STECResidual.build(d)
     
-class GridElementDepA(object):
-  """GridElementDepA.
+class GridElementNoStd(object):
+  """GridElementNoStd.
   
   Contains one tropo delay, plus STEC residuals for each satellite at the
 grid point.
@@ -490,7 +490,7 @@ grid point.
   ----------
   index : int
     Index of the grid point
-  tropo_delay_correction : TroposphericDelayCorrectionDepA
+  tropo_delay_correction : TroposphericDelayCorrectionNoStd
     Wet and hydrostatic vertical delays
   stec_residuals : array
     STEC residuals for each satellite
@@ -498,8 +498,8 @@ grid point.
   """
   _parser = construct.Embedded(construct.Struct(
                      'index' / construct.Int16ul,
-                     'tropo_delay_correction' / construct.Struct(TroposphericDelayCorrectionDepA._parser),
-                     construct.GreedyRange('stec_residuals' / construct.Struct(STECResidualDepA._parser)),))
+                     'tropo_delay_correction' / construct.Struct(TroposphericDelayCorrectionNoStd._parser),
+                     construct.GreedyRange('stec_residuals' / construct.Struct(STECResidualNoStd._parser)),))
   __slots__ = [
                'index',
                'tropo_delay_correction',
@@ -518,13 +518,13 @@ grid point.
     return fmt_repr(self)
   
   def from_binary(self, d):
-    p = GridElementDepA._parser.parse(d)
+    p = GridElementNoStd._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
   def to_binary(self):
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GridElementDepA.build(d)
+    return GridElementNoStd.build(d)
     
 class GridElement(object):
   """GridElement.
@@ -1325,11 +1325,11 @@ delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
     d.update(j)
     return d
     
-SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A = 0x05F0
-class MsgSsrGriddedCorrectionDepA(SBP):
-  """SBP class for message MSG_SSR_GRIDDED_CORRECTION_DEP_A (0x05F0).
+SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD = 0x05F0
+class MsgSsrGriddedCorrectionNoStd(SBP):
+  """SBP class for message MSG_SSR_GRIDDED_CORRECTION_NO_STD (0x05F0).
 
-  You can have MSG_SSR_GRIDDED_CORRECTION_DEP_A inherit its fields directly
+  You can have MSG_SSR_GRIDDED_CORRECTION_NO_STD inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -1344,7 +1344,7 @@ were added.
     SBP parent object to inherit from.
   header : GriddedCorrectionHeader
     Header of a Gridded Correction message
-  element : GridElementDepA
+  element : GridElementNoStd
     Tropo and STEC residuals for the given grid point
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
@@ -1352,7 +1352,7 @@ were added.
   """
   _parser = construct.Struct(
                    'header' / construct.Struct(GriddedCorrectionHeader._parser),
-                   'element' / construct.Struct(GridElementDepA._parser),)
+                   'element' / construct.Struct(GridElementNoStd._parser),)
   __slots__ = [
                'header',
                'element',
@@ -1360,13 +1360,13 @@ were added.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgSsrGriddedCorrectionDepA,
+      super( MsgSsrGriddedCorrectionNoStd,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgSsrGriddedCorrectionDepA, self).__init__()
-      self.msg_type = SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A
+      super( MsgSsrGriddedCorrectionNoStd, self).__init__()
+      self.msg_type = SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.header = kwargs.pop('header')
       self.element = kwargs.pop('element')
@@ -1380,12 +1380,12 @@ were added.
 
     """
     d = json.loads(s)
-    return MsgSsrGriddedCorrectionDepA.from_json_dict(d)
+    return MsgSsrGriddedCorrectionNoStd.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgSsrGriddedCorrectionDepA(sbp, **d)
+    return MsgSsrGriddedCorrectionNoStd(sbp, **d)
 
  
   def from_binary(self, d):
@@ -1393,7 +1393,7 @@ were added.
     the message.
 
     """
-    p = MsgSsrGriddedCorrectionDepA._parser.parse(d)
+    p = MsgSsrGriddedCorrectionNoStd._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -1402,7 +1402,7 @@ were added.
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgSsrGriddedCorrectionDepA._parser.build(c)
+    self.payload = MsgSsrGriddedCorrectionNoStd._parser.build(c)
     return self.pack()
 
   def into_buffer(self, buf, offset):
@@ -1410,13 +1410,13 @@ were added.
 
     """
     self.payload = containerize(exclude_fields(self))
-    self.parser = MsgSsrGriddedCorrectionDepA._parser
+    self.parser = MsgSsrGriddedCorrectionNoStd._parser
     self.stream_payload.reset(buf, offset)
     return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgSsrGriddedCorrectionDepA, self).to_json_dict()
+    d = super( MsgSsrGriddedCorrectionNoStd, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -1626,7 +1626,7 @@ msg_classes = {
   0x05E1: MsgSsrCodeBiases,
   0x05E6: MsgSsrPhaseBiases,
   0x05EB: MsgSsrStecCorrection,
-  0x05F0: MsgSsrGriddedCorrectionDepA,
+  0x05F0: MsgSsrGriddedCorrectionNoStd,
   0x05FA: MsgSsrGriddedCorrection,
   0x05F5: MsgSsrGridDefinition,
 }
