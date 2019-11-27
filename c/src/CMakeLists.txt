@@ -33,6 +33,7 @@ set(libsbp_SRCS
   )
 
 add_library(sbp ${libsbp_SRCS})
+add_library(swiftnav::sbp ALIAS sbp)
 
 if(MSVC)
     separate_arguments(LIBSBP_COMPILER_OPTIONS WINDOWS_COMMAND ${LIBSBP_CFLAGS})
