@@ -28,7 +28,9 @@ encodeLine :: SBPMsg -> ByteString
 encodeLine v = toStrict $ encode v <> "\n"
 
 main :: IO ()
-main =
+main = do
+  hSetBuffering stdin NoBuffering
+  hSetBuffering stdout NoBuffering
   runResourceT $
     sourceHandle stdin
       =$= conduitDecode
