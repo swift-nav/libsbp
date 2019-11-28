@@ -58,6 +58,8 @@ class State {
     writer_ = writer;
   }
 
+  virtual ~State() = default;
+
   sbp_state_t *get_state() { return &state_; }
 
   void set_reader(IReader *reader) { reader_ = reader; }
