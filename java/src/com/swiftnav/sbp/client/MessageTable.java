@@ -74,6 +74,14 @@ import com.swiftnav.sbp.navigation.MsgVelECEF;
 import com.swiftnav.sbp.navigation.MsgVelECEFCov;
 import com.swiftnav.sbp.navigation.MsgVelNED;
 import com.swiftnav.sbp.navigation.MsgVelNEDCov;
+import com.swiftnav.sbp.navigation.MsgPosECEFGnss;
+import com.swiftnav.sbp.navigation.MsgPosECEFCovGnss;
+import com.swiftnav.sbp.navigation.MsgPosLLHGnss;
+import com.swiftnav.sbp.navigation.MsgPosLLHCovGnss;
+import com.swiftnav.sbp.navigation.MsgVelECEFGnss;
+import com.swiftnav.sbp.navigation.MsgVelECEFCovGnss;
+import com.swiftnav.sbp.navigation.MsgVelNEDGnss;
+import com.swiftnav.sbp.navigation.MsgVelNEDCovGnss;
 import com.swiftnav.sbp.navigation.MsgVelBody;
 import com.swiftnav.sbp.navigation.MsgAgeCorrections;
 import com.swiftnav.sbp.navigation.MsgGPSTimeDepA;
@@ -311,6 +319,22 @@ final class MessageTable {
                 return new MsgVelNED(msg);
             case MsgVelNEDCov.TYPE:
                 return new MsgVelNEDCov(msg);
+            case MsgPosECEFGnss.TYPE:
+                return new MsgPosECEFGnss(msg);
+            case MsgPosECEFCovGnss.TYPE:
+                return new MsgPosECEFCovGnss(msg);
+            case MsgPosLLHGnss.TYPE:
+                return new MsgPosLLHGnss(msg);
+            case MsgPosLLHCovGnss.TYPE:
+                return new MsgPosLLHCovGnss(msg);
+            case MsgVelECEFGnss.TYPE:
+                return new MsgVelECEFGnss(msg);
+            case MsgVelECEFCovGnss.TYPE:
+                return new MsgVelECEFCovGnss(msg);
+            case MsgVelNEDGnss.TYPE:
+                return new MsgVelNEDGnss(msg);
+            case MsgVelNEDCovGnss.TYPE:
+                return new MsgVelNEDCovGnss(msg);
             case MsgVelBody.TYPE:
                 return new MsgVelBody(msg);
             case MsgAgeCorrections.TYPE:

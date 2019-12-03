@@ -346,6 +346,200 @@ typedef struct SBP_ATTR_PACKED {
 } msg_vel_ned_cov_t;
 
 
+/** GNSS-only Position in ECEF
+ *
+ * The position solution message reports absolute Earth Centered
+ * Earth Fixed (ECEF) coordinates and the status (single point vs
+ * pseudo-absolute RTK) of the position solution. If the rover
+ * receiver knows the surveyed position of the base station and has
+ * an RTK solution, this reports a pseudo-absolute position
+ * solution using the base station position and the rover's RTK
+ * baseline vector. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+#define SBP_MSG_POS_ECEF_GNSS          0x0229
+typedef struct SBP_ATTR_PACKED {
+  u32 tow;         /**< GPS Time of Week [ms] */
+  double x;           /**< ECEF X coordinate [m] */
+  double y;           /**< ECEF Y coordinate [m] */
+  double z;           /**< ECEF Z coordinate [m] */
+  u16 accuracy;    /**< Position estimated standard deviation [mm] */
+  u8 n_sats;      /**< Number of satellites used in solution */
+  u8 flags;       /**< Status flags */
+} msg_pos_ecef_gnss_t;
+
+
+/** GNSS-only Position in ECEF
+ *
+ * The position solution message reports absolute Earth Centered
+ * Earth Fixed (ECEF) coordinates and the status (single point vs
+ * pseudo-absolute RTK) of the position solution. The message also
+ * reports the upper triangular portion of the 3x3 covariance matrix.
+ * If the receiver knows the surveyed position of the base station and has
+ * an RTK solution, this reports a pseudo-absolute position
+ * solution using the base station position and the rover's RTK
+ * baseline vector. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+#define SBP_MSG_POS_ECEF_COV_GNSS      0x0234
+typedef struct SBP_ATTR_PACKED {
+  u32 tow;        /**< GPS Time of Week [ms] */
+  double x;          /**< ECEF X coordinate [m] */
+  double y;          /**< ECEF Y coordinate [m] */
+  double z;          /**< ECEF Z coordinate [m] */
+  float cov_x_x;    /**< Estimated variance of x [m^2] */
+  float cov_x_y;    /**< Estimated covariance of x and y [m^2] */
+  float cov_x_z;    /**< Estimated covariance of x and z [m^2] */
+  float cov_y_y;    /**< Estimated variance of y [m^2] */
+  float cov_y_z;    /**< Estimated covariance of y and z [m^2] */
+  float cov_z_z;    /**< Estimated variance of z [m^2] */
+  u8 n_sats;     /**< Number of satellites used in solution */
+  u8 flags;      /**< Status flags */
+} msg_pos_ecef_cov_gnss_t;
+
+
+/** GNSS-only Geodetic Position
+ *
+ * This position solution message reports the absolute geodetic
+ * coordinates and the status (single point vs pseudo-absolute RTK)
+ * of the position solution. If the rover receiver knows the
+ * surveyed position of the base station and has an RTK solution,
+ * this reports a pseudo-absolute position solution using the base
+ * station position and the rover's RTK baseline vector. The full
+ * GPS time is given by the preceding MSG_GPS_TIME with the
+ * matching time-of-week (tow).
+ */
+#define SBP_MSG_POS_LLH_GNSS           0x022A
+typedef struct SBP_ATTR_PACKED {
+  u32 tow;           /**< GPS Time of Week [ms] */
+  double lat;           /**< Latitude [deg] */
+  double lon;           /**< Longitude [deg] */
+  double height;        /**< Height above WGS84 ellipsoid [m] */
+  u16 h_accuracy;    /**< Horizontal position estimated standard deviation [mm] */
+  u16 v_accuracy;    /**< Vertical position estimated standard deviation [mm] */
+  u8 n_sats;        /**< Number of satellites used in solution. */
+  u8 flags;         /**< Status flags */
+} msg_pos_llh_gnss_t;
+
+
+/** GNSS-only Geodetic Position
+ *
+ * This position solution message reports the absolute geodetic
+ * coordinates and the status (single point vs pseudo-absolute RTK)
+ * of the position solution as well as the upper triangle of the 3x3
+ * covariance matrix.  The position information and Fix Mode flags should
+ * follow the MSG_POS_LLH message.  Since the covariance matrix is computed
+ * in the local-level North, East, Down frame, the covariance terms follow
+ * with that convention. Thus, covariances are reported against the "downward"
+ * measurement and care should be taken with the sign convention.
+ */
+#define SBP_MSG_POS_LLH_COV_GNSS       0x0231
+typedef struct SBP_ATTR_PACKED {
+  u32 tow;        /**< GPS Time of Week [ms] */
+  double lat;        /**< Latitude [deg] */
+  double lon;        /**< Longitude [deg] */
+  double height;     /**< Height above WGS84 ellipsoid [m] */
+  float cov_n_n;    /**< Estimated variance of northing [m^2] */
+  float cov_n_e;    /**< Covariance of northing and easting [m^2] */
+  float cov_n_d;    /**< Covariance of northing and downward measurement [m^2] */
+  float cov_e_e;    /**< Estimated variance of easting [m^2] */
+  float cov_e_d;    /**< Covariance of easting and downward measurement [m^2] */
+  float cov_d_d;    /**< Estimated variance of downward measurement [m^2] */
+  u8 n_sats;     /**< Number of satellites used in solution. */
+  u8 flags;      /**< Status flags */
+} msg_pos_llh_cov_gnss_t;
+
+
+/** GNSS-only Velocity in ECEF
+ *
+ * This message reports the velocity in Earth Centered Earth Fixed
+ * (ECEF) coordinates. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+#define SBP_MSG_VEL_ECEF_GNSS          0x022D
+typedef struct SBP_ATTR_PACKED {
+  u32 tow;         /**< GPS Time of Week [ms] */
+  s32 x;           /**< Velocity ECEF X coordinate [mm/s] */
+  s32 y;           /**< Velocity ECEF Y coordinate [mm/s] */
+  s32 z;           /**< Velocity ECEF Z coordinate [mm/s] */
+  u16 accuracy;    /**< Velocity estimated standard deviation
+ [mm/s] */
+  u8 n_sats;      /**< Number of satellites used in solution */
+  u8 flags;       /**< Status flags */
+} msg_vel_ecef_gnss_t;
+
+
+/** GNSS-only Velocity in ECEF
+ *
+ * This message reports the velocity in Earth Centered Earth Fixed
+ * (ECEF) coordinates. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+#define SBP_MSG_VEL_ECEF_COV_GNSS      0x0235
+typedef struct SBP_ATTR_PACKED {
+  u32 tow;        /**< GPS Time of Week [ms] */
+  s32 x;          /**< Velocity ECEF X coordinate [mm/s] */
+  s32 y;          /**< Velocity ECEF Y coordinate [mm/s] */
+  s32 z;          /**< Velocity ECEF Z coordinate [mm/s] */
+  float cov_x_x;    /**< Estimated variance of x [m^2/s^2] */
+  float cov_x_y;    /**< Estimated covariance of x and y [m^2/s^2] */
+  float cov_x_z;    /**< Estimated covariance of x and z [m^2/s^2] */
+  float cov_y_y;    /**< Estimated variance of y [m^2/s^2] */
+  float cov_y_z;    /**< Estimated covariance of y and z [m^2/s^2] */
+  float cov_z_z;    /**< Estimated variance of z [m^2/s^2] */
+  u8 n_sats;     /**< Number of satellites used in solution */
+  u8 flags;      /**< Status flags */
+} msg_vel_ecef_cov_gnss_t;
+
+
+/** GNSS-only Velocity in NED
+ *
+ * This message reports the velocity in local North East Down (NED)
+ * coordinates. The NED coordinate system is defined as the local WGS84
+ * tangent plane centered at the current position. The full GPS time is
+ * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+#define SBP_MSG_VEL_NED_GNSS           0x022E
+typedef struct SBP_ATTR_PACKED {
+  u32 tow;           /**< GPS Time of Week [ms] */
+  s32 n;             /**< Velocity North coordinate [mm/s] */
+  s32 e;             /**< Velocity East coordinate [mm/s] */
+  s32 d;             /**< Velocity Down coordinate [mm/s] */
+  u16 h_accuracy;    /**< Horizontal velocity estimated standard deviation
+ [mm/s] */
+  u16 v_accuracy;    /**< Vertical velocity estimated standard deviation
+ [mm/s] */
+  u8 n_sats;        /**< Number of satellites used in solution */
+  u8 flags;         /**< Status flags */
+} msg_vel_ned_gnss_t;
+
+
+/** GNSS-only Velocity in NED
+ *
+ * This message reports the velocity in local North East Down (NED)
+ * coordinates. The NED coordinate system is defined as the local WGS84
+ * tangent plane centered at the current position. The full GPS time is
+ * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * This message is similar to the MSG_VEL_NED, but it includes the upper triangular
+ * portion of the 3x3 covariance matrix.
+ */
+#define SBP_MSG_VEL_NED_COV_GNSS       0x0232
+typedef struct SBP_ATTR_PACKED {
+  u32 tow;        /**< GPS Time of Week [ms] */
+  s32 n;          /**< Velocity North coordinate [mm/s] */
+  s32 e;          /**< Velocity East coordinate [mm/s] */
+  s32 d;          /**< Velocity Down coordinate [mm/s] */
+  float cov_n_n;    /**< Estimated variance of northward measurement [m^2] */
+  float cov_n_e;    /**< Covariance of northward and eastward measurement [m^2] */
+  float cov_n_d;    /**< Covariance of northward and downward measurement [m^2] */
+  float cov_e_e;    /**< Estimated variance of eastward measurement [m^2] */
+  float cov_e_d;    /**< Covariance of eastward and downward measurement [m^2] */
+  float cov_d_d;    /**< Estimated variance of downward measurement [m^2] */
+  u8 n_sats;     /**< Number of satellites used in solution */
+  u8 flags;      /**< Status flags */
+} msg_vel_ned_cov_gnss_t;
+
+
 /** Velocity in User Frame
  *
  * This message reports the velocity in the Vehicle Body Frame. By convention,

@@ -1179,6 +1179,755 @@ portion of the 3x3 covariance matrix.
     ret += 1
     return ret
   
+SBP_MSG_POS_ECEF_GNSS = 0x0229
+class MsgPosECEFGnss(SBP):
+  """SBP class for message MSG_POS_ECEF_GNSS (0x0229).
+
+  You can have MSG_POS_ECEF_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The position solution message reports absolute Earth Centered
+Earth Fixed (ECEF) coordinates and the status (single point vs
+pseudo-absolute RTK) of the position solution. If the rover
+receiver knows the surveyed position of the base station and has
+an RTK solution, this reports a pseudo-absolute position
+solution using the base station position and the rover's RTK
+baseline vector. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).
+
+
+  """
+  __slots__ = ['tow',
+               'x',
+               'y',
+               'z',
+               'accuracy',
+               'n_sats',
+               'flags',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__x, offset, length) = get_f64(buf, offset, length)
+    ret['x'] = __x
+    (__y, offset, length) = get_f64(buf, offset, length)
+    ret['y'] = __y
+    (__z, offset, length) = get_f64(buf, offset, length)
+    ret['z'] = __z
+    (__accuracy, offset, length) = get_u16(buf, offset, length)
+    ret['accuracy'] = __accuracy
+    (__n_sats, offset, length) = get_u8(buf, offset, length)
+    ret['n_sats'] = __n_sats
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.tow = res['tow']
+    self.x = res['x']
+    self.y = res['y']
+    self.z = res['z']
+    self.accuracy = res['accuracy']
+    self.n_sats = res['n_sats']
+    self.flags = res['flags']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tow: u32
+    ret += 4
+    # x: double
+    ret += 8
+    # y: double
+    ret += 8
+    # z: double
+    ret += 8
+    # accuracy: u16
+    ret += 2
+    # n_sats: u8
+    ret += 1
+    # flags: u8
+    ret += 1
+    return ret
+  
+SBP_MSG_POS_ECEF_COV_GNSS = 0x0234
+class MsgPosECEFCovGnss(SBP):
+  """SBP class for message MSG_POS_ECEF_COV_GNSS (0x0234).
+
+  You can have MSG_POS_ECEF_COV_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The position solution message reports absolute Earth Centered
+Earth Fixed (ECEF) coordinates and the status (single point vs
+pseudo-absolute RTK) of the position solution. The message also
+reports the upper triangular portion of the 3x3 covariance matrix.
+If the receiver knows the surveyed position of the base station and has
+an RTK solution, this reports a pseudo-absolute position
+solution using the base station position and the rover's RTK
+baseline vector. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).
+
+
+  """
+  __slots__ = ['tow',
+               'x',
+               'y',
+               'z',
+               'cov_x_x',
+               'cov_x_y',
+               'cov_x_z',
+               'cov_y_y',
+               'cov_y_z',
+               'cov_z_z',
+               'n_sats',
+               'flags',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__x, offset, length) = get_f64(buf, offset, length)
+    ret['x'] = __x
+    (__y, offset, length) = get_f64(buf, offset, length)
+    ret['y'] = __y
+    (__z, offset, length) = get_f64(buf, offset, length)
+    ret['z'] = __z
+    (__cov_x_x, offset, length) = get_f32(buf, offset, length)
+    ret['cov_x_x'] = judicious_round(np.float32(__cov_x_x)) if SBP.judicious_rounding else __cov_x_x
+    (__cov_x_y, offset, length) = get_f32(buf, offset, length)
+    ret['cov_x_y'] = judicious_round(np.float32(__cov_x_y)) if SBP.judicious_rounding else __cov_x_y
+    (__cov_x_z, offset, length) = get_f32(buf, offset, length)
+    ret['cov_x_z'] = judicious_round(np.float32(__cov_x_z)) if SBP.judicious_rounding else __cov_x_z
+    (__cov_y_y, offset, length) = get_f32(buf, offset, length)
+    ret['cov_y_y'] = judicious_round(np.float32(__cov_y_y)) if SBP.judicious_rounding else __cov_y_y
+    (__cov_y_z, offset, length) = get_f32(buf, offset, length)
+    ret['cov_y_z'] = judicious_round(np.float32(__cov_y_z)) if SBP.judicious_rounding else __cov_y_z
+    (__cov_z_z, offset, length) = get_f32(buf, offset, length)
+    ret['cov_z_z'] = judicious_round(np.float32(__cov_z_z)) if SBP.judicious_rounding else __cov_z_z
+    (__n_sats, offset, length) = get_u8(buf, offset, length)
+    ret['n_sats'] = __n_sats
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.tow = res['tow']
+    self.x = res['x']
+    self.y = res['y']
+    self.z = res['z']
+    self.cov_x_x = res['cov_x_x']
+    self.cov_x_y = res['cov_x_y']
+    self.cov_x_z = res['cov_x_z']
+    self.cov_y_y = res['cov_y_y']
+    self.cov_y_z = res['cov_y_z']
+    self.cov_z_z = res['cov_z_z']
+    self.n_sats = res['n_sats']
+    self.flags = res['flags']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tow: u32
+    ret += 4
+    # x: double
+    ret += 8
+    # y: double
+    ret += 8
+    # z: double
+    ret += 8
+    # cov_x_x: float
+    ret += 4
+    # cov_x_y: float
+    ret += 4
+    # cov_x_z: float
+    ret += 4
+    # cov_y_y: float
+    ret += 4
+    # cov_y_z: float
+    ret += 4
+    # cov_z_z: float
+    ret += 4
+    # n_sats: u8
+    ret += 1
+    # flags: u8
+    ret += 1
+    return ret
+  
+SBP_MSG_POS_LLH_GNSS = 0x022A
+class MsgPosLLHGnss(SBP):
+  """SBP class for message MSG_POS_LLH_GNSS (0x022A).
+
+  You can have MSG_POS_LLH_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This position solution message reports the absolute geodetic
+coordinates and the status (single point vs pseudo-absolute RTK)
+of the position solution. If the rover receiver knows the
+surveyed position of the base station and has an RTK solution,
+this reports a pseudo-absolute position solution using the base
+station position and the rover's RTK baseline vector. The full
+GPS time is given by the preceding MSG_GPS_TIME with the
+matching time-of-week (tow).
+
+
+  """
+  __slots__ = ['tow',
+               'lat',
+               'lon',
+               'height',
+               'h_accuracy',
+               'v_accuracy',
+               'n_sats',
+               'flags',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__lat, offset, length) = get_f64(buf, offset, length)
+    ret['lat'] = __lat
+    (__lon, offset, length) = get_f64(buf, offset, length)
+    ret['lon'] = __lon
+    (__height, offset, length) = get_f64(buf, offset, length)
+    ret['height'] = __height
+    (__h_accuracy, offset, length) = get_u16(buf, offset, length)
+    ret['h_accuracy'] = __h_accuracy
+    (__v_accuracy, offset, length) = get_u16(buf, offset, length)
+    ret['v_accuracy'] = __v_accuracy
+    (__n_sats, offset, length) = get_u8(buf, offset, length)
+    ret['n_sats'] = __n_sats
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.tow = res['tow']
+    self.lat = res['lat']
+    self.lon = res['lon']
+    self.height = res['height']
+    self.h_accuracy = res['h_accuracy']
+    self.v_accuracy = res['v_accuracy']
+    self.n_sats = res['n_sats']
+    self.flags = res['flags']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tow: u32
+    ret += 4
+    # lat: double
+    ret += 8
+    # lon: double
+    ret += 8
+    # height: double
+    ret += 8
+    # h_accuracy: u16
+    ret += 2
+    # v_accuracy: u16
+    ret += 2
+    # n_sats: u8
+    ret += 1
+    # flags: u8
+    ret += 1
+    return ret
+  
+SBP_MSG_POS_LLH_COV_GNSS = 0x0231
+class MsgPosLLHCovGnss(SBP):
+  """SBP class for message MSG_POS_LLH_COV_GNSS (0x0231).
+
+  You can have MSG_POS_LLH_COV_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This position solution message reports the absolute geodetic
+coordinates and the status (single point vs pseudo-absolute RTK)
+of the position solution as well as the upper triangle of the 3x3
+covariance matrix.  The position information and Fix Mode flags should
+follow the MSG_POS_LLH message.  Since the covariance matrix is computed
+in the local-level North, East, Down frame, the covariance terms follow
+with that convention. Thus, covariances are reported against the "downward"
+measurement and care should be taken with the sign convention.
+
+
+  """
+  __slots__ = ['tow',
+               'lat',
+               'lon',
+               'height',
+               'cov_n_n',
+               'cov_n_e',
+               'cov_n_d',
+               'cov_e_e',
+               'cov_e_d',
+               'cov_d_d',
+               'n_sats',
+               'flags',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__lat, offset, length) = get_f64(buf, offset, length)
+    ret['lat'] = __lat
+    (__lon, offset, length) = get_f64(buf, offset, length)
+    ret['lon'] = __lon
+    (__height, offset, length) = get_f64(buf, offset, length)
+    ret['height'] = __height
+    (__cov_n_n, offset, length) = get_f32(buf, offset, length)
+    ret['cov_n_n'] = judicious_round(np.float32(__cov_n_n)) if SBP.judicious_rounding else __cov_n_n
+    (__cov_n_e, offset, length) = get_f32(buf, offset, length)
+    ret['cov_n_e'] = judicious_round(np.float32(__cov_n_e)) if SBP.judicious_rounding else __cov_n_e
+    (__cov_n_d, offset, length) = get_f32(buf, offset, length)
+    ret['cov_n_d'] = judicious_round(np.float32(__cov_n_d)) if SBP.judicious_rounding else __cov_n_d
+    (__cov_e_e, offset, length) = get_f32(buf, offset, length)
+    ret['cov_e_e'] = judicious_round(np.float32(__cov_e_e)) if SBP.judicious_rounding else __cov_e_e
+    (__cov_e_d, offset, length) = get_f32(buf, offset, length)
+    ret['cov_e_d'] = judicious_round(np.float32(__cov_e_d)) if SBP.judicious_rounding else __cov_e_d
+    (__cov_d_d, offset, length) = get_f32(buf, offset, length)
+    ret['cov_d_d'] = judicious_round(np.float32(__cov_d_d)) if SBP.judicious_rounding else __cov_d_d
+    (__n_sats, offset, length) = get_u8(buf, offset, length)
+    ret['n_sats'] = __n_sats
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.tow = res['tow']
+    self.lat = res['lat']
+    self.lon = res['lon']
+    self.height = res['height']
+    self.cov_n_n = res['cov_n_n']
+    self.cov_n_e = res['cov_n_e']
+    self.cov_n_d = res['cov_n_d']
+    self.cov_e_e = res['cov_e_e']
+    self.cov_e_d = res['cov_e_d']
+    self.cov_d_d = res['cov_d_d']
+    self.n_sats = res['n_sats']
+    self.flags = res['flags']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tow: u32
+    ret += 4
+    # lat: double
+    ret += 8
+    # lon: double
+    ret += 8
+    # height: double
+    ret += 8
+    # cov_n_n: float
+    ret += 4
+    # cov_n_e: float
+    ret += 4
+    # cov_n_d: float
+    ret += 4
+    # cov_e_e: float
+    ret += 4
+    # cov_e_d: float
+    ret += 4
+    # cov_d_d: float
+    ret += 4
+    # n_sats: u8
+    ret += 1
+    # flags: u8
+    ret += 1
+    return ret
+  
+SBP_MSG_VEL_ECEF_GNSS = 0x022D
+class MsgVelECEFGnss(SBP):
+  """SBP class for message MSG_VEL_ECEF_GNSS (0x022D).
+
+  You can have MSG_VEL_ECEF_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the velocity in Earth Centered Earth Fixed
+(ECEF) coordinates. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).
+
+
+  """
+  __slots__ = ['tow',
+               'x',
+               'y',
+               'z',
+               'accuracy',
+               'n_sats',
+               'flags',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__x, offset, length) = get_s32(buf, offset, length)
+    ret['x'] = __x
+    (__y, offset, length) = get_s32(buf, offset, length)
+    ret['y'] = __y
+    (__z, offset, length) = get_s32(buf, offset, length)
+    ret['z'] = __z
+    (__accuracy, offset, length) = get_u16(buf, offset, length)
+    ret['accuracy'] = __accuracy
+    (__n_sats, offset, length) = get_u8(buf, offset, length)
+    ret['n_sats'] = __n_sats
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.tow = res['tow']
+    self.x = res['x']
+    self.y = res['y']
+    self.z = res['z']
+    self.accuracy = res['accuracy']
+    self.n_sats = res['n_sats']
+    self.flags = res['flags']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tow: u32
+    ret += 4
+    # x: s32
+    ret += 4
+    # y: s32
+    ret += 4
+    # z: s32
+    ret += 4
+    # accuracy: u16
+    ret += 2
+    # n_sats: u8
+    ret += 1
+    # flags: u8
+    ret += 1
+    return ret
+  
+SBP_MSG_VEL_ECEF_COV_GNSS = 0x0235
+class MsgVelECEFCovGnss(SBP):
+  """SBP class for message MSG_VEL_ECEF_COV_GNSS (0x0235).
+
+  You can have MSG_VEL_ECEF_COV_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the velocity in Earth Centered Earth Fixed
+(ECEF) coordinates. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).
+
+
+  """
+  __slots__ = ['tow',
+               'x',
+               'y',
+               'z',
+               'cov_x_x',
+               'cov_x_y',
+               'cov_x_z',
+               'cov_y_y',
+               'cov_y_z',
+               'cov_z_z',
+               'n_sats',
+               'flags',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__x, offset, length) = get_s32(buf, offset, length)
+    ret['x'] = __x
+    (__y, offset, length) = get_s32(buf, offset, length)
+    ret['y'] = __y
+    (__z, offset, length) = get_s32(buf, offset, length)
+    ret['z'] = __z
+    (__cov_x_x, offset, length) = get_f32(buf, offset, length)
+    ret['cov_x_x'] = judicious_round(np.float32(__cov_x_x)) if SBP.judicious_rounding else __cov_x_x
+    (__cov_x_y, offset, length) = get_f32(buf, offset, length)
+    ret['cov_x_y'] = judicious_round(np.float32(__cov_x_y)) if SBP.judicious_rounding else __cov_x_y
+    (__cov_x_z, offset, length) = get_f32(buf, offset, length)
+    ret['cov_x_z'] = judicious_round(np.float32(__cov_x_z)) if SBP.judicious_rounding else __cov_x_z
+    (__cov_y_y, offset, length) = get_f32(buf, offset, length)
+    ret['cov_y_y'] = judicious_round(np.float32(__cov_y_y)) if SBP.judicious_rounding else __cov_y_y
+    (__cov_y_z, offset, length) = get_f32(buf, offset, length)
+    ret['cov_y_z'] = judicious_round(np.float32(__cov_y_z)) if SBP.judicious_rounding else __cov_y_z
+    (__cov_z_z, offset, length) = get_f32(buf, offset, length)
+    ret['cov_z_z'] = judicious_round(np.float32(__cov_z_z)) if SBP.judicious_rounding else __cov_z_z
+    (__n_sats, offset, length) = get_u8(buf, offset, length)
+    ret['n_sats'] = __n_sats
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.tow = res['tow']
+    self.x = res['x']
+    self.y = res['y']
+    self.z = res['z']
+    self.cov_x_x = res['cov_x_x']
+    self.cov_x_y = res['cov_x_y']
+    self.cov_x_z = res['cov_x_z']
+    self.cov_y_y = res['cov_y_y']
+    self.cov_y_z = res['cov_y_z']
+    self.cov_z_z = res['cov_z_z']
+    self.n_sats = res['n_sats']
+    self.flags = res['flags']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tow: u32
+    ret += 4
+    # x: s32
+    ret += 4
+    # y: s32
+    ret += 4
+    # z: s32
+    ret += 4
+    # cov_x_x: float
+    ret += 4
+    # cov_x_y: float
+    ret += 4
+    # cov_x_z: float
+    ret += 4
+    # cov_y_y: float
+    ret += 4
+    # cov_y_z: float
+    ret += 4
+    # cov_z_z: float
+    ret += 4
+    # n_sats: u8
+    ret += 1
+    # flags: u8
+    ret += 1
+    return ret
+  
+SBP_MSG_VEL_NED_GNSS = 0x022E
+class MsgVelNEDGnss(SBP):
+  """SBP class for message MSG_VEL_NED_GNSS (0x022E).
+
+  You can have MSG_VEL_NED_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the velocity in local North East Down (NED)
+coordinates. The NED coordinate system is defined as the local WGS84
+tangent plane centered at the current position. The full GPS time is
+given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+
+
+  """
+  __slots__ = ['tow',
+               'n',
+               'e',
+               'd',
+               'h_accuracy',
+               'v_accuracy',
+               'n_sats',
+               'flags',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__n, offset, length) = get_s32(buf, offset, length)
+    ret['n'] = __n
+    (__e, offset, length) = get_s32(buf, offset, length)
+    ret['e'] = __e
+    (__d, offset, length) = get_s32(buf, offset, length)
+    ret['d'] = __d
+    (__h_accuracy, offset, length) = get_u16(buf, offset, length)
+    ret['h_accuracy'] = __h_accuracy
+    (__v_accuracy, offset, length) = get_u16(buf, offset, length)
+    ret['v_accuracy'] = __v_accuracy
+    (__n_sats, offset, length) = get_u8(buf, offset, length)
+    ret['n_sats'] = __n_sats
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.tow = res['tow']
+    self.n = res['n']
+    self.e = res['e']
+    self.d = res['d']
+    self.h_accuracy = res['h_accuracy']
+    self.v_accuracy = res['v_accuracy']
+    self.n_sats = res['n_sats']
+    self.flags = res['flags']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tow: u32
+    ret += 4
+    # n: s32
+    ret += 4
+    # e: s32
+    ret += 4
+    # d: s32
+    ret += 4
+    # h_accuracy: u16
+    ret += 2
+    # v_accuracy: u16
+    ret += 2
+    # n_sats: u8
+    ret += 1
+    # flags: u8
+    ret += 1
+    return ret
+  
+SBP_MSG_VEL_NED_COV_GNSS = 0x0232
+class MsgVelNEDCovGnss(SBP):
+  """SBP class for message MSG_VEL_NED_COV_GNSS (0x0232).
+
+  You can have MSG_VEL_NED_COV_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the velocity in local North East Down (NED)
+coordinates. The NED coordinate system is defined as the local WGS84
+tangent plane centered at the current position. The full GPS time is
+given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+This message is similar to the MSG_VEL_NED, but it includes the upper triangular
+portion of the 3x3 covariance matrix.
+
+
+  """
+  __slots__ = ['tow',
+               'n',
+               'e',
+               'd',
+               'cov_n_n',
+               'cov_n_e',
+               'cov_n_d',
+               'cov_e_e',
+               'cov_e_d',
+               'cov_d_d',
+               'n_sats',
+               'flags',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__n, offset, length) = get_s32(buf, offset, length)
+    ret['n'] = __n
+    (__e, offset, length) = get_s32(buf, offset, length)
+    ret['e'] = __e
+    (__d, offset, length) = get_s32(buf, offset, length)
+    ret['d'] = __d
+    (__cov_n_n, offset, length) = get_f32(buf, offset, length)
+    ret['cov_n_n'] = judicious_round(np.float32(__cov_n_n)) if SBP.judicious_rounding else __cov_n_n
+    (__cov_n_e, offset, length) = get_f32(buf, offset, length)
+    ret['cov_n_e'] = judicious_round(np.float32(__cov_n_e)) if SBP.judicious_rounding else __cov_n_e
+    (__cov_n_d, offset, length) = get_f32(buf, offset, length)
+    ret['cov_n_d'] = judicious_round(np.float32(__cov_n_d)) if SBP.judicious_rounding else __cov_n_d
+    (__cov_e_e, offset, length) = get_f32(buf, offset, length)
+    ret['cov_e_e'] = judicious_round(np.float32(__cov_e_e)) if SBP.judicious_rounding else __cov_e_e
+    (__cov_e_d, offset, length) = get_f32(buf, offset, length)
+    ret['cov_e_d'] = judicious_round(np.float32(__cov_e_d)) if SBP.judicious_rounding else __cov_e_d
+    (__cov_d_d, offset, length) = get_f32(buf, offset, length)
+    ret['cov_d_d'] = judicious_round(np.float32(__cov_d_d)) if SBP.judicious_rounding else __cov_d_d
+    (__n_sats, offset, length) = get_u8(buf, offset, length)
+    ret['n_sats'] = __n_sats
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.tow = res['tow']
+    self.n = res['n']
+    self.e = res['e']
+    self.d = res['d']
+    self.cov_n_n = res['cov_n_n']
+    self.cov_n_e = res['cov_n_e']
+    self.cov_n_d = res['cov_n_d']
+    self.cov_e_e = res['cov_e_e']
+    self.cov_e_d = res['cov_e_d']
+    self.cov_d_d = res['cov_d_d']
+    self.n_sats = res['n_sats']
+    self.flags = res['flags']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tow: u32
+    ret += 4
+    # n: s32
+    ret += 4
+    # e: s32
+    ret += 4
+    # d: s32
+    ret += 4
+    # cov_n_n: float
+    ret += 4
+    # cov_n_e: float
+    ret += 4
+    # cov_n_d: float
+    ret += 4
+    # cov_e_e: float
+    ret += 4
+    # cov_e_d: float
+    ret += 4
+    # cov_d_d: float
+    ret += 4
+    # n_sats: u8
+    ret += 1
+    # flags: u8
+    ret += 1
+    return ret
+  
 SBP_MSG_VEL_BODY = 0x0213
 class MsgVelBody(SBP):
   """SBP class for message MSG_VEL_BODY (0x0213).
@@ -2088,6 +2837,14 @@ msg_classes = {
   0x0215: MsgVelECEFCov,
   0x020E: MsgVelNED,
   0x0212: MsgVelNEDCov,
+  0x0229: MsgPosECEFGnss,
+  0x0234: MsgPosECEFCovGnss,
+  0x022A: MsgPosLLHGnss,
+  0x0231: MsgPosLLHCovGnss,
+  0x022D: MsgVelECEFGnss,
+  0x0235: MsgVelECEFCovGnss,
+  0x022E: MsgVelNEDGnss,
+  0x0232: MsgVelNEDCovGnss,
   0x0213: MsgVelBody,
   0x0210: MsgAgeCorrections,
   0x0100: MsgGPSTimeDepA,

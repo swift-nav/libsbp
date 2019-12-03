@@ -1784,6 +1784,1120 @@ portion of the 3x3 covariance matrix.
     d.update(j)
     return d
     
+SBP_MSG_POS_ECEF_GNSS = 0x0229
+class MsgPosECEFGnss(SBP):
+  """SBP class for message MSG_POS_ECEF_GNSS (0x0229).
+
+  You can have MSG_POS_ECEF_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The position solution message reports absolute Earth Centered
+Earth Fixed (ECEF) coordinates and the status (single point vs
+pseudo-absolute RTK) of the position solution. If the rover
+receiver knows the surveyed position of the base station and has
+an RTK solution, this reports a pseudo-absolute position
+solution using the base station position and the rover's RTK
+baseline vector. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS Time of Week
+  x : double
+    ECEF X coordinate
+  y : double
+    ECEF Y coordinate
+  z : double
+    ECEF Z coordinate
+  accuracy : int
+    Position estimated standard deviation
+  n_sats : int
+    Number of satellites used in solution
+  flags : int
+    Status flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'x' / construct.Float64l,
+                   'y' / construct.Float64l,
+                   'z' / construct.Float64l,
+                   'accuracy' / construct.Int16ul,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'tow',
+               'x',
+               'y',
+               'z',
+               'accuracy',
+               'n_sats',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgPosECEFGnss,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgPosECEFGnss, self).__init__()
+      self.msg_type = SBP_MSG_POS_ECEF_GNSS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.x = kwargs.pop('x')
+      self.y = kwargs.pop('y')
+      self.z = kwargs.pop('z')
+      self.accuracy = kwargs.pop('accuracy')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgPosECEFGnss.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgPosECEFGnss(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgPosECEFGnss._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgPosECEFGnss._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgPosECEFGnss._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgPosECEFGnss, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_POS_ECEF_COV_GNSS = 0x0234
+class MsgPosECEFCovGnss(SBP):
+  """SBP class for message MSG_POS_ECEF_COV_GNSS (0x0234).
+
+  You can have MSG_POS_ECEF_COV_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The position solution message reports absolute Earth Centered
+Earth Fixed (ECEF) coordinates and the status (single point vs
+pseudo-absolute RTK) of the position solution. The message also
+reports the upper triangular portion of the 3x3 covariance matrix.
+If the receiver knows the surveyed position of the base station and has
+an RTK solution, this reports a pseudo-absolute position
+solution using the base station position and the rover's RTK
+baseline vector. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS Time of Week
+  x : double
+    ECEF X coordinate
+  y : double
+    ECEF Y coordinate
+  z : double
+    ECEF Z coordinate
+  cov_x_x : float
+    Estimated variance of x
+  cov_x_y : float
+    Estimated covariance of x and y
+  cov_x_z : float
+    Estimated covariance of x and z
+  cov_y_y : float
+    Estimated variance of y
+  cov_y_z : float
+    Estimated covariance of y and z
+  cov_z_z : float
+    Estimated variance of z
+  n_sats : int
+    Number of satellites used in solution
+  flags : int
+    Status flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'x' / construct.Float64l,
+                   'y' / construct.Float64l,
+                   'z' / construct.Float64l,
+                   'cov_x_x' / construct.Float32l,
+                   'cov_x_y' / construct.Float32l,
+                   'cov_x_z' / construct.Float32l,
+                   'cov_y_y' / construct.Float32l,
+                   'cov_y_z' / construct.Float32l,
+                   'cov_z_z' / construct.Float32l,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'tow',
+               'x',
+               'y',
+               'z',
+               'cov_x_x',
+               'cov_x_y',
+               'cov_x_z',
+               'cov_y_y',
+               'cov_y_z',
+               'cov_z_z',
+               'n_sats',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgPosECEFCovGnss,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgPosECEFCovGnss, self).__init__()
+      self.msg_type = SBP_MSG_POS_ECEF_COV_GNSS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.x = kwargs.pop('x')
+      self.y = kwargs.pop('y')
+      self.z = kwargs.pop('z')
+      self.cov_x_x = kwargs.pop('cov_x_x')
+      self.cov_x_y = kwargs.pop('cov_x_y')
+      self.cov_x_z = kwargs.pop('cov_x_z')
+      self.cov_y_y = kwargs.pop('cov_y_y')
+      self.cov_y_z = kwargs.pop('cov_y_z')
+      self.cov_z_z = kwargs.pop('cov_z_z')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgPosECEFCovGnss.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgPosECEFCovGnss(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgPosECEFCovGnss._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgPosECEFCovGnss._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgPosECEFCovGnss._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgPosECEFCovGnss, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_POS_LLH_GNSS = 0x022A
+class MsgPosLLHGnss(SBP):
+  """SBP class for message MSG_POS_LLH_GNSS (0x022A).
+
+  You can have MSG_POS_LLH_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This position solution message reports the absolute geodetic
+coordinates and the status (single point vs pseudo-absolute RTK)
+of the position solution. If the rover receiver knows the
+surveyed position of the base station and has an RTK solution,
+this reports a pseudo-absolute position solution using the base
+station position and the rover's RTK baseline vector. The full
+GPS time is given by the preceding MSG_GPS_TIME with the
+matching time-of-week (tow).
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS Time of Week
+  lat : double
+    Latitude
+  lon : double
+    Longitude
+  height : double
+    Height above WGS84 ellipsoid
+  h_accuracy : int
+    Horizontal position estimated standard deviation
+  v_accuracy : int
+    Vertical position estimated standard deviation
+  n_sats : int
+    Number of satellites used in solution.
+  flags : int
+    Status flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'lat' / construct.Float64l,
+                   'lon' / construct.Float64l,
+                   'height' / construct.Float64l,
+                   'h_accuracy' / construct.Int16ul,
+                   'v_accuracy' / construct.Int16ul,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'tow',
+               'lat',
+               'lon',
+               'height',
+               'h_accuracy',
+               'v_accuracy',
+               'n_sats',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgPosLLHGnss,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgPosLLHGnss, self).__init__()
+      self.msg_type = SBP_MSG_POS_LLH_GNSS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.lat = kwargs.pop('lat')
+      self.lon = kwargs.pop('lon')
+      self.height = kwargs.pop('height')
+      self.h_accuracy = kwargs.pop('h_accuracy')
+      self.v_accuracy = kwargs.pop('v_accuracy')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgPosLLHGnss.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgPosLLHGnss(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgPosLLHGnss._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgPosLLHGnss._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgPosLLHGnss._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgPosLLHGnss, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_POS_LLH_COV_GNSS = 0x0231
+class MsgPosLLHCovGnss(SBP):
+  """SBP class for message MSG_POS_LLH_COV_GNSS (0x0231).
+
+  You can have MSG_POS_LLH_COV_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This position solution message reports the absolute geodetic
+coordinates and the status (single point vs pseudo-absolute RTK)
+of the position solution as well as the upper triangle of the 3x3
+covariance matrix.  The position information and Fix Mode flags should
+follow the MSG_POS_LLH message.  Since the covariance matrix is computed
+in the local-level North, East, Down frame, the covariance terms follow
+with that convention. Thus, covariances are reported against the "downward"
+measurement and care should be taken with the sign convention.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS Time of Week
+  lat : double
+    Latitude
+  lon : double
+    Longitude
+  height : double
+    Height above WGS84 ellipsoid
+  cov_n_n : float
+    Estimated variance of northing
+  cov_n_e : float
+    Covariance of northing and easting
+  cov_n_d : float
+    Covariance of northing and downward measurement
+  cov_e_e : float
+    Estimated variance of easting
+  cov_e_d : float
+    Covariance of easting and downward measurement
+  cov_d_d : float
+    Estimated variance of downward measurement
+  n_sats : int
+    Number of satellites used in solution.
+  flags : int
+    Status flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'lat' / construct.Float64l,
+                   'lon' / construct.Float64l,
+                   'height' / construct.Float64l,
+                   'cov_n_n' / construct.Float32l,
+                   'cov_n_e' / construct.Float32l,
+                   'cov_n_d' / construct.Float32l,
+                   'cov_e_e' / construct.Float32l,
+                   'cov_e_d' / construct.Float32l,
+                   'cov_d_d' / construct.Float32l,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'tow',
+               'lat',
+               'lon',
+               'height',
+               'cov_n_n',
+               'cov_n_e',
+               'cov_n_d',
+               'cov_e_e',
+               'cov_e_d',
+               'cov_d_d',
+               'n_sats',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgPosLLHCovGnss,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgPosLLHCovGnss, self).__init__()
+      self.msg_type = SBP_MSG_POS_LLH_COV_GNSS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.lat = kwargs.pop('lat')
+      self.lon = kwargs.pop('lon')
+      self.height = kwargs.pop('height')
+      self.cov_n_n = kwargs.pop('cov_n_n')
+      self.cov_n_e = kwargs.pop('cov_n_e')
+      self.cov_n_d = kwargs.pop('cov_n_d')
+      self.cov_e_e = kwargs.pop('cov_e_e')
+      self.cov_e_d = kwargs.pop('cov_e_d')
+      self.cov_d_d = kwargs.pop('cov_d_d')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgPosLLHCovGnss.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgPosLLHCovGnss(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgPosLLHCovGnss._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgPosLLHCovGnss._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgPosLLHCovGnss._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgPosLLHCovGnss, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_VEL_ECEF_GNSS = 0x022D
+class MsgVelECEFGnss(SBP):
+  """SBP class for message MSG_VEL_ECEF_GNSS (0x022D).
+
+  You can have MSG_VEL_ECEF_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the velocity in Earth Centered Earth Fixed
+(ECEF) coordinates. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS Time of Week
+  x : int
+    Velocity ECEF X coordinate
+  y : int
+    Velocity ECEF Y coordinate
+  z : int
+    Velocity ECEF Z coordinate
+  accuracy : int
+    Velocity estimated standard deviation
+
+  n_sats : int
+    Number of satellites used in solution
+  flags : int
+    Status flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'x' / construct.Int32sl,
+                   'y' / construct.Int32sl,
+                   'z' / construct.Int32sl,
+                   'accuracy' / construct.Int16ul,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'tow',
+               'x',
+               'y',
+               'z',
+               'accuracy',
+               'n_sats',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgVelECEFGnss,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgVelECEFGnss, self).__init__()
+      self.msg_type = SBP_MSG_VEL_ECEF_GNSS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.x = kwargs.pop('x')
+      self.y = kwargs.pop('y')
+      self.z = kwargs.pop('z')
+      self.accuracy = kwargs.pop('accuracy')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgVelECEFGnss.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgVelECEFGnss(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgVelECEFGnss._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgVelECEFGnss._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgVelECEFGnss._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgVelECEFGnss, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_VEL_ECEF_COV_GNSS = 0x0235
+class MsgVelECEFCovGnss(SBP):
+  """SBP class for message MSG_VEL_ECEF_COV_GNSS (0x0235).
+
+  You can have MSG_VEL_ECEF_COV_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the velocity in Earth Centered Earth Fixed
+(ECEF) coordinates. The full GPS time is given by the preceding
+MSG_GPS_TIME with the matching time-of-week (tow).
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS Time of Week
+  x : int
+    Velocity ECEF X coordinate
+  y : int
+    Velocity ECEF Y coordinate
+  z : int
+    Velocity ECEF Z coordinate
+  cov_x_x : float
+    Estimated variance of x
+  cov_x_y : float
+    Estimated covariance of x and y
+  cov_x_z : float
+    Estimated covariance of x and z
+  cov_y_y : float
+    Estimated variance of y
+  cov_y_z : float
+    Estimated covariance of y and z
+  cov_z_z : float
+    Estimated variance of z
+  n_sats : int
+    Number of satellites used in solution
+  flags : int
+    Status flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'x' / construct.Int32sl,
+                   'y' / construct.Int32sl,
+                   'z' / construct.Int32sl,
+                   'cov_x_x' / construct.Float32l,
+                   'cov_x_y' / construct.Float32l,
+                   'cov_x_z' / construct.Float32l,
+                   'cov_y_y' / construct.Float32l,
+                   'cov_y_z' / construct.Float32l,
+                   'cov_z_z' / construct.Float32l,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'tow',
+               'x',
+               'y',
+               'z',
+               'cov_x_x',
+               'cov_x_y',
+               'cov_x_z',
+               'cov_y_y',
+               'cov_y_z',
+               'cov_z_z',
+               'n_sats',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgVelECEFCovGnss,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgVelECEFCovGnss, self).__init__()
+      self.msg_type = SBP_MSG_VEL_ECEF_COV_GNSS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.x = kwargs.pop('x')
+      self.y = kwargs.pop('y')
+      self.z = kwargs.pop('z')
+      self.cov_x_x = kwargs.pop('cov_x_x')
+      self.cov_x_y = kwargs.pop('cov_x_y')
+      self.cov_x_z = kwargs.pop('cov_x_z')
+      self.cov_y_y = kwargs.pop('cov_y_y')
+      self.cov_y_z = kwargs.pop('cov_y_z')
+      self.cov_z_z = kwargs.pop('cov_z_z')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgVelECEFCovGnss.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgVelECEFCovGnss(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgVelECEFCovGnss._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgVelECEFCovGnss._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgVelECEFCovGnss._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgVelECEFCovGnss, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_VEL_NED_GNSS = 0x022E
+class MsgVelNEDGnss(SBP):
+  """SBP class for message MSG_VEL_NED_GNSS (0x022E).
+
+  You can have MSG_VEL_NED_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the velocity in local North East Down (NED)
+coordinates. The NED coordinate system is defined as the local WGS84
+tangent plane centered at the current position. The full GPS time is
+given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS Time of Week
+  n : int
+    Velocity North coordinate
+  e : int
+    Velocity East coordinate
+  d : int
+    Velocity Down coordinate
+  h_accuracy : int
+    Horizontal velocity estimated standard deviation
+
+  v_accuracy : int
+    Vertical velocity estimated standard deviation
+
+  n_sats : int
+    Number of satellites used in solution
+  flags : int
+    Status flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'n' / construct.Int32sl,
+                   'e' / construct.Int32sl,
+                   'd' / construct.Int32sl,
+                   'h_accuracy' / construct.Int16ul,
+                   'v_accuracy' / construct.Int16ul,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'tow',
+               'n',
+               'e',
+               'd',
+               'h_accuracy',
+               'v_accuracy',
+               'n_sats',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgVelNEDGnss,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgVelNEDGnss, self).__init__()
+      self.msg_type = SBP_MSG_VEL_NED_GNSS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.n = kwargs.pop('n')
+      self.e = kwargs.pop('e')
+      self.d = kwargs.pop('d')
+      self.h_accuracy = kwargs.pop('h_accuracy')
+      self.v_accuracy = kwargs.pop('v_accuracy')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgVelNEDGnss.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgVelNEDGnss(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgVelNEDGnss._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgVelNEDGnss._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgVelNEDGnss._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgVelNEDGnss, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_VEL_NED_COV_GNSS = 0x0232
+class MsgVelNEDCovGnss(SBP):
+  """SBP class for message MSG_VEL_NED_COV_GNSS (0x0232).
+
+  You can have MSG_VEL_NED_COV_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the velocity in local North East Down (NED)
+coordinates. The NED coordinate system is defined as the local WGS84
+tangent plane centered at the current position. The full GPS time is
+given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+This message is similar to the MSG_VEL_NED, but it includes the upper triangular
+portion of the 3x3 covariance matrix.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS Time of Week
+  n : int
+    Velocity North coordinate
+  e : int
+    Velocity East coordinate
+  d : int
+    Velocity Down coordinate
+  cov_n_n : float
+    Estimated variance of northward measurement
+  cov_n_e : float
+    Covariance of northward and eastward measurement
+  cov_n_d : float
+    Covariance of northward and downward measurement
+  cov_e_e : float
+    Estimated variance of eastward measurement
+  cov_e_d : float
+    Covariance of eastward and downward measurement
+  cov_d_d : float
+    Estimated variance of downward measurement
+  n_sats : int
+    Number of satellites used in solution
+  flags : int
+    Status flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'n' / construct.Int32sl,
+                   'e' / construct.Int32sl,
+                   'd' / construct.Int32sl,
+                   'cov_n_n' / construct.Float32l,
+                   'cov_n_e' / construct.Float32l,
+                   'cov_n_d' / construct.Float32l,
+                   'cov_e_e' / construct.Float32l,
+                   'cov_e_d' / construct.Float32l,
+                   'cov_d_d' / construct.Float32l,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'tow',
+               'n',
+               'e',
+               'd',
+               'cov_n_n',
+               'cov_n_e',
+               'cov_n_d',
+               'cov_e_e',
+               'cov_e_d',
+               'cov_d_d',
+               'n_sats',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgVelNEDCovGnss,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgVelNEDCovGnss, self).__init__()
+      self.msg_type = SBP_MSG_VEL_NED_COV_GNSS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.n = kwargs.pop('n')
+      self.e = kwargs.pop('e')
+      self.d = kwargs.pop('d')
+      self.cov_n_n = kwargs.pop('cov_n_n')
+      self.cov_n_e = kwargs.pop('cov_n_e')
+      self.cov_n_d = kwargs.pop('cov_n_d')
+      self.cov_e_e = kwargs.pop('cov_e_e')
+      self.cov_e_d = kwargs.pop('cov_e_d')
+      self.cov_d_d = kwargs.pop('cov_d_d')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgVelNEDCovGnss.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgVelNEDCovGnss(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgVelNEDCovGnss._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgVelNEDCovGnss._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgVelNEDCovGnss._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgVelNEDCovGnss, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_VEL_BODY = 0x0213
 class MsgVelBody(SBP):
   """SBP class for message MSG_VEL_BODY (0x0213).
@@ -3292,6 +4406,14 @@ msg_classes = {
   0x0215: MsgVelECEFCov,
   0x020E: MsgVelNED,
   0x0212: MsgVelNEDCov,
+  0x0229: MsgPosECEFGnss,
+  0x0234: MsgPosECEFCovGnss,
+  0x022A: MsgPosLLHGnss,
+  0x0231: MsgPosLLHCovGnss,
+  0x022D: MsgVelECEFGnss,
+  0x0235: MsgVelECEFCovGnss,
+  0x022E: MsgVelNEDGnss,
+  0x0232: MsgVelNEDCovGnss,
   0x0213: MsgVelBody,
   0x0210: MsgAgeCorrections,
   0x0100: MsgGPSTimeDepA,
