@@ -834,6 +834,54 @@ struct MessageTraits<msg_angular_rate_t> {
 
 
 template<>
+struct MessageTraits<msg_pos_ecef_gnss_t> {
+  static constexpr u16 id = 553;
+};
+
+
+template<>
+struct MessageTraits<msg_pos_llh_gnss_t> {
+  static constexpr u16 id = 554;
+};
+
+
+template<>
+struct MessageTraits<msg_vel_ecef_gnss_t> {
+  static constexpr u16 id = 557;
+};
+
+
+template<>
+struct MessageTraits<msg_vel_ned_gnss_t> {
+  static constexpr u16 id = 558;
+};
+
+
+template<>
+struct MessageTraits<msg_pos_llh_cov_gnss_t> {
+  static constexpr u16 id = 561;
+};
+
+
+template<>
+struct MessageTraits<msg_vel_ned_cov_gnss_t> {
+  static constexpr u16 id = 562;
+};
+
+
+template<>
+struct MessageTraits<msg_pos_ecef_cov_gnss_t> {
+  static constexpr u16 id = 564;
+};
+
+
+template<>
+struct MessageTraits<msg_vel_ecef_cov_gnss_t> {
+  static constexpr u16 id = 565;
+};
+
+
+template<>
 struct MessageTraits<msg_ndb_event_t> {
   static constexpr u16 id = 1024;
 };
