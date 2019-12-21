@@ -72,7 +72,7 @@ typedef struct SBP_ATTR_PACKED {
  * the indications on the device itself. Measurement units, which are specific to the
  * device hardware and settings, are communicated via the MSG_IMU_AUX message.
  */
-#define SBP_MSG_IMU_RAWX 0x0902
+#define SBP_MSG_IMU_RAWX 0x0904
 typedef struct SBP_ATTR_PACKED {
   u16 week;      /**< GPS week */
   double tow;       /**< Seconds since start of GPS week. [s] */

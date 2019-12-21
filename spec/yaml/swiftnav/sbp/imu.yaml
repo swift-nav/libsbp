@@ -96,7 +96,7 @@ definitions:
                       - 3: +/- 16g
 
  - MSG_IMU_RAWX:
-    id: 0x0902
+    id: 0x0904
     short_desc: Raw IMU data (extended)
     desc: |
       Raw data from the Inertial Measurement Unit, containing accelerometer and
@@ -132,4 +132,3 @@ definitions:
         - status:
             type: s32
             desc: IMU status (tbd)
-            
