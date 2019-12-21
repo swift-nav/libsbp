@@ -35,7 +35,7 @@ SBP_PACK_START
  * the indications on the device itself. Measurement units, which are specific to the
  * device hardware and settings, are communicated via the MSG_IMU_AUX message.
  */
-#define SBP_MSG_IMU_RAW 0x0900
+#define SBP_MSG_IMU_RAW  0x0900
 typedef struct SBP_ATTR_PACKED {
   u32 tow;      /**< Milliseconds since start of GPS week. If the high bit is set, the
 time is unknown or invalid.
@@ -57,12 +57,33 @@ time is unknown or invalid.
  * always be consistent but the rest of the payload is device specific and
  * depends on the value of `imu_type`.
  */
-#define SBP_MSG_IMU_AUX 0x0901
+#define SBP_MSG_IMU_AUX  0x0901
 typedef struct SBP_ATTR_PACKED {
   u8 imu_type;    /**< IMU type */
   s16 temp;        /**< Raw IMU temperature */
   u8 imu_conf;    /**< IMU configuration */
 } msg_imu_aux_t;
+
+
+/** Raw IMU data (extended)
+ *
+ * Raw data from the Inertial Measurement Unit, containing accelerometer and
+ * gyroscope readings. The sense of the measurements are to be aligned with 
+ * the indications on the device itself. Measurement units, which are specific to the
+ * device hardware and settings, are communicated via the MSG_IMU_AUX message.
+ */
+#define SBP_MSG_IMU_RAWX 0x0902
+typedef struct SBP_ATTR_PACKED {
+  u16 week;      /**< GPS week */
+  double tow;       /**< Seconds since start of GPS week. [s] */
+  s32 acc_x;     /**< Acceleration in the IMU frame X axis */
+  s32 acc_y;     /**< Acceleration in the IMU frame Y axis */
+  s32 acc_z;     /**< Acceleration in the IMU frame Z axis */
+  s32 gyr_x;     /**< Angular rate around IMU frame X axis */
+  s32 gyr_y;     /**< Angular rate around IMU frame Y axis */
+  s32 gyr_z;     /**< Angular rate around IMU frame Z axis */
+  s32 status;    /**< IMU status (tbd) */
+} msg_imu_rawx_t;
 
 
 /** \} */

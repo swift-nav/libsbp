@@ -978,6 +978,12 @@ struct MessageTraits<msg_mag_raw_t> {
 
 
 template<>
+struct MessageTraits<msg_imu_rawx_t> {
+  static constexpr u16 id = 2306;
+};
+
+
+template<>
 struct MessageTraits<msg_odometry_t> {
   static constexpr u16 id = 2307;
 };
