@@ -58,7 +58,7 @@ namespace details {
 /**
  * Recursive interface type for defining the interface functions for `MessageHandler`.
  *
- * These types define a virtual `operator()` for handling a specific SBP message type,
+ * These types define a virtual `handle_sbp_msg()` for handling a specific SBP message type,
  * as well as a function for registering it as a SBP callback.
  *
  * @note These types aren't meant to be used directly by application code.
@@ -114,7 +114,7 @@ class CallbackInterface<MsgType> {
  * `sbp_state_t`.
  *
  * Classes that derive from `MessageHandler` need to implement
- *   void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const MsgType& msg) const;
+ *   void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const MsgType& msg);
  * for each `MsgType` in the list of message types given as template parameters.
  *
  * Due to the nature of the callback registration in libsbp we dissallow copying or
