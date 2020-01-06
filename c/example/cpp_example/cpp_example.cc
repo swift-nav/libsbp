@@ -65,7 +65,7 @@ class LLHFrameHandler : private sbp::FrameHandler<msg_gps_time_t, msg_pos_llh_t>
       (void)payload;
       (void)frame;
       if (msg_type == SBP_MSG_POS_LLH) {
-        std::cout << "Receveid new POS_LLH frame, payload length " << (int)payload_len << ", frame length " << frame_len << "\n";
+        std::cout << "Received new POS_LLH frame, payload length " << (int)payload_len << ", frame length " << frame_len << "\n";
       } else if (msg_type == SBP_MSG_GPS_TIME) {
         std::cout << "Received new GPS_TIME frame, payload length " << (int)payload_len << ", frame length " << frame_len << "\n";
       }
@@ -83,7 +83,7 @@ class EverythingHandler : private sbp::AllFrameHandler {
       (void)sender_id;
       (void)payload;
       (void)frame;
-      std::cout << "Receveid new frame, message type " << msg_type << ", payload length " << (int)payload_len << ", frame length " << frame_len << "\n";
+      std::cout << "Received new frame, message type " << msg_type << ", payload length " << (int)payload_len << ", frame length " << frame_len << "\n";
     }
 };
 

@@ -10,8 +10,8 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-#ifndef SBP_CPP_FRAME_HANDLER_H_
-#define SBP_CPP_FRAME_HANDLER_H_
+#ifndef SBP_CPP_FRAME_HANDLER_H
+#define SBP_CPP_FRAME_HANDLER_H
 
 #include <cassert>
 #include <array>
@@ -58,9 +58,11 @@ inline void sbp_frame_cb_passthrough(uint16_t sender_id, uint16_t msg_type,
  * the given `sbp_state_t`.
  *
  * Classes that derive from `FrameHandler` need to implement
+ * @code
  *   void handle_sbp_frame(uint16_t sender_id, uint16_t msg_type,
  *                         uint8_t payload_len, uint8_t payload[],
  *                         uint16_t frame_len, uint8_t frame[]);
+ * @endcode
  * 
  * This member function will be called for each message specified in the template parameters.
  * You will be able to differentiate the message types based on the `msg_type` argument.
@@ -86,6 +88,7 @@ inline void sbp_frame_cb_passthrough(uint16_t sender_id, uint16_t msg_type,
  *     }
  * };
  *
+ * @tparam MsgTypes List of SBP message types to register callbacks for
  */
 template<typename ...MsgTypes>
 class FrameHandler {
@@ -133,9 +136,11 @@ class FrameHandler {
  * the given `sbp_state_t`.
  *
  * Classes that derive from `AllFrameHandler` need to implement
+ * @code
  *   void handle_sbp_frame(uint16_t sender_id, uint16_t msg_type,
  *                         uint8_t payload_len, uint8_t payload[],
  *                         uint16_t frame_len, uint8_t frame[]);
+ * @endcode
  *
  * Due to the nature of the callback registration in libsbp we dissallow copying or
  * moving of `AllFrameHandler`.
@@ -188,4 +193,4 @@ class AllFrameHandler {
 
 } /* namespace sbp */
 
-#endif /* SBP_CPP_MESSAGE_HANDLER_H_ */
+#endif /* SBP_CPP_MESSAGE_HANDLER_H */
