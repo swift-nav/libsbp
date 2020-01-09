@@ -3,6 +3,7 @@
 
 #include <libsbp/cpp/state.h>
 #include <libsbp/cpp/message_handler.h>
+#include <libsbp/cpp/frame_handler.h>
 
 void usage(char *prog_name) {
   fprintf(stderr, "usage: %s [filename]\n", prog_name);
@@ -52,6 +53,40 @@ class ECEFHandler : private sbp::MessageHandler<msg_gps_time_t, msg_pos_ecef_t> 
     }
 };
 
+class LLHFrameHandler : private sbp::FrameHandler<msg_gps_time_t, msg_pos_llh_t> {
+  public:
+    LLHFrameHandler(sbp::State *state) : sbp::FrameHandler<msg_gps_time_t, msg_pos_llh_t>(state) {
+    }
+
+    void handle_sbp_frame(uint16_t sender_id, uint16_t msg_type,
+                                     uint8_t payload_len, uint8_t payload[],
+                                     uint16_t frame_len, uint8_t frame[]) {
+      (void)sender_id;
+      (void)payload;
+      (void)frame;
+      if (msg_type == SBP_MSG_POS_LLH) {
+        std::cout << "Received new POS_LLH frame, payload length " << (int)payload_len << ", frame length " << frame_len << "\n";
+      } else if (msg_type == SBP_MSG_GPS_TIME) {
+        std::cout << "Received new GPS_TIME frame, payload length " << (int)payload_len << ", frame length " << frame_len << "\n";
+      }
+    }
+};
+
+class EverythingHandler : private sbp::AllFrameHandler {
+  public:
+    EverythingHandler(sbp::State *state) : sbp::AllFrameHandler(state) {
+    }
+
+    void handle_sbp_frame(uint16_t sender_id, uint16_t msg_type,
+                                     uint8_t payload_len, uint8_t payload[],
+                                     uint16_t frame_len, uint8_t frame[]) {
+      (void)sender_id;
+      (void)payload;
+      (void)frame;
+      std::cout << "Received new frame, message type " << msg_type << ", payload length " << (int)payload_len << ", frame length " << frame_len << "\n";
+    }
+};
+
 int main(int argc, char **argv)
 {
   if (argc <= 1) {
@@ -68,7 +103,9 @@ int main(int argc, char **argv)
   }
 
   sbp::State s;
-  ECEFHandler handler(&s);
+  ECEFHandler ecef_handler(&s);
+  LLHFrameHandler llh_handler(&s);
+  EverythingHandler everything_handler(&s);
 
   s.set_reader(&reader);
 
@@ -78,3 +115,4 @@ int main(int argc, char **argv)
 
   return 0;
 }
+
