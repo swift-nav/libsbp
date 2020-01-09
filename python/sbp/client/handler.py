@@ -48,20 +48,35 @@ class Handler(object):
         self._receive_thread.daemon = True
         self._sinks = []  # This is a list of weakrefs to upstream iterators
         self._dead = False
+        self._exception = None
         self._write_lock = threading.Lock()
 
     def _recv_thread(self):
         """
         Internal thread to iterate over source messages and dispatch callbacks.
         """
-        for msg, metadata in self._source:
-            if msg.msg_type:
-                self._call(msg, **metadata)
+        def gen_messages():
+            for msg, metadata in self._source:
+                if msg.msg_type:
+                    yield (msg, metadata)
+
+        messages = gen_messages()
+        while True:
+            msg_and_metatdata = None
+            try:
+                msg_and_metatdata = next(messages, None)
+            except Exception as exc:
+                self._exception = exc
+                break
+            if msg_and_metatdata is None:
+                break
+            msg, metadata = msg_and_metatdata
+            self._call(msg, **metadata)
         # Break any upstream iterators
         for sink in self._sinks:
             i = sink()
             if i is not None:
-                i.breakiter()
+                i.breakiter(self._exception)
         self._dead = True
 
     def __enter__(self):
@@ -295,6 +310,7 @@ class Handler(object):
         def __init__(self, maxsize):
             self._queue = Queue(maxsize)
             self._broken = False
+            self._exception = None  # type: Optional[Exception]
 
         def __iter__(self):
             return self
@@ -302,8 +318,9 @@ class Handler(object):
         def __call__(self, msg, **metadata):
             self._queue.put((msg, metadata), False)
 
-        def breakiter(self):
+        def breakiter(self, exc=None):
             self._broken = True
+            self._exception = exc
             self._queue.put(None, True, 1.0)
 
         def __next__(self):
@@ -311,5 +328,7 @@ class Handler(object):
                 raise StopIteration
             m = self._queue.get(True)
             if self._broken and m is None:
+                if self._exception is not None:
+                    raise self._exception
                 raise StopIteration
             return m

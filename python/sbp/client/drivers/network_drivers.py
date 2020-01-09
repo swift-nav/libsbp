@@ -49,7 +49,6 @@ class TCPDriver(BaseDriver):
                  reconnect=False,
                  max_reconnect=MAX_RECONNECT_RETRIES):
         self._address = (host, port)
-        print((host, port))
         self._create_connection = partial(socket.create_connection,
                                           (host, port),
                                           timeout=timeout
