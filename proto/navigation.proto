@@ -307,6 +307,181 @@ message MsgVelNedCov {
     uint32 flags = 12;
 }
 
+/** GNSS-only Position in ECEF
+ *
+ * The position solution message reports absolute Earth Centered
+ * Earth Fixed (ECEF) coordinates and the status (single point vs
+ * pseudo-absolute RTK) of the position solution. If the rover
+ * receiver knows the surveyed position of the base station and has
+ * an RTK solution, this reports a pseudo-absolute position
+ * solution using the base station position and the rover's RTK
+ * baseline vector. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+message MsgPosEcefGnss {
+    uint32 tow = 1;
+    double x = 2;
+    double y = 3;
+    double z = 4;
+    uint32 accuracy = 5;
+    uint32 n_sats = 6;
+    uint32 flags = 7;
+}
+
+/** GNSS-only Position in ECEF
+ *
+ * The position solution message reports absolute Earth Centered
+ * Earth Fixed (ECEF) coordinates and the status (single point vs
+ * pseudo-absolute RTK) of the position solution. The message also
+ * reports the upper triangular portion of the 3x3 covariance matrix.
+ * If the receiver knows the surveyed position of the base station and has
+ * an RTK solution, this reports a pseudo-absolute position
+ * solution using the base station position and the rover's RTK
+ * baseline vector. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+message MsgPosEcefCovGnss {
+    uint32 tow = 1;
+    double x = 2;
+    double y = 3;
+    double z = 4;
+    float cov_x_x = 5;
+    float cov_x_y = 6;
+    float cov_x_z = 7;
+    float cov_y_y = 8;
+    float cov_y_z = 9;
+    float cov_z_z = 10;
+    uint32 n_sats = 11;
+    uint32 flags = 12;
+}
+
+/** GNSS-only Geodetic Position
+ *
+ * This position solution message reports the absolute geodetic
+ * coordinates and the status (single point vs pseudo-absolute RTK)
+ * of the position solution. If the rover receiver knows the
+ * surveyed position of the base station and has an RTK solution,
+ * this reports a pseudo-absolute position solution using the base
+ * station position and the rover's RTK baseline vector. The full
+ * GPS time is given by the preceding MSG_GPS_TIME with the
+ * matching time-of-week (tow).
+ */
+message MsgPosLlhGnss {
+    uint32 tow = 1;
+    double lat = 2;
+    double lon = 3;
+    double height = 4;
+    uint32 h_accuracy = 5;
+    uint32 v_accuracy = 6;
+    uint32 n_sats = 7;
+    uint32 flags = 8;
+}
+
+/** GNSS-only Geodetic Position
+ *
+ * This position solution message reports the absolute geodetic
+ * coordinates and the status (single point vs pseudo-absolute RTK)
+ * of the position solution as well as the upper triangle of the 3x3
+ * covariance matrix.  The position information and Fix Mode flags should
+ * follow the MSG_POS_LLH message.  Since the covariance matrix is computed
+ * in the local-level North, East, Down frame, the covariance terms follow
+ * with that convention. Thus, covariances are reported against the "downward"
+ * measurement and care should be taken with the sign convention.
+ */
+message MsgPosLlhCovGnss {
+    uint32 tow = 1;
+    double lat = 2;
+    double lon = 3;
+    double height = 4;
+    float cov_n_n = 5;
+    float cov_n_e = 6;
+    float cov_n_d = 7;
+    float cov_e_e = 8;
+    float cov_e_d = 9;
+    float cov_d_d = 10;
+    uint32 n_sats = 11;
+    uint32 flags = 12;
+}
+
+/** GNSS-only Velocity in ECEF
+ *
+ * This message reports the velocity in Earth Centered Earth Fixed
+ * (ECEF) coordinates. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+message MsgVelEcefGnss {
+    uint32 tow = 1;
+    sint32 x = 2;
+    sint32 y = 3;
+    sint32 z = 4;
+    uint32 accuracy = 5;
+    uint32 n_sats = 6;
+    uint32 flags = 7;
+}
+
+/** GNSS-only Velocity in ECEF
+ *
+ * This message reports the velocity in Earth Centered Earth Fixed
+ * (ECEF) coordinates. The full GPS time is given by the preceding
+ * MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+message MsgVelEcefCovGnss {
+    uint32 tow = 1;
+    sint32 x = 2;
+    sint32 y = 3;
+    sint32 z = 4;
+    float cov_x_x = 5;
+    float cov_x_y = 6;
+    float cov_x_z = 7;
+    float cov_y_y = 8;
+    float cov_y_z = 9;
+    float cov_z_z = 10;
+    uint32 n_sats = 11;
+    uint32 flags = 12;
+}
+
+/** GNSS-only Velocity in NED
+ *
+ * This message reports the velocity in local North East Down (NED)
+ * coordinates. The NED coordinate system is defined as the local WGS84
+ * tangent plane centered at the current position. The full GPS time is
+ * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+message MsgVelNedGnss {
+    uint32 tow = 1;
+    sint32 n = 2;
+    sint32 e = 3;
+    sint32 d = 4;
+    uint32 h_accuracy = 5;
+    uint32 v_accuracy = 6;
+    uint32 n_sats = 7;
+    uint32 flags = 8;
+}
+
+/** GNSS-only Velocity in NED
+ *
+ * This message reports the velocity in local North East Down (NED)
+ * coordinates. The NED coordinate system is defined as the local WGS84
+ * tangent plane centered at the current position. The full GPS time is
+ * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ * This message is similar to the MSG_VEL_NED, but it includes the upper triangular
+ * portion of the 3x3 covariance matrix.
+ */
+message MsgVelNedCovGnss {
+    uint32 tow = 1;
+    sint32 n = 2;
+    sint32 e = 3;
+    sint32 d = 4;
+    float cov_n_n = 5;
+    float cov_n_e = 6;
+    float cov_n_d = 7;
+    float cov_e_e = 8;
+    float cov_e_d = 9;
+    float cov_d_d = 10;
+    uint32 n_sats = 11;
+    uint32 flags = 12;
+}
+
 /** Velocity in User Frame
  *
  * This message reports the velocity in the Vehicle Body Frame. By convention,

@@ -205,63 +205,146 @@ instance Binary STECSatElement where
 $(makeJSON "_sTECSatElement_" ''STECSatElement)
 $(makeLenses ''STECSatElement)
 
--- | TroposphericDelayCorrection.
+-- | TroposphericDelayCorrectionNoStd.
 --
 -- Troposphere vertical delays at the grid point.
+data TroposphericDelayCorrectionNoStd = TroposphericDelayCorrectionNoStd
+  { _troposphericDelayCorrectionNoStd_hydro :: !Int16
+    -- ^ Hydrostatic vertical delay
+  , _troposphericDelayCorrectionNoStd_wet :: !Int8
+    -- ^ Wet vertical delay
+  } deriving ( Show, Read, Eq )
+
+instance Binary TroposphericDelayCorrectionNoStd where
+  get = do
+    _troposphericDelayCorrectionNoStd_hydro <- fromIntegral <$> getWord16le
+    _troposphericDelayCorrectionNoStd_wet <- fromIntegral <$> getWord8
+    pure TroposphericDelayCorrectionNoStd {..}
+
+  put TroposphericDelayCorrectionNoStd {..} = do
+    (putWord16le . fromIntegral) _troposphericDelayCorrectionNoStd_hydro
+    (putWord8 . fromIntegral) _troposphericDelayCorrectionNoStd_wet
+
+$(makeJSON "_troposphericDelayCorrectionNoStd_" ''TroposphericDelayCorrectionNoStd)
+$(makeLenses ''TroposphericDelayCorrectionNoStd)
+
+-- | TroposphericDelayCorrection.
+--
+-- Troposphere vertical delays (mean and standard deviation) at the grid point.
 data TroposphericDelayCorrection = TroposphericDelayCorrection
   { _troposphericDelayCorrection_hydro :: !Int16
     -- ^ Hydrostatic vertical delay
-  , _troposphericDelayCorrection_wet :: !Int8
+  , _troposphericDelayCorrection_wet  :: !Int8
     -- ^ Wet vertical delay
+  , _troposphericDelayCorrection_stddev :: !Word8
+    -- ^ stddev
   } deriving ( Show, Read, Eq )
 
 instance Binary TroposphericDelayCorrection where
   get = do
     _troposphericDelayCorrection_hydro <- fromIntegral <$> getWord16le
     _troposphericDelayCorrection_wet <- fromIntegral <$> getWord8
+    _troposphericDelayCorrection_stddev <- getWord8
     pure TroposphericDelayCorrection {..}
 
   put TroposphericDelayCorrection {..} = do
     (putWord16le . fromIntegral) _troposphericDelayCorrection_hydro
     (putWord8 . fromIntegral) _troposphericDelayCorrection_wet
+    putWord8 _troposphericDelayCorrection_stddev
 
 $(makeJSON "_troposphericDelayCorrection_" ''TroposphericDelayCorrection)
 $(makeLenses ''TroposphericDelayCorrection)
 
--- | STECResidual.
+-- | STECResidualNoStd.
 --
 -- STEC residual for the given satellite at the grid point.
+data STECResidualNoStd = STECResidualNoStd
+  { _sTECResidualNoStd_sv_id  :: !SvId
+    -- ^ space vehicle identifier
+  , _sTECResidualNoStd_residual :: !Int16
+    -- ^ STEC residual
+  } deriving ( Show, Read, Eq )
+
+instance Binary STECResidualNoStd where
+  get = do
+    _sTECResidualNoStd_sv_id <- get
+    _sTECResidualNoStd_residual <- fromIntegral <$> getWord16le
+    pure STECResidualNoStd {..}
+
+  put STECResidualNoStd {..} = do
+    put _sTECResidualNoStd_sv_id
+    (putWord16le . fromIntegral) _sTECResidualNoStd_residual
+
+$(makeJSON "_sTECResidualNoStd_" ''STECResidualNoStd)
+$(makeLenses ''STECResidualNoStd)
+
+-- | STECResidual.
+--
+-- STEC residual (mean and standard deviation) for the given satellite at the
+-- grid point,
 data STECResidual = STECResidual
   { _sTECResidual_sv_id  :: !SvId
     -- ^ space vehicle identifier
   , _sTECResidual_residual :: !Int16
     -- ^ STEC residual
+  , _sTECResidual_stddev :: !Word8
+    -- ^ stddev
   } deriving ( Show, Read, Eq )
 
 instance Binary STECResidual where
   get = do
     _sTECResidual_sv_id <- get
     _sTECResidual_residual <- fromIntegral <$> getWord16le
+    _sTECResidual_stddev <- getWord8
     pure STECResidual {..}
 
   put STECResidual {..} = do
     put _sTECResidual_sv_id
     (putWord16le . fromIntegral) _sTECResidual_residual
+    putWord8 _sTECResidual_stddev
 
 $(makeJSON "_sTECResidual_" ''STECResidual)
 $(makeLenses ''STECResidual)
 
--- | GridElement.
+-- | GridElementNoStd.
 --
 -- Contains one tropo delay, plus STEC residuals for each satellite at the grid
 -- point.
+data GridElementNoStd = GridElementNoStd
+  { _gridElementNoStd_index                :: !Word16
+    -- ^ Index of the grid point
+  , _gridElementNoStd_tropo_delay_correction :: !TroposphericDelayCorrectionNoStd
+    -- ^ Wet and hydrostatic vertical delays
+  , _gridElementNoStd_stec_residuals       :: ![STECResidualNoStd]
+    -- ^ STEC residuals for each satellite
+  } deriving ( Show, Read, Eq )
+
+instance Binary GridElementNoStd where
+  get = do
+    _gridElementNoStd_index <- getWord16le
+    _gridElementNoStd_tropo_delay_correction <- get
+    _gridElementNoStd_stec_residuals <- whileM (not <$> isEmpty) get
+    pure GridElementNoStd {..}
+
+  put GridElementNoStd {..} = do
+    putWord16le _gridElementNoStd_index
+    put _gridElementNoStd_tropo_delay_correction
+    mapM_ put _gridElementNoStd_stec_residuals
+
+$(makeJSON "_gridElementNoStd_" ''GridElementNoStd)
+$(makeLenses ''GridElementNoStd)
+
+-- | GridElement.
+--
+-- Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
+-- stddev) for each satellite at the grid point.
 data GridElement = GridElement
   { _gridElement_index                :: !Word16
     -- ^ Index of the grid point
   , _gridElement_tropo_delay_correction :: !TroposphericDelayCorrection
-    -- ^ Wet and hydrostatic vertical delays
+    -- ^ Wet and hydrostatic vertical delays (mean, stddev)
   , _gridElement_stec_residuals       :: ![STECResidual]
-    -- ^ STEC residuals for each satellite
+    -- ^ STEC residuals for each satellite (mean, stddev)
   } deriving ( Show, Read, Eq )
 
 instance Binary GridElement where
@@ -613,10 +696,37 @@ $(makeSBP 'msgSsrStecCorrection ''MsgSsrStecCorrection)
 $(makeJSON "_msgSsrStecCorrection_" ''MsgSsrStecCorrection)
 $(makeLenses ''MsgSsrStecCorrection)
 
-msgSsrGriddedCorrection :: Word16
-msgSsrGriddedCorrection = 0x05F0
+msgSsrGriddedCorrectionNoStd :: Word16
+msgSsrGriddedCorrectionNoStd = 0x05F0
 
--- | SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05F0).
+-- | SBP class for message MSG_SSR_GRIDDED_CORRECTION_NO_STD (0x05F0).
+--
+-- This message was deprecated when variances (stddev) were added.
+data MsgSsrGriddedCorrectionNoStd = MsgSsrGriddedCorrectionNoStd
+  { _msgSsrGriddedCorrectionNoStd_header :: !GriddedCorrectionHeader
+    -- ^ Header of a Gridded Correction message
+  , _msgSsrGriddedCorrectionNoStd_element :: !GridElementNoStd
+    -- ^ Tropo and STEC residuals for the given grid point
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrGriddedCorrectionNoStd where
+  get = do
+    _msgSsrGriddedCorrectionNoStd_header <- get
+    _msgSsrGriddedCorrectionNoStd_element <- get
+    pure MsgSsrGriddedCorrectionNoStd {..}
+
+  put MsgSsrGriddedCorrectionNoStd {..} = do
+    put _msgSsrGriddedCorrectionNoStd_header
+    put _msgSsrGriddedCorrectionNoStd_element
+
+$(makeSBP 'msgSsrGriddedCorrectionNoStd ''MsgSsrGriddedCorrectionNoStd)
+$(makeJSON "_msgSsrGriddedCorrectionNoStd_" ''MsgSsrGriddedCorrectionNoStd)
+$(makeLenses ''MsgSsrGriddedCorrectionNoStd)
+
+msgSsrGriddedCorrection :: Word16
+msgSsrGriddedCorrection = 0x05FA
+
+-- | SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
 --
 -- STEC residuals are per space vehicle, tropo is not. It is typically
 -- equivalent to the QZSS CLAS Sub Type 9 messages
@@ -624,7 +734,8 @@ data MsgSsrGriddedCorrection = MsgSsrGriddedCorrection
   { _msgSsrGriddedCorrection_header :: !GriddedCorrectionHeader
     -- ^ Header of a Gridded Correction message
   , _msgSsrGriddedCorrection_element :: !GridElement
-    -- ^ Tropo and STEC residuals for the given grid point
+    -- ^ Tropo and STEC residuals for the given grid point (mean and standard
+    -- deviation)
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgSsrGriddedCorrection where

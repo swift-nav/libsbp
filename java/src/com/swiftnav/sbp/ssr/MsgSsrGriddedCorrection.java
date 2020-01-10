@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05F0).
+/** SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
  *
  * You can have MSG_SSR_GRIDDED_CORRECTION inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -33,13 +33,15 @@ import org.json.JSONArray;
  * It is typically equivalent to the QZSS CLAS Sub Type 9 messages */
 
 public class MsgSsrGriddedCorrection extends SBPMessage {
-    public static final int TYPE = 0x05F0;
+    public static final int TYPE = 0x05FA;
 
     
     /** Header of a Gridded Correction message */
     public GriddedCorrectionHeader header;
     
-    /** Tropo and STEC residuals for the given grid point */
+    /** Tropo and STEC residuals for the given grid point (mean
+and standard deviation)
+ */
     public GridElement element;
     
 

@@ -219,13 +219,43 @@ STECSatElement.prototype.fieldSpec.push(['stec_quality_indicator', 'writeUInt8',
 STECSatElement.prototype.fieldSpec.push(['stec_coeff', 'array', 'writeInt16LE', function () { return 2; }, 4]);
 
 /**
- * SBP class for message fragment TroposphericDelayCorrection
+ * SBP class for message fragment TroposphericDelayCorrectionNoStd
  *
  * Troposphere vertical delays at the grid point.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field hydro number (signed 16-bit int, 2 bytes) Hydrostatic vertical delay
  * @field wet number (signed 8-bit int, 1 byte) Wet vertical delay
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var TroposphericDelayCorrectionNoStd = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "TroposphericDelayCorrectionNoStd";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+TroposphericDelayCorrectionNoStd.prototype = Object.create(SBP.prototype);
+TroposphericDelayCorrectionNoStd.prototype.messageType = "TroposphericDelayCorrectionNoStd";
+TroposphericDelayCorrectionNoStd.prototype.constructor = TroposphericDelayCorrectionNoStd;
+TroposphericDelayCorrectionNoStd.prototype.parser = new Parser()
+  .endianess('little')
+  .int16('hydro')
+  .int8('wet');
+TroposphericDelayCorrectionNoStd.prototype.fieldSpec = [];
+TroposphericDelayCorrectionNoStd.prototype.fieldSpec.push(['hydro', 'writeInt16LE', 2]);
+TroposphericDelayCorrectionNoStd.prototype.fieldSpec.push(['wet', 'writeInt8', 1]);
+
+/**
+ * SBP class for message fragment TroposphericDelayCorrection
+ *
+ * Troposphere vertical delays (mean and standard deviation) at the grid point.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field hydro number (signed 16-bit int, 2 bytes) Hydrostatic vertical delay
+ * @field wet number (signed 8-bit int, 1 byte) Wet vertical delay
+ * @field stddev number (unsigned 8-bit int, 1 byte) stddev
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -242,19 +272,52 @@ TroposphericDelayCorrection.prototype.constructor = TroposphericDelayCorrection;
 TroposphericDelayCorrection.prototype.parser = new Parser()
   .endianess('little')
   .int16('hydro')
-  .int8('wet');
+  .int8('wet')
+  .uint8('stddev');
 TroposphericDelayCorrection.prototype.fieldSpec = [];
 TroposphericDelayCorrection.prototype.fieldSpec.push(['hydro', 'writeInt16LE', 2]);
 TroposphericDelayCorrection.prototype.fieldSpec.push(['wet', 'writeInt8', 1]);
+TroposphericDelayCorrection.prototype.fieldSpec.push(['stddev', 'writeUInt8', 1]);
 
 /**
- * SBP class for message fragment STECResidual
+ * SBP class for message fragment STECResidualNoStd
  *
  * STEC residual for the given satellite at the grid point.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field sv_id SvId space vehicle identifier
  * @field residual number (signed 16-bit int, 2 bytes) STEC residual
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var STECResidualNoStd = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "STECResidualNoStd";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+STECResidualNoStd.prototype = Object.create(SBP.prototype);
+STECResidualNoStd.prototype.messageType = "STECResidualNoStd";
+STECResidualNoStd.prototype.constructor = STECResidualNoStd;
+STECResidualNoStd.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('sv_id', { type: SvId.prototype.parser })
+  .int16('residual');
+STECResidualNoStd.prototype.fieldSpec = [];
+STECResidualNoStd.prototype.fieldSpec.push(['sv_id', SvId.prototype.fieldSpec]);
+STECResidualNoStd.prototype.fieldSpec.push(['residual', 'writeInt16LE', 2]);
+
+/**
+ * SBP class for message fragment STECResidual
+ *
+ * STEC residual (mean and standard deviation) for the given satellite at the grid
+ * point,
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sv_id SvId space vehicle identifier
+ * @field residual number (signed 16-bit int, 2 bytes) STEC residual
+ * @field stddev number (unsigned 8-bit int, 1 byte) stddev
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -271,21 +334,56 @@ STECResidual.prototype.constructor = STECResidual;
 STECResidual.prototype.parser = new Parser()
   .endianess('little')
   .nest('sv_id', { type: SvId.prototype.parser })
-  .int16('residual');
+  .int16('residual')
+  .uint8('stddev');
 STECResidual.prototype.fieldSpec = [];
 STECResidual.prototype.fieldSpec.push(['sv_id', SvId.prototype.fieldSpec]);
 STECResidual.prototype.fieldSpec.push(['residual', 'writeInt16LE', 2]);
+STECResidual.prototype.fieldSpec.push(['stddev', 'writeUInt8', 1]);
 
 /**
- * SBP class for message fragment GridElement
+ * SBP class for message fragment GridElementNoStd
  *
  * Contains one tropo delay, plus STEC residuals for each satellite at the grid
  * point.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field index number (unsigned 16-bit int, 2 bytes) Index of the grid point
- * @field tropo_delay_correction TroposphericDelayCorrection Wet and hydrostatic vertical delays
+ * @field tropo_delay_correction TroposphericDelayCorrectionNoStd Wet and hydrostatic vertical delays
  * @field stec_residuals array STEC residuals for each satellite
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var GridElementNoStd = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "GridElementNoStd";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+GridElementNoStd.prototype = Object.create(SBP.prototype);
+GridElementNoStd.prototype.messageType = "GridElementNoStd";
+GridElementNoStd.prototype.constructor = GridElementNoStd;
+GridElementNoStd.prototype.parser = new Parser()
+  .endianess('little')
+  .uint16('index')
+  .nest('tropo_delay_correction', { type: TroposphericDelayCorrectionNoStd.prototype.parser })
+  .array('stec_residuals', { type: STECResidualNoStd.prototype.parser, readUntil: 'eof' });
+GridElementNoStd.prototype.fieldSpec = [];
+GridElementNoStd.prototype.fieldSpec.push(['index', 'writeUInt16LE', 2]);
+GridElementNoStd.prototype.fieldSpec.push(['tropo_delay_correction', TroposphericDelayCorrectionNoStd.prototype.fieldSpec]);
+GridElementNoStd.prototype.fieldSpec.push(['stec_residuals', 'array', STECResidualNoStd.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+
+/**
+ * SBP class for message fragment GridElement
+ *
+ * Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
+ * stddev) for each satellite at the grid point.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field index number (unsigned 16-bit int, 2 bytes) Index of the grid point
+ * @field tropo_delay_correction TroposphericDelayCorrection Wet and hydrostatic vertical delays (mean, stddev)
+ * @field stec_residuals array STEC residuals for each satellite (mean, stddev)
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -625,14 +723,44 @@ MsgSsrStecCorrection.prototype.fieldSpec.push(['header', STECHeader.prototype.fi
 MsgSsrStecCorrection.prototype.fieldSpec.push(['stec_sat_list', 'array', STECSatElement.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
- * SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05F0).
+ * SBP class for message MSG_SSR_GRIDDED_CORRECTION_NO_STD (0x05F0).
+ *
+ * This message was deprecated when variances (stddev) were added.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field header GriddedCorrectionHeader Header of a Gridded Correction message
+ * @field element GridElementNoStd Tropo and STEC residuals for the given grid point
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSsrGriddedCorrectionNoStd = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_GRIDDED_CORRECTION_NO_STD";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrGriddedCorrectionNoStd.prototype = Object.create(SBP.prototype);
+MsgSsrGriddedCorrectionNoStd.prototype.messageType = "MSG_SSR_GRIDDED_CORRECTION_NO_STD";
+MsgSsrGriddedCorrectionNoStd.prototype.msg_type = 0x05F0;
+MsgSsrGriddedCorrectionNoStd.prototype.constructor = MsgSsrGriddedCorrectionNoStd;
+MsgSsrGriddedCorrectionNoStd.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('header', { type: GriddedCorrectionHeader.prototype.parser })
+  .nest('element', { type: GridElementNoStd.prototype.parser });
+MsgSsrGriddedCorrectionNoStd.prototype.fieldSpec = [];
+MsgSsrGriddedCorrectionNoStd.prototype.fieldSpec.push(['header', GriddedCorrectionHeader.prototype.fieldSpec]);
+MsgSsrGriddedCorrectionNoStd.prototype.fieldSpec.push(['element', GridElementNoStd.prototype.fieldSpec]);
+
+/**
+ * SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
  *
  * STEC residuals are per space vehicle, tropo is not. It is typically equivalent
  * to the QZSS CLAS Sub Type 9 messages
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header GriddedCorrectionHeader Header of a Gridded Correction message
- * @field element GridElement Tropo and STEC residuals for the given grid point
+ * @field element GridElement Tropo and STEC residuals for the given grid point (mean and standard deviation)
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -645,7 +773,7 @@ var MsgSsrGriddedCorrection = function (sbp, fields) {
 };
 MsgSsrGriddedCorrection.prototype = Object.create(SBP.prototype);
 MsgSsrGriddedCorrection.prototype.messageType = "MSG_SSR_GRIDDED_CORRECTION";
-MsgSsrGriddedCorrection.prototype.msg_type = 0x05F0;
+MsgSsrGriddedCorrection.prototype.msg_type = 0x05FA;
 MsgSsrGriddedCorrection.prototype.constructor = MsgSsrGriddedCorrection;
 MsgSsrGriddedCorrection.prototype.parser = new Parser()
   .endianess('little')
@@ -695,8 +823,11 @@ module.exports = {
   STECHeader: STECHeader,
   GriddedCorrectionHeader: GriddedCorrectionHeader,
   STECSatElement: STECSatElement,
+  TroposphericDelayCorrectionNoStd: TroposphericDelayCorrectionNoStd,
   TroposphericDelayCorrection: TroposphericDelayCorrection,
+  STECResidualNoStd: STECResidualNoStd,
   STECResidual: STECResidual,
+  GridElementNoStd: GridElementNoStd,
   GridElement: GridElement,
   GridDefinitionHeader: GridDefinitionHeader,
   0x05DD: MsgSsrOrbitClock,
@@ -709,7 +840,9 @@ module.exports = {
   MsgSsrPhaseBiases: MsgSsrPhaseBiases,
   0x05EB: MsgSsrStecCorrection,
   MsgSsrStecCorrection: MsgSsrStecCorrection,
-  0x05F0: MsgSsrGriddedCorrection,
+  0x05F0: MsgSsrGriddedCorrectionNoStd,
+  MsgSsrGriddedCorrectionNoStd: MsgSsrGriddedCorrectionNoStd,
+  0x05FA: MsgSsrGriddedCorrection,
   MsgSsrGriddedCorrection: MsgSsrGriddedCorrection,
   0x05F5: MsgSsrGridDefinition,
   MsgSsrGridDefinition: MsgSsrGridDefinition,

@@ -1061,6 +1061,122 @@ impl crate::serialize::SbpSerialize for MsgPosECEFCov {
     }
 }
 
+/// GNSS-only Position in ECEF
+///
+/// The position solution message reports absolute Earth Centered
+/// Earth Fixed (ECEF) coordinates and the status (single point vs
+/// pseudo-absolute RTK) of the position solution. The message also
+/// reports the upper triangular portion of the 3x3 covariance matrix.
+/// If the receiver knows the surveyed position of the base station and has
+/// an RTK solution, this reports a pseudo-absolute position
+/// solution using the base station position and the rover's RTK
+/// baseline vector. The full GPS time is given by the preceding
+/// MSG_GPS_TIME with the matching time-of-week (tow).
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgPosECEFCovGnss {
+    pub sender_id: Option<u16>,
+    /// GPS Time of Week
+    pub tow: u32,
+    /// ECEF X coordinate
+    pub x: f64,
+    /// ECEF Y coordinate
+    pub y: f64,
+    /// ECEF Z coordinate
+    pub z: f64,
+    /// Estimated variance of x
+    pub cov_x_x: f32,
+    /// Estimated covariance of x and y
+    pub cov_x_y: f32,
+    /// Estimated covariance of x and z
+    pub cov_x_z: f32,
+    /// Estimated variance of y
+    pub cov_y_y: f32,
+    /// Estimated covariance of y and z
+    pub cov_y_z: f32,
+    /// Estimated variance of z
+    pub cov_z_z: f32,
+    /// Number of satellites used in solution
+    pub n_sats: u8,
+    /// Status flags
+    pub flags: u8,
+}
+
+impl MsgPosECEFCovGnss {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFCovGnss, crate::Error> {
+        Ok(MsgPosECEFCovGnss {
+            sender_id: None,
+            tow: _buf.read_u32::<LittleEndian>()?,
+            x: _buf.read_f64::<LittleEndian>()?,
+            y: _buf.read_f64::<LittleEndian>()?,
+            z: _buf.read_f64::<LittleEndian>()?,
+            cov_x_x: _buf.read_f32::<LittleEndian>()?,
+            cov_x_y: _buf.read_f32::<LittleEndian>()?,
+            cov_x_z: _buf.read_f32::<LittleEndian>()?,
+            cov_y_y: _buf.read_f32::<LittleEndian>()?,
+            cov_y_z: _buf.read_f32::<LittleEndian>()?,
+            cov_z_z: _buf.read_f32::<LittleEndian>()?,
+            n_sats: _buf.read_u8()?,
+            flags: _buf.read_u8()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgPosECEFCovGnss {
+    fn get_message_type(&self) -> u16 {
+        564
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgPosECEFCovGnss {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.x.append_to_sbp_buffer(buf);
+        self.y.append_to_sbp_buffer(buf);
+        self.z.append_to_sbp_buffer(buf);
+        self.cov_x_x.append_to_sbp_buffer(buf);
+        self.cov_x_y.append_to_sbp_buffer(buf);
+        self.cov_x_z.append_to_sbp_buffer(buf);
+        self.cov_y_y.append_to_sbp_buffer(buf);
+        self.cov_y_z.append_to_sbp_buffer(buf);
+        self.cov_z_z.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.x.sbp_size();
+        size += self.y.sbp_size();
+        size += self.z.sbp_size();
+        size += self.cov_x_x.sbp_size();
+        size += self.cov_x_y.sbp_size();
+        size += self.cov_x_z.sbp_size();
+        size += self.cov_y_y.sbp_size();
+        size += self.cov_y_z.sbp_size();
+        size += self.cov_z_z.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Single-point position in ECEF
 ///
 /// The position solution message reports absolute Earth Centered
@@ -1127,6 +1243,96 @@ impl super::SBPMessage for MsgPosECEFDepA {
 }
 
 impl crate::serialize::SbpSerialize for MsgPosECEFDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.x.append_to_sbp_buffer(buf);
+        self.y.append_to_sbp_buffer(buf);
+        self.z.append_to_sbp_buffer(buf);
+        self.accuracy.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.x.sbp_size();
+        size += self.y.sbp_size();
+        size += self.z.sbp_size();
+        size += self.accuracy.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
+/// GNSS-only Position in ECEF
+///
+/// The position solution message reports absolute Earth Centered
+/// Earth Fixed (ECEF) coordinates and the status (single point vs
+/// pseudo-absolute RTK) of the position solution. If the rover
+/// receiver knows the surveyed position of the base station and has
+/// an RTK solution, this reports a pseudo-absolute position
+/// solution using the base station position and the rover's RTK
+/// baseline vector. The full GPS time is given by the preceding
+/// MSG_GPS_TIME with the matching time-of-week (tow).
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgPosECEFGnss {
+    pub sender_id: Option<u16>,
+    /// GPS Time of Week
+    pub tow: u32,
+    /// ECEF X coordinate
+    pub x: f64,
+    /// ECEF Y coordinate
+    pub y: f64,
+    /// ECEF Z coordinate
+    pub z: f64,
+    /// Position estimated standard deviation
+    pub accuracy: u16,
+    /// Number of satellites used in solution
+    pub n_sats: u8,
+    /// Status flags
+    pub flags: u8,
+}
+
+impl MsgPosECEFGnss {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFGnss, crate::Error> {
+        Ok(MsgPosECEFGnss {
+            sender_id: None,
+            tow: _buf.read_u32::<LittleEndian>()?,
+            x: _buf.read_f64::<LittleEndian>()?,
+            y: _buf.read_f64::<LittleEndian>()?,
+            z: _buf.read_f64::<LittleEndian>()?,
+            accuracy: _buf.read_u16::<LittleEndian>()?,
+            n_sats: _buf.read_u8()?,
+            flags: _buf.read_u8()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgPosECEFGnss {
+    fn get_message_type(&self) -> u16 {
+        553
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgPosECEFGnss {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -1361,6 +1567,121 @@ impl crate::serialize::SbpSerialize for MsgPosLLHCov {
     }
 }
 
+/// GNSS-only Geodetic Position
+///
+/// This position solution message reports the absolute geodetic
+/// coordinates and the status (single point vs pseudo-absolute RTK)
+/// of the position solution as well as the upper triangle of the 3x3
+/// covariance matrix.  The position information and Fix Mode flags should
+/// follow the MSG_POS_LLH message.  Since the covariance matrix is computed
+/// in the local-level North, East, Down frame, the covariance terms follow
+/// with that convention. Thus, covariances are reported against the "downward"
+/// measurement and care should be taken with the sign convention.
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgPosLLHCovGnss {
+    pub sender_id: Option<u16>,
+    /// GPS Time of Week
+    pub tow: u32,
+    /// Latitude
+    pub lat: f64,
+    /// Longitude
+    pub lon: f64,
+    /// Height above WGS84 ellipsoid
+    pub height: f64,
+    /// Estimated variance of northing
+    pub cov_n_n: f32,
+    /// Covariance of northing and easting
+    pub cov_n_e: f32,
+    /// Covariance of northing and downward measurement
+    pub cov_n_d: f32,
+    /// Estimated variance of easting
+    pub cov_e_e: f32,
+    /// Covariance of easting and downward measurement
+    pub cov_e_d: f32,
+    /// Estimated variance of downward measurement
+    pub cov_d_d: f32,
+    /// Number of satellites used in solution.
+    pub n_sats: u8,
+    /// Status flags
+    pub flags: u8,
+}
+
+impl MsgPosLLHCovGnss {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHCovGnss, crate::Error> {
+        Ok(MsgPosLLHCovGnss {
+            sender_id: None,
+            tow: _buf.read_u32::<LittleEndian>()?,
+            lat: _buf.read_f64::<LittleEndian>()?,
+            lon: _buf.read_f64::<LittleEndian>()?,
+            height: _buf.read_f64::<LittleEndian>()?,
+            cov_n_n: _buf.read_f32::<LittleEndian>()?,
+            cov_n_e: _buf.read_f32::<LittleEndian>()?,
+            cov_n_d: _buf.read_f32::<LittleEndian>()?,
+            cov_e_e: _buf.read_f32::<LittleEndian>()?,
+            cov_e_d: _buf.read_f32::<LittleEndian>()?,
+            cov_d_d: _buf.read_f32::<LittleEndian>()?,
+            n_sats: _buf.read_u8()?,
+            flags: _buf.read_u8()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgPosLLHCovGnss {
+    fn get_message_type(&self) -> u16 {
+        561
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgPosLLHCovGnss {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.lat.append_to_sbp_buffer(buf);
+        self.lon.append_to_sbp_buffer(buf);
+        self.height.append_to_sbp_buffer(buf);
+        self.cov_n_n.append_to_sbp_buffer(buf);
+        self.cov_n_e.append_to_sbp_buffer(buf);
+        self.cov_n_d.append_to_sbp_buffer(buf);
+        self.cov_e_e.append_to_sbp_buffer(buf);
+        self.cov_e_d.append_to_sbp_buffer(buf);
+        self.cov_d_d.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.lat.sbp_size();
+        size += self.lon.sbp_size();
+        size += self.height.sbp_size();
+        size += self.cov_n_n.sbp_size();
+        size += self.cov_n_e.sbp_size();
+        size += self.cov_n_d.sbp_size();
+        size += self.cov_e_e.sbp_size();
+        size += self.cov_e_d.sbp_size();
+        size += self.cov_d_d.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Geodetic Position
 ///
 /// This position solution message reports the absolute geodetic
@@ -1430,6 +1751,101 @@ impl super::SBPMessage for MsgPosLLHDepA {
 }
 
 impl crate::serialize::SbpSerialize for MsgPosLLHDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.lat.append_to_sbp_buffer(buf);
+        self.lon.append_to_sbp_buffer(buf);
+        self.height.append_to_sbp_buffer(buf);
+        self.h_accuracy.append_to_sbp_buffer(buf);
+        self.v_accuracy.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.lat.sbp_size();
+        size += self.lon.sbp_size();
+        size += self.height.sbp_size();
+        size += self.h_accuracy.sbp_size();
+        size += self.v_accuracy.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
+/// GNSS-only Geodetic Position
+///
+/// This position solution message reports the absolute geodetic
+/// coordinates and the status (single point vs pseudo-absolute RTK)
+/// of the position solution. If the rover receiver knows the
+/// surveyed position of the base station and has an RTK solution,
+/// this reports a pseudo-absolute position solution using the base
+/// station position and the rover's RTK baseline vector. The full
+/// GPS time is given by the preceding MSG_GPS_TIME with the
+/// matching time-of-week (tow).
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgPosLLHGnss {
+    pub sender_id: Option<u16>,
+    /// GPS Time of Week
+    pub tow: u32,
+    /// Latitude
+    pub lat: f64,
+    /// Longitude
+    pub lon: f64,
+    /// Height above WGS84 ellipsoid
+    pub height: f64,
+    /// Horizontal position estimated standard deviation
+    pub h_accuracy: u16,
+    /// Vertical position estimated standard deviation
+    pub v_accuracy: u16,
+    /// Number of satellites used in solution.
+    pub n_sats: u8,
+    /// Status flags
+    pub flags: u8,
+}
+
+impl MsgPosLLHGnss {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHGnss, crate::Error> {
+        Ok(MsgPosLLHGnss {
+            sender_id: None,
+            tow: _buf.read_u32::<LittleEndian>()?,
+            lat: _buf.read_f64::<LittleEndian>()?,
+            lon: _buf.read_f64::<LittleEndian>()?,
+            height: _buf.read_f64::<LittleEndian>()?,
+            h_accuracy: _buf.read_u16::<LittleEndian>()?,
+            v_accuracy: _buf.read_u16::<LittleEndian>()?,
+            n_sats: _buf.read_u8()?,
+            flags: _buf.read_u8()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgPosLLHGnss {
+    fn get_message_type(&self) -> u16 {
+        554
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgPosLLHGnss {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -1945,6 +2361,116 @@ impl crate::serialize::SbpSerialize for MsgVelECEFCov {
     }
 }
 
+/// GNSS-only Velocity in ECEF
+///
+/// This message reports the velocity in Earth Centered Earth Fixed
+/// (ECEF) coordinates. The full GPS time is given by the preceding
+/// MSG_GPS_TIME with the matching time-of-week (tow).
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgVelECEFCovGnss {
+    pub sender_id: Option<u16>,
+    /// GPS Time of Week
+    pub tow: u32,
+    /// Velocity ECEF X coordinate
+    pub x: i32,
+    /// Velocity ECEF Y coordinate
+    pub y: i32,
+    /// Velocity ECEF Z coordinate
+    pub z: i32,
+    /// Estimated variance of x
+    pub cov_x_x: f32,
+    /// Estimated covariance of x and y
+    pub cov_x_y: f32,
+    /// Estimated covariance of x and z
+    pub cov_x_z: f32,
+    /// Estimated variance of y
+    pub cov_y_y: f32,
+    /// Estimated covariance of y and z
+    pub cov_y_z: f32,
+    /// Estimated variance of z
+    pub cov_z_z: f32,
+    /// Number of satellites used in solution
+    pub n_sats: u8,
+    /// Status flags
+    pub flags: u8,
+}
+
+impl MsgVelECEFCovGnss {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFCovGnss, crate::Error> {
+        Ok(MsgVelECEFCovGnss {
+            sender_id: None,
+            tow: _buf.read_u32::<LittleEndian>()?,
+            x: _buf.read_i32::<LittleEndian>()?,
+            y: _buf.read_i32::<LittleEndian>()?,
+            z: _buf.read_i32::<LittleEndian>()?,
+            cov_x_x: _buf.read_f32::<LittleEndian>()?,
+            cov_x_y: _buf.read_f32::<LittleEndian>()?,
+            cov_x_z: _buf.read_f32::<LittleEndian>()?,
+            cov_y_y: _buf.read_f32::<LittleEndian>()?,
+            cov_y_z: _buf.read_f32::<LittleEndian>()?,
+            cov_z_z: _buf.read_f32::<LittleEndian>()?,
+            n_sats: _buf.read_u8()?,
+            flags: _buf.read_u8()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgVelECEFCovGnss {
+    fn get_message_type(&self) -> u16 {
+        565
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgVelECEFCovGnss {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.x.append_to_sbp_buffer(buf);
+        self.y.append_to_sbp_buffer(buf);
+        self.z.append_to_sbp_buffer(buf);
+        self.cov_x_x.append_to_sbp_buffer(buf);
+        self.cov_x_y.append_to_sbp_buffer(buf);
+        self.cov_x_z.append_to_sbp_buffer(buf);
+        self.cov_y_y.append_to_sbp_buffer(buf);
+        self.cov_y_z.append_to_sbp_buffer(buf);
+        self.cov_z_z.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.x.sbp_size();
+        size += self.y.sbp_size();
+        size += self.z.sbp_size();
+        size += self.cov_x_x.sbp_size();
+        size += self.cov_x_y.sbp_size();
+        size += self.cov_x_z.sbp_size();
+        size += self.cov_y_y.sbp_size();
+        size += self.cov_y_z.sbp_size();
+        size += self.cov_z_z.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Velocity in ECEF
 ///
 /// This message reports the velocity in Earth Centered Earth Fixed
@@ -2006,6 +2532,91 @@ impl super::SBPMessage for MsgVelECEFDepA {
 }
 
 impl crate::serialize::SbpSerialize for MsgVelECEFDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.x.append_to_sbp_buffer(buf);
+        self.y.append_to_sbp_buffer(buf);
+        self.z.append_to_sbp_buffer(buf);
+        self.accuracy.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.x.sbp_size();
+        size += self.y.sbp_size();
+        size += self.z.sbp_size();
+        size += self.accuracy.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
+/// GNSS-only Velocity in ECEF
+///
+/// This message reports the velocity in Earth Centered Earth Fixed
+/// (ECEF) coordinates. The full GPS time is given by the preceding
+/// MSG_GPS_TIME with the matching time-of-week (tow).
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgVelECEFGnss {
+    pub sender_id: Option<u16>,
+    /// GPS Time of Week
+    pub tow: u32,
+    /// Velocity ECEF X coordinate
+    pub x: i32,
+    /// Velocity ECEF Y coordinate
+    pub y: i32,
+    /// Velocity ECEF Z coordinate
+    pub z: i32,
+    /// Velocity estimated standard deviation
+    pub accuracy: u16,
+    /// Number of satellites used in solution
+    pub n_sats: u8,
+    /// Status flags
+    pub flags: u8,
+}
+
+impl MsgVelECEFGnss {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFGnss, crate::Error> {
+        Ok(MsgVelECEFGnss {
+            sender_id: None,
+            tow: _buf.read_u32::<LittleEndian>()?,
+            x: _buf.read_i32::<LittleEndian>()?,
+            y: _buf.read_i32::<LittleEndian>()?,
+            z: _buf.read_i32::<LittleEndian>()?,
+            accuracy: _buf.read_u16::<LittleEndian>()?,
+            n_sats: _buf.read_u8()?,
+            flags: _buf.read_u8()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgVelECEFGnss {
+    fn get_message_type(&self) -> u16 {
+        557
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgVelECEFGnss {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
@@ -2234,6 +2845,119 @@ impl crate::serialize::SbpSerialize for MsgVelNEDCov {
     }
 }
 
+/// GNSS-only Velocity in NED
+///
+/// This message reports the velocity in local North East Down (NED)
+/// coordinates. The NED coordinate system is defined as the local WGS84
+/// tangent plane centered at the current position. The full GPS time is
+/// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+/// This message is similar to the MSG_VEL_NED, but it includes the upper triangular
+/// portion of the 3x3 covariance matrix.
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgVelNEDCovGnss {
+    pub sender_id: Option<u16>,
+    /// GPS Time of Week
+    pub tow: u32,
+    /// Velocity North coordinate
+    pub n: i32,
+    /// Velocity East coordinate
+    pub e: i32,
+    /// Velocity Down coordinate
+    pub d: i32,
+    /// Estimated variance of northward measurement
+    pub cov_n_n: f32,
+    /// Covariance of northward and eastward measurement
+    pub cov_n_e: f32,
+    /// Covariance of northward and downward measurement
+    pub cov_n_d: f32,
+    /// Estimated variance of eastward measurement
+    pub cov_e_e: f32,
+    /// Covariance of eastward and downward measurement
+    pub cov_e_d: f32,
+    /// Estimated variance of downward measurement
+    pub cov_d_d: f32,
+    /// Number of satellites used in solution
+    pub n_sats: u8,
+    /// Status flags
+    pub flags: u8,
+}
+
+impl MsgVelNEDCovGnss {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDCovGnss, crate::Error> {
+        Ok(MsgVelNEDCovGnss {
+            sender_id: None,
+            tow: _buf.read_u32::<LittleEndian>()?,
+            n: _buf.read_i32::<LittleEndian>()?,
+            e: _buf.read_i32::<LittleEndian>()?,
+            d: _buf.read_i32::<LittleEndian>()?,
+            cov_n_n: _buf.read_f32::<LittleEndian>()?,
+            cov_n_e: _buf.read_f32::<LittleEndian>()?,
+            cov_n_d: _buf.read_f32::<LittleEndian>()?,
+            cov_e_e: _buf.read_f32::<LittleEndian>()?,
+            cov_e_d: _buf.read_f32::<LittleEndian>()?,
+            cov_d_d: _buf.read_f32::<LittleEndian>()?,
+            n_sats: _buf.read_u8()?,
+            flags: _buf.read_u8()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgVelNEDCovGnss {
+    fn get_message_type(&self) -> u16 {
+        562
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgVelNEDCovGnss {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.n.append_to_sbp_buffer(buf);
+        self.e.append_to_sbp_buffer(buf);
+        self.d.append_to_sbp_buffer(buf);
+        self.cov_n_n.append_to_sbp_buffer(buf);
+        self.cov_n_e.append_to_sbp_buffer(buf);
+        self.cov_n_d.append_to_sbp_buffer(buf);
+        self.cov_e_e.append_to_sbp_buffer(buf);
+        self.cov_e_d.append_to_sbp_buffer(buf);
+        self.cov_d_d.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.n.sbp_size();
+        size += self.e.sbp_size();
+        size += self.d.sbp_size();
+        size += self.cov_n_n.sbp_size();
+        size += self.cov_n_e.sbp_size();
+        size += self.cov_n_d.sbp_size();
+        size += self.cov_e_e.sbp_size();
+        size += self.cov_e_d.sbp_size();
+        size += self.cov_d_d.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Velocity in NED
 ///
 /// This message reports the velocity in local North East Down (NED)
@@ -2299,6 +3023,97 @@ impl super::SBPMessage for MsgVelNEDDepA {
 }
 
 impl crate::serialize::SbpSerialize for MsgVelNEDDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.n.append_to_sbp_buffer(buf);
+        self.e.append_to_sbp_buffer(buf);
+        self.d.append_to_sbp_buffer(buf);
+        self.h_accuracy.append_to_sbp_buffer(buf);
+        self.v_accuracy.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.n.sbp_size();
+        size += self.e.sbp_size();
+        size += self.d.sbp_size();
+        size += self.h_accuracy.sbp_size();
+        size += self.v_accuracy.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
+/// GNSS-only Velocity in NED
+///
+/// This message reports the velocity in local North East Down (NED)
+/// coordinates. The NED coordinate system is defined as the local WGS84
+/// tangent plane centered at the current position. The full GPS time is
+/// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+///
+#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgVelNEDGnss {
+    pub sender_id: Option<u16>,
+    /// GPS Time of Week
+    pub tow: u32,
+    /// Velocity North coordinate
+    pub n: i32,
+    /// Velocity East coordinate
+    pub e: i32,
+    /// Velocity Down coordinate
+    pub d: i32,
+    /// Horizontal velocity estimated standard deviation
+    pub h_accuracy: u16,
+    /// Vertical velocity estimated standard deviation
+    pub v_accuracy: u16,
+    /// Number of satellites used in solution
+    pub n_sats: u8,
+    /// Status flags
+    pub flags: u8,
+}
+
+impl MsgVelNEDGnss {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDGnss, crate::Error> {
+        Ok(MsgVelNEDGnss {
+            sender_id: None,
+            tow: _buf.read_u32::<LittleEndian>()?,
+            n: _buf.read_i32::<LittleEndian>()?,
+            e: _buf.read_i32::<LittleEndian>()?,
+            d: _buf.read_i32::<LittleEndian>()?,
+            h_accuracy: _buf.read_u16::<LittleEndian>()?,
+            v_accuracy: _buf.read_u16::<LittleEndian>()?,
+            n_sats: _buf.read_u8()?,
+            flags: _buf.read_u8()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgVelNEDGnss {
+    fn get_message_type(&self) -> u16 {
+        558
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgVelNEDGnss {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);

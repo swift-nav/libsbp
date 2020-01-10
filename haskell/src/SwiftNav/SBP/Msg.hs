@@ -171,10 +171,14 @@ data SBPMsg =
    | SBPMsgOsr MsgOsr Msg
    | SBPMsgPosEcef MsgPosEcef Msg
    | SBPMsgPosEcefCov MsgPosEcefCov Msg
+   | SBPMsgPosEcefCovGnss MsgPosEcefCovGnss Msg
    | SBPMsgPosEcefDepA MsgPosEcefDepA Msg
+   | SBPMsgPosEcefGnss MsgPosEcefGnss Msg
    | SBPMsgPosLlh MsgPosLlh Msg
    | SBPMsgPosLlhCov MsgPosLlhCov Msg
+   | SBPMsgPosLlhCovGnss MsgPosLlhCovGnss Msg
    | SBPMsgPosLlhDepA MsgPosLlhDepA Msg
+   | SBPMsgPosLlhGnss MsgPosLlhGnss Msg
    | SBPMsgPrintDep MsgPrintDep Msg
    | SBPMsgProtectionLevel MsgProtectionLevel Msg
    | SBPMsgReset MsgReset Msg
@@ -197,6 +201,7 @@ data SBPMsg =
    | SBPMsgSsrCodeBiases MsgSsrCodeBiases Msg
    | SBPMsgSsrGridDefinition MsgSsrGridDefinition Msg
    | SBPMsgSsrGriddedCorrection MsgSsrGriddedCorrection Msg
+   | SBPMsgSsrGriddedCorrectionNoStd MsgSsrGriddedCorrectionNoStd Msg
    | SBPMsgSsrOrbitClock MsgSsrOrbitClock Msg
    | SBPMsgSsrOrbitClockDepA MsgSsrOrbitClockDepA Msg
    | SBPMsgSsrPhaseBiases MsgSsrPhaseBiases Msg
@@ -224,10 +229,14 @@ data SBPMsg =
    | SBPMsgVelBody MsgVelBody Msg
    | SBPMsgVelEcef MsgVelEcef Msg
    | SBPMsgVelEcefCov MsgVelEcefCov Msg
+   | SBPMsgVelEcefCovGnss MsgVelEcefCovGnss Msg
    | SBPMsgVelEcefDepA MsgVelEcefDepA Msg
+   | SBPMsgVelEcefGnss MsgVelEcefGnss Msg
    | SBPMsgVelNed MsgVelNed Msg
    | SBPMsgVelNedCov MsgVelNedCov Msg
+   | SBPMsgVelNedCovGnss MsgVelNedCovGnss Msg
    | SBPMsgVelNedDepA MsgVelNedDepA Msg
+   | SBPMsgVelNedGnss MsgVelNedGnss Msg
    | SBPMsgBadCrc Msg
    | SBPMsgUnknown Msg
   deriving ( Show, Read, Eq )
@@ -358,10 +367,14 @@ instance Binary SBPMsg where
           | _msgSBPType == msgOsr = SBPMsgOsr (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosEcef = SBPMsgPosEcef (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosEcefCov = SBPMsgPosEcefCov (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgPosEcefCovGnss = SBPMsgPosEcefCovGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosEcefDepA = SBPMsgPosEcefDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgPosEcefGnss = SBPMsgPosEcefGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosLlh = SBPMsgPosLlh (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosLlhCov = SBPMsgPosLlhCov (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgPosLlhCovGnss = SBPMsgPosLlhCovGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPosLlhDepA = SBPMsgPosLlhDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgPosLlhGnss = SBPMsgPosLlhGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPrintDep = SBPMsgPrintDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgProtectionLevel = SBPMsgProtectionLevel (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgReset = SBPMsgReset (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -384,6 +397,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgSsrCodeBiases = SBPMsgSsrCodeBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrGridDefinition = SBPMsgSsrGridDefinition (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrGriddedCorrection = SBPMsgSsrGriddedCorrection (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrGriddedCorrectionNoStd = SBPMsgSsrGriddedCorrectionNoStd (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrOrbitClock = SBPMsgSsrOrbitClock (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrOrbitClockDepA = SBPMsgSsrOrbitClockDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrPhaseBiases = SBPMsgSsrPhaseBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -411,10 +425,14 @@ instance Binary SBPMsg where
           | _msgSBPType == msgVelBody = SBPMsgVelBody (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelEcef = SBPMsgVelEcef (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelEcefCov = SBPMsgVelEcefCov (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgVelEcefCovGnss = SBPMsgVelEcefCovGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelEcefDepA = SBPMsgVelEcefDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgVelEcefGnss = SBPMsgVelEcefGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelNed = SBPMsgVelNed (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelNedCov = SBPMsgVelNedCov (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgVelNedCovGnss = SBPMsgVelNedCovGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelNedDepA = SBPMsgVelNedDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgVelNedGnss = SBPMsgVelNedGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | otherwise = SBPMsgUnknown m
 
   put sm = do
@@ -537,10 +555,14 @@ instance Binary SBPMsg where
       encoder (SBPMsgOsr _ m) = put m
       encoder (SBPMsgPosEcef _ m) = put m
       encoder (SBPMsgPosEcefCov _ m) = put m
+      encoder (SBPMsgPosEcefCovGnss _ m) = put m
       encoder (SBPMsgPosEcefDepA _ m) = put m
+      encoder (SBPMsgPosEcefGnss _ m) = put m
       encoder (SBPMsgPosLlh _ m) = put m
       encoder (SBPMsgPosLlhCov _ m) = put m
+      encoder (SBPMsgPosLlhCovGnss _ m) = put m
       encoder (SBPMsgPosLlhDepA _ m) = put m
+      encoder (SBPMsgPosLlhGnss _ m) = put m
       encoder (SBPMsgPrintDep _ m) = put m
       encoder (SBPMsgProtectionLevel _ m) = put m
       encoder (SBPMsgReset _ m) = put m
@@ -563,6 +585,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgSsrCodeBiases _ m) = put m
       encoder (SBPMsgSsrGridDefinition _ m) = put m
       encoder (SBPMsgSsrGriddedCorrection _ m) = put m
+      encoder (SBPMsgSsrGriddedCorrectionNoStd _ m) = put m
       encoder (SBPMsgSsrOrbitClock _ m) = put m
       encoder (SBPMsgSsrOrbitClockDepA _ m) = put m
       encoder (SBPMsgSsrPhaseBiases _ m) = put m
@@ -590,10 +613,14 @@ instance Binary SBPMsg where
       encoder (SBPMsgVelBody _ m) = put m
       encoder (SBPMsgVelEcef _ m) = put m
       encoder (SBPMsgVelEcefCov _ m) = put m
+      encoder (SBPMsgVelEcefCovGnss _ m) = put m
       encoder (SBPMsgVelEcefDepA _ m) = put m
+      encoder (SBPMsgVelEcefGnss _ m) = put m
       encoder (SBPMsgVelNed _ m) = put m
       encoder (SBPMsgVelNedCov _ m) = put m
+      encoder (SBPMsgVelNedCovGnss _ m) = put m
       encoder (SBPMsgVelNedDepA _ m) = put m
+      encoder (SBPMsgVelNedGnss _ m) = put m
       encoder (SBPMsgUnknown m) = put m
       encoder (SBPMsgBadCrc m) = put m
 
@@ -720,10 +747,14 @@ instance FromJSON SBPMsg where
         | msgType == msgOsr = SBPMsgOsr <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosEcef = SBPMsgPosEcef <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosEcefCov = SBPMsgPosEcefCov <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgPosEcefCovGnss = SBPMsgPosEcefCovGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosEcefDepA = SBPMsgPosEcefDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgPosEcefGnss = SBPMsgPosEcefGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosLlh = SBPMsgPosLlh <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosLlhCov = SBPMsgPosLlhCov <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgPosLlhCovGnss = SBPMsgPosLlhCovGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPosLlhDepA = SBPMsgPosLlhDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgPosLlhGnss = SBPMsgPosLlhGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPrintDep = SBPMsgPrintDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgProtectionLevel = SBPMsgProtectionLevel <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgReset = SBPMsgReset <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -746,6 +777,7 @@ instance FromJSON SBPMsg where
         | msgType == msgSsrCodeBiases = SBPMsgSsrCodeBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrGridDefinition = SBPMsgSsrGridDefinition <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrGriddedCorrection = SBPMsgSsrGriddedCorrection <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrGriddedCorrectionNoStd = SBPMsgSsrGriddedCorrectionNoStd <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrOrbitClock = SBPMsgSsrOrbitClock <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrOrbitClockDepA = SBPMsgSsrOrbitClockDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrPhaseBiases = SBPMsgSsrPhaseBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -773,10 +805,14 @@ instance FromJSON SBPMsg where
         | msgType == msgVelBody = SBPMsgVelBody <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelEcef = SBPMsgVelEcef <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelEcefCov = SBPMsgVelEcefCov <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgVelEcefCovGnss = SBPMsgVelEcefCovGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelEcefDepA = SBPMsgVelEcefDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgVelEcefGnss = SBPMsgVelEcefGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelNed = SBPMsgVelNed <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelNedCov = SBPMsgVelNedCov <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgVelNedCovGnss = SBPMsgVelNedCovGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelNedDepA = SBPMsgVelNedDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgVelNedGnss = SBPMsgVelNedGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | otherwise = SBPMsgUnknown <$> parseJSON obj
   parseJSON _ = mzero
 
@@ -904,10 +940,14 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgOsr n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosEcef n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosEcefCov n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgPosEcefCovGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosEcefDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgPosEcefGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosLlh n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosLlhCov n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgPosLlhCovGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPosLlhDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgPosLlhGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPrintDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgProtectionLevel n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgReset n m) = toJSON n <<>> toJSON m
@@ -930,6 +970,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgSsrCodeBiases n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrGridDefinition n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrGriddedCorrection n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrGriddedCorrectionNoStd n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrOrbitClock n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrOrbitClockDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrPhaseBiases n m) = toJSON n <<>> toJSON m
@@ -957,10 +998,14 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgVelBody n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelEcef n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelEcefCov n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgVelEcefCovGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelEcefDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgVelEcefGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelNed n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelNedCov n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgVelNedCovGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelNedDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgVelNedGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgBadCrc m) = toJSON m
   toJSON (SBPMsgUnknown m) = toJSON m
 
@@ -1082,10 +1127,14 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgOsr n m) = SBPMsgOsr n <$> f m
   msg f (SBPMsgPosEcef n m) = SBPMsgPosEcef n <$> f m
   msg f (SBPMsgPosEcefCov n m) = SBPMsgPosEcefCov n <$> f m
+  msg f (SBPMsgPosEcefCovGnss n m) = SBPMsgPosEcefCovGnss n <$> f m
   msg f (SBPMsgPosEcefDepA n m) = SBPMsgPosEcefDepA n <$> f m
+  msg f (SBPMsgPosEcefGnss n m) = SBPMsgPosEcefGnss n <$> f m
   msg f (SBPMsgPosLlh n m) = SBPMsgPosLlh n <$> f m
   msg f (SBPMsgPosLlhCov n m) = SBPMsgPosLlhCov n <$> f m
+  msg f (SBPMsgPosLlhCovGnss n m) = SBPMsgPosLlhCovGnss n <$> f m
   msg f (SBPMsgPosLlhDepA n m) = SBPMsgPosLlhDepA n <$> f m
+  msg f (SBPMsgPosLlhGnss n m) = SBPMsgPosLlhGnss n <$> f m
   msg f (SBPMsgPrintDep n m) = SBPMsgPrintDep n <$> f m
   msg f (SBPMsgProtectionLevel n m) = SBPMsgProtectionLevel n <$> f m
   msg f (SBPMsgReset n m) = SBPMsgReset n <$> f m
@@ -1108,6 +1157,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgSsrCodeBiases n m) = SBPMsgSsrCodeBiases n <$> f m
   msg f (SBPMsgSsrGridDefinition n m) = SBPMsgSsrGridDefinition n <$> f m
   msg f (SBPMsgSsrGriddedCorrection n m) = SBPMsgSsrGriddedCorrection n <$> f m
+  msg f (SBPMsgSsrGriddedCorrectionNoStd n m) = SBPMsgSsrGriddedCorrectionNoStd n <$> f m
   msg f (SBPMsgSsrOrbitClock n m) = SBPMsgSsrOrbitClock n <$> f m
   msg f (SBPMsgSsrOrbitClockDepA n m) = SBPMsgSsrOrbitClockDepA n <$> f m
   msg f (SBPMsgSsrPhaseBiases n m) = SBPMsgSsrPhaseBiases n <$> f m
@@ -1135,9 +1185,13 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgVelBody n m) = SBPMsgVelBody n <$> f m
   msg f (SBPMsgVelEcef n m) = SBPMsgVelEcef n <$> f m
   msg f (SBPMsgVelEcefCov n m) = SBPMsgVelEcefCov n <$> f m
+  msg f (SBPMsgVelEcefCovGnss n m) = SBPMsgVelEcefCovGnss n <$> f m
   msg f (SBPMsgVelEcefDepA n m) = SBPMsgVelEcefDepA n <$> f m
+  msg f (SBPMsgVelEcefGnss n m) = SBPMsgVelEcefGnss n <$> f m
   msg f (SBPMsgVelNed n m) = SBPMsgVelNed n <$> f m
   msg f (SBPMsgVelNedCov n m) = SBPMsgVelNedCov n <$> f m
+  msg f (SBPMsgVelNedCovGnss n m) = SBPMsgVelNedCovGnss n <$> f m
   msg f (SBPMsgVelNedDepA n m) = SBPMsgVelNedDepA n <$> f m
+  msg f (SBPMsgVelNedGnss n m) = SBPMsgVelNedGnss n <$> f m
   msg f (SBPMsgUnknown m) = SBPMsgUnknown <$> f m
   msg f (SBPMsgBadCrc m) = SBPMsgBadCrc <$> f m
