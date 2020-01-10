@@ -130,7 +130,7 @@ definitions:
         desc: |
           Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
 
- - TroposphericDelayCorrection:
+ - TroposphericDelayCorrectionNoStd:
     desc: |
       Troposphere vertical delays at the grid point.
     fields:
@@ -143,7 +143,27 @@ definitions:
         units: 4 mm (add 0.252 m to get actual vertical wet delay)
         desc: Wet vertical delay
 
- - STECResidual:
+ - TroposphericDelayCorrection:
+    desc: |
+      Troposphere vertical delays (mean and standard deviation) at the grid
+      point.
+    fields:
+    - hydro:
+        type: s16
+        units: 4 mm (add 2.3 m to get actual vertical hydro delay)
+        desc: Hydrostatic vertical delay
+    - wet:
+        type: s8
+        units: 4 mm (add 0.252 m to get actual vertical wet delay)
+        desc: Wet vertical delay
+    - stddev:
+        type: u8
+        units: |
+          modified DF389 scale; class is upper 3 bits, value is lower 5
+          stddev <= (3^class * (1 + value/16) - 1) mm
+        desc: stddev
+
+ - STECResidualNoStd:
     desc: STEC residual for the given satellite at the grid point.
     fields:
     - sv_id:
@@ -154,7 +174,26 @@ definitions:
         units: 0.04 TECU
         desc: STEC residual
 
- - GridElement:
+ - STECResidual:
+    desc: |
+      STEC residual (mean and standard deviation) for the given satellite
+      at the grid point,
+    fields:
+    - sv_id:
+        type: SvId
+        desc: space vehicle identifier
+    - residual:
+        type: s16
+        units: 0.04 TECU
+        desc: STEC residual
+    - stddev:
+        type: u8
+        units: |
+          modified DF389 scale; class is upper 3 bits, value is lower 5
+          stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
+        desc: stddev
+
+ - GridElementNoStd:
     short_desc: Correction data for a single grid point.
     desc: |
       Contains one tropo delay, plus STEC residuals for each satellite at the
@@ -164,12 +203,29 @@ definitions:
         type: u16
         desc: Index of the grid point
     - tropo_delay_correction:
-        type: TroposphericDelayCorrection
+        type: TroposphericDelayCorrectionNoStd
         desc: Wet and hydrostatic vertical delays
     - stec_residuals:
         type: array
-        fill: STECResidual
+        fill: STECResidualNoStd
         desc: STEC residuals for each satellite
+
+ - GridElement:
+    short_desc: Correction data for a single grid point.
+    desc: |
+      Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
+      stddev) for each satellite at the grid point.
+    fields:
+    - index:
+        type: u16
+        desc: Index of the grid point
+    - tropo_delay_correction:
+        type: TroposphericDelayCorrection
+        desc: Wet and hydrostatic vertical delays (mean, stddev)
+    - stec_residuals:
+        type: array
+        fill: STECResidual
+        desc: STEC residuals for each satellite (mean, stddev)
 
  - GridDefinitionHeader:
     short_desc: Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
@@ -434,8 +490,22 @@ definitions:
             fill: STECSatElement
             desc: Array of STEC information for each space vehicle
 
- - MSG_SSR_GRIDDED_CORRECTION:
+ - MSG_SSR_GRIDDED_CORRECTION_NO_STD:
     id: 0x05F0
+    short_desc: Gridded troposphere and STEC residuals
+    desc: |
+      This message was deprecated when variances (stddev)
+      were added.
+    fields:
+        - header:
+            type: GriddedCorrectionHeader
+            desc: Header of a Gridded Correction message
+        - element:
+            type: GridElementNoStd
+            desc: Tropo and STEC residuals for the given grid point
+
+ - MSG_SSR_GRIDDED_CORRECTION:
+    id: 0x05FA
     short_desc: Gridded troposphere and STEC residuals
     desc: |
       STEC residuals are per space vehicle, tropo is not.
@@ -446,8 +516,9 @@ definitions:
             desc: Header of a Gridded Correction message
         - element:
             type: GridElement
-            desc: Tropo and STEC residuals for the given grid point
-
+            desc: |
+              Tropo and STEC residuals for the given grid point (mean
+              and standard deviation)
 
  - MSG_SSR_GRID_DEFINITION:
     id: 0x05F5
