@@ -1,0 +1,77 @@
+# This is an image that should been able to generate Swift libsbp bindings.
+#
+# Developers should be in the top level directory of a clean clone of
+# libsbp, then type:
+#
+# docker run -v `pwd`:/mnt/workspace -i -t <this image>
+#
+# where <this image> is
+# 571934480752.dkr.ecr.us-west-2.amazonaws.com/libsbp-build:<tag>
+
+FROM debian:buster-slim
+
+# @Klaus - what is this?  
+ARG DEBIAN_FRONTEND=noninteractive
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+
+RUN apt-get update && apt-get install -y \
+    git \
+    sudo \
+    software-properties-common \
+    apt-utils \
+    wget \
+    curl \
+    && mkdir /usr/share/man/man1
+
+# Toolchains
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    pandoc \
+    llvm \
+    nodejs \
+    npm \
+    mocha \
+    gradle \
+    texlive-science \
+    texlive-fonts-extra \
+    haskell-stack \
+    haskell-platform \
+    check \
+    cmake \
+    ccache \
+    pkg-config \
+    doxygen \
+    graphviz \
+    texlive-latex-base \
+    imagemagick \
+    libudev-dev \
+    uuid-dev
+
+RUN echo "deb http://ftp.debian.org/debian buster-backports main" >> /etc/apt/sources.list.d/buster-backports.list
+
+RUN apt-get update && apt-get install -y \
+    python-pip \
+    python3 \
+    python3-pip \
+    && pip3 install tox \
+    && pip install sphinx \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install rust
+ENV RUSTUP_HOME=/rust
+ENV CARGO_HOME=/cargo
+ENV PATH=/usr/lib/ccache:/cargo/bin:/rust/bin:${PATH}
+RUN curl https://sh.rustup.rs -sSf | \
+      sh -s -- -y --default-toolchain stable --no-modify-path
+
+ENV CARGO_HOME=
+WORKDIR /mnt/workspace
+
+# Add a "dockerdev" user with sudo capabilities
+# 1000 is the first user ID issued on Ubuntu; might
+# be different for Mac users. Might need to add more.
+RUN useradd -u 1000 -ms /bin/bash -G sudo dockerdev
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+USER dockerdev
+
+RUN stack install --resolver lts-10.10 sbp
