@@ -29,6 +29,21 @@ repository is organized into the following directory structure:
 Except for the `generator`, all of the above are generated and should not be modified directly.
 
 ## Building / installing
+### Using the dockerfile
+
+`Dockerfile-build` will create a docker image that contains all the
+necessary dependencies to build libsbp.  You can make a local image
+fresh from this file by running `docker build` as such:
+
+`docker build -f ../Dockerfile.buster -t your-local-image-name .`
+
+You can then make this image operate on your local workspace like this:
+
+`docker run  -v `pwd`:/mnt/workspace  -i -t your-local-image-name:latest`
+
+Once in the image, simply type `make all` to gererate all the libsbp bindings.
+
+
 ### Installing from package managers
 Some bindings are available on package managers:
 
