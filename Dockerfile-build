@@ -1,16 +1,8 @@
-# This is an image that should been able to generate Swift libsbp bindings.
-#
-# Developers should be in the top level directory of a clean clone of
-# libsbp, then type:
-#
-# docker run -v `pwd`:/mnt/workspace -i -t <this image>
-#
-# where <this image> is
-# 571934480752.dkr.ecr.us-west-2.amazonaws.com/libsbp-build:<tag>
+# This describes an image that should be able to generate libsbp bindings.
+# See the README.md for instructions on how to use it.
 
 FROM debian:buster-slim
 
-# @Klaus - what is this?  
 ARG DEBIAN_FRONTEND=noninteractive
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 

@@ -35,13 +35,27 @@ Except for the `generator`, all of the above are generated and should not be mod
 necessary dependencies to build libsbp.  You can make a local image
 fresh from this file by running `docker build` as such:
 
+`mkdir dummy; cd dummy`
+
+This dummy directory is to prevent docker from sucking up the whole
+repo into the local context (which is then immediately discarded
+anyway).  Next create the docker image:
+
 `docker build -f ../Dockerfile.buster -t your-local-image-name .`
 
 You can then make this image operate on your local workspace like this:
 
+`cd ..`  (back up to the root of the repo)
 `docker run  -v `pwd`:/mnt/workspace  -i -t your-local-image-name:latest`
 
 Once in the image, simply type `make all` to gererate all the libsbp bindings.
+
+You can also pull a copy from the docker registry (no guarantees on freshness):
+
+`docker run  -v `pwd`:/mnt/workspace -i -t 571934480752.dkr.ecr.us-west-2.amazonaws.com/libsbp-build:<tag>`
+
+where <tag> is a date if you need a specific copy of the image.  You
+will need to get aws credentials to pull from the registry.
 
 
 ### Installing from package managers
