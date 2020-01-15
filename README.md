@@ -29,7 +29,9 @@ repository is organized into the following directory structure:
 Except for the `generator`, all of the above are generated and should not be modified directly.
 
 ## Building / installing
-### Using the dockerfile
+### Using Docker
+
+#### Creating your own image
 
 `Dockerfile-build` will create a docker image that contains all the
 necessary dependencies to build libsbp.  You can make a local image
@@ -50,13 +52,13 @@ You can then make this image operate on your local workspace like this:
 
 Once in the image, simply type `make all` to gererate all the libsbp bindings.
 
-You can also pull a copy from the docker registry (no guarantees on freshness):
+#### Using the prebuilt one from dockerhub
 
-`docker run  -v `pwd`:/mnt/workspace -i -t 571934480752.dkr.ecr.us-west-2.amazonaws.com/libsbp-build:<tag>`
+You can also pull a copy from dockerdub (no guarantees on freshness):
 
-where <tag> is a date if you need a specific copy of the image.  You
-will need to get aws credentials to pull from the registry.
+`docker run  -v `pwd`:/mnt/workspace -i -t swiftnav/libsbp-build:2020.01.15`
 
+Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
 
 ### Installing from package managers
 Some bindings are available on package managers:
