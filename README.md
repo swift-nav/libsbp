@@ -57,7 +57,7 @@ Once in the image, simply type `make all` to gererate all the libsbp bindings.
 
 You can also pull a copy from dockerhub (no guarantees on freshness):
 
-`docker run  -v \`pwd\`:/mnt/workspace -i -t swiftnav/libsbp-build:2020.01.15`
+``docker run  -v `pwd`:/mnt/workspace -i -t swiftnav/libsbp-build:2020.01.15``
 
 Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
 
