@@ -1,0 +1,79 @@
+# Copyright (C) 2020 Swift Navigation Inc.
+# Contact: Swift Navigation <dev@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+# This describes an image that should be able to generate libsbp bindings.
+# See the README.md for instructions on how to use it.
+
+FROM debian:buster-slim
+
+ARG DEBIAN_FRONTEND=noninteractive
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+
+RUN apt-get update && apt-get install -y \
+    git \
+    sudo \
+    software-properties-common \
+    apt-utils \
+    wget \
+    curl \
+    && mkdir /usr/share/man/man1
+
+# Toolchains
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    pandoc \
+    llvm \
+    nodejs \
+    npm \
+    mocha \
+    gradle \
+    texlive-science \
+    texlive-fonts-extra \
+    haskell-stack \
+    haskell-platform \
+    check \
+    cmake \
+    ccache \
+    pkg-config \
+    doxygen \
+    graphviz \
+    texlive-latex-base \
+    imagemagick \
+    libudev-dev \
+    uuid-dev
+
+RUN echo "deb http://ftp.debian.org/debian buster-backports main" >> /etc/apt/sources.list.d/buster-backports.list
+
+RUN apt-get update && apt-get install -y \
+    python-pip \
+    python3 \
+    python3-pip \
+    && pip3 install tox \
+    && pip install sphinx \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install rust
+ENV RUSTUP_HOME=/rust
+ENV CARGO_HOME=/cargo
+ENV PATH=/usr/lib/ccache:/cargo/bin:/rust/bin:${PATH}
+RUN curl https://sh.rustup.rs -sSf | \
+      sh -s -- -y --default-toolchain stable --no-modify-path
+
+ENV CARGO_HOME=
+WORKDIR /mnt/workspace
+
+# Add a "dockerdev" user with sudo capabilities
+# 1000 is the first user ID issued on Ubuntu; might
+# be different for Mac users. Might need to add more.
+RUN useradd -u 1000 -ms /bin/bash -G sudo dockerdev
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+USER dockerdev
+
+RUN stack install --resolver lts-10.10 sbp
