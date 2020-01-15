@@ -49,7 +49,7 @@ You can then make this image operate on your local workspace like this:
 
 `cd ..`  (back up to the root of the repo)
 
-`docker run  -v `pwd`:/mnt/workspace  -i -t your-local-image-name:latest`
+``docker run  -v `pwd`:/mnt/workspace  -i -t your-local-image-name:latest``
 
 Once in the image, simply type `make all` to gererate all the libsbp bindings.
 
