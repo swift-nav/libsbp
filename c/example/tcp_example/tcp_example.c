@@ -48,10 +48,10 @@ void heartbeat_callback(u16 sender_id, u8 len, u8 msg[], void *context)
   fprintf(stdout, "%s\n", __FUNCTION__);
 }
 
-u32 socket_read(u8 *buff, u32 n, void *context)
+s32 socket_read(u8 *buff, u32 n, void *context)
 {
   (void)context;
-  u32 result;
+  s32 result;
 
   result = read(socket_desc, buff, n);
   return result;
