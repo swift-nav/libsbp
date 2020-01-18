@@ -2,6 +2,9 @@ use super::SBPMessage;
 use crate::framer;
 use crate::serialize::SbpSerialize;
 
+#[cfg(feature = "serialize")]
+use serde::{Deserialize, Serialize};
+
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 pub struct Unknown {
