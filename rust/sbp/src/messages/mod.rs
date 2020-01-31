@@ -88,19 +88,27 @@ use self::navigation::MsgGPSTime;
 use self::navigation::MsgGPSTimeDepA;
 use self::navigation::MsgPosECEF;
 use self::navigation::MsgPosECEFCov;
+use self::navigation::MsgPosECEFCovGnss;
 use self::navigation::MsgPosECEFDepA;
+use self::navigation::MsgPosECEFGnss;
 use self::navigation::MsgPosLLH;
 use self::navigation::MsgPosLLHCov;
+use self::navigation::MsgPosLLHCovGnss;
 use self::navigation::MsgPosLLHDepA;
+use self::navigation::MsgPosLLHGnss;
 use self::navigation::MsgProtectionLevel;
 use self::navigation::MsgUtcTime;
 use self::navigation::MsgVelBody;
 use self::navigation::MsgVelECEF;
 use self::navigation::MsgVelECEFCov;
+use self::navigation::MsgVelECEFCovGnss;
 use self::navigation::MsgVelECEFDepA;
+use self::navigation::MsgVelECEFGnss;
 use self::navigation::MsgVelNED;
 use self::navigation::MsgVelNEDCov;
+use self::navigation::MsgVelNEDCovGnss;
 use self::navigation::MsgVelNEDDepA;
+use self::navigation::MsgVelNEDGnss;
 use self::ndb::MsgNdbEvent;
 use self::observation::MsgAlmanacGPS;
 use self::observation::MsgAlmanacGPSDep;
@@ -183,6 +191,7 @@ use self::settings::MsgSettingsWriteResp;
 use self::ssr::MsgSsrCodeBiases;
 use self::ssr::MsgSsrGridDefinition;
 use self::ssr::MsgSsrGriddedCorrection;
+use self::ssr::MsgSsrGriddedCorrectionNoStd;
 use self::ssr::MsgSsrOrbitClock;
 use self::ssr::MsgSsrOrbitClockDepA;
 use self::ssr::MsgSsrPhaseBiases;
@@ -362,6 +371,14 @@ pub enum SBP {
     MsgOrientQuat(MsgOrientQuat),
     MsgOrientEuler(MsgOrientEuler),
     MsgAngularRate(MsgAngularRate),
+    MsgPosECEFGnss(MsgPosECEFGnss),
+    MsgPosLLHGnss(MsgPosLLHGnss),
+    MsgVelECEFGnss(MsgVelECEFGnss),
+    MsgVelNEDGnss(MsgVelNEDGnss),
+    MsgPosLLHCovGnss(MsgPosLLHCovGnss),
+    MsgVelNEDCovGnss(MsgVelNEDCovGnss),
+    MsgPosECEFCovGnss(MsgPosECEFCovGnss),
+    MsgVelECEFCovGnss(MsgVelECEFCovGnss),
     MsgNdbEvent(MsgNdbEvent),
     MsgLog(MsgLog),
     MsgFwd(MsgFwd),
@@ -370,8 +387,9 @@ pub enum SBP {
     MsgSsrCodeBiases(MsgSsrCodeBiases),
     MsgSsrPhaseBiases(MsgSsrPhaseBiases),
     MsgSsrStecCorrection(MsgSsrStecCorrection),
-    MsgSsrGriddedCorrection(MsgSsrGriddedCorrection),
+    MsgSsrGriddedCorrectionNoStd(MsgSsrGriddedCorrectionNoStd),
     MsgSsrGridDefinition(MsgSsrGridDefinition),
+    MsgSsrGriddedCorrection(MsgSsrGriddedCorrection),
     MsgOsr(MsgOsr),
     MsgUserData(MsgUserData),
     MsgImuRaw(MsgImuRaw),
@@ -1106,6 +1124,46 @@ impl SBP {
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgAngularRate(msg))
             }
+            553 => {
+                let mut msg = MsgPosECEFGnss::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgPosECEFGnss(msg))
+            }
+            554 => {
+                let mut msg = MsgPosLLHGnss::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgPosLLHGnss(msg))
+            }
+            557 => {
+                let mut msg = MsgVelECEFGnss::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgVelECEFGnss(msg))
+            }
+            558 => {
+                let mut msg = MsgVelNEDGnss::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgVelNEDGnss(msg))
+            }
+            561 => {
+                let mut msg = MsgPosLLHCovGnss::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgPosLLHCovGnss(msg))
+            }
+            562 => {
+                let mut msg = MsgVelNEDCovGnss::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgVelNEDCovGnss(msg))
+            }
+            564 => {
+                let mut msg = MsgPosECEFCovGnss::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgPosECEFCovGnss(msg))
+            }
+            565 => {
+                let mut msg = MsgVelECEFCovGnss::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgVelECEFCovGnss(msg))
+            }
             1024 => {
                 let mut msg = MsgNdbEvent::parse(payload)?;
                 msg.set_sender_id(sender_id);
@@ -1147,14 +1205,19 @@ impl SBP {
                 Ok(SBP::MsgSsrStecCorrection(msg))
             }
             1520 => {
-                let mut msg = MsgSsrGriddedCorrection::parse(payload)?;
+                let mut msg = MsgSsrGriddedCorrectionNoStd::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgSsrGriddedCorrection(msg))
+                Ok(SBP::MsgSsrGriddedCorrectionNoStd(msg))
             }
             1525 => {
                 let mut msg = MsgSsrGridDefinition::parse(payload)?;
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgSsrGridDefinition(msg))
+            }
+            1530 => {
+                let mut msg = MsgSsrGriddedCorrection::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgSsrGriddedCorrection(msg))
             }
             1600 => {
                 let mut msg = MsgOsr::parse(payload)?;
@@ -1426,6 +1489,14 @@ impl SBP {
             SBP::MsgOrientQuat(msg) => msg,
             SBP::MsgOrientEuler(msg) => msg,
             SBP::MsgAngularRate(msg) => msg,
+            SBP::MsgPosECEFGnss(msg) => msg,
+            SBP::MsgPosLLHGnss(msg) => msg,
+            SBP::MsgVelECEFGnss(msg) => msg,
+            SBP::MsgVelNEDGnss(msg) => msg,
+            SBP::MsgPosLLHCovGnss(msg) => msg,
+            SBP::MsgVelNEDCovGnss(msg) => msg,
+            SBP::MsgPosECEFCovGnss(msg) => msg,
+            SBP::MsgVelECEFCovGnss(msg) => msg,
             SBP::MsgNdbEvent(msg) => msg,
             SBP::MsgLog(msg) => msg,
             SBP::MsgFwd(msg) => msg,
@@ -1434,8 +1505,9 @@ impl SBP {
             SBP::MsgSsrCodeBiases(msg) => msg,
             SBP::MsgSsrPhaseBiases(msg) => msg,
             SBP::MsgSsrStecCorrection(msg) => msg,
-            SBP::MsgSsrGriddedCorrection(msg) => msg,
+            SBP::MsgSsrGriddedCorrectionNoStd(msg) => msg,
             SBP::MsgSsrGridDefinition(msg) => msg,
+            SBP::MsgSsrGriddedCorrection(msg) => msg,
             SBP::MsgOsr(msg) => msg,
             SBP::MsgUserData(msg) => msg,
             SBP::MsgImuRaw(msg) => msg,

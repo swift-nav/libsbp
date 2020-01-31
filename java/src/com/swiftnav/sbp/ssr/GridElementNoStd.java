@@ -23,43 +23,43 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class TroposphericDelayCorrection extends SBPStruct {
+public class GridElementNoStd extends SBPStruct {
     
-    /** Hydrostatic vertical delay */
-    public int hydro;
+    /** Index of the grid point */
+    public int index;
     
-    /** Wet vertical delay */
-    public int wet;
+    /** Wet and hydrostatic vertical delays */
+    public TroposphericDelayCorrectionNoStd tropo_delay_correction;
     
-    /** stddev */
-    public int stddev;
+    /** STEC residuals for each satellite */
+    public STECResidualNoStd[] stec_residuals;
     
 
-    public TroposphericDelayCorrection () {}
+    public GridElementNoStd () {}
 
     @Override
-    public TroposphericDelayCorrection parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public GridElementNoStd parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        hydro = parser.getS16();
-        wet = parser.getS8();
-        stddev = parser.getU8();
+        index = parser.getU16();
+        tropo_delay_correction = new TroposphericDelayCorrectionNoStd().parse(parser);
+        stec_residuals = parser.getArray(STECResidualNoStd.class);
         return this;
     }
 
     @Override
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
-        builder.putS16(hydro);
-        builder.putS8(wet);
-        builder.putU8(stddev);
+        builder.putU16(index);
+        tropo_delay_correction.build(builder);
+        builder.putArray(stec_residuals);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
-        obj.put("hydro", hydro);
-        obj.put("wet", wet);
-        obj.put("stddev", stddev);
+        obj.put("index", index);
+        obj.put("tropo_delay_correction", tropo_delay_correction.toJSON());
+        obj.put("stec_residuals", SBPStruct.toJSONArray(stec_residuals));
         return obj;
     }
 }

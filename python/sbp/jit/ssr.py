@@ -304,10 +304,10 @@ class STECSatElement(object):
     ret += 2 * 4
     return ret
   
-class TroposphericDelayCorrection(object):
-  """SBP class for message TroposphericDelayCorrection
+class TroposphericDelayCorrectionNoStd(object):
+  """SBP class for message TroposphericDelayCorrectionNoStd
 
-  You can have TroposphericDelayCorrection inherit its fields directly
+  You can have TroposphericDelayCorrectionNoStd inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -345,10 +345,58 @@ class TroposphericDelayCorrection(object):
     ret += 1
     return ret
   
-class STECResidual(object):
-  """SBP class for message STECResidual
+class TroposphericDelayCorrection(object):
+  """SBP class for message TroposphericDelayCorrection
 
-  You can have STECResidual inherit its fields directly
+  You can have TroposphericDelayCorrection inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Troposphere vertical delays (mean and standard deviation) at the grid
+point.
+
+
+  """
+  __slots__ = ['hydro',
+               'wet',
+               'stddev',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__hydro, offset, length) = get_s16(buf, offset, length)
+    ret['hydro'] = __hydro
+    (__wet, offset, length) = get_s8(buf, offset, length)
+    ret['wet'] = __wet
+    (__stddev, offset, length) = get_u8(buf, offset, length)
+    ret['stddev'] = __stddev
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.hydro = res['hydro']
+    self.wet = res['wet']
+    self.stddev = res['stddev']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # hydro: s16
+    ret += 2
+    # wet: s8
+    ret += 1
+    # stddev: u8
+    ret += 1
+    return ret
+  
+class STECResidualNoStd(object):
+  """SBP class for message STECResidualNoStd
+
+  You can have STECResidualNoStd inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -385,6 +433,102 @@ class STECResidual(object):
     ret += 2
     return ret
   
+class STECResidual(object):
+  """SBP class for message STECResidual
+
+  You can have STECResidual inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  STEC residual (mean and standard deviation) for the given satellite
+at the grid point,
+
+
+  """
+  __slots__ = ['sv_id',
+               'residual',
+               'stddev',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__sv_id, offset, length) = SvId.parse_members(buf, offset, length)
+    ret['sv_id'] = __sv_id
+    (__residual, offset, length) = get_s16(buf, offset, length)
+    ret['residual'] = __residual
+    (__stddev, offset, length) = get_u8(buf, offset, length)
+    ret['stddev'] = __stddev
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.sv_id = res['sv_id']
+    self.residual = res['residual']
+    self.stddev = res['stddev']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # sv_id: SvId
+    ret += SvId._payload_size()
+    # residual: s16
+    ret += 2
+    # stddev: u8
+    ret += 1
+    return ret
+  
+class GridElementNoStd(object):
+  """SBP class for message GridElementNoStd
+
+  You can have GridElementNoStd inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Contains one tropo delay, plus STEC residuals for each satellite at the
+grid point.
+
+
+  """
+  __slots__ = ['index',
+               'tropo_delay_correction',
+               'stec_residuals',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__index, offset, length) = get_u16(buf, offset, length)
+    ret['index'] = __index
+    (__tropo_delay_correction, offset, length) = TroposphericDelayCorrectionNoStd.parse_members(buf, offset, length)
+    ret['tropo_delay_correction'] = __tropo_delay_correction
+    (__stec_residuals, offset, length) = get_array(STECResidualNoStd.parse_members)(buf, offset, length)
+    ret['stec_residuals'] = __stec_residuals
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.index = res['index']
+    self.tropo_delay_correction = res['tropo_delay_correction']
+    self.stec_residuals = res['stec_residuals']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # index: u16
+    ret += 2
+    # tropo_delay_correction: TroposphericDelayCorrectionNoStd
+    ret += TroposphericDelayCorrectionNoStd._payload_size()
+    # stec_residuals: array of STECResidualNoStd
+    ret += 247
+    return ret
+  
 class GridElement(object):
   """SBP class for message GridElement
 
@@ -393,8 +537,8 @@ class GridElement(object):
   of its fields.
 
   
-  Contains one tropo delay, plus STEC residuals for each satellite at the
-grid point.
+  Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
+stddev) for each satellite at the grid point.
 
 
   """
@@ -930,9 +1074,52 @@ delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
     ret += 247
     return ret
   
-SBP_MSG_SSR_GRIDDED_CORRECTION = 0x05F0
+SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD = 0x05F0
+class MsgSsrGriddedCorrectionNoStd(SBP):
+  """SBP class for message MSG_SSR_GRIDDED_CORRECTION_NO_STD (0x05F0).
+
+  You can have MSG_SSR_GRIDDED_CORRECTION_NO_STD inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message was deprecated when variances (stddev)
+were added.
+
+
+  """
+  __slots__ = ['header',
+               'element',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__header, offset, length) = GriddedCorrectionHeader.parse_members(buf, offset, length)
+    ret['header'] = __header
+    (__element, offset, length) = GridElementNoStd.parse_members(buf, offset, length)
+    ret['element'] = __element
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.header = res['header']
+    self.element = res['element']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # header: GriddedCorrectionHeader
+    ret += GriddedCorrectionHeader._payload_size()
+    # element: GridElementNoStd
+    ret += GridElementNoStd._payload_size()
+    return ret
+  
+SBP_MSG_SSR_GRIDDED_CORRECTION = 0x05FA
 class MsgSsrGriddedCorrection(SBP):
-  """SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05F0).
+  """SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
 
   You can have MSG_SSR_GRIDDED_CORRECTION inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -1023,6 +1210,7 @@ msg_classes = {
   0x05E1: MsgSsrCodeBiases,
   0x05E6: MsgSsrPhaseBiases,
   0x05EB: MsgSsrStecCorrection,
-  0x05F0: MsgSsrGriddedCorrection,
+  0x05F0: MsgSsrGriddedCorrectionNoStd,
+  0x05FA: MsgSsrGriddedCorrection,
   0x05F5: MsgSsrGridDefinition,
 }

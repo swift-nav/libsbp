@@ -930,7 +930,7 @@ struct MessageTraits<msg_ssr_stec_correction_t> {
 
 
 template<>
-struct MessageTraits<msg_ssr_gridded_correction_t> {
+struct MessageTraits<msg_ssr_gridded_correction_no_std_t> {
   static constexpr u16 id = 1520;
 };
 
@@ -938,6 +938,12 @@ struct MessageTraits<msg_ssr_gridded_correction_t> {
 template<>
 struct MessageTraits<msg_ssr_grid_definition_t> {
   static constexpr u16 id = 1525;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_gridded_correction_t> {
+  static constexpr u16 id = 1530;
 };
 
 
