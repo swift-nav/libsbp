@@ -42,7 +42,7 @@ pub fn to_frame(msg: &dyn SBPMessage) -> std::result::Result<Vec<u8>, FramerErro
         .ok_or(FramerError::NoSenderId)?
         .append_to_sbp_buffer(&mut frame);
 
-    frame.push(len as u8);
+    frame.push((len + 8) as u8);
 
     msg.append_to_sbp_buffer(&mut frame);
 
