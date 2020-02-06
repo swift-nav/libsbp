@@ -77,6 +77,9 @@ value is reset to zero. It is encoded according to DF402 from
 the RTCM 10403.2 Amendment 2 specification.  Valid values range
 from 0 to 15 and the most significant nibble is reserved for future use.
  */
+  u8 P_stddev;
+  u8 L_stddev;
+  u8 D_stddev;
   u8 flags;    /**< Measurement status flags. A bit field of flags providing the
 status of this observation.  If this field is 0 it means only the Cn0
 estimate for the signal is valid.
