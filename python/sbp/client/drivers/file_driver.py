@@ -9,6 +9,8 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 from .base_driver import BaseDriver
+
+
 class FileDriver(BaseDriver):
     """
     BaseDriver
@@ -32,9 +34,11 @@ class FileDriver(BaseDriver):
           Number of bytes to read.
         """
         return_val = self.handle.read(size)
+        self.total_bytes_read += len(return_val)
         if not return_val:
             raise IOError
-        else: 
+        else:
             return return_val
+
     def __init__(self, fd):
         self.handle = fd

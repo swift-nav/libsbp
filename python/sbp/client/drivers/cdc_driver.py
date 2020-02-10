@@ -35,6 +35,7 @@ class CdcDriver(BaseDriver):
         """
         try:
             return_val = self.handle.read(size)
+            self.total_bytes_read += len(return_val)
             if return_val == '':
                 print()
                 print("Piksi disconnected")
@@ -57,7 +58,8 @@ class CdcDriver(BaseDriver):
           Bytes to write
         """
         try:
-            return self.handle.write(s)
+            return_val = self.handle.write(s)
+            self.total_bytes_written += return_val
         except OSError:
             print()
             print("Piksi disconnected")

@@ -24,6 +24,8 @@ class BaseDriver(object):
 
     def __init__(self, handle):
         self.handle = handle
+        self.total_bytes_read = 0
+        self.total_bytes_written = 0
 
     def __enter__(self):
         self.flush()
@@ -42,7 +44,9 @@ class BaseDriver(object):
         size : int
           Number of bytes to read.
         """
-        return self.handle.read(size)
+        bytes_read = self.handle.read(size)
+        self.total_bytes_read += len(bytes_read)
+        return bytes_read
 
     def write(self, s):
         """
@@ -53,7 +57,9 @@ class BaseDriver(object):
         s : bytes
           Bytes to write
         """
-        return self.handle.write(s)
+        return_val = self.handle.write(s)
+        self.total_bytes_written += len(s)
+        return return_val
 
     def flush(self):
         """
