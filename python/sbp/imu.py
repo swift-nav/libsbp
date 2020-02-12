@@ -258,8 +258,142 @@ depends on the value of `imu_type`.
     d.update(j)
     return d
     
+SBP_MSG_IMU_RAWX = 0x0904
+class MsgImuRawx(SBP):
+  """SBP class for message MSG_IMU_RAWX (0x0904).
+
+  You can have MSG_IMU_RAWX inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Raw data from the Inertial Measurement Unit, containing accelerometer and
+gyroscope readings. The sense of the measurements are to be aligned with 
+the indications on the device itself. Measurement units, which are specific to the
+device hardware and settings, are communicated via the MSG_IMU_AUX message.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  week : int
+    GPS week
+  tow : double
+    Seconds since start of GPS week.
+  acc_x : int
+    Acceleration in the IMU frame X axis
+  acc_y : int
+    Acceleration in the IMU frame Y axis
+  acc_z : int
+    Acceleration in the IMU frame Z axis
+  gyr_x : int
+    Angular rate around IMU frame X axis
+  gyr_y : int
+    Angular rate around IMU frame Y axis
+  gyr_z : int
+    Angular rate around IMU frame Z axis
+  status : int
+    IMU status (tbd)
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'week' / construct.Int16ul,
+                   'tow' / construct.Float64l,
+                   'acc_x' / construct.Int32sl,
+                   'acc_y' / construct.Int32sl,
+                   'acc_z' / construct.Int32sl,
+                   'gyr_x' / construct.Int32sl,
+                   'gyr_y' / construct.Int32sl,
+                   'gyr_z' / construct.Int32sl,
+                   'status' / construct.Int32sl,)
+  __slots__ = [
+               'week',
+               'tow',
+               'acc_x',
+               'acc_y',
+               'acc_z',
+               'gyr_x',
+               'gyr_y',
+               'gyr_z',
+               'status',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgImuRawx,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgImuRawx, self).__init__()
+      self.msg_type = SBP_MSG_IMU_RAWX
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.week = kwargs.pop('week')
+      self.tow = kwargs.pop('tow')
+      self.acc_x = kwargs.pop('acc_x')
+      self.acc_y = kwargs.pop('acc_y')
+      self.acc_z = kwargs.pop('acc_z')
+      self.gyr_x = kwargs.pop('gyr_x')
+      self.gyr_y = kwargs.pop('gyr_y')
+      self.gyr_z = kwargs.pop('gyr_z')
+      self.status = kwargs.pop('status')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgImuRawx.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgImuRawx(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgImuRawx._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgImuRawx._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgImuRawx._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgImuRawx, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x0900: MsgImuRaw,
   0x0901: MsgImuAux,
+  0x0904: MsgImuRawx,
 }
