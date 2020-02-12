@@ -123,3 +123,62 @@ instance Binary MsgImuAux where
 $(makeSBP 'msgImuAux ''MsgImuAux)
 $(makeJSON "_msgImuAux_" ''MsgImuAux)
 $(makeLenses ''MsgImuAux)
+
+msgImuRawx :: Word16
+msgImuRawx = 0x0904
+
+-- | SBP class for message MSG_IMU_RAWX (0x0904).
+--
+-- Raw data from the Inertial Measurement Unit, containing accelerometer and
+-- gyroscope readings. The sense of the measurements are to be aligned with
+-- the indications on the device itself. Measurement units, which are specific
+-- to the device hardware and settings, are communicated via the MSG_IMU_AUX
+-- message.
+data MsgImuRawx = MsgImuRawx
+  { _msgImuRawx_week :: !Word16
+    -- ^ GPS week
+  , _msgImuRawx_tow  :: !Double
+    -- ^ Seconds since start of GPS week.
+  , _msgImuRawx_acc_x :: !Int32
+    -- ^ Acceleration in the IMU frame X axis
+  , _msgImuRawx_acc_y :: !Int32
+    -- ^ Acceleration in the IMU frame Y axis
+  , _msgImuRawx_acc_z :: !Int32
+    -- ^ Acceleration in the IMU frame Z axis
+  , _msgImuRawx_gyr_x :: !Int32
+    -- ^ Angular rate around IMU frame X axis
+  , _msgImuRawx_gyr_y :: !Int32
+    -- ^ Angular rate around IMU frame Y axis
+  , _msgImuRawx_gyr_z :: !Int32
+    -- ^ Angular rate around IMU frame Z axis
+  , _msgImuRawx_status :: !Int32
+    -- ^ IMU status (tbd)
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgImuRawx where
+  get = do
+    _msgImuRawx_week <- getWord16le
+    _msgImuRawx_tow <- getFloat64le
+    _msgImuRawx_acc_x <- fromIntegral <$> getWord32le
+    _msgImuRawx_acc_y <- fromIntegral <$> getWord32le
+    _msgImuRawx_acc_z <- fromIntegral <$> getWord32le
+    _msgImuRawx_gyr_x <- fromIntegral <$> getWord32le
+    _msgImuRawx_gyr_y <- fromIntegral <$> getWord32le
+    _msgImuRawx_gyr_z <- fromIntegral <$> getWord32le
+    _msgImuRawx_status <- fromIntegral <$> getWord32le
+    pure MsgImuRawx {..}
+
+  put MsgImuRawx {..} = do
+    putWord16le _msgImuRawx_week
+    putFloat64le _msgImuRawx_tow
+    (putWord32le . fromIntegral) _msgImuRawx_acc_x
+    (putWord32le . fromIntegral) _msgImuRawx_acc_y
+    (putWord32le . fromIntegral) _msgImuRawx_acc_z
+    (putWord32le . fromIntegral) _msgImuRawx_gyr_x
+    (putWord32le . fromIntegral) _msgImuRawx_gyr_y
+    (putWord32le . fromIntegral) _msgImuRawx_gyr_z
+    (putWord32le . fromIntegral) _msgImuRawx_status
+
+$(makeSBP 'msgImuRawx ''MsgImuRawx)
+$(makeJSON "_msgImuRawx_" ''MsgImuRawx)
+$(makeLenses ''MsgImuRawx)
