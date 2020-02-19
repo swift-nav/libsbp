@@ -41,3 +41,6 @@ class FileDriver(BaseDriver):
 
     def __init__(self, fd):
         super(FileDriver, self).__init__(fd)
+
+    def readline(self):
+        return self.handle.readline()

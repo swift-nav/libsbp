@@ -107,8 +107,54 @@ class JSONLogIterator(LogIterator):
     ----------
     filename : string
       Path to file to read SBP messages from.
-
     """
+
+    def __init__(self, handle, dispatcher=dispatch, conventional=False):
+        super(JSONLogIterator, self).__init__(handle, dispatcher=dispatcher)
+        self._broken = False
+        self._conventional = conventional
+
+    def breakiter(self):
+        """
+        Break out of message iteration.
+        May be called from another thread when some thread is blocked in next().
+        """
+        self._broken = True
+
+    def _extract_data(self, line):
+        data = json.loads(line)
+        if "payload" in data.keys():
+            item = SBP.from_json_dict(data)
+        else:
+            item = SBP.from_json_dict(data.pop('data', data))
+        msg = self.dispatch(item, line)
+        return (msg, data)
+
+    def _next_conventional(self):
+        if self._broken:
+            raise StopIteration
+
+        try:
+            line = self.handle.readline()
+
+            if not line:
+                raise StopIteration
+
+            return self._extract_data(line)
+        except (ValueError, UnicodeDecodeError):
+            warn = "Bad JSON decoding for line %s" % line
+            warnings.warn(warn, RuntimeWarning)
+            # Try next line, can lead to RecursionError if source is full of rubbish
+            return self._next_conventional()
+
+    def _next_legacy(self):
+        for line in self.handle:
+            try:
+                yield self._extract_data(line)
+            except (ValueError, UnicodeDecodeError):
+                warn = "Bad JSON decoding for line %s" % line
+                warnings.warn(warn, RuntimeWarning)
+        self.handle.seek(0, 0)
 
     def __next__(self):
         """
@@ -129,16 +175,7 @@ class JSONLogIterator(LogIterator):
         iterators instead of tuples due to weird usage of the class.
 
         """
-        for line in self.handle:
-            try:
-                data = json.loads(line)
-                if "payload" in data.keys():
-                    item = SBP.from_json_dict(data)
-                else:
-                    item = SBP.from_json_dict(data.pop('data', data))
-                msg = self.dispatch(item, line)
-                yield (msg, data)
-            except (ValueError, UnicodeDecodeError):
-                warn = "Bad JSON decoding for line %s" % line
-                warnings.warn(warn, RuntimeWarning)
-        self.handle.seek(0, 0)
+        if self._conventional:
+            return self._next_conventional()
+        else:
+            return self._next_legacy()
