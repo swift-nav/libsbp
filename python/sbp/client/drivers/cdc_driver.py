@@ -24,7 +24,7 @@ class CdcDriver(BaseDriver):
       Stream of bytes to read from and write to.
     """
 
-    def read(self, size):
+    def _read(self, size):
         """
         Read wrapper.
 
@@ -35,7 +35,6 @@ class CdcDriver(BaseDriver):
         """
         try:
             return_val = self.handle.read(size)
-            self.total_bytes_read += len(return_val)
             if return_val == '':
                 print()
                 print("Piksi disconnected")
@@ -48,7 +47,7 @@ class CdcDriver(BaseDriver):
             print()
             raise IOError
 
-    def write(self, s):
+    def _write(self, s):
         """
         Write wrapper.
 
@@ -58,8 +57,7 @@ class CdcDriver(BaseDriver):
           Bytes to write
         """
         try:
-            return_val = self.handle.write(s)
-            self.total_bytes_written += return_val
+            return self.handle.write(s)
         except OSError:
             print()
             print("Piksi disconnected")

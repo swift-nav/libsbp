@@ -24,7 +24,7 @@ class FileDriver(BaseDriver):
       Stream of bytes to read from and write to.
     """
 
-    def read(self, size):
+    def _read(self, size):
         """
         Read wrapper.
 
@@ -34,11 +34,10 @@ class FileDriver(BaseDriver):
           Number of bytes to read.
         """
         return_val = self.handle.read(size)
-        self.total_bytes_read += len(return_val)
         if not return_val:
             raise IOError
         else:
             return return_val
 
     def __init__(self, fd):
-        self.handle = fd
+        super(FileDriver, self).__init__(fd)

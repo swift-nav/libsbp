@@ -43,8 +43,6 @@ class PySerialDriver(BaseDriver):
 
     def __init__(self, port, baud=115200, rtscts=False):
         import serial
-        self.total_bytes_read = 0
-        self.total_bytes_written = 0
         try:
             handle = serial.serial_for_url(port)
             handle.baudrate = baud
@@ -68,7 +66,7 @@ class PySerialDriver(BaseDriver):
             print()
             raise SystemExit
 
-    def read(self, size):
+    def _read(self, size):
         """
         Read wrapper.
 
@@ -78,9 +76,7 @@ class PySerialDriver(BaseDriver):
           Number of bytes to read.
         """
         try:
-            return_val = self.handle.read(size)
-            self.total_bytes_read += len(return_val)
-            return return_val
+            return self.handle.read(size)
         except (OSError, serial.SerialException):
             print()
             print("Piksi disconnected")
@@ -88,7 +84,7 @@ class PySerialDriver(BaseDriver):
             self.handle.close()
             raise IOError
 
-    def write(self, s):
+    def _write(self, s):
         """
         Write wrapper.
 
@@ -98,9 +94,7 @@ class PySerialDriver(BaseDriver):
           Bytes to write
         """
         try:
-            return_val = self.handle.write(s)
-            self.total_bytes_written += return_val
-            return return_val
+            return self.handle.write(s)
         except (OSError, serial.SerialException,
                 serial.writeTimeoutError) as e:
             if e == serial.writeTimeoutError:

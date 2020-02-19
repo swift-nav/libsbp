@@ -84,7 +84,7 @@ class TCPDriver(BaseDriver):
                 continue
             break
 
-    def read(self, size):
+    def _read(self, size):
         """
         Read wrapper.
 
@@ -97,7 +97,6 @@ class TCPDriver(BaseDriver):
         while True:
             try:
                 data = self.handle.recv(size)
-                self.total_bytes_read += len(data)
             except socket.timeout as socket_error:
                 self._reconnect(socket_error)
             except socket.error as socket_error:
@@ -113,7 +112,7 @@ class TCPDriver(BaseDriver):
     def flush(self):
         pass
 
-    def write(self, s):
+    def _write(self, s):
         """
         Write wrapper.
 
@@ -125,7 +124,6 @@ class TCPDriver(BaseDriver):
         try:
             self._write_lock.acquire()
             self.handle.sendall(s)
-            self.total_bytes_written += len(s)
         except socket.timeout:
             self._connect()
         except socket.error:
