@@ -55,3 +55,47 @@ definitions:
                           - 0: None (invalid)
                           - 1: GPS Solution (ms in week)
                           - 2: Processor Time
+
+ - MSG_WHEELTICK:
+    id: 0x0904
+    short_desc: Accumulated wheeltick count message
+    desc: |
+      Message containing the accumulated distance travelled by a wheel located at an odometry
+      reference point defined by the user. The offset for the odometry reference point and the
+      definition and origin of the user frame are defined through the device settings interface.
+      The source of this message is identified by the source field, which is an integer ranging
+      from 0 to 255.
+      The timestamp associated with this message should represent the time when the accumulated
+      tick count reached the value given by the contents of this message as accurately as possible.
+    fields:
+        - time:
+            type: u64
+            units: us
+            desc: |
+             Time field representing either microseconds since the last PPS, microseconds in the GPS
+             Week or local CPU time from the producing system in microseconds. See the synch_type
+             field for the exact meaning of this timestamp.
+        - flags:
+            type: u8
+            desc: |
+              Field indicating the type of timestamp contained in the time field.
+            fields:
+                  - 2-7:
+                      desc: Reserved
+                  - 0-1:
+                      desc: Synchronization type
+                      values:
+                          - 0: microseconds since last PPS
+                          - 1: microseconds ing GPS week
+                          - 2: local CPU time in nominal microseconds
+        - source:
+            type: u8
+            desc: |
+              ID of the sensor producing this message
+        - ticks:
+            type: s32
+            units: arbitrary distance units
+            desc: |
+              Free-running counter of the accumulated distance for this sensor. The counter should be
+              incrementing if travelling into one direction and decrementing when travelling in the
+              opposite direction.
