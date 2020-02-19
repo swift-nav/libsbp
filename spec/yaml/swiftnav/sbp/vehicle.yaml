@@ -86,7 +86,7 @@ definitions:
                       desc: Synchronization type
                       values:
                           - 0: microseconds since last PPS
-                          - 1: microseconds ing GPS week
+                          - 1: microseconds in GPS week
                           - 2: local CPU time in nominal microseconds
         - source:
             type: u8
