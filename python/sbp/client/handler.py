@@ -62,15 +62,15 @@ class Handler(object):
 
         messages = gen_messages()
         while True:
-            msg_and_metatdata = None
+            msg_and_metadata = None
             try:
-                msg_and_metatdata = next(messages, None)
+                msg_and_metadata = next(messages, None)
             except Exception as exc:
                 self._exception = exc
                 break
-            if msg_and_metatdata is None:
+            if msg_and_metadata is None:
                 break
-            msg, metadata = msg_and_metatdata
+            msg, metadata = msg_and_metadata
             self._call(msg, **metadata)
         # Break any upstream iterators
         for sink in self._sinks:
