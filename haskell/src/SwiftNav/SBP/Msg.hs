@@ -237,6 +237,7 @@ data SBPMsg =
    | SBPMsgVelNedCovGnss MsgVelNedCovGnss Msg
    | SBPMsgVelNedDepA MsgVelNedDepA Msg
    | SBPMsgVelNedGnss MsgVelNedGnss Msg
+   | SBPMsgWheeltick MsgWheeltick Msg
    | SBPMsgBadCrc Msg
    | SBPMsgUnknown Msg
   deriving ( Show, Read, Eq )
@@ -433,6 +434,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgVelNedCovGnss = SBPMsgVelNedCovGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelNedDepA = SBPMsgVelNedDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelNedGnss = SBPMsgVelNedGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgWheeltick = SBPMsgWheeltick (decode (fromStrict (unBytes _msgSBPPayload))) m
           | otherwise = SBPMsgUnknown m
 
   put sm = do
@@ -621,6 +623,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgVelNedCovGnss _ m) = put m
       encoder (SBPMsgVelNedDepA _ m) = put m
       encoder (SBPMsgVelNedGnss _ m) = put m
+      encoder (SBPMsgWheeltick _ m) = put m
       encoder (SBPMsgUnknown m) = put m
       encoder (SBPMsgBadCrc m) = put m
 
@@ -813,6 +816,7 @@ instance FromJSON SBPMsg where
         | msgType == msgVelNedCovGnss = SBPMsgVelNedCovGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelNedDepA = SBPMsgVelNedDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelNedGnss = SBPMsgVelNedGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgWheeltick = SBPMsgWheeltick <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | otherwise = SBPMsgUnknown <$> parseJSON obj
   parseJSON _ = mzero
 
@@ -1006,6 +1010,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgVelNedCovGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelNedDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelNedGnss n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgWheeltick n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgBadCrc m) = toJSON m
   toJSON (SBPMsgUnknown m) = toJSON m
 
@@ -1193,5 +1198,6 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgVelNedCovGnss n m) = SBPMsgVelNedCovGnss n <$> f m
   msg f (SBPMsgVelNedDepA n m) = SBPMsgVelNedDepA n <$> f m
   msg f (SBPMsgVelNedGnss n m) = SBPMsgVelNedGnss n <$> f m
+  msg f (SBPMsgWheeltick n m) = SBPMsgWheeltick n <$> f m
   msg f (SBPMsgUnknown m) = SBPMsgUnknown <$> f m
   msg f (SBPMsgBadCrc m) = SBPMsgBadCrc <$> f m

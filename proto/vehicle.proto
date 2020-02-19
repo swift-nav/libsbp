@@ -33,3 +33,20 @@ message MsgOdometry {
     sint32 velocity = 2;
     uint32 flags = 3;
 }
+
+/** Accumulated wheeltick count message
+ *
+ * Message containing the accumulated distance travelled by a wheel located at an odometry
+ * reference point defined by the user. The offset for the odometry reference point and the
+ * definition and origin of the user frame are defined through the device settings interface.
+ * The source of this message is identified by the source field, which is an integer ranging
+ * from 0 to 255.
+ * The timestamp associated with this message should represent the time when the accumulated
+ * tick count reached the value given by the contents of this message as accurately as possible.
+ */
+message MsgWheeltick {
+    uint64 time = 1;
+    uint32 flags = 2;
+    uint32 source = 3;
+    sint32 ticks = 4;
+}

@@ -198,6 +198,7 @@ import com.swiftnav.sbp.tracking.MsgTrackingStateDepA;
 import com.swiftnav.sbp.tracking.MsgTrackingStateDepB;
 import com.swiftnav.sbp.user.MsgUserData;
 import com.swiftnav.sbp.vehicle.MsgOdometry;
+import com.swiftnav.sbp.vehicle.MsgWheeltick;
 
 final class MessageTable {
     static SBPMessage dispatch(SBPMessage msg) throws SBPBinaryException {
@@ -568,6 +569,8 @@ final class MessageTable {
                 return new MsgUserData(msg);
             case MsgOdometry.TYPE:
                 return new MsgOdometry(msg);
+            case MsgWheeltick.TYPE:
+                return new MsgWheeltick(msg);
         }
         return msg;
     }
