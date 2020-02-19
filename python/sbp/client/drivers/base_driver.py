@@ -89,6 +89,28 @@ class BaseDriver(object):
         self.total_bytes_written &= U32_MAX
         return return_val
 
+    def bytes_read_since(self, last_total_bytes_read):
+        """
+        Counts the number of bytes that have been read since
+        last_total_bytes_read arg by handling any rollover logic required
+        from the total_bytes_read counter.
+
+        Parameters
+        ----------
+        last_total_bytes_read : int
+          byte counter value against which to difference
+
+        Returns
+        ----------
+        difference between last_total_bytes_read and current count
+        of bytes read assuming up to one rollover.
+        """
+
+        if (self.total_bytes_read - last_total_bytes_read) >= 0:
+            return self.total_bytes_read - last_total_bytes_read
+        else:  # assume one rollover only (inherent ambiguity)
+            return (self.total_bytes_read + U32_MAX) - last_total_bytes_read
+
     def flush(self):
         """
         Flush wrapper.
