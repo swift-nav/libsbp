@@ -79,7 +79,68 @@ source 0 through 3.
     ret += 1
     return ret
   
+SBP_MSG_WHEELTICK = 0x0904
+class MsgWheeltick(SBP):
+  """SBP class for message MSG_WHEELTICK (0x0904).
+
+  You can have MSG_WHEELTICK inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Message containing the accumulated distance travelled by a wheel located at an odometry
+reference point defined by the user. The offset for the odometry reference point and the
+definition and origin of the user frame are defined through the device settings interface.
+The source of this message is identified by the source field, which is an integer ranging
+from 0 to 255.
+The timestamp associated with this message should represent the time when the accumulated
+tick count reached the value given by the contents of this message as accurately as possible.
+
+
+  """
+  __slots__ = ['time',
+               'flags',
+               'source',
+               'ticks',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__time, offset, length) = get_u64(buf, offset, length)
+    ret['time'] = __time
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    (__source, offset, length) = get_u8(buf, offset, length)
+    ret['source'] = __source
+    (__ticks, offset, length) = get_s32(buf, offset, length)
+    ret['ticks'] = __ticks
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.time = res['time']
+    self.flags = res['flags']
+    self.source = res['source']
+    self.ticks = res['ticks']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # time: u64
+    ret += 8
+    # flags: u8
+    ret += 1
+    # source: u8
+    ret += 1
+    # ticks: s32
+    ret += 4
+    return ret
+  
 
 msg_classes = {
   0x0903: MsgOdometry,
+  0x0904: MsgWheeltick,
 }

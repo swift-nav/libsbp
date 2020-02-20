@@ -984,6 +984,12 @@ struct MessageTraits<msg_odometry_t> {
 
 
 template<>
+struct MessageTraits<msg_wheeltick_t> {
+  static constexpr u16 id = 2308;
+};
+
+
+template<>
 struct MessageTraits<msg_fileio_config_req_t> {
   static constexpr u16 id = 4097;
 };
