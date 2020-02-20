@@ -37,9 +37,9 @@ class State {
   IReader *reader_;
   IWriter *writer_;
 
-  State(const State&);
+  State(const State&) = delete;
   
-  State& operator=(const State&);
+  State& operator=(const State&) = delete;
 
   static s32 read_func(u8 *buff, u32 n, void *ctx) {
     State *instance = static_cast<State *>(ctx);
