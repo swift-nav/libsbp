@@ -24,7 +24,7 @@ class CdcDriver(BaseDriver):
       Stream of bytes to read from and write to.
     """
 
-    def read(self, size):
+    def _read(self, size):
         """
         Read wrapper.
 
@@ -47,7 +47,7 @@ class CdcDriver(BaseDriver):
             print()
             raise IOError
 
-    def write(self, s):
+    def _write(self, s):
         """
         Write wrapper.
 

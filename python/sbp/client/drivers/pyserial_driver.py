@@ -66,7 +66,7 @@ class PySerialDriver(BaseDriver):
             print()
             raise SystemExit
 
-    def read(self, size):
+    def _read(self, size):
         """
         Read wrapper.
 
@@ -84,7 +84,7 @@ class PySerialDriver(BaseDriver):
             self.handle.close()
             raise IOError
 
-    def write(self, s):
+    def _write(self, s):
         """
         Write wrapper.
 

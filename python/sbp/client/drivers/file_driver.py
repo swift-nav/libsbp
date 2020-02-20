@@ -9,6 +9,8 @@
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 from .base_driver import BaseDriver
+
+
 class FileDriver(BaseDriver):
     """
     BaseDriver
@@ -22,7 +24,7 @@ class FileDriver(BaseDriver):
       Stream of bytes to read from and write to.
     """
 
-    def read(self, size):
+    def _read(self, size):
         """
         Read wrapper.
 
@@ -34,7 +36,8 @@ class FileDriver(BaseDriver):
         return_val = self.handle.read(size)
         if not return_val:
             raise IOError
-        else: 
+        else:
             return return_val
+
     def __init__(self, fd):
-        self.handle = fd
+        super(FileDriver, self).__init__(fd)

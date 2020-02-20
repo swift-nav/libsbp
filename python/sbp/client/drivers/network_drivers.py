@@ -84,7 +84,7 @@ class TCPDriver(BaseDriver):
                 continue
             break
 
-    def read(self, size):
+    def _read(self, size):
         """
         Read wrapper.
 
@@ -112,7 +112,7 @@ class TCPDriver(BaseDriver):
     def flush(self):
         pass
 
-    def write(self, s):
+    def _write(self, s):
         """
         Write wrapper.
 
@@ -130,6 +130,3 @@ class TCPDriver(BaseDriver):
             raise IOError
         finally:
             self._write_lock.release()
-
-
-
