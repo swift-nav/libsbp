@@ -22,6 +22,7 @@ import pytest
 import six
 from six.moves import socketserver
 import threading
+import os, tempfile, time
 import warnings
 
 def test_log():
@@ -36,16 +37,13 @@ def test_log():
           pass
   assert exc_info.value.args[0] == "next() not implemented!"
 
-def test_json_log():
-  """
-  JSON log iterator sanity tests.
-  """
+def _json_log(conventional, fetch_next):
   log_datafile = "./data/serial_link_log_20150310-115522-test.log.dat"
   count = 0
   with warnings.catch_warnings(record=True) as w:
     with open(log_datafile, 'r') as infile:
-      with JSONLogIterator(infile) as log:
-        for msg, metadata in next(log):
+      with JSONLogIterator(infile, conventional=conventional) as log:
+        for msg, metadata in fetch_next(log):
           assert type(metadata['time']) == six.text_type
           assert isinstance(msg, SBP) or issubclass(type(msg), SBP)
           count += 1
@@ -53,35 +51,50 @@ def test_json_log():
         assert len(w) == 0
   assert count == 2650
 
-def test_non_utf8_json_log():
+def test_json_log():
   """
   JSON log iterator sanity tests.
   """
+  _json_log(conventional=False, fetch_next = lambda x : next(x))
+  _json_log(conventional=True, fetch_next = lambda x : x)
+
+def _non_utf8_json_log(conventional, fetch_next):
   log_datafile = "./data/serial_link_non_utf8.log.dat"
-  count = 0
+
   with warnings.catch_warnings(record=True) as w:
     with open(log_datafile, 'r') as infile:
-      with JSONLogIterator(infile) as log:
-        for msg, metadata in next(log):
+      with JSONLogIterator(infile, conventional=conventional) as log:
+        for _, _ in fetch_next(log):
           pass
         warnings.simplefilter("always")
         assert len(w) == 1
 
-@pytest.mark.xfail
-def test_msg_print():
+def test_non_utf8_json_log():
   """
+  JSON log iterator sanity tests.
   """
+  _non_utf8_json_log(conventional=False, fetch_next = lambda x : next(x))
+  _non_utf8_json_log(conventional=True, fetch_next = lambda x : x)
+
+def _msg_print(conventional, fetch_next):
   log_datafile = "./data/serial_link_log_20150428-084729.log.dat"
   with open(log_datafile, 'r') as infile:
-    with JSONLogIterator(infile) as log:
+    with JSONLogIterator(infile, conventional=conventional) as log:
       with warnings.catch_warnings(record=True) as w:
-        for msg, metadata in next(log):
+        for _, _ in fetch_next(log):
           pass
         warnings.simplefilter("always")
         # Check for warnings.
         assert len(w) == 1
         assert issubclass(w[0].category, RuntimeWarning)
         assert str(w[0].message).startswith('Bad message parsing for line')
+
+@pytest.mark.xfail
+def test_msg_print():
+  """
+  """
+  _msg_print(conventional=False, fetch_next = lambda x : next(x))
+  _msg_print(conventional=True, fetch_next = lambda x : x)
 
 def udp_handler(data):
   class MockRequestHandler(socketserver.BaseRequestHandler):
@@ -107,13 +120,10 @@ def test_udp_logger():
   with UdpLogger(ip, port) as udp:
     udp(msg)
 
-@pytest.mark.slow
-def test_rolling_json_log():
+def _rolling_json_log(conventional, fetch_next):
   """
   Rolling JSON log iterator sanity tests.
   """
-  count = 0
-  import os, tempfile, time
   # Duration of test
   test_interval = 6
   # Rotating interval
@@ -133,8 +143,8 @@ def test_rolling_json_log():
           t = time.time()
       i = 0
       with open(tf.name, 'r') as infile:
-        with JSONLogIterator(infile) as log:
-          for msg, metadata in next(log):
+        with JSONLogIterator(infile, conventional=conventional) as log:
+          for msg, _ in fetch_next(log):
             assert isinstance(msg, MsgPrintDep)
             assert msg.text == b"abc\n"
             i += 1
@@ -144,3 +154,11 @@ def test_rolling_json_log():
     raise
   finally:
     os.unlink(tf.name)
+
+@pytest.mark.slow
+def test_rolling_json_log():
+  """
+  Rolling JSON log iterator sanity tests.
+  """
+  _rolling_json_log(conventional=False, fetch_next = lambda x : next(x))
+  _rolling_json_log(conventional=True, fetch_next = lambda x : x)
