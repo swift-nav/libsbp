@@ -17,15 +17,14 @@ import time
 
 class FileDriver(BaseDriver):
     """
-    BaseDriver
+    FileDriver
 
-    The :class:`BaseDriver` class wraps IO sources of SBP messages and provides
-    context management.
+    The :class:`FileDriver` class wraps file handle IO
 
     Parameters
     ----------
-    handle : port
-      Stream of bytes to read from and write to.
+    fd : File descriptor
+      File stream.
     """
 
     def _read(self, size):
