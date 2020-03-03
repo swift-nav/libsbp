@@ -9,6 +9,8 @@ libsbp Development Procedures
 - [Installing QuickType](#installing-quicktype)
 - [Distributing Python](#distributing-python)
   * [Building on Windows](#building-on-windows)
+  * [Troubleshooting](#troubleshooting)
+    + [Error: `!!! No Python wheel (.whl) file found...`](#error--no-python-wheel-whl-file-found)
 - [Contributions](#contributions)
 
 <!-- tocstop -->
@@ -229,10 +231,16 @@ make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
 
 In order to build on Windows, first install the necessary compilers per the
 instructions [on this Microsoft developer blog][1] install the 64-bit Python
-3.7 version of [Conda][2]
+3.7 version of [Conda][2].  You'll also need to install [Chocolatey][3].
 
 [1]: https://devblogs.microsoft.com/python/unable-to-find-vcvarsall-bat/
 [2]: https://docs.conda.io/en/latest/miniconda.html
+[3]: https://chocolatey.org/docs/installation
+
+For Chocolatey, the following packages are recommended:
+- make
+- vcredist140
+- vcredist2015
 
 In order to compile for 64-bit: start a command shell with the x64 set
 of compiler tools (shortcut `x64 Native Tools Command Prompt for VS 2019`).
@@ -246,14 +254,23 @@ Then activate Conda with the `activate.bat` script in the Conda installation.
 
 Prior to invoking the `dist-python` target.  Set the following global variable
 to force Conda to create 32-bit environemnts:
-```
-set CONDA_FORCE_32BIT=1
-```
+
+    set CONDA_FORCE_32BIT=1
 
 Then invoke the `dist-python` target per usual. (Side note: at some point
 it was also necessary to delete libraries from `C:\Users\<user>\AppData\Roaming\Python`
 in order to prevent 32-bit Conda Python from loading libraries of the wrong
 architecture).
+
+## Troubleshooting
+
+### Error: `!!! No Python wheel (.whl) file found...`
+
+This usually means the git checkout you're building from is not in a "clean" state.  The
+build scripts will use the git command `git describe --tag --always --dirty` to generate
+a version.  Either temporarily force update the tag with `git tag -f vM.N.X` (do not
+push this unintentionally) and/or make sure you're submodule are up-to-date with
+`git submodule update --init --checkout --recursive`.
 
 # Contributions
 
