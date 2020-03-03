@@ -1,6 +1,18 @@
 libsbp Development Procedures
 =============================
 
+<!-- toc -->
+
+- [Adding and Testing New Messages](#adding-and-testing-new-messages)
+- [Message Guidelines](#message-guidelines)
+- [Releasing New Versions of the Library](#releasing-new-versions-of-the-library)
+- [Installing QuickType](#installing-quicktype)
+- [Distributing Python](#distributing-python)
+  * [Building on Windows](#building-on-windows)
+- [Contributions](#contributions)
+
+<!-- tocstop -->
+
 This document summarizes some practices around contributions to this
 library. These instructions don't come with a warranty yet, so please
 feel free to update it to mirror reality.
