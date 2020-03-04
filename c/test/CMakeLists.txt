@@ -36,3 +36,4 @@ swift_add_test(test-libsbp
     ${TEST_LIBS}
   )
 
+add_subdirectory(cpp)

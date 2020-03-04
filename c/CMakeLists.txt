@@ -15,6 +15,8 @@ include(CodeCoverage)
 include(TestTargets)
 add_code_coverage_all_targets()
 
+find_package(Googletest REQUIRED)
+
 ##########################################################
 # Set some reasonable default compiler flags.
 # Users of LibSbp that need different flags to be used can specify them
