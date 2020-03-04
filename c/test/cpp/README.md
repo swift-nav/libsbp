@@ -12,7 +12,7 @@ The json test data is stored and edited inside the `json_data` folder.
 
 The unit tests run on the `.sbp` files stored inside the `sbp_data` folder, which are directly generated from the `.json` files by running the following commands:
 ```
-cd interleaver/tests/unit/
+cd ./c/test/cpp
 ./generate_sbp_data.sh
 ```
 One should NOT modify the files within `sbp_data` directly, but should instead modify the corresponding `json_data` file and then regenerate the `.sbp` files and commit the results.
