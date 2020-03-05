@@ -54,7 +54,7 @@ private:
 class SbpStdioTest : public ::testing::Test {
 protected:
   int num_entries_in_file(const std::string &input_file) {
-    sbp::SbpFileReader reader = sbp::SbpFileReader(input_file);
+    sbp::SbpFileReader reader = sbp::SbpFileReader(input_file.data());
     sbp::State state;
     state.set_reader(&reader);
     MsgObsHandler handler(&state);
@@ -73,8 +73,8 @@ protected:
   }
 
   void write_to_file(const std::string &input_file, const std::string &output_file) {
-    sbp::SbpFileReader reader = sbp::SbpFileReader(input_file);
-    sbp::SbpFileWriter writer = sbp::SbpFileWriter(output_file);
+    sbp::SbpFileReader reader = sbp::SbpFileReader(input_file.data());
+    sbp::SbpFileWriter writer = sbp::SbpFileWriter(output_file.data());
     sbp::State state;
     state.set_reader(&reader);
     state.set_writer(&writer);
