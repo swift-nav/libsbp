@@ -4,3 +4,6 @@
 [submodule "c/third_party/check"]
 	path = c/third_party/check
 	url = https://github.com/swift-nav/check.git
+[submodule "c/third_party/googletest"]
+	path = c/third_party/googletest
+	url = https://github.com/google/googletest.git
