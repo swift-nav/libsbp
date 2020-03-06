@@ -24,7 +24,7 @@ matrix:
     - env:
         - TRAVIS_TARGET=python-haskell
       language: python
-      python: 3.8-dev
+      python: 3.8
       before_install:
         - sudo apt-get -qq update
         - sudo apt-get install python2.7 python2.7-dev
