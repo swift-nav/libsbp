@@ -154,7 +154,7 @@ def assert_package(test_filename, pkg_name):
 
   """
   with open(test_filename, 'r') as f:
-    pkg = yaml.load(f.read())
+    pkg = yaml.load(f.read(), Loader=yaml.FullLoader)
     _assert_sane_package(pkg_name, pkg)
     for test_case in pkg['tests']:
       sbp = SBP.unpack(base64.standard_b64decode(test_case['raw_packet']))
