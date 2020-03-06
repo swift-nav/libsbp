@@ -213,10 +213,15 @@ class SBP(object):
     """Pack to framed binary message.
 
     """
-    buf = np.zeros(512, dtype=np.uint8)
-    packed_len = self._get_framed(buf, 0, self._copy_payload)
-    d = buf[:packed_len]
-    return d.tobytes()
+    if NONUMPY:
+      buf = bytearray(512)
+      packed_len = self._get_framed(buf, 0, self._copy_payload)
+      return bytes(buf[:packed_len])
+    else:
+      buf = np.zeros(512, dtype=np.uint8)
+      packed_len = self._get_framed(buf, 0, self._copy_payload)
+      d = buf[:packed_len]
+      return d.tobytes()
 
   def pack_into(self, buf, offset, write_payload):
     """Pack to framed binary message.
