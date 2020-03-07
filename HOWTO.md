@@ -272,6 +272,17 @@ a version.  Either temporarily force update the tag with `git tag -f vM.N.X` (do
 push this unintentionally) and/or make sure you're submodule are up-to-date with
 `git submodule update --init --checkout --recursive`.
 
+### Tox error: `ERROR: FAIL could not package project`
+
+Tox needs to be run with the Python it was installed with (and apparently must
+run with Python 2) otherwise you'll get an error similar to:
+
+    ERROR: FAIL could not package project - v = InvocationError('/home/ubuntu/dev/libsbp/python/.tox/.tox/bin/python setup.py sdist --formats=zip --dist-dir /home/ubuntu/dev/libsbp/python/.tox/dist', -11)
+
+Tox also seems to have issues interacting with conda environments.  The easiest
+way to work around this is to remove conda from your path and make sure tox is
+installed with a Python2 version of the interpreter.
+
 # Contributions
 
 This library is developed internally by Swift Navigation. We welcome

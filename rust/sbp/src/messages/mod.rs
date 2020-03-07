@@ -214,6 +214,7 @@ use self::tracking::MsgTrackingStateDetailedDepA;
 use self::unknown::Unknown;
 use self::user::MsgUserData;
 use self::vehicle::MsgOdometry;
+use self::vehicle::MsgWheeltick;
 
 use crate::framer::FramerError;
 use crate::serialize::SbpSerialize;
@@ -396,6 +397,7 @@ pub enum SBP {
     MsgImuAux(MsgImuAux),
     MsgMagRaw(MsgMagRaw),
     MsgOdometry(MsgOdometry),
+    MsgWheeltick(MsgWheeltick),
     MsgFileioConfigReq(MsgFileioConfigReq),
     MsgFileioConfigResp(MsgFileioConfigResp),
     MsgSbasRaw(MsgSbasRaw),
@@ -1249,6 +1251,11 @@ impl SBP {
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgOdometry(msg))
             }
+            2308 => {
+                let mut msg = MsgWheeltick::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgWheeltick(msg))
+            }
             4097 => {
                 let mut msg = MsgFileioConfigReq::parse(payload)?;
                 msg.set_sender_id(sender_id);
@@ -1514,6 +1521,7 @@ impl SBP {
             SBP::MsgImuAux(msg) => msg,
             SBP::MsgMagRaw(msg) => msg,
             SBP::MsgOdometry(msg) => msg,
+            SBP::MsgWheeltick(msg) => msg,
             SBP::MsgFileioConfigReq(msg) => msg,
             SBP::MsgFileioConfigResp(msg) => msg,
             SBP::MsgSbasRaw(msg) => msg,

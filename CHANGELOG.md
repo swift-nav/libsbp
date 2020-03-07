@@ -1,5 +1,14 @@
 # Change Log
 
+## [v2.7.5](https://github.com/swift-nav/libsbp/tree/v2.7.5)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.7.4...v2.7.5)
+
+**Merged pull requests:**
+
+- Add library support to read and write SBP files [\#780](https://github.com/swift-nav/libsbp/pull/780)
+- Fixed crashing bug in Python release
+
 ## [v2.7.3](https://github.com/swift-nav/libsbp/tree/HEAD)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.7.3...v2.7.4)
