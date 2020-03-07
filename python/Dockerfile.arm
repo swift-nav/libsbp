@@ -41,26 +41,28 @@ RUN \
   && make -j${JOBS} install \
   && cd /work
 
-ENV PY34=3.4.10
-ENV PY34_URL=https://www.python.org/ftp/python/${PY34}/Python-${PY34}.tar.xz
-
-RUN \
-     echo '>>> Building Python 3.4...' \
-  && wget -O /tmp/python${PY34}.txz ${PY34_URL} \
-  && mkdir /tmp/python${PY34}-build && cd /tmp/python${PY34}-build \
-  && tar -xJf /tmp/python${PY34}.txz \
-  && cd Python-${PY34} \
-  && ./configure \
-      LDFLAGS="-L${OPENSSL_PREFIX}/lib -Wl,-rpath=${OPENSSL_PREFIX}/lib" \
-      CPPFLAGS="-I${OPENSSL_PREFIX}/include" \
-  \
-  && make -j${JOBS} \
-  && make altinstall \
-  && cd /work \
-  \
-  && /usr/local/bin/python3.4 /tmp/get-pip.py \
-  && /usr/local/bin/python3.4 -m pip install --upgrade pip \
-  && /usr/local/bin/python3.4 -m pip install wheel setuptools
+#ENV PY34=3.4.10
+#ENV PY34_URL=https://www.python.org/ftp/python/${PY34}/Python-${PY34}.tar.xz
+#
+#RUN \
+#     echo '>>> Building Python 3.4...' \
+#  && wget -O /tmp/python${PY34}.txz ${PY34_URL} \
+#  && mkdir /tmp/python${PY34}-build && cd /tmp/python${PY34}-build \
+#  && tar -xJf /tmp/python${PY34}.txz \
+#  && cd Python-${PY34} \
+#  && ./configure \
+#      LDFLAGS="-L${OPENSSL_PREFIX}/lib -Wl,-rpath=${OPENSSL_PREFIX}/lib" \
+#      CPPFLAGS="-I${OPENSSL_PREFIX}/include" \
+#  \
+#  && make -j${JOBS} \
+#  && make altinstall \
+#  && cd /work \
+#  \
+#  && /usr/local/bin/python3.4 /tmp/get-pip.py \
+#  && /usr/local/bin/python3.4 -m pip install --upgrade pip \
+#  && /usr/local/bin/python3.4 -m pip install wheel setuptools \
+#  && rm /tmp/python${PY34}.txz \
+#  && rm -rf /tmp/python${PY34}-build
 
 ENV PY27=2.7.16
 ENV PY27_URL=https://www.python.org/ftp/python/${PY27}/Python-${PY27}.tar.xz
@@ -158,8 +160,6 @@ RUN \
 RUN \
      rm /tmp/python${PY27}.txz \
   && rm -rf /tmp/python${PY27}-build \
-  && rm /tmp/python${PY34}.txz \
-  && rm -rf /tmp/python${PY34}-build \
   && rm /tmp/python${PY35}.txz \
   && rm -rf /tmp/python${PY35}-build \
   && rm /tmp/python${PY36}.txz \

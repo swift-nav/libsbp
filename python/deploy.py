@@ -9,8 +9,7 @@ import tempfile
 import subprocess
 
 #CP27MU = "2.7u"
-ALL_PY_VERSIONS = ["3.4", "3.5", "3.6", "3.7"]
-AMD64_PY_VERSION = ["3.5", "3.6", "3.7"]
+ALL_PY_VERSIONS = ["3.5", "3.6", "3.7"]
 
 SKIP_PY_VERS = os.environ.get("SKIP_PY_VERS", "").split(",") 
 
@@ -306,9 +305,7 @@ def py_versions():
     def _py_versions():
         if os.environ.get('LIBSBP_BUILD_ANY', None):
             return ["3.7"]
-        if platform.machine().startswith("arm"):
-            return ALL_PY_VERSIONS
-        return AMD64_PY_VERSION
+        return ALL_PY_VERSIONS
     for pyver in _py_versions():
         if pyver in SKIP_PY_VERS:
             continue
