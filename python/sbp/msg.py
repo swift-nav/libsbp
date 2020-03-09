@@ -230,12 +230,25 @@ class SBP(object):
     return self._get_framed(buf, offset, write_payload)
 
   @staticmethod
+  def calc_crc(msg):
+    ret = struct.pack("<BHHB", SBP_PREAMBLE, msg.msg_type, msg.sender, len(msg.payload))
+    ret += msg.payload
+    return crc16(ret[1:])
+
+  @staticmethod
   def unpack(d):
     """Unpack and return a framed binary message.
 
     """
     p = SBP._parser.parse(d)
+
     assert p.preamble == SBP_PREAMBLE, "Invalid preamble 0x%x." % p.preamble
+
+    if p.crc != SBP.calc_crc(p):
+      exc = ValueError("CRC error")
+      exc.malformed_msg = SBP(p.msg_type, p.sender, p.length, p.payload, p.crc)
+      raise exc
+
     return SBP(p.msg_type, p.sender, p.length, p.payload, p.crc)
 
   def copy(self):

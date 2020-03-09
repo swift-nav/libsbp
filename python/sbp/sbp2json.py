@@ -218,8 +218,11 @@ def sbp_main(args):
                         dump(args, m)
                         consumed = header_len + m.length + 2
                     except StreamError:
-                        # Framing failed, try next index
+                        # Framing failed, find next preamble
                         consumed = 1
+                    except ValueError as exc:
+                        # CRC error, skip malformed message and find next preamble
+                        consumed = header_len + exc.malformed_msg.length
             else:
                 consumed, payload_len, msg_type, sender, crc, crc_fail = \
                     msg.unpack_payload(buf, unconsumed_offset, (read_offset - unconsumed_offset))
