@@ -25,7 +25,7 @@ fi
 
 diff $OUTPUT_SHORT_HS $OUTPUT_SHORT_PY || exit 1
 
-echo -e "Sanity check \e[32mOK\e[0m, please wait for format test.."
+echo -e "Short format check \e[32mOK\e[0m, please wait for longer format test.."
 
 PYTHONPATH=$TESTDATA_ROOT/../python/ \
     python $TESTDATA_ROOT/../python/bin/sbp2json \

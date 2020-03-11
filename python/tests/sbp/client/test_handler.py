@@ -8,6 +8,10 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+import pytest
+
+pytest.importorskip("numpy")
+
 import io
 import itertools
 import time
@@ -151,4 +155,3 @@ def test_late_iter():
   handler = Handler(())
   handler.start()
   assert tuple(handler) == ()
-
