@@ -71,6 +71,7 @@ definitions:
                   desc: IMU Type
                   values:
                       - 0: Bosch BMI160
+                      - 1: ST Microelectronics ASM330LLH
         - temp:
             type: s16
             desc: Raw IMU temperature
