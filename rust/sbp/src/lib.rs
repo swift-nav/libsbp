@@ -16,6 +16,7 @@ pub type Result<T> = result::Result<T, Error>;
 #[derive(Debug)]
 pub enum Error {
     ParseError,
+    CrcError,
     NotEnoughData,
     UnrecoverableFailure,
     IoError(std::io::Error),
@@ -24,9 +25,10 @@ pub enum Error {
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Error::ParseError => write!(f, "Parse Error"),
+            Error::ParseError => write!(f, "Parse error"),
+            Error::CrcError => write!(f, "CRC error"),
             Error::NotEnoughData => write!(f, "Not enough data"),
-            Error::UnrecoverableFailure => write!(f, "Unrecoverage Failure"),
+            Error::UnrecoverableFailure => write!(f, "Unrecoverage failure"),
             Error::IoError(err) => write!(f, "IO Error: {}", err),
         }
     }
@@ -36,6 +38,7 @@ impl error::Error for Error {
     fn description(&self) -> &str {
         match self {
             Error::ParseError => "An error occured during parsing",
+            Error::CrcError => "CRC validation failed",
             Error::NotEnoughData => "Not enough data available to parse a message",
             Error::UnrecoverableFailure => "An unrecoverage failure was encountered",
             Error::IoError(err) => err.description(),

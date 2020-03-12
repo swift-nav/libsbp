@@ -30,20 +30,20 @@ pub fn frame(input: &[u8]) -> (Result<SBP>, usize) {
     let result = tuple((preamble, le_u16, le_u16, payload, le_u16))(input);
 
     match result {
-        Ok((o, (_preamble, msg_type, sender_id, payload, _crc))) => {
+        Ok((o, (_preamble, msg_type, sender_id, payload, crc_in))) => {
             let mut crc = crc16::State::<crc16::XMODEM>::new();
             crc.update(&msg_type.to_le_bytes());
             crc.update(&sender_id.to_le_bytes());
             crc.update(&[payload.len() as u8]);
             crc.update(payload);
-            if crc.get() == _crc {
+            if crc.get() == crc_in {
                 let bytes_read = original_size - o.len();
                 (
                     SBP::parse(msg_type, sender_id, &mut &payload[..]),
-                    bytes_read,
+                    bytes_read
                 )
             } else {
-                (Err(crate::Error::ParseError), 1)
+                (Err(crate::Error::CrcError), 1)
             }
         }
         // Act like we didn't read anything
