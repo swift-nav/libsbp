@@ -8,8 +8,7 @@ import platform
 import tempfile
 import subprocess
 
-#CP27MU = "2.7u"
-ALL_PY_VERSIONS = ["3.5", "3.6", "3.7"]
+ALL_PY_VERSIONS = ["3.5", "3.6", "3.7", "3.8"]
 
 SKIP_PY_VERS = os.environ.get("SKIP_PY_VERS", "").split(",") 
 
@@ -51,10 +50,6 @@ os.environ['IS_RELEASED'] = 'y'
 
 def twine_upload(conda_dir, wheel, py_version="3.7", use_conda=True):
 
-#    if platform.machine().startswith("arm") and py_version == CP27MU:
-#        cmd_prefix = ["/opt/cp27mu/bin/python2.7", "-m"]
-#        if use_conda:
-#            raise RuntimeError("Conda with Python {} is not supported on ARM".format(py_version))
     if platform.machine().startswith("arm") and py_version in ALL_PY_VERSIONS:
         cmd_prefix = ["/usr/local/bin/python{}".format(py_version), "-m"]
         if use_conda:
@@ -83,10 +78,6 @@ def build_wheel_native(conda_dir, deploy_dir, py_version):
 
     py_version_prefix = "/usr/local"
     py_version_suffix = py_version
-
-#    if py_version == CP27MU:
-#        py_version_prefix = "/opt/cp27mu"
-#        py_version_suffix = "2.7"
 
     if py_version not in ALL_PY_VERSIONS:
         raise RuntimeError("Unsupported Python version")
@@ -185,11 +176,6 @@ def run_bdist(conda_dir,
     for dirent in glob.glob("module/build/*"):
         shutil.rmtree(dirent) if os.path.isdir(dirent) else os.unlink(dirent)
 
-#    with open("module/setup.py", "rb") as fp:
-#        data = fp.read()
-#    with open("module/setup.py", "wb") as fp:
-#        fp.write(data.replace(b"IS_RELEASED = False", b"IS_RELEASED = True"))
-
     os.chdir("module")
 
     print(">>> Staged to '{}'...'".format(deploy_dir))
@@ -254,12 +240,6 @@ def build_wheel_conda(conda_dir, deploy_dir, py_version):
         "conda", "run", "-p", conda_dir] + DASHDASH + [
         "pip", "install", "twine", "numpy"
     ])
-
-#    if py_version.startswith("2.7"):
-#        subprocess.check_call([
-#            "conda", "run", "-p", conda_dir] + DASHDASH + [
-#            "pip", "install", "enum34"
-#        ])
 
     if platform.system() == "Linux" and platform.machine().startswith("x86"):
         subprocess.check_call([
