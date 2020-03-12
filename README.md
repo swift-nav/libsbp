@@ -25,6 +25,8 @@ repository is organized into the following directory structure:
 * [`haskell`](https://github.com/swift-nav/libsbp/tree/HEAD/haskell): Haskell client and examples.
 * [`java`](https://github.com/swift-nav/libsbp/tree/HEAD/java): Java client library and examples.
 * [`javascript`](https://github.com/swift-nav/libsbp/tree/HEAD/javascript): JavaScript client library and examples.
+* [`rust`](https://github.com/swift-nav/libsbp/tree/HEAD/rust): Rust client library and examples.
+* [`sbpjson`](https://github.com/swift-nav/libsbp/tree/HEAD/sbpjson): Tools for parsing SBP-JSON.
 
 Except for the `generator`, all of the above are generated and should not be modified directly.
 

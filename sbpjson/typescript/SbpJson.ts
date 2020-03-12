@@ -1,6 +1,6 @@
 // To parse this data:
 //
-//   import { Convert, AcqSvProfile, AlmanacCommonContent, CarrierPhase, CodeBiasesContent, Doppler, EphemerisCommonContent, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GriddedCorrectionHeader, GridDefinitionHeader, GridElement, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGlo, MsgAlmanacGPS, MsgAngularRate, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBasePosECEF, MsgBasePosLLH, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisGPS, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGloBiases, MsgGnssCapb, MsgGPSTime, MsgGroupDelay, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEFCov, MsgPosECEF, MsgPosLLHCov, MsgPosLLH, MsgResetFilters, MsgReset, MsgSbasRaw, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSpecan, MsgSsrCodeBiases, MsgSsrGriddedCorrection, MsgSsrGridDefinition, MsgSsrOrbitClock, MsgSsrPhaseBiases, MsgSsrStecCorrection, MsgStartup, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCTime, MsgVelBody, MsgVelECEFCov, MsgVelECEF, MsgVelNEDCov, MsgVelNED, NetworkUsage, ObservationHeader, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECSatElement, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, UARTChannel } from "./file";
+//   import { Convert, AcqSvProfile, AlmanacCommonContent, CarrierPhase, CodeBiasesContent, Doppler, EphemerisCommonContent, GnssCapb, GnssSignal, GpsTime, GpsTimeSEC, GriddedCorrectionHeader, GridDefinitionHeader, GridElement, GridElementNoStd, Latency, MeasurementState, MsgAcqResult, MsgAcqSvProfile, MsgAgeCorrections, MsgAlmanacGlo, MsgAlmanacGPS, MsgAngularRate, MsgBaselineECEF, MsgBaselineHeading, MsgBaselineNED, MsgBasePosECEF, MsgBasePosLLH, MsgBootloaderHandshakeResp, MsgBootloaderJumpToApp, MsgCellModemStatus, MsgCommandOutput, MsgCommandReq, MsgCommandResp, MsgCsacTelemetry, MsgCsacTelemetryLabels, MsgDeviceMonitor, MsgDgnssStatus, MsgDops, MsgEphemerisBds, MsgEphemerisGal, MsgEphemerisGlo, MsgEphemerisGPS, MsgEphemerisQzss, MsgEphemerisSbas, MsgEXTEvent, MsgFileioConfigReq, MsgFileioConfigResp, MsgFileioReadDirReq, MsgFileioReadDirResp, MsgFileioReadReq, MsgFileioReadResp, MsgFileioRemove, MsgFileioWriteReq, MsgFileioWriteResp, MsgFlashDone, MsgFlashErase, MsgFlashProgram, MsgFlashReadReq, MsgFlashReadResp, MsgFrontEndGain, MsgFwd, MsgGloBiases, MsgGnssCapb, MsgGPSTime, MsgGroupDelay, MsgHeartbeat, MsgIarState, MsgImuAux, MsgImuRaw, MsgInsStatus, MsgIono, MsgLinuxCPUState, MsgLinuxMemState, MsgLinuxProcessFdCount, MsgLinuxProcessFdSummary, MsgLinuxProcessSocketCounts, MsgLinuxProcessSocketQueues, MsgLinuxSocketUsage, MsgLinuxSysState, MsgLog, MsgM25FlashWriteStatus, MsgMagRaw, MsgMaskSatellite, MsgMeasurementState, MsgNapDeviceDnaResp, MsgNdbEvent, MsgNetworkBandwidthUsage, MsgNetworkStateResp, MsgObs, MsgOdometry, MsgOrientEuler, MsgOrientQuat, MsgOsr, MsgPosECEFCovGnss, MsgPosECEFCov, MsgPosECEFGnss, MsgPosECEF, MsgPosLLHCovGnss, MsgPosLLHCov, MsgPosLLHGnss, MsgPosLLH, MsgProtectionLevel, MsgResetFilters, MsgReset, MsgSbasRaw, MsgSettingsReadByIndexReq, MsgSettingsReadByIndexResp, MsgSettingsReadReq, MsgSettingsReadResp, MsgSettingsRegister, MsgSettingsRegisterResp, MsgSettingsWrite, MsgSettingsWriteResp, MsgSpecan, MsgSsrCodeBiases, MsgSsrGriddedCorrection, MsgSsrGriddedCorrectionNoStd, MsgSsrGridDefinition, MsgSsrOrbitClock, MsgSsrPhaseBiases, MsgSsrStecCorrection, MsgStartup, MsgStmFlashLockSector, MsgStmFlashUnlockSector, MsgStmUniqueIDResp, MsgSvAzEl, MsgThreadState, MsgTrackingIq, MsgTrackingState, MsgUARTState, MsgUserData, MsgUTCTime, MsgVelBody, MsgVelECEFCovGnss, MsgVelECEFCov, MsgVelECEFGnss, MsgVelECEF, MsgVelNEDCovGnss, MsgVelNEDCov, MsgVelNEDGnss, MsgVelNED, MsgWheeltick, NetworkUsage, ObservationHeader, PackedObsContent, PackedOsrContent, Period, PhaseBiasesContent, STECHeader, STECResidual, STECResidualNoStd, STECSatElement, SvAzEl, SvID, TrackingChannelCorrelation, TrackingChannelState, TroposphericDelayCorrection, TroposphericDelayCorrectionNoStd, UARTChannel } from "./file";
 //
 //   const acqSvProfile = Convert.toAcqSvProfile(json);
 //   const almanacCommonContent = Convert.toAlmanacCommonContent(json);
@@ -15,6 +15,7 @@
 //   const griddedCorrectionHeader = Convert.toGriddedCorrectionHeader(json);
 //   const gridDefinitionHeader = Convert.toGridDefinitionHeader(json);
 //   const gridElement = Convert.toGridElement(json);
+//   const gridElementNoStd = Convert.toGridElementNoStd(json);
 //   const latency = Convert.toLatency(json);
 //   const measurementState = Convert.toMeasurementState(json);
 //   const msgAcqResult = Convert.toMsgAcqResult(json);
@@ -100,10 +101,15 @@
 //   const msgOrientEuler = Convert.toMsgOrientEuler(json);
 //   const msgOrientQuat = Convert.toMsgOrientQuat(json);
 //   const msgOsr = Convert.toMsgOsr(json);
+//   const msgPosECEFCovGnss = Convert.toMsgPosECEFCovGnss(json);
 //   const msgPosECEFCov = Convert.toMsgPosECEFCov(json);
+//   const msgPosECEFGnss = Convert.toMsgPosECEFGnss(json);
 //   const msgPosECEF = Convert.toMsgPosECEF(json);
+//   const msgPosLLHCovGnss = Convert.toMsgPosLLHCovGnss(json);
 //   const msgPosLLHCov = Convert.toMsgPosLLHCov(json);
+//   const msgPosLLHGnss = Convert.toMsgPosLLHGnss(json);
 //   const msgPosLLH = Convert.toMsgPosLLH(json);
+//   const msgProtectionLevel = Convert.toMsgProtectionLevel(json);
 //   const msgResetFilters = Convert.toMsgResetFilters(json);
 //   const msgReset = Convert.toMsgReset(json);
 //   const msgSbasRaw = Convert.toMsgSbasRaw(json);
@@ -121,6 +127,7 @@
 //   const msgSpecan = Convert.toMsgSpecan(json);
 //   const msgSsrCodeBiases = Convert.toMsgSsrCodeBiases(json);
 //   const msgSsrGriddedCorrection = Convert.toMsgSsrGriddedCorrection(json);
+//   const msgSsrGriddedCorrectionNoStd = Convert.toMsgSsrGriddedCorrectionNoStd(json);
 //   const msgSsrGridDefinition = Convert.toMsgSsrGridDefinition(json);
 //   const msgSsrOrbitClock = Convert.toMsgSsrOrbitClock(json);
 //   const msgSsrPhaseBiases = Convert.toMsgSsrPhaseBiases(json);
@@ -138,10 +145,15 @@
 //   const msgUserData = Convert.toMsgUserData(json);
 //   const msgUTCTime = Convert.toMsgUTCTime(json);
 //   const msgVelBody = Convert.toMsgVelBody(json);
+//   const msgVelECEFCovGnss = Convert.toMsgVelECEFCovGnss(json);
 //   const msgVelECEFCov = Convert.toMsgVelECEFCov(json);
+//   const msgVelECEFGnss = Convert.toMsgVelECEFGnss(json);
 //   const msgVelECEF = Convert.toMsgVelECEF(json);
+//   const msgVelNEDCovGnss = Convert.toMsgVelNEDCovGnss(json);
 //   const msgVelNEDCov = Convert.toMsgVelNEDCov(json);
+//   const msgVelNEDGnss = Convert.toMsgVelNEDGnss(json);
 //   const msgVelNED = Convert.toMsgVelNED(json);
+//   const msgWheeltick = Convert.toMsgWheeltick(json);
 //   const networkUsage = Convert.toNetworkUsage(json);
 //   const observationHeader = Convert.toObservationHeader(json);
 //   const packedObsContent = Convert.toPackedObsContent(json);
@@ -150,12 +162,14 @@
 //   const phaseBiasesContent = Convert.toPhaseBiasesContent(json);
 //   const sTECHeader = Convert.toSTECHeader(json);
 //   const sTECResidual = Convert.toSTECResidual(json);
+//   const sTECResidualNoStd = Convert.toSTECResidualNoStd(json);
 //   const sTECSatElement = Convert.toSTECSatElement(json);
 //   const svAzEl = Convert.toSvAzEl(json);
 //   const svID = Convert.toSvID(json);
 //   const trackingChannelCorrelation = Convert.toTrackingChannelCorrelation(json);
 //   const trackingChannelState = Convert.toTrackingChannelState(json);
 //   const troposphericDelayCorrection = Convert.toTroposphericDelayCorrection(json);
+//   const troposphericDelayCorrectionNoStd = Convert.toTroposphericDelayCorrectionNoStd(json);
 //   const uARTChannel = Convert.toUARTChannel(json);
 //
 // These functions will throw an error if the JSON doesn't
@@ -1421,6 +1435,32 @@ export interface PackedOsrContent {
  * baseline vector. The full GPS time is given by the preceding,
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
+export interface MsgPosECEFCovGnss {
+    cov_x_x: number;
+    cov_x_y: number;
+    cov_x_z: number;
+    cov_y_y: number;
+    cov_y_z: number;
+    cov_z_z: number;
+    flags:   number;
+    n_sats:  number;
+    tow:     number;
+    x:       number;
+    y:       number;
+    z:       number;
+}
+
+/**
+ * The position solution message reports absolute Earth Centered,
+ * Earth Fixed (ECEF) coordinates and the status (single point vs,
+ * pseudo-absolute RTK) of the position solution. The message also,
+ * reports the upper triangular portion of the 3x3 covariance matrix.,
+ * If the receiver knows the surveyed position of the base station and has,
+ * an RTK solution, this reports a pseudo-absolute position,
+ * solution using the base station position and the rover's RTK,
+ * baseline vector. The full GPS time is given by the preceding,
+ * MSG_GPS_TIME with the matching time-of-week (tow).
+ */
 export interface MsgPosECEFCov {
     cov_x_x: number;
     cov_x_y: number;
@@ -1446,6 +1486,26 @@ export interface MsgPosECEFCov {
  * baseline vector. The full GPS time is given by the preceding,
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
+export interface MsgPosECEFGnss {
+    accuracy: number;
+    flags:    number;
+    n_sats:   number;
+    tow:      number;
+    x:        number;
+    y:        number;
+    z:        number;
+}
+
+/**
+ * The position solution message reports absolute Earth Centered,
+ * Earth Fixed (ECEF) coordinates and the status (single point vs,
+ * pseudo-absolute RTK) of the position solution. If the rover,
+ * receiver knows the surveyed position of the base station and has,
+ * an RTK solution, this reports a pseudo-absolute position,
+ * solution using the base station position and the rover's RTK,
+ * baseline vector. The full GPS time is given by the preceding,
+ * MSG_GPS_TIME with the matching time-of-week (tow).
+ */
 export interface MsgPosECEF {
     accuracy: number;
     flags:    number;
@@ -1454,6 +1514,31 @@ export interface MsgPosECEF {
     x:        number;
     y:        number;
     z:        number;
+}
+
+/**
+ * This position solution message reports the absolute geodetic,
+ * coordinates and the status (single point vs pseudo-absolute RTK),
+ * of the position solution as well as the upper triangle of the 3x3,
+ * covariance matrix.  The position information and Fix Mode flags should,
+ * follow the MSG_POS_LLH message.  Since the covariance matrix is computed,
+ * in the local-level North, East, Down frame, the covariance terms follow,
+ * with that convention. Thus, covariances are reported against the "downward",
+ * measurement and care should be taken with the sign convention.
+ */
+export interface MsgPosLLHCovGnss {
+    cov_d_d: number;
+    cov_e_d: number;
+    cov_e_e: number;
+    cov_n_d: number;
+    cov_n_e: number;
+    cov_n_n: number;
+    flags:   number;
+    height:  number;
+    lat:     number;
+    lon:     number;
+    n_sats:  number;
+    tow:     number;
 }
 
 /**
@@ -1491,6 +1576,27 @@ export interface MsgPosLLHCov {
  * GPS time is given by the preceding MSG_GPS_TIME with the,
  * matching time-of-week (tow).
  */
+export interface MsgPosLLHGnss {
+    flags:      number;
+    h_accuracy: number;
+    height:     number;
+    lat:        number;
+    lon:        number;
+    n_sats:     number;
+    tow:        number;
+    v_accuracy: number;
+}
+
+/**
+ * This position solution message reports the absolute geodetic,
+ * coordinates and the status (single point vs pseudo-absolute RTK),
+ * of the position solution. If the rover receiver knows the,
+ * surveyed position of the base station and has an RTK solution,,
+ * this reports a pseudo-absolute position solution using the base,
+ * station position and the rover's RTK baseline vector. The full,
+ * GPS time is given by the preceding MSG_GPS_TIME with the,
+ * matching time-of-week (tow).
+ */
 export interface MsgPosLLH {
     flags:      number;
     h_accuracy: number;
@@ -1500,6 +1606,21 @@ export interface MsgPosLLH {
     n_sats:     number;
     tow:        number;
     v_accuracy: number;
+}
+
+/**
+ * This message reports the local vertical and horizontal protection levels,
+ * associated with a given LLH position solution. The full GPS time is given,
+ * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ */
+export interface MsgProtectionLevel {
+    flags:  number;
+    height: number;
+    hpl:    number;
+    lat:    number;
+    lon:    number;
+    tow:    number;
+    vpl:    number;
 }
 
 /**
@@ -1675,8 +1796,8 @@ export interface MsgSsrGriddedCorrection {
 }
 
 /**
- * Contains one tropo delay, plus STEC residuals for each satellite at the,
- * grid point.
+ * Contains one tropo delay (mean and stddev), plus STEC residuals (mean and,
+ * stddev) for each satellite at the grid point.
  */
 export interface GridElement {
     index:                  number;
@@ -1685,10 +1806,12 @@ export interface GridElement {
 }
 
 /**
- * STEC residual for the given satellite at the grid point.
+ * STEC residual (mean and standard deviation) for the given satellite,
+ * at the grid point,
  */
 export interface STECResidual {
     residual: number;
+    stddev:   number;
     sv_id:    SvID;
 }
 
@@ -1702,11 +1825,13 @@ export interface SvID {
 }
 
 /**
- * Troposphere vertical delays at the grid point.
+ * Troposphere vertical delays (mean and standard deviation) at the grid,
+ * point.
  */
 export interface TroposphericDelayCorrection {
-    hydro: number;
-    wet:   number;
+    hydro:  number;
+    stddev: number;
+    wet:    number;
 }
 
 /**
@@ -1721,6 +1846,41 @@ export interface GriddedCorrectionHeader {
     time:                    GpsTimeSEC;
     tropo_quality_indicator: number;
     update_interval:         number;
+}
+
+/**
+ * This message was deprecated when variances (stddev),
+ * were added.
+ */
+export interface MsgSsrGriddedCorrectionNoStd {
+    element: GridElementNoStd;
+    header:  GriddedCorrectionHeader;
+}
+
+/**
+ * Contains one tropo delay, plus STEC residuals for each satellite at the,
+ * grid point.
+ */
+export interface GridElementNoStd {
+    index:                  number;
+    stec_residuals:         STECResidualNoStd[];
+    tropo_delay_correction: TroposphericDelayCorrectionNoStd;
+}
+
+/**
+ * STEC residual for the given satellite at the grid point.
+ */
+export interface STECResidualNoStd {
+    residual: number;
+    sv_id:    SvID;
+}
+
+/**
+ * Troposphere vertical delays at the grid point.
+ */
+export interface TroposphericDelayCorrectionNoStd {
+    hydro: number;
+    wet:   number;
 }
 
 /**
@@ -2052,6 +2212,26 @@ export interface MsgVelBody {
  * (ECEF) coordinates. The full GPS time is given by the preceding,
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
+export interface MsgVelECEFCovGnss {
+    cov_x_x: number;
+    cov_x_y: number;
+    cov_x_z: number;
+    cov_y_y: number;
+    cov_y_z: number;
+    cov_z_z: number;
+    flags:   number;
+    n_sats:  number;
+    tow:     number;
+    x:       number;
+    y:       number;
+    z:       number;
+}
+
+/**
+ * This message reports the velocity in Earth Centered Earth Fixed,
+ * (ECEF) coordinates. The full GPS time is given by the preceding,
+ * MSG_GPS_TIME with the matching time-of-week (tow).
+ */
 export interface MsgVelECEFCov {
     cov_x_x: number;
     cov_x_y: number;
@@ -2072,6 +2252,21 @@ export interface MsgVelECEFCov {
  * (ECEF) coordinates. The full GPS time is given by the preceding,
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
+export interface MsgVelECEFGnss {
+    accuracy: number;
+    flags:    number;
+    n_sats:   number;
+    tow:      number;
+    x:        number;
+    y:        number;
+    z:        number;
+}
+
+/**
+ * This message reports the velocity in Earth Centered Earth Fixed,
+ * (ECEF) coordinates. The full GPS time is given by the preceding,
+ * MSG_GPS_TIME with the matching time-of-week (tow).
+ */
 export interface MsgVelECEF {
     accuracy: number;
     flags:    number;
@@ -2080,6 +2275,29 @@ export interface MsgVelECEF {
     x:        number;
     y:        number;
     z:        number;
+}
+
+/**
+ * This message reports the velocity in local North East Down (NED),
+ * coordinates. The NED coordinate system is defined as the local WGS84,
+ * tangent plane centered at the current position. The full GPS time is,
+ * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).,
+ * This message is similar to the MSG_VEL_NED, but it includes the upper triangular,
+ * portion of the 3x3 covariance matrix.
+ */
+export interface MsgVelNEDCovGnss {
+    cov_d_d: number;
+    cov_e_d: number;
+    cov_e_e: number;
+    cov_n_d: number;
+    cov_n_e: number;
+    cov_n_n: number;
+    d:       number;
+    e:       number;
+    flags:   number;
+    n:       number;
+    n_sats:  number;
+    tow:     number;
 }
 
 /**
@@ -2111,6 +2329,23 @@ export interface MsgVelNEDCov {
  * tangent plane centered at the current position. The full GPS time is,
  * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
+export interface MsgVelNEDGnss {
+    d:          number;
+    e:          number;
+    flags:      number;
+    h_accuracy: number;
+    n:          number;
+    n_sats:     number;
+    tow:        number;
+    v_accuracy: number;
+}
+
+/**
+ * This message reports the velocity in local North East Down (NED),
+ * coordinates. The NED coordinate system is defined as the local WGS84,
+ * tangent plane centered at the current position. The full GPS time is,
+ * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
+ */
 export interface MsgVelNED {
     d:          number;
     e:          number;
@@ -2120,6 +2355,26 @@ export interface MsgVelNED {
     n_sats:     number;
     tow:        number;
     v_accuracy: number;
+}
+
+/**
+ * Message containing the accumulated distance travelled by a wheel located at an odometry,
+ * reference point defined by the user. The offset for the odometry reference point and the,
+ * definition and origin of the user frame are defined through the device settings
+ * interface.,
+ * The source of this message is identified by the source field, which is an integer
+ * ranging,
+ * from 0 to 255.,
+ * The timestamp associated with this message should represent the time when the
+ * accumulated,
+ * tick count reached the value given by the contents of this message as accurately as
+ * possible.
+ */
+export interface MsgWheeltick {
+    flags:  number;
+    source: number;
+    ticks:  number;
+    time:   number;
 }
 
 // Converts JSON strings to/from your types
@@ -2227,6 +2482,14 @@ export class Convert {
 
     public static gridElementToJson(value: GridElement): string {
         return JSON.stringify(uncast(value, r("GridElement")), null, 2);
+    }
+
+    public static toGridElementNoStd(json: string): GridElementNoStd {
+        return cast(JSON.parse(json), r("GridElementNoStd"));
+    }
+
+    public static gridElementNoStdToJson(value: GridElementNoStd): string {
+        return JSON.stringify(uncast(value, r("GridElementNoStd")), null, 2);
     }
 
     public static toLatency(json: string): Latency {
@@ -2909,12 +3172,28 @@ export class Convert {
         return JSON.stringify(uncast(value, r("MsgOsr")), null, 2);
     }
 
+    public static toMsgPosECEFCovGnss(json: string): MsgPosECEFCovGnss {
+        return cast(JSON.parse(json), r("MsgPosECEFCovGnss"));
+    }
+
+    public static msgPosECEFCovGnssToJson(value: MsgPosECEFCovGnss): string {
+        return JSON.stringify(uncast(value, r("MsgPosECEFCovGnss")), null, 2);
+    }
+
     public static toMsgPosECEFCov(json: string): MsgPosECEFCov {
         return cast(JSON.parse(json), r("MsgPosECEFCov"));
     }
 
     public static msgPosECEFCovToJson(value: MsgPosECEFCov): string {
         return JSON.stringify(uncast(value, r("MsgPosECEFCov")), null, 2);
+    }
+
+    public static toMsgPosECEFGnss(json: string): MsgPosECEFGnss {
+        return cast(JSON.parse(json), r("MsgPosECEFGnss"));
+    }
+
+    public static msgPosECEFGnssToJson(value: MsgPosECEFGnss): string {
+        return JSON.stringify(uncast(value, r("MsgPosECEFGnss")), null, 2);
     }
 
     public static toMsgPosECEF(json: string): MsgPosECEF {
@@ -2925,6 +3204,14 @@ export class Convert {
         return JSON.stringify(uncast(value, r("MsgPosECEF")), null, 2);
     }
 
+    public static toMsgPosLLHCovGnss(json: string): MsgPosLLHCovGnss {
+        return cast(JSON.parse(json), r("MsgPosLLHCovGnss"));
+    }
+
+    public static msgPosLLHCovGnssToJson(value: MsgPosLLHCovGnss): string {
+        return JSON.stringify(uncast(value, r("MsgPosLLHCovGnss")), null, 2);
+    }
+
     public static toMsgPosLLHCov(json: string): MsgPosLLHCov {
         return cast(JSON.parse(json), r("MsgPosLLHCov"));
     }
@@ -2933,12 +3220,28 @@ export class Convert {
         return JSON.stringify(uncast(value, r("MsgPosLLHCov")), null, 2);
     }
 
+    public static toMsgPosLLHGnss(json: string): MsgPosLLHGnss {
+        return cast(JSON.parse(json), r("MsgPosLLHGnss"));
+    }
+
+    public static msgPosLLHGnssToJson(value: MsgPosLLHGnss): string {
+        return JSON.stringify(uncast(value, r("MsgPosLLHGnss")), null, 2);
+    }
+
     public static toMsgPosLLH(json: string): MsgPosLLH {
         return cast(JSON.parse(json), r("MsgPosLLH"));
     }
 
     public static msgPosLLHToJson(value: MsgPosLLH): string {
         return JSON.stringify(uncast(value, r("MsgPosLLH")), null, 2);
+    }
+
+    public static toMsgProtectionLevel(json: string): MsgProtectionLevel {
+        return cast(JSON.parse(json), r("MsgProtectionLevel"));
+    }
+
+    public static msgProtectionLevelToJson(value: MsgProtectionLevel): string {
+        return JSON.stringify(uncast(value, r("MsgProtectionLevel")), null, 2);
     }
 
     public static toMsgResetFilters(json: string): MsgResetFilters {
@@ -3077,6 +3380,14 @@ export class Convert {
         return JSON.stringify(uncast(value, r("MsgSsrGriddedCorrection")), null, 2);
     }
 
+    public static toMsgSsrGriddedCorrectionNoStd(json: string): MsgSsrGriddedCorrectionNoStd {
+        return cast(JSON.parse(json), r("MsgSsrGriddedCorrectionNoStd"));
+    }
+
+    public static msgSsrGriddedCorrectionNoStdToJson(value: MsgSsrGriddedCorrectionNoStd): string {
+        return JSON.stringify(uncast(value, r("MsgSsrGriddedCorrectionNoStd")), null, 2);
+    }
+
     public static toMsgSsrGridDefinition(json: string): MsgSsrGridDefinition {
         return cast(JSON.parse(json), r("MsgSsrGridDefinition"));
     }
@@ -3213,12 +3524,28 @@ export class Convert {
         return JSON.stringify(uncast(value, r("MsgVelBody")), null, 2);
     }
 
+    public static toMsgVelECEFCovGnss(json: string): MsgVelECEFCovGnss {
+        return cast(JSON.parse(json), r("MsgVelECEFCovGnss"));
+    }
+
+    public static msgVelECEFCovGnssToJson(value: MsgVelECEFCovGnss): string {
+        return JSON.stringify(uncast(value, r("MsgVelECEFCovGnss")), null, 2);
+    }
+
     public static toMsgVelECEFCov(json: string): MsgVelECEFCov {
         return cast(JSON.parse(json), r("MsgVelECEFCov"));
     }
 
     public static msgVelECEFCovToJson(value: MsgVelECEFCov): string {
         return JSON.stringify(uncast(value, r("MsgVelECEFCov")), null, 2);
+    }
+
+    public static toMsgVelECEFGnss(json: string): MsgVelECEFGnss {
+        return cast(JSON.parse(json), r("MsgVelECEFGnss"));
+    }
+
+    public static msgVelECEFGnssToJson(value: MsgVelECEFGnss): string {
+        return JSON.stringify(uncast(value, r("MsgVelECEFGnss")), null, 2);
     }
 
     public static toMsgVelECEF(json: string): MsgVelECEF {
@@ -3229,6 +3556,14 @@ export class Convert {
         return JSON.stringify(uncast(value, r("MsgVelECEF")), null, 2);
     }
 
+    public static toMsgVelNEDCovGnss(json: string): MsgVelNEDCovGnss {
+        return cast(JSON.parse(json), r("MsgVelNEDCovGnss"));
+    }
+
+    public static msgVelNEDCovGnssToJson(value: MsgVelNEDCovGnss): string {
+        return JSON.stringify(uncast(value, r("MsgVelNEDCovGnss")), null, 2);
+    }
+
     public static toMsgVelNEDCov(json: string): MsgVelNEDCov {
         return cast(JSON.parse(json), r("MsgVelNEDCov"));
     }
@@ -3237,12 +3572,28 @@ export class Convert {
         return JSON.stringify(uncast(value, r("MsgVelNEDCov")), null, 2);
     }
 
+    public static toMsgVelNEDGnss(json: string): MsgVelNEDGnss {
+        return cast(JSON.parse(json), r("MsgVelNEDGnss"));
+    }
+
+    public static msgVelNEDGnssToJson(value: MsgVelNEDGnss): string {
+        return JSON.stringify(uncast(value, r("MsgVelNEDGnss")), null, 2);
+    }
+
     public static toMsgVelNED(json: string): MsgVelNED {
         return cast(JSON.parse(json), r("MsgVelNED"));
     }
 
     public static msgVelNEDToJson(value: MsgVelNED): string {
         return JSON.stringify(uncast(value, r("MsgVelNED")), null, 2);
+    }
+
+    public static toMsgWheeltick(json: string): MsgWheeltick {
+        return cast(JSON.parse(json), r("MsgWheeltick"));
+    }
+
+    public static msgWheeltickToJson(value: MsgWheeltick): string {
+        return JSON.stringify(uncast(value, r("MsgWheeltick")), null, 2);
     }
 
     public static toNetworkUsage(json: string): NetworkUsage {
@@ -3309,6 +3660,14 @@ export class Convert {
         return JSON.stringify(uncast(value, r("STECResidual")), null, 2);
     }
 
+    public static toSTECResidualNoStd(json: string): STECResidualNoStd {
+        return cast(JSON.parse(json), r("STECResidualNoStd"));
+    }
+
+    public static sTECResidualNoStdToJson(value: STECResidualNoStd): string {
+        return JSON.stringify(uncast(value, r("STECResidualNoStd")), null, 2);
+    }
+
     public static toSTECSatElement(json: string): STECSatElement {
         return cast(JSON.parse(json), r("STECSatElement"));
     }
@@ -3355,6 +3714,14 @@ export class Convert {
 
     public static troposphericDelayCorrectionToJson(value: TroposphericDelayCorrection): string {
         return JSON.stringify(uncast(value, r("TroposphericDelayCorrection")), null, 2);
+    }
+
+    public static toTroposphericDelayCorrectionNoStd(json: string): TroposphericDelayCorrectionNoStd {
+        return cast(JSON.parse(json), r("TroposphericDelayCorrectionNoStd"));
+    }
+
+    public static troposphericDelayCorrectionNoStdToJson(value: TroposphericDelayCorrectionNoStd): string {
+        return JSON.stringify(uncast(value, r("TroposphericDelayCorrectionNoStd")), null, 2);
     }
 
     public static toUARTChannel(json: string): UARTChannel {
@@ -4127,6 +4494,20 @@ const typeMap: any = {
         { json: "sid", js: "sid", typ: r("GnssSignal") },
         { json: "tropo_std", js: "tropo_std", typ: 0 },
     ], "any"),
+    "MsgPosECEFCovGnss": o([
+        { json: "cov_x_x", js: "cov_x_x", typ: 3.14 },
+        { json: "cov_x_y", js: "cov_x_y", typ: 3.14 },
+        { json: "cov_x_z", js: "cov_x_z", typ: 3.14 },
+        { json: "cov_y_y", js: "cov_y_y", typ: 3.14 },
+        { json: "cov_y_z", js: "cov_y_z", typ: 3.14 },
+        { json: "cov_z_z", js: "cov_z_z", typ: 3.14 },
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "x", js: "x", typ: 3.14 },
+        { json: "y", js: "y", typ: 3.14 },
+        { json: "z", js: "z", typ: 3.14 },
+    ], "any"),
     "MsgPosECEFCov": o([
         { json: "cov_x_x", js: "cov_x_x", typ: 3.14 },
         { json: "cov_x_y", js: "cov_x_y", typ: 3.14 },
@@ -4134,6 +4515,15 @@ const typeMap: any = {
         { json: "cov_y_y", js: "cov_y_y", typ: 3.14 },
         { json: "cov_y_z", js: "cov_y_z", typ: 3.14 },
         { json: "cov_z_z", js: "cov_z_z", typ: 3.14 },
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "x", js: "x", typ: 3.14 },
+        { json: "y", js: "y", typ: 3.14 },
+        { json: "z", js: "z", typ: 3.14 },
+    ], "any"),
+    "MsgPosECEFGnss": o([
+        { json: "accuracy", js: "accuracy", typ: 0 },
         { json: "flags", js: "flags", typ: 0 },
         { json: "n_sats", js: "n_sats", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
@@ -4150,6 +4540,20 @@ const typeMap: any = {
         { json: "y", js: "y", typ: 3.14 },
         { json: "z", js: "z", typ: 3.14 },
     ], "any"),
+    "MsgPosLLHCovGnss": o([
+        { json: "cov_d_d", js: "cov_d_d", typ: 3.14 },
+        { json: "cov_e_d", js: "cov_e_d", typ: 3.14 },
+        { json: "cov_e_e", js: "cov_e_e", typ: 3.14 },
+        { json: "cov_n_d", js: "cov_n_d", typ: 3.14 },
+        { json: "cov_n_e", js: "cov_n_e", typ: 3.14 },
+        { json: "cov_n_n", js: "cov_n_n", typ: 3.14 },
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "height", js: "height", typ: 3.14 },
+        { json: "lat", js: "lat", typ: 3.14 },
+        { json: "lon", js: "lon", typ: 3.14 },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "tow", js: "tow", typ: 0 },
+    ], "any"),
     "MsgPosLLHCov": o([
         { json: "cov_d_d", js: "cov_d_d", typ: 3.14 },
         { json: "cov_e_d", js: "cov_e_d", typ: 3.14 },
@@ -4164,6 +4568,16 @@ const typeMap: any = {
         { json: "n_sats", js: "n_sats", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
     ], "any"),
+    "MsgPosLLHGnss": o([
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "h_accuracy", js: "h_accuracy", typ: 0 },
+        { json: "height", js: "height", typ: 3.14 },
+        { json: "lat", js: "lat", typ: 3.14 },
+        { json: "lon", js: "lon", typ: 3.14 },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "v_accuracy", js: "v_accuracy", typ: 0 },
+    ], "any"),
     "MsgPosLLH": o([
         { json: "flags", js: "flags", typ: 0 },
         { json: "h_accuracy", js: "h_accuracy", typ: 0 },
@@ -4173,6 +4587,15 @@ const typeMap: any = {
         { json: "n_sats", js: "n_sats", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
         { json: "v_accuracy", js: "v_accuracy", typ: 0 },
+    ], "any"),
+    "MsgProtectionLevel": o([
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "height", js: "height", typ: 3.14 },
+        { json: "hpl", js: "hpl", typ: 0 },
+        { json: "lat", js: "lat", typ: 3.14 },
+        { json: "lon", js: "lon", typ: 3.14 },
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "vpl", js: "vpl", typ: 0 },
     ], "any"),
     "MsgResetFilters": o([
         { json: "filter", js: "filter", typ: 0 },
@@ -4244,6 +4667,7 @@ const typeMap: any = {
     ], "any"),
     "STECResidual": o([
         { json: "residual", js: "residual", typ: 0 },
+        { json: "stddev", js: "stddev", typ: 0 },
         { json: "sv_id", js: "sv_id", typ: r("SvID") },
     ], "any"),
     "SvID": o([
@@ -4252,6 +4676,7 @@ const typeMap: any = {
     ], "any"),
     "TroposphericDelayCorrection": o([
         { json: "hydro", js: "hydro", typ: 0 },
+        { json: "stddev", js: "stddev", typ: 0 },
         { json: "wet", js: "wet", typ: 0 },
     ], "any"),
     "GriddedCorrectionHeader": o([
@@ -4261,6 +4686,23 @@ const typeMap: any = {
         { json: "time", js: "time", typ: r("GpsTimeSEC") },
         { json: "tropo_quality_indicator", js: "tropo_quality_indicator", typ: 0 },
         { json: "update_interval", js: "update_interval", typ: 0 },
+    ], "any"),
+    "MsgSsrGriddedCorrectionNoStd": o([
+        { json: "element", js: "element", typ: r("GridElementNoStd") },
+        { json: "header", js: "header", typ: r("GriddedCorrectionHeader") },
+    ], "any"),
+    "GridElementNoStd": o([
+        { json: "index", js: "index", typ: 0 },
+        { json: "stec_residuals", js: "stec_residuals", typ: a(r("STECResidualNoStd")) },
+        { json: "tropo_delay_correction", js: "tropo_delay_correction", typ: r("TroposphericDelayCorrectionNoStd") },
+    ], "any"),
+    "STECResidualNoStd": o([
+        { json: "residual", js: "residual", typ: 0 },
+        { json: "sv_id", js: "sv_id", typ: r("SvID") },
+    ], "any"),
+    "TroposphericDelayCorrectionNoStd": o([
+        { json: "hydro", js: "hydro", typ: 0 },
+        { json: "wet", js: "wet", typ: 0 },
     ], "any"),
     "MsgSsrGridDefinition": o([
         { json: "header", js: "header", typ: r("GridDefinitionHeader") },
@@ -4422,6 +4864,20 @@ const typeMap: any = {
         { json: "y", js: "y", typ: 0 },
         { json: "z", js: "z", typ: 0 },
     ], "any"),
+    "MsgVelECEFCovGnss": o([
+        { json: "cov_x_x", js: "cov_x_x", typ: 3.14 },
+        { json: "cov_x_y", js: "cov_x_y", typ: 3.14 },
+        { json: "cov_x_z", js: "cov_x_z", typ: 3.14 },
+        { json: "cov_y_y", js: "cov_y_y", typ: 3.14 },
+        { json: "cov_y_z", js: "cov_y_z", typ: 3.14 },
+        { json: "cov_z_z", js: "cov_z_z", typ: 3.14 },
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "x", js: "x", typ: 0 },
+        { json: "y", js: "y", typ: 0 },
+        { json: "z", js: "z", typ: 0 },
+    ], "any"),
     "MsgVelECEFCov": o([
         { json: "cov_x_x", js: "cov_x_x", typ: 3.14 },
         { json: "cov_x_y", js: "cov_x_y", typ: 3.14 },
@@ -4429,6 +4885,15 @@ const typeMap: any = {
         { json: "cov_y_y", js: "cov_y_y", typ: 3.14 },
         { json: "cov_y_z", js: "cov_y_z", typ: 3.14 },
         { json: "cov_z_z", js: "cov_z_z", typ: 3.14 },
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "x", js: "x", typ: 0 },
+        { json: "y", js: "y", typ: 0 },
+        { json: "z", js: "z", typ: 0 },
+    ], "any"),
+    "MsgVelECEFGnss": o([
+        { json: "accuracy", js: "accuracy", typ: 0 },
         { json: "flags", js: "flags", typ: 0 },
         { json: "n_sats", js: "n_sats", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
@@ -4445,6 +4910,20 @@ const typeMap: any = {
         { json: "y", js: "y", typ: 0 },
         { json: "z", js: "z", typ: 0 },
     ], "any"),
+    "MsgVelNEDCovGnss": o([
+        { json: "cov_d_d", js: "cov_d_d", typ: 3.14 },
+        { json: "cov_e_d", js: "cov_e_d", typ: 3.14 },
+        { json: "cov_e_e", js: "cov_e_e", typ: 3.14 },
+        { json: "cov_n_d", js: "cov_n_d", typ: 3.14 },
+        { json: "cov_n_e", js: "cov_n_e", typ: 3.14 },
+        { json: "cov_n_n", js: "cov_n_n", typ: 3.14 },
+        { json: "d", js: "d", typ: 0 },
+        { json: "e", js: "e", typ: 0 },
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "n", js: "n", typ: 0 },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "tow", js: "tow", typ: 0 },
+    ], "any"),
     "MsgVelNEDCov": o([
         { json: "cov_d_d", js: "cov_d_d", typ: 3.14 },
         { json: "cov_e_d", js: "cov_e_d", typ: 3.14 },
@@ -4459,6 +4938,16 @@ const typeMap: any = {
         { json: "n_sats", js: "n_sats", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
     ], "any"),
+    "MsgVelNEDGnss": o([
+        { json: "d", js: "d", typ: 0 },
+        { json: "e", js: "e", typ: 0 },
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "h_accuracy", js: "h_accuracy", typ: 0 },
+        { json: "n", js: "n", typ: 0 },
+        { json: "n_sats", js: "n_sats", typ: 0 },
+        { json: "tow", js: "tow", typ: 0 },
+        { json: "v_accuracy", js: "v_accuracy", typ: 0 },
+    ], "any"),
     "MsgVelNED": o([
         { json: "d", js: "d", typ: 0 },
         { json: "e", js: "e", typ: 0 },
@@ -4468,5 +4957,11 @@ const typeMap: any = {
         { json: "n_sats", js: "n_sats", typ: 0 },
         { json: "tow", js: "tow", typ: 0 },
         { json: "v_accuracy", js: "v_accuracy", typ: 0 },
+    ], "any"),
+    "MsgWheeltick": o([
+        { json: "flags", js: "flags", typ: 0 },
+        { json: "source", js: "source", typ: 0 },
+        { json: "ticks", js: "ticks", typ: 0 },
+        { json: "time", js: "time", typ: 0 },
     ], "any"),
 };

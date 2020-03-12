@@ -6,7 +6,7 @@ import io
 import json
 
 import decimal as dec
-
+from sbp.msg import SBP_PREAMBLE
 from sbp import msg as msg_nojit
 from sbp.table import dispatch as dispatch_nojit
 
@@ -207,13 +207,22 @@ def sbp_main(args):
                 from construct.core import StreamError
                 bytes_available = read_offset - unconsumed_offset
                 b = buf[unconsumed_offset:(unconsumed_offset + bytes_available)]
-                try:
-                    m = msg_nojit.SBP.unpack(b)
-                except StreamError:
+                if len(b) == 0:
                     break
-                m = dispatch_nojit(m)
-                dump(args, m)
-                consumed = header_len + m.length + 2
+                if b[0] != SBP_PREAMBLE:
+                    consumed = 1
+                else:
+                    try:
+                        m = msg_nojit.SBP.unpack(b)
+                        m = dispatch_nojit(m)
+                        dump(args, m)
+                        consumed = header_len + m.length + 2
+                    except StreamError:
+                        # Framing failed, find next preamble
+                        consumed = 1
+                    except ValueError as exc:
+                        # CRC error, skip malformed message and find next preamble
+                        consumed = header_len + exc.malformed_msg.length
             else:
                 consumed, payload_len, msg_type, sender, crc, crc_fail = \
                     msg.unpack_payload(buf, unconsumed_offset, (read_offset - unconsumed_offset))

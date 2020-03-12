@@ -9,6 +9,10 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+import pytest
+
+pytest.importorskip("numpy")
+
 from sbp.msg import SBP
 from sbp.client.loggers.base_logger import LogIterator
 from sbp.client.loggers.json_logger import JSONLogIterator
@@ -18,7 +22,7 @@ from sbp.acquisition import MsgAcqResultDepA
 from sbp.logging import MsgPrintDep
 from sbp.table import _SBP_TABLE, dispatch
 from sbp.table import InvalidSBPMessageType
-import pytest
+
 import six
 from six.moves import socketserver
 import threading
