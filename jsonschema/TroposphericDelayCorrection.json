@@ -13,14 +13,16 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#TroposphericDelayCorrection",
   "title":"TroposphericDelayCorrection",
-  "description":"Troposphere vertical delays at the grid point.\n",
+  "description":"Troposphere vertical delays (mean and standard deviation) at the grid,\npoint.\n",
   "type": "object",
   "properties": {
     "hydro": {"type": "integer"},
-    "wet": {"type": "integer"}
+    "wet": {"type": "integer"},
+    "stddev": {"type": "integer"}
   },
   "required": [
     "hydro",
-    "wet"
+    "wet",
+    "stddev"
   ]
 }

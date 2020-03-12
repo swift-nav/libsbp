@@ -11,18 +11,16 @@
     "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
   ],
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "$id": "#GridElement",
-  "title":"GridElement",
-  "description":"Contains one tropo delay (mean and stddev), plus STEC residuals (mean and,\nstddev) for each satellite at the grid point.\n",
+  "$id": "#MsgSsrGriddedCorrectionNoStd",
+  "title":"MsgSsrGriddedCorrectionNoStd",
+  "description":"This message was deprecated when variances (stddev),\nwere added.\n",
   "type": "object",
   "properties": {
-    "index": {"type": "integer"},
-    "tropo_delay_correction": {"$ref": "TroposphericDelayCorrection.json"},
-    "stec_residuals": {"type": "array", "items": {"$ref": "STECResidual.json"}}
+    "header": {"$ref": "GriddedCorrectionHeader.json"},
+    "element": {"$ref": "GridElementNoStd.json"}
   },
   "required": [
-    "index",
-    "tropo_delay_correction",
-    "stec_residuals"
+    "header",
+    "element"
   ]
 }
