@@ -95,43 +95,68 @@ Ubuntu 16.04.
 0. Branch and tag a new release. Tag the release version:
 
     ```shell
-    # Produces most recent tag (e.g., v0.29)
+    # Produces most recent tag (e.g., v2.7.5)
     git describe --abbrev=0 --tags
-    # Increment that value, create a new one (e.g, v0.30), and push
+    # Increment that value, create a new one (e.g, v2.7.6)
     git tag -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
     ```
 
-1. Run `make all`.  If running the release macOS you may need to install
+1. Make sure that the repo is reported as clean, e.g.
+
+    ```shell
+    git describe --tags --dirty --always
+    ```
+
+   This will ensure that version information for language libraries
+   will be generated cleanly.
+
+   If running the release macOS you may need to install
    llvm though brew (recommend installing llvm 6 with `brew instal llvm@6`)
    then add it to your path with `export PATH=$(brew --prefix llvm@6)/bin:$PATH`.
    You can also use Nixpkgs to setup a complete build environment for
    running a release.  [Install Nixpkgs](https://nixos.org/nix/download.html)
    and then run `nix-shell` prior to running `make all`.
 
-2. This will bump versions in the following files:
-   - `python/sbp/RELEASE-VERSION`
-   - `docs/sbp.pdf`
-   - `haskell/sbp.cabal`
-   - `package.json`
-   - `c/include/libsbp/version.h`
-   - `package-lock.json` -- you can typically revert all the changes in this
-     file except for the libsbp version change:
-     ```shell
-     git add -p package-lock.json
-     # enter 'y' for version change, 'd' to stop adding changes
-     git commit -m 'package-lock.json version bump'
-     git checkout package-lock.json
-     ```
-   Commit the docs, these above version bumps and re-tag:
-   ```shell
-   git add docs/sbp.pdf
-   git commit -m 'Update docs'
-   git add python/sbp/RELEASE-VERSION haskell/sbp.cabal.m4 package.json c/include/libsbp/version.h
-   git commit -m 'Version bumps'
-   git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
-   ```
+2. Run make tagets for each language and re-tag.  For python:
 
-3. Verify that package dependencies, their version numbers, and the
+    ```shell
+    make python pythonNG
+    git add python/sbp/RELEASE-VERSION
+    git commit -m 'INCREMENTED_TAG'
+    git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
+    ```
+
+   For Java, jsonschema, and Protobuf (these should not require bumping the git tag,
+   unless the geneated files are out of date):
+
+    ```shell
+    make java jsonschema protobuf rust
+    ```
+
+   For C, Haskell and JavaScript:
+
+    ```shell
+    make c haskell javascript
+    git add c/include/libsbp/version.h sbp.cabal package.json package-lock.json
+    git commit -m 'INCREMENTED_TAG'
+    git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
+    ```
+
+3. Finally, build the docs:
+
+    ```shell
+    make docs
+    ```
+
+   Then commit the docs and re-tag:
+
+    ```shell
+    git add docs/sbp.pdf
+    git commit -m 'Update docs'
+    git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
+    ```
+
+4. Verify that package dependencies, their version numbers, and the
    libsbp version number in the C, Python, JavaScript, and LaTeX developer
    documentation are consistent.
 
@@ -139,13 +164,13 @@ Ubuntu 16.04.
 
    - Others: should be automatically extracted from git tag
 
-4. Update the CHANGELOG details with `make release`. Submit a pull request and
+5. Update the CHANGELOG details with `make release`. Submit a pull request and
    get it merged. This requires
    [github-changelog-generator](https://github.com/skywinder/github-changelog-generator),
    and a `CHANGELOG_GITHUB_TOKEN` in your `PATH` if you don't already have
    them.
 
-5. After the release PR is merged, recreate the tag:
+6. After the release PR is merged, recreate the tag:
     ```shell
     git checkout master
     git pull
@@ -154,11 +179,11 @@ Ubuntu 16.04.
     git push origin INCREMENTED_TAG
     ```
 
-6. Create a release on
+7. Create a release on
    [GitHub](https://github.com/swift-nav/libsbp/releases) and add the
    RELEASE_NOTES.md.
 
-7. Distribute release packages.  You can attempt to run all releases
+8. Distribute release packages.  You can attempt to run all releases
    with `make dist` -- this will likely not work through... it is
    advisable to run each dist target separately.  In particular:
 
@@ -174,7 +199,7 @@ Ubuntu 16.04.
    update all other supported languages when we make an official firmware
    release.
 
-8. Releases are not only never perfect, they never really end. Please
+9. Releases are not only never perfect, they never really end. Please
    pay special attention to any downstream projects or users that may
    have issues or regressions as a consequence of the release version.
 
@@ -282,6 +307,17 @@ run with Python 2) otherwise you'll get an error similar to:
 Tox also seems to have issues interacting with conda environments.  The easiest
 way to work around this is to remove conda from your path and make sure tox is
 installed with a Python2 version of the interpreter.
+
+### Tox error: `ERROR: cowardly refusing to delete envdir`
+
+Tox may fail with the following error:
+
+    ERROR: cowardly refusing to delete `envdir` (it does not look like a virtualenv): /home/ubuntu/dev/libsbp/python/.tox/py38-nojit
+
+There's an open tox issue for this: https://github.com/tox-dev/tox/issues/1354
+-- the only workaround that resolved this was to downgrade tox:
+
+    pip install --upgrade --force-reinstall tox==3.12.1
 
 # Contributions
 

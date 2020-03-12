@@ -1,5 +1,15 @@
 # Change Log
 
+## [v2.7.6](https://github.com/swift-nav/libsbp/tree/v2.7.6)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.7.5...v2.7.6)
+
+**Merged pull requests:**
+
+- Update haskell installation instructions [\#785](https://github.com/swift-nav/libsbp/pull/785)
+- \[INFRA-114\] Nojit fixes and unit testing [\#784](https://github.com/swift-nav/libsbp/pull/784)
+- Add IMU type code for ST ASM330LLH \[STEP-63\] [\#783](https://github.com/swift-nav/libsbp/pull/783)
+
 ## [v2.7.5](https://github.com/swift-nav/libsbp/tree/v2.7.5)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.7.4...v2.7.5)

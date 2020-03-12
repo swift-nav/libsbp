@@ -25,21 +25,23 @@ RUN \
      echo '>>> Downlading get-pip.py...' \
   && wget -O /tmp/get-pip.py https://bootstrap.pypa.io/get-pip.py
 
-ENV OPENSSL_VER=1.0.2s
-ENV OPENSSL_PREFIX=/opt/openssl-${OPENSSL_VER}
-ENV OPENSSL_URL=https://www.openssl.org/source/openssl-${OPENSSL_VER}.tar.gz
+#ENV OPENSSL_VER=1.0.2s
+#ENV OPENSSL_PREFIX=/opt/openssl-${OPENSSL_VER}
+#ENV OPENSSL_URL=https://www.openssl.org/source/openssl-${OPENSSL_VER}.tar.gz
 
-RUN \
-     echo ">>> Building OpenSSL ${OPENSSL_VER}..." \
-  && wget -O /tmp/openssl.tgz ${OPENSSL_URL} \
-  && mkdir /tmp/openssl-build-${OPENSSL_VER} \
-  && cd /tmp/openssl-build-${OPENSSL_VER} \
-  && tar -xzf /tmp/openssl.tgz \
-  && cd openssl-${OPENSSL_VER} \
-  && ./config shared --prefix=${OPENSSL_PREFIX} \
-  && make -j${JOBS} \
-  && make -j${JOBS} install \
-  && cd /work
+#RUN \
+#     echo ">>> Building OpenSSL ${OPENSSL_VER}..." \
+#  && wget -O /tmp/openssl.tgz ${OPENSSL_URL} \
+#  && mkdir /tmp/openssl-build-${OPENSSL_VER} \
+#  && cd /tmp/openssl-build-${OPENSSL_VER} \
+#  && tar -xzf /tmp/openssl.tgz \
+#  && cd openssl-${OPENSSL_VER} \
+#  && ./config shared --prefix=${OPENSSL_PREFIX} \
+#  && make -j${JOBS} \
+#  && make -j${JOBS} install \
+#  && cd /work
+#  && rm -rf /tmp/openssl.tgz \
+#  && rm -rf /tmp/openssl-build-${OPENSSLVER} \
 
 #ENV PY34=3.4.10
 #ENV PY34_URL=https://www.python.org/ftp/python/${PY34}/Python-${PY34}.tar.xz
@@ -77,7 +79,7 @@ RUN \
   && mkdir /tmp/python${PY27}-build && cd /tmp/python${PY27}-build \
   && tar -xJf /tmp/python${PY27}.txz \
   && cd Python-${PY27} \
-  && ./configure \
+  && ./configure --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" \
   && make -j${JOBS} \
   && make altinstall \
   && cd /work \
@@ -106,7 +108,7 @@ RUN \
   && ${CP27MU_PREFIX}/bin/python2.7 -m pip install --upgrade pip \
   && ${CP27MU_PREFIX}/bin/python2.7 -m pip install wheel setuptools
 
-ENV PY35=3.5.7
+ENV PY35=3.5.9
 ENV PY35_URL=https://www.python.org/ftp/python/${PY35}/Python-${PY35}.tar.xz
 
 RUN \
@@ -116,7 +118,7 @@ RUN \
   && cd /tmp/python${PY35}-build \
   && tar -xJf /tmp/python${PY35}.txz \
   && cd Python-${PY35} \
-  && ./configure \
+  && ./configure --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" \
   && make -j${JOBS} \
   && make altinstall \
   && cd /work \
@@ -124,7 +126,7 @@ RUN \
   && /usr/local/bin/python3.5 -m pip install --upgrade pip \
   && /usr/local/bin/python3.5 -m pip install wheel setuptools
 
-ENV PY36=3.6.8
+ENV PY36=3.6.10
 ENV PY36_URL=https://www.python.org/ftp/python/${PY36}/Python-${PY36}.tar.xz
 
 RUN \
@@ -133,7 +135,7 @@ RUN \
   && mkdir /tmp/python${PY36}-build && cd /tmp/python${PY36}-build \
   && tar -xJf /tmp/python${PY36}.txz \
   && cd Python-${PY36} \
-  && ./configure \
+  && ./configure --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" \
   && make -j${JOBS} \
   && make altinstall \
   && cd /work \
@@ -141,7 +143,7 @@ RUN \
   && /usr/local/bin/python3.6 -m pip install --upgrade pip \
   && /usr/local/bin/python3.6 -m pip install wheel setuptools
 
-ENV PY37=3.7.3
+ENV PY37=3.7.7
 ENV PY37_URL=https://www.python.org/ftp/python/${PY37}/Python-${PY37}.tar.xz
 
 RUN \
@@ -150,12 +152,28 @@ RUN \
   && mkdir /tmp/python${PY37}-build && cd /tmp/python${PY37}-build \
   && tar -xJf /tmp/python${PY37}.txz \
   && cd Python-${PY37} \
-  && ./configure \
+  && ./configure --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" \
   && make -j${JOBS} \
   && make altinstall \
   && cd /work \
   && /usr/local/bin/python3.7 -m pip install --upgrade pip \
   && /usr/local/bin/python3.7 -m pip install wheel setuptools
+
+ENV PY38=3.8.2
+ENV PY38_URL=https://www.python.org/ftp/python/${PY38}/Python-${PY38}.tar.xz
+
+RUN \
+     echo '>>> Building Python 3.8...' \
+  && wget -O /tmp/python${PY38}.txz ${PY38_URL} \
+  && mkdir /tmp/python${PY38}-build && cd /tmp/python${PY38}-build \
+  && tar -xJf /tmp/python${PY38}.txz \
+  && cd Python-${PY38} \
+  && ./configure --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" \
+  && make -j${JOBS} \
+  && make altinstall \
+  && cd /work \
+  && /usr/local/bin/python3.8 -m pip install --upgrade pip \
+  && /usr/local/bin/python3.8 -m pip install wheel setuptools
 
 RUN \
      rm /tmp/python${PY27}.txz \
@@ -166,8 +184,8 @@ RUN \
   && rm -rf /tmp/python${PY36}-build \
   && rm /tmp/python${PY37}.txz \
   && rm -rf /tmp/python${PY37}-build \
-  && rm -rf /tmp/openssl.tgz \
-  && rm -rf /tmp/openssl-build-${OPENSSLVER} \
+  && rm /tmp/python${PY38}.txz \
+  && rm -rf /tmp/python${PY38}-build \
   && rm /tmp/get-pip.py
 
 RUN [ "cross-build-end" ]

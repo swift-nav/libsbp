@@ -65,7 +65,7 @@ help:
 	@echo "  quicktype-elm          generate Elm module from JSON Schema"
 	@echo
 
-all: c python pythonNG javascript java docs haskell protobuf rust
+all: c python pythonNG javascript java docs haskell protobuf rust jsonschema
 clean:
 	@echo "Removing the ./c/build directory..."
 	rm -r $(SWIFTNAV_ROOT)/c/build
@@ -267,12 +267,12 @@ gen-quicktype-typescript:
 
 gen-quicktype-javascript:
 	$(call announce-begin,"Generating JavaScript module from JSON Schema")
-	(cd jsonschema; quicktype -l javascript --src-lang schema *.json >../sbpjson/javascript/SbpModule.js)
+	(cd jsonschema; quicktype -l javascript --src-lang schema *.json >../sbpjson/javascript/SbpJson.js)
 	$(call announce-begin,"Finished generating JavaScript module from JSON Schema definitions")
 
 gen-quicktype-elm:
 	$(call announce-begin,"Generating Elm module from JSON Schema")
-	(cd jsonschema; quicktype -l elm --module SbpJson --src-lang schema *.json >../sbpjson/elm/SbpModule.elm)
+	(cd jsonschema; quicktype -l elm --module SbpJson --src-lang schema *.json >../sbpjson/elm/SbpJson.elm)
 	$(call announce-begin,"Finished generating Elm module from JSON Schema definitions")
 
 # Testers
