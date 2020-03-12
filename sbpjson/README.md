@@ -27,6 +27,9 @@ which allow users to fully utilize whatever type checking their language provide
 This also enables "developer assistance" technologies like IntelliSense for
 exploring SBP message types during development.
 
+[3]: https://json-schema.org/
+[4]: https://github.com/quicktype/quicktype
+
 See [javascript/README.md](../javascript/README.md) for a quick usage example.
 Also see [HOWTO.md](../HOWTO.md) for information on how to update these
 definitions if needed.
