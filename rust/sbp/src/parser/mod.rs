@@ -40,7 +40,7 @@ pub fn frame(input: &[u8]) -> (Result<SBP>, usize) {
                 let bytes_read = original_size - o.len();
                 (
                     SBP::parse(msg_type, sender_id, &mut &payload[..]),
-                    bytes_read
+                    bytes_read,
                 )
             } else {
                 (Err(crate::Error::CrcError), 1)
