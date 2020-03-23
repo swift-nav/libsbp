@@ -8,6 +8,7 @@ use self::nom::bytes::complete::is_a;
 use self::nom::multi::length_data;
 use self::nom::number::complete::{le_u16, le_u8};
 use self::nom::sequence::tuple;
+use self::nom::error::ErrorKind;
 use crate::messages::SBP;
 use crate::Result;
 use std::io::Read;
@@ -56,9 +57,14 @@ pub fn frame(input: &[u8]) -> (Result<SBP>, usize) {
         // Act like we didn't read anything
         Err(self::nom::Err::Incomplete(_)) => (Err(crate::Error::NotEnoughData), 0),
         // Act like we only read a single byte
-        Err(self::nom::Err::Error((err, kind))) => {
-            eprintln!("frame: ParseError: {:?} {:?}", err, kind);
-            (Err(crate::Error::ParseError), 1)
+        Err(self::nom::Err::Error((_data, kind))) => {
+            match kind {
+                ErrorKind::Eof => (Err(crate::Error::NotEnoughData), 0),
+                _ => {
+                    eprintln!("frame: ParseError: {:?}", kind);
+                    (Err(crate::Error::ParseError), 1)
+                }
+            }
         }
         // Act like we didn't read anything
         Err(self::nom::Err::Failure((_, _))) => (Err(crate::Error::UnrecoverableFailure), 0),
