@@ -60,10 +60,7 @@ pub fn frame(input: &[u8]) -> (Result<SBP>, usize) {
         Err(self::nom::Err::Error((_data, kind))) => {
             match kind {
                 ErrorKind::Eof => (Err(crate::Error::NotEnoughData), 0),
-                _ => {
-                    eprintln!("frame: ParseError: {:?}", kind);
-                    (Err(crate::Error::ParseError), 1)
-                }
+                _ => (Err(crate::Error::ParseError), 1)
             }
         }
         // Act like we didn't read anything
