@@ -12,6 +12,8 @@ use crate::messages::SBP;
 use crate::Result;
 use std::io::Read;
 
+const MSG_HEADER_LEN: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/ + 1 /*len*/;
+
 /// Attempts to extract a single SBP message from a data
 /// slice
 ///
@@ -23,6 +25,11 @@ use std::io::Read;
 /// If the result is a
 /// success then the SBP message has been fully validated.
 pub fn frame(input: &[u8]) -> (Result<SBP>, usize) {
+
+    if input.len() < MSG_HEADER_LEN {
+        return (Err(crate::Error::NotEnoughData), 0);
+    }
+
     let original_size = input.len();
     let preamble = is_a("\x55");
     let payload = length_data(le_u8);
