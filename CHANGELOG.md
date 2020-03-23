@@ -1,5 +1,14 @@
 # Change Log
 
+## [v2.7.7](https://github.com/swift-nav/libsbp/tree/v2.7.7)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.7.6...v2.7.7)
+
+**Merged pull requests:**
+
+- rust: expose crc errors \[INFRA-125\] [\#786](https://github.com/swift-nav/libsbp/pull/786)
+- File playback driver [\#782](https://github.com/swift-nav/libsbp/pull/782)
+
 ## [v2.7.6](https://github.com/swift-nav/libsbp/tree/v2.7.6)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.7.5...v2.7.6)
