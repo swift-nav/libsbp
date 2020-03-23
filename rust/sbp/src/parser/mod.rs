@@ -8,9 +8,12 @@ use self::nom::bytes::complete::is_a;
 use self::nom::multi::length_data;
 use self::nom::number::complete::{le_u16, le_u8};
 use self::nom::sequence::tuple;
+use self::nom::error::ErrorKind;
 use crate::messages::SBP;
 use crate::Result;
 use std::io::Read;
+
+const MSG_HEADER_LEN: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/ + 1 /*len*/;
 
 /// Attempts to extract a single SBP message from a data
 /// slice
@@ -23,6 +26,11 @@ use std::io::Read;
 /// If the result is a
 /// success then the SBP message has been fully validated.
 pub fn frame(input: &[u8]) -> (Result<SBP>, usize) {
+
+    if input.len() < MSG_HEADER_LEN {
+        return (Err(crate::Error::NotEnoughData), 0);
+    }
+
     let original_size = input.len();
     let preamble = is_a("\x55");
     let payload = length_data(le_u8);
@@ -40,7 +48,7 @@ pub fn frame(input: &[u8]) -> (Result<SBP>, usize) {
                 let bytes_read = original_size - o.len();
                 (
                     SBP::parse(msg_type, sender_id, &mut &payload[..]),
-                    bytes_read,
+                    bytes_read
                 )
             } else {
                 (Err(crate::Error::CrcError), 1)
@@ -49,7 +57,12 @@ pub fn frame(input: &[u8]) -> (Result<SBP>, usize) {
         // Act like we didn't read anything
         Err(self::nom::Err::Incomplete(_)) => (Err(crate::Error::NotEnoughData), 0),
         // Act like we only read a single byte
-        Err(self::nom::Err::Error((_, _))) => (Err(crate::Error::ParseError), 1),
+        Err(self::nom::Err::Error((_data, kind))) => {
+            match kind {
+                ErrorKind::Eof => (Err(crate::Error::NotEnoughData), 0),
+                _ => (Err(crate::Error::ParseError), 1)
+            }
+        }
         // Act like we didn't read anything
         Err(self::nom::Err::Failure((_, _))) => (Err(crate::Error::UnrecoverableFailure), 0),
     }

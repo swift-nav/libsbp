@@ -102,7 +102,7 @@ mod tests {
             y: 1327294,
             z: 631798,
         };
-        let (sbp_result, _remaining_data) = crate::parser::frame(&packet[..]);
+        let (sbp_result, consumed) = crate::parser::frame(&packet[..]);
         assert!(sbp_result.is_ok());
         if let crate::messages::SBP::MsgBaselineECEF(msg) = sbp_result.unwrap() {
             assert_eq!(msg.sender_id, baseline_ecef_expectation.sender_id);
@@ -113,6 +113,36 @@ mod tests {
             assert_eq!(msg.x, baseline_ecef_expectation.x);
             assert_eq!(msg.y, baseline_ecef_expectation.y);
             assert_eq!(msg.z, baseline_ecef_expectation.z);
+        } else {
+            assert!(false);
+        }
+        assert_eq!(packet.len(), consumed);
+    }
+
+    #[test]
+    /// Test parsing when we don't have enough data for a frame message
+    fn frame_eof() {
+        let packet = [
+            0x55u8, 0x0b, 0x02, 0xd3, 0x88, 0x14, 0x28, 0xf4, 0x7a, 0x13, 0x96, 0x62, 0xee, 0xff,
+            0xbe, 0x40, 0x14, 0x00, 0xf6, 0xa3, 0x09, 0x00, 0x00, 0x00, 0x0e, 0x00, 0xdb, 0xbf,
+        ];
+
+        let (sbp_result, _remaining_data) = crate::parser::frame(&packet[..packet.len()-1]);
+        assert!(sbp_result.is_err());
+
+        if let Err(err) = sbp_result {
+            match err {
+                crate::Error::NotEnoughData => { /* No-op */ }
+                _ => {
+                    assert!(false);
+                }
+            }
+        }
+
+        let (sbp_result, _remaining_data) = crate::parser::frame(&packet[..packet.len()]);
+
+        if let crate::messages::SBP::MsgBaselineECEF(_msg) = sbp_result.unwrap() {
+            /* No-op */
         } else {
             assert!(false);
         }

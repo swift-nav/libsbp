@@ -15,7 +15,7 @@ serialize = ["serde"]
 [dependencies]
 byteorder = "1.2.1"
 crc16 = "*"
-nom = "5.0.0"
+nom = "5.1.1"
 serde = { version = "1.0", features = ["derive"], optional = true }
 
 [dev-dependencies]
