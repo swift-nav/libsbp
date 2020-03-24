@@ -50,7 +50,7 @@ data CodeBiasesContent = CodeBiasesContent
 instance Binary CodeBiasesContent where
   get = do
     _codeBiasesContent_code <- getWord8
-    _codeBiasesContent_value <- fromIntegral <$> getWord16le
+    _codeBiasesContent_value <- (fromIntegral <$> getWord16le)
     pure CodeBiasesContent {..}
 
   put CodeBiasesContent {..} = do
@@ -84,7 +84,7 @@ instance Binary PhaseBiasesContent where
     _phaseBiasesContent_integer_indicator <- getWord8
     _phaseBiasesContent_widelane_integer_indicator <- getWord8
     _phaseBiasesContent_discontinuity_counter <- getWord8
-    _phaseBiasesContent_bias <- fromIntegral <$> getWord32le
+    _phaseBiasesContent_bias <- (fromIntegral <$> getWord32le)
     pure PhaseBiasesContent {..}
 
   put PhaseBiasesContent {..} = do
@@ -194,7 +194,7 @@ instance Binary STECSatElement where
   get = do
     _sTECSatElement_sv_id <- get
     _sTECSatElement_stec_quality_indicator <- getWord8
-    _sTECSatElement_stec_coeff <- replicateM 4 fromIntegral <$> getWord16le
+    _sTECSatElement_stec_coeff <- replicateM 4 (fromIntegral <$> getWord16le)
     pure STECSatElement {..}
 
   put STECSatElement {..} = do
@@ -217,8 +217,8 @@ data TroposphericDelayCorrectionNoStd = TroposphericDelayCorrectionNoStd
 
 instance Binary TroposphericDelayCorrectionNoStd where
   get = do
-    _troposphericDelayCorrectionNoStd_hydro <- fromIntegral <$> getWord16le
-    _troposphericDelayCorrectionNoStd_wet <- fromIntegral <$> getWord8
+    _troposphericDelayCorrectionNoStd_hydro <- (fromIntegral <$> getWord16le)
+    _troposphericDelayCorrectionNoStd_wet <- (fromIntegral <$> getWord8)
     pure TroposphericDelayCorrectionNoStd {..}
 
   put TroposphericDelayCorrectionNoStd {..} = do
@@ -242,8 +242,8 @@ data TroposphericDelayCorrection = TroposphericDelayCorrection
 
 instance Binary TroposphericDelayCorrection where
   get = do
-    _troposphericDelayCorrection_hydro <- fromIntegral <$> getWord16le
-    _troposphericDelayCorrection_wet <- fromIntegral <$> getWord8
+    _troposphericDelayCorrection_hydro <- (fromIntegral <$> getWord16le)
+    _troposphericDelayCorrection_wet <- (fromIntegral <$> getWord8)
     _troposphericDelayCorrection_stddev <- getWord8
     pure TroposphericDelayCorrection {..}
 
@@ -268,7 +268,7 @@ data STECResidualNoStd = STECResidualNoStd
 instance Binary STECResidualNoStd where
   get = do
     _sTECResidualNoStd_sv_id <- get
-    _sTECResidualNoStd_residual <- fromIntegral <$> getWord16le
+    _sTECResidualNoStd_residual <- (fromIntegral <$> getWord16le)
     pure STECResidualNoStd {..}
 
   put STECResidualNoStd {..} = do
@@ -294,7 +294,7 @@ data STECResidual = STECResidual
 instance Binary STECResidual where
   get = do
     _sTECResidual_sv_id <- get
-    _sTECResidual_residual <- fromIntegral <$> getWord16le
+    _sTECResidual_residual <- (fromIntegral <$> getWord16le)
     _sTECResidual_stddev <- getWord8
     pure STECResidual {..}
 
@@ -452,15 +452,15 @@ instance Binary MsgSsrOrbitClock where
     _msgSsrOrbitClock_update_interval <- getWord8
     _msgSsrOrbitClock_iod_ssr <- getWord8
     _msgSsrOrbitClock_iod <- getWord32le
-    _msgSsrOrbitClock_radial <- fromIntegral <$> getWord32le
-    _msgSsrOrbitClock_along <- fromIntegral <$> getWord32le
-    _msgSsrOrbitClock_cross <- fromIntegral <$> getWord32le
-    _msgSsrOrbitClock_dot_radial <- fromIntegral <$> getWord32le
-    _msgSsrOrbitClock_dot_along <- fromIntegral <$> getWord32le
-    _msgSsrOrbitClock_dot_cross <- fromIntegral <$> getWord32le
-    _msgSsrOrbitClock_c0 <- fromIntegral <$> getWord32le
-    _msgSsrOrbitClock_c1 <- fromIntegral <$> getWord32le
-    _msgSsrOrbitClock_c2 <- fromIntegral <$> getWord32le
+    _msgSsrOrbitClock_radial <- (fromIntegral <$> getWord32le)
+    _msgSsrOrbitClock_along <- (fromIntegral <$> getWord32le)
+    _msgSsrOrbitClock_cross <- (fromIntegral <$> getWord32le)
+    _msgSsrOrbitClock_dot_radial <- (fromIntegral <$> getWord32le)
+    _msgSsrOrbitClock_dot_along <- (fromIntegral <$> getWord32le)
+    _msgSsrOrbitClock_dot_cross <- (fromIntegral <$> getWord32le)
+    _msgSsrOrbitClock_c0 <- (fromIntegral <$> getWord32le)
+    _msgSsrOrbitClock_c1 <- (fromIntegral <$> getWord32le)
+    _msgSsrOrbitClock_c2 <- (fromIntegral <$> getWord32le)
     pure MsgSsrOrbitClock {..}
 
   put MsgSsrOrbitClock {..} = do
@@ -531,15 +531,15 @@ instance Binary MsgSsrOrbitClockDepA where
     _msgSsrOrbitClockDepA_update_interval <- getWord8
     _msgSsrOrbitClockDepA_iod_ssr <- getWord8
     _msgSsrOrbitClockDepA_iod <- getWord8
-    _msgSsrOrbitClockDepA_radial <- fromIntegral <$> getWord32le
-    _msgSsrOrbitClockDepA_along <- fromIntegral <$> getWord32le
-    _msgSsrOrbitClockDepA_cross <- fromIntegral <$> getWord32le
-    _msgSsrOrbitClockDepA_dot_radial <- fromIntegral <$> getWord32le
-    _msgSsrOrbitClockDepA_dot_along <- fromIntegral <$> getWord32le
-    _msgSsrOrbitClockDepA_dot_cross <- fromIntegral <$> getWord32le
-    _msgSsrOrbitClockDepA_c0 <- fromIntegral <$> getWord32le
-    _msgSsrOrbitClockDepA_c1 <- fromIntegral <$> getWord32le
-    _msgSsrOrbitClockDepA_c2 <- fromIntegral <$> getWord32le
+    _msgSsrOrbitClockDepA_radial <- (fromIntegral <$> getWord32le)
+    _msgSsrOrbitClockDepA_along <- (fromIntegral <$> getWord32le)
+    _msgSsrOrbitClockDepA_cross <- (fromIntegral <$> getWord32le)
+    _msgSsrOrbitClockDepA_dot_radial <- (fromIntegral <$> getWord32le)
+    _msgSsrOrbitClockDepA_dot_along <- (fromIntegral <$> getWord32le)
+    _msgSsrOrbitClockDepA_dot_cross <- (fromIntegral <$> getWord32le)
+    _msgSsrOrbitClockDepA_c0 <- (fromIntegral <$> getWord32le)
+    _msgSsrOrbitClockDepA_c1 <- (fromIntegral <$> getWord32le)
+    _msgSsrOrbitClockDepA_c2 <- (fromIntegral <$> getWord32le)
     pure MsgSsrOrbitClockDepA {..}
 
   put MsgSsrOrbitClockDepA {..} = do
@@ -647,7 +647,7 @@ instance Binary MsgSsrPhaseBiases where
     _msgSsrPhaseBiases_dispersive_bias <- getWord8
     _msgSsrPhaseBiases_mw_consistency <- getWord8
     _msgSsrPhaseBiases_yaw <- getWord16le
-    _msgSsrPhaseBiases_yaw_rate <- fromIntegral <$> getWord8
+    _msgSsrPhaseBiases_yaw_rate <- (fromIntegral <$> getWord8)
     _msgSsrPhaseBiases_biases <- whileM (not <$> isEmpty) get
     pure MsgSsrPhaseBiases {..}
 

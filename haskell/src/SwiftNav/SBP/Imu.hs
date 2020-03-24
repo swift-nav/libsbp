@@ -69,12 +69,12 @@ instance Binary MsgImuRaw where
   get = do
     _msgImuRaw_tow <- getWord32le
     _msgImuRaw_tow_f <- getWord8
-    _msgImuRaw_acc_x <- fromIntegral <$> getWord16le
-    _msgImuRaw_acc_y <- fromIntegral <$> getWord16le
-    _msgImuRaw_acc_z <- fromIntegral <$> getWord16le
-    _msgImuRaw_gyr_x <- fromIntegral <$> getWord16le
-    _msgImuRaw_gyr_y <- fromIntegral <$> getWord16le
-    _msgImuRaw_gyr_z <- fromIntegral <$> getWord16le
+    _msgImuRaw_acc_x <- (fromIntegral <$> getWord16le)
+    _msgImuRaw_acc_y <- (fromIntegral <$> getWord16le)
+    _msgImuRaw_acc_z <- (fromIntegral <$> getWord16le)
+    _msgImuRaw_gyr_x <- (fromIntegral <$> getWord16le)
+    _msgImuRaw_gyr_y <- (fromIntegral <$> getWord16le)
+    _msgImuRaw_gyr_z <- (fromIntegral <$> getWord16le)
     pure MsgImuRaw {..}
 
   put MsgImuRaw {..} = do
@@ -111,7 +111,7 @@ data MsgImuAux = MsgImuAux
 instance Binary MsgImuAux where
   get = do
     _msgImuAux_imu_type <- getWord8
-    _msgImuAux_temp <- fromIntegral <$> getWord16le
+    _msgImuAux_temp <- (fromIntegral <$> getWord16le)
     _msgImuAux_imu_conf <- getWord8
     pure MsgImuAux {..}
 

@@ -108,10 +108,10 @@ data MsgOrientQuat = MsgOrientQuat
 instance Binary MsgOrientQuat where
   get = do
     _msgOrientQuat_tow <- getWord32le
-    _msgOrientQuat_w <- fromIntegral <$> getWord32le
-    _msgOrientQuat_x <- fromIntegral <$> getWord32le
-    _msgOrientQuat_y <- fromIntegral <$> getWord32le
-    _msgOrientQuat_z <- fromIntegral <$> getWord32le
+    _msgOrientQuat_w <- (fromIntegral <$> getWord32le)
+    _msgOrientQuat_x <- (fromIntegral <$> getWord32le)
+    _msgOrientQuat_y <- (fromIntegral <$> getWord32le)
+    _msgOrientQuat_z <- (fromIntegral <$> getWord32le)
     _msgOrientQuat_w_accuracy <- getFloat32le
     _msgOrientQuat_x_accuracy <- getFloat32le
     _msgOrientQuat_y_accuracy <- getFloat32le
@@ -168,9 +168,9 @@ data MsgOrientEuler = MsgOrientEuler
 instance Binary MsgOrientEuler where
   get = do
     _msgOrientEuler_tow <- getWord32le
-    _msgOrientEuler_roll <- fromIntegral <$> getWord32le
-    _msgOrientEuler_pitch <- fromIntegral <$> getWord32le
-    _msgOrientEuler_yaw <- fromIntegral <$> getWord32le
+    _msgOrientEuler_roll <- (fromIntegral <$> getWord32le)
+    _msgOrientEuler_pitch <- (fromIntegral <$> getWord32le)
+    _msgOrientEuler_yaw <- (fromIntegral <$> getWord32le)
     _msgOrientEuler_roll_accuracy <- getFloat32le
     _msgOrientEuler_pitch_accuracy <- getFloat32le
     _msgOrientEuler_yaw_accuracy <- getFloat32le
@@ -221,9 +221,9 @@ data MsgAngularRate = MsgAngularRate
 instance Binary MsgAngularRate where
   get = do
     _msgAngularRate_tow <- getWord32le
-    _msgAngularRate_x <- fromIntegral <$> getWord32le
-    _msgAngularRate_y <- fromIntegral <$> getWord32le
-    _msgAngularRate_z <- fromIntegral <$> getWord32le
+    _msgAngularRate_x <- (fromIntegral <$> getWord32le)
+    _msgAngularRate_y <- (fromIntegral <$> getWord32le)
+    _msgAngularRate_z <- (fromIntegral <$> getWord32le)
     _msgAngularRate_flags <- getWord8
     pure MsgAngularRate {..}
 

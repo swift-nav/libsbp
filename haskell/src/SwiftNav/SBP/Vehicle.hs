@@ -59,7 +59,7 @@ data MsgOdometry = MsgOdometry
 instance Binary MsgOdometry where
   get = do
     _msgOdometry_tow <- getWord32le
-    _msgOdometry_velocity <- fromIntegral <$> getWord32le
+    _msgOdometry_velocity <- (fromIntegral <$> getWord32le)
     _msgOdometry_flags <- getWord8
     pure MsgOdometry {..}
 
@@ -106,7 +106,7 @@ instance Binary MsgWheeltick where
     _msgWheeltick_time <- getWord64le
     _msgWheeltick_flags <- getWord8
     _msgWheeltick_source <- getWord8
-    _msgWheeltick_ticks <- fromIntegral <$> getWord32le
+    _msgWheeltick_ticks <- (fromIntegral <$> getWord32le)
     pure MsgWheeltick {..}
 
   put MsgWheeltick {..} = do

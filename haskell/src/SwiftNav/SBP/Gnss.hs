@@ -178,7 +178,7 @@ data GpsTime = GpsTime
 instance Binary GpsTime where
   get = do
     _gpsTime_tow <- getWord32le
-    _gpsTime_ns_residual <- fromIntegral <$> getWord32le
+    _gpsTime_ns_residual <- (fromIntegral <$> getWord32le)
     _gpsTime_wn <- getWord16le
     pure GpsTime {..}
 
@@ -204,7 +204,7 @@ data CarrierPhase = CarrierPhase
 
 instance Binary CarrierPhase where
   get = do
-    _carrierPhase_i <- fromIntegral <$> getWord32le
+    _carrierPhase_i <- (fromIntegral <$> getWord32le)
     _carrierPhase_f <- getWord8
     pure CarrierPhase {..}
 

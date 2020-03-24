@@ -59,9 +59,9 @@ instance Binary MsgMagRaw where
   get = do
     _msgMagRaw_tow <- getWord32le
     _msgMagRaw_tow_f <- getWord8
-    _msgMagRaw_mag_x <- fromIntegral <$> getWord16le
-    _msgMagRaw_mag_y <- fromIntegral <$> getWord16le
-    _msgMagRaw_mag_z <- fromIntegral <$> getWord16le
+    _msgMagRaw_mag_x <- (fromIntegral <$> getWord16le)
+    _msgMagRaw_mag_y <- (fromIntegral <$> getWord16le)
+    _msgMagRaw_mag_z <- (fromIntegral <$> getWord16le)
     pure MsgMagRaw {..}
 
   put MsgMagRaw {..} = do
