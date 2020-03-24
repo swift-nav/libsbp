@@ -104,13 +104,13 @@ instance Binary MsgTrackingStateDetailedDepA where
     _msgTrackingStateDetailedDepA_cn0 <- getWord8
     _msgTrackingStateDetailedDepA_lock <- getWord16le
     _msgTrackingStateDetailedDepA_sid <- get
-    _msgTrackingStateDetailedDepA_doppler <- fromIntegral <$> getWord32le
+    _msgTrackingStateDetailedDepA_doppler <- (fromIntegral <$> getWord32le)
     _msgTrackingStateDetailedDepA_doppler_std <- getWord16le
     _msgTrackingStateDetailedDepA_uptime <- getWord32le
-    _msgTrackingStateDetailedDepA_clock_offset <- fromIntegral <$> getWord16le
-    _msgTrackingStateDetailedDepA_clock_drift <- fromIntegral <$> getWord16le
+    _msgTrackingStateDetailedDepA_clock_offset <- (fromIntegral <$> getWord16le)
+    _msgTrackingStateDetailedDepA_clock_drift <- (fromIntegral <$> getWord16le)
     _msgTrackingStateDetailedDepA_corr_spacing <- getWord16le
-    _msgTrackingStateDetailedDepA_acceleration <- fromIntegral <$> getWord8
+    _msgTrackingStateDetailedDepA_acceleration <- (fromIntegral <$> getWord8)
     _msgTrackingStateDetailedDepA_sync_flags <- getWord8
     _msgTrackingStateDetailedDepA_tow_flags <- getWord8
     _msgTrackingStateDetailedDepA_track_flags <- getWord8
@@ -213,13 +213,13 @@ instance Binary MsgTrackingStateDetailedDep where
     _msgTrackingStateDetailedDep_cn0 <- getWord8
     _msgTrackingStateDetailedDep_lock <- getWord16le
     _msgTrackingStateDetailedDep_sid <- get
-    _msgTrackingStateDetailedDep_doppler <- fromIntegral <$> getWord32le
+    _msgTrackingStateDetailedDep_doppler <- (fromIntegral <$> getWord32le)
     _msgTrackingStateDetailedDep_doppler_std <- getWord16le
     _msgTrackingStateDetailedDep_uptime <- getWord32le
-    _msgTrackingStateDetailedDep_clock_offset <- fromIntegral <$> getWord16le
-    _msgTrackingStateDetailedDep_clock_drift <- fromIntegral <$> getWord16le
+    _msgTrackingStateDetailedDep_clock_offset <- (fromIntegral <$> getWord16le)
+    _msgTrackingStateDetailedDep_clock_drift <- (fromIntegral <$> getWord16le)
     _msgTrackingStateDetailedDep_corr_spacing <- getWord16le
-    _msgTrackingStateDetailedDep_acceleration <- fromIntegral <$> getWord8
+    _msgTrackingStateDetailedDep_acceleration <- (fromIntegral <$> getWord8)
     _msgTrackingStateDetailedDep_sync_flags <- getWord8
     _msgTrackingStateDetailedDep_tow_flags <- getWord8
     _msgTrackingStateDetailedDep_track_flags <- getWord8
@@ -371,8 +371,8 @@ data TrackingChannelCorrelation = TrackingChannelCorrelation
 
 instance Binary TrackingChannelCorrelation where
   get = do
-    _trackingChannelCorrelation_I <- fromIntegral <$> getWord16le
-    _trackingChannelCorrelation_Q <- fromIntegral <$> getWord16le
+    _trackingChannelCorrelation_I <- (fromIntegral <$> getWord16le)
+    _trackingChannelCorrelation_Q <- (fromIntegral <$> getWord16le)
     pure TrackingChannelCorrelation {..}
 
   put TrackingChannelCorrelation {..} = do
@@ -426,8 +426,8 @@ data TrackingChannelCorrelationDep = TrackingChannelCorrelationDep
 
 instance Binary TrackingChannelCorrelationDep where
   get = do
-    _trackingChannelCorrelationDep_I <- fromIntegral <$> getWord32le
-    _trackingChannelCorrelationDep_Q <- fromIntegral <$> getWord32le
+    _trackingChannelCorrelationDep_I <- (fromIntegral <$> getWord32le)
+    _trackingChannelCorrelationDep_Q <- (fromIntegral <$> getWord32le)
     pure TrackingChannelCorrelationDep {..}
 
   put TrackingChannelCorrelationDep {..} = do

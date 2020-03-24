@@ -79,7 +79,7 @@ instance Binary MsgGpsTime where
   get = do
     _msgGpsTime_wn <- getWord16le
     _msgGpsTime_tow <- getWord32le
-    _msgGpsTime_ns_residual <- fromIntegral <$> getWord32le
+    _msgGpsTime_ns_residual <- (fromIntegral <$> getWord32le)
     _msgGpsTime_flags <- getWord8
     pure MsgGpsTime {..}
 
@@ -487,9 +487,9 @@ data MsgBaselineEcef = MsgBaselineEcef
 instance Binary MsgBaselineEcef where
   get = do
     _msgBaselineEcef_tow <- getWord32le
-    _msgBaselineEcef_x <- fromIntegral <$> getWord32le
-    _msgBaselineEcef_y <- fromIntegral <$> getWord32le
-    _msgBaselineEcef_z <- fromIntegral <$> getWord32le
+    _msgBaselineEcef_x <- (fromIntegral <$> getWord32le)
+    _msgBaselineEcef_y <- (fromIntegral <$> getWord32le)
+    _msgBaselineEcef_z <- (fromIntegral <$> getWord32le)
     _msgBaselineEcef_accuracy <- getWord16le
     _msgBaselineEcef_n_sats <- getWord8
     _msgBaselineEcef_flags <- getWord8
@@ -541,9 +541,9 @@ data MsgBaselineNed = MsgBaselineNed
 instance Binary MsgBaselineNed where
   get = do
     _msgBaselineNed_tow <- getWord32le
-    _msgBaselineNed_n <- fromIntegral <$> getWord32le
-    _msgBaselineNed_e <- fromIntegral <$> getWord32le
-    _msgBaselineNed_d <- fromIntegral <$> getWord32le
+    _msgBaselineNed_n <- (fromIntegral <$> getWord32le)
+    _msgBaselineNed_e <- (fromIntegral <$> getWord32le)
+    _msgBaselineNed_d <- (fromIntegral <$> getWord32le)
     _msgBaselineNed_h_accuracy <- getWord16le
     _msgBaselineNed_v_accuracy <- getWord16le
     _msgBaselineNed_n_sats <- getWord8
@@ -592,9 +592,9 @@ data MsgVelEcef = MsgVelEcef
 instance Binary MsgVelEcef where
   get = do
     _msgVelEcef_tow <- getWord32le
-    _msgVelEcef_x <- fromIntegral <$> getWord32le
-    _msgVelEcef_y <- fromIntegral <$> getWord32le
-    _msgVelEcef_z <- fromIntegral <$> getWord32le
+    _msgVelEcef_x <- (fromIntegral <$> getWord32le)
+    _msgVelEcef_y <- (fromIntegral <$> getWord32le)
+    _msgVelEcef_z <- (fromIntegral <$> getWord32le)
     _msgVelEcef_accuracy <- getWord16le
     _msgVelEcef_n_sats <- getWord8
     _msgVelEcef_flags <- getWord8
@@ -651,9 +651,9 @@ data MsgVelEcefCov = MsgVelEcefCov
 instance Binary MsgVelEcefCov where
   get = do
     _msgVelEcefCov_tow <- getWord32le
-    _msgVelEcefCov_x <- fromIntegral <$> getWord32le
-    _msgVelEcefCov_y <- fromIntegral <$> getWord32le
-    _msgVelEcefCov_z <- fromIntegral <$> getWord32le
+    _msgVelEcefCov_x <- (fromIntegral <$> getWord32le)
+    _msgVelEcefCov_y <- (fromIntegral <$> getWord32le)
+    _msgVelEcefCov_z <- (fromIntegral <$> getWord32le)
     _msgVelEcefCov_cov_x_x <- getFloat32le
     _msgVelEcefCov_cov_x_y <- getFloat32le
     _msgVelEcefCov_cov_x_z <- getFloat32le
@@ -713,9 +713,9 @@ data MsgVelNed = MsgVelNed
 instance Binary MsgVelNed where
   get = do
     _msgVelNed_tow <- getWord32le
-    _msgVelNed_n <- fromIntegral <$> getWord32le
-    _msgVelNed_e <- fromIntegral <$> getWord32le
-    _msgVelNed_d <- fromIntegral <$> getWord32le
+    _msgVelNed_n <- (fromIntegral <$> getWord32le)
+    _msgVelNed_e <- (fromIntegral <$> getWord32le)
+    _msgVelNed_d <- (fromIntegral <$> getWord32le)
     _msgVelNed_h_accuracy <- getWord16le
     _msgVelNed_v_accuracy <- getWord16le
     _msgVelNed_n_sats <- getWord8
@@ -777,9 +777,9 @@ data MsgVelNedCov = MsgVelNedCov
 instance Binary MsgVelNedCov where
   get = do
     _msgVelNedCov_tow <- getWord32le
-    _msgVelNedCov_n <- fromIntegral <$> getWord32le
-    _msgVelNedCov_e <- fromIntegral <$> getWord32le
-    _msgVelNedCov_d <- fromIntegral <$> getWord32le
+    _msgVelNedCov_n <- (fromIntegral <$> getWord32le)
+    _msgVelNedCov_e <- (fromIntegral <$> getWord32le)
+    _msgVelNedCov_d <- (fromIntegral <$> getWord32le)
     _msgVelNedCov_cov_n_n <- getFloat32le
     _msgVelNedCov_cov_n_e <- getFloat32le
     _msgVelNedCov_cov_n_d <- getFloat32le
@@ -1094,9 +1094,9 @@ data MsgVelEcefGnss = MsgVelEcefGnss
 instance Binary MsgVelEcefGnss where
   get = do
     _msgVelEcefGnss_tow <- getWord32le
-    _msgVelEcefGnss_x <- fromIntegral <$> getWord32le
-    _msgVelEcefGnss_y <- fromIntegral <$> getWord32le
-    _msgVelEcefGnss_z <- fromIntegral <$> getWord32le
+    _msgVelEcefGnss_x <- (fromIntegral <$> getWord32le)
+    _msgVelEcefGnss_y <- (fromIntegral <$> getWord32le)
+    _msgVelEcefGnss_z <- (fromIntegral <$> getWord32le)
     _msgVelEcefGnss_accuracy <- getWord16le
     _msgVelEcefGnss_n_sats <- getWord8
     _msgVelEcefGnss_flags <- getWord8
@@ -1153,9 +1153,9 @@ data MsgVelEcefCovGnss = MsgVelEcefCovGnss
 instance Binary MsgVelEcefCovGnss where
   get = do
     _msgVelEcefCovGnss_tow <- getWord32le
-    _msgVelEcefCovGnss_x <- fromIntegral <$> getWord32le
-    _msgVelEcefCovGnss_y <- fromIntegral <$> getWord32le
-    _msgVelEcefCovGnss_z <- fromIntegral <$> getWord32le
+    _msgVelEcefCovGnss_x <- (fromIntegral <$> getWord32le)
+    _msgVelEcefCovGnss_y <- (fromIntegral <$> getWord32le)
+    _msgVelEcefCovGnss_z <- (fromIntegral <$> getWord32le)
     _msgVelEcefCovGnss_cov_x_x <- getFloat32le
     _msgVelEcefCovGnss_cov_x_y <- getFloat32le
     _msgVelEcefCovGnss_cov_x_z <- getFloat32le
@@ -1215,9 +1215,9 @@ data MsgVelNedGnss = MsgVelNedGnss
 instance Binary MsgVelNedGnss where
   get = do
     _msgVelNedGnss_tow <- getWord32le
-    _msgVelNedGnss_n <- fromIntegral <$> getWord32le
-    _msgVelNedGnss_e <- fromIntegral <$> getWord32le
-    _msgVelNedGnss_d <- fromIntegral <$> getWord32le
+    _msgVelNedGnss_n <- (fromIntegral <$> getWord32le)
+    _msgVelNedGnss_e <- (fromIntegral <$> getWord32le)
+    _msgVelNedGnss_d <- (fromIntegral <$> getWord32le)
     _msgVelNedGnss_h_accuracy <- getWord16le
     _msgVelNedGnss_v_accuracy <- getWord16le
     _msgVelNedGnss_n_sats <- getWord8
@@ -1279,9 +1279,9 @@ data MsgVelNedCovGnss = MsgVelNedCovGnss
 instance Binary MsgVelNedCovGnss where
   get = do
     _msgVelNedCovGnss_tow <- getWord32le
-    _msgVelNedCovGnss_n <- fromIntegral <$> getWord32le
-    _msgVelNedCovGnss_e <- fromIntegral <$> getWord32le
-    _msgVelNedCovGnss_d <- fromIntegral <$> getWord32le
+    _msgVelNedCovGnss_n <- (fromIntegral <$> getWord32le)
+    _msgVelNedCovGnss_e <- (fromIntegral <$> getWord32le)
+    _msgVelNedCovGnss_d <- (fromIntegral <$> getWord32le)
     _msgVelNedCovGnss_cov_n_n <- getFloat32le
     _msgVelNedCovGnss_cov_n_e <- getFloat32le
     _msgVelNedCovGnss_cov_n_d <- getFloat32le
@@ -1354,9 +1354,9 @@ data MsgVelBody = MsgVelBody
 instance Binary MsgVelBody where
   get = do
     _msgVelBody_tow <- getWord32le
-    _msgVelBody_x <- fromIntegral <$> getWord32le
-    _msgVelBody_y <- fromIntegral <$> getWord32le
-    _msgVelBody_z <- fromIntegral <$> getWord32le
+    _msgVelBody_x <- (fromIntegral <$> getWord32le)
+    _msgVelBody_y <- (fromIntegral <$> getWord32le)
+    _msgVelBody_z <- (fromIntegral <$> getWord32le)
     _msgVelBody_cov_x_x <- getFloat32le
     _msgVelBody_cov_x_y <- getFloat32le
     _msgVelBody_cov_x_z <- getFloat32le
@@ -1443,7 +1443,7 @@ instance Binary MsgGpsTimeDepA where
   get = do
     _msgGpsTimeDepA_wn <- getWord16le
     _msgGpsTimeDepA_tow <- getWord32le
-    _msgGpsTimeDepA_ns_residual <- fromIntegral <$> getWord32le
+    _msgGpsTimeDepA_ns_residual <- (fromIntegral <$> getWord32le)
     _msgGpsTimeDepA_flags <- getWord8
     pure MsgGpsTimeDepA {..}
 
@@ -1640,9 +1640,9 @@ data MsgBaselineEcefDepA = MsgBaselineEcefDepA
 instance Binary MsgBaselineEcefDepA where
   get = do
     _msgBaselineEcefDepA_tow <- getWord32le
-    _msgBaselineEcefDepA_x <- fromIntegral <$> getWord32le
-    _msgBaselineEcefDepA_y <- fromIntegral <$> getWord32le
-    _msgBaselineEcefDepA_z <- fromIntegral <$> getWord32le
+    _msgBaselineEcefDepA_x <- (fromIntegral <$> getWord32le)
+    _msgBaselineEcefDepA_y <- (fromIntegral <$> getWord32le)
+    _msgBaselineEcefDepA_z <- (fromIntegral <$> getWord32le)
     _msgBaselineEcefDepA_accuracy <- getWord16le
     _msgBaselineEcefDepA_n_sats <- getWord8
     _msgBaselineEcefDepA_flags <- getWord8
@@ -1694,9 +1694,9 @@ data MsgBaselineNedDepA = MsgBaselineNedDepA
 instance Binary MsgBaselineNedDepA where
   get = do
     _msgBaselineNedDepA_tow <- getWord32le
-    _msgBaselineNedDepA_n <- fromIntegral <$> getWord32le
-    _msgBaselineNedDepA_e <- fromIntegral <$> getWord32le
-    _msgBaselineNedDepA_d <- fromIntegral <$> getWord32le
+    _msgBaselineNedDepA_n <- (fromIntegral <$> getWord32le)
+    _msgBaselineNedDepA_e <- (fromIntegral <$> getWord32le)
+    _msgBaselineNedDepA_d <- (fromIntegral <$> getWord32le)
     _msgBaselineNedDepA_h_accuracy <- getWord16le
     _msgBaselineNedDepA_v_accuracy <- getWord16le
     _msgBaselineNedDepA_n_sats <- getWord8
@@ -1745,9 +1745,9 @@ data MsgVelEcefDepA = MsgVelEcefDepA
 instance Binary MsgVelEcefDepA where
   get = do
     _msgVelEcefDepA_tow <- getWord32le
-    _msgVelEcefDepA_x <- fromIntegral <$> getWord32le
-    _msgVelEcefDepA_y <- fromIntegral <$> getWord32le
-    _msgVelEcefDepA_z <- fromIntegral <$> getWord32le
+    _msgVelEcefDepA_x <- (fromIntegral <$> getWord32le)
+    _msgVelEcefDepA_y <- (fromIntegral <$> getWord32le)
+    _msgVelEcefDepA_z <- (fromIntegral <$> getWord32le)
     _msgVelEcefDepA_accuracy <- getWord16le
     _msgVelEcefDepA_n_sats <- getWord8
     _msgVelEcefDepA_flags <- getWord8
@@ -1797,9 +1797,9 @@ data MsgVelNedDepA = MsgVelNedDepA
 instance Binary MsgVelNedDepA where
   get = do
     _msgVelNedDepA_tow <- getWord32le
-    _msgVelNedDepA_n <- fromIntegral <$> getWord32le
-    _msgVelNedDepA_e <- fromIntegral <$> getWord32le
-    _msgVelNedDepA_d <- fromIntegral <$> getWord32le
+    _msgVelNedDepA_n <- (fromIntegral <$> getWord32le)
+    _msgVelNedDepA_e <- (fromIntegral <$> getWord32le)
+    _msgVelNedDepA_d <- (fromIntegral <$> getWord32le)
     _msgVelNedDepA_h_accuracy <- getWord16le
     _msgVelNedDepA_v_accuracy <- getWord16le
     _msgVelNedDepA_n_sats <- getWord8

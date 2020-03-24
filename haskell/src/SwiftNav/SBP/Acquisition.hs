@@ -224,9 +224,9 @@ instance Binary AcqSvProfile where
     _acqSvProfile_bin_width <- getWord16le
     _acqSvProfile_timestamp <- getWord32le
     _acqSvProfile_time_spent <- getWord32le
-    _acqSvProfile_cf_min <- fromIntegral <$> getWord32le
-    _acqSvProfile_cf_max <- fromIntegral <$> getWord32le
-    _acqSvProfile_cf <- fromIntegral <$> getWord32le
+    _acqSvProfile_cf_min <- (fromIntegral <$> getWord32le)
+    _acqSvProfile_cf_max <- (fromIntegral <$> getWord32le)
+    _acqSvProfile_cf <- (fromIntegral <$> getWord32le)
     _acqSvProfile_cp <- getWord32le
     pure AcqSvProfile {..}
 
@@ -287,9 +287,9 @@ instance Binary AcqSvProfileDep where
     _acqSvProfileDep_bin_width <- getWord16le
     _acqSvProfileDep_timestamp <- getWord32le
     _acqSvProfileDep_time_spent <- getWord32le
-    _acqSvProfileDep_cf_min <- fromIntegral <$> getWord32le
-    _acqSvProfileDep_cf_max <- fromIntegral <$> getWord32le
-    _acqSvProfileDep_cf <- fromIntegral <$> getWord32le
+    _acqSvProfileDep_cf_min <- (fromIntegral <$> getWord32le)
+    _acqSvProfileDep_cf_max <- (fromIntegral <$> getWord32le)
+    _acqSvProfileDep_cf <- (fromIntegral <$> getWord32le)
     _acqSvProfileDep_cp <- getWord32le
     pure AcqSvProfileDep {..}
 

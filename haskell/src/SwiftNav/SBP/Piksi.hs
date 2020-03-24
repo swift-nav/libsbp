@@ -299,10 +299,10 @@ data Period = Period
 
 instance Binary Period where
   get = do
-    _period_avg <- fromIntegral <$> getWord32le
-    _period_pmin <- fromIntegral <$> getWord32le
-    _period_pmax <- fromIntegral <$> getWord32le
-    _period_current <- fromIntegral <$> getWord32le
+    _period_avg <- (fromIntegral <$> getWord32le)
+    _period_pmin <- (fromIntegral <$> getWord32le)
+    _period_pmax <- (fromIntegral <$> getWord32le)
+    _period_current <- (fromIntegral <$> getWord32le)
     pure Period {..}
 
   put Period {..} = do
@@ -333,10 +333,10 @@ data Latency = Latency
 
 instance Binary Latency where
   get = do
-    _latency_avg <- fromIntegral <$> getWord32le
-    _latency_lmin <- fromIntegral <$> getWord32le
-    _latency_lmax <- fromIntegral <$> getWord32le
-    _latency_current <- fromIntegral <$> getWord32le
+    _latency_avg <- (fromIntegral <$> getWord32le)
+    _latency_lmin <- (fromIntegral <$> getWord32le)
+    _latency_lmax <- (fromIntegral <$> getWord32le)
+    _latency_current <- (fromIntegral <$> getWord32le)
     pure Latency {..}
 
   put Latency {..} = do
@@ -532,11 +532,11 @@ data MsgDeviceMonitor = MsgDeviceMonitor
 
 instance Binary MsgDeviceMonitor where
   get = do
-    _msgDeviceMonitor_dev_vin <- fromIntegral <$> getWord16le
-    _msgDeviceMonitor_cpu_vint <- fromIntegral <$> getWord16le
-    _msgDeviceMonitor_cpu_vaux <- fromIntegral <$> getWord16le
-    _msgDeviceMonitor_cpu_temperature <- fromIntegral <$> getWord16le
-    _msgDeviceMonitor_fe_temperature <- fromIntegral <$> getWord16le
+    _msgDeviceMonitor_dev_vin <- (fromIntegral <$> getWord16le)
+    _msgDeviceMonitor_cpu_vint <- (fromIntegral <$> getWord16le)
+    _msgDeviceMonitor_cpu_vaux <- (fromIntegral <$> getWord16le)
+    _msgDeviceMonitor_cpu_temperature <- (fromIntegral <$> getWord16le)
+    _msgDeviceMonitor_fe_temperature <- (fromIntegral <$> getWord16le)
     pure MsgDeviceMonitor {..}
 
   put MsgDeviceMonitor {..} = do
@@ -595,7 +595,7 @@ data MsgCommandResp = MsgCommandResp
 instance Binary MsgCommandResp where
   get = do
     _msgCommandResp_sequence <- getWord32le
-    _msgCommandResp_code <- fromIntegral <$> getWord32le
+    _msgCommandResp_code <- (fromIntegral <$> getWord32le)
     pure MsgCommandResp {..}
 
   put MsgCommandResp {..} = do
@@ -788,7 +788,7 @@ data MsgCellModemStatus = MsgCellModemStatus
 
 instance Binary MsgCellModemStatus where
   get = do
-    _msgCellModemStatus_signal_strength <- fromIntegral <$> getWord8
+    _msgCellModemStatus_signal_strength <- (fromIntegral <$> getWord8)
     _msgCellModemStatus_signal_error_rate <- getFloat32le
     _msgCellModemStatus_reserved <- whileM (not <$> isEmpty) getWord8
     pure MsgCellModemStatus {..}
@@ -917,8 +917,8 @@ data MsgFrontEndGain = MsgFrontEndGain
 
 instance Binary MsgFrontEndGain where
   get = do
-    _msgFrontEndGain_rf_gain <- replicateM 8 fromIntegral <$> getWord8
-    _msgFrontEndGain_if_gain <- replicateM 8 fromIntegral <$> getWord8
+    _msgFrontEndGain_rf_gain <- replicateM 8 (fromIntegral <$> getWord8)
+    _msgFrontEndGain_if_gain <- replicateM 8 (fromIntegral <$> getWord8)
     pure MsgFrontEndGain {..}
 
   put MsgFrontEndGain {..} = do

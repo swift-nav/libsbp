@@ -74,7 +74,7 @@ data Doppler = Doppler
 
 instance Binary Doppler where
   get = do
-    _doppler_i <- fromIntegral <$> getWord16le
+    _doppler_i <- (fromIntegral <$> getWord16le)
     _doppler_f <- getWord8
     pure Doppler {..}
 
@@ -2204,7 +2204,7 @@ data CarrierPhaseDepA = CarrierPhaseDepA
 
 instance Binary CarrierPhaseDepA where
   get = do
-    _carrierPhaseDepA_i <- fromIntegral <$> getWord32le
+    _carrierPhaseDepA_i <- (fromIntegral <$> getWord32le)
     _carrierPhaseDepA_f <- getWord8
     pure CarrierPhaseDepA {..}
 
@@ -2616,9 +2616,9 @@ instance Binary MsgGroupDelayDepA where
     _msgGroupDelayDepA_t_op <- get
     _msgGroupDelayDepA_prn <- getWord8
     _msgGroupDelayDepA_valid <- getWord8
-    _msgGroupDelayDepA_tgd <- fromIntegral <$> getWord16le
-    _msgGroupDelayDepA_isc_l1ca <- fromIntegral <$> getWord16le
-    _msgGroupDelayDepA_isc_l2c <- fromIntegral <$> getWord16le
+    _msgGroupDelayDepA_tgd <- (fromIntegral <$> getWord16le)
+    _msgGroupDelayDepA_isc_l1ca <- (fromIntegral <$> getWord16le)
+    _msgGroupDelayDepA_isc_l2c <- (fromIntegral <$> getWord16le)
     pure MsgGroupDelayDepA {..}
 
   put MsgGroupDelayDepA {..} = do
@@ -2657,9 +2657,9 @@ instance Binary MsgGroupDelayDepB where
     _msgGroupDelayDepB_t_op <- get
     _msgGroupDelayDepB_sid <- get
     _msgGroupDelayDepB_valid <- getWord8
-    _msgGroupDelayDepB_tgd <- fromIntegral <$> getWord16le
-    _msgGroupDelayDepB_isc_l1ca <- fromIntegral <$> getWord16le
-    _msgGroupDelayDepB_isc_l2c <- fromIntegral <$> getWord16le
+    _msgGroupDelayDepB_tgd <- (fromIntegral <$> getWord16le)
+    _msgGroupDelayDepB_isc_l1ca <- (fromIntegral <$> getWord16le)
+    _msgGroupDelayDepB_isc_l2c <- (fromIntegral <$> getWord16le)
     pure MsgGroupDelayDepB {..}
 
   put MsgGroupDelayDepB {..} = do
@@ -2698,9 +2698,9 @@ instance Binary MsgGroupDelay where
     _msgGroupDelay_t_op <- get
     _msgGroupDelay_sid <- get
     _msgGroupDelay_valid <- getWord8
-    _msgGroupDelay_tgd <- fromIntegral <$> getWord16le
-    _msgGroupDelay_isc_l1ca <- fromIntegral <$> getWord16le
-    _msgGroupDelay_isc_l2c <- fromIntegral <$> getWord16le
+    _msgGroupDelay_tgd <- (fromIntegral <$> getWord16le)
+    _msgGroupDelay_isc_l1ca <- (fromIntegral <$> getWord16le)
+    _msgGroupDelay_isc_l2c <- (fromIntegral <$> getWord16le)
     pure MsgGroupDelay {..}
 
   put MsgGroupDelay {..} = do
@@ -3063,10 +3063,10 @@ data MsgGloBiases = MsgGloBiases
 instance Binary MsgGloBiases where
   get = do
     _msgGloBiases_mask <- getWord8
-    _msgGloBiases_l1ca_bias <- fromIntegral <$> getWord16le
-    _msgGloBiases_l1p_bias <- fromIntegral <$> getWord16le
-    _msgGloBiases_l2ca_bias <- fromIntegral <$> getWord16le
-    _msgGloBiases_l2p_bias <- fromIntegral <$> getWord16le
+    _msgGloBiases_l1ca_bias <- (fromIntegral <$> getWord16le)
+    _msgGloBiases_l1p_bias <- (fromIntegral <$> getWord16le)
+    _msgGloBiases_l2ca_bias <- (fromIntegral <$> getWord16le)
+    _msgGloBiases_l2p_bias <- (fromIntegral <$> getWord16le)
     pure MsgGloBiases {..}
 
   put MsgGloBiases {..} = do
@@ -3096,7 +3096,7 @@ instance Binary SvAzEl where
   get = do
     _svAzEl_sid <- get
     _svAzEl_az <- getWord8
-    _svAzEl_el <- fromIntegral <$> getWord8
+    _svAzEl_el <- (fromIntegral <$> getWord8)
     pure SvAzEl {..}
 
   put SvAzEl {..} = do
