@@ -34,9 +34,9 @@ const MSG_CRC_LEN: usize = 2;
 /// Read `stream` line by line and parse a JSON object from each line.
 /// The function specified by `func` will be called for each object
 /// that's parsed.
-pub fn json_read_loop<F>(stream: &mut dyn Read, func: F) -> Result<()>
+pub fn json_read_loop<F>(stream: &mut dyn Read, mut func: F) -> Result<()>
 where
-    F: Fn(&Value) -> Result<()>,
+    F: FnMut(&Value) -> Result<()>,
 {
     let reader = BufReader::new(stream);
     for line in reader.lines() {
@@ -299,6 +299,7 @@ pub fn json2sbp_process_with_expand(
     debug: bool,
     float_compat: bool,
     expand_json: bool,
+    stream_output: &mut Rc<Box<dyn Write>>,
 ) -> Result<()> {
     let mut base64_payload: String = String::with_capacity(512);
     let (value, rewrap_data) = unwrap_data_obj(&value);
@@ -318,8 +319,6 @@ pub fn json2sbp_process_with_expand(
                     if let Ok(res) = res {
                         if expand_json {
                             let mut value = serde_json::to_value(&sbp_msg)?;
-                            let mut stdout: Rc<Box<dyn Write>> =
-                                Rc::new(Box::new(std::io::stdout()));
                             write_sbp_json_value(
                                 float_compat,
                                 rewrap_data,
@@ -327,10 +326,12 @@ pub fn json2sbp_process_with_expand(
                                 common_sbp,
                                 &res[..],
                                 &mut value,
-                                &mut stdout,
+                                stream_output,
                             )?;
                         } else {
-                            if let Err(err) = std::io::stdout().write_all(&res) {
+                            let io_ref =
+                                Rc::get_mut(stream_output).expect("could not get output stream");
+                            if let Err(err) = io_ref.write_all(&res) {
                                 if debug {
                                     eprintln!("IO write failed: {:?}", err);
                                 }
@@ -502,17 +503,27 @@ pub fn sbp2json_read_loop(
     Ok(())
 }
 
-pub fn json2json_read_loop(debug: bool, float_compat: bool, stream: &mut dyn Read) -> Result<()> {
+pub fn json2json_read_loop(
+    debug: bool,
+    float_compat: bool,
+    stream_input: &mut dyn Read,
+    stream_output: &mut Rc<Box<dyn Write>>,
+) -> Result<()> {
     let json2json_process = |value: &Value| -> Result<()> {
-        json2sbp_process_with_expand(value, debug, float_compat, true)
+        json2sbp_process_with_expand(value, debug, float_compat, true, stream_output)
     };
 
-    json_read_loop(stream, json2json_process)
+    json_read_loop(stream_input, json2json_process)
 }
 
-pub fn json2sbp_read_loop(debug: bool, stream: &mut dyn Read) -> Result<()> {
-    let json2sbp_process =
-        |value: &Value| -> Result<()> { json2sbp_process_with_expand(value, debug, false, false) };
+pub fn json2sbp_read_loop(
+    debug: bool,
+    stream_input: &mut dyn Read,
+    stream_output: &mut Rc<Box<dyn Write>>,
+) -> Result<()> {
+    let json2sbp_process = |value: &Value| -> Result<()> {
+        json2sbp_process_with_expand(value, debug, false, false, stream_output)
+    };
 
-    json_read_loop(stream, json2sbp_process)
+    json_read_loop(stream_input, json2sbp_process)
 }

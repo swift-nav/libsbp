@@ -1,3 +1,7 @@
+use std::boxed::Box;
+use std::io::Write;
+use std::rc::Rc;
+
 use structopt::StructOpt;
 
 use sbp::sbp2json::{json2json_read_loop, Result};
@@ -21,5 +25,6 @@ struct Options {
 
 fn main() -> Result<()> {
     let options = Options::from_args();
-    json2json_read_loop(options.debug, options.float_compat, &mut std::io::stdin())
+    let mut stdout: Rc<Box<dyn Write>> = Rc::new(Box::new(std::io::stdout()));
+    json2json_read_loop(options.debug, options.float_compat, &mut std::io::stdin(), &mut stdout)
 }
