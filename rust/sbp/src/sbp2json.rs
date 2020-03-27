@@ -243,6 +243,7 @@ fn unwrap_data_obj<'a>(value: &'a Value) -> (&'a Value, bool) {
     (map.get("data").unwrap(), true)
 }
 
+/// Unwrap and return the "payload" key from a JSON object, if it exists.
 fn get_payload<'a>(value: &'a Value) -> Option<&'a str> {
     if !value.is_object() {
         return None;
@@ -258,42 +259,42 @@ fn get_payload<'a>(value: &'a Value) -> Option<&'a str> {
     Some(payload.as_str().unwrap())
 }
 
-fn get_msg_type(value: &Value) -> Option<u16> {
+/// Fetches a key specified by `key_name` from the JSON object, if it exists.
+fn get_u16_key(key_name: &str, value: &Value) -> Option<u16>
+{
     if !value.is_object() {
         panic!("value always expected to be an object");
     }
     let value = value.as_object().unwrap();
-    if !value.contains_key("msg_type") {
+    if !value.contains_key(key_name) {
         return None;
     }
-    let msg_type = value.get("msg_type").unwrap();
-    if msg_type.is_i64() {
-        return Some(msg_type.as_i64().unwrap() as u16);
+    let u16_value = value.get(key_name).unwrap();
+    if u16_value.is_i64() {
+        return Some(u16_value.as_i64().unwrap() as u16);
     }
-    if msg_type.is_u64() {
-        return Some(msg_type.as_u64().unwrap() as u16);
+    if u16_value.is_u64() {
+        return Some(u16_value.as_u64().unwrap() as u16);
     }
     None
 }
 
-fn get_sender_id(value: &Value) -> u16 {
-    if !value.is_object() {
-        panic!("value always expected to be an object");
-    }
-    let value = value.as_object().unwrap();
-    if !value.contains_key("sender") {
-        return 0;
-    }
-    let sender_id = value.get("sender").unwrap();
-    if sender_id.is_i64() {
-        return sender_id.as_i64().unwrap() as u16;
-    }
-    if sender_id.is_u64() {
-        return sender_id.as_u64().unwrap() as u16;
-    }
-    0
+/// Unwrap and return the "msg_type" key from a JSON object, if it exists.
+fn get_msg_type(value: &Value) -> Option<u16> {
+    get_u16_key("msg_type", value)
 }
 
+/// Unwrap and return the "sender" key from a JSON object, defaults to 0 if it doesn't exist.
+fn get_sender_id(value: &Value) -> u16 {
+    if let Some(sender) = get_u16_key("sender", value) {
+        sender
+    } else {
+        0
+    }
+}
+
+/// Takes an input JSON object and either emits it as SBP binary or re-emits it
+/// as a JSON object (for the json2json use case).
 pub fn json2sbp_process_with_expand(
     value: &Value,
     debug: bool,
@@ -503,6 +504,7 @@ pub fn sbp2json_read_loop(
     Ok(())
 }
 
+/// Main read loop for json2json.
 pub fn json2json_read_loop(
     debug: bool,
     float_compat: bool,
@@ -516,6 +518,7 @@ pub fn json2json_read_loop(
     json_read_loop(stream_input, json2json_process)
 }
 
+/// Main read loop for json2sbp
 pub fn json2sbp_read_loop(
     debug: bool,
     stream_input: &mut dyn Read,
