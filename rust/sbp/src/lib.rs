@@ -7,6 +7,9 @@ pub mod messages;
 pub mod parser;
 pub mod serialize;
 
+#[cfg(feature = "sbp2json")]
+pub mod sbp2json_lib;
+
 use std::error;
 use std::fmt;
 use std::result;
@@ -41,6 +44,7 @@ impl error::Error for Error {
             Error::CrcError => "CRC validation failed",
             Error::NotEnoughData => "Not enough data available to parse a message",
             Error::UnrecoverableFailure => "An unrecoverage failure was encountered",
+            #[allow(deprecated)]
             Error::IoError(err) => err.description(),
         }
     }
