@@ -16,6 +16,11 @@ use super::messages::SBP;
 pub type Error = Box<dyn std::error::Error + Sync + Send>;
 pub type Result<T> = std::result::Result<T, Error>;
 
+/// The read buffer size, this buffer will be re-used with varying offsets until
+/// there is no remaining space, any "leftover" data will be cycled to the front
+/// of the buffer and old data will be flushed.
+const BUF_SIZE: usize = 4096;
+
 /// Size of the SBP message header, used to extract the payload portion
 /// of a framed SBP message.
 const MSG_HEADER_LEN: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/ + 1 /*len*/;
@@ -139,7 +144,7 @@ fn unpack<'a>(value: &'a mut serde_json::Value) -> Option<&'a mut serde_json::Va
 /// Add common fields to the input JSON object: length, msg_type, payload, preamble, crc, and
 /// sender_id.
 fn add_common_fields<'a>(
-    msg: &dyn sbp::messages::SBPMessage,
+    msg: &dyn SBPMessage,
     payload: &[u8],
     value: &'a mut serde_json::Value,
     base64_payload: &'a mut String,
@@ -276,7 +281,7 @@ fn get_sender_id(value: &Value) -> u16 {
     0
 }
 
-fn json2sbp_process_with_expand(
+pub fn json2sbp_process_with_expand(
     value: &Value,
     debug: bool,
     float_compat: bool,
@@ -368,7 +373,7 @@ fn json2sbp_process_with_expand(
 ///
 ///    `remaining_length` -> the remaining available space in the buffer
 ///
-pub fn sbp2json_read_loop(options: &SBP2JSON_Options, stream: &mut dyn Read) -> Result<()> {
+pub fn sbp2json_read_loop(debug: bool, debug_memory: bool, float_compat: bool, stream: &mut dyn Read) -> Result<()> {
     let mut base64_payload: String = String::with_capacity(512);
     let mut buf = [0u8; BUF_SIZE];
     let mut unconsumed_offset = 0;
@@ -376,7 +381,7 @@ pub fn sbp2json_read_loop(options: &SBP2JSON_Options, stream: &mut dyn Read) -> 
     let mut remaining_length = buf.len();
     loop {
         if remaining_length == 0 {
-            if options.debug {
+            if debug {
                 eprintln!(
                     "remaining_length == 0: read_offset: {}, unconsumed_offset: {}",
                     read_offset, unconsumed_offset
@@ -388,7 +393,7 @@ pub fn sbp2json_read_loop(options: &SBP2JSON_Options, stream: &mut dyn Read) -> 
             remaining_length = buf.len() - read_offset;
         }
         let read_length = stream.read(&mut buf[read_offset..])?;
-        if options.debug {
+        if debug {
             eprintln!(
                 "loop: read_length: {}, unconsumed_offset: {}",
                 read_offset, unconsumed_offset
@@ -399,7 +404,7 @@ pub fn sbp2json_read_loop(options: &SBP2JSON_Options, stream: &mut dyn Read) -> 
         }
         read_offset += read_length;
         remaining_length -= read_length;
-        if options.debug_memory {
+        if debug_memory {
             eprintln!(
                 "memory: base64_payload: {}, buf: {}",
                 base64_payload.capacity(),
@@ -407,7 +412,7 @@ pub fn sbp2json_read_loop(options: &SBP2JSON_Options, stream: &mut dyn Read) -> 
             );
         }
         loop {
-            if options.debug {
+            if debug {
                 eprintln!(
                     "loop.loop.enter: read_offset: {}, unconsumed_offset: {}",
                     read_offset, unconsumed_offset
@@ -418,13 +423,13 @@ pub fn sbp2json_read_loop(options: &SBP2JSON_Options, stream: &mut dyn Read) -> 
                 break;
             }
             let slice = &buf[unconsumed_offset..(unconsumed_offset + bytes_available)];
-            let (res, consumed) = sbp::parser::frame(slice);
+            let (res, consumed) = super::parser::frame(slice);
             match res {
                 Ok(msg) => {
                     let common_sbp = msg.as_sbp_message();
                     let mut value = serde_json::to_value(&msg)?;
                     write_sbp_json_value(
-                        options.float_compat,
+                        float_compat,
                         false,
                         &mut base64_payload,
                         common_sbp,
@@ -433,7 +438,7 @@ pub fn sbp2json_read_loop(options: &SBP2JSON_Options, stream: &mut dyn Read) -> 
                         &mut std::io::stdout(),
                     )?;
                     unconsumed_offset += consumed;
-                    if options.debug {
+                    if debug {
                         eprintln!(
                             "loop.loop.frame: consumed: {}, unconsumed_offset: {}",
                             consumed, unconsumed_offset
@@ -441,25 +446,25 @@ pub fn sbp2json_read_loop(options: &SBP2JSON_Options, stream: &mut dyn Read) -> 
                     }
                 }
                 Err(err) => match err {
-                    sbp::Error::CrcError => {
-                        if options.debug {
+                    super::Error::CrcError => {
+                        if debug {
                             eprintln!("loop.loop.error: crc error");
                         }
                         unconsumed_offset += consumed;
                     }
-                    sbp::Error::ParseError => {
-                        if options.debug {
+                    super::Error::ParseError => {
+                        if debug {
                             eprintln!("loop.loop.error: parse error");
                         }
                         unconsumed_offset += consumed;
                     }
-                    sbp::Error::NotEnoughData => { if options.debug {
+                    super::Error::NotEnoughData => { if debug {
                             eprintln!("loop.loop.error: not enough data");
                         }
                         break;
                     }
-                    sbp::Error::UnrecoverableFailure => panic!("unrecoverable failure"),
-                    sbp::Error::IoError(err) => panic!("I/O error: {}", err),
+                    super::Error::UnrecoverableFailure => panic!("unrecoverable failure"),
+                    super::Error::IoError(err) => panic!("I/O error: {}", err),
                 },
             }
         }

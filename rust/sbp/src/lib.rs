@@ -8,7 +8,7 @@ pub mod parser;
 pub mod serialize;
 
 #[cfg(feature = "sbp2json")]
-pub mod sbp2json_lib;
+pub mod sbp2json;
 
 use std::error;
 use std::fmt;
