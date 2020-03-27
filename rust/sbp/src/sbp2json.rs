@@ -351,6 +351,7 @@ pub fn json2sbp_process_with_expand(
 /// The main SBP read loop, uses one buffer of size `BUF_SIZE`, and tracks the following
 ///   markers for the buffer:
 ///                                             
+///  ```text
 ///                                                         |<---remaining_length--->|
 ///                                                         |                        |
 ///                              |<-------read_length------>|                        |
@@ -362,6 +363,7 @@ pub fn json2sbp_process_with_expand(
 ///  +------+--------------------+---------------------------------------------------+
 ///  |######%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@&&&&&&&&&&&&&&&&&&&&&&&&|
 ///  +-------------------------------------------------------------------------------+
+///  ```
 ///
 ///  Where:
 ///    ### -> old data, available to be dropped or overwritten
@@ -371,16 +373,16 @@ pub fn json2sbp_process_with_expand(
 ///
 ///  The following definitions apply for the offsets / lengths tracked:
 ///
-///    `unconsumed_offset` -> start of data that needs to be processed, could point to left over
+///    'unconsumed_offset' -> start of data that needs to be processed, could point to left over
 ///      data from a previous read, or could be the same as read_offset.
 ///
 ///      Invariant: unconsumed_offset <= read_offset
 ///
-///    `read_offset` -> the point where a new read should place its data
+///    'read_offset' -> the point where a new read should place its data
 ///
-///    `read_length` -> the size of the last read, used to update `remaining_length`
+///    'read_length' -> the size of the last read, used to update `remaining_length`
 ///
-///    `remaining_length` -> the remaining available space in the buffer
+///    'remaining_length' -> the remaining available space in the buffer
 ///
 pub fn sbp2json_read_loop(
     debug: bool,
@@ -485,4 +487,20 @@ pub fn sbp2json_read_loop(
         }
     }
     Ok(())
+}
+
+pub fn json2json_read_loop(debug: bool, float_compat: bool, stream: &mut dyn Read) -> Result<()> {
+    let json2json_process = |value: &Value| -> Result<()> {
+        json2sbp_process_with_expand(value, debug, float_compat, true)
+    };
+
+    json_read_loop(stream, json2json_process)
+}
+
+pub fn json2sbp_read_loop(debug: bool, stream: &mut dyn Read) -> Result<()> {
+    let json2sbp_process = |value: &Value| -> Result<()> {
+        json2sbp_process_with_expand(value, debug, false, false)
+    };
+
+    json_read_loop(stream, json2sbp_process)
 }

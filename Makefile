@@ -320,9 +320,9 @@ test-haskell:
 
 test-rust:
 	$(call announce-begin,"Running Rust tests")
-	cd $(SWIFTNAV_ROOT)/rust/sbp && cargo test --verbose
+	cargo test --verbose
 	$(call announce-begin,"Building Rust examples")
-	cd $(SWIFTNAV_ROOT)/rust/sbp && cargo build --examples --verbose --all-features --all-targets
+	cargo build --examples --verbose --all-features --all-targets
 	$(call announce-end,"Finished running Rust tests")
 
 test-protobuf:

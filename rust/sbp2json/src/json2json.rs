@@ -1,9 +1,6 @@
-use std::io::Read;
-
-use serde_json::Value;
 use structopt::StructOpt;
 
-use sbp::sbp2json::{json2sbp_process_with_expand, json_read_loop, Result};
+use sbp::sbp2json::{json2json_read_loop, Result};
 
 #[derive(Debug, StructOpt)]
 #[structopt(name = "json2json", verbatim_doc_comment)]
@@ -14,7 +11,7 @@ use sbp::sbp2json::{json2sbp_process_with_expand, json_read_loop, Result};
 ///     cat console-json-log.json | json2json
 struct Options {
     /// Print debugging messages to standard error
-    #[structopt(short = "d", long)]
+    #[structopt(long)]
     debug: bool,
 
     /// Try to be compatible with the float formatting of the Haskell version of sbp2json
@@ -22,15 +19,7 @@ struct Options {
     float_compat: bool,
 }
 
-fn json2json_read_loop(options: &Options, stream: &mut dyn Read) -> Result<()> {
-    let json2json_process = |value: &Value| -> Result<()> {
-        json2sbp_process_with_expand(value, options.debug, options.float_compat, true)
-    };
-
-    json_read_loop(stream, json2json_process)
-}
-
 fn main() -> Result<()> {
     let options = Options::from_args();
-    json2json_read_loop(&options, &mut std::io::stdin())
+    json2json_read_loop(options.debug, options.float_compat, &mut std::io::stdin())
 }
