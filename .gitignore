@@ -73,6 +73,6 @@ sbp_out.*
 .build/
 
 # rust
-/Cargo.lock
+rust/sbp/Cargo.lock
 
 python/sbp/_version.py
