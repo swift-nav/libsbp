@@ -1,5 +1,6 @@
 use std::boxed::Box;
 use std::io::{BufRead, BufReader, Cursor, Read, Seek, SeekFrom, Write};
+use std::rc::Rc;
 
 use serde::ser::Serialize;
 
@@ -201,7 +202,7 @@ fn write_sbp_json_value(
     common_sbp: &dyn SBPMessage,
     slice: &[u8],
     value: &mut Value,
-    stream: &mut dyn Write,
+    stream: &mut Rc<Box<dyn Write>>,
 ) -> Result<()> {
     let value = unpack(value);
     let value = add_common_fields(common_sbp, slice, value.unwrap(), base64_payload);
@@ -213,13 +214,16 @@ fn write_sbp_json_value(
         value
     };
     if float_compat {
-        let mut ser = Serializer::with_formatter(stream, HaskellishFloatFormatter {});
+        let io_ref = Rc::get_mut(stream).expect("could not get output stream");
+        let mut ser = Serializer::with_formatter(io_ref, HaskellishFloatFormatter {});
         serialize(&mut ser, &value)?;
     } else {
-        let mut ser = Serializer::new(stream);
+        let io_ref = Rc::get_mut(stream).expect("could not get output stream");
+        let mut ser = Serializer::new(io_ref);
         serialize(&mut ser, &value)?;
     };
-    println!("");
+    let io_ref = Rc::get_mut(stream).expect("could not get output stream");
+    writeln!(io_ref, "")?;
     Ok(())
 }
 
@@ -314,6 +318,8 @@ pub fn json2sbp_process_with_expand(
                     if let Ok(res) = res {
                         if expand_json {
                             let mut value = serde_json::to_value(&sbp_msg)?;
+                            let mut stdout: Rc<Box<dyn Write>> =
+                                Rc::new(Box::new(std::io::stdout()));
                             write_sbp_json_value(
                                 float_compat,
                                 rewrap_data,
@@ -321,7 +327,7 @@ pub fn json2sbp_process_with_expand(
                                 common_sbp,
                                 &res[..],
                                 &mut value,
-                                &mut std::io::stdout(),
+                                &mut stdout,
                             )?;
                         } else {
                             if let Err(err) = std::io::stdout().write_all(&res) {
@@ -394,7 +400,8 @@ pub fn sbp2json_read_loop(
     debug: bool,
     debug_memory: bool,
     float_compat: bool,
-    stream: &mut dyn Read,
+    input_stream: &mut dyn Read,
+    output_stream: &mut Rc<Box<dyn Write>>,
 ) -> Result<()> {
     let mut base64_payload: String = String::with_capacity(512);
     let mut buf = [0u8; BUF_SIZE];
@@ -414,7 +421,7 @@ pub fn sbp2json_read_loop(
             unconsumed_offset = 0;
             remaining_length = buf.len() - read_offset;
         }
-        let read_length = stream.read(&mut buf[read_offset..])?;
+        let read_length = input_stream.read(&mut buf[read_offset..])?;
         if debug {
             eprintln!(
                 "loop: read_length: {}, unconsumed_offset: {}",
@@ -457,7 +464,7 @@ pub fn sbp2json_read_loop(
                         common_sbp,
                         slice,
                         &mut value,
-                        &mut std::io::stdout(),
+                        output_stream,
                     )?;
                     unconsumed_offset += consumed;
                     if debug {
