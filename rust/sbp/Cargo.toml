@@ -11,7 +11,7 @@ keywords = ["encoding", "parsing"]
 
 [features]
 serialize = ["serde"]
-sbp2json = ["serde", "serde_json", "base64", "float-pretty-print", "dtoa"]
+sbp2json = ["serde", "serde_json", "base64", "float-pretty-print", "dtoa", "sbp/serialize"]
 
 [lib]
 path = "src/lib.rs"
