@@ -352,6 +352,7 @@ pub fn json2sbp_process_with_expand(
 ///   markers for the buffer:
 ///                                             
 ///  ```text
+///
 ///                                                         |<---remaining_length--->|
 ///                                                         |                        |
 ///                              |<-------read_length------>|                        |
@@ -363,6 +364,7 @@ pub fn json2sbp_process_with_expand(
 ///  +------+--------------------+---------------------------------------------------+
 ///  |######%%%%%%%%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@&&&&&&&&&&&&&&&&&&&&&&&&|
 ///  +-------------------------------------------------------------------------------+
+///
 ///  ```
 ///
 ///  Where:
@@ -372,6 +374,8 @@ pub fn json2sbp_process_with_expand(
 ///    &&& -> remaining free space in the buffer
 ///
 ///  The following definitions apply for the offsets / lengths tracked:
+///
+///  ```text
 ///
 ///    'unconsumed_offset' -> start of data that needs to be processed, could point to left over
 ///      data from a previous read, or could be the same as read_offset.
@@ -383,6 +387,8 @@ pub fn json2sbp_process_with_expand(
 ///    'read_length' -> the size of the last read, used to update `remaining_length`
 ///
 ///    'remaining_length' -> the remaining available space in the buffer
+///
+///  ```
 ///
 pub fn sbp2json_read_loop(
     debug: bool,
@@ -498,9 +504,8 @@ pub fn json2json_read_loop(debug: bool, float_compat: bool, stream: &mut dyn Rea
 }
 
 pub fn json2sbp_read_loop(debug: bool, stream: &mut dyn Read) -> Result<()> {
-    let json2sbp_process = |value: &Value| -> Result<()> {
-        json2sbp_process_with_expand(value, debug, false, false)
-    };
+    let json2sbp_process =
+        |value: &Value| -> Result<()> { json2sbp_process_with_expand(value, debug, false, false) };
 
     json_read_loop(stream, json2sbp_process)
 }
