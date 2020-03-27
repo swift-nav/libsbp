@@ -19,7 +19,7 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-#[cfg(feature = "serialize")]
+#[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 /// Reports timestamped external pin event
@@ -27,7 +27,7 @@ use serde::{Deserialize, Serialize};
 /// Reports detection of an external event, the GPS time it occurred,
 /// which pin it was and whether it was rising or falling.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgExtEvent {

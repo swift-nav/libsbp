@@ -35,7 +35,7 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-#[cfg(feature = "serialize")]
+#[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 /// Age of corrections
@@ -43,7 +43,7 @@ use serde::{Deserialize, Serialize};
 /// This message reports the Age of the corrections used for the current
 /// Differential solution
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAgeCorrections {
@@ -105,7 +105,7 @@ impl crate::serialize::SbpSerialize for MsgAgeCorrections {
 /// full GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineECEF {
@@ -192,7 +192,7 @@ impl crate::serialize::SbpSerialize for MsgBaselineECEF {
 /// full GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineECEFDepA {
@@ -277,7 +277,7 @@ impl crate::serialize::SbpSerialize for MsgBaselineECEFDepA {
 /// to the rover relative to True North. The full GPS time is given by the
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineHeadingDepA {
@@ -350,7 +350,7 @@ impl crate::serialize::SbpSerialize for MsgBaselineHeadingDepA {
 /// base station position.  The full GPS time is given by the
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineNED {
@@ -443,7 +443,7 @@ impl crate::serialize::SbpSerialize for MsgBaselineNED {
 /// base station position.  The full GPS time is given by the
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineNEDDepA {
@@ -534,7 +534,7 @@ impl crate::serialize::SbpSerialize for MsgBaselineNEDDepA {
 /// precision.  The flags field indicated whether the DOP reported
 /// corresponds to differential or SPP solution.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgDops {
@@ -619,7 +619,7 @@ impl crate::serialize::SbpSerialize for MsgDops {
 /// navigation satellite geometry on positional measurement
 /// precision.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgDopsDepA {
@@ -709,7 +709,7 @@ impl crate::serialize::SbpSerialize for MsgDopsDepA {
 /// (but lacking the ns field) and indicates a more precise time of
 /// these messages.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGPSTime {
@@ -790,7 +790,7 @@ impl crate::serialize::SbpSerialize for MsgGPSTime {
 /// (but lacking the ns field) and indicates a more precise time of
 /// these messages.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgGPSTimeDepA {
@@ -866,7 +866,7 @@ impl crate::serialize::SbpSerialize for MsgGPSTimeDepA {
 /// baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEF {
@@ -957,7 +957,7 @@ impl crate::serialize::SbpSerialize for MsgPosECEF {
 /// baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEFCov {
@@ -1073,7 +1073,7 @@ impl crate::serialize::SbpSerialize for MsgPosECEFCov {
 /// baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEFCovGnss {
@@ -1188,7 +1188,7 @@ impl crate::serialize::SbpSerialize for MsgPosECEFCovGnss {
 /// baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEFDepA {
@@ -1278,7 +1278,7 @@ impl crate::serialize::SbpSerialize for MsgPosECEFDepA {
 /// baseline vector. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEFGnss {
@@ -1368,7 +1368,7 @@ impl crate::serialize::SbpSerialize for MsgPosECEFGnss {
 /// GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosLLH {
@@ -1463,7 +1463,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLH {
 /// with that convention. Thus, covariances are reported against the "downward"
 /// measurement and care should be taken with the sign convention.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosLLHCov {
@@ -1578,7 +1578,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLHCov {
 /// with that convention. Thus, covariances are reported against the "downward"
 /// measurement and care should be taken with the sign convention.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosLLHCovGnss {
@@ -1693,7 +1693,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLHCovGnss {
 /// GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosLLHDepA {
@@ -1788,7 +1788,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLHDepA {
 /// GPS time is given by the preceding MSG_GPS_TIME with the
 /// matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPosLLHGnss {
@@ -1878,7 +1878,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLHGnss {
 /// associated with a given LLH position solution. The full GPS time is given
 /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgProtectionLevel {
@@ -1962,7 +1962,7 @@ impl crate::serialize::SbpSerialize for MsgProtectionLevel {
 /// This message reports the Universal Coordinated Time (UTC).  Note the flags
 /// which indicate the source of the UTC offset value and source of the time fix.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgUtcTime {
@@ -2062,7 +2062,7 @@ impl crate::serialize::SbpSerialize for MsgUtcTime {
 /// matching time-of-week (tow). This message is only produced by inertial versions of Swift
 /// products and is not available from Piksi Multi or Duro.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelBody {
@@ -2172,7 +2172,7 @@ impl crate::serialize::SbpSerialize for MsgVelBody {
 /// (ECEF) coordinates. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelECEF {
@@ -2257,7 +2257,7 @@ impl crate::serialize::SbpSerialize for MsgVelECEF {
 /// (ECEF) coordinates. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelECEFCov {
@@ -2367,7 +2367,7 @@ impl crate::serialize::SbpSerialize for MsgVelECEFCov {
 /// (ECEF) coordinates. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelECEFCovGnss {
@@ -2477,7 +2477,7 @@ impl crate::serialize::SbpSerialize for MsgVelECEFCovGnss {
 /// (ECEF) coordinates. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelECEFDepA {
@@ -2562,7 +2562,7 @@ impl crate::serialize::SbpSerialize for MsgVelECEFDepA {
 /// (ECEF) coordinates. The full GPS time is given by the preceding
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelECEFGnss {
@@ -2648,7 +2648,7 @@ impl crate::serialize::SbpSerialize for MsgVelECEFGnss {
 /// tangent plane centered at the current position. The full GPS time is
 /// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelNED {
@@ -2741,7 +2741,7 @@ impl crate::serialize::SbpSerialize for MsgVelNED {
 /// This message is similar to the MSG_VEL_NED, but it includes the upper triangular
 /// portion of the 3x3 covariance matrix.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelNEDCov {
@@ -2854,7 +2854,7 @@ impl crate::serialize::SbpSerialize for MsgVelNEDCov {
 /// This message is similar to the MSG_VEL_NED, but it includes the upper triangular
 /// portion of the 3x3 covariance matrix.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelNEDCovGnss {
@@ -2965,7 +2965,7 @@ impl crate::serialize::SbpSerialize for MsgVelNEDCovGnss {
 /// tangent plane centered at the current position. The full GPS time is
 /// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelNEDDepA {
@@ -3056,7 +3056,7 @@ impl crate::serialize::SbpSerialize for MsgVelNEDDepA {
 /// tangent plane centered at the current position. The full GPS time is
 /// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgVelNEDGnss {

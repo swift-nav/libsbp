@@ -382,7 +382,12 @@ pub fn json2sbp_process_with_expand(
 ///
 ///    `remaining_length` -> the remaining available space in the buffer
 ///
-pub fn sbp2json_read_loop(debug: bool, debug_memory: bool, float_compat: bool, stream: &mut dyn Read) -> Result<()> {
+pub fn sbp2json_read_loop(
+    debug: bool,
+    debug_memory: bool,
+    float_compat: bool,
+    stream: &mut dyn Read,
+) -> Result<()> {
     let mut base64_payload: String = String::with_capacity(512);
     let mut buf = [0u8; BUF_SIZE];
     let mut unconsumed_offset = 0;
@@ -467,7 +472,8 @@ pub fn sbp2json_read_loop(debug: bool, debug_memory: bool, float_compat: bool, s
                         }
                         unconsumed_offset += consumed;
                     }
-                    super::Error::NotEnoughData => { if debug {
+                    super::Error::NotEnoughData => {
+                        if debug {
                             eprintln!("loop.loop.error: not enough data");
                         }
                         break;

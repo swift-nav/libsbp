@@ -2,10 +2,10 @@ use super::SBPMessage;
 use crate::framer;
 use crate::serialize::SbpSerialize;
 
-#[cfg(feature = "serialize")]
+#[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 pub struct Unknown {
     pub msg_id: u16,

@@ -58,9 +58,6 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
-# PyBuilder
-target/
-
 # LaTeX output
 sbp_out.*
 
@@ -73,6 +70,7 @@ sbp_out.*
 .build/
 
 # rust
-rust/sbp/Cargo.lock
+Cargo.lock
+/target
 
 python/sbp/_version.py

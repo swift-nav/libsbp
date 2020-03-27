@@ -18,7 +18,7 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-#[cfg(feature = "serialize")]
+#[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 /// User data
@@ -26,7 +26,7 @@ use serde::{Deserialize, Serialize};
 /// This message can contain any application specific user data up to a
 /// maximum length of 255 bytes per message.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgUserData {

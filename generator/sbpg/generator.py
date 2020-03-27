@@ -174,6 +174,8 @@ def main():
       elif args.rust:
         parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
         rs.render_mod(output_dir, parsed)
+        rs.render_sbp_cargo_toml(output_dir, args.release[0])
+        rs.render_sbp2json_cargo_toml(output_dir, args.release[0])
       elif args.test_c:
         test_c.render_check_suites(output_dir, all_specs)
         test_c.render_check_main(output_dir, all_specs)

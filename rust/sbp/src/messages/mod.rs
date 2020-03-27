@@ -218,7 +218,7 @@ use self::vehicle::MsgWheeltick;
 
 use crate::framer::FramerError;
 use crate::serialize::SbpSerialize;
-#[cfg(feature = "serialize")]
+#[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 pub trait SBPMessage: SbpSerialize {
@@ -228,7 +228,7 @@ pub trait SBPMessage: SbpSerialize {
     fn to_frame(&self) -> std::result::Result<Vec<u8>, FramerError>;
 }
 
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 pub enum SBP {
     MsgPrintDep(MsgPrintDep),

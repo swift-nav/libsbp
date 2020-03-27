@@ -22,7 +22,7 @@ use self::(((p.identifier|mod_name)))::(((m.identifier|camel_case)));
 ((*- endfor *))
 use self::unknown::Unknown;
 
-#[cfg(feature = "serialize")]
+#[cfg(feature = "sbp_serde")]
 use serde::{Serialize, Deserialize};
 use crate::serialize::SbpSerialize;
 use crate::framer::FramerError;
@@ -34,7 +34,7 @@ pub trait SBPMessage: SbpSerialize {
     fn to_frame(&self) -> std::result::Result<Vec<u8>, FramerError>;
 }
 
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 pub enum SBP {
     ((*- for m in msgs *))

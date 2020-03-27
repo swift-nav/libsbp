@@ -21,7 +21,7 @@ extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
-#[cfg(feature = "serialize")]
+#[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 /// Receiver-to-base station latency
@@ -32,7 +32,7 @@ use serde::{Deserialize, Serialize};
 /// receiver to give a precise measurement of the end-to-end
 /// communication latency in the system.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct Latency {
@@ -96,7 +96,7 @@ impl crate::serialize::SbpSerialize for Latency {
 /// This is a legacy message for sending and loading a satellite
 /// alamanac onto the Piksi's flash memory from the host.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanac {
@@ -142,7 +142,7 @@ impl crate::serialize::SbpSerialize for MsgAlmanac {
 /// will be send periodically to update the host on the status
 /// of the modem and its various parameters.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgCellModemStatus {
@@ -208,7 +208,7 @@ impl crate::serialize::SbpSerialize for MsgCellModemStatus {
 /// The sequence number can be used to filter for filtering
 /// the correct command.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgCommandOutput {
@@ -268,7 +268,7 @@ impl crate::serialize::SbpSerialize for MsgCommandOutput {
 /// Output will be sent in MSG_LOG messages, and the exit
 /// code will be returned with MSG_COMMAND_RESP.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgCommandReq {
@@ -327,7 +327,7 @@ impl crate::serialize::SbpSerialize for MsgCommandReq {
 /// The response to MSG_COMMAND_REQ with the return code of
 /// the command.  A return code of zero indicates success.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgCommandResp {
@@ -387,7 +387,7 @@ impl crate::serialize::SbpSerialize for MsgCommandResp {
 /// CW interference channel on the SwiftNAP. This message will be
 /// removed in a future release.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgCwResults {
@@ -433,7 +433,7 @@ impl crate::serialize::SbpSerialize for MsgCwResults {
 /// the CW interference channel on the SwiftNAP. This message will
 /// be removed in a future release.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgCwStart {
@@ -479,7 +479,7 @@ impl crate::serialize::SbpSerialize for MsgCwStart {
 /// processor's monitoring system and the RF frontend die temperature if
 /// available.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgDeviceMonitor {
@@ -557,7 +557,7 @@ impl crate::serialize::SbpSerialize for MsgDeviceMonitor {
 /// in the frontend. A gain of 127 percent encodes that rf channel is not present in the hardware.
 /// A negative value implies an error for the particular gain stage as reported by the frontend.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFrontEndGain {
@@ -618,7 +618,7 @@ impl crate::serialize::SbpSerialize for MsgFrontEndGain {
 /// ambiguities from double-differenced carrier-phase measurements
 /// from satellite observations.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgIarState {
@@ -671,7 +671,7 @@ impl crate::serialize::SbpSerialize for MsgIarState {
 ///
 /// Deprecated
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgInitBaseDep {
@@ -716,7 +716,7 @@ impl crate::serialize::SbpSerialize for MsgInitBaseDep {
 /// This message allows setting a mask to prevent a particular satellite
 /// from being used in various Piksi subsystems.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgMaskSatellite {
@@ -774,7 +774,7 @@ impl crate::serialize::SbpSerialize for MsgMaskSatellite {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgMaskSatelliteDep {
@@ -832,7 +832,7 @@ impl crate::serialize::SbpSerialize for MsgMaskSatelliteDep {
 ///
 /// The bandwidth usage, a list of usage by interface.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgNetworkBandwidthUsage {
@@ -886,7 +886,7 @@ impl crate::serialize::SbpSerialize for MsgNetworkBandwidthUsage {
 /// Request state of Piksi network interfaces.
 /// Output will be sent in MSG_NETWORK_STATE_RESP messages
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgNetworkStateReq {
@@ -932,7 +932,7 @@ impl crate::serialize::SbpSerialize for MsgNetworkStateReq {
 /// Data is made to reflect output of ifaddrs struct returned by getifaddrs
 /// in c.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgNetworkStateResp {
@@ -1021,7 +1021,7 @@ impl crate::serialize::SbpSerialize for MsgNetworkStateResp {
 /// This message from the host resets the Piksi back into the
 /// bootloader.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgReset {
@@ -1075,7 +1075,7 @@ impl crate::serialize::SbpSerialize for MsgReset {
 /// This message from the host resets the Piksi back into the
 /// bootloader.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgResetDep {
@@ -1120,7 +1120,7 @@ impl crate::serialize::SbpSerialize for MsgResetDep {
 /// This message resets either the DGNSS Kalman filters or Integer
 /// Ambiguity Resolution (IAR) process.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgResetFilters {
@@ -1174,7 +1174,7 @@ impl crate::serialize::SbpSerialize for MsgResetFilters {
 /// This message sets up timing functionality using a coarse GPS
 /// time estimate sent by the host.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSetTime {
@@ -1218,7 +1218,7 @@ impl crate::serialize::SbpSerialize for MsgSetTime {
 ///
 /// Spectrum analyzer packet.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSpecan {
@@ -1301,7 +1301,7 @@ impl crate::serialize::SbpSerialize for MsgSpecan {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSpecanDep {
@@ -1386,7 +1386,7 @@ impl crate::serialize::SbpSerialize for MsgSpecanDep {
 /// operating system (RTOS) thread usage statistics for the named
 /// thread. The reported percentage values must be normalized.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgThreadState {
@@ -1458,7 +1458,7 @@ impl crate::serialize::SbpSerialize for MsgThreadState {
 /// the timeliness of received base observations while the
 /// period indicates their likelihood of transmission.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgUartState {
@@ -1531,7 +1531,7 @@ impl crate::serialize::SbpSerialize for MsgUartState {
 ///
 /// Deprecated
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgUartStateDepa {
@@ -1604,7 +1604,7 @@ impl crate::serialize::SbpSerialize for MsgUartStateDepa {
 /// may vary, both a timestamp and period field is provided,
 /// though may not necessarily be populated with a value.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct NetworkUsage {
@@ -1677,7 +1677,7 @@ impl crate::serialize::SbpSerialize for NetworkUsage {
 /// or missing sets will increase the period.  Long periods
 /// can cause momentary RTK solution outages.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct Period {
@@ -1742,7 +1742,7 @@ impl crate::serialize::SbpSerialize for Period {
 /// of this UART channel. The reported percentage values must
 /// be normalized.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct UARTChannel {

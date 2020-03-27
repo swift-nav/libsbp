@@ -19,7 +19,7 @@ extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
-#[cfg(feature = "serialize")]
+#[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 /// Navigation DataBase Event
@@ -27,7 +27,7 @@ use serde::{Deserialize, Serialize};
 /// This message is sent out when an object is stored into NDB. If needed
 /// message could also be sent out when fetching an object from NDB.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgNdbEvent {

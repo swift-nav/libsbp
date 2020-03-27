@@ -17,7 +17,7 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-#[cfg(feature = "serialize")]
+#[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 /// GNSS carrier phase measurement.
@@ -27,7 +27,7 @@ use serde::{Deserialize, Serialize};
 /// cycles and 8-bits of fractional cycles. This phase has the
 /// same sign as the pseudorange.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct CarrierPhase {
@@ -83,7 +83,7 @@ impl crate::serialize::SbpSerialize for CarrierPhase {
 /// transition. In most cases, observations are epoch aligned
 /// so ns field will be 0.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct GPSTime {
@@ -144,7 +144,7 @@ impl crate::serialize::SbpSerialize for GPSTime {
 /// milliseconds since beginning of the week on the Saturday/Sunday
 /// transition.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct GPSTimeDep {
@@ -199,7 +199,7 @@ impl crate::serialize::SbpSerialize for GPSTimeDep {
 /// seconds since beginning of the week on the Saturday/Sunday
 /// transition.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct GPSTimeSec {
@@ -252,7 +252,7 @@ impl crate::serialize::SbpSerialize for GPSTimeSec {
 ///
 /// Signal identifier containing constellation, band, and satellite identifier
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct GnssSignal {
@@ -306,7 +306,7 @@ impl crate::serialize::SbpSerialize for GnssSignal {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct GnssSignalDep {
@@ -370,7 +370,7 @@ impl crate::serialize::SbpSerialize for GnssSignalDep {
 /// A (Constellation ID, satellite ID) tuple that uniquely identifies
 /// a space vehicle
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct SvId {

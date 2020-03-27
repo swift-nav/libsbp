@@ -131,7 +131,7 @@ mod tests {
             0xbe, 0x40, 0x14, 0x00, 0xf6, 0xa3, 0x09, 0x00, 0x00, 0x00, 0x0e, 0x00, 0xdb, 0xbf,
         ];
 
-        let (sbp_result, _remaining_data) = crate::parser::frame(&packet[..packet.len()-1]);
+        let (sbp_result, _remaining_data) = crate::parser::frame(&packet[..packet.len() - 1]);
         assert!(sbp_result.is_err());
 
         if let Err(err) = sbp_result {
