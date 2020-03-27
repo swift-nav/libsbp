@@ -14,6 +14,7 @@ use super::messages::SBPMessage;
 use super::messages::SBP;
 
 pub type Error = Box<dyn std::error::Error + Sync + Send>;
+
 pub type Result<T> = std::result::Result<T, Error>;
 
 /// The read buffer size, this buffer will be re-used with varying offsets until
@@ -29,6 +30,9 @@ const MSG_HEADER_LEN: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/ 
 /// framed SBP message.
 const MSG_CRC_LEN: usize = 2;
 
+/// Read `stream` line by line and parse a JSON object from each line.
+/// The function specified by `func` will be called for each object
+/// that's parsed.
 pub fn json_read_loop<F>(stream: &mut dyn Read, func: F) -> Result<()>
 where
     F: Fn(&Value) -> Result<()>,
@@ -85,6 +89,7 @@ where
 /// Provide Haskell style formatting (sort of).  See `haskellish_float`.
 struct HaskellishFloatFormatter {}
 
+/// Provide Haskell style formatting (sort of).  See `haskellish_float`.
 impl Formatter for HaskellishFloatFormatter {
     #[inline]
     fn write_f32<W: ?Sized>(&mut self, writer: &mut W, value: f32) -> std::io::Result<()>
@@ -103,6 +108,7 @@ impl Formatter for HaskellishFloatFormatter {
     }
 }
 
+/// Serialize a `serde_json::Value` into a serde serializer
 fn serialize<S>(ser: S, value: &serde_json::Value) -> Result<()>
 where
     S: serde::Serializer<Ok = ()>,
@@ -185,7 +191,10 @@ fn add_common_fields<'a>(
     value
 }
 
-pub fn write_sbp_json_value(
+/// Write's an SBP message formatted as JSON in `value` to the `Write` stream specified by
+/// `stream`.  Adds all the default values ("payload" encoded as base64, "sender", "msg_type",
+/// etc). to the outputted JSON object.
+fn write_sbp_json_value(
     float_compat: bool,
     rewrap_data: bool,
     base64_payload: &mut String,
