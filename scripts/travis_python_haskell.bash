@@ -19,7 +19,14 @@ sudo chown    "$USER:$USER" "$HOME/.docker-cache"
 sudo chown -R "$USER:$USER" "$HOME/.docker-cache/stack"
 sudo chown -R "$USER:$USER" "$PWD"
 
-tar -C "$(find "$HOME/.docker-cache/stack/work/install" -name bin)" -czf sbp_linux_tools.tar.gz \
+haskell_bins="$(find "$HOME/.docker-cache/stack/work/install" -name bin)"
+
+cp "$haskell_bins/sbp2json" .
+cp "$haskell_bins/sbp2prettyjson" .
+cp "$haskell_bins/json2sbp" .
+cp "$haskell_bins/json2json" .
+
+tar -C "$haskell_bins" -czf sbp_linux_tools.tar.gz \
     sbp2json \
     sbp2prettyjson \
     sbp2yaml \
