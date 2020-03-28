@@ -94,10 +94,9 @@ matrix:
         - make test-rust
     - env:
         - TRAVIS_TARGET=benchmark
+      language: c
       before_install:
         - sudo apt-get -qq update
-      language: c
-      script:
         - export HYPERFINE_RELEASE=v1.9.0
         - export HYPERFINE_BASENAME=hyperfine-${HYPERFINE_RELEASE}-x86_64-unknown-linux-musl
         - export HYPERFINE_URL_BASE=https://github.com/sharkdp/hyperfine/releases/download
@@ -106,14 +105,20 @@ matrix:
         - export MINICONDA_URL=https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
         - export HASKELL_STACK_URL=https://get.haskellstack.org
         - export RUST_RUSTUP_URL=https://get.haskellstack.org
-        - curl -sSL $MINICONDA_URL | sh -s -- -b -p "$HOME/miniconda"
+        - mkdir -p ~/.local/bin
+        - curl -sSL "${HYPERFINE_URL}" | tar -C ~/.local/bin -xvzf - --strip-components=1 "${HYPERFINE_BIN_PATH}"
+        - curl -sSL "${MINICONDA_URL}" | sh -s -- -b -p "${HOME}/miniconda"
+        - curl -sSL "${HASKELL_STACK_URL}" | sh
+        - curl -sSL "${RUST_RUSTUP_URL}" | sh -s -- -y
         - source "$HOME/miniconda/etc/profile.d/conda.sh"
-        - curl -sSL ${HASKELL_STACK_URL} | sh
-        - curl -sSL ${RUST_RUSTUP_URL} | sh -s -- -y
-        - export PATH=$HOME/.local/bin:$HOME/.cargo/bin:$PATH
+        - export PATH="${HOME}/.local/bin:${HOME}/.cargo/bin:${PATH}"
+        - hash -r
+        - conda config --set always_yes yes --set changeps1 no
+        - conda update -q conda
+        - conda info -a
+      script:
         - cd haskell && stack install
         - cd rust/sbp2json && cargo install --path .
-        - curl -sSL $HYPERFINE_URL | tar -C ~/.local/bin -xvzf - --strip-components=1 $HYPERFINE_BIN_PATH
 
 deploy:
   provider: releases

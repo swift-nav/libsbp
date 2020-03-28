@@ -406,3 +406,6 @@ mapping:
     awk '{printf("%s  %5d  %s\n", $$4, $$4, $$2)}' |\
 		sed 's/:$$//' |\
     sort
+
+benchmark:
+	@./test_data/benchmark.py
