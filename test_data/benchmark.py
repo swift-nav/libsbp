@@ -24,7 +24,8 @@ subprocess.run(
     ['hyperfine',  # '--show-output',
      '--export-json', 'benchmark_sbp2json.json',
      '-L', 'lang', 'rust,haskell,python',
-     './test_data/benchmark/sbp2json_{lang}.py'])
+     './test_data/benchmark/sbp2json_{lang}.py'],
+    check=True)
 
 def compare_threshold(expected, actual):
     diff = abs(expected - actual)
@@ -66,7 +67,8 @@ subprocess.run(
     ['hyperfine',  # '--show-output',
      '--export-json', 'benchmark_json2sbp.json',
      '-L', 'lang', 'rust,haskell',
-     './test_data/benchmark/json2sbp_{lang}.py'])
+     './test_data/benchmark/json2sbp_{lang}.py'],
+    check=True)
 
 BENCH_JSON2SBP = json.load(open('benchmark_json2sbp.json'))
 
@@ -88,7 +90,8 @@ subprocess.run(
     ['hyperfine',  # '--show-output',
      '--export-json', 'benchmark_json2json.json',
      '-L', 'lang', 'rust,haskell',
-     './test_data/benchmark/json2json_{lang}.py'])
+     './test_data/benchmark/json2json_{lang}.py'],
+    check=True)
 
 BENCH_JSON2JSON = json.load(open('benchmark_json2json.json'))
 
