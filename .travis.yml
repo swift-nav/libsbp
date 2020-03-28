@@ -119,6 +119,7 @@ matrix:
       script:
         - cd haskell && stack install
         - cd rust/sbp2json && cargo install --path .
+        - make benchmark
 
 deploy:
   provider: releases
