@@ -115,12 +115,12 @@ matrix:
         - conda update -q conda
         - conda info -a
       script: |
-        push haskell
+        pushd haskell
         docker build -t haskell-sbp2json .
         docker run --rm --name haskell-sbp2json haskell-sbp2json | tar -xf -
         popd
         pushd rust
-        docker build -t rust-sbp2json .
+        docker build -t rust-sbp2json sbp2json
         docker run --rm --name rust-sbp2json rust-sbp2json >sbp_linux_tools.tar
         tar xf sbp_linux_tools.tar
         gzip sbp_linux_tools.tar
