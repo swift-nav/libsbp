@@ -44,6 +44,7 @@ def validate_thresholds(thresholds, means, target):
         if not compare_threshold(threshold, ratio):
             sys.stderr.write(
                 f"ERROR: sbp2json speed threshold failed for {lang}, expected: {threshold}, actual: {ratio}")
+            sys.stderr.flush()
             sys.exit(1)
 
 BENCH_SBP2JSON = json.load(open('benchmark_sbp2json.json'))
