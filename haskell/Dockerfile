@@ -1,13 +1,14 @@
 FROM debian:stretch-slim
 
-ADD . /app
-WORKDIR /app
-
 RUN \
   apt-get update && \
   apt-get install curl make ca-certificates xz-utils -y --no-install-recommends && \
-  curl -sSL https://get.haskellstack.org/ | sh && \
-  stack build
+  curl -sSL https://get.haskellstack.org/ | sh
+
+ADD . /work
+WORKDIR /work
+
+RUN stack build
 
 CMD \
   tar -C $(find .stack-work/install -name bin) -cf - \

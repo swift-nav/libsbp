@@ -29,22 +29,23 @@ matrix:
       python: 3.7-dev
       before_install:
         - sudo apt-get -qq update
-        - sudo apt-get install python2.7 python2.7-dev
-
+        - sudo apt-get install gcc python2.7 python2.7-dev
         # https://linuxize.com/post/how-to-install-python-3-8-on-ubuntu-18-04/
         - sudo apt-get install software-properties-common
         - sudo add-apt-repository -y ppa:deadsnakes/ppa
         - sudo apt-get install python3.5 python3.5-dev
         - sudo apt-get install python3.8 python3.8-dev
-
         - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
         - sudo pip install tox
       script: |
         pushd haskell
-        docker build -t sbp2json .
-        docker run --rm --name sbp2json sbp2json >sbp_linux_tools.tar
+        docker build -t haskell-sbp2json .
+        docker run --rm --name haskell-sbp2json haskell-sbp2json >sbp_linux_tools.tar
         tar xf sbp_linux_tools.tar
         gzip sbp_linux_tools.tar
+        export VERSION=$(git describe --always --tags --dirty)
+        export BUILD_TRIPLET=$(cc -dumpmachine)
+        mv sbp_linux_tools.tar.gz sbp_tools_haskell-${VERSION}-${BUILD_TRIPLET}.tar.gz
         ls -l
         popd
         make test-python
@@ -103,30 +104,48 @@ matrix:
         - export HYPERFINE_URL=${HYPERFINE_URL_BASE}/${HYPERFINE_RELEASE}/${HYPERFINE_BASENAME}.tar.gz
         - export HYPERFINE_BIN_PATH=${HYPERFINE_BASENAME}/hyperfine
         - export MINICONDA_URL=https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-        - export HASKELL_STACK_URL=https://get.haskellstack.org
-        - export RUST_RUSTUP_URL=https://get.haskellstack.org
         - mkdir -p ~/.local/bin
         - curl -sSL "${HYPERFINE_URL}" | tar -C ~/.local/bin -xvzf - --strip-components=1 "${HYPERFINE_BIN_PATH}"
-        - curl -sSL "${MINICONDA_URL}" | sh -s -- -b -p "${HOME}/miniconda"
-        - curl -sSL "${HASKELL_STACK_URL}" | sh
-        - curl -sSL "${RUST_RUSTUP_URL}" | sh -s -- -y
+        - curl -sSL "${MINICONDA_URL}" >./miniconda.sh && chmod +x ./miniconda.sh
+        - ./miniconda.sh -b -p "${HOME}/miniconda"
         - source "$HOME/miniconda/etc/profile.d/conda.sh"
         - export PATH="${HOME}/.local/bin:${HOME}/.cargo/bin:${PATH}"
         - hash -r
         - conda config --set always_yes yes --set changeps1 no
         - conda update -q conda
         - conda info -a
-      script:
-        - cd haskell && stack install
-        - cd rust/sbp2json && cargo install --path .
-        - make benchmark
+      script: |
+        push haskell
+        docker build -t haskell-sbp2json .
+        docker run --rm --name haskell-sbp2json haskell-sbp2json | tar -xf -
+        popd
+        pushd rust
+        docker build -t rust-sbp2json .
+        docker run --rm --name rust-sbp2json rust-sbp2json >sbp_linux_tools.tar
+        tar xf sbp_linux_tools.tar
+        gzip sbp_linux_tools.tar
+        export VERSION=$(git describe --always --tags --dirty)
+        export BUILD_TRIPLET=$(cc -dumpmachine)
+        mv sbp_linux_tools.tar.gz sbp_tools-${VERSION}-${BUILD_TRIPLET}.tar.gz
+        ls -l
+        popd
+        make benchmark
 
 deploy:
-  provider: releases
-  api_key:
-    secure: "WDZRT7VevzQidPo8Mn1ozV6azwNFe7qGwKbLCb8rmKpPmiF+wcQ3KrhTnGj0EmqGqQ2q1c3UZzVCr+nLhLvIFLhkvNK42bs8Byc+HolKNX/diPAlB/mczGHI08rV4EJFmJL56vopdoafOAsqtZBnD4hZ8BDETNqMyJefo70pyY8="
-  file: haskell/sbp_linux_tools.tar.gz
-  skip_cleanup: true
-  "on":
-    tags: true
+  - provider: releases
+    api_key:
+      secure: "WDZRT7VevzQidPo8Mn1ozV6azwNFe7qGwKbLCb8rmKpPmiF+wcQ3KrhTnGj0EmqGqQ2q1c3UZzVCr+nLhLvIFLhkvNK42bs8Byc+HolKNX/diPAlB/mczGHI08rV4EJFmJL56vopdoafOAsqtZBnD4hZ8BDETNqMyJefo70pyY8="
+    file: "haskell/sbp_tools_haskell-*.tar.gz"
+    skip_cleanup: true
+    "on":
+      tags: true
+      condition: "$TRAVIS_TARGET = python-haskell"
+  - provider: releases
+    api_key:
+      secure: "WDZRT7VevzQidPo8Mn1ozV6azwNFe7qGwKbLCb8rmKpPmiF+wcQ3KrhTnGj0EmqGqQ2q1c3UZzVCr+nLhLvIFLhkvNK42bs8Byc+HolKNX/diPAlB/mczGHI08rV4EJFmJL56vopdoafOAsqtZBnD4hZ8BDETNqMyJefo70pyY8="
+    file: "rust/sbp_tools-*.tar.gz"
+    skip_cleanup: true
+    "on":
+      tags: true
+      condition: "$TRAVIS_TARGET = benchmark"
 ...
