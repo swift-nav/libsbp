@@ -41,12 +41,6 @@ fn test_json2sbp() -> Result<()> {
     test_round_trip(tranform1, tranform2, "json2sbp", "roundtrip.json", make_none_transform!())
 }
 
-use std::any::type_name;
-
-fn type_of<T>(_: T) -> &'static str {
-    type_name::<T>()
-}
-
 #[test]
 fn test_json2json() -> Result<()> {
 
@@ -68,7 +62,6 @@ fn test_json2json() -> Result<()> {
     };
 
     let third_transform = Some(third_transform);
-    eprintln!("third_transform type: {}", type_of(&third_transform));
 
     test_round_trip(tranform1, tranform2, "json2json", "roundtrip.json2json.input", third_transform)
 }
