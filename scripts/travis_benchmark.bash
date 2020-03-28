@@ -82,8 +82,9 @@ popd
 
 pushd python
 
-pip3 -r setup_requirements.txt
-pip3 -r requirements.txt
+pip3 install -r setup_requirements.txt
+pip3 install -r requirements.txt
+pip3 install -e .
 
 popd
 

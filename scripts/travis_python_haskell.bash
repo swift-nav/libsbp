@@ -8,7 +8,7 @@ docker build --tag haskell-sbp2json .
 
 docker run \
   -v "$PWD:/work" \
-  -v "$HOME/.docker-cache/stack/work:/work/haskell/.stack-work" \
+  -v "$HOME/.docker-cache/stack/work:/work/.stack-work" \
   -v "$HOME/.docker-cache/stack/home:/root/.stack" \
   --rm \
   --name haskell-sbp2json-run \

@@ -5,7 +5,7 @@ import subprocess
 
 PWD = os.getcwd()
 TESTDATA_ROOT = os.path.join(PWD, "test_data")
-LONG_SBP = os.path.join(TESTDATA_ROOT, "long.sbp")
+LONG_SBP = os.path.join(TESTDATA_ROOT, "benchmark.sbp")
 
 subprocess.run(
     ['./rust/bin/sbp2json'],

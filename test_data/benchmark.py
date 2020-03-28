@@ -7,16 +7,17 @@ import subprocess
 
 SLUSH_PERCENTAGE = 0.15
 
-THRESHOLDS_SBP2JSON = {
-    "haskell": 1.86,
-    "python": 1.44,
+# How much faster Rust should be than other implementations
+RATIOS_SBP2JSON = {
+    "haskell": 2.77,
+    "python": 1.79,
 }
 
-THRESHOLDS_JSON2SBP = {
+RATIOS_JSON2SBP = {
     "haskell": 4.23,
 }
 
-THRESHOLDS_JSON2JSON = {
+RATIOS_JSON2JSON = {
     "haskell": 2.81,
 }
 
@@ -56,7 +57,7 @@ MEANS_SBP2JSON = {
     "python": get_bench_mean(BENCH_SBP2JSON, "python"),
 }
 
-validate_thresholds(THRESHOLDS_SBP2JSON, MEANS_SBP2JSON, SBP2JSON_RUST_MEAN)
+validate_thresholds(RATIOS_SBP2JSON, MEANS_SBP2JSON, SBP2JSON_RUST_MEAN)
 
 BENCHMARK_INPUT_JSON2SBP_GZ = open("test_data/benchmark.json2sbp.gz", "rb")
 JSON_DATA = gzip.decompress(BENCHMARK_INPUT_JSON2SBP_GZ.read())
@@ -79,7 +80,7 @@ MEANS_JSON2SBP = {
 
 JSON2SBP_RUST_MEAN = get_bench_mean(BENCH_JSON2SBP, "rust")
 
-validate_thresholds(THRESHOLDS_JSON2SBP, MEANS_JSON2SBP, JSON2SBP_RUST_MEAN)
+validate_thresholds(RATIOS_JSON2SBP, MEANS_JSON2SBP, JSON2SBP_RUST_MEAN)
 
 BENCHMARK_INPUT_JSON2JSON_GZ = open("test_data/benchmark.json2json.gz", "rb")
 JSON_DATA = gzip.decompress(BENCHMARK_INPUT_JSON2JSON_GZ.read())
@@ -102,4 +103,4 @@ MEANS_JSON2JSON = {
 
 JSON2JSON_RUST_MEAN = get_bench_mean(BENCH_JSON2JSON, "rust")
 
-validate_thresholds(THRESHOLDS_JSON2JSON, MEANS_JSON2JSON, JSON2JSON_RUST_MEAN)
+validate_thresholds(RATIOS_JSON2JSON, MEANS_JSON2JSON, JSON2JSON_RUST_MEAN)
