@@ -5,24 +5,25 @@ import gzip
 import json
 import subprocess
 
+# If the ratio is off from expected by more than this percentage
 SLUSH_PERCENTAGE = 0.15
 
 # How much faster Rust should be than other implementations
 RATIOS_SBP2JSON = {
-    "haskell": 2.77,
-    "python": 1.79,
+    "haskell": 2.90,
+    "python": 2.10,
 }
 
 RATIOS_JSON2SBP = {
-    "haskell": 4.23,
+    "haskell": 6.33,
 }
 
 RATIOS_JSON2JSON = {
-    "haskell": 2.81,
+    "haskell": 3.65,
 }
 
 subprocess.run(
-    ['hyperfine',  # '--show-output',
+    ['hyperfine',
      '--export-json', 'benchmark_sbp2json.json',
      '-L', 'lang', 'rust,haskell,python',
      './test_data/benchmark/sbp2json_{lang}.py'],
@@ -66,7 +67,7 @@ with open("test_data/benchmark.json2sbp", "wb") as BENCHMARK_INPUT_JSON2SBP:
     BENCHMARK_INPUT_JSON2SBP.write(JSON_DATA)
 
 subprocess.run(
-    ['hyperfine',  # '--show-output',
+    ['hyperfine',
      '--export-json', 'benchmark_json2sbp.json',
      '-L', 'lang', 'rust,haskell',
      './test_data/benchmark/json2sbp_{lang}.py'],
@@ -89,7 +90,7 @@ with open("test_data/benchmark.json2json", "wb") as BENCHMARK_INPUT_JSON2JSON:
     BENCHMARK_INPUT_JSON2JSON.write(JSON_DATA)
 
 subprocess.run(
-    ['hyperfine',  # '--show-output',
+    ['hyperfine',
      '--export-json', 'benchmark_json2json.json',
      '-L', 'lang', 'rust,haskell',
      './test_data/benchmark/json2json_{lang}.py'],
