@@ -80,4 +80,11 @@ rm Cargo.toml
 
 popd
 
+pushd python
+
+pip3 -r setup_requirements.txt
+pip3 -r requirements.txt
+
+popd
+
 make benchmark
