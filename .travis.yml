@@ -98,16 +98,22 @@ matrix:
         - sudo apt-get -qq update
       language: c
       script:
-        - curl -sSL -o miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-        - curl -sSL https://get.haskellstack.org/ | sh
-        - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+        - export HYPERFINE_RELEASE=v1.9.0
+        - export HYPERFINE_BASENAME=hyperfine-${HYPERFINE_RELEASE}-x86_64-unknown-linux-musl
+        - export HYPERFINE_URL_BASE=https://github.com/sharkdp/hyperfine/releases/download
+        - export HYPERFINE_URL=${HYPERFINE_URL_BASE}/${HYPERFINE_RELEASE/${HYPERFINE_BASENAME}.tar.gz
+        - export HYPERFINE_BIN_PATH=${HYPERFINE_BASENAME}/hyperfine
+        - export MINICONDA_URL=https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+        - export HASKELL_STACK_URL=https://get.haskellstack.org
+        - export RUST_RUSTUP_URL=https://get.haskellstack.org
+        - curl -sSL $MINICONDA_URL | sh -s -- -b -p "$HOME/miniconda"
+        - source "$HOME/miniconda/etc/profile.d/conda.sh"
+        - curl -sSL ${HASKELL_STACK_URL} | sh
+        - curl -sSL ${RUST_RUSTUP_URL} | sh -s -- -y
         - export PATH=$HOME/.local/bin:$HOME/.cargo/bin:$PATH
         - cd haskell && stack install
         - cd rust/sbp2json && cargo install --path .
-        - export HYPERFINE_URL=https://github.com/sharkdp/hyperfine/releases/download/v1.9.0/hyperfine-v1.9.0-x86_64-unknown-linux-musl.tar.gz
-        - export HYPERFINE_BIN_PATH=hyperfine-v1.9.0-x86_64-unknown-linux-musl/hyperfine
-        - curl -o- -sSL $HYPERFINE_URL | tar -C ~/.local/bin -xvzf - --strip-components=1 $HYPERFINE_BIN_PATH
-        - chmod +x ~/.local/bin/hyperfine
+        - curl -sSL $HYPERFINE_URL | tar -C ~/.local/bin -xvzf - --strip-components=1 $HYPERFINE_BIN_PATH
 
 deploy:
   provider: releases
