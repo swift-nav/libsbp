@@ -1,3 +1,5 @@
+# yamllint disable rule:line-length
+---
 sudo: required
 
 dist: bionic
@@ -6,12 +8,12 @@ language: generic
 addons:
   apt:
     packages:
-    - build-essential
-    - doxygen
-    - cmake
-    - lcov
-    - gradle
-    - libgmp-dev
+      - build-essential
+      - doxygen
+      - cmake
+      - lcov
+      - gradle
+      - libgmp-dev
 
 cache:
   apt: true
@@ -81,6 +83,7 @@ matrix:
       after_success:
         bash <(curl -s https://codecov.io/bash) -s c/build || echo "Codecov did not collect coverage reports";
     - env:
+        - TRAVIS_TARGET=rust
       before_install:
         - sudo apt-get -qq update
         - sudo apt-get install libudev-dev
@@ -89,6 +92,22 @@ matrix:
         - stable
       script:
         - make test-rust
+    - env:
+        - TRAVIS_TARGET=benchmark
+      before_install:
+        - sudo apt-get -qq update
+      language: c
+      script:
+        - curl -sSL -o miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+        - curl -sSL https://get.haskellstack.org/ | sh
+        - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+        - export PATH=$HOME/.local/bin:$HOME/.cargo/bin:$PATH
+        - cd haskell && stack install
+        - cd rust/sbp2json && cargo install --path .
+        - export HYPERFINE_URL=https://github.com/sharkdp/hyperfine/releases/download/v1.9.0/hyperfine-v1.9.0-x86_64-unknown-linux-musl.tar.gz
+        - export HYPERFINE_BIN_PATH=hyperfine-v1.9.0-x86_64-unknown-linux-musl/hyperfine
+        - curl -o- -sSL $HYPERFINE_URL | tar -C ~/.local/bin -xvzf - --strip-components=1 $HYPERFINE_BIN_PATH
+        - chmod +x ~/.local/bin/hyperfine
 
 deploy:
   provider: releases
@@ -96,5 +115,6 @@ deploy:
     secure: "WDZRT7VevzQidPo8Mn1ozV6azwNFe7qGwKbLCb8rmKpPmiF+wcQ3KrhTnGj0EmqGqQ2q1c3UZzVCr+nLhLvIFLhkvNK42bs8Byc+HolKNX/diPAlB/mczGHI08rV4EJFmJL56vopdoafOAsqtZBnD4hZ8BDETNqMyJefo70pyY8="
   file: haskell/sbp_linux_tools.tar.gz
   skip_cleanup: true
-  on:
+  "on":
     tags: true
+...
