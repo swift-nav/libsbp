@@ -100,7 +100,7 @@ matrix:
         - export HYPERFINE_RELEASE=v1.9.0
         - export HYPERFINE_BASENAME=hyperfine-${HYPERFINE_RELEASE}-x86_64-unknown-linux-musl
         - export HYPERFINE_URL_BASE=https://github.com/sharkdp/hyperfine/releases/download
-        - export HYPERFINE_URL=${HYPERFINE_URL_BASE}/${HYPERFINE_RELEASE/${HYPERFINE_BASENAME}.tar.gz
+        - export HYPERFINE_URL=${HYPERFINE_URL_BASE}/${HYPERFINE_RELEASE}/${HYPERFINE_BASENAME}.tar.gz
         - export HYPERFINE_BIN_PATH=${HYPERFINE_BASENAME}/hyperfine
         - export MINICONDA_URL=https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
         - export HASKELL_STACK_URL=https://get.haskellstack.org
