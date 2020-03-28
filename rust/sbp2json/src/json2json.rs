@@ -6,6 +6,10 @@ use structopt::StructOpt;
 
 use sbp::sbp2json::{json2json_read_loop, Result};
 
+#[cfg(all(not(windows), not(target_env = "musl")))]
+#[global_allocator]
+static ALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
+
 #[derive(Debug, StructOpt)]
 #[structopt(name = "json2json", verbatim_doc_comment)]
 /// Convert "compact" SBP JSON data to an "exploded" form

@@ -18,8 +18,10 @@ addons:
 cache:
   apt: true
   directories:
-    - $HOME/.stack/
     - .stack-work/
+    - $HOME/.stack/
+    - $HOME/.cargo/
+    - $HOME/.docker-cache/
 
 matrix:
   include:
@@ -37,18 +39,9 @@ matrix:
         - sudo apt-get install python3.8 python3.8-dev
         - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
         - sudo pip install tox
-      script: |
-        pushd haskell
-        docker build -t haskell-sbp2json .
-        docker run --rm --name haskell-sbp2json haskell-sbp2json >sbp_linux_tools.tar
-        tar xf sbp_linux_tools.tar
-        gzip sbp_linux_tools.tar
-        export VERSION=$(git describe --always --tags --dirty)
-        export BUILD_TRIPLET=$(cc -dumpmachine)
-        mv sbp_linux_tools.tar.gz sbp_tools_haskell-${VERSION}-${BUILD_TRIPLET}.tar.gz
-        ls -l
-        popd
-        make test-python
+      script:
+        - ./scripts/travis_python_haskell.bash
+
     - env:
         - TRAVIS_TARGET=default JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
       before_install:
@@ -83,6 +76,7 @@ matrix:
         - make test-c
       after_success:
         bash <(curl -s https://codecov.io/bash) -s c/build || echo "Codecov did not collect coverage reports";
+
     - env:
         - TRAVIS_TARGET=rust
       before_install:
@@ -93,43 +87,16 @@ matrix:
         - stable
       script:
         - make test-rust
+
     - env:
         - TRAVIS_TARGET=benchmark
-      language: c
+      language: python
+      python:
+        - "3.7"
       before_install:
-        - sudo apt-get -qq update
-        - export HYPERFINE_RELEASE=v1.9.0
-        - export HYPERFINE_BASENAME=hyperfine-${HYPERFINE_RELEASE}-x86_64-unknown-linux-musl
-        - export HYPERFINE_URL_BASE=https://github.com/sharkdp/hyperfine/releases/download
-        - export HYPERFINE_URL=${HYPERFINE_URL_BASE}/${HYPERFINE_RELEASE}/${HYPERFINE_BASENAME}.tar.gz
-        - export HYPERFINE_BIN_PATH=${HYPERFINE_BASENAME}/hyperfine
-        - export MINICONDA_URL=https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-        - mkdir -p ~/.local/bin
-        - curl -sSL "${HYPERFINE_URL}" | tar -C ~/.local/bin -xvzf - --strip-components=1 "${HYPERFINE_BIN_PATH}"
-        - curl -sSL "${MINICONDA_URL}" >./miniconda.sh && chmod +x ./miniconda.sh
-        - ./miniconda.sh -b -p "${HOME}/miniconda"
-        - source "$HOME/miniconda/etc/profile.d/conda.sh"
-        - export PATH="${HOME}/.local/bin:${HOME}/.cargo/bin:${PATH}"
-        - hash -r
-        - conda config --set always_yes yes --set changeps1 no
-        - conda update -q conda
-        - conda info -a
-      script: |
-        pushd haskell
-        docker build -t haskell-sbp2json .
-        docker run --rm --name haskell-sbp2json haskell-sbp2json | tar -xf -
-        popd
-        pushd rust
-        docker build -t rust-sbp2json sbp2json
-        docker run --rm --name rust-sbp2json rust-sbp2json >sbp_linux_tools.tar
-        tar xf sbp_linux_tools.tar
-        gzip sbp_linux_tools.tar
-        export VERSION=$(git describe --always --tags --dirty)
-        export BUILD_TRIPLET=$(cc -dumpmachine)
-        mv sbp_linux_tools.tar.gz sbp_tools-${VERSION}-${BUILD_TRIPLET}.tar.gz
-        ls -l
-        popd
-        make benchmark
+        - source ./scripts/travis_benchmark_install.bash
+      script:
+        - ./scripts/travis_benchmark.bash
 
 deploy:
   - provider: releases

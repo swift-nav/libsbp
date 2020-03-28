@@ -13,7 +13,7 @@ RUN mkdir -p $SCCACHE_DIR
 
 RUN \
       apt-get update \
-   && apt-get install -y libssl-dev pkg-config curl \
+   && apt-get install -y libssl-dev pkg-config curl build-essential \
    && curl -sSL -o /tmp/sccache.tgz "${SCCACHE_URL}" \
    && mkdir /tmp/sccache \
    && tar --strip-components=1 -C /tmp/sccache -xzf /tmp/sccache.tgz \
@@ -26,13 +26,4 @@ RUN \
 
 ENV RUSTC_WRAPPER=/usr/local/bin/sccache
 
-ADD . /work
 WORKDIR /work
-
-RUN cargo install --path .
-
-CMD \
-  tar -C $(find ~/.cargo -name bin) -cf - \
-    sbp2json \
-    json2sbp \
-    json2json
