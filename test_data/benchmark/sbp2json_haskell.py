@@ -10,4 +10,5 @@ LONG_SBP = os.path.join(TESTDATA_ROOT, "long.sbp")
 subprocess.run(
     ['./haskell/sbp2json'],
     stdin=open(LONG_SBP, 'rb'),
-    stdout=subprocess.DEVNULL)
+    stdout=subprocess.DEVNULL,
+    check=True)

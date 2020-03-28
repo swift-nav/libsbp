@@ -13,4 +13,5 @@ LONG_SBP = os.path.join(TESTDATA_ROOT, "long.sbp")
 subprocess.run(
     ['python3', "python/bin/sbp2json", '--mode', 'rapidjson'],
     stdin=open(LONG_SBP, 'rb'),
-    stdout=subprocess.DEVNULL)
+    stdout=subprocess.DEVNULL,
+    check=True)
