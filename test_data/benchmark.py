@@ -15,7 +15,7 @@ RATIOS_SBP2JSON = {
 }
 
 RATIOS_JSON2SBP = {
-    "haskell": 6.33,
+    "haskell": 3.42,
 }
 
 RATIOS_JSON2JSON = {
