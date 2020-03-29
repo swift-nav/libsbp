@@ -17,6 +17,7 @@ addons:
 
 cache:
   apt: true
+  cargo: true
   directories:
     - .stack-work/
     - $HOME/.stack/
@@ -99,21 +100,49 @@ matrix:
       script:
         - ./scripts/travis_benchmark.bash
 
+    - env:
+        - TRAVIS_TARGET=osx
+      os: osx
+      osx_image: Xcode 8.3.3
+      language: rust
+      script: |
+        set -ex
+        cargo build --all --release
+        tar -C "target/release" -czf sbp_osx_tools.tar.gz \
+          sbp2json json2sbp json2json
+        VERSION="$(git describe --always --tags --dirty)"
+        BUILD_TRIPLET="$(cc -dumpmachine)"
+        mv sbp_osx_tools.tar.gz "sbp_tools-${VERSION}-${BUILD_TRIPLET}.tar.gz"
+        ls -l
+      addons:
+        homebrew:
+          packages:
+            - cmake
+
+_github_api_key: &_github_api_key
+  api_key:
+    secure: "WDZRT7VevzQidPo8Mn1ozV6azwNFe7qGwKbLCb8rmKpPmiF+wcQ3KrhTnGj0EmqGqQ2q1c3UZzVCr+nLhLvIFLhkvNK42bs8Byc+HolKNX/diPAlB/mczGHI08rV4EJFmJL56vopdoafOAsqtZBnD4hZ8BDETNqMyJefo70pyY8="
+
 deploy:
   - provider: releases
-    api_key:
-      secure: "WDZRT7VevzQidPo8Mn1ozV6azwNFe7qGwKbLCb8rmKpPmiF+wcQ3KrhTnGj0EmqGqQ2q1c3UZzVCr+nLhLvIFLhkvNK42bs8Byc+HolKNX/diPAlB/mczGHI08rV4EJFmJL56vopdoafOAsqtZBnD4hZ8BDETNqMyJefo70pyY8="
     file: "haskell/sbp_tools_haskell-*.tar.gz"
     skip_cleanup: true
     "on":
       tags: true
       condition: "$TRAVIS_TARGET = python-haskell"
+    <<: *_github_api_key
   - provider: releases
-    api_key:
-      secure: "WDZRT7VevzQidPo8Mn1ozV6azwNFe7qGwKbLCb8rmKpPmiF+wcQ3KrhTnGj0EmqGqQ2q1c3UZzVCr+nLhLvIFLhkvNK42bs8Byc+HolKNX/diPAlB/mczGHI08rV4EJFmJL56vopdoafOAsqtZBnD4hZ8BDETNqMyJefo70pyY8="
     file: "rust/sbp_tools-*.tar.gz"
     skip_cleanup: true
     "on":
       tags: true
       condition: "$TRAVIS_TARGET = benchmark"
+    <<: *_github_api_key
+  - provider: releases
+    file: "sbp_tools-*.tar.gz"
+    skip_cleanup: true
+    "on":
+      tags: true
+      condition: "$TRAVIS_TARGET = osx"
+    <<: *_github_api_key
 ...
