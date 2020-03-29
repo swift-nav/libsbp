@@ -132,11 +132,11 @@ matrix:
         cargo build --all --release
         cd target/release
         7z a -tzip ../../sbp_windows_tools.zip \
-          sbp2json json2sbp json2json
+          sbp2json.exe json2sbp.exe json2json.exe
         cd ../..
         VERSION="$(git describe --always --tags --dirty)"
         BUILD_TRIPLET="$(clang -dumpmachine)"
-        mv sbp_windows_tools.tar.gz "sbp_tools-${VERSION}-${BUILD_TRIPLET}.tar.gz"
+        mv sbp_windows_tools.zip "sbp_tools-${VERSION}-${BUILD_TRIPLET}.zip"
         ls -l
 
 _github_api_key: &_github_api_key
@@ -164,5 +164,12 @@ deploy:
     "on":
       tags: true
       condition: "$TRAVIS_TARGET = osx"
+    <<: *_github_api_key
+  - provider: releases
+    file: "sbp_tools-*.zip"
+    skip_cleanup: true
+    "on":
+      tags: true
+      condition: "$TRAVIS_TARGET = windows"
     <<: *_github_api_key
 ...

@@ -84,7 +84,7 @@ pushd python
 
 if [[ -n "${VIA_DOCKER:-}" ]]; then
 
-  docker build --tag python-sbp2json .
+  docker build --tag python-sbp2json -f Dockerfile.benchmark .
 else
 
   pip3 install -r setup_requirements.txt
