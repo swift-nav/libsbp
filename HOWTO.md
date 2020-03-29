@@ -11,6 +11,8 @@ libsbp Development Procedures
   * [Building on Windows](#building-on-windows)
   * [Troubleshooting](#troubleshooting)
     + [Error: `!!! No Python wheel (.whl) file found...`](#error--no-python-wheel-whl-file-found)
+    + [Tox error: `ERROR: FAIL could not package project`](#tox-error-error-fail-could-not-package-project)
+    + [Tox error: `ERROR: cowardly refusing to delete envdir`](#tox-error-error-cowardly-refusing-to-delete-envdir)
 - [Contributions](#contributions)
 
 <!-- tocstop -->
