@@ -2,33 +2,101 @@
 
 [![Build status][1]][2]
 
-The Swift Navigation Binary Protocol (SBP) is a fast, simple, and
-minimal binary protocol for communicating with Swift devices. It is
-the native binary protocol used by the
-[Piksi GPS receiver](http://swiftnav.com/piksi.html) to transmit
-solutions, observations, status and debugging messages, as well as
+<!-- toc -->
+
+- [Installing sbp2json, json2sbp, json2json and related tools](#installing-sbp2json-json2sbp-json2json-and-related-tools)
+- [Building / installing](#building--installing)
+  * [Using Docker](#using-docker)
+    + [Creating your own image](#creating-your-own-image)
+    + [Using the prebuilt one from dockerhub](#using-the-prebuilt-one-from-dockerhub)
+  * [Installing from package managers](#installing-from-package-managers)
+  * [Installing development Python versions](#installing-development-python-versions)
+  * [Adding development version as a pip dependency](#adding-development-version-as-a-pip-dependency)
+  * [Installing from source](#installing-from-source)
+- [SBP Protocol Specification](#sbp-protocol-specification)
+- [JSON Schema Definitions](#json-schema-definitions)
+- [LICENSE](#license)
+
+<!-- tocstop -->
+
+The Swift Navigation Binary Protocol (SBP) is a fast, simple, and minimal
+binary protocol for communicating with Swift devices. It is the native binary
+protocol used by the [Piksi GPS receiver](http://swiftnav.com/piksi.html) to
+transmit solutions, observations, status and debugging messages, as well as
 receive messages from the host operating system, such as differential
 corrections and the almanac.
 
-This project provides language-agnostic specification and
-documentation for messages used with SBP, a compiler for generating
-message bindings, and client libraries in a variety of languages. This
-repository is organized into the following directory structure:
+This project provides language-agnostic specification and documentation for
+messages used with SBP, a compiler for generating message bindings, and client
+libraries in a variety of languages. This repository is organized into the
+following directory structure:
 
-* [`docs`](https://github.com/swift-nav/libsbp/tree/HEAD/docs): Protocol documentation and message definitions.
-* [`spec`](https://github.com/swift-nav/libsbp/tree/HEAD/spec): Machine readable protocol specification in
+* [`docs`](./docs): Protocol documentation and message definitions.
+* [`spec`](./spec): Machine readable protocol specification in
   [YAML](http://en.wikipedia.org/wiki/YAML).
-* [`generator`](https://github.com/swift-nav/libsbp/tree/HEAD/generator): Simple, template-based generator for
+* [`generator`](./generator): Simple, template-based generator for
   different languages.
-* [`python`](https://github.com/swift-nav/libsbp/tree/HEAD/python): Python client and examples.
-* [`c`](https://github.com/swift-nav/libsbp/tree/HEAD/c): C client library and examples.
-* [`haskell`](https://github.com/swift-nav/libsbp/tree/HEAD/haskell): Haskell client and examples.
-* [`java`](https://github.com/swift-nav/libsbp/tree/HEAD/java): Java client library and examples.
-* [`javascript`](https://github.com/swift-nav/libsbp/tree/HEAD/javascript): JavaScript client library and examples.
-* [`rust`](https://github.com/swift-nav/libsbp/tree/HEAD/rust): Rust client library and examples.
-* [`sbpjson`](https://github.com/swift-nav/libsbp/tree/HEAD/sbpjson): Tools for parsing SBP-JSON.
+* [`python`](./python): Python client and examples.
+* [`c`](./c): C client library and examples.
+* [`haskell`](./haskell): Haskell client and examples.
+* [`java`](./java): Java client library and examples.
+* [`javascript`](./javascript): JavaScript client library and examples.
+* [`rust`](./rust): Rust client library and examples.
+* [`sbpjson`](./sbpjson): Tools for parsing SBP-JSON.
 
 Except for the `generator`, all of the above are generated and should not be modified directly.
+
+## Installing sbp2json, json2sbp, json2json and related tools
+
+This repository also provides the following utilities for comprehending and
+inspecting SBP data:
+
+- `sbp2json`: converts SBP binary into a JSON representation, in which field
+  names and values are expanded into JSON objects, common fields such as
+  "message type" and "payload" are included as well.
+
+- `json2sbp`: uses the "message type", "payload" and related fields from an SBP
+  JSON stream to reconstruct the binary representation.
+
+- `json2json`: some tools (notably the Swift GUI Console) produce abbreviated
+  JSON logs with only common fields such as "message type" and "payload", the
+  `json2json` tool expands these JSON objects to include fields specific the
+  individual message.
+
+To install a released version of these tools, visit the [releases
+page](https://github.com/swift-nav/libsbp/releases) and download an archive for
+your platform.
+
+To install from source, you can use Rust's cargo tool (first [install
+Rust](https://www.rust-lang.org/tools/install)), then run:
+
+```
+cargo install --git https://github.com/swift-nav/libsbp.git --bins
+```
+
+There's also a [Haskell version](./haskell) available which can be installed by
+running `stack install` in the [./haskell](./haskell) directory of a checkout
+of this repo (after [installing
+stack](https://docs.haskellstack.org/en/stable/README/)) or by visiting the
+releases by and downloading an `sbp_tools_haskell` archive.  This variant of
+the tools predate the Rust and Python versions, and also includes an `sbp2yaml`
+tool as well as a `sbp2prettyjson` tool.
+
+Finally, a Python version of the `sbp2json` tool exists, which is installable
+on any platform that support Python via pip, e.g.:
+
+```
+pip3 install sbp
+```
+
+The tool can then be invoked as follows:
+
+```
+python3 -m sbp2json <sbp.bin
+```
+
+On select platforms this Python tool is accelerated with native code and has
+performance on par with the Haskell and Rust variants.
 
 ## Building / installing
 ### Using Docker
@@ -156,9 +224,9 @@ HOWTO for instructions on updating these schemas.
 
 ## LICENSE
 
-Copyright © 2015 Swift Navigation
+Copyright © 2020 Swift Navigation
 
 Distributed under LGPLv3.0.
 
-[1]: https://travis-ci.org/swift-nav/libsbp.png
+[1]: https://travis-ci.org/swift-nav/libsbp.svg?branch=master
 [2]: https://travis-ci.org/swift-nav/libsbp
