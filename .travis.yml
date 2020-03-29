@@ -133,6 +133,7 @@ matrix:
         cd target/release
         7z a -tzip ../../sbp_windows_tools.zip \
           sbp2json json2sbp json2json
+        cd ../..
         VERSION="$(git describe --always --tags --dirty)"
         BUILD_TRIPLET="$(clang -dumpmachine)"
         mv sbp_windows_tools.tar.gz "sbp_tools-${VERSION}-${BUILD_TRIPLET}.tar.gz"
