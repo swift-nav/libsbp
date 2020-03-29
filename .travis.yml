@@ -90,6 +90,7 @@ matrix:
 
     - env:
         - TRAVIS_TARGET=benchmark
+        - VIA_DOCKER=y
       language: python
       python:
         - "3.7"

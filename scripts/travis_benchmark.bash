@@ -82,9 +82,16 @@ popd
 
 pushd python
 
-pip3 install -r setup_requirements.txt
-pip3 install -r requirements.txt
-pip3 install -e .
+if [[ -n "${VIA_DOCKER:-}" ]]; then
+
+  docker build --tag -sbp2json .
+else
+
+  pip3 install -r setup_requirements.txt
+  pip3 install -r requirements.txt
+
+  python3 setup.py install
+fi
 
 popd
 

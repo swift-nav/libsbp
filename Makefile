@@ -408,4 +408,4 @@ mapping:
     sort
 
 benchmark:
-	@./test_data/benchmark.py
+	@PYTHONPATH=$(PWD)/test_data ./test_data/benchmark_main.py
