@@ -2,6 +2,10 @@
 ---
 sudo: required
 
+branches:
+  only:
+    - master
+
 dist: bionic
 language: generic
 
