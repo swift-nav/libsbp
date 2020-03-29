@@ -11,16 +11,16 @@ SLUSH_PERCENTAGE = 0.20
 
 # How much faster Rust should be than other implementations
 RATIOS_SBP2JSON = {
-    "haskell": 3.26,
-    "python": 1.33,
+    "haskell": 1.30,
+    "python": 1.26,
 }
 
 RATIOS_JSON2SBP = {
-    "haskell": 7.53,
+    "haskell": 1.63,
 }
 
 RATIOS_JSON2JSON = {
-    "haskell": 4.19,
+    "haskell": 1.21,
 }
 
 FAILED = [False]
@@ -37,7 +37,7 @@ def maybe_via_docker(pwd, image, cmd):
     ] + cmd
 
 
-def compare_threshold(expected, actual):
+def compare_ratio(expected, actual):
     diff = abs(expected - actual)
     percentage = diff / expected
     return percentage <= SLUSH_PERCENTAGE
@@ -53,9 +53,9 @@ def validate_thresholds(binary, thresholds, means, target):
     for lang in thresholds:
         threshold = thresholds[lang]
         ratio = means[lang] / target
-        if not compare_threshold(threshold, ratio):
+        if not compare_ratio(threshold, ratio):
             sys.stderr.write(
-                f"\nERROR: {binary} speed threshold failed for {lang}, expected: {threshold}, actual: {ratio}\n")
+                f"\nERROR: {binary} speed threshold failed for {lang}, expected: {threshold}, actual: {ratio}\n\n")
             sys.stderr.flush()
             FAILED[0] = True
 
