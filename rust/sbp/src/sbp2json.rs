@@ -316,8 +316,8 @@ pub fn json2sbp_process_with_expand(
                 let sbp_msg = SBP::parse(msg_type, sender_id, &mut payload);
                 if let Ok(sbp_msg) = sbp_msg {
                     let common_sbp = sbp_msg.as_sbp_message();
-                    let res = common_sbp.to_frame();
-                    if let Ok(res) = res {
+                    let frame = common_sbp.to_frame();
+                    if let Ok(frame) = frame {
                         if expand_json {
                             let mut value = serde_json::to_value(&sbp_msg)?;
                             write_sbp_json_value(
@@ -325,21 +325,21 @@ pub fn json2sbp_process_with_expand(
                                 rewrap_data,
                                 &mut base64_payload,
                                 common_sbp,
-                                &res[..],
+                                &frame[..],
                                 &mut value,
                                 stream_output,
                             )?;
                         } else {
                             let io_ref =
                                 Rc::get_mut(stream_output).expect("could not get output stream");
-                            if let Err(err) = io_ref.write_all(&res) {
+                            if let Err(err) = io_ref.write_all(&frame) {
                                 if debug {
                                     eprintln!("IO write failed: {:?}", err);
                                 }
                             }
                         }
                     } else if debug {
-                        eprintln!("SBP framing failed: {:?}", res.err());
+                        eprintln!("SBP framing failed: {:?}", frame.err());
                     }
                 } else if debug {
                     eprintln!("SBP parse failed: {:?}", sbp_msg.err());
@@ -454,8 +454,8 @@ pub fn sbp2json_read_loop(
                 break;
             }
             let slice = &buf[unconsumed_offset..(unconsumed_offset + bytes_available)];
-            let (res, consumed) = super::parser::frame(slice);
-            match res {
+            let (frame, consumed) = super::parser::frame(slice);
+            match frame {
                 Ok(msg) => {
                     let common_sbp = msg.as_sbp_message();
                     let mut value = serde_json::to_value(&msg)?;
