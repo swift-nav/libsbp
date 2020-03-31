@@ -1,3 +1,10 @@
+#######################################################################
+###                                                                 ###
+### WARNING: This file is generated, please update the template at: ###
+###            generator/sbpg/targets/resources/sbp2json-cargo.toml ###
+###                                                                 ###
+#######################################################################
+
 [package]
 name = "sbp2json"
 version = "2.7.7"

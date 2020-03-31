@@ -260,8 +260,7 @@ fn get_payload<'a>(value: &'a Value) -> Option<&'a str> {
 }
 
 /// Fetches a key specified by `key_name` from the JSON object, if it exists.
-fn get_u16_key(key_name: &str, value: &Value) -> Option<u16>
-{
+fn get_u16_key(key_name: &str, value: &Value) -> Option<u16> {
     if !value.is_object() {
         panic!("value always expected to be an object");
     }

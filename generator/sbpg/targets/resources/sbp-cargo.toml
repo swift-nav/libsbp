@@ -1,3 +1,10 @@
+#######################################################################
+###                                                                 ###
+### WARNING: This file is generated, please update the template at: ###
+###            generator/sbpg/targets/resources/sbp-cargo.toml      ###
+###                                                                 ###
+#######################################################################
+
 [package]
 name = "sbp"
 version = "(((release)))"
