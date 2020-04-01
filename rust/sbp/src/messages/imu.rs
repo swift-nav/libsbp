@@ -17,7 +17,7 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-#[cfg(feature = "serialize")]
+#[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 /// Auxiliary IMU data
@@ -26,7 +26,7 @@ use serde::{Deserialize, Serialize};
 /// always be consistent but the rest of the payload is device specific and
 /// depends on the value of `imu_type`.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgImuAux {
@@ -92,7 +92,7 @@ impl crate::serialize::SbpSerialize for MsgImuAux {
 /// the indications on the device itself. Measurement units, which are specific to the
 /// device hardware and settings, are communicated via the MSG_IMU_AUX message.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgImuRaw {

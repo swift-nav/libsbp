@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
-if [ "$#" -ne 1 ]; then
+
+if [[ "$#" -ne 1 ]]; then
     echo "Skipping format-test.sh, enable by providing a full path to Haskell SBP tools"
     exit 0
 fi
 
 set -e
+
+[[ -z "${DEBUG:-}" ]] || set -x
 
 TESTDATA_ROOT=$(git rev-parse --show-toplevel)/test_data
 INPUT_SHORT=$TESTDATA_ROOT/short.sbp
@@ -16,25 +19,23 @@ OUTPUT_LONG_HS=$TESTDATA_ROOT/long_hask_pretty.json
 OUTPUT_LONG_PY=$TESTDATA_ROOT/long_py_pretty.json
 
 PYTHONPATH=$TESTDATA_ROOT/../python/ \
-    python $TESTDATA_ROOT/../python/bin/sbp2json \
-    < $INPUT_SHORT --mode json --sort-keys --judicious-rounding > $OUTPUT_SHORT_PY
+    python "$TESTDATA_ROOT/../python/bin/sbp2json" \
+    --mode json --sort-keys --judicious-rounding \
+    <"$INPUT_SHORT" >"$OUTPUT_SHORT_PY"
 
-if [ ! -f $OUTPUT_SHORT_HS ]; then
-  $1/sbp2prettyjson < $INPUT_SHORT > $OUTPUT_SHORT_HS
-fi
+"$1/sbp2prettyjson" <"$INPUT_SHORT" >"$OUTPUT_SHORT_HS"
 
-diff $OUTPUT_SHORT_HS $OUTPUT_SHORT_PY || exit 1
+diff "$OUTPUT_SHORT_HS" "$OUTPUT_SHORT_PY" &>/dev/null || exit 1
 
 echo -e "Short format check \e[32mOK\e[0m, please wait for longer format test.."
 
 PYTHONPATH=$TESTDATA_ROOT/../python/ \
-    python $TESTDATA_ROOT/../python/bin/sbp2json \
-    < $INPUT_LONG --mode json --sort-keys --judicious-rounding > $OUTPUT_LONG_PY
+    python "$TESTDATA_ROOT/../python/bin/sbp2json" \
+    --mode json --sort-keys --judicious-rounding \
+    <"$INPUT_LONG" >"$OUTPUT_LONG_PY"
 
-if [ ! -f $OUTPUT_LONG_HS ]; then
-  $1/sbp2prettyjson < $INPUT_LONG > $OUTPUT_LONG_HS
-fi
+"$1/sbp2prettyjson" <"$INPUT_LONG" >"$OUTPUT_LONG_HS"
 
-diff $OUTPUT_LONG_HS $OUTPUT_LONG_PY || exit 1
+diff "$OUTPUT_LONG_HS" "$OUTPUT_LONG_PY" &>/dev/null || exit 1
 
 echo -e "Format check \e[32mOK\e[0m"

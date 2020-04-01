@@ -25,7 +25,7 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-#[cfg(feature = "serialize")]
+#[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 /// Request advice on the optimal configuration for FileIO.
@@ -35,7 +35,7 @@ use serde::{Deserialize, Serialize};
 /// throughput by supporting a large window of FileIO data
 /// that can be in-flight during read or write operations.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioConfigReq {
@@ -92,7 +92,7 @@ impl crate::serialize::SbpSerialize for MsgFileioConfigReq {
 /// throughput by supporting a large window of FileIO data
 /// that can be in-flight during read or write operations.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioConfigResp {
@@ -169,7 +169,7 @@ impl crate::serialize::SbpSerialize for MsgFileioConfigResp {
 /// A device will only respond to this message when it is received
 /// from sender ID 0x42.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadDirReq {
@@ -237,7 +237,7 @@ impl crate::serialize::SbpSerialize for MsgFileioReadDirReq {
 /// entry containing just the character 0xFF. The sequence number in
 /// the response is preserved from the request.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadDirResp {
@@ -302,7 +302,7 @@ impl crate::serialize::SbpSerialize for MsgFileioReadDirResp {
 /// print "Invalid fileio read message". A device will only respond
 /// to this message when it is received from sender ID 0x42.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadReq {
@@ -374,7 +374,7 @@ impl crate::serialize::SbpSerialize for MsgFileioReadReq {
 /// were succesfully read. The sequence number in the response is
 /// preserved from the request.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadResp {
@@ -435,7 +435,7 @@ impl crate::serialize::SbpSerialize for MsgFileioReadResp {
 /// print "Invalid fileio remove message". A device will only
 /// process this message when it is received from sender ID 0x42.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioRemove {
@@ -495,7 +495,7 @@ impl crate::serialize::SbpSerialize for MsgFileioRemove {
 /// only  process this message when it is received from sender ID
 /// 0x42.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioWriteReq {
@@ -567,7 +567,7 @@ impl crate::serialize::SbpSerialize for MsgFileioWriteReq {
 /// write. The sequence number in the response is preserved from the
 /// request.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFileioWriteResp {

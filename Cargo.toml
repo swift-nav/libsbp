@@ -1,0 +1,5 @@
+[workspace]
+members = [
+  "rust/sbp",
+  "rust/sbp2json"
+]

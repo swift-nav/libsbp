@@ -1,0 +1,12 @@
+FROM python:3.7-slim-stretch
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN    apt-get update \
+    && apt-get install -y git llvm-7-dev build-essential
+
+WORKDIR /work
+ADD . /work
+
+RUN pip3 install -r /work/setup_requirements.txt
+RUN pip3 install -r /work/requirements.txt
+RUN python3 /work/setup.py install

@@ -22,14 +22,14 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-#[cfg(feature = "serialize")]
+#[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 /// Deprecated
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeDepA {
@@ -84,7 +84,7 @@ impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeDepA {
 /// handshake between the device bootloader and the host. The
 /// response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeReq {
@@ -132,7 +132,7 @@ impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeReq {
 /// payload contains the bootloader version number and the SBP
 /// protocol version number.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeResp {
@@ -190,7 +190,7 @@ impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeResp {
 ///
 /// The host initiates the bootloader to jump to the application.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderJumpToApp {
@@ -248,7 +248,7 @@ impl crate::serialize::SbpSerialize for MsgBootloaderJumpToApp {
 /// device ID in the payload. Note that this ID is tied to the FPGA,
 /// and not related to the Piksi's serial number.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgNapDeviceDnaReq {
@@ -297,7 +297,7 @@ impl crate::serialize::SbpSerialize for MsgNapDeviceDnaReq {
 /// device ID in the payload. Note that this ID is tied to the FPGA,
 /// and not related to the Piksi's serial number.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgNapDeviceDnaResp {

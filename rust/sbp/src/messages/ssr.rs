@@ -18,7 +18,7 @@ extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
-#[cfg(feature = "serialize")]
+#[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 /// SSR code biases corrections for a particular satellite.
@@ -26,7 +26,7 @@ use serde::{Deserialize, Serialize};
 /// Code biases are to be added to pseudorange.
 /// The corrections conform with typical RTCMv3 MT1059 and 1065.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct CodeBiasesContent {
@@ -83,7 +83,7 @@ impl crate::serialize::SbpSerialize for CodeBiasesContent {
 /// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
 /// Also includes an RLE encoded validity list.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct GridDefinitionHeader {
@@ -162,7 +162,7 @@ impl crate::serialize::SbpSerialize for GridDefinitionHeader {
 /// Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
 /// stddev) for each satellite at the grid point.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct GridElement {
@@ -221,7 +221,7 @@ impl crate::serialize::SbpSerialize for GridElement {
 /// Contains one tropo delay, plus STEC residuals for each satellite at the
 /// grid point.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct GridElementNoStd {
@@ -284,7 +284,7 @@ impl crate::serialize::SbpSerialize for GridElementNoStd {
 /// which are not suppported in SBP, so each grid point will
 /// be identified by the index.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct GriddedCorrectionHeader {
@@ -365,7 +365,7 @@ impl crate::serialize::SbpSerialize for GriddedCorrectionHeader {
 /// to get corrected pseudorange. It is typically
 /// an equivalent to the 1059 and 1065 RTCM message types
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrCodeBiases {
@@ -441,7 +441,7 @@ impl crate::serialize::SbpSerialize for MsgSsrCodeBiases {
 /// STEC residuals are per space vehicle, tropo is not.
 /// It is typically equivalent to the QZSS CLAS Sub Type 9 messages
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGriddedCorrection {
@@ -501,7 +501,7 @@ impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrection {
 /// This message was deprecated when variances (stddev)
 /// were added.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGriddedCorrectionNoStd {
@@ -560,7 +560,7 @@ impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrectionNoStd {
 /// Based on the 3GPP proposal R2-1906781 which is in turn based on
 /// OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGridDefinition {
@@ -624,7 +624,7 @@ impl crate::serialize::SbpSerialize for MsgSsrGridDefinition {
 /// ephemeris and is typically an equivalent to the 1060
 /// and 1066 RTCM message types
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrOrbitClock {
@@ -747,7 +747,7 @@ impl crate::serialize::SbpSerialize for MsgSsrOrbitClock {
 /// ephemeris and is typically an equivalent to the 1060
 /// and 1066 RTCM message types
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrOrbitClockDepA {
@@ -872,7 +872,7 @@ impl crate::serialize::SbpSerialize for MsgSsrOrbitClockDepA {
 /// the phase wind-up correction.
 /// It is typically an equivalent to the 1265 RTCM message types
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrPhaseBiases {
@@ -970,7 +970,7 @@ impl crate::serialize::SbpSerialize for MsgSsrPhaseBiases {
 /// message to get the state space representation of the atmospheric
 /// delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgSsrStecCorrection {
@@ -1029,7 +1029,7 @@ impl crate::serialize::SbpSerialize for MsgSsrStecCorrection {
 /// Phase biases are to be added to carrier phase measurements.
 /// The corrections conform with typical RTCMv3 MT1059 and 1065.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct PhaseBiasesContent {
@@ -1103,7 +1103,7 @@ impl crate::serialize::SbpSerialize for PhaseBiasesContent {
 /// messages, since SBP message a limited to 255 bytes.  The header
 /// is used to tie multiple SBP messages into a sequence.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct STECHeader {
@@ -1173,7 +1173,7 @@ impl crate::serialize::SbpSerialize for STECHeader {
 /// STEC residual (mean and standard deviation) for the given satellite
 /// at the grid point,
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct STECResidual {
@@ -1231,7 +1231,7 @@ impl crate::serialize::SbpSerialize for STECResidual {
 ///
 /// STEC residual for the given satellite at the grid point.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct STECResidualNoStd {
@@ -1287,7 +1287,7 @@ impl crate::serialize::SbpSerialize for STECResidualNoStd {
 ///
 /// STEC polynomial for the given satellite.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct STECSatElement {
@@ -1350,7 +1350,7 @@ impl crate::serialize::SbpSerialize for STECSatElement {
 /// Troposphere vertical delays (mean and standard deviation) at the grid
 /// point.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct TroposphericDelayCorrection {
@@ -1411,7 +1411,7 @@ impl crate::serialize::SbpSerialize for TroposphericDelayCorrection {
 ///
 /// Troposphere vertical delays at the grid point.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct TroposphericDelayCorrectionNoStd {

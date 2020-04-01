@@ -18,7 +18,7 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-#[cfg(feature = "serialize")]
+#[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 /// Wrapper for FWD a separate stream of information over SBP
@@ -31,7 +31,7 @@ use serde::{Deserialize, Serialize};
 /// The protocol identifier identifies what the expected protocol the forwarded msg contains.
 /// Protocol 0 represents SBP and the remaining values are implementation defined.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgFwd {
@@ -96,7 +96,7 @@ impl crate::serialize::SbpSerialize for MsgFwd {
 /// device containing errors, warnings and informational messages at
 /// ERROR, WARNING, DEBUG, INFO logging levels.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgLog {
@@ -154,7 +154,7 @@ impl crate::serialize::SbpSerialize for MsgLog {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgPrintDep {

@@ -17,7 +17,7 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-#[cfg(feature = "serialize")]
+#[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 /// Experimental telemetry message
@@ -26,7 +26,7 @@ use serde::{Deserialize, Serialize};
 /// from a device. It is not produced or available on general Swift Products.
 /// It is intended to be a low rate message for status purposes.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgCsacTelemetry {
@@ -87,7 +87,7 @@ impl crate::serialize::SbpSerialize for MsgCsacTelemetry {
 /// produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
 /// rate than the MSG_CSAC_TELEMETRY.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgCsacTelemetryLabels {
@@ -148,7 +148,7 @@ impl crate::serialize::SbpSerialize for MsgCsacTelemetryLabels {
 /// corrections.  It is expected to be sent with each receipt of a complete
 /// corrections packet.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgDgnssStatus {
@@ -225,7 +225,7 @@ impl crate::serialize::SbpSerialize for MsgDgnssStatus {
 /// occurred in the system. To determine the source of the error,
 /// the remaining error flags should be inspected.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgHeartbeat {
@@ -279,7 +279,7 @@ impl crate::serialize::SbpSerialize for MsgHeartbeat {
 /// The INS status message describes the state of the operation
 /// and initialization of the inertial navigation system.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgInsStatus {
@@ -335,7 +335,7 @@ impl crate::serialize::SbpSerialize for MsgInsStatus {
 /// the system has started and is now ready to respond to commands
 /// or configuration requests.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgStartup {

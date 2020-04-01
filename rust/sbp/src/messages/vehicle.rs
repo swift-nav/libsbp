@@ -17,7 +17,7 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-#[cfg(feature = "serialize")]
+#[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 /// Vehicle forward (x-axis) velocity
@@ -28,7 +28,7 @@ use serde::{Deserialize, Serialize};
 /// There are 4 possible user-defined sources of this message  which are labeled arbitrarily
 /// source 0 through 3.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgOdometry {
@@ -99,7 +99,7 @@ impl crate::serialize::SbpSerialize for MsgOdometry {
 /// The timestamp associated with this message should represent the time when the accumulated
 /// tick count reached the value given by the contents of this message as accurately as possible.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgWheeltick {

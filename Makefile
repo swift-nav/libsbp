@@ -320,9 +320,9 @@ test-haskell:
 
 test-rust:
 	$(call announce-begin,"Running Rust tests")
-	cd $(SWIFTNAV_ROOT)/rust/sbp && cargo test --verbose
+	cargo test --verbose --all-targets
 	$(call announce-begin,"Building Rust examples")
-	cd $(SWIFTNAV_ROOT)/rust/sbp && cargo build --examples --verbose --all-features --all-targets
+	cargo build --examples --verbose --all-features --all-targets
 	$(call announce-end,"Finished running Rust tests")
 
 test-protobuf:
@@ -406,3 +406,6 @@ mapping:
     awk '{printf("%s  %5d  %s\n", $$4, $$4, $$2)}' |\
 		sed 's/:$$//' |\
     sort
+
+benchmark:
+	@PYTHONPATH=$(PWD)/test_data ./test_data/benchmark_main.py

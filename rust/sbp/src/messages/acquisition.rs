@@ -18,7 +18,7 @@ extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
 use super::gnss::*;
-#[cfg(feature = "serialize")]
+#[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 /// Acq perfomance measurement and debug
@@ -27,7 +27,7 @@ use serde::{Deserialize, Serialize};
 /// The message describes SV profile during acquisition time.
 /// The message is used to debug and measure the performance.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct AcqSvProfile {
@@ -130,7 +130,7 @@ impl crate::serialize::SbpSerialize for AcqSvProfile {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct AcqSvProfileDep {
@@ -240,7 +240,7 @@ impl crate::serialize::SbpSerialize for AcqSvProfileDep {
 /// acquisition search space with the best carrier-to-noise (CN/0)
 /// ratio.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResult {
@@ -308,7 +308,7 @@ impl crate::serialize::SbpSerialize for MsgAcqResult {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepA {
@@ -378,7 +378,7 @@ impl crate::serialize::SbpSerialize for MsgAcqResultDepA {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepB {
@@ -447,7 +447,7 @@ impl crate::serialize::SbpSerialize for MsgAcqResultDepB {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepC {
@@ -516,7 +516,7 @@ impl crate::serialize::SbpSerialize for MsgAcqResultDepC {
 /// The message describes all SV profiles during acquisition time.
 /// The message is used to debug and measure the performance.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqSvProfile {
@@ -569,7 +569,7 @@ impl crate::serialize::SbpSerialize for MsgAcqSvProfile {
 ///
 /// Deprecated.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAcqSvProfileDep {

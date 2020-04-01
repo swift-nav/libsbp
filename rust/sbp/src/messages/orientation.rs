@@ -17,7 +17,7 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-#[cfg(feature = "serialize")]
+#[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 /// Vehicle Body Frame instantaneous angular rates
@@ -32,7 +32,7 @@ use serde::{Deserialize, Serialize};
 /// This message will only be available in future INS versions of Swift Products
 /// and is not produced by Piksi Multi or Duro.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgAngularRate {
@@ -108,7 +108,7 @@ impl crate::serialize::SbpSerialize for MsgAngularRate {
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended
 /// that time-matched RTK mode is used when the base station is moving.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineHeading {
@@ -180,7 +180,7 @@ impl crate::serialize::SbpSerialize for MsgBaselineHeading {
 /// to the vehicle body frame.  This message will only be available in future
 /// INS versions of Swift Products and is not produced by Piksi Multi or Duro.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgOrientEuler {
@@ -272,7 +272,7 @@ impl crate::serialize::SbpSerialize for MsgOrientEuler {
 /// be available in future INS versions of Swift Products and is not produced by Piksi Multi
 /// or Duro.
 ///
-#[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct MsgOrientQuat {
