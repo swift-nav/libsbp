@@ -1,5 +1,15 @@
 # Change Log
 
+## [v2.8.0](https://github.com/swift-nav/libsbp/tree/v2.8.0)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.7.7...v2.8.0)
+
+**Merged pull requests:**
+
+- rust: implement sbp2json, json2sbp, json2json \[INFRA-125\] [\#790](https://github.com/swift-nav/libsbp/pull/790)
+- INFRA-137: wrap integer gets in parens [\#789](https://github.com/swift-nav/libsbp/pull/789)
+- rust: nom parsing fix-up for eof error \[INFRA-125\] [\#788](https://github.com/swift-nav/libsbp/pull/788)
+
 ## [v2.7.7](https://github.com/swift-nav/libsbp/tree/v2.7.7)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.7.6...v2.7.7)

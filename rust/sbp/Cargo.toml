@@ -7,7 +7,7 @@
 
 [package]
 name = "sbp"
-version = "2.7.7"
+version = "2.8.0"
 description = "Rust native implementation of SBP (Swift Binary Protocol) for communicating with devices made by Swift Navigation"
 authors = ["Swift Navigation <dev@swiftnav.com>"]
 repository = "https://github.com/swift-nav/libsbp"

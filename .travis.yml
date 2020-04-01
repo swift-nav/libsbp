@@ -5,6 +5,7 @@ sudo: required
 branches:
   only:
     - master
+    - /v\d+\.\d+.\d+/
 
 dist: bionic
 language: generic
@@ -145,6 +146,7 @@ _github_api_key: &_github_api_key
 
 deploy:
   - provider: releases
+    file_glob: true
     file: "haskell/sbp_tools_haskell-*.tar.gz"
     skip_cleanup: true
     "on":
@@ -152,6 +154,7 @@ deploy:
       condition: "$TRAVIS_TARGET = python-haskell"
     <<: *_github_api_key
   - provider: releases
+    file_glob: true
     file: "rust/sbp_tools-*.tar.gz"
     skip_cleanup: true
     "on":
@@ -159,6 +162,7 @@ deploy:
       condition: "$TRAVIS_TARGET = benchmark"
     <<: *_github_api_key
   - provider: releases
+    file_glob: true
     file: "sbp_tools-*.tar.gz"
     skip_cleanup: true
     "on":
@@ -166,6 +170,7 @@ deploy:
       condition: "$TRAVIS_TARGET = osx"
     <<: *_github_api_key
   - provider: releases
+    file_glob: true
     file: "sbp_tools-*.zip"
     skip_cleanup: true
     "on":
