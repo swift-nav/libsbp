@@ -79,6 +79,12 @@ definitions:
         type: u8
         desc: |
             IOD of the SSR atmospheric correction
+    - tile_set_id:
+        type: u8
+        desc: Indicates grid IDs are part of the same generation set
+    - tile_id:
+        type: u16
+        desc: Unique (within a network) identifer for the tile/grid
 
  - GriddedCorrectionHeader:
     short_desc: Header for MSG_SSR_GRIDDED_CORRECTION
@@ -105,6 +111,12 @@ definitions:
         type: u8
         desc: |
             IOD of the SSR atmospheric correction
+    - tile_set_id:
+        type: u8
+        desc: Indicates grid IDs are part of the same generation set
+    - tile_id:
+        type: u16
+        desc: Unique (within a network) identifer for the tile/grid
     - tropo_quality_indicator:
         type: u8
         desc: |
@@ -250,6 +262,12 @@ definitions:
     - lon_nw_corner_enc:
         type: u16
         desc: North-West corner longtitude (deg) = region_size * lon_nw_corner_enc - 180
+    - tile_set_id:
+        type: u8
+        desc: Indicates grid IDs are part of the same generation set
+    - tile_id:
+        type: u16
+        desc: Unique (within a network) identifer for the tile/grid
     - num_msgs:
         type: u8
         desc: Number of messages in the dataset
