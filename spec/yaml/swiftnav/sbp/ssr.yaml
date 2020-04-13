@@ -334,10 +334,10 @@ definitions:
     fields:
     - rows:
         type: u16
-        desc: number of correction points in lattitude
+        desc: number of rows of points (lattitude)
     - cols:
         type: u16
-        desc: number of correction points in longitude
+        desc: number of columns of points (longitude)
     - spacing_lat:
         type: s32
         units: deg = val * (180 / 2^32)
