@@ -180,7 +180,7 @@ definitions:
           Quality of the troposphere data. Encoded following RTCM DF389
           specifcation in units of m.
 
-- STECSatElement:
+ - STECSatElement:
     desc: STEC polynomial for the given satellite.
     fields:
     - sv_id:
@@ -352,7 +352,7 @@ definitions:
         desc: northwest corner lattidue
     - corner_nw_lon:
         type: s32
-        uinits: deg = val * (180 / 2^32)
+        units: deg = val * (180 / 2^32)
         desc: northwest corner longtitude
     - tile_set_id:
         type: u8
