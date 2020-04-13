@@ -346,11 +346,11 @@ definitions:
         type: s32
         units: deg = val * (180 / 2^32)
         desc: spacing between lon correction points
-    - corner_nw_lat_enc:
+    - corner_nw_lat:
         type: s32
         units: deg = val * (180 / 2^32)
         desc: northwest corner lattidue
-    - corner_nw_lon_enc:
+    - corner_nw_lon:
         type: s32
         uinits: deg = val * (180 / 2^32)
         desc: northwest corner longtitude
