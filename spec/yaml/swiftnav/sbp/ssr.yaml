@@ -54,7 +54,7 @@ definitions:
             units: 0.1 mm
             desc: Phase bias for specified signal
 
- - STECHeader_DEP_A:
+ - STECHeaderDepA:
     short_desc: Header for MSG_SSR_STEC_CORRECTION message
     desc: |
       A full set of STEC information will likely span multiple SBP
@@ -112,7 +112,7 @@ definitions:
         type: u16
         desc: Unique (within a network) identifer for the tile/grid
 
- - GriddedCorrectionHeader_DEP_A:
+ - GriddedCorrectionHeaderDepA:
     short_desc: Header for MSG_SSR_GRIDDED_CORRECTION
     desc: |
       The 3GPP message contains nested variable length arrays
@@ -296,7 +296,7 @@ definitions:
         fill: STECResidual
         desc: STEC residuals for each satellite (mean, stddev)
 
- - GridDefinitionHeader_DEP_A:
+ - GridDefinitionHeaderDepA:
     short_desc: Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
     desc: |
       Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
