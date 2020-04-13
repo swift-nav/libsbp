@@ -54,6 +54,32 @@ definitions:
             units: 0.1 mm
             desc: Phase bias for specified signal
 
+ - STECHeader_DEP_A:
+    short_desc: Header for MSG_SSR_STEC_CORRECTION message
+    desc: |
+      A full set of STEC information will likely span multiple SBP
+      messages, since SBP message a limited to 255 bytes.  The header
+      is used to tie multiple SBP messages into a sequence.
+    fields:
+    - time:
+        type: GPSTimeSec
+        desc: GNSS reference time of the correction
+    - num_msgs:
+        type: u8
+        desc: Number of messages in the dataset
+    - seq_num:
+        type: u8
+        desc: Position of this message in the dataset
+    - update_interval:
+        type: u8
+        desc: |
+            Update interval between consecutive corrections. Encoded
+            following RTCM DF391 specification.
+    - iod_atmo:
+        type: u8
+        desc: |
+            IOD of the SSR atmospheric correction
+
  - STECHeader:
     short_desc: Header for MSG_SSR_STEC_CORRECTION message
     desc: |
@@ -85,6 +111,37 @@ definitions:
     - tile_id:
         type: u16
         desc: Unique (within a network) identifer for the tile/grid
+
+ - GriddedCorrectionHeader_DEP_A:
+    short_desc: Header for MSG_SSR_GRIDDED_CORRECTION
+    desc: |
+      The 3GPP message contains nested variable length arrays
+      which are not suppported in SBP, so each grid point will
+      be identified by the index.
+    fields:
+    - time:
+        type: GPSTimeSec
+        desc: GNSS reference time of the correction
+    - num_msgs:
+        type: u16
+        desc: Number of messages in the dataset
+    - seq_num:
+        type: u16
+        desc: Position of this message in the dataset
+    - update_interval:
+        type: u8
+        desc: |
+            Update interval between consecutive corrections. Encoded
+            following RTCM DF391 specification.
+    - iod_atmo:
+        type: u8
+        desc: |
+            IOD of the SSR atmospheric correction
+    - tropo_quality_indicator:
+        type: u8
+        desc: |
+          Quality of the troposphere data. Encoded following RTCM DF389
+          specifcation in units of m.
 
  - GriddedCorrectionHeader:
     short_desc: Header for MSG_SSR_GRIDDED_CORRECTION
@@ -123,7 +180,7 @@ definitions:
           Quality of the troposphere data. Encoded following RTCM DF389
           specifcation in units of m.
 
- - STECSatElement:
+- STECSatElement:
     desc: STEC polynomial for the given satellite.
     fields:
     - sv_id:
@@ -239,7 +296,7 @@ definitions:
         fill: STECResidual
         desc: STEC residuals for each satellite (mean, stddev)
 
- - GridDefinitionHeader:
+ - GridDefinitionHeader_DEP_A:
     short_desc: Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
     desc: |
       Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
@@ -262,6 +319,41 @@ definitions:
     - lon_nw_corner_enc:
         type: u16
         desc: North-West corner longtitude (deg) = region_size * lon_nw_corner_enc - 180
+    - num_msgs:
+        type: u8
+        desc: Number of messages in the dataset
+    - seq_num:
+        type: u8
+        desc: Postion of this message in the dataset
+
+ - GridDefinitionHeader:
+    short_desc: Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
+    desc: |
+      Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
+      Also includes an RLE encoded validity list.
+    fields:
+    - rows:
+        type: u16
+        desc: number of correction points in lattitude
+    - cols:
+        type: u16
+        desc: number of correction points in longitude
+    - spacing_lat:
+        type: s32
+        units: deg = val * (180 / 2^32)
+        desc: spacing between lat corrction points
+    - spacing_lon:
+        type: s32
+        units: deg = val * (180 / 2^32)
+        desc: spacing between lon correction points
+    - corner_nw_lat_enc:
+        type: s32
+        units: deg = val * (180 / 2^32)
+        desc: northwest corner lattidue
+    - corner_nw_lon_enc:
+        type: s32
+        uinits: deg = val * (180 / 2^32)
+        desc: northwest corner longtitude
     - tile_set_id:
         type: u8
         desc: Indicates grid IDs are part of the same generation set
@@ -491,6 +583,23 @@ definitions:
               Phase biases corrections for a
               satellite being tracked.
 
+ - MSG_SSR_STEC_CORRECTION_DEP_A:
+    id: 0x05EB
+    short_desc: Slant Total Electron Content
+    desc: |
+      The STEC per space vehicle, given as polynomial approximation for
+      a given grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION
+      message to get the state space representation of the atmospheric
+      delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
+    fields:
+        - header:
+            type: STECHeader_DEP_A
+            desc: Header of a STEC message
+        - stec_sat_list:
+            type: array
+            fill: STECSatElement
+            desc: Array of STEC information for each space vehicle
+
  - MSG_SSR_STEC_CORRECTION:
     id: 0x05EB
     short_desc: Slant Total Electron Content
@@ -522,6 +631,22 @@ definitions:
             type: GridElementNoStd
             desc: Tropo and STEC residuals for the given grid point
 
+ - MSG_SSR_GRIDDED_CORRECTION_DEP_A:
+    id: 0x05FA
+    short_desc: Gridded troposphere and STEC residuals
+    desc: |
+      STEC residuals are per space vehicle, tropo is not.
+      It is typically equivalent to the QZSS CLAS Sub Type 9 messages
+    fields:
+        - header:
+            type: GriddedCorrectionHeader_DEP_A
+            desc: Header of a Gridded Correction message
+        - element:
+            type: GridElement
+            desc: |
+              Tropo and STEC residuals for the given grid point (mean
+              and standard deviation)
+
  - MSG_SSR_GRIDDED_CORRECTION:
     id: 0x05FA
     short_desc: Gridded troposphere and STEC residuals
@@ -538,7 +663,7 @@ definitions:
               Tropo and STEC residuals for the given grid point (mean
               and standard deviation)
 
- - MSG_SSR_GRID_DEFINITION:
+ - MSG_SSR_GRID_DEFINITION_DEP_A:
     id: 0x05F5
     short_desc: Definition of the grid for STEC and tropo messages
     desc: |
@@ -546,7 +671,7 @@ definitions:
       OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
     fields:
         - header:
-            type: GridDefinitionHeader
+            type: GridDefinitionHeader_DEP_A
             desc: Header of a Gridded Correction message
         - rle_list:
             type: array
@@ -556,3 +681,20 @@ definitions:
               The spec describes the encoding scheme in detail, but
               essentially the index of the quadrants that contain transitions between
               valid and invalid (and vice versa) are encoded as u8 integers.
+
+ - MSG_SSR_GRID_DEFINITION_DEP_A:
+    id: 0x05F5
+    short_desc: Definition of the grid for STEC and tropo messages
+    desc: |
+      Based on the 3GPP proposal R2-1906781 which is in turn based on
+      OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
+    fields:
+        - header:
+            type: GridDefinitionHeader
+            desc: Header of a Gridded Correction message
+        - validity_vector:
+            type: array
+            fill: u8
+            desc: |
+              Bit mask of valid grid points; see 3GPP draft.  If not present,
+              all grid points are valid.
