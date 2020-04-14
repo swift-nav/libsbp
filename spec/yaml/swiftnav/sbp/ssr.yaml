@@ -593,7 +593,7 @@ definitions:
       delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
     fields:
         - header:
-            type: STECHeader_DEP_A
+            type: STECHeaderDepA
             desc: Header of a STEC message
         - stec_sat_list:
             type: array
