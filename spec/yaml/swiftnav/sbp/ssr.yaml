@@ -639,7 +639,7 @@ definitions:
       It is typically equivalent to the QZSS CLAS Sub Type 9 messages
     fields:
         - header:
-            type: GriddedCorrectionHeader_DEP_A
+            type: GriddedCorrectionHeaderDepA
             desc: Header of a Gridded Correction message
         - element:
             type: GridElement
@@ -671,7 +671,7 @@ definitions:
       OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
     fields:
         - header:
-            type: GridDefinitionHeader_DEP_A
+            type: GridDefinitionHeaderDepA
             desc: Header of a Gridded Correction message
         - rle_list:
             type: array
