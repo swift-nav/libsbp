@@ -127,8 +127,8 @@ Increased for every discontinuity in phase.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return PhaseBiasesContent.build(d)
     
-class STECHeader(object):
-  """STECHeader.
+class STECHeaderDepA(object):
+  """STECHeaderDepA.
   
   A full set of STEC information will likely span multiple SBP
 messages, since SBP message a limited to 255 bytes.  The header
@@ -180,6 +180,77 @@ following RTCM DF391 specification.
     return fmt_repr(self)
   
   def from_binary(self, d):
+    p = STECHeaderDepA._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return STECHeaderDepA.build(d)
+    
+class STECHeader(object):
+  """STECHeader.
+  
+  A full set of STEC information will likely span multiple SBP
+messages, since SBP message a limited to 255 bytes.  The header
+is used to tie multiple SBP messages into a sequence.
+
+  
+  Parameters
+  ----------
+  time : GPSTimeSec
+    GNSS reference time of the correction
+  num_msgs : int
+    Number of messages in the dataset
+  seq_num : int
+    Position of this message in the dataset
+  update_interval : int
+    Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+
+  iod_atmo : int
+    IOD of the SSR atmospheric correction
+
+  tile_set_id : int
+    Indicates grid IDs are part of the same generation set
+  tile_id : int
+    Unique (within a network) identifer for the tile/grid
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'time' / construct.Struct(GPSTimeSec._parser),
+                     'num_msgs' / construct.Int8ul,
+                     'seq_num' / construct.Int8ul,
+                     'update_interval' / construct.Int8ul,
+                     'iod_atmo' / construct.Int8ul,
+                     'tile_set_id' / construct.Int8ul,
+                     'tile_id' / construct.Int16ul,))
+  __slots__ = [
+               'time',
+               'num_msgs',
+               'seq_num',
+               'update_interval',
+               'iod_atmo',
+               'tile_set_id',
+               'tile_id',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.time = kwargs.pop('time')
+      self.num_msgs = kwargs.pop('num_msgs')
+      self.seq_num = kwargs.pop('seq_num')
+      self.update_interval = kwargs.pop('update_interval')
+      self.iod_atmo = kwargs.pop('iod_atmo')
+      self.tile_set_id = kwargs.pop('tile_set_id')
+      self.tile_id = kwargs.pop('tile_id')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
     p = STECHeader._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
@@ -188,8 +259,8 @@ following RTCM DF391 specification.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return STECHeader.build(d)
     
-class GriddedCorrectionHeader(object):
-  """GriddedCorrectionHeader.
+class GriddedCorrectionHeaderDepA(object):
+  """GriddedCorrectionHeaderDepA.
   
   The 3GPP message contains nested variable length arrays
 which are not suppported in SBP, so each grid point will
@@ -242,6 +313,84 @@ specifcation in units of m.
       self.seq_num = kwargs.pop('seq_num')
       self.update_interval = kwargs.pop('update_interval')
       self.iod_atmo = kwargs.pop('iod_atmo')
+      self.tropo_quality_indicator = kwargs.pop('tropo_quality_indicator')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = GriddedCorrectionHeaderDepA._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return GriddedCorrectionHeaderDepA.build(d)
+    
+class GriddedCorrectionHeader(object):
+  """GriddedCorrectionHeader.
+  
+  The 3GPP message contains nested variable length arrays
+which are not suppported in SBP, so each grid point will
+be identified by the index.
+
+  
+  Parameters
+  ----------
+  time : GPSTimeSec
+    GNSS reference time of the correction
+  num_msgs : int
+    Number of messages in the dataset
+  seq_num : int
+    Position of this message in the dataset
+  update_interval : int
+    Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+
+  iod_atmo : int
+    IOD of the SSR atmospheric correction
+
+  tile_set_id : int
+    Indicates grid IDs are part of the same generation set
+  tile_id : int
+    Unique (within a network) identifer for the tile/grid
+  tropo_quality_indicator : int
+    Quality of the troposphere data. Encoded following RTCM DF389
+specifcation in units of m.
+
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'time' / construct.Struct(GPSTimeSec._parser),
+                     'num_msgs' / construct.Int16ul,
+                     'seq_num' / construct.Int16ul,
+                     'update_interval' / construct.Int8ul,
+                     'iod_atmo' / construct.Int8ul,
+                     'tile_set_id' / construct.Int8ul,
+                     'tile_id' / construct.Int16ul,
+                     'tropo_quality_indicator' / construct.Int8ul,))
+  __slots__ = [
+               'time',
+               'num_msgs',
+               'seq_num',
+               'update_interval',
+               'iod_atmo',
+               'tile_set_id',
+               'tile_id',
+               'tropo_quality_indicator',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.time = kwargs.pop('time')
+      self.num_msgs = kwargs.pop('num_msgs')
+      self.seq_num = kwargs.pop('seq_num')
+      self.update_interval = kwargs.pop('update_interval')
+      self.iod_atmo = kwargs.pop('iod_atmo')
+      self.tile_set_id = kwargs.pop('tile_set_id')
+      self.tile_id = kwargs.pop('tile_id')
       self.tropo_quality_indicator = kwargs.pop('tropo_quality_indicator')
 
   def __repr__(self):
@@ -573,8 +722,8 @@ stddev) for each satellite at the grid point.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return GridElement.build(d)
     
-class GridDefinitionHeader(object):
-  """GridDefinitionHeader.
+class GridDefinitionHeaderDepA(object):
+  """GridDefinitionHeaderDepA.
   
   Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
 Also includes an RLE encoded validity list.
@@ -624,6 +773,88 @@ Also includes an RLE encoded validity list.
       self.area_width = kwargs.pop('area_width')
       self.lat_nw_corner_enc = kwargs.pop('lat_nw_corner_enc')
       self.lon_nw_corner_enc = kwargs.pop('lon_nw_corner_enc')
+      self.num_msgs = kwargs.pop('num_msgs')
+      self.seq_num = kwargs.pop('seq_num')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = GridDefinitionHeaderDepA._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return GridDefinitionHeaderDepA.build(d)
+    
+class GridDefinitionHeader(object):
+  """GridDefinitionHeader.
+  
+  Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
+Also includes an RLE encoded validity list.
+
+  
+  Parameters
+  ----------
+  rows : int
+    number of rows of points (lattitude)
+  cols : int
+    number of columns of points (longitude)
+  spacing_lat : int
+    spacing between lat corrction points
+  spacing_lon : int
+    spacing between lon correction points
+  corner_nw_lat : int
+    northwest corner lattidue
+  corner_nw_lon : int
+    northwest corner longtitude
+  tile_set_id : int
+    Indicates grid IDs are part of the same generation set
+  tile_id : int
+    Unique (within a network) identifer for the tile/grid
+  num_msgs : int
+    Number of messages in the dataset
+  seq_num : int
+    Postion of this message in the dataset
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'rows' / construct.Int16ul,
+                     'cols' / construct.Int16ul,
+                     'spacing_lat' / construct.Int32sl,
+                     'spacing_lon' / construct.Int32sl,
+                     'corner_nw_lat' / construct.Int32sl,
+                     'corner_nw_lon' / construct.Int32sl,
+                     'tile_set_id' / construct.Int8ul,
+                     'tile_id' / construct.Int16ul,
+                     'num_msgs' / construct.Int8ul,
+                     'seq_num' / construct.Int8ul,))
+  __slots__ = [
+               'rows',
+               'cols',
+               'spacing_lat',
+               'spacing_lon',
+               'corner_nw_lat',
+               'corner_nw_lon',
+               'tile_set_id',
+               'tile_id',
+               'num_msgs',
+               'seq_num',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.rows = kwargs.pop('rows')
+      self.cols = kwargs.pop('cols')
+      self.spacing_lat = kwargs.pop('spacing_lat')
+      self.spacing_lon = kwargs.pop('spacing_lon')
+      self.corner_nw_lat = kwargs.pop('corner_nw_lat')
+      self.corner_nw_lon = kwargs.pop('corner_nw_lon')
+      self.tile_set_id = kwargs.pop('tile_set_id')
+      self.tile_id = kwargs.pop('tile_id')
       self.num_msgs = kwargs.pop('num_msgs')
       self.seq_num = kwargs.pop('seq_num')
 
@@ -1227,6 +1458,104 @@ satellite being tracked.
     d.update(j)
     return d
     
+SBP_MSG_SSR_STEC_CORRECTION_DEP_A = 0x05EB
+class MsgSsrStecCorrectionDepA(SBP):
+  """SBP class for message MSG_SSR_STEC_CORRECTION_DEP_A (0x05EB).
+
+  You can have MSG_SSR_STEC_CORRECTION_DEP_A inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The STEC per space vehicle, given as polynomial approximation for
+a given grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION
+message to get the state space representation of the atmospheric
+delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  header : STECHeaderDepA
+    Header of a STEC message
+  stec_sat_list : array
+    Array of STEC information for each space vehicle
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'header' / construct.Struct(STECHeaderDepA._parser),
+                   construct.GreedyRange('stec_sat_list' / construct.Struct(STECSatElement._parser)),)
+  __slots__ = [
+               'header',
+               'stec_sat_list',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSsrStecCorrectionDepA,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrStecCorrectionDepA, self).__init__()
+      self.msg_type = SBP_MSG_SSR_STEC_CORRECTION_DEP_A
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.header = kwargs.pop('header')
+      self.stec_sat_list = kwargs.pop('stec_sat_list')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrStecCorrectionDepA.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrStecCorrectionDepA(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrStecCorrectionDepA._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrStecCorrectionDepA._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrStecCorrectionDepA._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrStecCorrectionDepA, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_SSR_STEC_CORRECTION = 0x05EB
 class MsgSsrStecCorrection(SBP):
   """SBP class for message MSG_SSR_STEC_CORRECTION (0x05EB).
@@ -1421,6 +1750,104 @@ were added.
     d.update(j)
     return d
     
+SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A = 0x05FA
+class MsgSsrGriddedCorrectionDepA(SBP):
+  """SBP class for message MSG_SSR_GRIDDED_CORRECTION_DEP_A (0x05FA).
+
+  You can have MSG_SSR_GRIDDED_CORRECTION_DEP_A inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  STEC residuals are per space vehicle, tropo is not.
+It is typically equivalent to the QZSS CLAS Sub Type 9 messages
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  header : GriddedCorrectionHeaderDepA
+    Header of a Gridded Correction message
+  element : GridElement
+    Tropo and STEC residuals for the given grid point (mean
+and standard deviation)
+
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'header' / construct.Struct(GriddedCorrectionHeaderDepA._parser),
+                   'element' / construct.Struct(GridElement._parser),)
+  __slots__ = [
+               'header',
+               'element',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSsrGriddedCorrectionDepA,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrGriddedCorrectionDepA, self).__init__()
+      self.msg_type = SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.header = kwargs.pop('header')
+      self.element = kwargs.pop('element')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrGriddedCorrectionDepA.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrGriddedCorrectionDepA(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrGriddedCorrectionDepA._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrGriddedCorrectionDepA._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrGriddedCorrectionDepA._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrGriddedCorrectionDepA, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_SSR_GRIDDED_CORRECTION = 0x05FA
 class MsgSsrGriddedCorrection(SBP):
   """SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
@@ -1519,11 +1946,111 @@ and standard deviation)
     d.update(j)
     return d
     
-SBP_MSG_SSR_GRID_DEFINITION = 0x05F5
-class MsgSsrGridDefinition(SBP):
-  """SBP class for message MSG_SSR_GRID_DEFINITION (0x05F5).
+SBP_MSG_SSR_GRID_DEFINITION_DEP_A = 0x05F5
+class MsgSsrGridDefinitionDepA(SBP):
+  """SBP class for message MSG_SSR_GRID_DEFINITION_DEP_A (0x05F5).
 
-  You can have MSG_SSR_GRID_DEFINITION inherit its fields directly
+  You can have MSG_SSR_GRID_DEFINITION_DEP_A inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Based on the 3GPP proposal R2-1906781 which is in turn based on
+OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  header : GridDefinitionHeaderDepA
+    Header of a Gridded Correction message
+  rle_list : array
+    Run Length Encode list of quadrants that contain valid data.
+The spec describes the encoding scheme in detail, but
+essentially the index of the quadrants that contain transitions between
+valid and invalid (and vice versa) are encoded as u8 integers.
+
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'header' / construct.Struct(GridDefinitionHeaderDepA._parser),
+                   construct.GreedyRange('rle_list' / construct.Int8ul),)
+  __slots__ = [
+               'header',
+               'rle_list',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSsrGridDefinitionDepA,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrGridDefinitionDepA, self).__init__()
+      self.msg_type = SBP_MSG_SSR_GRID_DEFINITION_DEP_A
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.header = kwargs.pop('header')
+      self.rle_list = kwargs.pop('rle_list')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrGridDefinitionDepA.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrGridDefinitionDepA(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrGridDefinitionDepA._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrGridDefinitionDepA._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrGridDefinitionDepA._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrGridDefinitionDepA, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SSR_GRID_DEFINITION_DEP_A = 0x05F5
+class MsgSsrGridDefinitionDepA(SBP):
+  """SBP class for message MSG_SSR_GRID_DEFINITION_DEP_A (0x05F5).
+
+  You can have MSG_SSR_GRID_DEFINITION_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -1538,11 +2065,9 @@ OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
     SBP parent object to inherit from.
   header : GridDefinitionHeader
     Header of a Gridded Correction message
-  rle_list : array
-    Run Length Encode list of quadrants that contain valid data.
-The spec describes the encoding scheme in detail, but
-essentially the index of the quadrants that contain transitions between
-valid and invalid (and vice versa) are encoded as u8 integers.
+  validity_vector : array
+    Bit mask of valid grid points; see 3GPP draft.  If not present,
+all grid points are valid.
 
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
@@ -1550,24 +2075,24 @@ valid and invalid (and vice versa) are encoded as u8 integers.
   """
   _parser = construct.Struct(
                    'header' / construct.Struct(GridDefinitionHeader._parser),
-                   construct.GreedyRange('rle_list' / construct.Int8ul),)
+                   construct.GreedyRange('validity_vector' / construct.Int8ul),)
   __slots__ = [
                'header',
-               'rle_list',
+               'validity_vector',
               ]
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgSsrGridDefinition,
+      super( MsgSsrGridDefinitionDepA,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgSsrGridDefinition, self).__init__()
-      self.msg_type = SBP_MSG_SSR_GRID_DEFINITION
+      super( MsgSsrGridDefinitionDepA, self).__init__()
+      self.msg_type = SBP_MSG_SSR_GRID_DEFINITION_DEP_A
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.header = kwargs.pop('header')
-      self.rle_list = kwargs.pop('rle_list')
+      self.validity_vector = kwargs.pop('validity_vector')
 
   def __repr__(self):
     return fmt_repr(self)
@@ -1578,12 +2103,12 @@ valid and invalid (and vice versa) are encoded as u8 integers.
 
     """
     d = json.loads(s)
-    return MsgSsrGridDefinition.from_json_dict(d)
+    return MsgSsrGridDefinitionDepA.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgSsrGridDefinition(sbp, **d)
+    return MsgSsrGridDefinitionDepA(sbp, **d)
 
  
   def from_binary(self, d):
@@ -1591,7 +2116,7 @@ valid and invalid (and vice versa) are encoded as u8 integers.
     the message.
 
     """
-    p = MsgSsrGridDefinition._parser.parse(d)
+    p = MsgSsrGridDefinitionDepA._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -1600,7 +2125,7 @@ valid and invalid (and vice versa) are encoded as u8 integers.
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgSsrGridDefinition._parser.build(c)
+    self.payload = MsgSsrGridDefinitionDepA._parser.build(c)
     return self.pack()
 
   def into_buffer(self, buf, offset):
@@ -1608,13 +2133,13 @@ valid and invalid (and vice versa) are encoded as u8 integers.
 
     """
     self.payload = containerize(exclude_fields(self))
-    self.parser = MsgSsrGridDefinition._parser
+    self.parser = MsgSsrGridDefinitionDepA._parser
     self.stream_payload.reset(buf, offset)
     return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgSsrGridDefinition, self).to_json_dict()
+    d = super( MsgSsrGridDefinitionDepA, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -1625,8 +2150,11 @@ msg_classes = {
   0x05DC: MsgSsrOrbitClockDepA,
   0x05E1: MsgSsrCodeBiases,
   0x05E6: MsgSsrPhaseBiases,
+  0x05EB: MsgSsrStecCorrectionDepA,
   0x05EB: MsgSsrStecCorrection,
   0x05F0: MsgSsrGriddedCorrectionNoStd,
+  0x05FA: MsgSsrGriddedCorrectionDepA,
   0x05FA: MsgSsrGriddedCorrection,
-  0x05F5: MsgSsrGridDefinition,
+  0x05F5: MsgSsrGridDefinitionDepA,
+  0x05F5: MsgSsrGridDefinitionDepA,
 }

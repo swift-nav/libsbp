@@ -130,10 +130,10 @@ The corrections conform with typical RTCMv3 MT1059 and 1065.
     ret += 4
     return ret
   
-class STECHeader(object):
-  """SBP class for message STECHeader
+class STECHeaderDepA(object):
+  """SBP class for message STECHeaderDepA
 
-  You can have STECHeader inherit its fields directly
+  You can have STECHeaderDepA inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -191,10 +191,83 @@ is used to tie multiple SBP messages into a sequence.
     ret += 1
     return ret
   
-class GriddedCorrectionHeader(object):
-  """SBP class for message GriddedCorrectionHeader
+class STECHeader(object):
+  """SBP class for message STECHeader
 
-  You can have GriddedCorrectionHeader inherit its fields directly
+  You can have STECHeader inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  A full set of STEC information will likely span multiple SBP
+messages, since SBP message a limited to 255 bytes.  The header
+is used to tie multiple SBP messages into a sequence.
+
+
+  """
+  __slots__ = ['time',
+               'num_msgs',
+               'seq_num',
+               'update_interval',
+               'iod_atmo',
+               'tile_set_id',
+               'tile_id',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__time, offset, length) = GPSTimeSec.parse_members(buf, offset, length)
+    ret['time'] = __time
+    (__num_msgs, offset, length) = get_u8(buf, offset, length)
+    ret['num_msgs'] = __num_msgs
+    (__seq_num, offset, length) = get_u8(buf, offset, length)
+    ret['seq_num'] = __seq_num
+    (__update_interval, offset, length) = get_u8(buf, offset, length)
+    ret['update_interval'] = __update_interval
+    (__iod_atmo, offset, length) = get_u8(buf, offset, length)
+    ret['iod_atmo'] = __iod_atmo
+    (__tile_set_id, offset, length) = get_u8(buf, offset, length)
+    ret['tile_set_id'] = __tile_set_id
+    (__tile_id, offset, length) = get_u16(buf, offset, length)
+    ret['tile_id'] = __tile_id
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.time = res['time']
+    self.num_msgs = res['num_msgs']
+    self.seq_num = res['seq_num']
+    self.update_interval = res['update_interval']
+    self.iod_atmo = res['iod_atmo']
+    self.tile_set_id = res['tile_set_id']
+    self.tile_id = res['tile_id']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # time: GPSTimeSec
+    ret += GPSTimeSec._payload_size()
+    # num_msgs: u8
+    ret += 1
+    # seq_num: u8
+    ret += 1
+    # update_interval: u8
+    ret += 1
+    # iod_atmo: u8
+    ret += 1
+    # tile_set_id: u8
+    ret += 1
+    # tile_id: u16
+    ret += 2
+    return ret
+  
+class GriddedCorrectionHeaderDepA(object):
+  """SBP class for message GriddedCorrectionHeaderDepA
+
+  You can have GriddedCorrectionHeaderDepA inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -254,6 +327,85 @@ be identified by the index.
     ret += 1
     # iod_atmo: u8
     ret += 1
+    # tropo_quality_indicator: u8
+    ret += 1
+    return ret
+  
+class GriddedCorrectionHeader(object):
+  """SBP class for message GriddedCorrectionHeader
+
+  You can have GriddedCorrectionHeader inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The 3GPP message contains nested variable length arrays
+which are not suppported in SBP, so each grid point will
+be identified by the index.
+
+
+  """
+  __slots__ = ['time',
+               'num_msgs',
+               'seq_num',
+               'update_interval',
+               'iod_atmo',
+               'tile_set_id',
+               'tile_id',
+               'tropo_quality_indicator',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__time, offset, length) = GPSTimeSec.parse_members(buf, offset, length)
+    ret['time'] = __time
+    (__num_msgs, offset, length) = get_u16(buf, offset, length)
+    ret['num_msgs'] = __num_msgs
+    (__seq_num, offset, length) = get_u16(buf, offset, length)
+    ret['seq_num'] = __seq_num
+    (__update_interval, offset, length) = get_u8(buf, offset, length)
+    ret['update_interval'] = __update_interval
+    (__iod_atmo, offset, length) = get_u8(buf, offset, length)
+    ret['iod_atmo'] = __iod_atmo
+    (__tile_set_id, offset, length) = get_u8(buf, offset, length)
+    ret['tile_set_id'] = __tile_set_id
+    (__tile_id, offset, length) = get_u16(buf, offset, length)
+    ret['tile_id'] = __tile_id
+    (__tropo_quality_indicator, offset, length) = get_u8(buf, offset, length)
+    ret['tropo_quality_indicator'] = __tropo_quality_indicator
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.time = res['time']
+    self.num_msgs = res['num_msgs']
+    self.seq_num = res['seq_num']
+    self.update_interval = res['update_interval']
+    self.iod_atmo = res['iod_atmo']
+    self.tile_set_id = res['tile_set_id']
+    self.tile_id = res['tile_id']
+    self.tropo_quality_indicator = res['tropo_quality_indicator']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # time: GPSTimeSec
+    ret += GPSTimeSec._payload_size()
+    # num_msgs: u16
+    ret += 2
+    # seq_num: u16
+    ret += 2
+    # update_interval: u8
+    ret += 1
+    # iod_atmo: u8
+    ret += 1
+    # tile_set_id: u8
+    ret += 1
+    # tile_id: u16
+    ret += 2
     # tropo_quality_indicator: u8
     ret += 1
     return ret
@@ -577,10 +729,10 @@ stddev) for each satellite at the grid point.
     ret += 247
     return ret
   
-class GridDefinitionHeader(object):
-  """SBP class for message GridDefinitionHeader
+class GridDefinitionHeaderDepA(object):
+  """SBP class for message GridDefinitionHeaderDepA
 
-  You can have GridDefinitionHeader inherit its fields directly
+  You can have GridDefinitionHeaderDepA inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -636,6 +788,96 @@ Also includes an RLE encoded validity list.
     # lat_nw_corner_enc: u16
     ret += 2
     # lon_nw_corner_enc: u16
+    ret += 2
+    # num_msgs: u8
+    ret += 1
+    # seq_num: u8
+    ret += 1
+    return ret
+  
+class GridDefinitionHeader(object):
+  """SBP class for message GridDefinitionHeader
+
+  You can have GridDefinitionHeader inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
+Also includes an RLE encoded validity list.
+
+
+  """
+  __slots__ = ['rows',
+               'cols',
+               'spacing_lat',
+               'spacing_lon',
+               'corner_nw_lat',
+               'corner_nw_lon',
+               'tile_set_id',
+               'tile_id',
+               'num_msgs',
+               'seq_num',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__rows, offset, length) = get_u16(buf, offset, length)
+    ret['rows'] = __rows
+    (__cols, offset, length) = get_u16(buf, offset, length)
+    ret['cols'] = __cols
+    (__spacing_lat, offset, length) = get_s32(buf, offset, length)
+    ret['spacing_lat'] = __spacing_lat
+    (__spacing_lon, offset, length) = get_s32(buf, offset, length)
+    ret['spacing_lon'] = __spacing_lon
+    (__corner_nw_lat, offset, length) = get_s32(buf, offset, length)
+    ret['corner_nw_lat'] = __corner_nw_lat
+    (__corner_nw_lon, offset, length) = get_s32(buf, offset, length)
+    ret['corner_nw_lon'] = __corner_nw_lon
+    (__tile_set_id, offset, length) = get_u8(buf, offset, length)
+    ret['tile_set_id'] = __tile_set_id
+    (__tile_id, offset, length) = get_u16(buf, offset, length)
+    ret['tile_id'] = __tile_id
+    (__num_msgs, offset, length) = get_u8(buf, offset, length)
+    ret['num_msgs'] = __num_msgs
+    (__seq_num, offset, length) = get_u8(buf, offset, length)
+    ret['seq_num'] = __seq_num
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.rows = res['rows']
+    self.cols = res['cols']
+    self.spacing_lat = res['spacing_lat']
+    self.spacing_lon = res['spacing_lon']
+    self.corner_nw_lat = res['corner_nw_lat']
+    self.corner_nw_lon = res['corner_nw_lon']
+    self.tile_set_id = res['tile_set_id']
+    self.tile_id = res['tile_id']
+    self.num_msgs = res['num_msgs']
+    self.seq_num = res['seq_num']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # rows: u16
+    ret += 2
+    # cols: u16
+    ret += 2
+    # spacing_lat: s32
+    ret += 4
+    # spacing_lon: s32
+    ret += 4
+    # corner_nw_lat: s32
+    ret += 4
+    # corner_nw_lon: s32
+    ret += 4
+    # tile_set_id: u8
+    ret += 1
+    # tile_id: u16
     ret += 2
     # num_msgs: u8
     ret += 1
@@ -1029,6 +1271,51 @@ It is typically an equivalent to the 1265 RTCM message types
     ret += 247
     return ret
   
+SBP_MSG_SSR_STEC_CORRECTION_DEP_A = 0x05EB
+class MsgSsrStecCorrectionDepA(SBP):
+  """SBP class for message MSG_SSR_STEC_CORRECTION_DEP_A (0x05EB).
+
+  You can have MSG_SSR_STEC_CORRECTION_DEP_A inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The STEC per space vehicle, given as polynomial approximation for
+a given grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION
+message to get the state space representation of the atmospheric
+delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
+
+
+  """
+  __slots__ = ['header',
+               'stec_sat_list',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__header, offset, length) = STECHeaderDepA.parse_members(buf, offset, length)
+    ret['header'] = __header
+    (__stec_sat_list, offset, length) = get_array(STECSatElement.parse_members)(buf, offset, length)
+    ret['stec_sat_list'] = __stec_sat_list
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.header = res['header']
+    self.stec_sat_list = res['stec_sat_list']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # header: STECHeaderDepA
+    ret += STECHeaderDepA._payload_size()
+    # stec_sat_list: array of STECSatElement
+    ret += 247
+    return ret
+  
 SBP_MSG_SSR_STEC_CORRECTION = 0x05EB
 class MsgSsrStecCorrection(SBP):
   """SBP class for message MSG_SSR_STEC_CORRECTION (0x05EB).
@@ -1117,6 +1404,49 @@ were added.
     ret += GridElementNoStd._payload_size()
     return ret
   
+SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A = 0x05FA
+class MsgSsrGriddedCorrectionDepA(SBP):
+  """SBP class for message MSG_SSR_GRIDDED_CORRECTION_DEP_A (0x05FA).
+
+  You can have MSG_SSR_GRIDDED_CORRECTION_DEP_A inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  STEC residuals are per space vehicle, tropo is not.
+It is typically equivalent to the QZSS CLAS Sub Type 9 messages
+
+
+  """
+  __slots__ = ['header',
+               'element',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__header, offset, length) = GriddedCorrectionHeaderDepA.parse_members(buf, offset, length)
+    ret['header'] = __header
+    (__element, offset, length) = GridElement.parse_members(buf, offset, length)
+    ret['element'] = __element
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.header = res['header']
+    self.element = res['element']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # header: GriddedCorrectionHeaderDepA
+    ret += GriddedCorrectionHeaderDepA._payload_size()
+    # element: GridElement
+    ret += GridElement._payload_size()
+    return ret
+  
 SBP_MSG_SSR_GRIDDED_CORRECTION = 0x05FA
 class MsgSsrGriddedCorrection(SBP):
   """SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
@@ -1160,11 +1490,11 @@ It is typically equivalent to the QZSS CLAS Sub Type 9 messages
     ret += GridElement._payload_size()
     return ret
   
-SBP_MSG_SSR_GRID_DEFINITION = 0x05F5
-class MsgSsrGridDefinition(SBP):
-  """SBP class for message MSG_SSR_GRID_DEFINITION (0x05F5).
+SBP_MSG_SSR_GRID_DEFINITION_DEP_A = 0x05F5
+class MsgSsrGridDefinitionDepA(SBP):
+  """SBP class for message MSG_SSR_GRID_DEFINITION_DEP_A (0x05F5).
 
-  You can have MSG_SSR_GRID_DEFINITION inherit its fields directly
+  You can have MSG_SSR_GRID_DEFINITION_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -1180,7 +1510,7 @@ OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
   @classmethod
   def parse_members(cls, buf, offset, length):
     ret = {}
-    (__header, offset, length) = GridDefinitionHeader.parse_members(buf, offset, length)
+    (__header, offset, length) = GridDefinitionHeaderDepA.parse_members(buf, offset, length)
     ret['header'] = __header
     (__rle_list, offset, length) = get_array(get_u8)(buf, offset, length)
     ret['rle_list'] = __rle_list
@@ -1197,9 +1527,52 @@ OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
   @classmethod
   def _payload_size(self):
     ret = 0
+    # header: GridDefinitionHeaderDepA
+    ret += GridDefinitionHeaderDepA._payload_size()
+    # rle_list: array of u8
+    ret += 247
+    return ret
+  
+SBP_MSG_SSR_GRID_DEFINITION_DEP_A = 0x05F5
+class MsgSsrGridDefinitionDepA(SBP):
+  """SBP class for message MSG_SSR_GRID_DEFINITION_DEP_A (0x05F5).
+
+  You can have MSG_SSR_GRID_DEFINITION_DEP_A inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Based on the 3GPP proposal R2-1906781 which is in turn based on
+OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
+
+
+  """
+  __slots__ = ['header',
+               'validity_vector',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__header, offset, length) = GridDefinitionHeader.parse_members(buf, offset, length)
+    ret['header'] = __header
+    (__validity_vector, offset, length) = get_array(get_u8)(buf, offset, length)
+    ret['validity_vector'] = __validity_vector
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.header = res['header']
+    self.validity_vector = res['validity_vector']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
     # header: GridDefinitionHeader
     ret += GridDefinitionHeader._payload_size()
-    # rle_list: array of u8
+    # validity_vector: array of u8
     ret += 247
     return ret
   
@@ -1209,8 +1582,11 @@ msg_classes = {
   0x05DC: MsgSsrOrbitClockDepA,
   0x05E1: MsgSsrCodeBiases,
   0x05E6: MsgSsrPhaseBiases,
+  0x05EB: MsgSsrStecCorrectionDepA,
   0x05EB: MsgSsrStecCorrection,
   0x05F0: MsgSsrGriddedCorrectionNoStd,
+  0x05FA: MsgSsrGriddedCorrectionDepA,
   0x05FA: MsgSsrGriddedCorrection,
-  0x05F5: MsgSsrGridDefinition,
+  0x05F5: MsgSsrGridDefinitionDepA,
+  0x05F5: MsgSsrGridDefinitionDepA,
 }
