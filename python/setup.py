@@ -55,13 +55,13 @@ def _read_release_version():
 
 def read_release_version():
     major, minor, patch = _read_release_version().split('.')
-    return (int(major), int(minor), int(patch))
+    return (int(major), int(minor), patch)
 
 
 MAJOR, MINOR, PATCH = read_release_version()
 IS_RELEASED = os.environ.get('IS_RELEASED', '') != ''
 
-VERSION = '%d.%d.%d' % (MAJOR, MINOR, PATCH)
+VERSION = '%d.%d.%s' % (MAJOR, MINOR, PATCH)
 
 VERSION_PY_TEMPLATE = """\
 # THIS FILE IS GENERATED FROM TRAITS SETUP.PY
