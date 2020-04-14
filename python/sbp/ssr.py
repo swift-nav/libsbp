@@ -1556,9 +1556,9 @@ delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
     d.update(j)
     return d
     
-SBP_MSG_SSR_STEC_CORRECTION = 0x05EB
+SBP_MSG_SSR_STEC_CORRECTION = 0x05EC
 class MsgSsrStecCorrection(SBP):
-  """SBP class for message MSG_SSR_STEC_CORRECTION (0x05EB).
+  """SBP class for message MSG_SSR_STEC_CORRECTION (0x05EC).
 
   You can have MSG_SSR_STEC_CORRECTION inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -1848,9 +1848,9 @@ and standard deviation)
     d.update(j)
     return d
     
-SBP_MSG_SSR_GRIDDED_CORRECTION = 0x05FA
+SBP_MSG_SSR_GRIDDED_CORRECTION = 0x05FB
 class MsgSsrGriddedCorrection(SBP):
-  """SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
+  """SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FB).
 
   You can have MSG_SSR_GRIDDED_CORRECTION inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -2046,11 +2046,11 @@ valid and invalid (and vice versa) are encoded as u8 integers.
     d.update(j)
     return d
     
-SBP_MSG_SSR_GRID_DEFINITION_DEP_A = 0x05F5
-class MsgSsrGridDefinitionDepA(SBP):
-  """SBP class for message MSG_SSR_GRID_DEFINITION_DEP_A (0x05F5).
+SBP_MSG_SSR_GRID_DEFINITION = 0x05F6
+class MsgSsrGridDefinition(SBP):
+  """SBP class for message MSG_SSR_GRID_DEFINITION (0x05F6).
 
-  You can have MSG_SSR_GRID_DEFINITION_DEP_A inherit its fields directly
+  You can have MSG_SSR_GRID_DEFINITION inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -2083,13 +2083,13 @@ all grid points are valid.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgSsrGridDefinitionDepA,
+      super( MsgSsrGridDefinition,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgSsrGridDefinitionDepA, self).__init__()
-      self.msg_type = SBP_MSG_SSR_GRID_DEFINITION_DEP_A
+      super( MsgSsrGridDefinition, self).__init__()
+      self.msg_type = SBP_MSG_SSR_GRID_DEFINITION
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.header = kwargs.pop('header')
       self.validity_vector = kwargs.pop('validity_vector')
@@ -2103,12 +2103,12 @@ all grid points are valid.
 
     """
     d = json.loads(s)
-    return MsgSsrGridDefinitionDepA.from_json_dict(d)
+    return MsgSsrGridDefinition.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgSsrGridDefinitionDepA(sbp, **d)
+    return MsgSsrGridDefinition(sbp, **d)
 
  
   def from_binary(self, d):
@@ -2116,7 +2116,7 @@ all grid points are valid.
     the message.
 
     """
-    p = MsgSsrGridDefinitionDepA._parser.parse(d)
+    p = MsgSsrGridDefinition._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -2125,7 +2125,7 @@ all grid points are valid.
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgSsrGridDefinitionDepA._parser.build(c)
+    self.payload = MsgSsrGridDefinition._parser.build(c)
     return self.pack()
 
   def into_buffer(self, buf, offset):
@@ -2133,13 +2133,13 @@ all grid points are valid.
 
     """
     self.payload = containerize(exclude_fields(self))
-    self.parser = MsgSsrGridDefinitionDepA._parser
+    self.parser = MsgSsrGridDefinition._parser
     self.stream_payload.reset(buf, offset)
     return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgSsrGridDefinitionDepA, self).to_json_dict()
+    d = super( MsgSsrGridDefinition, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -2151,10 +2151,10 @@ msg_classes = {
   0x05E1: MsgSsrCodeBiases,
   0x05E6: MsgSsrPhaseBiases,
   0x05EB: MsgSsrStecCorrectionDepA,
-  0x05EB: MsgSsrStecCorrection,
+  0x05EC: MsgSsrStecCorrection,
   0x05F0: MsgSsrGriddedCorrectionNoStd,
   0x05FA: MsgSsrGriddedCorrectionDepA,
-  0x05FA: MsgSsrGriddedCorrection,
+  0x05FB: MsgSsrGriddedCorrection,
   0x05F5: MsgSsrGridDefinitionDepA,
-  0x05F5: MsgSsrGridDefinitionDepA,
+  0x05F6: MsgSsrGridDefinition,
 }

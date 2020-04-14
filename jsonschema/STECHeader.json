@@ -20,13 +20,17 @@
     "num_msgs": {"type": "integer"},
     "seq_num": {"type": "integer"},
     "update_interval": {"type": "integer"},
-    "iod_atmo": {"type": "integer"}
+    "iod_atmo": {"type": "integer"},
+    "tile_set_id": {"type": "integer"},
+    "tile_id": {"type": "integer"}
   },
   "required": [
     "time",
     "num_msgs",
     "seq_num",
     "update_interval",
-    "iod_atmo"
+    "iod_atmo",
+    "tile_set_id",
+    "tile_id"
   ]
 }

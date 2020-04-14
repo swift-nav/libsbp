@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_SSR_STEC_CORRECTION (0x05EB).
+/** SBP class for message MSG_SSR_STEC_CORRECTION (0x05EC).
  *
  * You can have MSG_SSR_STEC_CORRECTION inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -35,7 +35,7 @@ import org.json.JSONArray;
  * delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages */
 
 public class MsgSsrStecCorrection extends SBPMessage {
-    public static final int TYPE = 0x05EB;
+    public static final int TYPE = 0x05EC;
 
     
     /** Header of a STEC message */

@@ -21,6 +21,8 @@
     "seq_num": {"type": "integer"},
     "update_interval": {"type": "integer"},
     "iod_atmo": {"type": "integer"},
+    "tile_set_id": {"type": "integer"},
+    "tile_id": {"type": "integer"},
     "tropo_quality_indicator": {"type": "integer"}
   },
   "required": [
@@ -29,6 +31,8 @@
     "seq_num",
     "update_interval",
     "iod_atmo",
+    "tile_set_id",
+    "tile_id",
     "tropo_quality_indicator"
   ]
 }

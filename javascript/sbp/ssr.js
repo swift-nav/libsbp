@@ -101,6 +101,47 @@ PhaseBiasesContent.prototype.fieldSpec.push(['discontinuity_counter', 'writeUInt
 PhaseBiasesContent.prototype.fieldSpec.push(['bias', 'writeInt32LE', 4]);
 
 /**
+ * SBP class for message fragment STECHeaderDepA
+ *
+ * A full set of STEC information will likely span multiple SBP messages, since SBP
+ * message a limited to 255 bytes.  The header is used to tie multiple SBP messages
+ * into a sequence.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field time GPSTimeSec GNSS reference time of the correction
+ * @field num_msgs number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
+ * @field seq_num number (unsigned 8-bit int, 1 byte) Position of this message in the dataset
+ * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections. Encoded following RTCM DF391
+ *   specification.
+ * @field iod_atmo number (unsigned 8-bit int, 1 byte) IOD of the SSR atmospheric correction
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var STECHeaderDepA = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "STECHeaderDepA";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+STECHeaderDepA.prototype = Object.create(SBP.prototype);
+STECHeaderDepA.prototype.messageType = "STECHeaderDepA";
+STECHeaderDepA.prototype.constructor = STECHeaderDepA;
+STECHeaderDepA.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('time', { type: GPSTimeSec.prototype.parser })
+  .uint8('num_msgs')
+  .uint8('seq_num')
+  .uint8('update_interval')
+  .uint8('iod_atmo');
+STECHeaderDepA.prototype.fieldSpec = [];
+STECHeaderDepA.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
+STECHeaderDepA.prototype.fieldSpec.push(['num_msgs', 'writeUInt8', 1]);
+STECHeaderDepA.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
+STECHeaderDepA.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
+STECHeaderDepA.prototype.fieldSpec.push(['iod_atmo', 'writeUInt8', 1]);
+
+/**
  * SBP class for message fragment STECHeader
  *
  * A full set of STEC information will likely span multiple SBP messages, since SBP
@@ -114,6 +155,8 @@ PhaseBiasesContent.prototype.fieldSpec.push(['bias', 'writeInt32LE', 4]);
  * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections. Encoded following RTCM DF391
  *   specification.
  * @field iod_atmo number (unsigned 8-bit int, 1 byte) IOD of the SSR atmospheric correction
+ * @field tile_set_id number (unsigned 8-bit int, 1 byte) Indicates grid IDs are part of the same generation set
+ * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique (within a network) identifer for the tile/grid
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -133,13 +176,61 @@ STECHeader.prototype.parser = new Parser()
   .uint8('num_msgs')
   .uint8('seq_num')
   .uint8('update_interval')
-  .uint8('iod_atmo');
+  .uint8('iod_atmo')
+  .uint8('tile_set_id')
+  .uint16('tile_id');
 STECHeader.prototype.fieldSpec = [];
 STECHeader.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
 STECHeader.prototype.fieldSpec.push(['num_msgs', 'writeUInt8', 1]);
 STECHeader.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
 STECHeader.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
 STECHeader.prototype.fieldSpec.push(['iod_atmo', 'writeUInt8', 1]);
+STECHeader.prototype.fieldSpec.push(['tile_set_id', 'writeUInt8', 1]);
+STECHeader.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
+
+/**
+ * SBP class for message fragment GriddedCorrectionHeaderDepA
+ *
+ * The 3GPP message contains nested variable length arrays which are not suppported
+ * in SBP, so each grid point will be identified by the index.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field time GPSTimeSec GNSS reference time of the correction
+ * @field num_msgs number (unsigned 16-bit int, 2 bytes) Number of messages in the dataset
+ * @field seq_num number (unsigned 16-bit int, 2 bytes) Position of this message in the dataset
+ * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections. Encoded following RTCM DF391
+ *   specification.
+ * @field iod_atmo number (unsigned 8-bit int, 1 byte) IOD of the SSR atmospheric correction
+ * @field tropo_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the troposphere data. Encoded following RTCM DF389 specifcation in
+ *   units of m.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var GriddedCorrectionHeaderDepA = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "GriddedCorrectionHeaderDepA";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+GriddedCorrectionHeaderDepA.prototype = Object.create(SBP.prototype);
+GriddedCorrectionHeaderDepA.prototype.messageType = "GriddedCorrectionHeaderDepA";
+GriddedCorrectionHeaderDepA.prototype.constructor = GriddedCorrectionHeaderDepA;
+GriddedCorrectionHeaderDepA.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('time', { type: GPSTimeSec.prototype.parser })
+  .uint16('num_msgs')
+  .uint16('seq_num')
+  .uint8('update_interval')
+  .uint8('iod_atmo')
+  .uint8('tropo_quality_indicator');
+GriddedCorrectionHeaderDepA.prototype.fieldSpec = [];
+GriddedCorrectionHeaderDepA.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
+GriddedCorrectionHeaderDepA.prototype.fieldSpec.push(['num_msgs', 'writeUInt16LE', 2]);
+GriddedCorrectionHeaderDepA.prototype.fieldSpec.push(['seq_num', 'writeUInt16LE', 2]);
+GriddedCorrectionHeaderDepA.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
+GriddedCorrectionHeaderDepA.prototype.fieldSpec.push(['iod_atmo', 'writeUInt8', 1]);
+GriddedCorrectionHeaderDepA.prototype.fieldSpec.push(['tropo_quality_indicator', 'writeUInt8', 1]);
 
 /**
  * SBP class for message fragment GriddedCorrectionHeader
@@ -154,6 +245,8 @@ STECHeader.prototype.fieldSpec.push(['iod_atmo', 'writeUInt8', 1]);
  * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections. Encoded following RTCM DF391
  *   specification.
  * @field iod_atmo number (unsigned 8-bit int, 1 byte) IOD of the SSR atmospheric correction
+ * @field tile_set_id number (unsigned 8-bit int, 1 byte) Indicates grid IDs are part of the same generation set
+ * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique (within a network) identifer for the tile/grid
  * @field tropo_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the troposphere data. Encoded following RTCM DF389 specifcation in
  *   units of m.
  *
@@ -176,6 +269,8 @@ GriddedCorrectionHeader.prototype.parser = new Parser()
   .uint16('seq_num')
   .uint8('update_interval')
   .uint8('iod_atmo')
+  .uint8('tile_set_id')
+  .uint16('tile_id')
   .uint8('tropo_quality_indicator');
 GriddedCorrectionHeader.prototype.fieldSpec = [];
 GriddedCorrectionHeader.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
@@ -183,6 +278,8 @@ GriddedCorrectionHeader.prototype.fieldSpec.push(['num_msgs', 'writeUInt16LE', 2
 GriddedCorrectionHeader.prototype.fieldSpec.push(['seq_num', 'writeUInt16LE', 2]);
 GriddedCorrectionHeader.prototype.fieldSpec.push(['update_interval', 'writeUInt8', 1]);
 GriddedCorrectionHeader.prototype.fieldSpec.push(['iod_atmo', 'writeUInt8', 1]);
+GriddedCorrectionHeader.prototype.fieldSpec.push(['tile_set_id', 'writeUInt8', 1]);
+GriddedCorrectionHeader.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
 GriddedCorrectionHeader.prototype.fieldSpec.push(['tropo_quality_indicator', 'writeUInt8', 1]);
 
 /**
@@ -408,7 +505,7 @@ GridElement.prototype.fieldSpec.push(['tropo_delay_correction', TroposphericDela
 GridElement.prototype.fieldSpec.push(['stec_residuals', 'array', STECResidual.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
- * SBP class for message fragment GridDefinitionHeader
+ * SBP class for message fragment GridDefinitionHeaderDepA
  *
  * Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages. Also includes an RLE
  * encoded validity list.
@@ -419,6 +516,52 @@ GridElement.prototype.fieldSpec.push(['stec_residuals', 'array', STECResidual.pr
  *   value.
  * @field lat_nw_corner_enc number (unsigned 16-bit int, 2 bytes) North-West corner latitdue (deg) = region_size * lat_nw_corner_enc - 90
  * @field lon_nw_corner_enc number (unsigned 16-bit int, 2 bytes) North-West corner longtitude (deg) = region_size * lon_nw_corner_enc - 180
+ * @field num_msgs number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
+ * @field seq_num number (unsigned 8-bit int, 1 byte) Postion of this message in the dataset
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var GridDefinitionHeaderDepA = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "GridDefinitionHeaderDepA";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+GridDefinitionHeaderDepA.prototype = Object.create(SBP.prototype);
+GridDefinitionHeaderDepA.prototype.messageType = "GridDefinitionHeaderDepA";
+GridDefinitionHeaderDepA.prototype.constructor = GridDefinitionHeaderDepA;
+GridDefinitionHeaderDepA.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('region_size_inverse')
+  .uint16('area_width')
+  .uint16('lat_nw_corner_enc')
+  .uint16('lon_nw_corner_enc')
+  .uint8('num_msgs')
+  .uint8('seq_num');
+GridDefinitionHeaderDepA.prototype.fieldSpec = [];
+GridDefinitionHeaderDepA.prototype.fieldSpec.push(['region_size_inverse', 'writeUInt8', 1]);
+GridDefinitionHeaderDepA.prototype.fieldSpec.push(['area_width', 'writeUInt16LE', 2]);
+GridDefinitionHeaderDepA.prototype.fieldSpec.push(['lat_nw_corner_enc', 'writeUInt16LE', 2]);
+GridDefinitionHeaderDepA.prototype.fieldSpec.push(['lon_nw_corner_enc', 'writeUInt16LE', 2]);
+GridDefinitionHeaderDepA.prototype.fieldSpec.push(['num_msgs', 'writeUInt8', 1]);
+GridDefinitionHeaderDepA.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message fragment GridDefinitionHeader
+ *
+ * Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages. Also includes an RLE
+ * encoded validity list.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field rows number (unsigned 16-bit int, 2 bytes) number of rows of points (lattitude)
+ * @field cols number (unsigned 16-bit int, 2 bytes) number of columns of points (longitude)
+ * @field spacing_lat number (signed 32-bit int, 4 bytes) spacing between lat corrction points
+ * @field spacing_lon number (signed 32-bit int, 4 bytes) spacing between lon correction points
+ * @field corner_nw_lat number (signed 32-bit int, 4 bytes) northwest corner lattidue
+ * @field corner_nw_lon number (signed 32-bit int, 4 bytes) northwest corner longtitude
+ * @field tile_set_id number (unsigned 8-bit int, 1 byte) Indicates grid IDs are part of the same generation set
+ * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique (within a network) identifer for the tile/grid
  * @field num_msgs number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
  * @field seq_num number (unsigned 8-bit int, 1 byte) Postion of this message in the dataset
  *
@@ -436,17 +579,25 @@ GridDefinitionHeader.prototype.messageType = "GridDefinitionHeader";
 GridDefinitionHeader.prototype.constructor = GridDefinitionHeader;
 GridDefinitionHeader.prototype.parser = new Parser()
   .endianess('little')
-  .uint8('region_size_inverse')
-  .uint16('area_width')
-  .uint16('lat_nw_corner_enc')
-  .uint16('lon_nw_corner_enc')
+  .uint16('rows')
+  .uint16('cols')
+  .int32('spacing_lat')
+  .int32('spacing_lon')
+  .int32('corner_nw_lat')
+  .int32('corner_nw_lon')
+  .uint8('tile_set_id')
+  .uint16('tile_id')
   .uint8('num_msgs')
   .uint8('seq_num');
 GridDefinitionHeader.prototype.fieldSpec = [];
-GridDefinitionHeader.prototype.fieldSpec.push(['region_size_inverse', 'writeUInt8', 1]);
-GridDefinitionHeader.prototype.fieldSpec.push(['area_width', 'writeUInt16LE', 2]);
-GridDefinitionHeader.prototype.fieldSpec.push(['lat_nw_corner_enc', 'writeUInt16LE', 2]);
-GridDefinitionHeader.prototype.fieldSpec.push(['lon_nw_corner_enc', 'writeUInt16LE', 2]);
+GridDefinitionHeader.prototype.fieldSpec.push(['rows', 'writeUInt16LE', 2]);
+GridDefinitionHeader.prototype.fieldSpec.push(['cols', 'writeUInt16LE', 2]);
+GridDefinitionHeader.prototype.fieldSpec.push(['spacing_lat', 'writeInt32LE', 4]);
+GridDefinitionHeader.prototype.fieldSpec.push(['spacing_lon', 'writeInt32LE', 4]);
+GridDefinitionHeader.prototype.fieldSpec.push(['corner_nw_lat', 'writeInt32LE', 4]);
+GridDefinitionHeader.prototype.fieldSpec.push(['corner_nw_lon', 'writeInt32LE', 4]);
+GridDefinitionHeader.prototype.fieldSpec.push(['tile_set_id', 'writeUInt8', 1]);
+GridDefinitionHeader.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
 GridDefinitionHeader.prototype.fieldSpec.push(['num_msgs', 'writeUInt8', 1]);
 GridDefinitionHeader.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
 
@@ -690,7 +841,40 @@ MsgSsrPhaseBiases.prototype.fieldSpec.push(['yaw_rate', 'writeInt8', 1]);
 MsgSsrPhaseBiases.prototype.fieldSpec.push(['biases', 'array', PhaseBiasesContent.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
- * SBP class for message MSG_SSR_STEC_CORRECTION (0x05EB).
+ * SBP class for message MSG_SSR_STEC_CORRECTION_DEP_A (0x05EB).
+ *
+ * The STEC per space vehicle, given as polynomial approximation for a given grid.
+ * This should be combined with MSG_SSR_GRIDDED_CORRECTION message to get the state
+ * space representation of the atmospheric delay. It is typically equivalent to the
+ * QZSS CLAS Sub Type 8 messages
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field header STECHeaderDepA Header of a STEC message
+ * @field stec_sat_list array Array of STEC information for each space vehicle
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSsrStecCorrectionDepA = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_STEC_CORRECTION_DEP_A";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrStecCorrectionDepA.prototype = Object.create(SBP.prototype);
+MsgSsrStecCorrectionDepA.prototype.messageType = "MSG_SSR_STEC_CORRECTION_DEP_A";
+MsgSsrStecCorrectionDepA.prototype.msg_type = 0x05EB;
+MsgSsrStecCorrectionDepA.prototype.constructor = MsgSsrStecCorrectionDepA;
+MsgSsrStecCorrectionDepA.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('header', { type: STECHeaderDepA.prototype.parser })
+  .array('stec_sat_list', { type: STECSatElement.prototype.parser, readUntil: 'eof' });
+MsgSsrStecCorrectionDepA.prototype.fieldSpec = [];
+MsgSsrStecCorrectionDepA.prototype.fieldSpec.push(['header', STECHeaderDepA.prototype.fieldSpec]);
+MsgSsrStecCorrectionDepA.prototype.fieldSpec.push(['stec_sat_list', 'array', STECSatElement.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+
+/**
+ * SBP class for message MSG_SSR_STEC_CORRECTION (0x05EC).
  *
  * The STEC per space vehicle, given as polynomial approximation for a given grid.
  * This should be combined with MSG_SSR_GRIDDED_CORRECTION message to get the state
@@ -712,7 +896,7 @@ var MsgSsrStecCorrection = function (sbp, fields) {
 };
 MsgSsrStecCorrection.prototype = Object.create(SBP.prototype);
 MsgSsrStecCorrection.prototype.messageType = "MSG_SSR_STEC_CORRECTION";
-MsgSsrStecCorrection.prototype.msg_type = 0x05EB;
+MsgSsrStecCorrection.prototype.msg_type = 0x05EC;
 MsgSsrStecCorrection.prototype.constructor = MsgSsrStecCorrection;
 MsgSsrStecCorrection.prototype.parser = new Parser()
   .endianess('little')
@@ -753,7 +937,38 @@ MsgSsrGriddedCorrectionNoStd.prototype.fieldSpec.push(['header', GriddedCorrecti
 MsgSsrGriddedCorrectionNoStd.prototype.fieldSpec.push(['element', GridElementNoStd.prototype.fieldSpec]);
 
 /**
- * SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
+ * SBP class for message MSG_SSR_GRIDDED_CORRECTION_DEP_A (0x05FA).
+ *
+ * STEC residuals are per space vehicle, tropo is not. It is typically equivalent
+ * to the QZSS CLAS Sub Type 9 messages
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field header GriddedCorrectionHeaderDepA Header of a Gridded Correction message
+ * @field element GridElement Tropo and STEC residuals for the given grid point (mean and standard deviation)
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSsrGriddedCorrectionDepA = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_GRIDDED_CORRECTION_DEP_A";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrGriddedCorrectionDepA.prototype = Object.create(SBP.prototype);
+MsgSsrGriddedCorrectionDepA.prototype.messageType = "MSG_SSR_GRIDDED_CORRECTION_DEP_A";
+MsgSsrGriddedCorrectionDepA.prototype.msg_type = 0x05FA;
+MsgSsrGriddedCorrectionDepA.prototype.constructor = MsgSsrGriddedCorrectionDepA;
+MsgSsrGriddedCorrectionDepA.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('header', { type: GriddedCorrectionHeaderDepA.prototype.parser })
+  .nest('element', { type: GridElement.prototype.parser });
+MsgSsrGriddedCorrectionDepA.prototype.fieldSpec = [];
+MsgSsrGriddedCorrectionDepA.prototype.fieldSpec.push(['header', GriddedCorrectionHeaderDepA.prototype.fieldSpec]);
+MsgSsrGriddedCorrectionDepA.prototype.fieldSpec.push(['element', GridElement.prototype.fieldSpec]);
+
+/**
+ * SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FB).
  *
  * STEC residuals are per space vehicle, tropo is not. It is typically equivalent
  * to the QZSS CLAS Sub Type 9 messages
@@ -773,7 +988,7 @@ var MsgSsrGriddedCorrection = function (sbp, fields) {
 };
 MsgSsrGriddedCorrection.prototype = Object.create(SBP.prototype);
 MsgSsrGriddedCorrection.prototype.messageType = "MSG_SSR_GRIDDED_CORRECTION";
-MsgSsrGriddedCorrection.prototype.msg_type = 0x05FA;
+MsgSsrGriddedCorrection.prototype.msg_type = 0x05FB;
 MsgSsrGriddedCorrection.prototype.constructor = MsgSsrGriddedCorrection;
 MsgSsrGriddedCorrection.prototype.parser = new Parser()
   .endianess('little')
@@ -784,17 +999,49 @@ MsgSsrGriddedCorrection.prototype.fieldSpec.push(['header', GriddedCorrectionHea
 MsgSsrGriddedCorrection.prototype.fieldSpec.push(['element', GridElement.prototype.fieldSpec]);
 
 /**
- * SBP class for message MSG_SSR_GRID_DEFINITION (0x05F5).
+ * SBP class for message MSG_SSR_GRID_DEFINITION_DEP_A (0x05F5).
+ *
+ * Based on the 3GPP proposal R2-1906781 which is in turn based on OMA-LPPe-
+ * ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field header GridDefinitionHeaderDepA Header of a Gridded Correction message
+ * @field rle_list array Run Length Encode list of quadrants that contain valid data. The spec describes
+ *   the encoding scheme in detail, but essentially the index of the quadrants that
+ *   contain transitions between valid and invalid (and vice versa) are encoded as u8
+ *   integers.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSsrGridDefinitionDepA = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_GRID_DEFINITION_DEP_A";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrGridDefinitionDepA.prototype = Object.create(SBP.prototype);
+MsgSsrGridDefinitionDepA.prototype.messageType = "MSG_SSR_GRID_DEFINITION_DEP_A";
+MsgSsrGridDefinitionDepA.prototype.msg_type = 0x05F5;
+MsgSsrGridDefinitionDepA.prototype.constructor = MsgSsrGridDefinitionDepA;
+MsgSsrGridDefinitionDepA.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('header', { type: GridDefinitionHeaderDepA.prototype.parser })
+  .array('rle_list', { type: 'uint8', readUntil: 'eof' });
+MsgSsrGridDefinitionDepA.prototype.fieldSpec = [];
+MsgSsrGridDefinitionDepA.prototype.fieldSpec.push(['header', GridDefinitionHeaderDepA.prototype.fieldSpec]);
+MsgSsrGridDefinitionDepA.prototype.fieldSpec.push(['rle_list', 'array', 'writeUInt8', function () { return 1; }, null]);
+
+/**
+ * SBP class for message MSG_SSR_GRID_DEFINITION (0x05F6).
  *
  * Based on the 3GPP proposal R2-1906781 which is in turn based on OMA-LPPe-
  * ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field header GridDefinitionHeader Header of a Gridded Correction message
- * @field rle_list array Run Length Encode list of quadrants that contain valid data. The spec describes
- *   the encoding scheme in detail, but essentially the index of the quadrants that
- *   contain transitions between valid and invalid (and vice versa) are encoded as u8
- *   integers.
+ * @field validity_vector array Bit mask of valid grid points; see 3GPP draft.  If not present, all grid points
+ *   are valid.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -807,20 +1054,22 @@ var MsgSsrGridDefinition = function (sbp, fields) {
 };
 MsgSsrGridDefinition.prototype = Object.create(SBP.prototype);
 MsgSsrGridDefinition.prototype.messageType = "MSG_SSR_GRID_DEFINITION";
-MsgSsrGridDefinition.prototype.msg_type = 0x05F5;
+MsgSsrGridDefinition.prototype.msg_type = 0x05F6;
 MsgSsrGridDefinition.prototype.constructor = MsgSsrGridDefinition;
 MsgSsrGridDefinition.prototype.parser = new Parser()
   .endianess('little')
   .nest('header', { type: GridDefinitionHeader.prototype.parser })
-  .array('rle_list', { type: 'uint8', readUntil: 'eof' });
+  .array('validity_vector', { type: 'uint8', readUntil: 'eof' });
 MsgSsrGridDefinition.prototype.fieldSpec = [];
 MsgSsrGridDefinition.prototype.fieldSpec.push(['header', GridDefinitionHeader.prototype.fieldSpec]);
-MsgSsrGridDefinition.prototype.fieldSpec.push(['rle_list', 'array', 'writeUInt8', function () { return 1; }, null]);
+MsgSsrGridDefinition.prototype.fieldSpec.push(['validity_vector', 'array', 'writeUInt8', function () { return 1; }, null]);
 
 module.exports = {
   CodeBiasesContent: CodeBiasesContent,
   PhaseBiasesContent: PhaseBiasesContent,
+  STECHeaderDepA: STECHeaderDepA,
   STECHeader: STECHeader,
+  GriddedCorrectionHeaderDepA: GriddedCorrectionHeaderDepA,
   GriddedCorrectionHeader: GriddedCorrectionHeader,
   STECSatElement: STECSatElement,
   TroposphericDelayCorrectionNoStd: TroposphericDelayCorrectionNoStd,
@@ -829,6 +1078,7 @@ module.exports = {
   STECResidual: STECResidual,
   GridElementNoStd: GridElementNoStd,
   GridElement: GridElement,
+  GridDefinitionHeaderDepA: GridDefinitionHeaderDepA,
   GridDefinitionHeader: GridDefinitionHeader,
   0x05DD: MsgSsrOrbitClock,
   MsgSsrOrbitClock: MsgSsrOrbitClock,
@@ -838,12 +1088,18 @@ module.exports = {
   MsgSsrCodeBiases: MsgSsrCodeBiases,
   0x05E6: MsgSsrPhaseBiases,
   MsgSsrPhaseBiases: MsgSsrPhaseBiases,
-  0x05EB: MsgSsrStecCorrection,
+  0x05EB: MsgSsrStecCorrectionDepA,
+  MsgSsrStecCorrectionDepA: MsgSsrStecCorrectionDepA,
+  0x05EC: MsgSsrStecCorrection,
   MsgSsrStecCorrection: MsgSsrStecCorrection,
   0x05F0: MsgSsrGriddedCorrectionNoStd,
   MsgSsrGriddedCorrectionNoStd: MsgSsrGriddedCorrectionNoStd,
-  0x05FA: MsgSsrGriddedCorrection,
+  0x05FA: MsgSsrGriddedCorrectionDepA,
+  MsgSsrGriddedCorrectionDepA: MsgSsrGriddedCorrectionDepA,
+  0x05FB: MsgSsrGriddedCorrection,
   MsgSsrGriddedCorrection: MsgSsrGriddedCorrection,
-  0x05F5: MsgSsrGridDefinition,
+  0x05F5: MsgSsrGridDefinitionDepA,
+  MsgSsrGridDefinitionDepA: MsgSsrGridDefinitionDepA,
+  0x05F6: MsgSsrGridDefinition,
   MsgSsrGridDefinition: MsgSsrGridDefinition,
 }

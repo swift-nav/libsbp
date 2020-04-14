@@ -17,10 +17,10 @@
   "type": "object",
   "properties": {
     "header": {"$ref": "GridDefinitionHeader.json"},
-    "rle_list": {"type": "array", "items": {"type": "integer"}}
+    "validity_vector": {"type": "array", "items": {"type": "integer"}}
   },
   "required": [
     "header",
-    "rle_list"
+    "validity_vector"
   ]
 }

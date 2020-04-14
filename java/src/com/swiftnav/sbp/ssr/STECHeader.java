@@ -43,6 +43,12 @@ following RTCM DF391 specification.
  */
     public int iod_atmo;
     
+    /** Indicates grid IDs are part of the same generation set */
+    public int tile_set_id;
+    
+    /** Unique (within a network) identifer for the tile/grid */
+    public int tile_id;
+    
 
     public STECHeader () {}
 
@@ -54,6 +60,8 @@ following RTCM DF391 specification.
         seq_num = parser.getU8();
         update_interval = parser.getU8();
         iod_atmo = parser.getU8();
+        tile_set_id = parser.getU8();
+        tile_id = parser.getU16();
         return this;
     }
 
@@ -65,6 +73,8 @@ following RTCM DF391 specification.
         builder.putU8(seq_num);
         builder.putU8(update_interval);
         builder.putU8(iod_atmo);
+        builder.putU8(tile_set_id);
+        builder.putU16(tile_id);
     }
 
     @Override
@@ -75,6 +85,8 @@ following RTCM DF391 specification.
         obj.put("seq_num", seq_num);
         obj.put("update_interval", update_interval);
         obj.put("iod_atmo", iod_atmo);
+        obj.put("tile_set_id", tile_set_id);
+        obj.put("tile_id", tile_id);
         return obj;
     }
 }

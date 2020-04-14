@@ -1316,9 +1316,9 @@ delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
     ret += 247
     return ret
   
-SBP_MSG_SSR_STEC_CORRECTION = 0x05EB
+SBP_MSG_SSR_STEC_CORRECTION = 0x05EC
 class MsgSsrStecCorrection(SBP):
-  """SBP class for message MSG_SSR_STEC_CORRECTION (0x05EB).
+  """SBP class for message MSG_SSR_STEC_CORRECTION (0x05EC).
 
   You can have MSG_SSR_STEC_CORRECTION inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -1447,9 +1447,9 @@ It is typically equivalent to the QZSS CLAS Sub Type 9 messages
     ret += GridElement._payload_size()
     return ret
   
-SBP_MSG_SSR_GRIDDED_CORRECTION = 0x05FA
+SBP_MSG_SSR_GRIDDED_CORRECTION = 0x05FB
 class MsgSsrGriddedCorrection(SBP):
-  """SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
+  """SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FB).
 
   You can have MSG_SSR_GRIDDED_CORRECTION inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
@@ -1533,11 +1533,11 @@ OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
     ret += 247
     return ret
   
-SBP_MSG_SSR_GRID_DEFINITION_DEP_A = 0x05F5
-class MsgSsrGridDefinitionDepA(SBP):
-  """SBP class for message MSG_SSR_GRID_DEFINITION_DEP_A (0x05F5).
+SBP_MSG_SSR_GRID_DEFINITION = 0x05F6
+class MsgSsrGridDefinition(SBP):
+  """SBP class for message MSG_SSR_GRID_DEFINITION (0x05F6).
 
-  You can have MSG_SSR_GRID_DEFINITION_DEP_A inherit its fields directly
+  You can have MSG_SSR_GRID_DEFINITION inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -1583,10 +1583,10 @@ msg_classes = {
   0x05E1: MsgSsrCodeBiases,
   0x05E6: MsgSsrPhaseBiases,
   0x05EB: MsgSsrStecCorrectionDepA,
-  0x05EB: MsgSsrStecCorrection,
+  0x05EC: MsgSsrStecCorrection,
   0x05F0: MsgSsrGriddedCorrectionNoStd,
   0x05FA: MsgSsrGriddedCorrectionDepA,
-  0x05FA: MsgSsrGriddedCorrection,
+  0x05FB: MsgSsrGriddedCorrection,
   0x05F5: MsgSsrGridDefinitionDepA,
-  0x05F5: MsgSsrGridDefinitionDepA,
+  0x05F6: MsgSsrGridDefinition,
 }
