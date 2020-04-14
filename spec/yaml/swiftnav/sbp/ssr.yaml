@@ -601,7 +601,7 @@ definitions:
             desc: Array of STEC information for each space vehicle
 
  - MSG_SSR_STEC_CORRECTION:
-    id: 0x05EB
+    id: 0x05EC
     short_desc: Slant Total Electron Content
     desc: |
       The STEC per space vehicle, given as polynomial approximation for
@@ -648,7 +648,7 @@ definitions:
               and standard deviation)
 
  - MSG_SSR_GRIDDED_CORRECTION:
-    id: 0x05FA
+    id: 0x05FB
     short_desc: Gridded troposphere and STEC residuals
     desc: |
       STEC residuals are per space vehicle, tropo is not.
@@ -683,7 +683,7 @@ definitions:
               valid and invalid (and vice versa) are encoded as u8 integers.
 
  - MSG_SSR_GRID_DEFINITION_DEP_A:
-    id: 0x05F5
+    id: 0x05F6
     short_desc: Definition of the grid for STEC and tropo messages
     desc: |
       Based on the 3GPP proposal R2-1906781 which is in turn based on
