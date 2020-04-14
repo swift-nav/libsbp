@@ -682,7 +682,7 @@ definitions:
               essentially the index of the quadrants that contain transitions between
               valid and invalid (and vice versa) are encoded as u8 integers.
 
- - MSG_SSR_GRID_DEFINITION_DEP_A:
+ - MSG_SSR_GRID_DEFINITION:
     id: 0x05F6
     short_desc: Definition of the grid for STEC and tropo messages
     desc: |
