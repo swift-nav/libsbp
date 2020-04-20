@@ -23,31 +23,31 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FB).
+/** SBP class for message MSG_SSR_STEC_CORRECTION_DEP_A (0x05EB).
  *
- * You can have MSG_SSR_GRIDDED_CORRECTION inherent its fields directly from
+ * You can have MSG_SSR_STEC_CORRECTION_DEP_A inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * STEC residuals are per space vehicle, tropo is not.
- * It is typically equivalent to the QZSS CLAS Sub Type 9 messages */
+ * The STEC per space vehicle, given as polynomial approximation for
+ * a given grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION
+ * message to get the state space representation of the atmospheric
+ * delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages */
 
-public class MsgSsrGriddedCorrection extends SBPMessage {
-    public static final int TYPE = 0x05FB;
+public class MsgSsrStecCorrectionDepA extends SBPMessage {
+    public static final int TYPE = 0x05EB;
 
     
-    /** Header of a Gridded Correction message */
-    public GriddedCorrectionHeader header;
+    /** Header of a STEC message */
+    public STECHeaderDepA header;
     
-    /** Tropo and STEC residuals for the given grid point (mean
-and standard deviation)
- */
-    public GridElement element;
+    /** Array of STEC information for each space vehicle */
+    public STECSatElement[] stec_sat_list;
     
 
-    public MsgSsrGriddedCorrection (int sender) { super(sender, TYPE); }
-    public MsgSsrGriddedCorrection () { super(TYPE); }
-    public MsgSsrGriddedCorrection (SBPMessage msg) throws SBPBinaryException {
+    public MsgSsrStecCorrectionDepA (int sender) { super(sender, TYPE); }
+    public MsgSsrStecCorrectionDepA () { super(TYPE); }
+    public MsgSsrStecCorrectionDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -55,21 +55,21 @@ and standard deviation)
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        header = new GriddedCorrectionHeader().parse(parser);
-        element = new GridElement().parse(parser);
+        header = new STECHeaderDepA().parse(parser);
+        stec_sat_list = parser.getArray(STECSatElement.class);
     }
 
     @Override
     protected void build(Builder builder) {
         header.build(builder);
-        element.build(builder);
+        builder.putArray(stec_sat_list);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("header", header.toJSON());
-        obj.put("element", element.toJSON());
+        obj.put("stec_sat_list", SBPStruct.toJSONArray(stec_sat_list));
         return obj;
     }
 }

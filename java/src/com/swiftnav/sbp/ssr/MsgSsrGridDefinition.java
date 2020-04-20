@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_SSR_GRID_DEFINITION (0x05F5).
+/** SBP class for message MSG_SSR_GRID_DEFINITION (0x05F6).
  *
  * You can have MSG_SSR_GRID_DEFINITION inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -33,18 +33,16 @@ import org.json.JSONArray;
  * OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C */
 
 public class MsgSsrGridDefinition extends SBPMessage {
-    public static final int TYPE = 0x05F5;
+    public static final int TYPE = 0x05F6;
 
     
     /** Header of a Gridded Correction message */
     public GridDefinitionHeader header;
     
-    /** Run Length Encode list of quadrants that contain valid data.
-The spec describes the encoding scheme in detail, but
-essentially the index of the quadrants that contain transitions between
-valid and invalid (and vice versa) are encoded as u8 integers.
+    /** Bit mask of valid grid points; see 3GPP draft.  If not present,
+all grid points are valid.
  */
-    public int[] rle_list;
+    public int[] validity_vector;
     
 
     public MsgSsrGridDefinition (int sender) { super(sender, TYPE); }
@@ -58,20 +56,20 @@ valid and invalid (and vice versa) are encoded as u8 integers.
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         header = new GridDefinitionHeader().parse(parser);
-        rle_list = parser.getArrayofU8();
+        validity_vector = parser.getArrayofU8();
     }
 
     @Override
     protected void build(Builder builder) {
         header.build(builder);
-        builder.putArrayofU8(rle_list);
+        builder.putArrayofU8(validity_vector);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("header", header.toJSON());
-        obj.put("rle_list", new JSONArray(rle_list));
+        obj.put("validity_vector", new JSONArray(validity_vector));
         return obj;
     }
 }

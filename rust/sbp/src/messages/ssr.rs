@@ -87,16 +87,22 @@ impl crate::serialize::SbpSerialize for CodeBiasesContent {
 #[derive(Debug)]
 #[allow(non_snake_case)]
 pub struct GridDefinitionHeader {
-    /// region_size (deg) = 10 / region_size_inverse 0 is an invalid value.
-    pub region_size_inverse: u8,
-    /// grid height (deg) = grid idth (deg) = area_width / region_size 0 is an
-    /// invalid value.
-    pub area_width: u16,
-    /// North-West corner latitdue (deg) = region_size * lat_nw_corner_enc - 90
-    pub lat_nw_corner_enc: u16,
-    /// North-West corner longtitude (deg) = region_size * lon_nw_corner_enc -
-    /// 180
-    pub lon_nw_corner_enc: u16,
+    /// number of rows of points (lattitude)
+    pub rows: u16,
+    /// number of columns of points (longitude)
+    pub cols: u16,
+    /// spacing between lat corrction points
+    pub spacing_lat: i32,
+    /// spacing between lon correction points
+    pub spacing_lon: i32,
+    /// northwest corner lattidue
+    pub corner_nw_lat: i32,
+    /// northwest corner longtitude
+    pub corner_nw_lon: i32,
+    /// Indicates grid IDs are part of the same generation set
+    pub tile_set_id: u8,
+    /// Unique (within a network) identifer for the tile/grid
+    pub tile_id: u16,
     /// Number of messages in the dataset
     pub num_msgs: u8,
     /// Postion of this message in the dataset
@@ -106,10 +112,14 @@ pub struct GridDefinitionHeader {
 impl GridDefinitionHeader {
     pub fn parse(_buf: &mut &[u8]) -> Result<GridDefinitionHeader, crate::Error> {
         Ok(GridDefinitionHeader {
-            region_size_inverse: _buf.read_u8()?,
-            area_width: _buf.read_u16::<LittleEndian>()?,
-            lat_nw_corner_enc: _buf.read_u16::<LittleEndian>()?,
-            lon_nw_corner_enc: _buf.read_u16::<LittleEndian>()?,
+            rows: _buf.read_u16::<LittleEndian>()?,
+            cols: _buf.read_u16::<LittleEndian>()?,
+            spacing_lat: _buf.read_i32::<LittleEndian>()?,
+            spacing_lon: _buf.read_i32::<LittleEndian>()?,
+            corner_nw_lat: _buf.read_i32::<LittleEndian>()?,
+            corner_nw_lon: _buf.read_i32::<LittleEndian>()?,
+            tile_set_id: _buf.read_u8()?,
+            tile_id: _buf.read_u16::<LittleEndian>()?,
             num_msgs: _buf.read_u8()?,
             seq_num: _buf.read_u8()?,
         })
@@ -135,6 +145,93 @@ impl GridDefinitionHeader {
 }
 
 impl crate::serialize::SbpSerialize for GridDefinitionHeader {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.rows.append_to_sbp_buffer(buf);
+        self.cols.append_to_sbp_buffer(buf);
+        self.spacing_lat.append_to_sbp_buffer(buf);
+        self.spacing_lon.append_to_sbp_buffer(buf);
+        self.corner_nw_lat.append_to_sbp_buffer(buf);
+        self.corner_nw_lon.append_to_sbp_buffer(buf);
+        self.tile_set_id.append_to_sbp_buffer(buf);
+        self.tile_id.append_to_sbp_buffer(buf);
+        self.num_msgs.append_to_sbp_buffer(buf);
+        self.seq_num.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.rows.sbp_size();
+        size += self.cols.sbp_size();
+        size += self.spacing_lat.sbp_size();
+        size += self.spacing_lon.sbp_size();
+        size += self.corner_nw_lat.sbp_size();
+        size += self.corner_nw_lon.sbp_size();
+        size += self.tile_set_id.sbp_size();
+        size += self.tile_id.sbp_size();
+        size += self.num_msgs.sbp_size();
+        size += self.seq_num.sbp_size();
+        size
+    }
+}
+
+/// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
+///
+/// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
+/// Also includes an RLE encoded validity list.
+///
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct GridDefinitionHeaderDepA {
+    /// region_size (deg) = 10 / region_size_inverse 0 is an invalid value.
+    pub region_size_inverse: u8,
+    /// grid height (deg) = grid idth (deg) = area_width / region_size 0 is an
+    /// invalid value.
+    pub area_width: u16,
+    /// North-West corner latitdue (deg) = region_size * lat_nw_corner_enc - 90
+    pub lat_nw_corner_enc: u16,
+    /// North-West corner longtitude (deg) = region_size * lon_nw_corner_enc -
+    /// 180
+    pub lon_nw_corner_enc: u16,
+    /// Number of messages in the dataset
+    pub num_msgs: u8,
+    /// Postion of this message in the dataset
+    pub seq_num: u8,
+}
+
+impl GridDefinitionHeaderDepA {
+    pub fn parse(_buf: &mut &[u8]) -> Result<GridDefinitionHeaderDepA, crate::Error> {
+        Ok(GridDefinitionHeaderDepA {
+            region_size_inverse: _buf.read_u8()?,
+            area_width: _buf.read_u16::<LittleEndian>()?,
+            lat_nw_corner_enc: _buf.read_u16::<LittleEndian>()?,
+            lon_nw_corner_enc: _buf.read_u16::<LittleEndian>()?,
+            num_msgs: _buf.read_u8()?,
+            seq_num: _buf.read_u8()?,
+        })
+    }
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GridDefinitionHeaderDepA>, crate::Error> {
+        let mut v = Vec::new();
+        while buf.len() > 0 {
+            v.push(GridDefinitionHeaderDepA::parse(buf)?);
+        }
+        Ok(v)
+    }
+
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<GridDefinitionHeaderDepA>, crate::Error> {
+        let mut v = Vec::new();
+        for _ in 0..n {
+            v.push(GridDefinitionHeaderDepA::parse(buf)?);
+        }
+        Ok(v)
+    }
+}
+
+impl crate::serialize::SbpSerialize for GridDefinitionHeaderDepA {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.region_size_inverse.append_to_sbp_buffer(buf);
@@ -299,6 +396,10 @@ pub struct GriddedCorrectionHeader {
     pub update_interval: u8,
     /// IOD of the SSR atmospheric correction
     pub iod_atmo: u8,
+    /// Indicates grid IDs are part of the same generation set
+    pub tile_set_id: u8,
+    /// Unique (within a network) identifer for the tile/grid
+    pub tile_id: u16,
     /// Quality of the troposphere data. Encoded following RTCM DF389
     /// specifcation in units of m.
     pub tropo_quality_indicator: u8,
@@ -312,6 +413,8 @@ impl GriddedCorrectionHeader {
             seq_num: _buf.read_u16::<LittleEndian>()?,
             update_interval: _buf.read_u8()?,
             iod_atmo: _buf.read_u8()?,
+            tile_set_id: _buf.read_u8()?,
+            tile_id: _buf.read_u16::<LittleEndian>()?,
             tropo_quality_indicator: _buf.read_u8()?,
         })
     }
@@ -336,6 +439,90 @@ impl GriddedCorrectionHeader {
 }
 
 impl crate::serialize::SbpSerialize for GriddedCorrectionHeader {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.time.append_to_sbp_buffer(buf);
+        self.num_msgs.append_to_sbp_buffer(buf);
+        self.seq_num.append_to_sbp_buffer(buf);
+        self.update_interval.append_to_sbp_buffer(buf);
+        self.iod_atmo.append_to_sbp_buffer(buf);
+        self.tile_set_id.append_to_sbp_buffer(buf);
+        self.tile_id.append_to_sbp_buffer(buf);
+        self.tropo_quality_indicator.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.time.sbp_size();
+        size += self.num_msgs.sbp_size();
+        size += self.seq_num.sbp_size();
+        size += self.update_interval.sbp_size();
+        size += self.iod_atmo.sbp_size();
+        size += self.tile_set_id.sbp_size();
+        size += self.tile_id.sbp_size();
+        size += self.tropo_quality_indicator.sbp_size();
+        size
+    }
+}
+
+/// Header for MSG_SSR_GRIDDED_CORRECTION
+///
+/// The 3GPP message contains nested variable length arrays
+/// which are not suppported in SBP, so each grid point will
+/// be identified by the index.
+///
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct GriddedCorrectionHeaderDepA {
+    /// GNSS reference time of the correction
+    pub time: GPSTimeSec,
+    /// Number of messages in the dataset
+    pub num_msgs: u16,
+    /// Position of this message in the dataset
+    pub seq_num: u16,
+    /// Update interval between consecutive corrections. Encoded following RTCM
+    /// DF391 specification.
+    pub update_interval: u8,
+    /// IOD of the SSR atmospheric correction
+    pub iod_atmo: u8,
+    /// Quality of the troposphere data. Encoded following RTCM DF389
+    /// specifcation in units of m.
+    pub tropo_quality_indicator: u8,
+}
+
+impl GriddedCorrectionHeaderDepA {
+    pub fn parse(_buf: &mut &[u8]) -> Result<GriddedCorrectionHeaderDepA, crate::Error> {
+        Ok(GriddedCorrectionHeaderDepA {
+            time: GPSTimeSec::parse(_buf)?,
+            num_msgs: _buf.read_u16::<LittleEndian>()?,
+            seq_num: _buf.read_u16::<LittleEndian>()?,
+            update_interval: _buf.read_u8()?,
+            iod_atmo: _buf.read_u8()?,
+            tropo_quality_indicator: _buf.read_u8()?,
+        })
+    }
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GriddedCorrectionHeaderDepA>, crate::Error> {
+        let mut v = Vec::new();
+        while buf.len() > 0 {
+            v.push(GriddedCorrectionHeaderDepA::parse(buf)?);
+        }
+        Ok(v)
+    }
+
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<GriddedCorrectionHeaderDepA>, crate::Error> {
+        let mut v = Vec::new();
+        for _ in 0..n {
+            v.push(GriddedCorrectionHeaderDepA::parse(buf)?);
+        }
+        Ok(v)
+    }
+}
+
+impl crate::serialize::SbpSerialize for GriddedCorrectionHeaderDepA {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.time.append_to_sbp_buffer(buf);
@@ -464,7 +651,7 @@ impl MsgSsrGriddedCorrection {
 }
 impl super::SBPMessage for MsgSsrGriddedCorrection {
     fn get_message_type(&self) -> u16 {
-        1530
+        1531
     }
 
     fn get_sender_id(&self) -> Option<u16> {
@@ -482,6 +669,66 @@ impl super::SBPMessage for MsgSsrGriddedCorrection {
 }
 
 impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrection {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.header.append_to_sbp_buffer(buf);
+        self.element.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.header.sbp_size();
+        size += self.element.sbp_size();
+        size
+    }
+}
+
+/// Gridded troposphere and STEC residuals
+///
+/// STEC residuals are per space vehicle, tropo is not.
+/// It is typically equivalent to the QZSS CLAS Sub Type 9 messages
+///
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgSsrGriddedCorrectionDepA {
+    pub sender_id: Option<u16>,
+    /// Header of a Gridded Correction message
+    pub header: GriddedCorrectionHeaderDepA,
+    /// Tropo and STEC residuals for the given grid point (mean and standard
+    /// deviation)
+    pub element: GridElement,
+}
+
+impl MsgSsrGriddedCorrectionDepA {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGriddedCorrectionDepA, crate::Error> {
+        Ok(MsgSsrGriddedCorrectionDepA {
+            sender_id: None,
+            header: GriddedCorrectionHeaderDepA::parse(_buf)?,
+            element: GridElement::parse(_buf)?,
+        })
+    }
+}
+impl super::SBPMessage for MsgSsrGriddedCorrectionDepA {
+    fn get_message_type(&self) -> u16 {
+        1530
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrectionDepA {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.header.append_to_sbp_buffer(buf);
@@ -567,11 +814,9 @@ pub struct MsgSsrGridDefinition {
     pub sender_id: Option<u16>,
     /// Header of a Gridded Correction message
     pub header: GridDefinitionHeader,
-    /// Run Length Encode list of quadrants that contain valid data. The spec
-    /// describes the encoding scheme in detail, but essentially the index of
-    /// the quadrants that contain transitions between valid and invalid (and
-    /// vice versa) are encoded as u8 integers.
-    pub rle_list: Vec<u8>,
+    /// Bit mask of valid grid points; see 3GPP draft.  If not present, all grid
+    /// points are valid.
+    pub validity_vector: Vec<u8>,
 }
 
 impl MsgSsrGridDefinition {
@@ -579,11 +824,73 @@ impl MsgSsrGridDefinition {
         Ok(MsgSsrGridDefinition {
             sender_id: None,
             header: GridDefinitionHeader::parse(_buf)?,
-            rle_list: crate::parser::read_u8_array(_buf)?,
+            validity_vector: crate::parser::read_u8_array(_buf)?,
         })
     }
 }
 impl super::SBPMessage for MsgSsrGridDefinition {
+    fn get_message_type(&self) -> u16 {
+        1526
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSsrGridDefinition {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.header.append_to_sbp_buffer(buf);
+        self.validity_vector.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.header.sbp_size();
+        size += self.validity_vector.sbp_size();
+        size
+    }
+}
+
+/// Definition of the grid for STEC and tropo messages
+///
+/// Based on the 3GPP proposal R2-1906781 which is in turn based on
+/// OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
+///
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgSsrGridDefinitionDepA {
+    pub sender_id: Option<u16>,
+    /// Header of a Gridded Correction message
+    pub header: GridDefinitionHeaderDepA,
+    /// Run Length Encode list of quadrants that contain valid data. The spec
+    /// describes the encoding scheme in detail, but essentially the index of
+    /// the quadrants that contain transitions between valid and invalid (and
+    /// vice versa) are encoded as u8 integers.
+    pub rle_list: Vec<u8>,
+}
+
+impl MsgSsrGridDefinitionDepA {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGridDefinitionDepA, crate::Error> {
+        Ok(MsgSsrGridDefinitionDepA {
+            sender_id: None,
+            header: GridDefinitionHeaderDepA::parse(_buf)?,
+            rle_list: crate::parser::read_u8_array(_buf)?,
+        })
+    }
+}
+impl super::SBPMessage for MsgSsrGridDefinitionDepA {
     fn get_message_type(&self) -> u16 {
         1525
     }
@@ -602,7 +909,7 @@ impl super::SBPMessage for MsgSsrGridDefinition {
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgSsrGridDefinition {
+impl crate::serialize::SbpSerialize for MsgSsrGridDefinitionDepA {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.header.append_to_sbp_buffer(buf);
@@ -992,7 +1299,7 @@ impl MsgSsrStecCorrection {
 }
 impl super::SBPMessage for MsgSsrStecCorrection {
     fn get_message_type(&self) -> u16 {
-        1515
+        1516
     }
 
     fn get_sender_id(&self) -> Option<u16> {
@@ -1010,6 +1317,67 @@ impl super::SBPMessage for MsgSsrStecCorrection {
 }
 
 impl crate::serialize::SbpSerialize for MsgSsrStecCorrection {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.header.append_to_sbp_buffer(buf);
+        self.stec_sat_list.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.header.sbp_size();
+        size += self.stec_sat_list.sbp_size();
+        size
+    }
+}
+
+/// Slant Total Electron Content
+///
+/// The STEC per space vehicle, given as polynomial approximation for
+/// a given grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION
+/// message to get the state space representation of the atmospheric
+/// delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
+///
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgSsrStecCorrectionDepA {
+    pub sender_id: Option<u16>,
+    /// Header of a STEC message
+    pub header: STECHeaderDepA,
+    /// Array of STEC information for each space vehicle
+    pub stec_sat_list: Vec<STECSatElement>,
+}
+
+impl MsgSsrStecCorrectionDepA {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrStecCorrectionDepA, crate::Error> {
+        Ok(MsgSsrStecCorrectionDepA {
+            sender_id: None,
+            header: STECHeaderDepA::parse(_buf)?,
+            stec_sat_list: STECSatElement::parse_array(_buf)?,
+        })
+    }
+}
+impl super::SBPMessage for MsgSsrStecCorrectionDepA {
+    fn get_message_type(&self) -> u16 {
+        1515
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSsrStecCorrectionDepA {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.header.append_to_sbp_buffer(buf);
@@ -1118,6 +1486,10 @@ pub struct STECHeader {
     pub update_interval: u8,
     /// IOD of the SSR atmospheric correction
     pub iod_atmo: u8,
+    /// Indicates grid IDs are part of the same generation set
+    pub tile_set_id: u8,
+    /// Unique (within a network) identifer for the tile/grid
+    pub tile_id: u16,
 }
 
 impl STECHeader {
@@ -1128,6 +1500,8 @@ impl STECHeader {
             seq_num: _buf.read_u8()?,
             update_interval: _buf.read_u8()?,
             iod_atmo: _buf.read_u8()?,
+            tile_set_id: _buf.read_u8()?,
+            tile_id: _buf.read_u16::<LittleEndian>()?,
         })
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECHeader>, crate::Error> {
@@ -1148,6 +1522,84 @@ impl STECHeader {
 }
 
 impl crate::serialize::SbpSerialize for STECHeader {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.time.append_to_sbp_buffer(buf);
+        self.num_msgs.append_to_sbp_buffer(buf);
+        self.seq_num.append_to_sbp_buffer(buf);
+        self.update_interval.append_to_sbp_buffer(buf);
+        self.iod_atmo.append_to_sbp_buffer(buf);
+        self.tile_set_id.append_to_sbp_buffer(buf);
+        self.tile_id.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.time.sbp_size();
+        size += self.num_msgs.sbp_size();
+        size += self.seq_num.sbp_size();
+        size += self.update_interval.sbp_size();
+        size += self.iod_atmo.sbp_size();
+        size += self.tile_set_id.sbp_size();
+        size += self.tile_id.sbp_size();
+        size
+    }
+}
+
+/// Header for MSG_SSR_STEC_CORRECTION message
+///
+/// A full set of STEC information will likely span multiple SBP
+/// messages, since SBP message a limited to 255 bytes.  The header
+/// is used to tie multiple SBP messages into a sequence.
+///
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct STECHeaderDepA {
+    /// GNSS reference time of the correction
+    pub time: GPSTimeSec,
+    /// Number of messages in the dataset
+    pub num_msgs: u8,
+    /// Position of this message in the dataset
+    pub seq_num: u8,
+    /// Update interval between consecutive corrections. Encoded following RTCM
+    /// DF391 specification.
+    pub update_interval: u8,
+    /// IOD of the SSR atmospheric correction
+    pub iod_atmo: u8,
+}
+
+impl STECHeaderDepA {
+    pub fn parse(_buf: &mut &[u8]) -> Result<STECHeaderDepA, crate::Error> {
+        Ok(STECHeaderDepA {
+            time: GPSTimeSec::parse(_buf)?,
+            num_msgs: _buf.read_u8()?,
+            seq_num: _buf.read_u8()?,
+            update_interval: _buf.read_u8()?,
+            iod_atmo: _buf.read_u8()?,
+        })
+    }
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECHeaderDepA>, crate::Error> {
+        let mut v = Vec::new();
+        while buf.len() > 0 {
+            v.push(STECHeaderDepA::parse(buf)?);
+        }
+        Ok(v)
+    }
+
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<STECHeaderDepA>, crate::Error> {
+        let mut v = Vec::new();
+        for _ in 0..n {
+            v.push(STECHeaderDepA::parse(buf)?);
+        }
+        Ok(v)
+    }
+}
+
+impl crate::serialize::SbpSerialize for STECHeaderDepA {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.time.append_to_sbp_buffer(buf);

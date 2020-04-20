@@ -43,6 +43,12 @@ following RTCM DF391 specification.
  */
     public int iod_atmo;
     
+    /** Indicates grid IDs are part of the same generation set */
+    public int tile_set_id;
+    
+    /** Unique (within a network) identifer for the tile/grid */
+    public int tile_id;
+    
     /** Quality of the troposphere data. Encoded following RTCM DF389
 specifcation in units of m.
  */
@@ -59,6 +65,8 @@ specifcation in units of m.
         seq_num = parser.getU16();
         update_interval = parser.getU8();
         iod_atmo = parser.getU8();
+        tile_set_id = parser.getU8();
+        tile_id = parser.getU16();
         tropo_quality_indicator = parser.getU8();
         return this;
     }
@@ -71,6 +79,8 @@ specifcation in units of m.
         builder.putU16(seq_num);
         builder.putU8(update_interval);
         builder.putU8(iod_atmo);
+        builder.putU8(tile_set_id);
+        builder.putU16(tile_id);
         builder.putU8(tropo_quality_indicator);
     }
 
@@ -82,6 +92,8 @@ specifcation in units of m.
         obj.put("seq_num", seq_num);
         obj.put("update_interval", update_interval);
         obj.put("iod_atmo", iod_atmo);
+        obj.put("tile_set_id", tile_set_id);
+        obj.put("tile_id", tile_id);
         obj.put("tropo_quality_indicator", tropo_quality_indicator);
         return obj;
     }

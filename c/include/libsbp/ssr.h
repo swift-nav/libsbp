@@ -71,6 +71,26 @@ following RTCM DF391 specification.
  */
   u8 iod_atmo;           /**< IOD of the SSR atmospheric correction
  */
+} stec_header_dep_a_t;
+
+
+/** Header for MSG_SSR_STEC_CORRECTION message
+ *
+ * A full set of STEC information will likely span multiple SBP
+ * messages, since SBP message a limited to 255 bytes.  The header
+ * is used to tie multiple SBP messages into a sequence.
+ */
+typedef struct SBP_ATTR_PACKED {
+  gps_time_sec_t time;               /**< GNSS reference time of the correction */
+  u8 num_msgs;           /**< Number of messages in the dataset */
+  u8 seq_num;            /**< Position of this message in the dataset */
+  u8 update_interval;    /**< Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+ */
+  u8 iod_atmo;           /**< IOD of the SSR atmospheric correction
+ */
+  u8 tile_set_id;        /**< Indicates grid IDs are part of the same generation set */
+  u16 tile_id;            /**< Unique (within a network) identifer for the tile/grid */
 } stec_header_t;
 
 
@@ -89,6 +109,29 @@ following RTCM DF391 specification.
  */
   u8 iod_atmo;                   /**< IOD of the SSR atmospheric correction
  */
+  u8 tropo_quality_indicator;    /**< Quality of the troposphere data. Encoded following RTCM DF389
+specifcation in units of m.
+ */
+} gridded_correction_header_dep_a_t;
+
+
+/** Header for MSG_SSR_GRIDDED_CORRECTION
+ *
+ * The 3GPP message contains nested variable length arrays
+ * which are not suppported in SBP, so each grid point will
+ * be identified by the index.
+ */
+typedef struct SBP_ATTR_PACKED {
+  gps_time_sec_t time;                       /**< GNSS reference time of the correction */
+  u16 num_msgs;                   /**< Number of messages in the dataset */
+  u16 seq_num;                    /**< Position of this message in the dataset */
+  u8 update_interval;            /**< Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+ */
+  u8 iod_atmo;                   /**< IOD of the SSR atmospheric correction
+ */
+  u8 tile_set_id;                /**< Indicates grid IDs are part of the same generation set */
+  u16 tile_id;                    /**< Unique (within a network) identifer for the tile/grid */
   u8 tropo_quality_indicator;    /**< Quality of the troposphere data. Encoded following RTCM DF389
 specifcation in units of m.
  */
@@ -197,6 +240,25 @@ typedef struct SBP_ATTR_PACKED {
   u16 lon_nw_corner_enc;      /**< North-West corner longtitude (deg) = region_size * lon_nw_corner_enc - 180 */
   u8 num_msgs;               /**< Number of messages in the dataset */
   u8 seq_num;                /**< Postion of this message in the dataset */
+} grid_definition_header_dep_a_t;
+
+
+/** Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
+ *
+ * Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
+ * Also includes an RLE encoded validity list.
+ */
+typedef struct SBP_ATTR_PACKED {
+  u16 rows;             /**< number of rows of points (lattitude) */
+  u16 cols;             /**< number of columns of points (longitude) */
+  s32 spacing_lat;      /**< spacing between lat corrction points [deg = val * (180 / 2^32)] */
+  s32 spacing_lon;      /**< spacing between lon correction points [deg = val * (180 / 2^32)] */
+  s32 corner_nw_lat;    /**< northwest corner lattidue [deg = val * (180 / 2^32)] */
+  s32 corner_nw_lon;    /**< northwest corner longtitude [deg = val * (180 / 2^32)] */
+  u8 tile_set_id;      /**< Indicates grid IDs are part of the same generation set */
+  u16 tile_id;          /**< Unique (within a network) identifer for the tile/grid */
+  u8 num_msgs;         /**< Number of messages in the dataset */
+  u8 seq_num;          /**< Postion of this message in the dataset */
 } grid_definition_header_t;
 
 
@@ -323,7 +385,21 @@ satellite being tracked.
  * message to get the state space representation of the atmospheric
  * delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
  */
-#define SBP_MSG_SSR_STEC_CORRECTION           0x05EB
+#define SBP_MSG_SSR_STEC_CORRECTION_DEP_A     0x05EB
+typedef struct SBP_ATTR_PACKED {
+  stec_header_dep_a_t header;           /**< Header of a STEC message */
+  stec_sat_element_t stec_sat_list[0]; /**< Array of STEC information for each space vehicle */
+} msg_ssr_stec_correction_dep_a_t;
+
+
+/** Slant Total Electron Content
+ *
+ * The STEC per space vehicle, given as polynomial approximation for
+ * a given grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION
+ * message to get the state space representation of the atmospheric
+ * delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
+ */
+#define SBP_MSG_SSR_STEC_CORRECTION           0x05EC
 typedef struct SBP_ATTR_PACKED {
   stec_header_t header;           /**< Header of a STEC message */
   stec_sat_element_t stec_sat_list[0]; /**< Array of STEC information for each space vehicle */
@@ -347,7 +423,21 @@ typedef struct SBP_ATTR_PACKED {
  * STEC residuals are per space vehicle, tropo is not.
  * It is typically equivalent to the QZSS CLAS Sub Type 9 messages
  */
-#define SBP_MSG_SSR_GRIDDED_CORRECTION        0x05FA
+#define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A  0x05FA
+typedef struct SBP_ATTR_PACKED {
+  gridded_correction_header_dep_a_t header;     /**< Header of a Gridded Correction message */
+  grid_element_t element;    /**< Tropo and STEC residuals for the given grid point (mean
+and standard deviation)
+ */
+} msg_ssr_gridded_correction_dep_a_t;
+
+
+/** Gridded troposphere and STEC residuals
+ *
+ * STEC residuals are per space vehicle, tropo is not.
+ * It is typically equivalent to the QZSS CLAS Sub Type 9 messages
+ */
+#define SBP_MSG_SSR_GRIDDED_CORRECTION        0x05FB
 typedef struct SBP_ATTR_PACKED {
   gridded_correction_header_t header;     /**< Header of a Gridded Correction message */
   grid_element_t element;    /**< Tropo and STEC residuals for the given grid point (mean
@@ -361,13 +451,27 @@ and standard deviation)
  * Based on the 3GPP proposal R2-1906781 which is in turn based on
  * OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
  */
-#define SBP_MSG_SSR_GRID_DEFINITION           0x05F5
+#define SBP_MSG_SSR_GRID_DEFINITION_DEP_A     0x05F5
 typedef struct SBP_ATTR_PACKED {
-  grid_definition_header_t header;      /**< Header of a Gridded Correction message */
+  grid_definition_header_dep_a_t header;      /**< Header of a Gridded Correction message */
   u8 rle_list[0]; /**< Run Length Encode list of quadrants that contain valid data.
 The spec describes the encoding scheme in detail, but
 essentially the index of the quadrants that contain transitions between
 valid and invalid (and vice versa) are encoded as u8 integers.
+ */
+} msg_ssr_grid_definition_dep_a_t;
+
+
+/** Definition of the grid for STEC and tropo messages
+ *
+ * Based on the 3GPP proposal R2-1906781 which is in turn based on
+ * OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
+ */
+#define SBP_MSG_SSR_GRID_DEFINITION           0x05F6
+typedef struct SBP_ATTR_PACKED {
+  grid_definition_header_t header;             /**< Header of a Gridded Correction message */
+  u8 validity_vector[0]; /**< Bit mask of valid grid points; see 3GPP draft.  If not present,
+all grid points are valid.
  */
 } msg_ssr_grid_definition_t;
 

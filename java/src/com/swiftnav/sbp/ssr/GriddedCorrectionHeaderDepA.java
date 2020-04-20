@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import com.swiftnav.sbp.SBPStruct;
 
-public class STECHeader extends SBPStruct {
+public class GriddedCorrectionHeaderDepA extends SBPStruct {
     
     /** GNSS reference time of the correction */
     public GPSTimeSec time;
@@ -43,25 +43,23 @@ following RTCM DF391 specification.
  */
     public int iod_atmo;
     
-    /** Indicates grid IDs are part of the same generation set */
-    public int tile_set_id;
-    
-    /** Unique (within a network) identifer for the tile/grid */
-    public int tile_id;
+    /** Quality of the troposphere data. Encoded following RTCM DF389
+specifcation in units of m.
+ */
+    public int tropo_quality_indicator;
     
 
-    public STECHeader () {}
+    public GriddedCorrectionHeaderDepA () {}
 
     @Override
-    public STECHeader parse(SBPMessage.Parser parser) throws SBPBinaryException {
+    public GriddedCorrectionHeaderDepA parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         time = new GPSTimeSec().parse(parser);
-        num_msgs = parser.getU8();
-        seq_num = parser.getU8();
+        num_msgs = parser.getU16();
+        seq_num = parser.getU16();
         update_interval = parser.getU8();
         iod_atmo = parser.getU8();
-        tile_set_id = parser.getU8();
-        tile_id = parser.getU16();
+        tropo_quality_indicator = parser.getU8();
         return this;
     }
 
@@ -69,12 +67,11 @@ following RTCM DF391 specification.
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
         time.build(builder);
-        builder.putU8(num_msgs);
-        builder.putU8(seq_num);
+        builder.putU16(num_msgs);
+        builder.putU16(seq_num);
         builder.putU8(update_interval);
         builder.putU8(iod_atmo);
-        builder.putU8(tile_set_id);
-        builder.putU16(tile_id);
+        builder.putU8(tropo_quality_indicator);
     }
 
     @Override
@@ -85,8 +82,7 @@ following RTCM DF391 specification.
         obj.put("seq_num", seq_num);
         obj.put("update_interval", update_interval);
         obj.put("iod_atmo", iod_atmo);
-        obj.put("tile_set_id", tile_set_id);
-        obj.put("tile_id", tile_id);
+        obj.put("tropo_quality_indicator", tropo_quality_indicator);
         return obj;
     }
 }

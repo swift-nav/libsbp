@@ -56,6 +56,8 @@ message STECHeader {
     uint32 seq_num = 3;
     uint32 update_interval = 4;
     uint32 iod_atmo = 5;
+    uint32 tile_set_id = 6;
+    uint32 tile_id = 7;
 }
 
 /** Header for MSG_SSR_GRIDDED_CORRECTION
@@ -70,7 +72,9 @@ message GriddedCorrectionHeader {
     uint32 seq_num = 3;
     uint32 update_interval = 4;
     uint32 iod_atmo = 5;
-    uint32 tropo_quality_indicator = 6;
+    uint32 tile_set_id = 6;
+    uint32 tile_id = 7;
+    uint32 tropo_quality_indicator = 8;
 }
 
 /** None
@@ -151,12 +155,16 @@ message GridElement {
  * Also includes an RLE encoded validity list.
  */
 message GridDefinitionHeader {
-    uint32 region_size_inverse = 1;
-    uint32 area_width = 2;
-    uint32 lat_nw_corner_enc = 3;
-    uint32 lon_nw_corner_enc = 4;
-    uint32 num_msgs = 5;
-    uint32 seq_num = 6;
+    uint32 rows = 1;
+    uint32 cols = 2;
+    sint32 spacing_lat = 3;
+    sint32 spacing_lon = 4;
+    sint32 corner_nw_lat = 5;
+    sint32 corner_nw_lon = 6;
+    uint32 tile_set_id = 7;
+    uint32 tile_id = 8;
+    uint32 num_msgs = 9;
+    uint32 seq_num = 10;
 }
 
 /** Precise orbit and clock correction
@@ -258,5 +266,5 @@ message MsgSsrGriddedCorrection {
  */
 message MsgSsrGridDefinition {
     GridDefinitionHeader header = 1;
-    repeated uint32 rle_list = 2;
+    repeated uint32 validity_vector = 2;
 }

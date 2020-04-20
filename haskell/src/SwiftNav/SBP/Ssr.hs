@@ -97,6 +97,44 @@ instance Binary PhaseBiasesContent where
 $(makeJSON "_phaseBiasesContent_" ''PhaseBiasesContent)
 $(makeLenses ''PhaseBiasesContent)
 
+-- | STECHeaderDepA.
+--
+-- A full set of STEC information will likely span multiple SBP messages, since
+-- SBP message a limited to 255 bytes.  The header is used to tie multiple SBP
+-- messages into a sequence.
+data STECHeaderDepA = STECHeaderDepA
+  { _sTECHeaderDepA_time          :: !GpsTimeSec
+    -- ^ GNSS reference time of the correction
+  , _sTECHeaderDepA_num_msgs      :: !Word8
+    -- ^ Number of messages in the dataset
+  , _sTECHeaderDepA_seq_num       :: !Word8
+    -- ^ Position of this message in the dataset
+  , _sTECHeaderDepA_update_interval :: !Word8
+    -- ^ Update interval between consecutive corrections. Encoded following RTCM
+    -- DF391 specification.
+  , _sTECHeaderDepA_iod_atmo      :: !Word8
+    -- ^ IOD of the SSR atmospheric correction
+  } deriving ( Show, Read, Eq )
+
+instance Binary STECHeaderDepA where
+  get = do
+    _sTECHeaderDepA_time <- get
+    _sTECHeaderDepA_num_msgs <- getWord8
+    _sTECHeaderDepA_seq_num <- getWord8
+    _sTECHeaderDepA_update_interval <- getWord8
+    _sTECHeaderDepA_iod_atmo <- getWord8
+    pure STECHeaderDepA {..}
+
+  put STECHeaderDepA {..} = do
+    put _sTECHeaderDepA_time
+    putWord8 _sTECHeaderDepA_num_msgs
+    putWord8 _sTECHeaderDepA_seq_num
+    putWord8 _sTECHeaderDepA_update_interval
+    putWord8 _sTECHeaderDepA_iod_atmo
+
+$(makeJSON "_sTECHeaderDepA_" ''STECHeaderDepA)
+$(makeLenses ''STECHeaderDepA)
+
 -- | STECHeader.
 --
 -- A full set of STEC information will likely span multiple SBP messages, since
@@ -114,6 +152,10 @@ data STECHeader = STECHeader
     -- DF391 specification.
   , _sTECHeader_iod_atmo      :: !Word8
     -- ^ IOD of the SSR atmospheric correction
+  , _sTECHeader_tile_set_id   :: !Word8
+    -- ^ Indicates grid IDs are part of the same generation set
+  , _sTECHeader_tile_id       :: !Word16
+    -- ^ Unique (within a network) identifer for the tile/grid
   } deriving ( Show, Read, Eq )
 
 instance Binary STECHeader where
@@ -123,6 +165,8 @@ instance Binary STECHeader where
     _sTECHeader_seq_num <- getWord8
     _sTECHeader_update_interval <- getWord8
     _sTECHeader_iod_atmo <- getWord8
+    _sTECHeader_tile_set_id <- getWord8
+    _sTECHeader_tile_id <- getWord16le
     pure STECHeader {..}
 
   put STECHeader {..} = do
@@ -131,9 +175,53 @@ instance Binary STECHeader where
     putWord8 _sTECHeader_seq_num
     putWord8 _sTECHeader_update_interval
     putWord8 _sTECHeader_iod_atmo
+    putWord8 _sTECHeader_tile_set_id
+    putWord16le _sTECHeader_tile_id
 
 $(makeJSON "_sTECHeader_" ''STECHeader)
 $(makeLenses ''STECHeader)
+
+-- | GriddedCorrectionHeaderDepA.
+--
+-- The 3GPP message contains nested variable length arrays which are not
+-- suppported in SBP, so each grid point will be identified by the index.
+data GriddedCorrectionHeaderDepA = GriddedCorrectionHeaderDepA
+  { _griddedCorrectionHeaderDepA_time                  :: !GpsTimeSec
+    -- ^ GNSS reference time of the correction
+  , _griddedCorrectionHeaderDepA_num_msgs              :: !Word16
+    -- ^ Number of messages in the dataset
+  , _griddedCorrectionHeaderDepA_seq_num               :: !Word16
+    -- ^ Position of this message in the dataset
+  , _griddedCorrectionHeaderDepA_update_interval       :: !Word8
+    -- ^ Update interval between consecutive corrections. Encoded following RTCM
+    -- DF391 specification.
+  , _griddedCorrectionHeaderDepA_iod_atmo              :: !Word8
+    -- ^ IOD of the SSR atmospheric correction
+  , _griddedCorrectionHeaderDepA_tropo_quality_indicator :: !Word8
+    -- ^ Quality of the troposphere data. Encoded following RTCM DF389
+    -- specifcation in units of m.
+  } deriving ( Show, Read, Eq )
+
+instance Binary GriddedCorrectionHeaderDepA where
+  get = do
+    _griddedCorrectionHeaderDepA_time <- get
+    _griddedCorrectionHeaderDepA_num_msgs <- getWord16le
+    _griddedCorrectionHeaderDepA_seq_num <- getWord16le
+    _griddedCorrectionHeaderDepA_update_interval <- getWord8
+    _griddedCorrectionHeaderDepA_iod_atmo <- getWord8
+    _griddedCorrectionHeaderDepA_tropo_quality_indicator <- getWord8
+    pure GriddedCorrectionHeaderDepA {..}
+
+  put GriddedCorrectionHeaderDepA {..} = do
+    put _griddedCorrectionHeaderDepA_time
+    putWord16le _griddedCorrectionHeaderDepA_num_msgs
+    putWord16le _griddedCorrectionHeaderDepA_seq_num
+    putWord8 _griddedCorrectionHeaderDepA_update_interval
+    putWord8 _griddedCorrectionHeaderDepA_iod_atmo
+    putWord8 _griddedCorrectionHeaderDepA_tropo_quality_indicator
+
+$(makeJSON "_griddedCorrectionHeaderDepA_" ''GriddedCorrectionHeaderDepA)
+$(makeLenses ''GriddedCorrectionHeaderDepA)
 
 -- | GriddedCorrectionHeader.
 --
@@ -151,6 +239,10 @@ data GriddedCorrectionHeader = GriddedCorrectionHeader
     -- DF391 specification.
   , _griddedCorrectionHeader_iod_atmo              :: !Word8
     -- ^ IOD of the SSR atmospheric correction
+  , _griddedCorrectionHeader_tile_set_id           :: !Word8
+    -- ^ Indicates grid IDs are part of the same generation set
+  , _griddedCorrectionHeader_tile_id               :: !Word16
+    -- ^ Unique (within a network) identifer for the tile/grid
   , _griddedCorrectionHeader_tropo_quality_indicator :: !Word8
     -- ^ Quality of the troposphere data. Encoded following RTCM DF389
     -- specifcation in units of m.
@@ -163,6 +255,8 @@ instance Binary GriddedCorrectionHeader where
     _griddedCorrectionHeader_seq_num <- getWord16le
     _griddedCorrectionHeader_update_interval <- getWord8
     _griddedCorrectionHeader_iod_atmo <- getWord8
+    _griddedCorrectionHeader_tile_set_id <- getWord8
+    _griddedCorrectionHeader_tile_id <- getWord16le
     _griddedCorrectionHeader_tropo_quality_indicator <- getWord8
     pure GriddedCorrectionHeader {..}
 
@@ -172,6 +266,8 @@ instance Binary GriddedCorrectionHeader where
     putWord16le _griddedCorrectionHeader_seq_num
     putWord8 _griddedCorrectionHeader_update_interval
     putWord8 _griddedCorrectionHeader_iod_atmo
+    putWord8 _griddedCorrectionHeader_tile_set_id
+    putWord16le _griddedCorrectionHeader_tile_id
     putWord8 _griddedCorrectionHeader_tropo_quality_indicator
 
 $(makeJSON "_griddedCorrectionHeader_" ''GriddedCorrectionHeader)
@@ -362,42 +458,98 @@ instance Binary GridElement where
 $(makeJSON "_gridElement_" ''GridElement)
 $(makeLenses ''GridElement)
 
+-- | GridDefinitionHeaderDepA.
+--
+-- Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages. Also includes an
+-- RLE encoded validity list.
+data GridDefinitionHeaderDepA = GridDefinitionHeaderDepA
+  { _gridDefinitionHeaderDepA_region_size_inverse :: !Word8
+    -- ^ region_size (deg) = 10 / region_size_inverse 0 is an invalid value.
+  , _gridDefinitionHeaderDepA_area_width        :: !Word16
+    -- ^ grid height (deg) = grid idth (deg) = area_width / region_size 0 is an
+    -- invalid value.
+  , _gridDefinitionHeaderDepA_lat_nw_corner_enc :: !Word16
+    -- ^ North-West corner latitdue (deg) = region_size * lat_nw_corner_enc - 90
+  , _gridDefinitionHeaderDepA_lon_nw_corner_enc :: !Word16
+    -- ^ North-West corner longtitude (deg) = region_size * lon_nw_corner_enc -
+    -- 180
+  , _gridDefinitionHeaderDepA_num_msgs          :: !Word8
+    -- ^ Number of messages in the dataset
+  , _gridDefinitionHeaderDepA_seq_num           :: !Word8
+    -- ^ Postion of this message in the dataset
+  } deriving ( Show, Read, Eq )
+
+instance Binary GridDefinitionHeaderDepA where
+  get = do
+    _gridDefinitionHeaderDepA_region_size_inverse <- getWord8
+    _gridDefinitionHeaderDepA_area_width <- getWord16le
+    _gridDefinitionHeaderDepA_lat_nw_corner_enc <- getWord16le
+    _gridDefinitionHeaderDepA_lon_nw_corner_enc <- getWord16le
+    _gridDefinitionHeaderDepA_num_msgs <- getWord8
+    _gridDefinitionHeaderDepA_seq_num <- getWord8
+    pure GridDefinitionHeaderDepA {..}
+
+  put GridDefinitionHeaderDepA {..} = do
+    putWord8 _gridDefinitionHeaderDepA_region_size_inverse
+    putWord16le _gridDefinitionHeaderDepA_area_width
+    putWord16le _gridDefinitionHeaderDepA_lat_nw_corner_enc
+    putWord16le _gridDefinitionHeaderDepA_lon_nw_corner_enc
+    putWord8 _gridDefinitionHeaderDepA_num_msgs
+    putWord8 _gridDefinitionHeaderDepA_seq_num
+
+$(makeJSON "_gridDefinitionHeaderDepA_" ''GridDefinitionHeaderDepA)
+$(makeLenses ''GridDefinitionHeaderDepA)
+
 -- | GridDefinitionHeader.
 --
 -- Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages. Also includes an
 -- RLE encoded validity list.
 data GridDefinitionHeader = GridDefinitionHeader
-  { _gridDefinitionHeader_region_size_inverse :: !Word8
-    -- ^ region_size (deg) = 10 / region_size_inverse 0 is an invalid value.
-  , _gridDefinitionHeader_area_width        :: !Word16
-    -- ^ grid height (deg) = grid idth (deg) = area_width / region_size 0 is an
-    -- invalid value.
-  , _gridDefinitionHeader_lat_nw_corner_enc :: !Word16
-    -- ^ North-West corner latitdue (deg) = region_size * lat_nw_corner_enc - 90
-  , _gridDefinitionHeader_lon_nw_corner_enc :: !Word16
-    -- ^ North-West corner longtitude (deg) = region_size * lon_nw_corner_enc -
-    -- 180
-  , _gridDefinitionHeader_num_msgs          :: !Word8
+  { _gridDefinitionHeader_rows        :: !Word16
+    -- ^ number of rows of points (lattitude)
+  , _gridDefinitionHeader_cols        :: !Word16
+    -- ^ number of columns of points (longitude)
+  , _gridDefinitionHeader_spacing_lat :: !Int32
+    -- ^ spacing between lat corrction points
+  , _gridDefinitionHeader_spacing_lon :: !Int32
+    -- ^ spacing between lon correction points
+  , _gridDefinitionHeader_corner_nw_lat :: !Int32
+    -- ^ northwest corner lattidue
+  , _gridDefinitionHeader_corner_nw_lon :: !Int32
+    -- ^ northwest corner longtitude
+  , _gridDefinitionHeader_tile_set_id :: !Word8
+    -- ^ Indicates grid IDs are part of the same generation set
+  , _gridDefinitionHeader_tile_id     :: !Word16
+    -- ^ Unique (within a network) identifer for the tile/grid
+  , _gridDefinitionHeader_num_msgs    :: !Word8
     -- ^ Number of messages in the dataset
-  , _gridDefinitionHeader_seq_num           :: !Word8
+  , _gridDefinitionHeader_seq_num     :: !Word8
     -- ^ Postion of this message in the dataset
   } deriving ( Show, Read, Eq )
 
 instance Binary GridDefinitionHeader where
   get = do
-    _gridDefinitionHeader_region_size_inverse <- getWord8
-    _gridDefinitionHeader_area_width <- getWord16le
-    _gridDefinitionHeader_lat_nw_corner_enc <- getWord16le
-    _gridDefinitionHeader_lon_nw_corner_enc <- getWord16le
+    _gridDefinitionHeader_rows <- getWord16le
+    _gridDefinitionHeader_cols <- getWord16le
+    _gridDefinitionHeader_spacing_lat <- (fromIntegral <$> getWord32le)
+    _gridDefinitionHeader_spacing_lon <- (fromIntegral <$> getWord32le)
+    _gridDefinitionHeader_corner_nw_lat <- (fromIntegral <$> getWord32le)
+    _gridDefinitionHeader_corner_nw_lon <- (fromIntegral <$> getWord32le)
+    _gridDefinitionHeader_tile_set_id <- getWord8
+    _gridDefinitionHeader_tile_id <- getWord16le
     _gridDefinitionHeader_num_msgs <- getWord8
     _gridDefinitionHeader_seq_num <- getWord8
     pure GridDefinitionHeader {..}
 
   put GridDefinitionHeader {..} = do
-    putWord8 _gridDefinitionHeader_region_size_inverse
-    putWord16le _gridDefinitionHeader_area_width
-    putWord16le _gridDefinitionHeader_lat_nw_corner_enc
-    putWord16le _gridDefinitionHeader_lon_nw_corner_enc
+    putWord16le _gridDefinitionHeader_rows
+    putWord16le _gridDefinitionHeader_cols
+    (putWord32le . fromIntegral) _gridDefinitionHeader_spacing_lat
+    (putWord32le . fromIntegral) _gridDefinitionHeader_spacing_lon
+    (putWord32le . fromIntegral) _gridDefinitionHeader_corner_nw_lat
+    (putWord32le . fromIntegral) _gridDefinitionHeader_corner_nw_lon
+    putWord8 _gridDefinitionHeader_tile_set_id
+    putWord16le _gridDefinitionHeader_tile_id
     putWord8 _gridDefinitionHeader_num_msgs
     putWord8 _gridDefinitionHeader_seq_num
 
@@ -666,10 +818,40 @@ $(makeSBP 'msgSsrPhaseBiases ''MsgSsrPhaseBiases)
 $(makeJSON "_msgSsrPhaseBiases_" ''MsgSsrPhaseBiases)
 $(makeLenses ''MsgSsrPhaseBiases)
 
-msgSsrStecCorrection :: Word16
-msgSsrStecCorrection = 0x05EB
+msgSsrStecCorrectionDepA :: Word16
+msgSsrStecCorrectionDepA = 0x05EB
 
--- | SBP class for message MSG_SSR_STEC_CORRECTION (0x05EB).
+-- | SBP class for message MSG_SSR_STEC_CORRECTION_DEP_A (0x05EB).
+--
+-- The STEC per space vehicle, given as polynomial approximation for a given
+-- grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION message to
+-- get the state space representation of the atmospheric delay. It is typically
+-- equivalent to the QZSS CLAS Sub Type 8 messages
+data MsgSsrStecCorrectionDepA = MsgSsrStecCorrectionDepA
+  { _msgSsrStecCorrectionDepA_header      :: !STECHeaderDepA
+    -- ^ Header of a STEC message
+  , _msgSsrStecCorrectionDepA_stec_sat_list :: ![STECSatElement]
+    -- ^ Array of STEC information for each space vehicle
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrStecCorrectionDepA where
+  get = do
+    _msgSsrStecCorrectionDepA_header <- get
+    _msgSsrStecCorrectionDepA_stec_sat_list <- whileM (not <$> isEmpty) get
+    pure MsgSsrStecCorrectionDepA {..}
+
+  put MsgSsrStecCorrectionDepA {..} = do
+    put _msgSsrStecCorrectionDepA_header
+    mapM_ put _msgSsrStecCorrectionDepA_stec_sat_list
+
+$(makeSBP 'msgSsrStecCorrectionDepA ''MsgSsrStecCorrectionDepA)
+$(makeJSON "_msgSsrStecCorrectionDepA_" ''MsgSsrStecCorrectionDepA)
+$(makeLenses ''MsgSsrStecCorrectionDepA)
+
+msgSsrStecCorrection :: Word16
+msgSsrStecCorrection = 0x05EC
+
+-- | SBP class for message MSG_SSR_STEC_CORRECTION (0x05EC).
 --
 -- The STEC per space vehicle, given as polynomial approximation for a given
 -- grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION message to
@@ -723,10 +905,39 @@ $(makeSBP 'msgSsrGriddedCorrectionNoStd ''MsgSsrGriddedCorrectionNoStd)
 $(makeJSON "_msgSsrGriddedCorrectionNoStd_" ''MsgSsrGriddedCorrectionNoStd)
 $(makeLenses ''MsgSsrGriddedCorrectionNoStd)
 
-msgSsrGriddedCorrection :: Word16
-msgSsrGriddedCorrection = 0x05FA
+msgSsrGriddedCorrectionDepA :: Word16
+msgSsrGriddedCorrectionDepA = 0x05FA
 
--- | SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FA).
+-- | SBP class for message MSG_SSR_GRIDDED_CORRECTION_DEP_A (0x05FA).
+--
+-- STEC residuals are per space vehicle, tropo is not. It is typically
+-- equivalent to the QZSS CLAS Sub Type 9 messages
+data MsgSsrGriddedCorrectionDepA = MsgSsrGriddedCorrectionDepA
+  { _msgSsrGriddedCorrectionDepA_header :: !GriddedCorrectionHeaderDepA
+    -- ^ Header of a Gridded Correction message
+  , _msgSsrGriddedCorrectionDepA_element :: !GridElement
+    -- ^ Tropo and STEC residuals for the given grid point (mean and standard
+    -- deviation)
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrGriddedCorrectionDepA where
+  get = do
+    _msgSsrGriddedCorrectionDepA_header <- get
+    _msgSsrGriddedCorrectionDepA_element <- get
+    pure MsgSsrGriddedCorrectionDepA {..}
+
+  put MsgSsrGriddedCorrectionDepA {..} = do
+    put _msgSsrGriddedCorrectionDepA_header
+    put _msgSsrGriddedCorrectionDepA_element
+
+$(makeSBP 'msgSsrGriddedCorrectionDepA ''MsgSsrGriddedCorrectionDepA)
+$(makeJSON "_msgSsrGriddedCorrectionDepA_" ''MsgSsrGriddedCorrectionDepA)
+$(makeLenses ''MsgSsrGriddedCorrectionDepA)
+
+msgSsrGriddedCorrection :: Word16
+msgSsrGriddedCorrection = 0x05FB
+
+-- | SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FB).
 --
 -- STEC residuals are per space vehicle, tropo is not. It is typically
 -- equivalent to the QZSS CLAS Sub Type 9 messages
@@ -752,32 +963,61 @@ $(makeSBP 'msgSsrGriddedCorrection ''MsgSsrGriddedCorrection)
 $(makeJSON "_msgSsrGriddedCorrection_" ''MsgSsrGriddedCorrection)
 $(makeLenses ''MsgSsrGriddedCorrection)
 
-msgSsrGridDefinition :: Word16
-msgSsrGridDefinition = 0x05F5
+msgSsrGridDefinitionDepA :: Word16
+msgSsrGridDefinitionDepA = 0x05F5
 
--- | SBP class for message MSG_SSR_GRID_DEFINITION (0x05F5).
+-- | SBP class for message MSG_SSR_GRID_DEFINITION_DEP_A (0x05F5).
 --
 -- Based on the 3GPP proposal R2-1906781 which is in turn based on OMA-LPPe-
 -- ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
-data MsgSsrGridDefinition = MsgSsrGridDefinition
-  { _msgSsrGridDefinition_header :: !GridDefinitionHeader
+data MsgSsrGridDefinitionDepA = MsgSsrGridDefinitionDepA
+  { _msgSsrGridDefinitionDepA_header :: !GridDefinitionHeaderDepA
     -- ^ Header of a Gridded Correction message
-  , _msgSsrGridDefinition_rle_list :: ![Word8]
+  , _msgSsrGridDefinitionDepA_rle_list :: ![Word8]
     -- ^ Run Length Encode list of quadrants that contain valid data. The spec
     -- describes the encoding scheme in detail, but essentially the index of
     -- the quadrants that contain transitions between valid and invalid (and
     -- vice versa) are encoded as u8 integers.
   } deriving ( Show, Read, Eq )
 
+instance Binary MsgSsrGridDefinitionDepA where
+  get = do
+    _msgSsrGridDefinitionDepA_header <- get
+    _msgSsrGridDefinitionDepA_rle_list <- whileM (not <$> isEmpty) getWord8
+    pure MsgSsrGridDefinitionDepA {..}
+
+  put MsgSsrGridDefinitionDepA {..} = do
+    put _msgSsrGridDefinitionDepA_header
+    mapM_ putWord8 _msgSsrGridDefinitionDepA_rle_list
+
+$(makeSBP 'msgSsrGridDefinitionDepA ''MsgSsrGridDefinitionDepA)
+$(makeJSON "_msgSsrGridDefinitionDepA_" ''MsgSsrGridDefinitionDepA)
+$(makeLenses ''MsgSsrGridDefinitionDepA)
+
+msgSsrGridDefinition :: Word16
+msgSsrGridDefinition = 0x05F6
+
+-- | SBP class for message MSG_SSR_GRID_DEFINITION (0x05F6).
+--
+-- Based on the 3GPP proposal R2-1906781 which is in turn based on OMA-LPPe-
+-- ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
+data MsgSsrGridDefinition = MsgSsrGridDefinition
+  { _msgSsrGridDefinition_header        :: !GridDefinitionHeader
+    -- ^ Header of a Gridded Correction message
+  , _msgSsrGridDefinition_validity_vector :: ![Word8]
+    -- ^ Bit mask of valid grid points; see 3GPP draft.  If not present, all grid
+    -- points are valid.
+  } deriving ( Show, Read, Eq )
+
 instance Binary MsgSsrGridDefinition where
   get = do
     _msgSsrGridDefinition_header <- get
-    _msgSsrGridDefinition_rle_list <- whileM (not <$> isEmpty) getWord8
+    _msgSsrGridDefinition_validity_vector <- whileM (not <$> isEmpty) getWord8
     pure MsgSsrGridDefinition {..}
 
   put MsgSsrGridDefinition {..} = do
     put _msgSsrGridDefinition_header
-    mapM_ putWord8 _msgSsrGridDefinition_rle_list
+    mapM_ putWord8 _msgSsrGridDefinition_validity_vector
 
 $(makeSBP 'msgSsrGridDefinition ''MsgSsrGridDefinition)
 $(makeJSON "_msgSsrGridDefinition_" ''MsgSsrGridDefinition)
