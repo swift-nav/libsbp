@@ -97,8 +97,7 @@ impl crate::serialize::SbpSerialize for MsgImuAux {
 #[allow(non_snake_case)]
 pub struct MsgImuRaw {
     pub sender_id: Option<u16>,
-    /// Milliseconds since start of GPS week. If the high bit is set, the time
-    /// is unknown or invalid.
+    /// Milliseconds since reference epoch and time status.
     pub tow: u32,
     /// Milliseconds since start of GPS week, fractional part
     pub tow_f: u8,

@@ -45,8 +45,7 @@ device hardware and settings, are communicated via the MSG_IMU_AUX message.
   sbp : SBP
     SBP parent object to inherit from.
   tow : int
-    Milliseconds since start of GPS week. If the high bit is set, the
-time is unknown or invalid.
+    Milliseconds since reference epoch and time status.
 
   tow_f : int
     Milliseconds since start of GPS week, fractional part

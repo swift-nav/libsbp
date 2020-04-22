@@ -47,8 +47,7 @@ msgImuRaw = 0x0900
 -- message.
 data MsgImuRaw = MsgImuRaw
   { _msgImuRaw_tow :: !Word32
-    -- ^ Milliseconds since start of GPS week. If the high bit is set, the time
-    -- is unknown or invalid.
+    -- ^ Milliseconds since reference epoch and time status.
   , _msgImuRaw_tow_f :: !Word8
     -- ^ Milliseconds since start of GPS week, fractional part
   , _msgImuRaw_acc_x :: !Int16
