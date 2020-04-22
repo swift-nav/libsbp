@@ -49,7 +49,7 @@ data MsgImuRaw = MsgImuRaw
   { _msgImuRaw_tow :: !Word32
     -- ^ Milliseconds since reference epoch and time status.
   , _msgImuRaw_tow_f :: !Word8
-    -- ^ Milliseconds since start of GPS week, fractional part
+    -- ^ Milliseconds since reference epoch, fractional part
   , _msgImuRaw_acc_x :: !Int16
     -- ^ Acceleration in the IMU frame X axis
   , _msgImuRaw_acc_y :: !Int16

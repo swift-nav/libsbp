@@ -48,7 +48,7 @@ device hardware and settings, are communicated via the MSG_IMU_AUX message.
     Milliseconds since reference epoch and time status.
 
   tow_f : int
-    Milliseconds since start of GPS week, fractional part
+    Milliseconds since reference epoch, fractional part
 
   acc_x : int
     Acceleration in the IMU frame X axis

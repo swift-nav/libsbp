@@ -41,7 +41,7 @@ public class MsgImuRaw extends SBPMessage {
  */
     public long tow;
     
-    /** Milliseconds since start of GPS week, fractional part
+    /** Milliseconds since reference epoch, fractional part
  */
     public int tow_f;
     

@@ -39,7 +39,7 @@ SBP_PACK_START
 typedef struct SBP_ATTR_PACKED {
   u32 tow;      /**< Milliseconds since reference epoch and time status.
  */
-  u8 tow_f;    /**< Milliseconds since start of GPS week, fractional part
+  u8 tow_f;    /**< Milliseconds since reference epoch, fractional part
  [ms / 256] */
   s16 acc_x;    /**< Acceleration in the IMU frame X axis */
   s16 acc_y;    /**< Acceleration in the IMU frame Y axis */

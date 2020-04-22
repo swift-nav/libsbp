@@ -99,7 +99,7 @@ pub struct MsgImuRaw {
     pub sender_id: Option<u16>,
     /// Milliseconds since reference epoch and time status.
     pub tow: u32,
-    /// Milliseconds since start of GPS week, fractional part
+    /// Milliseconds since reference epoch, fractional part
     pub tow_f: u8,
     /// Acceleration in the IMU frame X axis
     pub acc_x: i16,

@@ -43,7 +43,7 @@ definitions:
             type: u8
             units: ms / 256
             desc: |
-              Milliseconds since start of GPS week, fractional part
+              Milliseconds since reference epoch, fractional part
         - acc_x:
             type: s16
             desc: Acceleration in the IMU frame X axis

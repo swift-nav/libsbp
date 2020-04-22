@@ -33,7 +33,7 @@ var UInt64 = require('cuint').UINT64;
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) Milliseconds since reference epoch and time status.
- * @field tow_f number (unsigned 8-bit int, 1 byte) Milliseconds since start of GPS week, fractional part
+ * @field tow_f number (unsigned 8-bit int, 1 byte) Milliseconds since reference epoch, fractional part
  * @field acc_x number (signed 16-bit int, 2 bytes) Acceleration in the IMU frame X axis
  * @field acc_y number (signed 16-bit int, 2 bytes) Acceleration in the IMU frame Y axis
  * @field acc_z number (signed 16-bit int, 2 bytes) Acceleration in the IMU frame Z axis
