@@ -37,10 +37,9 @@ SBP_PACK_START
  */
 #define SBP_MSG_IMU_RAW 0x0900
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;      /**< Milliseconds since start of GPS week. If the high bit is set, the
-time is unknown or invalid.
- [ms] */
-  u8 tow_f;    /**< Milliseconds since start of GPS week, fractional part
+  u32 tow;      /**< Milliseconds since reference epoch and time status.
+ */
+  u8 tow_f;    /**< Milliseconds since reference epoch, fractional part
  [ms / 256] */
   s16 acc_x;    /**< Acceleration in the IMU frame X axis */
   s16 acc_y;    /**< Acceleration in the IMU frame Y axis */

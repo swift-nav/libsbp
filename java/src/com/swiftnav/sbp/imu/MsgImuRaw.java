@@ -37,12 +37,11 @@ public class MsgImuRaw extends SBPMessage {
     public static final int TYPE = 0x0900;
 
     
-    /** Milliseconds since start of GPS week. If the high bit is set, the
-time is unknown or invalid.
+    /** Milliseconds since reference epoch and time status.
  */
     public long tow;
     
-    /** Milliseconds since start of GPS week, fractional part
+    /** Milliseconds since reference epoch, fractional part
  */
     public int tow_f;
     
