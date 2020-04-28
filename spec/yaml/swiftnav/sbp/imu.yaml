@@ -27,15 +27,23 @@ definitions:
     fields:
         - tow:
             type: u32
-            units: ms
+            fields:
+              - 30-31:
+                  desc: Time status
+                  values:
+                      - 0: Reference epoch is start of current GPS week
+                      - 1: reserved
+                      - 2: Reference epoch is unknown
+                      - 3: Reference epoch is last PPS
+              - 0-29:
+                  desc: Time since reference epoch in milliseconds
             desc: |
-              Milliseconds since start of GPS week. If the high bit is set, the
-              time is unknown or invalid.
+              Milliseconds since reference epoch and time status.
         - tow_f:
             type: u8
             units: ms / 256
             desc: |
-              Milliseconds since start of GPS week, fractional part
+              Milliseconds since reference epoch, fractional part
         - acc_x:
             type: s16
             desc: Acceleration in the IMU frame X axis
