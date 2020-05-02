@@ -131,14 +131,19 @@ impl Parser {
                     self.buffer = self.buffer[bytes_read..].to_vec();
                     break Ok(msg);
                 }
-                (Err(crate::Error::ParseError), bytes_read) => {
+                (Err(e), bytes_read) => {
                     if bytes_read >= self.buffer.len() {
                         self.buffer.clear()
                     } else {
                         self.buffer = self.buffer[bytes_read..].to_vec();
                     }
+
+                    if let crate::Error::ParseError = e {
+                        // Continue parsing
+                    } else {
+                        break Err(e)
+                    }
                 }
-                (Err(e), _bytes_read) => break Err(e),
             }
 
             if self.buffer.is_empty() {
