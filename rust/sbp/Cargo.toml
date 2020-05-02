@@ -32,6 +32,7 @@ serde_json = { version = "1.0", optional = true }
 dtoa = { version = "0.4", optional = true }
 base64 = { version = "0.12", optional = true }
 float-pretty-print = { version = "0.1", optional = true }
+buf_redux = "0.8.4"
 
 [dev-dependencies]
 serialport = "2.1.0"

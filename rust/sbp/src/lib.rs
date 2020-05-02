@@ -22,6 +22,7 @@ pub enum Error {
     CrcError,
     NotEnoughData,
     UnrecoverableFailure,
+    Eof,
     IoError(std::io::Error),
 }
 
@@ -32,6 +33,7 @@ impl fmt::Display for Error {
             Error::CrcError => write!(f, "CRC error"),
             Error::NotEnoughData => write!(f, "Not enough data"),
             Error::UnrecoverableFailure => write!(f, "Unrecoverage failure"),
+            Error::Eof => write!(f, "Reached EOF"),
             Error::IoError(err) => write!(f, "IO Error: {}", err),
         }
     }
@@ -44,6 +46,7 @@ impl error::Error for Error {
             Error::CrcError => "CRC validation failed",
             Error::NotEnoughData => "Not enough data available to parse a message",
             Error::UnrecoverableFailure => "An unrecoverage failure was encountered",
+            Error::Eof => "Reached EOF",
             #[allow(deprecated)]
             Error::IoError(err) => err.description(),
         }

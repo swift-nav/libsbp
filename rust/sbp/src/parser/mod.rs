@@ -11,7 +11,8 @@ use self::nom::number::complete::{le_u16, le_u8};
 use self::nom::sequence::tuple;
 use crate::messages::SBP;
 use crate::Result;
-use std::io::Read;
+use std::io::{BufRead, Read};
+use buf_redux::{BufReader, policy::MinBuffered};
 
 const MSG_HEADER_LEN: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/ + 1 /*len*/;
 
@@ -61,7 +62,7 @@ pub fn frame(input: &[u8]) -> (Result<SBP>, usize) {
             _ => (Err(crate::Error::ParseError), 1),
         },
         // Act like we didn't read anything
-        Err(self::nom::Err::Failure((_, _))) => (Err(crate::Error::UnrecoverableFailure), 0),
+        Err(self::nom::Err::Failure((_, _))) => (Err(crate::Error::UnrecoverableFailure), 1),
     }
 }
 
@@ -72,16 +73,20 @@ pub fn frame(input: &[u8]) -> (Result<SBP>, usize) {
 /// the stream. A Parser buffers some data locally to
 /// reduce the number of
 /// calls to read data.
-pub struct Parser {
-    buffer: Vec<u8>,
+pub struct Parser<R: Read> {
+    reader: BufReader<R, MinBuffered>,
 }
 
-impl Parser {
-    const BUF_SIZE: usize = 1024usize;
-
+impl<R: Read> Parser<R> {
     /// Creates a new Parser object
-    pub fn new() -> Parser {
-        Parser { buffer: vec![0; 0] }
+    pub fn new(reader: R) -> Self {
+        Self {
+            reader: BufReader::new(reader).set_policy(MinBuffered(MSG_HEADER_LEN)),
+        }
+    }
+
+    pub fn into_inner(self) -> R {
+        self.reader.into_inner()
     }
 
     /// Attempts to read a single SBP message from the
@@ -91,63 +96,30 @@ impl Parser {
     /// as needed
     /// until either a message is successfully parsed or an
     /// error occurs
-    pub fn parse<R: Read>(&mut self, input: &mut R) -> Result<SBP> {
-        if self.buffer.len() == 0 {
-            self.read_more(input)?;
-        }
-
+    pub fn parse(&mut self) -> Result<SBP> {
         loop {
-            match self.parse_remaining() {
+            self.reader.fill_buf();
+            let (result, bytes_read) = frame(self.reader.buffer());
+            self.reader.consume(bytes_read);
+
+            match result {
                 Ok(msg) => break Ok(msg),
+                Err(crate::Error::ParseError) => (),
                 Err(crate::Error::NotEnoughData) => {
-                    if let Err(e) = self.read_more(input) {
-                        break Err(e);
+                    self.reader.make_room();
+                    let prev_size = self.reader.buffer().len();
+                    match self.reader.read_into_buf() {
+                        Err(e) => break Err(crate::Error::IoError(e)),
+                        Ok(read_count) => {
+                            // If we need more data, but we've hit EOF (read count of 0)
+                            // then there isn't anything more we can process
+                            if read_count == 0 {
+                                break Err(crate::Error::Eof);
+                            }
+                        }
                     }
                 }
                 Err(e) => break Err(e),
-            };
-        }
-    }
-
-    fn read_more<R: Read>(&mut self, input: &mut R) -> Result<usize> {
-        let mut local_buffer = vec![0; Parser::BUF_SIZE];
-        let read_bytes = input.read(local_buffer.as_mut())?;
-        if read_bytes == 0 {
-            return Err(crate::Error::IoError(std::io::Error::new(
-                std::io::ErrorKind::UnexpectedEof,
-                "",
-            )));
-        }
-        self.buffer.extend_from_slice(&local_buffer[..read_bytes]);
-        Ok(read_bytes)
-    }
-
-    fn parse_remaining(&mut self) -> Result<SBP> {
-        loop {
-            let result = frame(&self.buffer);
-
-            match result {
-                (Ok(msg), bytes_read) => {
-                    self.buffer = self.buffer[bytes_read..].to_vec();
-                    break Ok(msg);
-                }
-                (Err(e), bytes_read) => {
-                    if bytes_read >= self.buffer.len() {
-                        self.buffer.clear()
-                    } else {
-                        self.buffer = self.buffer[bytes_read..].to_vec();
-                    }
-
-                    if let crate::Error::ParseError = e {
-                        // Continue parsing
-                    } else {
-                        break Err(e)
-                    }
-                }
-            }
-
-            if self.buffer.is_empty() {
-                break Err(crate::Error::NotEnoughData);
             }
         }
     }

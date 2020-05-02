@@ -200,12 +200,12 @@ fn write_sbp_json_value(
     rewrap_data: bool,
     base64_payload: &mut String,
     common_sbp: &dyn SBPMessage,
-    slice: &[u8],
     value: &mut Value,
     stream: &mut Rc<Box<dyn Write>>,
 ) -> Result<()> {
     let value = unpack(value);
-    let value = add_common_fields(common_sbp, slice, value.unwrap(), base64_payload);
+    let payload = common_sbp.to_frame()?;
+    let value = add_common_fields(common_sbp, &payload, value.unwrap(), base64_payload);
     let data_wrapped;
     let value = if rewrap_data {
         data_wrapped = json!({ "data": value });
@@ -315,8 +315,6 @@ pub fn json2sbp_process_with_expand(
                 let sbp_msg = SBP::parse(msg_type, sender_id, &mut payload);
                 if let Ok(sbp_msg) = sbp_msg {
                     let common_sbp = sbp_msg.as_sbp_message();
-                    let frame = common_sbp.to_frame();
-                    if let Ok(frame) = frame {
                         if expand_json {
                             let mut value = serde_json::to_value(&sbp_msg)?;
                             write_sbp_json_value(
@@ -324,22 +322,18 @@ pub fn json2sbp_process_with_expand(
                                 rewrap_data,
                                 &mut base64_payload,
                                 common_sbp,
-                                &frame[..],
                                 &mut value,
                                 stream_output,
                             )?;
                         } else {
                             let io_ref =
                                 Rc::get_mut(stream_output).expect("could not get output stream");
-                            if let Err(err) = io_ref.write_all(&frame) {
+                            if let Err(err) = io_ref.write_all(&common_sbp.to_frame()?) {
                                 if debug {
                                     eprintln!("IO write failed: {:?}", err);
                                 }
                             }
                         }
-                    } else if debug {
-                        eprintln!("SBP framing failed: {:?}", frame.err());
-                    }
                 } else if debug {
                     eprintln!("SBP parse failed: {:?}", sbp_msg.err());
                 }
@@ -405,55 +399,9 @@ pub fn sbp2json_read_loop(
     output_stream: &mut Rc<Box<dyn Write>>,
 ) -> Result<()> {
     let mut base64_payload: String = String::with_capacity(512);
-    let mut buf = [0u8; BUF_SIZE];
-    let mut unconsumed_offset = 0;
-    let mut read_offset = 0;
-    let mut remaining_length = buf.len();
-    loop {
-        if remaining_length == 0 {
-            if debug {
-                eprintln!(
-                    "remaining_length == 0: read_offset: {}, unconsumed_offset: {}",
-                    read_offset, unconsumed_offset
-                );
-            }
-            buf.rotate_left(unconsumed_offset);
-            read_offset = read_offset - unconsumed_offset;
-            unconsumed_offset = 0;
-            remaining_length = buf.len() - read_offset;
-        }
-        let read_length = input_stream.read(&mut buf[read_offset..])?;
-        if debug {
-            eprintln!(
-                "loop: read_length: {}, unconsumed_offset: {}",
-                read_offset, unconsumed_offset
-            );
-        }
-        if read_length == 0 {
-            break;
-        }
-        read_offset += read_length;
-        remaining_length -= read_length;
-        if debug_memory {
-            eprintln!(
-                "memory: base64_payload: {}, buf: {}",
-                base64_payload.capacity(),
-                buf.len()
-            );
-        }
+    let mut parser = super::parser::Parser::new(input_stream);
         loop {
-            if debug {
-                eprintln!(
-                    "loop.loop.enter: read_offset: {}, unconsumed_offset: {}",
-                    read_offset, unconsumed_offset
-                );
-            }
-            let bytes_available = read_offset - unconsumed_offset;
-            if bytes_available == 0 {
-                break;
-            }
-            let slice = &buf[unconsumed_offset..(unconsumed_offset + bytes_available)];
-            let (frame, consumed) = super::parser::frame(slice);
+            let frame = parser.parse();
             match frame {
                 Ok(msg) => {
                     let common_sbp = msg.as_sbp_message();
@@ -463,34 +411,30 @@ pub fn sbp2json_read_loop(
                         false,
                         &mut base64_payload,
                         common_sbp,
-                        slice,
                         &mut value,
                         output_stream,
                     )?;
-                    unconsumed_offset += consumed;
-                    if debug {
-                        eprintln!(
-                            "loop.loop.frame: consumed: {}, unconsumed_offset: {}",
-                            consumed, unconsumed_offset
-                        );
-                    }
                 }
                 Err(err) => match err {
                     super::Error::CrcError => {
                         if debug {
                             eprintln!("loop.loop.error: crc error");
                         }
-                        unconsumed_offset += consumed;
                     }
                     super::Error::ParseError => {
                         if debug {
                             eprintln!("loop.loop.error: parse error");
                         }
-                        unconsumed_offset += consumed;
                     }
                     super::Error::NotEnoughData => {
                         if debug {
                             eprintln!("loop.loop.error: not enough data");
+                        }
+                        break;
+                    }
+                    super::Error::Eof => {
+                        if debug {
+                            eprintln!("loop.loop.error: end of file");
                         }
                         break;
                     }
@@ -499,7 +443,6 @@ pub fn sbp2json_read_loop(
                 },
             }
         }
-    }
     Ok(())
 }
 
