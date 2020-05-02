@@ -162,7 +162,7 @@ mod tests {
             0x62, 0xee, 0xff, 0xbe, 0x40, 0x14, 0x00, 0xf6, 0xa3, 0x09, 0x00, 0x00, 0x00, 0x0e,
             0x00, 0xdb, 0xbf, 0xde, 0xad, 0xbe, 0xef,
         ];
-        let mut reader = std::io::Cursor::new(packet);
+        let reader = std::io::Cursor::new(packet);
         let baseline_ecef_expectation = crate::messages::navigation::MsgBaselineECEF {
             sender_id: Some(0x88d3),
             accuracy: 0,
@@ -173,10 +173,10 @@ mod tests {
             y: 1327294,
             z: 631798,
         };
-        let mut parser = crate::parser::Parser::new();
+        let mut parser = crate::parser::Parser::new(reader);
         // Iterate through the data until we hit something that is
         // parsable
-        let sbp_result = parser.parse(&mut reader);
+        let sbp_result = parser.parse();
         assert!(sbp_result.is_ok());
         if let crate::messages::SBP::MsgBaselineECEF(msg) = sbp_result.unwrap() {
             assert_eq!(msg.sender_id, baseline_ecef_expectation.sender_id);
