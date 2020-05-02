@@ -24,8 +24,8 @@ fn test_auto_check_sbp_bootload_39() {
         let payload: Vec<u8> = vec![85, 180, 0, 0, 0, 9, 0, 0, 0, 0, 118, 49, 46, 50, 10, 201, 1];
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new();
-        let msg_result = parser.parse(&mut &payload[..]);
+        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(payload));
+        let msg_result = parser.parse();
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
         match &sbp_msg {
@@ -62,6 +62,7 @@ fn test_auto_check_sbp_bootload_39() {
             _ => panic!("Invalid message type! Expected a MsgBootloaderHandshakeResp"),
         };
 
+        let payload = parser.into_inner().into_inner();
         let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
         assert_eq!(frame, payload);
     }
@@ -69,8 +70,8 @@ fn test_auto_check_sbp_bootload_39() {
         let payload: Vec<u8> = vec![85, 176, 0, 195, 4, 4, 118, 49, 46, 50, 1, 206];
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new();
-        let msg_result = parser.parse(&mut &payload[..]);
+        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(payload));
+        let msg_result = parser.parse();
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
         match &sbp_msg {
@@ -111,6 +112,7 @@ fn test_auto_check_sbp_bootload_39() {
             _ => panic!("Invalid message type! Expected a MsgBootloaderHandshakeDepA"),
         };
 
+        let payload = parser.into_inner().into_inner();
         let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
         assert_eq!(frame, payload);
     }
