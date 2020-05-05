@@ -190,6 +190,36 @@ mod tests {
     }
 
     #[test]
+    fn parser_crc_error() {
+        let packet = vec![
+            // Start with a mostly valid message, with a single byte error
+            0x55, 0x0c, // This byte should be 0x0b, changed to intentionally cause a CRC error
+            0x02, 0xd3, 0x88, 0x14, 0x28, 0xf4, 0x7a, 0x13, 0x96,
+            0x62, 0xee, 0xff, 0xbe, 0x40, 0x14, 0x00, 0xf6, 0xa3, 0x09, 0x00, 0x00, 0x00, 0x0e,
+            0x00, 0xdb, 0xbf, 0xde, 0xad, 0xbe, 0xef,
+            // Include another valid message to properly parse
+            0x55u8, 0x0b, 0x02, 0xd3, 0x88, 0x14, 0x28, 0xf4, 0x7a, 0x13, 0x96,
+            0x62, 0xee, 0xff, 0xbe, 0x40, 0x14, 0x00, 0xf6, 0xa3, 0x09, 0x00, 0x00, 0x00, 0x0e,
+            0x00, 0xdb, 0xbf, 0xde, 0xad, 0xbe, 0xef,
+        ];
+        let mut reader = std::io::Cursor::new(packet);
+        let mut parser = crate::parser::Parser::new();
+        // Iterate through the data until we hit something that is
+        // parsable
+        let sbp_result = parser.parse(&mut reader);
+        assert!(sbp_result.is_err());
+        match sbp_result.unwrap_err() {
+            crate::Error::CrcError => {},
+            e => {
+                assert!(false, "Unexpected error: {:?}", e);
+            }
+        };
+
+        let sbp_result = parser.parse(&mut reader);
+        assert!(sbp_result.is_ok());
+    }
+
+    #[test]
     fn making_frame() {
         use crate::messages::SBPMessage;
 
