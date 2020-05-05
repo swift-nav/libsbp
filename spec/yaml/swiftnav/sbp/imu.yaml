@@ -80,6 +80,7 @@ definitions:
                   values:
                       - 0: Bosch BMI160
                       - 1: ST Microelectronics ASM330LLH
+                      - 2: Android smartphone
         - temp:
             type: s16
             desc: Raw IMU temperature
