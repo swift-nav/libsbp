@@ -122,7 +122,7 @@ Ubuntu 16.04.
 2. Run make tagets for each language and re-tag.  For python:
 
     ```shell
-    make python pythonNG
+    make python
     git add python/sbp/RELEASE-VERSION
     git commit -m 'INCREMENTED_TAG'
     git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
@@ -132,14 +132,14 @@ Ubuntu 16.04.
    unless the geneated files are out of date):
 
     ```shell
-    make java jsonschema protobuf rust
+    make java jsonschema protobuf
     ```
 
    For C, Haskell and JavaScript:
 
     ```shell
-    make c haskell javascript
-    git add c/include/libsbp/version.h sbp.cabal package.json package-lock.json
+    make c haskell javascript rust
+    git add c/include/libsbp/version.h sbp.cabal package.json package-lock.json rust/sbp/Cargo.toml
     git commit -m 'INCREMENTED_TAG'
     git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
     ```
@@ -218,11 +218,11 @@ at the moment.
 
 # Distributing Python
 
-Python distribution requires compilation for the JIT accelerated `sbp.jit`
-package.  This package uses the Python `numba` library, which supports AOT
-compilation of a native Python extension.  The distributions for each platform
-can be created by running the `make dist-python` target on each platform
-(Windows, Mac OS X, Linux x86/ARM through docker).
+Python package distribution requires compilation for the JIT accelerated
+`sbp.jit` package.  This package uses the Python `numba` library, which
+supports AOT compilation of a native Python extension.  The distributions
+for each platform can be created by running the `make dist-python` target
+on each platform (Windows, Mac OS X, Linux x86/ARM through docker).
 
 For example, running this:
 ```
@@ -236,8 +236,8 @@ can be produced and uploaded by running the following command:
 make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=... LIBSBP_BUILD_ANY=y
 ```
 
-The Linux x86 build of libsbp can be done throuch docker via the "manylinux"
-project by running the following set of commands:
+The Linux x86 build of libsbp should be done through docker via the
+"manylinux" project by running the following set of commands:
 ```
 docker build -f python/Dockerfile.x86_64 -t libsbp-amd64 .
 docker run -v libsbp-amd64-root:/root -v $PWD:/work --rm -it libsbp-amd64 /bin/bash
@@ -248,8 +248,7 @@ make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
 The Linux ARM build of libsbp can be done through docker via the following set
 of commands:
 ```
-docker build -f python/Dockerfile.arm -t libsbp-arm .
-docker run -v libsbp-arm-root:/root -v $PWD:/work --rm -it swiftnav/piksi-tools-stretch-arm:2019.06.25 libsbp-arm /bin/bash
+docker run -v libsbp-arm-root:/root -v $PWD:/work --rm -it swiftnav/libsbp-arm:2020.05.07 libsbp-arm /bin/bash
 cd /work
 make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
 ```
@@ -273,10 +272,26 @@ In order to compile for 64-bit: start a command shell with the x64 set
 of compiler tools (shortcut `x64 Native Tools Command Prompt for VS 2019`).
 Then activate Conda with the `activate.bat` script in the Conda installation.
 
-Invoke the `dist-python` target from `libsbp` (with appropriate PyPI auth).
+Alternately, if you're using PowerShell, you can use the utility here:
+https://github.com/olegsych/posh-vs -- in order to  bring Visual Studio
+compilers into your PowerShell session.  For example for 64-bit:
 
-In order to compile for 32-bit: start a command shell with the x86 set
-of compiler tools (shortcut `x86 Native Tools Command Prompt for VS 2019`).
+```
+Import-BatchEnvironment 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat'
+$env:CONDA_FORCE_32BIT = 0
+```
+
+And for 32-bit:
+```
+Import-BatchEnvironment 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars32.bat'
+$env:CONDA_FORCE_32BIT = 1
+```
+
+Then invoke the `dist-python` target from `libsbp` (with appropriate PyPI auth).
+This will need to be once for 32-bit and 64-bit.
+
+If not using PowerShell, to compile for 32-bit: start a command shell with 
+the x86 set of compiler tools (shortcut `x86 Native Tools Command Prompt for VS 2019`).
 Then activate Conda with the `activate.bat` script in the Conda installation.
 
 Prior to invoking the `dist-python` target.  Set the following global variable
