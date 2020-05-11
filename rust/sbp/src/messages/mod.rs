@@ -96,6 +96,7 @@ use self::navigation::MsgPosLLHCov;
 use self::navigation::MsgPosLLHCovGnss;
 use self::navigation::MsgPosLLHDepA;
 use self::navigation::MsgPosLLHGnss;
+use self::navigation::MsgPosVelECEFGnss;
 use self::navigation::MsgProtectionLevel;
 use self::navigation::MsgUtcTime;
 use self::navigation::MsgVelBody;
@@ -380,6 +381,7 @@ pub enum SBP {
     MsgVelNEDCovGnss(MsgVelNEDCovGnss),
     MsgPosECEFCovGnss(MsgPosECEFCovGnss),
     MsgVelECEFCovGnss(MsgVelECEFCovGnss),
+    MsgPosVelECEFGnss(MsgPosVelECEFGnss),
     MsgNdbEvent(MsgNdbEvent),
     MsgLog(MsgLog),
     MsgFwd(MsgFwd),
@@ -1166,6 +1168,11 @@ impl SBP {
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgVelECEFCovGnss(msg))
             }
+            768 => {
+                let mut msg = MsgPosVelECEFGnss::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgPosVelECEFGnss(msg))
+            }
             1024 => {
                 let mut msg = MsgNdbEvent::parse(payload)?;
                 msg.set_sender_id(sender_id);
@@ -1504,6 +1511,7 @@ impl SBP {
             SBP::MsgVelNEDCovGnss(msg) => msg,
             SBP::MsgPosECEFCovGnss(msg) => msg,
             SBP::MsgVelECEFCovGnss(msg) => msg,
+            SBP::MsgPosVelECEFGnss(msg) => msg,
             SBP::MsgNdbEvent(msg) => msg,
             SBP::MsgLog(msg) => msg,
             SBP::MsgFwd(msg) => msg,

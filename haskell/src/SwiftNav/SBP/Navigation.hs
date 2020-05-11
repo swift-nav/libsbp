@@ -1905,3 +1905,145 @@ instance Binary MsgProtectionLevel where
 $(makeSBP 'msgProtectionLevel ''MsgProtectionLevel)
 $(makeJSON "_msgProtectionLevel_" ''MsgProtectionLevel)
 $(makeLenses ''MsgProtectionLevel)
+
+msgPosVelEcefGnss :: Word16
+msgPosVelEcefGnss = 0x0300
+
+-- | SBP class for message MSG_POS_VEL_ECEF_GNSS (0x0300).
+--
+-- This message reports the PV solution
+data MsgPosVelEcefGnss = MsgPosVelEcefGnss
+  { _msgPosVelEcefGnss_tow                   :: !Word32
+    -- ^ GPS Time of Week
+  , _msgPosVelEcefGnss_x                     :: !Double
+    -- ^ ECEF X coordinate
+  , _msgPosVelEcefGnss_y                     :: !Double
+    -- ^ ECEF Y coordinate
+  , _msgPosVelEcefGnss_z                     :: !Double
+    -- ^ ECEF Z coordinate
+  , _msgPosVelEcefGnss_vx                    :: !Double
+    -- ^ ECEF X velocity
+  , _msgPosVelEcefGnss_vy                    :: !Double
+    -- ^ ECEF Y velocity
+  , _msgPosVelEcefGnss_vz                    :: !Double
+    -- ^ ECEF Z velocity
+  , _msgPosVelEcefGnss_cov_x_x               :: !Float
+    -- ^ Estimated variance of x
+  , _msgPosVelEcefGnss_cov_x_y               :: !Float
+    -- ^ Estimated covariance of x and y
+  , _msgPosVelEcefGnss_cov_x_z               :: !Float
+    -- ^ Estimated covariance of x and z
+  , _msgPosVelEcefGnss_cov_y_y               :: !Float
+    -- ^ Estimated variance of y
+  , _msgPosVelEcefGnss_cov_y_z               :: !Float
+    -- ^ Estimated covariance of y and z
+  , _msgPosVelEcefGnss_cov_z_z               :: !Float
+    -- ^ Estimated variance of z
+  , _msgPosVelEcefGnss_cov_x_vx              :: !Float
+    -- ^ Estimated covariance of x and vx
+  , _msgPosVelEcefGnss_cov_x_vy              :: !Float
+    -- ^ Estimated covariance of x and vy
+  , _msgPosVelEcefGnss_cov_x_vz              :: !Float
+    -- ^ Estimated covariance of x and vz
+  , _msgPosVelEcefGnss_cov_y_vx              :: !Float
+    -- ^ Estimated covariance of y and vx
+  , _msgPosVelEcefGnss_cov_y_vy              :: !Float
+    -- ^ Estimated covariance of y and vy
+  , _msgPosVelEcefGnss_cov_y_vz              :: !Float
+    -- ^ Estimated covariance of y and vz
+  , _msgPosVelEcefGnss_cov_z_vx              :: !Float
+    -- ^ Estimated covariance of z and vx
+  , _msgPosVelEcefGnss_cov_z_vy              :: !Float
+    -- ^ Estimated covariance of z and vy
+  , _msgPosVelEcefGnss_cov_z_vz              :: !Float
+    -- ^ Estimated covariance of z and vz
+  , _msgPosVelEcefGnss_cov_vx_vx             :: !Float
+    -- ^ Estimated variance of vx
+  , _msgPosVelEcefGnss_cov_vx_vy             :: !Float
+    -- ^ Estimated covariance of vx and vy
+  , _msgPosVelEcefGnss_cov_vx_vz             :: !Float
+    -- ^ Estimated covariance of vx and vz
+  , _msgPosVelEcefGnss_cov_vy_vy             :: !Float
+    -- ^ Estimated variance of vy
+  , _msgPosVelEcefGnss_cov_vy_vz             :: !Float
+    -- ^ Estimated covariance of vy and vz
+  , _msgPosVelEcefGnss_cov_vz_vz             :: !Float
+    -- ^ Estimated variance of vz
+  , _msgPosVelEcefGnss_n_sats                :: !Word8
+  , _msgPosVelEcefGnss_flags                 :: !Word8
+    -- ^ Status flags
+  , _msgPosVelEcefGnss_velocity_averaging_time :: !Float
+    -- ^ Velocity averaging time
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgPosVelEcefGnss where
+  get = do
+    _msgPosVelEcefGnss_tow <- getWord32le
+    _msgPosVelEcefGnss_x <- getFloat64le
+    _msgPosVelEcefGnss_y <- getFloat64le
+    _msgPosVelEcefGnss_z <- getFloat64le
+    _msgPosVelEcefGnss_vx <- getFloat64le
+    _msgPosVelEcefGnss_vy <- getFloat64le
+    _msgPosVelEcefGnss_vz <- getFloat64le
+    _msgPosVelEcefGnss_cov_x_x <- getFloat32le
+    _msgPosVelEcefGnss_cov_x_y <- getFloat32le
+    _msgPosVelEcefGnss_cov_x_z <- getFloat32le
+    _msgPosVelEcefGnss_cov_y_y <- getFloat32le
+    _msgPosVelEcefGnss_cov_y_z <- getFloat32le
+    _msgPosVelEcefGnss_cov_z_z <- getFloat32le
+    _msgPosVelEcefGnss_cov_x_vx <- getFloat32le
+    _msgPosVelEcefGnss_cov_x_vy <- getFloat32le
+    _msgPosVelEcefGnss_cov_x_vz <- getFloat32le
+    _msgPosVelEcefGnss_cov_y_vx <- getFloat32le
+    _msgPosVelEcefGnss_cov_y_vy <- getFloat32le
+    _msgPosVelEcefGnss_cov_y_vz <- getFloat32le
+    _msgPosVelEcefGnss_cov_z_vx <- getFloat32le
+    _msgPosVelEcefGnss_cov_z_vy <- getFloat32le
+    _msgPosVelEcefGnss_cov_z_vz <- getFloat32le
+    _msgPosVelEcefGnss_cov_vx_vx <- getFloat32le
+    _msgPosVelEcefGnss_cov_vx_vy <- getFloat32le
+    _msgPosVelEcefGnss_cov_vx_vz <- getFloat32le
+    _msgPosVelEcefGnss_cov_vy_vy <- getFloat32le
+    _msgPosVelEcefGnss_cov_vy_vz <- getFloat32le
+    _msgPosVelEcefGnss_cov_vz_vz <- getFloat32le
+    _msgPosVelEcefGnss_n_sats <- getWord8
+    _msgPosVelEcefGnss_flags <- getWord8
+    _msgPosVelEcefGnss_velocity_averaging_time <- getFloat32le
+    pure MsgPosVelEcefGnss {..}
+
+  put MsgPosVelEcefGnss {..} = do
+    putWord32le _msgPosVelEcefGnss_tow
+    putFloat64le _msgPosVelEcefGnss_x
+    putFloat64le _msgPosVelEcefGnss_y
+    putFloat64le _msgPosVelEcefGnss_z
+    putFloat64le _msgPosVelEcefGnss_vx
+    putFloat64le _msgPosVelEcefGnss_vy
+    putFloat64le _msgPosVelEcefGnss_vz
+    putFloat32le _msgPosVelEcefGnss_cov_x_x
+    putFloat32le _msgPosVelEcefGnss_cov_x_y
+    putFloat32le _msgPosVelEcefGnss_cov_x_z
+    putFloat32le _msgPosVelEcefGnss_cov_y_y
+    putFloat32le _msgPosVelEcefGnss_cov_y_z
+    putFloat32le _msgPosVelEcefGnss_cov_z_z
+    putFloat32le _msgPosVelEcefGnss_cov_x_vx
+    putFloat32le _msgPosVelEcefGnss_cov_x_vy
+    putFloat32le _msgPosVelEcefGnss_cov_x_vz
+    putFloat32le _msgPosVelEcefGnss_cov_y_vx
+    putFloat32le _msgPosVelEcefGnss_cov_y_vy
+    putFloat32le _msgPosVelEcefGnss_cov_y_vz
+    putFloat32le _msgPosVelEcefGnss_cov_z_vx
+    putFloat32le _msgPosVelEcefGnss_cov_z_vy
+    putFloat32le _msgPosVelEcefGnss_cov_z_vz
+    putFloat32le _msgPosVelEcefGnss_cov_vx_vx
+    putFloat32le _msgPosVelEcefGnss_cov_vx_vy
+    putFloat32le _msgPosVelEcefGnss_cov_vx_vz
+    putFloat32le _msgPosVelEcefGnss_cov_vy_vy
+    putFloat32le _msgPosVelEcefGnss_cov_vy_vz
+    putFloat32le _msgPosVelEcefGnss_cov_vz_vz
+    putWord8 _msgPosVelEcefGnss_n_sats
+    putWord8 _msgPosVelEcefGnss_flags
+    putFloat32le _msgPosVelEcefGnss_velocity_averaging_time
+
+$(makeSBP 'msgPosVelEcefGnss ''MsgPosVelEcefGnss)
+$(makeJSON "_msgPosVelEcefGnss_" ''MsgPosVelEcefGnss)
+$(makeLenses ''MsgPosVelEcefGnss)

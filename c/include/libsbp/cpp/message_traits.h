@@ -882,6 +882,12 @@ struct MessageTraits<msg_vel_ecef_cov_gnss_t> {
 
 
 template<>
+struct MessageTraits<msg_pos_vel_ecef_gnss_t> {
+  static constexpr u16 id = 768;
+};
+
+
+template<>
 struct MessageTraits<msg_ndb_event_t> {
   static constexpr u16 id = 1024;
 };

@@ -2822,6 +2822,222 @@ by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     ret += 1
     return ret
   
+SBP_MSG_POS_VEL_ECEF_GNSS = 0x0300
+class MsgPosVelECEFGnss(SBP):
+  """SBP class for message MSG_POS_VEL_ECEF_GNSS (0x0300).
+
+  You can have MSG_POS_VEL_ECEF_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the PV solution
+
+
+  """
+  __slots__ = ['tow',
+               'x',
+               'y',
+               'z',
+               'vx',
+               'vy',
+               'vz',
+               'cov_x_x',
+               'cov_x_y',
+               'cov_x_z',
+               'cov_y_y',
+               'cov_y_z',
+               'cov_z_z',
+               'cov_x_vx',
+               'cov_x_vy',
+               'cov_x_vz',
+               'cov_y_vx',
+               'cov_y_vy',
+               'cov_y_vz',
+               'cov_z_vx',
+               'cov_z_vy',
+               'cov_z_vz',
+               'cov_vx_vx',
+               'cov_vx_vy',
+               'cov_vx_vz',
+               'cov_vy_vy',
+               'cov_vy_vz',
+               'cov_vz_vz',
+               'n_sats',
+               'flags',
+               'velocity_averaging_time',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__x, offset, length) = get_f64(buf, offset, length)
+    ret['x'] = __x
+    (__y, offset, length) = get_f64(buf, offset, length)
+    ret['y'] = __y
+    (__z, offset, length) = get_f64(buf, offset, length)
+    ret['z'] = __z
+    (__vx, offset, length) = get_f64(buf, offset, length)
+    ret['vx'] = __vx
+    (__vy, offset, length) = get_f64(buf, offset, length)
+    ret['vy'] = __vy
+    (__vz, offset, length) = get_f64(buf, offset, length)
+    ret['vz'] = __vz
+    (__cov_x_x, offset, length) = get_f32(buf, offset, length)
+    ret['cov_x_x'] = judicious_round(np.float32(__cov_x_x)) if SBP.judicious_rounding else __cov_x_x
+    (__cov_x_y, offset, length) = get_f32(buf, offset, length)
+    ret['cov_x_y'] = judicious_round(np.float32(__cov_x_y)) if SBP.judicious_rounding else __cov_x_y
+    (__cov_x_z, offset, length) = get_f32(buf, offset, length)
+    ret['cov_x_z'] = judicious_round(np.float32(__cov_x_z)) if SBP.judicious_rounding else __cov_x_z
+    (__cov_y_y, offset, length) = get_f32(buf, offset, length)
+    ret['cov_y_y'] = judicious_round(np.float32(__cov_y_y)) if SBP.judicious_rounding else __cov_y_y
+    (__cov_y_z, offset, length) = get_f32(buf, offset, length)
+    ret['cov_y_z'] = judicious_round(np.float32(__cov_y_z)) if SBP.judicious_rounding else __cov_y_z
+    (__cov_z_z, offset, length) = get_f32(buf, offset, length)
+    ret['cov_z_z'] = judicious_round(np.float32(__cov_z_z)) if SBP.judicious_rounding else __cov_z_z
+    (__cov_x_vx, offset, length) = get_f32(buf, offset, length)
+    ret['cov_x_vx'] = judicious_round(np.float32(__cov_x_vx)) if SBP.judicious_rounding else __cov_x_vx
+    (__cov_x_vy, offset, length) = get_f32(buf, offset, length)
+    ret['cov_x_vy'] = judicious_round(np.float32(__cov_x_vy)) if SBP.judicious_rounding else __cov_x_vy
+    (__cov_x_vz, offset, length) = get_f32(buf, offset, length)
+    ret['cov_x_vz'] = judicious_round(np.float32(__cov_x_vz)) if SBP.judicious_rounding else __cov_x_vz
+    (__cov_y_vx, offset, length) = get_f32(buf, offset, length)
+    ret['cov_y_vx'] = judicious_round(np.float32(__cov_y_vx)) if SBP.judicious_rounding else __cov_y_vx
+    (__cov_y_vy, offset, length) = get_f32(buf, offset, length)
+    ret['cov_y_vy'] = judicious_round(np.float32(__cov_y_vy)) if SBP.judicious_rounding else __cov_y_vy
+    (__cov_y_vz, offset, length) = get_f32(buf, offset, length)
+    ret['cov_y_vz'] = judicious_round(np.float32(__cov_y_vz)) if SBP.judicious_rounding else __cov_y_vz
+    (__cov_z_vx, offset, length) = get_f32(buf, offset, length)
+    ret['cov_z_vx'] = judicious_round(np.float32(__cov_z_vx)) if SBP.judicious_rounding else __cov_z_vx
+    (__cov_z_vy, offset, length) = get_f32(buf, offset, length)
+    ret['cov_z_vy'] = judicious_round(np.float32(__cov_z_vy)) if SBP.judicious_rounding else __cov_z_vy
+    (__cov_z_vz, offset, length) = get_f32(buf, offset, length)
+    ret['cov_z_vz'] = judicious_round(np.float32(__cov_z_vz)) if SBP.judicious_rounding else __cov_z_vz
+    (__cov_vx_vx, offset, length) = get_f32(buf, offset, length)
+    ret['cov_vx_vx'] = judicious_round(np.float32(__cov_vx_vx)) if SBP.judicious_rounding else __cov_vx_vx
+    (__cov_vx_vy, offset, length) = get_f32(buf, offset, length)
+    ret['cov_vx_vy'] = judicious_round(np.float32(__cov_vx_vy)) if SBP.judicious_rounding else __cov_vx_vy
+    (__cov_vx_vz, offset, length) = get_f32(buf, offset, length)
+    ret['cov_vx_vz'] = judicious_round(np.float32(__cov_vx_vz)) if SBP.judicious_rounding else __cov_vx_vz
+    (__cov_vy_vy, offset, length) = get_f32(buf, offset, length)
+    ret['cov_vy_vy'] = judicious_round(np.float32(__cov_vy_vy)) if SBP.judicious_rounding else __cov_vy_vy
+    (__cov_vy_vz, offset, length) = get_f32(buf, offset, length)
+    ret['cov_vy_vz'] = judicious_round(np.float32(__cov_vy_vz)) if SBP.judicious_rounding else __cov_vy_vz
+    (__cov_vz_vz, offset, length) = get_f32(buf, offset, length)
+    ret['cov_vz_vz'] = judicious_round(np.float32(__cov_vz_vz)) if SBP.judicious_rounding else __cov_vz_vz
+    (__n_sats, offset, length) = get_u8(buf, offset, length)
+    ret['n_sats'] = __n_sats
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    (__velocity_averaging_time, offset, length) = get_f32(buf, offset, length)
+    ret['velocity_averaging_time'] = judicious_round(np.float32(__velocity_averaging_time)) if SBP.judicious_rounding else __velocity_averaging_time
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.tow = res['tow']
+    self.x = res['x']
+    self.y = res['y']
+    self.z = res['z']
+    self.vx = res['vx']
+    self.vy = res['vy']
+    self.vz = res['vz']
+    self.cov_x_x = res['cov_x_x']
+    self.cov_x_y = res['cov_x_y']
+    self.cov_x_z = res['cov_x_z']
+    self.cov_y_y = res['cov_y_y']
+    self.cov_y_z = res['cov_y_z']
+    self.cov_z_z = res['cov_z_z']
+    self.cov_x_vx = res['cov_x_vx']
+    self.cov_x_vy = res['cov_x_vy']
+    self.cov_x_vz = res['cov_x_vz']
+    self.cov_y_vx = res['cov_y_vx']
+    self.cov_y_vy = res['cov_y_vy']
+    self.cov_y_vz = res['cov_y_vz']
+    self.cov_z_vx = res['cov_z_vx']
+    self.cov_z_vy = res['cov_z_vy']
+    self.cov_z_vz = res['cov_z_vz']
+    self.cov_vx_vx = res['cov_vx_vx']
+    self.cov_vx_vy = res['cov_vx_vy']
+    self.cov_vx_vz = res['cov_vx_vz']
+    self.cov_vy_vy = res['cov_vy_vy']
+    self.cov_vy_vz = res['cov_vy_vz']
+    self.cov_vz_vz = res['cov_vz_vz']
+    self.n_sats = res['n_sats']
+    self.flags = res['flags']
+    self.velocity_averaging_time = res['velocity_averaging_time']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tow: u32
+    ret += 4
+    # x: double
+    ret += 8
+    # y: double
+    ret += 8
+    # z: double
+    ret += 8
+    # vx: double
+    ret += 8
+    # vy: double
+    ret += 8
+    # vz: double
+    ret += 8
+    # cov_x_x: float
+    ret += 4
+    # cov_x_y: float
+    ret += 4
+    # cov_x_z: float
+    ret += 4
+    # cov_y_y: float
+    ret += 4
+    # cov_y_z: float
+    ret += 4
+    # cov_z_z: float
+    ret += 4
+    # cov_x_vx: float
+    ret += 4
+    # cov_x_vy: float
+    ret += 4
+    # cov_x_vz: float
+    ret += 4
+    # cov_y_vx: float
+    ret += 4
+    # cov_y_vy: float
+    ret += 4
+    # cov_y_vz: float
+    ret += 4
+    # cov_z_vx: float
+    ret += 4
+    # cov_z_vy: float
+    ret += 4
+    # cov_z_vz: float
+    ret += 4
+    # cov_vx_vx: float
+    ret += 4
+    # cov_vx_vy: float
+    ret += 4
+    # cov_vx_vz: float
+    ret += 4
+    # cov_vy_vy: float
+    ret += 4
+    # cov_vy_vz: float
+    ret += 4
+    # cov_vz_vz: float
+    ret += 4
+    # n_sats: u8
+    ret += 1
+    # flags: u8
+    ret += 1
+    # velocity_averaging_time: float
+    ret += 4
+    return ret
+  
 
 msg_classes = {
   0x0102: MsgGPSTime,
@@ -2857,4 +3073,5 @@ msg_classes = {
   0x0205: MsgVelNEDDepA,
   0x0207: MsgBaselineHeadingDepA,
   0x0216: MsgProtectionLevel,
+  0x0300: MsgPosVelECEFGnss,
 }

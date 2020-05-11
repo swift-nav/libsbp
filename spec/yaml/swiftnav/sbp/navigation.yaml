@@ -1906,3 +1906,149 @@ definitions:
                 - 3-7:
                     desc: Reserved
 
+ - MSG_POS_VEL_ECEF_GNSS:
+    public: false
+    id: 0x0300
+    short_desc: GNSS solution
+    desc: |
+      This message reports the PV solution
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - x:
+              type: double
+              units: m
+              desc: ECEF X coordinate
+          - y:
+              type: double
+              units: m
+              desc: ECEF Y coordinate
+          - z:
+              type: double
+              units: m
+              desc: ECEF Z coordinate
+          - vx:
+              type: double
+              units: m
+              desc: ECEF X velocity
+          - vy:
+              type: double
+              units: m
+              desc: ECEF Y velocity
+          - vz:
+              type: double
+              units: m
+              desc: ECEF Z velocity
+          - cov_x_x:
+              type: float
+              units: m^2
+              desc: Estimated variance of x
+          - cov_x_y:
+              type: float
+              units: m^2
+              desc: Estimated covariance of x and y
+          - cov_x_z:
+              type: float
+              units: m^2
+              desc: Estimated covariance of x and z
+          - cov_y_y:
+              type: float
+              units: m^2
+              desc: Estimated variance of y
+          - cov_y_z:
+              type: float
+              units: m^2
+              desc: Estimated covariance of y and z
+          - cov_z_z:
+              type: float
+              units: m^2
+              desc: Estimated variance of z
+          - cov_x_vx:
+              type: float
+              units: m^2/s
+              desc: Estimated covariance of x and vx
+          - cov_x_vy:
+              type: float
+              units: m^2/s
+              desc: Estimated covariance of x and vy
+          - cov_x_vz:
+              type: float
+              units: m^2/s
+              desc: Estimated covariance of x and vz
+          - cov_y_vx:
+              type: float
+              units: m^2/s
+              desc: Estimated covariance of y and vx
+          - cov_y_vy:
+              type: float
+              units: m^2/s
+              desc: Estimated covariance of y and vy
+          - cov_y_vz:
+              type: float
+              units: m^2/s
+              desc: Estimated covariance of y and vz
+          - cov_z_vx:
+              type: float
+              units: m^2/s
+              desc: Estimated covariance of z and vx
+          - cov_z_vy:
+              type: float
+              units: m^2/s
+              desc: Estimated covariance of z and vy
+          - cov_z_vz:
+              type: float
+              units: m^2/s
+              desc: Estimated covariance of z and vz
+          - cov_vx_vx:
+              type: float
+              units: m^2/s^2
+              desc: Estimated variance of vx
+          - cov_vx_vy:
+              type: float
+              units: m^2/s^2
+              desc: Estimated covariance of vx and vy
+          - cov_vx_vz:
+              type: float
+              units: m^2/s^2
+              desc: Estimated covariance of vx and vz
+          - cov_vy_vy:
+              type: float
+              units: m^2/s^2
+              desc: Estimated variance of vy
+          - cov_vy_vz:
+              type: float
+              units: m^2/s^2
+              desc: Estimated covariance of vy and vz
+          - cov_vz_vz:
+              type: float
+              units: m^2/s^2
+              desc: Estimated variance of vz
+          - n_sats:
+              type: u8
+          - flags:
+              type: u8
+              desc: Status flags
+              fields:
+                - 5-7:
+                    desc: Reserved
+                - 3-4:
+                    desc: Inertial Navigation Mode
+                    values:
+                        - 0: None
+                        - 1: INS used
+                - 0-2:
+                    desc: Fix mode
+                    values:
+                        - 0: Invalid
+                        - 1: Single Point Position (SPP)
+                        - 2: Differential GNSS (DGNSS)
+                        - 3: Float RTK
+                        - 4: Fixed RTK
+                        - 5: Dead Reckoning
+                        - 6: SBAS Position
+          - velocity_averaging_time:
+              type: float
+              units: s
+              desc: Velocity averaging time

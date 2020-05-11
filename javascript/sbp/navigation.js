@@ -1773,6 +1773,123 @@ MsgProtectionLevel.prototype.fieldSpec.push(['lon', 'writeDoubleLE', 8]);
 MsgProtectionLevel.prototype.fieldSpec.push(['height', 'writeDoubleLE', 8]);
 MsgProtectionLevel.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
+/**
+ * SBP class for message MSG_POS_VEL_ECEF_GNSS (0x0300).
+ *
+ * This message reports the PV solution
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field x number (float, 8 bytes) ECEF X coordinate
+ * @field y number (float, 8 bytes) ECEF Y coordinate
+ * @field z number (float, 8 bytes) ECEF Z coordinate
+ * @field vx number (float, 8 bytes) ECEF X velocity
+ * @field vy number (float, 8 bytes) ECEF Y velocity
+ * @field vz number (float, 8 bytes) ECEF Z velocity
+ * @field cov_x_x number (float, 4 bytes) Estimated variance of x
+ * @field cov_x_y number (float, 4 bytes) Estimated covariance of x and y
+ * @field cov_x_z number (float, 4 bytes) Estimated covariance of x and z
+ * @field cov_y_y number (float, 4 bytes) Estimated variance of y
+ * @field cov_y_z number (float, 4 bytes) Estimated covariance of y and z
+ * @field cov_z_z number (float, 4 bytes) Estimated variance of z
+ * @field cov_x_vx number (float, 4 bytes) Estimated covariance of x and vx
+ * @field cov_x_vy number (float, 4 bytes) Estimated covariance of x and vy
+ * @field cov_x_vz number (float, 4 bytes) Estimated covariance of x and vz
+ * @field cov_y_vx number (float, 4 bytes) Estimated covariance of y and vx
+ * @field cov_y_vy number (float, 4 bytes) Estimated covariance of y and vy
+ * @field cov_y_vz number (float, 4 bytes) Estimated covariance of y and vz
+ * @field cov_z_vx number (float, 4 bytes) Estimated covariance of z and vx
+ * @field cov_z_vy number (float, 4 bytes) Estimated covariance of z and vy
+ * @field cov_z_vz number (float, 4 bytes) Estimated covariance of z and vz
+ * @field cov_vx_vx number (float, 4 bytes) Estimated variance of vx
+ * @field cov_vx_vy number (float, 4 bytes) Estimated covariance of vx and vy
+ * @field cov_vx_vz number (float, 4 bytes) Estimated covariance of vx and vz
+ * @field cov_vy_vy number (float, 4 bytes) Estimated variance of vy
+ * @field cov_vy_vz number (float, 4 bytes) Estimated covariance of vy and vz
+ * @field cov_vz_vz number (float, 4 bytes) Estimated variance of vz
+ * @field n_sats number (unsigned 8-bit int, 1 byte)
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags
+ * @field velocity_averaging_time number (float, 4 bytes) Velocity averaging time
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgPosVelEcefGnss = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_POS_VEL_ECEF_GNSS";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgPosVelEcefGnss.prototype = Object.create(SBP.prototype);
+MsgPosVelEcefGnss.prototype.messageType = "MSG_POS_VEL_ECEF_GNSS";
+MsgPosVelEcefGnss.prototype.msg_type = 0x0300;
+MsgPosVelEcefGnss.prototype.constructor = MsgPosVelEcefGnss;
+MsgPosVelEcefGnss.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .doublele('x')
+  .doublele('y')
+  .doublele('z')
+  .doublele('vx')
+  .doublele('vy')
+  .doublele('vz')
+  .floatle('cov_x_x')
+  .floatle('cov_x_y')
+  .floatle('cov_x_z')
+  .floatle('cov_y_y')
+  .floatle('cov_y_z')
+  .floatle('cov_z_z')
+  .floatle('cov_x_vx')
+  .floatle('cov_x_vy')
+  .floatle('cov_x_vz')
+  .floatle('cov_y_vx')
+  .floatle('cov_y_vy')
+  .floatle('cov_y_vz')
+  .floatle('cov_z_vx')
+  .floatle('cov_z_vy')
+  .floatle('cov_z_vz')
+  .floatle('cov_vx_vx')
+  .floatle('cov_vx_vy')
+  .floatle('cov_vx_vz')
+  .floatle('cov_vy_vy')
+  .floatle('cov_vy_vz')
+  .floatle('cov_vz_vz')
+  .uint8('n_sats')
+  .uint8('flags')
+  .floatle('velocity_averaging_time');
+MsgPosVelEcefGnss.prototype.fieldSpec = [];
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['x', 'writeDoubleLE', 8]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['y', 'writeDoubleLE', 8]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['z', 'writeDoubleLE', 8]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['vx', 'writeDoubleLE', 8]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['vy', 'writeDoubleLE', 8]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['vz', 'writeDoubleLE', 8]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_x_x', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_x_y', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_x_z', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_y_y', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_y_z', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_z_z', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_x_vx', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_x_vy', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_x_vz', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_y_vx', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_y_vy', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_y_vz', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_z_vx', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_z_vy', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_z_vz', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_vx_vx', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_vx_vy', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_vx_vz', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_vy_vy', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_vy_vz', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_vz_vz', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['velocity_averaging_time', 'writeFloatLE', 4]);
+
 module.exports = {
   0x0102: MsgGpsTime,
   MsgGpsTime: MsgGpsTime,
@@ -1840,4 +1957,6 @@ module.exports = {
   MsgBaselineHeadingDepA: MsgBaselineHeadingDepA,
   0x0216: MsgProtectionLevel,
   MsgProtectionLevel: MsgProtectionLevel,
+  0x0300: MsgPosVelEcefGnss,
+  MsgPosVelEcefGnss: MsgPosVelEcefGnss,
 }

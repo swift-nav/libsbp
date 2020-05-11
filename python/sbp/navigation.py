@@ -4391,6 +4391,245 @@ by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     d.update(j)
     return d
     
+SBP_MSG_POS_VEL_ECEF_GNSS = 0x0300
+class MsgPosVelECEFGnss(SBP):
+  """SBP class for message MSG_POS_VEL_ECEF_GNSS (0x0300).
+
+  You can have MSG_POS_VEL_ECEF_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the PV solution
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS Time of Week
+  x : double
+    ECEF X coordinate
+  y : double
+    ECEF Y coordinate
+  z : double
+    ECEF Z coordinate
+  vx : double
+    ECEF X velocity
+  vy : double
+    ECEF Y velocity
+  vz : double
+    ECEF Z velocity
+  cov_x_x : float
+    Estimated variance of x
+  cov_x_y : float
+    Estimated covariance of x and y
+  cov_x_z : float
+    Estimated covariance of x and z
+  cov_y_y : float
+    Estimated variance of y
+  cov_y_z : float
+    Estimated covariance of y and z
+  cov_z_z : float
+    Estimated variance of z
+  cov_x_vx : float
+    Estimated covariance of x and vx
+  cov_x_vy : float
+    Estimated covariance of x and vy
+  cov_x_vz : float
+    Estimated covariance of x and vz
+  cov_y_vx : float
+    Estimated covariance of y and vx
+  cov_y_vy : float
+    Estimated covariance of y and vy
+  cov_y_vz : float
+    Estimated covariance of y and vz
+  cov_z_vx : float
+    Estimated covariance of z and vx
+  cov_z_vy : float
+    Estimated covariance of z and vy
+  cov_z_vz : float
+    Estimated covariance of z and vz
+  cov_vx_vx : float
+    Estimated variance of vx
+  cov_vx_vy : float
+    Estimated covariance of vx and vy
+  cov_vx_vz : float
+    Estimated covariance of vx and vz
+  cov_vy_vy : float
+    Estimated variance of vy
+  cov_vy_vz : float
+    Estimated covariance of vy and vz
+  cov_vz_vz : float
+    Estimated variance of vz
+  n_sats : int
+  flags : int
+    Status flags
+  velocity_averaging_time : float
+    Velocity averaging time
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'x' / construct.Float64l,
+                   'y' / construct.Float64l,
+                   'z' / construct.Float64l,
+                   'vx' / construct.Float64l,
+                   'vy' / construct.Float64l,
+                   'vz' / construct.Float64l,
+                   'cov_x_x' / construct.Float32l,
+                   'cov_x_y' / construct.Float32l,
+                   'cov_x_z' / construct.Float32l,
+                   'cov_y_y' / construct.Float32l,
+                   'cov_y_z' / construct.Float32l,
+                   'cov_z_z' / construct.Float32l,
+                   'cov_x_vx' / construct.Float32l,
+                   'cov_x_vy' / construct.Float32l,
+                   'cov_x_vz' / construct.Float32l,
+                   'cov_y_vx' / construct.Float32l,
+                   'cov_y_vy' / construct.Float32l,
+                   'cov_y_vz' / construct.Float32l,
+                   'cov_z_vx' / construct.Float32l,
+                   'cov_z_vy' / construct.Float32l,
+                   'cov_z_vz' / construct.Float32l,
+                   'cov_vx_vx' / construct.Float32l,
+                   'cov_vx_vy' / construct.Float32l,
+                   'cov_vx_vz' / construct.Float32l,
+                   'cov_vy_vy' / construct.Float32l,
+                   'cov_vy_vz' / construct.Float32l,
+                   'cov_vz_vz' / construct.Float32l,
+                   'n_sats' / construct.Int8ul,
+                   'flags' / construct.Int8ul,
+                   'velocity_averaging_time' / construct.Float32l,)
+  __slots__ = [
+               'tow',
+               'x',
+               'y',
+               'z',
+               'vx',
+               'vy',
+               'vz',
+               'cov_x_x',
+               'cov_x_y',
+               'cov_x_z',
+               'cov_y_y',
+               'cov_y_z',
+               'cov_z_z',
+               'cov_x_vx',
+               'cov_x_vy',
+               'cov_x_vz',
+               'cov_y_vx',
+               'cov_y_vy',
+               'cov_y_vz',
+               'cov_z_vx',
+               'cov_z_vy',
+               'cov_z_vz',
+               'cov_vx_vx',
+               'cov_vx_vy',
+               'cov_vx_vz',
+               'cov_vy_vy',
+               'cov_vy_vz',
+               'cov_vz_vz',
+               'n_sats',
+               'flags',
+               'velocity_averaging_time',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgPosVelECEFGnss,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgPosVelECEFGnss, self).__init__()
+      self.msg_type = SBP_MSG_POS_VEL_ECEF_GNSS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.x = kwargs.pop('x')
+      self.y = kwargs.pop('y')
+      self.z = kwargs.pop('z')
+      self.vx = kwargs.pop('vx')
+      self.vy = kwargs.pop('vy')
+      self.vz = kwargs.pop('vz')
+      self.cov_x_x = kwargs.pop('cov_x_x')
+      self.cov_x_y = kwargs.pop('cov_x_y')
+      self.cov_x_z = kwargs.pop('cov_x_z')
+      self.cov_y_y = kwargs.pop('cov_y_y')
+      self.cov_y_z = kwargs.pop('cov_y_z')
+      self.cov_z_z = kwargs.pop('cov_z_z')
+      self.cov_x_vx = kwargs.pop('cov_x_vx')
+      self.cov_x_vy = kwargs.pop('cov_x_vy')
+      self.cov_x_vz = kwargs.pop('cov_x_vz')
+      self.cov_y_vx = kwargs.pop('cov_y_vx')
+      self.cov_y_vy = kwargs.pop('cov_y_vy')
+      self.cov_y_vz = kwargs.pop('cov_y_vz')
+      self.cov_z_vx = kwargs.pop('cov_z_vx')
+      self.cov_z_vy = kwargs.pop('cov_z_vy')
+      self.cov_z_vz = kwargs.pop('cov_z_vz')
+      self.cov_vx_vx = kwargs.pop('cov_vx_vx')
+      self.cov_vx_vy = kwargs.pop('cov_vx_vy')
+      self.cov_vx_vz = kwargs.pop('cov_vx_vz')
+      self.cov_vy_vy = kwargs.pop('cov_vy_vy')
+      self.cov_vy_vz = kwargs.pop('cov_vy_vz')
+      self.cov_vz_vz = kwargs.pop('cov_vz_vz')
+      self.n_sats = kwargs.pop('n_sats')
+      self.flags = kwargs.pop('flags')
+      self.velocity_averaging_time = kwargs.pop('velocity_averaging_time')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgPosVelECEFGnss.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgPosVelECEFGnss(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgPosVelECEFGnss._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgPosVelECEFGnss._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgPosVelECEFGnss._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgPosVelECEFGnss, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0x0102: MsgGPSTime,
@@ -4426,4 +4665,5 @@ msg_classes = {
   0x0205: MsgVelNEDDepA,
   0x0207: MsgBaselineHeadingDepA,
   0x0216: MsgProtectionLevel,
+  0x0300: MsgPosVelECEFGnss,
 }

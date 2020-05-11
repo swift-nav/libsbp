@@ -1872,6 +1872,208 @@ impl crate::serialize::SbpSerialize for MsgPosLLHGnss {
     }
 }
 
+/// GNSS solution
+///
+/// This message reports the PV solution
+///
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[derive(Debug)]
+#[allow(non_snake_case)]
+pub struct MsgPosVelECEFGnss {
+    pub sender_id: Option<u16>,
+    /// GPS Time of Week
+    pub tow: u32,
+    /// ECEF X coordinate
+    pub x: f64,
+    /// ECEF Y coordinate
+    pub y: f64,
+    /// ECEF Z coordinate
+    pub z: f64,
+    /// ECEF X velocity
+    pub vx: f64,
+    /// ECEF Y velocity
+    pub vy: f64,
+    /// ECEF Z velocity
+    pub vz: f64,
+    /// Estimated variance of x
+    pub cov_x_x: f32,
+    /// Estimated covariance of x and y
+    pub cov_x_y: f32,
+    /// Estimated covariance of x and z
+    pub cov_x_z: f32,
+    /// Estimated variance of y
+    pub cov_y_y: f32,
+    /// Estimated covariance of y and z
+    pub cov_y_z: f32,
+    /// Estimated variance of z
+    pub cov_z_z: f32,
+    /// Estimated covariance of x and vx
+    pub cov_x_vx: f32,
+    /// Estimated covariance of x and vy
+    pub cov_x_vy: f32,
+    /// Estimated covariance of x and vz
+    pub cov_x_vz: f32,
+    /// Estimated covariance of y and vx
+    pub cov_y_vx: f32,
+    /// Estimated covariance of y and vy
+    pub cov_y_vy: f32,
+    /// Estimated covariance of y and vz
+    pub cov_y_vz: f32,
+    /// Estimated covariance of z and vx
+    pub cov_z_vx: f32,
+    /// Estimated covariance of z and vy
+    pub cov_z_vy: f32,
+    /// Estimated covariance of z and vz
+    pub cov_z_vz: f32,
+    /// Estimated variance of vx
+    pub cov_vx_vx: f32,
+    /// Estimated covariance of vx and vy
+    pub cov_vx_vy: f32,
+    /// Estimated covariance of vx and vz
+    pub cov_vx_vz: f32,
+    /// Estimated variance of vy
+    pub cov_vy_vy: f32,
+    /// Estimated covariance of vy and vz
+    pub cov_vy_vz: f32,
+    /// Estimated variance of vz
+    pub cov_vz_vz: f32,
+    pub n_sats: u8,
+    /// Status flags
+    pub flags: u8,
+    /// Velocity averaging time
+    pub velocity_averaging_time: f32,
+}
+
+impl MsgPosVelECEFGnss {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosVelECEFGnss, crate::Error> {
+        Ok(MsgPosVelECEFGnss {
+            sender_id: None,
+            tow: _buf.read_u32::<LittleEndian>()?,
+            x: _buf.read_f64::<LittleEndian>()?,
+            y: _buf.read_f64::<LittleEndian>()?,
+            z: _buf.read_f64::<LittleEndian>()?,
+            vx: _buf.read_f64::<LittleEndian>()?,
+            vy: _buf.read_f64::<LittleEndian>()?,
+            vz: _buf.read_f64::<LittleEndian>()?,
+            cov_x_x: _buf.read_f32::<LittleEndian>()?,
+            cov_x_y: _buf.read_f32::<LittleEndian>()?,
+            cov_x_z: _buf.read_f32::<LittleEndian>()?,
+            cov_y_y: _buf.read_f32::<LittleEndian>()?,
+            cov_y_z: _buf.read_f32::<LittleEndian>()?,
+            cov_z_z: _buf.read_f32::<LittleEndian>()?,
+            cov_x_vx: _buf.read_f32::<LittleEndian>()?,
+            cov_x_vy: _buf.read_f32::<LittleEndian>()?,
+            cov_x_vz: _buf.read_f32::<LittleEndian>()?,
+            cov_y_vx: _buf.read_f32::<LittleEndian>()?,
+            cov_y_vy: _buf.read_f32::<LittleEndian>()?,
+            cov_y_vz: _buf.read_f32::<LittleEndian>()?,
+            cov_z_vx: _buf.read_f32::<LittleEndian>()?,
+            cov_z_vy: _buf.read_f32::<LittleEndian>()?,
+            cov_z_vz: _buf.read_f32::<LittleEndian>()?,
+            cov_vx_vx: _buf.read_f32::<LittleEndian>()?,
+            cov_vx_vy: _buf.read_f32::<LittleEndian>()?,
+            cov_vx_vz: _buf.read_f32::<LittleEndian>()?,
+            cov_vy_vy: _buf.read_f32::<LittleEndian>()?,
+            cov_vy_vz: _buf.read_f32::<LittleEndian>()?,
+            cov_vz_vz: _buf.read_f32::<LittleEndian>()?,
+            n_sats: _buf.read_u8()?,
+            flags: _buf.read_u8()?,
+            velocity_averaging_time: _buf.read_f32::<LittleEndian>()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgPosVelECEFGnss {
+    fn get_message_type(&self) -> u16 {
+        768
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgPosVelECEFGnss {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.x.append_to_sbp_buffer(buf);
+        self.y.append_to_sbp_buffer(buf);
+        self.z.append_to_sbp_buffer(buf);
+        self.vx.append_to_sbp_buffer(buf);
+        self.vy.append_to_sbp_buffer(buf);
+        self.vz.append_to_sbp_buffer(buf);
+        self.cov_x_x.append_to_sbp_buffer(buf);
+        self.cov_x_y.append_to_sbp_buffer(buf);
+        self.cov_x_z.append_to_sbp_buffer(buf);
+        self.cov_y_y.append_to_sbp_buffer(buf);
+        self.cov_y_z.append_to_sbp_buffer(buf);
+        self.cov_z_z.append_to_sbp_buffer(buf);
+        self.cov_x_vx.append_to_sbp_buffer(buf);
+        self.cov_x_vy.append_to_sbp_buffer(buf);
+        self.cov_x_vz.append_to_sbp_buffer(buf);
+        self.cov_y_vx.append_to_sbp_buffer(buf);
+        self.cov_y_vy.append_to_sbp_buffer(buf);
+        self.cov_y_vz.append_to_sbp_buffer(buf);
+        self.cov_z_vx.append_to_sbp_buffer(buf);
+        self.cov_z_vy.append_to_sbp_buffer(buf);
+        self.cov_z_vz.append_to_sbp_buffer(buf);
+        self.cov_vx_vx.append_to_sbp_buffer(buf);
+        self.cov_vx_vy.append_to_sbp_buffer(buf);
+        self.cov_vx_vz.append_to_sbp_buffer(buf);
+        self.cov_vy_vy.append_to_sbp_buffer(buf);
+        self.cov_vy_vz.append_to_sbp_buffer(buf);
+        self.cov_vz_vz.append_to_sbp_buffer(buf);
+        self.n_sats.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+        self.velocity_averaging_time.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.x.sbp_size();
+        size += self.y.sbp_size();
+        size += self.z.sbp_size();
+        size += self.vx.sbp_size();
+        size += self.vy.sbp_size();
+        size += self.vz.sbp_size();
+        size += self.cov_x_x.sbp_size();
+        size += self.cov_x_y.sbp_size();
+        size += self.cov_x_z.sbp_size();
+        size += self.cov_y_y.sbp_size();
+        size += self.cov_y_z.sbp_size();
+        size += self.cov_z_z.sbp_size();
+        size += self.cov_x_vx.sbp_size();
+        size += self.cov_x_vy.sbp_size();
+        size += self.cov_x_vz.sbp_size();
+        size += self.cov_y_vx.sbp_size();
+        size += self.cov_y_vy.sbp_size();
+        size += self.cov_y_vz.sbp_size();
+        size += self.cov_z_vx.sbp_size();
+        size += self.cov_z_vy.sbp_size();
+        size += self.cov_z_vz.sbp_size();
+        size += self.cov_vx_vx.sbp_size();
+        size += self.cov_vx_vy.sbp_size();
+        size += self.cov_vx_vz.sbp_size();
+        size += self.cov_vy_vy.sbp_size();
+        size += self.cov_vy_vz.sbp_size();
+        size += self.cov_vz_vz.sbp_size();
+        size += self.n_sats.sbp_size();
+        size += self.flags.sbp_size();
+        size += self.velocity_averaging_time.sbp_size();
+        size
+    }
+}
+
 /// Computed Position and Protection Level
 ///
 /// This message reports the local vertical and horizontal protection levels
