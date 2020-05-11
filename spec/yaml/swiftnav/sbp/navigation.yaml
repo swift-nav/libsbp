@@ -1913,6 +1913,9 @@ definitions:
     desc: |
       This message reports the PV solution
     fields:
+          - wn:
+              type: u16
+              desc: GPS week number
           - tow:
               type: u32
               units: ms
@@ -2027,6 +2030,14 @@ definitions:
               desc: Estimated variance of vz
           - n_sats:
               type: u8
+              desc: Number of satellites used
+          - displacement_period:
+              type: float
+              units: s
+              desc: Displacement period
+          - pdop:
+              type: float
+              desc: PDOP
           - flags:
               type: u8
               desc: Status flags
@@ -2048,7 +2059,3 @@ definitions:
                         - 4: Fixed RTK
                         - 5: Dead Reckoning
                         - 6: SBAS Position
-          - velocity_averaging_time:
-              type: float
-              units: s
-              desc: Velocity averaging time

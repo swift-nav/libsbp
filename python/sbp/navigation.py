@@ -4407,6 +4407,8 @@ class MsgPosVelECEFGnss(SBP):
   ----------
   sbp : SBP
     SBP parent object to inherit from.
+  wn : int
+    GPS week number
   tow : int
     GPS Time of Week
   x : double
@@ -4464,15 +4466,19 @@ class MsgPosVelECEFGnss(SBP):
   cov_vz_vz : float
     Estimated variance of vz
   n_sats : int
+    Number of satellites used
+  displacement_period : float
+    Displacement period
+  pdop : float
+    PDOP
   flags : int
     Status flags
-  velocity_averaging_time : float
-    Velocity averaging time
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
   """
   _parser = construct.Struct(
+                   'wn' / construct.Int16ul,
                    'tow' / construct.Int32ul,
                    'x' / construct.Float64l,
                    'y' / construct.Float64l,
@@ -4502,9 +4508,11 @@ class MsgPosVelECEFGnss(SBP):
                    'cov_vy_vz' / construct.Float32l,
                    'cov_vz_vz' / construct.Float32l,
                    'n_sats' / construct.Int8ul,
-                   'flags' / construct.Int8ul,
-                   'velocity_averaging_time' / construct.Float32l,)
+                   'displacement_period' / construct.Float32l,
+                   'pdop' / construct.Float32l,
+                   'flags' / construct.Int8ul,)
   __slots__ = [
+               'wn',
                'tow',
                'x',
                'y',
@@ -4534,8 +4542,9 @@ class MsgPosVelECEFGnss(SBP):
                'cov_vy_vz',
                'cov_vz_vz',
                'n_sats',
+               'displacement_period',
+               'pdop',
                'flags',
-               'velocity_averaging_time',
               ]
 
   def __init__(self, sbp=None, **kwargs):
@@ -4548,6 +4557,7 @@ class MsgPosVelECEFGnss(SBP):
       super( MsgPosVelECEFGnss, self).__init__()
       self.msg_type = SBP_MSG_POS_VEL_ECEF_GNSS
       self.sender = kwargs.pop('sender', SENDER_ID)
+      self.wn = kwargs.pop('wn')
       self.tow = kwargs.pop('tow')
       self.x = kwargs.pop('x')
       self.y = kwargs.pop('y')
@@ -4577,8 +4587,9 @@ class MsgPosVelECEFGnss(SBP):
       self.cov_vy_vz = kwargs.pop('cov_vy_vz')
       self.cov_vz_vz = kwargs.pop('cov_vz_vz')
       self.n_sats = kwargs.pop('n_sats')
+      self.displacement_period = kwargs.pop('displacement_period')
+      self.pdop = kwargs.pop('pdop')
       self.flags = kwargs.pop('flags')
-      self.velocity_averaging_time = kwargs.pop('velocity_averaging_time')
 
   def __repr__(self):
     return fmt_repr(self)

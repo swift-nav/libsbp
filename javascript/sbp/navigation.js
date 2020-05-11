@@ -1779,6 +1779,7 @@ MsgProtectionLevel.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * This message reports the PV solution
  *
  * Fields in the SBP payload (`sbp.payload`):
+ * @field wn number (unsigned 16-bit int, 2 bytes) GPS week number
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
  * @field x number (float, 8 bytes) ECEF X coordinate
  * @field y number (float, 8 bytes) ECEF Y coordinate
@@ -1807,9 +1808,10 @@ MsgProtectionLevel.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field cov_vy_vy number (float, 4 bytes) Estimated variance of vy
  * @field cov_vy_vz number (float, 4 bytes) Estimated covariance of vy and vz
  * @field cov_vz_vz number (float, 4 bytes) Estimated variance of vz
- * @field n_sats number (unsigned 8-bit int, 1 byte)
+ * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used
+ * @field displacement_period number (float, 4 bytes) Displacement period
+ * @field pdop number (float, 4 bytes) PDOP
  * @field flags number (unsigned 8-bit int, 1 byte) Status flags
- * @field velocity_averaging_time number (float, 4 bytes) Velocity averaging time
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -1826,6 +1828,7 @@ MsgPosVelEcefGnss.prototype.msg_type = 0x0300;
 MsgPosVelEcefGnss.prototype.constructor = MsgPosVelEcefGnss;
 MsgPosVelEcefGnss.prototype.parser = new Parser()
   .endianess('little')
+  .uint16('wn')
   .uint32('tow')
   .doublele('x')
   .doublele('y')
@@ -1855,9 +1858,11 @@ MsgPosVelEcefGnss.prototype.parser = new Parser()
   .floatle('cov_vy_vz')
   .floatle('cov_vz_vz')
   .uint8('n_sats')
-  .uint8('flags')
-  .floatle('velocity_averaging_time');
+  .floatle('displacement_period')
+  .floatle('pdop')
+  .uint8('flags');
 MsgPosVelEcefGnss.prototype.fieldSpec = [];
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
 MsgPosVelEcefGnss.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
 MsgPosVelEcefGnss.prototype.fieldSpec.push(['x', 'writeDoubleLE', 8]);
 MsgPosVelEcefGnss.prototype.fieldSpec.push(['y', 'writeDoubleLE', 8]);
@@ -1887,8 +1892,9 @@ MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_vy_vy', 'writeFloatLE', 4]);
 MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_vy_vz', 'writeFloatLE', 4]);
 MsgPosVelEcefGnss.prototype.fieldSpec.push(['cov_vz_vz', 'writeFloatLE', 4]);
 MsgPosVelEcefGnss.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['displacement_period', 'writeFloatLE', 4]);
+MsgPosVelEcefGnss.prototype.fieldSpec.push(['pdop', 'writeFloatLE', 4]);
 MsgPosVelEcefGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
-MsgPosVelEcefGnss.prototype.fieldSpec.push(['velocity_averaging_time', 'writeFloatLE', 4]);
 
 module.exports = {
   0x0102: MsgGpsTime,

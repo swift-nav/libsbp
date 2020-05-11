@@ -807,37 +807,39 @@ typedef struct SBP_ATTR_PACKED {
  */
 #define SBP_MSG_POS_VEL_ECEF_GNSS      0x0300
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;                        /**< GPS Time of Week [ms] */
-  double x;                          /**< ECEF X coordinate [m] */
-  double y;                          /**< ECEF Y coordinate [m] */
-  double z;                          /**< ECEF Z coordinate [m] */
-  double vx;                         /**< ECEF X velocity [m] */
-  double vy;                         /**< ECEF Y velocity [m] */
-  double vz;                         /**< ECEF Z velocity [m] */
-  float cov_x_x;                    /**< Estimated variance of x [m^2] */
-  float cov_x_y;                    /**< Estimated covariance of x and y [m^2] */
-  float cov_x_z;                    /**< Estimated covariance of x and z [m^2] */
-  float cov_y_y;                    /**< Estimated variance of y [m^2] */
-  float cov_y_z;                    /**< Estimated covariance of y and z [m^2] */
-  float cov_z_z;                    /**< Estimated variance of z [m^2] */
-  float cov_x_vx;                   /**< Estimated covariance of x and vx [m^2/s] */
-  float cov_x_vy;                   /**< Estimated covariance of x and vy [m^2/s] */
-  float cov_x_vz;                   /**< Estimated covariance of x and vz [m^2/s] */
-  float cov_y_vx;                   /**< Estimated covariance of y and vx [m^2/s] */
-  float cov_y_vy;                   /**< Estimated covariance of y and vy [m^2/s] */
-  float cov_y_vz;                   /**< Estimated covariance of y and vz [m^2/s] */
-  float cov_z_vx;                   /**< Estimated covariance of z and vx [m^2/s] */
-  float cov_z_vy;                   /**< Estimated covariance of z and vy [m^2/s] */
-  float cov_z_vz;                   /**< Estimated covariance of z and vz [m^2/s] */
-  float cov_vx_vx;                  /**< Estimated variance of vx [m^2/s^2] */
-  float cov_vx_vy;                  /**< Estimated covariance of vx and vy [m^2/s^2] */
-  float cov_vx_vz;                  /**< Estimated covariance of vx and vz [m^2/s^2] */
-  float cov_vy_vy;                  /**< Estimated variance of vy [m^2/s^2] */
-  float cov_vy_vz;                  /**< Estimated covariance of vy and vz [m^2/s^2] */
-  float cov_vz_vz;                  /**< Estimated variance of vz [m^2/s^2] */
-  u8 n_sats;                    
-  u8 flags;                      /**< Status flags */
-  float velocity_averaging_time;    /**< Velocity averaging time [s] */
+  u16 wn;                     /**< GPS week number */
+  u32 tow;                    /**< GPS Time of Week [ms] */
+  double x;                      /**< ECEF X coordinate [m] */
+  double y;                      /**< ECEF Y coordinate [m] */
+  double z;                      /**< ECEF Z coordinate [m] */
+  double vx;                     /**< ECEF X velocity [m] */
+  double vy;                     /**< ECEF Y velocity [m] */
+  double vz;                     /**< ECEF Z velocity [m] */
+  float cov_x_x;                /**< Estimated variance of x [m^2] */
+  float cov_x_y;                /**< Estimated covariance of x and y [m^2] */
+  float cov_x_z;                /**< Estimated covariance of x and z [m^2] */
+  float cov_y_y;                /**< Estimated variance of y [m^2] */
+  float cov_y_z;                /**< Estimated covariance of y and z [m^2] */
+  float cov_z_z;                /**< Estimated variance of z [m^2] */
+  float cov_x_vx;               /**< Estimated covariance of x and vx [m^2/s] */
+  float cov_x_vy;               /**< Estimated covariance of x and vy [m^2/s] */
+  float cov_x_vz;               /**< Estimated covariance of x and vz [m^2/s] */
+  float cov_y_vx;               /**< Estimated covariance of y and vx [m^2/s] */
+  float cov_y_vy;               /**< Estimated covariance of y and vy [m^2/s] */
+  float cov_y_vz;               /**< Estimated covariance of y and vz [m^2/s] */
+  float cov_z_vx;               /**< Estimated covariance of z and vx [m^2/s] */
+  float cov_z_vy;               /**< Estimated covariance of z and vy [m^2/s] */
+  float cov_z_vz;               /**< Estimated covariance of z and vz [m^2/s] */
+  float cov_vx_vx;              /**< Estimated variance of vx [m^2/s^2] */
+  float cov_vx_vy;              /**< Estimated covariance of vx and vy [m^2/s^2] */
+  float cov_vx_vz;              /**< Estimated covariance of vx and vz [m^2/s^2] */
+  float cov_vy_vy;              /**< Estimated variance of vy [m^2/s^2] */
+  float cov_vy_vz;              /**< Estimated covariance of vy and vz [m^2/s^2] */
+  float cov_vz_vz;              /**< Estimated variance of vz [m^2/s^2] */
+  u8 n_sats;                 /**< Number of satellites used */
+  float displacement_period;    /**< Displacement period [s] */
+  float pdop;                   /**< PDOP */
+  u8 flags;                  /**< Status flags */
 } msg_pos_vel_ecef_gnss_t;
 
 

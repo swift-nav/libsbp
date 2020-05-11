@@ -2835,7 +2835,8 @@ class MsgPosVelECEFGnss(SBP):
 
 
   """
-  __slots__ = ['tow',
+  __slots__ = ['wn',
+               'tow',
                'x',
                'y',
                'z',
@@ -2864,12 +2865,15 @@ class MsgPosVelECEFGnss(SBP):
                'cov_vy_vz',
                'cov_vz_vz',
                'n_sats',
+               'displacement_period',
+               'pdop',
                'flags',
-               'velocity_averaging_time',
                ]
   @classmethod
   def parse_members(cls, buf, offset, length):
     ret = {}
+    (__wn, offset, length) = get_u16(buf, offset, length)
+    ret['wn'] = __wn
     (__tow, offset, length) = get_u32(buf, offset, length)
     ret['tow'] = __tow
     (__x, offset, length) = get_f64(buf, offset, length)
@@ -2928,16 +2932,19 @@ class MsgPosVelECEFGnss(SBP):
     ret['cov_vz_vz'] = judicious_round(np.float32(__cov_vz_vz)) if SBP.judicious_rounding else __cov_vz_vz
     (__n_sats, offset, length) = get_u8(buf, offset, length)
     ret['n_sats'] = __n_sats
+    (__displacement_period, offset, length) = get_f32(buf, offset, length)
+    ret['displacement_period'] = judicious_round(np.float32(__displacement_period)) if SBP.judicious_rounding else __displacement_period
+    (__pdop, offset, length) = get_f32(buf, offset, length)
+    ret['pdop'] = judicious_round(np.float32(__pdop)) if SBP.judicious_rounding else __pdop
     (__flags, offset, length) = get_u8(buf, offset, length)
     ret['flags'] = __flags
-    (__velocity_averaging_time, offset, length) = get_f32(buf, offset, length)
-    ret['velocity_averaging_time'] = judicious_round(np.float32(__velocity_averaging_time)) if SBP.judicious_rounding else __velocity_averaging_time
     return ret, offset, length
 
   def _unpack_members(self, buf, offset, length):
     res, off, length = self.parse_members(buf, offset, length)
     if off == offset:
       return {}, offset, length
+    self.wn = res['wn']
     self.tow = res['tow']
     self.x = res['x']
     self.y = res['y']
@@ -2967,13 +2974,16 @@ class MsgPosVelECEFGnss(SBP):
     self.cov_vy_vz = res['cov_vy_vz']
     self.cov_vz_vz = res['cov_vz_vz']
     self.n_sats = res['n_sats']
+    self.displacement_period = res['displacement_period']
+    self.pdop = res['pdop']
     self.flags = res['flags']
-    self.velocity_averaging_time = res['velocity_averaging_time']
     return res, off, length
 
   @classmethod
   def _payload_size(self):
     ret = 0
+    # wn: u16
+    ret += 2
     # tow: u32
     ret += 4
     # x: double
@@ -3032,10 +3042,12 @@ class MsgPosVelECEFGnss(SBP):
     ret += 4
     # n_sats: u8
     ret += 1
+    # displacement_period: float
+    ret += 4
+    # pdop: float
+    ret += 4
     # flags: u8
     ret += 1
-    # velocity_averaging_time: float
-    ret += 4
     return ret
   
 

@@ -1881,6 +1881,8 @@ impl crate::serialize::SbpSerialize for MsgPosLLHGnss {
 #[allow(non_snake_case)]
 pub struct MsgPosVelECEFGnss {
     pub sender_id: Option<u16>,
+    /// GPS week number
+    pub wn: u16,
     /// GPS Time of Week
     pub tow: u32,
     /// ECEF X coordinate
@@ -1937,17 +1939,21 @@ pub struct MsgPosVelECEFGnss {
     pub cov_vy_vz: f32,
     /// Estimated variance of vz
     pub cov_vz_vz: f32,
+    /// Number of satellites used
     pub n_sats: u8,
+    /// Displacement period
+    pub displacement_period: f32,
+    /// PDOP
+    pub pdop: f32,
     /// Status flags
     pub flags: u8,
-    /// Velocity averaging time
-    pub velocity_averaging_time: f32,
 }
 
 impl MsgPosVelECEFGnss {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosVelECEFGnss, crate::Error> {
         Ok(MsgPosVelECEFGnss {
             sender_id: None,
+            wn: _buf.read_u16::<LittleEndian>()?,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_f64::<LittleEndian>()?,
             y: _buf.read_f64::<LittleEndian>()?,
@@ -1977,8 +1983,9 @@ impl MsgPosVelECEFGnss {
             cov_vy_vz: _buf.read_f32::<LittleEndian>()?,
             cov_vz_vz: _buf.read_f32::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
+            displacement_period: _buf.read_f32::<LittleEndian>()?,
+            pdop: _buf.read_f32::<LittleEndian>()?,
             flags: _buf.read_u8()?,
-            velocity_averaging_time: _buf.read_f32::<LittleEndian>()?,
         })
     }
 }
@@ -2004,6 +2011,7 @@ impl super::SBPMessage for MsgPosVelECEFGnss {
 impl crate::serialize::SbpSerialize for MsgPosVelECEFGnss {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.wn.append_to_sbp_buffer(buf);
         self.tow.append_to_sbp_buffer(buf);
         self.x.append_to_sbp_buffer(buf);
         self.y.append_to_sbp_buffer(buf);
@@ -2033,12 +2041,14 @@ impl crate::serialize::SbpSerialize for MsgPosVelECEFGnss {
         self.cov_vy_vz.append_to_sbp_buffer(buf);
         self.cov_vz_vz.append_to_sbp_buffer(buf);
         self.n_sats.append_to_sbp_buffer(buf);
+        self.displacement_period.append_to_sbp_buffer(buf);
+        self.pdop.append_to_sbp_buffer(buf);
         self.flags.append_to_sbp_buffer(buf);
-        self.velocity_averaging_time.append_to_sbp_buffer(buf);
     }
 
     fn sbp_size(&self) -> usize {
         let mut size = 0;
+        size += self.wn.sbp_size();
         size += self.tow.sbp_size();
         size += self.x.sbp_size();
         size += self.y.sbp_size();
@@ -2068,8 +2078,9 @@ impl crate::serialize::SbpSerialize for MsgPosVelECEFGnss {
         size += self.cov_vy_vz.sbp_size();
         size += self.cov_vz_vz.sbp_size();
         size += self.n_sats.sbp_size();
+        size += self.displacement_period.sbp_size();
+        size += self.pdop.sbp_size();
         size += self.flags.sbp_size();
-        size += self.velocity_averaging_time.sbp_size();
         size
     }
 }

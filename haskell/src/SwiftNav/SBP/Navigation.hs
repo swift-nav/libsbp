@@ -1913,71 +1913,77 @@ msgPosVelEcefGnss = 0x0300
 --
 -- This message reports the PV solution
 data MsgPosVelEcefGnss = MsgPosVelEcefGnss
-  { _msgPosVelEcefGnss_tow                   :: !Word32
+  { _msgPosVelEcefGnss_wn                :: !Word16
+    -- ^ GPS week number
+  , _msgPosVelEcefGnss_tow               :: !Word32
     -- ^ GPS Time of Week
-  , _msgPosVelEcefGnss_x                     :: !Double
+  , _msgPosVelEcefGnss_x                 :: !Double
     -- ^ ECEF X coordinate
-  , _msgPosVelEcefGnss_y                     :: !Double
+  , _msgPosVelEcefGnss_y                 :: !Double
     -- ^ ECEF Y coordinate
-  , _msgPosVelEcefGnss_z                     :: !Double
+  , _msgPosVelEcefGnss_z                 :: !Double
     -- ^ ECEF Z coordinate
-  , _msgPosVelEcefGnss_vx                    :: !Double
+  , _msgPosVelEcefGnss_vx                :: !Double
     -- ^ ECEF X velocity
-  , _msgPosVelEcefGnss_vy                    :: !Double
+  , _msgPosVelEcefGnss_vy                :: !Double
     -- ^ ECEF Y velocity
-  , _msgPosVelEcefGnss_vz                    :: !Double
+  , _msgPosVelEcefGnss_vz                :: !Double
     -- ^ ECEF Z velocity
-  , _msgPosVelEcefGnss_cov_x_x               :: !Float
+  , _msgPosVelEcefGnss_cov_x_x           :: !Float
     -- ^ Estimated variance of x
-  , _msgPosVelEcefGnss_cov_x_y               :: !Float
+  , _msgPosVelEcefGnss_cov_x_y           :: !Float
     -- ^ Estimated covariance of x and y
-  , _msgPosVelEcefGnss_cov_x_z               :: !Float
+  , _msgPosVelEcefGnss_cov_x_z           :: !Float
     -- ^ Estimated covariance of x and z
-  , _msgPosVelEcefGnss_cov_y_y               :: !Float
+  , _msgPosVelEcefGnss_cov_y_y           :: !Float
     -- ^ Estimated variance of y
-  , _msgPosVelEcefGnss_cov_y_z               :: !Float
+  , _msgPosVelEcefGnss_cov_y_z           :: !Float
     -- ^ Estimated covariance of y and z
-  , _msgPosVelEcefGnss_cov_z_z               :: !Float
+  , _msgPosVelEcefGnss_cov_z_z           :: !Float
     -- ^ Estimated variance of z
-  , _msgPosVelEcefGnss_cov_x_vx              :: !Float
+  , _msgPosVelEcefGnss_cov_x_vx          :: !Float
     -- ^ Estimated covariance of x and vx
-  , _msgPosVelEcefGnss_cov_x_vy              :: !Float
+  , _msgPosVelEcefGnss_cov_x_vy          :: !Float
     -- ^ Estimated covariance of x and vy
-  , _msgPosVelEcefGnss_cov_x_vz              :: !Float
+  , _msgPosVelEcefGnss_cov_x_vz          :: !Float
     -- ^ Estimated covariance of x and vz
-  , _msgPosVelEcefGnss_cov_y_vx              :: !Float
+  , _msgPosVelEcefGnss_cov_y_vx          :: !Float
     -- ^ Estimated covariance of y and vx
-  , _msgPosVelEcefGnss_cov_y_vy              :: !Float
+  , _msgPosVelEcefGnss_cov_y_vy          :: !Float
     -- ^ Estimated covariance of y and vy
-  , _msgPosVelEcefGnss_cov_y_vz              :: !Float
+  , _msgPosVelEcefGnss_cov_y_vz          :: !Float
     -- ^ Estimated covariance of y and vz
-  , _msgPosVelEcefGnss_cov_z_vx              :: !Float
+  , _msgPosVelEcefGnss_cov_z_vx          :: !Float
     -- ^ Estimated covariance of z and vx
-  , _msgPosVelEcefGnss_cov_z_vy              :: !Float
+  , _msgPosVelEcefGnss_cov_z_vy          :: !Float
     -- ^ Estimated covariance of z and vy
-  , _msgPosVelEcefGnss_cov_z_vz              :: !Float
+  , _msgPosVelEcefGnss_cov_z_vz          :: !Float
     -- ^ Estimated covariance of z and vz
-  , _msgPosVelEcefGnss_cov_vx_vx             :: !Float
+  , _msgPosVelEcefGnss_cov_vx_vx         :: !Float
     -- ^ Estimated variance of vx
-  , _msgPosVelEcefGnss_cov_vx_vy             :: !Float
+  , _msgPosVelEcefGnss_cov_vx_vy         :: !Float
     -- ^ Estimated covariance of vx and vy
-  , _msgPosVelEcefGnss_cov_vx_vz             :: !Float
+  , _msgPosVelEcefGnss_cov_vx_vz         :: !Float
     -- ^ Estimated covariance of vx and vz
-  , _msgPosVelEcefGnss_cov_vy_vy             :: !Float
+  , _msgPosVelEcefGnss_cov_vy_vy         :: !Float
     -- ^ Estimated variance of vy
-  , _msgPosVelEcefGnss_cov_vy_vz             :: !Float
+  , _msgPosVelEcefGnss_cov_vy_vz         :: !Float
     -- ^ Estimated covariance of vy and vz
-  , _msgPosVelEcefGnss_cov_vz_vz             :: !Float
+  , _msgPosVelEcefGnss_cov_vz_vz         :: !Float
     -- ^ Estimated variance of vz
-  , _msgPosVelEcefGnss_n_sats                :: !Word8
-  , _msgPosVelEcefGnss_flags                 :: !Word8
+  , _msgPosVelEcefGnss_n_sats            :: !Word8
+    -- ^ Number of satellites used
+  , _msgPosVelEcefGnss_displacement_period :: !Float
+    -- ^ Displacement period
+  , _msgPosVelEcefGnss_pdop              :: !Float
+    -- ^ PDOP
+  , _msgPosVelEcefGnss_flags             :: !Word8
     -- ^ Status flags
-  , _msgPosVelEcefGnss_velocity_averaging_time :: !Float
-    -- ^ Velocity averaging time
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgPosVelEcefGnss where
   get = do
+    _msgPosVelEcefGnss_wn <- getWord16le
     _msgPosVelEcefGnss_tow <- getWord32le
     _msgPosVelEcefGnss_x <- getFloat64le
     _msgPosVelEcefGnss_y <- getFloat64le
@@ -2007,11 +2013,13 @@ instance Binary MsgPosVelEcefGnss where
     _msgPosVelEcefGnss_cov_vy_vz <- getFloat32le
     _msgPosVelEcefGnss_cov_vz_vz <- getFloat32le
     _msgPosVelEcefGnss_n_sats <- getWord8
+    _msgPosVelEcefGnss_displacement_period <- getFloat32le
+    _msgPosVelEcefGnss_pdop <- getFloat32le
     _msgPosVelEcefGnss_flags <- getWord8
-    _msgPosVelEcefGnss_velocity_averaging_time <- getFloat32le
     pure MsgPosVelEcefGnss {..}
 
   put MsgPosVelEcefGnss {..} = do
+    putWord16le _msgPosVelEcefGnss_wn
     putWord32le _msgPosVelEcefGnss_tow
     putFloat64le _msgPosVelEcefGnss_x
     putFloat64le _msgPosVelEcefGnss_y
@@ -2041,8 +2049,9 @@ instance Binary MsgPosVelEcefGnss where
     putFloat32le _msgPosVelEcefGnss_cov_vy_vz
     putFloat32le _msgPosVelEcefGnss_cov_vz_vz
     putWord8 _msgPosVelEcefGnss_n_sats
+    putFloat32le _msgPosVelEcefGnss_displacement_period
+    putFloat32le _msgPosVelEcefGnss_pdop
     putWord8 _msgPosVelEcefGnss_flags
-    putFloat32le _msgPosVelEcefGnss_velocity_averaging_time
 
 $(makeSBP 'msgPosVelEcefGnss ''MsgPosVelEcefGnss)
 $(makeJSON "_msgPosVelEcefGnss_" ''MsgPosVelEcefGnss)
