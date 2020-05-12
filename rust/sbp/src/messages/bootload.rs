@@ -30,7 +30,7 @@ use serde::{Deserialize, Serialize};
 /// Deprecated.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeDepA {
     pub sender_id: Option<u16>,
@@ -85,7 +85,7 @@ impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeDepA {
 /// response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeReq {
     pub sender_id: Option<u16>,
@@ -133,7 +133,7 @@ impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeReq {
 /// protocol version number.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderHandshakeResp {
     pub sender_id: Option<u16>,
@@ -191,7 +191,7 @@ impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeResp {
 /// The host initiates the bootloader to jump to the application.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBootloaderJumpToApp {
     pub sender_id: Option<u16>,
@@ -249,7 +249,7 @@ impl crate::serialize::SbpSerialize for MsgBootloaderJumpToApp {
 /// and not related to the Piksi's serial number.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgNapDeviceDnaReq {
     pub sender_id: Option<u16>,
@@ -298,7 +298,7 @@ impl crate::serialize::SbpSerialize for MsgNapDeviceDnaReq {
 /// and not related to the Piksi's serial number.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgNapDeviceDnaResp {
     pub sender_id: Option<u16>,

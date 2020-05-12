@@ -51,7 +51,7 @@ use serde::{Deserialize, Serialize};
 /// The settings message for indicating end of the settings values.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsReadByIndexDone {
     pub sender_id: Option<u16>,
@@ -97,7 +97,7 @@ impl crate::serialize::SbpSerialize for MsgSettingsReadByIndexDone {
 /// "MSG_SETTINGS_READ_BY_INDEX_RESP".
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsReadByIndexReq {
     pub sender_id: Option<u16>,
@@ -160,7 +160,7 @@ impl crate::serialize::SbpSerialize for MsgSettingsReadByIndexReq {
 /// the device is "simulator\0enabled\0True\0enum:True,False\0"
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsReadByIndexResp {
     pub sender_id: Option<u16>,
@@ -227,7 +227,7 @@ impl crate::serialize::SbpSerialize for MsgSettingsReadByIndexResp {
 /// message (msg_id 0x00A5).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsReadReq {
     pub sender_id: Option<u16>,
@@ -287,7 +287,7 @@ impl crate::serialize::SbpSerialize for MsgSettingsReadReq {
 /// "solution\0soln_freq\010\0".
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsReadResp {
     pub sender_id: Option<u16>,
@@ -343,7 +343,7 @@ impl crate::serialize::SbpSerialize for MsgSettingsReadResp {
 /// for this setting to set the initial value.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsRegister {
     pub sender_id: Option<u16>,
@@ -400,7 +400,7 @@ impl crate::serialize::SbpSerialize for MsgSettingsRegister {
 /// and had a different value.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsRegisterResp {
     pub sender_id: Option<u16>,
@@ -461,7 +461,7 @@ impl crate::serialize::SbpSerialize for MsgSettingsRegisterResp {
 /// configuration to its onboard flash memory file system.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsSave {
     pub sender_id: Option<u16>,
@@ -511,7 +511,7 @@ impl crate::serialize::SbpSerialize for MsgSettingsSave {
 /// "solution\0soln_freq\010\0".
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsWrite {
     pub sender_id: Option<u16>,
@@ -571,7 +571,7 @@ impl crate::serialize::SbpSerialize for MsgSettingsWrite {
 /// "solution\0soln_freq\010\0".
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSettingsWriteResp {
     pub sender_id: Option<u16>,

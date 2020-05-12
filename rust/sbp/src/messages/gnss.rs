@@ -28,7 +28,7 @@ use serde::{Deserialize, Serialize};
 /// same sign as the pseudorange.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct CarrierPhase {
     /// Carrier phase whole cycles
@@ -84,7 +84,7 @@ impl crate::serialize::SbpSerialize for CarrierPhase {
 /// so ns field will be 0.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GPSTime {
     /// Milliseconds since start of GPS week
@@ -145,7 +145,7 @@ impl crate::serialize::SbpSerialize for GPSTime {
 /// transition.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GPSTimeDep {
     /// Milliseconds since start of GPS week
@@ -200,7 +200,7 @@ impl crate::serialize::SbpSerialize for GPSTimeDep {
 /// transition.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GPSTimeSec {
     /// Seconds since start of GPS week
@@ -253,7 +253,7 @@ impl crate::serialize::SbpSerialize for GPSTimeSec {
 /// Signal identifier containing constellation, band, and satellite identifier
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GnssSignal {
     /// Constellation-specific satellite identifier. This field for Glonass can
@@ -307,7 +307,7 @@ impl crate::serialize::SbpSerialize for GnssSignal {
 /// Deprecated.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GnssSignalDep {
     /// Constellation-specific satellite identifier.  Note: unlike GnssSignal,
@@ -371,7 +371,7 @@ impl crate::serialize::SbpSerialize for GnssSignalDep {
 /// a space vehicle
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct SvId {
     /// ID of the space vehicle within its constellation

@@ -27,7 +27,7 @@ use serde::{Deserialize, Serialize};
 /// The corrections conform with typical RTCMv3 MT1059 and 1065.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct CodeBiasesContent {
     /// Signal constellation, band and code
@@ -84,7 +84,7 @@ impl crate::serialize::SbpSerialize for CodeBiasesContent {
 /// Also includes an RLE encoded validity list.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GridDefinitionHeader {
     /// region_size (deg) = 10 / region_size_inverse 0 is an invalid value.
@@ -163,7 +163,7 @@ impl crate::serialize::SbpSerialize for GridDefinitionHeader {
 /// stddev) for each satellite at the grid point.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GridElement {
     /// Index of the grid point
@@ -222,7 +222,7 @@ impl crate::serialize::SbpSerialize for GridElement {
 /// grid point.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GridElementNoStd {
     /// Index of the grid point
@@ -285,7 +285,7 @@ impl crate::serialize::SbpSerialize for GridElementNoStd {
 /// be identified by the index.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GriddedCorrectionHeader {
     /// GNSS reference time of the correction
@@ -366,7 +366,7 @@ impl crate::serialize::SbpSerialize for GriddedCorrectionHeader {
 /// an equivalent to the 1059 and 1065 RTCM message types
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrCodeBiases {
     pub sender_id: Option<u16>,
@@ -442,7 +442,7 @@ impl crate::serialize::SbpSerialize for MsgSsrCodeBiases {
 /// It is typically equivalent to the QZSS CLAS Sub Type 9 messages
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGriddedCorrection {
     pub sender_id: Option<u16>,
@@ -502,7 +502,7 @@ impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrection {
 /// were added.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGriddedCorrectionNoStd {
     pub sender_id: Option<u16>,
@@ -561,7 +561,7 @@ impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrectionNoStd {
 /// OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGridDefinition {
     pub sender_id: Option<u16>,
@@ -625,7 +625,7 @@ impl crate::serialize::SbpSerialize for MsgSsrGridDefinition {
 /// and 1066 RTCM message types
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrOrbitClock {
     pub sender_id: Option<u16>,
@@ -748,7 +748,7 @@ impl crate::serialize::SbpSerialize for MsgSsrOrbitClock {
 /// and 1066 RTCM message types
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrOrbitClockDepA {
     pub sender_id: Option<u16>,
@@ -873,7 +873,7 @@ impl crate::serialize::SbpSerialize for MsgSsrOrbitClockDepA {
 /// It is typically an equivalent to the 1265 RTCM message types
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrPhaseBiases {
     pub sender_id: Option<u16>,
@@ -971,7 +971,7 @@ impl crate::serialize::SbpSerialize for MsgSsrPhaseBiases {
 /// delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrStecCorrection {
     pub sender_id: Option<u16>,
@@ -1030,7 +1030,7 @@ impl crate::serialize::SbpSerialize for MsgSsrStecCorrection {
 /// The corrections conform with typical RTCMv3 MT1059 and 1065.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct PhaseBiasesContent {
     /// Signal constellation, band and code
@@ -1104,7 +1104,7 @@ impl crate::serialize::SbpSerialize for PhaseBiasesContent {
 /// is used to tie multiple SBP messages into a sequence.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct STECHeader {
     /// GNSS reference time of the correction
@@ -1174,7 +1174,7 @@ impl crate::serialize::SbpSerialize for STECHeader {
 /// at the grid point,
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct STECResidual {
     /// space vehicle identifier
@@ -1232,7 +1232,7 @@ impl crate::serialize::SbpSerialize for STECResidual {
 /// STEC residual for the given satellite at the grid point.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct STECResidualNoStd {
     /// space vehicle identifier
@@ -1288,7 +1288,7 @@ impl crate::serialize::SbpSerialize for STECResidualNoStd {
 /// STEC polynomial for the given satellite.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct STECSatElement {
     /// Unique space vehicle identifier
@@ -1351,7 +1351,7 @@ impl crate::serialize::SbpSerialize for STECSatElement {
 /// point.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct TroposphericDelayCorrection {
     /// Hydrostatic vertical delay
@@ -1412,7 +1412,7 @@ impl crate::serialize::SbpSerialize for TroposphericDelayCorrection {
 /// Troposphere vertical delays at the grid point.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct TroposphericDelayCorrectionNoStd {
     /// Hydrostatic vertical delay

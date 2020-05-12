@@ -27,7 +27,7 @@ use serde::{Deserialize, Serialize};
 /// It is intended to be a low rate message for status purposes.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgCsacTelemetry {
     pub sender_id: Option<u16>,
@@ -88,7 +88,7 @@ impl crate::serialize::SbpSerialize for MsgCsacTelemetry {
 /// rate than the MSG_CSAC_TELEMETRY.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgCsacTelemetryLabels {
     pub sender_id: Option<u16>,
@@ -149,7 +149,7 @@ impl crate::serialize::SbpSerialize for MsgCsacTelemetryLabels {
 /// corrections packet.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgDgnssStatus {
     pub sender_id: Option<u16>,
@@ -226,7 +226,7 @@ impl crate::serialize::SbpSerialize for MsgDgnssStatus {
 /// the remaining error flags should be inspected.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgHeartbeat {
     pub sender_id: Option<u16>,
@@ -280,7 +280,7 @@ impl crate::serialize::SbpSerialize for MsgHeartbeat {
 /// and initialization of the inertial navigation system.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgInsStatus {
     pub sender_id: Option<u16>,
@@ -336,7 +336,7 @@ impl crate::serialize::SbpSerialize for MsgInsStatus {
 /// or configuration requests.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgStartup {
     pub sender_id: Option<u16>,

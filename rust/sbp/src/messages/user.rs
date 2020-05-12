@@ -27,7 +27,7 @@ use serde::{Deserialize, Serialize};
 /// maximum length of 255 bytes per message.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgUserData {
     pub sender_id: Option<u16>,

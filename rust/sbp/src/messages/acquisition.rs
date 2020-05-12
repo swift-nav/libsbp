@@ -28,7 +28,7 @@ use serde::{Deserialize, Serialize};
 /// The message is used to debug and measure the performance.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct AcqSvProfile {
     /// SV search job type (deep, fallback, etc)
@@ -131,7 +131,7 @@ impl crate::serialize::SbpSerialize for AcqSvProfile {
 /// Deprecated.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct AcqSvProfileDep {
     /// SV search job type (deep, fallback, etc)
@@ -241,7 +241,7 @@ impl crate::serialize::SbpSerialize for AcqSvProfileDep {
 /// ratio.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResult {
     pub sender_id: Option<u16>,
@@ -309,7 +309,7 @@ impl crate::serialize::SbpSerialize for MsgAcqResult {
 /// Deprecated.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepA {
     pub sender_id: Option<u16>,
@@ -379,7 +379,7 @@ impl crate::serialize::SbpSerialize for MsgAcqResultDepA {
 /// Deprecated.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepB {
     pub sender_id: Option<u16>,
@@ -448,7 +448,7 @@ impl crate::serialize::SbpSerialize for MsgAcqResultDepB {
 /// Deprecated.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAcqResultDepC {
     pub sender_id: Option<u16>,
@@ -517,7 +517,7 @@ impl crate::serialize::SbpSerialize for MsgAcqResultDepC {
 /// The message is used to debug and measure the performance.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAcqSvProfile {
     pub sender_id: Option<u16>,
@@ -570,7 +570,7 @@ impl crate::serialize::SbpSerialize for MsgAcqSvProfile {
 /// Deprecated.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAcqSvProfileDep {
     pub sender_id: Option<u16>,

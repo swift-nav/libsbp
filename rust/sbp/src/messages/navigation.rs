@@ -44,7 +44,7 @@ use serde::{Deserialize, Serialize};
 /// Differential solution
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAgeCorrections {
     pub sender_id: Option<u16>,
@@ -106,7 +106,7 @@ impl crate::serialize::SbpSerialize for MsgAgeCorrections {
 /// matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineECEF {
     pub sender_id: Option<u16>,
@@ -193,7 +193,7 @@ impl crate::serialize::SbpSerialize for MsgBaselineECEF {
 /// matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineECEFDepA {
     pub sender_id: Option<u16>,
@@ -278,7 +278,7 @@ impl crate::serialize::SbpSerialize for MsgBaselineECEFDepA {
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineHeadingDepA {
     pub sender_id: Option<u16>,
@@ -351,7 +351,7 @@ impl crate::serialize::SbpSerialize for MsgBaselineHeadingDepA {
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineNED {
     pub sender_id: Option<u16>,
@@ -444,7 +444,7 @@ impl crate::serialize::SbpSerialize for MsgBaselineNED {
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineNEDDepA {
     pub sender_id: Option<u16>,
@@ -535,7 +535,7 @@ impl crate::serialize::SbpSerialize for MsgBaselineNEDDepA {
 /// corresponds to differential or SPP solution.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgDops {
     pub sender_id: Option<u16>,
@@ -620,7 +620,7 @@ impl crate::serialize::SbpSerialize for MsgDops {
 /// precision.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgDopsDepA {
     pub sender_id: Option<u16>,
@@ -710,7 +710,7 @@ impl crate::serialize::SbpSerialize for MsgDopsDepA {
 /// these messages.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGPSTime {
     pub sender_id: Option<u16>,
@@ -791,7 +791,7 @@ impl crate::serialize::SbpSerialize for MsgGPSTime {
 /// these messages.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGPSTimeDepA {
     pub sender_id: Option<u16>,
@@ -867,7 +867,7 @@ impl crate::serialize::SbpSerialize for MsgGPSTimeDepA {
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEF {
     pub sender_id: Option<u16>,
@@ -958,7 +958,7 @@ impl crate::serialize::SbpSerialize for MsgPosECEF {
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEFCov {
     pub sender_id: Option<u16>,
@@ -1074,7 +1074,7 @@ impl crate::serialize::SbpSerialize for MsgPosECEFCov {
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEFCovGnss {
     pub sender_id: Option<u16>,
@@ -1189,7 +1189,7 @@ impl crate::serialize::SbpSerialize for MsgPosECEFCovGnss {
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEFDepA {
     pub sender_id: Option<u16>,
@@ -1279,7 +1279,7 @@ impl crate::serialize::SbpSerialize for MsgPosECEFDepA {
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEFGnss {
     pub sender_id: Option<u16>,
@@ -1369,7 +1369,7 @@ impl crate::serialize::SbpSerialize for MsgPosECEFGnss {
 /// matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgPosLLH {
     pub sender_id: Option<u16>,
@@ -1464,7 +1464,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLH {
 /// measurement and care should be taken with the sign convention.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgPosLLHCov {
     pub sender_id: Option<u16>,
@@ -1579,7 +1579,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLHCov {
 /// measurement and care should be taken with the sign convention.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgPosLLHCovGnss {
     pub sender_id: Option<u16>,
@@ -1694,7 +1694,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLHCovGnss {
 /// matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgPosLLHDepA {
     pub sender_id: Option<u16>,
@@ -1789,7 +1789,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLHDepA {
 /// matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgPosLLHGnss {
     pub sender_id: Option<u16>,
@@ -1879,7 +1879,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLHGnss {
 /// by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgProtectionLevel {
     pub sender_id: Option<u16>,
@@ -1963,7 +1963,7 @@ impl crate::serialize::SbpSerialize for MsgProtectionLevel {
 /// which indicate the source of the UTC offset value and source of the time fix.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgUtcTime {
     pub sender_id: Option<u16>,
@@ -2063,7 +2063,7 @@ impl crate::serialize::SbpSerialize for MsgUtcTime {
 /// products and is not available from Piksi Multi or Duro.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgVelBody {
     pub sender_id: Option<u16>,
@@ -2173,7 +2173,7 @@ impl crate::serialize::SbpSerialize for MsgVelBody {
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgVelECEF {
     pub sender_id: Option<u16>,
@@ -2258,7 +2258,7 @@ impl crate::serialize::SbpSerialize for MsgVelECEF {
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgVelECEFCov {
     pub sender_id: Option<u16>,
@@ -2368,7 +2368,7 @@ impl crate::serialize::SbpSerialize for MsgVelECEFCov {
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgVelECEFCovGnss {
     pub sender_id: Option<u16>,
@@ -2478,7 +2478,7 @@ impl crate::serialize::SbpSerialize for MsgVelECEFCovGnss {
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgVelECEFDepA {
     pub sender_id: Option<u16>,
@@ -2563,7 +2563,7 @@ impl crate::serialize::SbpSerialize for MsgVelECEFDepA {
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgVelECEFGnss {
     pub sender_id: Option<u16>,
@@ -2649,7 +2649,7 @@ impl crate::serialize::SbpSerialize for MsgVelECEFGnss {
 /// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgVelNED {
     pub sender_id: Option<u16>,
@@ -2742,7 +2742,7 @@ impl crate::serialize::SbpSerialize for MsgVelNED {
 /// portion of the 3x3 covariance matrix.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgVelNEDCov {
     pub sender_id: Option<u16>,
@@ -2855,7 +2855,7 @@ impl crate::serialize::SbpSerialize for MsgVelNEDCov {
 /// portion of the 3x3 covariance matrix.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgVelNEDCovGnss {
     pub sender_id: Option<u16>,
@@ -2966,7 +2966,7 @@ impl crate::serialize::SbpSerialize for MsgVelNEDCovGnss {
 /// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgVelNEDDepA {
     pub sender_id: Option<u16>,
@@ -3057,7 +3057,7 @@ impl crate::serialize::SbpSerialize for MsgVelNEDDepA {
 /// given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgVelNEDGnss {
     pub sender_id: Option<u16>,

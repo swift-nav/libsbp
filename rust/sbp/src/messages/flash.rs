@@ -33,7 +33,7 @@ use serde::{Deserialize, Serialize};
 /// MSG_FLASH_PROGRAM, may return this message on failure.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFlashDone {
     pub sender_id: Option<u16>,
@@ -90,7 +90,7 @@ impl crate::serialize::SbpSerialize for MsgFlashDone {
 /// invalid.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFlashErase {
     pub sender_id: Option<u16>,
@@ -153,7 +153,7 @@ impl crate::serialize::SbpSerialize for MsgFlashErase {
 /// erased before addresses can be programmed.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFlashProgram {
     pub sender_id: Option<u16>,
@@ -227,7 +227,7 @@ impl crate::serialize::SbpSerialize for MsgFlashProgram {
 /// range.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFlashReadReq {
     pub sender_id: Option<u16>,
@@ -296,7 +296,7 @@ impl crate::serialize::SbpSerialize for MsgFlashReadReq {
 /// range.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFlashReadResp {
     pub sender_id: Option<u16>,
@@ -360,7 +360,7 @@ impl crate::serialize::SbpSerialize for MsgFlashReadResp {
 /// register. The device replies with a MSG_FLASH_DONE message.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgM25FlashWriteStatus {
     pub sender_id: Option<u16>,
@@ -414,7 +414,7 @@ impl crate::serialize::SbpSerialize for MsgM25FlashWriteStatus {
 /// memory. The device replies with a MSG_FLASH_DONE message.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgStmFlashLockSector {
     pub sender_id: Option<u16>,
@@ -468,7 +468,7 @@ impl crate::serialize::SbpSerialize for MsgStmFlashLockSector {
 /// memory. The device replies with a MSG_FLASH_DONE message.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgStmFlashUnlockSector {
     pub sender_id: Option<u16>,
@@ -525,7 +525,7 @@ impl crate::serialize::SbpSerialize for MsgStmFlashUnlockSector {
 /// ID in the payload.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgStmUniqueIdReq {
     pub sender_id: Option<u16>,
@@ -573,7 +573,7 @@ impl crate::serialize::SbpSerialize for MsgStmUniqueIdReq {
 /// ID in the payload..
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgStmUniqueIdResp {
     pub sender_id: Option<u16>,

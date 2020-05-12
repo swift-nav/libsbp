@@ -27,7 +27,7 @@ use serde::{Deserialize, Serialize};
 /// parity of the data block and sends only blocks that pass the check.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSbasRaw {
     pub sender_id: Option<u16>,

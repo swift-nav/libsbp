@@ -32,7 +32,7 @@ use serde::{Deserialize, Serialize};
 /// Protocol 0 represents SBP and the remaining values are implementation defined.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFwd {
     pub sender_id: Option<u16>,
@@ -97,7 +97,7 @@ impl crate::serialize::SbpSerialize for MsgFwd {
 /// ERROR, WARNING, DEBUG, INFO logging levels.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgLog {
     pub sender_id: Option<u16>,
@@ -155,7 +155,7 @@ impl crate::serialize::SbpSerialize for MsgLog {
 /// Deprecated.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgPrintDep {
     pub sender_id: Option<u16>,

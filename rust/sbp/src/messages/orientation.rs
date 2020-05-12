@@ -33,7 +33,7 @@ use serde::{Deserialize, Serialize};
 /// and is not produced by Piksi Multi or Duro.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAngularRate {
     pub sender_id: Option<u16>,
@@ -109,7 +109,7 @@ impl crate::serialize::SbpSerialize for MsgAngularRate {
 /// that time-matched RTK mode is used when the base station is moving.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBaselineHeading {
     pub sender_id: Option<u16>,
@@ -181,7 +181,7 @@ impl crate::serialize::SbpSerialize for MsgBaselineHeading {
 /// INS versions of Swift Products and is not produced by Piksi Multi or Duro.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgOrientEuler {
     pub sender_id: Option<u16>,
@@ -273,7 +273,7 @@ impl crate::serialize::SbpSerialize for MsgOrientEuler {
 /// or Duro.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgOrientQuat {
     pub sender_id: Option<u16>,
