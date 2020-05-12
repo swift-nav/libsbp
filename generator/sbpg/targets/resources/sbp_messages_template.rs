@@ -34,7 +34,7 @@ use super::(((i)))::*;
 ///
 ((*- endif *))
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct (((m.identifier|camel_case))) {
     ((*- if m.sbp_id *))
