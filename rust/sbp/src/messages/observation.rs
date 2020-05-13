@@ -22,7 +22,7 @@ use super::gnss::*;
 use serde::{Deserialize, Serialize};
 
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct AlmanacCommonContent {
     /// GNSS signal identifier
@@ -103,7 +103,7 @@ impl crate::serialize::SbpSerialize for AlmanacCommonContent {
 }
 
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct AlmanacCommonContentDep {
     /// GNSS signal identifier
@@ -192,7 +192,7 @@ impl crate::serialize::SbpSerialize for AlmanacCommonContentDep {
 /// the opposite sign as the pseudorange.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct CarrierPhaseDepA {
     /// Carrier phase whole cycles
@@ -251,7 +251,7 @@ impl crate::serialize::SbpSerialize for CarrierPhaseDepA {
 /// as positive for approaching satellites.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct Doppler {
     /// Doppler whole Hz
@@ -300,7 +300,7 @@ impl crate::serialize::SbpSerialize for Doppler {
 }
 
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct EphemerisCommonContent {
     /// GNSS signal identifier (16 bit)
@@ -373,7 +373,7 @@ impl crate::serialize::SbpSerialize for EphemerisCommonContent {
 }
 
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct EphemerisCommonContentDepA {
     /// GNSS signal identifier
@@ -446,7 +446,7 @@ impl crate::serialize::SbpSerialize for EphemerisCommonContentDepA {
 }
 
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct EphemerisCommonContentDepB {
     /// GNSS signal identifier (16 bit)
@@ -519,7 +519,7 @@ impl crate::serialize::SbpSerialize for EphemerisCommonContentDepB {
 }
 
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GnssCapb {
     /// GPS SV active mask
@@ -642,7 +642,7 @@ impl crate::serialize::SbpSerialize for GnssCapb {
 /// almanac" for details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGlo {
     pub sender_id: Option<u16>,
@@ -734,7 +734,7 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGlo {
 /// almanac" for details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGloDep {
     pub sender_id: Option<u16>,
@@ -826,7 +826,7 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGloDep {
 /// (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGPS {
     pub sender_id: Option<u16>,
@@ -927,7 +927,7 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGPS {
 /// (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGPSDep {
     pub sender_id: Option<u16>,
@@ -1030,7 +1030,7 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGPSDep {
 /// pseudo-absolute position output.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBasePosECEF {
     pub sender_id: Option<u16>,
@@ -1097,7 +1097,7 @@ impl crate::serialize::SbpSerialize for MsgBasePosECEF {
 /// error in the pseudo-absolute position output.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBasePosLLH {
     pub sender_id: Option<u16>,
@@ -1163,7 +1163,7 @@ impl crate::serialize::SbpSerialize for MsgBasePosLLH {
 /// Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisBds {
     pub sender_id: Option<u16>,
@@ -1335,7 +1335,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisBds {
 /// Deprecated.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepA {
     pub sender_id: Option<u16>,
@@ -1517,7 +1517,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepA {
 /// Deprecated.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepB {
     pub sender_id: Option<u16>,
@@ -1708,7 +1708,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepB {
 /// 20-III) for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepC {
     pub sender_id: Option<u16>,
@@ -1909,7 +1909,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepC {
 /// 20-III) for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepD {
     pub sender_id: Option<u16>,
@@ -2109,7 +2109,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepD {
 /// OS SIS ICD, Issue 1.3, December 2016 for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGal {
     pub sender_id: Option<u16>,
@@ -2287,7 +2287,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGal {
 /// an ephemeris message with explicit source of NAV data.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGalDepA {
     pub sender_id: Option<u16>,
@@ -2463,7 +2463,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGalDepA {
 /// for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGlo {
     pub sender_id: Option<u16>,
@@ -2560,7 +2560,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGlo {
 /// for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepA {
     pub sender_id: Option<u16>,
@@ -2642,7 +2642,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepA {
 /// for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepB {
     pub sender_id: Option<u16>,
@@ -2724,7 +2724,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepB {
 /// for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepC {
     pub sender_id: Option<u16>,
@@ -2813,7 +2813,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepC {
 /// ephemeris message using floats for size reduction.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepD {
     pub sender_id: Option<u16>,
@@ -2910,7 +2910,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepD {
 /// 20-III) for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGPS {
     pub sender_id: Option<u16>,
@@ -3081,7 +3081,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGPS {
 /// 20-III) for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGPSDepE {
     pub sender_id: Option<u16>,
@@ -3249,7 +3249,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGPSDepE {
 /// ephemeris message using floats for size reduction.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGPSDepF {
     pub sender_id: Option<u16>,
@@ -3418,7 +3418,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGPSDepF {
 /// velocity, and clock offset.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisQzss {
     pub sender_id: Option<u16>,
@@ -3581,7 +3581,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisQzss {
 }
 
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbas {
     pub sender_id: Option<u16>,
@@ -3655,7 +3655,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisSbas {
 }
 
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbasDepA {
     pub sender_id: Option<u16>,
@@ -3734,7 +3734,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisSbasDepA {
 /// ephemeris message using floats for size reduction.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbasDepB {
     pub sender_id: Option<u16>,
@@ -3815,7 +3815,7 @@ impl crate::serialize::SbpSerialize for MsgEphemerisSbasDepB {
 /// manufacturers)
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGloBiases {
     pub sender_id: Option<u16>,
@@ -3884,7 +3884,7 @@ impl crate::serialize::SbpSerialize for MsgGloBiases {
 }
 
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGnssCapb {
     pub sender_id: Option<u16>,
@@ -3942,7 +3942,7 @@ impl crate::serialize::SbpSerialize for MsgGnssCapb {
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGroupDelay {
     pub sender_id: Option<u16>,
@@ -4018,7 +4018,7 @@ impl crate::serialize::SbpSerialize for MsgGroupDelay {
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGroupDelayDepA {
     pub sender_id: Option<u16>,
@@ -4094,7 +4094,7 @@ impl crate::serialize::SbpSerialize for MsgGroupDelayDepA {
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGroupDelayDepB {
     pub sender_id: Option<u16>,
@@ -4172,7 +4172,7 @@ impl crate::serialize::SbpSerialize for MsgGroupDelayDepB {
 /// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgIono {
     pub sender_id: Option<u16>,
@@ -4263,7 +4263,7 @@ impl crate::serialize::SbpSerialize for MsgIono {
 /// with typical RTCMv3 GNSS observations.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgObs {
     pub sender_id: Option<u16>,
@@ -4321,7 +4321,7 @@ impl crate::serialize::SbpSerialize for MsgObs {
 /// Deprecated.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgObsDepA {
     pub sender_id: Option<u16>,
@@ -4384,7 +4384,7 @@ impl crate::serialize::SbpSerialize for MsgObsDepA {
 /// observations.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgObsDepB {
     pub sender_id: Option<u16>,
@@ -4448,7 +4448,7 @@ impl crate::serialize::SbpSerialize for MsgObsDepB {
 /// with typical RTCMv3 GNSS observations.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgObsDepC {
     pub sender_id: Option<u16>,
@@ -4506,7 +4506,7 @@ impl crate::serialize::SbpSerialize for MsgObsDepC {
 /// The OSR message contains network corrections in an observation-like format
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgOsr {
     pub sender_id: Option<u16>,
@@ -4565,7 +4565,7 @@ impl crate::serialize::SbpSerialize for MsgOsr {
 /// that the device does have ephemeris or almanac for.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSvAzEl {
     pub sender_id: Option<u16>,
@@ -4618,7 +4618,7 @@ impl crate::serialize::SbpSerialize for MsgSvAzEl {
 /// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSvConfigurationGPSDep {
     pub sender_id: Option<u16>,
@@ -4676,7 +4676,7 @@ impl crate::serialize::SbpSerialize for MsgSvConfigurationGPSDep {
 /// Header of a GNSS observation message.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct ObservationHeader {
     /// GNSS time of this observation
@@ -4733,7 +4733,7 @@ impl crate::serialize::SbpSerialize for ObservationHeader {
 /// Header of a GPS observation message.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct ObservationHeaderDep {
     /// GPS time of this observation
@@ -4796,7 +4796,7 @@ impl crate::serialize::SbpSerialize for ObservationHeaderDep {
 /// peformed.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct PackedObsContent {
     /// Pseudorange observation
@@ -4884,7 +4884,7 @@ impl crate::serialize::SbpSerialize for PackedObsContent {
 /// Deprecated.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct PackedObsContentDepA {
     /// Pseudorange observation
@@ -4958,7 +4958,7 @@ impl crate::serialize::SbpSerialize for PackedObsContentDepA {
 /// tracked.  Pseudoranges are referenced to a nominal pseudorange.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct PackedObsContentDepB {
     /// Pseudorange observation
@@ -5033,7 +5033,7 @@ impl crate::serialize::SbpSerialize for PackedObsContentDepB {
 /// receivers and conform with typical RTCMv3 GNSS observations.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct PackedObsContentDepC {
     /// Pseudorange observation
@@ -5106,7 +5106,7 @@ impl crate::serialize::SbpSerialize for PackedObsContentDepC {
 /// Pseudorange and carrier phase network corrections for a satellite signal.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct PackedOsrContent {
     /// Pseudorange observation
@@ -5197,7 +5197,7 @@ impl crate::serialize::SbpSerialize for PackedOsrContent {
 /// Satellite azimuth and elevation.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct SvAzEl {
     /// GNSS signal identifier

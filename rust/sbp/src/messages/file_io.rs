@@ -36,7 +36,7 @@ use serde::{Deserialize, Serialize};
 /// that can be in-flight during read or write operations.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioConfigReq {
     pub sender_id: Option<u16>,
@@ -93,7 +93,7 @@ impl crate::serialize::SbpSerialize for MsgFileioConfigReq {
 /// that can be in-flight during read or write operations.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioConfigResp {
     pub sender_id: Option<u16>,
@@ -170,7 +170,7 @@ impl crate::serialize::SbpSerialize for MsgFileioConfigResp {
 /// from sender ID 0x42.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadDirReq {
     pub sender_id: Option<u16>,
@@ -238,7 +238,7 @@ impl crate::serialize::SbpSerialize for MsgFileioReadDirReq {
 /// the response is preserved from the request.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadDirResp {
     pub sender_id: Option<u16>,
@@ -303,7 +303,7 @@ impl crate::serialize::SbpSerialize for MsgFileioReadDirResp {
 /// to this message when it is received from sender ID 0x42.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadReq {
     pub sender_id: Option<u16>,
@@ -375,7 +375,7 @@ impl crate::serialize::SbpSerialize for MsgFileioReadReq {
 /// preserved from the request.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadResp {
     pub sender_id: Option<u16>,
@@ -436,7 +436,7 @@ impl crate::serialize::SbpSerialize for MsgFileioReadResp {
 /// process this message when it is received from sender ID 0x42.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioRemove {
     pub sender_id: Option<u16>,
@@ -496,7 +496,7 @@ impl crate::serialize::SbpSerialize for MsgFileioRemove {
 /// 0x42.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioWriteReq {
     pub sender_id: Option<u16>,
@@ -568,7 +568,7 @@ impl crate::serialize::SbpSerialize for MsgFileioWriteReq {
 /// request.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioWriteResp {
     pub sender_id: Option<u16>,

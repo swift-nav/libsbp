@@ -28,7 +28,7 @@ use serde::{Deserialize, Serialize};
 /// message could also be sent out when fetching an object from NDB.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgNdbEvent {
     pub sender_id: Option<u16>,

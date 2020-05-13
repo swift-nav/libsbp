@@ -6,7 +6,7 @@ use crate::serialize::SbpSerialize;
 use serde::{Deserialize, Serialize};
 
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Unknown {
     pub msg_id: u16,
     pub sender_id: u16,

@@ -29,7 +29,7 @@ use serde::{Deserialize, Serialize};
 /// measurements for all tracked satellites.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgMeasurementState {
     pub sender_id: Option<u16>,
@@ -83,7 +83,7 @@ impl crate::serialize::SbpSerialize for MsgMeasurementState {
 /// update interval.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingIq {
     pub sender_id: Option<u16>,
@@ -146,7 +146,7 @@ impl crate::serialize::SbpSerialize for MsgTrackingIq {
 /// Deprecated.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingIqDepA {
     pub sender_id: Option<u16>,
@@ -210,7 +210,7 @@ impl crate::serialize::SbpSerialize for MsgTrackingIqDepA {
 /// update interval.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingIqDepB {
     pub sender_id: Option<u16>,
@@ -275,7 +275,7 @@ impl crate::serialize::SbpSerialize for MsgTrackingIqDepB {
 /// measurements for all tracked satellites.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingState {
     pub sender_id: Option<u16>,
@@ -328,7 +328,7 @@ impl crate::serialize::SbpSerialize for MsgTrackingState {
 /// Deprecated.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDepA {
     pub sender_id: Option<u16>,
@@ -381,7 +381,7 @@ impl crate::serialize::SbpSerialize for MsgTrackingStateDepA {
 /// Deprecated.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDepB {
     pub sender_id: Option<u16>,
@@ -434,7 +434,7 @@ impl crate::serialize::SbpSerialize for MsgTrackingStateDepB {
 /// Deprecated.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDetailedDep {
     pub sender_id: Option<u16>,
@@ -594,7 +594,7 @@ impl crate::serialize::SbpSerialize for MsgTrackingStateDetailedDep {
 /// single tracking channel useful for debugging issues.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgTrackingStateDetailedDepA {
     pub sender_id: Option<u16>,
@@ -757,7 +757,7 @@ impl crate::serialize::SbpSerialize for MsgTrackingStateDetailedDepA {
 /// the Slot ID (from 1 to 28)
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MeasurementState {
     /// Measurement Engine GNSS signal being tracked (carries either Glonass FCN
@@ -814,7 +814,7 @@ impl crate::serialize::SbpSerialize for MeasurementState {
 /// Structure containing in-phase and quadrature correlation components.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelCorrelation {
     /// In-phase correlation
@@ -870,7 +870,7 @@ impl crate::serialize::SbpSerialize for TrackingChannelCorrelation {
 /// Structure containing in-phase and quadrature correlation components.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelCorrelationDep {
     /// In-phase correlation
@@ -929,7 +929,7 @@ impl crate::serialize::SbpSerialize for TrackingChannelCorrelationDep {
 /// measured signal power.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelState {
     /// GNSS signal being tracked
@@ -990,7 +990,7 @@ impl crate::serialize::SbpSerialize for TrackingChannelState {
 /// Deprecated.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelStateDepA {
     /// Status of tracking channel
@@ -1051,7 +1051,7 @@ impl crate::serialize::SbpSerialize for TrackingChannelStateDepA {
 /// Deprecated.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct TrackingChannelStateDepB {
     /// Status of tracking channel

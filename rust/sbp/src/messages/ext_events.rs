@@ -28,7 +28,7 @@ use serde::{Deserialize, Serialize};
 /// which pin it was and whether it was rising or falling.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgExtEvent {
     pub sender_id: Option<u16>,

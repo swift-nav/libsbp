@@ -35,7 +35,7 @@ pub trait SBPMessage: SbpSerialize {
 }
 
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum SBP {
     ((*- for m in msgs *))
     (((m.identifier|camel_case)))( (((m.identifier|camel_case))) ),

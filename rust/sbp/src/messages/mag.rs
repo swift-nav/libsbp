@@ -25,7 +25,7 @@ use serde::{Deserialize, Serialize};
 /// Raw data from the magnetometer.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgMagRaw {
     pub sender_id: Option<u16>,

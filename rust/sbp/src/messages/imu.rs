@@ -27,7 +27,7 @@ use serde::{Deserialize, Serialize};
 /// depends on the value of `imu_type`.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgImuAux {
     pub sender_id: Option<u16>,
@@ -93,7 +93,7 @@ impl crate::serialize::SbpSerialize for MsgImuAux {
 /// device hardware and settings, are communicated via the MSG_IMU_AUX message.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgImuRaw {
     pub sender_id: Option<u16>,

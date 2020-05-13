@@ -141,7 +141,7 @@ impl Parser {
                     if let crate::Error::ParseError = e {
                         // Continue parsing
                     } else {
-                        break Err(e)
+                        break Err(e);
                     }
                 }
             }

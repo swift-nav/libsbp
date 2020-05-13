@@ -27,7 +27,7 @@ use serde::{Deserialize, Serialize};
 /// consumers of CPU on the system.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxCpuState {
     pub sender_id: Option<u16>,
@@ -101,7 +101,7 @@ impl crate::serialize::SbpSerialize for MsgLinuxCpuState {
 /// consumers of memory on the system.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxMemState {
     pub sender_id: Option<u16>,
@@ -174,7 +174,7 @@ impl crate::serialize::SbpSerialize for MsgLinuxMemState {
 /// Top 10 list of processes with a large number of open file descriptors.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxProcessFdCount {
     pub sender_id: Option<u16>,
@@ -242,7 +242,7 @@ impl crate::serialize::SbpSerialize for MsgLinuxProcessFdCount {
 /// Summary of open file descriptors on the system.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxProcessFdSummary {
     pub sender_id: Option<u16>,
@@ -304,7 +304,7 @@ impl crate::serialize::SbpSerialize for MsgLinuxProcessFdSummary {
 /// Top 10 list of processes with high socket counts.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxProcessSocketCounts {
     pub sender_id: Option<u16>,
@@ -386,7 +386,7 @@ impl crate::serialize::SbpSerialize for MsgLinuxProcessSocketCounts {
 /// Top 10 list of sockets with deep queues.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxProcessSocketQueues {
     pub sender_id: Option<u16>,
@@ -479,7 +479,7 @@ impl crate::serialize::SbpSerialize for MsgLinuxProcessSocketQueues {
 /// Summaries the socket usage across the system.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxSocketUsage {
     pub sender_id: Option<u16>,
@@ -551,7 +551,7 @@ impl crate::serialize::SbpSerialize for MsgLinuxSocketUsage {
 /// This presents a summary of CPU and memory utilization.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgLinuxSysState {
     pub sender_id: Option<u16>,

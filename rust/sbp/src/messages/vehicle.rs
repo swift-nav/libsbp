@@ -29,7 +29,7 @@ use serde::{Deserialize, Serialize};
 /// source 0 through 3.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgOdometry {
     pub sender_id: Option<u16>,
@@ -100,7 +100,7 @@ impl crate::serialize::SbpSerialize for MsgOdometry {
 /// tick count reached the value given by the contents of this message as accurately as possible.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgWheeltick {
     pub sender_id: Option<u16>,
