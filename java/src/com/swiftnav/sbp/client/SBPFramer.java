@@ -33,7 +33,7 @@ public class SBPFramer extends SBPIterable implements SBPSender {
         }
     }
 
-    public SBPMessage receive() throws IOException {
+    private SBPMessage receive() throws IOException {
         /* Wait for a preamble to be received */
         byte[] preamble;
         do {
