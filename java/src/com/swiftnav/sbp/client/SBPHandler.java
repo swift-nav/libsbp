@@ -23,6 +23,8 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /** Provide an interface for queueing and filtering messages.
  */
@@ -148,6 +150,17 @@ public class SBPHandler implements Iterable<SBPMessage> {
                         dispatch(null, msg);
                 }
             }
+
+            // Inform all callbacks that there are no more messages coming from the source
+            for (List<Reference<SBPCallback>> cb_list : callbacks.values()) {
+                for (Reference<SBPCallback> wr : cb_list) {
+                    SBPCallback cb = wr.get();
+                    if (cb != null) {
+                        cb.allCallbacksDone();
+                    }
+                }
+            }
+
         }
 
         void finish() {
@@ -169,6 +182,7 @@ public class SBPHandler implements Iterable<SBPMessage> {
 
     class SBPQueueIterator extends SBPIterable implements SBPCallback {
         private BlockingQueue<SBPMessage> queue;
+        private AtomicBoolean finished;
 
         private SBPQueueIterator(int queue_size) {
             if (queue_size <= 0) {
@@ -176,6 +190,7 @@ public class SBPHandler implements Iterable<SBPMessage> {
             } else {
                 queue = new ArrayBlockingQueue<>(queue_size);
             }
+            finished = new AtomicBoolean(false);
         }
 
         @Override
@@ -184,12 +199,25 @@ public class SBPHandler implements Iterable<SBPMessage> {
         }
 
         @Override
+        public void allCallbacksDone() {
+            finished.set(true);
+        }
+
+        @Override
         protected SBPMessage getNext() {
-            try {
-                return queue.take();
-            } catch (InterruptedException e) {
-                throw new NoSuchElementException();
+            while (!finished.get()) {
+                try {
+                    SBPMessage msg = queue.poll(100, TimeUnit.MILLISECONDS);
+                    if (msg != null) {
+                        return msg;
+                    }
+                    continue;
+                } catch (InterruptedException e) {
+                    continue;
+                }
             }
+            // If we get here finished is set to true so there are no more messages available
+            throw new NoSuchElementException();
         }
     }
 }
