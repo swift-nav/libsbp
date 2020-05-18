@@ -156,7 +156,7 @@ public class SBPHandler implements Iterable<SBPMessage> {
                 for (Reference<SBPCallback> wr : cb_list) {
                     SBPCallback cb = wr.get();
                     if (cb != null) {
-                        cb.allCallbacksDone();
+                        cb.callbacksDone();
                     }
                 }
             }
@@ -199,7 +199,7 @@ public class SBPHandler implements Iterable<SBPMessage> {
         }
 
         @Override
-        public void allCallbacksDone() {
+        public void callbacksDone() {
             finished.set(true);
         }
 
