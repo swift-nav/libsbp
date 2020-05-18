@@ -16,4 +16,5 @@ import com.swiftnav.sbp.SBPMessage;
 /** Interface for SBP message handlers. */
 public interface SBPCallback {
     void receiveCallback(SBPMessage msg);
+    void callbacksDone();
 }
