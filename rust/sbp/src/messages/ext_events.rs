@@ -22,6 +22,9 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
+#[allow(unused_imports)]
+use crate::SbpString;
+
 /// Reports timestamped external pin event
 ///
 /// Reports detection of an external event, the GPS time it occurred,

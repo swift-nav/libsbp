@@ -60,7 +60,7 @@ fn test_auto_check_sbp_system_35() {
                     msg.num_signals
                 );
                 assert_eq!(
-                    msg.source,
+                    Into::<String>::into(msg.source.clone()),
                     "Skylark".to_string(),
                     "incorrect value for msg.source, expected string '{}', is '{}'",
                     "Skylark".to_string(),

@@ -21,6 +21,9 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
+#[allow(unused_imports)]
+use crate::SbpString;
+
 /// List CPU state on the system
 ///
 /// This message indicates the process state of the top 10 heaviest
@@ -38,9 +41,9 @@ pub struct MsgLinuxCpuState {
     /// percent of cpu used, expressed as a fraction of 256
     pub pcpu: u8,
     /// fixed length string representing the thread name
-    pub tname: String,
+    pub tname: SbpString,
     /// the command line (as much as it fits in the remaining packet)
-    pub cmdline: String,
+    pub cmdline: SbpString,
 }
 
 impl MsgLinuxCpuState {
@@ -112,9 +115,9 @@ pub struct MsgLinuxMemState {
     /// percent of memory used, expressed as a fraction of 256
     pub pmem: u8,
     /// fixed length string representing the thread name
-    pub tname: String,
+    pub tname: SbpString,
     /// the command line (as much as it fits in the remaining packet)
-    pub cmdline: String,
+    pub cmdline: SbpString,
 }
 
 impl MsgLinuxMemState {
@@ -185,7 +188,7 @@ pub struct MsgLinuxProcessFdCount {
     /// a count of the number of file descriptors opened by the process
     pub fd_count: u16,
     /// the command line of the process in question
-    pub cmdline: String,
+    pub cmdline: SbpString,
 }
 
 impl MsgLinuxProcessFdCount {
@@ -253,7 +256,7 @@ pub struct MsgLinuxProcessFdSummary {
     /// being reported.  That is, in C string syntax
     /// "32\0/var/log/syslog\012\0/tmp/foo\0" with the end of the list being 2
     /// NULL terminators in a row.
-    pub most_opened: String,
+    pub most_opened: SbpString,
 }
 
 impl MsgLinuxProcessFdSummary {
@@ -323,7 +326,7 @@ pub struct MsgLinuxProcessSocketCounts {
     /// (listen), 0x400 (closing), 0x800 (unconnected),   and 0x8000 (unknown)
     pub socket_states: u16,
     /// the command line of the process in question
-    pub cmdline: String,
+    pub cmdline: SbpString,
 }
 
 impl MsgLinuxProcessSocketCounts {
@@ -408,9 +411,9 @@ pub struct MsgLinuxProcessSocketQueues {
     pub socket_states: u16,
     /// Address of the largest queue, remote or local depending on the
     /// directionality of the connection.
-    pub address_of_largest: String,
+    pub address_of_largest: SbpString,
     /// the command line of the process in question
-    pub cmdline: String,
+    pub cmdline: SbpString,
 }
 
 impl MsgLinuxProcessSocketQueues {

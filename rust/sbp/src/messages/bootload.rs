@@ -25,6 +25,9 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
+#[allow(unused_imports)]
+use crate::SbpString;
+
 /// Deprecated
 ///
 /// Deprecated.
@@ -140,7 +143,7 @@ pub struct MsgBootloaderHandshakeResp {
     /// Bootloader flags
     pub flags: u32,
     /// Bootloader version number
-    pub version: String,
+    pub version: SbpString,
 }
 
 impl MsgBootloaderHandshakeResp {

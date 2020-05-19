@@ -20,6 +20,9 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
+#[allow(unused_imports)]
+use crate::SbpString;
+
 /// Vehicle forward (x-axis) velocity
 ///
 /// Message representing the x component of vehicle velocity in the user frame at the odometry

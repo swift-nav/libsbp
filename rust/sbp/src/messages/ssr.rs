@@ -17,9 +17,12 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-use super::gnss::*;
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
+
+use super::gnss::*;
+#[allow(unused_imports)]
+use crate::SbpString;
 
 /// SSR code biases corrections for a particular satellite.
 ///

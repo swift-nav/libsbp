@@ -20,6 +20,9 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
+#[allow(unused_imports)]
+use crate::SbpString;
+
 /// Auxiliary IMU data
 ///
 /// Auxiliary data specific to a particular IMU. The `imu_type` field will

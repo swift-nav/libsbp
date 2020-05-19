@@ -20,9 +20,12 @@
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
-use super::gnss::*;
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
+
+use super::gnss::*;
+#[allow(unused_imports)]
+use crate::SbpString;
 
 /// Receiver-to-base station latency
 ///
@@ -216,7 +219,7 @@ pub struct MsgCommandOutput {
     /// Sequence number
     pub sequence: u32,
     /// Line of standard output or standard error
-    pub line: String,
+    pub line: SbpString,
 }
 
 impl MsgCommandOutput {
@@ -276,7 +279,7 @@ pub struct MsgCommandReq {
     /// Sequence number
     pub sequence: u32,
     /// Command line to execute
-    pub command: String,
+    pub command: SbpString,
 }
 
 impl MsgCommandReq {
@@ -950,7 +953,7 @@ pub struct MsgNetworkStateResp {
     /// Number of Tx bytes
     pub tx_bytes: u32,
     /// Interface Name
-    pub interface_name: String,
+    pub interface_name: SbpString,
     /// Interface flags from SIOCGIFFLAGS
     pub flags: u32,
 }
@@ -1392,7 +1395,7 @@ impl crate::serialize::SbpSerialize for MsgSpecanDep {
 pub struct MsgThreadState {
     pub sender_id: Option<u16>,
     /// Thread name (NULL terminated)
-    pub name: String,
+    pub name: SbpString,
     /// Percentage cpu use for this thread. Values range from 0 - 1000 and needs
     /// to be renormalized to 100
     pub cpu: u16,
@@ -1617,7 +1620,7 @@ pub struct NetworkUsage {
     /// Number of bytes received within period
     pub tx_bytes: u32,
     /// Interface Name
-    pub interface_name: String,
+    pub interface_name: SbpString,
 }
 
 impl NetworkUsage {
