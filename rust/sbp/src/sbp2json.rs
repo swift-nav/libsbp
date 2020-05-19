@@ -23,9 +23,11 @@ pub type Result<T> = std::result::Result<T, Error>;
 /// of the buffer and old data will be flushed.
 const BUF_SIZE: usize = 4096;
 
+const MSG_HEADER_SIZE_OFFSET: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/;
+
 /// Size of the SBP message header, used to extract the payload portion
 /// of a framed SBP message.
-const MSG_HEADER_LEN: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/ + 1 /*len*/;
+const MSG_HEADER_LEN: usize = MSG_HEADER_SIZE_OFFSET + 1 /*len*/;
 
 /// The length of the CRC in SBP, used to extract the CRC value of a
 /// framed SBP message.
@@ -161,7 +163,7 @@ fn add_common_fields<'a>(
     }
 
     let sender_id = msg.get_sender_id();
-    let size = msg.sbp_size();
+    let size = payload[MSG_HEADER_SIZE_OFFSET] as usize;
     let msg_type = msg.get_message_type();
     let map = value.as_object_mut().unwrap();
 

@@ -18,6 +18,54 @@ pub type Result<T> = result::Result<T, Error>;
 
 pub const SBP_MAX_PAYLOAD: usize = 256;
 
+#[derive(Debug, Clone)]
+pub struct SbpString(Vec<u8>);
+
+#[cfg(feature = "sbp_serde")]
+impl serde::Serialize for SbpString {
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let s = Into::<String>::into(self.clone());
+        serializer.serialize_str(&s)
+    }
+}
+
+#[cfg(feature = "sbp_serde")]
+impl<'de> serde::Deserialize<'de> for SbpString {
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        serde::Deserialize::deserialize(deserializer).map(|s: String| SbpString::from(s))
+    }
+}
+
+impl std::convert::From<String> for SbpString {
+    fn from(s: String) -> SbpString {
+        SbpString(s.as_bytes().to_vec())
+    }
+}
+
+impl std::convert::Into<String> for SbpString {
+    fn into(self) -> String {
+        String::from_utf8_lossy(&self.0).into()
+    }
+}
+
+impl std::convert::Into<Vec<u8>> for SbpString {
+    fn into(self) -> Vec<u8> {
+        self.0
+    }
+}
+
+impl std::fmt::Display for SbpString {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "SbpString({})", Into::<String>::into(self.clone()))
+    }
+}
+
 #[derive(Debug)]
 pub enum Error {
     ParseError,
@@ -236,5 +284,28 @@ mod tests {
         let expected_frame = b"\x55\x00\xFF\xFA\x00\x04\x01\x2D\x00\x00\xBC\x73";
 
         assert_eq!(frame, expected_frame);
+    }
+
+    #[test]
+    fn invalid_utf8() {
+        let packet = vec![
+            0x55, 0xa7, 0x0, 0x0, 0x10, 0x48, 0x8, 0x0, 0x73, 0x6f, 0x6c, 0x75, 0x74, 0x69, 0x6f,
+            0x6e, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+            0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+            0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+            0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0xb6, 0xe8, 0xab,
+        ];
+
+        let mut reader = std::io::Cursor::new(packet);
+        let mut parser = crate::parser::Parser::new();
+
+        let sbp_result = parser.parse(&mut reader);
+
+        assert!(sbp_result.is_ok());
+
+        let sbp_message = sbp_result.unwrap();
+        let sbp_message = sbp_message.as_sbp_message();
+
+        assert_eq!(sbp_message.sbp_size(), 72);
     }
 }

@@ -35,5 +35,10 @@ lazy_static! {
 fn main() -> Result<()> {
     let options = Options::from_args();
     let mut stdout: Rc<Box<dyn Write>> = Rc::new(Box::new(STDOUT.lock()));
-    json2json_read_loop(options.debug, options.float_compat, &mut std::io::stdin().lock(), &mut stdout)
+    json2json_read_loop(
+        options.debug,
+        options.float_compat,
+        &mut std::io::stdin().lock(),
+        &mut stdout,
+    )
 }

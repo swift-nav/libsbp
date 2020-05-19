@@ -53,7 +53,7 @@ TYPE_MAP = {'u8': 'u8',
             's64': 'i64',
             'float': 'f32',
             'double': 'f64',
-            'string': 'String'}
+            'string': 'SbpString'}
 
 def type_map(field):
   if field.type_id in TYPE_MAP:
