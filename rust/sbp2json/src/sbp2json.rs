@@ -42,7 +42,7 @@ fn main() -> Result<()> {
         options.debug,
         options.debug_memory,
         options.float_compat,
-        &mut std::io::stdin(),
+        &mut std::io::stdin().lock(),
         &mut stdout,
     )
 }

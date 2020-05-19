@@ -153,14 +153,12 @@ impl Parser {
     }
 }
 
-pub fn read_string(buf: &mut dyn Read) -> Result<String> {
-    let mut s = String::new();
-    buf.read_to_string(&mut s)?;
-    Ok(s)
+pub(crate) fn read_string(buf: &[u8]) -> Result<String> {
+    Ok(String::from_utf8_lossy(buf).into())
 }
 
-pub fn read_string_limit(buf: &mut dyn Read, n: u64) -> Result<String> {
-    read_string(&mut buf.take(n))
+pub(crate) fn read_string_limit(buf: &[u8], n: usize) -> Result<String> {
+    read_string(&buf[0..n])
 }
 
 pub fn read_u8_array(buf: &mut &[u8]) -> Result<Vec<u8>> {
