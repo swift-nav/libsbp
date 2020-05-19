@@ -16,6 +16,8 @@ use std::result;
 
 pub type Result<T> = result::Result<T, Error>;
 
+pub const SBP_MAX_PAYLOAD: usize = 256;
+
 #[derive(Debug)]
 pub enum Error {
     ParseError,

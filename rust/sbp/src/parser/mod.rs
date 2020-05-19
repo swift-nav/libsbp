@@ -154,7 +154,7 @@ impl Parser {
 }
 
 pub(crate) fn read_string(buf: &mut dyn Read) -> Result<String> {
-    let mut string_buffer = [0u8; 256];
+    let mut string_buffer = [0u8; crate::SBP_MAX_PAYLOAD];
     let len = buf.read(&mut string_buffer)?; // TODO: figure out how to get rid of this copy
     Ok(String::from_utf8_lossy(&string_buffer[..len]).into())
 }
