@@ -163,11 +163,11 @@ pub(crate) fn read_string_limit(buf: &mut dyn Read, n: u64) -> Result<String> {
     read_string(&mut buf.take(n))
 }
 
-pub fn read_u8_array(buf: &mut &[u8]) -> Result<Vec<u8>> {
+pub(crate) fn read_u8_array(buf: &mut &[u8]) -> Result<Vec<u8>> {
     Ok(buf.to_vec())
 }
 
-pub fn read_u8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u8>> {
+pub(crate) fn read_u8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u8>> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_u8()?);
@@ -175,7 +175,7 @@ pub fn read_u8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u8>> {
     Ok(v)
 }
 
-pub fn read_s8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i8>> {
+pub(crate) fn read_s8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i8>> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_i8()?);
@@ -183,7 +183,7 @@ pub fn read_s8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i8>> {
     Ok(v)
 }
 
-pub fn read_s16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i16>> {
+pub(crate) fn read_s16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i16>> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_i16::<LittleEndian>()?);
@@ -191,7 +191,7 @@ pub fn read_s16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i16>> {
     Ok(v)
 }
 
-pub fn read_u16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u16>> {
+pub(crate) fn read_u16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u16>> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_u16::<LittleEndian>()?);
@@ -199,7 +199,7 @@ pub fn read_u16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u16>> {
     Ok(v)
 }
 
-pub fn read_float_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f32>> {
+pub(crate) fn read_float_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f32>> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_f32::<LittleEndian>()?);
@@ -207,7 +207,7 @@ pub fn read_float_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f32>> {
     Ok(v)
 }
 
-pub fn read_double_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f64>> {
+pub(crate) fn read_double_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f64>> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_f64::<LittleEndian>()?);
