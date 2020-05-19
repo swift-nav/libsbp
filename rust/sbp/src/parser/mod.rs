@@ -153,12 +153,14 @@ impl Parser {
     }
 }
 
-pub(crate) fn read_string(buf: &[u8]) -> Result<String> {
-    Ok(String::from_utf8_lossy(buf).into())
+pub(crate) fn read_string(buf: &mut dyn Read) -> Result<String> {
+    let mut string_buffer = [0u8; 256];
+    let len = buf.read(&mut string_buffer)?; // TODO: figure out how to get rid of this copy
+    Ok(String::from_utf8_lossy(&string_buffer[..len]).into())
 }
 
-pub(crate) fn read_string_limit(buf: &[u8], n: usize) -> Result<String> {
-    read_string(&buf[0..n])
+pub(crate) fn read_string_limit(buf: &mut dyn Read, n: u64) -> Result<String> {
+    read_string(&mut buf.take(n))
 }
 
 pub fn read_u8_array(buf: &mut &[u8]) -> Result<Vec<u8>> {
