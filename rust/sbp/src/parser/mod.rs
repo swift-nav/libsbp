@@ -164,13 +164,10 @@ pub(crate) fn read_string(buf: &mut &[u8]) -> Result<SbpString> {
 pub(crate) fn read_string_limit(buf: &mut &[u8], n: usize) -> Result<SbpString> {
     let n = std::cmp::min(n, buf.len());
     let (mut head, tail) = buf.split_at(n);
-    match read_string(&mut head) {
-        Ok(s) => {
-            *buf = tail;
-            Ok(s)
-        }
-        e => e,
-    }
+    read_string(&mut head).map(|sbp_string| {
+        *buf = tail;
+        sbp_string
+    })
 }
 
 #[test]
