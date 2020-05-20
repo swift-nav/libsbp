@@ -29,7 +29,7 @@ impl error::Error for FramerError {
 
 pub fn to_frame(msg: &dyn SBPMessage) -> std::result::Result<Vec<u8>, FramerError> {
     let len = msg.sbp_size();
-    if len > 255 {
+    if len >= crate::SBP_MAX_PAYLOAD {
         return Err(FramerError::TooLarge);
     }
 

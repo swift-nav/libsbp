@@ -27,7 +27,7 @@ impl serde::Serialize for SbpString {
     where
         S: serde::Serializer,
     {
-        let s = Into::<String>::into(self.clone());
+        let s: String = self.clone().into();
         serializer.serialize_str(&s)
     }
 }
