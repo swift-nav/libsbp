@@ -10,9 +10,13 @@ pub mod serialize;
 #[cfg(feature = "sbp2json")]
 pub mod sbp2json;
 
+use std::convert::{From, Into};
 use std::error;
 use std::fmt;
 use std::result;
+
+#[cfg(feature = "sbp_serde")]
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 pub type Result<T> = result::Result<T, Error>;
 
@@ -22,10 +26,10 @@ pub const SBP_MAX_PAYLOAD: usize = 256;
 pub struct SbpString(Vec<u8>);
 
 #[cfg(feature = "sbp_serde")]
-impl serde::Serialize for SbpString {
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+impl Serialize for SbpString {
+    fn serialize<S>(&self, serializer: S) -> result::Result<S::Ok, S::Error>
     where
-        S: serde::Serializer,
+        S: Serializer,
     {
         let s: String = self.clone().into();
         serializer.serialize_str(&s)
@@ -33,34 +37,34 @@ impl serde::Serialize for SbpString {
 }
 
 #[cfg(feature = "sbp_serde")]
-impl<'de> serde::Deserialize<'de> for SbpString {
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+impl<'de> Deserialize<'de> for SbpString {
+    fn deserialize<D>(deserializer: D) -> result::Result<Self, D::Error>
     where
-        D: serde::Deserializer<'de>,
+        D: Deserializer<'de>,
     {
-        serde::Deserialize::deserialize(deserializer).map(|s: String| SbpString::from(s))
+        Deserialize::deserialize(deserializer).map(|s: String| SbpString::from(s))
     }
 }
 
-impl std::convert::From<String> for SbpString {
+impl From<String> for SbpString {
     fn from(s: String) -> SbpString {
         SbpString(s.as_bytes().to_vec())
     }
 }
 
-impl std::convert::Into<String> for SbpString {
+impl Into<String> for SbpString {
     fn into(self) -> String {
         String::from_utf8_lossy(&self.0).into()
     }
 }
 
-impl std::convert::Into<Vec<u8>> for SbpString {
+impl Into<Vec<u8>> for SbpString {
     fn into(self) -> Vec<u8> {
         self.0
     }
 }
 
-impl std::fmt::Display for SbpString {
+impl fmt::Display for SbpString {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "SbpString({})", Into::<String>::into(self.clone()))
     }
