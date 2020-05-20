@@ -189,6 +189,66 @@ definitions:
                       - 2: Ready
                       - 3: GNSS Outage exceeds max duration
 
+ - MSG_INS_UPDATES:
+    id: 0xBEEF
+    short_desc: Inertial Navigation System update status message
+    public: false
+    desc: |
+        The INS update status message contains informations about executed and rejected INS updates 
+    fields:
+        - tow:
+            type: u32
+            units: ms
+            desc: GPS Time of Week
+        - gnsspos:
+            type: u8
+            desc: GNSS position update status flags
+            fields:
+              - 4-7:
+                  desc: Number of attempted GNSS position updates since last message.
+              - 0-3:
+                  desc: Number of rejected GNSS position updates since last message.
+        - gnssvel:
+            type: u8
+            desc: GNSS velocity update status flags
+            fields:
+              - 4-7:
+                  desc: Number of attempted GNSS velocity updates since last message.
+              - 0-3:
+                  desc: Number of rejected GNSS velocity updates since last message.
+        - wheelticks:
+            type: u8
+            desc: Wheelticks update status flags
+            fields:
+              - 4-7:
+                  desc: Number of attempted wheeltick updates since last message.
+              - 0-3:
+                  desc: Number of rejected wheeltick updates since last message.
+        - speed:
+            type: u8
+            desc: Wheelticks update status flags
+            fields:
+              - 4-7:
+                  desc: Number of attempted speed updates since last message.
+              - 0-3:
+                  desc: Number of rejected speed updates since last message.
+        - nhc:
+            type: u8
+            desc: NHC update status flags
+            fields:
+              - 4-7:
+                  desc: Number of attempted NHC updates since last message.
+              - 0-3:
+                  desc: Number of rejected NHC updates since last message.
+        - zerovel:
+            type: u8
+            desc: Zero velocity update status flags
+            fields:
+              - 4-7:
+                  desc: Number of attempted zero velocity updates since last message.
+              - 0-3:
+                  desc: Number of rejected zero velocity updates since last message.
+                  
  - MSG_CSAC_TELEMETRY:
     id: 0xFF04
     short_desc: Experimental telemetry message
