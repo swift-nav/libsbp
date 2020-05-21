@@ -113,7 +113,7 @@ matrix:
       script: |
         set -ex
         cargo build --all --release
-        (cd target/release; strip sbp2json json2sbp json2json)
+        strip target/release/{sbp2json,json2sbp,json2json}
         tar -C "target/release" -czf sbp_osx_tools.tar.gz \
           sbp2json json2sbp json2json
         VERSION="$(git describe --always --tags --dirty)"
