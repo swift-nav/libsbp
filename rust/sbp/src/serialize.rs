@@ -109,7 +109,7 @@ impl SbpSerialize for f64 {
 
 impl SbpSerialize for SbpString {
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        buf.extend(self.0.clone());
+        buf.extend(self.as_bytes());
     }
 
     fn sbp_size(&self) -> usize {

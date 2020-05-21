@@ -20,10 +20,16 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 pub type Result<T> = result::Result<T, Error>;
 
-pub const SBP_MAX_PAYLOAD: usize = 256;
+pub const SBP_MAX_PAYLOAD_SIZE: usize = 255;
 
 #[derive(Debug, Clone)]
 pub struct SbpString(Vec<u8>);
+
+impl SbpString {
+    pub fn as_bytes(&self) -> &[u8] {
+        &self.0
+    }
+}
 
 #[cfg(feature = "sbp_serde")]
 impl Serialize for SbpString {
