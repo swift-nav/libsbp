@@ -61,8 +61,9 @@ pub struct AcqSvProfile {
 }
 
 impl AcqSvProfile {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfile, crate::Error> {
-        Ok(AcqSvProfile {
+        Ok( AcqSvProfile{
             job_type: _buf.read_u8()?,
             status: _buf.read_u8()?,
             cn0: _buf.read_u16::<LittleEndian>()?,
@@ -75,7 +76,7 @@ impl AcqSvProfile {
             cf_max: _buf.read_i32::<LittleEndian>()?,
             cf: _buf.read_i32::<LittleEndian>()?,
             cp: _buf.read_u32::<LittleEndian>()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfile>, crate::Error> {
         let mut v = Vec::new();
@@ -164,8 +165,9 @@ pub struct AcqSvProfileDep {
 }
 
 impl AcqSvProfileDep {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfileDep, crate::Error> {
-        Ok(AcqSvProfileDep {
+        Ok( AcqSvProfileDep{
             job_type: _buf.read_u8()?,
             status: _buf.read_u8()?,
             cn0: _buf.read_u16::<LittleEndian>()?,
@@ -178,7 +180,7 @@ impl AcqSvProfileDep {
             cf_max: _buf.read_i32::<LittleEndian>()?,
             cf: _buf.read_i32::<LittleEndian>()?,
             cp: _buf.read_u32::<LittleEndian>()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfileDep>, crate::Error> {
         let mut v = Vec::new();
@@ -259,14 +261,15 @@ pub struct MsgAcqResult {
 }
 
 impl MsgAcqResult {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResult, crate::Error> {
-        Ok(MsgAcqResult {
+        Ok( MsgAcqResult{
             sender_id: None,
             cn0: _buf.read_f32::<LittleEndian>()?,
             cp: _buf.read_f32::<LittleEndian>()?,
             cf: _buf.read_f32::<LittleEndian>()?,
             sid: GnssSignal::parse(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgAcqResult {
@@ -329,14 +332,15 @@ pub struct MsgAcqResultDepA {
 }
 
 impl MsgAcqResultDepA {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepA, crate::Error> {
-        Ok(MsgAcqResultDepA {
+        Ok( MsgAcqResultDepA{
             sender_id: None,
             snr: _buf.read_f32::<LittleEndian>()?,
             cp: _buf.read_f32::<LittleEndian>()?,
             cf: _buf.read_f32::<LittleEndian>()?,
             prn: _buf.read_u8()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgAcqResultDepA {
@@ -398,14 +402,15 @@ pub struct MsgAcqResultDepB {
 }
 
 impl MsgAcqResultDepB {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepB, crate::Error> {
-        Ok(MsgAcqResultDepB {
+        Ok( MsgAcqResultDepB{
             sender_id: None,
             snr: _buf.read_f32::<LittleEndian>()?,
             cp: _buf.read_f32::<LittleEndian>()?,
             cf: _buf.read_f32::<LittleEndian>()?,
             sid: GnssSignalDep::parse(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgAcqResultDepB {
@@ -466,14 +471,15 @@ pub struct MsgAcqResultDepC {
 }
 
 impl MsgAcqResultDepC {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepC, crate::Error> {
-        Ok(MsgAcqResultDepC {
+        Ok( MsgAcqResultDepC{
             sender_id: None,
             cn0: _buf.read_f32::<LittleEndian>()?,
             cp: _buf.read_f32::<LittleEndian>()?,
             cf: _buf.read_f32::<LittleEndian>()?,
             sid: GnssSignalDep::parse(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgAcqResultDepC {
@@ -529,11 +535,12 @@ pub struct MsgAcqSvProfile {
 }
 
 impl MsgAcqSvProfile {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfile, crate::Error> {
-        Ok(MsgAcqSvProfile {
+        Ok( MsgAcqSvProfile{
             sender_id: None,
             acq_sv_profile: AcqSvProfile::parse_array(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgAcqSvProfile {
@@ -582,11 +589,12 @@ pub struct MsgAcqSvProfileDep {
 }
 
 impl MsgAcqSvProfileDep {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfileDep, crate::Error> {
-        Ok(MsgAcqSvProfileDep {
+        Ok( MsgAcqSvProfileDep{
             sender_id: None,
             acq_sv_profile: AcqSvProfileDep::parse_array(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgAcqSvProfileDep {

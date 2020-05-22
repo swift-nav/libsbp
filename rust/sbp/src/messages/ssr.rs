@@ -40,11 +40,12 @@ pub struct CodeBiasesContent {
 }
 
 impl CodeBiasesContent {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<CodeBiasesContent, crate::Error> {
-        Ok(CodeBiasesContent {
+        Ok( CodeBiasesContent{
             code: _buf.read_u8()?,
             value: _buf.read_i16::<LittleEndian>()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CodeBiasesContent>, crate::Error> {
         let mut v = Vec::new();
@@ -107,15 +108,16 @@ pub struct GridDefinitionHeader {
 }
 
 impl GridDefinitionHeader {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<GridDefinitionHeader, crate::Error> {
-        Ok(GridDefinitionHeader {
+        Ok( GridDefinitionHeader{
             region_size_inverse: _buf.read_u8()?,
             area_width: _buf.read_u16::<LittleEndian>()?,
             lat_nw_corner_enc: _buf.read_u16::<LittleEndian>()?,
             lon_nw_corner_enc: _buf.read_u16::<LittleEndian>()?,
             num_msgs: _buf.read_u8()?,
             seq_num: _buf.read_u8()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GridDefinitionHeader>, crate::Error> {
         let mut v = Vec::new();
@@ -178,12 +180,13 @@ pub struct GridElement {
 }
 
 impl GridElement {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<GridElement, crate::Error> {
-        Ok(GridElement {
+        Ok( GridElement{
             index: _buf.read_u16::<LittleEndian>()?,
             tropo_delay_correction: TroposphericDelayCorrection::parse(_buf)?,
             stec_residuals: STECResidual::parse_array(_buf)?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GridElement>, crate::Error> {
         let mut v = Vec::new();
@@ -237,12 +240,13 @@ pub struct GridElementNoStd {
 }
 
 impl GridElementNoStd {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<GridElementNoStd, crate::Error> {
-        Ok(GridElementNoStd {
+        Ok( GridElementNoStd{
             index: _buf.read_u16::<LittleEndian>()?,
             tropo_delay_correction: TroposphericDelayCorrectionNoStd::parse(_buf)?,
             stec_residuals: STECResidualNoStd::parse_array(_buf)?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GridElementNoStd>, crate::Error> {
         let mut v = Vec::new();
@@ -308,15 +312,16 @@ pub struct GriddedCorrectionHeader {
 }
 
 impl GriddedCorrectionHeader {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<GriddedCorrectionHeader, crate::Error> {
-        Ok(GriddedCorrectionHeader {
+        Ok( GriddedCorrectionHeader{
             time: GPSTimeSec::parse(_buf)?,
             num_msgs: _buf.read_u16::<LittleEndian>()?,
             seq_num: _buf.read_u16::<LittleEndian>()?,
             update_interval: _buf.read_u8()?,
             iod_atmo: _buf.read_u8()?,
             tropo_quality_indicator: _buf.read_u8()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GriddedCorrectionHeader>, crate::Error> {
         let mut v = Vec::new();
@@ -388,15 +393,16 @@ pub struct MsgSsrCodeBiases {
 }
 
 impl MsgSsrCodeBiases {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrCodeBiases, crate::Error> {
-        Ok(MsgSsrCodeBiases {
+        Ok( MsgSsrCodeBiases{
             sender_id: None,
             time: GPSTimeSec::parse(_buf)?,
             sid: GnssSignal::parse(_buf)?,
             update_interval: _buf.read_u8()?,
             iod_ssr: _buf.read_u8()?,
             biases: CodeBiasesContent::parse_array(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgSsrCodeBiases {
@@ -457,12 +463,13 @@ pub struct MsgSsrGriddedCorrection {
 }
 
 impl MsgSsrGriddedCorrection {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGriddedCorrection, crate::Error> {
-        Ok(MsgSsrGriddedCorrection {
+        Ok( MsgSsrGriddedCorrection{
             sender_id: None,
             header: GriddedCorrectionHeader::parse(_buf)?,
             element: GridElement::parse(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgSsrGriddedCorrection {
@@ -516,12 +523,13 @@ pub struct MsgSsrGriddedCorrectionNoStd {
 }
 
 impl MsgSsrGriddedCorrectionNoStd {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGriddedCorrectionNoStd, crate::Error> {
-        Ok(MsgSsrGriddedCorrectionNoStd {
+        Ok( MsgSsrGriddedCorrectionNoStd{
             sender_id: None,
             header: GriddedCorrectionHeader::parse(_buf)?,
             element: GridElementNoStd::parse(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgSsrGriddedCorrectionNoStd {
@@ -578,12 +586,13 @@ pub struct MsgSsrGridDefinition {
 }
 
 impl MsgSsrGridDefinition {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGridDefinition, crate::Error> {
-        Ok(MsgSsrGridDefinition {
+        Ok( MsgSsrGridDefinition{
             sender_id: None,
             header: GridDefinitionHeader::parse(_buf)?,
             rle_list: crate::parser::read_u8_array(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgSsrGridDefinition {
@@ -665,8 +674,9 @@ pub struct MsgSsrOrbitClock {
 }
 
 impl MsgSsrOrbitClock {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrOrbitClock, crate::Error> {
-        Ok(MsgSsrOrbitClock {
+        Ok( MsgSsrOrbitClock{
             sender_id: None,
             time: GPSTimeSec::parse(_buf)?,
             sid: GnssSignal::parse(_buf)?,
@@ -682,7 +692,7 @@ impl MsgSsrOrbitClock {
             c0: _buf.read_i32::<LittleEndian>()?,
             c1: _buf.read_i32::<LittleEndian>()?,
             c2: _buf.read_i32::<LittleEndian>()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgSsrOrbitClock {
@@ -788,8 +798,9 @@ pub struct MsgSsrOrbitClockDepA {
 }
 
 impl MsgSsrOrbitClockDepA {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrOrbitClockDepA, crate::Error> {
-        Ok(MsgSsrOrbitClockDepA {
+        Ok( MsgSsrOrbitClockDepA{
             sender_id: None,
             time: GPSTimeSec::parse(_buf)?,
             sid: GnssSignal::parse(_buf)?,
@@ -805,7 +816,7 @@ impl MsgSsrOrbitClockDepA {
             c0: _buf.read_i32::<LittleEndian>()?,
             c1: _buf.read_i32::<LittleEndian>()?,
             c2: _buf.read_i32::<LittleEndian>()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgSsrOrbitClockDepA {
@@ -903,8 +914,9 @@ pub struct MsgSsrPhaseBiases {
 }
 
 impl MsgSsrPhaseBiases {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrPhaseBiases, crate::Error> {
-        Ok(MsgSsrPhaseBiases {
+        Ok( MsgSsrPhaseBiases{
             sender_id: None,
             time: GPSTimeSec::parse(_buf)?,
             sid: GnssSignal::parse(_buf)?,
@@ -915,7 +927,7 @@ impl MsgSsrPhaseBiases {
             yaw: _buf.read_u16::<LittleEndian>()?,
             yaw_rate: _buf.read_i8()?,
             biases: PhaseBiasesContent::parse_array(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgSsrPhaseBiases {
@@ -985,12 +997,13 @@ pub struct MsgSsrStecCorrection {
 }
 
 impl MsgSsrStecCorrection {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrStecCorrection, crate::Error> {
-        Ok(MsgSsrStecCorrection {
+        Ok( MsgSsrStecCorrection{
             sender_id: None,
             header: STECHeader::parse(_buf)?,
             stec_sat_list: STECSatElement::parse_array(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgSsrStecCorrection {
@@ -1050,14 +1063,15 @@ pub struct PhaseBiasesContent {
 }
 
 impl PhaseBiasesContent {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<PhaseBiasesContent, crate::Error> {
-        Ok(PhaseBiasesContent {
+        Ok( PhaseBiasesContent{
             code: _buf.read_u8()?,
             integer_indicator: _buf.read_u8()?,
             widelane_integer_indicator: _buf.read_u8()?,
             discontinuity_counter: _buf.read_u8()?,
             bias: _buf.read_i32::<LittleEndian>()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PhaseBiasesContent>, crate::Error> {
         let mut v = Vec::new();
@@ -1124,14 +1138,15 @@ pub struct STECHeader {
 }
 
 impl STECHeader {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<STECHeader, crate::Error> {
-        Ok(STECHeader {
+        Ok( STECHeader{
             time: GPSTimeSec::parse(_buf)?,
             num_msgs: _buf.read_u8()?,
             seq_num: _buf.read_u8()?,
             update_interval: _buf.read_u8()?,
             iod_atmo: _buf.read_u8()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECHeader>, crate::Error> {
         let mut v = Vec::new();
@@ -1189,12 +1204,13 @@ pub struct STECResidual {
 }
 
 impl STECResidual {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<STECResidual, crate::Error> {
-        Ok(STECResidual {
+        Ok( STECResidual{
             sv_id: SvId::parse(_buf)?,
             residual: _buf.read_i16::<LittleEndian>()?,
             stddev: _buf.read_u8()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECResidual>, crate::Error> {
         let mut v = Vec::new();
@@ -1245,11 +1261,12 @@ pub struct STECResidualNoStd {
 }
 
 impl STECResidualNoStd {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<STECResidualNoStd, crate::Error> {
-        Ok(STECResidualNoStd {
+        Ok( STECResidualNoStd{
             sv_id: SvId::parse(_buf)?,
             residual: _buf.read_i16::<LittleEndian>()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECResidualNoStd>, crate::Error> {
         let mut v = Vec::new();
@@ -1304,12 +1321,13 @@ pub struct STECSatElement {
 }
 
 impl STECSatElement {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<STECSatElement, crate::Error> {
-        Ok(STECSatElement {
+        Ok( STECSatElement{
             sv_id: SvId::parse(_buf)?,
             stec_quality_indicator: _buf.read_u8()?,
             stec_coeff: crate::parser::read_s16_array_limit(_buf, 4)?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECSatElement>, crate::Error> {
         let mut v = Vec::new();
@@ -1366,12 +1384,13 @@ pub struct TroposphericDelayCorrection {
 }
 
 impl TroposphericDelayCorrection {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<TroposphericDelayCorrection, crate::Error> {
-        Ok(TroposphericDelayCorrection {
+        Ok( TroposphericDelayCorrection{
             hydro: _buf.read_i16::<LittleEndian>()?,
             wet: _buf.read_i8()?,
             stddev: _buf.read_u8()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TroposphericDelayCorrection>, crate::Error> {
         let mut v = Vec::new();
@@ -1425,11 +1444,12 @@ pub struct TroposphericDelayCorrectionNoStd {
 }
 
 impl TroposphericDelayCorrectionNoStd {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<TroposphericDelayCorrectionNoStd, crate::Error> {
-        Ok(TroposphericDelayCorrectionNoStd {
+        Ok( TroposphericDelayCorrectionNoStd{
             hydro: _buf.read_i16::<LittleEndian>()?,
             wet: _buf.read_i8()?,
-        })
+        } )
     }
     pub fn parse_array(
         buf: &mut &[u8],

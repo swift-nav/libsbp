@@ -1,5 +1,5 @@
 use std::boxed::Box;
-use std::io::{BufRead, BufReader, Cursor, Read, Seek, SeekFrom, Write};
+use std::io::{BufRead, BufReader, Cursor, Read, Seek, SeekFrom, Stdout, Write};
 use std::rc::Rc;
 
 use serde::ser::Serialize;
@@ -45,14 +45,9 @@ where
                 let line_length = line.len();
                 let mut cursor = Cursor::new(line);
                 let value: serde_json::Result<Value> = serde_json::from_reader(cursor.by_ref());
-                match value {
-                    Ok(value) => {
-                        func(&value)?;
-                    }
-                    Err(err) => {
-                        return Err(err.into());
-                    }
-                }
+                value
+                    .map(|value| func(&value))
+                    .map_err(|error| Error::from(error))??;
                 let pos = cursor.seek(SeekFrom::Current(0))? as usize;
                 if line_length != pos {
                     eprintln!("WARNING: unconsumed data on input line");
@@ -63,7 +58,6 @@ where
             }
         }
     }
-
     Ok(())
 }
 
@@ -513,7 +507,6 @@ pub fn json2json_read_loop(
     let json2json_process = |value: &Value| -> Result<()> {
         json2sbp_process_with_expand(value, debug, float_compat, true, stream_output)
     };
-
     json_read_loop(stream_input, json2json_process)
 }
 
@@ -526,6 +519,19 @@ pub fn json2sbp_read_loop(
     let json2sbp_process = |value: &Value| -> Result<()> {
         json2sbp_process_with_expand(value, debug, false, false, stream_output)
     };
-
     json_read_loop(stream_input, json2sbp_process)
+}
+
+pub struct StdoutFlusher(&'static Stdout);
+
+impl StdoutFlusher {
+    pub fn new(stdout: &'static Stdout) -> StdoutFlusher {
+        StdoutFlusher(stdout)
+    }
+}
+
+impl Drop for StdoutFlusher {
+    fn drop(&mut self) {
+        self.0.lock().flush().expect("failed to flush stdout");
+    }
 }

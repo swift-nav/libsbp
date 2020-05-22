@@ -42,12 +42,13 @@ pub struct MsgCsacTelemetry {
 }
 
 impl MsgCsacTelemetry {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgCsacTelemetry, crate::Error> {
-        Ok(MsgCsacTelemetry {
+        Ok( MsgCsacTelemetry{
             sender_id: None,
             id: _buf.read_u8()?,
             telemetry: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgCsacTelemetry {
@@ -103,12 +104,13 @@ pub struct MsgCsacTelemetryLabels {
 }
 
 impl MsgCsacTelemetryLabels {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgCsacTelemetryLabels, crate::Error> {
-        Ok(MsgCsacTelemetryLabels {
+        Ok( MsgCsacTelemetryLabels{
             sender_id: None,
             id: _buf.read_u8()?,
             telemetry_labels: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgCsacTelemetryLabels {
@@ -167,14 +169,15 @@ pub struct MsgDgnssStatus {
 }
 
 impl MsgDgnssStatus {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgDgnssStatus, crate::Error> {
-        Ok(MsgDgnssStatus {
+        Ok( MsgDgnssStatus{
             sender_id: None,
             flags: _buf.read_u8()?,
             latency: _buf.read_u16::<LittleEndian>()?,
             num_signals: _buf.read_u8()?,
             source: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgDgnssStatus {
@@ -238,11 +241,12 @@ pub struct MsgHeartbeat {
 }
 
 impl MsgHeartbeat {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgHeartbeat, crate::Error> {
-        Ok(MsgHeartbeat {
+        Ok( MsgHeartbeat{
             sender_id: None,
             flags: _buf.read_u32::<LittleEndian>()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgHeartbeat {
@@ -292,11 +296,12 @@ pub struct MsgInsStatus {
 }
 
 impl MsgInsStatus {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgInsStatus, crate::Error> {
-        Ok(MsgInsStatus {
+        Ok( MsgInsStatus{
             sender_id: None,
             flags: _buf.read_u32::<LittleEndian>()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgInsStatus {
@@ -352,13 +357,14 @@ pub struct MsgStartup {
 }
 
 impl MsgStartup {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgStartup, crate::Error> {
-        Ok(MsgStartup {
+        Ok( MsgStartup{
             sender_id: None,
             cause: _buf.read_u8()?,
             startup_type: _buf.read_u8()?,
             reserved: _buf.read_u16::<LittleEndian>()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgStartup {

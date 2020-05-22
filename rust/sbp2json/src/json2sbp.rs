@@ -1,11 +1,11 @@
 use std::boxed::Box;
-use std::io::Write;
+use std::io::{Stdout, Write};
 use std::rc::Rc;
 
 use lazy_static::lazy_static;
 use structopt::StructOpt;
 
-use sbp::sbp2json::{json2sbp_read_loop, Result};
+use sbp::sbp2json::{json2sbp_read_loop, Result, StdoutFlusher};
 
 #[cfg(all(not(windows), not(target_env = "musl")))]
 #[global_allocator]
@@ -25,11 +25,12 @@ struct Options {
 }
 
 lazy_static! {
-    static ref STDOUT: std::io::Stdout = std::io::stdout();
+    static ref STDOUT: Stdout = std::io::stdout();
 }
 
 fn main() -> Result<()> {
     let options = Options::from_args();
     let mut stdout: Rc<Box<dyn Write>> = Rc::new(Box::new(STDOUT.lock()));
+    let _stdout_flusher = StdoutFlusher::new(&STDOUT);
     json2sbp_read_loop(options.debug, &mut std::io::stdin().lock(), &mut stdout)
 }

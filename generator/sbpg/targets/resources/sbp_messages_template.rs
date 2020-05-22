@@ -51,6 +51,7 @@ pub struct (((m.identifier|camel_case))) {
 }
 
 impl (((m.identifier|camel_case))) {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<(((m.identifier|camel_case))), crate::Error> {
         Ok( (((m.identifier|camel_case))){
             ((*- if m.sbp_id *))

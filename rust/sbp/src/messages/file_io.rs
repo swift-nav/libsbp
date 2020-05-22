@@ -48,11 +48,12 @@ pub struct MsgFileioConfigReq {
 }
 
 impl MsgFileioConfigReq {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigReq, crate::Error> {
-        Ok(MsgFileioConfigReq {
+        Ok( MsgFileioConfigReq{
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFileioConfigReq {
@@ -111,14 +112,15 @@ pub struct MsgFileioConfigResp {
 }
 
 impl MsgFileioConfigResp {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigResp, crate::Error> {
-        Ok(MsgFileioConfigResp {
+        Ok( MsgFileioConfigResp{
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             window_size: _buf.read_u32::<LittleEndian>()?,
             batch_size: _buf.read_u32::<LittleEndian>()?,
             fileio_version: _buf.read_u32::<LittleEndian>()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFileioConfigResp {
@@ -186,13 +188,14 @@ pub struct MsgFileioReadDirReq {
 }
 
 impl MsgFileioReadDirReq {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadDirReq, crate::Error> {
-        Ok(MsgFileioReadDirReq {
+        Ok( MsgFileioReadDirReq{
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             offset: _buf.read_u32::<LittleEndian>()?,
             dirname: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFileioReadDirReq {
@@ -252,12 +255,13 @@ pub struct MsgFileioReadDirResp {
 }
 
 impl MsgFileioReadDirResp {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadDirResp, crate::Error> {
-        Ok(MsgFileioReadDirResp {
+        Ok( MsgFileioReadDirResp{
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             contents: crate::parser::read_u8_array(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFileioReadDirResp {
@@ -321,14 +325,15 @@ pub struct MsgFileioReadReq {
 }
 
 impl MsgFileioReadReq {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadReq, crate::Error> {
-        Ok(MsgFileioReadReq {
+        Ok( MsgFileioReadReq{
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             offset: _buf.read_u32::<LittleEndian>()?,
             chunk_size: _buf.read_u8()?,
             filename: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFileioReadReq {
@@ -389,12 +394,13 @@ pub struct MsgFileioReadResp {
 }
 
 impl MsgFileioReadResp {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadResp, crate::Error> {
-        Ok(MsgFileioReadResp {
+        Ok( MsgFileioReadResp{
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             contents: crate::parser::read_u8_array(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFileioReadResp {
@@ -448,11 +454,12 @@ pub struct MsgFileioRemove {
 }
 
 impl MsgFileioRemove {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioRemove, crate::Error> {
-        Ok(MsgFileioRemove {
+        Ok( MsgFileioRemove{
             sender_id: None,
             filename: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFileioRemove {
@@ -514,14 +521,15 @@ pub struct MsgFileioWriteReq {
 }
 
 impl MsgFileioWriteReq {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteReq, crate::Error> {
-        Ok(MsgFileioWriteReq {
+        Ok( MsgFileioWriteReq{
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             offset: _buf.read_u32::<LittleEndian>()?,
             filename: crate::parser::read_string(_buf)?,
             data: crate::parser::read_u8_array(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFileioWriteReq {
@@ -580,11 +588,12 @@ pub struct MsgFileioWriteResp {
 }
 
 impl MsgFileioWriteResp {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteResp, crate::Error> {
-        Ok(MsgFileioWriteResp {
+        Ok( MsgFileioWriteResp{
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFileioWriteResp {

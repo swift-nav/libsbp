@@ -5,7 +5,7 @@ use std::rc::Rc;
 use lazy_static::lazy_static;
 use structopt::StructOpt;
 
-use sbp::sbp2json::{sbp2json_read_loop, Result};
+use sbp::sbp2json::{sbp2json_read_loop, Result, StdoutFlusher};
 
 #[cfg(all(not(windows), not(target_env = "musl")))]
 #[global_allocator]
@@ -43,6 +43,7 @@ lazy_static! {
 fn main() -> Result<()> {
     let options = Options::from_args();
     let mut stdout: Rc<Box<dyn Write>> = Rc::new(Box::new(STDOUT.lock()));
+    let _stdout_flusher = StdoutFlusher::new(&STDOUT);
     sbp2json_read_loop(
         options.debug,
         options.debug_memory,

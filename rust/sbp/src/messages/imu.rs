@@ -43,13 +43,14 @@ pub struct MsgImuAux {
 }
 
 impl MsgImuAux {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuAux, crate::Error> {
-        Ok(MsgImuAux {
+        Ok( MsgImuAux{
             sender_id: None,
             imu_type: _buf.read_u8()?,
             temp: _buf.read_i16::<LittleEndian>()?,
             imu_conf: _buf.read_u8()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgImuAux {
@@ -119,8 +120,9 @@ pub struct MsgImuRaw {
 }
 
 impl MsgImuRaw {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuRaw, crate::Error> {
-        Ok(MsgImuRaw {
+        Ok( MsgImuRaw{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             tow_f: _buf.read_u8()?,
@@ -130,7 +132,7 @@ impl MsgImuRaw {
             gyr_x: _buf.read_i16::<LittleEndian>()?,
             gyr_y: _buf.read_i16::<LittleEndian>()?,
             gyr_z: _buf.read_i16::<LittleEndian>()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgImuRaw {

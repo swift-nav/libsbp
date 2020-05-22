@@ -45,11 +45,12 @@ pub struct MsgFlashDone {
 }
 
 impl MsgFlashDone {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashDone, crate::Error> {
-        Ok(MsgFlashDone {
+        Ok( MsgFlashDone{
             sender_id: None,
             response: _buf.read_u8()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFlashDone {
@@ -104,12 +105,13 @@ pub struct MsgFlashErase {
 }
 
 impl MsgFlashErase {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashErase, crate::Error> {
-        Ok(MsgFlashErase {
+        Ok( MsgFlashErase{
             sender_id: None,
             target: _buf.read_u8()?,
             sector_num: _buf.read_u32::<LittleEndian>()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFlashErase {
@@ -171,14 +173,15 @@ pub struct MsgFlashProgram {
 }
 
 impl MsgFlashProgram {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashProgram, crate::Error> {
-        Ok(MsgFlashProgram {
+        Ok( MsgFlashProgram{
             sender_id: None,
             target: _buf.read_u8()?,
             addr_start: crate::parser::read_u8_array_limit(_buf, 3)?,
             addr_len: _buf.read_u8()?,
             data: crate::parser::read_u8_array(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFlashProgram {
@@ -243,13 +246,14 @@ pub struct MsgFlashReadReq {
 }
 
 impl MsgFlashReadReq {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashReadReq, crate::Error> {
-        Ok(MsgFlashReadReq {
+        Ok( MsgFlashReadReq{
             sender_id: None,
             target: _buf.read_u8()?,
             addr_start: crate::parser::read_u8_array_limit(_buf, 3)?,
             addr_len: _buf.read_u8()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFlashReadReq {
@@ -312,13 +316,14 @@ pub struct MsgFlashReadResp {
 }
 
 impl MsgFlashReadResp {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashReadResp, crate::Error> {
-        Ok(MsgFlashReadResp {
+        Ok( MsgFlashReadResp{
             sender_id: None,
             target: _buf.read_u8()?,
             addr_start: crate::parser::read_u8_array_limit(_buf, 3)?,
             addr_len: _buf.read_u8()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFlashReadResp {
@@ -372,11 +377,12 @@ pub struct MsgM25FlashWriteStatus {
 }
 
 impl MsgM25FlashWriteStatus {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgM25FlashWriteStatus, crate::Error> {
-        Ok(MsgM25FlashWriteStatus {
+        Ok( MsgM25FlashWriteStatus{
             sender_id: None,
             status: crate::parser::read_u8_array_limit(_buf, 1)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgM25FlashWriteStatus {
@@ -426,11 +432,12 @@ pub struct MsgStmFlashLockSector {
 }
 
 impl MsgStmFlashLockSector {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmFlashLockSector, crate::Error> {
-        Ok(MsgStmFlashLockSector {
+        Ok( MsgStmFlashLockSector{
             sender_id: None,
             sector: _buf.read_u32::<LittleEndian>()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgStmFlashLockSector {
@@ -480,11 +487,12 @@ pub struct MsgStmFlashUnlockSector {
 }
 
 impl MsgStmFlashUnlockSector {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmFlashUnlockSector, crate::Error> {
-        Ok(MsgStmFlashUnlockSector {
+        Ok( MsgStmFlashUnlockSector{
             sender_id: None,
             sector: _buf.read_u32::<LittleEndian>()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgStmFlashUnlockSector {
@@ -535,8 +543,11 @@ pub struct MsgStmUniqueIdReq {
 }
 
 impl MsgStmUniqueIdReq {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmUniqueIdReq, crate::Error> {
-        Ok(MsgStmUniqueIdReq { sender_id: None })
+        Ok( MsgStmUniqueIdReq{
+            sender_id: None,
+        } )
     }
 }
 impl super::SBPMessage for MsgStmUniqueIdReq {
@@ -585,11 +596,12 @@ pub struct MsgStmUniqueIdResp {
 }
 
 impl MsgStmUniqueIdResp {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmUniqueIdResp, crate::Error> {
-        Ok(MsgStmUniqueIdResp {
+        Ok( MsgStmUniqueIdResp{
             sender_id: None,
             stm_id: crate::parser::read_u8_array_limit(_buf, 12)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgStmUniqueIdResp {

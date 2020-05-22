@@ -46,15 +46,16 @@ pub struct MsgMagRaw {
 }
 
 impl MsgMagRaw {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgMagRaw, crate::Error> {
-        Ok(MsgMagRaw {
+        Ok( MsgMagRaw{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             tow_f: _buf.read_u8()?,
             mag_x: _buf.read_i16::<LittleEndian>()?,
             mag_y: _buf.read_i16::<LittleEndian>()?,
             mag_z: _buf.read_i16::<LittleEndian>()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgMagRaw {
