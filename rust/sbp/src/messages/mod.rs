@@ -201,6 +201,7 @@ use self::system::MsgCsacTelemetryLabels;
 use self::system::MsgDgnssStatus;
 use self::system::MsgHeartbeat;
 use self::system::MsgInsStatus;
+use self::system::MsgInsUpdates;
 use self::system::MsgStartup;
 use self::tracking::MsgMeasurementState;
 use self::tracking::MsgTrackingIq;
@@ -409,6 +410,7 @@ pub enum SBP {
     MsgLinuxSocketUsage(MsgLinuxSocketUsage),
     MsgLinuxProcessFdCount(MsgLinuxProcessFdCount),
     MsgLinuxProcessFdSummary(MsgLinuxProcessFdSummary),
+    MsgInsUpdates(MsgInsUpdates),
     MsgStartup(MsgStartup),
     MsgDgnssStatus(MsgDgnssStatus),
     MsgInsStatus(MsgInsStatus),
@@ -1311,6 +1313,11 @@ impl SBP {
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgLinuxProcessFdSummary(msg))
             }
+            48879 => {
+                let mut msg = MsgInsUpdates::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgInsUpdates(msg))
+            }
             65280 => {
                 let mut msg = MsgStartup::parse(payload)?;
                 msg.set_sender_id(sender_id);
@@ -1533,6 +1540,7 @@ impl SBP {
             SBP::MsgLinuxSocketUsage(msg) => msg,
             SBP::MsgLinuxProcessFdCount(msg) => msg,
             SBP::MsgLinuxProcessFdSummary(msg) => msg,
+            SBP::MsgInsUpdates(msg) => msg,
             SBP::MsgStartup(msg) => msg,
             SBP::MsgDgnssStatus(msg) => msg,
             SBP::MsgInsStatus(msg) => msg,

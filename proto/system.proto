@@ -71,6 +71,20 @@ message MsgInsStatus {
     uint32 flags = 1;
 }
 
+/** Inertial Navigation System update status message
+ *
+ * The INS update status message contains informations about executed and rejected INS updates 
+ */
+message MsgInsUpdates {
+    uint32 tow = 1;
+    uint32 gnsspos = 2;
+    uint32 gnssvel = 3;
+    uint32 wheelticks = 4;
+    uint32 speed = 5;
+    uint32 nhc = 6;
+    uint32 zerovel = 7;
+}
+
 /** Experimental telemetry message
  *
  * The CSAC telemetry message has an implementation defined telemetry string

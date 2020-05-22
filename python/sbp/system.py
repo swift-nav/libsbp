@@ -425,6 +425,126 @@ and initialization of the inertial navigation system.
     d.update(j)
     return d
     
+SBP_MSG_INS_UPDATES = 0xBEEF
+class MsgInsUpdates(SBP):
+  """SBP class for message MSG_INS_UPDATES (0xBEEF).
+
+  You can have MSG_INS_UPDATES inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The INS update status message contains informations about executed and rejected INS updates 
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS Time of Week
+  gnsspos : int
+    GNSS position update status flags
+  gnssvel : int
+    GNSS velocity update status flags
+  wheelticks : int
+    Wheelticks update status flags
+  speed : int
+    Wheelticks update status flags
+  nhc : int
+    NHC update status flags
+  zerovel : int
+    Zero velocity update status flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'gnsspos' / construct.Int8ul,
+                   'gnssvel' / construct.Int8ul,
+                   'wheelticks' / construct.Int8ul,
+                   'speed' / construct.Int8ul,
+                   'nhc' / construct.Int8ul,
+                   'zerovel' / construct.Int8ul,)
+  __slots__ = [
+               'tow',
+               'gnsspos',
+               'gnssvel',
+               'wheelticks',
+               'speed',
+               'nhc',
+               'zerovel',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgInsUpdates,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgInsUpdates, self).__init__()
+      self.msg_type = SBP_MSG_INS_UPDATES
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.gnsspos = kwargs.pop('gnsspos')
+      self.gnssvel = kwargs.pop('gnssvel')
+      self.wheelticks = kwargs.pop('wheelticks')
+      self.speed = kwargs.pop('speed')
+      self.nhc = kwargs.pop('nhc')
+      self.zerovel = kwargs.pop('zerovel')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgInsUpdates.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgInsUpdates(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgInsUpdates._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgInsUpdates._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgInsUpdates._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgInsUpdates, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_CSAC_TELEMETRY = 0xFF04
 class MsgCsacTelemetry(SBP):
   """SBP class for message MSG_CSAC_TELEMETRY (0xFF04).
@@ -625,6 +745,7 @@ msg_classes = {
   0xFF02: MsgDgnssStatus,
   0xFFFF: MsgHeartbeat,
   0xFF03: MsgInsStatus,
+  0xBEEF: MsgInsUpdates,
   0xFF04: MsgCsacTelemetry,
   0xFF05: MsgCsacTelemetryLabels,
 }

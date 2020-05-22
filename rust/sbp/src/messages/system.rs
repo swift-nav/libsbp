@@ -328,6 +328,89 @@ impl crate::serialize::SbpSerialize for MsgInsStatus {
     }
 }
 
+/// Inertial Navigation System update status message
+///
+/// The INS update status message contains informations about executed and rejected INS updates
+///
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[derive(Debug, Clone)]
+#[allow(non_snake_case)]
+pub struct MsgInsUpdates {
+    pub sender_id: Option<u16>,
+    /// GPS Time of Week
+    pub tow: u32,
+    /// GNSS position update status flags
+    pub gnsspos: u8,
+    /// GNSS velocity update status flags
+    pub gnssvel: u8,
+    /// Wheelticks update status flags
+    pub wheelticks: u8,
+    /// Wheelticks update status flags
+    pub speed: u8,
+    /// NHC update status flags
+    pub nhc: u8,
+    /// Zero velocity update status flags
+    pub zerovel: u8,
+}
+
+impl MsgInsUpdates {
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgInsUpdates, crate::Error> {
+        Ok(MsgInsUpdates {
+            sender_id: None,
+            tow: _buf.read_u32::<LittleEndian>()?,
+            gnsspos: _buf.read_u8()?,
+            gnssvel: _buf.read_u8()?,
+            wheelticks: _buf.read_u8()?,
+            speed: _buf.read_u8()?,
+            nhc: _buf.read_u8()?,
+            zerovel: _buf.read_u8()?,
+        })
+    }
+}
+impl super::SBPMessage for MsgInsUpdates {
+    fn get_message_type(&self) -> u16 {
+        48879
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgInsUpdates {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.gnsspos.append_to_sbp_buffer(buf);
+        self.gnssvel.append_to_sbp_buffer(buf);
+        self.wheelticks.append_to_sbp_buffer(buf);
+        self.speed.append_to_sbp_buffer(buf);
+        self.nhc.append_to_sbp_buffer(buf);
+        self.zerovel.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.gnsspos.sbp_size();
+        size += self.gnssvel.sbp_size();
+        size += self.wheelticks.sbp_size();
+        size += self.speed.sbp_size();
+        size += self.nhc.sbp_size();
+        size += self.zerovel.sbp_size();
+        size
+    }
+}
+
 /// System start-up message
 ///
 /// The system start-up message is sent once on system
