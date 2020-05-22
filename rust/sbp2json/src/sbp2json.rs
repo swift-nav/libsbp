@@ -2,6 +2,7 @@ use std::boxed::Box;
 use std::io::Write;
 use std::rc::Rc;
 
+use lazy_static::lazy_static;
 use structopt::StructOpt;
 
 use sbp::sbp2json::{sbp2json_read_loop, Result};
@@ -35,14 +36,18 @@ pub struct Options {
     debug_memory: bool,
 }
 
+lazy_static! {
+    static ref STDOUT: std::io::Stdout = std::io::stdout();
+}
+
 fn main() -> Result<()> {
     let options = Options::from_args();
-    let mut stdout: Rc<Box<dyn Write>> = Rc::new(Box::new(std::io::stdout()));
+    let mut stdout: Rc<Box<dyn Write>> = Rc::new(Box::new(STDOUT.lock()));
     sbp2json_read_loop(
         options.debug,
         options.debug_memory,
         options.float_compat,
-        &mut std::io::stdin(),
+        &mut std::io::stdin().lock(),
         &mut stdout,
     )
 }

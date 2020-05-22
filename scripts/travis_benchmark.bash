@@ -59,16 +59,20 @@ sudo chown -R "$USER:$USER" "$PWD"
 
 rust_bins="$HOME/.docker-cache/cargo/work/release"
 
-tar -C "$rust_bins" -czf sbp_linux_tools.tar.gz \
-    sbp2json \
-    json2sbp \
-    json2json
-
 mkdir bin
 
 cp "$rust_bins/sbp2json" bin
 cp "$rust_bins/json2sbp" bin
 cp "$rust_bins/json2json" bin
+
+strip "$rust_bins/sbp2json"
+strip "$rust_bins/json2sbp"
+strip "$rust_bins/json2json"
+
+tar -C "$rust_bins" -czf sbp_linux_tools.tar.gz \
+    sbp2json \
+    json2sbp \
+    json2json
 
 VERSION="$(git describe --always --tags --dirty)"
 BUILD_TRIPLET="$(cc -dumpmachine)"

@@ -20,6 +20,9 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
+#[allow(unused_imports)]
+use crate::SbpString;
+
 /// GNSS carrier phase measurement.
 ///
 /// Carrier phase measurement in cycles represented as a 40-bit

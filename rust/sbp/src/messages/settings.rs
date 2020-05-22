@@ -46,6 +46,9 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
+#[allow(unused_imports)]
+use crate::SbpString;
+
 /// Finished reading settings (host <= device)
 ///
 /// The settings message for indicating end of the settings values.
@@ -169,7 +172,7 @@ pub struct MsgSettingsReadByIndexResp {
     pub index: u16,
     /// A NULL-terminated and delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
-    pub setting: String,
+    pub setting: SbpString,
 }
 
 impl MsgSettingsReadByIndexResp {
@@ -233,7 +236,7 @@ pub struct MsgSettingsReadReq {
     pub sender_id: Option<u16>,
     /// A NULL-terminated and NULL-delimited string with contents
     /// "SECTION_SETTING\0SETTING\0"
-    pub setting: String,
+    pub setting: SbpString,
 }
 
 impl MsgSettingsReadReq {
@@ -293,7 +296,7 @@ pub struct MsgSettingsReadResp {
     pub sender_id: Option<u16>,
     /// A NULL-terminated and NULL-delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE\0"
-    pub setting: String,
+    pub setting: SbpString,
 }
 
 impl MsgSettingsReadResp {
@@ -349,7 +352,7 @@ pub struct MsgSettingsRegister {
     pub sender_id: Option<u16>,
     /// A NULL-terminated and delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE".
-    pub setting: String,
+    pub setting: SbpString,
 }
 
 impl MsgSettingsRegister {
@@ -409,7 +412,7 @@ pub struct MsgSettingsRegisterResp {
     /// A NULL-terminated and delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined
     /// according to the status field.
-    pub setting: String,
+    pub setting: SbpString,
 }
 
 impl MsgSettingsRegisterResp {
@@ -517,7 +520,7 @@ pub struct MsgSettingsWrite {
     pub sender_id: Option<u16>,
     /// A NULL-terminated and NULL-delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE\0"
-    pub setting: String,
+    pub setting: SbpString,
 }
 
 impl MsgSettingsWrite {
@@ -579,7 +582,7 @@ pub struct MsgSettingsWriteResp {
     pub status: u8,
     /// A NULL-terminated and delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE\0"
-    pub setting: String,
+    pub setting: SbpString,
 }
 
 impl MsgSettingsWriteResp {

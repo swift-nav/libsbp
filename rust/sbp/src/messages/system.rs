@@ -20,6 +20,9 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
+#[allow(unused_imports)]
+use crate::SbpString;
+
 /// Experimental telemetry message
 ///
 /// The CSAC telemetry message has an implementation defined telemetry string
@@ -35,7 +38,7 @@ pub struct MsgCsacTelemetry {
     /// defined.
     pub id: u8,
     /// Comma separated list of values as defined by the index
-    pub telemetry: String,
+    pub telemetry: SbpString,
 }
 
 impl MsgCsacTelemetry {
@@ -96,7 +99,7 @@ pub struct MsgCsacTelemetryLabels {
     /// defined.
     pub id: u8,
     /// Comma separated list of telemetry field values
-    pub telemetry_labels: String,
+    pub telemetry_labels: SbpString,
 }
 
 impl MsgCsacTelemetryLabels {
@@ -160,7 +163,7 @@ pub struct MsgDgnssStatus {
     /// Number of signals from base station
     pub num_signals: u8,
     /// Corrections source string
-    pub source: String,
+    pub source: SbpString,
 }
 
 impl MsgDgnssStatus {

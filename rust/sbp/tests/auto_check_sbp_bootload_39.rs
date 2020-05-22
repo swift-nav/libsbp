@@ -48,7 +48,7 @@ fn test_auto_check_sbp_bootload_39() {
                     msg.flags
                 );
                 assert_eq!(
-                    msg.version,
+                    Into::<String>::into(msg.version.clone()),
                     "v1.2
 "
                     .to_string(),

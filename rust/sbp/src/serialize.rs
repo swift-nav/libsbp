@@ -1,3 +1,5 @@
+use crate::SbpString;
+
 pub trait SbpSerialize {
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>);
     fn sbp_size(&self) -> usize;
@@ -105,13 +107,13 @@ impl SbpSerialize for f64 {
     }
 }
 
-impl SbpSerialize for String {
+impl SbpSerialize for SbpString {
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         buf.extend(self.as_bytes());
     }
 
     fn sbp_size(&self) -> usize {
-        self.len()
+        self.0.len()
     }
 }
 

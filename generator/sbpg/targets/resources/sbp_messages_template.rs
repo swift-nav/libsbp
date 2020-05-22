@@ -21,6 +21,8 @@ use self::byteorder::{LittleEndian,ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Serialize, Deserialize};
 
+#[allow(unused_imports)]
+use crate::SbpString;
 
 ((*- for i in includes *))
 use super::(((i)))::*;

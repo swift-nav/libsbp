@@ -21,6 +21,9 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
+#[allow(unused_imports)]
+use crate::SbpString;
+
 /// User data
 ///
 /// This message can contain any application specific user data up to a

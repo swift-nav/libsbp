@@ -28,6 +28,9 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
+#[allow(unused_imports)]
+use crate::SbpString;
+
 /// Request advice on the optimal configuration for FileIO.
 ///
 /// Requests advice on the optimal configuration for a FileIO
@@ -179,7 +182,7 @@ pub struct MsgFileioReadDirReq {
     /// The offset to skip the first n elements of the file list
     pub offset: u32,
     /// Name of the directory to list
-    pub dirname: String,
+    pub dirname: SbpString,
 }
 
 impl MsgFileioReadDirReq {
@@ -314,7 +317,7 @@ pub struct MsgFileioReadReq {
     /// Chunk size to read
     pub chunk_size: u8,
     /// Name of the file to read from
-    pub filename: String,
+    pub filename: SbpString,
 }
 
 impl MsgFileioReadReq {
@@ -441,7 +444,7 @@ impl crate::serialize::SbpSerialize for MsgFileioReadResp {
 pub struct MsgFileioRemove {
     pub sender_id: Option<u16>,
     /// Name of the file to delete
-    pub filename: String,
+    pub filename: SbpString,
 }
 
 impl MsgFileioRemove {
@@ -505,7 +508,7 @@ pub struct MsgFileioWriteReq {
     /// Offset into the file at which to start writing in bytes
     pub offset: u32,
     /// Name of the file to write to
-    pub filename: String,
+    pub filename: SbpString,
     /// Variable-length array of data to write
     pub data: Vec<u8>,
 }

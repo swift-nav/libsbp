@@ -46,7 +46,7 @@ fn test_auto_check_sbp_logging_42() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.fwd_payload,
+                    Into::<String>::into(msg.fwd_payload.clone()),
                     "VQD/QgAEAAAAAEag".to_string(),
                     "incorrect value for msg.fwd_payload, expected string '{}', is '{}'",
                     "VQD/QgAEAAAAAEag".to_string(),

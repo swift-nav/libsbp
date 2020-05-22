@@ -11,6 +11,7 @@ use self::nom::number::complete::{le_u16, le_u8};
 use self::nom::sequence::tuple;
 use crate::messages::SBP;
 use crate::Result;
+use crate::SbpString;
 use std::io::Read;
 
 const MSG_HEADER_LEN: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/ + 1 /*len*/;
@@ -153,21 +154,70 @@ impl Parser {
     }
 }
 
-pub fn read_string(buf: &mut dyn Read) -> Result<String> {
-    let mut s = String::new();
-    buf.read_to_string(&mut s)?;
-    Ok(s)
+pub(crate) fn read_string(buf: &mut &[u8]) -> Result<SbpString> {
+    let amount = buf.len();
+    let (head, tail) = buf.split_at(amount);
+    *buf = tail;
+    Ok(SbpString(head.to_vec()))
 }
 
-pub fn read_string_limit(buf: &mut dyn Read, n: u64) -> Result<String> {
-    read_string(&mut buf.take(n))
+pub(crate) fn read_string_limit(buf: &mut &[u8], n: usize) -> Result<SbpString> {
+    let n = std::cmp::min(n, buf.len());
+    let (mut head, tail) = buf.split_at(n);
+    read_string(&mut head).map(|sbp_string| {
+        *buf = tail;
+        sbp_string
+    })
 }
 
-pub fn read_u8_array(buf: &mut &[u8]) -> Result<Vec<u8>> {
+#[test]
+fn test_read_string_invalid_utf8() {
+    // (9 * 8) - 2 = 70
+    let buf = vec![
+        0x73, 0x6f, 0x6c, 0x75, 0x74, 0x69, 0x6f, 0x6e, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+        0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+        0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+        0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0xb6,
+    ];
+
+    let mut slice = &buf[..];
+
+    let sbp_string = read_string(&mut slice).unwrap();
+
+    let string: String = sbp_string.clone().into();
+    let vec: Vec<u8> = sbp_string.into();
+
+    // The last 0xb6 get's transformed into 3 UTF-8 bytes (� aka U+FFFD REPLACEMENT CHARACTER)
+    assert_eq!(string.len(), 69 + 3);
+    assert_eq!(vec.len(), 70);
+}
+
+#[test]
+fn test_read_string() {
+    let v = b"hi, imma string";
+    let mut slice = &v[..];
+
+    let string: String = read_string(&mut slice).unwrap().into();
+    assert_eq!(string, "hi, imma string".to_string());
+
+    let string: String = read_string(&mut slice).unwrap().into();
+    assert_eq!(string, "".to_string());
+
+    let v = b"hi, imma string";
+    let mut slice = &v[..];
+
+    let string: String = read_string_limit(&mut slice, 8).unwrap().into();
+    assert_eq!(string, "hi, imma".to_string());
+
+    let string: String = read_string_limit(&mut slice, 8).unwrap().into();
+    assert_eq!(string, " string".to_string());
+}
+
+pub(crate) fn read_u8_array(buf: &mut &[u8]) -> Result<Vec<u8>> {
     Ok(buf.to_vec())
 }
 
-pub fn read_u8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u8>> {
+pub(crate) fn read_u8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u8>> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_u8()?);
@@ -175,7 +225,7 @@ pub fn read_u8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u8>> {
     Ok(v)
 }
 
-pub fn read_s8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i8>> {
+pub(crate) fn read_s8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i8>> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_i8()?);
@@ -183,7 +233,7 @@ pub fn read_s8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i8>> {
     Ok(v)
 }
 
-pub fn read_s16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i16>> {
+pub(crate) fn read_s16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i16>> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_i16::<LittleEndian>()?);
@@ -191,7 +241,7 @@ pub fn read_s16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i16>> {
     Ok(v)
 }
 
-pub fn read_u16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u16>> {
+pub(crate) fn read_u16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u16>> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_u16::<LittleEndian>()?);
@@ -199,7 +249,7 @@ pub fn read_u16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u16>> {
     Ok(v)
 }
 
-pub fn read_float_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f32>> {
+pub(crate) fn read_float_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f32>> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_f32::<LittleEndian>()?);
@@ -207,7 +257,7 @@ pub fn read_float_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f32>> {
     Ok(v)
 }
 
-pub fn read_double_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f64>> {
+pub(crate) fn read_double_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f64>> {
     let mut v = Vec::new();
     for _ in 0..n {
         v.push(buf.read_f64::<LittleEndian>()?);

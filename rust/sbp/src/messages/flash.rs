@@ -25,6 +25,9 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
+#[allow(unused_imports)]
+use crate::SbpString;
+
 /// Flash response message (host <= device).
 ///
 /// This message defines success or failure codes for a variety of

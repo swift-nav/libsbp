@@ -1,14 +1,14 @@
+use std::boxed::Box;
+use std::env;
+use std::fs;
 use std::fs::File;
 use std::io::prelude::*;
-use std::boxed::Box;
-use std::rc::Rc;
-use std::fs;
 use std::ops::Drop;
-use std::vec::Vec;
 use std::path::PathBuf;
-use std::env;
+use std::rc::Rc;
+use std::vec::Vec;
 
-use sha2::{Sha256, Digest};
+use sha2::{Digest, Sha256};
 
 use sbp::sbp2json::Result;
 
@@ -33,7 +33,7 @@ fn find_project_root() -> Option<PathBuf> {
 }
 
 struct DeleteTestOutput {
-    files: Vec<PathBuf>
+    files: Vec<PathBuf>,
 }
 
 impl Drop for DeleteTestOutput {
@@ -58,8 +58,9 @@ impl DeleteTestOutput {
     }
 }
 
-pub struct ThirdTransform<F> 
-    where F: FnMut(&mut dyn Read, &mut Rc<Box<dyn Write>>) -> Result<()>
+pub struct ThirdTransform<F>
+where
+    F: FnMut(&mut dyn Read, &mut Rc<Box<dyn Write>>) -> Result<()>,
 {
     pub transform: F,
     pub expected_output: String,
@@ -67,13 +68,14 @@ pub struct ThirdTransform<F>
 
 #[macro_export]
 macro_rules! make_none_transform {
-    () => {
-        {
-            let empty_closure = |_: &mut dyn Read, _: &mut Rc<Box<dyn Write>>| -> Result<()> { Ok(()) };
-            let s = Some(ThirdTransform { transform: empty_closure, expected_output: "".into() });
-            s.filter(|_| false)
-        }
-    };
+    () => {{
+        let empty_closure = |_: &mut dyn Read, _: &mut Rc<Box<dyn Write>>| -> Result<()> { Ok(()) };
+        let s = Some(ThirdTransform {
+            transform: empty_closure,
+            expected_output: "".into(),
+        });
+        s.filter(|_| false)
+    }};
 }
 
 pub fn test_round_trip<F1, F2, F3>(
@@ -82,10 +84,11 @@ pub fn test_round_trip<F1, F2, F3>(
     test_name: &str,
     input_filename: &str,
     mut third_transform: Option<ThirdTransform<F3>>,
-    ) -> Result<()>
-    where F1: FnMut(&mut dyn Read, &mut Rc<Box<dyn Write>>) -> Result<()>,
-          F2: FnMut(&mut dyn Read, &mut Rc<Box<dyn Write>>) -> Result<()>,
-          F3: FnMut(&mut dyn Read, &mut Rc<Box<dyn Write>>) -> Result<()>,
+) -> Result<()>
+where
+    F1: FnMut(&mut dyn Read, &mut Rc<Box<dyn Write>>) -> Result<()>,
+    F2: FnMut(&mut dyn Read, &mut Rc<Box<dyn Write>>) -> Result<()>,
+    F3: FnMut(&mut dyn Read, &mut Rc<Box<dyn Write>>) -> Result<()>,
 {
     let mut del_test_output = DeleteTestOutput::new();
 
@@ -100,8 +103,10 @@ pub fn test_round_trip<F1, F2, F3>(
     {
         del_test_output.add_test_output(&output_path);
 
-        let mut input_file = File::open(input_path.clone()).expect("could not open first transform input file");
-        let output_file = File::create(output_path).expect("could not create first transform output file");
+        let mut input_file =
+            File::open(input_path.clone()).expect("could not open first transform input file");
+        let output_file =
+            File::create(output_path).expect("could not create first transform output file");
 
         let mut output_file: Rc<Box<dyn Write>> = Rc::new(Box::new(output_file));
 
@@ -112,8 +117,10 @@ pub fn test_round_trip<F1, F2, F3>(
 
         del_test_output.add_test_output(&output_path);
 
-        let mut input_file = File::open(input_path).expect("could not open second transform input file");
-        let output_file = File::create(output_path).expect("could not create second transform output file");
+        let mut input_file =
+            File::open(input_path).expect("could not open second transform input file");
+        let output_file =
+            File::create(output_path).expect("could not create second transform output file");
 
         let mut output_file: Rc<Box<dyn Write>> = Rc::new(Box::new(output_file));
 
@@ -121,7 +128,6 @@ pub fn test_round_trip<F1, F2, F3>(
     }
 
     if let Some(third_transform) = &mut third_transform {
-
         let input_path = root.join(second_transform_output.clone());
         let output_path = root.join(third_transform_output.clone());
 
@@ -129,20 +135,24 @@ pub fn test_round_trip<F1, F2, F3>(
 
         del_test_output.add_test_output(&output_path);
 
-        let mut input_file = File::open(input_path).expect("could not open third transform input file");
-        let output_file = File::create(output_path).expect("could not create third transform output file");
+        let mut input_file =
+            File::open(input_path).expect("could not open third transform input file");
+        let output_file =
+            File::create(output_path).expect("could not create third transform output file");
 
         let mut output_file: Rc<Box<dyn Write>> = Rc::new(Box::new(output_file));
 
         (third_transform.transform)(&mut input_file, &mut output_file)?;
     }
 
-    let (input_path, output_path) = 
-        if let Some(third_transform) = third_transform { 
-            (root.join(format!("test_data/{}", third_transform.expected_output)), root.join(third_transform_output))
-        } else { 
-            (root.join(input_path), root.join(second_transform_output))
-        };
+    let (input_path, output_path) = if let Some(third_transform) = third_transform {
+        (
+            root.join(format!("test_data/{}", third_transform.expected_output)),
+            root.join(third_transform_output),
+        )
+    } else {
+        (root.join(input_path), root.join(second_transform_output))
+    };
 
     del_test_output.add_test_output(&output_path);
 
@@ -152,8 +162,8 @@ pub fn test_round_trip<F1, F2, F3>(
     let mut input_file_hash = Sha256::new();
     let mut output_file_hash = Sha256::new();
 
-    std::io::copy(&mut input_file, &mut input_file_hash).map(|_|())?;
-    std::io::copy(&mut output_file, &mut output_file_hash).map(|_|())?;
+    std::io::copy(&mut input_file, &mut input_file_hash).map(|_| ())?;
+    std::io::copy(&mut output_file, &mut output_file_hash).map(|_| ())?;
 
     let input_digest = input_file_hash.result();
     let output_digest = output_file_hash.result();

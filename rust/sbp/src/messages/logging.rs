@@ -21,6 +21,9 @@ use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
+#[allow(unused_imports)]
+use crate::SbpString;
+
 /// Wrapper for FWD a separate stream of information over SBP
 ///
 /// This message provides the ability to forward messages over SBP.  This may take the form
@@ -41,7 +44,7 @@ pub struct MsgFwd {
     /// protocol identifier
     pub protocol: u8,
     /// variable length wrapped binary message
-    pub fwd_payload: String,
+    pub fwd_payload: SbpString,
 }
 
 impl MsgFwd {
@@ -104,7 +107,7 @@ pub struct MsgLog {
     /// Logging level
     pub level: u8,
     /// Human-readable string
-    pub text: String,
+    pub text: SbpString,
 }
 
 impl MsgLog {
@@ -160,7 +163,7 @@ impl crate::serialize::SbpSerialize for MsgLog {
 pub struct MsgPrintDep {
     pub sender_id: Option<u16>,
     /// Human-readable string
-    pub text: String,
+    pub text: SbpString,
 }
 
 impl MsgPrintDep {
