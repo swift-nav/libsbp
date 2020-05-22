@@ -47,13 +47,14 @@ pub struct MsgOdometry {
 }
 
 impl MsgOdometry {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgOdometry, crate::Error> {
-        Ok(MsgOdometry {
+        Ok( MsgOdometry{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             velocity: _buf.read_i32::<LittleEndian>()?,
             flags: _buf.read_u8()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgOdometry {
@@ -123,14 +124,15 @@ pub struct MsgWheeltick {
 }
 
 impl MsgWheeltick {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgWheeltick, crate::Error> {
-        Ok(MsgWheeltick {
+        Ok( MsgWheeltick{
             sender_id: None,
             time: _buf.read_u64::<LittleEndian>()?,
             flags: _buf.read_u8()?,
             source: _buf.read_u8()?,
             ticks: _buf.read_i32::<LittleEndian>()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgWheeltick {

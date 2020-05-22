@@ -53,15 +53,16 @@ pub struct MsgAngularRate {
 }
 
 impl MsgAngularRate {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAngularRate, crate::Error> {
-        Ok(MsgAngularRate {
+        Ok( MsgAngularRate{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
             y: _buf.read_i32::<LittleEndian>()?,
             z: _buf.read_i32::<LittleEndian>()?,
             flags: _buf.read_u8()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgAngularRate {
@@ -127,14 +128,15 @@ pub struct MsgBaselineHeading {
 }
 
 impl MsgBaselineHeading {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineHeading, crate::Error> {
-        Ok(MsgBaselineHeading {
+        Ok( MsgBaselineHeading{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             heading: _buf.read_u32::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgBaselineHeading {
@@ -207,8 +209,9 @@ pub struct MsgOrientEuler {
 }
 
 impl MsgOrientEuler {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgOrientEuler, crate::Error> {
-        Ok(MsgOrientEuler {
+        Ok( MsgOrientEuler{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             roll: _buf.read_i32::<LittleEndian>()?,
@@ -218,7 +221,7 @@ impl MsgOrientEuler {
             pitch_accuracy: _buf.read_f32::<LittleEndian>()?,
             yaw_accuracy: _buf.read_f32::<LittleEndian>()?,
             flags: _buf.read_u8()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgOrientEuler {
@@ -303,8 +306,9 @@ pub struct MsgOrientQuat {
 }
 
 impl MsgOrientQuat {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgOrientQuat, crate::Error> {
-        Ok(MsgOrientQuat {
+        Ok( MsgOrientQuat{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             w: _buf.read_i32::<LittleEndian>()?,
@@ -316,7 +320,7 @@ impl MsgOrientQuat {
             y_accuracy: _buf.read_f32::<LittleEndian>()?,
             z_accuracy: _buf.read_f32::<LittleEndian>()?,
             flags: _buf.read_u8()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgOrientQuat {

@@ -48,13 +48,14 @@ pub struct MsgFwd {
 }
 
 impl MsgFwd {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFwd, crate::Error> {
-        Ok(MsgFwd {
+        Ok( MsgFwd{
             sender_id: None,
             source: _buf.read_u8()?,
             protocol: _buf.read_u8()?,
             fwd_payload: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFwd {
@@ -111,12 +112,13 @@ pub struct MsgLog {
 }
 
 impl MsgLog {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgLog, crate::Error> {
-        Ok(MsgLog {
+        Ok( MsgLog{
             sender_id: None,
             level: _buf.read_u8()?,
             text: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgLog {
@@ -167,11 +169,12 @@ pub struct MsgPrintDep {
 }
 
 impl MsgPrintDep {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPrintDep, crate::Error> {
-        Ok(MsgPrintDep {
+        Ok( MsgPrintDep{
             sender_id: None,
             text: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgPrintDep {

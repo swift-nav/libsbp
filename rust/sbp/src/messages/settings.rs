@@ -61,8 +61,11 @@ pub struct MsgSettingsReadByIndexDone {
 }
 
 impl MsgSettingsReadByIndexDone {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexDone, crate::Error> {
-        Ok(MsgSettingsReadByIndexDone { sender_id: None })
+        Ok( MsgSettingsReadByIndexDone{
+            sender_id: None,
+        } )
     }
 }
 impl super::SBPMessage for MsgSettingsReadByIndexDone {
@@ -110,11 +113,12 @@ pub struct MsgSettingsReadByIndexReq {
 }
 
 impl MsgSettingsReadByIndexReq {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexReq, crate::Error> {
-        Ok(MsgSettingsReadByIndexReq {
+        Ok( MsgSettingsReadByIndexReq{
             sender_id: None,
             index: _buf.read_u16::<LittleEndian>()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgSettingsReadByIndexReq {
@@ -176,12 +180,13 @@ pub struct MsgSettingsReadByIndexResp {
 }
 
 impl MsgSettingsReadByIndexResp {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexResp, crate::Error> {
-        Ok(MsgSettingsReadByIndexResp {
+        Ok( MsgSettingsReadByIndexResp{
             sender_id: None,
             index: _buf.read_u16::<LittleEndian>()?,
             setting: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgSettingsReadByIndexResp {
@@ -240,11 +245,12 @@ pub struct MsgSettingsReadReq {
 }
 
 impl MsgSettingsReadReq {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadReq, crate::Error> {
-        Ok(MsgSettingsReadReq {
+        Ok( MsgSettingsReadReq{
             sender_id: None,
             setting: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgSettingsReadReq {
@@ -300,11 +306,12 @@ pub struct MsgSettingsReadResp {
 }
 
 impl MsgSettingsReadResp {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadResp, crate::Error> {
-        Ok(MsgSettingsReadResp {
+        Ok( MsgSettingsReadResp{
             sender_id: None,
             setting: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgSettingsReadResp {
@@ -356,11 +363,12 @@ pub struct MsgSettingsRegister {
 }
 
 impl MsgSettingsRegister {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsRegister, crate::Error> {
-        Ok(MsgSettingsRegister {
+        Ok( MsgSettingsRegister{
             sender_id: None,
             setting: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgSettingsRegister {
@@ -416,12 +424,13 @@ pub struct MsgSettingsRegisterResp {
 }
 
 impl MsgSettingsRegisterResp {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsRegisterResp, crate::Error> {
-        Ok(MsgSettingsRegisterResp {
+        Ok( MsgSettingsRegisterResp{
             sender_id: None,
             status: _buf.read_u8()?,
             setting: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgSettingsRegisterResp {
@@ -471,8 +480,11 @@ pub struct MsgSettingsSave {
 }
 
 impl MsgSettingsSave {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsSave, crate::Error> {
-        Ok(MsgSettingsSave { sender_id: None })
+        Ok( MsgSettingsSave{
+            sender_id: None,
+        } )
     }
 }
 impl super::SBPMessage for MsgSettingsSave {
@@ -524,11 +536,12 @@ pub struct MsgSettingsWrite {
 }
 
 impl MsgSettingsWrite {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWrite, crate::Error> {
-        Ok(MsgSettingsWrite {
+        Ok( MsgSettingsWrite{
             sender_id: None,
             setting: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgSettingsWrite {
@@ -586,12 +599,13 @@ pub struct MsgSettingsWriteResp {
 }
 
 impl MsgSettingsWriteResp {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWriteResp, crate::Error> {
-        Ok(MsgSettingsWriteResp {
+        Ok( MsgSettingsWriteResp{
             sender_id: None,
             status: _buf.read_u8()?,
             setting: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgSettingsWriteResp {

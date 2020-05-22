@@ -41,11 +41,12 @@ pub struct MsgMeasurementState {
 }
 
 impl MsgMeasurementState {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgMeasurementState, crate::Error> {
-        Ok(MsgMeasurementState {
+        Ok( MsgMeasurementState{
             sender_id: None,
             states: MeasurementState::parse_array(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgMeasurementState {
@@ -99,13 +100,14 @@ pub struct MsgTrackingIq {
 }
 
 impl MsgTrackingIq {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIq, crate::Error> {
-        Ok(MsgTrackingIq {
+        Ok( MsgTrackingIq{
             sender_id: None,
             channel: _buf.read_u8()?,
             sid: GnssSignal::parse(_buf)?,
             corrs: TrackingChannelCorrelation::parse_array_limit(_buf, 3)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgTrackingIq {
@@ -162,13 +164,14 @@ pub struct MsgTrackingIqDepA {
 }
 
 impl MsgTrackingIqDepA {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIqDepA, crate::Error> {
-        Ok(MsgTrackingIqDepA {
+        Ok( MsgTrackingIqDepA{
             sender_id: None,
             channel: _buf.read_u8()?,
             sid: GnssSignalDep::parse(_buf)?,
             corrs: TrackingChannelCorrelationDep::parse_array_limit(_buf, 3)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgTrackingIqDepA {
@@ -226,13 +229,14 @@ pub struct MsgTrackingIqDepB {
 }
 
 impl MsgTrackingIqDepB {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingIqDepB, crate::Error> {
-        Ok(MsgTrackingIqDepB {
+        Ok( MsgTrackingIqDepB{
             sender_id: None,
             channel: _buf.read_u8()?,
             sid: GnssSignal::parse(_buf)?,
             corrs: TrackingChannelCorrelationDep::parse_array_limit(_buf, 3)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgTrackingIqDepB {
@@ -287,11 +291,12 @@ pub struct MsgTrackingState {
 }
 
 impl MsgTrackingState {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingState, crate::Error> {
-        Ok(MsgTrackingState {
+        Ok( MsgTrackingState{
             sender_id: None,
             states: TrackingChannelState::parse_array(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgTrackingState {
@@ -340,11 +345,12 @@ pub struct MsgTrackingStateDepA {
 }
 
 impl MsgTrackingStateDepA {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDepA, crate::Error> {
-        Ok(MsgTrackingStateDepA {
+        Ok( MsgTrackingStateDepA{
             sender_id: None,
             states: TrackingChannelStateDepA::parse_array(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgTrackingStateDepA {
@@ -393,11 +399,12 @@ pub struct MsgTrackingStateDepB {
 }
 
 impl MsgTrackingStateDepB {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDepB, crate::Error> {
-        Ok(MsgTrackingStateDepB {
+        Ok( MsgTrackingStateDepB{
             sender_id: None,
             states: TrackingChannelStateDepB::parse_array(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgTrackingStateDepB {
@@ -492,8 +499,9 @@ pub struct MsgTrackingStateDetailedDep {
 }
 
 impl MsgTrackingStateDetailedDep {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDetailedDep, crate::Error> {
-        Ok(MsgTrackingStateDetailedDep {
+        Ok( MsgTrackingStateDetailedDep{
             sender_id: None,
             recv_time: _buf.read_u64::<LittleEndian>()?,
             tot: GPSTimeDep::parse(_buf)?,
@@ -516,7 +524,7 @@ impl MsgTrackingStateDetailedDep {
             nav_flags: _buf.read_u8()?,
             pset_flags: _buf.read_u8()?,
             misc_flags: _buf.read_u8()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgTrackingStateDetailedDep {
@@ -652,8 +660,9 @@ pub struct MsgTrackingStateDetailedDepA {
 }
 
 impl MsgTrackingStateDetailedDepA {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgTrackingStateDetailedDepA, crate::Error> {
-        Ok(MsgTrackingStateDetailedDepA {
+        Ok( MsgTrackingStateDetailedDepA{
             sender_id: None,
             recv_time: _buf.read_u64::<LittleEndian>()?,
             tot: GPSTime::parse(_buf)?,
@@ -676,7 +685,7 @@ impl MsgTrackingStateDetailedDepA {
             nav_flags: _buf.read_u8()?,
             pset_flags: _buf.read_u8()?,
             misc_flags: _buf.read_u8()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgTrackingStateDetailedDepA {
@@ -771,11 +780,12 @@ pub struct MeasurementState {
 }
 
 impl MeasurementState {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MeasurementState, crate::Error> {
-        Ok(MeasurementState {
+        Ok( MeasurementState{
             mesid: GnssSignal::parse(_buf)?,
             cn0: _buf.read_u8()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<MeasurementState>, crate::Error> {
         let mut v = Vec::new();
@@ -827,11 +837,12 @@ pub struct TrackingChannelCorrelation {
 }
 
 impl TrackingChannelCorrelation {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelCorrelation, crate::Error> {
-        Ok(TrackingChannelCorrelation {
+        Ok( TrackingChannelCorrelation{
             I: _buf.read_i16::<LittleEndian>()?,
             Q: _buf.read_i16::<LittleEndian>()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelCorrelation>, crate::Error> {
         let mut v = Vec::new();
@@ -883,11 +894,12 @@ pub struct TrackingChannelCorrelationDep {
 }
 
 impl TrackingChannelCorrelationDep {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelCorrelationDep, crate::Error> {
-        Ok(TrackingChannelCorrelationDep {
+        Ok( TrackingChannelCorrelationDep{
             I: _buf.read_i32::<LittleEndian>()?,
             Q: _buf.read_i32::<LittleEndian>()?,
-        })
+        } )
     }
     pub fn parse_array(
         buf: &mut &[u8],
@@ -944,12 +956,13 @@ pub struct TrackingChannelState {
 }
 
 impl TrackingChannelState {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelState, crate::Error> {
-        Ok(TrackingChannelState {
+        Ok( TrackingChannelState{
             sid: GnssSignal::parse(_buf)?,
             fcn: _buf.read_u8()?,
             cn0: _buf.read_u8()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelState>, crate::Error> {
         let mut v = Vec::new();
@@ -1005,12 +1018,13 @@ pub struct TrackingChannelStateDepA {
 }
 
 impl TrackingChannelStateDepA {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelStateDepA, crate::Error> {
-        Ok(TrackingChannelStateDepA {
+        Ok( TrackingChannelStateDepA{
             state: _buf.read_u8()?,
             prn: _buf.read_u8()?,
             cn0: _buf.read_f32::<LittleEndian>()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelStateDepA>, crate::Error> {
         let mut v = Vec::new();
@@ -1066,12 +1080,13 @@ pub struct TrackingChannelStateDepB {
 }
 
 impl TrackingChannelStateDepB {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<TrackingChannelStateDepB, crate::Error> {
-        Ok(TrackingChannelStateDepB {
+        Ok( TrackingChannelStateDepB{
             state: _buf.read_u8()?,
             sid: GnssSignalDep::parse(_buf)?,
             cn0: _buf.read_f32::<LittleEndian>()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TrackingChannelStateDepB>, crate::Error> {
         let mut v = Vec::new();

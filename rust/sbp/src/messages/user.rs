@@ -39,11 +39,12 @@ pub struct MsgUserData {
 }
 
 impl MsgUserData {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgUserData, crate::Error> {
-        Ok(MsgUserData {
+        Ok( MsgUserData{
             sender_id: None,
             contents: crate::parser::read_u8_array(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgUserData {

@@ -45,14 +45,15 @@ pub struct MsgSbasRaw {
 }
 
 impl MsgSbasRaw {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSbasRaw, crate::Error> {
-        Ok(MsgSbasRaw {
+        Ok( MsgSbasRaw{
             sender_id: None,
             sid: GnssSignal::parse(_buf)?,
             tow: _buf.read_u32::<LittleEndian>()?,
             message_type: _buf.read_u8()?,
             data: crate::parser::read_u8_array_limit(_buf, 27)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgSbasRaw {

@@ -42,11 +42,12 @@ pub struct MsgBootloaderHandshakeDepA {
 }
 
 impl MsgBootloaderHandshakeDepA {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeDepA, crate::Error> {
-        Ok(MsgBootloaderHandshakeDepA {
+        Ok( MsgBootloaderHandshakeDepA{
             sender_id: None,
             handshake: crate::parser::read_u8_array(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgBootloaderHandshakeDepA {
@@ -95,8 +96,11 @@ pub struct MsgBootloaderHandshakeReq {
 }
 
 impl MsgBootloaderHandshakeReq {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeReq, crate::Error> {
-        Ok(MsgBootloaderHandshakeReq { sender_id: None })
+        Ok( MsgBootloaderHandshakeReq{
+            sender_id: None,
+        } )
     }
 }
 impl super::SBPMessage for MsgBootloaderHandshakeReq {
@@ -147,12 +151,13 @@ pub struct MsgBootloaderHandshakeResp {
 }
 
 impl MsgBootloaderHandshakeResp {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeResp, crate::Error> {
-        Ok(MsgBootloaderHandshakeResp {
+        Ok( MsgBootloaderHandshakeResp{
             sender_id: None,
             flags: _buf.read_u32::<LittleEndian>()?,
             version: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgBootloaderHandshakeResp {
@@ -203,11 +208,12 @@ pub struct MsgBootloaderJumpToApp {
 }
 
 impl MsgBootloaderJumpToApp {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderJumpToApp, crate::Error> {
-        Ok(MsgBootloaderJumpToApp {
+        Ok( MsgBootloaderJumpToApp{
             sender_id: None,
             jump: _buf.read_u8()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgBootloaderJumpToApp {
@@ -259,8 +265,11 @@ pub struct MsgNapDeviceDnaReq {
 }
 
 impl MsgNapDeviceDnaReq {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaReq, crate::Error> {
-        Ok(MsgNapDeviceDnaReq { sender_id: None })
+        Ok( MsgNapDeviceDnaReq{
+            sender_id: None,
+        } )
     }
 }
 impl super::SBPMessage for MsgNapDeviceDnaReq {
@@ -310,11 +319,12 @@ pub struct MsgNapDeviceDnaResp {
 }
 
 impl MsgNapDeviceDnaResp {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaResp, crate::Error> {
-        Ok(MsgNapDeviceDnaResp {
+        Ok( MsgNapDeviceDnaResp{
             sender_id: None,
             dna: crate::parser::read_u8_array_limit(_buf, 8)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgNapDeviceDnaResp {

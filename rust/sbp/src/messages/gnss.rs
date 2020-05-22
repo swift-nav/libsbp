@@ -41,11 +41,12 @@ pub struct CarrierPhase {
 }
 
 impl CarrierPhase {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<CarrierPhase, crate::Error> {
-        Ok(CarrierPhase {
+        Ok( CarrierPhase{
             i: _buf.read_i32::<LittleEndian>()?,
             f: _buf.read_u8()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CarrierPhase>, crate::Error> {
         let mut v = Vec::new();
@@ -100,12 +101,13 @@ pub struct GPSTime {
 }
 
 impl GPSTime {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<GPSTime, crate::Error> {
-        Ok(GPSTime {
+        Ok( GPSTime{
             tow: _buf.read_u32::<LittleEndian>()?,
             ns_residual: _buf.read_i32::<LittleEndian>()?,
             wn: _buf.read_u16::<LittleEndian>()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTime>, crate::Error> {
         let mut v = Vec::new();
@@ -158,11 +160,12 @@ pub struct GPSTimeDep {
 }
 
 impl GPSTimeDep {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<GPSTimeDep, crate::Error> {
-        Ok(GPSTimeDep {
+        Ok( GPSTimeDep{
             tow: _buf.read_u32::<LittleEndian>()?,
             wn: _buf.read_u16::<LittleEndian>()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTimeDep>, crate::Error> {
         let mut v = Vec::new();
@@ -213,11 +216,12 @@ pub struct GPSTimeSec {
 }
 
 impl GPSTimeSec {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<GPSTimeSec, crate::Error> {
-        Ok(GPSTimeSec {
+        Ok( GPSTimeSec{
             tow: _buf.read_u32::<LittleEndian>()?,
             wn: _buf.read_u16::<LittleEndian>()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTimeSec>, crate::Error> {
         let mut v = Vec::new();
@@ -267,11 +271,12 @@ pub struct GnssSignal {
 }
 
 impl GnssSignal {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<GnssSignal, crate::Error> {
-        Ok(GnssSignal {
+        Ok( GnssSignal{
             sat: _buf.read_u8()?,
             code: _buf.read_u8()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssSignal>, crate::Error> {
         let mut v = Vec::new();
@@ -324,12 +329,13 @@ pub struct GnssSignalDep {
 }
 
 impl GnssSignalDep {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<GnssSignalDep, crate::Error> {
-        Ok(GnssSignalDep {
+        Ok( GnssSignalDep{
             sat: _buf.read_u16::<LittleEndian>()?,
             code: _buf.read_u8()?,
             reserved: _buf.read_u8()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssSignalDep>, crate::Error> {
         let mut v = Vec::new();
@@ -384,11 +390,12 @@ pub struct SvId {
 }
 
 impl SvId {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<SvId, crate::Error> {
-        Ok(SvId {
+        Ok( SvId{
             satId: _buf.read_u8()?,
             constellation: _buf.read_u8()?,
-        })
+        } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SvId>, crate::Error> {
         let mut v = Vec::new();
