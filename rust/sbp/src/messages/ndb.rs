@@ -12,18 +12,20 @@
 // Automatically generated from yaml/swiftnav/sbp/ndb.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
+
 //! Messages for logging NDB events.
-//!
+//! 
 
 extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
+use self::byteorder::{LittleEndian,ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
-use serde::{Deserialize, Serialize};
+use serde::{Serialize, Deserialize};
 
-use super::gnss::*;
 #[allow(unused_imports)]
 use crate::SbpString;
+use super::gnss::*;
+
 
 /// Navigation DataBase Event
 ///
@@ -61,7 +63,7 @@ pub struct MsgNdbEvent {
 
 impl MsgNdbEvent {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgNdbEvent, crate::Error> {
-        Ok(MsgNdbEvent {
+        Ok( MsgNdbEvent{
             sender_id: None,
             recv_time: _buf.read_u64::<LittleEndian>()?,
             event: _buf.read_u8()?,
@@ -71,7 +73,7 @@ impl MsgNdbEvent {
             object_sid: GnssSignal::parse(_buf)?,
             src_sid: GnssSignal::parse(_buf)?,
             original_sender: _buf.read_u16::<LittleEndian>()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgNdbEvent {

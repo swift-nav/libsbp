@@ -12,28 +12,30 @@
 // Automatically generated from yaml/swiftnav/sbp/file_io.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
+
 //! Messages for using device's onboard flash filesystem
 //! functionality. This allows data to be stored persistently in the
 //! device's program flash with wear-levelling using a simple filesystem
 //! interface. The file system interface (CFS) defines an abstract API
 //! for reading directories and for reading and writing files.
-//!
+//! 
 //! Note that some of these messages share the same message type ID for both the
 //! host request and the device response.
-//!
+//! 
 
 extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
+use self::byteorder::{LittleEndian,ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
-use serde::{Deserialize, Serialize};
+use serde::{Serialize, Deserialize};
 
 #[allow(unused_imports)]
 use crate::SbpString;
 
+
 /// Request advice on the optimal configuration for FileIO.
 ///
-/// Requests advice on the optimal configuration for a FileIO
+/// Requests advice on the optimal configuration for a FileIO 
 /// transfer.  Newer version of FileIO can support greater
 /// throughput by supporting a large window of FileIO data
 /// that can be in-flight during read or write operations.
@@ -49,10 +51,10 @@ pub struct MsgFileioConfigReq {
 
 impl MsgFileioConfigReq {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigReq, crate::Error> {
-        Ok(MsgFileioConfigReq {
+        Ok( MsgFileioConfigReq{
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFileioConfigReq {
@@ -112,13 +114,13 @@ pub struct MsgFileioConfigResp {
 
 impl MsgFileioConfigResp {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigResp, crate::Error> {
-        Ok(MsgFileioConfigResp {
+        Ok( MsgFileioConfigResp{
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             window_size: _buf.read_u32::<LittleEndian>()?,
             batch_size: _buf.read_u32::<LittleEndian>()?,
             fileio_version: _buf.read_u32::<LittleEndian>()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFileioConfigResp {
@@ -187,12 +189,12 @@ pub struct MsgFileioReadDirReq {
 
 impl MsgFileioReadDirReq {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadDirReq, crate::Error> {
-        Ok(MsgFileioReadDirReq {
+        Ok( MsgFileioReadDirReq{
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             offset: _buf.read_u32::<LittleEndian>()?,
             dirname: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFileioReadDirReq {
@@ -253,11 +255,11 @@ pub struct MsgFileioReadDirResp {
 
 impl MsgFileioReadDirResp {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadDirResp, crate::Error> {
-        Ok(MsgFileioReadDirResp {
+        Ok( MsgFileioReadDirResp{
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             contents: crate::parser::read_u8_array(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFileioReadDirResp {
@@ -322,13 +324,13 @@ pub struct MsgFileioReadReq {
 
 impl MsgFileioReadReq {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadReq, crate::Error> {
-        Ok(MsgFileioReadReq {
+        Ok( MsgFileioReadReq{
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             offset: _buf.read_u32::<LittleEndian>()?,
             chunk_size: _buf.read_u8()?,
             filename: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFileioReadReq {
@@ -390,11 +392,11 @@ pub struct MsgFileioReadResp {
 
 impl MsgFileioReadResp {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadResp, crate::Error> {
-        Ok(MsgFileioReadResp {
+        Ok( MsgFileioReadResp{
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             contents: crate::parser::read_u8_array(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFileioReadResp {
@@ -449,10 +451,10 @@ pub struct MsgFileioRemove {
 
 impl MsgFileioRemove {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioRemove, crate::Error> {
-        Ok(MsgFileioRemove {
+        Ok( MsgFileioRemove{
             sender_id: None,
             filename: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFileioRemove {
@@ -515,13 +517,13 @@ pub struct MsgFileioWriteReq {
 
 impl MsgFileioWriteReq {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteReq, crate::Error> {
-        Ok(MsgFileioWriteReq {
+        Ok( MsgFileioWriteReq{
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
             offset: _buf.read_u32::<LittleEndian>()?,
             filename: crate::parser::read_string(_buf)?,
             data: crate::parser::read_u8_array(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFileioWriteReq {
@@ -581,10 +583,10 @@ pub struct MsgFileioWriteResp {
 
 impl MsgFileioWriteResp {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteResp, crate::Error> {
-        Ok(MsgFileioWriteResp {
+        Ok( MsgFileioWriteResp{
             sender_id: None,
             sequence: _buf.read_u32::<LittleEndian>()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFileioWriteResp {

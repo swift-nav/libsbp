@@ -12,24 +12,26 @@
 // Automatically generated from yaml/swiftnav/sbp/logging.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
+
 //! Logging and debugging messages from the device.
-//!
+//! 
 
 extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
+use self::byteorder::{LittleEndian,ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
-use serde::{Deserialize, Serialize};
+use serde::{Serialize, Deserialize};
 
 #[allow(unused_imports)]
 use crate::SbpString;
 
+
 /// Wrapper for FWD a separate stream of information over SBP
 ///
 /// This message provides the ability to forward messages over SBP.  This may take the form
-/// of wrapping up SBP messages received by Piksi for logging purposes or wrapping
+/// of wrapping up SBP messages received by Piksi for logging purposes or wrapping 
 /// another protocol with SBP.
-///
+/// 
 /// The source identifier indicates from what interface a forwarded stream derived.
 /// The protocol identifier identifies what the expected protocol the forwarded msg contains.
 /// Protocol 0 represents SBP and the remaining values are implementation defined.
@@ -49,12 +51,12 @@ pub struct MsgFwd {
 
 impl MsgFwd {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFwd, crate::Error> {
-        Ok(MsgFwd {
+        Ok( MsgFwd{
             sender_id: None,
             source: _buf.read_u8()?,
             protocol: _buf.read_u8()?,
             fwd_payload: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgFwd {
@@ -112,11 +114,11 @@ pub struct MsgLog {
 
 impl MsgLog {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgLog, crate::Error> {
-        Ok(MsgLog {
+        Ok( MsgLog{
             sender_id: None,
             level: _buf.read_u8()?,
             text: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgLog {
@@ -168,10 +170,10 @@ pub struct MsgPrintDep {
 
 impl MsgPrintDep {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPrintDep, crate::Error> {
-        Ok(MsgPrintDep {
+        Ok( MsgPrintDep{
             sender_id: None,
             text: crate::parser::read_string(_buf)?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgPrintDep {
