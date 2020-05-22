@@ -12,36 +12,34 @@
 // Automatically generated from yaml/swiftnav/sbp/navigation.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 //! Geodetic navigation messages reporting GPS time, position, velocity,
 //! and baseline position solutions. For position solutions, these
 //! messages define several different position solutions: single-point
 //! (SPP), RTK, and pseudo-absolute position solutions.
-//! 
+//!
 //! The SPP is the standalone, absolute GPS position solution using only
 //! a single receiver. The RTK solution is the differential GPS
 //! solution, which can use either a fixed/integer or floating carrier
 //! phase ambiguity. The pseudo-absolute position solution uses a
 //! user-provided, well-surveyed base station position (if available)
 //! and the RTK solution in tandem.
-//! 
+//!
 //! When the inertial navigation mode indicates that the IMU is used,
 //! all messages are reported in the vehicle body frame as defined by
 //! device settings.  By default, the vehicle body frame is configured to be
 //! coincident with the antenna phase center.  When there is no inertial
 //! navigation, the solution will be reported at the phase center of the antenna.
-//! There is no inertial navigation capability on Piksi Multi or Duro. 
-//! 
+//! There is no inertial navigation capability on Piksi Multi or Duro.
+//!
 
 extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian,ReadBytesExt};
+use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
 use crate::SbpString;
-
 
 /// Age of corrections
 ///
@@ -61,11 +59,11 @@ pub struct MsgAgeCorrections {
 
 impl MsgAgeCorrections {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgAgeCorrections, crate::Error> {
-        Ok( MsgAgeCorrections{
+        Ok(MsgAgeCorrections {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             age: _buf.read_u16::<LittleEndian>()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgAgeCorrections {
@@ -133,7 +131,7 @@ pub struct MsgBaselineECEF {
 
 impl MsgBaselineECEF {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineECEF, crate::Error> {
-        Ok( MsgBaselineECEF{
+        Ok(MsgBaselineECEF {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
@@ -142,7 +140,7 @@ impl MsgBaselineECEF {
             accuracy: _buf.read_u16::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgBaselineECEF {
@@ -220,7 +218,7 @@ pub struct MsgBaselineECEFDepA {
 
 impl MsgBaselineECEFDepA {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineECEFDepA, crate::Error> {
-        Ok( MsgBaselineECEFDepA{
+        Ok(MsgBaselineECEFDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
@@ -229,7 +227,7 @@ impl MsgBaselineECEFDepA {
             accuracy: _buf.read_u16::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgBaselineECEFDepA {
@@ -299,13 +297,13 @@ pub struct MsgBaselineHeadingDepA {
 
 impl MsgBaselineHeadingDepA {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineHeadingDepA, crate::Error> {
-        Ok( MsgBaselineHeadingDepA{
+        Ok(MsgBaselineHeadingDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             heading: _buf.read_u32::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgBaselineHeadingDepA {
@@ -380,7 +378,7 @@ pub struct MsgBaselineNED {
 
 impl MsgBaselineNED {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNED, crate::Error> {
-        Ok( MsgBaselineNED{
+        Ok(MsgBaselineNED {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             n: _buf.read_i32::<LittleEndian>()?,
@@ -390,7 +388,7 @@ impl MsgBaselineNED {
             v_accuracy: _buf.read_u16::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgBaselineNED {
@@ -473,7 +471,7 @@ pub struct MsgBaselineNEDDepA {
 
 impl MsgBaselineNEDDepA {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNEDDepA, crate::Error> {
-        Ok( MsgBaselineNEDDepA{
+        Ok(MsgBaselineNEDDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             n: _buf.read_i32::<LittleEndian>()?,
@@ -483,7 +481,7 @@ impl MsgBaselineNEDDepA {
             v_accuracy: _buf.read_u16::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgBaselineNEDDepA {
@@ -562,7 +560,7 @@ pub struct MsgDops {
 
 impl MsgDops {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgDops, crate::Error> {
-        Ok( MsgDops{
+        Ok(MsgDops {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             gdop: _buf.read_u16::<LittleEndian>()?,
@@ -571,7 +569,7 @@ impl MsgDops {
             hdop: _buf.read_u16::<LittleEndian>()?,
             vdop: _buf.read_u16::<LittleEndian>()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgDops {
@@ -645,7 +643,7 @@ pub struct MsgDopsDepA {
 
 impl MsgDopsDepA {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgDopsDepA, crate::Error> {
-        Ok( MsgDopsDepA{
+        Ok(MsgDopsDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             gdop: _buf.read_u16::<LittleEndian>()?,
@@ -653,7 +651,7 @@ impl MsgDopsDepA {
             tdop: _buf.read_u16::<LittleEndian>()?,
             hdop: _buf.read_u16::<LittleEndian>()?,
             vdop: _buf.read_u16::<LittleEndian>()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgDopsDepA {
@@ -705,7 +703,7 @@ impl crate::serialize::SbpSerialize for MsgDopsDepA {
 /// counts the weeks and seconds of the week. The weeks begin at the
 /// Saturday/Sunday transition. GPS week 0 began at the beginning of
 /// the GPS time scale.
-/// 
+///
 /// Within each week number, the GPS time of the week is between
 /// between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
 /// does not accumulate leap seconds, and as of now, has a small
@@ -732,13 +730,13 @@ pub struct MsgGPSTime {
 
 impl MsgGPSTime {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTime, crate::Error> {
-        Ok( MsgGPSTime{
+        Ok(MsgGPSTime {
             sender_id: None,
             wn: _buf.read_u16::<LittleEndian>()?,
             tow: _buf.read_u32::<LittleEndian>()?,
             ns_residual: _buf.read_i32::<LittleEndian>()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgGPSTime {
@@ -786,7 +784,7 @@ impl crate::serialize::SbpSerialize for MsgGPSTime {
 /// counts the weeks and seconds of the week. The weeks begin at the
 /// Saturday/Sunday transition. GPS week 0 began at the beginning of
 /// the GPS time scale.
-/// 
+///
 /// Within each week number, the GPS time of the week is between
 /// between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
 /// does not accumulate leap seconds, and as of now, has a small
@@ -813,13 +811,13 @@ pub struct MsgGPSTimeDepA {
 
 impl MsgGPSTimeDepA {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTimeDepA, crate::Error> {
-        Ok( MsgGPSTimeDepA{
+        Ok(MsgGPSTimeDepA {
             sender_id: None,
             wn: _buf.read_u16::<LittleEndian>()?,
             tow: _buf.read_u32::<LittleEndian>()?,
             ns_residual: _buf.read_i32::<LittleEndian>()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgGPSTimeDepA {
@@ -894,7 +892,7 @@ pub struct MsgPosECEF {
 
 impl MsgPosECEF {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEF, crate::Error> {
-        Ok( MsgPosECEF{
+        Ok(MsgPosECEF {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_f64::<LittleEndian>()?,
@@ -903,7 +901,7 @@ impl MsgPosECEF {
             accuracy: _buf.read_u16::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgPosECEF {
@@ -995,7 +993,7 @@ pub struct MsgPosECEFCov {
 
 impl MsgPosECEFCov {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFCov, crate::Error> {
-        Ok( MsgPosECEFCov{
+        Ok(MsgPosECEFCov {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_f64::<LittleEndian>()?,
@@ -1009,7 +1007,7 @@ impl MsgPosECEFCov {
             cov_z_z: _buf.read_f32::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgPosECEFCov {
@@ -1111,7 +1109,7 @@ pub struct MsgPosECEFCovGnss {
 
 impl MsgPosECEFCovGnss {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFCovGnss, crate::Error> {
-        Ok( MsgPosECEFCovGnss{
+        Ok(MsgPosECEFCovGnss {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_f64::<LittleEndian>()?,
@@ -1125,7 +1123,7 @@ impl MsgPosECEFCovGnss {
             cov_z_z: _buf.read_f32::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgPosECEFCovGnss {
@@ -1216,7 +1214,7 @@ pub struct MsgPosECEFDepA {
 
 impl MsgPosECEFDepA {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFDepA, crate::Error> {
-        Ok( MsgPosECEFDepA{
+        Ok(MsgPosECEFDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_f64::<LittleEndian>()?,
@@ -1225,7 +1223,7 @@ impl MsgPosECEFDepA {
             accuracy: _buf.read_u16::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgPosECEFDepA {
@@ -1306,7 +1304,7 @@ pub struct MsgPosECEFGnss {
 
 impl MsgPosECEFGnss {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFGnss, crate::Error> {
-        Ok( MsgPosECEFGnss{
+        Ok(MsgPosECEFGnss {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_f64::<LittleEndian>()?,
@@ -1315,7 +1313,7 @@ impl MsgPosECEFGnss {
             accuracy: _buf.read_u16::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgPosECEFGnss {
@@ -1398,7 +1396,7 @@ pub struct MsgPosLLH {
 
 impl MsgPosLLH {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLH, crate::Error> {
-        Ok( MsgPosLLH{
+        Ok(MsgPosLLH {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             lat: _buf.read_f64::<LittleEndian>()?,
@@ -1408,7 +1406,7 @@ impl MsgPosLLH {
             v_accuracy: _buf.read_u16::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgPosLLH {
@@ -1501,7 +1499,7 @@ pub struct MsgPosLLHCov {
 
 impl MsgPosLLHCov {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHCov, crate::Error> {
-        Ok( MsgPosLLHCov{
+        Ok(MsgPosLLHCov {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             lat: _buf.read_f64::<LittleEndian>()?,
@@ -1515,7 +1513,7 @@ impl MsgPosLLHCov {
             cov_d_d: _buf.read_f32::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgPosLLHCov {
@@ -1616,7 +1614,7 @@ pub struct MsgPosLLHCovGnss {
 
 impl MsgPosLLHCovGnss {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHCovGnss, crate::Error> {
-        Ok( MsgPosLLHCovGnss{
+        Ok(MsgPosLLHCovGnss {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             lat: _buf.read_f64::<LittleEndian>()?,
@@ -1630,7 +1628,7 @@ impl MsgPosLLHCovGnss {
             cov_d_d: _buf.read_f32::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgPosLLHCovGnss {
@@ -1723,7 +1721,7 @@ pub struct MsgPosLLHDepA {
 
 impl MsgPosLLHDepA {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHDepA, crate::Error> {
-        Ok( MsgPosLLHDepA{
+        Ok(MsgPosLLHDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             lat: _buf.read_f64::<LittleEndian>()?,
@@ -1733,7 +1731,7 @@ impl MsgPosLLHDepA {
             v_accuracy: _buf.read_u16::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgPosLLHDepA {
@@ -1818,7 +1816,7 @@ pub struct MsgPosLLHGnss {
 
 impl MsgPosLLHGnss {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHGnss, crate::Error> {
-        Ok( MsgPosLLHGnss{
+        Ok(MsgPosLLHGnss {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             lat: _buf.read_f64::<LittleEndian>()?,
@@ -1828,7 +1826,7 @@ impl MsgPosLLHGnss {
             v_accuracy: _buf.read_u16::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgPosLLHGnss {
@@ -1906,7 +1904,7 @@ pub struct MsgProtectionLevel {
 
 impl MsgProtectionLevel {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgProtectionLevel, crate::Error> {
-        Ok( MsgProtectionLevel{
+        Ok(MsgProtectionLevel {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             vpl: _buf.read_u16::<LittleEndian>()?,
@@ -1915,7 +1913,7 @@ impl MsgProtectionLevel {
             lon: _buf.read_f64::<LittleEndian>()?,
             height: _buf.read_f64::<LittleEndian>()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgProtectionLevel {
@@ -1994,7 +1992,7 @@ pub struct MsgUtcTime {
 
 impl MsgUtcTime {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgUtcTime, crate::Error> {
-        Ok( MsgUtcTime{
+        Ok(MsgUtcTime {
             sender_id: None,
             flags: _buf.read_u8()?,
             tow: _buf.read_u32::<LittleEndian>()?,
@@ -2005,7 +2003,7 @@ impl MsgUtcTime {
             minutes: _buf.read_u8()?,
             seconds: _buf.read_u8()?,
             ns: _buf.read_u32::<LittleEndian>()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgUtcTime {
@@ -2100,7 +2098,7 @@ pub struct MsgVelBody {
 
 impl MsgVelBody {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelBody, crate::Error> {
-        Ok( MsgVelBody{
+        Ok(MsgVelBody {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
@@ -2114,7 +2112,7 @@ impl MsgVelBody {
             cov_z_z: _buf.read_f32::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgVelBody {
@@ -2200,7 +2198,7 @@ pub struct MsgVelECEF {
 
 impl MsgVelECEF {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEF, crate::Error> {
-        Ok( MsgVelECEF{
+        Ok(MsgVelECEF {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
@@ -2209,7 +2207,7 @@ impl MsgVelECEF {
             accuracy: _buf.read_u16::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgVelECEF {
@@ -2295,7 +2293,7 @@ pub struct MsgVelECEFCov {
 
 impl MsgVelECEFCov {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFCov, crate::Error> {
-        Ok( MsgVelECEFCov{
+        Ok(MsgVelECEFCov {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
@@ -2309,7 +2307,7 @@ impl MsgVelECEFCov {
             cov_z_z: _buf.read_f32::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgVelECEFCov {
@@ -2405,7 +2403,7 @@ pub struct MsgVelECEFCovGnss {
 
 impl MsgVelECEFCovGnss {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFCovGnss, crate::Error> {
-        Ok( MsgVelECEFCovGnss{
+        Ok(MsgVelECEFCovGnss {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
@@ -2419,7 +2417,7 @@ impl MsgVelECEFCovGnss {
             cov_z_z: _buf.read_f32::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgVelECEFCovGnss {
@@ -2505,7 +2503,7 @@ pub struct MsgVelECEFDepA {
 
 impl MsgVelECEFDepA {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFDepA, crate::Error> {
-        Ok( MsgVelECEFDepA{
+        Ok(MsgVelECEFDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
@@ -2514,7 +2512,7 @@ impl MsgVelECEFDepA {
             accuracy: _buf.read_u16::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgVelECEFDepA {
@@ -2590,7 +2588,7 @@ pub struct MsgVelECEFGnss {
 
 impl MsgVelECEFGnss {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFGnss, crate::Error> {
-        Ok( MsgVelECEFGnss{
+        Ok(MsgVelECEFGnss {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             x: _buf.read_i32::<LittleEndian>()?,
@@ -2599,7 +2597,7 @@ impl MsgVelECEFGnss {
             accuracy: _buf.read_u16::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgVelECEFGnss {
@@ -2678,7 +2676,7 @@ pub struct MsgVelNED {
 
 impl MsgVelNED {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNED, crate::Error> {
-        Ok( MsgVelNED{
+        Ok(MsgVelNED {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             n: _buf.read_i32::<LittleEndian>()?,
@@ -2688,7 +2686,7 @@ impl MsgVelNED {
             v_accuracy: _buf.read_u16::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgVelNED {
@@ -2779,7 +2777,7 @@ pub struct MsgVelNEDCov {
 
 impl MsgVelNEDCov {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDCov, crate::Error> {
-        Ok( MsgVelNEDCov{
+        Ok(MsgVelNEDCov {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             n: _buf.read_i32::<LittleEndian>()?,
@@ -2793,7 +2791,7 @@ impl MsgVelNEDCov {
             cov_d_d: _buf.read_f32::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgVelNEDCov {
@@ -2892,7 +2890,7 @@ pub struct MsgVelNEDCovGnss {
 
 impl MsgVelNEDCovGnss {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDCovGnss, crate::Error> {
-        Ok( MsgVelNEDCovGnss{
+        Ok(MsgVelNEDCovGnss {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             n: _buf.read_i32::<LittleEndian>()?,
@@ -2906,7 +2904,7 @@ impl MsgVelNEDCovGnss {
             cov_d_d: _buf.read_f32::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgVelNEDCovGnss {
@@ -2995,7 +2993,7 @@ pub struct MsgVelNEDDepA {
 
 impl MsgVelNEDDepA {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDDepA, crate::Error> {
-        Ok( MsgVelNEDDepA{
+        Ok(MsgVelNEDDepA {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             n: _buf.read_i32::<LittleEndian>()?,
@@ -3005,7 +3003,7 @@ impl MsgVelNEDDepA {
             v_accuracy: _buf.read_u16::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgVelNEDDepA {
@@ -3086,7 +3084,7 @@ pub struct MsgVelNEDGnss {
 
 impl MsgVelNEDGnss {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDGnss, crate::Error> {
-        Ok( MsgVelNEDGnss{
+        Ok(MsgVelNEDGnss {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             n: _buf.read_i32::<LittleEndian>()?,
@@ -3096,7 +3094,7 @@ impl MsgVelNEDGnss {
             v_accuracy: _buf.read_u16::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
             flags: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgVelNEDGnss {

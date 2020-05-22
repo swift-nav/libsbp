@@ -12,20 +12,18 @@
 // Automatically generated from yaml/swiftnav/sbp/ext_events.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 //! Messages reporting accurately-timestamped external events,
 //! e.g. camera shutter time.
-//! 
+//!
 
 extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian,ReadBytesExt};
+use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
 use crate::SbpString;
-
 
 /// Reports timestamped external pin event
 ///
@@ -52,14 +50,14 @@ pub struct MsgExtEvent {
 
 impl MsgExtEvent {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgExtEvent, crate::Error> {
-        Ok( MsgExtEvent{
+        Ok(MsgExtEvent {
             sender_id: None,
             wn: _buf.read_u16::<LittleEndian>()?,
             tow: _buf.read_u32::<LittleEndian>()?,
             ns_residual: _buf.read_i32::<LittleEndian>()?,
             flags: _buf.read_u8()?,
             pin: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgExtEvent {

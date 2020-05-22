@@ -12,18 +12,16 @@
 // Automatically generated from yaml/swiftnav/sbp/imu.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 //! Inertial Measurement Unit (IMU) messages.
 
 extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian,ReadBytesExt};
+use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
 use crate::SbpString;
-
 
 /// Auxiliary IMU data
 ///
@@ -46,12 +44,12 @@ pub struct MsgImuAux {
 
 impl MsgImuAux {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuAux, crate::Error> {
-        Ok( MsgImuAux{
+        Ok(MsgImuAux {
             sender_id: None,
             imu_type: _buf.read_u8()?,
             temp: _buf.read_i16::<LittleEndian>()?,
             imu_conf: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgImuAux {
@@ -93,7 +91,7 @@ impl crate::serialize::SbpSerialize for MsgImuAux {
 /// Raw IMU data
 ///
 /// Raw data from the Inertial Measurement Unit, containing accelerometer and
-/// gyroscope readings. The sense of the measurements are to be aligned with 
+/// gyroscope readings. The sense of the measurements are to be aligned with
 /// the indications on the device itself. Measurement units, which are specific to the
 /// device hardware and settings, are communicated via the MSG_IMU_AUX message.
 ///
@@ -122,7 +120,7 @@ pub struct MsgImuRaw {
 
 impl MsgImuRaw {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuRaw, crate::Error> {
-        Ok( MsgImuRaw{
+        Ok(MsgImuRaw {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             tow_f: _buf.read_u8()?,
@@ -132,7 +130,7 @@ impl MsgImuRaw {
             gyr_x: _buf.read_i16::<LittleEndian>()?,
             gyr_y: _buf.read_i16::<LittleEndian>()?,
             gyr_z: _buf.read_i16::<LittleEndian>()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgImuRaw {

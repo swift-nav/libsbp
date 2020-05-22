@@ -12,18 +12,16 @@
 // Automatically generated from yaml/swiftnav/sbp/gnss.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 //! Various structs shared between modules
 
 extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian,ReadBytesExt};
+use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
 use crate::SbpString;
-
 
 /// GNSS carrier phase measurement.
 ///
@@ -44,15 +42,15 @@ pub struct CarrierPhase {
 
 impl CarrierPhase {
     pub fn parse(_buf: &mut &[u8]) -> Result<CarrierPhase, crate::Error> {
-        Ok( CarrierPhase{
+        Ok(CarrierPhase {
             i: _buf.read_i32::<LittleEndian>()?,
             f: _buf.read_u8()?,
-        } )
+        })
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CarrierPhase>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
-            v.push( CarrierPhase::parse(buf)? );
+            v.push(CarrierPhase::parse(buf)?);
         }
         Ok(v)
     }
@@ -60,7 +58,7 @@ impl CarrierPhase {
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<CarrierPhase>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
-            v.push( CarrierPhase::parse(buf)? );
+            v.push(CarrierPhase::parse(buf)?);
         }
         Ok(v)
     }
@@ -103,16 +101,16 @@ pub struct GPSTime {
 
 impl GPSTime {
     pub fn parse(_buf: &mut &[u8]) -> Result<GPSTime, crate::Error> {
-        Ok( GPSTime{
+        Ok(GPSTime {
             tow: _buf.read_u32::<LittleEndian>()?,
             ns_residual: _buf.read_i32::<LittleEndian>()?,
             wn: _buf.read_u16::<LittleEndian>()?,
-        } )
+        })
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTime>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
-            v.push( GPSTime::parse(buf)? );
+            v.push(GPSTime::parse(buf)?);
         }
         Ok(v)
     }
@@ -120,7 +118,7 @@ impl GPSTime {
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GPSTime>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
-            v.push( GPSTime::parse(buf)? );
+            v.push(GPSTime::parse(buf)?);
         }
         Ok(v)
     }
@@ -161,15 +159,15 @@ pub struct GPSTimeDep {
 
 impl GPSTimeDep {
     pub fn parse(_buf: &mut &[u8]) -> Result<GPSTimeDep, crate::Error> {
-        Ok( GPSTimeDep{
+        Ok(GPSTimeDep {
             tow: _buf.read_u32::<LittleEndian>()?,
             wn: _buf.read_u16::<LittleEndian>()?,
-        } )
+        })
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTimeDep>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
-            v.push( GPSTimeDep::parse(buf)? );
+            v.push(GPSTimeDep::parse(buf)?);
         }
         Ok(v)
     }
@@ -177,7 +175,7 @@ impl GPSTimeDep {
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GPSTimeDep>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
-            v.push( GPSTimeDep::parse(buf)? );
+            v.push(GPSTimeDep::parse(buf)?);
         }
         Ok(v)
     }
@@ -216,15 +214,15 @@ pub struct GPSTimeSec {
 
 impl GPSTimeSec {
     pub fn parse(_buf: &mut &[u8]) -> Result<GPSTimeSec, crate::Error> {
-        Ok( GPSTimeSec{
+        Ok(GPSTimeSec {
             tow: _buf.read_u32::<LittleEndian>()?,
             wn: _buf.read_u16::<LittleEndian>()?,
-        } )
+        })
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTimeSec>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
-            v.push( GPSTimeSec::parse(buf)? );
+            v.push(GPSTimeSec::parse(buf)?);
         }
         Ok(v)
     }
@@ -232,7 +230,7 @@ impl GPSTimeSec {
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GPSTimeSec>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
-            v.push( GPSTimeSec::parse(buf)? );
+            v.push(GPSTimeSec::parse(buf)?);
         }
         Ok(v)
     }
@@ -270,15 +268,15 @@ pub struct GnssSignal {
 
 impl GnssSignal {
     pub fn parse(_buf: &mut &[u8]) -> Result<GnssSignal, crate::Error> {
-        Ok( GnssSignal{
+        Ok(GnssSignal {
             sat: _buf.read_u8()?,
             code: _buf.read_u8()?,
-        } )
+        })
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssSignal>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
-            v.push( GnssSignal::parse(buf)? );
+            v.push(GnssSignal::parse(buf)?);
         }
         Ok(v)
     }
@@ -286,7 +284,7 @@ impl GnssSignal {
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GnssSignal>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
-            v.push( GnssSignal::parse(buf)? );
+            v.push(GnssSignal::parse(buf)?);
         }
         Ok(v)
     }
@@ -327,24 +325,27 @@ pub struct GnssSignalDep {
 
 impl GnssSignalDep {
     pub fn parse(_buf: &mut &[u8]) -> Result<GnssSignalDep, crate::Error> {
-        Ok( GnssSignalDep{
+        Ok(GnssSignalDep {
             sat: _buf.read_u16::<LittleEndian>()?,
             code: _buf.read_u8()?,
             reserved: _buf.read_u8()?,
-        } )
+        })
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssSignalDep>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
-            v.push( GnssSignalDep::parse(buf)? );
+            v.push(GnssSignalDep::parse(buf)?);
         }
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GnssSignalDep>, crate::Error> {
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<GnssSignalDep>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
-            v.push( GnssSignalDep::parse(buf)? );
+            v.push(GnssSignalDep::parse(buf)?);
         }
         Ok(v)
     }
@@ -384,15 +385,15 @@ pub struct SvId {
 
 impl SvId {
     pub fn parse(_buf: &mut &[u8]) -> Result<SvId, crate::Error> {
-        Ok( SvId{
+        Ok(SvId {
             satId: _buf.read_u8()?,
             constellation: _buf.read_u8()?,
-        } )
+        })
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SvId>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
-            v.push( SvId::parse(buf)? );
+            v.push(SvId::parse(buf)?);
         }
         Ok(v)
     }
@@ -400,7 +401,7 @@ impl SvId {
     pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<SvId>, crate::Error> {
         let mut v = Vec::new();
         for _ in 0..n {
-            v.push( SvId::parse(buf)? );
+            v.push(SvId::parse(buf)?);
         }
         Ok(v)
     }

@@ -12,23 +12,21 @@
 // Automatically generated from yaml/swiftnav/sbp/flash.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 //! Messages for reading/writing the device's onboard flash memory. Many
 //! of these messages target specific flash memory peripherals used in
 //! Swift Navigation devices: the STM32 flash and the M25Pxx FPGA
-//! configuration flash from Piksi 2.3.1.  This module does not apply 
+//! configuration flash from Piksi 2.3.1.  This module does not apply
 //! to Piksi Multi.
-//! 
+//!
 
 extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian,ReadBytesExt};
+use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
 use crate::SbpString;
-
 
 /// Flash response message (host <= device).
 ///
@@ -48,10 +46,10 @@ pub struct MsgFlashDone {
 
 impl MsgFlashDone {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashDone, crate::Error> {
-        Ok( MsgFlashDone{
+        Ok(MsgFlashDone {
             sender_id: None,
             response: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgFlashDone {
@@ -107,11 +105,11 @@ pub struct MsgFlashErase {
 
 impl MsgFlashErase {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashErase, crate::Error> {
-        Ok( MsgFlashErase{
+        Ok(MsgFlashErase {
             sender_id: None,
             target: _buf.read_u8()?,
             sector_num: _buf.read_u32::<LittleEndian>()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgFlashErase {
@@ -174,13 +172,13 @@ pub struct MsgFlashProgram {
 
 impl MsgFlashProgram {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashProgram, crate::Error> {
-        Ok( MsgFlashProgram{
+        Ok(MsgFlashProgram {
             sender_id: None,
             target: _buf.read_u8()?,
             addr_start: crate::parser::read_u8_array_limit(_buf, 3)?,
             addr_len: _buf.read_u8()?,
             data: crate::parser::read_u8_array(_buf)?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgFlashProgram {
@@ -246,12 +244,12 @@ pub struct MsgFlashReadReq {
 
 impl MsgFlashReadReq {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashReadReq, crate::Error> {
-        Ok( MsgFlashReadReq{
+        Ok(MsgFlashReadReq {
             sender_id: None,
             target: _buf.read_u8()?,
             addr_start: crate::parser::read_u8_array_limit(_buf, 3)?,
             addr_len: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgFlashReadReq {
@@ -315,12 +313,12 @@ pub struct MsgFlashReadResp {
 
 impl MsgFlashReadResp {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashReadResp, crate::Error> {
-        Ok( MsgFlashReadResp{
+        Ok(MsgFlashReadResp {
             sender_id: None,
             target: _buf.read_u8()?,
             addr_start: crate::parser::read_u8_array_limit(_buf, 3)?,
             addr_len: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgFlashReadResp {
@@ -375,10 +373,10 @@ pub struct MsgM25FlashWriteStatus {
 
 impl MsgM25FlashWriteStatus {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgM25FlashWriteStatus, crate::Error> {
-        Ok( MsgM25FlashWriteStatus{
+        Ok(MsgM25FlashWriteStatus {
             sender_id: None,
             status: crate::parser::read_u8_array_limit(_buf, 1)?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgM25FlashWriteStatus {
@@ -429,10 +427,10 @@ pub struct MsgStmFlashLockSector {
 
 impl MsgStmFlashLockSector {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmFlashLockSector, crate::Error> {
-        Ok( MsgStmFlashLockSector{
+        Ok(MsgStmFlashLockSector {
             sender_id: None,
             sector: _buf.read_u32::<LittleEndian>()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgStmFlashLockSector {
@@ -483,10 +481,10 @@ pub struct MsgStmFlashUnlockSector {
 
 impl MsgStmFlashUnlockSector {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmFlashUnlockSector, crate::Error> {
-        Ok( MsgStmFlashUnlockSector{
+        Ok(MsgStmFlashUnlockSector {
             sender_id: None,
             sector: _buf.read_u32::<LittleEndian>()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgStmFlashUnlockSector {
@@ -538,9 +536,7 @@ pub struct MsgStmUniqueIdReq {
 
 impl MsgStmUniqueIdReq {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmUniqueIdReq, crate::Error> {
-        Ok( MsgStmUniqueIdReq{
-            sender_id: None,
-        } )
+        Ok(MsgStmUniqueIdReq { sender_id: None })
     }
 }
 impl super::SBPMessage for MsgStmUniqueIdReq {
@@ -564,8 +560,7 @@ impl super::SBPMessage for MsgStmUniqueIdReq {
 
 impl crate::serialize::SbpSerialize for MsgStmUniqueIdReq {
     #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-    }
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
 
     fn sbp_size(&self) -> usize {
         0
@@ -591,10 +586,10 @@ pub struct MsgStmUniqueIdResp {
 
 impl MsgStmUniqueIdResp {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmUniqueIdResp, crate::Error> {
-        Ok( MsgStmUniqueIdResp{
+        Ok(MsgStmUniqueIdResp {
             sender_id: None,
             stm_id: crate::parser::read_u8_array_limit(_buf, 12)?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgStmUniqueIdResp {

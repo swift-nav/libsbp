@@ -12,23 +12,21 @@
 // Automatically generated from yaml/swiftnav/sbp/bootload.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 //! Messages for the bootloading configuration of a Piksi 2.3.1.  This message
 //! group does not apply to Piksi Multi.
-//! 
+//!
 //! Note that some of these messages share the same message type ID for both the
 //! host request and the device response.
-//! 
+//!
 
 extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian,ReadBytesExt};
+use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
 use crate::SbpString;
-
 
 /// Deprecated
 ///
@@ -45,10 +43,10 @@ pub struct MsgBootloaderHandshakeDepA {
 
 impl MsgBootloaderHandshakeDepA {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeDepA, crate::Error> {
-        Ok( MsgBootloaderHandshakeDepA{
+        Ok(MsgBootloaderHandshakeDepA {
             sender_id: None,
             handshake: crate::parser::read_u8_array(_buf)?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgBootloaderHandshakeDepA {
@@ -98,9 +96,7 @@ pub struct MsgBootloaderHandshakeReq {
 
 impl MsgBootloaderHandshakeReq {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeReq, crate::Error> {
-        Ok( MsgBootloaderHandshakeReq{
-            sender_id: None,
-        } )
+        Ok(MsgBootloaderHandshakeReq { sender_id: None })
     }
 }
 impl super::SBPMessage for MsgBootloaderHandshakeReq {
@@ -124,8 +120,7 @@ impl super::SBPMessage for MsgBootloaderHandshakeReq {
 
 impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeReq {
     #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-    }
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
 
     fn sbp_size(&self) -> usize {
         0
@@ -153,11 +148,11 @@ pub struct MsgBootloaderHandshakeResp {
 
 impl MsgBootloaderHandshakeResp {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderHandshakeResp, crate::Error> {
-        Ok( MsgBootloaderHandshakeResp{
+        Ok(MsgBootloaderHandshakeResp {
             sender_id: None,
             flags: _buf.read_u32::<LittleEndian>()?,
             version: crate::parser::read_string(_buf)?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgBootloaderHandshakeResp {
@@ -209,10 +204,10 @@ pub struct MsgBootloaderJumpToApp {
 
 impl MsgBootloaderJumpToApp {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgBootloaderJumpToApp, crate::Error> {
-        Ok( MsgBootloaderJumpToApp{
+        Ok(MsgBootloaderJumpToApp {
             sender_id: None,
             jump: _buf.read_u8()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgBootloaderJumpToApp {
@@ -265,9 +260,7 @@ pub struct MsgNapDeviceDnaReq {
 
 impl MsgNapDeviceDnaReq {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaReq, crate::Error> {
-        Ok( MsgNapDeviceDnaReq{
-            sender_id: None,
-        } )
+        Ok(MsgNapDeviceDnaReq { sender_id: None })
     }
 }
 impl super::SBPMessage for MsgNapDeviceDnaReq {
@@ -291,8 +284,7 @@ impl super::SBPMessage for MsgNapDeviceDnaReq {
 
 impl crate::serialize::SbpSerialize for MsgNapDeviceDnaReq {
     #[allow(unused_variables)]
-    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-    }
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {}
 
     fn sbp_size(&self) -> usize {
         0
@@ -319,10 +311,10 @@ pub struct MsgNapDeviceDnaResp {
 
 impl MsgNapDeviceDnaResp {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaResp, crate::Error> {
-        Ok( MsgNapDeviceDnaResp{
+        Ok(MsgNapDeviceDnaResp {
             sender_id: None,
             dna: crate::parser::read_u8_array_limit(_buf, 8)?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgNapDeviceDnaResp {

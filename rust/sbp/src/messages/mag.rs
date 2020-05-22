@@ -12,18 +12,16 @@
 // Automatically generated from yaml/swiftnav/sbp/mag.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-
 //! Magnetometer (mag) messages.
 
 extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian,ReadBytesExt};
+use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
 use crate::SbpString;
-
 
 /// Raw magnetometer data
 ///
@@ -49,14 +47,14 @@ pub struct MsgMagRaw {
 
 impl MsgMagRaw {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgMagRaw, crate::Error> {
-        Ok( MsgMagRaw{
+        Ok(MsgMagRaw {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             tow_f: _buf.read_u8()?,
             mag_x: _buf.read_i16::<LittleEndian>()?,
             mag_y: _buf.read_i16::<LittleEndian>()?,
             mag_z: _buf.read_i16::<LittleEndian>()?,
-        } )
+        })
     }
 }
 impl super::SBPMessage for MsgMagRaw {
