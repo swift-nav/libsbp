@@ -22,7 +22,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_INS_UPDATES (0xBEEF).
+/** SBP class for message MSG_INS_UPDATES (0xFF06).
  *
  * You can have MSG_INS_UPDATES inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
@@ -31,7 +31,7 @@ import org.json.JSONArray;
  * The INS update status message contains informations about executed and rejected INS updates  */
 
 public class MsgInsUpdates extends SBPMessage {
-    public static final int TYPE = 0xBEEF;
+    public static final int TYPE = 0xFF06;
 
     
     /** GPS Time of Week */

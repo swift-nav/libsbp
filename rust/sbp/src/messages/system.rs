@@ -369,7 +369,7 @@ impl MsgInsUpdates {
 }
 impl super::SBPMessage for MsgInsUpdates {
     fn get_message_type(&self) -> u16 {
-        48879
+        65286
     }
 
     fn get_sender_id(&self) -> Option<u16> {

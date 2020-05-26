@@ -158,54 +158,6 @@ $(makeSBP 'msgInsStatus ''MsgInsStatus)
 $(makeJSON "_msgInsStatus_" ''MsgInsStatus)
 $(makeLenses ''MsgInsStatus)
 
-msgInsUpdates :: Word16
-msgInsUpdates = 0xBEEF
-
--- | SBP class for message MSG_INS_UPDATES (0xBEEF).
---
--- The INS update status message contains informations about executed and
--- rejected INS updates
-data MsgInsUpdates = MsgInsUpdates
-  { _msgInsUpdates_tow      :: !Word32
-    -- ^ GPS Time of Week
-  , _msgInsUpdates_gnsspos  :: !Word8
-    -- ^ GNSS position update status flags
-  , _msgInsUpdates_gnssvel  :: !Word8
-    -- ^ GNSS velocity update status flags
-  , _msgInsUpdates_wheelticks :: !Word8
-    -- ^ Wheelticks update status flags
-  , _msgInsUpdates_speed    :: !Word8
-    -- ^ Wheelticks update status flags
-  , _msgInsUpdates_nhc      :: !Word8
-    -- ^ NHC update status flags
-  , _msgInsUpdates_zerovel  :: !Word8
-    -- ^ Zero velocity update status flags
-  } deriving ( Show, Read, Eq )
-
-instance Binary MsgInsUpdates where
-  get = do
-    _msgInsUpdates_tow <- getWord32le
-    _msgInsUpdates_gnsspos <- getWord8
-    _msgInsUpdates_gnssvel <- getWord8
-    _msgInsUpdates_wheelticks <- getWord8
-    _msgInsUpdates_speed <- getWord8
-    _msgInsUpdates_nhc <- getWord8
-    _msgInsUpdates_zerovel <- getWord8
-    pure MsgInsUpdates {..}
-
-  put MsgInsUpdates {..} = do
-    putWord32le _msgInsUpdates_tow
-    putWord8 _msgInsUpdates_gnsspos
-    putWord8 _msgInsUpdates_gnssvel
-    putWord8 _msgInsUpdates_wheelticks
-    putWord8 _msgInsUpdates_speed
-    putWord8 _msgInsUpdates_nhc
-    putWord8 _msgInsUpdates_zerovel
-
-$(makeSBP 'msgInsUpdates ''MsgInsUpdates)
-$(makeJSON "_msgInsUpdates_" ''MsgInsUpdates)
-$(makeLenses ''MsgInsUpdates)
-
 msgCsacTelemetry :: Word16
 msgCsacTelemetry = 0xFF04
 
@@ -265,3 +217,51 @@ instance Binary MsgCsacTelemetryLabels where
 $(makeSBP 'msgCsacTelemetryLabels ''MsgCsacTelemetryLabels)
 $(makeJSON "_msgCsacTelemetryLabels_" ''MsgCsacTelemetryLabels)
 $(makeLenses ''MsgCsacTelemetryLabels)
+
+msgInsUpdates :: Word16
+msgInsUpdates = 0xFF06
+
+-- | SBP class for message MSG_INS_UPDATES (0xFF06).
+--
+-- The INS update status message contains informations about executed and
+-- rejected INS updates
+data MsgInsUpdates = MsgInsUpdates
+  { _msgInsUpdates_tow      :: !Word32
+    -- ^ GPS Time of Week
+  , _msgInsUpdates_gnsspos  :: !Word8
+    -- ^ GNSS position update status flags
+  , _msgInsUpdates_gnssvel  :: !Word8
+    -- ^ GNSS velocity update status flags
+  , _msgInsUpdates_wheelticks :: !Word8
+    -- ^ Wheelticks update status flags
+  , _msgInsUpdates_speed    :: !Word8
+    -- ^ Wheelticks update status flags
+  , _msgInsUpdates_nhc      :: !Word8
+    -- ^ NHC update status flags
+  , _msgInsUpdates_zerovel  :: !Word8
+    -- ^ Zero velocity update status flags
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgInsUpdates where
+  get = do
+    _msgInsUpdates_tow <- getWord32le
+    _msgInsUpdates_gnsspos <- getWord8
+    _msgInsUpdates_gnssvel <- getWord8
+    _msgInsUpdates_wheelticks <- getWord8
+    _msgInsUpdates_speed <- getWord8
+    _msgInsUpdates_nhc <- getWord8
+    _msgInsUpdates_zerovel <- getWord8
+    pure MsgInsUpdates {..}
+
+  put MsgInsUpdates {..} = do
+    putWord32le _msgInsUpdates_tow
+    putWord8 _msgInsUpdates_gnsspos
+    putWord8 _msgInsUpdates_gnssvel
+    putWord8 _msgInsUpdates_wheelticks
+    putWord8 _msgInsUpdates_speed
+    putWord8 _msgInsUpdates_nhc
+    putWord8 _msgInsUpdates_zerovel
+
+$(makeSBP 'msgInsUpdates ''MsgInsUpdates)
+$(makeJSON "_msgInsUpdates_" ''MsgInsUpdates)
+$(makeLenses ''MsgInsUpdates)

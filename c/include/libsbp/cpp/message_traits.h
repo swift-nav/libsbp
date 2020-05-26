@@ -1056,12 +1056,6 @@ struct MessageTraits<msg_linux_process_fd_summary_t> {
 
 
 template<>
-struct MessageTraits<msg_ins_updates_t> {
-  static constexpr u16 id = 48879;
-};
-
-
-template<>
 struct MessageTraits<msg_startup_t> {
   static constexpr u16 id = 65280;
 };
@@ -1088,6 +1082,12 @@ struct MessageTraits<msg_csac_telemetry_t> {
 template<>
 struct MessageTraits<msg_csac_telemetry_labels_t> {
   static constexpr u16 id = 65285;
+};
+
+
+template<>
+struct MessageTraits<msg_ins_updates_t> {
+  static constexpr u16 id = 65286;
 };
 
 
