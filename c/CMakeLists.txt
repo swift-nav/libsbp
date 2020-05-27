@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(libsbp)
+project(libsbp C)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake" "${CMAKE_CURRENT_LIST_DIR}/cmake/common")
 
@@ -15,7 +15,9 @@ include(CodeCoverage)
 include(TestTargets)
 add_code_coverage_all_targets()
 
-find_package(Googletest REQUIRED)
+if(libsbp_BUILD_TESTS)
+  find_package(Googletest)
+endif()
 
 ##########################################################
 # Set some reasonable default compiler flags.
@@ -25,6 +27,8 @@ find_package(Googletest REQUIRED)
 ##########################################################
 if(MSVC)
     set(LIBSBP_CFLAGS "/Wall" CACHE STRING "Compile flags for libsbp.")
+elseif(CMAKE_C_COMPILER_ID MATCHES "ARMCC")
+    # Warnings are on by default in armcc
 else()
     set(LIBSBP_CFLAGS "-Wall -Werror" CACHE STRING "Compile flags for libsbp.")
 endif()
