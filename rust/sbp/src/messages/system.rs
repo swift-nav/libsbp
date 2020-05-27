@@ -330,7 +330,8 @@ impl crate::serialize::SbpSerialize for MsgInsStatus {
 
 /// Inertial Navigation System update status message
 ///
-/// The INS update status message contains informations about executed and rejected INS updates
+/// The INS update status message contains informations about executed and rejected INS updates.
+/// This message is expected to be extended in the future as new types of measurements are being added.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone)]

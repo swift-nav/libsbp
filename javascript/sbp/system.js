@@ -224,7 +224,8 @@ MsgCsacTelemetryLabels.prototype.fieldSpec.push(['telemetry_labels', 'string', n
  * SBP class for message MSG_INS_UPDATES (0xFF06).
  *
  * The INS update status message contains informations about executed and rejected
- * INS updates
+ * INS updates. This message is expected to be extended in the future as new types
+ * of measurements are being added.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week

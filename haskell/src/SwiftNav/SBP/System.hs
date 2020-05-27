@@ -224,7 +224,8 @@ msgInsUpdates = 0xFF06
 -- | SBP class for message MSG_INS_UPDATES (0xFF06).
 --
 -- The INS update status message contains informations about executed and
--- rejected INS updates
+-- rejected INS updates. This message is expected to be extended in the future
+-- as new types of measurements are being added.
 data MsgInsUpdates = MsgInsUpdates
   { _msgInsUpdates_tow      :: !Word32
     -- ^ GPS Time of Week
