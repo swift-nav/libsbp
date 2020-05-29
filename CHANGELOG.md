@@ -1,5 +1,41 @@
 # Change Log
 
+## [v3.1.0](https://github.com/swift-nav/libsbp/tree/v3.1.0)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.0.1...v3.1.0)
+
+**Merged pull requests:**
+
+- Explicitly flush stdout \[INFRA-196\] [\#809](https://github.com/swift-nav/libsbp/pull/809)
+- \[SEN-311\] Add INS update status message [\#808](https://github.com/swift-nav/libsbp/pull/808)
+- Support building with ARMCC [\#807](https://github.com/swift-nav/libsbp/pull/807)
+
+## [v3.0.1](https://github.com/swift-nav/libsbp/tree/v3.0.1) (2020-05-22)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.0.0...v3.0.1)
+
+## [v3.0.0](https://github.com/swift-nav/libsbp/tree/v3.0.0) (2020-05-22)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.8.0...v3.0.0)
+
+**Closed issues:**
+
+- Rust parser does not continue parsing after CRC error [\#793](https://github.com/swift-nav/libsbp/issues/793)
+- JSONLogIterator uses generators improperly [\#716](https://github.com/swift-nav/libsbp/issues/716)
+
+**Merged pull requests:**
+
+- Auto submodule update: cmake - Merge pull request \#57 from swift-nav/joint-work/valgrind-integration [\#806](https://github.com/swift-nav/libsbp/pull/806)
+- Handle invalid UTF-8 sequences \[INFRA-196\] [\#805](https://github.com/swift-nav/libsbp/pull/805)
+- Public receive method in SBPFramer Java class [\#804](https://github.com/swift-nav/libsbp/pull/804)
+- rust: derive clone [\#803](https://github.com/swift-nav/libsbp/pull/803)
+- Auto submodule update: cmake - Add FindSwiftlets.cmake \(\#53\) [\#800](https://github.com/swift-nav/libsbp/pull/800)
+- Improve how the rust parser handles errors [\#798](https://github.com/swift-nav/libsbp/pull/798)
+- \[SEN-235\] Fix IMURAW docstring [\#797](https://github.com/swift-nav/libsbp/pull/797)
+- npm audit fix \[INFRA-184\] [\#796](https://github.com/swift-nav/libsbp/pull/796)
+- Auto submodule update: cmake - Merge pull request \#51 from swift-nav/lkloh\_cmake [\#795](https://github.com/swift-nav/libsbp/pull/795)
+- Fix-up Python binding generation [\#794](https://github.com/swift-nav/libsbp/pull/794)
+
 ## [v2.8.0](https://github.com/swift-nav/libsbp/tree/v2.8.0)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.7.7...v2.8.0)

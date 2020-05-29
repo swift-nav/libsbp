@@ -363,8 +363,9 @@ pub struct MsgInsUpdates {
 }
 
 impl MsgInsUpdates {
+    #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgInsUpdates, crate::Error> {
-        Ok(MsgInsUpdates {
+        Ok( MsgInsUpdates{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             gnsspos: _buf.read_u8()?,
@@ -373,7 +374,7 @@ impl MsgInsUpdates {
             speed: _buf.read_u8()?,
             nhc: _buf.read_u8()?,
             zerovel: _buf.read_u8()?,
-        })
+        } )
     }
 }
 impl super::SBPMessage for MsgInsUpdates {
