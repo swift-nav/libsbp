@@ -201,6 +201,7 @@ use self::system::MsgCsacTelemetryLabels;
 use self::system::MsgDgnssStatus;
 use self::system::MsgHeartbeat;
 use self::system::MsgInsStatus;
+use self::system::MsgInsUpdates;
 use self::system::MsgStartup;
 use self::tracking::MsgMeasurementState;
 use self::tracking::MsgTrackingIq;
@@ -414,6 +415,7 @@ pub enum SBP {
     MsgInsStatus(MsgInsStatus),
     MsgCsacTelemetry(MsgCsacTelemetry),
     MsgCsacTelemetryLabels(MsgCsacTelemetryLabels),
+    MsgInsUpdates(MsgInsUpdates),
     MsgHeartbeat(MsgHeartbeat),
     Unknown(Unknown),
 }
@@ -1336,6 +1338,11 @@ impl SBP {
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgCsacTelemetryLabels(msg))
             }
+            65286 => {
+                let mut msg = MsgInsUpdates::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgInsUpdates(msg))
+            }
             65535 => {
                 let mut msg = MsgHeartbeat::parse(payload)?;
                 msg.set_sender_id(sender_id);
@@ -1538,6 +1545,7 @@ impl SBP {
             SBP::MsgInsStatus(msg) => msg,
             SBP::MsgCsacTelemetry(msg) => msg,
             SBP::MsgCsacTelemetryLabels(msg) => msg,
+            SBP::MsgInsUpdates(msg) => msg,
             SBP::MsgHeartbeat(msg) => msg,
             SBP::Unknown(msg) => msg,
         }

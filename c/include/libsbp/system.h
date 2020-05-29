@@ -114,6 +114,23 @@ typedef struct SBP_ATTR_PACKED {
 } msg_csac_telemetry_labels_t;
 
 
+/** Inertial Navigation System update status message
+ *
+ * The INS update status message contains informations about executed and rejected INS updates.
+ * This message is expected to be extended in the future as new types of measurements are being added.
+ */
+#define SBP_MSG_INS_UPDATES           0xFF06
+typedef struct SBP_ATTR_PACKED {
+  u32 tow;           /**< GPS Time of Week [ms] */
+  u8 gnsspos;       /**< GNSS position update status flags */
+  u8 gnssvel;       /**< GNSS velocity update status flags */
+  u8 wheelticks;    /**< Wheelticks update status flags */
+  u8 speed;         /**< Wheelticks update status flags */
+  u8 nhc;           /**< NHC update status flags */
+  u8 zerovel;       /**< Zero velocity update status flags */
+} msg_ins_updates_t;
+
+
 /** \} */
 
 SBP_PACK_END

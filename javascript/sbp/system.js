@@ -220,6 +220,53 @@ MsgCsacTelemetryLabels.prototype.fieldSpec = [];
 MsgCsacTelemetryLabels.prototype.fieldSpec.push(['id', 'writeUInt8', 1]);
 MsgCsacTelemetryLabels.prototype.fieldSpec.push(['telemetry_labels', 'string', null]);
 
+/**
+ * SBP class for message MSG_INS_UPDATES (0xFF06).
+ *
+ * The INS update status message contains informations about executed and rejected
+ * INS updates. This message is expected to be extended in the future as new types
+ * of measurements are being added.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field gnsspos number (unsigned 8-bit int, 1 byte) GNSS position update status flags
+ * @field gnssvel number (unsigned 8-bit int, 1 byte) GNSS velocity update status flags
+ * @field wheelticks number (unsigned 8-bit int, 1 byte) Wheelticks update status flags
+ * @field speed number (unsigned 8-bit int, 1 byte) Wheelticks update status flags
+ * @field nhc number (unsigned 8-bit int, 1 byte) NHC update status flags
+ * @field zerovel number (unsigned 8-bit int, 1 byte) Zero velocity update status flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgInsUpdates = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_INS_UPDATES";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgInsUpdates.prototype = Object.create(SBP.prototype);
+MsgInsUpdates.prototype.messageType = "MSG_INS_UPDATES";
+MsgInsUpdates.prototype.msg_type = 0xFF06;
+MsgInsUpdates.prototype.constructor = MsgInsUpdates;
+MsgInsUpdates.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .uint8('gnsspos')
+  .uint8('gnssvel')
+  .uint8('wheelticks')
+  .uint8('speed')
+  .uint8('nhc')
+  .uint8('zerovel');
+MsgInsUpdates.prototype.fieldSpec = [];
+MsgInsUpdates.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgInsUpdates.prototype.fieldSpec.push(['gnsspos', 'writeUInt8', 1]);
+MsgInsUpdates.prototype.fieldSpec.push(['gnssvel', 'writeUInt8', 1]);
+MsgInsUpdates.prototype.fieldSpec.push(['wheelticks', 'writeUInt8', 1]);
+MsgInsUpdates.prototype.fieldSpec.push(['speed', 'writeUInt8', 1]);
+MsgInsUpdates.prototype.fieldSpec.push(['nhc', 'writeUInt8', 1]);
+MsgInsUpdates.prototype.fieldSpec.push(['zerovel', 'writeUInt8', 1]);
+
 module.exports = {
   0xFF00: MsgStartup,
   MsgStartup: MsgStartup,
@@ -233,4 +280,6 @@ module.exports = {
   MsgCsacTelemetry: MsgCsacTelemetry,
   0xFF05: MsgCsacTelemetryLabels,
   MsgCsacTelemetryLabels: MsgCsacTelemetryLabels,
+  0xFF06: MsgInsUpdates,
+  MsgInsUpdates: MsgInsUpdates,
 }

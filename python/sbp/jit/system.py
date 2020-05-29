@@ -304,6 +304,79 @@ rate than the MSG_CSAC_TELEMETRY.
     ret += 247
     return ret
   
+SBP_MSG_INS_UPDATES = 0xFF06
+class MsgInsUpdates(SBP):
+  """SBP class for message MSG_INS_UPDATES (0xFF06).
+
+  You can have MSG_INS_UPDATES inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The INS update status message contains informations about executed and rejected INS updates.
+This message is expected to be extended in the future as new types of measurements are being added.
+
+
+  """
+  __slots__ = ['tow',
+               'gnsspos',
+               'gnssvel',
+               'wheelticks',
+               'speed',
+               'nhc',
+               'zerovel',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__gnsspos, offset, length) = get_u8(buf, offset, length)
+    ret['gnsspos'] = __gnsspos
+    (__gnssvel, offset, length) = get_u8(buf, offset, length)
+    ret['gnssvel'] = __gnssvel
+    (__wheelticks, offset, length) = get_u8(buf, offset, length)
+    ret['wheelticks'] = __wheelticks
+    (__speed, offset, length) = get_u8(buf, offset, length)
+    ret['speed'] = __speed
+    (__nhc, offset, length) = get_u8(buf, offset, length)
+    ret['nhc'] = __nhc
+    (__zerovel, offset, length) = get_u8(buf, offset, length)
+    ret['zerovel'] = __zerovel
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.tow = res['tow']
+    self.gnsspos = res['gnsspos']
+    self.gnssvel = res['gnssvel']
+    self.wheelticks = res['wheelticks']
+    self.speed = res['speed']
+    self.nhc = res['nhc']
+    self.zerovel = res['zerovel']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # tow: u32
+    ret += 4
+    # gnsspos: u8
+    ret += 1
+    # gnssvel: u8
+    ret += 1
+    # wheelticks: u8
+    ret += 1
+    # speed: u8
+    ret += 1
+    # nhc: u8
+    ret += 1
+    # zerovel: u8
+    ret += 1
+    return ret
+  
 
 msg_classes = {
   0xFF00: MsgStartup,
@@ -312,4 +385,5 @@ msg_classes = {
   0xFF03: MsgInsStatus,
   0xFF04: MsgCsacTelemetry,
   0xFF05: MsgCsacTelemetryLabels,
+  0xFF06: MsgInsUpdates,
 }

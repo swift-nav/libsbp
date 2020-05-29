@@ -1086,6 +1086,12 @@ struct MessageTraits<msg_csac_telemetry_labels_t> {
 
 
 template<>
+struct MessageTraits<msg_ins_updates_t> {
+  static constexpr u16 id = 65286;
+};
+
+
+template<>
 struct MessageTraits<msg_heartbeat_t> {
   static constexpr u16 id = 65535;
 };
