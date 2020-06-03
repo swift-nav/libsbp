@@ -83,7 +83,7 @@ the tools predate the Rust and Python versions, and also includes an `sbp2yaml`
 tool as well as a `sbp2prettyjson` tool.
 
 Finally, a Python version of the `sbp2json` tool exists, which is installable
-on any platform that support Python via pip, e.g.:
+on any platform that supports Python via pip, e.g.:
 
 ```
 pip3 install sbp
@@ -123,7 +123,7 @@ You can then make this image operate on your local workspace like this:
 
 Once in the image, simply type `make all` to gererate all the libsbp bindings.
 
-#### Using the prebuilt one from dockerhub
+#### Using the prebuilt one from DockerHub
 
 You can also pull a copy from dockerhub (no guarantees on freshness):
 

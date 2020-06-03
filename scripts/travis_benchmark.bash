@@ -31,6 +31,8 @@ pushd rust
 
 docker build --tag rust-sbp2json .
 
+cp sbp2json/Cargo.lock .
+
 cat >Cargo.toml <<EOF
 [workspace]
 members = ["sbp", "sbp2json"]
