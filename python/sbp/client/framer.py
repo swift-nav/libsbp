@@ -51,7 +51,7 @@ class Framer(six.Iterator):
                  dispatcher=dispatch,
                  into_buffer=True,
                  skip_metadata=False,
-                 sender_id_filter=[]):
+                 sender_id_filter_list=[]):
         self._read = read
         self._write = write
         self._verbose = verbose
@@ -61,7 +61,7 @@ class Framer(six.Iterator):
         self._buffer = np.zeros(16*1024, dtype=np.uint8)
         self._into_buffer = into_buffer
         self._skip_metadata = skip_metadata
-        self._sender_id_filter = sender_id_filter
+        self._sender_id_filter_list = sender_id_filter_list
 
     def __iter__(self):
         self._broken = False
@@ -145,7 +145,7 @@ class Framer(six.Iterator):
             if self._verbose:
                 print("crc mismatch: 0x%04X 0x%04X" % (msg_crc, crc))
             return None
-        if (len(self._sender_id_filter) == 0 or sender in self._sender_id_filter):
+        if (len(self._sender_id_filter_list) == 0 or sender in self._sender_id_filter_list):
             msg = SBP(msg_type, sender, msg_len, data, crc)
             try:
                 msg = self._dispatch(msg)
