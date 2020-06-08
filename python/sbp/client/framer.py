@@ -34,6 +34,14 @@ class Framer(six.Iterator):
       Stream of bytes to read from.
     write : port
       Stream of bytes to write to.
+    verbose: boolean
+      verbosify stdout / stderr. Default False
+    dispatcher: function
+      function to call on each deframed message
+    skip_medata: boolean
+      do not add "time" and "session-uuid" metadata
+    sender_id_filter: list
+      list of integer sender_ids to frame, with the exlusion of all others
     """
 
     def __init__(self,
@@ -42,7 +50,8 @@ class Framer(six.Iterator):
                  verbose=False,
                  dispatcher=dispatch,
                  into_buffer=True,
-                 skip_metadata=False):
+                 skip_metadata=False,
+                 sender_id_filter_list=[]):
         self._read = read
         self._write = write
         self._verbose = verbose
@@ -52,6 +61,7 @@ class Framer(six.Iterator):
         self._buffer = np.zeros(16*1024, dtype=np.uint8)
         self._into_buffer = into_buffer
         self._skip_metadata = skip_metadata
+        self._sender_id_filter_list = sender_id_filter_list
 
     def __iter__(self):
         self._broken = False
@@ -135,12 +145,15 @@ class Framer(six.Iterator):
             if self._verbose:
                 print("crc mismatch: 0x%04X 0x%04X" % (msg_crc, crc))
             return None
-        msg = SBP(msg_type, sender, msg_len, data, crc)
-        try:
-            msg = self._dispatch(msg)
-        except Exception as exc:
-            warnings.warn("SBP dispatch error: %s" % (exc,))
-        return msg
+        if (len(self._sender_id_filter_list) == 0 or sender in self._sender_id_filter_list):
+            msg = SBP(msg_type, sender, msg_len, data, crc)
+            try:
+                msg = self._dispatch(msg)
+            except Exception as exc:
+                warnings.warn("SBP dispatch error: %s" % (exc,))
+            return msg
+        else:
+            return None
 
     def __call__(self, *msgs, **metadata):
         """
