@@ -144,6 +144,8 @@ class Framer(six.Iterator):
             except Exception as exc:
                 warnings.warn("SBP dispatch error: %s" % (exc,))
             return msg
+        else:
+            return None
 
     def __call__(self, *msgs, **metadata):
         """
