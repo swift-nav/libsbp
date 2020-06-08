@@ -1,7 +1,15 @@
 # Change Log
 
-## [v3.1.0](https://github.com/swift-nav/libsbp/tree/v3.1.0)
+## [v3.1.1](https://github.com/swift-nav/libsbp/tree/v3.1.1)
 
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.1.0...v3.1.1)
+
+**Merged pull requests:**
+
+- Dzollo/python sender id whitelist [\#813](https://github.com/swift-nav/libsbp/pull/813)
+- README typos, pin deps for sbp2json in Cargo.lock [\#812](https://github.com/swift-nav/libsbp/pull/812)
+
+## [v3.1.0](https://github.com/swift-nav/libsbp/tree/v3.1.0) (2020-05-29)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.0.1...v3.1.0)
 
 **Merged pull requests:**
@@ -11,11 +19,9 @@
 - Support building with ARMCC [\#807](https://github.com/swift-nav/libsbp/pull/807)
 
 ## [v3.0.1](https://github.com/swift-nav/libsbp/tree/v3.0.1) (2020-05-22)
-
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.0.0...v3.0.1)
 
 ## [v3.0.0](https://github.com/swift-nav/libsbp/tree/v3.0.0) (2020-05-22)
-
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.8.0...v3.0.0)
 
 **Closed issues:**
@@ -36,18 +42,17 @@
 - Auto submodule update: cmake - Merge pull request \#51 from swift-nav/lkloh\_cmake [\#795](https://github.com/swift-nav/libsbp/pull/795)
 - Fix-up Python binding generation [\#794](https://github.com/swift-nav/libsbp/pull/794)
 
-## [v2.8.0](https://github.com/swift-nav/libsbp/tree/v2.8.0)
-
+## [v2.8.0](https://github.com/swift-nav/libsbp/tree/v2.8.0) (2020-04-01)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.7.7...v2.8.0)
 
 **Merged pull requests:**
 
+- Fix JavaScript security warning [\#791](https://github.com/swift-nav/libsbp/pull/791)
 - rust: implement sbp2json, json2sbp, json2json \[INFRA-125\] [\#790](https://github.com/swift-nav/libsbp/pull/790)
 - INFRA-137: wrap integer gets in parens [\#789](https://github.com/swift-nav/libsbp/pull/789)
 - rust: nom parsing fix-up for eof error \[INFRA-125\] [\#788](https://github.com/swift-nav/libsbp/pull/788)
 
-## [v2.7.7](https://github.com/swift-nav/libsbp/tree/v2.7.7)
-
+## [v2.7.7](https://github.com/swift-nav/libsbp/tree/v2.7.7) (2020-03-14)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.7.6...v2.7.7)
 
 **Merged pull requests:**
@@ -55,31 +60,29 @@
 - rust: expose crc errors \[INFRA-125\] [\#786](https://github.com/swift-nav/libsbp/pull/786)
 - File playback driver [\#782](https://github.com/swift-nav/libsbp/pull/782)
 
-## [v2.7.6](https://github.com/swift-nav/libsbp/tree/v2.7.6)
-
+## [v2.7.6](https://github.com/swift-nav/libsbp/tree/v2.7.6) (2020-03-12)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.7.5...v2.7.6)
 
 **Merged pull requests:**
 
+- libsbp release 2.7.6 [\#787](https://github.com/swift-nav/libsbp/pull/787)
 - Update haskell installation instructions [\#785](https://github.com/swift-nav/libsbp/pull/785)
 - \[INFRA-114\] Nojit fixes and unit testing [\#784](https://github.com/swift-nav/libsbp/pull/784)
 - Add IMU type code for ST ASM330LLH \[STEP-63\] [\#783](https://github.com/swift-nav/libsbp/pull/783)
 
-## [v2.7.5](https://github.com/swift-nav/libsbp/tree/v2.7.5)
-
+## [v2.7.5](https://github.com/swift-nav/libsbp/tree/v2.7.5) (2020-03-07)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.7.4...v2.7.5)
 
 **Merged pull requests:**
 
 - Add library support to read and write SBP files [\#780](https://github.com/swift-nav/libsbp/pull/780)
-- Fixed crashing bug in Python release
 
-## [v2.7.3](https://github.com/swift-nav/libsbp/tree/HEAD)
-
+## [v2.7.4](https://github.com/swift-nav/libsbp/tree/v2.7.4) (2020-02-25)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.7.3...v2.7.4)
 
 **Merged pull requests:**
 
+- V2.7.4 branch [\#781](https://github.com/swift-nav/libsbp/pull/781)
 - Dzollo/expand sbp json payload [\#779](https://github.com/swift-nav/libsbp/pull/779)
 - Dzollo/sen 138/wheel odometry [\#778](https://github.com/swift-nav/libsbp/pull/778)
 - \[SEN-138\] Add message for accumulated wheeltick count [\#777](https://github.com/swift-nav/libsbp/pull/777)
@@ -132,7 +135,6 @@
 - Star 833 [\#736](https://github.com/swift-nav/libsbp/pull/736)
 - Generate JSON schema definitions for web clients [\#735](https://github.com/swift-nav/libsbp/pull/735)
 - Update libsbp ARM builders [\#733](https://github.com/swift-nav/libsbp/pull/733)
-- Modify to work with Rust's bindgen [\#706](https://github.com/swift-nav/libsbp/pull/706)
 
 ## [v2.7.1](https://github.com/swift-nav/libsbp/tree/v2.7.1) (2019-09-20)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.7.0...v2.7.1)
@@ -174,67 +176,24 @@
 ## [v2.6.4](https://github.com/swift-nav/libsbp/tree/v2.6.4) (2019-06-27)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.3...v2.6.4)
 
-**Closed issues:**
-
-- cmake error while installing libsbp - include could not find load file [\#705](https://github.com/swift-nav/libsbp/issues/705)
-
 **Merged pull requests:**
 
 - Update README.md [\#707](https://github.com/swift-nav/libsbp/pull/707)
-- SSR STEC and gridded correction message refinements [\#704](https://github.com/swift-nav/libsbp/pull/704)
-- Change ssr\_update\_interval to u8. [\#703](https://github.com/swift-nav/libsbp/pull/703)
-- Purge llvmlite and numba dependencies from generated Python code \[ESD-1396\] [\#702](https://github.com/swift-nav/libsbp/pull/702)
-- Don't use hardcoded include/link paths [\#701](https://github.com/swift-nav/libsbp/pull/701)
 
 ## [v2.6.3](https://github.com/swift-nav/libsbp/tree/v2.6.3) (2019-06-11)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.2...v2.6.3)
 
-**Merged pull requests:**
-
-- Version 2.6.3 [\#700](https://github.com/swift-nav/libsbp/pull/700)
-- Move sbp2json to libsbp from piksi\_tools \[ESD-1374\] [\#699](https://github.com/swift-nav/libsbp/pull/699)
-- Deprecate MSG\_INIT\_BASE \[ESD-1286\] [\#698](https://github.com/swift-nav/libsbp/pull/698)
-
 ## [v2.6.2](https://github.com/swift-nav/libsbp/tree/v2.6.2) (2019-06-06)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.1...v2.6.2)
-
-**Merged pull requests:**
-
-- v2.6.2 [\#697](https://github.com/swift-nav/libsbp/pull/697)
 
 ## [v2.6.1](https://github.com/swift-nav/libsbp/tree/v2.6.1) (2019-06-06)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.0...v2.6.1)
 
-**Merged pull requests:**
-
-- Version 2.6.1 [\#696](https://github.com/swift-nav/libsbp/pull/696)
-- Add QZSS eph [\#695](https://github.com/swift-nav/libsbp/pull/695)
-- Import standard cmake modules, standardise dependency resolution \[ESD-1246\] \[ESD-1247\] [\#692](https://github.com/swift-nav/libsbp/pull/692)
-
 ## [v2.6.0](https://github.com/swift-nav/libsbp/tree/v2.6.0) (2019-06-05)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.5...v2.6.0)
 
-**Merged pull requests:**
-
-- libsbp release 2.6.0 [\#694](https://github.com/swift-nav/libsbp/pull/694)
-- Remove unused build\_test\_data.py \[ESD-1086\] [\#693](https://github.com/swift-nav/libsbp/pull/693)
-- Integrate numba into setuptools \[ESD-1156\] [\#687](https://github.com/swift-nav/libsbp/pull/687)
-- Added three new messages for gridded atmospheric SSR corrections. [\#686](https://github.com/swift-nav/libsbp/pull/686)
-
 ## [v2.5.5](https://github.com/swift-nav/libsbp/tree/v2.5.5) (2019-05-16)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.3-4-g7e6afa39...v2.5.5)
-
-**Closed issues:**
-
-- MSG\_INIT\_BASE / Hotstart with known Position [\#681](https://github.com/swift-nav/libsbp/issues/681)
-
-**Merged pull requests:**
-
-- Release version 2.5.5 [\#690](https://github.com/swift-nav/libsbp/pull/690)
-- Use piksi\_tools master in benchmark [\#689](https://github.com/swift-nav/libsbp/pull/689)
-- Add source to gal eph [\#688](https://github.com/swift-nav/libsbp/pull/688)
-- Added additional checks for tools in the Makefile [\#684](https://github.com/swift-nav/libsbp/pull/684)
-- \[ESD-1238\] Do not call nullary constructors in Haskell ToJSON [\#680](https://github.com/swift-nav/libsbp/pull/680)
 
 ## [v2.5.3-4-g7e6afa39](https://github.com/swift-nav/libsbp/tree/v2.5.3-4-g7e6afa39) (2019-04-10)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.4...v2.5.3-4-g7e6afa39)
@@ -242,34 +201,14 @@
 ## [v2.5.4](https://github.com/swift-nav/libsbp/tree/v2.5.4) (2019-04-10)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.3...v2.5.4)
 
-**Merged pull requests:**
-
-- Release 2.5.4 [\#679](https://github.com/swift-nav/libsbp/pull/679)
-- Add TCP reconnect, purge "Skylark broker" support [\#678](https://github.com/swift-nav/libsbp/pull/678)
-
 ## [v2.5.3](https://github.com/swift-nav/libsbp/tree/v2.5.3) (2019-04-08)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.2...v2.5.3)
-
-**Merged pull requests:**
-
-- Release 2.5.3 [\#677](https://github.com/swift-nav/libsbp/pull/677)
-- Write payload if given [\#676](https://github.com/swift-nav/libsbp/pull/676)
 
 ## [v2.5.2](https://github.com/swift-nav/libsbp/tree/v2.5.2) (2019-04-04)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.1...v2.5.2)
 
-**Merged pull requests:**
-
-- Release version 2.5.2 [\#675](https://github.com/swift-nav/libsbp/pull/675)
-- Add base into\_buffer method for messages with no payload \[ESD-1154\] [\#674](https://github.com/swift-nav/libsbp/pull/674)
-- py3 compat: use errno attribute for socket.error [\#673](https://github.com/swift-nav/libsbp/pull/673)
-
 ## [v2.5.1](https://github.com/swift-nav/libsbp/tree/v2.5.1) (2019-03-29)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.0...v2.5.1)
-
-**Merged pull requests:**
-
-- Release version 2.5.1 [\#672](https://github.com/swift-nav/libsbp/pull/672)
 
 ## [v2.5.0](https://github.com/swift-nav/libsbp/tree/v2.5.0) (2019-03-01)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.4.10-haskell_tools0...v2.5.0)
