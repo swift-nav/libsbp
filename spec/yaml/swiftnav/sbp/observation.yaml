@@ -826,10 +826,18 @@ definitions:
           desc: Clock reference
       - iode:
           type: u8
-          desc: Issue of ephemeris data
+          desc: |
+            Issue of ephemeris data
+
+            Calculated from the navigation data parameter t_oe per RTCM/CSNO recommendation:
+            IODE = mod (t_oe / 720, 240)
       - iodc:
           type: u16
-          desc: Issue of clock data
+          desc: |
+            Issue of clock data
+
+            Calculated from the navigation data parameter t_oe per RTCM/CSNO recommendation:
+            IODE = mod (t_oc / 720, 240)
 
  - MSG_EPHEMERIS_GAL_DEP_A:
     id: 0x0095
@@ -927,10 +935,10 @@ definitions:
           desc: Clock reference
       - iode:
           type: u16
-          desc: Issue of ephemeris data
+          desc: Issue of data (IODnav)
       - iodc:
           type: u16
-          desc: Issue of clock data
+          desc: Issue of data (IODnav). Always equal to iode
 
  - MSG_EPHEMERIS_GAL:
     id: 0x008D
@@ -1028,13 +1036,13 @@ definitions:
           desc: Clock reference
       - iode:
           type: u16
-          desc: Issue of ephemeris data
+          desc: Issue of data (IODnav)
       - iodc:
           type: u16
-          desc: Issue of clock data
+          desc: Issue of data (IODnav). Always equal to iode
       - source:
           type: u8
-          desc: 0=I/NAV, 1=F/NAV, ...
+          desc: 0=I/NAV, 1=F/NAV
 
  - MSG_EPHEMERIS_SBAS_DEP_A:
     id: 0x0082
@@ -1342,7 +1350,7 @@ definitions:
           desc: Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
       - iod:
           type: u8
-          desc: Issue of ephemeris data
+          desc: Issue of data. Equal to the 7 bits of the immediate data word t_b
 
  - MSG_EPHEMERIS_GLO:
     id: 0x008B
@@ -1394,7 +1402,7 @@ definitions:
           desc: Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
       - iod:
           type: u8
-          desc: Issue of ephemeris data
+          desc: Issue of data. Equal to the 7 bits of the immediate data word t_b
 
  - MSG_EPHEMERIS_DEP_D:
     id: 0x0080
