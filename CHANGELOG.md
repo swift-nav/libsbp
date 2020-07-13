@@ -1,5 +1,14 @@
 # Change Log
 
+## [v3.1.2](https://github.com/swift-nav/libsbp/tree/v3.1.2)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.1.1...v3.1.2)
+
+**Merged pull requests:**
+
+- python: remove accidental numpy import [INFRA-243] [\#818](https://github.com/swift-nav/libsbp/pull/818)
+- Auto submodule update: cmake - Standardize system include targets \(\#62\) [\#817](https://github.com/swift-nav/libsbp/pull/817)
+
 ## [v3.1.1](https://github.com/swift-nav/libsbp/tree/v3.1.1)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.1.0...v3.1.1)

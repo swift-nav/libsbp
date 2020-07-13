@@ -119,15 +119,15 @@ You can then make this image operate on your local workspace like this:
 
 `cd ..`  (back up to the root of the repo)
 
-``docker run  -v `pwd`:/mnt/workspace  -i -t your-local-image-name:latest``
+``docker run  -v $PWD:/mnt/workspace  -i -t your-local-image-name:latest``
 
 Once in the image, simply type `make all` to gererate all the libsbp bindings.
 
 #### Using the prebuilt one from DockerHub
 
-You can also pull a copy from dockerhub (no guarantees on freshness):
+Ycu can also pull a copy from dockerhub (no guarantees on freshness):
 
-``docker run  -v `pwd`:/mnt/workspace -i -t swiftnav/libsbp-build:2020.01.15``
+``docker run  -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2020.01.15``
 
 Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
 

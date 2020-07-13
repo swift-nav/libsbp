@@ -139,7 +139,7 @@ Ubuntu 16.04.
 
     ```shell
     make c haskell javascript rust
-    git add c/include/libsbp/version.h sbp.cabal package.json package-lock.json rust/sbp/Cargo.toml
+    git add c/include/libsbp/version.h haskell/sbp.cabal package.json package-lock.json rust/sbp/Cargo.toml
     git commit -m 'INCREMENTED_TAG'
     git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
     ```
