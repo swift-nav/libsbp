@@ -18,8 +18,6 @@ import uuid
 import six
 import warnings
 
-import numpy as np
-
 
 class Framer(six.Iterator):
     """
@@ -58,7 +56,7 @@ class Framer(six.Iterator):
         self._broken = False
         self._dispatch = dispatcher
         self._session = str(uuid.uuid4())
-        self._buffer = np.zeros(16*1024, dtype=np.uint8)
+        self._buffer = bytearray(16*1024)
         self._into_buffer = into_buffer
         self._skip_metadata = skip_metadata
         self._sender_id_filter_list = sender_id_filter_list
