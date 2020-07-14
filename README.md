@@ -113,7 +113,7 @@ This dummy directory is to prevent docker from sucking up the whole
 repo into the local context (which is then immediately discarded
 anyway).  Next create the docker image:
 
-`docker build -f ../Dockerfile.buster -t your-local-image-name .`
+`docker build -f ../Dockerfile-build -t your-local-image-name .`
 
 You can then make this image operate on your local workspace like this:
 
