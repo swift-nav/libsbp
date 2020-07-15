@@ -81,7 +81,7 @@ class PySerialDriver(BaseDriver):
             print()
             print("Piksi disconnected")
             print()
-            self.handle.close()
+            self.close()
             raise IOError
 
     def _write(self, s):
@@ -104,7 +104,7 @@ class PySerialDriver(BaseDriver):
                 print()
                 print("Piksi disconnected")
                 print()
-                self.handle.close()
+                self.close()
                 raise IOError
 
     def __enter__(self):
