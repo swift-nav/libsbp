@@ -46,7 +46,7 @@ class PySerialDriver(BaseDriver):
         try:
             handle = serial.serial_for_url(port)
             handle.baudrate = baud
-            handle.timeout = 1
+            handle.timeout = None
             handle.rtscts = rtscts
             super(PySerialDriver, self).__init__(handle)
         except (OSError, serial.SerialException) as e:
