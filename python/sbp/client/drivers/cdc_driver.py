@@ -39,12 +39,14 @@ class CdcDriver(BaseDriver):
                 print()
                 print("Piksi disconnected")
                 print()
+                self.close()
                 raise IOError
             return return_val
         except OSError:
             print()
             print("Piksi disconnected")
             print()
+            self.close()
             raise IOError
 
     def _write(self, s):
@@ -62,6 +64,7 @@ class CdcDriver(BaseDriver):
             print()
             print("Piksi disconnected")
             print()
+            self.close()
             raise IOError
 
     def close(self):
