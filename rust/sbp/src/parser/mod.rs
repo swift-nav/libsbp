@@ -213,6 +213,31 @@ fn test_read_string() {
     assert_eq!(string, " string".to_string());
 }
 
+pub(crate) fn read_u16_array(buf: &mut &[u8]) -> Result<Vec<u16>> {
+    // buf is in fact an array of u16, so at least 2 u8 elem, unless buf is empty
+    let iter = buf.chunks_exact(2);
+    // collect() guarantees that it will return Err if at least one Err is found while iterating over the Vec
+    // https://doc.rust-lang.org/std/iter/trait.FromIterator.html#method.from_iter-14
+    // map_err necessary to convert the generic read_u16's Error into our Error enum type
+    // LittleEndian means chunks are read from right-to-left
+    let v = iter
+        .map(|mut x| x.read_u16::<LittleEndian>().map_err(|e| e.into()))
+        .collect();
+    v
+}
+
+#[test]
+fn test_read_u16_array() {
+    // A basic unit test for read_u16_array, LittleEndian convention assumed everywhere
+    let mock_data: [u8; 4] = [0b00000001, 0b00010000, 0b00000010, 0b00000001];
+    let mut expected_vec = Vec::with_capacity(2);
+    // 0b00010000+0b00000001
+    expected_vec.push(4097);
+    expected_vec.push(258);
+    let returned_vec = read_u16_array(&mut &mock_data[..]).unwrap();
+    assert_eq!(expected_vec, returned_vec);
+}
+
 pub(crate) fn read_u8_array(buf: &mut &[u8]) -> Result<Vec<u8>> {
     Ok(buf.to_vec())
 }
