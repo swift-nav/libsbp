@@ -281,4 +281,44 @@ definitions:
                   desc: Number of attempted zero velocity updates since last message.
               - 0-3:
                   desc: Number of rejected zero velocity updates since last message.
-                  
+
+ - MSG_GROUP_META:
+     id: 0xFF0A
+     short_desc: Solution Group Metadata
+     public: true
+     desc: |
+       This leading message lists the time metadata of the Solution Group.
+       It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
+     fields:
+       - wn:
+           type: u16
+           units: weeks
+           desc: GPS Week Number
+       - tow:
+           type: u32
+           units: ms
+           desc: GPS time of week rounded to the nearest millisecond
+       - flags:
+           type: u8
+           desc: Status flags (reserved)
+           fields:
+             - 4-7:
+                 desc: Reserved
+             - 2-3:
+                 desc: Solution Group type
+                 values:
+                   - 0: None (invalid)
+                   - 1: GNSS only
+                   - 2: GNSS+INS (Fuzed)
+                   - 3: Reserved
+             - 0-1:
+                 desc: Time source
+                 values:
+                   - 0: None (invalid)
+                   - 1: Reference epoch is start of current GPS Week
+                   - 2: Reference epoch is last PPS
+                   - 3: Reference epoch is Sensor Time Init
+       - group_msgs:
+           type: array
+           fill: u16
+           desc: An inorder list of message types included in the Solution Group
