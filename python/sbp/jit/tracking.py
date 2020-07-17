@@ -139,52 +139,6 @@ single tracking channel useful for debugging issues.
     self.misc_flags = res['misc_flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # recv_time: u64
-    ret += 8
-    # tot: GPSTime
-    ret += GPSTime._payload_size()
-    # P: u32
-    ret += 4
-    # P_std: u16
-    ret += 2
-    # L: CarrierPhase
-    ret += CarrierPhase._payload_size()
-    # cn0: u8
-    ret += 1
-    # lock: u16
-    ret += 2
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # doppler: s32
-    ret += 4
-    # doppler_std: u16
-    ret += 2
-    # uptime: u32
-    ret += 4
-    # clock_offset: s16
-    ret += 2
-    # clock_drift: s16
-    ret += 2
-    # corr_spacing: u16
-    ret += 2
-    # acceleration: s8
-    ret += 1
-    # sync_flags: u8
-    ret += 1
-    # tow_flags: u8
-    ret += 1
-    # track_flags: u8
-    ret += 1
-    # nav_flags: u8
-    ret += 1
-    # pset_flags: u8
-    ret += 1
-    # misc_flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_TRACKING_STATE_DETAILED_DEP = 0x0011
 class MsgTrackingStateDetailedDep(SBP):
@@ -294,52 +248,6 @@ class MsgTrackingStateDetailedDep(SBP):
     self.misc_flags = res['misc_flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # recv_time: u64
-    ret += 8
-    # tot: GPSTimeDep
-    ret += GPSTimeDep._payload_size()
-    # P: u32
-    ret += 4
-    # P_std: u16
-    ret += 2
-    # L: CarrierPhase
-    ret += CarrierPhase._payload_size()
-    # cn0: u8
-    ret += 1
-    # lock: u16
-    ret += 2
-    # sid: GnssSignalDep
-    ret += GnssSignalDep._payload_size()
-    # doppler: s32
-    ret += 4
-    # doppler_std: u16
-    ret += 2
-    # uptime: u32
-    ret += 4
-    # clock_offset: s16
-    ret += 2
-    # clock_drift: s16
-    ret += 2
-    # corr_spacing: u16
-    ret += 2
-    # acceleration: s8
-    ret += 1
-    # sync_flags: u8
-    ret += 1
-    # tow_flags: u8
-    ret += 1
-    # track_flags: u8
-    ret += 1
-    # nav_flags: u8
-    ret += 1
-    # pset_flags: u8
-    ret += 1
-    # misc_flags: u8
-    ret += 1
-    return ret
   
 class TrackingChannelState(object):
   """SBP class for message TrackingChannelState
@@ -378,16 +286,6 @@ measured signal power.
     self.cn0 = res['cn0']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # fcn: u8
-    ret += 1
-    # cn0: u8
-    ret += 1
-    return ret
   
 SBP_MSG_TRACKING_STATE = 0x0041
 class MsgTrackingState(SBP):
@@ -420,12 +318,6 @@ measurements for all tracked satellites.
     self.states = res['states']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # states: array of TrackingChannelState
-    ret += 247
-    return ret
   
 class MeasurementState(object):
   """SBP class for message MeasurementState
@@ -463,14 +355,6 @@ the Slot ID (from 1 to 28)
     self.cn0 = res['cn0']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # mesid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # cn0: u8
-    ret += 1
-    return ret
   
 SBP_MSG_MEASUREMENT_STATE = 0x0061
 class MsgMeasurementState(SBP):
@@ -503,12 +387,6 @@ measurements for all tracked satellites.
     self.states = res['states']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # states: array of MeasurementState
-    ret += 247
-    return ret
   
 class TrackingChannelCorrelation(object):
   """SBP class for message TrackingChannelCorrelation
@@ -542,14 +420,6 @@ class TrackingChannelCorrelation(object):
     self.Q = res['Q']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # I: s16
-    ret += 2
-    # Q: s16
-    ret += 2
-    return ret
   
 SBP_MSG_TRACKING_IQ = 0x002D
 class MsgTrackingIq(SBP):
@@ -589,16 +459,6 @@ update interval.
     self.corrs = res['corrs']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # channel: u8
-    ret += 1
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # corrs: array of TrackingChannelCorrelation
-    ret += TrackingChannelCorrelation._payload_size() * 3
-    return ret
   
 class TrackingChannelCorrelationDep(object):
   """SBP class for message TrackingChannelCorrelationDep
@@ -632,14 +492,6 @@ class TrackingChannelCorrelationDep(object):
     self.Q = res['Q']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # I: s32
-    ret += 4
-    # Q: s32
-    ret += 4
-    return ret
   
 SBP_MSG_TRACKING_IQ_DEP_B = 0x002C
 class MsgTrackingIqDepB(SBP):
@@ -679,16 +531,6 @@ update interval.
     self.corrs = res['corrs']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # channel: u8
-    ret += 1
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # corrs: array of TrackingChannelCorrelationDep
-    ret += TrackingChannelCorrelationDep._payload_size() * 3
-    return ret
   
 SBP_MSG_TRACKING_IQ_DEP_A = 0x001C
 class MsgTrackingIqDepA(SBP):
@@ -726,16 +568,6 @@ class MsgTrackingIqDepA(SBP):
     self.corrs = res['corrs']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # channel: u8
-    ret += 1
-    # sid: GnssSignalDep
-    ret += GnssSignalDep._payload_size()
-    # corrs: array of TrackingChannelCorrelationDep
-    ret += TrackingChannelCorrelationDep._payload_size() * 3
-    return ret
   
 class TrackingChannelStateDepA(object):
   """SBP class for message TrackingChannelStateDepA
@@ -772,16 +604,6 @@ class TrackingChannelStateDepA(object):
     self.cn0 = res['cn0']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # state: u8
-    ret += 1
-    # prn: u8
-    ret += 1
-    # cn0: float
-    ret += 4
-    return ret
   
 SBP_MSG_TRACKING_STATE_DEP_A = 0x0016
 class MsgTrackingStateDepA(SBP):
@@ -811,12 +633,6 @@ class MsgTrackingStateDepA(SBP):
     self.states = res['states']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # states: array of TrackingChannelStateDepA
-    ret += 247
-    return ret
   
 class TrackingChannelStateDepB(object):
   """SBP class for message TrackingChannelStateDepB
@@ -853,16 +669,6 @@ class TrackingChannelStateDepB(object):
     self.cn0 = res['cn0']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # state: u8
-    ret += 1
-    # sid: GnssSignalDep
-    ret += GnssSignalDep._payload_size()
-    # cn0: float
-    ret += 4
-    return ret
   
 SBP_MSG_TRACKING_STATE_DEP_B = 0x0013
 class MsgTrackingStateDepB(SBP):
@@ -892,12 +698,6 @@ class MsgTrackingStateDepB(SBP):
     self.states = res['states']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # states: array of TrackingChannelStateDepB
-    ret += 247
-    return ret
   
 
 msg_classes = {

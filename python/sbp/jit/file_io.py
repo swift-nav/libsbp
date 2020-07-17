@@ -83,18 +83,6 @@ to this message when it is received from sender ID 0x42.
     self.filename = res['filename']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    # offset: u32
-    ret += 4
-    # chunk_size: u8
-    ret += 1
-    # filename: string
-    ret += 247
-    return ret
   
 SBP_MSG_FILEIO_READ_RESP = 0x00A3
 class MsgFileioReadResp(SBP):
@@ -133,14 +121,6 @@ preserved from the request.
     self.contents = res['contents']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    # contents: array of u8
-    ret += 247
-    return ret
   
 SBP_MSG_FILEIO_READ_DIR_REQ = 0x00A9
 class MsgFileioReadDirReq(SBP):
@@ -188,16 +168,6 @@ from sender ID 0x42.
     self.dirname = res['dirname']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    # offset: u32
-    ret += 4
-    # dirname: string
-    ret += 247
-    return ret
   
 SBP_MSG_FILEIO_READ_DIR_RESP = 0x00AA
 class MsgFileioReadDirResp(SBP):
@@ -237,14 +207,6 @@ the response is preserved from the request.
     self.contents = res['contents']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    # contents: array of u8
-    ret += 247
-    return ret
   
 SBP_MSG_FILEIO_REMOVE = 0x00AC
 class MsgFileioRemove(SBP):
@@ -278,12 +240,6 @@ process this message when it is received from sender ID 0x42.
     self.filename = res['filename']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # filename: string
-    ret += 247
-    return ret
   
 SBP_MSG_FILEIO_WRITE_REQ = 0x00AD
 class MsgFileioWriteReq(SBP):
@@ -333,18 +289,6 @@ only  process this message when it is received from sender ID
     self.data = res['data']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    # offset: u32
-    ret += 4
-    # filename: string
-    ret += 247
-    # data: array of u8
-    ret += 247
-    return ret
   
 SBP_MSG_FILEIO_WRITE_RESP = 0x00AB
 class MsgFileioWriteResp(SBP):
@@ -379,12 +323,6 @@ request.
     self.sequence = res['sequence']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    return ret
   
 SBP_MSG_FILEIO_CONFIG_REQ = 0x1001
 class MsgFileioConfigReq(SBP):
@@ -418,12 +356,6 @@ that can be in-flight during read or write operations.
     self.sequence = res['sequence']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    return ret
   
 SBP_MSG_FILEIO_CONFIG_RESP = 0x1002
 class MsgFileioConfigResp(SBP):
@@ -469,18 +401,6 @@ that can be in-flight during read or write operations.
     self.fileio_version = res['fileio_version']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    # window_size: u32
-    ret += 4
-    # batch_size: u32
-    ret += 4
-    # fileio_version: u32
-    ret += 4
-    return ret
   
 
 msg_classes = {

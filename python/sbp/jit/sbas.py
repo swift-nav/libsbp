@@ -70,18 +70,6 @@ parity of the data block and sends only blocks that pass the check.
     self.data = res['data']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # tow: u32
-    ret += 4
-    # message_type: u8
-    ret += 1
-    # data: array of u8
-    ret += 1 * 27
-    return ret
   
 
 msg_classes = {

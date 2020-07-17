@@ -72,20 +72,6 @@ class MsgMagRaw(SBP):
     self.mag_z = res['mag_z']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # tow_f: u8
-    ret += 1
-    # mag_x: s16
-    ret += 2
-    # mag_y: s16
-    ret += 2
-    # mag_z: s16
-    ret += 2
-    return ret
   
 
 msg_classes = {

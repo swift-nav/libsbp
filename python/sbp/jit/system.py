@@ -67,16 +67,6 @@ or configuration requests.
     self.reserved = res['reserved']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # cause: u8
-    ret += 1
-    # startup_type: u8
-    ret += 1
-    # reserved: u16
-    ret += 2
-    return ret
   
 SBP_MSG_DGNSS_STATUS = 0xFF02
 class MsgDgnssStatus(SBP):
@@ -121,18 +111,6 @@ corrections packet.
     self.source = res['source']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # flags: u8
-    ret += 1
-    # latency: u16
-    ret += 2
-    # num_signals: u8
-    ret += 1
-    # source: string
-    ret += 247
-    return ret
   
 SBP_MSG_HEARTBEAT = 0xFFFF
 class MsgHeartbeat(SBP):
@@ -172,12 +150,6 @@ the remaining error flags should be inspected.
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # flags: u32
-    ret += 4
-    return ret
   
 SBP_MSG_INS_STATUS = 0xFF03
 class MsgInsStatus(SBP):
@@ -209,12 +181,6 @@ and initialization of the inertial navigation system.
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # flags: u32
-    ret += 4
-    return ret
   
 SBP_MSG_CSAC_TELEMETRY = 0xFF04
 class MsgCsacTelemetry(SBP):
@@ -251,14 +217,6 @@ It is intended to be a low rate message for status purposes.
     self.telemetry = res['telemetry']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # id: u8
-    ret += 1
-    # telemetry: string
-    ret += 247
-    return ret
   
 SBP_MSG_CSAC_TELEMETRY_LABELS = 0xFF05
 class MsgCsacTelemetryLabels(SBP):
@@ -295,14 +253,6 @@ rate than the MSG_CSAC_TELEMETRY.
     self.telemetry_labels = res['telemetry_labels']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # id: u8
-    ret += 1
-    # telemetry_labels: string
-    ret += 247
-    return ret
   
 SBP_MSG_INS_UPDATES = 0xFF06
 class MsgInsUpdates(SBP):
@@ -358,24 +308,6 @@ This message is expected to be extended in the future as new types of measuremen
     self.zerovel = res['zerovel']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # gnsspos: u8
-    ret += 1
-    # gnssvel: u8
-    ret += 1
-    # wheelticks: u8
-    ret += 1
-    # speed: u8
-    ret += 1
-    # nhc: u8
-    ret += 1
-    # zerovel: u8
-    ret += 1
-    return ret
   
 
 msg_classes = {

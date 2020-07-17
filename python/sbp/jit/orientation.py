@@ -71,18 +71,6 @@ that time-matched RTK mode is used when the base station is moving.
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # heading: u32
-    ret += 4
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_ORIENT_QUAT = 0x0220
 class MsgOrientQuat(SBP):
@@ -153,30 +141,6 @@ or Duro.
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # w: s32
-    ret += 4
-    # x: s32
-    ret += 4
-    # y: s32
-    ret += 4
-    # z: s32
-    ret += 4
-    # w_accuracy: float
-    ret += 4
-    # x_accuracy: float
-    ret += 4
-    # y_accuracy: float
-    ret += 4
-    # z_accuracy: float
-    ret += 4
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_ORIENT_EULER = 0x0221
 class MsgOrientEuler(SBP):
@@ -239,26 +203,6 @@ INS versions of Swift Products and is not produced by Piksi Multi or Duro.
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # roll: s32
-    ret += 4
-    # pitch: s32
-    ret += 4
-    # yaw: s32
-    ret += 4
-    # roll_accuracy: float
-    ret += 4
-    # pitch_accuracy: float
-    ret += 4
-    # yaw_accuracy: float
-    ret += 4
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_ANGULAR_RATE = 0x0222
 class MsgAngularRate(SBP):
@@ -313,20 +257,6 @@ and is not produced by Piksi Multi or Duro.
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: s32
-    ret += 4
-    # y: s32
-    ret += 4
-    # z: s32
-    ret += 4
-    # flags: u8
-    ret += 1
-    return ret
   
 
 msg_classes = {

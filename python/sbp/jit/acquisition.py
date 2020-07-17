@@ -73,18 +73,6 @@ ratio.
     self.sid = res['sid']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # cn0: float
-    ret += 4
-    # cp: float
-    ret += 4
-    # cf: float
-    ret += 4
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    return ret
   
 SBP_MSG_ACQ_RESULT_DEP_C = 0x001F
 class MsgAcqResultDepC(SBP):
@@ -126,18 +114,6 @@ class MsgAcqResultDepC(SBP):
     self.sid = res['sid']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # cn0: float
-    ret += 4
-    # cp: float
-    ret += 4
-    # cf: float
-    ret += 4
-    # sid: GnssSignalDep
-    ret += GnssSignalDep._payload_size()
-    return ret
   
 SBP_MSG_ACQ_RESULT_DEP_B = 0x0014
 class MsgAcqResultDepB(SBP):
@@ -179,18 +155,6 @@ class MsgAcqResultDepB(SBP):
     self.sid = res['sid']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # snr: float
-    ret += 4
-    # cp: float
-    ret += 4
-    # cf: float
-    ret += 4
-    # sid: GnssSignalDep
-    ret += GnssSignalDep._payload_size()
-    return ret
   
 SBP_MSG_ACQ_RESULT_DEP_A = 0x0015
 class MsgAcqResultDepA(SBP):
@@ -232,18 +196,6 @@ class MsgAcqResultDepA(SBP):
     self.prn = res['prn']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # snr: float
-    ret += 4
-    # cp: float
-    ret += 4
-    # cf: float
-    ret += 4
-    # prn: u8
-    ret += 1
-    return ret
   
 class AcqSvProfile(object):
   """SBP class for message AcqSvProfile
@@ -319,34 +271,6 @@ The message is used to debug and measure the performance.
     self.cp = res['cp']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # job_type: u8
-    ret += 1
-    # status: u8
-    ret += 1
-    # cn0: u16
-    ret += 2
-    # int_time: u8
-    ret += 1
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # bin_width: u16
-    ret += 2
-    # timestamp: u32
-    ret += 4
-    # time_spent: u32
-    ret += 4
-    # cf_min: s32
-    ret += 4
-    # cf_max: s32
-    ret += 4
-    # cf: s32
-    ret += 4
-    # cp: u32
-    ret += 4
-    return ret
   
 class AcqSvProfileDep(object):
   """SBP class for message AcqSvProfileDep
@@ -419,34 +343,6 @@ class AcqSvProfileDep(object):
     self.cp = res['cp']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # job_type: u8
-    ret += 1
-    # status: u8
-    ret += 1
-    # cn0: u16
-    ret += 2
-    # int_time: u8
-    ret += 1
-    # sid: GnssSignalDep
-    ret += GnssSignalDep._payload_size()
-    # bin_width: u16
-    ret += 2
-    # timestamp: u32
-    ret += 4
-    # time_spent: u32
-    ret += 4
-    # cf_min: s32
-    ret += 4
-    # cf_max: s32
-    ret += 4
-    # cf: s32
-    ret += 4
-    # cp: u32
-    ret += 4
-    return ret
   
 SBP_MSG_ACQ_SV_PROFILE = 0x002E
 class MsgAcqSvProfile(SBP):
@@ -478,12 +374,6 @@ The message is used to debug and measure the performance.
     self.acq_sv_profile = res['acq_sv_profile']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # acq_sv_profile: array of AcqSvProfile
-    ret += 247
-    return ret
   
 SBP_MSG_ACQ_SV_PROFILE_DEP = 0x001E
 class MsgAcqSvProfileDep(SBP):
@@ -513,12 +403,6 @@ class MsgAcqSvProfileDep(SBP):
     self.acq_sv_profile = res['acq_sv_profile']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # acq_sv_profile: array of AcqSvProfileDep
-    ret += 247
-    return ret
   
 
 msg_classes = {

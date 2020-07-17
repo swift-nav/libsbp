@@ -59,14 +59,6 @@ class GnssSignal(object):
     self.code = res['code']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sat: u8
-    ret += 1
-    # code: u8
-    ret += 1
-    return ret
   
 class SvId(object):
   """SBP class for message SvId
@@ -101,14 +93,6 @@ a space vehicle
     self.constellation = res['constellation']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # satId: u8
-    ret += 1
-    # constellation: u8
-    ret += 1
-    return ret
   
 class GnssSignalDep(object):
   """SBP class for message GnssSignalDep
@@ -145,16 +129,6 @@ class GnssSignalDep(object):
     self.reserved = res['reserved']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sat: u16
-    ret += 2
-    # code: u8
-    ret += 1
-    # reserved: u8
-    ret += 1
-    return ret
   
 class GPSTimeDep(object):
   """SBP class for message GPSTimeDep
@@ -190,14 +164,6 @@ transition.
     self.wn = res['wn']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # wn: u16
-    ret += 2
-    return ret
   
 class GPSTimeSec(object):
   """SBP class for message GPSTimeSec
@@ -233,14 +199,6 @@ transition.
     self.wn = res['wn']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # wn: u16
-    ret += 2
-    return ret
   
 class GPSTime(object):
   """SBP class for message GPSTime
@@ -281,16 +239,6 @@ so ns field will be 0.
     self.wn = res['wn']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # ns_residual: s32
-    ret += 4
-    # wn: u16
-    ret += 2
-    return ret
   
 class CarrierPhase(object):
   """SBP class for message CarrierPhase
@@ -327,14 +275,6 @@ same sign as the pseudorange.
     self.f = res['f']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # i: s32
-    ret += 4
-    # f: u8
-    ret += 1
-    return ret
   
 
 msg_classes = {

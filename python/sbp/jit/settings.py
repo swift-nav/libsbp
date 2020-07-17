@@ -70,9 +70,6 @@ configuration to its onboard flash memory file system.
   __slots__ = []
   def _unpack_members(self, buf, offset, length):
     return {}, offset, length
-
-  def _payload_size(self):
-    return 0
   
 SBP_MSG_SETTINGS_WRITE = 0x00A0
 class MsgSettingsWrite(SBP):
@@ -109,12 +106,6 @@ An example string that could be sent to a device is
     self.setting = res['setting']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # setting: string
-    ret += 247
-    return ret
   
 SBP_MSG_SETTINGS_WRITE_RESP = 0x00AF
 class MsgSettingsWriteResp(SBP):
@@ -155,14 +146,6 @@ are omitted. An example string that could be sent from device is
     self.setting = res['setting']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # status: u8
-    ret += 1
-    # setting: string
-    ret += 247
-    return ret
   
 SBP_MSG_SETTINGS_READ_REQ = 0x00A4
 class MsgSettingsReadReq(SBP):
@@ -200,12 +183,6 @@ message (msg_id 0x00A5).
     self.setting = res['setting']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # setting: string
-    ret += 247
-    return ret
   
 SBP_MSG_SETTINGS_READ_RESP = 0x00A5
 class MsgSettingsReadResp(SBP):
@@ -242,12 +219,6 @@ example string that could be sent from device is
     self.setting = res['setting']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # setting: string
-    ret += 247
-    return ret
   
 SBP_MSG_SETTINGS_READ_BY_INDEX_REQ = 0x00A2
 class MsgSettingsReadByIndexReq(SBP):
@@ -280,12 +251,6 @@ values. A device will respond to this message with a
     self.index = res['index']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # index: u16
-    ret += 2
-    return ret
   
 SBP_MSG_SETTINGS_READ_BY_INDEX_RESP = 0x00A7
 class MsgSettingsReadByIndexResp(SBP):
@@ -329,14 +294,6 @@ the device is "simulator\0enabled\0True\0enum:True,False\0"
     self.setting = res['setting']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # index: u16
-    ret += 2
-    # setting: string
-    ret += 247
-    return ret
   
 SBP_MSG_SETTINGS_READ_BY_INDEX_DONE = 0x00A6
 class MsgSettingsReadByIndexDone(SBP):
@@ -354,9 +311,6 @@ class MsgSettingsReadByIndexDone(SBP):
   __slots__ = []
   def _unpack_members(self, buf, offset, length):
     return {}, offset, length
-
-  def _payload_size(self):
-    return 0
   
 SBP_MSG_SETTINGS_REGISTER = 0x00AE
 class MsgSettingsRegister(SBP):
@@ -389,12 +343,6 @@ for this setting to set the initial value.
     self.setting = res['setting']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # setting: string
-    ret += 247
-    return ret
   
 SBP_MSG_SETTINGS_REGISTER_RESP = 0x01AF
 class MsgSettingsRegisterResp(SBP):
@@ -432,14 +380,6 @@ and had a different value.
     self.setting = res['setting']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # status: u8
-    ret += 1
-    # setting: string
-    ret += 247
-    return ret
   
 
 msg_classes = {

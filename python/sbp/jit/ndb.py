@@ -87,26 +87,6 @@ message could also be sent out when fetching an object from NDB.
     self.original_sender = res['original_sender']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # recv_time: u64
-    ret += 8
-    # event: u8
-    ret += 1
-    # object_type: u8
-    ret += 1
-    # result: u8
-    ret += 1
-    # data_source: u8
-    ret += 1
-    # object_sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # src_sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # original_sender: u16
-    ret += 2
-    return ret
   
 
 msg_classes = {

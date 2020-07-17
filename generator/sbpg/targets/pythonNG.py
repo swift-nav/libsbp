@@ -87,31 +87,6 @@ def numba_type(f):
     return '__' + f.identifier
 
 
-def numba_size(f):
-  # the worst case 255 - 6 (header) - 2 (crc)
-  UNKNOWN_LEN = 255 - 6 - 2
-
-  if f.type_id in NUMBA_TY_BYTES:
-    return NUMBA_TY_BYTES[f.type_id]
-  elif f.type_id == 'string':
-    if f.options.get('size', None) is not None:
-      return f.options.get('size', None).value
-    return UNKNOWN_LEN
-  elif f.type_id == 'array':
-    # NOTE: arrays of arrays are not supported
-    t = f.options['fill'].value
-    count = f.options.get('size', None)
-    if count:
-      if t in NUMBA_TY_BYTES:
-        return "%d * %d" % (NUMBA_TY_BYTES[t], count.value)
-      else:
-        return t + "._payload_size() * %d" % (count.value)
-    else:
-      return UNKNOWN_LEN
-  else:
-    return f.type_id + '._payload_size()'
-
-
 def numba_format(f):
   if NUMBA_GET_FN.get(f.type_id, None):
     return NUMBA_GET_FN.get(f.type_id)
@@ -164,7 +139,6 @@ def classnameify(s):
 
 JENV.filters['numba_py'] = numba_format
 JENV.filters['numba_type'] = numba_type
-JENV.filters['numba_size'] = numba_size
 JENV.filters['classnameify'] = classnameify
 JENV.filters['pydoc'] = pydoc_format
 JENV.filters['comment_links'] = comment_links
@@ -174,7 +148,7 @@ def render_source(output_dir, package_spec, jenv=JENV):
   """
   Render and output
   """
-  path, name = package_spec.filepath
+  _path, name = package_spec.filepath
   directory = output_dir
   destination_filename = "%s/%s.py" % (directory, name)
   py_template = jenv.get_template(TEMPLATE_NAME)

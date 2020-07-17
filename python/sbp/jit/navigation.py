@@ -98,18 +98,6 @@ these messages.
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # wn: u16
-    ret += 2
-    # tow: u32
-    ret += 4
-    # ns_residual: s32
-    ret += 4
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_UTC_TIME = 0x0103
 class MsgUtcTime(SBP):
@@ -173,28 +161,6 @@ which indicate the source of the UTC offset value and source of the time fix.
     self.ns = res['ns']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # flags: u8
-    ret += 1
-    # tow: u32
-    ret += 4
-    # year: u16
-    ret += 2
-    # month: u8
-    ret += 1
-    # day: u8
-    ret += 1
-    # hours: u8
-    ret += 1
-    # minutes: u8
-    ret += 1
-    # seconds: u8
-    ret += 1
-    # ns: u32
-    ret += 4
-    return ret
   
 SBP_MSG_DOPS = 0x0208
 class MsgDops(SBP):
@@ -252,24 +218,6 @@ corresponds to differential or SPP solution.
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # gdop: u16
-    ret += 2
-    # pdop: u16
-    ret += 2
-    # tdop: u16
-    ret += 2
-    # hdop: u16
-    ret += 2
-    # vdop: u16
-    ret += 2
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_POS_ECEF = 0x0209
 class MsgPosECEF(SBP):
@@ -331,24 +279,6 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: double
-    ret += 8
-    # y: double
-    ret += 8
-    # z: double
-    ret += 8
-    # accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_POS_ECEF_COV = 0x0214
 class MsgPosECEFCov(SBP):
@@ -431,34 +361,6 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: double
-    ret += 8
-    # y: double
-    ret += 8
-    # z: double
-    ret += 8
-    # cov_x_x: float
-    ret += 4
-    # cov_x_y: float
-    ret += 4
-    # cov_x_z: float
-    ret += 4
-    # cov_y_y: float
-    ret += 4
-    # cov_y_z: float
-    ret += 4
-    # cov_z_z: float
-    ret += 4
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_POS_LLH = 0x020A
 class MsgPosLLH(SBP):
@@ -524,26 +426,6 @@ matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # lat: double
-    ret += 8
-    # lon: double
-    ret += 8
-    # height: double
-    ret += 8
-    # h_accuracy: u16
-    ret += 2
-    # v_accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_POS_LLH_COV = 0x0211
 class MsgPosLLHCov(SBP):
@@ -625,34 +507,6 @@ measurement and care should be taken with the sign convention.
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # lat: double
-    ret += 8
-    # lon: double
-    ret += 8
-    # height: double
-    ret += 8
-    # cov_n_n: float
-    ret += 4
-    # cov_n_e: float
-    ret += 4
-    # cov_n_d: float
-    ret += 4
-    # cov_e_e: float
-    ret += 4
-    # cov_e_d: float
-    ret += 4
-    # cov_d_d: float
-    ret += 4
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_BASELINE_ECEF = 0x020B
 class MsgBaselineECEF(SBP):
@@ -711,24 +565,6 @@ matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: s32
-    ret += 4
-    # y: s32
-    ret += 4
-    # z: s32
-    ret += 4
-    # accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_BASELINE_NED = 0x020C
 class MsgBaselineNED(SBP):
@@ -792,26 +628,6 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # n: s32
-    ret += 4
-    # e: s32
-    ret += 4
-    # d: s32
-    ret += 4
-    # h_accuracy: u16
-    ret += 2
-    # v_accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_VEL_ECEF = 0x020D
 class MsgVelECEF(SBP):
@@ -868,24 +684,6 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: s32
-    ret += 4
-    # y: s32
-    ret += 4
-    # z: s32
-    ret += 4
-    # accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_VEL_ECEF_COV = 0x0215
 class MsgVelECEFCov(SBP):
@@ -962,34 +760,6 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: s32
-    ret += 4
-    # y: s32
-    ret += 4
-    # z: s32
-    ret += 4
-    # cov_x_x: float
-    ret += 4
-    # cov_x_y: float
-    ret += 4
-    # cov_x_z: float
-    ret += 4
-    # cov_y_y: float
-    ret += 4
-    # cov_y_z: float
-    ret += 4
-    # cov_z_z: float
-    ret += 4
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_VEL_NED = 0x020E
 class MsgVelNED(SBP):
@@ -1051,26 +821,6 @@ given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # n: s32
-    ret += 4
-    # e: s32
-    ret += 4
-    # d: s32
-    ret += 4
-    # h_accuracy: u16
-    ret += 2
-    # v_accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_VEL_NED_COV = 0x0212
 class MsgVelNEDCov(SBP):
@@ -1150,34 +900,6 @@ portion of the 3x3 covariance matrix.
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # n: s32
-    ret += 4
-    # e: s32
-    ret += 4
-    # d: s32
-    ret += 4
-    # cov_n_n: float
-    ret += 4
-    # cov_n_e: float
-    ret += 4
-    # cov_n_d: float
-    ret += 4
-    # cov_e_e: float
-    ret += 4
-    # cov_e_d: float
-    ret += 4
-    # cov_d_d: float
-    ret += 4
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_POS_ECEF_GNSS = 0x0229
 class MsgPosECEFGnss(SBP):
@@ -1239,24 +961,6 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: double
-    ret += 8
-    # y: double
-    ret += 8
-    # z: double
-    ret += 8
-    # accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_POS_ECEF_COV_GNSS = 0x0234
 class MsgPosECEFCovGnss(SBP):
@@ -1339,34 +1043,6 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: double
-    ret += 8
-    # y: double
-    ret += 8
-    # z: double
-    ret += 8
-    # cov_x_x: float
-    ret += 4
-    # cov_x_y: float
-    ret += 4
-    # cov_x_z: float
-    ret += 4
-    # cov_y_y: float
-    ret += 4
-    # cov_y_z: float
-    ret += 4
-    # cov_z_z: float
-    ret += 4
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_POS_LLH_GNSS = 0x022A
 class MsgPosLLHGnss(SBP):
@@ -1432,26 +1108,6 @@ matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # lat: double
-    ret += 8
-    # lon: double
-    ret += 8
-    # height: double
-    ret += 8
-    # h_accuracy: u16
-    ret += 2
-    # v_accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_POS_LLH_COV_GNSS = 0x0231
 class MsgPosLLHCovGnss(SBP):
@@ -1533,34 +1189,6 @@ measurement and care should be taken with the sign convention.
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # lat: double
-    ret += 8
-    # lon: double
-    ret += 8
-    # height: double
-    ret += 8
-    # cov_n_n: float
-    ret += 4
-    # cov_n_e: float
-    ret += 4
-    # cov_n_d: float
-    ret += 4
-    # cov_e_e: float
-    ret += 4
-    # cov_e_d: float
-    ret += 4
-    # cov_d_d: float
-    ret += 4
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_VEL_ECEF_GNSS = 0x022D
 class MsgVelECEFGnss(SBP):
@@ -1617,24 +1245,6 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: s32
-    ret += 4
-    # y: s32
-    ret += 4
-    # z: s32
-    ret += 4
-    # accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_VEL_ECEF_COV_GNSS = 0x0235
 class MsgVelECEFCovGnss(SBP):
@@ -1711,34 +1321,6 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: s32
-    ret += 4
-    # y: s32
-    ret += 4
-    # z: s32
-    ret += 4
-    # cov_x_x: float
-    ret += 4
-    # cov_x_y: float
-    ret += 4
-    # cov_x_z: float
-    ret += 4
-    # cov_y_y: float
-    ret += 4
-    # cov_y_z: float
-    ret += 4
-    # cov_z_z: float
-    ret += 4
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_VEL_NED_GNSS = 0x022E
 class MsgVelNEDGnss(SBP):
@@ -1800,26 +1382,6 @@ given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # n: s32
-    ret += 4
-    # e: s32
-    ret += 4
-    # d: s32
-    ret += 4
-    # h_accuracy: u16
-    ret += 2
-    # v_accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_VEL_NED_COV_GNSS = 0x0232
 class MsgVelNEDCovGnss(SBP):
@@ -1899,34 +1461,6 @@ portion of the 3x3 covariance matrix.
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # n: s32
-    ret += 4
-    # e: s32
-    ret += 4
-    # d: s32
-    ret += 4
-    # cov_n_n: float
-    ret += 4
-    # cov_n_e: float
-    ret += 4
-    # cov_n_d: float
-    ret += 4
-    # cov_e_e: float
-    ret += 4
-    # cov_e_d: float
-    ret += 4
-    # cov_d_d: float
-    ret += 4
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_VEL_BODY = 0x0213
 class MsgVelBody(SBP):
@@ -2008,34 +1542,6 @@ products and is not available from Piksi Multi or Duro.
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: s32
-    ret += 4
-    # y: s32
-    ret += 4
-    # z: s32
-    ret += 4
-    # cov_x_x: float
-    ret += 4
-    # cov_x_y: float
-    ret += 4
-    # cov_x_z: float
-    ret += 4
-    # cov_y_y: float
-    ret += 4
-    # cov_y_z: float
-    ret += 4
-    # cov_z_z: float
-    ret += 4
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_AGE_CORRECTIONS = 0x0210
 class MsgAgeCorrections(SBP):
@@ -2071,14 +1577,6 @@ Differential solution
     self.age = res['age']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # age: u16
-    ret += 2
-    return ret
   
 SBP_MSG_GPS_TIME_DEP_A = 0x0100
 class MsgGPSTimeDepA(SBP):
@@ -2133,18 +1631,6 @@ these messages.
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # wn: u16
-    ret += 2
-    # tow: u32
-    ret += 4
-    # ns_residual: s32
-    ret += 4
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_DOPS_DEP_A = 0x0206
 class MsgDopsDepA(SBP):
@@ -2197,22 +1683,6 @@ precision.
     self.vdop = res['vdop']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # gdop: u16
-    ret += 2
-    # pdop: u16
-    ret += 2
-    # tdop: u16
-    ret += 2
-    # hdop: u16
-    ret += 2
-    # vdop: u16
-    ret += 2
-    return ret
   
 SBP_MSG_POS_ECEF_DEP_A = 0x0200
 class MsgPosECEFDepA(SBP):
@@ -2274,24 +1744,6 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: double
-    ret += 8
-    # y: double
-    ret += 8
-    # z: double
-    ret += 8
-    # accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_POS_LLH_DEP_A = 0x0201
 class MsgPosLLHDepA(SBP):
@@ -2357,26 +1809,6 @@ matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # lat: double
-    ret += 8
-    # lon: double
-    ret += 8
-    # height: double
-    ret += 8
-    # h_accuracy: u16
-    ret += 2
-    # v_accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_BASELINE_ECEF_DEP_A = 0x0202
 class MsgBaselineECEFDepA(SBP):
@@ -2435,24 +1867,6 @@ matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: s32
-    ret += 4
-    # y: s32
-    ret += 4
-    # z: s32
-    ret += 4
-    # accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_BASELINE_NED_DEP_A = 0x0203
 class MsgBaselineNEDDepA(SBP):
@@ -2516,26 +1930,6 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # n: s32
-    ret += 4
-    # e: s32
-    ret += 4
-    # d: s32
-    ret += 4
-    # h_accuracy: u16
-    ret += 2
-    # v_accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_VEL_ECEF_DEP_A = 0x0204
 class MsgVelECEFDepA(SBP):
@@ -2592,24 +1986,6 @@ MSG_GPS_TIME with the matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # x: s32
-    ret += 4
-    # y: s32
-    ret += 4
-    # z: s32
-    ret += 4
-    # accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_VEL_NED_DEP_A = 0x0205
 class MsgVelNEDDepA(SBP):
@@ -2671,26 +2047,6 @@ given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # n: s32
-    ret += 4
-    # e: s32
-    ret += 4
-    # d: s32
-    ret += 4
-    # h_accuracy: u16
-    ret += 2
-    # v_accuracy: u16
-    ret += 2
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_BASELINE_HEADING_DEP_A = 0x0207
 class MsgBaselineHeadingDepA(SBP):
@@ -2735,18 +2091,6 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # heading: u32
-    ret += 4
-    # n_sats: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_PROTECTION_LEVEL = 0x0216
 class MsgProtectionLevel(SBP):
@@ -2803,24 +2147,6 @@ by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # vpl: u16
-    ret += 2
-    # hpl: u16
-    ret += 2
-    # lat: double
-    ret += 8
-    # lon: double
-    ret += 8
-    # height: double
-    ret += 8
-    # flags: u8
-    ret += 1
-    return ret
   
 
 msg_classes = {
