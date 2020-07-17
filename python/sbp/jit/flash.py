@@ -78,18 +78,6 @@ erased before addresses can be programmed.
     self.data = res['data']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # target: u8
-    ret += 1
-    # addr_start: array of u8
-    ret += 1 * 3
-    # addr_len: u8
-    ret += 1
-    # data: array of u8
-    ret += 247
-    return ret
   
 SBP_MSG_FLASH_DONE = 0x00E0
 class MsgFlashDone(SBP):
@@ -123,12 +111,6 @@ MSG_FLASH_PROGRAM, may return this message on failure.
     self.response = res['response']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # response: u8
-    ret += 1
-    return ret
   
 SBP_MSG_FLASH_READ_REQ = 0x00E7
 class MsgFlashReadReq(SBP):
@@ -173,16 +155,6 @@ range.
     self.addr_len = res['addr_len']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # target: u8
-    ret += 1
-    # addr_start: array of u8
-    ret += 1 * 3
-    # addr_len: u8
-    ret += 1
-    return ret
   
 SBP_MSG_FLASH_READ_RESP = 0x00E1
 class MsgFlashReadResp(SBP):
@@ -227,16 +199,6 @@ range.
     self.addr_len = res['addr_len']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # target: u8
-    ret += 1
-    # addr_start: array of u8
-    ret += 1 * 3
-    # addr_len: u8
-    ret += 1
-    return ret
   
 SBP_MSG_FLASH_ERASE = 0x00E2
 class MsgFlashErase(SBP):
@@ -275,14 +237,6 @@ invalid.
     self.sector_num = res['sector_num']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # target: u8
-    ret += 1
-    # sector_num: u32
-    ret += 4
-    return ret
   
 SBP_MSG_STM_FLASH_LOCK_SECTOR = 0x00E3
 class MsgStmFlashLockSector(SBP):
@@ -314,12 +268,6 @@ memory. The device replies with a MSG_FLASH_DONE message.
     self.sector = res['sector']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sector: u32
-    ret += 4
-    return ret
   
 SBP_MSG_STM_FLASH_UNLOCK_SECTOR = 0x00E4
 class MsgStmFlashUnlockSector(SBP):
@@ -351,12 +299,6 @@ memory. The device replies with a MSG_FLASH_DONE message.
     self.sector = res['sector']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sector: u32
-    ret += 4
-    return ret
   
 SBP_MSG_STM_UNIQUE_ID_REQ = 0x00E8
 class MsgStmUniqueIdReq(SBP):
@@ -377,9 +319,6 @@ ID in the payload.
   __slots__ = []
   def _unpack_members(self, buf, offset, length):
     return {}, offset, length
-
-  def _payload_size(self):
-    return 0
   
 SBP_MSG_STM_UNIQUE_ID_RESP = 0x00E5
 class MsgStmUniqueIdResp(SBP):
@@ -413,12 +352,6 @@ ID in the payload..
     self.stm_id = res['stm_id']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # stm_id: array of u8
-    ret += 1 * 12
-    return ret
   
 SBP_MSG_M25_FLASH_WRITE_STATUS = 0x00F3
 class MsgM25FlashWriteStatus(SBP):
@@ -450,12 +383,6 @@ register. The device replies with a MSG_FLASH_DONE message.
     self.status = res['status']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # status: array of u8
-    ret += 1 * 1
-    return ret
   
 
 msg_classes = {

@@ -68,16 +68,6 @@ source 0 through 3.
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # velocity: s32
-    ret += 4
-    # flags: u8
-    ret += 1
-    return ret
   
 SBP_MSG_WHEELTICK = 0x0904
 class MsgWheeltick(SBP):
@@ -126,18 +116,6 @@ tick count reached the value given by the contents of this message as accurately
     self.ticks = res['ticks']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # time: u64
-    ret += 8
-    # flags: u8
-    ret += 1
-    # source: u8
-    ret += 1
-    # ticks: s32
-    ret += 4
-    return ret
   
 
 msg_classes = {

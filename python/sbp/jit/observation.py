@@ -59,14 +59,6 @@ class ObservationHeader(object):
     self.n_obs = res['n_obs']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # t: GPSTime
-    ret += GPSTime._payload_size()
-    # n_obs: u8
-    ret += 1
-    return ret
   
 class Doppler(object):
   """SBP class for message Doppler
@@ -103,14 +95,6 @@ as positive for approaching satellites.
     self.f = res['f']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # i: s16
-    ret += 2
-    # f: u8
-    ret += 1
-    return ret
   
 class PackedObsContent(object):
   """SBP class for message PackedObsContent
@@ -170,24 +154,6 @@ peformed.
     self.sid = res['sid']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # P: u32
-    ret += 4
-    # L: CarrierPhase
-    ret += CarrierPhase._payload_size()
-    # D: Doppler
-    ret += Doppler._payload_size()
-    # cn0: u8
-    ret += 1
-    # lock: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    return ret
   
 class PackedOsrContent(object):
   """SBP class for message PackedOsrContent
@@ -245,26 +211,6 @@ class PackedOsrContent(object):
     self.range_std = res['range_std']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # P: u32
-    ret += 4
-    # L: CarrierPhase
-    ret += CarrierPhase._payload_size()
-    # lock: u8
-    ret += 1
-    # flags: u8
-    ret += 1
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # iono_std: u16
-    ret += 2
-    # tropo_std: u16
-    ret += 2
-    # range_std: u16
-    ret += 2
-    return ret
   
 SBP_MSG_OBS = 0x004A
 class MsgObs(SBP):
@@ -305,14 +251,6 @@ with typical RTCMv3 GNSS observations.
     self.obs = res['obs']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # header: ObservationHeader
-    ret += ObservationHeader._payload_size()
-    # obs: array of PackedObsContent
-    ret += 247
-    return ret
   
 SBP_MSG_BASE_POS_LLH = 0x0044
 class MsgBasePosLLH(SBP):
@@ -355,16 +293,6 @@ error in the pseudo-absolute position output.
     self.height = res['height']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # lat: double
-    ret += 8
-    # lon: double
-    ret += 8
-    # height: double
-    ret += 8
-    return ret
   
 SBP_MSG_BASE_POS_ECEF = 0x0048
 class MsgBasePosECEF(SBP):
@@ -408,16 +336,6 @@ pseudo-absolute position output.
     self.z = res['z']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # x: double
-    ret += 8
-    # y: double
-    ret += 8
-    # z: double
-    ret += 8
-    return ret
   
 class EphemerisCommonContent(object):
   """SBP class for message EphemerisCommonContent
@@ -465,22 +383,6 @@ class EphemerisCommonContent(object):
     self.health_bits = res['health_bits']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # toe: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # ura: float
-    ret += 4
-    # fit_interval: u32
-    ret += 4
-    # valid: u8
-    ret += 1
-    # health_bits: u8
-    ret += 1
-    return ret
   
 class EphemerisCommonContentDepB(object):
   """SBP class for message EphemerisCommonContentDepB
@@ -528,22 +430,6 @@ class EphemerisCommonContentDepB(object):
     self.health_bits = res['health_bits']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # toe: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # ura: double
-    ret += 8
-    # fit_interval: u32
-    ret += 4
-    # valid: u8
-    ret += 1
-    # health_bits: u8
-    ret += 1
-    return ret
   
 class EphemerisCommonContentDepA(object):
   """SBP class for message EphemerisCommonContentDepA
@@ -591,22 +477,6 @@ class EphemerisCommonContentDepA(object):
     self.health_bits = res['health_bits']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sid: GnssSignalDep
-    ret += GnssSignalDep._payload_size()
-    # toe: GPSTimeDep
-    ret += GPSTimeDep._payload_size()
-    # ura: double
-    ret += 8
-    # fit_interval: u32
-    ret += 4
-    # valid: u8
-    ret += 1
-    # health_bits: u8
-    ret += 1
-    return ret
   
 SBP_MSG_EPHEMERIS_GPS_DEP_E = 0x0081
 class MsgEphemerisGPSDepE(SBP):
@@ -729,56 +599,6 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     self.iodc = res['iodc']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # common: EphemerisCommonContentDepA
-    ret += EphemerisCommonContentDepA._payload_size()
-    # tgd: double
-    ret += 8
-    # c_rs: double
-    ret += 8
-    # c_rc: double
-    ret += 8
-    # c_uc: double
-    ret += 8
-    # c_us: double
-    ret += 8
-    # c_ic: double
-    ret += 8
-    # c_is: double
-    ret += 8
-    # dn: double
-    ret += 8
-    # m0: double
-    ret += 8
-    # ecc: double
-    ret += 8
-    # sqrta: double
-    ret += 8
-    # omega0: double
-    ret += 8
-    # omegadot: double
-    ret += 8
-    # w: double
-    ret += 8
-    # inc: double
-    ret += 8
-    # inc_dot: double
-    ret += 8
-    # af0: double
-    ret += 8
-    # af1: double
-    ret += 8
-    # af2: double
-    ret += 8
-    # toc: GPSTimeDep
-    ret += GPSTimeDep._payload_size()
-    # iode: u8
-    ret += 1
-    # iodc: u16
-    ret += 2
-    return ret
   
 SBP_MSG_EPHEMERIS_GPS_DEP_F = 0x0086
 class MsgEphemerisGPSDepF(SBP):
@@ -898,56 +718,6 @@ ephemeris message using floats for size reduction.
     self.iodc = res['iodc']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # common: EphemerisCommonContentDepB
-    ret += EphemerisCommonContentDepB._payload_size()
-    # tgd: double
-    ret += 8
-    # c_rs: double
-    ret += 8
-    # c_rc: double
-    ret += 8
-    # c_uc: double
-    ret += 8
-    # c_us: double
-    ret += 8
-    # c_ic: double
-    ret += 8
-    # c_is: double
-    ret += 8
-    # dn: double
-    ret += 8
-    # m0: double
-    ret += 8
-    # ecc: double
-    ret += 8
-    # sqrta: double
-    ret += 8
-    # omega0: double
-    ret += 8
-    # omegadot: double
-    ret += 8
-    # w: double
-    ret += 8
-    # inc: double
-    ret += 8
-    # inc_dot: double
-    ret += 8
-    # af0: double
-    ret += 8
-    # af1: double
-    ret += 8
-    # af2: double
-    ret += 8
-    # toc: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # iode: u8
-    ret += 1
-    # iodc: u16
-    ret += 2
-    return ret
   
 SBP_MSG_EPHEMERIS_GPS = 0x008A
 class MsgEphemerisGPS(SBP):
@@ -1070,56 +840,6 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     self.iodc = res['iodc']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # common: EphemerisCommonContent
-    ret += EphemerisCommonContent._payload_size()
-    # tgd: float
-    ret += 4
-    # c_rs: float
-    ret += 4
-    # c_rc: float
-    ret += 4
-    # c_uc: float
-    ret += 4
-    # c_us: float
-    ret += 4
-    # c_ic: float
-    ret += 4
-    # c_is: float
-    ret += 4
-    # dn: double
-    ret += 8
-    # m0: double
-    ret += 8
-    # ecc: double
-    ret += 8
-    # sqrta: double
-    ret += 8
-    # omega0: double
-    ret += 8
-    # omegadot: double
-    ret += 8
-    # w: double
-    ret += 8
-    # inc: double
-    ret += 8
-    # inc_dot: double
-    ret += 8
-    # af0: float
-    ret += 4
-    # af1: float
-    ret += 4
-    # af2: float
-    ret += 4
-    # toc: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # iode: u8
-    ret += 1
-    # iodc: u16
-    ret += 2
-    return ret
   
 SBP_MSG_EPHEMERIS_QZSS = 0x008E
 class MsgEphemerisQzss(SBP):
@@ -1240,56 +960,6 @@ velocity, and clock offset.
     self.iodc = res['iodc']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # common: EphemerisCommonContent
-    ret += EphemerisCommonContent._payload_size()
-    # tgd: float
-    ret += 4
-    # c_rs: float
-    ret += 4
-    # c_rc: float
-    ret += 4
-    # c_uc: float
-    ret += 4
-    # c_us: float
-    ret += 4
-    # c_ic: float
-    ret += 4
-    # c_is: float
-    ret += 4
-    # dn: double
-    ret += 8
-    # m0: double
-    ret += 8
-    # ecc: double
-    ret += 8
-    # sqrta: double
-    ret += 8
-    # omega0: double
-    ret += 8
-    # omegadot: double
-    ret += 8
-    # w: double
-    ret += 8
-    # inc: double
-    ret += 8
-    # inc_dot: double
-    ret += 8
-    # af0: float
-    ret += 4
-    # af1: float
-    ret += 4
-    # af2: float
-    ret += 4
-    # toc: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # iode: u8
-    ret += 1
-    # iodc: u16
-    ret += 2
-    return ret
   
 SBP_MSG_EPHEMERIS_BDS = 0x0089
 class MsgEphemerisBds(SBP):
@@ -1415,58 +1085,6 @@ Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
     self.iodc = res['iodc']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # common: EphemerisCommonContent
-    ret += EphemerisCommonContent._payload_size()
-    # tgd1: float
-    ret += 4
-    # tgd2: float
-    ret += 4
-    # c_rs: float
-    ret += 4
-    # c_rc: float
-    ret += 4
-    # c_uc: float
-    ret += 4
-    # c_us: float
-    ret += 4
-    # c_ic: float
-    ret += 4
-    # c_is: float
-    ret += 4
-    # dn: double
-    ret += 8
-    # m0: double
-    ret += 8
-    # ecc: double
-    ret += 8
-    # sqrta: double
-    ret += 8
-    # omega0: double
-    ret += 8
-    # omegadot: double
-    ret += 8
-    # w: double
-    ret += 8
-    # inc: double
-    ret += 8
-    # inc_dot: double
-    ret += 8
-    # af0: double
-    ret += 8
-    # af1: float
-    ret += 4
-    # af2: float
-    ret += 4
-    # toc: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # iode: u8
-    ret += 1
-    # iodc: u16
-    ret += 2
-    return ret
   
 SBP_MSG_EPHEMERIS_GAL_DEP_A = 0x0095
 class MsgEphemerisGalDepA(SBP):
@@ -1590,58 +1208,6 @@ an ephemeris message with explicit source of NAV data.
     self.iodc = res['iodc']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # common: EphemerisCommonContent
-    ret += EphemerisCommonContent._payload_size()
-    # bgd_e1e5a: float
-    ret += 4
-    # bgd_e1e5b: float
-    ret += 4
-    # c_rs: float
-    ret += 4
-    # c_rc: float
-    ret += 4
-    # c_uc: float
-    ret += 4
-    # c_us: float
-    ret += 4
-    # c_ic: float
-    ret += 4
-    # c_is: float
-    ret += 4
-    # dn: double
-    ret += 8
-    # m0: double
-    ret += 8
-    # ecc: double
-    ret += 8
-    # sqrta: double
-    ret += 8
-    # omega0: double
-    ret += 8
-    # omegadot: double
-    ret += 8
-    # w: double
-    ret += 8
-    # inc: double
-    ret += 8
-    # inc_dot: double
-    ret += 8
-    # af0: double
-    ret += 8
-    # af1: double
-    ret += 8
-    # af2: float
-    ret += 4
-    # toc: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # iode: u16
-    ret += 2
-    # iodc: u16
-    ret += 2
-    return ret
   
 SBP_MSG_EPHEMERIS_GAL = 0x008D
 class MsgEphemerisGal(SBP):
@@ -1771,60 +1337,6 @@ OS SIS ICD, Issue 1.3, December 2016 for more details.
     self.source = res['source']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # common: EphemerisCommonContent
-    ret += EphemerisCommonContent._payload_size()
-    # bgd_e1e5a: float
-    ret += 4
-    # bgd_e1e5b: float
-    ret += 4
-    # c_rs: float
-    ret += 4
-    # c_rc: float
-    ret += 4
-    # c_uc: float
-    ret += 4
-    # c_us: float
-    ret += 4
-    # c_ic: float
-    ret += 4
-    # c_is: float
-    ret += 4
-    # dn: double
-    ret += 8
-    # m0: double
-    ret += 8
-    # ecc: double
-    ret += 8
-    # sqrta: double
-    ret += 8
-    # omega0: double
-    ret += 8
-    # omegadot: double
-    ret += 8
-    # w: double
-    ret += 8
-    # inc: double
-    ret += 8
-    # inc_dot: double
-    ret += 8
-    # af0: double
-    ret += 8
-    # af1: double
-    ret += 8
-    # af2: float
-    ret += 4
-    # toc: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # iode: u16
-    ret += 2
-    # iodc: u16
-    ret += 2
-    # source: u8
-    ret += 1
-    return ret
   
 SBP_MSG_EPHEMERIS_SBAS_DEP_A = 0x0082
 class MsgEphemerisSbasDepA(SBP):
@@ -1873,22 +1385,6 @@ class MsgEphemerisSbasDepA(SBP):
     self.a_gf1 = res['a_gf1']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # common: EphemerisCommonContentDepA
-    ret += EphemerisCommonContentDepA._payload_size()
-    # pos: array of double
-    ret += 8 * 3
-    # vel: array of double
-    ret += 8 * 3
-    # acc: array of double
-    ret += 8 * 3
-    # a_gf0: double
-    ret += 8
-    # a_gf1: double
-    ret += 8
-    return ret
   
 SBP_MSG_EPHEMERIS_GLO_DEP_A = 0x0083
 class MsgEphemerisGloDepA(SBP):
@@ -1943,22 +1439,6 @@ for more details.
     self.acc = res['acc']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # common: EphemerisCommonContentDepA
-    ret += EphemerisCommonContentDepA._payload_size()
-    # gamma: double
-    ret += 8
-    # tau: double
-    ret += 8
-    # pos: array of double
-    ret += 8 * 3
-    # vel: array of double
-    ret += 8 * 3
-    # acc: array of double
-    ret += 8 * 3
-    return ret
   
 SBP_MSG_EPHEMERIS_SBAS_DEP_B = 0x0084
 class MsgEphemerisSbasDepB(SBP):
@@ -2010,22 +1490,6 @@ ephemeris message using floats for size reduction.
     self.a_gf1 = res['a_gf1']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # common: EphemerisCommonContentDepB
-    ret += EphemerisCommonContentDepB._payload_size()
-    # pos: array of double
-    ret += 8 * 3
-    # vel: array of double
-    ret += 8 * 3
-    # acc: array of double
-    ret += 8 * 3
-    # a_gf0: double
-    ret += 8
-    # a_gf1: double
-    ret += 8
-    return ret
   
 SBP_MSG_EPHEMERIS_SBAS = 0x008C
 class MsgEphemerisSbas(SBP):
@@ -2074,22 +1538,6 @@ class MsgEphemerisSbas(SBP):
     self.a_gf1 = res['a_gf1']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # common: EphemerisCommonContent
-    ret += EphemerisCommonContent._payload_size()
-    # pos: array of double
-    ret += 8 * 3
-    # vel: array of float
-    ret += 4 * 3
-    # acc: array of float
-    ret += 4 * 3
-    # a_gf0: float
-    ret += 4
-    # a_gf1: float
-    ret += 4
-    return ret
   
 SBP_MSG_EPHEMERIS_GLO_DEP_B = 0x0085
 class MsgEphemerisGloDepB(SBP):
@@ -2144,22 +1592,6 @@ for more details.
     self.acc = res['acc']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # common: EphemerisCommonContentDepB
-    ret += EphemerisCommonContentDepB._payload_size()
-    # gamma: double
-    ret += 8
-    # tau: double
-    ret += 8
-    # pos: array of double
-    ret += 8 * 3
-    # vel: array of double
-    ret += 8 * 3
-    # acc: array of double
-    ret += 8 * 3
-    return ret
   
 SBP_MSG_EPHEMERIS_GLO_DEP_C = 0x0087
 class MsgEphemerisGloDepC(SBP):
@@ -2222,26 +1654,6 @@ for more details.
     self.fcn = res['fcn']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # common: EphemerisCommonContentDepB
-    ret += EphemerisCommonContentDepB._payload_size()
-    # gamma: double
-    ret += 8
-    # tau: double
-    ret += 8
-    # d_tau: double
-    ret += 8
-    # pos: array of double
-    ret += 8 * 3
-    # vel: array of double
-    ret += 8 * 3
-    # acc: array of double
-    ret += 8 * 3
-    # fcn: u8
-    ret += 1
-    return ret
   
 SBP_MSG_EPHEMERIS_GLO_DEP_D = 0x0088
 class MsgEphemerisGloDepD(SBP):
@@ -2305,28 +1717,6 @@ ephemeris message using floats for size reduction.
     self.iod = res['iod']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # common: EphemerisCommonContentDepB
-    ret += EphemerisCommonContentDepB._payload_size()
-    # gamma: double
-    ret += 8
-    # tau: double
-    ret += 8
-    # d_tau: double
-    ret += 8
-    # pos: array of double
-    ret += 8 * 3
-    # vel: array of double
-    ret += 8 * 3
-    # acc: array of double
-    ret += 8 * 3
-    # fcn: u8
-    ret += 1
-    # iod: u8
-    ret += 1
-    return ret
   
 SBP_MSG_EPHEMERIS_GLO = 0x008B
 class MsgEphemerisGlo(SBP):
@@ -2393,28 +1783,6 @@ for more details.
     self.iod = res['iod']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # common: EphemerisCommonContent
-    ret += EphemerisCommonContent._payload_size()
-    # gamma: float
-    ret += 4
-    # tau: float
-    ret += 4
-    # d_tau: float
-    ret += 4
-    # pos: array of double
-    ret += 8 * 3
-    # vel: array of double
-    ret += 8 * 3
-    # acc: array of float
-    ret += 4 * 3
-    # fcn: u8
-    ret += 1
-    # iod: u8
-    ret += 1
-    return ret
   
 SBP_MSG_EPHEMERIS_DEP_D = 0x0080
 class MsgEphemerisDepD(SBP):
@@ -2561,68 +1929,6 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     self.reserved = res['reserved']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tgd: double
-    ret += 8
-    # c_rs: double
-    ret += 8
-    # c_rc: double
-    ret += 8
-    # c_uc: double
-    ret += 8
-    # c_us: double
-    ret += 8
-    # c_ic: double
-    ret += 8
-    # c_is: double
-    ret += 8
-    # dn: double
-    ret += 8
-    # m0: double
-    ret += 8
-    # ecc: double
-    ret += 8
-    # sqrta: double
-    ret += 8
-    # omega0: double
-    ret += 8
-    # omegadot: double
-    ret += 8
-    # w: double
-    ret += 8
-    # inc: double
-    ret += 8
-    # inc_dot: double
-    ret += 8
-    # af0: double
-    ret += 8
-    # af1: double
-    ret += 8
-    # af2: double
-    ret += 8
-    # toe_tow: double
-    ret += 8
-    # toe_wn: u16
-    ret += 2
-    # toc_tow: double
-    ret += 8
-    # toc_wn: u16
-    ret += 2
-    # valid: u8
-    ret += 1
-    # healthy: u8
-    ret += 1
-    # sid: GnssSignalDep
-    ret += GnssSignalDep._payload_size()
-    # iode: u8
-    ret += 1
-    # iodc: u16
-    ret += 2
-    # reserved: u32
-    ret += 4
-    return ret
   
 SBP_MSG_EPHEMERIS_DEP_A = 0x001A
 class MsgEphemerisDepA(SBP):
@@ -2752,62 +2058,6 @@ class MsgEphemerisDepA(SBP):
     self.prn = res['prn']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tgd: double
-    ret += 8
-    # c_rs: double
-    ret += 8
-    # c_rc: double
-    ret += 8
-    # c_uc: double
-    ret += 8
-    # c_us: double
-    ret += 8
-    # c_ic: double
-    ret += 8
-    # c_is: double
-    ret += 8
-    # dn: double
-    ret += 8
-    # m0: double
-    ret += 8
-    # ecc: double
-    ret += 8
-    # sqrta: double
-    ret += 8
-    # omega0: double
-    ret += 8
-    # omegadot: double
-    ret += 8
-    # w: double
-    ret += 8
-    # inc: double
-    ret += 8
-    # inc_dot: double
-    ret += 8
-    # af0: double
-    ret += 8
-    # af1: double
-    ret += 8
-    # af2: double
-    ret += 8
-    # toe_tow: double
-    ret += 8
-    # toe_wn: u16
-    ret += 2
-    # toc_tow: double
-    ret += 8
-    # toc_wn: u16
-    ret += 2
-    # valid: u8
-    ret += 1
-    # healthy: u8
-    ret += 1
-    # prn: u8
-    ret += 1
-    return ret
   
 SBP_MSG_EPHEMERIS_DEP_B = 0x0046
 class MsgEphemerisDepB(SBP):
@@ -2941,64 +2191,6 @@ class MsgEphemerisDepB(SBP):
     self.iode = res['iode']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tgd: double
-    ret += 8
-    # c_rs: double
-    ret += 8
-    # c_rc: double
-    ret += 8
-    # c_uc: double
-    ret += 8
-    # c_us: double
-    ret += 8
-    # c_ic: double
-    ret += 8
-    # c_is: double
-    ret += 8
-    # dn: double
-    ret += 8
-    # m0: double
-    ret += 8
-    # ecc: double
-    ret += 8
-    # sqrta: double
-    ret += 8
-    # omega0: double
-    ret += 8
-    # omegadot: double
-    ret += 8
-    # w: double
-    ret += 8
-    # inc: double
-    ret += 8
-    # inc_dot: double
-    ret += 8
-    # af0: double
-    ret += 8
-    # af1: double
-    ret += 8
-    # af2: double
-    ret += 8
-    # toe_tow: double
-    ret += 8
-    # toe_wn: u16
-    ret += 2
-    # toc_tow: double
-    ret += 8
-    # toc_wn: u16
-    ret += 2
-    # valid: u8
-    ret += 1
-    # healthy: u8
-    ret += 1
-    # prn: u8
-    ret += 1
-    # iode: u8
-    ret += 1
-    return ret
   
 SBP_MSG_EPHEMERIS_DEP_C = 0x0047
 class MsgEphemerisDepC(SBP):
@@ -3145,68 +2337,6 @@ Space Segment/Navigation user interfaces (ICD-GPS-200, Table
     self.reserved = res['reserved']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tgd: double
-    ret += 8
-    # c_rs: double
-    ret += 8
-    # c_rc: double
-    ret += 8
-    # c_uc: double
-    ret += 8
-    # c_us: double
-    ret += 8
-    # c_ic: double
-    ret += 8
-    # c_is: double
-    ret += 8
-    # dn: double
-    ret += 8
-    # m0: double
-    ret += 8
-    # ecc: double
-    ret += 8
-    # sqrta: double
-    ret += 8
-    # omega0: double
-    ret += 8
-    # omegadot: double
-    ret += 8
-    # w: double
-    ret += 8
-    # inc: double
-    ret += 8
-    # inc_dot: double
-    ret += 8
-    # af0: double
-    ret += 8
-    # af1: double
-    ret += 8
-    # af2: double
-    ret += 8
-    # toe_tow: double
-    ret += 8
-    # toe_wn: u16
-    ret += 2
-    # toc_tow: double
-    ret += 8
-    # toc_wn: u16
-    ret += 2
-    # valid: u8
-    ret += 1
-    # healthy: u8
-    ret += 1
-    # sid: GnssSignalDep
-    ret += GnssSignalDep._payload_size()
-    # iode: u8
-    ret += 1
-    # iodc: u16
-    ret += 2
-    # reserved: u32
-    ret += 4
-    return ret
   
 class ObservationHeaderDep(object):
   """SBP class for message ObservationHeaderDep
@@ -3239,14 +2369,6 @@ class ObservationHeaderDep(object):
     self.n_obs = res['n_obs']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # t: GPSTimeDep
-    ret += GPSTimeDep._payload_size()
-    # n_obs: u8
-    ret += 1
-    return ret
   
 class CarrierPhaseDepA(object):
   """SBP class for message CarrierPhaseDepA
@@ -3284,14 +2406,6 @@ the opposite sign as the pseudorange.
     self.f = res['f']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # i: s32
-    ret += 4
-    # f: u8
-    ret += 1
-    return ret
   
 class PackedObsContentDepA(object):
   """SBP class for message PackedObsContentDepA
@@ -3336,20 +2450,6 @@ class PackedObsContentDepA(object):
     self.prn = res['prn']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # P: u32
-    ret += 4
-    # L: CarrierPhaseDepA
-    ret += CarrierPhaseDepA._payload_size()
-    # cn0: u8
-    ret += 1
-    # lock: u16
-    ret += 2
-    # prn: u8
-    ret += 1
-    return ret
   
 class PackedObsContentDepB(object):
   """SBP class for message PackedObsContentDepB
@@ -3396,20 +2496,6 @@ tracked.  Pseudoranges are referenced to a nominal pseudorange.
     self.sid = res['sid']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # P: u32
-    ret += 4
-    # L: CarrierPhaseDepA
-    ret += CarrierPhaseDepA._payload_size()
-    # cn0: u8
-    ret += 1
-    # lock: u16
-    ret += 2
-    # sid: GnssSignalDep
-    ret += GnssSignalDep._payload_size()
-    return ret
   
 class PackedObsContentDepC(object):
   """SBP class for message PackedObsContentDepC
@@ -3457,20 +2543,6 @@ receivers and conform with typical RTCMv3 GNSS observations.
     self.sid = res['sid']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # P: u32
-    ret += 4
-    # L: CarrierPhase
-    ret += CarrierPhase._payload_size()
-    # cn0: u8
-    ret += 1
-    # lock: u16
-    ret += 2
-    # sid: GnssSignalDep
-    ret += GnssSignalDep._payload_size()
-    return ret
   
 SBP_MSG_OBS_DEP_A = 0x0045
 class MsgObsDepA(SBP):
@@ -3504,14 +2576,6 @@ class MsgObsDepA(SBP):
     self.obs = res['obs']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # header: ObservationHeaderDep
-    ret += ObservationHeaderDep._payload_size()
-    # obs: array of PackedObsContentDepA
-    ret += 247
-    return ret
   
 SBP_MSG_OBS_DEP_B = 0x0043
 class MsgObsDepB(SBP):
@@ -3551,14 +2615,6 @@ observations.
     self.obs = res['obs']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # header: ObservationHeaderDep
-    ret += ObservationHeaderDep._payload_size()
-    # obs: array of PackedObsContentDepB
-    ret += 247
-    return ret
   
 SBP_MSG_OBS_DEP_C = 0x0049
 class MsgObsDepC(SBP):
@@ -3599,14 +2655,6 @@ with typical RTCMv3 GNSS observations.
     self.obs = res['obs']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # header: ObservationHeaderDep
-    ret += ObservationHeaderDep._payload_size()
-    # obs: array of PackedObsContentDepC
-    ret += 247
-    return ret
   
 SBP_MSG_IONO = 0x0090
 class MsgIono(SBP):
@@ -3671,28 +2719,6 @@ Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
     self.b3 = res['b3']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # t_nmct: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # a0: double
-    ret += 8
-    # a1: double
-    ret += 8
-    # a2: double
-    ret += 8
-    # a3: double
-    ret += 8
-    # b0: double
-    ret += 8
-    # b1: double
-    ret += 8
-    # b2: double
-    ret += 8
-    # b3: double
-    ret += 8
-    return ret
   
 SBP_MSG_SV_CONFIGURATION_GPS_DEP = 0x0091
 class MsgSvConfigurationGPSDep(SBP):
@@ -3727,14 +2753,6 @@ class MsgSvConfigurationGPSDep(SBP):
     self.l2c_mask = res['l2c_mask']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # t_nmct: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # l2c_mask: u32
-    ret += 4
-    return ret
   
 class GnssCapb(object):
   """SBP class for message GnssCapb
@@ -3818,40 +2836,6 @@ class GnssCapb(object):
     self.gal_e5 = res['gal_e5']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # gps_active: u64
-    ret += 8
-    # gps_l2c: u64
-    ret += 8
-    # gps_l5: u64
-    ret += 8
-    # glo_active: u32
-    ret += 4
-    # glo_l2of: u32
-    ret += 4
-    # glo_l3: u32
-    ret += 4
-    # sbas_active: u64
-    ret += 8
-    # sbas_l5: u64
-    ret += 8
-    # bds_active: u64
-    ret += 8
-    # bds_d2nav: u64
-    ret += 8
-    # bds_b2: u64
-    ret += 8
-    # bds_b2a: u64
-    ret += 8
-    # qzss_active: u32
-    ret += 4
-    # gal_active: u64
-    ret += 8
-    # gal_e5: u64
-    ret += 8
-    return ret
   
 SBP_MSG_GNSS_CAPB = 0x0096
 class MsgGnssCapb(SBP):
@@ -3884,14 +2868,6 @@ class MsgGnssCapb(SBP):
     self.gc = res['gc']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # t_nmct: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # gc: GnssCapb
-    ret += GnssCapb._payload_size()
-    return ret
   
 SBP_MSG_GROUP_DELAY_DEP_A = 0x0092
 class MsgGroupDelayDepA(SBP):
@@ -3941,22 +2917,6 @@ class MsgGroupDelayDepA(SBP):
     self.isc_l2c = res['isc_l2c']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # t_op: GPSTimeDep
-    ret += GPSTimeDep._payload_size()
-    # prn: u8
-    ret += 1
-    # valid: u8
-    ret += 1
-    # tgd: s16
-    ret += 2
-    # isc_l1ca: s16
-    ret += 2
-    # isc_l2c: s16
-    ret += 2
-    return ret
   
 SBP_MSG_GROUP_DELAY_DEP_B = 0x0093
 class MsgGroupDelayDepB(SBP):
@@ -4006,22 +2966,6 @@ class MsgGroupDelayDepB(SBP):
     self.isc_l2c = res['isc_l2c']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # t_op: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # sid: GnssSignalDep
-    ret += GnssSignalDep._payload_size()
-    # valid: u8
-    ret += 1
-    # tgd: s16
-    ret += 2
-    # isc_l1ca: s16
-    ret += 2
-    # isc_l2c: s16
-    ret += 2
-    return ret
   
 SBP_MSG_GROUP_DELAY = 0x0094
 class MsgGroupDelay(SBP):
@@ -4071,22 +3015,6 @@ class MsgGroupDelay(SBP):
     self.isc_l2c = res['isc_l2c']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # t_op: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # valid: u8
-    ret += 1
-    # tgd: s16
-    ret += 2
-    # isc_l1ca: s16
-    ret += 2
-    # isc_l2c: s16
-    ret += 2
-    return ret
   
 class AlmanacCommonContent(object):
   """SBP class for message AlmanacCommonContent
@@ -4134,22 +3062,6 @@ class AlmanacCommonContent(object):
     self.health_bits = res['health_bits']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # toa: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # ura: double
-    ret += 8
-    # fit_interval: u32
-    ret += 4
-    # valid: u8
-    ret += 1
-    # health_bits: u8
-    ret += 1
-    return ret
   
 class AlmanacCommonContentDep(object):
   """SBP class for message AlmanacCommonContentDep
@@ -4197,22 +3109,6 @@ class AlmanacCommonContentDep(object):
     self.health_bits = res['health_bits']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sid: GnssSignalDep
-    ret += GnssSignalDep._payload_size()
-    # toa: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # ura: double
-    ret += 8
-    # fit_interval: u32
-    ret += 4
-    # valid: u8
-    ret += 1
-    # health_bits: u8
-    ret += 1
-    return ret
   
 SBP_MSG_ALMANAC_GPS_DEP = 0x0070
 class MsgAlmanacGPSDep(SBP):
@@ -4282,30 +3178,6 @@ Please see the Navstar GPS Space Segment/Navigation user interfaces
     self.af1 = res['af1']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # common: AlmanacCommonContentDep
-    ret += AlmanacCommonContentDep._payload_size()
-    # m0: double
-    ret += 8
-    # ecc: double
-    ret += 8
-    # sqrta: double
-    ret += 8
-    # omega0: double
-    ret += 8
-    # omegadot: double
-    ret += 8
-    # w: double
-    ret += 8
-    # inc: double
-    ret += 8
-    # af0: double
-    ret += 8
-    # af1: double
-    ret += 8
-    return ret
   
 SBP_MSG_ALMANAC_GPS = 0x0072
 class MsgAlmanacGPS(SBP):
@@ -4375,30 +3247,6 @@ Please see the Navstar GPS Space Segment/Navigation user interfaces
     self.af1 = res['af1']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # common: AlmanacCommonContent
-    ret += AlmanacCommonContent._payload_size()
-    # m0: double
-    ret += 8
-    # ecc: double
-    ret += 8
-    # sqrta: double
-    ret += 8
-    # omega0: double
-    ret += 8
-    # omegadot: double
-    ret += 8
-    # w: double
-    ret += 8
-    # inc: double
-    ret += 8
-    # af0: double
-    ret += 8
-    # af1: double
-    ret += 8
-    return ret
   
 SBP_MSG_ALMANAC_GLO_DEP = 0x0071
 class MsgAlmanacGloDep(SBP):
@@ -4460,26 +3308,6 @@ almanac" for details.
     self.omega = res['omega']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # common: AlmanacCommonContentDep
-    ret += AlmanacCommonContentDep._payload_size()
-    # lambda_na: double
-    ret += 8
-    # t_lambda_na: double
-    ret += 8
-    # i: double
-    ret += 8
-    # t: double
-    ret += 8
-    # t_dot: double
-    ret += 8
-    # epsilon: double
-    ret += 8
-    # omega: double
-    ret += 8
-    return ret
   
 SBP_MSG_ALMANAC_GLO = 0x0073
 class MsgAlmanacGlo(SBP):
@@ -4541,26 +3369,6 @@ almanac" for details.
     self.omega = res['omega']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # common: AlmanacCommonContent
-    ret += AlmanacCommonContent._payload_size()
-    # lambda_na: double
-    ret += 8
-    # t_lambda_na: double
-    ret += 8
-    # i: double
-    ret += 8
-    # t: double
-    ret += 8
-    # t_dot: double
-    ret += 8
-    # epsilon: double
-    ret += 8
-    # omega: double
-    ret += 8
-    return ret
   
 SBP_MSG_GLO_BIASES = 0x0075
 class MsgGloBiases(SBP):
@@ -4610,20 +3418,6 @@ manufacturers)
     self.l2p_bias = res['l2p_bias']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # mask: u8
-    ret += 1
-    # l1ca_bias: s16
-    ret += 2
-    # l1p_bias: s16
-    ret += 2
-    # l2ca_bias: s16
-    ret += 2
-    # l2p_bias: s16
-    ret += 2
-    return ret
   
 class SvAzEl(object):
   """SBP class for message SvAzEl
@@ -4660,16 +3454,6 @@ class SvAzEl(object):
     self.el = res['el']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # az: u8
-    ret += 1
-    # el: s8
-    ret += 1
-    return ret
   
 SBP_MSG_SV_AZ_EL = 0x0097
 class MsgSvAzEl(SBP):
@@ -4701,12 +3485,6 @@ that the device does have ephemeris or almanac for.
     self.azel = res['azel']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # azel: array of SvAzEl
-    ret += 247
-    return ret
   
 SBP_MSG_OSR = 0x0640
 class MsgOsr(SBP):
@@ -4741,14 +3519,6 @@ class MsgOsr(SBP):
     self.obs = res['obs']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # header: ObservationHeader
-    ret += ObservationHeader._payload_size()
-    # obs: array of PackedOsrContent
-    ret += 247
-    return ret
   
 
 msg_classes = {

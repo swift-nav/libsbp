@@ -74,20 +74,6 @@ consumers of CPU on the system.
     self.cmdline = res['cmdline']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # index: u8
-    ret += 1
-    # pid: u16
-    ret += 2
-    # pcpu: u8
-    ret += 1
-    # tname: string
-    ret += 15
-    # cmdline: string
-    ret += 247
-    return ret
   
 SBP_MSG_LINUX_MEM_STATE = 0x7F01
 class MsgLinuxMemState(SBP):
@@ -135,20 +121,6 @@ consumers of memory on the system.
     self.cmdline = res['cmdline']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # index: u8
-    ret += 1
-    # pid: u16
-    ret += 2
-    # pmem: u8
-    ret += 1
-    # tname: string
-    ret += 15
-    # cmdline: string
-    ret += 247
-    return ret
   
 SBP_MSG_LINUX_SYS_STATE = 0x7F02
 class MsgLinuxSysState(SBP):
@@ -199,22 +171,6 @@ class MsgLinuxSysState(SBP):
     self.pid_count = res['pid_count']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # mem_total: u16
-    ret += 2
-    # pcpu: u8
-    ret += 1
-    # pmem: u8
-    ret += 1
-    # procs_starting: u16
-    ret += 2
-    # procs_stopping: u16
-    ret += 2
-    # pid_count: u16
-    ret += 2
-    return ret
   
 SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS = 0x7F03
 class MsgLinuxProcessSocketCounts(SBP):
@@ -265,22 +221,6 @@ class MsgLinuxProcessSocketCounts(SBP):
     self.cmdline = res['cmdline']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # index: u8
-    ret += 1
-    # pid: u16
-    ret += 2
-    # socket_count: u16
-    ret += 2
-    # socket_types: u16
-    ret += 2
-    # socket_states: u16
-    ret += 2
-    # cmdline: string
-    ret += 247
-    return ret
   
 SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES = 0x7F04
 class MsgLinuxProcessSocketQueues(SBP):
@@ -339,26 +279,6 @@ class MsgLinuxProcessSocketQueues(SBP):
     self.cmdline = res['cmdline']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # index: u8
-    ret += 1
-    # pid: u16
-    ret += 2
-    # recv_queued: u16
-    ret += 2
-    # send_queued: u16
-    ret += 2
-    # socket_types: u16
-    ret += 2
-    # socket_states: u16
-    ret += 2
-    # address_of_largest: string
-    ret += 64
-    # cmdline: string
-    ret += 247
-    return ret
   
 SBP_MSG_LINUX_SOCKET_USAGE = 0x7F05
 class MsgLinuxSocketUsage(SBP):
@@ -401,18 +321,6 @@ class MsgLinuxSocketUsage(SBP):
     self.socket_type_counts = res['socket_type_counts']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # avg_queue_depth: u32
-    ret += 4
-    # max_queue_depth: u32
-    ret += 4
-    # socket_state_counts: array of u16
-    ret += 2 * 16
-    # socket_type_counts: array of u16
-    ret += 2 * 16
-    return ret
   
 SBP_MSG_LINUX_PROCESS_FD_COUNT = 0x7F06
 class MsgLinuxProcessFdCount(SBP):
@@ -455,18 +363,6 @@ class MsgLinuxProcessFdCount(SBP):
     self.cmdline = res['cmdline']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # index: u8
-    ret += 1
-    # pid: u16
-    ret += 2
-    # fd_count: u16
-    ret += 2
-    # cmdline: string
-    ret += 247
-    return ret
   
 SBP_MSG_LINUX_PROCESS_FD_SUMMARY = 0x7F07
 class MsgLinuxProcessFdSummary(SBP):
@@ -501,14 +397,6 @@ class MsgLinuxProcessFdSummary(SBP):
     self.most_opened = res['most_opened']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sys_fd_count: u32
-    ret += 4
-    # most_opened: string
-    ret += 247
-    return ret
   
 
 msg_classes = {

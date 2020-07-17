@@ -61,14 +61,6 @@ The corrections conform with typical RTCMv3 MT1059 and 1065.
     self.value = res['value']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # code: u8
-    ret += 1
-    # value: s16
-    ret += 2
-    return ret
   
 class PhaseBiasesContent(object):
   """SBP class for message PhaseBiasesContent
@@ -115,20 +107,6 @@ The corrections conform with typical RTCMv3 MT1059 and 1065.
     self.bias = res['bias']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # code: u8
-    ret += 1
-    # integer_indicator: u8
-    ret += 1
-    # widelane_integer_indicator: u8
-    ret += 1
-    # discontinuity_counter: u8
-    ret += 1
-    # bias: s32
-    ret += 4
-    return ret
   
 class STECHeader(object):
   """SBP class for message STECHeader
@@ -176,20 +154,6 @@ is used to tie multiple SBP messages into a sequence.
     self.iod_atmo = res['iod_atmo']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # time: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # num_msgs: u8
-    ret += 1
-    # seq_num: u8
-    ret += 1
-    # update_interval: u8
-    ret += 1
-    # iod_atmo: u8
-    ret += 1
-    return ret
   
 class GriddedCorrectionHeader(object):
   """SBP class for message GriddedCorrectionHeader
@@ -241,22 +205,6 @@ be identified by the index.
     self.tropo_quality_indicator = res['tropo_quality_indicator']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # time: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # num_msgs: u16
-    ret += 2
-    # seq_num: u16
-    ret += 2
-    # update_interval: u8
-    ret += 1
-    # iod_atmo: u8
-    ret += 1
-    # tropo_quality_indicator: u8
-    ret += 1
-    return ret
   
 class STECSatElement(object):
   """SBP class for message STECSatElement
@@ -293,16 +241,6 @@ class STECSatElement(object):
     self.stec_coeff = res['stec_coeff']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sv_id: SvId
-    ret += SvId._payload_size()
-    # stec_quality_indicator: u8
-    ret += 1
-    # stec_coeff: array of s16
-    ret += 2 * 4
-    return ret
   
 class TroposphericDelayCorrectionNoStd(object):
   """SBP class for message TroposphericDelayCorrectionNoStd
@@ -336,14 +274,6 @@ class TroposphericDelayCorrectionNoStd(object):
     self.wet = res['wet']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # hydro: s16
-    ret += 2
-    # wet: s8
-    ret += 1
-    return ret
   
 class TroposphericDelayCorrection(object):
   """SBP class for message TroposphericDelayCorrection
@@ -382,16 +312,6 @@ point.
     self.stddev = res['stddev']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # hydro: s16
-    ret += 2
-    # wet: s8
-    ret += 1
-    # stddev: u8
-    ret += 1
-    return ret
   
 class STECResidualNoStd(object):
   """SBP class for message STECResidualNoStd
@@ -424,14 +344,6 @@ class STECResidualNoStd(object):
     self.residual = res['residual']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sv_id: SvId
-    ret += SvId._payload_size()
-    # residual: s16
-    ret += 2
-    return ret
   
 class STECResidual(object):
   """SBP class for message STECResidual
@@ -470,16 +382,6 @@ at the grid point,
     self.stddev = res['stddev']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sv_id: SvId
-    ret += SvId._payload_size()
-    # residual: s16
-    ret += 2
-    # stddev: u8
-    ret += 1
-    return ret
   
 class GridElementNoStd(object):
   """SBP class for message GridElementNoStd
@@ -518,16 +420,6 @@ grid point.
     self.stec_residuals = res['stec_residuals']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # index: u16
-    ret += 2
-    # tropo_delay_correction: TroposphericDelayCorrectionNoStd
-    ret += TroposphericDelayCorrectionNoStd._payload_size()
-    # stec_residuals: array of STECResidualNoStd
-    ret += 247
-    return ret
   
 class GridElement(object):
   """SBP class for message GridElement
@@ -566,16 +458,6 @@ stddev) for each satellite at the grid point.
     self.stec_residuals = res['stec_residuals']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # index: u16
-    ret += 2
-    # tropo_delay_correction: TroposphericDelayCorrection
-    ret += TroposphericDelayCorrection._payload_size()
-    # stec_residuals: array of STECResidual
-    ret += 247
-    return ret
   
 class GridDefinitionHeader(object):
   """SBP class for message GridDefinitionHeader
@@ -626,22 +508,6 @@ Also includes an RLE encoded validity list.
     self.seq_num = res['seq_num']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # region_size_inverse: u8
-    ret += 1
-    # area_width: u16
-    ret += 2
-    # lat_nw_corner_enc: u16
-    ret += 2
-    # lon_nw_corner_enc: u16
-    ret += 2
-    # num_msgs: u8
-    ret += 1
-    # seq_num: u8
-    ret += 1
-    return ret
   
 SBP_MSG_SSR_ORBIT_CLOCK = 0x05DD
 class MsgSsrOrbitClock(SBP):
@@ -727,38 +593,6 @@ and 1066 RTCM message types
     self.c2 = res['c2']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # time: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # update_interval: u8
-    ret += 1
-    # iod_ssr: u8
-    ret += 1
-    # iod: u32
-    ret += 4
-    # radial: s32
-    ret += 4
-    # along: s32
-    ret += 4
-    # cross: s32
-    ret += 4
-    # dot_radial: s32
-    ret += 4
-    # dot_along: s32
-    ret += 4
-    # dot_cross: s32
-    ret += 4
-    # c0: s32
-    ret += 4
-    # c1: s32
-    ret += 4
-    # c2: s32
-    ret += 4
-    return ret
   
 SBP_MSG_SSR_ORBIT_CLOCK_DEP_A = 0x05DC
 class MsgSsrOrbitClockDepA(SBP):
@@ -844,38 +678,6 @@ and 1066 RTCM message types
     self.c2 = res['c2']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # time: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # update_interval: u8
-    ret += 1
-    # iod_ssr: u8
-    ret += 1
-    # iod: u8
-    ret += 1
-    # radial: s32
-    ret += 4
-    # along: s32
-    ret += 4
-    # cross: s32
-    ret += 4
-    # dot_radial: s32
-    ret += 4
-    # dot_along: s32
-    ret += 4
-    # dot_cross: s32
-    ret += 4
-    # c0: s32
-    ret += 4
-    # c1: s32
-    ret += 4
-    # c2: s32
-    ret += 4
-    return ret
   
 SBP_MSG_SSR_CODE_BIASES = 0x05E1
 class MsgSsrCodeBiases(SBP):
@@ -925,20 +727,6 @@ an equivalent to the 1059 and 1065 RTCM message types
     self.biases = res['biases']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # time: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # update_interval: u8
-    ret += 1
-    # iod_ssr: u8
-    ret += 1
-    # biases: array of CodeBiasesContent
-    ret += 247
-    return ret
   
 SBP_MSG_SSR_PHASE_BIASES = 0x05E6
 class MsgSsrPhaseBiases(SBP):
@@ -1006,28 +794,6 @@ It is typically an equivalent to the 1265 RTCM message types
     self.biases = res['biases']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # time: GPSTimeSec
-    ret += GPSTimeSec._payload_size()
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    # update_interval: u8
-    ret += 1
-    # iod_ssr: u8
-    ret += 1
-    # dispersive_bias: u8
-    ret += 1
-    # mw_consistency: u8
-    ret += 1
-    # yaw: u16
-    ret += 2
-    # yaw_rate: s8
-    ret += 1
-    # biases: array of PhaseBiasesContent
-    ret += 247
-    return ret
   
 SBP_MSG_SSR_STEC_CORRECTION = 0x05EB
 class MsgSsrStecCorrection(SBP):
@@ -1065,14 +831,6 @@ delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
     self.stec_sat_list = res['stec_sat_list']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # header: STECHeader
-    ret += STECHeader._payload_size()
-    # stec_sat_list: array of STECSatElement
-    ret += 247
-    return ret
   
 SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD = 0x05F0
 class MsgSsrGriddedCorrectionNoStd(SBP):
@@ -1108,14 +866,6 @@ were added.
     self.element = res['element']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # header: GriddedCorrectionHeader
-    ret += GriddedCorrectionHeader._payload_size()
-    # element: GridElementNoStd
-    ret += GridElementNoStd._payload_size()
-    return ret
   
 SBP_MSG_SSR_GRIDDED_CORRECTION = 0x05FA
 class MsgSsrGriddedCorrection(SBP):
@@ -1151,14 +901,6 @@ It is typically equivalent to the QZSS CLAS Sub Type 9 messages
     self.element = res['element']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # header: GriddedCorrectionHeader
-    ret += GriddedCorrectionHeader._payload_size()
-    # element: GridElement
-    ret += GridElement._payload_size()
-    return ret
   
 SBP_MSG_SSR_GRID_DEFINITION = 0x05F5
 class MsgSsrGridDefinition(SBP):
@@ -1194,14 +936,6 @@ OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
     self.rle_list = res['rle_list']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # header: GridDefinitionHeader
-    ret += GridDefinitionHeader._payload_size()
-    # rle_list: array of u8
-    ret += 247
-    return ret
   
 
 msg_classes = {

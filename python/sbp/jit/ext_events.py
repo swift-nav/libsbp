@@ -75,20 +75,6 @@ which pin it was and whether it was rising or falling.
     self.pin = res['pin']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # wn: u16
-    ret += 2
-    # tow: u32
-    ret += 4
-    # ns_residual: s32
-    ret += 4
-    # flags: u8
-    ret += 1
-    # pin: u8
-    ret += 1
-    return ret
   
 
 msg_classes = {

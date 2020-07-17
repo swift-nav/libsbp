@@ -87,26 +87,6 @@ device hardware and settings, are communicated via the MSG_IMU_AUX message.
     self.gyr_z = res['gyr_z']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tow: u32
-    ret += 4
-    # tow_f: u8
-    ret += 1
-    # acc_x: s16
-    ret += 2
-    # acc_y: s16
-    ret += 2
-    # acc_z: s16
-    ret += 2
-    # gyr_x: s16
-    ret += 2
-    # gyr_y: s16
-    ret += 2
-    # gyr_z: s16
-    ret += 2
-    return ret
   
 SBP_MSG_IMU_AUX = 0x0901
 class MsgImuAux(SBP):
@@ -147,16 +127,6 @@ depends on the value of `imu_type`.
     self.imu_conf = res['imu_conf']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # imu_type: u8
-    ret += 1
-    # temp: s16
-    ret += 2
-    # imu_conf: u8
-    ret += 1
-    return ret
   
 
 msg_classes = {

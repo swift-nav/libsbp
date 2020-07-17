@@ -50,9 +50,6 @@ response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
   __slots__ = []
   def _unpack_members(self, buf, offset, length):
     return {}, offset, length
-
-  def _payload_size(self):
-    return 0
   
 SBP_MSG_BOOTLOADER_HANDSHAKE_RESP = 0x00B4
 class MsgBootloaderHandshakeResp(SBP):
@@ -91,14 +88,6 @@ protocol version number.
     self.version = res['version']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # flags: u32
-    ret += 4
-    # version: string
-    ret += 247
-    return ret
   
 SBP_MSG_BOOTLOADER_JUMP_TO_APP = 0x00B1
 class MsgBootloaderJumpToApp(SBP):
@@ -129,12 +118,6 @@ class MsgBootloaderJumpToApp(SBP):
     self.jump = res['jump']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # jump: u8
-    ret += 1
-    return ret
   
 SBP_MSG_NAP_DEVICE_DNA_REQ = 0x00DE
 class MsgNapDeviceDnaReq(SBP):
@@ -157,9 +140,6 @@ and not related to the Piksi's serial number.
   __slots__ = []
   def _unpack_members(self, buf, offset, length):
     return {}, offset, length
-
-  def _payload_size(self):
-    return 0
   
 SBP_MSG_NAP_DEVICE_DNA_RESP = 0x00DD
 class MsgNapDeviceDnaResp(SBP):
@@ -195,12 +175,6 @@ and not related to the Piksi's serial number.
     self.dna = res['dna']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # dna: array of u8
-    ret += 1 * 8
-    return ret
   
 SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A = 0x00B0
 class MsgBootloaderHandshakeDepA(SBP):
@@ -230,12 +204,6 @@ class MsgBootloaderHandshakeDepA(SBP):
     self.handshake = res['handshake']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # handshake: array of u8
-    ret += 247
-    return ret
   
 
 msg_classes = {

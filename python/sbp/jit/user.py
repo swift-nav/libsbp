@@ -58,12 +58,6 @@ maximum length of 255 bytes per message.
     self.contents = res['contents']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # contents: array of u8
-    ret += 247
-    return ret
   
 
 msg_classes = {

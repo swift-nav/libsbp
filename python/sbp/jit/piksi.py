@@ -48,9 +48,6 @@ alamanac onto the Piksi's flash memory from the host.
   __slots__ = []
   def _unpack_members(self, buf, offset, length):
     return {}, offset, length
-
-  def _payload_size(self):
-    return 0
   
 SBP_MSG_SET_TIME = 0x0068
 class MsgSetTime(SBP):
@@ -69,9 +66,6 @@ time estimate sent by the host.
   __slots__ = []
   def _unpack_members(self, buf, offset, length):
     return {}, offset, length
-
-  def _payload_size(self):
-    return 0
   
 SBP_MSG_RESET = 0x00B6
 class MsgReset(SBP):
@@ -103,12 +97,6 @@ bootloader.
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # flags: u32
-    ret += 4
-    return ret
   
 SBP_MSG_RESET_DEP = 0x00B2
 class MsgResetDep(SBP):
@@ -127,9 +115,6 @@ bootloader.
   __slots__ = []
   def _unpack_members(self, buf, offset, length):
     return {}, offset, length
-
-  def _payload_size(self):
-    return 0
   
 SBP_MSG_CW_RESULTS = 0x00C0
 class MsgCwResults(SBP):
@@ -149,9 +134,6 @@ removed in a future release.
   __slots__ = []
   def _unpack_members(self, buf, offset, length):
     return {}, offset, length
-
-  def _payload_size(self):
-    return 0
   
 SBP_MSG_CW_START = 0x00C1
 class MsgCwStart(SBP):
@@ -171,9 +153,6 @@ be removed in a future release.
   __slots__ = []
   def _unpack_members(self, buf, offset, length):
     return {}, offset, length
-
-  def _payload_size(self):
-    return 0
   
 SBP_MSG_RESET_FILTERS = 0x0022
 class MsgResetFilters(SBP):
@@ -205,12 +184,6 @@ Ambiguity Resolution (IAR) process.
     self.filter = res['filter']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # filter: u8
-    ret += 1
-    return ret
   
 SBP_MSG_INIT_BASE_DEP = 0x0023
 class MsgInitBaseDep(SBP):
@@ -227,9 +200,6 @@ class MsgInitBaseDep(SBP):
   __slots__ = []
   def _unpack_members(self, buf, offset, length):
     return {}, offset, length
-
-  def _payload_size(self):
-    return 0
   
 SBP_MSG_THREAD_STATE = 0x0017
 class MsgThreadState(SBP):
@@ -270,16 +240,6 @@ thread. The reported percentage values must be normalized.
     self.stack_free = res['stack_free']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # name: string
-    ret += 20
-    # cpu: u16
-    ret += 2
-    # stack_free: u32
-    ret += 4
-    return ret
   
 class UARTChannel(object):
   """SBP class for message UARTChannel
@@ -331,22 +291,6 @@ be normalized.
     self.rx_buffer_level = res['rx_buffer_level']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # tx_throughput: float
-    ret += 4
-    # rx_throughput: float
-    ret += 4
-    # crc_error_count: u16
-    ret += 2
-    # io_error_count: u16
-    ret += 2
-    # tx_buffer_level: u8
-    ret += 1
-    # rx_buffer_level: u8
-    ret += 1
-    return ret
   
 class Period(object):
   """SBP class for message Period
@@ -393,18 +337,6 @@ can cause momentary RTK solution outages.
     self.current = res['current']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # avg: s32
-    ret += 4
-    # pmin: s32
-    ret += 4
-    # pmax: s32
-    ret += 4
-    # current: s32
-    ret += 4
-    return ret
   
 class Latency(object):
   """SBP class for message Latency
@@ -450,18 +382,6 @@ communication latency in the system.
     self.current = res['current']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # avg: s32
-    ret += 4
-    # lmin: s32
-    ret += 4
-    # lmax: s32
-    ret += 4
-    # current: s32
-    ret += 4
-    return ret
   
 SBP_MSG_UART_STATE = 0x001D
 class MsgUartState(SBP):
@@ -516,20 +436,6 @@ period indicates their likelihood of transmission.
     self.obs_period = res['obs_period']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # uart_a: UARTChannel
-    ret += UARTChannel._payload_size()
-    # uart_b: UARTChannel
-    ret += UARTChannel._payload_size()
-    # uart_ftdi: UARTChannel
-    ret += UARTChannel._payload_size()
-    # latency: Latency
-    ret += Latency._payload_size()
-    # obs_period: Period
-    ret += Period._payload_size()
-    return ret
   
 SBP_MSG_UART_STATE_DEPA = 0x0018
 class MsgUartStateDepa(SBP):
@@ -571,18 +477,6 @@ class MsgUartStateDepa(SBP):
     self.latency = res['latency']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # uart_a: UARTChannel
-    ret += UARTChannel._payload_size()
-    # uart_b: UARTChannel
-    ret += UARTChannel._payload_size()
-    # uart_ftdi: UARTChannel
-    ret += UARTChannel._payload_size()
-    # latency: Latency
-    ret += Latency._payload_size()
-    return ret
   
 SBP_MSG_IAR_STATE = 0x0019
 class MsgIarState(SBP):
@@ -616,12 +510,6 @@ from satellite observations.
     self.num_hyps = res['num_hyps']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # num_hyps: u32
-    ret += 4
-    return ret
   
 SBP_MSG_MASK_SATELLITE = 0x002B
 class MsgMaskSatellite(SBP):
@@ -657,14 +545,6 @@ from being used in various Piksi subsystems.
     self.sid = res['sid']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # mask: u8
-    ret += 1
-    # sid: GnssSignal
-    ret += GnssSignal._payload_size()
-    return ret
   
 SBP_MSG_MASK_SATELLITE_DEP = 0x001B
 class MsgMaskSatelliteDep(SBP):
@@ -698,14 +578,6 @@ class MsgMaskSatelliteDep(SBP):
     self.sid = res['sid']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # mask: u8
-    ret += 1
-    # sid: GnssSignalDep
-    ret += GnssSignalDep._payload_size()
-    return ret
   
 SBP_MSG_DEVICE_MONITOR = 0x00B5
 class MsgDeviceMonitor(SBP):
@@ -754,20 +626,6 @@ available.
     self.fe_temperature = res['fe_temperature']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # dev_vin: s16
-    ret += 2
-    # cpu_vint: s16
-    ret += 2
-    # cpu_vaux: s16
-    ret += 2
-    # cpu_temperature: s16
-    ret += 2
-    # fe_temperature: s16
-    ret += 2
-    return ret
   
 SBP_MSG_COMMAND_REQ = 0x00B8
 class MsgCommandReq(SBP):
@@ -804,14 +662,6 @@ code will be returned with MSG_COMMAND_RESP.
     self.command = res['command']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    # command: string
-    ret += 247
-    return ret
   
 SBP_MSG_COMMAND_RESP = 0x00B9
 class MsgCommandResp(SBP):
@@ -847,14 +697,6 @@ the command.  A return code of zero indicates success.
     self.code = res['code']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    # code: s32
-    ret += 4
-    return ret
   
 SBP_MSG_COMMAND_OUTPUT = 0x00BC
 class MsgCommandOutput(SBP):
@@ -892,14 +734,6 @@ the correct command.
     self.line = res['line']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # sequence: u32
-    ret += 4
-    # line: string
-    ret += 247
-    return ret
   
 SBP_MSG_NETWORK_STATE_REQ = 0x00BA
 class MsgNetworkStateReq(SBP):
@@ -918,9 +752,6 @@ Output will be sent in MSG_NETWORK_STATE_RESP messages
   __slots__ = []
   def _unpack_members(self, buf, offset, length):
     return {}, offset, length
-
-  def _payload_size(self):
-    return 0
   
 SBP_MSG_NETWORK_STATE_RESP = 0x00BB
 class MsgNetworkStateResp(SBP):
@@ -981,26 +812,6 @@ in c.
     self.flags = res['flags']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # ipv4_address: array of u8
-    ret += 1 * 4
-    # ipv4_mask_size: u8
-    ret += 1
-    # ipv6_address: array of u8
-    ret += 1 * 16
-    # ipv6_mask_size: u8
-    ret += 1
-    # rx_bytes: u32
-    ret += 4
-    # tx_bytes: u32
-    ret += 4
-    # interface_name: string
-    ret += 16
-    # flags: u32
-    ret += 4
-    return ret
   
 class NetworkUsage(object):
   """SBP class for message NetworkUsage
@@ -1051,20 +862,6 @@ though may not necessarily be populated with a value.
     self.interface_name = res['interface_name']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # duration: u64
-    ret += 8
-    # total_bytes: u64
-    ret += 8
-    # rx_bytes: u32
-    ret += 4
-    # tx_bytes: u32
-    ret += 4
-    # interface_name: string
-    ret += 16
-    return ret
   
 SBP_MSG_NETWORK_BANDWIDTH_USAGE = 0x00BD
 class MsgNetworkBandwidthUsage(SBP):
@@ -1095,12 +892,6 @@ class MsgNetworkBandwidthUsage(SBP):
     self.interfaces = res['interfaces']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # interfaces: array of NetworkUsage
-    ret += 247
-    return ret
   
 SBP_MSG_CELL_MODEM_STATUS = 0x00BE
 class MsgCellModemStatus(SBP):
@@ -1141,16 +932,6 @@ of the modem and its various parameters.
     self.reserved = res['reserved']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # signal_strength: s8
-    ret += 1
-    # signal_error_rate: float
-    ret += 4
-    # reserved: array of u8
-    ret += 247
-    return ret
   
 SBP_MSG_SPECAN_DEP = 0x0050
 class MsgSpecanDep(SBP):
@@ -1204,24 +985,6 @@ class MsgSpecanDep(SBP):
     self.amplitude_value = res['amplitude_value']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # channel_tag: u16
-    ret += 2
-    # t: GPSTimeDep
-    ret += GPSTimeDep._payload_size()
-    # freq_ref: float
-    ret += 4
-    # freq_step: float
-    ret += 4
-    # amplitude_ref: float
-    ret += 4
-    # amplitude_unit: float
-    ret += 4
-    # amplitude_value: array of u8
-    ret += 247
-    return ret
   
 SBP_MSG_SPECAN = 0x0051
 class MsgSpecan(SBP):
@@ -1276,24 +1039,6 @@ class MsgSpecan(SBP):
     self.amplitude_value = res['amplitude_value']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # channel_tag: u16
-    ret += 2
-    # t: GPSTime
-    ret += GPSTime._payload_size()
-    # freq_ref: float
-    ret += 4
-    # freq_step: float
-    ret += 4
-    # amplitude_ref: float
-    ret += 4
-    # amplitude_unit: float
-    ret += 4
-    # amplitude_value: array of u8
-    ret += 247
-    return ret
   
 SBP_MSG_FRONT_END_GAIN = 0x00BF
 class MsgFrontEndGain(SBP):
@@ -1333,14 +1078,6 @@ A negative value implies an error for the particular gain stage as reported by t
     self.if_gain = res['if_gain']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # rf_gain: array of s8
-    ret += 1 * 8
-    # if_gain: array of s8
-    ret += 1 * 8
-    return ret
   
 
 msg_classes = {

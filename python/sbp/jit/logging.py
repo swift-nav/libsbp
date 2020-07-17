@@ -63,14 +63,6 @@ ERROR, WARNING, DEBUG, INFO logging levels.
     self.text = res['text']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # level: u8
-    ret += 1
-    # text: string
-    ret += 247
-    return ret
   
 SBP_MSG_FWD = 0x0402
 class MsgFwd(SBP):
@@ -115,16 +107,6 @@ Protocol 0 represents SBP and the remaining values are implementation defined.
     self.fwd_payload = res['fwd_payload']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # source: u8
-    ret += 1
-    # protocol: u8
-    ret += 1
-    # fwd_payload: string
-    ret += 247
-    return ret
   
 SBP_MSG_PRINT_DEP = 0x0010
 class MsgPrintDep(SBP):
@@ -154,12 +136,6 @@ class MsgPrintDep(SBP):
     self.text = res['text']
     return res, off, length
 
-  @classmethod
-  def _payload_size(self):
-    ret = 0
-    # text: string
-    ret += 247
-    return ret
   
 
 msg_classes = {
