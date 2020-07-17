@@ -1,0 +1,29 @@
+---
+description: Unit tests for swiftnav.sbp.system MsgGroupMeta v2.0.
+generated_on: 2016-11-04 14:47:58.712586
+package: sbp.system
+tests:
+
+- msg:
+    fields:
+      wn: 1984
+      tow: 123456
+      flags: 0b00000011  # group type invalid, reference epoch sensor time init
+      group_msgs: [522, 65282]  # pos_lla & msg_ins_updates
+    module: sbp.system
+    name: MsgGroupMeta
+  msg_type: '0xFF0A'
+  raw_json: '{"crc": 41870, "flags": 3, "wn": 1984, "sender": 61166, "msg_type": 65290,
+    "tow": 123456, "length": 11, "group_msgs": [522, 65282], "preamble": 85, "payload":
+    "wAdA4gEAAwoCAv8="}'
+  # base64
+  raw_packet: VQr/7u4LwAdA4gEAAwoCAv+Oow==
+  sbp:
+    crc: '0xA38E'
+    length: 11
+    msg_type: '0xFF0A'
+    payload: wAdA4gEAAwoCAv8=
+    preamble: '0x55'
+    sender: '0xEEEE'
+version: 2.0
+...
