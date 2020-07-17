@@ -199,6 +199,7 @@ use self::ssr::MsgSsrStecCorrection;
 use self::system::MsgCsacTelemetry;
 use self::system::MsgCsacTelemetryLabels;
 use self::system::MsgDgnssStatus;
+use self::system::MsgGroupMeta;
 use self::system::MsgHeartbeat;
 use self::system::MsgInsStatus;
 use self::system::MsgInsUpdates;
@@ -416,6 +417,7 @@ pub enum SBP {
     MsgCsacTelemetry(MsgCsacTelemetry),
     MsgCsacTelemetryLabels(MsgCsacTelemetryLabels),
     MsgInsUpdates(MsgInsUpdates),
+    MsgGroupMeta(MsgGroupMeta),
     MsgHeartbeat(MsgHeartbeat),
     Unknown(Unknown),
 }
@@ -1343,6 +1345,11 @@ impl SBP {
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgInsUpdates(msg))
             }
+            65290 => {
+                let mut msg = MsgGroupMeta::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgGroupMeta(msg))
+            }
             65535 => {
                 let mut msg = MsgHeartbeat::parse(payload)?;
                 msg.set_sender_id(sender_id);
@@ -1546,6 +1553,7 @@ impl SBP {
             SBP::MsgCsacTelemetry(msg) => msg,
             SBP::MsgCsacTelemetryLabels(msg) => msg,
             SBP::MsgInsUpdates(msg) => msg,
+            SBP::MsgGroupMeta(msg) => msg,
             SBP::MsgHeartbeat(msg) => msg,
             SBP::Unknown(msg) => msg,
         }

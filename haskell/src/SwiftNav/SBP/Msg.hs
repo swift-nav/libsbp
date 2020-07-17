@@ -134,6 +134,7 @@ data SBPMsg =
    | SBPMsgGroupDelay MsgGroupDelay Msg
    | SBPMsgGroupDelayDepA MsgGroupDelayDepA Msg
    | SBPMsgGroupDelayDepB MsgGroupDelayDepB Msg
+   | SBPMsgGroupMeta MsgGroupMeta Msg
    | SBPMsgHeartbeat MsgHeartbeat Msg
    | SBPMsgIarState MsgIarState Msg
    | SBPMsgImuAux MsgImuAux Msg
@@ -332,6 +333,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgGroupDelay = SBPMsgGroupDelay (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGroupDelayDepA = SBPMsgGroupDelayDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGroupDelayDepB = SBPMsgGroupDelayDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgGroupMeta = SBPMsgGroupMeta (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgHeartbeat = SBPMsgHeartbeat (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgIarState = SBPMsgIarState (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgImuAux = SBPMsgImuAux (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -522,6 +524,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgGroupDelay _ m) = put m
       encoder (SBPMsgGroupDelayDepA _ m) = put m
       encoder (SBPMsgGroupDelayDepB _ m) = put m
+      encoder (SBPMsgGroupMeta _ m) = put m
       encoder (SBPMsgHeartbeat _ m) = put m
       encoder (SBPMsgIarState _ m) = put m
       encoder (SBPMsgImuAux _ m) = put m
@@ -716,6 +719,7 @@ instance FromJSON SBPMsg where
         | msgType == msgGroupDelay = SBPMsgGroupDelay <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGroupDelayDepA = SBPMsgGroupDelayDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGroupDelayDepB = SBPMsgGroupDelayDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgGroupMeta = SBPMsgGroupMeta <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgHeartbeat = SBPMsgHeartbeat <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgIarState = SBPMsgIarState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgImuAux = SBPMsgImuAux <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -911,6 +915,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgGroupDelay n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGroupDelayDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGroupDelayDepB n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgGroupMeta n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgHeartbeat n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgIarState n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgImuAux n m) = toJSON n <<>> toJSON m
@@ -1100,6 +1105,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgGroupDelay n m) = SBPMsgGroupDelay n <$> f m
   msg f (SBPMsgGroupDelayDepA n m) = SBPMsgGroupDelayDepA n <$> f m
   msg f (SBPMsgGroupDelayDepB n m) = SBPMsgGroupDelayDepB n <$> f m
+  msg f (SBPMsgGroupMeta n m) = SBPMsgGroupMeta n <$> f m
   msg f (SBPMsgHeartbeat n m) = SBPMsgHeartbeat n <$> f m
   msg f (SBPMsgIarState n m) = SBPMsgIarState n <$> f m
   msg f (SBPMsgImuAux n m) = SBPMsgImuAux n <$> f m

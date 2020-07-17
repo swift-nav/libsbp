@@ -377,6 +377,61 @@ This message is expected to be extended in the future as new types of measuremen
     ret += 1
     return ret
   
+SBP_MSG_GROUP_META = 0xFF0A
+class MsgGroupMeta(SBP):
+  """SBP class for message MSG_GROUP_META (0xFF0A).
+
+  You can have MSG_GROUP_META inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This leading message lists the time metadata of the Solution Group.
+It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
+
+
+  """
+  __slots__ = ['wn',
+               'tow',
+               'flags',
+               'group_msgs',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__wn, offset, length) = get_u16(buf, offset, length)
+    ret['wn'] = __wn
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    (__group_msgs, offset, length) = get_array(get_u16)(buf, offset, length)
+    ret['group_msgs'] = __group_msgs
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.wn = res['wn']
+    self.tow = res['tow']
+    self.flags = res['flags']
+    self.group_msgs = res['group_msgs']
+    return res, off, length
+
+  @classmethod
+  def _payload_size(self):
+    ret = 0
+    # wn: u16
+    ret += 2
+    # tow: u32
+    ret += 4
+    # flags: u8
+    ret += 1
+    # group_msgs: array of u16
+    ret += 247
+    return ret
+  
 
 msg_classes = {
   0xFF00: MsgStartup,
@@ -386,4 +441,5 @@ msg_classes = {
   0xFF04: MsgCsacTelemetry,
   0xFF05: MsgCsacTelemetryLabels,
   0xFF06: MsgInsUpdates,
+  0xFF0A: MsgGroupMeta,
 }

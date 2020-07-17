@@ -218,6 +218,76 @@ impl crate::serialize::SbpSerialize for MsgDgnssStatus {
     }
 }
 
+/// Solution Group Metadata
+///
+/// This leading message lists the time metadata of the Solution Group.
+/// It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
+///
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[derive(Debug, Clone)]
+#[allow(non_snake_case)]
+pub struct MsgGroupMeta {
+    pub sender_id: Option<u16>,
+    /// GPS Week Number
+    pub wn: u16,
+    /// GPS time of week rounded to the nearest millisecond
+    pub tow: u32,
+    /// Status flags (reserved)
+    pub flags: u8,
+    /// An inorder list of message types included in the Solution Group
+    pub group_msgs: Vec<u16>,
+}
+
+impl MsgGroupMeta {
+    #[rustfmt::skip]
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupMeta, crate::Error> {
+        Ok( MsgGroupMeta{
+            sender_id: None,
+            wn: _buf.read_u16::<LittleEndian>()?,
+            tow: _buf.read_u32::<LittleEndian>()?,
+            flags: _buf.read_u8()?,
+            group_msgs: crate::parser::read_u16_array(_buf)?,
+        } )
+    }
+}
+impl super::SBPMessage for MsgGroupMeta {
+    fn get_message_type(&self) -> u16 {
+        65290
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgGroupMeta {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.wn.append_to_sbp_buffer(buf);
+        self.tow.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+        self.group_msgs.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.wn.sbp_size();
+        size += self.tow.sbp_size();
+        size += self.flags.sbp_size();
+        size += self.group_msgs.sbp_size();
+        size
+    }
+}
+
 /// System heartbeat message
 ///
 /// The heartbeat message is sent periodically to inform the host

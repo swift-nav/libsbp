@@ -131,6 +131,20 @@ typedef struct SBP_ATTR_PACKED {
 } msg_ins_updates_t;
 
 
+/** Solution Group Metadata
+ *
+ * This leading message lists the time metadata of the Solution Group.
+ * It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
+ */
+#define SBP_MSG_GROUP_META            0xFF0A
+typedef struct SBP_ATTR_PACKED {
+  u16 wn;            /**< GPS Week Number [weeks] */
+  u32 tow;           /**< GPS time of week rounded to the nearest millisecond [ms] */
+  u8 flags;         /**< Status flags (reserved) */
+  u16 group_msgs[0]; /**< An inorder list of message types included in the Solution Group */
+} msg_group_meta_t;
+
+
 /** \} */
 
 SBP_PACK_END
