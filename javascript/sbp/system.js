@@ -267,6 +267,44 @@ MsgInsUpdates.prototype.fieldSpec.push(['speed', 'writeUInt8', 1]);
 MsgInsUpdates.prototype.fieldSpec.push(['nhc', 'writeUInt8', 1]);
 MsgInsUpdates.prototype.fieldSpec.push(['zerovel', 'writeUInt8', 1]);
 
+/**
+ * SBP class for message MSG_GROUP_META (0xFF0A).
+ *
+ * This leading message lists the time metadata of the Solution Group. It also
+ * lists the atomic contents (i.e. types of messages included) of the Solution
+ * Group.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field wn number (unsigned 16-bit int, 2 bytes) GPS Week Number
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS time of week rounded to the nearest millisecond
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags (reserved)
+ * @field group_msgs array An inorder list of message types included in the Solution Group
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgGroupMeta = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_GROUP_META";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgGroupMeta.prototype = Object.create(SBP.prototype);
+MsgGroupMeta.prototype.messageType = "MSG_GROUP_META";
+MsgGroupMeta.prototype.msg_type = 0xFF0A;
+MsgGroupMeta.prototype.constructor = MsgGroupMeta;
+MsgGroupMeta.prototype.parser = new Parser()
+  .endianess('little')
+  .uint16('wn')
+  .uint32('tow')
+  .uint8('flags')
+  .array('group_msgs', { type: 'uint16le', readUntil: 'eof' });
+MsgGroupMeta.prototype.fieldSpec = [];
+MsgGroupMeta.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
+MsgGroupMeta.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgGroupMeta.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+MsgGroupMeta.prototype.fieldSpec.push(['group_msgs', 'array', 'writeUInt16LE', function () { return 2; }, null]);
+
 module.exports = {
   0xFF00: MsgStartup,
   MsgStartup: MsgStartup,
@@ -282,4 +320,6 @@ module.exports = {
   MsgCsacTelemetryLabels: MsgCsacTelemetryLabels,
   0xFF06: MsgInsUpdates,
   MsgInsUpdates: MsgInsUpdates,
+  0xFF0A: MsgGroupMeta,
+  MsgGroupMeta: MsgGroupMeta,
 }

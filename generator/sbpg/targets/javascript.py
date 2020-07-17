@@ -139,15 +139,16 @@ def construct_format(f, type_map=CONSTRUCT_CODE):
       field_type = "%s.prototype.parser" % f_.type_id
     else:
       field_type = "'%s'" % field_type
+    d = { "'uint16'" : "'uint16le'", "'uint32'" : "'uint32le'", "'uint64'" : "'uint16le'",
+          "'int16'" : "'int16le'", "'int32'" : "'int32le'", "'int64'" : "'int16le'" }
     if size is not None:
-      d = { "'uint16'" : "'uint16le'", "'uint32'" : "'uint32le'", "'uint64'" : "'uint16le'",
-            "'int16'" : "'int16le'", "'int32'" : "'int32le'", "'int64'" : "'int16le'" }
       field_type_arr = d.get(field_type, field_type)
       return "array('%s', { length: %d, type: %s })" % (f.identifier, size.value, field_type_arr)
     elif f.options.get('size_fn') is not None:
       return "array('%s', { type: %s, length: '%s' })" % (f_.identifier, field_type, size_fn.value)
     else:
-      return "array('%s', { type: %s, readUntil: 'eof' })" % (f_.identifier, field_type)
+      field_type_arr = d.get(field_type, field_type)
+      return "array('%s', { type: %s, readUntil: 'eof' })" % (f_.identifier, field_type_arr)
   else:
     return "nest('%s', { type: %s.prototype.parser })" % (f.identifier, f.type_id)
   return formatted
