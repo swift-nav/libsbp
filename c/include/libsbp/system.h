@@ -131,6 +131,21 @@ typedef struct SBP_ATTR_PACKED {
 } msg_ins_updates_t;
 
 
+/** Offset of the local time with respect to GNSS time
+ *
+ * The GNSS time offset message contains the information that is needed to translate messages
+ * tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the sender
+ * producing this message.
+ */
+#define SBP_MSG_GNSS_TIME_OFFSET      0xFF07
+typedef struct SBP_ATTR_PACKED {
+  s16 weeks;           /**< Weeks portion of the time offset [weeks] */
+  s32 milliseconds;    /**< Milliseconds portion of the time offset [ms] */
+  s16 microseconds;    /**< Microseconds portion of the time offset [microseconds] */
+  u8 flags;           /**< Status flags (reserved) */
+} msg_gnss_time_offset_t;
+
+
 /** \} */
 
 SBP_PACK_END

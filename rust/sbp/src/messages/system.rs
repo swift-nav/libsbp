@@ -218,6 +218,77 @@ impl crate::serialize::SbpSerialize for MsgDgnssStatus {
     }
 }
 
+/// Offset of the local time with respect to GNSS time
+///
+/// The GNSS time offset message contains the information that is needed to translate messages
+/// tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the sender
+/// producing this message.
+///
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[derive(Debug, Clone)]
+#[allow(non_snake_case)]
+pub struct MsgGnssTimeOffset {
+    pub sender_id: Option<u16>,
+    /// Weeks portion of the time offset
+    pub weeks: i16,
+    /// Milliseconds portion of the time offset
+    pub milliseconds: i32,
+    /// Microseconds portion of the time offset
+    pub microseconds: i16,
+    /// Status flags (reserved)
+    pub flags: u8,
+}
+
+impl MsgGnssTimeOffset {
+    #[rustfmt::skip]
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGnssTimeOffset, crate::Error> {
+        Ok( MsgGnssTimeOffset{
+            sender_id: None,
+            weeks: _buf.read_i16::<LittleEndian>()?,
+            milliseconds: _buf.read_i32::<LittleEndian>()?,
+            microseconds: _buf.read_i16::<LittleEndian>()?,
+            flags: _buf.read_u8()?,
+        } )
+    }
+}
+impl super::SBPMessage for MsgGnssTimeOffset {
+    fn get_message_type(&self) -> u16 {
+        65287
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgGnssTimeOffset {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.weeks.append_to_sbp_buffer(buf);
+        self.milliseconds.append_to_sbp_buffer(buf);
+        self.microseconds.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.weeks.sbp_size();
+        size += self.milliseconds.sbp_size();
+        size += self.microseconds.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// System heartbeat message
 ///
 /// The heartbeat message is sent periodically to inform the host

@@ -39,6 +39,9 @@ reference point(s) specified by the user. The offset for the odometry reference 
 the definition and origin of the user frame are defined through the device settings interface.
 There are 4 possible user-defined sources of this message  which are labeled arbitrarily 
 source 0 through 3.
+If using "processor time" time tags, the receiving end will expect a
+`MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry measurements
+with GNSS.
 
 
   Parameters
@@ -149,6 +152,9 @@ The source of this message is identified by the source field, which is an intege
 from 0 to 255.
 The timestamp associated with this message should represent the time when the accumulated
 tick count reached the value given by the contents of this message as accurately as possible.
+If using "local CPU time" time tags, the receiving end will expect a
+`MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise wheeltick measurements
+with GNSS.
 
 
   Parameters

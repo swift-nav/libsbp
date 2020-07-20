@@ -44,7 +44,9 @@ msgOdometry = 0x0903
 -- odometry reference point and  the definition and origin of the user frame
 -- are defined through the device settings interface. There are 4 possible
 -- user-defined sources of this message  which are labeled arbitrarily  source
--- 0 through 3.
+-- 0 through 3. If using "processor time" time tags, the receiving end will
+-- expect a `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to
+-- synchronise odometry measurements with GNSS.
 data MsgOdometry = MsgOdometry
   { _msgOdometry_tow    :: !Word32
     -- ^ Time field representing either milliseconds in the GPS Week or local CPU
@@ -84,7 +86,9 @@ msgWheeltick = 0x0904
 -- identified by the source field, which is an integer ranging from 0 to 255.
 -- The timestamp associated with this message should represent the time when
 -- the accumulated tick count reached the value given by the contents of this
--- message as accurately as possible.
+-- message as accurately as possible. If using "local CPU time" time tags, the
+-- receiving end will expect a `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes
+-- available to synchronise wheeltick measurements with GNSS.
 data MsgWheeltick = MsgWheeltick
   { _msgWheeltick_time :: !Word64
     -- ^ Time field representing either microseconds since the last PPS,

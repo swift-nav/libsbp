@@ -30,7 +30,10 @@ var UInt64 = require('cuint').UINT64;
  * the odometry reference point(s) specified by the user. The offset for the
  * odometry reference point and  the definition and origin of the user frame are
  * defined through the device settings interface. There are 4 possible user-defined
- * sources of this message  which are labeled arbitrarily  source 0 through 3.
+ * sources of this message  which are labeled arbitrarily  source 0 through 3. If
+ * using "processor time" time tags, the receiving end will expect a
+ * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry
+ * measurements with GNSS.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) Time field representing either milliseconds in the GPS Week or local CPU time
@@ -72,7 +75,9 @@ MsgOdometry.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * by the source field, which is an integer ranging from 0 to 255. The timestamp
  * associated with this message should represent the time when the accumulated tick
  * count reached the value given by the contents of this message as accurately as
- * possible.
+ * possible. If using "local CPU time" time tags, the receiving end will expect a
+ * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise wheeltick
+ * measurements with GNSS.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field time number (unsigned 64-bit int, 8 bytes) Time field representing either microseconds since the last PPS, microseconds in
