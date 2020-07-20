@@ -282,3 +282,26 @@ definitions:
               - 0-3:
                   desc: Number of rejected zero velocity updates since last message.
                   
+ - MSG_GNSS_TIME_OFFSET:
+    id: 0xFF07
+    short_desc: Offset of the local time with respect to GNSS time
+    desc: |
+        The GNSS time offset message contains the information that is needed to translate messages
+        tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the sender
+        producing this message.
+    fields:
+        - weeks:
+            type: s16
+            units: weeks
+            desc: Weeks portion of the time offset
+        - milliseconds:
+            type: s32
+            units: ms
+            desc: Milliseconds portion of the time offset
+        - microseconds:
+            type: s16
+            units: microseconds
+            desc: Microseconds portion of the time offset
+        - flags:
+            type: u8
+            desc: Status flags (reserved)
