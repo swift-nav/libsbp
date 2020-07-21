@@ -1,0 +1,30 @@
+---
+description: Unit tests for swiftnav.sbp.system MsgGroupMeta
+generated_on: 2020-07-17 00:00:00.00  # manually generated
+package: sbp.system
+tests:
+
+- msg:
+    fields:
+      wn: 1984
+      tom: 123456
+      ns_residual: 0
+      flags: 0b00000011
+      group_msgs: [522, 65282]  # pos_lla & msg_ins_updates
+    module: sbp.system
+    name: MsgGroupMeta
+  msg_type: '0xFF0A'
+  raw_json: '{"crc": 19612, "flags": 3, "wn": 1984, "sender": 61166, "msg_type": 65290,
+  "tom": 123456, "ns_residual": 0, "length": 15, "group_msgs": [522, 65282], "preamble": 85, "payload":
+  "wAdA4gEAAAAAAAMKAgL/"}'
+  # base64
+  raw_packet: VQr/7u4PwAdA4gEAAAAAAAMKAgL/nEw=
+  sbp:
+    crc: '0x4c9c'
+    length: 15
+    msg_type: '0xFF0A'
+    payload: wAdA4gEAAAAAAAMKAgL/
+    preamble: '0x55'
+    sender: '0xEEEE'
+version: 3.1
+...
