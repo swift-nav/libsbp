@@ -338,7 +338,7 @@ MsgGroupMeta.prototype.parser = new Parser()
   .uint32('tom')
   .int32('ns_residual')
   .uint8('flags')
-  .array('group_msgs', { type: 'uint16', readUntil: 'eof' });
+  .array('group_msgs', { type: 'uint16le', readUntil: 'eof' });
 MsgGroupMeta.prototype.fieldSpec = [];
 MsgGroupMeta.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
 MsgGroupMeta.prototype.fieldSpec.push(['tom', 'writeUInt32LE', 4]);
