@@ -353,6 +353,53 @@ producing this message.
     return res, off, length
 
   
+SBP_MSG_GROUP_META = 0xFF0A
+class MsgGroupMeta(SBP):
+  """SBP class for message MSG_GROUP_META (0xFF0A).
+
+  You can have MSG_GROUP_META inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This leading message lists the time metadata of the Solution Group.
+It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
+
+
+  """
+  __slots__ = ['wn',
+               'tom',
+               'ns_residual',
+               'flags',
+               'group_msgs',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__wn, offset, length) = get_u16(buf, offset, length)
+    ret['wn'] = __wn
+    (__tom, offset, length) = get_u32(buf, offset, length)
+    ret['tom'] = __tom
+    (__ns_residual, offset, length) = get_s32(buf, offset, length)
+    ret['ns_residual'] = __ns_residual
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    (__group_msgs, offset, length) = get_array(get_u16)(buf, offset, length)
+    ret['group_msgs'] = __group_msgs
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.wn = res['wn']
+    self.tom = res['tom']
+    self.ns_residual = res['ns_residual']
+    self.flags = res['flags']
+    self.group_msgs = res['group_msgs']
+    return res, off, length
+
+  
 
 msg_classes = {
   0xFF00: MsgStartup,
@@ -363,4 +410,5 @@ msg_classes = {
   0xFF05: MsgCsacTelemetryLabels,
   0xFF06: MsgInsUpdates,
   0xFF07: MsgGnssTimeOffset,
+  0xFF0A: MsgGroupMeta,
 }

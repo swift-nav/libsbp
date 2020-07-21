@@ -847,6 +847,119 @@ producing this message.
     d.update(j)
     return d
     
+SBP_MSG_GROUP_META = 0xFF0A
+class MsgGroupMeta(SBP):
+  """SBP class for message MSG_GROUP_META (0xFF0A).
+
+  You can have MSG_GROUP_META inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This leading message lists the time metadata of the Solution Group.
+It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  wn : int
+    GPS Week Number or zero if Reference epoch is not GPS
+  tom : int
+    Time of Measurement in Milliseconds since reference epoch
+  ns_residual : int
+    Nanosecond residual of millisecond-rounded TOM (ranges
+from -500000 to 500000)
+
+  flags : int
+    Status flags (reserved)
+  group_msgs : array
+    An inorder list of message types included in the Solution Group
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'wn' / construct.Int16ul,
+                   'tom' / construct.Int32ul,
+                   'ns_residual' / construct.Int32sl,
+                   'flags' / construct.Int8ul,
+                   construct.GreedyRange('group_msgs' / construct.Int16ul),)
+  __slots__ = [
+               'wn',
+               'tom',
+               'ns_residual',
+               'flags',
+               'group_msgs',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgGroupMeta,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgGroupMeta, self).__init__()
+      self.msg_type = SBP_MSG_GROUP_META
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.wn = kwargs.pop('wn')
+      self.tom = kwargs.pop('tom')
+      self.ns_residual = kwargs.pop('ns_residual')
+      self.flags = kwargs.pop('flags')
+      self.group_msgs = kwargs.pop('group_msgs')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgGroupMeta.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgGroupMeta(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgGroupMeta._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgGroupMeta._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgGroupMeta._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgGroupMeta, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0xFF00: MsgStartup,
@@ -857,4 +970,5 @@ msg_classes = {
   0xFF05: MsgCsacTelemetryLabels,
   0xFF06: MsgInsUpdates,
   0xFF07: MsgGnssTimeOffset,
+  0xFF0A: MsgGroupMeta,
 }

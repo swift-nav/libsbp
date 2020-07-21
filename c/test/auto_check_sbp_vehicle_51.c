@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swiftnav.com>
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
  *
  * This source is subject to the license found in the file 'LICENSE' which must
  * be be distributed together with this source. All other rights reserved.
@@ -99,7 +99,7 @@ START_TEST( test_auto_check_sbp_vehicle_51 )
 
     sbp_register_callback(&sbp_state, 0x903, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
-    u8 test_data[] = {85,3,9,66,0,9,7,0,0,0,3,0,0,0,3,36,82, };
+    u8 test_data[] = {85,3,9,66,0,9,8,0,0,0,7,0,0,0,1,52,99, };
 
     dummy_reset();
     sbp_send_message(&sbp_state, 0x903, 66, sizeof(test_data), test_data, &dummy_write);
@@ -125,9 +125,9 @@ START_TEST( test_auto_check_sbp_vehicle_51 )
     msg_odometry_t* msg = ( msg_odometry_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->flags == 3, "incorrect value for flags, expected 3, is %d", msg->flags);
-    fail_unless(msg->tow == 7, "incorrect value for tow, expected 7, is %d", msg->tow);
-    fail_unless(msg->velocity == 3, "incorrect value for velocity, expected 3, is %d", msg->velocity);
+    fail_unless(msg->flags == 1, "incorrect value for flags, expected 1, is %d", msg->flags);
+    fail_unless(msg->tow == 8, "incorrect value for tow, expected 8, is %d", msg->tow);
+    fail_unless(msg->velocity == 7, "incorrect value for velocity, expected 7, is %d", msg->velocity);
   }
 }
 END_TEST

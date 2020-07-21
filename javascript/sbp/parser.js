@@ -16,7 +16,7 @@ var Parser = require('binary-parser').Parser;
  */
 Parser.prototype.uint64 = function uint64 (fieldName, options) {
   return this.setNextParser('uint64', fieldName, Object.assign({}, options, {
-    formatter: function (recv_time) {
+    formatter: function (_recv_time) {
       var UInt64 = require('cuint').UINT64;
       var low = buffer.readUInt32LE(offset);
       offset += 4;

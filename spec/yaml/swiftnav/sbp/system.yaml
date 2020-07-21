@@ -305,3 +305,50 @@ definitions:
         - flags:
             type: u8
             desc: Status flags (reserved)
+
+ - MSG_GROUP_META:
+     id: 0xFF0A
+     short_desc: Solution Group Metadata
+     public: true
+     desc: |
+       This leading message lists the time metadata of the Solution Group.
+       It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
+     fields:
+       - wn:
+           type: u16
+           units: weeks
+           desc: GPS Week Number or zero if Reference epoch is not GPS
+       - tom:
+           type: u32
+           units: ms
+           desc: Time of Measurement in Milliseconds since reference epoch
+       - ns_residual:
+           type: s32
+           units: ns
+           desc: |
+             Nanosecond residual of millisecond-rounded TOM (ranges
+             from -500000 to 500000)
+       - flags:
+           type: u8
+           desc: Status flags (reserved)
+           fields:
+             - 4-7:
+                 desc: Reserved
+             - 2-3:
+                 desc: Solution Group type
+                 values:
+                   - 0: None (invalid)
+                   - 1: GNSS only
+                   - 2: GNSS+INS (Fuzed)
+                   - 3: Reserved
+             - 0-1:
+                 desc: Time source
+                 values:
+                   - 0: Reference epoch is start of current GPS week
+                   - 1: Reference epoch is Sensor Time Init
+                   - 2: Reference epoch is unknown
+                   - 3: Reference epoch is last PPS
+       - group_msgs:
+           type: array
+           fill: u16
+           desc: An inorder list of message types included in the Solution Group
