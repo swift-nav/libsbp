@@ -146,6 +146,23 @@ typedef struct SBP_ATTR_PACKED {
 } msg_gnss_time_offset_t;
 
 
+/** Solution Group Metadata
+ *
+ * This leading message lists the time metadata of the Solution Group.
+ * It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
+ */
+#define SBP_MSG_GROUP_META            0xFF0A
+typedef struct SBP_ATTR_PACKED {
+  u16 wn;             /**< GPS Week Number or zero if Reference epoch is not GPS [weeks] */
+  u32 tom;            /**< Time of Measurement in Milliseconds since reference epoch [ms] */
+  s32 ns_residual;    /**< Nanosecond residual of millisecond-rounded TOM (ranges
+from -500000 to 500000)
+ [ns] */
+  u8 flags;          /**< Status flags (reserved) */
+  u16 group_msgs[0];  /**< An inorder list of message types included in the Solution Group */
+} msg_group_meta_t;
+
+
 /** \} */
 
 SBP_PACK_END

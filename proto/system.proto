@@ -120,3 +120,16 @@ message MsgGnssTimeOffset {
     sint32 microseconds = 3;
     uint32 flags = 4;
 }
+
+/** Solution Group Metadata
+ *
+ * This leading message lists the time metadata of the Solution Group.
+ * It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
+ */
+message MsgGroupMeta {
+    uint32 wn = 1;
+    uint32 tom = 2;
+    sint32 ns_residual = 3;
+    uint32 flags = 4;
+    repeated uint32 group_msgs = 5;
+}

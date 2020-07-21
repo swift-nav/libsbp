@@ -303,3 +303,45 @@ instance Binary MsgGnssTimeOffset where
 $(makeSBP 'msgGnssTimeOffset ''MsgGnssTimeOffset)
 $(makeJSON "_msgGnssTimeOffset_" ''MsgGnssTimeOffset)
 $(makeLenses ''MsgGnssTimeOffset)
+
+msgGroupMeta :: Word16
+msgGroupMeta = 0xFF0A
+
+-- | SBP class for message MSG_GROUP_META (0xFF0A).
+--
+-- This leading message lists the time metadata of the Solution Group. It also
+-- lists the atomic contents (i.e. types of messages included) of the Solution
+-- Group.
+data MsgGroupMeta = MsgGroupMeta
+  { _msgGroupMeta_wn        :: !Word16
+    -- ^ GPS Week Number or zero if Reference epoch is not GPS
+  , _msgGroupMeta_tom       :: !Word32
+    -- ^ Time of Measurement in Milliseconds since reference epoch
+  , _msgGroupMeta_ns_residual :: !Int32
+    -- ^ Nanosecond residual of millisecond-rounded TOM (ranges from -500000 to
+    -- 500000)
+  , _msgGroupMeta_flags     :: !Word8
+    -- ^ Status flags (reserved)
+  , _msgGroupMeta_group_msgs :: ![Word16]
+    -- ^ An inorder list of message types included in the Solution Group
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgGroupMeta where
+  get = do
+    _msgGroupMeta_wn <- getWord16le
+    _msgGroupMeta_tom <- getWord32le
+    _msgGroupMeta_ns_residual <- (fromIntegral <$> getWord32le)
+    _msgGroupMeta_flags <- getWord8
+    _msgGroupMeta_group_msgs <- whileM (not <$> isEmpty) getWord16le
+    pure MsgGroupMeta {..}
+
+  put MsgGroupMeta {..} = do
+    putWord16le _msgGroupMeta_wn
+    putWord32le _msgGroupMeta_tom
+    (putWord32le . fromIntegral) _msgGroupMeta_ns_residual
+    putWord8 _msgGroupMeta_flags
+    mapM_ putWord16le _msgGroupMeta_group_msgs
+
+$(makeSBP 'msgGroupMeta ''MsgGroupMeta)
+$(makeJSON "_msgGroupMeta_" ''MsgGroupMeta)
+$(makeLenses ''MsgGroupMeta)
