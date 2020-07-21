@@ -107,3 +107,16 @@ message MsgInsUpdates {
     uint32 nhc = 6;
     uint32 zerovel = 7;
 }
+
+/** Offset of the local time with respect to GNSS time
+ *
+ * The GNSS time offset message contains the information that is needed to translate messages
+ * tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the sender
+ * producing this message.
+ */
+message MsgGnssTimeOffset {
+    sint32 weeks = 1;
+    sint32 milliseconds = 2;
+    sint32 microseconds = 3;
+    uint32 flags = 4;
+}

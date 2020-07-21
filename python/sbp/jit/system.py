@@ -309,6 +309,50 @@ This message is expected to be extended in the future as new types of measuremen
     return res, off, length
 
   
+SBP_MSG_GNSS_TIME_OFFSET = 0xFF07
+class MsgGnssTimeOffset(SBP):
+  """SBP class for message MSG_GNSS_TIME_OFFSET (0xFF07).
+
+  You can have MSG_GNSS_TIME_OFFSET inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The GNSS time offset message contains the information that is needed to translate messages
+tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the sender
+producing this message.
+
+
+  """
+  __slots__ = ['weeks',
+               'milliseconds',
+               'microseconds',
+               'flags',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__weeks, offset, length) = get_s16(buf, offset, length)
+    ret['weeks'] = __weeks
+    (__milliseconds, offset, length) = get_s32(buf, offset, length)
+    ret['milliseconds'] = __milliseconds
+    (__microseconds, offset, length) = get_s16(buf, offset, length)
+    ret['microseconds'] = __microseconds
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.weeks = res['weeks']
+    self.milliseconds = res['milliseconds']
+    self.microseconds = res['microseconds']
+    self.flags = res['flags']
+    return res, off, length
+
+  
 
 msg_classes = {
   0xFF00: MsgStartup,
@@ -318,4 +362,5 @@ msg_classes = {
   0xFF04: MsgCsacTelemetry,
   0xFF05: MsgCsacTelemetryLabels,
   0xFF06: MsgInsUpdates,
+  0xFF07: MsgGnssTimeOffset,
 }

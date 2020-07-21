@@ -267,6 +267,44 @@ MsgInsUpdates.prototype.fieldSpec.push(['speed', 'writeUInt8', 1]);
 MsgInsUpdates.prototype.fieldSpec.push(['nhc', 'writeUInt8', 1]);
 MsgInsUpdates.prototype.fieldSpec.push(['zerovel', 'writeUInt8', 1]);
 
+/**
+ * SBP class for message MSG_GNSS_TIME_OFFSET (0xFF07).
+ *
+ * The GNSS time offset message contains the information that is needed to
+ * translate messages tagged with a local timestamp (e.g. IMU or wheeltick
+ * messages) to GNSS time for the sender producing this message.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field weeks number (signed 16-bit int, 2 bytes) Weeks portion of the time offset
+ * @field milliseconds number (signed 32-bit int, 4 bytes) Milliseconds portion of the time offset
+ * @field microseconds number (signed 16-bit int, 2 bytes) Microseconds portion of the time offset
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags (reserved)
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgGnssTimeOffset = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_GNSS_TIME_OFFSET";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgGnssTimeOffset.prototype = Object.create(SBP.prototype);
+MsgGnssTimeOffset.prototype.messageType = "MSG_GNSS_TIME_OFFSET";
+MsgGnssTimeOffset.prototype.msg_type = 0xFF07;
+MsgGnssTimeOffset.prototype.constructor = MsgGnssTimeOffset;
+MsgGnssTimeOffset.prototype.parser = new Parser()
+  .endianess('little')
+  .int16('weeks')
+  .int32('milliseconds')
+  .int16('microseconds')
+  .uint8('flags');
+MsgGnssTimeOffset.prototype.fieldSpec = [];
+MsgGnssTimeOffset.prototype.fieldSpec.push(['weeks', 'writeInt16LE', 2]);
+MsgGnssTimeOffset.prototype.fieldSpec.push(['milliseconds', 'writeInt32LE', 4]);
+MsgGnssTimeOffset.prototype.fieldSpec.push(['microseconds', 'writeInt16LE', 2]);
+MsgGnssTimeOffset.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
 module.exports = {
   0xFF00: MsgStartup,
   MsgStartup: MsgStartup,
@@ -282,4 +320,6 @@ module.exports = {
   MsgCsacTelemetryLabels: MsgCsacTelemetryLabels,
   0xFF06: MsgInsUpdates,
   MsgInsUpdates: MsgInsUpdates,
+  0xFF07: MsgGnssTimeOffset,
+  MsgGnssTimeOffset: MsgGnssTimeOffset,
 }

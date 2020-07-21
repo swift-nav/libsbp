@@ -1092,6 +1092,12 @@ struct MessageTraits<msg_ins_updates_t> {
 
 
 template<>
+struct MessageTraits<msg_gnss_time_offset_t> {
+  static constexpr u16 id = 65287;
+};
+
+
+template<>
 struct MessageTraits<msg_heartbeat_t> {
   static constexpr u16 id = 65535;
 };

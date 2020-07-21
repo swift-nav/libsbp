@@ -266,3 +266,40 @@ instance Binary MsgInsUpdates where
 $(makeSBP 'msgInsUpdates ''MsgInsUpdates)
 $(makeJSON "_msgInsUpdates_" ''MsgInsUpdates)
 $(makeLenses ''MsgInsUpdates)
+
+msgGnssTimeOffset :: Word16
+msgGnssTimeOffset = 0xFF07
+
+-- | SBP class for message MSG_GNSS_TIME_OFFSET (0xFF07).
+--
+-- The GNSS time offset message contains the information that is needed to
+-- translate messages tagged with a local timestamp (e.g. IMU or wheeltick
+-- messages) to GNSS time for the sender producing this message.
+data MsgGnssTimeOffset = MsgGnssTimeOffset
+  { _msgGnssTimeOffset_weeks      :: !Int16
+    -- ^ Weeks portion of the time offset
+  , _msgGnssTimeOffset_milliseconds :: !Int32
+    -- ^ Milliseconds portion of the time offset
+  , _msgGnssTimeOffset_microseconds :: !Int16
+    -- ^ Microseconds portion of the time offset
+  , _msgGnssTimeOffset_flags      :: !Word8
+    -- ^ Status flags (reserved)
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgGnssTimeOffset where
+  get = do
+    _msgGnssTimeOffset_weeks <- (fromIntegral <$> getWord16le)
+    _msgGnssTimeOffset_milliseconds <- (fromIntegral <$> getWord32le)
+    _msgGnssTimeOffset_microseconds <- (fromIntegral <$> getWord16le)
+    _msgGnssTimeOffset_flags <- getWord8
+    pure MsgGnssTimeOffset {..}
+
+  put MsgGnssTimeOffset {..} = do
+    (putWord16le . fromIntegral) _msgGnssTimeOffset_weeks
+    (putWord32le . fromIntegral) _msgGnssTimeOffset_milliseconds
+    (putWord16le . fromIntegral) _msgGnssTimeOffset_microseconds
+    putWord8 _msgGnssTimeOffset_flags
+
+$(makeSBP 'msgGnssTimeOffset ''MsgGnssTimeOffset)
+$(makeJSON "_msgGnssTimeOffset_" ''MsgGnssTimeOffset)
+$(makeLenses ''MsgGnssTimeOffset)

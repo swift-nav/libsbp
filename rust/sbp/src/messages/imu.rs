@@ -95,6 +95,11 @@ impl crate::serialize::SbpSerialize for MsgImuAux {
 /// gyroscope readings. The sense of the measurements are to be aligned with
 /// the indications on the device itself. Measurement units, which are specific to the
 /// device hardware and settings, are communicated via the MSG_IMU_AUX message.
+/// If using "time since startup" time tags, the receiving end will expect a
+/// `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise IMU measurements
+/// with GNSS.
+///
+/// The time-tagging mode should not change throughout a run.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone)]

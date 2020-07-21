@@ -740,6 +740,113 @@ This message is expected to be extended in the future as new types of measuremen
     d.update(j)
     return d
     
+SBP_MSG_GNSS_TIME_OFFSET = 0xFF07
+class MsgGnssTimeOffset(SBP):
+  """SBP class for message MSG_GNSS_TIME_OFFSET (0xFF07).
+
+  You can have MSG_GNSS_TIME_OFFSET inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The GNSS time offset message contains the information that is needed to translate messages
+tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the sender
+producing this message.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  weeks : int
+    Weeks portion of the time offset
+  milliseconds : int
+    Milliseconds portion of the time offset
+  microseconds : int
+    Microseconds portion of the time offset
+  flags : int
+    Status flags (reserved)
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'weeks' / construct.Int16sl,
+                   'milliseconds' / construct.Int32sl,
+                   'microseconds' / construct.Int16sl,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'weeks',
+               'milliseconds',
+               'microseconds',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgGnssTimeOffset,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgGnssTimeOffset, self).__init__()
+      self.msg_type = SBP_MSG_GNSS_TIME_OFFSET
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.weeks = kwargs.pop('weeks')
+      self.milliseconds = kwargs.pop('milliseconds')
+      self.microseconds = kwargs.pop('microseconds')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgGnssTimeOffset.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgGnssTimeOffset(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgGnssTimeOffset._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgGnssTimeOffset._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgGnssTimeOffset._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgGnssTimeOffset, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
   0xFF00: MsgStartup,
@@ -749,4 +856,5 @@ msg_classes = {
   0xFF04: MsgCsacTelemetry,
   0xFF05: MsgCsacTelemetryLabels,
   0xFF06: MsgInsUpdates,
+  0xFF07: MsgGnssTimeOffset,
 }

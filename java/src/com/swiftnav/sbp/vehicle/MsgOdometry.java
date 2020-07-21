@@ -32,7 +32,10 @@ import org.json.JSONArray;
  * reference point(s) specified by the user. The offset for the odometry reference point and 
  * the definition and origin of the user frame are defined through the device settings interface.
  * There are 4 possible user-defined sources of this message  which are labeled arbitrarily 
- * source 0 through 3. */
+ * source 0 through 3.
+ * If using "processor time" time tags, the receiving end will expect a
+ * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry measurements
+ * with GNSS. */
 
 public class MsgOdometry extends SBPMessage {
     public static final int TYPE = 0x0903;
