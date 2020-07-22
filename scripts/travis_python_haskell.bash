@@ -25,13 +25,15 @@ cp "$haskell_bins/sbp2json" .
 cp "$haskell_bins/sbp2prettyjson" .
 cp "$haskell_bins/json2sbp" .
 cp "$haskell_bins/json2json" .
+cp "$haskell_bins/sbp2nmea" .
 
 tar -C "$haskell_bins" -czf sbp_linux_tools.tar.gz \
     sbp2json \
     sbp2prettyjson \
     sbp2yaml \
     json2sbp \
-    json2json
+    json2json \
+    sbp2nmea
 
 VERSION=$(git describe --always --tags --dirty)
 BUILD_TRIPLET=$(cc -dumpmachine)
