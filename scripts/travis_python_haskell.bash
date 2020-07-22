@@ -25,6 +25,7 @@ cp "$haskell_bins/sbp2json" .
 cp "$haskell_bins/sbp2prettyjson" .
 cp "$haskell_bins/json2sbp" .
 cp "$haskell_bins/json2json" .
+cp "$haskell_bins/sbp2nmea" .
 
 tar -C "$haskell_bins" -czf sbp_linux_tools.tar.gz \
     sbp2json \
