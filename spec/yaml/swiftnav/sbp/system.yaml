@@ -188,6 +188,8 @@ definitions:
                       - 1: Dynamically aligning
                       - 2: Ready
                       - 3: GNSS Outage exceeds max duration
+                      - 4: FastStart seeding
+                      - 5: FastStart validating
                   
  - MSG_CSAC_TELEMETRY:
     id: 0xFF04
