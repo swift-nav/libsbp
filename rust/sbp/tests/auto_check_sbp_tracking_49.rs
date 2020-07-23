@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/tracking/test_MsgTrackingStateDetailedDep.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/tracking/test_MsgTrackingState.yaml by generate.py. Do not modify by hand!
 
 extern crate sbp;
 use sbp::messages::SBPMessage;
@@ -22,9 +22,11 @@ use common::AlmostEq;
 fn test_auto_check_sbp_tracking_49() {
     {
         let payload: Vec<u8> = vec![
-            85, 17, 0, 59, 103, 55, 163, 151, 112, 215, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 39, 5, 0, 0, 169, 177, 208, 54, 15, 0, 0, 0, 85, 61, 0, 0, 39, 0, 1, 0, 0, 0, 0,
-            0, 0, 0, 40, 0, 108, 1, 0, 11, 0, 0, 9, 166, 214,
+            85, 19, 0, 246, 215, 99, 1, 202, 0, 0, 0, 197, 253, 28, 66, 1, 203, 0, 0, 0, 231, 99,
+            16, 66, 1, 208, 0, 0, 0, 212, 129, 22, 66, 1, 212, 0, 0, 0, 58, 21, 28, 66, 1, 217, 0,
+            0, 0, 178, 33, 40, 66, 1, 218, 0, 0, 0, 235, 189, 21, 66, 1, 220, 0, 0, 0, 29, 177, 25,
+            66, 1, 222, 0, 0, 0, 43, 169, 27, 66, 1, 225, 0, 0, 0, 137, 125, 42, 66, 0, 0, 0, 0, 0,
+            0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 0, 128, 191, 222, 97,
         ];
 
         // Test the round trip payload parsing
@@ -33,142 +35,292 @@ fn test_auto_check_sbp_tracking_49() {
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
         match &sbp_msg {
-            sbp::messages::SBP::MsgTrackingStateDetailedDep(msg) => {
+            sbp::messages::SBP::MsgTrackingStateDepB(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x11,
-                    "Incorrect message type, expected 0x11, is {}",
+                    0x13,
+                    "Incorrect message type, expected 0x13, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0x673b,
-                    "incorrect sender id, expected 0x673b, is {}",
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
                     sender_id
                 );
-                assert_eq!(
-                    msg.L.f, 169,
-                    "incorrect value for L.f, expected 169, is {}",
-                    msg.L.f
+                assert!(
+                    msg.states[0].cn0.almost_eq(3.92478218078613281e+01),
+                    "incorrect value for states[0].cn0, expected 3.92478218078613281e+01, is {:e}",
+                    msg.states[0].cn0
                 );
                 assert_eq!(
-                    msg.L.i, 1319,
-                    "incorrect value for L.i, expected 1319, is {}",
-                    msg.L.i
-                );
-                assert_eq!(msg.P, 0, "incorrect value for P, expected 0, is {}", msg.P);
-                assert_eq!(
-                    msg.P_std, 0,
-                    "incorrect value for P_std, expected 0, is {}",
-                    msg.P_std
+                    msg.states[0].sid.code, 0,
+                    "incorrect value for states[0].sid.code, expected 0, is {}",
+                    msg.states[0].sid.code
                 );
                 assert_eq!(
-                    msg.acceleration, 108,
-                    "incorrect value for acceleration, expected 108, is {}",
-                    msg.acceleration
+                    msg.states[0].sid.reserved, 0,
+                    "incorrect value for states[0].sid.reserved, expected 0, is {}",
+                    msg.states[0].sid.reserved
                 );
                 assert_eq!(
-                    msg.clock_drift, 0,
-                    "incorrect value for clock_drift, expected 0, is {}",
-                    msg.clock_drift
+                    msg.states[0].sid.sat, 202,
+                    "incorrect value for states[0].sid.sat, expected 202, is {}",
+                    msg.states[0].sid.sat
                 );
                 assert_eq!(
-                    msg.clock_offset, 0,
-                    "incorrect value for clock_offset, expected 0, is {}",
-                    msg.clock_offset
+                    msg.states[0].state, 1,
+                    "incorrect value for states[0].state, expected 1, is {}",
+                    msg.states[0].state
+                );
+                assert!(
+                    msg.states[1].cn0.almost_eq(3.60975608825683594e+01),
+                    "incorrect value for states[1].cn0, expected 3.60975608825683594e+01, is {:e}",
+                    msg.states[1].cn0
                 );
                 assert_eq!(
-                    msg.cn0, 177,
-                    "incorrect value for cn0, expected 177, is {}",
-                    msg.cn0
+                    msg.states[1].sid.code, 0,
+                    "incorrect value for states[1].sid.code, expected 0, is {}",
+                    msg.states[1].sid.code
                 );
                 assert_eq!(
-                    msg.corr_spacing, 40,
-                    "incorrect value for corr_spacing, expected 40, is {}",
-                    msg.corr_spacing
+                    msg.states[1].sid.reserved, 0,
+                    "incorrect value for states[1].sid.reserved, expected 0, is {}",
+                    msg.states[1].sid.reserved
                 );
                 assert_eq!(
-                    msg.doppler, 15701,
-                    "incorrect value for doppler, expected 15701, is {}",
-                    msg.doppler
+                    msg.states[1].sid.sat, 203,
+                    "incorrect value for states[1].sid.sat, expected 203, is {}",
+                    msg.states[1].sid.sat
                 );
                 assert_eq!(
-                    msg.doppler_std, 39,
-                    "incorrect value for doppler_std, expected 39, is {}",
-                    msg.doppler_std
+                    msg.states[1].state, 1,
+                    "incorrect value for states[1].state, expected 1, is {}",
+                    msg.states[1].state
+                );
+                assert!(
+                    msg.states[2].cn0.almost_eq(3.76267852783203125e+01),
+                    "incorrect value for states[2].cn0, expected 3.76267852783203125e+01, is {:e}",
+                    msg.states[2].cn0
                 );
                 assert_eq!(
-                    msg.lock, 14032,
-                    "incorrect value for lock, expected 14032, is {}",
-                    msg.lock
+                    msg.states[2].sid.code, 0,
+                    "incorrect value for states[2].sid.code, expected 0, is {}",
+                    msg.states[2].sid.code
                 );
                 assert_eq!(
-                    msg.misc_flags, 9,
-                    "incorrect value for misc_flags, expected 9, is {}",
-                    msg.misc_flags
+                    msg.states[2].sid.reserved, 0,
+                    "incorrect value for states[2].sid.reserved, expected 0, is {}",
+                    msg.states[2].sid.reserved
                 );
                 assert_eq!(
-                    msg.nav_flags, 0,
-                    "incorrect value for nav_flags, expected 0, is {}",
-                    msg.nav_flags
+                    msg.states[2].sid.sat, 208,
+                    "incorrect value for states[2].sid.sat, expected 208, is {}",
+                    msg.states[2].sid.sat
                 );
                 assert_eq!(
-                    msg.pset_flags, 0,
-                    "incorrect value for pset_flags, expected 0, is {}",
-                    msg.pset_flags
+                    msg.states[2].state, 1,
+                    "incorrect value for states[2].state, expected 1, is {}",
+                    msg.states[2].state
+                );
+                assert!(
+                    msg.states[3].cn0.almost_eq(3.90207290649414062e+01),
+                    "incorrect value for states[3].cn0, expected 3.90207290649414062e+01, is {:e}",
+                    msg.states[3].cn0
                 );
                 assert_eq!(
-                    msg.recv_time, 7909447587,
-                    "incorrect value for recv_time, expected 7909447587, is {}",
-                    msg.recv_time
+                    msg.states[3].sid.code, 0,
+                    "incorrect value for states[3].sid.code, expected 0, is {}",
+                    msg.states[3].sid.code
                 );
                 assert_eq!(
-                    msg.sid.code, 0,
-                    "incorrect value for sid.code, expected 0, is {}",
-                    msg.sid.code
+                    msg.states[3].sid.reserved, 0,
+                    "incorrect value for states[3].sid.reserved, expected 0, is {}",
+                    msg.states[3].sid.reserved
                 );
                 assert_eq!(
-                    msg.sid.reserved, 0,
-                    "incorrect value for sid.reserved, expected 0, is {}",
-                    msg.sid.reserved
+                    msg.states[3].sid.sat, 212,
+                    "incorrect value for states[3].sid.sat, expected 212, is {}",
+                    msg.states[3].sid.sat
                 );
                 assert_eq!(
-                    msg.sid.sat, 15,
-                    "incorrect value for sid.sat, expected 15, is {}",
-                    msg.sid.sat
+                    msg.states[3].state, 1,
+                    "incorrect value for states[3].state, expected 1, is {}",
+                    msg.states[3].state
+                );
+                assert!(
+                    msg.states[4].cn0.almost_eq(4.20329055786132812e+01),
+                    "incorrect value for states[4].cn0, expected 4.20329055786132812e+01, is {:e}",
+                    msg.states[4].cn0
                 );
                 assert_eq!(
-                    msg.sync_flags, 1,
-                    "incorrect value for sync_flags, expected 1, is {}",
-                    msg.sync_flags
+                    msg.states[4].sid.code, 0,
+                    "incorrect value for states[4].sid.code, expected 0, is {}",
+                    msg.states[4].sid.code
                 );
                 assert_eq!(
-                    msg.tot.tow, 0,
-                    "incorrect value for tot.tow, expected 0, is {}",
-                    msg.tot.tow
+                    msg.states[4].sid.reserved, 0,
+                    "incorrect value for states[4].sid.reserved, expected 0, is {}",
+                    msg.states[4].sid.reserved
                 );
                 assert_eq!(
-                    msg.tot.wn, 0,
-                    "incorrect value for tot.wn, expected 0, is {}",
-                    msg.tot.wn
+                    msg.states[4].sid.sat, 217,
+                    "incorrect value for states[4].sid.sat, expected 217, is {}",
+                    msg.states[4].sid.sat
                 );
                 assert_eq!(
-                    msg.tow_flags, 0,
-                    "incorrect value for tow_flags, expected 0, is {}",
-                    msg.tow_flags
+                    msg.states[4].state, 1,
+                    "incorrect value for states[4].state, expected 1, is {}",
+                    msg.states[4].state
+                );
+                assert!(
+                    msg.states[5].cn0.almost_eq(3.74354667663574219e+01),
+                    "incorrect value for states[5].cn0, expected 3.74354667663574219e+01, is {:e}",
+                    msg.states[5].cn0
                 );
                 assert_eq!(
-                    msg.track_flags, 11,
-                    "incorrect value for track_flags, expected 11, is {}",
-                    msg.track_flags
+                    msg.states[5].sid.code, 0,
+                    "incorrect value for states[5].sid.code, expected 0, is {}",
+                    msg.states[5].sid.code
                 );
                 assert_eq!(
-                    msg.uptime, 1,
-                    "incorrect value for uptime, expected 1, is {}",
-                    msg.uptime
+                    msg.states[5].sid.reserved, 0,
+                    "incorrect value for states[5].sid.reserved, expected 0, is {}",
+                    msg.states[5].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[5].sid.sat, 218,
+                    "incorrect value for states[5].sid.sat, expected 218, is {}",
+                    msg.states[5].sid.sat
+                );
+                assert_eq!(
+                    msg.states[5].state, 1,
+                    "incorrect value for states[5].state, expected 1, is {}",
+                    msg.states[5].state
+                );
+                assert!(
+                    msg.states[6].cn0.almost_eq(3.84229621887207031e+01),
+                    "incorrect value for states[6].cn0, expected 3.84229621887207031e+01, is {:e}",
+                    msg.states[6].cn0
+                );
+                assert_eq!(
+                    msg.states[6].sid.code, 0,
+                    "incorrect value for states[6].sid.code, expected 0, is {}",
+                    msg.states[6].sid.code
+                );
+                assert_eq!(
+                    msg.states[6].sid.reserved, 0,
+                    "incorrect value for states[6].sid.reserved, expected 0, is {}",
+                    msg.states[6].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[6].sid.sat, 220,
+                    "incorrect value for states[6].sid.sat, expected 220, is {}",
+                    msg.states[6].sid.sat
+                );
+                assert_eq!(
+                    msg.states[6].state, 1,
+                    "incorrect value for states[6].state, expected 1, is {}",
+                    msg.states[6].state
+                );
+                assert!(
+                    msg.states[7].cn0.almost_eq(3.89152030944824219e+01),
+                    "incorrect value for states[7].cn0, expected 3.89152030944824219e+01, is {:e}",
+                    msg.states[7].cn0
+                );
+                assert_eq!(
+                    msg.states[7].sid.code, 0,
+                    "incorrect value for states[7].sid.code, expected 0, is {}",
+                    msg.states[7].sid.code
+                );
+                assert_eq!(
+                    msg.states[7].sid.reserved, 0,
+                    "incorrect value for states[7].sid.reserved, expected 0, is {}",
+                    msg.states[7].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[7].sid.sat, 222,
+                    "incorrect value for states[7].sid.sat, expected 222, is {}",
+                    msg.states[7].sid.sat
+                );
+                assert_eq!(
+                    msg.states[7].state, 1,
+                    "incorrect value for states[7].state, expected 1, is {}",
+                    msg.states[7].state
+                );
+                assert!(
+                    msg.states[8].cn0.almost_eq(4.26225929260253906e+01),
+                    "incorrect value for states[8].cn0, expected 4.26225929260253906e+01, is {:e}",
+                    msg.states[8].cn0
+                );
+                assert_eq!(
+                    msg.states[8].sid.code, 0,
+                    "incorrect value for states[8].sid.code, expected 0, is {}",
+                    msg.states[8].sid.code
+                );
+                assert_eq!(
+                    msg.states[8].sid.reserved, 0,
+                    "incorrect value for states[8].sid.reserved, expected 0, is {}",
+                    msg.states[8].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[8].sid.sat, 225,
+                    "incorrect value for states[8].sid.sat, expected 225, is {}",
+                    msg.states[8].sid.sat
+                );
+                assert_eq!(
+                    msg.states[8].state, 1,
+                    "incorrect value for states[8].state, expected 1, is {}",
+                    msg.states[8].state
+                );
+                assert!(
+                    msg.states[9].cn0.almost_eq(-1.00000000000000000e+00),
+                    "incorrect value for states[9].cn0, expected -1.00000000000000000e+00, is {:e}",
+                    msg.states[9].cn0
+                );
+                assert_eq!(
+                    msg.states[9].sid.code, 0,
+                    "incorrect value for states[9].sid.code, expected 0, is {}",
+                    msg.states[9].sid.code
+                );
+                assert_eq!(
+                    msg.states[9].sid.reserved, 0,
+                    "incorrect value for states[9].sid.reserved, expected 0, is {}",
+                    msg.states[9].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[9].sid.sat, 0,
+                    "incorrect value for states[9].sid.sat, expected 0, is {}",
+                    msg.states[9].sid.sat
+                );
+                assert_eq!(
+                    msg.states[9].state, 0,
+                    "incorrect value for states[9].state, expected 0, is {}",
+                    msg.states[9].state
+                );
+                assert!(msg.states[10].cn0.almost_eq( -1.00000000000000000e+00 ), "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}", msg.states[10].cn0);
+                assert_eq!(
+                    msg.states[10].sid.code, 0,
+                    "incorrect value for states[10].sid.code, expected 0, is {}",
+                    msg.states[10].sid.code
+                );
+                assert_eq!(
+                    msg.states[10].sid.reserved, 0,
+                    "incorrect value for states[10].sid.reserved, expected 0, is {}",
+                    msg.states[10].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[10].sid.sat, 0,
+                    "incorrect value for states[10].sid.sat, expected 0, is {}",
+                    msg.states[10].sid.sat
+                );
+                assert_eq!(
+                    msg.states[10].state, 0,
+                    "incorrect value for states[10].state, expected 0, is {}",
+                    msg.states[10].state
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgTrackingStateDetailedDep"),
+            _ => panic!("Invalid message type! Expected a MsgTrackingStateDepB"),
         };
 
         let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
@@ -176,9 +328,11 @@ fn test_auto_check_sbp_tracking_49() {
     }
     {
         let payload: Vec<u8> = vec![
-            85, 17, 0, 59, 103, 55, 97, 251, 61, 245, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 18, 7, 0, 0, 14, 175, 208, 54, 15, 0, 0, 0, 51, 61, 0, 0, 30, 0, 1, 0, 0, 0, 0, 0,
-            0, 0, 40, 0, 224, 1, 0, 11, 0, 0, 9, 136, 179,
+            85, 19, 0, 246, 215, 99, 1, 202, 0, 0, 0, 250, 249, 27, 66, 1, 203, 0, 0, 0, 40, 143,
+            11, 66, 1, 208, 0, 0, 0, 190, 200, 21, 66, 1, 212, 0, 0, 0, 251, 233, 26, 66, 1, 217,
+            0, 0, 0, 209, 238, 39, 66, 1, 218, 0, 0, 0, 162, 219, 21, 66, 1, 220, 0, 0, 0, 162,
+            197, 25, 66, 1, 222, 0, 0, 0, 14, 35, 28, 66, 1, 225, 0, 0, 0, 9, 153, 43, 66, 0, 0, 0,
+            0, 0, 0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 0, 128, 191, 20, 31,
         ];
 
         // Test the round trip payload parsing
@@ -187,142 +341,292 @@ fn test_auto_check_sbp_tracking_49() {
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
         match &sbp_msg {
-            sbp::messages::SBP::MsgTrackingStateDetailedDep(msg) => {
+            sbp::messages::SBP::MsgTrackingStateDepB(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x11,
-                    "Incorrect message type, expected 0x11, is {}",
+                    0x13,
+                    "Incorrect message type, expected 0x13, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0x673b,
-                    "incorrect sender id, expected 0x673b, is {}",
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
                     sender_id
                 );
-                assert_eq!(
-                    msg.L.f, 14,
-                    "incorrect value for L.f, expected 14, is {}",
-                    msg.L.f
+                assert!(
+                    msg.states[0].cn0.almost_eq(3.89941177368164062e+01),
+                    "incorrect value for states[0].cn0, expected 3.89941177368164062e+01, is {:e}",
+                    msg.states[0].cn0
                 );
                 assert_eq!(
-                    msg.L.i, 1810,
-                    "incorrect value for L.i, expected 1810, is {}",
-                    msg.L.i
-                );
-                assert_eq!(msg.P, 0, "incorrect value for P, expected 0, is {}", msg.P);
-                assert_eq!(
-                    msg.P_std, 0,
-                    "incorrect value for P_std, expected 0, is {}",
-                    msg.P_std
+                    msg.states[0].sid.code, 0,
+                    "incorrect value for states[0].sid.code, expected 0, is {}",
+                    msg.states[0].sid.code
                 );
                 assert_eq!(
-                    msg.acceleration, -32,
-                    "incorrect value for acceleration, expected -32, is {}",
-                    msg.acceleration
+                    msg.states[0].sid.reserved, 0,
+                    "incorrect value for states[0].sid.reserved, expected 0, is {}",
+                    msg.states[0].sid.reserved
                 );
                 assert_eq!(
-                    msg.clock_drift, 0,
-                    "incorrect value for clock_drift, expected 0, is {}",
-                    msg.clock_drift
+                    msg.states[0].sid.sat, 202,
+                    "incorrect value for states[0].sid.sat, expected 202, is {}",
+                    msg.states[0].sid.sat
                 );
                 assert_eq!(
-                    msg.clock_offset, 0,
-                    "incorrect value for clock_offset, expected 0, is {}",
-                    msg.clock_offset
+                    msg.states[0].state, 1,
+                    "incorrect value for states[0].state, expected 1, is {}",
+                    msg.states[0].state
+                );
+                assert!(
+                    msg.states[1].cn0.almost_eq(3.48898010253906250e+01),
+                    "incorrect value for states[1].cn0, expected 3.48898010253906250e+01, is {:e}",
+                    msg.states[1].cn0
                 );
                 assert_eq!(
-                    msg.cn0, 175,
-                    "incorrect value for cn0, expected 175, is {}",
-                    msg.cn0
+                    msg.states[1].sid.code, 0,
+                    "incorrect value for states[1].sid.code, expected 0, is {}",
+                    msg.states[1].sid.code
                 );
                 assert_eq!(
-                    msg.corr_spacing, 40,
-                    "incorrect value for corr_spacing, expected 40, is {}",
-                    msg.corr_spacing
+                    msg.states[1].sid.reserved, 0,
+                    "incorrect value for states[1].sid.reserved, expected 0, is {}",
+                    msg.states[1].sid.reserved
                 );
                 assert_eq!(
-                    msg.doppler, 15667,
-                    "incorrect value for doppler, expected 15667, is {}",
-                    msg.doppler
+                    msg.states[1].sid.sat, 203,
+                    "incorrect value for states[1].sid.sat, expected 203, is {}",
+                    msg.states[1].sid.sat
                 );
                 assert_eq!(
-                    msg.doppler_std, 30,
-                    "incorrect value for doppler_std, expected 30, is {}",
-                    msg.doppler_std
+                    msg.states[1].state, 1,
+                    "incorrect value for states[1].state, expected 1, is {}",
+                    msg.states[1].state
+                );
+                assert!(
+                    msg.states[2].cn0.almost_eq(3.74460372924804688e+01),
+                    "incorrect value for states[2].cn0, expected 3.74460372924804688e+01, is {:e}",
+                    msg.states[2].cn0
                 );
                 assert_eq!(
-                    msg.lock, 14032,
-                    "incorrect value for lock, expected 14032, is {}",
-                    msg.lock
+                    msg.states[2].sid.code, 0,
+                    "incorrect value for states[2].sid.code, expected 0, is {}",
+                    msg.states[2].sid.code
                 );
                 assert_eq!(
-                    msg.misc_flags, 9,
-                    "incorrect value for misc_flags, expected 9, is {}",
-                    msg.misc_flags
+                    msg.states[2].sid.reserved, 0,
+                    "incorrect value for states[2].sid.reserved, expected 0, is {}",
+                    msg.states[2].sid.reserved
                 );
                 assert_eq!(
-                    msg.nav_flags, 0,
-                    "incorrect value for nav_flags, expected 0, is {}",
-                    msg.nav_flags
+                    msg.states[2].sid.sat, 208,
+                    "incorrect value for states[2].sid.sat, expected 208, is {}",
+                    msg.states[2].sid.sat
                 );
                 assert_eq!(
-                    msg.pset_flags, 0,
-                    "incorrect value for pset_flags, expected 0, is {}",
-                    msg.pset_flags
+                    msg.states[2].state, 1,
+                    "incorrect value for states[2].state, expected 1, is {}",
+                    msg.states[2].state
+                );
+                assert!(
+                    msg.states[3].cn0.almost_eq(3.87284965515136719e+01),
+                    "incorrect value for states[3].cn0, expected 3.87284965515136719e+01, is {:e}",
+                    msg.states[3].cn0
                 );
                 assert_eq!(
-                    msg.recv_time, 8409447265,
-                    "incorrect value for recv_time, expected 8409447265, is {}",
-                    msg.recv_time
+                    msg.states[3].sid.code, 0,
+                    "incorrect value for states[3].sid.code, expected 0, is {}",
+                    msg.states[3].sid.code
                 );
                 assert_eq!(
-                    msg.sid.code, 0,
-                    "incorrect value for sid.code, expected 0, is {}",
-                    msg.sid.code
+                    msg.states[3].sid.reserved, 0,
+                    "incorrect value for states[3].sid.reserved, expected 0, is {}",
+                    msg.states[3].sid.reserved
                 );
                 assert_eq!(
-                    msg.sid.reserved, 0,
-                    "incorrect value for sid.reserved, expected 0, is {}",
-                    msg.sid.reserved
+                    msg.states[3].sid.sat, 212,
+                    "incorrect value for states[3].sid.sat, expected 212, is {}",
+                    msg.states[3].sid.sat
                 );
                 assert_eq!(
-                    msg.sid.sat, 15,
-                    "incorrect value for sid.sat, expected 15, is {}",
-                    msg.sid.sat
+                    msg.states[3].state, 1,
+                    "incorrect value for states[3].state, expected 1, is {}",
+                    msg.states[3].state
+                );
+                assert!(
+                    msg.states[4].cn0.almost_eq(4.19832191467285156e+01),
+                    "incorrect value for states[4].cn0, expected 4.19832191467285156e+01, is {:e}",
+                    msg.states[4].cn0
                 );
                 assert_eq!(
-                    msg.sync_flags, 1,
-                    "incorrect value for sync_flags, expected 1, is {}",
-                    msg.sync_flags
+                    msg.states[4].sid.code, 0,
+                    "incorrect value for states[4].sid.code, expected 0, is {}",
+                    msg.states[4].sid.code
                 );
                 assert_eq!(
-                    msg.tot.tow, 0,
-                    "incorrect value for tot.tow, expected 0, is {}",
-                    msg.tot.tow
+                    msg.states[4].sid.reserved, 0,
+                    "incorrect value for states[4].sid.reserved, expected 0, is {}",
+                    msg.states[4].sid.reserved
                 );
                 assert_eq!(
-                    msg.tot.wn, 0,
-                    "incorrect value for tot.wn, expected 0, is {}",
-                    msg.tot.wn
+                    msg.states[4].sid.sat, 217,
+                    "incorrect value for states[4].sid.sat, expected 217, is {}",
+                    msg.states[4].sid.sat
                 );
                 assert_eq!(
-                    msg.tow_flags, 0,
-                    "incorrect value for tow_flags, expected 0, is {}",
-                    msg.tow_flags
+                    msg.states[4].state, 1,
+                    "incorrect value for states[4].state, expected 1, is {}",
+                    msg.states[4].state
+                );
+                assert!(
+                    msg.states[5].cn0.almost_eq(3.74644851684570312e+01),
+                    "incorrect value for states[5].cn0, expected 3.74644851684570312e+01, is {:e}",
+                    msg.states[5].cn0
                 );
                 assert_eq!(
-                    msg.track_flags, 11,
-                    "incorrect value for track_flags, expected 11, is {}",
-                    msg.track_flags
+                    msg.states[5].sid.code, 0,
+                    "incorrect value for states[5].sid.code, expected 0, is {}",
+                    msg.states[5].sid.code
                 );
                 assert_eq!(
-                    msg.uptime, 1,
-                    "incorrect value for uptime, expected 1, is {}",
-                    msg.uptime
+                    msg.states[5].sid.reserved, 0,
+                    "incorrect value for states[5].sid.reserved, expected 0, is {}",
+                    msg.states[5].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[5].sid.sat, 218,
+                    "incorrect value for states[5].sid.sat, expected 218, is {}",
+                    msg.states[5].sid.sat
+                );
+                assert_eq!(
+                    msg.states[5].state, 1,
+                    "incorrect value for states[5].state, expected 1, is {}",
+                    msg.states[5].state
+                );
+                assert!(
+                    msg.states[6].cn0.almost_eq(3.84430007934570312e+01),
+                    "incorrect value for states[6].cn0, expected 3.84430007934570312e+01, is {:e}",
+                    msg.states[6].cn0
+                );
+                assert_eq!(
+                    msg.states[6].sid.code, 0,
+                    "incorrect value for states[6].sid.code, expected 0, is {}",
+                    msg.states[6].sid.code
+                );
+                assert_eq!(
+                    msg.states[6].sid.reserved, 0,
+                    "incorrect value for states[6].sid.reserved, expected 0, is {}",
+                    msg.states[6].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[6].sid.sat, 220,
+                    "incorrect value for states[6].sid.sat, expected 220, is {}",
+                    msg.states[6].sid.sat
+                );
+                assert_eq!(
+                    msg.states[6].state, 1,
+                    "incorrect value for states[6].state, expected 1, is {}",
+                    msg.states[6].state
+                );
+                assert!(
+                    msg.states[7].cn0.almost_eq(3.90342330932617188e+01),
+                    "incorrect value for states[7].cn0, expected 3.90342330932617188e+01, is {:e}",
+                    msg.states[7].cn0
+                );
+                assert_eq!(
+                    msg.states[7].sid.code, 0,
+                    "incorrect value for states[7].sid.code, expected 0, is {}",
+                    msg.states[7].sid.code
+                );
+                assert_eq!(
+                    msg.states[7].sid.reserved, 0,
+                    "incorrect value for states[7].sid.reserved, expected 0, is {}",
+                    msg.states[7].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[7].sid.sat, 222,
+                    "incorrect value for states[7].sid.sat, expected 222, is {}",
+                    msg.states[7].sid.sat
+                );
+                assert_eq!(
+                    msg.states[7].state, 1,
+                    "incorrect value for states[7].state, expected 1, is {}",
+                    msg.states[7].state
+                );
+                assert!(
+                    msg.states[8].cn0.almost_eq(4.28994483947753906e+01),
+                    "incorrect value for states[8].cn0, expected 4.28994483947753906e+01, is {:e}",
+                    msg.states[8].cn0
+                );
+                assert_eq!(
+                    msg.states[8].sid.code, 0,
+                    "incorrect value for states[8].sid.code, expected 0, is {}",
+                    msg.states[8].sid.code
+                );
+                assert_eq!(
+                    msg.states[8].sid.reserved, 0,
+                    "incorrect value for states[8].sid.reserved, expected 0, is {}",
+                    msg.states[8].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[8].sid.sat, 225,
+                    "incorrect value for states[8].sid.sat, expected 225, is {}",
+                    msg.states[8].sid.sat
+                );
+                assert_eq!(
+                    msg.states[8].state, 1,
+                    "incorrect value for states[8].state, expected 1, is {}",
+                    msg.states[8].state
+                );
+                assert!(
+                    msg.states[9].cn0.almost_eq(-1.00000000000000000e+00),
+                    "incorrect value for states[9].cn0, expected -1.00000000000000000e+00, is {:e}",
+                    msg.states[9].cn0
+                );
+                assert_eq!(
+                    msg.states[9].sid.code, 0,
+                    "incorrect value for states[9].sid.code, expected 0, is {}",
+                    msg.states[9].sid.code
+                );
+                assert_eq!(
+                    msg.states[9].sid.reserved, 0,
+                    "incorrect value for states[9].sid.reserved, expected 0, is {}",
+                    msg.states[9].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[9].sid.sat, 0,
+                    "incorrect value for states[9].sid.sat, expected 0, is {}",
+                    msg.states[9].sid.sat
+                );
+                assert_eq!(
+                    msg.states[9].state, 0,
+                    "incorrect value for states[9].state, expected 0, is {}",
+                    msg.states[9].state
+                );
+                assert!(msg.states[10].cn0.almost_eq( -1.00000000000000000e+00 ), "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}", msg.states[10].cn0);
+                assert_eq!(
+                    msg.states[10].sid.code, 0,
+                    "incorrect value for states[10].sid.code, expected 0, is {}",
+                    msg.states[10].sid.code
+                );
+                assert_eq!(
+                    msg.states[10].sid.reserved, 0,
+                    "incorrect value for states[10].sid.reserved, expected 0, is {}",
+                    msg.states[10].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[10].sid.sat, 0,
+                    "incorrect value for states[10].sid.sat, expected 0, is {}",
+                    msg.states[10].sid.sat
+                );
+                assert_eq!(
+                    msg.states[10].state, 0,
+                    "incorrect value for states[10].state, expected 0, is {}",
+                    msg.states[10].state
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgTrackingStateDetailedDep"),
+            _ => panic!("Invalid message type! Expected a MsgTrackingStateDepB"),
         };
 
         let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
@@ -330,9 +634,11 @@ fn test_auto_check_sbp_tracking_49() {
     }
     {
         let payload: Vec<u8> = vec![
-            85, 17, 0, 59, 103, 55, 139, 218, 236, 18, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 250, 8, 0, 0, 8, 179, 208, 54, 15, 0, 0, 0, 67, 61, 0, 0, 22, 0, 2, 0, 0, 0, 0, 0,
-            0, 0, 40, 0, 27, 1, 0, 11, 0, 2, 9, 217, 159,
+            85, 19, 0, 246, 215, 99, 1, 202, 0, 0, 0, 123, 209, 27, 66, 1, 203, 0, 0, 0, 214, 64,
+            15, 66, 1, 208, 0, 0, 0, 56, 55, 22, 66, 1, 212, 0, 0, 0, 91, 142, 27, 66, 1, 217, 0,
+            0, 0, 253, 154, 41, 66, 1, 218, 0, 0, 0, 128, 142, 22, 66, 1, 220, 0, 0, 0, 17, 174,
+            23, 66, 1, 222, 0, 0, 0, 155, 2, 29, 66, 1, 225, 0, 0, 0, 162, 100, 42, 66, 0, 0, 0, 0,
+            0, 0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 0, 128, 191, 233, 71,
         ];
 
         // Test the round trip payload parsing
@@ -341,142 +647,292 @@ fn test_auto_check_sbp_tracking_49() {
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
         match &sbp_msg {
-            sbp::messages::SBP::MsgTrackingStateDetailedDep(msg) => {
+            sbp::messages::SBP::MsgTrackingStateDepB(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x11,
-                    "Incorrect message type, expected 0x11, is {}",
+                    0x13,
+                    "Incorrect message type, expected 0x13, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0x673b,
-                    "incorrect sender id, expected 0x673b, is {}",
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
                     sender_id
                 );
-                assert_eq!(
-                    msg.L.f, 8,
-                    "incorrect value for L.f, expected 8, is {}",
-                    msg.L.f
+                assert!(
+                    msg.states[0].cn0.almost_eq(3.89545707702636719e+01),
+                    "incorrect value for states[0].cn0, expected 3.89545707702636719e+01, is {:e}",
+                    msg.states[0].cn0
                 );
                 assert_eq!(
-                    msg.L.i, 2298,
-                    "incorrect value for L.i, expected 2298, is {}",
-                    msg.L.i
-                );
-                assert_eq!(msg.P, 0, "incorrect value for P, expected 0, is {}", msg.P);
-                assert_eq!(
-                    msg.P_std, 0,
-                    "incorrect value for P_std, expected 0, is {}",
-                    msg.P_std
+                    msg.states[0].sid.code, 0,
+                    "incorrect value for states[0].sid.code, expected 0, is {}",
+                    msg.states[0].sid.code
                 );
                 assert_eq!(
-                    msg.acceleration, 27,
-                    "incorrect value for acceleration, expected 27, is {}",
-                    msg.acceleration
+                    msg.states[0].sid.reserved, 0,
+                    "incorrect value for states[0].sid.reserved, expected 0, is {}",
+                    msg.states[0].sid.reserved
                 );
                 assert_eq!(
-                    msg.clock_drift, 0,
-                    "incorrect value for clock_drift, expected 0, is {}",
-                    msg.clock_drift
+                    msg.states[0].sid.sat, 202,
+                    "incorrect value for states[0].sid.sat, expected 202, is {}",
+                    msg.states[0].sid.sat
                 );
                 assert_eq!(
-                    msg.clock_offset, 0,
-                    "incorrect value for clock_offset, expected 0, is {}",
-                    msg.clock_offset
+                    msg.states[0].state, 1,
+                    "incorrect value for states[0].state, expected 1, is {}",
+                    msg.states[0].state
+                );
+                assert!(
+                    msg.states[1].cn0.almost_eq(3.58133163452148438e+01),
+                    "incorrect value for states[1].cn0, expected 3.58133163452148438e+01, is {:e}",
+                    msg.states[1].cn0
                 );
                 assert_eq!(
-                    msg.cn0, 179,
-                    "incorrect value for cn0, expected 179, is {}",
-                    msg.cn0
+                    msg.states[1].sid.code, 0,
+                    "incorrect value for states[1].sid.code, expected 0, is {}",
+                    msg.states[1].sid.code
                 );
                 assert_eq!(
-                    msg.corr_spacing, 40,
-                    "incorrect value for corr_spacing, expected 40, is {}",
-                    msg.corr_spacing
+                    msg.states[1].sid.reserved, 0,
+                    "incorrect value for states[1].sid.reserved, expected 0, is {}",
+                    msg.states[1].sid.reserved
                 );
                 assert_eq!(
-                    msg.doppler, 15683,
-                    "incorrect value for doppler, expected 15683, is {}",
-                    msg.doppler
+                    msg.states[1].sid.sat, 203,
+                    "incorrect value for states[1].sid.sat, expected 203, is {}",
+                    msg.states[1].sid.sat
                 );
                 assert_eq!(
-                    msg.doppler_std, 22,
-                    "incorrect value for doppler_std, expected 22, is {}",
-                    msg.doppler_std
+                    msg.states[1].state, 1,
+                    "incorrect value for states[1].state, expected 1, is {}",
+                    msg.states[1].state
+                );
+                assert!(
+                    msg.states[2].cn0.almost_eq(3.75539245605468750e+01),
+                    "incorrect value for states[2].cn0, expected 3.75539245605468750e+01, is {:e}",
+                    msg.states[2].cn0
                 );
                 assert_eq!(
-                    msg.lock, 14032,
-                    "incorrect value for lock, expected 14032, is {}",
-                    msg.lock
+                    msg.states[2].sid.code, 0,
+                    "incorrect value for states[2].sid.code, expected 0, is {}",
+                    msg.states[2].sid.code
                 );
                 assert_eq!(
-                    msg.misc_flags, 9,
-                    "incorrect value for misc_flags, expected 9, is {}",
-                    msg.misc_flags
+                    msg.states[2].sid.reserved, 0,
+                    "incorrect value for states[2].sid.reserved, expected 0, is {}",
+                    msg.states[2].sid.reserved
                 );
                 assert_eq!(
-                    msg.nav_flags, 0,
-                    "incorrect value for nav_flags, expected 0, is {}",
-                    msg.nav_flags
+                    msg.states[2].sid.sat, 208,
+                    "incorrect value for states[2].sid.sat, expected 208, is {}",
+                    msg.states[2].sid.sat
                 );
                 assert_eq!(
-                    msg.pset_flags, 2,
-                    "incorrect value for pset_flags, expected 2, is {}",
-                    msg.pset_flags
+                    msg.states[2].state, 1,
+                    "incorrect value for states[2].state, expected 1, is {}",
+                    msg.states[2].state
+                );
+                assert!(
+                    msg.states[3].cn0.almost_eq(3.88890190124511719e+01),
+                    "incorrect value for states[3].cn0, expected 3.88890190124511719e+01, is {:e}",
+                    msg.states[3].cn0
                 );
                 assert_eq!(
-                    msg.recv_time, 8907446923,
-                    "incorrect value for recv_time, expected 8907446923, is {}",
-                    msg.recv_time
+                    msg.states[3].sid.code, 0,
+                    "incorrect value for states[3].sid.code, expected 0, is {}",
+                    msg.states[3].sid.code
                 );
                 assert_eq!(
-                    msg.sid.code, 0,
-                    "incorrect value for sid.code, expected 0, is {}",
-                    msg.sid.code
+                    msg.states[3].sid.reserved, 0,
+                    "incorrect value for states[3].sid.reserved, expected 0, is {}",
+                    msg.states[3].sid.reserved
                 );
                 assert_eq!(
-                    msg.sid.reserved, 0,
-                    "incorrect value for sid.reserved, expected 0, is {}",
-                    msg.sid.reserved
+                    msg.states[3].sid.sat, 212,
+                    "incorrect value for states[3].sid.sat, expected 212, is {}",
+                    msg.states[3].sid.sat
                 );
                 assert_eq!(
-                    msg.sid.sat, 15,
-                    "incorrect value for sid.sat, expected 15, is {}",
-                    msg.sid.sat
+                    msg.states[3].state, 1,
+                    "incorrect value for states[3].state, expected 1, is {}",
+                    msg.states[3].state
+                );
+                assert!(
+                    msg.states[4].cn0.almost_eq(4.24013557434082031e+01),
+                    "incorrect value for states[4].cn0, expected 4.24013557434082031e+01, is {:e}",
+                    msg.states[4].cn0
                 );
                 assert_eq!(
-                    msg.sync_flags, 1,
-                    "incorrect value for sync_flags, expected 1, is {}",
-                    msg.sync_flags
+                    msg.states[4].sid.code, 0,
+                    "incorrect value for states[4].sid.code, expected 0, is {}",
+                    msg.states[4].sid.code
                 );
                 assert_eq!(
-                    msg.tot.tow, 0,
-                    "incorrect value for tot.tow, expected 0, is {}",
-                    msg.tot.tow
+                    msg.states[4].sid.reserved, 0,
+                    "incorrect value for states[4].sid.reserved, expected 0, is {}",
+                    msg.states[4].sid.reserved
                 );
                 assert_eq!(
-                    msg.tot.wn, 0,
-                    "incorrect value for tot.wn, expected 0, is {}",
-                    msg.tot.wn
+                    msg.states[4].sid.sat, 217,
+                    "incorrect value for states[4].sid.sat, expected 217, is {}",
+                    msg.states[4].sid.sat
                 );
                 assert_eq!(
-                    msg.tow_flags, 0,
-                    "incorrect value for tow_flags, expected 0, is {}",
-                    msg.tow_flags
+                    msg.states[4].state, 1,
+                    "incorrect value for states[4].state, expected 1, is {}",
+                    msg.states[4].state
+                );
+                assert!(
+                    msg.states[5].cn0.almost_eq(3.76391601562500000e+01),
+                    "incorrect value for states[5].cn0, expected 3.76391601562500000e+01, is {:e}",
+                    msg.states[5].cn0
                 );
                 assert_eq!(
-                    msg.track_flags, 11,
-                    "incorrect value for track_flags, expected 11, is {}",
-                    msg.track_flags
+                    msg.states[5].sid.code, 0,
+                    "incorrect value for states[5].sid.code, expected 0, is {}",
+                    msg.states[5].sid.code
                 );
                 assert_eq!(
-                    msg.uptime, 2,
-                    "incorrect value for uptime, expected 2, is {}",
-                    msg.uptime
+                    msg.states[5].sid.reserved, 0,
+                    "incorrect value for states[5].sid.reserved, expected 0, is {}",
+                    msg.states[5].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[5].sid.sat, 218,
+                    "incorrect value for states[5].sid.sat, expected 218, is {}",
+                    msg.states[5].sid.sat
+                );
+                assert_eq!(
+                    msg.states[5].state, 1,
+                    "incorrect value for states[5].state, expected 1, is {}",
+                    msg.states[5].state
+                );
+                assert!(
+                    msg.states[6].cn0.almost_eq(3.79199867248535156e+01),
+                    "incorrect value for states[6].cn0, expected 3.79199867248535156e+01, is {:e}",
+                    msg.states[6].cn0
+                );
+                assert_eq!(
+                    msg.states[6].sid.code, 0,
+                    "incorrect value for states[6].sid.code, expected 0, is {}",
+                    msg.states[6].sid.code
+                );
+                assert_eq!(
+                    msg.states[6].sid.reserved, 0,
+                    "incorrect value for states[6].sid.reserved, expected 0, is {}",
+                    msg.states[6].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[6].sid.sat, 220,
+                    "incorrect value for states[6].sid.sat, expected 220, is {}",
+                    msg.states[6].sid.sat
+                );
+                assert_eq!(
+                    msg.states[6].state, 1,
+                    "incorrect value for states[6].state, expected 1, is {}",
+                    msg.states[6].state
+                );
+                assert!(
+                    msg.states[7].cn0.almost_eq(3.92525444030761719e+01),
+                    "incorrect value for states[7].cn0, expected 3.92525444030761719e+01, is {:e}",
+                    msg.states[7].cn0
+                );
+                assert_eq!(
+                    msg.states[7].sid.code, 0,
+                    "incorrect value for states[7].sid.code, expected 0, is {}",
+                    msg.states[7].sid.code
+                );
+                assert_eq!(
+                    msg.states[7].sid.reserved, 0,
+                    "incorrect value for states[7].sid.reserved, expected 0, is {}",
+                    msg.states[7].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[7].sid.sat, 222,
+                    "incorrect value for states[7].sid.sat, expected 222, is {}",
+                    msg.states[7].sid.sat
+                );
+                assert_eq!(
+                    msg.states[7].state, 1,
+                    "incorrect value for states[7].state, expected 1, is {}",
+                    msg.states[7].state
+                );
+                assert!(
+                    msg.states[8].cn0.almost_eq(4.25982742309570312e+01),
+                    "incorrect value for states[8].cn0, expected 4.25982742309570312e+01, is {:e}",
+                    msg.states[8].cn0
+                );
+                assert_eq!(
+                    msg.states[8].sid.code, 0,
+                    "incorrect value for states[8].sid.code, expected 0, is {}",
+                    msg.states[8].sid.code
+                );
+                assert_eq!(
+                    msg.states[8].sid.reserved, 0,
+                    "incorrect value for states[8].sid.reserved, expected 0, is {}",
+                    msg.states[8].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[8].sid.sat, 225,
+                    "incorrect value for states[8].sid.sat, expected 225, is {}",
+                    msg.states[8].sid.sat
+                );
+                assert_eq!(
+                    msg.states[8].state, 1,
+                    "incorrect value for states[8].state, expected 1, is {}",
+                    msg.states[8].state
+                );
+                assert!(
+                    msg.states[9].cn0.almost_eq(-1.00000000000000000e+00),
+                    "incorrect value for states[9].cn0, expected -1.00000000000000000e+00, is {:e}",
+                    msg.states[9].cn0
+                );
+                assert_eq!(
+                    msg.states[9].sid.code, 0,
+                    "incorrect value for states[9].sid.code, expected 0, is {}",
+                    msg.states[9].sid.code
+                );
+                assert_eq!(
+                    msg.states[9].sid.reserved, 0,
+                    "incorrect value for states[9].sid.reserved, expected 0, is {}",
+                    msg.states[9].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[9].sid.sat, 0,
+                    "incorrect value for states[9].sid.sat, expected 0, is {}",
+                    msg.states[9].sid.sat
+                );
+                assert_eq!(
+                    msg.states[9].state, 0,
+                    "incorrect value for states[9].state, expected 0, is {}",
+                    msg.states[9].state
+                );
+                assert!(msg.states[10].cn0.almost_eq( -1.00000000000000000e+00 ), "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}", msg.states[10].cn0);
+                assert_eq!(
+                    msg.states[10].sid.code, 0,
+                    "incorrect value for states[10].sid.code, expected 0, is {}",
+                    msg.states[10].sid.code
+                );
+                assert_eq!(
+                    msg.states[10].sid.reserved, 0,
+                    "incorrect value for states[10].sid.reserved, expected 0, is {}",
+                    msg.states[10].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[10].sid.sat, 0,
+                    "incorrect value for states[10].sid.sat, expected 0, is {}",
+                    msg.states[10].sid.sat
+                );
+                assert_eq!(
+                    msg.states[10].state, 0,
+                    "incorrect value for states[10].state, expected 0, is {}",
+                    msg.states[10].state
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgTrackingStateDetailedDep"),
+            _ => panic!("Invalid message type! Expected a MsgTrackingStateDepB"),
         };
 
         let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
@@ -484,9 +940,11 @@ fn test_auto_check_sbp_tracking_49() {
     }
     {
         let payload: Vec<u8> = vec![
-            85, 17, 0, 59, 103, 55, 255, 251, 170, 48, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 226, 10, 0, 0, 125, 181, 208, 54, 15, 0, 0, 0, 29, 61, 0, 0, 10, 0, 2, 0, 0, 0, 0,
-            0, 0, 0, 40, 0, 220, 1, 0, 11, 0, 3, 9, 66, 95,
+            85, 19, 0, 246, 215, 99, 1, 202, 0, 0, 0, 120, 122, 29, 66, 1, 203, 0, 0, 0, 66, 22,
+            18, 66, 1, 208, 0, 0, 0, 153, 163, 24, 66, 1, 212, 0, 0, 0, 178, 204, 28, 66, 1, 217,
+            0, 0, 0, 220, 59, 38, 66, 1, 218, 0, 0, 0, 161, 27, 20, 66, 1, 220, 0, 0, 0, 125, 107,
+            24, 66, 1, 222, 0, 0, 0, 242, 46, 28, 66, 1, 225, 0, 0, 0, 231, 130, 41, 66, 0, 0, 0,
+            0, 0, 0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 0, 128, 191, 73, 193,
         ];
 
         // Test the round trip payload parsing
@@ -495,142 +953,292 @@ fn test_auto_check_sbp_tracking_49() {
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
         match &sbp_msg {
-            sbp::messages::SBP::MsgTrackingStateDetailedDep(msg) => {
+            sbp::messages::SBP::MsgTrackingStateDepB(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x11,
-                    "Incorrect message type, expected 0x11, is {}",
+                    0x13,
+                    "Incorrect message type, expected 0x13, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0x673b,
-                    "incorrect sender id, expected 0x673b, is {}",
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
                     sender_id
                 );
-                assert_eq!(
-                    msg.L.f, 125,
-                    "incorrect value for L.f, expected 125, is {}",
-                    msg.L.f
+                assert!(
+                    msg.states[0].cn0.almost_eq(3.93695983886718750e+01),
+                    "incorrect value for states[0].cn0, expected 3.93695983886718750e+01, is {:e}",
+                    msg.states[0].cn0
                 );
                 assert_eq!(
-                    msg.L.i, 2786,
-                    "incorrect value for L.i, expected 2786, is {}",
-                    msg.L.i
-                );
-                assert_eq!(msg.P, 0, "incorrect value for P, expected 0, is {}", msg.P);
-                assert_eq!(
-                    msg.P_std, 0,
-                    "incorrect value for P_std, expected 0, is {}",
-                    msg.P_std
+                    msg.states[0].sid.code, 0,
+                    "incorrect value for states[0].sid.code, expected 0, is {}",
+                    msg.states[0].sid.code
                 );
                 assert_eq!(
-                    msg.acceleration, -36,
-                    "incorrect value for acceleration, expected -36, is {}",
-                    msg.acceleration
+                    msg.states[0].sid.reserved, 0,
+                    "incorrect value for states[0].sid.reserved, expected 0, is {}",
+                    msg.states[0].sid.reserved
                 );
                 assert_eq!(
-                    msg.clock_drift, 0,
-                    "incorrect value for clock_drift, expected 0, is {}",
-                    msg.clock_drift
+                    msg.states[0].sid.sat, 202,
+                    "incorrect value for states[0].sid.sat, expected 202, is {}",
+                    msg.states[0].sid.sat
                 );
                 assert_eq!(
-                    msg.clock_offset, 0,
-                    "incorrect value for clock_offset, expected 0, is {}",
-                    msg.clock_offset
+                    msg.states[0].state, 1,
+                    "incorrect value for states[0].state, expected 1, is {}",
+                    msg.states[0].state
+                );
+                assert!(
+                    msg.states[1].cn0.almost_eq(3.65217361450195312e+01),
+                    "incorrect value for states[1].cn0, expected 3.65217361450195312e+01, is {:e}",
+                    msg.states[1].cn0
                 );
                 assert_eq!(
-                    msg.cn0, 181,
-                    "incorrect value for cn0, expected 181, is {}",
-                    msg.cn0
+                    msg.states[1].sid.code, 0,
+                    "incorrect value for states[1].sid.code, expected 0, is {}",
+                    msg.states[1].sid.code
                 );
                 assert_eq!(
-                    msg.corr_spacing, 40,
-                    "incorrect value for corr_spacing, expected 40, is {}",
-                    msg.corr_spacing
+                    msg.states[1].sid.reserved, 0,
+                    "incorrect value for states[1].sid.reserved, expected 0, is {}",
+                    msg.states[1].sid.reserved
                 );
                 assert_eq!(
-                    msg.doppler, 15645,
-                    "incorrect value for doppler, expected 15645, is {}",
-                    msg.doppler
+                    msg.states[1].sid.sat, 203,
+                    "incorrect value for states[1].sid.sat, expected 203, is {}",
+                    msg.states[1].sid.sat
                 );
                 assert_eq!(
-                    msg.doppler_std, 10,
-                    "incorrect value for doppler_std, expected 10, is {}",
-                    msg.doppler_std
+                    msg.states[1].state, 1,
+                    "incorrect value for states[1].state, expected 1, is {}",
+                    msg.states[1].state
+                );
+                assert!(
+                    msg.states[2].cn0.almost_eq(3.81597633361816406e+01),
+                    "incorrect value for states[2].cn0, expected 3.81597633361816406e+01, is {:e}",
+                    msg.states[2].cn0
                 );
                 assert_eq!(
-                    msg.lock, 14032,
-                    "incorrect value for lock, expected 14032, is {}",
-                    msg.lock
+                    msg.states[2].sid.code, 0,
+                    "incorrect value for states[2].sid.code, expected 0, is {}",
+                    msg.states[2].sid.code
                 );
                 assert_eq!(
-                    msg.misc_flags, 9,
-                    "incorrect value for misc_flags, expected 9, is {}",
-                    msg.misc_flags
+                    msg.states[2].sid.reserved, 0,
+                    "incorrect value for states[2].sid.reserved, expected 0, is {}",
+                    msg.states[2].sid.reserved
                 );
                 assert_eq!(
-                    msg.nav_flags, 0,
-                    "incorrect value for nav_flags, expected 0, is {}",
-                    msg.nav_flags
+                    msg.states[2].sid.sat, 208,
+                    "incorrect value for states[2].sid.sat, expected 208, is {}",
+                    msg.states[2].sid.sat
                 );
                 assert_eq!(
-                    msg.pset_flags, 3,
-                    "incorrect value for pset_flags, expected 3, is {}",
-                    msg.pset_flags
+                    msg.states[2].state, 1,
+                    "incorrect value for states[2].state, expected 1, is {}",
+                    msg.states[2].state
+                );
+                assert!(
+                    msg.states[3].cn0.almost_eq(3.91998977661132812e+01),
+                    "incorrect value for states[3].cn0, expected 3.91998977661132812e+01, is {:e}",
+                    msg.states[3].cn0
                 );
                 assert_eq!(
-                    msg.recv_time, 9406446591,
-                    "incorrect value for recv_time, expected 9406446591, is {}",
-                    msg.recv_time
+                    msg.states[3].sid.code, 0,
+                    "incorrect value for states[3].sid.code, expected 0, is {}",
+                    msg.states[3].sid.code
                 );
                 assert_eq!(
-                    msg.sid.code, 0,
-                    "incorrect value for sid.code, expected 0, is {}",
-                    msg.sid.code
+                    msg.states[3].sid.reserved, 0,
+                    "incorrect value for states[3].sid.reserved, expected 0, is {}",
+                    msg.states[3].sid.reserved
                 );
                 assert_eq!(
-                    msg.sid.reserved, 0,
-                    "incorrect value for sid.reserved, expected 0, is {}",
-                    msg.sid.reserved
+                    msg.states[3].sid.sat, 212,
+                    "incorrect value for states[3].sid.sat, expected 212, is {}",
+                    msg.states[3].sid.sat
                 );
                 assert_eq!(
-                    msg.sid.sat, 15,
-                    "incorrect value for sid.sat, expected 15, is {}",
-                    msg.sid.sat
+                    msg.states[3].state, 1,
+                    "incorrect value for states[3].state, expected 1, is {}",
+                    msg.states[3].state
+                );
+                assert!(
+                    msg.states[4].cn0.almost_eq(4.15584564208984375e+01),
+                    "incorrect value for states[4].cn0, expected 4.15584564208984375e+01, is {:e}",
+                    msg.states[4].cn0
                 );
                 assert_eq!(
-                    msg.sync_flags, 1,
-                    "incorrect value for sync_flags, expected 1, is {}",
-                    msg.sync_flags
+                    msg.states[4].sid.code, 0,
+                    "incorrect value for states[4].sid.code, expected 0, is {}",
+                    msg.states[4].sid.code
                 );
                 assert_eq!(
-                    msg.tot.tow, 0,
-                    "incorrect value for tot.tow, expected 0, is {}",
-                    msg.tot.tow
+                    msg.states[4].sid.reserved, 0,
+                    "incorrect value for states[4].sid.reserved, expected 0, is {}",
+                    msg.states[4].sid.reserved
                 );
                 assert_eq!(
-                    msg.tot.wn, 0,
-                    "incorrect value for tot.wn, expected 0, is {}",
-                    msg.tot.wn
+                    msg.states[4].sid.sat, 217,
+                    "incorrect value for states[4].sid.sat, expected 217, is {}",
+                    msg.states[4].sid.sat
                 );
                 assert_eq!(
-                    msg.tow_flags, 0,
-                    "incorrect value for tow_flags, expected 0, is {}",
-                    msg.tow_flags
+                    msg.states[4].state, 1,
+                    "incorrect value for states[4].state, expected 1, is {}",
+                    msg.states[4].state
+                );
+                assert!(
+                    msg.states[5].cn0.almost_eq(3.70269813537597656e+01),
+                    "incorrect value for states[5].cn0, expected 3.70269813537597656e+01, is {:e}",
+                    msg.states[5].cn0
                 );
                 assert_eq!(
-                    msg.track_flags, 11,
-                    "incorrect value for track_flags, expected 11, is {}",
-                    msg.track_flags
+                    msg.states[5].sid.code, 0,
+                    "incorrect value for states[5].sid.code, expected 0, is {}",
+                    msg.states[5].sid.code
                 );
                 assert_eq!(
-                    msg.uptime, 2,
-                    "incorrect value for uptime, expected 2, is {}",
-                    msg.uptime
+                    msg.states[5].sid.reserved, 0,
+                    "incorrect value for states[5].sid.reserved, expected 0, is {}",
+                    msg.states[5].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[5].sid.sat, 218,
+                    "incorrect value for states[5].sid.sat, expected 218, is {}",
+                    msg.states[5].sid.sat
+                );
+                assert_eq!(
+                    msg.states[5].state, 1,
+                    "incorrect value for states[5].state, expected 1, is {}",
+                    msg.states[5].state
+                );
+                assert!(
+                    msg.states[6].cn0.almost_eq(3.81049690246582031e+01),
+                    "incorrect value for states[6].cn0, expected 3.81049690246582031e+01, is {:e}",
+                    msg.states[6].cn0
+                );
+                assert_eq!(
+                    msg.states[6].sid.code, 0,
+                    "incorrect value for states[6].sid.code, expected 0, is {}",
+                    msg.states[6].sid.code
+                );
+                assert_eq!(
+                    msg.states[6].sid.reserved, 0,
+                    "incorrect value for states[6].sid.reserved, expected 0, is {}",
+                    msg.states[6].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[6].sid.sat, 220,
+                    "incorrect value for states[6].sid.sat, expected 220, is {}",
+                    msg.states[6].sid.sat
+                );
+                assert_eq!(
+                    msg.states[6].state, 1,
+                    "incorrect value for states[6].state, expected 1, is {}",
+                    msg.states[6].state
+                );
+                assert!(
+                    msg.states[7].cn0.almost_eq(3.90458450317382812e+01),
+                    "incorrect value for states[7].cn0, expected 3.90458450317382812e+01, is {:e}",
+                    msg.states[7].cn0
+                );
+                assert_eq!(
+                    msg.states[7].sid.code, 0,
+                    "incorrect value for states[7].sid.code, expected 0, is {}",
+                    msg.states[7].sid.code
+                );
+                assert_eq!(
+                    msg.states[7].sid.reserved, 0,
+                    "incorrect value for states[7].sid.reserved, expected 0, is {}",
+                    msg.states[7].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[7].sid.sat, 222,
+                    "incorrect value for states[7].sid.sat, expected 222, is {}",
+                    msg.states[7].sid.sat
+                );
+                assert_eq!(
+                    msg.states[7].state, 1,
+                    "incorrect value for states[7].state, expected 1, is {}",
+                    msg.states[7].state
+                );
+                assert!(
+                    msg.states[8].cn0.almost_eq(4.23778343200683594e+01),
+                    "incorrect value for states[8].cn0, expected 4.23778343200683594e+01, is {:e}",
+                    msg.states[8].cn0
+                );
+                assert_eq!(
+                    msg.states[8].sid.code, 0,
+                    "incorrect value for states[8].sid.code, expected 0, is {}",
+                    msg.states[8].sid.code
+                );
+                assert_eq!(
+                    msg.states[8].sid.reserved, 0,
+                    "incorrect value for states[8].sid.reserved, expected 0, is {}",
+                    msg.states[8].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[8].sid.sat, 225,
+                    "incorrect value for states[8].sid.sat, expected 225, is {}",
+                    msg.states[8].sid.sat
+                );
+                assert_eq!(
+                    msg.states[8].state, 1,
+                    "incorrect value for states[8].state, expected 1, is {}",
+                    msg.states[8].state
+                );
+                assert!(
+                    msg.states[9].cn0.almost_eq(-1.00000000000000000e+00),
+                    "incorrect value for states[9].cn0, expected -1.00000000000000000e+00, is {:e}",
+                    msg.states[9].cn0
+                );
+                assert_eq!(
+                    msg.states[9].sid.code, 0,
+                    "incorrect value for states[9].sid.code, expected 0, is {}",
+                    msg.states[9].sid.code
+                );
+                assert_eq!(
+                    msg.states[9].sid.reserved, 0,
+                    "incorrect value for states[9].sid.reserved, expected 0, is {}",
+                    msg.states[9].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[9].sid.sat, 0,
+                    "incorrect value for states[9].sid.sat, expected 0, is {}",
+                    msg.states[9].sid.sat
+                );
+                assert_eq!(
+                    msg.states[9].state, 0,
+                    "incorrect value for states[9].state, expected 0, is {}",
+                    msg.states[9].state
+                );
+                assert!(msg.states[10].cn0.almost_eq( -1.00000000000000000e+00 ), "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}", msg.states[10].cn0);
+                assert_eq!(
+                    msg.states[10].sid.code, 0,
+                    "incorrect value for states[10].sid.code, expected 0, is {}",
+                    msg.states[10].sid.code
+                );
+                assert_eq!(
+                    msg.states[10].sid.reserved, 0,
+                    "incorrect value for states[10].sid.reserved, expected 0, is {}",
+                    msg.states[10].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[10].sid.sat, 0,
+                    "incorrect value for states[10].sid.sat, expected 0, is {}",
+                    msg.states[10].sid.sat
+                );
+                assert_eq!(
+                    msg.states[10].state, 0,
+                    "incorrect value for states[10].state, expected 0, is {}",
+                    msg.states[10].state
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgTrackingStateDetailedDep"),
+            _ => panic!("Invalid message type! Expected a MsgTrackingStateDepB"),
         };
 
         let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
@@ -638,9 +1246,11 @@ fn test_auto_check_sbp_tracking_49() {
     }
     {
         let payload: Vec<u8> = vec![
-            85, 17, 0, 59, 103, 55, 189, 95, 120, 78, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 203, 12, 0, 0, 64, 184, 208, 54, 15, 0, 0, 0, 24, 61, 0, 0, 4, 0, 3, 0, 0, 0, 0, 0,
-            0, 0, 40, 0, 2, 1, 0, 11, 0, 3, 9, 194, 206,
+            85, 19, 0, 246, 215, 99, 1, 202, 0, 0, 0, 103, 208, 30, 66, 1, 203, 0, 0, 0, 117, 24,
+            18, 66, 1, 208, 0, 0, 0, 200, 173, 20, 66, 1, 212, 0, 0, 0, 137, 68, 27, 66, 1, 217, 0,
+            0, 0, 243, 51, 40, 66, 1, 218, 0, 0, 0, 225, 58, 23, 66, 1, 220, 0, 0, 0, 132, 221, 22,
+            66, 1, 222, 0, 0, 0, 157, 29, 26, 66, 1, 225, 0, 0, 0, 133, 21, 41, 66, 0, 0, 0, 0, 0,
+            0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 0, 128, 191, 126, 47,
         ];
 
         // Test the round trip payload parsing
@@ -649,142 +1259,292 @@ fn test_auto_check_sbp_tracking_49() {
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
         match &sbp_msg {
-            sbp::messages::SBP::MsgTrackingStateDetailedDep(msg) => {
+            sbp::messages::SBP::MsgTrackingStateDepB(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x11,
-                    "Incorrect message type, expected 0x11, is {}",
+                    0x13,
+                    "Incorrect message type, expected 0x13, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0x673b,
-                    "incorrect sender id, expected 0x673b, is {}",
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
                     sender_id
                 );
-                assert_eq!(
-                    msg.L.f, 64,
-                    "incorrect value for L.f, expected 64, is {}",
-                    msg.L.f
+                assert!(
+                    msg.states[0].cn0.almost_eq(3.97035179138183594e+01),
+                    "incorrect value for states[0].cn0, expected 3.97035179138183594e+01, is {:e}",
+                    msg.states[0].cn0
                 );
                 assert_eq!(
-                    msg.L.i, 3275,
-                    "incorrect value for L.i, expected 3275, is {}",
-                    msg.L.i
-                );
-                assert_eq!(msg.P, 0, "incorrect value for P, expected 0, is {}", msg.P);
-                assert_eq!(
-                    msg.P_std, 0,
-                    "incorrect value for P_std, expected 0, is {}",
-                    msg.P_std
+                    msg.states[0].sid.code, 0,
+                    "incorrect value for states[0].sid.code, expected 0, is {}",
+                    msg.states[0].sid.code
                 );
                 assert_eq!(
-                    msg.acceleration, 2,
-                    "incorrect value for acceleration, expected 2, is {}",
-                    msg.acceleration
+                    msg.states[0].sid.reserved, 0,
+                    "incorrect value for states[0].sid.reserved, expected 0, is {}",
+                    msg.states[0].sid.reserved
                 );
                 assert_eq!(
-                    msg.clock_drift, 0,
-                    "incorrect value for clock_drift, expected 0, is {}",
-                    msg.clock_drift
+                    msg.states[0].sid.sat, 202,
+                    "incorrect value for states[0].sid.sat, expected 202, is {}",
+                    msg.states[0].sid.sat
                 );
                 assert_eq!(
-                    msg.clock_offset, 0,
-                    "incorrect value for clock_offset, expected 0, is {}",
-                    msg.clock_offset
+                    msg.states[0].state, 1,
+                    "incorrect value for states[0].state, expected 1, is {}",
+                    msg.states[0].state
+                );
+                assert!(
+                    msg.states[1].cn0.almost_eq(3.65238838195800781e+01),
+                    "incorrect value for states[1].cn0, expected 3.65238838195800781e+01, is {:e}",
+                    msg.states[1].cn0
                 );
                 assert_eq!(
-                    msg.cn0, 184,
-                    "incorrect value for cn0, expected 184, is {}",
-                    msg.cn0
+                    msg.states[1].sid.code, 0,
+                    "incorrect value for states[1].sid.code, expected 0, is {}",
+                    msg.states[1].sid.code
                 );
                 assert_eq!(
-                    msg.corr_spacing, 40,
-                    "incorrect value for corr_spacing, expected 40, is {}",
-                    msg.corr_spacing
+                    msg.states[1].sid.reserved, 0,
+                    "incorrect value for states[1].sid.reserved, expected 0, is {}",
+                    msg.states[1].sid.reserved
                 );
                 assert_eq!(
-                    msg.doppler, 15640,
-                    "incorrect value for doppler, expected 15640, is {}",
-                    msg.doppler
+                    msg.states[1].sid.sat, 203,
+                    "incorrect value for states[1].sid.sat, expected 203, is {}",
+                    msg.states[1].sid.sat
                 );
                 assert_eq!(
-                    msg.doppler_std, 4,
-                    "incorrect value for doppler_std, expected 4, is {}",
-                    msg.doppler_std
+                    msg.states[1].state, 1,
+                    "incorrect value for states[1].state, expected 1, is {}",
+                    msg.states[1].state
+                );
+                assert!(
+                    msg.states[2].cn0.almost_eq(3.71697082519531250e+01),
+                    "incorrect value for states[2].cn0, expected 3.71697082519531250e+01, is {:e}",
+                    msg.states[2].cn0
                 );
                 assert_eq!(
-                    msg.lock, 14032,
-                    "incorrect value for lock, expected 14032, is {}",
-                    msg.lock
+                    msg.states[2].sid.code, 0,
+                    "incorrect value for states[2].sid.code, expected 0, is {}",
+                    msg.states[2].sid.code
                 );
                 assert_eq!(
-                    msg.misc_flags, 9,
-                    "incorrect value for misc_flags, expected 9, is {}",
-                    msg.misc_flags
+                    msg.states[2].sid.reserved, 0,
+                    "incorrect value for states[2].sid.reserved, expected 0, is {}",
+                    msg.states[2].sid.reserved
                 );
                 assert_eq!(
-                    msg.nav_flags, 0,
-                    "incorrect value for nav_flags, expected 0, is {}",
-                    msg.nav_flags
+                    msg.states[2].sid.sat, 208,
+                    "incorrect value for states[2].sid.sat, expected 208, is {}",
+                    msg.states[2].sid.sat
                 );
                 assert_eq!(
-                    msg.pset_flags, 3,
-                    "incorrect value for pset_flags, expected 3, is {}",
-                    msg.pset_flags
+                    msg.states[2].state, 1,
+                    "incorrect value for states[2].state, expected 1, is {}",
+                    msg.states[2].state
+                );
+                assert!(
+                    msg.states[3].cn0.almost_eq(3.88169288635253906e+01),
+                    "incorrect value for states[3].cn0, expected 3.88169288635253906e+01, is {:e}",
+                    msg.states[3].cn0
                 );
                 assert_eq!(
-                    msg.recv_time, 9906446269,
-                    "incorrect value for recv_time, expected 9906446269, is {}",
-                    msg.recv_time
+                    msg.states[3].sid.code, 0,
+                    "incorrect value for states[3].sid.code, expected 0, is {}",
+                    msg.states[3].sid.code
                 );
                 assert_eq!(
-                    msg.sid.code, 0,
-                    "incorrect value for sid.code, expected 0, is {}",
-                    msg.sid.code
+                    msg.states[3].sid.reserved, 0,
+                    "incorrect value for states[3].sid.reserved, expected 0, is {}",
+                    msg.states[3].sid.reserved
                 );
                 assert_eq!(
-                    msg.sid.reserved, 0,
-                    "incorrect value for sid.reserved, expected 0, is {}",
-                    msg.sid.reserved
+                    msg.states[3].sid.sat, 212,
+                    "incorrect value for states[3].sid.sat, expected 212, is {}",
+                    msg.states[3].sid.sat
                 );
                 assert_eq!(
-                    msg.sid.sat, 15,
-                    "incorrect value for sid.sat, expected 15, is {}",
-                    msg.sid.sat
+                    msg.states[3].state, 1,
+                    "incorrect value for states[3].state, expected 1, is {}",
+                    msg.states[3].state
+                );
+                assert!(
+                    msg.states[4].cn0.almost_eq(4.20507316589355469e+01),
+                    "incorrect value for states[4].cn0, expected 4.20507316589355469e+01, is {:e}",
+                    msg.states[4].cn0
                 );
                 assert_eq!(
-                    msg.sync_flags, 1,
-                    "incorrect value for sync_flags, expected 1, is {}",
-                    msg.sync_flags
+                    msg.states[4].sid.code, 0,
+                    "incorrect value for states[4].sid.code, expected 0, is {}",
+                    msg.states[4].sid.code
                 );
                 assert_eq!(
-                    msg.tot.tow, 0,
-                    "incorrect value for tot.tow, expected 0, is {}",
-                    msg.tot.tow
+                    msg.states[4].sid.reserved, 0,
+                    "incorrect value for states[4].sid.reserved, expected 0, is {}",
+                    msg.states[4].sid.reserved
                 );
                 assert_eq!(
-                    msg.tot.wn, 0,
-                    "incorrect value for tot.wn, expected 0, is {}",
-                    msg.tot.wn
+                    msg.states[4].sid.sat, 217,
+                    "incorrect value for states[4].sid.sat, expected 217, is {}",
+                    msg.states[4].sid.sat
                 );
                 assert_eq!(
-                    msg.tow_flags, 0,
-                    "incorrect value for tow_flags, expected 0, is {}",
-                    msg.tow_flags
+                    msg.states[4].state, 1,
+                    "incorrect value for states[4].state, expected 1, is {}",
+                    msg.states[4].state
+                );
+                assert!(
+                    msg.states[5].cn0.almost_eq(3.78074989318847656e+01),
+                    "incorrect value for states[5].cn0, expected 3.78074989318847656e+01, is {:e}",
+                    msg.states[5].cn0
                 );
                 assert_eq!(
-                    msg.track_flags, 11,
-                    "incorrect value for track_flags, expected 11, is {}",
-                    msg.track_flags
+                    msg.states[5].sid.code, 0,
+                    "incorrect value for states[5].sid.code, expected 0, is {}",
+                    msg.states[5].sid.code
                 );
                 assert_eq!(
-                    msg.uptime, 3,
-                    "incorrect value for uptime, expected 3, is {}",
-                    msg.uptime
+                    msg.states[5].sid.reserved, 0,
+                    "incorrect value for states[5].sid.reserved, expected 0, is {}",
+                    msg.states[5].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[5].sid.sat, 218,
+                    "incorrect value for states[5].sid.sat, expected 218, is {}",
+                    msg.states[5].sid.sat
+                );
+                assert_eq!(
+                    msg.states[5].state, 1,
+                    "incorrect value for states[5].state, expected 1, is {}",
+                    msg.states[5].state
+                );
+                assert!(
+                    msg.states[6].cn0.almost_eq(3.77163238525390625e+01),
+                    "incorrect value for states[6].cn0, expected 3.77163238525390625e+01, is {:e}",
+                    msg.states[6].cn0
+                );
+                assert_eq!(
+                    msg.states[6].sid.code, 0,
+                    "incorrect value for states[6].sid.code, expected 0, is {}",
+                    msg.states[6].sid.code
+                );
+                assert_eq!(
+                    msg.states[6].sid.reserved, 0,
+                    "incorrect value for states[6].sid.reserved, expected 0, is {}",
+                    msg.states[6].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[6].sid.sat, 220,
+                    "incorrect value for states[6].sid.sat, expected 220, is {}",
+                    msg.states[6].sid.sat
+                );
+                assert_eq!(
+                    msg.states[6].state, 1,
+                    "incorrect value for states[6].state, expected 1, is {}",
+                    msg.states[6].state
+                );
+                assert!(
+                    msg.states[7].cn0.almost_eq(3.85289192199707031e+01),
+                    "incorrect value for states[7].cn0, expected 3.85289192199707031e+01, is {:e}",
+                    msg.states[7].cn0
+                );
+                assert_eq!(
+                    msg.states[7].sid.code, 0,
+                    "incorrect value for states[7].sid.code, expected 0, is {}",
+                    msg.states[7].sid.code
+                );
+                assert_eq!(
+                    msg.states[7].sid.reserved, 0,
+                    "incorrect value for states[7].sid.reserved, expected 0, is {}",
+                    msg.states[7].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[7].sid.sat, 222,
+                    "incorrect value for states[7].sid.sat, expected 222, is {}",
+                    msg.states[7].sid.sat
+                );
+                assert_eq!(
+                    msg.states[7].state, 1,
+                    "incorrect value for states[7].state, expected 1, is {}",
+                    msg.states[7].state
+                );
+                assert!(
+                    msg.states[8].cn0.almost_eq(4.22710151672363281e+01),
+                    "incorrect value for states[8].cn0, expected 4.22710151672363281e+01, is {:e}",
+                    msg.states[8].cn0
+                );
+                assert_eq!(
+                    msg.states[8].sid.code, 0,
+                    "incorrect value for states[8].sid.code, expected 0, is {}",
+                    msg.states[8].sid.code
+                );
+                assert_eq!(
+                    msg.states[8].sid.reserved, 0,
+                    "incorrect value for states[8].sid.reserved, expected 0, is {}",
+                    msg.states[8].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[8].sid.sat, 225,
+                    "incorrect value for states[8].sid.sat, expected 225, is {}",
+                    msg.states[8].sid.sat
+                );
+                assert_eq!(
+                    msg.states[8].state, 1,
+                    "incorrect value for states[8].state, expected 1, is {}",
+                    msg.states[8].state
+                );
+                assert!(
+                    msg.states[9].cn0.almost_eq(-1.00000000000000000e+00),
+                    "incorrect value for states[9].cn0, expected -1.00000000000000000e+00, is {:e}",
+                    msg.states[9].cn0
+                );
+                assert_eq!(
+                    msg.states[9].sid.code, 0,
+                    "incorrect value for states[9].sid.code, expected 0, is {}",
+                    msg.states[9].sid.code
+                );
+                assert_eq!(
+                    msg.states[9].sid.reserved, 0,
+                    "incorrect value for states[9].sid.reserved, expected 0, is {}",
+                    msg.states[9].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[9].sid.sat, 0,
+                    "incorrect value for states[9].sid.sat, expected 0, is {}",
+                    msg.states[9].sid.sat
+                );
+                assert_eq!(
+                    msg.states[9].state, 0,
+                    "incorrect value for states[9].state, expected 0, is {}",
+                    msg.states[9].state
+                );
+                assert!(msg.states[10].cn0.almost_eq( -1.00000000000000000e+00 ), "incorrect value for states[10].cn0, expected -1.00000000000000000e+00, is {:e}", msg.states[10].cn0);
+                assert_eq!(
+                    msg.states[10].sid.code, 0,
+                    "incorrect value for states[10].sid.code, expected 0, is {}",
+                    msg.states[10].sid.code
+                );
+                assert_eq!(
+                    msg.states[10].sid.reserved, 0,
+                    "incorrect value for states[10].sid.reserved, expected 0, is {}",
+                    msg.states[10].sid.reserved
+                );
+                assert_eq!(
+                    msg.states[10].sid.sat, 0,
+                    "incorrect value for states[10].sid.sat, expected 0, is {}",
+                    msg.states[10].sid.sat
+                );
+                assert_eq!(
+                    msg.states[10].state, 0,
+                    "incorrect value for states[10].state, expected 0, is {}",
+                    msg.states[10].state
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgTrackingStateDetailedDep"),
+            _ => panic!("Invalid message type! Expected a MsgTrackingStateDepB"),
         };
 
         let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
