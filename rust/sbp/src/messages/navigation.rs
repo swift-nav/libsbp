@@ -1089,7 +1089,7 @@ impl crate::serialize::SbpSerialize for MsgPosECEFCov {
 /// MSG_GPS_TIME with the matching time-of-week (tow).
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 #[allow(non_snake_case)]
 pub struct MsgPosECEFCovGnss {
     pub sender_id: Option<u16>,
