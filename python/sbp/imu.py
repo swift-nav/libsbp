@@ -40,7 +40,7 @@ the indications on the device itself. Measurement units, which are specific to t
 device hardware and settings, are communicated via the MSG_IMU_AUX message.
 If using "time since startup" time tags, the receiving end will expect a
 `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise IMU measurements
-with GNSS.
+with GNSS. The timestamp must wrap around to zero when reaching one week (604800 seconds).
 
 The time-tagging mode should not change throughout a run.
 
