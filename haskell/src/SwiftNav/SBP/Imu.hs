@@ -46,8 +46,9 @@ msgImuRaw = 0x0900
 -- to the device hardware and settings, are communicated via the MSG_IMU_AUX
 -- message. If using "time since startup" time tags, the receiving end will
 -- expect a `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to
--- synchronise IMU measurements with GNSS.  The time-tagging mode should not
--- change throughout a run.
+-- synchronise IMU measurements with GNSS. The timestamp must wrap around to
+-- zero when reaching one week (604800 seconds).  The time-tagging mode should
+-- not change throughout a run.
 data MsgImuRaw = MsgImuRaw
   { _msgImuRaw_tow :: !Word32
     -- ^ Milliseconds since reference epoch and time status.

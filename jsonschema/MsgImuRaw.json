@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgImuRaw",
   "title":"MsgImuRaw",
-  "description":"Raw data from the Inertial Measurement Unit, containing accelerometer and,\ngyroscope readings. The sense of the measurements are to be aligned with ,\nthe indications on the device itself. Measurement units, which are specific to the,\ndevice hardware and settings, are communicated via the MSG_IMU_AUX message.,\nIf using \"time since startup\" time tags, the receiving end will expect a,\n`MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise IMU measurements,\nwith GNSS.,\n,\nThe time-tagging mode should not change throughout a run.\n",
+  "description":"Raw data from the Inertial Measurement Unit, containing accelerometer and,\ngyroscope readings. The sense of the measurements are to be aligned with ,\nthe indications on the device itself. Measurement units, which are specific to the,\ndevice hardware and settings, are communicated via the MSG_IMU_AUX message.,\nIf using \"time since startup\" time tags, the receiving end will expect a,\n`MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise IMU measurements,\nwith GNSS. The timestamp must wrap around to zero when reaching one week (604800 seconds).,\n,\nThe time-tagging mode should not change throughout a run.\n",
   "type": "object",
   "properties": {
     "tow": {"type": "integer"},

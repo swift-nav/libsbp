@@ -32,7 +32,8 @@ var UInt64 = require('cuint').UINT64;
  * device hardware and settings, are communicated via the MSG_IMU_AUX message. If
  * using "time since startup" time tags, the receiving end will expect a
  * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise IMU
- * measurements with GNSS.  The time-tagging mode should not change throughout a
+ * measurements with GNSS. The timestamp must wrap around to zero when reaching one
+ * week (604800 seconds).  The time-tagging mode should not change throughout a
  * run.
  *
  * Fields in the SBP payload (`sbp.payload`):
