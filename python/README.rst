@@ -77,7 +77,7 @@ License
 
 Copyright © 2015 Swift Navigation
 
-Distributed under LGPLv3.0.
+Distributed under MIT.
 
 .. _simple.py: https://github.com/swift-nav/libsbp/blob/master/python/sbp/client/examples/simple.py
 .. _udp.py: https://github.com/swift-nav/libsbp/blob/master/python/sbp/client/examples/udp.py
