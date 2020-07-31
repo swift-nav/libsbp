@@ -33,5 +33,5 @@ License
 
 Copyright © 2015 Swift Navigation
 
-Distributed under LGPLv3.0.
+Distributed under MIT.
 

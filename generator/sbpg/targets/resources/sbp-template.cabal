@@ -2,7 +2,7 @@ name:                  sbp
 version:               (((release)))
 synopsis:              SwiftNav's SBP Library
 homepage:              https://github.com/swift-nav/libsbp
-license:               LGPL-3
+license:               MIT
 author:                Swift Navigation Inc.
 maintainer:            Swift Navigation <dev@swiftnav.com>
 copyright:             Copyright (C) 2015-2018 Swift Navigation, Inc.

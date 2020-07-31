@@ -226,7 +226,7 @@ HOWTO for instructions on updating these schemas.
 
 Copyright © 2020 Swift Navigation
 
-Distributed under LGPLv3.0.
+Distributed under MIT.
 
 [1]: https://travis-ci.org/swift-nav/libsbp.svg?branch=master
 [2]: https://travis-ci.org/swift-nav/libsbp
