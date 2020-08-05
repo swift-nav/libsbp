@@ -309,7 +309,7 @@ definitions:
             desc: Status flags (reserved)
 
  - MSG_GROUP_META:
-     id: 0xFF0A
+     id: 0xFF0C
      short_desc: Solution Group Metadata
      public: true
      desc: |
@@ -354,3 +354,4 @@ definitions:
            type: array
            fill: u16
            desc: An inorder list of message types included in the Solution Group
+
