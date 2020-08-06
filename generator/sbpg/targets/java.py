@@ -54,6 +54,7 @@ def classnameify(s):
   """
   Makes a classname.
   """
+  if '_' not in s: return s
   return ''.join(w if w in ACRONYMS else w.title() for w in s.split('_'))
 
 
