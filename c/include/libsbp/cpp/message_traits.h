@@ -29,6 +29,7 @@
 #include <libsbp/piksi.h>
 #include <libsbp/sbas.h>
 #include <libsbp/settings.h>
+#include <libsbp/solution_meta.h>
 #include <libsbp/ssr.h>
 #include <libsbp/system.h>
 #include <libsbp/tracking.h>
@@ -1100,6 +1101,30 @@ struct MessageTraits<msg_gnss_time_offset_t> {
 template<>
 struct MessageTraits<msg_group_meta_t> {
   static constexpr u16 id = 65290;
+};
+
+
+template<>
+struct MessageTraits<msg_soln_meta_t> {
+  static constexpr u16 id = 65295;
+};
+
+
+template<>
+struct MessageTraits<gnss_input_type_t> {
+  static constexpr u16 id = 65511;
+};
+
+
+template<>
+struct MessageTraits<imu_input_type_t> {
+  static constexpr u16 id = 65512;
+};
+
+
+template<>
+struct MessageTraits<odo_input_type_t> {
+  static constexpr u16 id = 65513;
 };
 
 

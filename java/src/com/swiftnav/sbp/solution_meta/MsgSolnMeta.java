@@ -1,0 +1,114 @@
+/*
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+package com.swiftnav.sbp.solution_meta;
+
+import java.math.BigInteger;
+
+import com.swiftnav.sbp.SBPMessage;
+import com.swiftnav.sbp.SBPBinaryException;
+import com.swiftnav.sbp.SBPStruct;
+
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+/** SBP class for message MSG_SOLN_META (0xFF0F).
+ *
+ * You can have MSG_SOLN_META inherent its fields directly from
+ * an inherited SBP object, or construct it inline using a dict of its
+ * fields.
+ *
+ * This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
+ * It focuses primarly, but not only, on GNSS metadata. */
+
+public class MsgSolnMeta extends SBPMessage {
+    public static final int TYPE = 0xFF0F;
+
+    
+    /** Position Dilution of Precision, as per last received DOPS, even if the GNSS solutions are not used in computing the Fuzed Solution. */
+    public int pdop;
+    
+    /** Horizontal Dilution of Precision, as per last received DOPS, even if the GNSS solutions are not used in computing the Fuzed Solution. */
+    public int hdop;
+    
+    /** Vertical Dilution of Precision, as per last received DOPS, even if the GNSS solutions are not used in computing the Fuzed Solution. */
+    public int vdop;
+    
+    /** Number of satellites used in solution, as per last received GNSS solutions, even if the GNSS solutions are not used in computing the Fuzed Solution. */
+    public int n_sats;
+    
+    /** Age of the corrections (0xFFFF indicates invalid), as per last received MSG_AGE_CORRECTIONS, even if the GNSS solutions are not used in computing the Fuzed Solution. */
+    public int age_of_corrections;
+    
+    /** Bits for reason why it cannot align (yet) */
+    public int alignment_status;
+    
+    /** Tow of last-used GNSS position measurement */
+    public long last_used_gnss_pos_tow;
+    
+    /** Tow of last-used GNSS velocity measurement */
+    public long last_used_gnss_vel_tow;
+    
+    /** Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each <Sensor>InputType descriptor in the present doc. */
+    public SolutionInputType[] solution_inputs;
+    
+
+    public MsgSolnMeta (int sender) { super(sender, TYPE); }
+    public MsgSolnMeta () { super(TYPE); }
+    public MsgSolnMeta (SBPMessage msg) throws SBPBinaryException {
+        super(msg);
+        assert msg.type != TYPE;
+    }
+
+    @Override
+    protected void parse(Parser parser) throws SBPBinaryException {
+        /* Parse fields from binary */
+        pdop = parser.getU16();
+        hdop = parser.getU16();
+        vdop = parser.getU16();
+        n_sats = parser.getU8();
+        age_of_corrections = parser.getU16();
+        alignment_status = parser.getU8();
+        last_used_gnss_pos_tow = parser.getU32();
+        last_used_gnss_vel_tow = parser.getU32();
+        solution_inputs = parser.getArray(SolutionInputType.class);
+    }
+
+    @Override
+    protected void build(Builder builder) {
+        builder.putU16(pdop);
+        builder.putU16(hdop);
+        builder.putU16(vdop);
+        builder.putU8(n_sats);
+        builder.putU16(age_of_corrections);
+        builder.putU8(alignment_status);
+        builder.putU32(last_used_gnss_pos_tow);
+        builder.putU32(last_used_gnss_vel_tow);
+        builder.putArray(solution_inputs);
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject obj = super.toJSON();
+        obj.put("pdop", pdop);
+        obj.put("hdop", hdop);
+        obj.put("vdop", vdop);
+        obj.put("n_sats", n_sats);
+        obj.put("age_of_corrections", age_of_corrections);
+        obj.put("alignment_status", alignment_status);
+        obj.put("last_used_gnss_pos_tow", last_used_gnss_pos_tow);
+        obj.put("last_used_gnss_vel_tow", last_used_gnss_vel_tow);
+        obj.put("solution_inputs", SBPStruct.toJSONArray(solution_inputs));
+        return obj;
+    }
+}
