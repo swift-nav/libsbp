@@ -35,20 +35,20 @@ public class MsgSolnMeta extends SBPMessage {
     public static final int TYPE = 0xFF0F;
 
     
-    /** Position Dilution of Precision, as per last received DOPS, even if the GNSS solutions are not used in computing the Fuzed Solution. */
+    /** Position Dilution of Precision, as per last available DOPS from Starling GNSS engine */
     public int pdop;
     
-    /** Horizontal Dilution of Precision, as per last received DOPS, even if the GNSS solutions are not used in computing the Fuzed Solution. */
+    /** Horizontal Dilution of Precision, as per last available DOPS from Starling GNSS engine */
     public int hdop;
     
-    /** Vertical Dilution of Precision, as per last received DOPS, even if the GNSS solutions are not used in computing the Fuzed Solution. */
+    /** Vertical Dilution of Precision, as per last available DOPS from Starling GNSS engine */
     public int vdop;
     
-    /** Number of satellites used in solution, as per last received GNSS solutions, even if the GNSS solutions are not used in computing the Fuzed Solution. */
+    /** Number of satellites used in solution, as per last available DOPS from Starling GNSS engine */
     public int n_sats;
     
-    /** Age of the corrections (0xFFFF indicates invalid), as per last received MSG_AGE_CORRECTIONS, even if the GNSS solutions are not used in computing the Fuzed Solution. */
-    public int age_of_corrections;
+    /** Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine */
+    public int age_corrections;
     
     /** Bits for reason why it cannot align (yet) */
     public int alignment_status;
@@ -59,8 +59,8 @@ public class MsgSolnMeta extends SBPMessage {
     /** Tow of last-used GNSS velocity measurement */
     public long last_used_gnss_vel_tow;
     
-    /** Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each <Sensor>InputType descriptor in the present doc. */
-    public SolutionInputType[] solution_inputs;
+    /** Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc. */
+    public SolutionInputType[] sol_in;
     
 
     public MsgSolnMeta (int sender) { super(sender, TYPE); }
@@ -77,11 +77,11 @@ public class MsgSolnMeta extends SBPMessage {
         hdop = parser.getU16();
         vdop = parser.getU16();
         n_sats = parser.getU8();
-        age_of_corrections = parser.getU16();
+        age_corrections = parser.getU16();
         alignment_status = parser.getU8();
         last_used_gnss_pos_tow = parser.getU32();
         last_used_gnss_vel_tow = parser.getU32();
-        solution_inputs = parser.getArray(SolutionInputType.class);
+        sol_in = parser.getArray(SolutionInputType.class);
     }
 
     @Override
@@ -90,11 +90,11 @@ public class MsgSolnMeta extends SBPMessage {
         builder.putU16(hdop);
         builder.putU16(vdop);
         builder.putU8(n_sats);
-        builder.putU16(age_of_corrections);
+        builder.putU16(age_corrections);
         builder.putU8(alignment_status);
         builder.putU32(last_used_gnss_pos_tow);
         builder.putU32(last_used_gnss_vel_tow);
-        builder.putArray(solution_inputs);
+        builder.putArray(sol_in);
     }
 
     @Override
@@ -104,11 +104,11 @@ public class MsgSolnMeta extends SBPMessage {
         obj.put("hdop", hdop);
         obj.put("vdop", vdop);
         obj.put("n_sats", n_sats);
-        obj.put("age_of_corrections", age_of_corrections);
+        obj.put("age_corrections", age_corrections);
         obj.put("alignment_status", alignment_status);
         obj.put("last_used_gnss_pos_tow", last_used_gnss_pos_tow);
         obj.put("last_used_gnss_vel_tow", last_used_gnss_vel_tow);
-        obj.put("solution_inputs", SBPStruct.toJSONArray(solution_inputs));
+        obj.put("sol_in", SBPStruct.toJSONArray(sol_in));
         return obj;
     }
 }

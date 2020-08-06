@@ -25,7 +25,8 @@ use crate::SbpString;
 
 /// Flags for a given GNSS sensor used as input for the fuzed solution.
 ///
-/// Metadata around the GNSS sensors involved in the fuzed solution.
+/// Metadata around the GNSS sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+///                                                                         in a MSG_SOLN_META.
 /// Note: Just to build descriptive tables in documentation and not actually used.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
@@ -80,7 +81,8 @@ impl crate::serialize::SbpSerialize for GNSSInputType {
 
 /// Flags for a given IMU sensor used as input for the fuzed solution.
 ///
-/// Metadata around the IMU sensors involved in the fuzed solution.
+/// Metadata around the IMU sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+///                                                                        in a MSG_SOLN_META.
 /// Note: Just to build descriptive tables in documentation and not actually used.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
@@ -143,23 +145,21 @@ impl crate::serialize::SbpSerialize for IMUInputType {
 #[allow(non_snake_case)]
 pub struct MsgSolnMeta {
     pub sender_id: Option<u16>,
-    /// Position Dilution of Precision, as per last received DOPS, even if the
-    /// GNSS solutions are not used in computing the Fuzed Solution.
+    /// Position Dilution of Precision, as per last available DOPS from Starling
+    /// GNSS engine
     pub pdop: u16,
-    /// Horizontal Dilution of Precision, as per last received DOPS, even if the
-    /// GNSS solutions are not used in computing the Fuzed Solution.
+    /// Horizontal Dilution of Precision, as per last available DOPS from
+    /// Starling GNSS engine
     pub hdop: u16,
-    /// Vertical Dilution of Precision, as per last received DOPS, even if the
-    /// GNSS solutions are not used in computing the Fuzed Solution.
+    /// Vertical Dilution of Precision, as per last available DOPS from Starling
+    /// GNSS engine
     pub vdop: u16,
-    /// Number of satellites used in solution, as per last received GNSS
-    /// solutions, even if the GNSS solutions are not used in computing the
-    /// Fuzed Solution.
+    /// Number of satellites used in solution, as per last available DOPS from
+    /// Starling GNSS engine
     pub n_sats: u8,
-    /// Age of the corrections (0xFFFF indicates invalid), as per last received
-    /// MSG_AGE_CORRECTIONS, even if the GNSS solutions are not used in
-    /// computing the Fuzed Solution.
-    pub age_of_corrections: u16,
+    /// Age of the corrections (0xFFFF indicates invalid), as per last available
+    /// AGE_CORRECTIONS from Starling GNSS engine
+    pub age_corrections: u16,
     /// Bits for reason why it cannot align (yet)
     pub alignment_status: u8,
     /// Tow of last-used GNSS position measurement
@@ -169,9 +169,9 @@ pub struct MsgSolnMeta {
     /// Array of Metadata describing the sensors potentially involved in the
     /// solution. Each element in the array represents a single sensor type and
     /// consists of flags containing (meta)data pertaining to that specific
-    /// single sensor. Refer to each <Sensor>InputType descriptor in the present
+    /// single sensor. Refer to each (XX)InputType descriptor in the present
     /// doc.
-    pub solution_inputs: Vec<SolutionInputType>,
+    pub sol_in: Vec<SolutionInputType>,
 }
 
 impl MsgSolnMeta {
@@ -183,11 +183,11 @@ impl MsgSolnMeta {
             hdop: _buf.read_u16::<LittleEndian>()?,
             vdop: _buf.read_u16::<LittleEndian>()?,
             n_sats: _buf.read_u8()?,
-            age_of_corrections: _buf.read_u16::<LittleEndian>()?,
+            age_corrections: _buf.read_u16::<LittleEndian>()?,
             alignment_status: _buf.read_u8()?,
             last_used_gnss_pos_tow: _buf.read_u32::<LittleEndian>()?,
             last_used_gnss_vel_tow: _buf.read_u32::<LittleEndian>()?,
-            solution_inputs: SolutionInputType::parse_array(_buf)?,
+            sol_in: SolutionInputType::parse_array(_buf)?,
         } )
     }
 }
@@ -217,11 +217,11 @@ impl crate::serialize::SbpSerialize for MsgSolnMeta {
         self.hdop.append_to_sbp_buffer(buf);
         self.vdop.append_to_sbp_buffer(buf);
         self.n_sats.append_to_sbp_buffer(buf);
-        self.age_of_corrections.append_to_sbp_buffer(buf);
+        self.age_corrections.append_to_sbp_buffer(buf);
         self.alignment_status.append_to_sbp_buffer(buf);
         self.last_used_gnss_pos_tow.append_to_sbp_buffer(buf);
         self.last_used_gnss_vel_tow.append_to_sbp_buffer(buf);
-        self.solution_inputs.append_to_sbp_buffer(buf);
+        self.sol_in.append_to_sbp_buffer(buf);
     }
 
     fn sbp_size(&self) -> usize {
@@ -230,18 +230,19 @@ impl crate::serialize::SbpSerialize for MsgSolnMeta {
         size += self.hdop.sbp_size();
         size += self.vdop.sbp_size();
         size += self.n_sats.sbp_size();
-        size += self.age_of_corrections.sbp_size();
+        size += self.age_corrections.sbp_size();
         size += self.alignment_status.sbp_size();
         size += self.last_used_gnss_pos_tow.sbp_size();
         size += self.last_used_gnss_vel_tow.sbp_size();
-        size += self.solution_inputs.sbp_size();
+        size += self.sol_in.sbp_size();
         size
     }
 }
 
 /// Flags for a given Odometry sensor used as input for the fuzed solution.
 ///
-/// Metadata around the Odometry sensors involved in the fuzed solution.
+/// Metadata around the Odometry sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+///                                                                             in a MSG_SOLN_META.
 /// Note: Just to build descriptive tables in documentation and not actually used.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]

@@ -28,10 +28,11 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * Metadata around the GNSS sensors involved in the fuzed solution.
+ * Metadata around the GNSS sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+ *                                                                         in a MSG_SOLN_META.
  * Note: Just to build descriptive tables in documentation and not actually used. */
 
-public class Gnssinputtype extends SBPMessage {
+public class GNSSInputType extends SBPMessage {
     public static final int TYPE = 0xFFE7;
 
     
@@ -39,9 +40,9 @@ public class Gnssinputtype extends SBPMessage {
     public int flags;
     
 
-    public Gnssinputtype (int sender) { super(sender, TYPE); }
-    public Gnssinputtype () { super(TYPE); }
-    public Gnssinputtype (SBPMessage msg) throws SBPBinaryException {
+    public GNSSInputType (int sender) { super(sender, TYPE); }
+    public GNSSInputType () { super(TYPE); }
+    public GNSSInputType (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }

@@ -27,6 +27,69 @@ from sbp.jit.msg import get_array, get_fixed_array
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/solution_meta.yaml with generate.py.
 # Please do not hand edit!
+SBP_MSG_SOLN_META = 0xFF0F
+class MsgSolnMeta(SBP):
+  """SBP class for message MSG_SOLN_META (0xFF0F).
+
+  You can have MSG_SOLN_META inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
+It focuses primarly, but not only, on GNSS metadata.
+
+
+  """
+  __slots__ = ['pdop',
+               'hdop',
+               'vdop',
+               'n_sats',
+               'age_corrections',
+               'alignment_status',
+               'last_used_gnss_pos_tow',
+               'last_used_gnss_vel_tow',
+               'sol_in',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__pdop, offset, length) = get_u16(buf, offset, length)
+    ret['pdop'] = __pdop
+    (__hdop, offset, length) = get_u16(buf, offset, length)
+    ret['hdop'] = __hdop
+    (__vdop, offset, length) = get_u16(buf, offset, length)
+    ret['vdop'] = __vdop
+    (__n_sats, offset, length) = get_u8(buf, offset, length)
+    ret['n_sats'] = __n_sats
+    (__age_corrections, offset, length) = get_u16(buf, offset, length)
+    ret['age_corrections'] = __age_corrections
+    (__alignment_status, offset, length) = get_u8(buf, offset, length)
+    ret['alignment_status'] = __alignment_status
+    (__last_used_gnss_pos_tow, offset, length) = get_u32(buf, offset, length)
+    ret['last_used_gnss_pos_tow'] = __last_used_gnss_pos_tow
+    (__last_used_gnss_vel_tow, offset, length) = get_u32(buf, offset, length)
+    ret['last_used_gnss_vel_tow'] = __last_used_gnss_vel_tow
+    (__sol_in, offset, length) = get_array(SolutionInputType.parse_members)(buf, offset, length)
+    ret['sol_in'] = __sol_in
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.pdop = res['pdop']
+    self.hdop = res['hdop']
+    self.vdop = res['vdop']
+    self.n_sats = res['n_sats']
+    self.age_corrections = res['age_corrections']
+    self.alignment_status = res['alignment_status']
+    self.last_used_gnss_pos_tow = res['last_used_gnss_pos_tow']
+    self.last_used_gnss_vel_tow = res['last_used_gnss_vel_tow']
+    self.sol_in = res['sol_in']
+    return res, off, length
+
+  
 SBP_GNSSInputType = 0xFFE7
 class Gnssinputtype(SBP):
   """SBP class for message GNSSInputType (0xFFE7).
@@ -36,7 +99,8 @@ class Gnssinputtype(SBP):
   of its fields.
 
   
-  Metadata around the GNSS sensors involved in the fuzed solution.
+  Metadata around the GNSS sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+                                                                        in a MSG_SOLN_META.
 Note: Just to build descriptive tables in documentation and not actually used.
 
 
@@ -67,7 +131,8 @@ class Imuinputtype(SBP):
   of its fields.
 
   
-  Metadata around the IMU sensors involved in the fuzed solution.
+  Metadata around the IMU sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+                                                                       in a MSG_SOLN_META.
 Note: Just to build descriptive tables in documentation and not actually used.
 
 
@@ -98,7 +163,8 @@ class Odoinputtype(SBP):
   of its fields.
 
   
-  Metadata around the Odometry sensors involved in the fuzed solution.
+  Metadata around the Odometry sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+                                                                            in a MSG_SOLN_META.
 Note: Just to build descriptive tables in documentation and not actually used.
 
 
@@ -158,73 +224,10 @@ The content of flags, for each sensor type, is described in the relevant structu
     return res, off, length
 
   
-SBP_MSG_SOLN_META = 0xFF0F
-class MsgSolnMeta(SBP):
-  """SBP class for message MSG_SOLN_META (0xFF0F).
-
-  You can have MSG_SOLN_META inherit its fields directly
-  from an inherited SBP object, or construct it inline using a dict
-  of its fields.
-
-  
-  This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
-It focuses primarly, but not only, on GNSS metadata.
-
-
-  """
-  __slots__ = ['pdop',
-               'hdop',
-               'vdop',
-               'n_sats',
-               'age_of_corrections',
-               'alignment_status',
-               'last_used_gnss_pos_tow',
-               'last_used_gnss_vel_tow',
-               'solution_inputs',
-               ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__pdop, offset, length) = get_u16(buf, offset, length)
-    ret['pdop'] = __pdop
-    (__hdop, offset, length) = get_u16(buf, offset, length)
-    ret['hdop'] = __hdop
-    (__vdop, offset, length) = get_u16(buf, offset, length)
-    ret['vdop'] = __vdop
-    (__n_sats, offset, length) = get_u8(buf, offset, length)
-    ret['n_sats'] = __n_sats
-    (__age_of_corrections, offset, length) = get_u16(buf, offset, length)
-    ret['age_of_corrections'] = __age_of_corrections
-    (__alignment_status, offset, length) = get_u8(buf, offset, length)
-    ret['alignment_status'] = __alignment_status
-    (__last_used_gnss_pos_tow, offset, length) = get_u32(buf, offset, length)
-    ret['last_used_gnss_pos_tow'] = __last_used_gnss_pos_tow
-    (__last_used_gnss_vel_tow, offset, length) = get_u32(buf, offset, length)
-    ret['last_used_gnss_vel_tow'] = __last_used_gnss_vel_tow
-    (__solution_inputs, offset, length) = get_array(SolutionInputType.parse_members)(buf, offset, length)
-    ret['solution_inputs'] = __solution_inputs
-    return ret, offset, length
-
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.pdop = res['pdop']
-    self.hdop = res['hdop']
-    self.vdop = res['vdop']
-    self.n_sats = res['n_sats']
-    self.age_of_corrections = res['age_of_corrections']
-    self.alignment_status = res['alignment_status']
-    self.last_used_gnss_pos_tow = res['last_used_gnss_pos_tow']
-    self.last_used_gnss_vel_tow = res['last_used_gnss_vel_tow']
-    self.solution_inputs = res['solution_inputs']
-    return res, off, length
-
-  
 
 msg_classes = {
+  0xFF0F: MsgSolnMeta,
   0xFFE7: Gnssinputtype,
   0xFFE8: Imuinputtype,
   0xFFE9: Odoinputtype,
-  0xFF0F: MsgSolnMeta,
 }

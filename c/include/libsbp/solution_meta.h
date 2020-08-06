@@ -28,9 +28,29 @@
 SBP_PACK_START
 
 
+/** Solution Sensors Metadata
+ *
+ * This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
+ * It focuses primarly, but not only, on GNSS metadata.
+ */
+#define SBP_MSG_SOLN_META 0xFF0F
+typedef struct SBP_ATTR_PACKED {
+  u16 pdop;                      /**< Position Dilution of Precision, as per last available DOPS from Starling GNSS engine [0.01] */
+  u16 hdop;                      /**< Horizontal Dilution of Precision, as per last available DOPS from Starling GNSS engine [0.01] */
+  u16 vdop;                      /**< Vertical Dilution of Precision, as per last available DOPS from Starling GNSS engine [0.01] */
+  u8 n_sats;                    /**< Number of satellites used in solution, as per last available DOPS from Starling GNSS engine */
+  u16 age_corrections;           /**< Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine [deciseconds] */
+  u8 alignment_status;          /**< Bits for reason why it cannot align (yet) */
+  u32 last_used_gnss_pos_tow;    /**< Tow of last-used GNSS position measurement [ms] */
+  u32 last_used_gnss_vel_tow;    /**< Tow of last-used GNSS velocity measurement [ms] */
+  solution_input_type_t sol_in[0];                 /**< Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc. */
+} msg_soln_meta_t;
+
+
 /** Flags for a given GNSS sensor used as input for the fuzed solution.
  *
- * Metadata around the GNSS sensors involved in the fuzed solution.
+ * Metadata around the GNSS sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+ *                                                                         in a MSG_SOLN_META.
  * Note: Just to build descriptive tables in documentation and not actually used.
  */
 #define SBP_GNSSInputType 0xFFE7
@@ -41,7 +61,8 @@ typedef struct SBP_ATTR_PACKED {
 
 /** Flags for a given IMU sensor used as input for the fuzed solution.
  *
- * Metadata around the IMU sensors involved in the fuzed solution.
+ * Metadata around the IMU sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+ *                                                                        in a MSG_SOLN_META.
  * Note: Just to build descriptive tables in documentation and not actually used.
  */
 #define SBP_IMUInputType  0xFFE8
@@ -52,7 +73,8 @@ typedef struct SBP_ATTR_PACKED {
 
 /** Flags for a given Odometry sensor used as input for the fuzed solution.
  *
- * Metadata around the Odometry sensors involved in the fuzed solution.
+ * Metadata around the Odometry sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+ *                                                                             in a MSG_SOLN_META.
  * Note: Just to build descriptive tables in documentation and not actually used.
  */
 #define SBP_OdoInputType  0xFFE9
@@ -72,27 +94,8 @@ typedef struct SBP_ATTR_PACKED {
  */
 typedef struct SBP_ATTR_PACKED {
   u8 sensor_type;    /**< The type of sensor */
-  u8 flags;          /**< Refer to each InputType description [<Sensor>InputType] */
+  u8 flags;          /**< Refer to each InputType description [(XX)InputType] */
 } solution_input_type_t;
-
-
-/** Solution Sensors Metadata
- *
- * This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
- * It focuses primarly, but not only, on GNSS metadata.
- */
-#define SBP_MSG_SOLN_META 0xFF0F
-typedef struct SBP_ATTR_PACKED {
-  u16 pdop;                      /**< Position Dilution of Precision, as per last received DOPS, even if the GNSS solutions are not used in computing the Fuzed Solution. [0.01] */
-  u16 hdop;                      /**< Horizontal Dilution of Precision, as per last received DOPS, even if the GNSS solutions are not used in computing the Fuzed Solution. [0.01] */
-  u16 vdop;                      /**< Vertical Dilution of Precision, as per last received DOPS, even if the GNSS solutions are not used in computing the Fuzed Solution. [0.01] */
-  u8 n_sats;                    /**< Number of satellites used in solution, as per last received GNSS solutions, even if the GNSS solutions are not used in computing the Fuzed Solution. */
-  u16 age_of_corrections;        /**< Age of the corrections (0xFFFF indicates invalid), as per last received MSG_AGE_CORRECTIONS, even if the GNSS solutions are not used in computing the Fuzed Solution. [deciseconds] */
-  u8 alignment_status;          /**< Bits for reason why it cannot align (yet) */
-  u32 last_used_gnss_pos_tow;    /**< Tow of last-used GNSS position measurement [ms] */
-  u32 last_used_gnss_vel_tow;    /**< Tow of last-used GNSS velocity measurement [ms] */
-  solution_input_type_t solution_inputs[0];        /**< Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each <Sensor>InputType descriptor in the present doc. */
-} msg_soln_meta_t;
 
 
 /** \} */

@@ -28,10 +28,11 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * Metadata around the IMU sensors involved in the fuzed solution.
+ * Metadata around the IMU sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+ *                                                                        in a MSG_SOLN_META.
  * Note: Just to build descriptive tables in documentation and not actually used. */
 
-public class Imuinputtype extends SBPMessage {
+public class IMUInputType extends SBPMessage {
     public static final int TYPE = 0xFFE8;
 
     
@@ -39,9 +40,9 @@ public class Imuinputtype extends SBPMessage {
     public int flags;
     
 
-    public Imuinputtype (int sender) { super(sender, TYPE); }
-    public Imuinputtype () { super(TYPE); }
-    public Imuinputtype (SBPMessage msg) throws SBPBinaryException {
+    public IMUInputType (int sender) { super(sender, TYPE); }
+    public IMUInputType () { super(TYPE); }
+    public IMUInputType (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }

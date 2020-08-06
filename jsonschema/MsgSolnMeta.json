@@ -20,21 +20,21 @@
     "hdop": {"type": "integer"},
     "vdop": {"type": "integer"},
     "n_sats": {"type": "integer"},
-    "age_of_corrections": {"type": "integer"},
+    "age_corrections": {"type": "integer"},
     "alignment_status": {"type": "integer"},
     "last_used_gnss_pos_tow": {"type": "integer"},
     "last_used_gnss_vel_tow": {"type": "integer"},
-    "solution_inputs": {"type": "array", "items": {"$ref": "SolutionInputType.json"}}
+    "sol_in": {"type": "array", "items": {"$ref": "SolutionInputType.json"}}
   },
   "required": [
     "pdop",
     "hdop",
     "vdop",
     "n_sats",
-    "age_of_corrections",
+    "age_corrections",
     "alignment_status",
     "last_used_gnss_pos_tow",
     "last_used_gnss_vel_tow",
-    "solution_inputs"
+    "sol_in"
   ]
 }

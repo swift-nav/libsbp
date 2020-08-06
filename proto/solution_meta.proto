@@ -20,9 +20,27 @@ syntax = "proto3";
 package swiftnav.sbp.solution_meta;
 
 
+/** Solution Sensors Metadata
+ *
+ * This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
+ * It focuses primarly, but not only, on GNSS metadata.
+ */
+message MsgSolnMeta {
+    uint32 pdop = 1;
+    uint32 hdop = 2;
+    uint32 vdop = 3;
+    uint32 n_sats = 4;
+    uint32 age_corrections = 5;
+    uint32 alignment_status = 6;
+    uint32 last_used_gnss_pos_tow = 7;
+    uint32 last_used_gnss_vel_tow = 8;
+    repeated SolutionInputType sol_in = 9;
+}
+
 /** Flags for a given GNSS sensor used as input for the fuzed solution.
  *
- * Metadata around the GNSS sensors involved in the fuzed solution.
+ * Metadata around the GNSS sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+ *                                                                         in a MSG_SOLN_META.
  * Note: Just to build descriptive tables in documentation and not actually used.
  */
 message GNSSInputType {
@@ -31,7 +49,8 @@ message GNSSInputType {
 
 /** Flags for a given IMU sensor used as input for the fuzed solution.
  *
- * Metadata around the IMU sensors involved in the fuzed solution.
+ * Metadata around the IMU sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+ *                                                                        in a MSG_SOLN_META.
  * Note: Just to build descriptive tables in documentation and not actually used.
  */
 message IMUInputType {
@@ -40,7 +59,8 @@ message IMUInputType {
 
 /** Flags for a given Odometry sensor used as input for the fuzed solution.
  *
- * Metadata around the Odometry sensors involved in the fuzed solution.
+ * Metadata around the Odometry sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+ *                                                                             in a MSG_SOLN_META.
  * Note: Just to build descriptive tables in documentation and not actually used.
  */
 message OdoInputType {
@@ -59,21 +79,4 @@ message OdoInputType {
 message SolutionInputType {
     uint32 sensor_type = 1;
     uint32 flags = 2;
-}
-
-/** Solution Sensors Metadata
- *
- * This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
- * It focuses primarly, but not only, on GNSS metadata.
- */
-message MsgSolnMeta {
-    uint32 pdop = 1;
-    uint32 hdop = 2;
-    uint32 vdop = 3;
-    uint32 n_sats = 4;
-    uint32 age_of_corrections = 5;
-    uint32 alignment_status = 6;
-    uint32 last_used_gnss_pos_tow = 7;
-    uint32 last_used_gnss_vel_tow = 8;
-    repeated SolutionInputType solution_inputs = 9;
 }

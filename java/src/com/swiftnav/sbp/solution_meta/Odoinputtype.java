@@ -28,10 +28,11 @@ import org.json.JSONArray;
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * Metadata around the Odometry sensors involved in the fuzed solution.
+ * Metadata around the Odometry sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+ *                                                                             in a MSG_SOLN_META.
  * Note: Just to build descriptive tables in documentation and not actually used. */
 
-public class Odoinputtype extends SBPMessage {
+public class OdoInputType extends SBPMessage {
     public static final int TYPE = 0xFFE9;
 
     
@@ -39,9 +40,9 @@ public class Odoinputtype extends SBPMessage {
     public int flags;
     
 
-    public Odoinputtype (int sender) { super(sender, TYPE); }
-    public Odoinputtype () { super(TYPE); }
-    public Odoinputtype (SBPMessage msg) throws SBPBinaryException {
+    public OdoInputType (int sender) { super(sender, TYPE); }
+    public OdoInputType () { super(TYPE); }
+    public OdoInputType (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
