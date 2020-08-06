@@ -33,7 +33,7 @@ from sbp import vehicle as vehicle
 from sbp import orientation as orientation
 from sbp import sbas as sbas
 from sbp import ssr as ssr
-from sbp import solution_meta as solmeta
+# from sbp import solution_meta as solmeta
 
 import pytest
 import sbp.acquisition as acq
@@ -45,7 +45,7 @@ def test_table_count():
   Test number of available messages to deserialize.
 
   """
-  number_of_messages = 192
+  number_of_messages = 191
   assert len(_SBP_TABLE) == number_of_messages
 
 def test_table_unqiue_count():
@@ -73,7 +73,7 @@ def test_table_unqiue_count():
                         + len(orientation.msg_classes)
                         + len(sbas.msg_classes)
                         + len(ssr.msg_classes)
-                        + len(solmeta.msg_classes)
+                        # + len(solmeta.msg_classes)
                          )
   assert len(_SBP_TABLE) == number_of_messages
 
