@@ -16,6 +16,14 @@ include:
   - types.yaml
 definitions:
 
+ #############################################
+ # One structure definition per sensor class
+ # Feel free to add more sensor Classes.
+ # They must all consist of only a u8 flags field.
+ # This type are never used nor instantiated per se.
+ # These definitions are for reference and documentation purposes.
+ #############################################
+ # for GNSS sensors
  - GNSSInputType:
      id: 0xFFE7
      short_desc: Flags for a given GNSS sensor used as input for the fuzed solution.
