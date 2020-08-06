@@ -16,6 +16,65 @@ include:
   - types.yaml
 definitions:
 
+ - MSG_SOLN_META:
+     id: 0xFF0F
+     short_desc: Solution Sensors Metadata
+     public: true
+     desc: |
+       This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
+       It focuses primarly, but not only, on GNSS metadata.
+     fields:
+       - pdop:
+           type: u16
+           units: 0.01
+           desc: Position Dilution of Precision, as per last available DOPS from Starling GNSS engine
+       - hdop:
+           type: u16
+           units: 0.01
+           desc: Horizontal Dilution of Precision, as per last available DOPS from Starling GNSS engine
+       - vdop:
+           type: u16
+           units: 0.01
+           desc: Vertical Dilution of Precision, as per last available DOPS from Starling GNSS engine
+       - n_sats:
+           type: u8
+           desc: Number of satellites used in solution, as per last available DOPS from Starling GNSS engine
+       - age_corrections:
+           type: u16
+           units: deciseconds
+           desc: Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine
+       - alignment_status:
+           type: u8
+           desc: Bits for reason why it cannot align (yet)
+           fields:
+             - 0-2:
+                 desc: Bits for reason why it cannot align (yet)
+                 values:
+                   - 0: Unknown reason or already aligned
+                   - 1: No seed values nor GNSS measurements
+                   - 2: Seed values loaded but not GNSS measurements
+                   - 3: Reserved
+                   - 4: Reserved
+                   - 5: Reserved
+                   - 6: Reserved
+                   - 7: Reserved
+             - 3-7:
+                 desc: Reserved
+       - last_used_gnss_pos_tow:
+           type: u32
+           units: ms
+           desc: Tow of last-used GNSS position measurement
+       - last_used_gnss_vel_tow:
+           type: u32
+           units: ms
+           desc: Tow of last-used GNSS velocity measurement
+       - sol_in:
+           type: array
+           fill: SolutionInputType
+           desc: Array of Metadata describing the sensors potentially involved in the solution.
+             Each element in the array represents a single sensor type and consists of flags containing (meta)data
+             pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc.
+
  #############################################
  # One structure definition per sensor class
  # Feel free to add more sensor Classes.
@@ -29,7 +88,8 @@ definitions:
      short_desc: Flags for a given GNSS sensor used as input for the fuzed solution.
      public: true
      desc: |
-       Metadata around the GNSS sensors involved in the fuzed solution.
+       Metadata around the GNSS sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+                                                                               in a MSG_SOLN_META.
        Note: Just to build descriptive tables in documentation and not actually used.
      fields:
        - flags:
@@ -45,13 +105,14 @@ definitions:
              - 2-7:
                  desc: Reserved
 
-  # for IMU sensors
+ # for IMU sensors
  - IMUInputType:
      id: 0xFFE8
      short_desc: Flags for a given IMU sensor used as input for the fuzed solution.
      public: true
      desc: |
-       Metadata around the IMU sensors involved in the fuzed solution.
+       Metadata around the IMU sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+                                                                              in a MSG_SOLN_META.
        Note: Just to build descriptive tables in documentation and not actually used.
      fields:
        - flags:
@@ -62,7 +123,7 @@ definitions:
                  desc: IMU architecture
                  values:
                    - 0: 6-axis MEMS
-                   - 1: other type
+                   - 1: Other type
              - 2-3:
                  desc: IMU Grade
                  values:
@@ -80,13 +141,14 @@ definitions:
              - 6-7:
                  desc: Reserved
 
-  # for Odometry sensors
+ # for Odometry sensors
  - OdoInputType:
      id: 0xFFE9
      short_desc: Flags for a given Odometry sensor used as input for the fuzed solution.
      public: true
      desc: |
-       Metadata around the Odometry sensors involved in the fuzed solution.
+       Metadata around the Odometry sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+                                                                                   in a MSG_SOLN_META.
        Note: Just to build descriptive tables in documentation and not actually used.
      fields:
        - flags:
@@ -96,10 +158,10 @@ definitions:
              - 0-1:
                  desc: Odometer class
                  values:
-                   - 0: single or averaged ticks
-                   - 1: single or averaged speed
-                   - 2: multi-dimensional ticks
-                   - 3: multi-dimensional speed
+                   - 0: Single or averaged ticks
+                   - 1: Single or averaged speed
+                   - 2: Multi-dimensional ticks
+                   - 3: Multi-dimensional speed
              - 2-3:
                  desc: Odometer grade
                  values:
@@ -117,7 +179,7 @@ definitions:
              - 6-7:
                  desc: Reserved
 
-  # the actual type of the elements going into the array solution_inputs in MSG_SOLN_META
+ # the actual union-like type of the elements going into the array sol_in in MSG_SOLN_META
  - SolutionInputType:
      short_desc: Flags for a given solution input type.
      desc: |
@@ -147,76 +209,12 @@ definitions:
              - 3-4:
                  desc: Whether this sensor input was actually used or not
                  values:
-                   - 0: unknown
-                   - 1: received and used
-                   - 2: received but not used
+                   - 0: Unknown
+                   - 1: Received and used
+                   - 2: Received but not used
              - 5-7:
                  desc: Reserved
        - flags:
            type: u8
-           units: <Sensor>InputType
+           units: (XX)InputType
            desc: Refer to each InputType description
-
- - MSG_SOLN_META:
-     id: 0xFF0F
-     short_desc: Solution Sensors Metadata
-     public: true
-     desc: |
-       This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
-       It focuses primarly, but not only, on GNSS metadata.
-     fields:
-       - pdop:
-           type: u16
-           units: 0.01
-           desc: Position Dilution of Precision, as per last received DOPS,
-             even if the GNSS solutions are not used in computing the Fuzed Solution.
-       - hdop:
-           type: u16
-           units: 0.01
-           desc: Horizontal Dilution of Precision, as per last received DOPS,
-             even if the GNSS solutions are not used in computing the Fuzed Solution.
-       - vdop:
-           type: u16
-           units: 0.01
-           desc: Vertical Dilution of Precision, as per last received DOPS,
-             even if the GNSS solutions are not used in computing the Fuzed Solution.
-       - n_sats:
-           type: u8
-           desc: Number of satellites used in solution, as per last received GNSS solutions,
-             even if the GNSS solutions are not used in computing the Fuzed Solution.
-       - age_of_corrections:
-           type: u16
-           units: deciseconds
-           desc: Age of the corrections (0xFFFF indicates invalid), as per last received MSG_AGE_CORRECTIONS,
-             even if the GNSS solutions are not used in computing the Fuzed Solution.
-       - alignment_status:
-           type: u8
-           desc: Bits for reason why it cannot align (yet)
-           fields:
-             - 0-2:
-                 desc: Bits for reason why it cannot align (yet)
-                 values:
-                   - 0: Unknown reason or already aligned
-                   - 1: No seed values nor GNSS measurements
-                   - 2: Seed values loaded but not GNSS measurements
-                   - 3: Reserved
-                   - 4: Reserved
-                   - 5: Reserved
-                   - 6: Reserved
-                   - 7: Reserved
-             - 3-7:
-                 desc: Reserved
-       - last_used_gnss_pos_tow:
-           type: u32
-           units: ms
-           desc: Tow of last-used GNSS position measurement
-       - last_used_gnss_vel_tow:
-           type: u32
-           units: ms
-           desc: Tow of last-used GNSS velocity measurement
-       - solution_inputs:
-           type: array
-           fill: SolutionInputType
-           desc: Array of Metadata describing the sensors potentially involved in the solution.
-             Each element in the array represents a single sensor type and consists of flags containing (meta)data
-             pertaining to that specific single sensor. Refer to each <Sensor>InputType descriptor in the present doc.
