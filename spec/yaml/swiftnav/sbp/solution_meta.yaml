@@ -1,0 +1,214 @@
+# Copyright (C) 2015 Swift Navigation Inc.
+# Contact: Fergus Noble <fergus@swiftnav.com>
+#
+# This source is subject to the license found in the file 'LICENSE' which must
+# be be distributed together with this source. All other rights reserved.
+#
+# THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+# EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+
+package: swiftnav.sbp.solution_meta
+description: Standardized Metadata messages for Fuzed Solution from Swift Navigation devices.
+stable: True
+public: True
+include:
+  - types.yaml
+definitions:
+
+ - GNSSInputType:
+     id: 0xFFE7
+     short_desc: Flags for a given GNSS sensor used as input for the fuzed solution.
+     public: true
+     desc: |
+       Metadata around the GNSS sensors involved in the fuzed solution.
+       Note: Just to build descriptive tables in documentation and not actually used.
+     fields:
+       - flags:
+           type: u8
+           desc: flags that store all relevant info specific to this sensor type.
+           fields:
+             - 0-1:
+                 desc: Type of GNSS measurement
+                 values:
+                   - 0: GNSS Position
+                   - 1: GNSS Velocity Doppler
+                   - 2: GNSS Velocity Displacement
+             - 2-7:
+                 desc: Reserved
+
+  # for IMU sensors
+ - IMUInputType:
+     id: 0xFFE8
+     short_desc: Flags for a given IMU sensor used as input for the fuzed solution.
+     public: true
+     desc: |
+       Metadata around the IMU sensors involved in the fuzed solution.
+       Note: Just to build descriptive tables in documentation and not actually used.
+     fields:
+       - flags:
+           type: u8
+           desc: flags that store all relevant info specific to this sensor type.
+           fields:
+             - 0-1:
+                 desc: IMU architecture
+                 values:
+                   - 0: 6-axis MEMS
+                   - 1: other type
+             - 2-3:
+                 desc: IMU Grade
+                 values:
+                   - 0: Consumer Grade
+                   - 1: Tactical grade
+                   - 2: Intermediate Grade
+                   - 3: Superior (Marine / Aviation) Grade
+             - 4-5:
+                 desc: Time status
+                 values:
+                   - 0: Reference epoch is start of current GPS week
+                   - 1: Reference epoch is time of system startup
+                   - 2: Reference epoch is unknown
+                   - 3: Reference epoch is last PPS
+             - 6-7:
+                 desc: Reserved
+
+  # for Odometry sensors
+ - OdoInputType:
+     id: 0xFFE9
+     short_desc: Flags for a given Odometry sensor used as input for the fuzed solution.
+     public: true
+     desc: |
+       Metadata around the Odometry sensors involved in the fuzed solution.
+       Note: Just to build descriptive tables in documentation and not actually used.
+     fields:
+       - flags:
+           type: u8
+           desc: flags that store all relevant info specific to this sensor type.
+           fields:
+             - 0-1:
+                 desc: Odometer class
+                 values:
+                   - 0: single or averaged ticks
+                   - 1: single or averaged speed
+                   - 2: multi-dimensional ticks
+                   - 3: multi-dimensional speed
+             - 2-3:
+                 desc: Odometer grade
+                 values:
+                   - 0: Low Grade (e.g. quantisized CAN)
+                   - 1: Medium Grade
+                   - 2: Superior Grade
+                   - 3: Reserved
+             - 4-5:
+                 desc: Rate
+                 values:
+                   - 0: Fixed incoming rate
+                   - 1: Incoming when triggered by minimum distance or speed
+                   - 2: Reserved
+                   - 3: Reserved
+             - 6-7:
+                 desc: Reserved
+
+  # the actual type of the elements going into the array solution_inputs in MSG_SOLN_META
+ - SolutionInputType:
+     short_desc: Flags for a given solution input type.
+     desc: |
+       Metadata describing which sensors were involved in the solution.
+       The structure is fixed no matter what the actual sensor type is.
+       The sensor_type field tells you which sensor we are talking about. It also tells you
+       whether the sensor data was actually used or not.
+       The flags field, always a u8, contains the sensor-specific data.
+       The content of flags, for each sensor type, is described in the relevant structures in this section.
+     type: u16
+     fields:
+       - sensor_type:
+           type: u8
+           desc: The type of sensor
+           fields:
+             - 0-2:
+                 desc: The type of sensor
+                 values:
+                   - 0: GNSS Position (see GNSSInputType)
+                   - 1: GNSS Velocity Displacement (see GNSSInputType)
+                   - 2: GNSS Velocity Doppler (see GNSSInputType)
+                   - 3: Odometry Ticks (see OdoInputType)
+                   - 4: Odometry Speed (see OdoInputType)
+                   - 5: IMU Sensor (see IMUInputType)
+                   - 6: Reserved
+                   - 7: Reserved
+             - 3-4:
+                 desc: Whether this sensor input was actually used or not
+                 values:
+                   - 0: unknown
+                   - 1: received and used
+                   - 2: received but not used
+             - 5-7:
+                 desc: Reserved
+       - flags:
+           type: u8
+           units: <Sensor>InputType
+           desc: Refer to each InputType description
+
+ - MSG_SOLN_META:
+     id: 0xFF0F
+     short_desc: Solution Sensors Metadata
+     public: true
+     desc: |
+       This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
+       It focuses primarly, but not only, on GNSS metadata.
+     fields:
+       - pdop:
+           type: u16
+           units: 0.01
+           desc: Position Dilution of Precision, as per last received DOPS,
+             even if the GNSS solutions are not used in computing the Fuzed Solution.
+       - hdop:
+           type: u16
+           units: 0.01
+           desc: Horizontal Dilution of Precision, as per last received DOPS,
+             even if the GNSS solutions are not used in computing the Fuzed Solution.
+       - vdop:
+           type: u16
+           units: 0.01
+           desc: Vertical Dilution of Precision, as per last received DOPS,
+             even if the GNSS solutions are not used in computing the Fuzed Solution.
+       - n_sats:
+           type: u8
+           desc: Number of satellites used in solution, as per last received GNSS solutions,
+             even if the GNSS solutions are not used in computing the Fuzed Solution.
+       - age_of_corrections:
+           type: u16
+           units: deciseconds
+           desc: Age of the corrections (0xFFFF indicates invalid), as per last received MSG_AGE_CORRECTIONS,
+             even if the GNSS solutions are not used in computing the Fuzed Solution.
+       - alignment_status:
+           type: u8
+           desc: Bits for reason why it cannot align (yet)
+           fields:
+             - 0-2:
+                 desc: Bits for reason why it cannot align (yet)
+                 values:
+                   - 0: Unknown reason or already aligned
+                   - 1: No seed values nor GNSS measurements
+                   - 2: Seed values loaded but not GNSS measurements
+                   - 3: Reserved
+                   - 4: Reserved
+                   - 5: Reserved
+                   - 6: Reserved
+                   - 7: Reserved
+             - 3-7:
+                 desc: Reserved
+       - last_used_gnss_pos_tow:
+           type: u32
+           units: ms
+           desc: Tow of last-used GNSS position measurement
+       - last_used_gnss_vel_tow:
+           type: u32
+           units: ms
+           desc: Tow of last-used GNSS velocity measurement
+       - solution_inputs:
+           type: array
+           fill: SolutionInputType
+           desc: Array of Metadata describing the sensors potentially involved in the solution.
+             Each element in the array represents a single sensor type and consists of flags containing (meta)data
+             pertaining to that specific single sensor. Refer to each <Sensor>InputType descriptor in the present doc.
