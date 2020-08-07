@@ -24,6 +24,40 @@ var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
 
 /**
+ * SBP class for message fragment SolutionInputType
+ *
+ * Metadata describing which sensors were involved in the solution. The structure
+ * is fixed no matter what the actual sensor type is. The sensor_type field tells
+ * you which sensor we are talking about. It also tells you whether the sensor data
+ * was actually used or not. The flags field, always a u8, contains the sensor-
+ * specific data. The content of flags, for each sensor type, is described in the
+ * relevant structures in this section.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sensor_type number (unsigned 8-bit int, 1 byte) The type of sensor
+ * @field flags number (unsigned 8-bit int, 1 byte) Refer to each InputType description
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var SolutionInputType = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "SolutionInputType";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+SolutionInputType.prototype = Object.create(SBP.prototype);
+SolutionInputType.prototype.messageType = "SolutionInputType";
+SolutionInputType.prototype.constructor = SolutionInputType;
+SolutionInputType.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('sensor_type')
+  .uint8('flags');
+SolutionInputType.prototype.fieldSpec = [];
+SolutionInputType.prototype.fieldSpec.push(['sensor_type', 'writeUInt8', 1]);
+SolutionInputType.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
+/**
  * SBP class for message MSG_SOLN_META (0xFF0F).
  *
  * This message contains all metadata about the sensors received and/or used in
@@ -174,41 +208,8 @@ OdoInputType.prototype.parser = new Parser()
 OdoInputType.prototype.fieldSpec = [];
 OdoInputType.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
-/**
- * SBP class for message fragment SolutionInputType
- *
- * Metadata describing which sensors were involved in the solution. The structure
- * is fixed no matter what the actual sensor type is. The sensor_type field tells
- * you which sensor we are talking about. It also tells you whether the sensor data
- * was actually used or not. The flags field, always a u8, contains the sensor-
- * specific data. The content of flags, for each sensor type, is described in the
- * relevant structures in this section.
- *
- * Fields in the SBP payload (`sbp.payload`):
- * @field sensor_type number (unsigned 8-bit int, 1 byte) The type of sensor
- * @field flags number (unsigned 8-bit int, 1 byte) Refer to each InputType description
- *
- * @param sbp An SBP object with a payload to be decoded.
- */
-var SolutionInputType = function (sbp, fields) {
-  SBP.call(this, sbp);
-  this.messageType = "SolutionInputType";
-  this.fields = (fields || this.parser.parse(sbp.payload));
-
-  return this;
-};
-SolutionInputType.prototype = Object.create(SBP.prototype);
-SolutionInputType.prototype.messageType = "SolutionInputType";
-SolutionInputType.prototype.constructor = SolutionInputType;
-SolutionInputType.prototype.parser = new Parser()
-  .endianess('little')
-  .uint8('sensor_type')
-  .uint8('flags');
-SolutionInputType.prototype.fieldSpec = [];
-SolutionInputType.prototype.fieldSpec.push(['sensor_type', 'writeUInt8', 1]);
-SolutionInputType.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
-
 module.exports = {
+  SolutionInputType: SolutionInputType,
   0xFF0F: MsgSolnMeta,
   MsgSolnMeta: MsgSolnMeta,
   0xFFE7: GNSSInputType,
@@ -217,5 +218,4 @@ module.exports = {
   IMUInputType: IMUInputType,
   0xFFE9: OdoInputType,
   OdoInputType: OdoInputType,
-  SolutionInputType: SolutionInputType,
 }

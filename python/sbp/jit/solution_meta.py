@@ -27,6 +27,44 @@ from sbp.jit.msg import get_array, get_fixed_array
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/solution_meta.yaml with generate.py.
 # Please do not hand edit!
+class SolutionInputType(object):
+  """SBP class for message SolutionInputType
+
+  You can have SolutionInputType inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Metadata describing which sensors were involved in the solution.
+The structure is fixed no matter what the actual sensor type is.
+The sensor_type field tells you which sensor we are talking about. It also tells you
+whether the sensor data was actually used or not.
+The flags field, always a u8, contains the sensor-specific data.
+The content of flags, for each sensor type, is described in the relevant structures in this section.
+
+
+  """
+  __slots__ = ['sensor_type',
+               'flags',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__sensor_type, offset, length) = get_u8(buf, offset, length)
+    ret['sensor_type'] = __sensor_type
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.sensor_type = res['sensor_type']
+    self.flags = res['flags']
+    return res, off, length
+
+  
 SBP_MSG_SOLN_META = 0xFF0F
 class MsgSolnMeta(SBP):
   """SBP class for message MSG_SOLN_META (0xFF0F).
@@ -182,44 +220,6 @@ Note: Just to build descriptive tables in documentation and not actually used.
     res, off, length = self.parse_members(buf, offset, length)
     if off == offset:
       return {}, offset, length
-    self.flags = res['flags']
-    return res, off, length
-
-  
-class SolutionInputType(object):
-  """SBP class for message SolutionInputType
-
-  You can have SolutionInputType inherit its fields directly
-  from an inherited SBP object, or construct it inline using a dict
-  of its fields.
-
-  
-  Metadata describing which sensors were involved in the solution.
-The structure is fixed no matter what the actual sensor type is.
-The sensor_type field tells you which sensor we are talking about. It also tells you
-whether the sensor data was actually used or not.
-The flags field, always a u8, contains the sensor-specific data.
-The content of flags, for each sensor type, is described in the relevant structures in this section.
-
-
-  """
-  __slots__ = ['sensor_type',
-               'flags',
-               ]
-  @classmethod
-  def parse_members(cls, buf, offset, length):
-    ret = {}
-    (__sensor_type, offset, length) = get_u8(buf, offset, length)
-    ret['sensor_type'] = __sensor_type
-    (__flags, offset, length) = get_u8(buf, offset, length)
-    ret['flags'] = __flags
-    return ret, offset, length
-
-  def _unpack_members(self, buf, offset, length):
-    res, off, length = self.parse_members(buf, offset, length)
-    if off == offset:
-      return {}, offset, length
-    self.sensor_type = res['sensor_type']
     self.flags = res['flags']
     return res, off, length
 

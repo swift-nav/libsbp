@@ -20,6 +20,20 @@ syntax = "proto3";
 package swiftnav.sbp.solution_meta;
 
 
+/** Flags for a given solution input type.
+ *
+ * Metadata describing which sensors were involved in the solution.
+ * The structure is fixed no matter what the actual sensor type is.
+ * The sensor_type field tells you which sensor we are talking about. It also tells you
+ * whether the sensor data was actually used or not.
+ * The flags field, always a u8, contains the sensor-specific data.
+ * The content of flags, for each sensor type, is described in the relevant structures in this section.
+ */
+message SolutionInputType {
+    uint32 sensor_type = 1;
+    uint32 flags = 2;
+}
+
 /** Solution Sensors Metadata
  *
  * This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
@@ -65,18 +79,4 @@ message IMUInputType {
  */
 message OdoInputType {
     uint32 flags = 1;
-}
-
-/** Flags for a given solution input type.
- *
- * Metadata describing which sensors were involved in the solution.
- * The structure is fixed no matter what the actual sensor type is.
- * The sensor_type field tells you which sensor we are talking about. It also tells you
- * whether the sensor data was actually used or not.
- * The flags field, always a u8, contains the sensor-specific data.
- * The content of flags, for each sensor type, is described in the relevant structures in this section.
- */
-message SolutionInputType {
-    uint32 sensor_type = 1;
-    uint32 flags = 2;
 }

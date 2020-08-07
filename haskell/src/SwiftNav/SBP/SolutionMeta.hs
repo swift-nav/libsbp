@@ -36,6 +36,34 @@ import SwiftNav.SBP.Types
 {-# ANN module ("HLint: ignore Use newtype instead of data"::String) #-}
 
 
+-- | SolutionInputType.
+--
+-- Metadata describing which sensors were involved in the solution. The
+-- structure is fixed no matter what the actual sensor type is. The sensor_type
+-- field tells you which sensor we are talking about. It also tells you whether
+-- the sensor data was actually used or not. The flags field, always a u8,
+-- contains the sensor-specific data. The content of flags, for each sensor
+-- type, is described in the relevant structures in this section.
+data SolutionInputType = SolutionInputType
+  { _solutionInputType_sensor_type :: !Word8
+    -- ^ The type of sensor
+  , _solutionInputType_flags     :: !Word8
+    -- ^ Refer to each InputType description
+  } deriving ( Show, Read, Eq )
+
+instance Binary SolutionInputType where
+  get = do
+    _solutionInputType_sensor_type <- getWord8
+    _solutionInputType_flags <- getWord8
+    pure SolutionInputType {..}
+
+  put SolutionInputType {..} = do
+    putWord8 _solutionInputType_sensor_type
+    putWord8 _solutionInputType_flags
+
+$(makeJSON "_solutionInputType_" ''SolutionInputType)
+$(makeLenses ''SolutionInputType)
+
 msgSolnMeta :: Word16
 msgSolnMeta = 0xFF0F
 
@@ -179,31 +207,3 @@ instance Binary OdoInputType where
 $(makeSBP 'odoInputType ''OdoInputType)
 $(makeJSON "_odoInputType_" ''OdoInputType)
 $(makeLenses ''OdoInputType)
-
--- | SolutionInputType.
---
--- Metadata describing which sensors were involved in the solution. The
--- structure is fixed no matter what the actual sensor type is. The sensor_type
--- field tells you which sensor we are talking about. It also tells you whether
--- the sensor data was actually used or not. The flags field, always a u8,
--- contains the sensor-specific data. The content of flags, for each sensor
--- type, is described in the relevant structures in this section.
-data SolutionInputType = SolutionInputType
-  { _solutionInputType_sensor_type :: !Word8
-    -- ^ The type of sensor
-  , _solutionInputType_flags     :: !Word8
-    -- ^ Refer to each InputType description
-  } deriving ( Show, Read, Eq )
-
-instance Binary SolutionInputType where
-  get = do
-    _solutionInputType_sensor_type <- getWord8
-    _solutionInputType_flags <- getWord8
-    pure SolutionInputType {..}
-
-  put SolutionInputType {..} = do
-    putWord8 _solutionInputType_sensor_type
-    putWord8 _solutionInputType_flags
-
-$(makeJSON "_solutionInputType_" ''SolutionInputType)
-$(makeLenses ''SolutionInputType)

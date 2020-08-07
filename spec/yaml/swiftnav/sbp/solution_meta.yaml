@@ -16,6 +16,46 @@ include:
   - types.yaml
 definitions:
 
+ # the actual union-like type of the elements going into the array sol_in in MSG_SOLN_META
+ - SolutionInputType:
+     short_desc: Flags for a given solution input type.
+     desc: |
+       Metadata describing which sensors were involved in the solution.
+       The structure is fixed no matter what the actual sensor type is.
+       The sensor_type field tells you which sensor we are talking about. It also tells you
+       whether the sensor data was actually used or not.
+       The flags field, always a u8, contains the sensor-specific data.
+       The content of flags, for each sensor type, is described in the relevant structures in this section.
+     type: u16
+     fields:
+       - sensor_type:
+           type: u8
+           desc: The type of sensor
+           fields:
+             - 0-2:
+                 desc: The type of sensor
+                 values:
+                   - 0: GNSS Position (see GNSSInputType)
+                   - 1: GNSS Velocity Displacement (see GNSSInputType)
+                   - 2: GNSS Velocity Doppler (see GNSSInputType)
+                   - 3: Odometry Ticks (see OdoInputType)
+                   - 4: Odometry Speed (see OdoInputType)
+                   - 5: IMU Sensor (see IMUInputType)
+                   - 6: Reserved
+                   - 7: Reserved
+             - 3-4:
+                 desc: Whether this sensor input was actually used or not
+                 values:
+                   - 0: Unknown
+                   - 1: Received and used
+                   - 2: Received but not used
+             - 5-7:
+                 desc: Reserved
+       - flags:
+           type: u8
+           units: (XX)InputType
+           desc: Refer to each InputType description
+
  - MSG_SOLN_META:
      id: 0xFF0F
      short_desc: Solution Sensors Metadata
@@ -178,43 +218,3 @@ definitions:
                    - 3: Reserved
              - 6-7:
                  desc: Reserved
-
- # the actual union-like type of the elements going into the array sol_in in MSG_SOLN_META
- - SolutionInputType:
-     short_desc: Flags for a given solution input type.
-     desc: |
-       Metadata describing which sensors were involved in the solution.
-       The structure is fixed no matter what the actual sensor type is.
-       The sensor_type field tells you which sensor we are talking about. It also tells you
-       whether the sensor data was actually used or not.
-       The flags field, always a u8, contains the sensor-specific data.
-       The content of flags, for each sensor type, is described in the relevant structures in this section.
-     type: u16
-     fields:
-       - sensor_type:
-           type: u8
-           desc: The type of sensor
-           fields:
-             - 0-2:
-                 desc: The type of sensor
-                 values:
-                   - 0: GNSS Position (see GNSSInputType)
-                   - 1: GNSS Velocity Displacement (see GNSSInputType)
-                   - 2: GNSS Velocity Doppler (see GNSSInputType)
-                   - 3: Odometry Ticks (see OdoInputType)
-                   - 4: Odometry Speed (see OdoInputType)
-                   - 5: IMU Sensor (see IMUInputType)
-                   - 6: Reserved
-                   - 7: Reserved
-             - 3-4:
-                 desc: Whether this sensor input was actually used or not
-                 values:
-                   - 0: Unknown
-                   - 1: Received and used
-                   - 2: Received but not used
-             - 5-7:
-                 desc: Reserved
-       - flags:
-           type: u8
-           units: (XX)InputType
-           desc: Refer to each InputType description

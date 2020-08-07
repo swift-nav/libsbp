@@ -28,6 +28,21 @@
 SBP_PACK_START
 
 
+/** Flags for a given solution input type.
+ *
+ * Metadata describing which sensors were involved in the solution.
+ * The structure is fixed no matter what the actual sensor type is.
+ * The sensor_type field tells you which sensor we are talking about. It also tells you
+ * whether the sensor data was actually used or not.
+ * The flags field, always a u8, contains the sensor-specific data.
+ * The content of flags, for each sensor type, is described in the relevant structures in this section.
+ */
+typedef struct SBP_ATTR_PACKED {
+  u8 sensor_type;    /**< The type of sensor */
+  u8 flags;          /**< Refer to each InputType description [(XX)InputType] */
+} solution_input_type_t;
+
+
 /** Solution Sensors Metadata
  *
  * This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
@@ -81,21 +96,6 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u8 flags;    /**< flags that store all relevant info specific to this sensor type. */
 } odo_input_type_t;
-
-
-/** Flags for a given solution input type.
- *
- * Metadata describing which sensors were involved in the solution.
- * The structure is fixed no matter what the actual sensor type is.
- * The sensor_type field tells you which sensor we are talking about. It also tells you
- * whether the sensor data was actually used or not.
- * The flags field, always a u8, contains the sensor-specific data.
- * The content of flags, for each sensor type, is described in the relevant structures in this section.
- */
-typedef struct SBP_ATTR_PACKED {
-  u8 sensor_type;    /**< The type of sensor */
-  u8 flags;          /**< Refer to each InputType description [(XX)InputType] */
-} solution_input_type_t;
 
 
 /** \} */
