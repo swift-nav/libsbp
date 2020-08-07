@@ -19,7 +19,7 @@ Build Javadoc documentation:
 Find compiled documentation in java/build/docs/javadoc
 
 Usage Examples
---------------
+---------------
 
 A simple example is provided to read from a serial port and write log messages,
 as well as the latitude, longitude, and altitude from MsgPosLLH to stdout.
