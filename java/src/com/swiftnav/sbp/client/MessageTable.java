@@ -173,6 +173,10 @@ import com.swiftnav.sbp.settings.MsgSettingsReadByIndexResp;
 import com.swiftnav.sbp.settings.MsgSettingsReadByIndexDone;
 import com.swiftnav.sbp.settings.MsgSettingsRegister;
 import com.swiftnav.sbp.settings.MsgSettingsRegisterResp;
+import com.swiftnav.sbp.solution_meta.MsgSolnMeta;
+import com.swiftnav.sbp.solution_meta.GNSSInputType;
+import com.swiftnav.sbp.solution_meta.IMUInputType;
+import com.swiftnav.sbp.solution_meta.OdoInputType;
 import com.swiftnav.sbp.ssr.MsgSsrOrbitClock;
 import com.swiftnav.sbp.ssr.MsgSsrOrbitClockDepA;
 import com.swiftnav.sbp.ssr.MsgSsrCodeBiases;
@@ -522,6 +526,14 @@ final class MessageTable {
                 return new MsgSettingsRegister(msg);
             case MsgSettingsRegisterResp.TYPE:
                 return new MsgSettingsRegisterResp(msg);
+            case MsgSolnMeta.TYPE:
+                return new MsgSolnMeta(msg);
+            case GNSSInputType.TYPE:
+                return new GNSSInputType(msg);
+            case IMUInputType.TYPE:
+                return new IMUInputType(msg);
+            case OdoInputType.TYPE:
+                return new OdoInputType(msg);
             case MsgSsrOrbitClock.TYPE:
                 return new MsgSsrOrbitClock(msg);
             case MsgSsrOrbitClockDepA.TYPE:

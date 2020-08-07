@@ -36,6 +36,7 @@ from . import vehicle as vehicle
 from . import orientation as orientation
 from . import sbas as sbas
 from . import ssr as ssr
+from . import solution_meta as solmeta
 
 import warnings
 
@@ -60,6 +61,7 @@ _SBP_TABLE = dict(list(acq.msg_classes.items())
                   + list(orientation.msg_classes.items())
                   + list(sbas.msg_classes.items())
                   + list(ssr.msg_classes.items())
+                  + list(solmeta.msg_classes.items())
                   )
 
 class InvalidSBPMessageType(NotImplementedError):

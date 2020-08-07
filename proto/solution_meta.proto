@@ -1,0 +1,82 @@
+/*
+ * Copyright (C) 2018 Swift Navigation Inc.
+ * Contact: Swift Navigation <dev@swiftnav.com>
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+syntax = "proto3";
+
+/** Solution_Meta
+ *
+ * Standardized Metadata messages for Fuzed Solution from Swift Navigation devices.
+ */
+
+package swiftnav.sbp.solution_meta;
+
+
+/** Flags for a given solution input type.
+ *
+ * Metadata describing which sensors were involved in the solution.
+ * The structure is fixed no matter what the actual sensor type is.
+ * The sensor_type field tells you which sensor we are talking about. It also tells you
+ * whether the sensor data was actually used or not.
+ * The flags field, always a u8, contains the sensor-specific data.
+ * The content of flags, for each sensor type, is described in the relevant structures in this section.
+ */
+message SolutionInputType {
+    uint32 sensor_type = 1;
+    uint32 flags = 2;
+}
+
+/** Solution Sensors Metadata
+ *
+ * This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
+ * It focuses primarly, but not only, on GNSS metadata.
+ */
+message MsgSolnMeta {
+    uint32 pdop = 1;
+    uint32 hdop = 2;
+    uint32 vdop = 3;
+    uint32 n_sats = 4;
+    uint32 age_corrections = 5;
+    uint32 alignment_status = 6;
+    uint32 last_used_gnss_pos_tow = 7;
+    uint32 last_used_gnss_vel_tow = 8;
+    repeated SolutionInputType sol_in = 9;
+}
+
+/** Flags for a given GNSS sensor used as input for the fuzed solution.
+ *
+ * Metadata around the GNSS sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+ *                                                                         in a MSG_SOLN_META.
+ * Note: Just to build descriptive tables in documentation and not actually used.
+ */
+message GNSSInputType {
+    uint32 flags = 1;
+}
+
+/** Flags for a given IMU sensor used as input for the fuzed solution.
+ *
+ * Metadata around the IMU sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+ *                                                                        in a MSG_SOLN_META.
+ * Note: Just to build descriptive tables in documentation and not actually used.
+ */
+message IMUInputType {
+    uint32 flags = 1;
+}
+
+/** Flags for a given Odometry sensor used as input for the fuzed solution.
+ *
+ * Metadata around the Odometry sensors involved in the fuzed solution. Accessible through sol_in[N].flags
+ *                                                                             in a MSG_SOLN_META.
+ * Note: Just to build descriptive tables in documentation and not actually used.
+ */
+message OdoInputType {
+    uint32 flags = 1;
+}
