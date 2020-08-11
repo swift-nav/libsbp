@@ -154,8 +154,8 @@ pub struct MsgSolnMeta {
     /// Vertical Dilution of Precision, as per last available DOPS from Starling
     /// GNSS engine
     pub vdop: u16,
-    /// Number of satellites used in solution, as per last available DOPS from
-    /// Starling GNSS engine
+    /// Number of satellites, as per last available solution from Starling GNSS
+    /// engine
     pub n_sats: u8,
     /// Age of the corrections (0xFFFF indicates invalid), as per last available
     /// AGE_CORRECTIONS from Starling GNSS engine
