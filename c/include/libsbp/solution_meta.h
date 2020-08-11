@@ -53,7 +53,7 @@ typedef struct SBP_ATTR_PACKED {
   u16 pdop;                      /**< Position Dilution of Precision, as per last available DOPS from Starling GNSS engine [0.01] */
   u16 hdop;                      /**< Horizontal Dilution of Precision, as per last available DOPS from Starling GNSS engine [0.01] */
   u16 vdop;                      /**< Vertical Dilution of Precision, as per last available DOPS from Starling GNSS engine [0.01] */
-  u8 n_sats;                    /**< Number of satellites used in solution, as per last available DOPS from Starling GNSS engine */
+  u8 n_sats;                    /**< Number of satellites, as per last available solution from Starling GNSS engine */
   u16 age_corrections;           /**< Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine [deciseconds] */
   u8 alignment_status;          /**< Bits for reason why it cannot align (yet) */
   u32 last_used_gnss_pos_tow;    /**< Tow of last-used GNSS position measurement [ms] */

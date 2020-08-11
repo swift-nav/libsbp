@@ -44,7 +44,7 @@ public class MsgSolnMeta extends SBPMessage {
     /** Vertical Dilution of Precision, as per last available DOPS from Starling GNSS engine */
     public int vdop;
     
-    /** Number of satellites used in solution, as per last available DOPS from Starling GNSS engine */
+    /** Number of satellites, as per last available solution from Starling GNSS engine */
     public int n_sats;
     
     /** Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine */

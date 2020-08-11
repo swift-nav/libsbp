@@ -83,8 +83,8 @@ data MsgSolnMeta = MsgSolnMeta
     -- ^ Vertical Dilution of Precision, as per last available DOPS from Starling
     -- GNSS engine
   , _msgSolnMeta_n_sats               :: !Word8
-    -- ^ Number of satellites used in solution, as per last available DOPS from
-    -- Starling GNSS engine
+    -- ^ Number of satellites, as per last available solution from Starling GNSS
+    -- engine
   , _msgSolnMeta_age_corrections      :: !Word16
     -- ^ Age of the corrections (0xFFFF indicates invalid), as per last available
     -- AGE_CORRECTIONS from Starling GNSS engine
