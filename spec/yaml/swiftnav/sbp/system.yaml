@@ -334,8 +334,15 @@ definitions:
            type: u8
            desc: Status flags (reserved)
            fields:
-             - 4-7:
+             - 6-7:
                  desc: Reserved
+             - 4-5:
+                 desc: Time quality
+                 values:
+                   - 0: Unknown, CPU local, or Invalid
+                   - 1: Coarse (order of 1ms)
+                   - 2: Propagated
+                   - 3: Finer or Finest
              - 2-3:
                  desc: Solution Group type
                  values:
