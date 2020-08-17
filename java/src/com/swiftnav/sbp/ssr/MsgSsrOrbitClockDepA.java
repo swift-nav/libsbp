@@ -23,16 +23,6 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_SSR_ORBIT_CLOCK_DEP_A (0x05DC).
- *
- * You can have MSG_SSR_ORBIT_CLOCK_DEP_A inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
- *
- * The precise orbit and clock correction message is
- * to be applied as a delta correction to broadcast
- * ephemeris and is typically an equivalent to the 1060
- * and 1066 RTCM message types */
 
 public class MsgSsrOrbitClockDepA extends SBPMessage {
     public static final int TYPE = 0x05DC;

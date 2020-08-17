@@ -44,33 +44,37 @@ message PhaseBiasesContent {
     sint32 bias = 5;
 }
 
-/** Header for MSG_SSR_STEC_CORRECTION message
+/** Header for the MSG_SSR_STEC_CORRECTION message.
  *
  * A full set of STEC information will likely span multiple SBP
  * messages, since SBP message a limited to 255 bytes.  The header
  * is used to tie multiple SBP messages into a sequence.
  */
 message STECHeader {
-    gnss.GpsTimeSec time = 1;
-    uint32 num_msgs = 2;
-    uint32 seq_num = 3;
-    uint32 update_interval = 4;
-    uint32 iod_atmo = 5;
+    uint32 tile_set_id = 1;
+    uint32 tile_id = 2;
+    gnss.GpsTimeSec time = 3;
+    uint32 num_msgs = 4;
+    uint32 seq_num = 5;
+    uint32 update_interval = 6;
+    uint32 iod_atmo = 7;
 }
 
-/** Header for MSG_SSR_GRIDDED_CORRECTION
+/** Header for the MSG_SSR_GRIDDED_CORRECTION message.
  *
- * The 3GPP message contains nested variable length arrays
+ * The LPP message contains nested variable length arrays
  * which are not suppported in SBP, so each grid point will
  * be identified by the index.
  */
 message GriddedCorrectionHeader {
-    gnss.GpsTimeSec time = 1;
-    uint32 num_msgs = 2;
-    uint32 seq_num = 3;
-    uint32 update_interval = 4;
-    uint32 iod_atmo = 5;
-    uint32 tropo_quality_indicator = 6;
+    uint32 tile_set_id = 1;
+    uint32 tile_id = 2;
+    gnss.GpsTimeSec time = 3;
+    uint32 num_msgs = 4;
+    uint32 seq_num = 5;
+    uint32 update_interval = 6;
+    uint32 iod_atmo = 7;
+    uint32 tropo_quality_indicator = 8;
 }
 
 /** None
@@ -145,20 +149,6 @@ message GridElement {
     repeated STECResidual stec_residuals = 3;
 }
 
-/** Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
- *
- * Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
- * Also includes an RLE encoded validity list.
- */
-message GridDefinitionHeader {
-    uint32 region_size_inverse = 1;
-    uint32 area_width = 2;
-    uint32 lat_nw_corner_enc = 3;
-    uint32 lon_nw_corner_enc = 4;
-    uint32 num_msgs = 5;
-    uint32 seq_num = 6;
-}
-
 /** Precise orbit and clock correction
  *
  * The precise orbit and clock correction message is
@@ -219,31 +209,24 @@ message MsgSsrPhaseBiases {
     repeated PhaseBiasesContent biases = 9;
 }
 
-/** Slant Total Electron Content
+/** STEC correction polynomial coeffcients.
  *
- * The STEC per space vehicle, given as polynomial approximation for
- * a given grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION
- * message to get the state space representation of the atmospheric
- * delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
+ * The Slant Total Electron Content per space vehicle, given as polynomial
+ * approximation for a given tile. This should be combined with the
+ * MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
+ * of the atmospheric delay.
+ * 
+ * It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
  */
 message MsgSsrStecCorrection {
     STECHeader header = 1;
     repeated STECSatElement stec_sat_list = 2;
 }
 
-/** Gridded troposphere and STEC residuals
+/** Gridded troposphere and STEC correction residuals.
  *
- * This message was deprecated when variances (stddev)
- * were added.
- */
-message MsgSsrGriddedCorrectionNoStd {
-    GriddedCorrectionHeader header = 1;
-    GridElementNoStd element = 2;
-}
-
-/** Gridded troposphere and STEC residuals
- *
- * STEC residuals are per space vehicle, tropo is not.
+ * STEC residuals are per space vehicle, troposphere is not.
+ * 
  * It is typically equivalent to the QZSS CLAS Sub Type 9 messages
  */
 message MsgSsrGriddedCorrection {
@@ -251,12 +234,25 @@ message MsgSsrGriddedCorrection {
     GridElement element = 2;
 }
 
-/** Definition of the grid for STEC and tropo messages
+/** Definition of a SSR atmospheric correction tile.
+
  *
- * Based on the 3GPP proposal R2-1906781 which is in turn based on
- * OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
+ * Provides the correction point coordinates for the atmospheric correction
+ * values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
+ * messages.
+ * 
+ * Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
+ * element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
+ * correction points, not lists of points.
  */
-message MsgSsrGridDefinition {
-    GridDefinitionHeader header = 1;
-    repeated uint32 rle_list = 2;
+message MsgSsrTileDefinition {
+    uint32 tile_set_id = 1;
+    uint32 tile_id = 2;
+    uint32 corner_nw_lat = 3;
+    uint32 corner_nw_lon = 4;
+    uint32 spacing_lat = 5;
+    uint32 spacing_lon = 6;
+    uint32 rows = 7;
+    uint32 cols = 8;
+    uint64 bitmask = 9;
 }

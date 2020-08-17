@@ -1,0 +1,40 @@
+{
+  "copyright": [
+    "Copyright (C) 2019 Swift Navigation Inc.",
+    "Contact: Swift Navigation <dev@swiftnav.com>",
+    "",
+    "This source is subject to the license found in the file 'LICENSE' which must",
+    "be be distributed together with this source. All other rights reserved.",
+    "",
+    "THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND,",
+    "EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED",
+    "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
+  ],
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "#MsgSsrTileDefinition",
+  "title":"MsgSsrTileDefinition",
+  "description":"Provides the correction point coordinates for the atmospheric correction,\nvalues in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION,\nmessages.,\n,\nBased on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information,\nelement GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of,\ncorrection points, not lists of points.\n",
+  "type": "object",
+  "properties": {
+    "tile_set_id": {"type": "integer"},
+    "tile_id": {"type": "integer"},
+    "corner_nw_lat": {"type": "integer"},
+    "corner_nw_lon": {"type": "integer"},
+    "spacing_lat": {"type": "integer"},
+    "spacing_lon": {"type": "integer"},
+    "rows": {"type": "integer"},
+    "cols": {"type": "integer"},
+    "bitmask": {"type": "integer"}
+  },
+  "required": [
+    "tile_set_id",
+    "tile_id",
+    "corner_nw_lat",
+    "corner_nw_lon",
+    "spacing_lat",
+    "spacing_lon",
+    "rows",
+    "cols",
+    "bitmask"
+  ]
+}

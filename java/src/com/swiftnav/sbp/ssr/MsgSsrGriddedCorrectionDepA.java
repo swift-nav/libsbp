@@ -23,31 +23,23 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FC).
- *
- * You can have MSG_SSR_GRIDDED_CORRECTION inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
- *
- * STEC residuals are per space vehicle, troposphere is not.
- * 
- * It is typically equivalent to the QZSS CLAS Sub Type 9 messages */
 
-public class MsgSsrGriddedCorrection extends SBPMessage {
-    public static final int TYPE = 0x05FC;
+public class MsgSsrGriddedCorrectionDepA extends SBPMessage {
+    public static final int TYPE = 0x05FA;
 
     
-    /** Header of a gridded correction message */
-    public GriddedCorrectionHeader header;
+    /** Header of a Gridded Correction message */
+    public GriddedCorrectionHeaderDepA header;
     
-    /** Tropo and STEC residuals for the given grid point.
+    /** Tropo and STEC residuals for the given grid point (mean
+and standard deviation)
  */
     public GridElement element;
     
 
-    public MsgSsrGriddedCorrection (int sender) { super(sender, TYPE); }
-    public MsgSsrGriddedCorrection () { super(TYPE); }
-    public MsgSsrGriddedCorrection (SBPMessage msg) throws SBPBinaryException {
+    public MsgSsrGriddedCorrectionDepA (int sender) { super(sender, TYPE); }
+    public MsgSsrGriddedCorrectionDepA () { super(TYPE); }
+    public MsgSsrGriddedCorrectionDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -55,7 +47,7 @@ public class MsgSsrGriddedCorrection extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        header = new GriddedCorrectionHeader().parse(parser);
+        header = new GriddedCorrectionHeaderDepA().parse(parser);
         element = new GridElement().parse(parser);
     }
 

@@ -13,9 +13,11 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#GriddedCorrectionHeader",
   "title":"GriddedCorrectionHeader",
-  "description":"The 3GPP message contains nested variable length arrays,\nwhich are not suppported in SBP, so each grid point will,\nbe identified by the index.\n",
+  "description":"The LPP message contains nested variable length arrays,\nwhich are not suppported in SBP, so each grid point will,\nbe identified by the index.\n",
   "type": "object",
   "properties": {
+    "tile_set_id": {"type": "integer"},
+    "tile_id": {"type": "integer"},
     "time": {"$ref": "GpsTimeSec.json"},
     "num_msgs": {"type": "integer"},
     "seq_num": {"type": "integer"},
@@ -24,6 +26,8 @@
     "tropo_quality_indicator": {"type": "integer"}
   },
   "required": [
+    "tile_set_id",
+    "tile_id",
     "time",
     "num_msgs",
     "seq_num",

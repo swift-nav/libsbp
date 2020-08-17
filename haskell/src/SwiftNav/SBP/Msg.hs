@@ -206,13 +206,16 @@ data SBPMsg =
    | SBPMsgSpecan MsgSpecan Msg
    | SBPMsgSpecanDep MsgSpecanDep Msg
    | SBPMsgSsrCodeBiases MsgSsrCodeBiases Msg
-   | SBPMsgSsrGridDefinition MsgSsrGridDefinition Msg
+   | SBPMsgSsrGridDefinitionDepA MsgSsrGridDefinitionDepA Msg
    | SBPMsgSsrGriddedCorrection MsgSsrGriddedCorrection Msg
-   | SBPMsgSsrGriddedCorrectionNoStd MsgSsrGriddedCorrectionNoStd Msg
+   | SBPMsgSsrGriddedCorrectionDepA MsgSsrGriddedCorrectionDepA Msg
+   | SBPMsgSsrGriddedCorrectionNoStdDepA MsgSsrGriddedCorrectionNoStdDepA Msg
    | SBPMsgSsrOrbitClock MsgSsrOrbitClock Msg
    | SBPMsgSsrOrbitClockDepA MsgSsrOrbitClockDepA Msg
    | SBPMsgSsrPhaseBiases MsgSsrPhaseBiases Msg
    | SBPMsgSsrStecCorrection MsgSsrStecCorrection Msg
+   | SBPMsgSsrStecCorrectionDepA MsgSsrStecCorrectionDepA Msg
+   | SBPMsgSsrTileDefinition MsgSsrTileDefinition Msg
    | SBPMsgStartup MsgStartup Msg
    | SBPMsgStmFlashLockSector MsgStmFlashLockSector Msg
    | SBPMsgStmFlashUnlockSector MsgStmFlashUnlockSector Msg
@@ -410,13 +413,16 @@ instance Binary SBPMsg where
           | _msgSBPType == msgSpecan = SBPMsgSpecan (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSpecanDep = SBPMsgSpecanDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrCodeBiases = SBPMsgSsrCodeBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == msgSsrGridDefinition = SBPMsgSsrGridDefinition (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrGridDefinitionDepA = SBPMsgSsrGridDefinitionDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrGriddedCorrection = SBPMsgSsrGriddedCorrection (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == msgSsrGriddedCorrectionNoStd = SBPMsgSsrGriddedCorrectionNoStd (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrGriddedCorrectionDepA = SBPMsgSsrGriddedCorrectionDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrGriddedCorrectionNoStdDepA = SBPMsgSsrGriddedCorrectionNoStdDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrOrbitClock = SBPMsgSsrOrbitClock (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrOrbitClockDepA = SBPMsgSsrOrbitClockDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrPhaseBiases = SBPMsgSsrPhaseBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrStecCorrection = SBPMsgSsrStecCorrection (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrStecCorrectionDepA = SBPMsgSsrStecCorrectionDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrTileDefinition = SBPMsgSsrTileDefinition (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStartup = SBPMsgStartup (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStmFlashLockSector = SBPMsgStmFlashLockSector (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -606,13 +612,16 @@ instance Binary SBPMsg where
       encoder (SBPMsgSpecan _ m) = put m
       encoder (SBPMsgSpecanDep _ m) = put m
       encoder (SBPMsgSsrCodeBiases _ m) = put m
-      encoder (SBPMsgSsrGridDefinition _ m) = put m
+      encoder (SBPMsgSsrGridDefinitionDepA _ m) = put m
       encoder (SBPMsgSsrGriddedCorrection _ m) = put m
-      encoder (SBPMsgSsrGriddedCorrectionNoStd _ m) = put m
+      encoder (SBPMsgSsrGriddedCorrectionDepA _ m) = put m
+      encoder (SBPMsgSsrGriddedCorrectionNoStdDepA _ m) = put m
       encoder (SBPMsgSsrOrbitClock _ m) = put m
       encoder (SBPMsgSsrOrbitClockDepA _ m) = put m
       encoder (SBPMsgSsrPhaseBiases _ m) = put m
       encoder (SBPMsgSsrStecCorrection _ m) = put m
+      encoder (SBPMsgSsrStecCorrectionDepA _ m) = put m
+      encoder (SBPMsgSsrTileDefinition _ m) = put m
       encoder (SBPMsgStartup _ m) = put m
       encoder (SBPMsgStmFlashLockSector _ m) = put m
       encoder (SBPMsgStmFlashUnlockSector _ m) = put m
@@ -806,13 +815,16 @@ instance FromJSON SBPMsg where
         | msgType == msgSpecan = SBPMsgSpecan <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSpecanDep = SBPMsgSpecanDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrCodeBiases = SBPMsgSsrCodeBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == msgSsrGridDefinition = SBPMsgSsrGridDefinition <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrGridDefinitionDepA = SBPMsgSsrGridDefinitionDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrGriddedCorrection = SBPMsgSsrGriddedCorrection <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == msgSsrGriddedCorrectionNoStd = SBPMsgSsrGriddedCorrectionNoStd <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrGriddedCorrectionDepA = SBPMsgSsrGriddedCorrectionDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrGriddedCorrectionNoStdDepA = SBPMsgSsrGriddedCorrectionNoStdDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrOrbitClock = SBPMsgSsrOrbitClock <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrOrbitClockDepA = SBPMsgSsrOrbitClockDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrPhaseBiases = SBPMsgSsrPhaseBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrStecCorrection = SBPMsgSsrStecCorrection <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrStecCorrectionDepA = SBPMsgSsrStecCorrectionDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrTileDefinition = SBPMsgSsrTileDefinition <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStartup = SBPMsgStartup <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStmFlashLockSector = SBPMsgStmFlashLockSector <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1007,13 +1019,16 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgSpecan n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSpecanDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrCodeBiases n m) = toJSON n <<>> toJSON m
-  toJSON (SBPMsgSsrGridDefinition n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrGridDefinitionDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrGriddedCorrection n m) = toJSON n <<>> toJSON m
-  toJSON (SBPMsgSsrGriddedCorrectionNoStd n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrGriddedCorrectionDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrGriddedCorrectionNoStdDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrOrbitClock n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrOrbitClockDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrPhaseBiases n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrStecCorrection n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrStecCorrectionDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrTileDefinition n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStartup n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStmFlashLockSector n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStmFlashUnlockSector n m) = toJSON n <<>> toJSON m
@@ -1202,13 +1217,16 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgSpecan n m) = SBPMsgSpecan n <$> f m
   msg f (SBPMsgSpecanDep n m) = SBPMsgSpecanDep n <$> f m
   msg f (SBPMsgSsrCodeBiases n m) = SBPMsgSsrCodeBiases n <$> f m
-  msg f (SBPMsgSsrGridDefinition n m) = SBPMsgSsrGridDefinition n <$> f m
+  msg f (SBPMsgSsrGridDefinitionDepA n m) = SBPMsgSsrGridDefinitionDepA n <$> f m
   msg f (SBPMsgSsrGriddedCorrection n m) = SBPMsgSsrGriddedCorrection n <$> f m
-  msg f (SBPMsgSsrGriddedCorrectionNoStd n m) = SBPMsgSsrGriddedCorrectionNoStd n <$> f m
+  msg f (SBPMsgSsrGriddedCorrectionDepA n m) = SBPMsgSsrGriddedCorrectionDepA n <$> f m
+  msg f (SBPMsgSsrGriddedCorrectionNoStdDepA n m) = SBPMsgSsrGriddedCorrectionNoStdDepA n <$> f m
   msg f (SBPMsgSsrOrbitClock n m) = SBPMsgSsrOrbitClock n <$> f m
   msg f (SBPMsgSsrOrbitClockDepA n m) = SBPMsgSsrOrbitClockDepA n <$> f m
   msg f (SBPMsgSsrPhaseBiases n m) = SBPMsgSsrPhaseBiases n <$> f m
   msg f (SBPMsgSsrStecCorrection n m) = SBPMsgSsrStecCorrection n <$> f m
+  msg f (SBPMsgSsrStecCorrectionDepA n m) = SBPMsgSsrStecCorrectionDepA n <$> f m
+  msg f (SBPMsgSsrTileDefinition n m) = SBPMsgSsrTileDefinition n <$> f m
   msg f (SBPMsgStartup n m) = SBPMsgStartup n <$> f m
   msg f (SBPMsgStmFlashLockSector n m) = SBPMsgStmFlashLockSector n <$> f m
   msg f (SBPMsgStmFlashUnlockSector n m) = SBPMsgStmFlashUnlockSector n <$> f m

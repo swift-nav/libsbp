@@ -23,31 +23,25 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_SSR_GRIDDED_CORRECTION (0x05FC).
- *
- * You can have MSG_SSR_GRIDDED_CORRECTION inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
- *
- * STEC residuals are per space vehicle, troposphere is not.
- * 
- * It is typically equivalent to the QZSS CLAS Sub Type 9 messages */
 
-public class MsgSsrGriddedCorrection extends SBPMessage {
-    public static final int TYPE = 0x05FC;
+public class MsgSsrGridDefinitionDepA extends SBPMessage {
+    public static final int TYPE = 0x05F5;
 
     
-    /** Header of a gridded correction message */
-    public GriddedCorrectionHeader header;
+    /** Header of a Gridded Correction message */
+    public GridDefinitionHeaderDepA header;
     
-    /** Tropo and STEC residuals for the given grid point.
+    /** Run Length Encode list of quadrants that contain valid data.
+The spec describes the encoding scheme in detail, but
+essentially the index of the quadrants that contain transitions between
+valid and invalid (and vice versa) are encoded as u8 integers.
  */
-    public GridElement element;
+    public int[] rle_list;
     
 
-    public MsgSsrGriddedCorrection (int sender) { super(sender, TYPE); }
-    public MsgSsrGriddedCorrection () { super(TYPE); }
-    public MsgSsrGriddedCorrection (SBPMessage msg) throws SBPBinaryException {
+    public MsgSsrGridDefinitionDepA (int sender) { super(sender, TYPE); }
+    public MsgSsrGridDefinitionDepA () { super(TYPE); }
+    public MsgSsrGridDefinitionDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -55,21 +49,21 @@ public class MsgSsrGriddedCorrection extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        header = new GriddedCorrectionHeader().parse(parser);
-        element = new GridElement().parse(parser);
+        header = new GridDefinitionHeaderDepA().parse(parser);
+        rle_list = parser.getArrayofU8();
     }
 
     @Override
     protected void build(Builder builder) {
         header.build(builder);
-        element.build(builder);
+        builder.putArrayofU8(rle_list);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("header", header.toJSON());
-        obj.put("element", element.toJSON());
+        obj.put("rle_list", new JSONArray(rle_list));
         return obj;
     }
 }
