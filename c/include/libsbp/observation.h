@@ -371,8 +371,16 @@ typedef struct SBP_ATTR_PACKED {
   float af1;         /**< Polynomial clock correction coefficient (clock drift) [s/s] */
   float af2;         /**< Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
   gps_time_sec_t toc;         /**< Clock reference */
-  u8 iode;        /**< Issue of ephemeris data */
-  u16 iodc;        /**< Issue of clock data */
+  u8 iode;        /**< Issue of ephemeris data
+
+Calculated from the navigation data parameter t_oe per RTCM/CSNO recommendation:
+IODE = mod (t_oe / 720, 240)
+ */
+  u16 iodc;        /**< Issue of clock data
+
+Calculated from the navigation data parameter t_oe per RTCM/CSNO recommendation:
+IODE = mod (t_oc / 720, 240)
+ */
 } msg_ephemeris_bds_t;
 
 
@@ -405,8 +413,8 @@ typedef struct SBP_ATTR_PACKED {
   double af1;          /**< Polynomial clock correction coefficient (clock drift) [s/s] */
   float af2;          /**< Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
   gps_time_sec_t toc;          /**< Clock reference */
-  u16 iode;         /**< Issue of ephemeris data */
-  u16 iodc;         /**< Issue of clock data */
+  u16 iode;         /**< Issue of data (IODnav) */
+  u16 iodc;         /**< Issue of data (IODnav). Always equal to iode */
 } msg_ephemeris_gal_dep_a_t;
 
 
@@ -441,9 +449,9 @@ typedef struct SBP_ATTR_PACKED {
   double af1;          /**< Polynomial clock correction coefficient (clock drift) [s/s] */
   float af2;          /**< Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
   gps_time_sec_t toc;          /**< Clock reference */
-  u16 iode;         /**< Issue of ephemeris data */
-  u16 iodc;         /**< Issue of clock data */
-  u8 source;       /**< 0=I/NAV, 1=F/NAV, ... */
+  u16 iode;         /**< Issue of data (IODnav) */
+  u16 iodc;         /**< Issue of data (IODnav). Always equal to iode */
+  u8 source;       /**< 0=I/NAV, 1=F/NAV */
 } msg_ephemeris_gal_t;
 
 
@@ -559,7 +567,7 @@ typedef struct SBP_ATTR_PACKED {
   double vel[3];    /**< Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s] */
   double acc[3];    /**< Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2] */
   u8 fcn;       /**< Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
-  u8 iod;       /**< Issue of ephemeris data */
+  u8 iod;       /**< Issue of data. Equal to the 7 bits of the immediate data word t_b */
 } msg_ephemeris_glo_dep_d_t;
 
 
@@ -581,7 +589,7 @@ typedef struct SBP_ATTR_PACKED {
   double vel[3];    /**< Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s] */
   float acc[3];    /**< Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2] */
   u8 fcn;       /**< Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
-  u8 iod;       /**< Issue of ephemeris data */
+  u8 iod;       /**< Issue of data. Equal to the 7 bits of the immediate data word t_b */
 } msg_ephemeris_glo_t;
 
 

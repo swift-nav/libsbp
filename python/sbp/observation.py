@@ -2216,8 +2216,16 @@ Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
     Clock reference
   iode : int
     Issue of ephemeris data
+
+Calculated from the navigation data parameter t_oe per RTCM/CSNO recommendation:
+IODE = mod (t_oe / 720, 240)
+
   iodc : int
     Issue of clock data
+
+Calculated from the navigation data parameter t_oe per RTCM/CSNO recommendation:
+IODE = mod (t_oc / 720, 240)
+
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -2421,9 +2429,9 @@ an ephemeris message with explicit source of NAV data.
   toc : GPSTimeSec
     Clock reference
   iode : int
-    Issue of ephemeris data
+    Issue of data (IODnav)
   iodc : int
-    Issue of clock data
+    Issue of data (IODnav). Always equal to iode
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -2629,11 +2637,11 @@ OS SIS ICD, Issue 1.3, December 2016 for more details.
   toc : GPSTimeSec
     Clock reference
   iode : int
-    Issue of ephemeris data
+    Issue of data (IODnav)
   iodc : int
-    Issue of clock data
+    Issue of data (IODnav). Always equal to iode
   source : int
-    0=I/NAV, 1=F/NAV, ...
+    0=I/NAV, 1=F/NAV
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -3521,7 +3529,7 @@ ephemeris message using floats for size reduction.
   fcn : int
     Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
   iod : int
-    Issue of ephemeris data
+    Issue of data. Equal to the 7 bits of the immediate data word t_b
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -3655,7 +3663,7 @@ for more details.
   fcn : int
     Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
   iod : int
-    Issue of ephemeris data
+    Issue of data. Equal to the 7 bits of the immediate data word t_b
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 

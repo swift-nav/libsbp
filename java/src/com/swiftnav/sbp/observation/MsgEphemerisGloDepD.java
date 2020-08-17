@@ -60,7 +60,7 @@ public class MsgEphemerisGloDepD extends SBPMessage {
     /** Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
     public int fcn;
     
-    /** Issue of ephemeris data */
+    /** Issue of data. Equal to the 7 bits of the immediate data word t_b */
     public int iod;
     
 

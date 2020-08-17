@@ -178,13 +178,16 @@ import com.swiftnav.sbp.solution_meta.GNSSInputType;
 import com.swiftnav.sbp.solution_meta.IMUInputType;
 import com.swiftnav.sbp.solution_meta.OdoInputType;
 import com.swiftnav.sbp.ssr.MsgSsrOrbitClock;
-import com.swiftnav.sbp.ssr.MsgSsrOrbitClockDepA;
 import com.swiftnav.sbp.ssr.MsgSsrCodeBiases;
 import com.swiftnav.sbp.ssr.MsgSsrPhaseBiases;
 import com.swiftnav.sbp.ssr.MsgSsrStecCorrection;
-import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrectionNoStd;
 import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrection;
-import com.swiftnav.sbp.ssr.MsgSsrGridDefinition;
+import com.swiftnav.sbp.ssr.MsgSsrTileDefinition;
+import com.swiftnav.sbp.ssr.MsgSsrOrbitClockDepA;
+import com.swiftnav.sbp.ssr.MsgSsrStecCorrectionDepA;
+import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrectionNoStdDepA;
+import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrectionDepA;
+import com.swiftnav.sbp.ssr.MsgSsrGridDefinitionDepA;
 import com.swiftnav.sbp.system.MsgStartup;
 import com.swiftnav.sbp.system.MsgDgnssStatus;
 import com.swiftnav.sbp.system.MsgHeartbeat;
@@ -536,20 +539,26 @@ final class MessageTable {
                 return new OdoInputType(msg);
             case MsgSsrOrbitClock.TYPE:
                 return new MsgSsrOrbitClock(msg);
-            case MsgSsrOrbitClockDepA.TYPE:
-                return new MsgSsrOrbitClockDepA(msg);
             case MsgSsrCodeBiases.TYPE:
                 return new MsgSsrCodeBiases(msg);
             case MsgSsrPhaseBiases.TYPE:
                 return new MsgSsrPhaseBiases(msg);
             case MsgSsrStecCorrection.TYPE:
                 return new MsgSsrStecCorrection(msg);
-            case MsgSsrGriddedCorrectionNoStd.TYPE:
-                return new MsgSsrGriddedCorrectionNoStd(msg);
             case MsgSsrGriddedCorrection.TYPE:
                 return new MsgSsrGriddedCorrection(msg);
-            case MsgSsrGridDefinition.TYPE:
-                return new MsgSsrGridDefinition(msg);
+            case MsgSsrTileDefinition.TYPE:
+                return new MsgSsrTileDefinition(msg);
+            case MsgSsrOrbitClockDepA.TYPE:
+                return new MsgSsrOrbitClockDepA(msg);
+            case MsgSsrStecCorrectionDepA.TYPE:
+                return new MsgSsrStecCorrectionDepA(msg);
+            case MsgSsrGriddedCorrectionNoStdDepA.TYPE:
+                return new MsgSsrGriddedCorrectionNoStdDepA(msg);
+            case MsgSsrGriddedCorrectionDepA.TYPE:
+                return new MsgSsrGriddedCorrectionDepA(msg);
+            case MsgSsrGridDefinitionDepA.TYPE:
+                return new MsgSsrGridDefinitionDepA(msg);
             case MsgStartup.TYPE:
                 return new MsgStartup(msg);
             case MsgDgnssStatus.TYPE:

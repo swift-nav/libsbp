@@ -102,10 +102,10 @@ public class MsgEphemerisGalDepA extends SBPMessage {
     /** Clock reference */
     public GPSTimeSec toc;
     
-    /** Issue of ephemeris data */
+    /** Issue of data (IODnav) */
     public int iode;
     
-    /** Issue of clock data */
+    /** Issue of data (IODnav). Always equal to iode */
     public int iodc;
     
 

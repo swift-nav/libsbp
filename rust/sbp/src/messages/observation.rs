@@ -1232,9 +1232,11 @@ pub struct MsgEphemerisBds {
     pub af2: f32,
     /// Clock reference
     pub toc: GPSTimeSec,
-    /// Issue of ephemeris data
+    /// Issue of ephemeris data  Calculated from the navigation data parameter
+    /// t_oe per RTCM/CSNO recommendation: IODE = mod (t_oe / 720, 240)
     pub iode: u8,
-    /// Issue of clock data
+    /// Issue of clock data  Calculated from the navigation data parameter t_oe
+    /// per RTCM/CSNO recommendation: IODE = mod (t_oc / 720, 240)
     pub iodc: u16,
 }
 
@@ -2183,11 +2185,11 @@ pub struct MsgEphemerisGal {
     pub af2: f32,
     /// Clock reference
     pub toc: GPSTimeSec,
-    /// Issue of ephemeris data
+    /// Issue of data (IODnav)
     pub iode: u16,
-    /// Issue of clock data
+    /// Issue of data (IODnav). Always equal to iode
     pub iodc: u16,
-    /// 0=I/NAV, 1=F/NAV, ...
+    /// 0=I/NAV, 1=F/NAV
     pub source: u8,
 }
 
@@ -2362,9 +2364,9 @@ pub struct MsgEphemerisGalDepA {
     pub af2: f32,
     /// Clock reference
     pub toc: GPSTimeSec,
-    /// Issue of ephemeris data
+    /// Issue of data (IODnav)
     pub iode: u16,
-    /// Issue of clock data
+    /// Issue of data (IODnav). Always equal to iode
     pub iodc: u16,
 }
 
@@ -2507,7 +2509,7 @@ pub struct MsgEphemerisGlo {
     pub acc: Vec<f32>,
     /// Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
     pub fcn: u8,
-    /// Issue of ephemeris data
+    /// Issue of data. Equal to the 7 bits of the immediate data word t_b
     pub iod: u8,
 }
 
@@ -2861,7 +2863,7 @@ pub struct MsgEphemerisGloDepD {
     pub acc: Vec<f64>,
     /// Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
     pub fcn: u8,
-    /// Issue of ephemeris data
+    /// Issue of data. Equal to the 7 bits of the immediate data word t_b
     pub iod: u8,
 }
 

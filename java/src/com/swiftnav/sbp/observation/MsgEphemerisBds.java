@@ -104,10 +104,18 @@ public class MsgEphemerisBds extends SBPMessage {
     /** Clock reference */
     public GPSTimeSec toc;
     
-    /** Issue of ephemeris data */
+    /** Issue of ephemeris data
+
+Calculated from the navigation data parameter t_oe per RTCM/CSNO recommendation:
+IODE = mod (t_oe / 720, 240)
+ */
     public int iode;
     
-    /** Issue of clock data */
+    /** Issue of clock data
+
+Calculated from the navigation data parameter t_oe per RTCM/CSNO recommendation:
+IODE = mod (t_oc / 720, 240)
+ */
     public int iodc;
     
 
