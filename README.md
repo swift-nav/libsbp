@@ -99,37 +99,41 @@ On select platforms this Python tool is accelerated with native code and has
 performance on par with the Haskell and Rust variants.
 
 ## Building / installing
+
 ### Using Docker
+
+#### Using the prebuilt image from DockerHub
+
+The quickest method to get going is to just pull a prebuilt copy from DockerHub
+(no guarantees on freshness):
+
+``docker run  -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2020.08.18``
+
+Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
 
 #### Creating your own image
 
-`Dockerfile-build` will create a docker image that contains all the
-necessary dependencies to build libsbp.  You can make a local image
-fresh from this file by running `docker build` as such:
+Otherwise, `Dockerfile-build` will create a docker image that contains all the
+necessary dependencies to build libsbp.  You can make a local image fresh from
+this file by running `docker build` as such:
 
-`mkdir dummy; cd dummy`
+`mkdir docker-build; cd docker-build`
 
 This dummy directory is to prevent docker from sucking up the whole
 repo into the local context (which is then immediately discarded
 anyway).  Next create the docker image:
 
-`docker build -f ../Dockerfile-build -t your-local-image-name .`
+`docker build -f ../Dockerfile-build -t libsbp-build .`
 
 You can then make this image operate on your local workspace like this:
 
 `cd ..`  (back up to the root of the repo)
 
-``docker run  -v $PWD:/mnt/workspace  -i -t your-local-image-name:latest``
+``docker run  -v $PWD:/mnt/workspace  -i -t libsbp-build:latest``
+
+#### Using the docker image
 
 Once in the image, simply type `make all` to gererate all the libsbp bindings.
-
-#### Using the prebuilt one from DockerHub
-
-Ycu can also pull a copy from dockerhub (no guarantees on freshness):
-
-``docker run  -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2020.01.15``
-
-Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
 
 ### Installing from package managers
 Some bindings are available on package managers:
