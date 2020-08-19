@@ -7,7 +7,7 @@
 - [Installing sbp2json, json2sbp, json2json and related tools](#installing-sbp2json-json2sbp-json2json-and-related-tools)
 - [Building / installing](#building--installing)
   * [Using Docker](#using-docker)
-    + [Using the prebuilt image from DockerHub](#using-the-prebuilt-image-from-dockerhub)
+    + [Fetching the prebuilt image from DockerHub](#fetching-the-prebuilt-image-from-dockerhub)
     + [Creating your own image](#creating-your-own-image)
     + [Using the docker image](#using-the-docker-image)
   * [Installing from package managers](#installing-from-package-managers)
@@ -103,7 +103,7 @@ performance on par with the Haskell and Rust variants.
 
 ### Using Docker
 
-#### Using the prebuilt image from DockerHub
+#### Fetching the prebuilt image from DockerHub
 
 The quickest method to get going is to just pull a prebuilt copy from DockerHub
 (no guarantees on freshness):
