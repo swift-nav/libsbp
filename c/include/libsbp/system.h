@@ -153,6 +153,7 @@ typedef struct SBP_ATTR_PACKED {
  */
 #define SBP_MSG_GROUP_META            0xFF0A
 typedef struct SBP_ATTR_PACKED {
+  u8 group_id;       /**< Id of the Msgs Group, 0 is Unknown, 1 is Bestpos-Fusion, 2 is Gnss */
   u16 wn;             /**< GPS Week Number or zero if Reference epoch is not GPS [weeks] */
   u32 tom;            /**< Time of Measurement in Milliseconds since reference epoch [ms] */
   s32 ns_residual;    /**< Nanosecond residual of millisecond-rounded TOM (ranges

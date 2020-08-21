@@ -35,6 +35,9 @@ public class MsgGroupMeta extends SBPMessage {
     public static final int TYPE = 0xFF0A;
 
     
+    /** Id of the Msgs Group, 0 is Unknown, 1 is Bestpos-Fusion, 2 is Gnss */
+    public int group_id;
+    
     /** GPS Week Number or zero if Reference epoch is not GPS */
     public int wn;
     
@@ -63,6 +66,7 @@ from -500000 to 500000)
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
+        group_id = parser.getU8();
         wn = parser.getU16();
         tom = parser.getU32();
         ns_residual = parser.getS32();
@@ -72,6 +76,7 @@ from -500000 to 500000)
 
     @Override
     protected void build(Builder builder) {
+        builder.putU8(group_id);
         builder.putU16(wn);
         builder.putU32(tom);
         builder.putS32(ns_residual);
@@ -82,6 +87,7 @@ from -500000 to 500000)
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
+        obj.put("group_id", group_id);
         obj.put("wn", wn);
         obj.put("tom", tom);
         obj.put("ns_residual", ns_residual);

@@ -367,7 +367,8 @@ It also lists the atomic contents (i.e. types of messages included) of the Solut
 
 
   """
-  __slots__ = ['wn',
+  __slots__ = ['group_id',
+               'wn',
                'tom',
                'ns_residual',
                'flags',
@@ -376,6 +377,8 @@ It also lists the atomic contents (i.e. types of messages included) of the Solut
   @classmethod
   def parse_members(cls, buf, offset, length):
     ret = {}
+    (__group_id, offset, length) = get_u8(buf, offset, length)
+    ret['group_id'] = __group_id
     (__wn, offset, length) = get_u16(buf, offset, length)
     ret['wn'] = __wn
     (__tom, offset, length) = get_u32(buf, offset, length)
@@ -392,6 +395,7 @@ It also lists the atomic contents (i.e. types of messages included) of the Solut
     res, off, length = self.parse_members(buf, offset, length)
     if off == offset:
       return {}, offset, length
+    self.group_id = res['group_id']
     self.wn = res['wn']
     self.tom = res['tom']
     self.ns_residual = res['ns_residual']

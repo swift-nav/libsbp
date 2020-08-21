@@ -313,6 +313,7 @@ MsgGnssTimeOffset.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * Group.
  *
  * Fields in the SBP payload (`sbp.payload`):
+ * @field group_id number (unsigned 8-bit int, 1 byte) Id of the Msgs Group, 0 is Unknown, 1 is Bestpos-Fusion, 2 is Gnss
  * @field wn number (unsigned 16-bit int, 2 bytes) GPS Week Number or zero if Reference epoch is not GPS
  * @field tom number (unsigned 32-bit int, 4 bytes) Time of Measurement in Milliseconds since reference epoch
  * @field ns_residual number (signed 32-bit int, 4 bytes) Nanosecond residual of millisecond-rounded TOM (ranges from -500000 to 500000)
@@ -334,12 +335,14 @@ MsgGroupMeta.prototype.msg_type = 0xFF0A;
 MsgGroupMeta.prototype.constructor = MsgGroupMeta;
 MsgGroupMeta.prototype.parser = new Parser()
   .endianess('little')
+  .uint8('group_id')
   .uint16('wn')
   .uint32('tom')
   .int32('ns_residual')
   .uint8('flags')
   .array('group_msgs', { type: 'uint16le', readUntil: 'eof' });
 MsgGroupMeta.prototype.fieldSpec = [];
+MsgGroupMeta.prototype.fieldSpec.push(['group_id', 'writeUInt8', 1]);
 MsgGroupMeta.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
 MsgGroupMeta.prototype.fieldSpec.push(['tom', 'writeUInt32LE', 4]);
 MsgGroupMeta.prototype.fieldSpec.push(['ns_residual', 'writeInt32LE', 4]);

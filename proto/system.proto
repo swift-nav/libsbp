@@ -127,9 +127,10 @@ message MsgGnssTimeOffset {
  * It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
  */
 message MsgGroupMeta {
-    uint32 wn = 1;
-    uint32 tom = 2;
-    sint32 ns_residual = 3;
-    uint32 flags = 4;
-    repeated uint32 group_msgs = 5;
+    uint32 group_id = 1;
+    uint32 wn = 2;
+    uint32 tom = 3;
+    sint32 ns_residual = 4;
+    uint32 flags = 5;
+    repeated uint32 group_msgs = 6;
 }

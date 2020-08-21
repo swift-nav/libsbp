@@ -99,7 +99,7 @@ START_TEST( test_auto_check_sbp_system_36 )
 
     sbp_register_callback(&sbp_state, 0xFF0A, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
-    u8 test_data[] = {85,10,255,238,238,15,192,7,64,226,1,0,0,0,0,0,3,10,2,2,255,156,76, };
+    u8 test_data[] = {85,10,255,238,238,16,1,192,7,64,226,1,0,0,0,0,0,3,10,2,2,255,20,193, };
 
     dummy_reset();
     sbp_send_message(&sbp_state, 0xFF0A, 61166, sizeof(test_data), test_data, &dummy_write);
@@ -126,6 +126,7 @@ START_TEST( test_auto_check_sbp_system_36 )
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
     fail_unless(msg->flags == 3, "incorrect value for flags, expected 3, is %d", msg->flags);
+    fail_unless(msg->group_id == 1, "incorrect value for group_id, expected 1, is %d", msg->group_id);
     fail_unless(msg->group_msgs[0] == 522, "incorrect value for group_msgs[0], expected 522, is %d", msg->group_msgs[0]);
     fail_unless(msg->group_msgs[1] == 65282, "incorrect value for group_msgs[1], expected 65282, is %d", msg->group_msgs[1]);
     fail_unless(msg->ns_residual == 0, "incorrect value for ns_residual, expected 0, is %d", msg->ns_residual);

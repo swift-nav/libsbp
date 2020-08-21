@@ -313,7 +313,9 @@ msgGroupMeta = 0xFF0A
 -- lists the atomic contents (i.e. types of messages included) of the Solution
 -- Group.
 data MsgGroupMeta = MsgGroupMeta
-  { _msgGroupMeta_wn        :: !Word16
+  { _msgGroupMeta_group_id  :: !Word8
+    -- ^ Id of the Msgs Group, 0 is Unknown, 1 is Bestpos-Fusion, 2 is Gnss
+  , _msgGroupMeta_wn        :: !Word16
     -- ^ GPS Week Number or zero if Reference epoch is not GPS
   , _msgGroupMeta_tom       :: !Word32
     -- ^ Time of Measurement in Milliseconds since reference epoch
@@ -328,6 +330,7 @@ data MsgGroupMeta = MsgGroupMeta
 
 instance Binary MsgGroupMeta where
   get = do
+    _msgGroupMeta_group_id <- getWord8
     _msgGroupMeta_wn <- getWord16le
     _msgGroupMeta_tom <- getWord32le
     _msgGroupMeta_ns_residual <- (fromIntegral <$> getWord32le)
@@ -336,6 +339,7 @@ instance Binary MsgGroupMeta where
     pure MsgGroupMeta {..}
 
   put MsgGroupMeta {..} = do
+    putWord8 _msgGroupMeta_group_id
     putWord16le _msgGroupMeta_wn
     putWord32le _msgGroupMeta_tom
     (putWord32le . fromIntegral) _msgGroupMeta_ns_residual

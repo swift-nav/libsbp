@@ -16,6 +16,7 @@
   "description":"This leading message lists the time metadata of the Solution Group.,\nIt also lists the atomic contents (i.e. types of messages included) of the Solution Group.\n",
   "type": "object",
   "properties": {
+    "group_id": {"type": "integer"},
     "wn": {"type": "integer"},
     "tom": {"type": "integer"},
     "ns_residual": {"type": "integer"},
@@ -23,6 +24,7 @@
     "group_msgs": {"type": "array", "items": {"type": "integer"}}
   },
   "required": [
+    "group_id",
     "wn",
     "tom",
     "ns_residual",

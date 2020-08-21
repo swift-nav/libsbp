@@ -299,6 +299,8 @@ impl crate::serialize::SbpSerialize for MsgGnssTimeOffset {
 #[allow(non_snake_case)]
 pub struct MsgGroupMeta {
     pub sender_id: Option<u16>,
+    /// Id of the Msgs Group, 0 is Unknown, 1 is Bestpos-Fusion, 2 is Gnss
+    pub group_id: u8,
     /// GPS Week Number or zero if Reference epoch is not GPS
     pub wn: u16,
     /// Time of Measurement in Milliseconds since reference epoch
@@ -317,6 +319,7 @@ impl MsgGroupMeta {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupMeta, crate::Error> {
         Ok( MsgGroupMeta{
             sender_id: None,
+            group_id: _buf.read_u8()?,
             wn: _buf.read_u16::<LittleEndian>()?,
             tom: _buf.read_u32::<LittleEndian>()?,
             ns_residual: _buf.read_i32::<LittleEndian>()?,
@@ -347,6 +350,7 @@ impl super::SBPMessage for MsgGroupMeta {
 impl crate::serialize::SbpSerialize for MsgGroupMeta {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.group_id.append_to_sbp_buffer(buf);
         self.wn.append_to_sbp_buffer(buf);
         self.tom.append_to_sbp_buffer(buf);
         self.ns_residual.append_to_sbp_buffer(buf);
@@ -356,6 +360,7 @@ impl crate::serialize::SbpSerialize for MsgGroupMeta {
 
     fn sbp_size(&self) -> usize {
         let mut size = 0;
+        size += self.group_id.sbp_size();
         size += self.wn.sbp_size();
         size += self.tom.sbp_size();
         size += self.ns_residual.sbp_size();
