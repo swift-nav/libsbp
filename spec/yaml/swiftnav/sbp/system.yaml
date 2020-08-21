@@ -316,6 +316,9 @@ definitions:
        This leading message lists the time metadata of the Solution Group.
        It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
      fields:
+       - group_id:
+           type: u8
+           desc: Id of the Msgs Group, 0 is Unknown, 1 is Bestpos-Fusion, 2 is Gnss
        - wn:
            type: u16
            units: weeks
@@ -351,7 +354,7 @@ definitions:
                    - 2: GNSS+INS (Fuzed)
                    - 3: Reserved
              - 0-1:
-                 desc: Time source
+                 desc: Time reference
                  values:
                    - 0: Reference epoch is start of current GPS week
                    - 1: Reference epoch is Sensor Time Init
