@@ -35,7 +35,7 @@ public class MsgGroupMeta extends SBPMessage {
     public static final int TYPE = 0xFF0A;
 
     
-    /** Id of the Msgs Group, 0 is Unknown, 1 is Bestpos-Fusion, 2 is Gnss */
+    /** Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss */
     public int group_id;
     
     /** GPS Week Number or zero if Reference epoch is not GPS */
@@ -52,7 +52,12 @@ from -500000 to 500000)
     /** Status flags (reserved) */
     public int flags;
     
-    /** An inorder list of message types included in the Solution Group */
+    /** Size of list group_msgs */
+    public int n_group_msgs;
+    
+    /** An inorder list of message types included in the Solution Group,
+including GROUP_META itself
+ */
     public int[] group_msgs;
     
 
@@ -71,6 +76,7 @@ from -500000 to 500000)
         tom = parser.getU32();
         ns_residual = parser.getS32();
         flags = parser.getU8();
+        n_group_msgs = parser.getU8();
         group_msgs = parser.getArrayofU16();
     }
 
@@ -81,6 +87,7 @@ from -500000 to 500000)
         builder.putU32(tom);
         builder.putS32(ns_residual);
         builder.putU8(flags);
+        builder.putU8(n_group_msgs);
         builder.putArrayofU16(group_msgs);
     }
 
@@ -92,6 +99,7 @@ from -500000 to 500000)
         obj.put("tom", tom);
         obj.put("ns_residual", ns_residual);
         obj.put("flags", flags);
+        obj.put("n_group_msgs", n_group_msgs);
         obj.put("group_msgs", new JSONArray(group_msgs));
         return obj;
     }

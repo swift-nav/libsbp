@@ -313,19 +313,22 @@ msgGroupMeta = 0xFF0A
 -- lists the atomic contents (i.e. types of messages included) of the Solution
 -- Group.
 data MsgGroupMeta = MsgGroupMeta
-  { _msgGroupMeta_group_id  :: !Word8
-    -- ^ Id of the Msgs Group, 0 is Unknown, 1 is Bestpos-Fusion, 2 is Gnss
-  , _msgGroupMeta_wn        :: !Word16
+  { _msgGroupMeta_group_id   :: !Word8
+    -- ^ Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss
+  , _msgGroupMeta_wn         :: !Word16
     -- ^ GPS Week Number or zero if Reference epoch is not GPS
-  , _msgGroupMeta_tom       :: !Word32
+  , _msgGroupMeta_tom        :: !Word32
     -- ^ Time of Measurement in Milliseconds since reference epoch
   , _msgGroupMeta_ns_residual :: !Int32
     -- ^ Nanosecond residual of millisecond-rounded TOM (ranges from -500000 to
     -- 500000)
-  , _msgGroupMeta_flags     :: !Word8
+  , _msgGroupMeta_flags      :: !Word8
     -- ^ Status flags (reserved)
+  , _msgGroupMeta_n_group_msgs :: !Word8
+    -- ^ Size of list group_msgs
   , _msgGroupMeta_group_msgs :: ![Word16]
-    -- ^ An inorder list of message types included in the Solution Group
+    -- ^ An inorder list of message types included in the Solution Group,
+    -- including GROUP_META itself
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgGroupMeta where
@@ -335,6 +338,7 @@ instance Binary MsgGroupMeta where
     _msgGroupMeta_tom <- getWord32le
     _msgGroupMeta_ns_residual <- (fromIntegral <$> getWord32le)
     _msgGroupMeta_flags <- getWord8
+    _msgGroupMeta_n_group_msgs <- getWord8
     _msgGroupMeta_group_msgs <- whileM (not <$> isEmpty) getWord16le
     pure MsgGroupMeta {..}
 
@@ -344,6 +348,7 @@ instance Binary MsgGroupMeta where
     putWord32le _msgGroupMeta_tom
     (putWord32le . fromIntegral) _msgGroupMeta_ns_residual
     putWord8 _msgGroupMeta_flags
+    putWord8 _msgGroupMeta_n_group_msgs
     mapM_ putWord16le _msgGroupMeta_group_msgs
 
 $(makeSBP 'msgGroupMeta ''MsgGroupMeta)

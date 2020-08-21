@@ -132,5 +132,6 @@ message MsgGroupMeta {
     uint32 tom = 3;
     sint32 ns_residual = 4;
     uint32 flags = 5;
-    repeated uint32 group_msgs = 6;
+    uint32 n_group_msgs = 6;
+    repeated uint32 group_msgs = 7;
 }

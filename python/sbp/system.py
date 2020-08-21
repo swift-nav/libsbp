@@ -865,7 +865,7 @@ It also lists the atomic contents (i.e. types of messages included) of the Solut
   sbp : SBP
     SBP parent object to inherit from.
   group_id : int
-    Id of the Msgs Group, 0 is Unknown, 1 is Bestpos-Fusion, 2 is Gnss
+    Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss
   wn : int
     GPS Week Number or zero if Reference epoch is not GPS
   tom : int
@@ -876,8 +876,12 @@ from -500000 to 500000)
 
   flags : int
     Status flags (reserved)
+  n_group_msgs : int
+    Size of list group_msgs
   group_msgs : array
-    An inorder list of message types included in the Solution Group
+    An inorder list of message types included in the Solution Group,
+including GROUP_META itself
+
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
@@ -888,6 +892,7 @@ from -500000 to 500000)
                    'tom' / construct.Int32ul,
                    'ns_residual' / construct.Int32sl,
                    'flags' / construct.Int8ul,
+                   'n_group_msgs' / construct.Int8ul,
                    construct.GreedyRange('group_msgs' / construct.Int16ul),)
   __slots__ = [
                'group_id',
@@ -895,6 +900,7 @@ from -500000 to 500000)
                'tom',
                'ns_residual',
                'flags',
+               'n_group_msgs',
                'group_msgs',
               ]
 
@@ -913,6 +919,7 @@ from -500000 to 500000)
       self.tom = kwargs.pop('tom')
       self.ns_residual = kwargs.pop('ns_residual')
       self.flags = kwargs.pop('flags')
+      self.n_group_msgs = kwargs.pop('n_group_msgs')
       self.group_msgs = kwargs.pop('group_msgs')
 
   def __repr__(self):

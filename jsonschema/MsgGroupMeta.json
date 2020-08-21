@@ -21,6 +21,7 @@
     "tom": {"type": "integer"},
     "ns_residual": {"type": "integer"},
     "flags": {"type": "integer"},
+    "n_group_msgs": {"type": "integer"},
     "group_msgs": {"type": "array", "items": {"type": "integer"}}
   },
   "required": [
@@ -29,6 +30,7 @@
     "tom",
     "ns_residual",
     "flags",
+    "n_group_msgs",
     "group_msgs"
   ]
 }

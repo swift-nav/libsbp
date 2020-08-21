@@ -372,6 +372,7 @@ It also lists the atomic contents (i.e. types of messages included) of the Solut
                'tom',
                'ns_residual',
                'flags',
+               'n_group_msgs',
                'group_msgs',
                ]
   @classmethod
@@ -387,6 +388,8 @@ It also lists the atomic contents (i.e. types of messages included) of the Solut
     ret['ns_residual'] = __ns_residual
     (__flags, offset, length) = get_u8(buf, offset, length)
     ret['flags'] = __flags
+    (__n_group_msgs, offset, length) = get_u8(buf, offset, length)
+    ret['n_group_msgs'] = __n_group_msgs
     (__group_msgs, offset, length) = get_array(get_u16)(buf, offset, length)
     ret['group_msgs'] = __group_msgs
     return ret, offset, length
@@ -400,6 +403,7 @@ It also lists the atomic contents (i.e. types of messages included) of the Solut
     self.tom = res['tom']
     self.ns_residual = res['ns_residual']
     self.flags = res['flags']
+    self.n_group_msgs = res['n_group_msgs']
     self.group_msgs = res['group_msgs']
     return res, off, length
 

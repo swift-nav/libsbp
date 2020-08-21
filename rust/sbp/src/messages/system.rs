@@ -299,7 +299,7 @@ impl crate::serialize::SbpSerialize for MsgGnssTimeOffset {
 #[allow(non_snake_case)]
 pub struct MsgGroupMeta {
     pub sender_id: Option<u16>,
-    /// Id of the Msgs Group, 0 is Unknown, 1 is Bestpos-Fusion, 2 is Gnss
+    /// Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss
     pub group_id: u8,
     /// GPS Week Number or zero if Reference epoch is not GPS
     pub wn: u16,
@@ -310,7 +310,10 @@ pub struct MsgGroupMeta {
     pub ns_residual: i32,
     /// Status flags (reserved)
     pub flags: u8,
-    /// An inorder list of message types included in the Solution Group
+    /// Size of list group_msgs
+    pub n_group_msgs: u8,
+    /// An inorder list of message types included in the Solution Group,
+    /// including GROUP_META itself
     pub group_msgs: Vec<u16>,
 }
 
@@ -324,6 +327,7 @@ impl MsgGroupMeta {
             tom: _buf.read_u32::<LittleEndian>()?,
             ns_residual: _buf.read_i32::<LittleEndian>()?,
             flags: _buf.read_u8()?,
+            n_group_msgs: _buf.read_u8()?,
             group_msgs: crate::parser::read_u16_array(_buf)?,
         } )
     }
@@ -355,6 +359,7 @@ impl crate::serialize::SbpSerialize for MsgGroupMeta {
         self.tom.append_to_sbp_buffer(buf);
         self.ns_residual.append_to_sbp_buffer(buf);
         self.flags.append_to_sbp_buffer(buf);
+        self.n_group_msgs.append_to_sbp_buffer(buf);
         self.group_msgs.append_to_sbp_buffer(buf);
     }
 
@@ -365,6 +370,7 @@ impl crate::serialize::SbpSerialize for MsgGroupMeta {
         size += self.tom.sbp_size();
         size += self.ns_residual.sbp_size();
         size += self.flags.sbp_size();
+        size += self.n_group_msgs.sbp_size();
         size += self.group_msgs.sbp_size();
         size
     }

@@ -22,8 +22,8 @@ use common::AlmostEq;
 fn test_auto_check_sbp_system_36() {
     {
         let payload: Vec<u8> = vec![
-            85, 10, 255, 238, 238, 16, 1, 192, 7, 64, 226, 1, 0, 0, 0, 0, 0, 3, 10, 2, 2, 255, 20,
-            193,
+            85, 10, 255, 238, 238, 19, 1, 192, 7, 64, 226, 1, 0, 0, 0, 0, 0, 3, 3, 10, 255, 10, 2,
+            2, 255, 253, 141,
         ];
 
         // Test the round trip payload parsing
@@ -56,14 +56,24 @@ fn test_auto_check_sbp_system_36() {
                     msg.group_id
                 );
                 assert_eq!(
-                    msg.group_msgs[0], 522,
-                    "incorrect value for group_msgs[0], expected 522, is {}",
+                    msg.group_msgs[0], 65290,
+                    "incorrect value for group_msgs[0], expected 65290, is {}",
                     msg.group_msgs[0]
                 );
                 assert_eq!(
-                    msg.group_msgs[1], 65282,
-                    "incorrect value for group_msgs[1], expected 65282, is {}",
+                    msg.group_msgs[1], 522,
+                    "incorrect value for group_msgs[1], expected 522, is {}",
                     msg.group_msgs[1]
+                );
+                assert_eq!(
+                    msg.group_msgs[2], 65282,
+                    "incorrect value for group_msgs[2], expected 65282, is {}",
+                    msg.group_msgs[2]
+                );
+                assert_eq!(
+                    msg.n_group_msgs, 3,
+                    "incorrect value for n_group_msgs, expected 3, is {}",
+                    msg.n_group_msgs
                 );
                 assert_eq!(
                     msg.ns_residual, 0,
