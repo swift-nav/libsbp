@@ -309,13 +309,16 @@ definitions:
             desc: Status flags (reserved)
 
  - MSG_GROUP_META:
-     id: 0xFF0A
+     id: 0xFF0A  # 65290
      short_desc: Solution Group Metadata
      public: true
      desc: |
        This leading message lists the time metadata of the Solution Group.
        It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
      fields:
+       - group_id:
+           type: u8
+           desc: Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss
        - wn:
            type: u16
            units: weeks
@@ -351,13 +354,18 @@ definitions:
                    - 2: GNSS+INS (Fuzed)
                    - 3: Reserved
              - 0-1:
-                 desc: Time source
+                 desc: Time reference
                  values:
                    - 0: Reference epoch is start of current GPS week
                    - 1: Reference epoch is Sensor Time Init
                    - 2: Reference epoch is unknown
                    - 3: Reference epoch is last PPS
+       - n_group_msgs:
+           type: u8
+           desc: Size of list group_msgs
        - group_msgs:
            type: array
            fill: u16
-           desc: An inorder list of message types included in the Solution Group
+           desc: |
+             An inorder list of message types included in the Solution Group,
+             including GROUP_META itself

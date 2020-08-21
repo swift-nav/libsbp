@@ -6,24 +6,26 @@ tests:
 
 - msg:
     fields:
+      group_id: 1
       wn: 1984
       tom: 123456
       ns_residual: 0
       flags: 0b00000011
-      group_msgs: [522, 65282]  # pos_lla & msg_ins_updates
+      n_group_msgs: 3  # includes group_meta itself
+      group_msgs: [65290, 522, 65282]  # group_meta, pos_lla & msg_ins_updates
     module: sbp.system
     name: MsgGroupMeta
   msg_type: '0xFF0A'
-  raw_json: '{"crc": 19612, "flags": 3, "wn": 1984, "sender": 61166, "msg_type": 65290,
-  "tom": 123456, "ns_residual": 0, "length": 15, "group_msgs": [522, 65282], "preamble": 85, "payload":
-  "wAdA4gEAAAAAAAMKAgL/"}'
+  raw_json: '{"crc": 36349, "flags": 3, "group_id": 1, "wn": 1984, "sender": 61166, "msg_type": 65290,
+  "tom": 123456, "ns_residual": 0, "length": 19, "n_group_msgs": 3 ,"group_msgs": [65290, 522, 65282], "preamble": 85, "payload":
+  "AcAHQOIBAAAAAAADAwr/CgIC/w=="}'
   # base64
-  raw_packet: VQr/7u4PwAdA4gEAAAAAAAMKAgL/nEw=
+  raw_packet: VQr/7u4TAcAHQOIBAAAAAAADAwr/CgIC//2N
   sbp:
-    crc: '0x4c9c'
-    length: 15
+    crc: '0x8dfd'
+    length: 19
     msg_type: '0xFF0A'
-    payload: wAdA4gEAAAAAAAMKAgL/
+    payload: AcAHQOIBAAAAAAADAwr/CgIC/w==
     preamble: '0x55'
     sender: '0xEEEE'
 version: 3.1
