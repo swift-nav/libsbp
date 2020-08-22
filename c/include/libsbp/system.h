@@ -153,13 +153,16 @@ typedef struct SBP_ATTR_PACKED {
  */
 #define SBP_MSG_GROUP_META            0xFF0A
 typedef struct SBP_ATTR_PACKED {
-  u16 wn;             /**< GPS Week Number or zero if Reference epoch is not GPS [weeks] */
-  u32 tom;            /**< Time of Measurement in Milliseconds since reference epoch [ms] */
-  s32 ns_residual;    /**< Nanosecond residual of millisecond-rounded TOM (ranges
+  u8 group_id;        /**< Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss */
+  u16 wn;              /**< GPS Week Number or zero if Reference epoch is not GPS [weeks] */
+  u32 tom;             /**< Time of Measurement in Milliseconds since reference epoch [ms] */
+  s32 ns_residual;     /**< Nanosecond residual of millisecond-rounded TOM (ranges
 from -500000 to 500000)
  [ns] */
-  u8 flags;          /**< Status flags (reserved) */
-  u16 group_msgs[0];  /**< An inorder list of message types included in the Solution Group */
+  u8 flags;           /**< Status flags (reserved) */
+  u8 n_group_msgs;    /**< Size of list group_msgs */
+  u16 group_msgs[0];   /**< An inorder list of message types included in the Solution Group,
+including GROUP_META itself */
 } msg_group_meta_t;
 
 
