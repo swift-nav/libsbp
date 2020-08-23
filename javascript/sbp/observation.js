@@ -839,8 +839,10 @@ MsgEphemerisQzss.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
  * @field af1 number (float, 4 bytes) Polynomial clock correction coefficient (clock drift)
  * @field af2 number (float, 4 bytes) Polynomial clock correction coefficient (rate of clock drift)
  * @field toc GPSTimeSec Clock reference
- * @field iode number (unsigned 8-bit int, 1 byte) Issue of ephemeris data
- * @field iodc number (unsigned 16-bit int, 2 bytes) Issue of clock data
+ * @field iode number (unsigned 8-bit int, 1 byte) Issue of ephemeris data  Calculated from the navigation data parameter t_oe per
+ *   RTCM/CSNO recommendation: IODE = mod (t_oe / 720, 240)
+ * @field iodc number (unsigned 16-bit int, 2 bytes) Issue of clock data  Calculated from the navigation data parameter t_oe per
+ *   RTCM/CSNO recommendation: IODE = mod (t_oc / 720, 240)
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -936,8 +938,8 @@ MsgEphemerisBds.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
  * @field af1 number (float, 8 bytes) Polynomial clock correction coefficient (clock drift)
  * @field af2 number (float, 4 bytes) Polynomial clock correction coefficient (rate of clock drift)
  * @field toc GPSTimeSec Clock reference
- * @field iode number (unsigned 16-bit int, 2 bytes) Issue of ephemeris data
- * @field iodc number (unsigned 16-bit int, 2 bytes) Issue of clock data
+ * @field iode number (unsigned 16-bit int, 2 bytes) Issue of data (IODnav)
+ * @field iodc number (unsigned 16-bit int, 2 bytes) Issue of data (IODnav). Always equal to iode
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -1034,9 +1036,9 @@ MsgEphemerisGalDepA.prototype.fieldSpec.push(['iodc', 'writeUInt16LE', 2]);
  * @field af1 number (float, 8 bytes) Polynomial clock correction coefficient (clock drift)
  * @field af2 number (float, 4 bytes) Polynomial clock correction coefficient (rate of clock drift)
  * @field toc GPSTimeSec Clock reference
- * @field iode number (unsigned 16-bit int, 2 bytes) Issue of ephemeris data
- * @field iodc number (unsigned 16-bit int, 2 bytes) Issue of clock data
- * @field source number (unsigned 8-bit int, 1 byte) 0=I/NAV, 1=F/NAV, ...
+ * @field iode number (unsigned 16-bit int, 2 bytes) Issue of data (IODnav)
+ * @field iodc number (unsigned 16-bit int, 2 bytes) Issue of data (IODnav). Always equal to iode
+ * @field source number (unsigned 8-bit int, 1 byte) 0=I/NAV, 1=F/NAV
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -1386,7 +1388,7 @@ MsgEphemerisGloDepC.prototype.fieldSpec.push(['fcn', 'writeUInt8', 1]);
  * @field vel array Velocity vector of the SV at tb in PZ-90.02 coordinates system
  * @field acc array Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
  * @field fcn number (unsigned 8-bit int, 1 byte) Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
- * @field iod number (unsigned 8-bit int, 1 byte) Issue of ephemeris data
+ * @field iod number (unsigned 8-bit int, 1 byte) Issue of data. Equal to the 7 bits of the immediate data word t_b
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -1440,7 +1442,7 @@ MsgEphemerisGloDepD.prototype.fieldSpec.push(['iod', 'writeUInt8', 1]);
  * @field vel array Velocity vector of the SV at tb in PZ-90.02 coordinates system
  * @field acc array Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
  * @field fcn number (unsigned 8-bit int, 1 byte) Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
- * @field iod number (unsigned 8-bit int, 1 byte) Issue of ephemeris data
+ * @field iod number (unsigned 8-bit int, 1 byte) Issue of data. Equal to the 7 bits of the immediate data word t_b
  *
  * @param sbp An SBP object with a payload to be decoded.
  */

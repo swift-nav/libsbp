@@ -866,14 +866,6 @@ It also lists the atomic contents (i.e. types of messages included) of the Solut
     SBP parent object to inherit from.
   group_id : int
     Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss
-  wn : int
-    GPS Week Number or zero if Reference epoch is not GPS
-  tom : int
-    Time of Measurement in Milliseconds since reference epoch
-  ns_residual : int
-    Nanosecond residual of millisecond-rounded TOM (ranges
-from -500000 to 500000)
-
   flags : int
     Status flags (reserved)
   n_group_msgs : int
@@ -887,17 +879,11 @@ including GROUP_META itself
   """
   _parser = construct.Struct(
                    'group_id' / construct.Int8ul,
-                   'wn' / construct.Int16ul,
-                   'tom' / construct.Int32ul,
-                   'ns_residual' / construct.Int32sl,
                    'flags' / construct.Int8ul,
                    'n_group_msgs' / construct.Int8ul,
                    construct.GreedyRange('group_msgs' / construct.Int16ul),)
   __slots__ = [
                'group_id',
-               'wn',
-               'tom',
-               'ns_residual',
                'flags',
                'n_group_msgs',
                'group_msgs',
@@ -914,9 +900,6 @@ including GROUP_META itself
       self.msg_type = SBP_MSG_GROUP_META
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.group_id = kwargs.pop('group_id')
-      self.wn = kwargs.pop('wn')
-      self.tom = kwargs.pop('tom')
-      self.ns_residual = kwargs.pop('ns_residual')
       self.flags = kwargs.pop('flags')
       self.n_group_msgs = kwargs.pop('n_group_msgs')
       self.group_msgs = kwargs.pop('group_msgs')

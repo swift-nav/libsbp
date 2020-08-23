@@ -162,6 +162,125 @@ from -500000 to 500000)
     d.update(j)
     return d
     
+SBP_MSG_GPS_TIME_GNSS = 0x0104
+class MsgGPSTimeGnss(SBP):
+  """SBP class for message MSG_GPS_TIME_GNSS (0x0104).
+
+  You can have MSG_GPS_TIME_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the GPS time, representing the time since
+the GPS epoch began on midnight January 6, 1980 UTC. GPS time
+counts the weeks and seconds of the week. The weeks begin at the
+Saturday/Sunday transition. GPS week 0 began at the beginning of
+the GPS time scale.
+
+Within each week number, the GPS time of the week is between
+between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
+does not accumulate leap seconds, and as of now, has a small
+offset from UTC. In a message stream, this message precedes a
+set of other navigation messages referenced to the same time
+(but lacking the ns field) and indicates a more precise time of
+these messages.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  wn : int
+    GPS week number
+  tow : int
+    GPS time of week rounded to the nearest millisecond
+  ns_residual : int
+    Nanosecond residual of millisecond-rounded TOW (ranges
+from -500000 to 500000)
+
+  flags : int
+    Status flags (reserved)
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'wn' / construct.Int16ul,
+                   'tow' / construct.Int32ul,
+                   'ns_residual' / construct.Int32sl,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'wn',
+               'tow',
+               'ns_residual',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgGPSTimeGnss,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgGPSTimeGnss, self).__init__()
+      self.msg_type = SBP_MSG_GPS_TIME_GNSS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.wn = kwargs.pop('wn')
+      self.tow = kwargs.pop('tow')
+      self.ns_residual = kwargs.pop('ns_residual')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgGPSTimeGnss.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgGPSTimeGnss(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgGPSTimeGnss._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgGPSTimeGnss._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgGPSTimeGnss._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgGPSTimeGnss, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_UTC_TIME = 0x0103
 class MsgUtcTime(SBP):
   """SBP class for message MSG_UTC_TIME (0x0103).
@@ -289,6 +408,137 @@ which indicate the source of the UTC offset value and source of the time fix.
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgUtcTime, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_UTC_TIME_GNSS = 0x0105
+class MsgUtcTimeGnss(SBP):
+  """SBP class for message MSG_UTC_TIME_GNSS (0x0105).
+
+  You can have MSG_UTC_TIME_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the Universal Coordinated Time (UTC).  Note the flags
+which indicate the source of the UTC offset value and source of the time fix.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  flags : int
+    Indicates source and time validity
+  tow : int
+    GPS time of week rounded to the nearest millisecond
+  year : int
+    Year
+  month : int
+    Month (range 1 .. 12)
+  day : int
+    days in the month (range 1-31)
+  hours : int
+    hours of day (range 0-23)
+  minutes : int
+    minutes of hour (range 0-59)
+  seconds : int
+    seconds of minute (range 0-60) rounded down
+  ns : int
+    nanoseconds of second (range 0-999999999)
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'flags' / construct.Int8ul,
+                   'tow' / construct.Int32ul,
+                   'year' / construct.Int16ul,
+                   'month' / construct.Int8ul,
+                   'day' / construct.Int8ul,
+                   'hours' / construct.Int8ul,
+                   'minutes' / construct.Int8ul,
+                   'seconds' / construct.Int8ul,
+                   'ns' / construct.Int32ul,)
+  __slots__ = [
+               'flags',
+               'tow',
+               'year',
+               'month',
+               'day',
+               'hours',
+               'minutes',
+               'seconds',
+               'ns',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgUtcTimeGnss,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgUtcTimeGnss, self).__init__()
+      self.msg_type = SBP_MSG_UTC_TIME_GNSS
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.flags = kwargs.pop('flags')
+      self.tow = kwargs.pop('tow')
+      self.year = kwargs.pop('year')
+      self.month = kwargs.pop('month')
+      self.day = kwargs.pop('day')
+      self.hours = kwargs.pop('hours')
+      self.minutes = kwargs.pop('minutes')
+      self.seconds = kwargs.pop('seconds')
+      self.ns = kwargs.pop('ns')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgUtcTimeGnss.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgUtcTimeGnss(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgUtcTimeGnss._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgUtcTimeGnss._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgUtcTimeGnss._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgUtcTimeGnss, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -4394,7 +4644,9 @@ by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 
 msg_classes = {
   0x0102: MsgGPSTime,
+  0x0104: MsgGPSTimeGnss,
   0x0103: MsgUtcTime,
+  0x0105: MsgUtcTimeGnss,
   0x0208: MsgDops,
   0x0209: MsgPosECEF,
   0x0214: MsgPosECEFCov,
