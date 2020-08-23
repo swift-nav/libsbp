@@ -868,6 +868,88 @@ impl crate::serialize::SbpSerialize for MsgGPSTimeDepA {
     }
 }
 
+/// GPS Time
+///
+/// This message reports the GPS time, representing the time since
+/// the GPS epoch began on midnight January 6, 1980 UTC. GPS time
+/// counts the weeks and seconds of the week. The weeks begin at the
+/// Saturday/Sunday transition. GPS week 0 began at the beginning of
+/// the GPS time scale.
+///
+/// Within each week number, the GPS time of the week is between
+/// between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
+/// does not accumulate leap seconds, and as of now, has a small
+/// offset from UTC. In a message stream, this message precedes a
+/// set of other navigation messages referenced to the same time
+/// (but lacking the ns field) and indicates a more precise time of
+/// these messages.
+///
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[derive(Debug, Clone)]
+#[allow(non_snake_case)]
+pub struct MsgGPSTimeGnss {
+    pub sender_id: Option<u16>,
+    /// GPS week number
+    pub wn: u16,
+    /// GPS time of week rounded to the nearest millisecond
+    pub tow: u32,
+    /// Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
+    /// 500000)
+    pub ns_residual: i32,
+    /// Status flags (reserved)
+    pub flags: u8,
+}
+
+impl MsgGPSTimeGnss {
+    #[rustfmt::skip]
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTimeGnss, crate::Error> {
+        Ok( MsgGPSTimeGnss{
+            sender_id: None,
+            wn: _buf.read_u16::<LittleEndian>()?,
+            tow: _buf.read_u32::<LittleEndian>()?,
+            ns_residual: _buf.read_i32::<LittleEndian>()?,
+            flags: _buf.read_u8()?,
+        } )
+    }
+}
+impl super::SBPMessage for MsgGPSTimeGnss {
+    fn get_message_type(&self) -> u16 {
+        260
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgGPSTimeGnss {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.wn.append_to_sbp_buffer(buf);
+        self.tow.append_to_sbp_buffer(buf);
+        self.ns_residual.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.wn.sbp_size();
+        size += self.tow.sbp_size();
+        size += self.ns_residual.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Single-point position in ECEF
 ///
 /// The position solution message reports absolute Earth Centered
@@ -2048,6 +2130,101 @@ impl super::SBPMessage for MsgUtcTime {
 }
 
 impl crate::serialize::SbpSerialize for MsgUtcTime {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.flags.append_to_sbp_buffer(buf);
+        self.tow.append_to_sbp_buffer(buf);
+        self.year.append_to_sbp_buffer(buf);
+        self.month.append_to_sbp_buffer(buf);
+        self.day.append_to_sbp_buffer(buf);
+        self.hours.append_to_sbp_buffer(buf);
+        self.minutes.append_to_sbp_buffer(buf);
+        self.seconds.append_to_sbp_buffer(buf);
+        self.ns.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.flags.sbp_size();
+        size += self.tow.sbp_size();
+        size += self.year.sbp_size();
+        size += self.month.sbp_size();
+        size += self.day.sbp_size();
+        size += self.hours.sbp_size();
+        size += self.minutes.sbp_size();
+        size += self.seconds.sbp_size();
+        size += self.ns.sbp_size();
+        size
+    }
+}
+
+/// UTC Time
+///
+/// This message reports the Universal Coordinated Time (UTC).  Note the flags
+/// which indicate the source of the UTC offset value and source of the time fix.
+///
+#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[derive(Debug, Clone)]
+#[allow(non_snake_case)]
+pub struct MsgUtcTimeGnss {
+    pub sender_id: Option<u16>,
+    /// Indicates source and time validity
+    pub flags: u8,
+    /// GPS time of week rounded to the nearest millisecond
+    pub tow: u32,
+    /// Year
+    pub year: u16,
+    /// Month (range 1 .. 12)
+    pub month: u8,
+    /// days in the month (range 1-31)
+    pub day: u8,
+    /// hours of day (range 0-23)
+    pub hours: u8,
+    /// minutes of hour (range 0-59)
+    pub minutes: u8,
+    /// seconds of minute (range 0-60) rounded down
+    pub seconds: u8,
+    /// nanoseconds of second (range 0-999999999)
+    pub ns: u32,
+}
+
+impl MsgUtcTimeGnss {
+    #[rustfmt::skip]
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUtcTimeGnss, crate::Error> {
+        Ok( MsgUtcTimeGnss{
+            sender_id: None,
+            flags: _buf.read_u8()?,
+            tow: _buf.read_u32::<LittleEndian>()?,
+            year: _buf.read_u16::<LittleEndian>()?,
+            month: _buf.read_u8()?,
+            day: _buf.read_u8()?,
+            hours: _buf.read_u8()?,
+            minutes: _buf.read_u8()?,
+            seconds: _buf.read_u8()?,
+            ns: _buf.read_u32::<LittleEndian>()?,
+        } )
+    }
+}
+impl super::SBPMessage for MsgUtcTimeGnss {
+    fn get_message_type(&self) -> u16 {
+        261
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
+        let trait_object = self as &dyn super::SBPMessage;
+        crate::framer::to_frame(trait_object)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgUtcTimeGnss {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.flags.append_to_sbp_buffer(buf);

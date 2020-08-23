@@ -93,6 +93,50 @@ $(makeSBP 'msgGpsTime ''MsgGpsTime)
 $(makeJSON "_msgGpsTime_" ''MsgGpsTime)
 $(makeLenses ''MsgGpsTime)
 
+msgGpsTimeGnss :: Word16
+msgGpsTimeGnss = 0x0104
+
+-- | SBP class for message MSG_GPS_TIME_GNSS (0x0104).
+--
+-- This message reports the GPS time, representing the time since the GPS epoch
+-- began on midnight January 6, 1980 UTC. GPS time counts the weeks and seconds
+-- of the week. The weeks begin at the Saturday/Sunday transition. GPS week 0
+-- began at the beginning of the GPS time scale.  Within each week number, the
+-- GPS time of the week is between between 0 and 604800 seconds (=60*60*24*7).
+-- Note that GPS time does not accumulate leap seconds, and as of now, has a
+-- small offset from UTC. In a message stream, this message precedes a set of
+-- other navigation messages referenced to the same time (but lacking the ns
+-- field) and indicates a more precise time of these messages.
+data MsgGpsTimeGnss = MsgGpsTimeGnss
+  { _msgGpsTimeGnss_wn        :: !Word16
+    -- ^ GPS week number
+  , _msgGpsTimeGnss_tow       :: !Word32
+    -- ^ GPS time of week rounded to the nearest millisecond
+  , _msgGpsTimeGnss_ns_residual :: !Int32
+    -- ^ Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to
+    -- 500000)
+  , _msgGpsTimeGnss_flags     :: !Word8
+    -- ^ Status flags (reserved)
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgGpsTimeGnss where
+  get = do
+    _msgGpsTimeGnss_wn <- getWord16le
+    _msgGpsTimeGnss_tow <- getWord32le
+    _msgGpsTimeGnss_ns_residual <- (fromIntegral <$> getWord32le)
+    _msgGpsTimeGnss_flags <- getWord8
+    pure MsgGpsTimeGnss {..}
+
+  put MsgGpsTimeGnss {..} = do
+    putWord16le _msgGpsTimeGnss_wn
+    putWord32le _msgGpsTimeGnss_tow
+    (putWord32le . fromIntegral) _msgGpsTimeGnss_ns_residual
+    putWord8 _msgGpsTimeGnss_flags
+
+$(makeSBP 'msgGpsTimeGnss ''MsgGpsTimeGnss)
+$(makeJSON "_msgGpsTimeGnss_" ''MsgGpsTimeGnss)
+$(makeLenses ''MsgGpsTimeGnss)
+
 msgUtcTime :: Word16
 msgUtcTime = 0x0103
 
@@ -149,6 +193,63 @@ instance Binary MsgUtcTime where
 $(makeSBP 'msgUtcTime ''MsgUtcTime)
 $(makeJSON "_msgUtcTime_" ''MsgUtcTime)
 $(makeLenses ''MsgUtcTime)
+
+msgUtcTimeGnss :: Word16
+msgUtcTimeGnss = 0x0105
+
+-- | SBP class for message MSG_UTC_TIME_GNSS (0x0105).
+--
+-- This message reports the Universal Coordinated Time (UTC).  Note the flags
+-- which indicate the source of the UTC offset value and source of the time
+-- fix.
+data MsgUtcTimeGnss = MsgUtcTimeGnss
+  { _msgUtcTimeGnss_flags :: !Word8
+    -- ^ Indicates source and time validity
+  , _msgUtcTimeGnss_tow   :: !Word32
+    -- ^ GPS time of week rounded to the nearest millisecond
+  , _msgUtcTimeGnss_year  :: !Word16
+    -- ^ Year
+  , _msgUtcTimeGnss_month :: !Word8
+    -- ^ Month (range 1 .. 12)
+  , _msgUtcTimeGnss_day   :: !Word8
+    -- ^ days in the month (range 1-31)
+  , _msgUtcTimeGnss_hours :: !Word8
+    -- ^ hours of day (range 0-23)
+  , _msgUtcTimeGnss_minutes :: !Word8
+    -- ^ minutes of hour (range 0-59)
+  , _msgUtcTimeGnss_seconds :: !Word8
+    -- ^ seconds of minute (range 0-60) rounded down
+  , _msgUtcTimeGnss_ns    :: !Word32
+    -- ^ nanoseconds of second (range 0-999999999)
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgUtcTimeGnss where
+  get = do
+    _msgUtcTimeGnss_flags <- getWord8
+    _msgUtcTimeGnss_tow <- getWord32le
+    _msgUtcTimeGnss_year <- getWord16le
+    _msgUtcTimeGnss_month <- getWord8
+    _msgUtcTimeGnss_day <- getWord8
+    _msgUtcTimeGnss_hours <- getWord8
+    _msgUtcTimeGnss_minutes <- getWord8
+    _msgUtcTimeGnss_seconds <- getWord8
+    _msgUtcTimeGnss_ns <- getWord32le
+    pure MsgUtcTimeGnss {..}
+
+  put MsgUtcTimeGnss {..} = do
+    putWord8 _msgUtcTimeGnss_flags
+    putWord32le _msgUtcTimeGnss_tow
+    putWord16le _msgUtcTimeGnss_year
+    putWord8 _msgUtcTimeGnss_month
+    putWord8 _msgUtcTimeGnss_day
+    putWord8 _msgUtcTimeGnss_hours
+    putWord8 _msgUtcTimeGnss_minutes
+    putWord8 _msgUtcTimeGnss_seconds
+    putWord32le _msgUtcTimeGnss_ns
+
+$(makeSBP 'msgUtcTimeGnss ''MsgUtcTimeGnss)
+$(makeJSON "_msgUtcTimeGnss_" ''MsgUtcTimeGnss)
+$(makeLenses ''MsgUtcTimeGnss)
 
 msgDops :: Word16
 msgDops = 0x0208

@@ -72,6 +72,33 @@ from -500000 to 500000)
 } msg_gps_time_t;
 
 
+/** GPS Time
+ *
+ * This message reports the GPS time, representing the time since
+ * the GPS epoch began on midnight January 6, 1980 UTC. GPS time
+ * counts the weeks and seconds of the week. The weeks begin at the
+ * Saturday/Sunday transition. GPS week 0 began at the beginning of
+ * the GPS time scale.
+ * 
+ * Within each week number, the GPS time of the week is between
+ * between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
+ * does not accumulate leap seconds, and as of now, has a small
+ * offset from UTC. In a message stream, this message precedes a
+ * set of other navigation messages referenced to the same time
+ * (but lacking the ns field) and indicates a more precise time of
+ * these messages.
+ */
+#define SBP_MSG_GPS_TIME_GNSS          0x0104
+typedef struct SBP_ATTR_PACKED {
+  u16 wn;             /**< GPS week number [weeks] */
+  u32 tow;            /**< GPS time of week rounded to the nearest millisecond [ms] */
+  s32 ns_residual;    /**< Nanosecond residual of millisecond-rounded TOW (ranges
+from -500000 to 500000)
+ [ns] */
+  u8 flags;          /**< Status flags (reserved) */
+} msg_gps_time_gnss_t;
+
+
 /** UTC Time
  *
  * This message reports the Universal Coordinated Time (UTC).  Note the flags
@@ -89,6 +116,25 @@ typedef struct SBP_ATTR_PACKED {
   u8 seconds;    /**< seconds of minute (range 0-60) rounded down [seconds] */
   u32 ns;         /**< nanoseconds of second (range 0-999999999) [nanoseconds] */
 } msg_utc_time_t;
+
+
+/** UTC Time
+ *
+ * This message reports the Universal Coordinated Time (UTC).  Note the flags
+ * which indicate the source of the UTC offset value and source of the time fix.
+ */
+#define SBP_MSG_UTC_TIME_GNSS          0x0105
+typedef struct SBP_ATTR_PACKED {
+  u8 flags;      /**< Indicates source and time validity */
+  u32 tow;        /**< GPS time of week rounded to the nearest millisecond [ms] */
+  u16 year;       /**< Year [year] */
+  u8 month;      /**< Month (range 1 .. 12) [months] */
+  u8 day;        /**< days in the month (range 1-31) [day] */
+  u8 hours;      /**< hours of day (range 0-23) [hours] */
+  u8 minutes;    /**< minutes of hour (range 0-59) [minutes] */
+  u8 seconds;    /**< seconds of minute (range 0-60) rounded down [seconds] */
+  u32 ns;         /**< nanoseconds of second (range 0-999999999) [nanoseconds] */
+} msg_utc_time_gnss_t;
 
 
 /** Dilution of Precision

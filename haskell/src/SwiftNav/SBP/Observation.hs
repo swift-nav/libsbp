@@ -930,9 +930,11 @@ data MsgEphemerisBds = MsgEphemerisBds
   , _msgEphemerisBds_toc    :: !GpsTimeSec
     -- ^ Clock reference
   , _msgEphemerisBds_iode   :: !Word8
-    -- ^ Issue of ephemeris data
+    -- ^ Issue of ephemeris data  Calculated from the navigation data parameter
+    -- t_oe per RTCM/CSNO recommendation: IODE = mod (t_oe / 720, 240)
   , _msgEphemerisBds_iodc   :: !Word16
-    -- ^ Issue of clock data
+    -- ^ Issue of clock data  Calculated from the navigation data parameter t_oe
+    -- per RTCM/CSNO recommendation: IODE = mod (t_oc / 720, 240)
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgEphemerisBds where
@@ -1050,9 +1052,9 @@ data MsgEphemerisGalDepA = MsgEphemerisGalDepA
   , _msgEphemerisGalDepA_toc     :: !GpsTimeSec
     -- ^ Clock reference
   , _msgEphemerisGalDepA_iode    :: !Word16
-    -- ^ Issue of ephemeris data
+    -- ^ Issue of data (IODnav)
   , _msgEphemerisGalDepA_iodc    :: !Word16
-    -- ^ Issue of clock data
+    -- ^ Issue of data (IODnav). Always equal to iode
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgEphemerisGalDepA where
@@ -1172,11 +1174,11 @@ data MsgEphemerisGal = MsgEphemerisGal
   , _msgEphemerisGal_toc     :: !GpsTimeSec
     -- ^ Clock reference
   , _msgEphemerisGal_iode    :: !Word16
-    -- ^ Issue of ephemeris data
+    -- ^ Issue of data (IODnav)
   , _msgEphemerisGal_iodc    :: !Word16
-    -- ^ Issue of clock data
+    -- ^ Issue of data (IODnav). Always equal to iode
   , _msgEphemerisGal_source  :: !Word8
-    -- ^ 0=I/NAV, 1=F/NAV, ...
+    -- ^ 0=I/NAV, 1=F/NAV
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgEphemerisGal where
@@ -1534,7 +1536,7 @@ data MsgEphemerisGloDepD = MsgEphemerisGloDepD
   , _msgEphemerisGloDepD_fcn  :: !Word8
     -- ^ Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
   , _msgEphemerisGloDepD_iod  :: !Word8
-    -- ^ Issue of ephemeris data
+    -- ^ Issue of data. Equal to the 7 bits of the immediate data word t_b
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgEphemerisGloDepD where
@@ -1592,7 +1594,7 @@ data MsgEphemerisGlo = MsgEphemerisGlo
   , _msgEphemerisGlo_fcn  :: !Word8
     -- ^ Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
   , _msgEphemerisGlo_iod  :: !Word8
-    -- ^ Issue of ephemeris data
+    -- ^ Issue of data. Equal to the 7 bits of the immediate data word t_b
   } deriving ( Show, Read, Eq )
 
 instance Binary MsgEphemerisGlo where

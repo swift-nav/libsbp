@@ -673,6 +673,18 @@ struct MessageTraits<msg_utc_time_t> {
 
 
 template<>
+struct MessageTraits<msg_gps_time_gnss_t> {
+  static constexpr u16 id = 260;
+};
+
+
+template<>
+struct MessageTraits<msg_utc_time_gnss_t> {
+  static constexpr u16 id = 261;
+};
+
+
+template<>
 struct MessageTraits<msg_settings_register_resp_t> {
   static constexpr u16 id = 431;
 };
