@@ -157,8 +157,8 @@ following RTCM DF391 specification.
 
   """
   _parser = construct.Embedded(construct.Struct(
-                     'tile_set_id' / construct.Int8ul,
-                     'tile_id' / construct.Int8ul,
+                     'tile_set_id' / construct.Int16ul,
+                     'tile_id' / construct.Int16ul,
                      'time' / construct.Struct(GPSTimeSec._parser),
                      'num_msgs' / construct.Int8ul,
                      'seq_num' / construct.Int8ul,
@@ -232,8 +232,8 @@ specifcation in units of m.
 
   """
   _parser = construct.Embedded(construct.Struct(
-                     'tile_set_id' / construct.Int8ul,
-                     'tile_id' / construct.Int8ul,
+                     'tile_set_id' / construct.Int16ul,
+                     'tile_id' / construct.Int16ul,
                      'time' / construct.Struct(GPSTimeSec._parser),
                      'num_msgs' / construct.Int16ul,
                      'seq_num' / construct.Int16ul,
@@ -1503,8 +1503,8 @@ note the definition of the bits is inverted.
 
   """
   _parser = construct.Struct(
-                   'tile_set_id' / construct.Int8ul,
-                   'tile_id' / construct.Int8ul,
+                   'tile_set_id' / construct.Int16ul,
+                   'tile_id' / construct.Int16ul,
                    'corner_nw_lat' / construct.Int16ul,
                    'corner_nw_lon' / construct.Int16ul,
                    'spacing_lat' / construct.Int16ul,

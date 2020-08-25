@@ -103,9 +103,9 @@ $(makeLenses ''PhaseBiasesContent)
 -- SBP message a limited to 255 bytes.  The header is used to tie multiple SBP
 -- messages into a sequence.
 data STECHeader = STECHeader
-  { _sTECHeader_tile_set_id   :: !Word8
+  { _sTECHeader_tile_set_id   :: !Word16
     -- ^ Unique identifier of the tile set this tile belongs to.
-  , _sTECHeader_tile_id       :: !Word8
+  , _sTECHeader_tile_id       :: !Word16
     -- ^ Unique identifier of this tile in the tile set.
   , _sTECHeader_time          :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
@@ -122,8 +122,8 @@ data STECHeader = STECHeader
 
 instance Binary STECHeader where
   get = do
-    _sTECHeader_tile_set_id <- getWord8
-    _sTECHeader_tile_id <- getWord8
+    _sTECHeader_tile_set_id <- getWord16le
+    _sTECHeader_tile_id <- getWord16le
     _sTECHeader_time <- get
     _sTECHeader_num_msgs <- getWord8
     _sTECHeader_seq_num <- getWord8
@@ -132,8 +132,8 @@ instance Binary STECHeader where
     pure STECHeader {..}
 
   put STECHeader {..} = do
-    putWord8 _sTECHeader_tile_set_id
-    putWord8 _sTECHeader_tile_id
+    putWord16le _sTECHeader_tile_set_id
+    putWord16le _sTECHeader_tile_id
     put _sTECHeader_time
     putWord8 _sTECHeader_num_msgs
     putWord8 _sTECHeader_seq_num
@@ -148,9 +148,9 @@ $(makeLenses ''STECHeader)
 -- The LPP message contains nested variable length arrays which are not
 -- suppported in SBP, so each grid point will be identified by the index.
 data GriddedCorrectionHeader = GriddedCorrectionHeader
-  { _griddedCorrectionHeader_tile_set_id           :: !Word8
+  { _griddedCorrectionHeader_tile_set_id           :: !Word16
     -- ^ Unique identifier of the tile set this tile belongs to.
-  , _griddedCorrectionHeader_tile_id               :: !Word8
+  , _griddedCorrectionHeader_tile_id               :: !Word16
     -- ^ Unique identifier of this tile in the tile set.
   , _griddedCorrectionHeader_time                  :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
@@ -170,8 +170,8 @@ data GriddedCorrectionHeader = GriddedCorrectionHeader
 
 instance Binary GriddedCorrectionHeader where
   get = do
-    _griddedCorrectionHeader_tile_set_id <- getWord8
-    _griddedCorrectionHeader_tile_id <- getWord8
+    _griddedCorrectionHeader_tile_set_id <- getWord16le
+    _griddedCorrectionHeader_tile_id <- getWord16le
     _griddedCorrectionHeader_time <- get
     _griddedCorrectionHeader_num_msgs <- getWord16le
     _griddedCorrectionHeader_seq_num <- getWord16le
@@ -181,8 +181,8 @@ instance Binary GriddedCorrectionHeader where
     pure GriddedCorrectionHeader {..}
 
   put GriddedCorrectionHeader {..} = do
-    putWord8 _griddedCorrectionHeader_tile_set_id
-    putWord8 _griddedCorrectionHeader_tile_id
+    putWord16le _griddedCorrectionHeader_tile_set_id
+    putWord16le _griddedCorrectionHeader_tile_id
     put _griddedCorrectionHeader_time
     putWord16le _griddedCorrectionHeader_num_msgs
     putWord16le _griddedCorrectionHeader_seq_num
@@ -631,9 +631,9 @@ msgSsrTileDefinition = 0x05F6
 -- information element GNSS-SSR-CorrectionPoints. SBP only supports gridded
 -- arrays of correction points, not lists of points.
 data MsgSsrTileDefinition = MsgSsrTileDefinition
-  { _msgSsrTileDefinition_tile_set_id :: !Word8
+  { _msgSsrTileDefinition_tile_set_id :: !Word16
     -- ^ Unique identifier of the tile set this tile belongs to.
-  , _msgSsrTileDefinition_tile_id     :: !Word8
+  , _msgSsrTileDefinition_tile_id     :: !Word16
     -- ^ Unique identifier of this tile in the tile set.  See GNSS-SSR-
     -- ArrayOfCorrectionPoints field correctionPointSetID.
   , _msgSsrTileDefinition_corner_nw_lat :: !Word16
@@ -673,8 +673,8 @@ data MsgSsrTileDefinition = MsgSsrTileDefinition
 
 instance Binary MsgSsrTileDefinition where
   get = do
-    _msgSsrTileDefinition_tile_set_id <- getWord8
-    _msgSsrTileDefinition_tile_id <- getWord8
+    _msgSsrTileDefinition_tile_set_id <- getWord16le
+    _msgSsrTileDefinition_tile_id <- getWord16le
     _msgSsrTileDefinition_corner_nw_lat <- getWord16le
     _msgSsrTileDefinition_corner_nw_lon <- getWord16le
     _msgSsrTileDefinition_spacing_lat <- getWord16le
@@ -685,8 +685,8 @@ instance Binary MsgSsrTileDefinition where
     pure MsgSsrTileDefinition {..}
 
   put MsgSsrTileDefinition {..} = do
-    putWord8 _msgSsrTileDefinition_tile_set_id
-    putWord8 _msgSsrTileDefinition_tile_id
+    putWord16le _msgSsrTileDefinition_tile_set_id
+    putWord16le _msgSsrTileDefinition_tile_id
     putWord16le _msgSsrTileDefinition_corner_nw_lat
     putWord16le _msgSsrTileDefinition_corner_nw_lon
     putWord16le _msgSsrTileDefinition_spacing_lat
