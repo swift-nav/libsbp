@@ -63,10 +63,10 @@ definitions:
       is used to tie multiple SBP messages into a sequence.
     fields:
     - tile_set_id:
-        type: u8
+        type: u16
         desc: Unique identifier of the tile set this tile belongs to.
     - tile_id:
-        type: u8
+        type: u16
         desc: Unique identifier of this tile in the tile set.
     - time:
         type: GPSTimeSec
@@ -95,10 +95,10 @@ definitions:
       be identified by the index.
     fields:
     - tile_set_id:
-        type: u8
+        type: u16
         desc: Unique identifier of the tile set this tile belongs to.
     - tile_id:
-        type: u8
+        type: u16
         desc: Unique identifier of this tile in the tile set.
     - time:
         type: GPSTimeSec
@@ -139,7 +139,7 @@ definitions:
         type: array
         size: 4
         fill: s16
-        units: C00 = 0.05 TECU, others = 0.02 TECU/deg
+        units: C00 = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2
         desc: |
           Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
 
@@ -439,10 +439,10 @@ definitions:
       correction points, not lists of points.
     fields:
         - tile_set_id:
-            type: u8
+            type: u16
             desc: Unique identifier of the tile set this tile belongs to.
         - tile_id:
-            type: u8
+            type: u16
             desc: |
               Unique identifier of this tile in the tile set.
 
