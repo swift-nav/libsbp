@@ -87,6 +87,7 @@ use self::navigation::MsgDops;
 use self::navigation::MsgDopsDepA;
 use self::navigation::MsgGPSTime;
 use self::navigation::MsgGPSTimeDepA;
+use self::navigation::MsgGPSTimeGnss;
 use self::navigation::MsgPosECEF;
 use self::navigation::MsgPosECEFCov;
 use self::navigation::MsgPosECEFCovGnss;
@@ -99,6 +100,7 @@ use self::navigation::MsgPosLLHDepA;
 use self::navigation::MsgPosLLHGnss;
 use self::navigation::MsgProtectionLevel;
 use self::navigation::MsgUtcTime;
+use self::navigation::MsgUtcTimeGnss;
 use self::navigation::MsgVelBody;
 use self::navigation::MsgVelECEF;
 use self::navigation::MsgVelECEFCov;
@@ -356,6 +358,8 @@ pub enum SBP {
     MsgExtEvent(MsgExtEvent),
     MsgGPSTime(MsgGPSTime),
     MsgUtcTime(MsgUtcTime),
+    MsgGPSTimeGnss(MsgGPSTimeGnss),
+    MsgUtcTimeGnss(MsgUtcTimeGnss),
     MsgSettingsRegisterResp(MsgSettingsRegisterResp),
     MsgPosECEFDepA(MsgPosECEFDepA),
     MsgPosLLHDepA(MsgPosLLHDepA),
@@ -1012,6 +1016,16 @@ impl SBP {
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgUtcTime(msg))
             }
+            260 => {
+                let mut msg = MsgGPSTimeGnss::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgGPSTimeGnss(msg))
+            }
+            261 => {
+                let mut msg = MsgUtcTimeGnss::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgUtcTimeGnss(msg))
+            }
             431 => {
                 let mut msg = MsgSettingsRegisterResp::parse(payload)?;
                 msg.set_sender_id(sender_id);
@@ -1540,6 +1554,8 @@ impl SBP {
             SBP::MsgExtEvent(msg) => msg,
             SBP::MsgGPSTime(msg) => msg,
             SBP::MsgUtcTime(msg) => msg,
+            SBP::MsgGPSTimeGnss(msg) => msg,
+            SBP::MsgUtcTimeGnss(msg) => msg,
             SBP::MsgSettingsRegisterResp(msg) => msg,
             SBP::MsgPosECEFDepA(msg) => msg,
             SBP::MsgPosLLHDepA(msg) => msg,

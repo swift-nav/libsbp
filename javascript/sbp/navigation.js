@@ -81,6 +81,50 @@ MsgGpsTime.prototype.fieldSpec.push(['ns_residual', 'writeInt32LE', 4]);
 MsgGpsTime.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 /**
+ * SBP class for message MSG_GPS_TIME_GNSS (0x0104).
+ *
+ * This message reports the GPS time, representing the time since the GPS epoch
+ * began on midnight January 6, 1980 UTC. GPS time counts the weeks and seconds of
+ * the week. The weeks begin at the Saturday/Sunday transition. GPS week 0 began at
+ * the beginning of the GPS time scale.  Within each week number, the GPS time of
+ * the week is between between 0 and 604800 seconds (=60*60*24*7). Note that GPS
+ * time does not accumulate leap seconds, and as of now, has a small offset from
+ * UTC. In a message stream, this message precedes a set of other navigation
+ * messages referenced to the same time (but lacking the ns field) and indicates a
+ * more precise time of these messages.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field wn number (unsigned 16-bit int, 2 bytes) GPS week number
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS time of week rounded to the nearest millisecond
+ * @field ns_residual number (signed 32-bit int, 4 bytes) Nanosecond residual of millisecond-rounded TOW (ranges from -500000 to 500000)
+ * @field flags number (unsigned 8-bit int, 1 byte) Status flags (reserved)
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgGpsTimeGnss = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_GPS_TIME_GNSS";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgGpsTimeGnss.prototype = Object.create(SBP.prototype);
+MsgGpsTimeGnss.prototype.messageType = "MSG_GPS_TIME_GNSS";
+MsgGpsTimeGnss.prototype.msg_type = 0x0104;
+MsgGpsTimeGnss.prototype.constructor = MsgGpsTimeGnss;
+MsgGpsTimeGnss.prototype.parser = new Parser()
+  .endianess('little')
+  .uint16('wn')
+  .uint32('tow')
+  .int32('ns_residual')
+  .uint8('flags');
+MsgGpsTimeGnss.prototype.fieldSpec = [];
+MsgGpsTimeGnss.prototype.fieldSpec.push(['wn', 'writeUInt16LE', 2]);
+MsgGpsTimeGnss.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgGpsTimeGnss.prototype.fieldSpec.push(['ns_residual', 'writeInt32LE', 4]);
+MsgGpsTimeGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
+/**
  * SBP class for message MSG_UTC_TIME (0x0103).
  *
  * This message reports the Universal Coordinated Time (UTC).  Note the flags which
@@ -131,6 +175,58 @@ MsgUtcTime.prototype.fieldSpec.push(['hours', 'writeUInt8', 1]);
 MsgUtcTime.prototype.fieldSpec.push(['minutes', 'writeUInt8', 1]);
 MsgUtcTime.prototype.fieldSpec.push(['seconds', 'writeUInt8', 1]);
 MsgUtcTime.prototype.fieldSpec.push(['ns', 'writeUInt32LE', 4]);
+
+/**
+ * SBP class for message MSG_UTC_TIME_GNSS (0x0105).
+ *
+ * This message reports the Universal Coordinated Time (UTC).  Note the flags which
+ * indicate the source of the UTC offset value and source of the time fix.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field flags number (unsigned 8-bit int, 1 byte) Indicates source and time validity
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS time of week rounded to the nearest millisecond
+ * @field year number (unsigned 16-bit int, 2 bytes) Year
+ * @field month number (unsigned 8-bit int, 1 byte) Month (range 1 .. 12)
+ * @field day number (unsigned 8-bit int, 1 byte) days in the month (range 1-31)
+ * @field hours number (unsigned 8-bit int, 1 byte) hours of day (range 0-23)
+ * @field minutes number (unsigned 8-bit int, 1 byte) minutes of hour (range 0-59)
+ * @field seconds number (unsigned 8-bit int, 1 byte) seconds of minute (range 0-60) rounded down
+ * @field ns number (unsigned 32-bit int, 4 bytes) nanoseconds of second (range 0-999999999)
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgUtcTimeGnss = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_UTC_TIME_GNSS";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgUtcTimeGnss.prototype = Object.create(SBP.prototype);
+MsgUtcTimeGnss.prototype.messageType = "MSG_UTC_TIME_GNSS";
+MsgUtcTimeGnss.prototype.msg_type = 0x0105;
+MsgUtcTimeGnss.prototype.constructor = MsgUtcTimeGnss;
+MsgUtcTimeGnss.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('flags')
+  .uint32('tow')
+  .uint16('year')
+  .uint8('month')
+  .uint8('day')
+  .uint8('hours')
+  .uint8('minutes')
+  .uint8('seconds')
+  .uint32('ns');
+MsgUtcTimeGnss.prototype.fieldSpec = [];
+MsgUtcTimeGnss.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+MsgUtcTimeGnss.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgUtcTimeGnss.prototype.fieldSpec.push(['year', 'writeUInt16LE', 2]);
+MsgUtcTimeGnss.prototype.fieldSpec.push(['month', 'writeUInt8', 1]);
+MsgUtcTimeGnss.prototype.fieldSpec.push(['day', 'writeUInt8', 1]);
+MsgUtcTimeGnss.prototype.fieldSpec.push(['hours', 'writeUInt8', 1]);
+MsgUtcTimeGnss.prototype.fieldSpec.push(['minutes', 'writeUInt8', 1]);
+MsgUtcTimeGnss.prototype.fieldSpec.push(['seconds', 'writeUInt8', 1]);
+MsgUtcTimeGnss.prototype.fieldSpec.push(['ns', 'writeUInt32LE', 4]);
 
 /**
  * SBP class for message MSG_DOPS (0x0208).
@@ -1776,8 +1872,12 @@ MsgProtectionLevel.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 module.exports = {
   0x0102: MsgGpsTime,
   MsgGpsTime: MsgGpsTime,
+  0x0104: MsgGpsTimeGnss,
+  MsgGpsTimeGnss: MsgGpsTimeGnss,
   0x0103: MsgUtcTime,
   MsgUtcTime: MsgUtcTime,
+  0x0105: MsgUtcTimeGnss,
+  MsgUtcTimeGnss: MsgUtcTimeGnss,
   0x0208: MsgDops,
   MsgDops: MsgDops,
   0x0209: MsgPosEcef,

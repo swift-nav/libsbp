@@ -11,20 +11,30 @@
     "WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE."
   ],
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "$id": "#MsgGroupMeta",
-  "title":"MsgGroupMeta",
-  "description":"This leading message lists the time metadata of the Solution Group.,\nIt also lists the atomic contents (i.e. types of messages included) of the Solution Group.\n",
+  "$id": "#MsgUtcTimeGnss",
+  "title":"MsgUtcTimeGnss",
+  "description":"This message reports the Universal Coordinated Time (UTC).  Note the flags,\nwhich indicate the source of the UTC offset value and source of the time fix.\n",
   "type": "object",
   "properties": {
-    "group_id": {"type": "integer"},
     "flags": {"type": "integer"},
-    "n_group_msgs": {"type": "integer"},
-    "group_msgs": {"type": "array", "items": {"type": "integer"}}
+    "tow": {"type": "integer"},
+    "year": {"type": "integer"},
+    "month": {"type": "integer"},
+    "day": {"type": "integer"},
+    "hours": {"type": "integer"},
+    "minutes": {"type": "integer"},
+    "seconds": {"type": "integer"},
+    "ns": {"type": "integer"}
   },
   "required": [
-    "group_id",
     "flags",
-    "n_group_msgs",
-    "group_msgs"
+    "tow",
+    "year",
+    "month",
+    "day",
+    "hours",
+    "minutes",
+    "seconds",
+    "ns"
   ]
 }

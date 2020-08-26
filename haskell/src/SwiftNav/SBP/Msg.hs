@@ -135,6 +135,7 @@ data SBPMsg =
    | SBPMsgGnssTimeOffset MsgGnssTimeOffset Msg
    | SBPMsgGpsTime MsgGpsTime Msg
    | SBPMsgGpsTimeDepA MsgGpsTimeDepA Msg
+   | SBPMsgGpsTimeGnss MsgGpsTimeGnss Msg
    | SBPMsgGroupDelay MsgGroupDelay Msg
    | SBPMsgGroupDelayDepA MsgGroupDelayDepA Msg
    | SBPMsgGroupDelayDepB MsgGroupDelayDepB Msg
@@ -236,6 +237,7 @@ data SBPMsg =
    | SBPMsgUartStateDepa MsgUartStateDepa Msg
    | SBPMsgUserData MsgUserData Msg
    | SBPMsgUtcTime MsgUtcTime Msg
+   | SBPMsgUtcTimeGnss MsgUtcTimeGnss Msg
    | SBPMsgVelBody MsgVelBody Msg
    | SBPMsgVelEcef MsgVelEcef Msg
    | SBPMsgVelEcefCov MsgVelEcefCov Msg
@@ -342,6 +344,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgGnssTimeOffset = SBPMsgGnssTimeOffset (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGpsTime = SBPMsgGpsTime (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGpsTimeDepA = SBPMsgGpsTimeDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgGpsTimeGnss = SBPMsgGpsTimeGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGroupDelay = SBPMsgGroupDelay (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGroupDelayDepA = SBPMsgGroupDelayDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgGroupDelayDepB = SBPMsgGroupDelayDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -443,6 +446,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgUartStateDepa = SBPMsgUartStateDepa (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgUserData = SBPMsgUserData (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgUtcTime = SBPMsgUtcTime (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgUtcTimeGnss = SBPMsgUtcTimeGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelBody = SBPMsgVelBody (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelEcef = SBPMsgVelEcef (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelEcefCov = SBPMsgVelEcefCov (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -541,6 +545,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgGnssTimeOffset _ m) = put m
       encoder (SBPMsgGpsTime _ m) = put m
       encoder (SBPMsgGpsTimeDepA _ m) = put m
+      encoder (SBPMsgGpsTimeGnss _ m) = put m
       encoder (SBPMsgGroupDelay _ m) = put m
       encoder (SBPMsgGroupDelayDepA _ m) = put m
       encoder (SBPMsgGroupDelayDepB _ m) = put m
@@ -642,6 +647,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgUartStateDepa _ m) = put m
       encoder (SBPMsgUserData _ m) = put m
       encoder (SBPMsgUtcTime _ m) = put m
+      encoder (SBPMsgUtcTimeGnss _ m) = put m
       encoder (SBPMsgVelBody _ m) = put m
       encoder (SBPMsgVelEcef _ m) = put m
       encoder (SBPMsgVelEcefCov _ m) = put m
@@ -744,6 +750,7 @@ instance FromJSON SBPMsg where
         | msgType == msgGnssTimeOffset = SBPMsgGnssTimeOffset <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGpsTime = SBPMsgGpsTime <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGpsTimeDepA = SBPMsgGpsTimeDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgGpsTimeGnss = SBPMsgGpsTimeGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGroupDelay = SBPMsgGroupDelay <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGroupDelayDepA = SBPMsgGroupDelayDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgGroupDelayDepB = SBPMsgGroupDelayDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -845,6 +852,7 @@ instance FromJSON SBPMsg where
         | msgType == msgUartStateDepa = SBPMsgUartStateDepa <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgUserData = SBPMsgUserData <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgUtcTime = SBPMsgUtcTime <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgUtcTimeGnss = SBPMsgUtcTimeGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelBody = SBPMsgVelBody <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelEcef = SBPMsgVelEcef <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelEcefCov = SBPMsgVelEcefCov <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -948,6 +956,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgGnssTimeOffset n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGpsTime n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGpsTimeDepA n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgGpsTimeGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGroupDelay n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGroupDelayDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgGroupDelayDepB n m) = toJSON n <<>> toJSON m
@@ -1049,6 +1058,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgUartStateDepa n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgUserData n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgUtcTime n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgUtcTimeGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelBody n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelEcef n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelEcefCov n m) = toJSON n <<>> toJSON m
@@ -1146,6 +1156,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgGnssTimeOffset n m) = SBPMsgGnssTimeOffset n <$> f m
   msg f (SBPMsgGpsTime n m) = SBPMsgGpsTime n <$> f m
   msg f (SBPMsgGpsTimeDepA n m) = SBPMsgGpsTimeDepA n <$> f m
+  msg f (SBPMsgGpsTimeGnss n m) = SBPMsgGpsTimeGnss n <$> f m
   msg f (SBPMsgGroupDelay n m) = SBPMsgGroupDelay n <$> f m
   msg f (SBPMsgGroupDelayDepA n m) = SBPMsgGroupDelayDepA n <$> f m
   msg f (SBPMsgGroupDelayDepB n m) = SBPMsgGroupDelayDepB n <$> f m
@@ -1247,6 +1258,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgUartStateDepa n m) = SBPMsgUartStateDepa n <$> f m
   msg f (SBPMsgUserData n m) = SBPMsgUserData n <$> f m
   msg f (SBPMsgUtcTime n m) = SBPMsgUtcTime n <$> f m
+  msg f (SBPMsgUtcTimeGnss n m) = SBPMsgUtcTimeGnss n <$> f m
   msg f (SBPMsgVelBody n m) = SBPMsgVelBody n <$> f m
   msg f (SBPMsgVelEcef n m) = SBPMsgVelEcef n <$> f m
   msg f (SBPMsgVelEcefCov n m) = SBPMsgVelEcefCov n <$> f m

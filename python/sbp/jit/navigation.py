@@ -99,11 +99,128 @@ these messages.
     return res, off, length
 
   
+SBP_MSG_GPS_TIME_GNSS = 0x0104
+class MsgGPSTimeGnss(SBP):
+  """SBP class for message MSG_GPS_TIME_GNSS (0x0104).
+
+  You can have MSG_GPS_TIME_GNSS inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the GPS time, representing the time since
+the GPS epoch began on midnight January 6, 1980 UTC. GPS time
+counts the weeks and seconds of the week. The weeks begin at the
+Saturday/Sunday transition. GPS week 0 began at the beginning of
+the GPS time scale.
+
+Within each week number, the GPS time of the week is between
+between 0 and 604800 seconds (=60*60*24*7). Note that GPS time
+does not accumulate leap seconds, and as of now, has a small
+offset from UTC. In a message stream, this message precedes a
+set of other navigation messages referenced to the same time
+(but lacking the ns field) and indicates a more precise time of
+these messages.
+
+
+  """
+  __slots__ = ['wn',
+               'tow',
+               'ns_residual',
+               'flags',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__wn, offset, length) = get_u16(buf, offset, length)
+    ret['wn'] = __wn
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__ns_residual, offset, length) = get_s32(buf, offset, length)
+    ret['ns_residual'] = __ns_residual
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.wn = res['wn']
+    self.tow = res['tow']
+    self.ns_residual = res['ns_residual']
+    self.flags = res['flags']
+    return res, off, length
+
+  
 SBP_MSG_UTC_TIME = 0x0103
 class MsgUtcTime(SBP):
   """SBP class for message MSG_UTC_TIME (0x0103).
 
   You can have MSG_UTC_TIME inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the Universal Coordinated Time (UTC).  Note the flags
+which indicate the source of the UTC offset value and source of the time fix.
+
+
+  """
+  __slots__ = ['flags',
+               'tow',
+               'year',
+               'month',
+               'day',
+               'hours',
+               'minutes',
+               'seconds',
+               'ns',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__year, offset, length) = get_u16(buf, offset, length)
+    ret['year'] = __year
+    (__month, offset, length) = get_u8(buf, offset, length)
+    ret['month'] = __month
+    (__day, offset, length) = get_u8(buf, offset, length)
+    ret['day'] = __day
+    (__hours, offset, length) = get_u8(buf, offset, length)
+    ret['hours'] = __hours
+    (__minutes, offset, length) = get_u8(buf, offset, length)
+    ret['minutes'] = __minutes
+    (__seconds, offset, length) = get_u8(buf, offset, length)
+    ret['seconds'] = __seconds
+    (__ns, offset, length) = get_u32(buf, offset, length)
+    ret['ns'] = __ns
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.flags = res['flags']
+    self.tow = res['tow']
+    self.year = res['year']
+    self.month = res['month']
+    self.day = res['day']
+    self.hours = res['hours']
+    self.minutes = res['minutes']
+    self.seconds = res['seconds']
+    self.ns = res['ns']
+    return res, off, length
+
+  
+SBP_MSG_UTC_TIME_GNSS = 0x0105
+class MsgUtcTimeGnss(SBP):
+  """SBP class for message MSG_UTC_TIME_GNSS (0x0105).
+
+  You can have MSG_UTC_TIME_GNSS inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -2151,7 +2268,9 @@ by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 
 msg_classes = {
   0x0102: MsgGPSTime,
+  0x0104: MsgGPSTimeGnss,
   0x0103: MsgUtcTime,
+  0x0105: MsgUtcTimeGnss,
   0x0208: MsgDops,
   0x0209: MsgPosECEF,
   0x0214: MsgPosECEFCov,

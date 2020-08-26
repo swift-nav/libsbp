@@ -22,8 +22,7 @@ use common::AlmostEq;
 fn test_auto_check_sbp_system_36() {
     {
         let payload: Vec<u8> = vec![
-            85, 10, 255, 238, 238, 19, 1, 192, 7, 64, 226, 1, 0, 0, 0, 0, 0, 3, 3, 10, 255, 10, 2,
-            2, 255, 253, 141,
+            85, 10, 255, 238, 238, 9, 1, 2, 3, 10, 255, 10, 2, 2, 255, 2, 14,
         ];
 
         // Test the round trip payload parsing
@@ -46,8 +45,8 @@ fn test_auto_check_sbp_system_36() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.flags, 3,
-                    "incorrect value for flags, expected 3, is {}",
+                    msg.flags, 2,
+                    "incorrect value for flags, expected 2, is {}",
                     msg.flags
                 );
                 assert_eq!(
@@ -74,21 +73,6 @@ fn test_auto_check_sbp_system_36() {
                     msg.n_group_msgs, 3,
                     "incorrect value for n_group_msgs, expected 3, is {}",
                     msg.n_group_msgs
-                );
-                assert_eq!(
-                    msg.ns_residual, 0,
-                    "incorrect value for ns_residual, expected 0, is {}",
-                    msg.ns_residual
-                );
-                assert_eq!(
-                    msg.tom, 123456,
-                    "incorrect value for tom, expected 123456, is {}",
-                    msg.tom
-                );
-                assert_eq!(
-                    msg.wn, 1984,
-                    "incorrect value for wn, expected 1984, is {}",
-                    msg.wn
                 );
             }
             _ => panic!("Invalid message type! Expected a MsgGroupMeta"),

@@ -62,7 +62,9 @@ import com.swiftnav.sbp.logging.MsgFwd;
 import com.swiftnav.sbp.logging.MsgPrintDep;
 import com.swiftnav.sbp.mag.MsgMagRaw;
 import com.swiftnav.sbp.navigation.MsgGPSTime;
+import com.swiftnav.sbp.navigation.MsgGPSTimeGnss;
 import com.swiftnav.sbp.navigation.MsgUtcTime;
+import com.swiftnav.sbp.navigation.MsgUtcTimeGnss;
 import com.swiftnav.sbp.navigation.MsgDops;
 import com.swiftnav.sbp.navigation.MsgPosECEF;
 import com.swiftnav.sbp.navigation.MsgPosECEFCov;
@@ -307,8 +309,12 @@ final class MessageTable {
                 return new MsgMagRaw(msg);
             case MsgGPSTime.TYPE:
                 return new MsgGPSTime(msg);
+            case MsgGPSTimeGnss.TYPE:
+                return new MsgGPSTimeGnss(msg);
             case MsgUtcTime.TYPE:
                 return new MsgUtcTime(msg);
+            case MsgUtcTimeGnss.TYPE:
+                return new MsgUtcTimeGnss(msg);
             case MsgDops.TYPE:
                 return new MsgDops(msg);
             case MsgPosECEF.TYPE:

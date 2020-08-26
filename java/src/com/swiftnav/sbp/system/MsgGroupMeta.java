@@ -38,17 +38,6 @@ public class MsgGroupMeta extends SBPMessage {
     /** Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss */
     public int group_id;
     
-    /** GPS Week Number or zero if Reference epoch is not GPS */
-    public int wn;
-    
-    /** Time of Measurement in Milliseconds since reference epoch */
-    public long tom;
-    
-    /** Nanosecond residual of millisecond-rounded TOM (ranges
-from -500000 to 500000)
- */
-    public int ns_residual;
-    
     /** Status flags (reserved) */
     public int flags;
     
@@ -56,8 +45,7 @@ from -500000 to 500000)
     public int n_group_msgs;
     
     /** An inorder list of message types included in the Solution Group,
-including GROUP_META itself
- */
+including GROUP_META itself */
     public int[] group_msgs;
     
 
@@ -72,9 +60,6 @@ including GROUP_META itself
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         group_id = parser.getU8();
-        wn = parser.getU16();
-        tom = parser.getU32();
-        ns_residual = parser.getS32();
         flags = parser.getU8();
         n_group_msgs = parser.getU8();
         group_msgs = parser.getArrayofU16();
@@ -83,9 +68,6 @@ including GROUP_META itself
     @Override
     protected void build(Builder builder) {
         builder.putU8(group_id);
-        builder.putU16(wn);
-        builder.putU32(tom);
-        builder.putS32(ns_residual);
         builder.putU8(flags);
         builder.putU8(n_group_msgs);
         builder.putArrayofU16(group_msgs);
@@ -95,9 +77,6 @@ including GROUP_META itself
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("group_id", group_id);
-        obj.put("wn", wn);
-        obj.put("tom", tom);
-        obj.put("ns_residual", ns_residual);
         obj.put("flags", flags);
         obj.put("n_group_msgs", n_group_msgs);
         obj.put("group_msgs", new JSONArray(group_msgs));
