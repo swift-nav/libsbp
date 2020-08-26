@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgSsrStecCorrection",
   "title":"MsgSsrStecCorrection",
-  "description":"The STEC per space vehicle, given as polynomial approximation for,\na given grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION,\nmessage to get the state space representation of the atmospheric,\ndelay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages\n",
+  "description":"The Slant Total Electron Content per space vehicle, given as polynomial,\napproximation for a given tile. This should be combined with the,\nMSG_SSR_GRIDDED_CORRECTION message to get the state space representation,\nof the atmospheric delay.,\n,\nIt is typically equivalent to the QZSS CLAS Sub Type 8 messages.\n",
   "type": "object",
   "properties": {
     "header": {"$ref": "STECHeader.json"},

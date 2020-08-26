@@ -937,26 +937,44 @@ struct MessageTraits<msg_ssr_phase_biases_t> {
 
 
 template<>
-struct MessageTraits<msg_ssr_stec_correction_t> {
+struct MessageTraits<msg_ssr_stec_correction_dep_a_t> {
   static constexpr u16 id = 1515;
 };
 
 
 template<>
-struct MessageTraits<msg_ssr_gridded_correction_no_std_t> {
+struct MessageTraits<msg_ssr_gridded_correction_no_std_dep_a_t> {
   static constexpr u16 id = 1520;
 };
 
 
 template<>
-struct MessageTraits<msg_ssr_grid_definition_t> {
+struct MessageTraits<msg_ssr_grid_definition_dep_a_t> {
   static constexpr u16 id = 1525;
 };
 
 
 template<>
-struct MessageTraits<msg_ssr_gridded_correction_t> {
+struct MessageTraits<msg_ssr_tile_definition_t> {
+  static constexpr u16 id = 1526;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_gridded_correction_dep_a_t> {
   static constexpr u16 id = 1530;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_stec_correction_t> {
+  static constexpr u16 id = 1531;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_gridded_correction_t> {
+  static constexpr u16 id = 1532;
 };
 
 

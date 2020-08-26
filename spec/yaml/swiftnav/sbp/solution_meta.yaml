@@ -32,6 +32,14 @@ definitions:
            type: u8
            desc: The type of sensor
            fields:
+             - 5-7:
+                 desc: Reserved
+             - 3-4:
+                 desc: Whether this sensor input was actually used or not
+                 values:
+                   - 0: Unknown
+                   - 1: Received and used
+                   - 2: Received but not used
              - 0-2:
                  desc: The type of sensor
                  values:
@@ -43,14 +51,6 @@ definitions:
                    - 5: IMU Sensor (see IMUInputType)
                    - 6: Reserved
                    - 7: Reserved
-             - 3-4:
-                 desc: Whether this sensor input was actually used or not
-                 values:
-                   - 0: Unknown
-                   - 1: Received and used
-                   - 2: Received but not used
-             - 5-7:
-                 desc: Reserved
        - flags:
            type: u8
            units: (XX)InputType
@@ -78,7 +78,7 @@ definitions:
            desc: Vertical Dilution of Precision, as per last available DOPS from Starling GNSS engine
        - n_sats:
            type: u8
-           desc: Number of satellites used in solution, as per last available DOPS from Starling GNSS engine
+           desc: Number of satellites, as per last available solution from Starling GNSS engine
        - age_corrections:
            type: u16
            units: deciseconds
@@ -87,19 +87,19 @@ definitions:
            type: u8
            desc: Bits for reason why it cannot align (yet)
            fields:
+             - 3-7:
+                 desc: Reserved
              - 0-2:
                  desc: Bits for reason why it cannot align (yet)
                  values:
                    - 0: Unknown reason or already aligned
-                   - 1: No seed values nor GNSS measurements
-                   - 2: Seed values loaded but not GNSS measurements
-                   - 3: Reserved
-                   - 4: Reserved
+                   - 1: Seed values loaded and Alignment in progress
+                   - 2: No seed values and Alignment in progress
+                   - 3: Seed values loaded but no GNSS measurements
+                   - 4: No seed values nor GNSS measurements
                    - 5: Reserved
                    - 6: Reserved
                    - 7: Reserved
-             - 3-7:
-                 desc: Reserved
        - last_used_gnss_pos_tow:
            type: u32
            units: ms
@@ -136,14 +136,14 @@ definitions:
            type: u8
            desc: flags that store all relevant info specific to this sensor type.
            fields:
+             - 2-7:
+                 desc: Reserved
              - 0-1:
                  desc: Type of GNSS measurement
                  values:
                    - 0: GNSS Position
                    - 1: GNSS Velocity Doppler
                    - 2: GNSS Velocity Displacement
-             - 2-7:
-                 desc: Reserved
 
  # for IMU sensors
  - IMUInputType:
@@ -159,18 +159,8 @@ definitions:
            type: u8
            desc: flags that store all relevant info specific to this sensor type.
            fields:
-             - 0-1:
-                 desc: IMU architecture
-                 values:
-                   - 0: 6-axis MEMS
-                   - 1: Other type
-             - 2-3:
-                 desc: IMU Grade
-                 values:
-                   - 0: Consumer Grade
-                   - 1: Tactical grade
-                   - 2: Intermediate Grade
-                   - 3: Superior (Marine / Aviation) Grade
+             - 6-7:
+                 desc: Reserved
              - 4-5:
                  desc: Time status
                  values:
@@ -178,8 +168,18 @@ definitions:
                    - 1: Reference epoch is time of system startup
                    - 2: Reference epoch is unknown
                    - 3: Reference epoch is last PPS
-             - 6-7:
-                 desc: Reserved
+             - 2-3:
+                 desc: IMU Grade
+                 values:
+                   - 0: Consumer Grade
+                   - 1: Tactical grade
+                   - 2: Intermediate Grade
+                   - 3: Superior (Marine / Aviation) Grade
+             - 0-1:
+                 desc: IMU architecture
+                 values:
+                   - 0: 6-axis MEMS
+                   - 1: Other type
 
  # for Odometry sensors
  - OdoInputType:
@@ -195,20 +195,8 @@ definitions:
            type: u8
            desc: flags that store all relevant info specific to this sensor type.
            fields:
-             - 0-1:
-                 desc: Odometer class
-                 values:
-                   - 0: Single or averaged ticks
-                   - 1: Single or averaged speed
-                   - 2: Multi-dimensional ticks
-                   - 3: Multi-dimensional speed
-             - 2-3:
-                 desc: Odometer grade
-                 values:
-                   - 0: Low Grade (e.g. quantisized CAN)
-                   - 1: Medium Grade
-                   - 2: Superior Grade
-                   - 3: Reserved
+             - 6-7:
+                 desc: Reserved
              - 4-5:
                  desc: Rate
                  values:
@@ -216,5 +204,17 @@ definitions:
                    - 1: Incoming when triggered by minimum distance or speed
                    - 2: Reserved
                    - 3: Reserved
-             - 6-7:
-                 desc: Reserved
+             - 2-3:
+                 desc: Odometer grade
+                 values:
+                   - 0: Low Grade (e.g. quantisized CAN)
+                   - 1: Medium Grade
+                   - 2: Superior Grade
+                   - 3: Reserved
+             - 0-1:
+                 desc: Odometer class
+                 values:
+                   - 0: Single or averaged ticks
+                   - 1: Single or averaged speed
+                   - 2: Multi-dimensional ticks
+                   - 3: Multi-dimensional speed

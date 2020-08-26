@@ -99,7 +99,7 @@ START_TEST( test_auto_check_sbp_system_36 )
 
     sbp_register_callback(&sbp_state, 0xFF0A, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
-    u8 test_data[] = {85,10,255,238,238,9,1,2,3,10,255,10,2,2,255,2,14, };
+    u8 test_data[] = {85,10,255,238,238,19,1,192,7,64,226,1,0,0,0,0,0,3,3,10,255,10,2,2,255,253,141, };
 
     dummy_reset();
     sbp_send_message(&sbp_state, 0xFF0A, 61166, sizeof(test_data), test_data, &dummy_write);
@@ -125,12 +125,15 @@ START_TEST( test_auto_check_sbp_system_36 )
     msg_group_meta_t* msg = ( msg_group_meta_t *)((void *)last_msg + 6);
     // Run tests against fields
     fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->flags == 2, "incorrect value for flags, expected 2, is %d", msg->flags);
+    fail_unless(msg->flags == 3, "incorrect value for flags, expected 3, is %d", msg->flags);
     fail_unless(msg->group_id == 1, "incorrect value for group_id, expected 1, is %d", msg->group_id);
     fail_unless(msg->group_msgs[0] == 65290, "incorrect value for group_msgs[0], expected 65290, is %d", msg->group_msgs[0]);
     fail_unless(msg->group_msgs[1] == 522, "incorrect value for group_msgs[1], expected 522, is %d", msg->group_msgs[1]);
     fail_unless(msg->group_msgs[2] == 65282, "incorrect value for group_msgs[2], expected 65282, is %d", msg->group_msgs[2]);
     fail_unless(msg->n_group_msgs == 3, "incorrect value for n_group_msgs, expected 3, is %d", msg->n_group_msgs);
+    fail_unless(msg->ns_residual == 0, "incorrect value for ns_residual, expected 0, is %d", msg->ns_residual);
+    fail_unless(msg->tom == 123456, "incorrect value for tom, expected 123456, is %d", msg->tom);
+    fail_unless(msg->wn == 1984, "incorrect value for wn, expected 1984, is %d", msg->wn);
   }
 }
 END_TEST

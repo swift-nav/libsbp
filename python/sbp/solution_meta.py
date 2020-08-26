@@ -95,7 +95,7 @@ It focuses primarly, but not only, on GNSS metadata.
   vdop : int
     Vertical Dilution of Precision, as per last available DOPS from Starling GNSS engine
   n_sats : int
-    Number of satellites used in solution, as per last available DOPS from Starling GNSS engine
+    Number of satellites, as per last available solution from Starling GNSS engine
   age_corrections : int
     Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine
   alignment_status : int

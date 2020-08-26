@@ -128,7 +128,10 @@ message MsgGnssTimeOffset {
  */
 message MsgGroupMeta {
     uint32 group_id = 1;
-    uint32 flags = 2;
-    uint32 n_group_msgs = 3;
-    repeated uint32 group_msgs = 4;
+    uint32 wn = 2;
+    uint32 tom = 3;
+    sint32 ns_residual = 4;
+    uint32 flags = 5;
+    uint32 n_group_msgs = 6;
+    repeated uint32 group_msgs = 7;
 }

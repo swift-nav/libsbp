@@ -71,8 +71,7 @@ SolutionInputType.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *   engine
  * @field vdop number (unsigned 16-bit int, 2 bytes) Vertical Dilution of Precision, as per last available DOPS from Starling GNSS
  *   engine
- * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites used in solution, as per last available DOPS from Starling
- *   GNSS engine
+ * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites, as per last available solution from Starling GNSS engine
  * @field age_corrections number (unsigned 16-bit int, 2 bytes) Age of the corrections (0xFFFF indicates invalid), as per last available
  *   AGE_CORRECTIONS from Starling GNSS engine
  * @field alignment_status number (unsigned 8-bit int, 1 byte) Bits for reason why it cannot align (yet)

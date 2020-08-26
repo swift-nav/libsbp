@@ -56,13 +56,15 @@ Increased for every discontinuity in phase.
 } phase_biases_content_t;
 
 
-/** Header for MSG_SSR_STEC_CORRECTION message
+/** Header for the MSG_SSR_STEC_CORRECTION message.
  *
  * A full set of STEC information will likely span multiple SBP
  * messages, since SBP message a limited to 255 bytes.  The header
  * is used to tie multiple SBP messages into a sequence.
  */
 typedef struct SBP_ATTR_PACKED {
+  u8 tile_set_id;        /**< Unique identifier of the tile set this tile belongs to. */
+  u8 tile_id;            /**< Unique identifier of this tile in the tile set. */
   gps_time_sec_t time;               /**< GNSS reference time of the correction */
   u8 num_msgs;           /**< Number of messages in the dataset */
   u8 seq_num;            /**< Position of this message in the dataset */
@@ -74,13 +76,15 @@ following RTCM DF391 specification.
 } stec_header_t;
 
 
-/** Header for MSG_SSR_GRIDDED_CORRECTION
+/** Header for the MSG_SSR_GRIDDED_CORRECTION message.
  *
- * The 3GPP message contains nested variable length arrays
+ * The LPP message contains nested variable length arrays
  * which are not suppported in SBP, so each grid point will
  * be identified by the index.
  */
 typedef struct SBP_ATTR_PACKED {
+  u8 tile_set_id;                /**< Unique identifier of the tile set this tile belongs to. */
+  u8 tile_id;                    /**< Unique identifier of this tile in the tile set. */
   gps_time_sec_t time;                       /**< GNSS reference time of the correction */
   u16 num_msgs;                   /**< Number of messages in the dataset */
   u16 seq_num;                    /**< Position of this message in the dataset */
@@ -181,25 +185,6 @@ typedef struct SBP_ATTR_PACKED {
 } grid_element_t;
 
 
-/** Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
- *
- * Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
- * Also includes an RLE encoded validity list.
- */
-typedef struct SBP_ATTR_PACKED {
-  u8 region_size_inverse;    /**< region_size (deg) = 10 / region_size_inverse
-0 is an invalid value.
- [inverse degrees] */
-  u16 area_width;             /**< grid height (deg) = grid idth (deg) = area_width / region_size
-0 is an invalid value.
- */
-  u16 lat_nw_corner_enc;      /**< North-West corner latitdue (deg) = region_size * lat_nw_corner_enc - 90 */
-  u16 lon_nw_corner_enc;      /**< North-West corner longtitude (deg) = region_size * lon_nw_corner_enc - 180 */
-  u8 num_msgs;               /**< Number of messages in the dataset */
-  u8 seq_num;                /**< Postion of this message in the dataset */
-} grid_definition_header_t;
-
-
 /** Precise orbit and clock correction
  *
  * The precise orbit and clock correction message is
@@ -207,7 +192,7 @@ typedef struct SBP_ATTR_PACKED {
  * ephemeris and is typically an equivalent to the 1060
  * and 1066 RTCM message types
  */
-#define SBP_MSG_SSR_ORBIT_CLOCK               0x05DD
+#define SBP_MSG_SSR_ORBIT_CLOCK                     0x05DD
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;               /**< GNSS reference time of the correction */
   sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
@@ -231,37 +216,6 @@ generating configuration
 } msg_ssr_orbit_clock_t;
 
 
-/** Precise orbit and clock correction
- *
- * The precise orbit and clock correction message is
- * to be applied as a delta correction to broadcast
- * ephemeris and is typically an equivalent to the 1060
- * and 1066 RTCM message types
- */
-#define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A         0x05DC
-typedef struct SBP_ATTR_PACKED {
-  gps_time_sec_t time;               /**< GNSS reference time of the correction */
-  sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
-  u8 update_interval;    /**< Update interval between consecutive corrections. Encoded
-following RTCM DF391 specification.
- */
-  u8 iod_ssr;            /**< IOD of the SSR correction. A change of Issue Of Data
-SSR is used to indicate a change in the SSR
-generating configuration
- */
-  u8 iod;                /**< Issue of broadcast ephemeris data */
-  s32 radial;             /**< Orbit radial delta correction [0.1 mm] */
-  s32 along;              /**< Orbit along delta correction [0.4 mm] */
-  s32 cross;              /**< Orbit along delta correction [0.4 mm] */
-  s32 dot_radial;         /**< Velocity of orbit radial delta correction [0.001 mm/s] */
-  s32 dot_along;          /**< Velocity of orbit along delta correction [0.004 mm/s] */
-  s32 dot_cross;          /**< Velocity of orbit cross delta correction [0.004 mm/s] */
-  s32 c0;                 /**< C0 polynomial coefficient for correction of broadcast satellite clock [0.1 mm] */
-  s32 c1;                 /**< C1 polynomial coefficient for correction of broadcast satellite clock [0.001 mm/s] */
-  s32 c2;                 /**< C2 polynomial coefficient for correction of broadcast satellite clock [0.00002 mm/s^-2] */
-} msg_ssr_orbit_clock_dep_a_t;
-
-
 /** Precise code biases correction
  *
  * The precise code biases message is to be added
@@ -269,7 +223,7 @@ generating configuration
  * to get corrected pseudorange. It is typically
  * an equivalent to the 1059 and 1065 RTCM message types
  */
-#define SBP_MSG_SSR_CODE_BIASES               0x05E1
+#define SBP_MSG_SSR_CODE_BIASES                     0x05E1
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;               /**< GNSS reference time of the correction */
   sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
@@ -293,7 +247,7 @@ generating configuration
  * the phase wind-up correction.
  * It is typically an equivalent to the 1265 RTCM message types
  */
-#define SBP_MSG_SSR_PHASE_BIASES              0x05E6
+#define SBP_MSG_SSR_PHASE_BIASES                    0x05E6
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t time;               /**< GNSS reference time of the correction */
   sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
@@ -316,60 +270,222 @@ satellite being tracked.
 } msg_ssr_phase_biases_t;
 
 
-/** Slant Total Electron Content
+/** STEC correction polynomial coeffcients.
  *
- * The STEC per space vehicle, given as polynomial approximation for
- * a given grid.  This should be combined with MSG_SSR_GRIDDED_CORRECTION
- * message to get the state space representation of the atmospheric
- * delay. It is typically equivalent to the QZSS CLAS Sub Type 8 messages
+ * The Slant Total Electron Content per space vehicle, given as polynomial
+ * approximation for a given tile. This should be combined with the
+ * MSG_SSR_GRIDDED_CORRECTION message to get the state space representation
+ * of the atmospheric delay.
+ * 
+ * It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
  */
-#define SBP_MSG_SSR_STEC_CORRECTION           0x05EB
+#define SBP_MSG_SSR_STEC_CORRECTION                 0x05FB
 typedef struct SBP_ATTR_PACKED {
-  stec_header_t header;           /**< Header of a STEC message */
-  stec_sat_element_t stec_sat_list[0]; /**< Array of STEC information for each space vehicle */
+  stec_header_t header;           /**< Header of a STEC polynomial coeffcient message. */
+  stec_sat_element_t stec_sat_list[0]; /**< Array of STEC polynomial coeffcients for each space vehicle. */
 } msg_ssr_stec_correction_t;
 
 
-/** Gridded troposphere and STEC residuals
+/** Gridded troposphere and STEC correction residuals.
  *
- * This message was deprecated when variances (stddev)
- * were added.
- */
-#define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD 0x05F0
-typedef struct SBP_ATTR_PACKED {
-  gridded_correction_header_t header;     /**< Header of a Gridded Correction message */
-  grid_element_no_std_t element;    /**< Tropo and STEC residuals for the given grid point */
-} msg_ssr_gridded_correction_no_std_t;
-
-
-/** Gridded troposphere and STEC residuals
- *
- * STEC residuals are per space vehicle, tropo is not.
+ * STEC residuals are per space vehicle, troposphere is not.
+ * 
  * It is typically equivalent to the QZSS CLAS Sub Type 9 messages
  */
-#define SBP_MSG_SSR_GRIDDED_CORRECTION        0x05FA
+#define SBP_MSG_SSR_GRIDDED_CORRECTION              0x05FC
 typedef struct SBP_ATTR_PACKED {
-  gridded_correction_header_t header;     /**< Header of a Gridded Correction message */
-  grid_element_t element;    /**< Tropo and STEC residuals for the given grid point (mean
-and standard deviation)
+  gridded_correction_header_t header;     /**< Header of a gridded correction message */
+  grid_element_t element;    /**< Tropo and STEC residuals for the given grid point.
  */
 } msg_ssr_gridded_correction_t;
 
 
-/** Definition of the grid for STEC and tropo messages
+/** Definition of a SSR atmospheric correction tile.
+
  *
- * Based on the 3GPP proposal R2-1906781 which is in turn based on
- * OMA-LPPe-ValidityArea from OMA-TS-LPPe-V2_0-20141202-C
+ * Provides the correction point coordinates for the atmospheric correction
+ * values in the MSG_SSR_STEC_CORRECTION and MSG_SSR_GRIDDED_CORRECTION
+ * messages.
+ * 
+ * Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
+ * element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
+ * correction points, not lists of points.
  */
-#define SBP_MSG_SSR_GRID_DEFINITION           0x05F5
+#define SBP_MSG_SSR_TILE_DEFINITION                 0x05F6
 typedef struct SBP_ATTR_PACKED {
-  grid_definition_header_t header;      /**< Header of a Gridded Correction message */
+  u8 tile_set_id;      /**< Unique identifier of the tile set this tile belongs to. */
+  u8 tile_id;          /**< Unique identifier of this tile in the tile set.
+
+See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
+ */
+  u16 corner_nw_lat;    /**< North-West corner correction point latitude.
+
+The relation between the latitude X in the range [-90, 90] and
+the coded number N is:
+
+N = floor((X / 90) * 2^14)
+
+See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
+ [encoded degrees] */
+  u16 corner_nw_lon;    /**< North-West corner correction point longtitude.
+
+The relation between the longtitude X in the range [-180, 180]
+and the coded number N is:
+
+N = floor((X / 180) * 2^15)
+
+See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLongitude.
+ [encoded degrees] */
+  u16 spacing_lat;      /**< Spacing of the correction points in the latitude direction.
+
+See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLatitude.
+ [0.01 degrees] */
+  u16 spacing_lon;      /**< Spacing of the correction points in the longtitude direction.
+
+See GNSS-SSR-ArrayOfCorrectionPoints field stepOfLongtitude.
+ [0.01 degrees] */
+  u16 rows;             /**< Number of steps in the latitude direction.
+
+See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLatitude.
+ */
+  u16 cols;             /**< Number of steps in the longtitude direction.
+
+See GNSS-SSR-ArrayOfCorrectionPoints field numberOfStepsLongtitude.
+ */
+  u64 bitmask;          /**< Specifies the availability of correction data at the
+correction points in the array.
+
+If a specific bit is enabled (set to 1), the correction is not
+available. Only the first rows * cols bits are used, the remainder
+are set to 0. If there are more then 64 correction points the
+remaining corrections are always available.
+
+Starting with the northwest corner of the array (top left on a
+north oriented map) the correction points are enumerated with row
+precedence - first row west to east, second row west to east,
+until last row west to east - ending with the southeast corner of
+the array.
+
+See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but
+note the definition of the bits is inverted.
+ */
+} msg_ssr_tile_definition_t;
+
+
+#define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A               0x05DC
+typedef struct SBP_ATTR_PACKED {
+  gps_time_sec_t time;               /**< GNSS reference time of the correction */
+  sbp_gnss_signal_t sid;                /**< GNSS signal identifier (16 bit) */
+  u8 update_interval;    /**< Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+ */
+  u8 iod_ssr;            /**< IOD of the SSR correction. A change of Issue Of Data
+SSR is used to indicate a change in the SSR
+generating configuration
+ */
+  u8 iod;                /**< Issue of broadcast ephemeris data */
+  s32 radial;             /**< Orbit radial delta correction [0.1 mm] */
+  s32 along;              /**< Orbit along delta correction [0.4 mm] */
+  s32 cross;              /**< Orbit along delta correction [0.4 mm] */
+  s32 dot_radial;         /**< Velocity of orbit radial delta correction [0.001 mm/s] */
+  s32 dot_along;          /**< Velocity of orbit along delta correction [0.004 mm/s] */
+  s32 dot_cross;          /**< Velocity of orbit cross delta correction [0.004 mm/s] */
+  s32 c0;                 /**< C0 polynomial coefficient for correction of broadcast satellite clock [0.1 mm] */
+  s32 c1;                 /**< C1 polynomial coefficient for correction of broadcast satellite clock [0.001 mm/s] */
+  s32 c2;                 /**< C2 polynomial coefficient for correction of broadcast satellite clock [0.00002 mm/s^-2] */
+} msg_ssr_orbit_clock_dep_a_t;
+
+
+/** Header for MSG_SSR_STEC_CORRECTION_DEP message
+ *
+ * A full set of STEC information will likely span multiple SBP
+ * messages, since SBP message a limited to 255 bytes.  The header
+ * is used to tie multiple SBP messages into a sequence.
+ */
+typedef struct SBP_ATTR_PACKED {
+  gps_time_sec_t time;               /**< GNSS reference time of the correction */
+  u8 num_msgs;           /**< Number of messages in the dataset */
+  u8 seq_num;            /**< Position of this message in the dataset */
+  u8 update_interval;    /**< Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+ */
+  u8 iod_atmo;           /**< IOD of the SSR atmospheric correction
+ */
+} stec_header_dep_a_t;
+
+
+/** Header for MSG_SSR_GRIDDED_CORRECTION_DEP
+ *
+ * The 3GPP message contains nested variable length arrays
+ * which are not suppported in SBP, so each grid point will
+ * be identified by the index.
+ */
+typedef struct SBP_ATTR_PACKED {
+  gps_time_sec_t time;                       /**< GNSS reference time of the correction */
+  u16 num_msgs;                   /**< Number of messages in the dataset */
+  u16 seq_num;                    /**< Position of this message in the dataset */
+  u8 update_interval;            /**< Update interval between consecutive corrections. Encoded
+following RTCM DF391 specification.
+ */
+  u8 iod_atmo;                   /**< IOD of the SSR atmospheric correction
+ */
+  u8 tropo_quality_indicator;    /**< Quality of the troposphere data. Encoded following RTCM DF389
+specifcation in units of m.
+ */
+} gridded_correction_header_dep_a_t;
+
+
+/** Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
+ *
+ * Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
+ * Also includes an RLE encoded validity list.
+ */
+typedef struct SBP_ATTR_PACKED {
+  u8 region_size_inverse;    /**< region_size (deg) = 10 / region_size_inverse
+0 is an invalid value.
+ [inverse degrees] */
+  u16 area_width;             /**< grid height (deg) = grid width (deg) = area_width / region_size
+0 is an invalid value.
+ */
+  u16 lat_nw_corner_enc;      /**< North-West corner latitude (deg) = region_size * lat_nw_corner_enc - 90 */
+  u16 lon_nw_corner_enc;      /**< North-West corner longtitude (deg) = region_size * lon_nw_corner_enc - 180 */
+  u8 num_msgs;               /**< Number of messages in the dataset */
+  u8 seq_num;                /**< Postion of this message in the dataset */
+} grid_definition_header_dep_a_t;
+
+
+#define SBP_MSG_SSR_STEC_CORRECTION_DEP_A           0x05EB
+typedef struct SBP_ATTR_PACKED {
+  stec_header_dep_a_t header;           /**< Header of a STEC message */
+  stec_sat_element_t stec_sat_list[0]; /**< Array of STEC information for each space vehicle */
+} msg_ssr_stec_correction_dep_a_t;
+
+
+#define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A 0x05F0
+typedef struct SBP_ATTR_PACKED {
+  gridded_correction_header_dep_a_t header;     /**< Header of a Gridded Correction message */
+  grid_element_no_std_t element;    /**< Tropo and STEC residuals for the given grid point */
+} msg_ssr_gridded_correction_no_std_dep_a_t;
+
+
+#define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A        0x05FA
+typedef struct SBP_ATTR_PACKED {
+  gridded_correction_header_dep_a_t header;     /**< Header of a Gridded Correction message */
+  grid_element_t element;    /**< Tropo and STEC residuals for the given grid point (mean
+and standard deviation)
+ */
+} msg_ssr_gridded_correction_dep_a_t;
+
+
+#define SBP_MSG_SSR_GRID_DEFINITION_DEP_A           0x05F5
+typedef struct SBP_ATTR_PACKED {
+  grid_definition_header_dep_a_t header;      /**< Header of a Gridded Correction message */
   u8 rle_list[0]; /**< Run Length Encode list of quadrants that contain valid data.
 The spec describes the encoding scheme in detail, but
 essentially the index of the quadrants that contain transitions between
 valid and invalid (and vice versa) are encoded as u8 integers.
  */
-} msg_ssr_grid_definition_t;
+} msg_ssr_grid_definition_dep_a_t;
 
 
 /** \} */

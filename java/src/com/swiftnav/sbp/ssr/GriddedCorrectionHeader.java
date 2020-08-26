@@ -25,6 +25,12 @@ import com.swiftnav.sbp.SBPStruct;
 
 public class GriddedCorrectionHeader extends SBPStruct {
     
+    /** Unique identifier of the tile set this tile belongs to. */
+    public int tile_set_id;
+    
+    /** Unique identifier of this tile in the tile set. */
+    public int tile_id;
+    
     /** GNSS reference time of the correction */
     public GPSTimeSec time;
     
@@ -54,6 +60,8 @@ specifcation in units of m.
     @Override
     public GriddedCorrectionHeader parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
+        tile_set_id = parser.getU8();
+        tile_id = parser.getU8();
         time = new GPSTimeSec().parse(parser);
         num_msgs = parser.getU16();
         seq_num = parser.getU16();
@@ -66,6 +74,8 @@ specifcation in units of m.
     @Override
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
+        builder.putU8(tile_set_id);
+        builder.putU8(tile_id);
         time.build(builder);
         builder.putU16(num_msgs);
         builder.putU16(seq_num);
@@ -77,6 +87,8 @@ specifcation in units of m.
     @Override
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
+        obj.put("tile_set_id", tile_set_id);
+        obj.put("tile_id", tile_id);
         obj.put("time", time.toJSON());
         obj.put("num_msgs", num_msgs);
         obj.put("seq_num", seq_num);

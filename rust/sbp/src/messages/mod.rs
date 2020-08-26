@@ -196,13 +196,16 @@ use self::solution_meta::IMUInputType;
 use self::solution_meta::MsgSolnMeta;
 use self::solution_meta::OdoInputType;
 use self::ssr::MsgSsrCodeBiases;
-use self::ssr::MsgSsrGridDefinition;
+use self::ssr::MsgSsrGridDefinitionDepA;
 use self::ssr::MsgSsrGriddedCorrection;
-use self::ssr::MsgSsrGriddedCorrectionNoStd;
+use self::ssr::MsgSsrGriddedCorrectionDepA;
+use self::ssr::MsgSsrGriddedCorrectionNoStdDepA;
 use self::ssr::MsgSsrOrbitClock;
 use self::ssr::MsgSsrOrbitClockDepA;
 use self::ssr::MsgSsrPhaseBiases;
 use self::ssr::MsgSsrStecCorrection;
+use self::ssr::MsgSsrStecCorrectionDepA;
+use self::ssr::MsgSsrTileDefinition;
 use self::system::MsgCsacTelemetry;
 use self::system::MsgCsacTelemetryLabels;
 use self::system::MsgDgnssStatus;
@@ -399,9 +402,12 @@ pub enum SBP {
     MsgSsrOrbitClock(MsgSsrOrbitClock),
     MsgSsrCodeBiases(MsgSsrCodeBiases),
     MsgSsrPhaseBiases(MsgSsrPhaseBiases),
+    MsgSsrStecCorrectionDepA(MsgSsrStecCorrectionDepA),
+    MsgSsrGriddedCorrectionNoStdDepA(MsgSsrGriddedCorrectionNoStdDepA),
+    MsgSsrGridDefinitionDepA(MsgSsrGridDefinitionDepA),
+    MsgSsrTileDefinition(MsgSsrTileDefinition),
+    MsgSsrGriddedCorrectionDepA(MsgSsrGriddedCorrectionDepA),
     MsgSsrStecCorrection(MsgSsrStecCorrection),
-    MsgSsrGriddedCorrectionNoStd(MsgSsrGriddedCorrectionNoStd),
-    MsgSsrGridDefinition(MsgSsrGridDefinition),
     MsgSsrGriddedCorrection(MsgSsrGriddedCorrection),
     MsgOsr(MsgOsr),
     MsgUserData(MsgUserData),
@@ -1231,21 +1237,36 @@ impl SBP {
                 Ok(SBP::MsgSsrPhaseBiases(msg))
             }
             1515 => {
+                let mut msg = MsgSsrStecCorrectionDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgSsrStecCorrectionDepA(msg))
+            }
+            1520 => {
+                let mut msg = MsgSsrGriddedCorrectionNoStdDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgSsrGriddedCorrectionNoStdDepA(msg))
+            }
+            1525 => {
+                let mut msg = MsgSsrGridDefinitionDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgSsrGridDefinitionDepA(msg))
+            }
+            1526 => {
+                let mut msg = MsgSsrTileDefinition::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgSsrTileDefinition(msg))
+            }
+            1530 => {
+                let mut msg = MsgSsrGriddedCorrectionDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgSsrGriddedCorrectionDepA(msg))
+            }
+            1531 => {
                 let mut msg = MsgSsrStecCorrection::parse(payload)?;
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgSsrStecCorrection(msg))
             }
-            1520 => {
-                let mut msg = MsgSsrGriddedCorrectionNoStd::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgSsrGriddedCorrectionNoStd(msg))
-            }
-            1525 => {
-                let mut msg = MsgSsrGridDefinition::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::MsgSsrGridDefinition(msg))
-            }
-            1530 => {
+            1532 => {
                 let mut msg = MsgSsrGriddedCorrection::parse(payload)?;
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgSsrGriddedCorrection(msg))
@@ -1577,9 +1598,12 @@ impl SBP {
             SBP::MsgSsrOrbitClock(msg) => msg,
             SBP::MsgSsrCodeBiases(msg) => msg,
             SBP::MsgSsrPhaseBiases(msg) => msg,
+            SBP::MsgSsrStecCorrectionDepA(msg) => msg,
+            SBP::MsgSsrGriddedCorrectionNoStdDepA(msg) => msg,
+            SBP::MsgSsrGridDefinitionDepA(msg) => msg,
+            SBP::MsgSsrTileDefinition(msg) => msg,
+            SBP::MsgSsrGriddedCorrectionDepA(msg) => msg,
             SBP::MsgSsrStecCorrection(msg) => msg,
-            SBP::MsgSsrGriddedCorrectionNoStd(msg) => msg,
-            SBP::MsgSsrGridDefinition(msg) => msg,
             SBP::MsgSsrGriddedCorrection(msg) => msg,
             SBP::MsgOsr(msg) => msg,
             SBP::MsgUserData(msg) => msg,
