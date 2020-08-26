@@ -17,18 +17,12 @@
   "type": "object",
   "properties": {
     "group_id": {"type": "integer"},
-    "wn": {"type": "integer"},
-    "tom": {"type": "integer"},
-    "ns_residual": {"type": "integer"},
     "flags": {"type": "integer"},
     "n_group_msgs": {"type": "integer"},
     "group_msgs": {"type": "array", "items": {"type": "integer"}}
   },
   "required": [
     "group_id",
-    "wn",
-    "tom",
-    "ns_residual",
     "flags",
     "n_group_msgs",
     "group_msgs"
