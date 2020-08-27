@@ -63,8 +63,8 @@ Increased for every discontinuity in phase.
  * is used to tie multiple SBP messages into a sequence.
  */
 typedef struct SBP_ATTR_PACKED {
-  u8 tile_set_id;        /**< Unique identifier of the tile set this tile belongs to. */
-  u8 tile_id;            /**< Unique identifier of this tile in the tile set. */
+  u16 tile_set_id;        /**< Unique identifier of the tile set this tile belongs to. */
+  u16 tile_id;            /**< Unique identifier of this tile in the tile set. */
   gps_time_sec_t time;               /**< GNSS reference time of the correction */
   u8 num_msgs;           /**< Number of messages in the dataset */
   u8 seq_num;            /**< Position of this message in the dataset */
@@ -83,8 +83,8 @@ following RTCM DF391 specification.
  * be identified by the index.
  */
 typedef struct SBP_ATTR_PACKED {
-  u8 tile_set_id;                /**< Unique identifier of the tile set this tile belongs to. */
-  u8 tile_id;                    /**< Unique identifier of this tile in the tile set. */
+  u16 tile_set_id;                /**< Unique identifier of the tile set this tile belongs to. */
+  u16 tile_id;                    /**< Unique identifier of this tile in the tile set. */
   gps_time_sec_t time;                       /**< GNSS reference time of the correction */
   u16 num_msgs;                   /**< Number of messages in the dataset */
   u16 seq_num;                    /**< Position of this message in the dataset */
@@ -109,7 +109,7 @@ typedef struct SBP_ATTR_PACKED {
 but in units of TECU instead of m.
  */
   s16 stec_coeff[4];             /**< Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
- [C00 = 0.05 TECU, others = 0.02 TECU/deg] */
+ [C00 = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2] */
 } stec_sat_element_t;
 
 
@@ -313,8 +313,8 @@ typedef struct SBP_ATTR_PACKED {
  */
 #define SBP_MSG_SSR_TILE_DEFINITION                 0x05F6
 typedef struct SBP_ATTR_PACKED {
-  u8 tile_set_id;      /**< Unique identifier of the tile set this tile belongs to. */
-  u8 tile_id;          /**< Unique identifier of this tile in the tile set.
+  u16 tile_set_id;      /**< Unique identifier of the tile set this tile belongs to. */
+  u16 tile_id;          /**< Unique identifier of this tile in the tile set.
 
 See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
  */

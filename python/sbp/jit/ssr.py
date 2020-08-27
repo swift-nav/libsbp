@@ -133,9 +133,9 @@ is used to tie multiple SBP messages into a sequence.
   @classmethod
   def parse_members(cls, buf, offset, length):
     ret = {}
-    (__tile_set_id, offset, length) = get_u8(buf, offset, length)
+    (__tile_set_id, offset, length) = get_u16(buf, offset, length)
     ret['tile_set_id'] = __tile_set_id
-    (__tile_id, offset, length) = get_u8(buf, offset, length)
+    (__tile_id, offset, length) = get_u16(buf, offset, length)
     ret['tile_id'] = __tile_id
     (__time, offset, length) = GPSTimeSec.parse_members(buf, offset, length)
     ret['time'] = __time
@@ -189,9 +189,9 @@ be identified by the index.
   @classmethod
   def parse_members(cls, buf, offset, length):
     ret = {}
-    (__tile_set_id, offset, length) = get_u8(buf, offset, length)
+    (__tile_set_id, offset, length) = get_u16(buf, offset, length)
     ret['tile_set_id'] = __tile_set_id
-    (__tile_id, offset, length) = get_u8(buf, offset, length)
+    (__tile_id, offset, length) = get_u16(buf, offset, length)
     ret['tile_id'] = __tile_id
     (__time, offset, length) = GPSTimeSec.parse_members(buf, offset, length)
     ret['time'] = __time
@@ -783,9 +783,9 @@ correction points, not lists of points.
   @classmethod
   def parse_members(cls, buf, offset, length):
     ret = {}
-    (__tile_set_id, offset, length) = get_u8(buf, offset, length)
+    (__tile_set_id, offset, length) = get_u16(buf, offset, length)
     ret['tile_set_id'] = __tile_set_id
-    (__tile_id, offset, length) = get_u8(buf, offset, length)
+    (__tile_id, offset, length) = get_u16(buf, offset, length)
     ret['tile_id'] = __tile_id
     (__corner_nw_lat, offset, length) = get_u16(buf, offset, length)
     ret['corner_nw_lat'] = __corner_nw_lat

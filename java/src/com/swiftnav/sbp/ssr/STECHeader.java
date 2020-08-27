@@ -55,8 +55,8 @@ following RTCM DF391 specification.
     @Override
     public STECHeader parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        tile_set_id = parser.getU8();
-        tile_id = parser.getU8();
+        tile_set_id = parser.getU16();
+        tile_id = parser.getU16();
         time = new GPSTimeSec().parse(parser);
         num_msgs = parser.getU8();
         seq_num = parser.getU8();
@@ -68,8 +68,8 @@ following RTCM DF391 specification.
     @Override
     public void build(SBPMessage.Builder builder) {
         /* Build fields into binary */
-        builder.putU8(tile_set_id);
-        builder.putU8(tile_id);
+        builder.putU16(tile_set_id);
+        builder.putU16(tile_id);
         time.build(builder);
         builder.putU8(num_msgs);
         builder.putU8(seq_num);

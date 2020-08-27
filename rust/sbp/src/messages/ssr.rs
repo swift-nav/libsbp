@@ -296,9 +296,9 @@ impl crate::serialize::SbpSerialize for GridElementNoStd {
 #[allow(non_snake_case)]
 pub struct GriddedCorrectionHeader {
     /// Unique identifier of the tile set this tile belongs to.
-    pub tile_set_id: u8,
+    pub tile_set_id: u16,
     /// Unique identifier of this tile in the tile set.
-    pub tile_id: u8,
+    pub tile_id: u16,
     /// GNSS reference time of the correction
     pub time: GPSTimeSec,
     /// Number of messages in the dataset
@@ -319,8 +319,8 @@ impl GriddedCorrectionHeader {
     #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<GriddedCorrectionHeader, crate::Error> {
         Ok( GriddedCorrectionHeader{
-            tile_set_id: _buf.read_u8()?,
-            tile_id: _buf.read_u8()?,
+            tile_set_id: _buf.read_u16::<LittleEndian>()?,
+            tile_id: _buf.read_u16::<LittleEndian>()?,
             time: GPSTimeSec::parse(_buf)?,
             num_msgs: _buf.read_u16::<LittleEndian>()?,
             seq_num: _buf.read_u16::<LittleEndian>()?,
@@ -1244,10 +1244,10 @@ impl crate::serialize::SbpSerialize for MsgSsrStecCorrectionDepA {
 pub struct MsgSsrTileDefinition {
     pub sender_id: Option<u16>,
     /// Unique identifier of the tile set this tile belongs to.
-    pub tile_set_id: u8,
+    pub tile_set_id: u16,
     /// Unique identifier of this tile in the tile set.  See GNSS-SSR-
     /// ArrayOfCorrectionPoints field correctionPointSetID.
-    pub tile_id: u8,
+    pub tile_id: u16,
     /// North-West corner correction point latitude.  The relation between the
     /// latitude X in the range [-90, 90] and the coded number N is:  N =
     /// floor((X / 90) * 2^14)  See GNSS-SSR-ArrayOfCorrectionPoints field
@@ -1288,8 +1288,8 @@ impl MsgSsrTileDefinition {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrTileDefinition, crate::Error> {
         Ok( MsgSsrTileDefinition{
             sender_id: None,
-            tile_set_id: _buf.read_u8()?,
-            tile_id: _buf.read_u8()?,
+            tile_set_id: _buf.read_u16::<LittleEndian>()?,
+            tile_id: _buf.read_u16::<LittleEndian>()?,
             corner_nw_lat: _buf.read_u16::<LittleEndian>()?,
             corner_nw_lon: _buf.read_u16::<LittleEndian>()?,
             spacing_lat: _buf.read_u16::<LittleEndian>()?,
@@ -1433,9 +1433,9 @@ impl crate::serialize::SbpSerialize for PhaseBiasesContent {
 #[allow(non_snake_case)]
 pub struct STECHeader {
     /// Unique identifier of the tile set this tile belongs to.
-    pub tile_set_id: u8,
+    pub tile_set_id: u16,
     /// Unique identifier of this tile in the tile set.
-    pub tile_id: u8,
+    pub tile_id: u16,
     /// GNSS reference time of the correction
     pub time: GPSTimeSec,
     /// Number of messages in the dataset
@@ -1453,8 +1453,8 @@ impl STECHeader {
     #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<STECHeader, crate::Error> {
         Ok( STECHeader{
-            tile_set_id: _buf.read_u8()?,
-            tile_id: _buf.read_u8()?,
+            tile_set_id: _buf.read_u16::<LittleEndian>()?,
+            tile_id: _buf.read_u16::<LittleEndian>()?,
             time: GPSTimeSec::parse(_buf)?,
             num_msgs: _buf.read_u8()?,
             seq_num: _buf.read_u8()?,

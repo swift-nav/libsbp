@@ -108,8 +108,8 @@ PhaseBiasesContent.prototype.fieldSpec.push(['bias', 'writeInt32LE', 4]);
  * into a sequence.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field tile_set_id number (unsigned 8-bit int, 1 byte) Unique identifier of the tile set this tile belongs to.
- * @field tile_id number (unsigned 8-bit int, 1 byte) Unique identifier of this tile in the tile set.
+ * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the tile set this tile belongs to.
+ * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set.
  * @field time GPSTimeSec GNSS reference time of the correction
  * @field num_msgs number (unsigned 8-bit int, 1 byte) Number of messages in the dataset
  * @field seq_num number (unsigned 8-bit int, 1 byte) Position of this message in the dataset
@@ -131,16 +131,16 @@ STECHeader.prototype.messageType = "STECHeader";
 STECHeader.prototype.constructor = STECHeader;
 STECHeader.prototype.parser = new Parser()
   .endianess('little')
-  .uint8('tile_set_id')
-  .uint8('tile_id')
+  .uint16('tile_set_id')
+  .uint16('tile_id')
   .nest('time', { type: GPSTimeSec.prototype.parser })
   .uint8('num_msgs')
   .uint8('seq_num')
   .uint8('update_interval')
   .uint8('iod_atmo');
 STECHeader.prototype.fieldSpec = [];
-STECHeader.prototype.fieldSpec.push(['tile_set_id', 'writeUInt8', 1]);
-STECHeader.prototype.fieldSpec.push(['tile_id', 'writeUInt8', 1]);
+STECHeader.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);
+STECHeader.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
 STECHeader.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
 STECHeader.prototype.fieldSpec.push(['num_msgs', 'writeUInt8', 1]);
 STECHeader.prototype.fieldSpec.push(['seq_num', 'writeUInt8', 1]);
@@ -154,8 +154,8 @@ STECHeader.prototype.fieldSpec.push(['iod_atmo', 'writeUInt8', 1]);
  * in SBP, so each grid point will be identified by the index.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field tile_set_id number (unsigned 8-bit int, 1 byte) Unique identifier of the tile set this tile belongs to.
- * @field tile_id number (unsigned 8-bit int, 1 byte) Unique identifier of this tile in the tile set.
+ * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the tile set this tile belongs to.
+ * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set.
  * @field time GPSTimeSec GNSS reference time of the correction
  * @field num_msgs number (unsigned 16-bit int, 2 bytes) Number of messages in the dataset
  * @field seq_num number (unsigned 16-bit int, 2 bytes) Position of this message in the dataset
@@ -179,8 +179,8 @@ GriddedCorrectionHeader.prototype.messageType = "GriddedCorrectionHeader";
 GriddedCorrectionHeader.prototype.constructor = GriddedCorrectionHeader;
 GriddedCorrectionHeader.prototype.parser = new Parser()
   .endianess('little')
-  .uint8('tile_set_id')
-  .uint8('tile_id')
+  .uint16('tile_set_id')
+  .uint16('tile_id')
   .nest('time', { type: GPSTimeSec.prototype.parser })
   .uint16('num_msgs')
   .uint16('seq_num')
@@ -188,8 +188,8 @@ GriddedCorrectionHeader.prototype.parser = new Parser()
   .uint8('iod_atmo')
   .uint8('tropo_quality_indicator');
 GriddedCorrectionHeader.prototype.fieldSpec = [];
-GriddedCorrectionHeader.prototype.fieldSpec.push(['tile_set_id', 'writeUInt8', 1]);
-GriddedCorrectionHeader.prototype.fieldSpec.push(['tile_id', 'writeUInt8', 1]);
+GriddedCorrectionHeader.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);
+GriddedCorrectionHeader.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
 GriddedCorrectionHeader.prototype.fieldSpec.push(['time', GPSTimeSec.prototype.fieldSpec]);
 GriddedCorrectionHeader.prototype.fieldSpec.push(['num_msgs', 'writeUInt16LE', 2]);
 GriddedCorrectionHeader.prototype.fieldSpec.push(['seq_num', 'writeUInt16LE', 2]);
@@ -663,8 +663,8 @@ MsgSsrGriddedCorrection.prototype.fieldSpec.push(['element', GridElement.prototy
  * lists of points.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field tile_set_id number (unsigned 8-bit int, 1 byte) Unique identifier of the tile set this tile belongs to.
- * @field tile_id number (unsigned 8-bit int, 1 byte) Unique identifier of this tile in the tile set.  See GNSS-SSR-
+ * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the tile set this tile belongs to.
+ * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set.  See GNSS-SSR-
  *   ArrayOfCorrectionPoints field correctionPointSetID.
  * @field corner_nw_lat number (unsigned 16-bit int, 2 bytes) North-West corner correction point latitude.  The relation between the latitude
  *   X in the range [-90, 90] and the coded number N is:  N = floor((X / 90) * 2^14)
@@ -706,8 +706,8 @@ MsgSsrTileDefinition.prototype.msg_type = 0x05F6;
 MsgSsrTileDefinition.prototype.constructor = MsgSsrTileDefinition;
 MsgSsrTileDefinition.prototype.parser = new Parser()
   .endianess('little')
-  .uint8('tile_set_id')
-  .uint8('tile_id')
+  .uint16('tile_set_id')
+  .uint16('tile_id')
   .uint16('corner_nw_lat')
   .uint16('corner_nw_lon')
   .uint16('spacing_lat')
@@ -716,8 +716,8 @@ MsgSsrTileDefinition.prototype.parser = new Parser()
   .uint16('cols')
   .uint64('bitmask');
 MsgSsrTileDefinition.prototype.fieldSpec = [];
-MsgSsrTileDefinition.prototype.fieldSpec.push(['tile_set_id', 'writeUInt8', 1]);
-MsgSsrTileDefinition.prototype.fieldSpec.push(['tile_id', 'writeUInt8', 1]);
+MsgSsrTileDefinition.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);
+MsgSsrTileDefinition.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
 MsgSsrTileDefinition.prototype.fieldSpec.push(['corner_nw_lat', 'writeUInt16LE', 2]);
 MsgSsrTileDefinition.prototype.fieldSpec.push(['corner_nw_lon', 'writeUInt16LE', 2]);
 MsgSsrTileDefinition.prototype.fieldSpec.push(['spacing_lat', 'writeUInt16LE', 2]);
