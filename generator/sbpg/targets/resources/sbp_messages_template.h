@@ -42,6 +42,14 @@ SBP_PACK_START
 #define SBP_(((m.identifier.ljust(max_msgid_len)))) ((('0x%04X'|format(m.sbp_id))))
 ((*- endif *))
 ((*- if m.fields *))
+((*- if m.sbp_id or m.embedded_type *))
+((*- for f in m.fields *))
+((*- if f.options.fields *))
+(((f|create_bitfield_macros(m.identifier))))
+((*- endif *))
+((*- endfor *))
+((*- endif *))
+
 typedef struct SBP_ATTR_PACKED {
   ((*- for f in m.fields *))
   ((*- if f.desc *))
