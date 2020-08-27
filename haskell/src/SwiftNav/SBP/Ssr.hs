@@ -636,12 +636,12 @@ data MsgSsrTileDefinition = MsgSsrTileDefinition
   , _msgSsrTileDefinition_tile_id     :: !Word16
     -- ^ Unique identifier of this tile in the tile set.  See GNSS-SSR-
     -- ArrayOfCorrectionPoints field correctionPointSetID.
-  , _msgSsrTileDefinition_corner_nw_lat :: !Word16
+  , _msgSsrTileDefinition_corner_nw_lat :: !Int16
     -- ^ North-West corner correction point latitude.  The relation between the
     -- latitude X in the range [-90, 90] and the coded number N is:  N =
     -- floor((X / 90) * 2^14)  See GNSS-SSR-ArrayOfCorrectionPoints field
     -- referencePointLatitude.
-  , _msgSsrTileDefinition_corner_nw_lon :: !Word16
+  , _msgSsrTileDefinition_corner_nw_lon :: !Int16
     -- ^ North-West corner correction point longtitude.  The relation between the
     -- longtitude X in the range [-180, 180] and the coded number N is:  N =
     -- floor((X / 180) * 2^15)  See GNSS-SSR-ArrayOfCorrectionPoints field
@@ -675,8 +675,8 @@ instance Binary MsgSsrTileDefinition where
   get = do
     _msgSsrTileDefinition_tile_set_id <- getWord16le
     _msgSsrTileDefinition_tile_id <- getWord16le
-    _msgSsrTileDefinition_corner_nw_lat <- getWord16le
-    _msgSsrTileDefinition_corner_nw_lon <- getWord16le
+    _msgSsrTileDefinition_corner_nw_lat <- (fromIntegral <$> getWord16le)
+    _msgSsrTileDefinition_corner_nw_lon <- (fromIntegral <$> getWord16le)
     _msgSsrTileDefinition_spacing_lat <- getWord16le
     _msgSsrTileDefinition_spacing_lon <- getWord16le
     _msgSsrTileDefinition_rows <- getWord16le
@@ -687,8 +687,8 @@ instance Binary MsgSsrTileDefinition where
   put MsgSsrTileDefinition {..} = do
     putWord16le _msgSsrTileDefinition_tile_set_id
     putWord16le _msgSsrTileDefinition_tile_id
-    putWord16le _msgSsrTileDefinition_corner_nw_lat
-    putWord16le _msgSsrTileDefinition_corner_nw_lon
+    (putWord16le . fromIntegral) _msgSsrTileDefinition_corner_nw_lat
+    (putWord16le . fromIntegral) _msgSsrTileDefinition_corner_nw_lon
     putWord16le _msgSsrTileDefinition_spacing_lat
     putWord16le _msgSsrTileDefinition_spacing_lon
     putWord16le _msgSsrTileDefinition_rows

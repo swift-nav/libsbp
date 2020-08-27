@@ -666,10 +666,10 @@ MsgSsrGriddedCorrection.prototype.fieldSpec.push(['element', GridElement.prototy
  * @field tile_set_id number (unsigned 16-bit int, 2 bytes) Unique identifier of the tile set this tile belongs to.
  * @field tile_id number (unsigned 16-bit int, 2 bytes) Unique identifier of this tile in the tile set.  See GNSS-SSR-
  *   ArrayOfCorrectionPoints field correctionPointSetID.
- * @field corner_nw_lat number (unsigned 16-bit int, 2 bytes) North-West corner correction point latitude.  The relation between the latitude
+ * @field corner_nw_lat number (signed 16-bit int, 2 bytes) North-West corner correction point latitude.  The relation between the latitude
  *   X in the range [-90, 90] and the coded number N is:  N = floor((X / 90) * 2^14)
  *   See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
- * @field corner_nw_lon number (unsigned 16-bit int, 2 bytes) North-West corner correction point longtitude.  The relation between the
+ * @field corner_nw_lon number (signed 16-bit int, 2 bytes) North-West corner correction point longtitude.  The relation between the
  *   longtitude X in the range [-180, 180] and the coded number N is:  N = floor((X /
  *   180) * 2^15)  See GNSS-SSR-ArrayOfCorrectionPoints field
  *   referencePointLongitude.
@@ -708,8 +708,8 @@ MsgSsrTileDefinition.prototype.parser = new Parser()
   .endianess('little')
   .uint16('tile_set_id')
   .uint16('tile_id')
-  .uint16('corner_nw_lat')
-  .uint16('corner_nw_lon')
+  .int16('corner_nw_lat')
+  .int16('corner_nw_lon')
   .uint16('spacing_lat')
   .uint16('spacing_lon')
   .uint16('rows')
@@ -718,8 +718,8 @@ MsgSsrTileDefinition.prototype.parser = new Parser()
 MsgSsrTileDefinition.prototype.fieldSpec = [];
 MsgSsrTileDefinition.prototype.fieldSpec.push(['tile_set_id', 'writeUInt16LE', 2]);
 MsgSsrTileDefinition.prototype.fieldSpec.push(['tile_id', 'writeUInt16LE', 2]);
-MsgSsrTileDefinition.prototype.fieldSpec.push(['corner_nw_lat', 'writeUInt16LE', 2]);
-MsgSsrTileDefinition.prototype.fieldSpec.push(['corner_nw_lon', 'writeUInt16LE', 2]);
+MsgSsrTileDefinition.prototype.fieldSpec.push(['corner_nw_lat', 'writeInt16LE', 2]);
+MsgSsrTileDefinition.prototype.fieldSpec.push(['corner_nw_lon', 'writeInt16LE', 2]);
 MsgSsrTileDefinition.prototype.fieldSpec.push(['spacing_lat', 'writeUInt16LE', 2]);
 MsgSsrTileDefinition.prototype.fieldSpec.push(['spacing_lon', 'writeUInt16LE', 2]);
 MsgSsrTileDefinition.prototype.fieldSpec.push(['rows', 'writeUInt16LE', 2]);

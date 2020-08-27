@@ -128,8 +128,8 @@ note the definition of the bits is inverted.
         /* Parse fields from binary */
         tile_set_id = parser.getU16();
         tile_id = parser.getU16();
-        corner_nw_lat = parser.getU16();
-        corner_nw_lon = parser.getU16();
+        corner_nw_lat = parser.getS16();
+        corner_nw_lon = parser.getS16();
         spacing_lat = parser.getU16();
         spacing_lon = parser.getU16();
         rows = parser.getU16();
@@ -141,8 +141,8 @@ note the definition of the bits is inverted.
     protected void build(Builder builder) {
         builder.putU16(tile_set_id);
         builder.putU16(tile_id);
-        builder.putU16(corner_nw_lat);
-        builder.putU16(corner_nw_lon);
+        builder.putS16(corner_nw_lat);
+        builder.putS16(corner_nw_lon);
         builder.putU16(spacing_lat);
         builder.putU16(spacing_lon);
         builder.putU16(rows);

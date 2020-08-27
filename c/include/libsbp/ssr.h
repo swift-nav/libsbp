@@ -318,7 +318,7 @@ typedef struct SBP_ATTR_PACKED {
 
 See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
  */
-  u16 corner_nw_lat;    /**< North-West corner correction point latitude.
+  s16 corner_nw_lat;    /**< North-West corner correction point latitude.
 
 The relation between the latitude X in the range [-90, 90] and
 the coded number N is:
@@ -327,7 +327,7 @@ N = floor((X / 90) * 2^14)
 
 See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
  [encoded degrees] */
-  u16 corner_nw_lon;    /**< North-West corner correction point longtitude.
+  s16 corner_nw_lon;    /**< North-West corner correction point longtitude.
 
 The relation between the longtitude X in the range [-180, 180]
 and the coded number N is:

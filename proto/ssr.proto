@@ -248,8 +248,8 @@ message MsgSsrGriddedCorrection {
 message MsgSsrTileDefinition {
     uint32 tile_set_id = 1;
     uint32 tile_id = 2;
-    uint32 corner_nw_lat = 3;
-    uint32 corner_nw_lon = 4;
+    sint32 corner_nw_lat = 3;
+    sint32 corner_nw_lon = 4;
     uint32 spacing_lat = 5;
     uint32 spacing_lon = 6;
     uint32 rows = 7;
