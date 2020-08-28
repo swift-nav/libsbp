@@ -3,6 +3,6 @@ pyftdi==0.13.*
 pylibftdi
 pyserial
 requests==2.20.*
-numpy==1.18.*
+numpy~=1.18
 pybase64
 python-rapidjson==0.9.1
