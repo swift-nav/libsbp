@@ -25,6 +25,7 @@ features = ["sbp2json"]
 [dev-dependencies]
 sha2 = "0.8"
 hex = "0.4"
+serde_json = "1.0"
 
 [profile.release]
 lto = true
