@@ -108,7 +108,7 @@ performance on par with the Haskell and Rust variants.
 The quickest method to get going is to just pull a prebuilt copy from DockerHub
 (no guarantees on freshness):
 
-``docker run  -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2020.08.18``
+``docker run  -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2020.08.28``
 
 Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
 
