@@ -191,7 +191,7 @@ fn add_common_fields<'a>(
 /// etc). to the outputted JSON object.
 fn write_sbp_json_value(
     float_compat: bool,
-    rewrap_data: bool,
+    rewrap_data: Option<Value>,
     base64_payload: &mut String,
     common_sbp: &dyn SBPMessage,
     slice: &[u8],
@@ -200,12 +200,12 @@ fn write_sbp_json_value(
 ) -> Result<()> {
     let value = unpack(value);
     let value = add_common_fields(common_sbp, slice, value.unwrap(), base64_payload);
-    let data_wrapped;
-    let value = if rewrap_data {
-        data_wrapped = json!({ "data": value });
-        &data_wrapped
+    let value = if let Some(mut rewrap_data) = rewrap_data {
+        let data_obj = rewrap_data.as_object_mut().unwrap();
+        data_obj.insert("data".into(), value.clone());
+        rewrap_data
     } else {
-        value
+        value.clone()
     };
     if float_compat {
         let io_ref = Rc::get_mut(stream).expect("could not get output stream");
@@ -223,18 +223,18 @@ fn write_sbp_json_value(
 
 /// The Swift console stores SBP JSON in the "data" field of a JSON object, if this field is
 /// present then we should unpack the SPB JSON from it.
-fn unwrap_data_obj<'a>(value: &'a Value) -> (&'a Value, bool) {
+fn unwrap_data_obj<'a>(value: &'a Value) -> (&'a Value, Option<Value>) {
     if !value.is_object() {
-        return (value, false);
+        return (value, None);
     }
     let map = value.as_object().unwrap();
     if map.contains_key("payload") {
-        return (value, false);
+        return (value, None);
     }
     if !map.contains_key("data") {
-        return (value, false);
+        return (value, None);
     }
-    (map.get("data").unwrap(), true)
+    (map.get("data").unwrap(), Some(value.clone()))
 }
 
 /// Unwrap and return the "payload" key from a JSON object, if it exists.
@@ -454,7 +454,7 @@ pub fn sbp2json_read_loop(
                     let mut value = serde_json::to_value(&msg)?;
                     write_sbp_json_value(
                         float_compat,
-                        false,
+                        None,
                         &mut base64_payload,
                         common_sbp,
                         slice,

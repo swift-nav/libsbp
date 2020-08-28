@@ -12,7 +12,7 @@ use sha2::{Digest, Sha256};
 
 use sbp::sbp2json::Result;
 
-fn find_project_root() -> Option<PathBuf> {
+pub fn find_project_root() -> Option<PathBuf> {
     let exe = env::current_exe();
     assert!(exe.is_ok());
     let mut path = exe.unwrap();
@@ -32,7 +32,7 @@ fn find_project_root() -> Option<PathBuf> {
     return None;
 }
 
-struct DeleteTestOutput {
+pub struct DeleteTestOutput {
     files: Vec<PathBuf>,
 }
 
