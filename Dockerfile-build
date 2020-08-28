@@ -63,14 +63,15 @@ RUN \
   && rm -rf /var/lib/apt/lists/* \
   && curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable --no-modify-path
 
-WORKDIR /mnt/workspace
-
 # Add a "dockerdev" user with sudo capabilities
 # 1000 is the first user ID issued on Ubuntu; might
 # be different for Mac users. Might need to add more.
-RUN useradd -u 1000 -ms /bin/bash -G sudo dockerdev
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN useradd -u 1000 -ms /bin/bash -G sudo dockerdev \
+    && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers \
+    && find $RUSTUP_HOME -exec chmod a+rw {} \; \
+    && find $CARGO_HOME -exec chmod a+rw {} \;
 
+WORKDIR /mnt/workspace
 USER dockerdev
 
 RUN stack install --resolver lts-10.10 sbp
