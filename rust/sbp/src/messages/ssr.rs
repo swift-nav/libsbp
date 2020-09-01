@@ -1252,12 +1252,12 @@ pub struct MsgSsrTileDefinition {
     /// latitude X in the range [-90, 90] and the coded number N is:  N =
     /// floor((X / 90) * 2^14)  See GNSS-SSR-ArrayOfCorrectionPoints field
     /// referencePointLatitude.
-    pub corner_nw_lat: u16,
+    pub corner_nw_lat: i16,
     /// North-West corner correction point longtitude.  The relation between the
     /// longtitude X in the range [-180, 180] and the coded number N is:  N =
     /// floor((X / 180) * 2^15)  See GNSS-SSR-ArrayOfCorrectionPoints field
     /// referencePointLongitude.
-    pub corner_nw_lon: u16,
+    pub corner_nw_lon: i16,
     /// Spacing of the correction points in the latitude direction.  See GNSS-
     /// SSR-ArrayOfCorrectionPoints field stepOfLatitude.
     pub spacing_lat: u16,
@@ -1290,8 +1290,8 @@ impl MsgSsrTileDefinition {
             sender_id: None,
             tile_set_id: _buf.read_u16::<LittleEndian>()?,
             tile_id: _buf.read_u16::<LittleEndian>()?,
-            corner_nw_lat: _buf.read_u16::<LittleEndian>()?,
-            corner_nw_lon: _buf.read_u16::<LittleEndian>()?,
+            corner_nw_lat: _buf.read_i16::<LittleEndian>()?,
+            corner_nw_lon: _buf.read_i16::<LittleEndian>()?,
             spacing_lat: _buf.read_u16::<LittleEndian>()?,
             spacing_lon: _buf.read_u16::<LittleEndian>()?,
             rows: _buf.read_u16::<LittleEndian>()?,

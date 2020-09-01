@@ -787,9 +787,9 @@ correction points, not lists of points.
     ret['tile_set_id'] = __tile_set_id
     (__tile_id, offset, length) = get_u16(buf, offset, length)
     ret['tile_id'] = __tile_id
-    (__corner_nw_lat, offset, length) = get_u16(buf, offset, length)
+    (__corner_nw_lat, offset, length) = get_s16(buf, offset, length)
     ret['corner_nw_lat'] = __corner_nw_lat
-    (__corner_nw_lon, offset, length) = get_u16(buf, offset, length)
+    (__corner_nw_lon, offset, length) = get_s16(buf, offset, length)
     ret['corner_nw_lon'] = __corner_nw_lon
     (__spacing_lat, offset, length) = get_u16(buf, offset, length)
     ret['spacing_lat'] = __spacing_lat

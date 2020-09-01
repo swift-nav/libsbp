@@ -1505,8 +1505,8 @@ note the definition of the bits is inverted.
   _parser = construct.Struct(
                    'tile_set_id' / construct.Int16ul,
                    'tile_id' / construct.Int16ul,
-                   'corner_nw_lat' / construct.Int16ul,
-                   'corner_nw_lon' / construct.Int16ul,
+                   'corner_nw_lat' / construct.Int16sl,
+                   'corner_nw_lon' / construct.Int16sl,
                    'spacing_lat' / construct.Int16ul,
                    'spacing_lon' / construct.Int16ul,
                    'rows' / construct.Int16ul,

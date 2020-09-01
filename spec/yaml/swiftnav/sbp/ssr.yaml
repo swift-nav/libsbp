@@ -448,7 +448,7 @@ definitions:
 
               See GNSS-SSR-ArrayOfCorrectionPoints field correctionPointSetID.
         - corner_nw_lat:
-            type: u16
+            type: s16
             units: encoded degrees
             desc: |
               North-West corner correction point latitude.
@@ -460,7 +460,7 @@ definitions:
 
               See GNSS-SSR-ArrayOfCorrectionPoints field referencePointLatitude.
         - corner_nw_lon:
-            type: u16
+            type: s16
             units: encoded degrees
             desc: |
               North-West corner correction point longtitude.
