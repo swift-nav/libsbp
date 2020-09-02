@@ -35,7 +35,7 @@ var (((ident))) = require("./(((file)))").(((ident)));
 ((*- for m in msgs *))
 
 /**
- * ((* if m.sbp_id *))SBP class for message (((m.identifier))) ((('(0x%04X)'|format(m.sbp_id)))).((* else *))SBP class for message fragment (((m.identifier))) ((*- endif *))
+ * ((* if m.is_real_message *))SBP class for message (((m.identifier))) ((('(0x%04X)'|format(m.sbp_id)))).((* else *))SBP class for message fragment (((m.identifier))) ((*- endif *))
  *
  ((* if m.desc *))* (((m.desc | starWordWrap )))
  *((*- endif *))
@@ -55,7 +55,7 @@ var ((( m.identifier | js_classnameify ))) = function (sbp, fields) {
 };
 ((( m.identifier | js_classnameify ))).prototype = Object.create(SBP.prototype);
 ((( m.identifier | js_classnameify ))).prototype.messageType = "(((m.identifier)))";
-((*- if m.sbp_id *))
+((*- if m.is_real_message *))
 ((( m.identifier | js_classnameify ))).prototype.msg_type = ((('0x%04X'|format(m.sbp_id))));
 ((*- endif *))
 ((( m.identifier | js_classnameify ))).prototype.constructor = ((( m.identifier | js_classnameify )));
@@ -82,7 +82,7 @@ var ((( m.identifier | js_classnameify ))) = function (sbp, fields) {
 
 module.exports = {
 ((*- for m in msgs *))
-  ((*- if m.sbp_id *))
+  ((*- if m.is_real_message *))
   ((('0x%04X'|format(m.sbp_id)))): ((( m.identifier | js_classnameify ))),
   ((*- endif *))
   ((( m.identifier | js_classnameify ))): ((( m.identifier | js_classnameify ))),

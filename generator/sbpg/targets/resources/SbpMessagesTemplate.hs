@@ -38,12 +38,12 @@ import (((m)))
 
 ((* for m in msgs *))
 ((*- if m.static *))
-((*- if m.sbp_id *))
+((*- if m.is_real_message *))
 (((m.identifier|hs_to_global))) :: Word16
 (((m.identifier|hs_to_global))) = ((('0x%04X'|format(m.sbp_id))))
 ((* endif *))
 ((*- if m.desc *))
-((*- if not m.sbp_id *))
+((*- if not m.is_real_message *))
 -- | (((m.identifier))).
 ((*- else *))
 -- | SBP class for message (((m.identifier))) ((('(0x%04X)'|format(m.sbp_id)))).
@@ -92,7 +92,7 @@ instance Binary (((m.identifier|hs_to_data))) where
 ((*- endfor *))
 ((* endif *))
 
-((*- if m.sbp_id *))
+((*- if m.is_real_message *))
 $(makeSBP '(((m.identifier|hs_to_global))) ''(((m.identifier|hs_to_data))))
 ((*- endif *))
 $(makeJSON "_(((m.identifier|hs_to_global)))_" ''(((m.identifier|hs_to_data))))

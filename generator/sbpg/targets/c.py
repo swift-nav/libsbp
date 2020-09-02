@@ -125,7 +125,7 @@ def render_traits(output_dir, package_specs):
     if name != 'types' and name != 'base':
       includes.append(name)
     for m in package_spec.definitions:
-      if m.static and m.sbp_id:
+      if m.is_real_message:
         msgs.append(m)
   destination_filename = "%s/cpp/message_traits.h" % output_dir
   py_template = JENV.get_template(MESSAGE_TRAITS_TEMPLATE_NAME)

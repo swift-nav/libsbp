@@ -15,7 +15,7 @@ pub mod unknown;
 
 ((*- for p in packages *))
 ((*- for m in p.definitions *))
-((*- if m.sbp_id *))
+((*- if m.is_real_message *))
 use self::(((p.identifier|mod_name)))::(((m.identifier|camel_case)));
 ((*- endif *))
 ((*- endfor *))
