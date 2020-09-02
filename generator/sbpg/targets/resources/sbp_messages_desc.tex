@@ -10,7 +10,7 @@
 \end{large}
 ((* endif *))
 
-\subsection{(((m.name | no_us))) --- ((*- if m.description_only!=True -*)) ((('0x%04X'|format(m.sbp_id)))) --- (((m.sbp_id))) ((*- endif -*))}
+\subsubsection{(((m.name | escape_tex ))) ((*- if m.is_real_message *)) --- ((('0x%04X'|format(m.sbp_id)))) --- (((m.sbp_id))) ((*- endif -*))}
 \label{sec:(((m.name)))}
 
 \begin{large}
