@@ -38,7 +38,7 @@ SBP_PACK_START
 (((m.desc|commentify)))
  */
 ((*- endif *))
-((*- if m.sbp_id *))
+((*- if m.is_real_message *))
 #define SBP_(((m.identifier.ljust(max_msgid_len)))) ((('0x%04X'|format(m.sbp_id))))
 ((*- endif *))
 ((*- if m.fields *))

@@ -17,7 +17,7 @@ import com.swiftnav.sbp.SBPMessage.Builder;
 import com.swiftnav.sbp.SBPMessage.Parser;
 ((*- for p in packages *))
 ((*- for m in p.definitions *))
-((*- if m.sbp_id *))
+((*- if m.is_real_message *))
 import com.(((p.identifier))).(((m.identifier|classnameify)));
 ((*- endif *))
 ((*- endfor *))
@@ -28,7 +28,7 @@ final class MessageTable {
         switch (msg.type) {
             ((*- for p in packages *))
             ((*- for m in p.definitions *))
-            ((*- if m.sbp_id *))
+            ((*- if m.is_real_message *))
             case (((m.identifier|classnameify))).TYPE:
                 return new (((m.identifier|classnameify)))(msg);
             ((*- endif *))

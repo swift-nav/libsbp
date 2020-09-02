@@ -24,7 +24,7 @@ import com.swiftnav.sbp.(((i))).*;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
-((*- if m.sbp_id *))
+((*- if m.is_real_message *))
 
 ((* if m.desc *))
 /** SBP class for message (((m.identifier))) ((('(0x%04X)'|format(m.sbp_id)))).
@@ -80,7 +80,7 @@ public class (((m.identifier | classnameify))) extends SBPMessage {
     }
 }
 ((*- endif *))
-((*- if not m.sbp_id *))
+((*- if not m.is_real_message *))
 import com.swiftnav.sbp.SBPStruct;
 
 public class (((m.identifier))) extends SBPStruct {

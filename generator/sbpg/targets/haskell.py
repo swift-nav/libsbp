@@ -208,7 +208,7 @@ def render_sbp(output_dir, package_specs):
     full_module_name = ".".join([module_prefix, module_name])
     modules.append(full_module_name)
     for m in package_spec.definitions:
-      if m.static and m.sbp_id:
+      if m.is_real_message:
         msgs.append(m)
   destination_filename = "%s/src/SwiftNav/SBP.hs" % output_dir
   py_template = JENV.get_template(SBP_TEMPLATE_NAME)

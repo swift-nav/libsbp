@@ -134,7 +134,7 @@ def render_mod(output_dir, package_specs):
     if name != 'types':
       mods.append(name)
     for m in package_spec.definitions:
-      if m.static and m.sbp_id:
+      if m.is_real_message:
         msgs.append(m)
   destination_filename = "%s/sbp/src/messages/mod.rs" % output_dir
   py_template = JENV.get_template(MESSAGES_MOD_TEMPLATE_NAME)

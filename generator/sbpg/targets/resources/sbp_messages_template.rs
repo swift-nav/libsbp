@@ -39,7 +39,7 @@ use super::(((i)))::*;
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct (((m.identifier|camel_case))) {
-    ((*- if m.sbp_id *))
+    ((*- if m.is_real_message *))
     pub sender_id: Option<u16>,
     ((*- endif *))
     ((*- for f in m.fields *))
@@ -54,7 +54,7 @@ impl (((m.identifier|camel_case))) {
     #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<(((m.identifier|camel_case))), crate::Error> {
         Ok( (((m.identifier|camel_case))){
-            ((*- if m.sbp_id *))
+            ((*- if m.is_real_message *))
             sender_id: None,
             ((*- endif *))
             ((*- for f in m.fields *))
@@ -63,7 +63,7 @@ impl (((m.identifier|camel_case))) {
         } )
     }
 
-    ((*- if not m.sbp_id *))
+    ((*- if not m.is_real_message *))
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<(((m.identifier|camel_case)))>, crate::Error> {
         let mut v = Vec::new();
         while buf.len() > 0 {
@@ -82,7 +82,7 @@ impl (((m.identifier|camel_case))) {
     ((*- endif *))
 }
 
-((*- if m.sbp_id *))
+((*- if m.is_real_message *))
 impl super::SBPMessage for (((m.identifier|camel_case))) {
     fn get_message_type(&self) -> u16 {
         (((m.sbp_id)))

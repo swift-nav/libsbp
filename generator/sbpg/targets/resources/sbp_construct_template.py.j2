@@ -30,7 +30,7 @@ from (((module_path))).(((i))) import *
 
 ((* for m in msgs *))
   ((*- if m.static *))
-    ((*- if not m.sbp_id *))
+    ((*- if not m.is_real_message *))
 class ((( m.identifier )))(object):
   """(((m.identifier))).
   ((* if m.desc *))
@@ -91,7 +91,7 @@ class ((( m.identifier )))(object):
 
 ((*- for m in msgs *))
   ((*- if m.static *))
-    ((*- if m.sbp_id *))
+    ((*- if m.is_real_message *))
 SBP_(((m.identifier))) = ((('0x%04X'|format(m.sbp_id))))
 class ((( m.identifier | classnameify )))(SBP):
   """SBP class for message (((m.identifier))) ((('(0x%04X)'|format(m.sbp_id)))).
@@ -214,7 +214,7 @@ class ((( m.identifier | classnameify )))(SBP):
 
 msg_classes = {
 ((*- for m in msgs *))
-  ((*- if m.sbp_id *))
+  ((*- if m.is_real_message *))
   ((('0x%04X'|format(m.sbp_id)))): ((( m.identifier | classnameify ))),
   ((*- endif*))
 ((*- endfor *))
