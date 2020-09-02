@@ -293,6 +293,7 @@ def render_source(output_dir, package_specs, version):
           adj_size = "%d" % size
         ti = TableItem(pkg_name, d.identifier, d.sbp_id,
                        d.short_desc, d.desc, adj_size, items, p.stable,
+                       pkg_desc=p.description,
                        is_real_message=d.is_real_message,
                        embedded_type=d.embedded_type)
         pkg_name = ""

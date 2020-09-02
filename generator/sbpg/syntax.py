@@ -138,6 +138,14 @@ class Message(Definition):
   @property
   def static(self):
     return True
+  
+  # Some primitive types are defined like messages, 
+  # but are not standalone messages with their own ids that would go on the wire
+  # The is_real_message property disambiguates these.
+
+  @property
+  def is_real_message(self):
+    return (not getattr(self, 'description_only', False)) and getattr(self, 'sbp_id', False)
 
   def __repr__(self):
     return fmt_repr(self)
@@ -156,6 +164,10 @@ class Struct(Definition):
   @property
   def static(self):
     return True
+  
+  @property
+  def is_real_message(self):
+    return not getattr(self, 'description_only', False) and getattr(self, 'sbp_id', False)
 
   def __repr__(self):
     return fmt_repr(self)
