@@ -138,7 +138,8 @@ class TableItem(object):
   """
 
   def __init__(self, pkg, name, sbp_id, short_desc,
-               desc, size, fields, stable=False, pkg_desc=None, embedded_type=False):
+               desc, size, fields, stable=False, pkg_desc=None, is_real_message=True,
+               embedded_type=False):
     self.pkg = pkg
     self.name = name
     self.sbp_id = sbp_id
@@ -149,6 +150,7 @@ class TableItem(object):
     self.stable = stable
     self.pkg_desc = pkg_desc
     self.embedded_type = embedded_type
+    self.is_real_message = is_real_message
 
 
 class FieldItem (object):
@@ -278,7 +280,7 @@ def render_source(output_dir, package_specs, version):
     if pkg_name == "swiftnav.sbp.types":
       prims = p.definitions
     for d in p.definitions:
-      if d.public and d.static and (d.sbp_id or d.embedded_type):
+      if d.public and (d.is_real_message or d.embedded_type):
         items, size, multiplier \
           = handle_fields(definitions, d.fields, "", 0, None)
         adj_size = ""
