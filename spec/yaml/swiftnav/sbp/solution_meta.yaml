@@ -35,13 +35,13 @@ definitions:
              - 5-7:
                  desc: Reserved
              - 3-4:
-                 desc: Whether this sensor input was actually used or not
+                 desc: Sensor Usage
                  values:
                    - 0: Unknown
                    - 1: Received and used
                    - 2: Received but not used
              - 0-2:
-                 desc: The type of sensor
+                 desc: Sensory Type
                  values:
                    - 0: GNSS Position (see GNSSInputType)
                    - 1: GNSS Velocity Displacement (see GNSSInputType)
@@ -85,12 +85,12 @@ definitions:
            desc: Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine
        - alignment_status:
            type: u8
-           desc: Bits for reason why it cannot align (yet)
+           desc: State of alignment and the status and receipt of the alignment inputs
            fields:
              - 3-7:
                  desc: Reserved
              - 0-2:
-                 desc: Bits for reason why it cannot align (yet)
+                 desc: Alignment status
                  values:
                    - 0: Unknown reason or already aligned
                    - 1: Seed values loaded and Alignment in progress
@@ -124,13 +124,12 @@ definitions:
  #############################################
  # for GNSS sensors
  - GNSSInputType:
-     id: 0xFFE7
-     short_desc: Flags for a given GNSS sensor used as input for the fuzed solution.
+     short_desc: Instruments the physical type of GNSS sensor input to the fuzed solution.
      public: true
+     embedded_type: true
      desc: |
-       Metadata around the GNSS sensors involved in the fuzed solution. Accessible through sol_in[N].flags
-                                                                               in a MSG_SOLN_META.
-       Note: Just to build descriptive tables in documentation and not actually used.
+       Metadata around the GNSS sensors involved in the fuzed solution.
+       Accessible through sol_in[N].flags in a MSG_SOLN_META.
      fields:
        - flags:
            type: u8
@@ -147,17 +146,17 @@ definitions:
 
  # for IMU sensors
  - IMUInputType:
-     id: 0xFFE8
-     short_desc: Flags for a given IMU sensor used as input for the fuzed solution.
+     short_desc: Provides detail about the IMU sensor, its timestamping mode,
+                 and its quality for input to the fuzed solution. 
      public: true
+     embedded_type: true
      desc: |
-       Metadata around the IMU sensors involved in the fuzed solution. Accessible through sol_in[N].flags
-                                                                              in a MSG_SOLN_META.
-       Note: Just to build descriptive tables in documentation and not actually used.
+       Metadata around the IMU sensors involved in the fuzed solution.
+       Accessible through sol_in[N].flags in a MSG_SOLN_META.
      fields:
        - flags:
            type: u8
-           desc: flags that store all relevant info specific to this sensor type.
+           desc: Instrument time, grade, and architecture for a sensor.
            fields:
              - 6-7:
                  desc: Reserved
@@ -183,17 +182,18 @@ definitions:
 
  # for Odometry sensors
  - OdoInputType:
-     id: 0xFFE9
-     short_desc: Flags for a given Odometry sensor used as input for the fuzed solution.
+     short_desc: Provides detail about the Odometry sensor, its timestamping mode,
+                 and its quality for input to the fuzed solution.
      public: true
+     id: 1
+     embedded_type: true
      desc: |
-       Metadata around the Odometry sensors involved in the fuzed solution. Accessible through sol_in[N].flags
-                                                                                   in a MSG_SOLN_META.
-       Note: Just to build descriptive tables in documentation and not actually used.
+       Metadata around the Odometry sensors involved in the fuzed solution.
+       Accessible through sol_in[N].flags in a MSG_SOLN_META.
      fields:
        - flags:
            type: u8
-           desc: flags that store all relevant info specific to this sensor type.
+           desc: Instrument ODO rate, grade, and quality.
            fields:
              - 6-7:
                  desc: Reserved
@@ -201,13 +201,13 @@ definitions:
                  desc: Rate
                  values:
                    - 0: Fixed incoming rate
-                   - 1: Incoming when triggered by minimum distance or speed
+                   - 1: Triggered by minimum distance or speed
                    - 2: Reserved
                    - 3: Reserved
              - 2-3:
                  desc: Odometer grade
                  values:
-                   - 0: Low Grade (e.g. quantisized CAN)
+                   - 0: Low Grade (e.g. quantized CAN)
                    - 1: Medium Grade
                    - 2: Superior Grade
                    - 3: Reserved
