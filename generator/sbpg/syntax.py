@@ -71,11 +71,12 @@ class Dependency(object):
 class Definition(object):
   def __init__(self, identifier=None,
                sbp_id=None, short_desc=None, desc=None, type_id=None,
-               fields=[], public=False):
+               fields=[], public=False, embedded_type=False):
     self.identifier = identifier
     self.sbp_id = sbp_id
     self.short_desc = short_desc
     self.desc = desc
+    self.embedded_type = embedded_type
     self.type_id = type_id
     self.fields = fields
     self.public = public
@@ -88,6 +89,10 @@ class Definition(object):
   @property
   def max_fid_len(self):
     return max([0]+[len(f.identifier) for f in self.fields])
+  
+  @property
+  def is_real_message(self):
+    return (not getattr(self, 'embedded_type', False)) and getattr(self, 'sbp_id', False)
 
   def __repr__(self):
     return fmt_repr(self)
