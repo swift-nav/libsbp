@@ -9,7 +9,8 @@
 (((m.pkg_desc | escape_tex )))
 \end{large}
 ((* endif *))
-\subsubsection{(((m.name|escape_tex))) --- ((('0x%04X'|format(m.sbp_id)))) --- (((m.sbp_id)))}
+
+\subsection{(((m.name | no_us))) --- ((*- if m.description_only!=True -*)) ((('0x%04X'|format(m.sbp_id)))) --- (((m.sbp_id))) ((*- endif -*))}
 \label{sec:(((m.name)))}
 
 \begin{large}
@@ -35,7 +36,10 @@
     & $(((m.size)))$ & & & & Total Payload Length\\
     \bottomrule
   \end{tabularx}
-  \caption{(((m.name|escape_tex))) (((('0x%04X'|format(m.sbp_id))))) message structure}
+  \caption{(((m.name|escape_tex))) 
+  ((*- if m.is_real_message *)) (((('0x%04X'|format(m.sbp_id))))) 
+  ((*- endif *))
+  message structure}
   \label{tab:(((m.name)))}
 \end{table}
 

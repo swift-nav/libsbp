@@ -259,7 +259,9 @@ def mk_definition(defn):
                                          desc=contents.get('desc', None),
                                          type_id=contents.get('type'),
                                          fields=fs,
-                                         public=contents.get('public', True)))
+                                         public=contents.get('public', True),
+                                         embedded_type=contents.get('embedded_type', False),
+                                         ))
 
 def mk_field(field):
   """Instantiates a field specification from a parsed "AST" of a

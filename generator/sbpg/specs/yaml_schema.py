@@ -53,6 +53,7 @@ definition = Schema({identifier:
                       Optional('public'): bool,
                       Optional('size'): size,
                       Optional('type'): type_identifier,
+                      Optional('embedded_type'): bool,
                       Optional('fields'): [field]}})
 package_schema = Schema({Optional('package'): identifier,
                          Optional('description'): description,
