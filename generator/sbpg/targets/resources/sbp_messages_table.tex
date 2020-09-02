@@ -23,8 +23,8 @@ internal development.
       \textbf{Stable} & & & & \\
     \midrule
     ((*- for m in msgs *))
-      ((*- if not m.description_only -*))
-      (((m.pkg|packagenameify|escape_tex|no_us|header_write))) &
+      ((* if m.is_real_message *)) 
+        (((m.pkg|packagenameify|escape_tex|no_us|header_write))) &
         \hyperref[sec:(((m.name)))]{\texttt{((('0x%04X'|format(m.sbp_id))))}} &
         \hyperref[sec:(((m.name)))]{\texttt{(((m.name|escape_tex)))}} &
         $(((m.size)))$ &
