@@ -520,6 +520,7 @@ definitions:
  - MSG_SSR_ORBIT_CLOCK_DEP_A:
     id: 0x05DC
     short_desc: Deprecated
+    public: False
     replaced_by:
       - MSG_SSR_ORBIT_CLOCK
     fields:
@@ -670,6 +671,7 @@ definitions:
  - MSG_SSR_STEC_CORRECTION_DEP_A:
     id: 0x05EB
     short_desc: Deprecated
+    public: False
     replaced_by:
       - MSG_SSR_STEC_CORRECTION
     fields:
@@ -684,6 +686,7 @@ definitions:
  - MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A:
     id: 0x05F0
     short_desc: Deprecated
+    public: False
     replaced_by:
       - MSG_SSR_STEC_CORRECTION_DEP
     fields:
@@ -697,6 +700,7 @@ definitions:
  - MSG_SSR_GRIDDED_CORRECTION_DEP_A:
     id: 0x05FA
     short_desc: Deprecated
+    public: False
     replaced_by:
       - MSG_SSR_GRIDDED_CORRECTION
     fields:
@@ -712,6 +716,7 @@ definitions:
  - MSG_SSR_GRID_DEFINITION_DEP_A:
     id: 0x05F5
     short_desc: Deprecated
+    public: False
     replaced_by:
       - MSG_SSR_TILE_DEFINITION
     fields:
