@@ -156,8 +156,15 @@ definitions:
                       - 5: Reserved
                       - 6: Reserved
                       - 7: Reserved
-              - 11-28:
+              - 14-28:
                   desc: Reserved
+              - 11-13:
+                  desc: Motion State
+                  values:
+                    - 0: Unknown or Init
+                    - 1: Arbitrary Motion
+                    - 2: Straight Motion
+                    - 3: Stationary
               - 10:
                   desc: Odometry Synch
                   values:
