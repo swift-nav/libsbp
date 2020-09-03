@@ -20,47 +20,32 @@ import com.swiftnav.sbp.SBPStruct;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
+import com.swiftnav.sbp.SBPStruct;
 
-
-/** SBP class for message OdoInputType (0xFFE9).
- *
- * You can have OdoInputType inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
- *
- * Metadata around the Odometry sensors involved in the fuzed solution. Accessible through sol_in[N].flags
- *                                                                             in a MSG_SOLN_META.
- * Note: Just to build descriptive tables in documentation and not actually used. */
-
-public class OdoInputType extends SBPMessage {
-    public static final int TYPE = 0xFFE9;
-
+public class OdoInputType extends SBPStruct {
     
-    /** flags that store all relevant info specific to this sensor type. */
+    /** Instrument ODO rate, grade, and quality. */
     public int flags;
     
 
-    public OdoInputType (int sender) { super(sender, TYPE); }
-    public OdoInputType () { super(TYPE); }
-    public OdoInputType (SBPMessage msg) throws SBPBinaryException {
-        super(msg);
-        assert msg.type != TYPE;
-    }
+    public OdoInputType () {}
 
     @Override
-    protected void parse(Parser parser) throws SBPBinaryException {
+    public OdoInputType parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         flags = parser.getU8();
+        return this;
     }
 
     @Override
-    protected void build(Builder builder) {
+    public void build(SBPMessage.Builder builder) {
+        /* Build fields into binary */
         builder.putU8(flags);
     }
 
     @Override
     public JSONObject toJSON() {
-        JSONObject obj = super.toJSON();
+        JSONObject obj = new JSONObject();
         obj.put("flags", flags);
         return obj;
     }

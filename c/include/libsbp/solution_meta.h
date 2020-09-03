@@ -55,46 +55,40 @@ typedef struct SBP_ATTR_PACKED {
   u16 vdop;                      /**< Vertical Dilution of Precision, as per last available DOPS from Starling GNSS engine [0.01] */
   u8 n_sats;                    /**< Number of satellites, as per last available solution from Starling GNSS engine */
   u16 age_corrections;           /**< Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine [deciseconds] */
-  u8 alignment_status;          /**< Bits for reason why it cannot align (yet) */
+  u8 alignment_status;          /**< State of alignment and the status and receipt of the alignment inputs */
   u32 last_used_gnss_pos_tow;    /**< Tow of last-used GNSS position measurement [ms] */
   u32 last_used_gnss_vel_tow;    /**< Tow of last-used GNSS velocity measurement [ms] */
   solution_input_type_t sol_in[0];                 /**< Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc. */
 } msg_soln_meta_t;
 
 
-/** Flags for a given GNSS sensor used as input for the fuzed solution.
+/** Instruments the physical type of GNSS sensor input to the fuzed solution.
  *
- * Metadata around the GNSS sensors involved in the fuzed solution. Accessible through sol_in[N].flags
- *                                                                         in a MSG_SOLN_META.
- * Note: Just to build descriptive tables in documentation and not actually used.
+ * Metadata around the GNSS sensors involved in the fuzed solution.
+ * Accessible through sol_in[N].flags in a MSG_SOLN_META.
  */
-#define SBP_GNSSInputType 0xFFE7
 typedef struct SBP_ATTR_PACKED {
   u8 flags;    /**< flags that store all relevant info specific to this sensor type. */
 } gnss_input_type_t;
 
 
-/** Flags for a given IMU sensor used as input for the fuzed solution.
+/** Provides detail about the IMU sensor, its timestamping mode, and its quality for input to the fuzed solution.
  *
- * Metadata around the IMU sensors involved in the fuzed solution. Accessible through sol_in[N].flags
- *                                                                        in a MSG_SOLN_META.
- * Note: Just to build descriptive tables in documentation and not actually used.
+ * Metadata around the IMU sensors involved in the fuzed solution.
+ * Accessible through sol_in[N].flags in a MSG_SOLN_META.
  */
-#define SBP_IMUInputType  0xFFE8
 typedef struct SBP_ATTR_PACKED {
-  u8 flags;    /**< flags that store all relevant info specific to this sensor type. */
+  u8 flags;    /**< Instrument time, grade, and architecture for a sensor. */
 } imu_input_type_t;
 
 
-/** Flags for a given Odometry sensor used as input for the fuzed solution.
+/** Provides detail about the Odometry sensor, its timestamping mode, and its quality for input to the fuzed solution.
  *
- * Metadata around the Odometry sensors involved in the fuzed solution. Accessible through sol_in[N].flags
- *                                                                             in a MSG_SOLN_META.
- * Note: Just to build descriptive tables in documentation and not actually used.
+ * Metadata around the Odometry sensors involved in the fuzed solution.
+ * Accessible through sol_in[N].flags in a MSG_SOLN_META.
  */
-#define SBP_OdoInputType  0xFFE9
 typedef struct SBP_ATTR_PACKED {
-  u8 flags;    /**< flags that store all relevant info specific to this sensor type. */
+  u8 flags;    /**< Instrument ODO rate, grade, and quality. */
 } odo_input_type_t;
 
 

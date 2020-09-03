@@ -89,7 +89,7 @@ data MsgSolnMeta = MsgSolnMeta
     -- ^ Age of the corrections (0xFFFF indicates invalid), as per last available
     -- AGE_CORRECTIONS from Starling GNSS engine
   , _msgSolnMeta_alignment_status     :: !Word8
-    -- ^ Bits for reason why it cannot align (yet)
+    -- ^ State of alignment and the status and receipt of the alignment inputs
   , _msgSolnMeta_last_used_gnss_pos_tow :: !Word32
     -- ^ Tow of last-used GNSS position measurement
   , _msgSolnMeta_last_used_gnss_vel_tow :: !Word32
@@ -130,15 +130,10 @@ $(makeSBP 'msgSolnMeta ''MsgSolnMeta)
 $(makeJSON "_msgSolnMeta_" ''MsgSolnMeta)
 $(makeLenses ''MsgSolnMeta)
 
-gNSSInputType :: Word16
-gNSSInputType = 0xFFE7
-
--- | SBP class for message GNSSInputType (0xFFE7).
+-- | GNSSInputType.
 --
 -- Metadata around the GNSS sensors involved in the fuzed solution. Accessible
--- through sol_in[N].flags
--- in a MSG_SOLN_META. Note: Just to build descriptive tables in documentation
--- and not actually used.
+-- through sol_in[N].flags in a MSG_SOLN_META.
 data GNSSInputType = GNSSInputType
   { _gNSSInputType_flags :: !Word8
     -- ^ flags that store all relevant info specific to this sensor type.
@@ -152,22 +147,16 @@ instance Binary GNSSInputType where
   put GNSSInputType {..} = do
     putWord8 _gNSSInputType_flags
 
-$(makeSBP 'gNSSInputType ''GNSSInputType)
 $(makeJSON "_gNSSInputType_" ''GNSSInputType)
 $(makeLenses ''GNSSInputType)
 
-iMUInputType :: Word16
-iMUInputType = 0xFFE8
-
--- | SBP class for message IMUInputType (0xFFE8).
+-- | IMUInputType.
 --
 -- Metadata around the IMU sensors involved in the fuzed solution. Accessible
--- through sol_in[N].flags
--- in a MSG_SOLN_META. Note: Just to build descriptive tables in documentation
--- and not actually used.
+-- through sol_in[N].flags in a MSG_SOLN_META.
 data IMUInputType = IMUInputType
   { _iMUInputType_flags :: !Word8
-    -- ^ flags that store all relevant info specific to this sensor type.
+    -- ^ Instrument time, grade, and architecture for a sensor.
   } deriving ( Show, Read, Eq )
 
 instance Binary IMUInputType where
@@ -178,22 +167,16 @@ instance Binary IMUInputType where
   put IMUInputType {..} = do
     putWord8 _iMUInputType_flags
 
-$(makeSBP 'iMUInputType ''IMUInputType)
 $(makeJSON "_iMUInputType_" ''IMUInputType)
 $(makeLenses ''IMUInputType)
 
-odoInputType :: Word16
-odoInputType = 0xFFE9
-
--- | SBP class for message OdoInputType (0xFFE9).
+-- | OdoInputType.
 --
 -- Metadata around the Odometry sensors involved in the fuzed solution.
--- Accessible through sol_in[N].flags
--- in a MSG_SOLN_META. Note: Just to build descriptive tables in documentation
--- and not actually used.
+-- Accessible through sol_in[N].flags in a MSG_SOLN_META.
 data OdoInputType = OdoInputType
   { _odoInputType_flags :: !Word8
-    -- ^ flags that store all relevant info specific to this sensor type.
+    -- ^ Instrument ODO rate, grade, and quality.
   } deriving ( Show, Read, Eq )
 
 instance Binary OdoInputType where
@@ -204,6 +187,5 @@ instance Binary OdoInputType where
   put OdoInputType {..} = do
     putWord8 _odoInputType_flags
 
-$(makeSBP 'odoInputType ''OdoInputType)
 $(makeJSON "_odoInputType_" ''OdoInputType)
 $(makeLenses ''OdoInputType)

@@ -50,7 +50,7 @@ public class MsgSolnMeta extends SBPMessage {
     /** Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine */
     public int age_corrections;
     
-    /** Bits for reason why it cannot align (yet) */
+    /** State of alignment and the status and receipt of the alignment inputs */
     public int alignment_status;
     
     /** Tow of last-used GNSS position measurement */

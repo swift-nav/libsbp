@@ -859,6 +859,7 @@ a string representation of the process count and the file
 name whose count it being reported.  That is, in C string
 syntax "32\0/var/log/syslog\012\0/tmp/foo\0" with the end
 of the list being 2 NULL terminators in a row.
+
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 
