@@ -191,10 +191,7 @@ use self::settings::MsgSettingsRegisterResp;
 use self::settings::MsgSettingsSave;
 use self::settings::MsgSettingsWrite;
 use self::settings::MsgSettingsWriteResp;
-use self::solution_meta::GNSSInputType;
-use self::solution_meta::IMUInputType;
 use self::solution_meta::MsgSolnMeta;
-use self::solution_meta::OdoInputType;
 use self::ssr::MsgSsrCodeBiases;
 use self::ssr::MsgSsrGridDefinitionDepA;
 use self::ssr::MsgSsrGriddedCorrection;
@@ -436,9 +433,6 @@ pub enum SBP {
     MsgGnssTimeOffset(MsgGnssTimeOffset),
     MsgGroupMeta(MsgGroupMeta),
     MsgSolnMeta(MsgSolnMeta),
-    GNSSInputType(GNSSInputType),
-    IMUInputType(IMUInputType),
-    OdoInputType(OdoInputType),
     MsgHeartbeat(MsgHeartbeat),
     Unknown(Unknown),
 }
@@ -1406,21 +1400,6 @@ impl SBP {
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgSolnMeta(msg))
             }
-            65511 => {
-                let mut msg = GNSSInputType::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::GNSSInputType(msg))
-            }
-            65512 => {
-                let mut msg = IMUInputType::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::IMUInputType(msg))
-            }
-            65513 => {
-                let mut msg = OdoInputType::parse(payload)?;
-                msg.set_sender_id(sender_id);
-                Ok(SBP::OdoInputType(msg))
-            }
             65535 => {
                 let mut msg = MsgHeartbeat::parse(payload)?;
                 msg.set_sender_id(sender_id);
@@ -1632,9 +1611,6 @@ impl SBP {
             SBP::MsgGnssTimeOffset(msg) => msg,
             SBP::MsgGroupMeta(msg) => msg,
             SBP::MsgSolnMeta(msg) => msg,
-            SBP::GNSSInputType(msg) => msg,
-            SBP::IMUInputType(msg) => msg,
-            SBP::OdoInputType(msg) => msg,
             SBP::MsgHeartbeat(msg) => msg,
             SBP::Unknown(msg) => msg,
         }

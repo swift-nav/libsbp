@@ -1141,24 +1141,6 @@ struct MessageTraits<msg_soln_meta_t> {
 
 
 template<>
-struct MessageTraits<gnss_input_type_t> {
-  static constexpr u16 id = 65511;
-};
-
-
-template<>
-struct MessageTraits<imu_input_type_t> {
-  static constexpr u16 id = 65512;
-};
-
-
-template<>
-struct MessageTraits<odo_input_type_t> {
-  static constexpr u16 id = 65513;
-};
-
-
-template<>
 struct MessageTraits<msg_heartbeat_t> {
   static constexpr u16 id = 65535;
 };

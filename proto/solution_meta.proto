@@ -51,31 +51,28 @@ message MsgSolnMeta {
     repeated SolutionInputType sol_in = 9;
 }
 
-/** Flags for a given GNSS sensor used as input for the fuzed solution.
+/** Instruments the physical type of GNSS sensor input to the fuzed solution.
  *
- * Metadata around the GNSS sensors involved in the fuzed solution. Accessible through sol_in[N].flags
- *                                                                         in a MSG_SOLN_META.
- * Note: Just to build descriptive tables in documentation and not actually used.
+ * Metadata around the GNSS sensors involved in the fuzed solution.
+ * Accessible through sol_in[N].flags in a MSG_SOLN_META.
  */
 message GNSSInputType {
     uint32 flags = 1;
 }
 
-/** Flags for a given IMU sensor used as input for the fuzed solution.
+/** Provides detail about the IMU sensor, its timestamping mode, and its quality for input to the fuzed solution.
  *
- * Metadata around the IMU sensors involved in the fuzed solution. Accessible through sol_in[N].flags
- *                                                                        in a MSG_SOLN_META.
- * Note: Just to build descriptive tables in documentation and not actually used.
+ * Metadata around the IMU sensors involved in the fuzed solution.
+ * Accessible through sol_in[N].flags in a MSG_SOLN_META.
  */
 message IMUInputType {
     uint32 flags = 1;
 }
 
-/** Flags for a given Odometry sensor used as input for the fuzed solution.
+/** Provides detail about the Odometry sensor, its timestamping mode, and its quality for input to the fuzed solution.
  *
- * Metadata around the Odometry sensors involved in the fuzed solution. Accessible through sol_in[N].flags
- *                                                                             in a MSG_SOLN_META.
- * Note: Just to build descriptive tables in documentation and not actually used.
+ * Metadata around the Odometry sensors involved in the fuzed solution.
+ * Accessible through sol_in[N].flags in a MSG_SOLN_META.
  */
 message OdoInputType {
     uint32 flags = 1;

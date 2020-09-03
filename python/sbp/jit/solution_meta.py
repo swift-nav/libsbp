@@ -128,18 +128,16 @@ It focuses primarly, but not only, on GNSS metadata.
     return res, off, length
 
   
-SBP_GNSSInputType = 0xFFE7
-class Gnssinputtype(SBP):
-  """SBP class for message GNSSInputType (0xFFE7).
+class GNSSInputType(object):
+  """SBP class for message GNSSInputType
 
   You can have GNSSInputType inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
-  Metadata around the GNSS sensors involved in the fuzed solution. Accessible through sol_in[N].flags
-                                                                        in a MSG_SOLN_META.
-Note: Just to build descriptive tables in documentation and not actually used.
+  Metadata around the GNSS sensors involved in the fuzed solution.
+Accessible through sol_in[N].flags in a MSG_SOLN_META.
 
 
   """
@@ -160,18 +158,16 @@ Note: Just to build descriptive tables in documentation and not actually used.
     return res, off, length
 
   
-SBP_IMUInputType = 0xFFE8
-class Imuinputtype(SBP):
-  """SBP class for message IMUInputType (0xFFE8).
+class IMUInputType(object):
+  """SBP class for message IMUInputType
 
   You can have IMUInputType inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
-  Metadata around the IMU sensors involved in the fuzed solution. Accessible through sol_in[N].flags
-                                                                       in a MSG_SOLN_META.
-Note: Just to build descriptive tables in documentation and not actually used.
+  Metadata around the IMU sensors involved in the fuzed solution.
+Accessible through sol_in[N].flags in a MSG_SOLN_META.
 
 
   """
@@ -192,18 +188,16 @@ Note: Just to build descriptive tables in documentation and not actually used.
     return res, off, length
 
   
-SBP_OdoInputType = 0xFFE9
-class Odoinputtype(SBP):
-  """SBP class for message OdoInputType (0xFFE9).
+class OdoInputType(object):
+  """SBP class for message OdoInputType
 
   You can have OdoInputType inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
   
-  Metadata around the Odometry sensors involved in the fuzed solution. Accessible through sol_in[N].flags
-                                                                            in a MSG_SOLN_META.
-Note: Just to build descriptive tables in documentation and not actually used.
+  Metadata around the Odometry sensors involved in the fuzed solution.
+Accessible through sol_in[N].flags in a MSG_SOLN_META.
 
 
   """
@@ -227,7 +221,4 @@ Note: Just to build descriptive tables in documentation and not actually used.
 
 msg_classes = {
   0xFF0F: MsgSolnMeta,
-  0xFFE7: Gnssinputtype,
-  0xFFE8: Imuinputtype,
-  0xFFE9: Odoinputtype,
 }

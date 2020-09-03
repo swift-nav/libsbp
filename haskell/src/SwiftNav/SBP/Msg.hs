@@ -55,9 +55,7 @@ import SwiftNav.SBP.Types
 -- Includes SBPMsgUnknown for valid SBP messages with undefined message
 -- types and SBPMsgBadCRC for SBP messages with invalid CRC checksums.
 data SBPMsg =
-     SBPGNSSInputType GNSSInputType Msg
-   | SBPIMUInputType IMUInputType Msg
-   | SBPMsgAcqResult MsgAcqResult Msg
+     SBPMsgAcqResult MsgAcqResult Msg
    | SBPMsgAcqResultDepA MsgAcqResultDepA Msg
    | SBPMsgAcqResultDepB MsgAcqResultDepB Msg
    | SBPMsgAcqResultDepC MsgAcqResultDepC Msg
@@ -250,7 +248,6 @@ data SBPMsg =
    | SBPMsgVelNedDepA MsgVelNedDepA Msg
    | SBPMsgVelNedGnss MsgVelNedGnss Msg
    | SBPMsgWheeltick MsgWheeltick Msg
-   | SBPOdoInputType OdoInputType Msg
    | SBPMsgBadCrc Msg
    | SBPMsgUnknown Msg
   deriving ( Show, Read, Eq )
@@ -264,8 +261,6 @@ instance Binary SBPMsg where
       decoder <$> get where
         decoder m@Msg {..}
           | checkCrc m /= _msgSBPCrc = SBPMsgBadCrc m
-          | _msgSBPType == gNSSInputType = SBPGNSSInputType (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == iMUInputType = SBPIMUInputType (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgAcqResult = SBPMsgAcqResult (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgAcqResultDepA = SBPMsgAcqResultDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgAcqResultDepB = SBPMsgAcqResultDepB (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -459,14 +454,11 @@ instance Binary SBPMsg where
           | _msgSBPType == msgVelNedDepA = SBPMsgVelNedDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgVelNedGnss = SBPMsgVelNedGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgWheeltick = SBPMsgWheeltick (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == odoInputType = SBPOdoInputType (decode (fromStrict (unBytes _msgSBPPayload))) m
           | otherwise = SBPMsgUnknown m
 
   put sm = do
     putWord8 msgSBPPreamble
     encoder sm where
-      encoder (SBPGNSSInputType _ m) = put m
-      encoder (SBPIMUInputType _ m) = put m
       encoder (SBPMsgAcqResult _ m) = put m
       encoder (SBPMsgAcqResultDepA _ m) = put m
       encoder (SBPMsgAcqResultDepB _ m) = put m
@@ -660,7 +652,6 @@ instance Binary SBPMsg where
       encoder (SBPMsgVelNedDepA _ m) = put m
       encoder (SBPMsgVelNedGnss _ m) = put m
       encoder (SBPMsgWheeltick _ m) = put m
-      encoder (SBPOdoInputType _ m) = put m
       encoder (SBPMsgUnknown m) = put m
       encoder (SBPMsgBadCrc m) = put m
 
@@ -670,8 +661,6 @@ instance FromJSON SBPMsg where
     payload <- o .: "payload"
     decoder msgType payload where
       decoder msgType payload
-        | msgType == gNSSInputType = SBPGNSSInputType <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == iMUInputType = SBPIMUInputType <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgAcqResult = SBPMsgAcqResult <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgAcqResultDepA = SBPMsgAcqResultDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgAcqResultDepB = SBPMsgAcqResultDepB <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -865,7 +854,6 @@ instance FromJSON SBPMsg where
         | msgType == msgVelNedDepA = SBPMsgVelNedDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgVelNedGnss = SBPMsgVelNedGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgWheeltick = SBPMsgWheeltick <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == odoInputType = SBPOdoInputType <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | otherwise = SBPMsgUnknown <$> parseJSON obj
   parseJSON _ = mzero
 
@@ -876,8 +864,6 @@ instance FromJSON SBPMsg where
   pure $ review _Object $ a' <> b'
 
 instance ToJSON SBPMsg where
-  toJSON (SBPGNSSInputType n m) = toJSON n <<>> toJSON m
-  toJSON (SBPIMUInputType n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgAcqResult n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgAcqResultDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgAcqResultDepB n m) = toJSON n <<>> toJSON m
@@ -1071,13 +1057,10 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgVelNedDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgVelNedGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgWheeltick n m) = toJSON n <<>> toJSON m
-  toJSON (SBPOdoInputType n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgBadCrc m) = toJSON m
   toJSON (SBPMsgUnknown m) = toJSON m
 
 instance HasMsg SBPMsg where
-  msg f (SBPGNSSInputType n m) = SBPGNSSInputType n <$> f m
-  msg f (SBPIMUInputType n m) = SBPIMUInputType n <$> f m
   msg f (SBPMsgAcqResult n m) = SBPMsgAcqResult n <$> f m
   msg f (SBPMsgAcqResultDepA n m) = SBPMsgAcqResultDepA n <$> f m
   msg f (SBPMsgAcqResultDepB n m) = SBPMsgAcqResultDepB n <$> f m
@@ -1271,6 +1254,5 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgVelNedDepA n m) = SBPMsgVelNedDepA n <$> f m
   msg f (SBPMsgVelNedGnss n m) = SBPMsgVelNedGnss n <$> f m
   msg f (SBPMsgWheeltick n m) = SBPMsgWheeltick n <$> f m
-  msg f (SBPOdoInputType n m) = SBPOdoInputType n <$> f m
   msg f (SBPMsgUnknown m) = SBPMsgUnknown <$> f m
   msg f (SBPMsgBadCrc m) = SBPMsgBadCrc <$> f m

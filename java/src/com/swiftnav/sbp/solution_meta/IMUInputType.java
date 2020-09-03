@@ -20,47 +20,32 @@ import com.swiftnav.sbp.SBPStruct;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
+import com.swiftnav.sbp.SBPStruct;
 
-
-/** SBP class for message IMUInputType (0xFFE8).
- *
- * You can have IMUInputType inherent its fields directly from
- * an inherited SBP object, or construct it inline using a dict of its
- * fields.
- *
- * Metadata around the IMU sensors involved in the fuzed solution. Accessible through sol_in[N].flags
- *                                                                        in a MSG_SOLN_META.
- * Note: Just to build descriptive tables in documentation and not actually used. */
-
-public class IMUInputType extends SBPMessage {
-    public static final int TYPE = 0xFFE8;
-
+public class IMUInputType extends SBPStruct {
     
-    /** flags that store all relevant info specific to this sensor type. */
+    /** Instrument time, grade, and architecture for a sensor. */
     public int flags;
     
 
-    public IMUInputType (int sender) { super(sender, TYPE); }
-    public IMUInputType () { super(TYPE); }
-    public IMUInputType (SBPMessage msg) throws SBPBinaryException {
-        super(msg);
-        assert msg.type != TYPE;
-    }
+    public IMUInputType () {}
 
     @Override
-    protected void parse(Parser parser) throws SBPBinaryException {
+    public IMUInputType parse(SBPMessage.Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         flags = parser.getU8();
+        return this;
     }
 
     @Override
-    protected void build(Builder builder) {
+    public void build(SBPMessage.Builder builder) {
+        /* Build fields into binary */
         builder.putU8(flags);
     }
 
     @Override
     public JSONObject toJSON() {
-        JSONObject obj = super.toJSON();
+        JSONObject obj = new JSONObject();
         obj.put("flags", flags);
         return obj;
     }

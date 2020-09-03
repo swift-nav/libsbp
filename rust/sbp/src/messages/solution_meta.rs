@@ -23,17 +23,15 @@ use serde::{Deserialize, Serialize};
 #[allow(unused_imports)]
 use crate::SbpString;
 
-/// Flags for a given GNSS sensor used as input for the fuzed solution.
+/// Instruments the physical type of GNSS sensor input to the fuzed solution.
 ///
-/// Metadata around the GNSS sensors involved in the fuzed solution. Accessible through sol_in[N].flags
-///                                                                         in a MSG_SOLN_META.
-/// Note: Just to build descriptive tables in documentation and not actually used.
+/// Metadata around the GNSS sensors involved in the fuzed solution.
+/// Accessible through sol_in[N].flags in a MSG_SOLN_META.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GNSSInputType {
-    pub sender_id: Option<u16>,
     /// flags that store all relevant info specific to this sensor type.
     pub flags: u8,
 }
@@ -42,27 +40,26 @@ impl GNSSInputType {
     #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<GNSSInputType, crate::Error> {
         Ok( GNSSInputType{
-            sender_id: None,
             flags: _buf.read_u8()?,
         } )
     }
-}
-impl super::SBPMessage for GNSSInputType {
-    fn get_message_type(&self) -> u16 {
-        65511
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GNSSInputType>, crate::Error> {
+        let mut v = Vec::new();
+        while buf.len() > 0 {
+            v.push(GNSSInputType::parse(buf)?);
+        }
+        Ok(v)
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<GNSSInputType>, crate::Error> {
+        let mut v = Vec::new();
+        for _ in 0..n {
+            v.push(GNSSInputType::parse(buf)?);
+        }
+        Ok(v)
     }
 }
 
@@ -79,18 +76,16 @@ impl crate::serialize::SbpSerialize for GNSSInputType {
     }
 }
 
-/// Flags for a given IMU sensor used as input for the fuzed solution.
+/// Provides detail about the IMU sensor, its timestamping mode, and its quality for input to the fuzed solution.
 ///
-/// Metadata around the IMU sensors involved in the fuzed solution. Accessible through sol_in[N].flags
-///                                                                        in a MSG_SOLN_META.
-/// Note: Just to build descriptive tables in documentation and not actually used.
+/// Metadata around the IMU sensors involved in the fuzed solution.
+/// Accessible through sol_in[N].flags in a MSG_SOLN_META.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct IMUInputType {
-    pub sender_id: Option<u16>,
-    /// flags that store all relevant info specific to this sensor type.
+    /// Instrument time, grade, and architecture for a sensor.
     pub flags: u8,
 }
 
@@ -98,27 +93,23 @@ impl IMUInputType {
     #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<IMUInputType, crate::Error> {
         Ok( IMUInputType{
-            sender_id: None,
             flags: _buf.read_u8()?,
         } )
     }
-}
-impl super::SBPMessage for IMUInputType {
-    fn get_message_type(&self) -> u16 {
-        65512
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<IMUInputType>, crate::Error> {
+        let mut v = Vec::new();
+        while buf.len() > 0 {
+            v.push(IMUInputType::parse(buf)?);
+        }
+        Ok(v)
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<IMUInputType>, crate::Error> {
+        let mut v = Vec::new();
+        for _ in 0..n {
+            v.push(IMUInputType::parse(buf)?);
+        }
+        Ok(v)
     }
 }
 
@@ -160,7 +151,7 @@ pub struct MsgSolnMeta {
     /// Age of the corrections (0xFFFF indicates invalid), as per last available
     /// AGE_CORRECTIONS from Starling GNSS engine
     pub age_corrections: u16,
-    /// Bits for reason why it cannot align (yet)
+    /// State of alignment and the status and receipt of the alignment inputs
     pub alignment_status: u8,
     /// Tow of last-used GNSS position measurement
     pub last_used_gnss_pos_tow: u32,
@@ -239,18 +230,16 @@ impl crate::serialize::SbpSerialize for MsgSolnMeta {
     }
 }
 
-/// Flags for a given Odometry sensor used as input for the fuzed solution.
+/// Provides detail about the Odometry sensor, its timestamping mode, and its quality for input to the fuzed solution.
 ///
-/// Metadata around the Odometry sensors involved in the fuzed solution. Accessible through sol_in[N].flags
-///                                                                             in a MSG_SOLN_META.
-/// Note: Just to build descriptive tables in documentation and not actually used.
+/// Metadata around the Odometry sensors involved in the fuzed solution.
+/// Accessible through sol_in[N].flags in a MSG_SOLN_META.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct OdoInputType {
-    pub sender_id: Option<u16>,
-    /// flags that store all relevant info specific to this sensor type.
+    /// Instrument ODO rate, grade, and quality.
     pub flags: u8,
 }
 
@@ -258,27 +247,23 @@ impl OdoInputType {
     #[rustfmt::skip]
     pub fn parse(_buf: &mut &[u8]) -> Result<OdoInputType, crate::Error> {
         Ok( OdoInputType{
-            sender_id: None,
             flags: _buf.read_u8()?,
         } )
     }
-}
-impl super::SBPMessage for OdoInputType {
-    fn get_message_type(&self) -> u16 {
-        65513
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<OdoInputType>, crate::Error> {
+        let mut v = Vec::new();
+        while buf.len() > 0 {
+            v.push(OdoInputType::parse(buf)?);
+        }
+        Ok(v)
     }
 
-    fn get_sender_id(&self) -> Option<u16> {
-        self.sender_id
-    }
-
-    fn set_sender_id(&mut self, new_id: u16) {
-        self.sender_id = Some(new_id);
-    }
-
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<OdoInputType>, crate::Error> {
+        let mut v = Vec::new();
+        for _ in 0..n {
+            v.push(OdoInputType::parse(buf)?);
+        }
+        Ok(v)
     }
 }
 
