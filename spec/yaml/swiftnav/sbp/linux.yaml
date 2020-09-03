@@ -23,6 +23,7 @@ definitions:
  - MSG_LINUX_CPU_STATE:
     id: 0x7F00
     short_desc: List CPU state on the system
+    public: false
     desc: |
       This message indicates the process state of the top 10 heaviest
       consumers of CPU on the system.
@@ -47,6 +48,7 @@ definitions:
  - MSG_LINUX_MEM_STATE:
     id: 0x7F01
     short_desc: List CPU state on the system
+    public: false
     desc: |
       This message indicates the process state of the top 10 heaviest
       consumers of memory on the system.
@@ -70,6 +72,7 @@ definitions:
 
  - MSG_LINUX_SYS_STATE:
     id: 0x7F02
+    public: false
     short_desc: CPU, Memory and Process Starts/Stops
     desc: |
       This presents a summary of CPU and memory utilization.
@@ -95,6 +98,7 @@ definitions:
 
  - MSG_LINUX_PROCESS_SOCKET_COUNTS:
     id: 0x7F03
+    public: false
     short_desc: A list of processes with high socket counts
     desc: |
       Top 10 list of processes with high socket counts.
@@ -128,6 +132,7 @@ definitions:
  
  - MSG_LINUX_PROCESS_SOCKET_QUEUES:
     id: 0x7F04
+    public: false
     short_desc: A list of processes with deep socket queues
     desc: |
       Top 10 list of sockets with deep queues.
@@ -170,6 +175,7 @@ definitions:
  
  - MSG_LINUX_SOCKET_USAGE:
     id: 0x7F05
+    public: false
     short_desc: Summary of socket usage across the system
     desc: |
       Summaries the socket usage across the system.
@@ -197,6 +203,7 @@ definitions:
             
  - MSG_LINUX_PROCESS_FD_COUNT:
     id: 0x7F06
+    public: false
     short_desc: Summary of processes with large amounts of open file descriptors
     desc: |
       Top 10 list of processes with a large number of open file descriptors.
@@ -216,6 +223,7 @@ definitions:
           
  - MSG_LINUX_PROCESS_FD_SUMMARY:
     id: 0x7F07
+    public: false
     short_desc: Summary of open file descriptors on the system
     desc: |
       Summary of open file descriptors on the system.
