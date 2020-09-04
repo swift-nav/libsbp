@@ -50,6 +50,29 @@ SBP_PACK_START
  * protocol version number.
  */
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_RESP  0x00B4
+#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK (0xff)
+#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT (8u)
+#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_GET(flags) \
+                             (((flags) >> SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT) \
+                             & SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK)
+#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK)) \
+                             << (SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT)));} while(0)
+                             
+
+#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK (0xff)
+#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT (0u)
+#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_GET(flags) \
+                             (((flags) >> SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT) \
+                             & SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK)
+#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK)) \
+                             << (SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT)));} while(0)
+                             
+
+
 typedef struct SBP_ATTR_PACKED {
   u32 flags;      /**< Bootloader flags */
   char version[0]; /**< Bootloader version number */
@@ -61,6 +84,7 @@ typedef struct SBP_ATTR_PACKED {
  * The host initiates the bootloader to jump to the application.
  */
 #define SBP_MSG_BOOTLOADER_JUMP_TO_APP     0x00B1
+
 typedef struct SBP_ATTR_PACKED {
   u8 jump;    /**< Ignored by the device */
 } msg_bootloader_jump_to_app_t;
@@ -88,6 +112,7 @@ typedef struct SBP_ATTR_PACKED {
  * and not related to the Piksi's serial number.
  */
 #define SBP_MSG_NAP_DEVICE_DNA_RESP        0x00DD
+
 typedef struct SBP_ATTR_PACKED {
   u8 dna[8]; /**< 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded
 on the right.
@@ -100,6 +125,7 @@ on the right.
 * Deprecated.
  */
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A 0x00B0
+
 typedef struct SBP_ATTR_PACKED {
   u8 handshake[0]; /**< Version number string (not NULL terminated) */
 } msg_bootloader_handshake_dep_a_t;

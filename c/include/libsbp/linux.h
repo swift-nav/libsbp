@@ -34,6 +34,7 @@ SBP_PACK_START
  * consumers of CPU on the system.
  */
 #define SBP_MSG_LINUX_CPU_STATE             0x7F00
+
 typedef struct SBP_ATTR_PACKED {
   u8 index;      /**< sequence of this status message, values from 0-9 */
   u16 pid;        /**< the PID of the process */
@@ -49,6 +50,7 @@ typedef struct SBP_ATTR_PACKED {
  * consumers of memory on the system.
  */
 #define SBP_MSG_LINUX_MEM_STATE             0x7F01
+
 typedef struct SBP_ATTR_PACKED {
   u8 index;      /**< sequence of this status message, values from 0-9 */
   u16 pid;        /**< the PID of the process */
@@ -63,6 +65,7 @@ typedef struct SBP_ATTR_PACKED {
  * This presents a summary of CPU and memory utilization.
  */
 #define SBP_MSG_LINUX_SYS_STATE             0x7F02
+
 typedef struct SBP_ATTR_PACKED {
   u16 mem_total;         /**< total system memory */
   u8 pcpu;              /**< percent of total cpu currently utilized */
@@ -78,6 +81,7 @@ typedef struct SBP_ATTR_PACKED {
  * Top 10 list of processes with high socket counts.
  */
 #define SBP_MSG_LINUX_PROCESS_SOCKET_COUNTS 0x7F03
+
 typedef struct SBP_ATTR_PACKED {
   u8 index;            /**< sequence of this status message, values from 0-9 */
   u16 pid;              /**< the PID of the process in question */
@@ -101,6 +105,7 @@ typedef struct SBP_ATTR_PACKED {
  * Top 10 list of sockets with deep queues.
  */
 #define SBP_MSG_LINUX_PROCESS_SOCKET_QUEUES 0x7F04
+
 typedef struct SBP_ATTR_PACKED {
   u8 index;                 /**< sequence of this status message, values from 0-9 */
   u16 pid;                   /**< the PID of the process in question */
@@ -128,6 +133,7 @@ of the connection.
  * Summaries the socket usage across the system.
  */
 #define SBP_MSG_LINUX_SOCKET_USAGE          0x7F05
+
 typedef struct SBP_ATTR_PACKED {
   u32 avg_queue_depth;        /**< average socket queue depths across all sockets on the system */
   u32 max_queue_depth;        /**< the max queue depth seen within the reporting period */
@@ -145,6 +151,7 @@ the first entry corresponds to the first enabled bit in `types_reported`.
  * Top 10 list of processes with a large number of open file descriptors.
  */
 #define SBP_MSG_LINUX_PROCESS_FD_COUNT      0x7F06
+
 typedef struct SBP_ATTR_PACKED {
   u8 index;       /**< sequence of this status message, values from 0-9 */
   u16 pid;         /**< the PID of the process in question */
@@ -158,6 +165,7 @@ typedef struct SBP_ATTR_PACKED {
  * Summary of open file descriptors on the system.
  */
 #define SBP_MSG_LINUX_PROCESS_FD_SUMMARY    0x7F07
+
 typedef struct SBP_ATTR_PACKED {
   u32 sys_fd_count;    /**< count of total FDs open on the system */
   char most_opened[0];  /**< A null delimited list of strings which alternates between

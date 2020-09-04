@@ -33,6 +33,7 @@ SBP_PACK_START
  * Raw data from the magnetometer.
  */
 #define SBP_MSG_MAG_RAW 0x0902
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;      /**< Milliseconds since start of GPS week. If the high bit is set, the
 time is unknown or invalid.
