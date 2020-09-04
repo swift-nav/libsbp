@@ -38,6 +38,7 @@ SBP_PACK_START
  * ratio.
  */
 #define SBP_MSG_ACQ_RESULT         0x002F
+
 typedef struct SBP_ATTR_PACKED {
   float cn0;    /**< CN/0 of best point [dB Hz] */
   float cp;     /**< Code phase of best point [chips] */
@@ -51,6 +52,7 @@ typedef struct SBP_ATTR_PACKED {
 * Deprecated.
  */
 #define SBP_MSG_ACQ_RESULT_DEP_C   0x001F
+
 typedef struct SBP_ATTR_PACKED {
   float cn0;    /**< CN/0 of best point [dB Hz] */
   float cp;     /**< Code phase of best point [chips] */
@@ -64,6 +66,7 @@ typedef struct SBP_ATTR_PACKED {
 * Deprecated.
  */
 #define SBP_MSG_ACQ_RESULT_DEP_B   0x0014
+
 typedef struct SBP_ATTR_PACKED {
   float snr;    /**< SNR of best point. Currently in arbitrary SNR points, but will
 be in units of dB Hz in a later revision of this message.
@@ -79,6 +82,7 @@ be in units of dB Hz in a later revision of this message.
 * Deprecated.
  */
 #define SBP_MSG_ACQ_RESULT_DEP_A   0x0015
+
 typedef struct SBP_ATTR_PACKED {
   float snr;    /**< SNR of best point. Currently dimensonless, but will have
 units of dB Hz in the revision of this message.
@@ -97,6 +101,7 @@ acquisition was attempted
  * The message describes SV profile during acquisition time.
  * The message is used to debug and measure the performance.
  */
+
 typedef struct SBP_ATTR_PACKED {
   u8 job_type;      /**< SV search job type (deep, fallback, etc) */
   u8 status;        /**< Acquisition status 1 is Success, 0 is Failure */
@@ -117,6 +122,7 @@ typedef struct SBP_ATTR_PACKED {
  *
 * Deprecated.
  */
+
 typedef struct SBP_ATTR_PACKED {
   u8 job_type;      /**< SV search job type (deep, fallback, etc) */
   u8 status;        /**< Acquisition status 1 is Success, 0 is Failure */
@@ -139,6 +145,7 @@ typedef struct SBP_ATTR_PACKED {
  * The message is used to debug and measure the performance.
  */
 #define SBP_MSG_ACQ_SV_PROFILE     0x002E
+
 typedef struct SBP_ATTR_PACKED {
   acq_sv_profile_t acq_sv_profile[0]; /**< SV profiles during acquisition time */
 } msg_acq_sv_profile_t;
@@ -149,6 +156,7 @@ typedef struct SBP_ATTR_PACKED {
 * Deprecated.
  */
 #define SBP_MSG_ACQ_SV_PROFILE_DEP 0x001E
+
 typedef struct SBP_ATTR_PACKED {
   acq_sv_profile_dep_t acq_sv_profile[0]; /**< SV profiles during acquisition time */
 } msg_acq_sv_profile_dep_t;

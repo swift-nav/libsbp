@@ -62,6 +62,21 @@ SBP_PACK_START
  * these messages.
  */
 #define SBP_MSG_GPS_TIME               0x0102
+#define SBP_GPS_TIME_TIME_SOURCE_MASK (0x7)
+#define SBP_GPS_TIME_TIME_SOURCE_SHIFT (0u)
+#define SBP_GPS_TIME_TIME_SOURCE_GET(flags) \
+                             (((flags) >> SBP_GPS_TIME_TIME_SOURCE_SHIFT) \
+                             & SBP_GPS_TIME_TIME_SOURCE_MASK)
+#define SBP_GPS_TIME_TIME_SOURCE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_GPS_TIME_TIME_SOURCE_MASK)) \
+                             << (SBP_GPS_TIME_TIME_SOURCE_SHIFT)));} while(0)
+                             
+
+#define SBP_GPS_TIME_TIME_SOURCE_NONE (0)
+#define SBP_GPS_TIME_TIME_SOURCE_GNSS_SOLUTION (1)
+#define SBP_GPS_TIME_TIME_SOURCE_PROPAGATED (2)
+
 typedef struct SBP_ATTR_PACKED {
   u16 wn;             /**< GPS week number [weeks] */
   u32 tow;            /**< GPS time of week rounded to the nearest millisecond [ms] */
@@ -89,6 +104,21 @@ from -500000 to 500000)
  * these messages.
  */
 #define SBP_MSG_GPS_TIME_GNSS          0x0104
+#define SBP_GPS_TIME_GNSS_TIME_SOURCE_MASK (0x7)
+#define SBP_GPS_TIME_GNSS_TIME_SOURCE_SHIFT (0u)
+#define SBP_GPS_TIME_GNSS_TIME_SOURCE_GET(flags) \
+                             (((flags) >> SBP_GPS_TIME_GNSS_TIME_SOURCE_SHIFT) \
+                             & SBP_GPS_TIME_GNSS_TIME_SOURCE_MASK)
+#define SBP_GPS_TIME_GNSS_TIME_SOURCE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_GPS_TIME_GNSS_TIME_SOURCE_MASK)) \
+                             << (SBP_GPS_TIME_GNSS_TIME_SOURCE_SHIFT)));} while(0)
+                             
+
+#define SBP_GPS_TIME_GNSS_TIME_SOURCE_NONE (0)
+#define SBP_GPS_TIME_GNSS_TIME_SOURCE_GNSS_SOLUTION (1)
+#define SBP_GPS_TIME_GNSS_TIME_SOURCE_PROPAGATED (2)
+
 typedef struct SBP_ATTR_PACKED {
   u16 wn;             /**< GPS week number [weeks] */
   u32 tow;            /**< GPS time of week rounded to the nearest millisecond [ms] */
@@ -105,6 +135,35 @@ from -500000 to 500000)
  * which indicate the source of the UTC offset value and source of the time fix.
  */
 #define SBP_MSG_UTC_TIME               0x0103
+#define SBP_UTC_TIME_UTC_OFFSET_SOURCE_MASK (0x3)
+#define SBP_UTC_TIME_UTC_OFFSET_SOURCE_SHIFT (3u)
+#define SBP_UTC_TIME_UTC_OFFSET_SOURCE_GET(flags) \
+                             (((flags) >> SBP_UTC_TIME_UTC_OFFSET_SOURCE_SHIFT) \
+                             & SBP_UTC_TIME_UTC_OFFSET_SOURCE_MASK)
+#define SBP_UTC_TIME_UTC_OFFSET_SOURCE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_UTC_TIME_UTC_OFFSET_SOURCE_MASK)) \
+                             << (SBP_UTC_TIME_UTC_OFFSET_SOURCE_SHIFT)));} while(0)
+                             
+
+#define SBP_UTC_TIME_UTC_OFFSET_SOURCE_FACTORY_DEFAULT (0)
+#define SBP_UTC_TIME_UTC_OFFSET_SOURCE_NON_VOLATILE_MEMORY (1)
+#define SBP_UTC_TIME_UTC_OFFSET_SOURCE_DECODED_THIS_SESSION (2)
+#define SBP_UTC_TIME_TIME_SOURCE_MASK (0x7)
+#define SBP_UTC_TIME_TIME_SOURCE_SHIFT (0u)
+#define SBP_UTC_TIME_TIME_SOURCE_GET(flags) \
+                             (((flags) >> SBP_UTC_TIME_TIME_SOURCE_SHIFT) \
+                             & SBP_UTC_TIME_TIME_SOURCE_MASK)
+#define SBP_UTC_TIME_TIME_SOURCE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_UTC_TIME_TIME_SOURCE_MASK)) \
+                             << (SBP_UTC_TIME_TIME_SOURCE_SHIFT)));} while(0)
+                             
+
+#define SBP_UTC_TIME_TIME_SOURCE_NONE (0)
+#define SBP_UTC_TIME_TIME_SOURCE_GNSS_SOLUTION (1)
+#define SBP_UTC_TIME_TIME_SOURCE_PROPAGATED (2)
+
 typedef struct SBP_ATTR_PACKED {
   u8 flags;      /**< Indicates source and time validity */
   u32 tow;        /**< GPS time of week rounded to the nearest millisecond [ms] */
@@ -124,6 +183,35 @@ typedef struct SBP_ATTR_PACKED {
  * which indicate the source of the UTC offset value and source of the time fix.
  */
 #define SBP_MSG_UTC_TIME_GNSS          0x0105
+#define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_MASK (0x3)
+#define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_SHIFT (3u)
+#define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_GET(flags) \
+                             (((flags) >> SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_SHIFT) \
+                             & SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_MASK)
+#define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_MASK)) \
+                             << (SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_SHIFT)));} while(0)
+                             
+
+#define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_FACTORY_DEFAULT (0)
+#define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_NON_VOLATILE_MEMORY (1)
+#define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_DECODED_THIS_SESSION (2)
+#define SBP_UTC_TIME_GNSS_TIME_SOURCE_MASK (0x7)
+#define SBP_UTC_TIME_GNSS_TIME_SOURCE_SHIFT (0u)
+#define SBP_UTC_TIME_GNSS_TIME_SOURCE_GET(flags) \
+                             (((flags) >> SBP_UTC_TIME_GNSS_TIME_SOURCE_SHIFT) \
+                             & SBP_UTC_TIME_GNSS_TIME_SOURCE_MASK)
+#define SBP_UTC_TIME_GNSS_TIME_SOURCE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_UTC_TIME_GNSS_TIME_SOURCE_MASK)) \
+                             << (SBP_UTC_TIME_GNSS_TIME_SOURCE_SHIFT)));} while(0)
+                             
+
+#define SBP_UTC_TIME_GNSS_TIME_SOURCE_NONE (0)
+#define SBP_UTC_TIME_GNSS_TIME_SOURCE_GNSS_SOLUTION (1)
+#define SBP_UTC_TIME_GNSS_TIME_SOURCE_PROPAGATED (2)
+
 typedef struct SBP_ATTR_PACKED {
   u8 flags;      /**< Indicates source and time validity */
   u32 tow;        /**< GPS time of week rounded to the nearest millisecond [ms] */
@@ -145,6 +233,36 @@ typedef struct SBP_ATTR_PACKED {
  * corresponds to differential or SPP solution.
  */
 #define SBP_MSG_DOPS                   0x0208
+#define SBP_DOPS_RAIM_REPAIR_FLAG_MASK (0x1)
+#define SBP_DOPS_RAIM_REPAIR_FLAG_SHIFT (7u)
+#define SBP_DOPS_RAIM_REPAIR_FLAG_GET(flags) \
+                             (((flags) >> SBP_DOPS_RAIM_REPAIR_FLAG_SHIFT) \
+                             & SBP_DOPS_RAIM_REPAIR_FLAG_MASK)
+#define SBP_DOPS_RAIM_REPAIR_FLAG_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_DOPS_RAIM_REPAIR_FLAG_MASK)) \
+                             << (SBP_DOPS_RAIM_REPAIR_FLAG_SHIFT)));} while(0)
+                             
+
+#define SBP_DOPS_FIX_MODE_MASK (0x7)
+#define SBP_DOPS_FIX_MODE_SHIFT (0u)
+#define SBP_DOPS_FIX_MODE_GET(flags) \
+                             (((flags) >> SBP_DOPS_FIX_MODE_SHIFT) \
+                             & SBP_DOPS_FIX_MODE_MASK)
+#define SBP_DOPS_FIX_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_DOPS_FIX_MODE_MASK)) \
+                             << (SBP_DOPS_FIX_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_DOPS_FIX_MODE_INVALID (0)
+#define SBP_DOPS_FIX_MODE_SINGLE_POINT_POSITION (1)
+#define SBP_DOPS_FIX_MODE_DIFFERENTIAL_GNSS (2)
+#define SBP_DOPS_FIX_MODE_FLOAT_RTK (3)
+#define SBP_DOPS_FIX_MODE_FIXED_RTK (4)
+#define SBP_DOPS_FIX_MODE_UNDEFINED (5)
+#define SBP_DOPS_FIX_MODE_SBAS_POSITION (6)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;      /**< GPS Time of Week [ms] */
   u16 gdop;     /**< Geometric Dilution of Precision [0.01] */
@@ -168,6 +286,38 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_POS_ECEF               0x0209
+#define SBP_POS_ECEF_INERTIAL_NAVIGATION_MODE_MASK (0x3)
+#define SBP_POS_ECEF_INERTIAL_NAVIGATION_MODE_SHIFT (3u)
+#define SBP_POS_ECEF_INERTIAL_NAVIGATION_MODE_GET(flags) \
+                             (((flags) >> SBP_POS_ECEF_INERTIAL_NAVIGATION_MODE_SHIFT) \
+                             & SBP_POS_ECEF_INERTIAL_NAVIGATION_MODE_MASK)
+#define SBP_POS_ECEF_INERTIAL_NAVIGATION_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_ECEF_INERTIAL_NAVIGATION_MODE_MASK)) \
+                             << (SBP_POS_ECEF_INERTIAL_NAVIGATION_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_ECEF_INERTIAL_NAVIGATION_MODE_NONE (0)
+#define SBP_POS_ECEF_INERTIAL_NAVIGATION_MODE_INS_USED (1)
+#define SBP_POS_ECEF_FIX_MODE_MASK (0x7)
+#define SBP_POS_ECEF_FIX_MODE_SHIFT (0u)
+#define SBP_POS_ECEF_FIX_MODE_GET(flags) \
+                             (((flags) >> SBP_POS_ECEF_FIX_MODE_SHIFT) \
+                             & SBP_POS_ECEF_FIX_MODE_MASK)
+#define SBP_POS_ECEF_FIX_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_ECEF_FIX_MODE_MASK)) \
+                             << (SBP_POS_ECEF_FIX_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_ECEF_FIX_MODE_INVALID (0)
+#define SBP_POS_ECEF_FIX_MODE_SINGLE_POINT_POSITION (1)
+#define SBP_POS_ECEF_FIX_MODE_DIFFERENTIAL_GNSS (2)
+#define SBP_POS_ECEF_FIX_MODE_FLOAT_RTK (3)
+#define SBP_POS_ECEF_FIX_MODE_FIXED_RTK (4)
+#define SBP_POS_ECEF_FIX_MODE_DEAD_RECKONING (5)
+#define SBP_POS_ECEF_FIX_MODE_SBAS_POSITION (6)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;         /**< GPS Time of Week [ms] */
   double x;           /**< ECEF X coordinate [m] */
@@ -192,6 +342,38 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_POS_ECEF_COV           0x0214
+#define SBP_POS_ECEF_COV_INERTIAL_NAVIGATION_MODE_MASK (0x3)
+#define SBP_POS_ECEF_COV_INERTIAL_NAVIGATION_MODE_SHIFT (3u)
+#define SBP_POS_ECEF_COV_INERTIAL_NAVIGATION_MODE_GET(flags) \
+                             (((flags) >> SBP_POS_ECEF_COV_INERTIAL_NAVIGATION_MODE_SHIFT) \
+                             & SBP_POS_ECEF_COV_INERTIAL_NAVIGATION_MODE_MASK)
+#define SBP_POS_ECEF_COV_INERTIAL_NAVIGATION_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_ECEF_COV_INERTIAL_NAVIGATION_MODE_MASK)) \
+                             << (SBP_POS_ECEF_COV_INERTIAL_NAVIGATION_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_ECEF_COV_INERTIAL_NAVIGATION_MODE_NONE (0)
+#define SBP_POS_ECEF_COV_INERTIAL_NAVIGATION_MODE_INS_USED (1)
+#define SBP_POS_ECEF_COV_FIX_MODE_MASK (0x7)
+#define SBP_POS_ECEF_COV_FIX_MODE_SHIFT (0u)
+#define SBP_POS_ECEF_COV_FIX_MODE_GET(flags) \
+                             (((flags) >> SBP_POS_ECEF_COV_FIX_MODE_SHIFT) \
+                             & SBP_POS_ECEF_COV_FIX_MODE_MASK)
+#define SBP_POS_ECEF_COV_FIX_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_ECEF_COV_FIX_MODE_MASK)) \
+                             << (SBP_POS_ECEF_COV_FIX_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_ECEF_COV_FIX_MODE_INVALID (0)
+#define SBP_POS_ECEF_COV_FIX_MODE_SINGLE_POINT_POSITION (1)
+#define SBP_POS_ECEF_COV_FIX_MODE_DIFFERENTIAL_GNSS (2)
+#define SBP_POS_ECEF_COV_FIX_MODE_FLOAT_RTK (3)
+#define SBP_POS_ECEF_COV_FIX_MODE_FIXED_RTK (4)
+#define SBP_POS_ECEF_COV_FIX_MODE_DEAD_RECKONING (5)
+#define SBP_POS_ECEF_COV_FIX_MODE_SBAS_POSITION (6)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
   double x;          /**< ECEF X coordinate [m] */
@@ -220,6 +402,38 @@ typedef struct SBP_ATTR_PACKED {
  * matching time-of-week (tow).
  */
 #define SBP_MSG_POS_LLH                0x020A
+#define SBP_POS_LLH_INERTIAL_NAVIGATION_MODE_MASK (0x3)
+#define SBP_POS_LLH_INERTIAL_NAVIGATION_MODE_SHIFT (3u)
+#define SBP_POS_LLH_INERTIAL_NAVIGATION_MODE_GET(flags) \
+                             (((flags) >> SBP_POS_LLH_INERTIAL_NAVIGATION_MODE_SHIFT) \
+                             & SBP_POS_LLH_INERTIAL_NAVIGATION_MODE_MASK)
+#define SBP_POS_LLH_INERTIAL_NAVIGATION_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_LLH_INERTIAL_NAVIGATION_MODE_MASK)) \
+                             << (SBP_POS_LLH_INERTIAL_NAVIGATION_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_LLH_INERTIAL_NAVIGATION_MODE_NONE (0)
+#define SBP_POS_LLH_INERTIAL_NAVIGATION_MODE_INS_USED (1)
+#define SBP_POS_LLH_FIX_MODE_MASK (0x7)
+#define SBP_POS_LLH_FIX_MODE_SHIFT (0u)
+#define SBP_POS_LLH_FIX_MODE_GET(flags) \
+                             (((flags) >> SBP_POS_LLH_FIX_MODE_SHIFT) \
+                             & SBP_POS_LLH_FIX_MODE_MASK)
+#define SBP_POS_LLH_FIX_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_LLH_FIX_MODE_MASK)) \
+                             << (SBP_POS_LLH_FIX_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_LLH_FIX_MODE_INVALID (0)
+#define SBP_POS_LLH_FIX_MODE_SINGLE_POINT_POSITION (1)
+#define SBP_POS_LLH_FIX_MODE_DIFFERENTIAL_GNSS (2)
+#define SBP_POS_LLH_FIX_MODE_FLOAT_RTK (3)
+#define SBP_POS_LLH_FIX_MODE_FIXED_RTK (4)
+#define SBP_POS_LLH_FIX_MODE_DEAD_RECKONING (5)
+#define SBP_POS_LLH_FIX_MODE_SBAS_POSITION (6)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;           /**< GPS Time of Week [ms] */
   double lat;           /**< Latitude [deg] */
@@ -244,6 +458,38 @@ typedef struct SBP_ATTR_PACKED {
  * measurement and care should be taken with the sign convention.
  */
 #define SBP_MSG_POS_LLH_COV            0x0211
+#define SBP_POS_LLH_COV_INERTIAL_NAVIGATION_MODE_MASK (0x3)
+#define SBP_POS_LLH_COV_INERTIAL_NAVIGATION_MODE_SHIFT (3u)
+#define SBP_POS_LLH_COV_INERTIAL_NAVIGATION_MODE_GET(flags) \
+                             (((flags) >> SBP_POS_LLH_COV_INERTIAL_NAVIGATION_MODE_SHIFT) \
+                             & SBP_POS_LLH_COV_INERTIAL_NAVIGATION_MODE_MASK)
+#define SBP_POS_LLH_COV_INERTIAL_NAVIGATION_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_LLH_COV_INERTIAL_NAVIGATION_MODE_MASK)) \
+                             << (SBP_POS_LLH_COV_INERTIAL_NAVIGATION_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_LLH_COV_INERTIAL_NAVIGATION_MODE_NONE (0)
+#define SBP_POS_LLH_COV_INERTIAL_NAVIGATION_MODE_INS_USED (1)
+#define SBP_POS_LLH_COV_FIX_MODE_MASK (0x7)
+#define SBP_POS_LLH_COV_FIX_MODE_SHIFT (0u)
+#define SBP_POS_LLH_COV_FIX_MODE_GET(flags) \
+                             (((flags) >> SBP_POS_LLH_COV_FIX_MODE_SHIFT) \
+                             & SBP_POS_LLH_COV_FIX_MODE_MASK)
+#define SBP_POS_LLH_COV_FIX_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_LLH_COV_FIX_MODE_MASK)) \
+                             << (SBP_POS_LLH_COV_FIX_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_LLH_COV_FIX_MODE_INVALID (0)
+#define SBP_POS_LLH_COV_FIX_MODE_SINGLE_POINT_POSITION (1)
+#define SBP_POS_LLH_COV_FIX_MODE_DIFFERENTIAL_GNSS (2)
+#define SBP_POS_LLH_COV_FIX_MODE_FLOAT_RTK (3)
+#define SBP_POS_LLH_COV_FIX_MODE_FIXED_RTK (4)
+#define SBP_POS_LLH_COV_FIX_MODE_DEAD_RECKONING (5)
+#define SBP_POS_LLH_COV_FIX_MODE_SBAS_POSITION (6)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
   double lat;        /**< Latitude [deg] */
@@ -269,6 +515,22 @@ typedef struct SBP_ATTR_PACKED {
  * matching time-of-week (tow).
  */
 #define SBP_MSG_BASELINE_ECEF          0x020B
+#define SBP_BASELINE_ECEF_FIX_MODE_MASK (0x7)
+#define SBP_BASELINE_ECEF_FIX_MODE_SHIFT (0u)
+#define SBP_BASELINE_ECEF_FIX_MODE_GET(flags) \
+                             (((flags) >> SBP_BASELINE_ECEF_FIX_MODE_SHIFT) \
+                             & SBP_BASELINE_ECEF_FIX_MODE_MASK)
+#define SBP_BASELINE_ECEF_FIX_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_BASELINE_ECEF_FIX_MODE_MASK)) \
+                             << (SBP_BASELINE_ECEF_FIX_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_BASELINE_ECEF_FIX_MODE_INVALID (0)
+#define SBP_BASELINE_ECEF_FIX_MODE_DIFFERENTIAL_GNSS (2)
+#define SBP_BASELINE_ECEF_FIX_MODE_FLOAT_RTK (3)
+#define SBP_BASELINE_ECEF_FIX_MODE_FIXED_RTK (4)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;         /**< GPS Time of Week [ms] */
   s32 x;           /**< Baseline ECEF X coordinate [mm] */
@@ -290,6 +552,22 @@ typedef struct SBP_ATTR_PACKED {
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_BASELINE_NED           0x020C
+#define SBP_BASELINE_NED_FIX_MODE_MASK (0x7)
+#define SBP_BASELINE_NED_FIX_MODE_SHIFT (0u)
+#define SBP_BASELINE_NED_FIX_MODE_GET(flags) \
+                             (((flags) >> SBP_BASELINE_NED_FIX_MODE_SHIFT) \
+                             & SBP_BASELINE_NED_FIX_MODE_MASK)
+#define SBP_BASELINE_NED_FIX_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_BASELINE_NED_FIX_MODE_MASK)) \
+                             << (SBP_BASELINE_NED_FIX_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_BASELINE_NED_FIX_MODE_INVALID (0)
+#define SBP_BASELINE_NED_FIX_MODE_DIFFERENTIAL_GNSS (2)
+#define SBP_BASELINE_NED_FIX_MODE_FLOAT_RTK (3)
+#define SBP_BASELINE_NED_FIX_MODE_FIXED_RTK (4)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;           /**< GPS Time of Week [ms] */
   s32 n;             /**< Baseline North coordinate [mm] */
@@ -309,6 +587,35 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_ECEF               0x020D
+#define SBP_VEL_ECEF_INS_NAVIGATION_MODE_MASK (0x3)
+#define SBP_VEL_ECEF_INS_NAVIGATION_MODE_SHIFT (3u)
+#define SBP_VEL_ECEF_INS_NAVIGATION_MODE_GET(flags) \
+                             (((flags) >> SBP_VEL_ECEF_INS_NAVIGATION_MODE_SHIFT) \
+                             & SBP_VEL_ECEF_INS_NAVIGATION_MODE_MASK)
+#define SBP_VEL_ECEF_INS_NAVIGATION_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_VEL_ECEF_INS_NAVIGATION_MODE_MASK)) \
+                             << (SBP_VEL_ECEF_INS_NAVIGATION_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_VEL_ECEF_INS_NAVIGATION_MODE_NONE (0)
+#define SBP_VEL_ECEF_INS_NAVIGATION_MODE_INS_USED (1)
+#define SBP_VEL_ECEF_VELOCITY_MODE_MASK (0x7)
+#define SBP_VEL_ECEF_VELOCITY_MODE_SHIFT (0u)
+#define SBP_VEL_ECEF_VELOCITY_MODE_GET(flags) \
+                             (((flags) >> SBP_VEL_ECEF_VELOCITY_MODE_SHIFT) \
+                             & SBP_VEL_ECEF_VELOCITY_MODE_MASK)
+#define SBP_VEL_ECEF_VELOCITY_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_VEL_ECEF_VELOCITY_MODE_MASK)) \
+                             << (SBP_VEL_ECEF_VELOCITY_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_VEL_ECEF_VELOCITY_MODE_INVALID (0)
+#define SBP_VEL_ECEF_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
+#define SBP_VEL_ECEF_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+#define SBP_VEL_ECEF_VELOCITY_MODE_DEAD_RECKONING (3)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;         /**< GPS Time of Week [ms] */
   s32 x;           /**< Velocity ECEF X coordinate [mm/s] */
@@ -328,6 +635,35 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_ECEF_COV           0x0215
+#define SBP_VEL_ECEF_COV_INS_NAVIGATION_MODE_MASK (0x3)
+#define SBP_VEL_ECEF_COV_INS_NAVIGATION_MODE_SHIFT (3u)
+#define SBP_VEL_ECEF_COV_INS_NAVIGATION_MODE_GET(flags) \
+                             (((flags) >> SBP_VEL_ECEF_COV_INS_NAVIGATION_MODE_SHIFT) \
+                             & SBP_VEL_ECEF_COV_INS_NAVIGATION_MODE_MASK)
+#define SBP_VEL_ECEF_COV_INS_NAVIGATION_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_VEL_ECEF_COV_INS_NAVIGATION_MODE_MASK)) \
+                             << (SBP_VEL_ECEF_COV_INS_NAVIGATION_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_VEL_ECEF_COV_INS_NAVIGATION_MODE_NONE (0)
+#define SBP_VEL_ECEF_COV_INS_NAVIGATION_MODE_INS_USED (1)
+#define SBP_VEL_ECEF_COV_VELOCITY_MODE_MASK (0x7)
+#define SBP_VEL_ECEF_COV_VELOCITY_MODE_SHIFT (0u)
+#define SBP_VEL_ECEF_COV_VELOCITY_MODE_GET(flags) \
+                             (((flags) >> SBP_VEL_ECEF_COV_VELOCITY_MODE_SHIFT) \
+                             & SBP_VEL_ECEF_COV_VELOCITY_MODE_MASK)
+#define SBP_VEL_ECEF_COV_VELOCITY_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_VEL_ECEF_COV_VELOCITY_MODE_MASK)) \
+                             << (SBP_VEL_ECEF_COV_VELOCITY_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_VEL_ECEF_COV_VELOCITY_MODE_INVALID (0)
+#define SBP_VEL_ECEF_COV_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
+#define SBP_VEL_ECEF_COV_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+#define SBP_VEL_ECEF_COV_VELOCITY_MODE_DEAD_RECKONING (3)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
   s32 x;          /**< Velocity ECEF X coordinate [mm/s] */
@@ -352,6 +688,35 @@ typedef struct SBP_ATTR_PACKED {
  * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_NED                0x020E
+#define SBP_VEL_NED_INS_NAVIGATION_MODE_MASK (0x3)
+#define SBP_VEL_NED_INS_NAVIGATION_MODE_SHIFT (3u)
+#define SBP_VEL_NED_INS_NAVIGATION_MODE_GET(flags) \
+                             (((flags) >> SBP_VEL_NED_INS_NAVIGATION_MODE_SHIFT) \
+                             & SBP_VEL_NED_INS_NAVIGATION_MODE_MASK)
+#define SBP_VEL_NED_INS_NAVIGATION_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_VEL_NED_INS_NAVIGATION_MODE_MASK)) \
+                             << (SBP_VEL_NED_INS_NAVIGATION_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_VEL_NED_INS_NAVIGATION_MODE_NONE (0)
+#define SBP_VEL_NED_INS_NAVIGATION_MODE_INS_USED (1)
+#define SBP_VEL_NED_VELOCITY_MODE_MASK (0x7)
+#define SBP_VEL_NED_VELOCITY_MODE_SHIFT (0u)
+#define SBP_VEL_NED_VELOCITY_MODE_GET(flags) \
+                             (((flags) >> SBP_VEL_NED_VELOCITY_MODE_SHIFT) \
+                             & SBP_VEL_NED_VELOCITY_MODE_MASK)
+#define SBP_VEL_NED_VELOCITY_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_VEL_NED_VELOCITY_MODE_MASK)) \
+                             << (SBP_VEL_NED_VELOCITY_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_VEL_NED_VELOCITY_MODE_INVALID (0)
+#define SBP_VEL_NED_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
+#define SBP_VEL_NED_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+#define SBP_VEL_NED_VELOCITY_MODE_DEAD_RECKONING (3)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;           /**< GPS Time of Week [ms] */
   s32 n;             /**< Velocity North coordinate [mm/s] */
@@ -376,6 +741,35 @@ typedef struct SBP_ATTR_PACKED {
  * portion of the 3x3 covariance matrix.
  */
 #define SBP_MSG_VEL_NED_COV            0x0212
+#define SBP_VEL_NED_COV_INS_NAVIGATION_MODE_MASK (0x3)
+#define SBP_VEL_NED_COV_INS_NAVIGATION_MODE_SHIFT (3u)
+#define SBP_VEL_NED_COV_INS_NAVIGATION_MODE_GET(flags) \
+                             (((flags) >> SBP_VEL_NED_COV_INS_NAVIGATION_MODE_SHIFT) \
+                             & SBP_VEL_NED_COV_INS_NAVIGATION_MODE_MASK)
+#define SBP_VEL_NED_COV_INS_NAVIGATION_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_VEL_NED_COV_INS_NAVIGATION_MODE_MASK)) \
+                             << (SBP_VEL_NED_COV_INS_NAVIGATION_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_VEL_NED_COV_INS_NAVIGATION_MODE_NONE (0)
+#define SBP_VEL_NED_COV_INS_NAVIGATION_MODE_INS_USED (1)
+#define SBP_VEL_NED_COV_VELOCITY_MODE_MASK (0x7)
+#define SBP_VEL_NED_COV_VELOCITY_MODE_SHIFT (0u)
+#define SBP_VEL_NED_COV_VELOCITY_MODE_GET(flags) \
+                             (((flags) >> SBP_VEL_NED_COV_VELOCITY_MODE_SHIFT) \
+                             & SBP_VEL_NED_COV_VELOCITY_MODE_MASK)
+#define SBP_VEL_NED_COV_VELOCITY_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_VEL_NED_COV_VELOCITY_MODE_MASK)) \
+                             << (SBP_VEL_NED_COV_VELOCITY_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_VEL_NED_COV_VELOCITY_MODE_INVALID (0)
+#define SBP_VEL_NED_COV_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
+#define SBP_VEL_NED_COV_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+#define SBP_VEL_NED_COV_VELOCITY_MODE_DEAD_RECKONING (3)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
   s32 n;          /**< Velocity North coordinate [mm/s] */
@@ -404,6 +798,24 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_POS_ECEF_GNSS          0x0229
+#define SBP_POS_ECEF_GNSS_FIX_MODE_MASK (0x7)
+#define SBP_POS_ECEF_GNSS_FIX_MODE_SHIFT (0u)
+#define SBP_POS_ECEF_GNSS_FIX_MODE_GET(flags) \
+                             (((flags) >> SBP_POS_ECEF_GNSS_FIX_MODE_SHIFT) \
+                             & SBP_POS_ECEF_GNSS_FIX_MODE_MASK)
+#define SBP_POS_ECEF_GNSS_FIX_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_ECEF_GNSS_FIX_MODE_MASK)) \
+                             << (SBP_POS_ECEF_GNSS_FIX_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_ECEF_GNSS_FIX_MODE_INVALID (0)
+#define SBP_POS_ECEF_GNSS_FIX_MODE_SINGLE_POINT_POSITION (1)
+#define SBP_POS_ECEF_GNSS_FIX_MODE_DIFFERENTIAL_GNSS (2)
+#define SBP_POS_ECEF_GNSS_FIX_MODE_FLOAT_RTK (3)
+#define SBP_POS_ECEF_GNSS_FIX_MODE_FIXED_RTK (4)
+#define SBP_POS_ECEF_GNSS_FIX_MODE_SBAS_POSITION (6)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;         /**< GPS Time of Week [ms] */
   double x;           /**< ECEF X coordinate [m] */
@@ -428,6 +840,24 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_POS_ECEF_COV_GNSS      0x0234
+#define SBP_POS_ECEF_COV_GNSS_FIX_MODE_MASK (0x7)
+#define SBP_POS_ECEF_COV_GNSS_FIX_MODE_SHIFT (0u)
+#define SBP_POS_ECEF_COV_GNSS_FIX_MODE_GET(flags) \
+                             (((flags) >> SBP_POS_ECEF_COV_GNSS_FIX_MODE_SHIFT) \
+                             & SBP_POS_ECEF_COV_GNSS_FIX_MODE_MASK)
+#define SBP_POS_ECEF_COV_GNSS_FIX_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_ECEF_COV_GNSS_FIX_MODE_MASK)) \
+                             << (SBP_POS_ECEF_COV_GNSS_FIX_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_ECEF_COV_GNSS_FIX_MODE_INVALID (0)
+#define SBP_POS_ECEF_COV_GNSS_FIX_MODE_SINGLE_POINT_POSITION (1)
+#define SBP_POS_ECEF_COV_GNSS_FIX_MODE_DIFFERENTIAL_GNSS (2)
+#define SBP_POS_ECEF_COV_GNSS_FIX_MODE_FLOAT_RTK (3)
+#define SBP_POS_ECEF_COV_GNSS_FIX_MODE_FIXED_RTK (4)
+#define SBP_POS_ECEF_COV_GNSS_FIX_MODE_SBAS_POSITION (6)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
   double x;          /**< ECEF X coordinate [m] */
@@ -456,6 +886,24 @@ typedef struct SBP_ATTR_PACKED {
  * matching time-of-week (tow).
  */
 #define SBP_MSG_POS_LLH_GNSS           0x022A
+#define SBP_POS_LLH_GNSS_FIX_MODE_MASK (0x7)
+#define SBP_POS_LLH_GNSS_FIX_MODE_SHIFT (0u)
+#define SBP_POS_LLH_GNSS_FIX_MODE_GET(flags) \
+                             (((flags) >> SBP_POS_LLH_GNSS_FIX_MODE_SHIFT) \
+                             & SBP_POS_LLH_GNSS_FIX_MODE_MASK)
+#define SBP_POS_LLH_GNSS_FIX_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_LLH_GNSS_FIX_MODE_MASK)) \
+                             << (SBP_POS_LLH_GNSS_FIX_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_LLH_GNSS_FIX_MODE_INVALID (0)
+#define SBP_POS_LLH_GNSS_FIX_MODE_SINGLE_POINT_POSITION (1)
+#define SBP_POS_LLH_GNSS_FIX_MODE_DIFFERENTIAL_GNSS (2)
+#define SBP_POS_LLH_GNSS_FIX_MODE_FLOAT_RTK (3)
+#define SBP_POS_LLH_GNSS_FIX_MODE_FIXED_RTK (4)
+#define SBP_POS_LLH_GNSS_FIX_MODE_SBAS_POSITION (6)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;           /**< GPS Time of Week [ms] */
   double lat;           /**< Latitude [deg] */
@@ -480,6 +928,25 @@ typedef struct SBP_ATTR_PACKED {
  * measurement and care should be taken with the sign convention.
  */
 #define SBP_MSG_POS_LLH_COV_GNSS       0x0231
+#define SBP_POS_LLH_COV_GNSS_FIX_MODE_MASK (0x7)
+#define SBP_POS_LLH_COV_GNSS_FIX_MODE_SHIFT (0u)
+#define SBP_POS_LLH_COV_GNSS_FIX_MODE_GET(flags) \
+                             (((flags) >> SBP_POS_LLH_COV_GNSS_FIX_MODE_SHIFT) \
+                             & SBP_POS_LLH_COV_GNSS_FIX_MODE_MASK)
+#define SBP_POS_LLH_COV_GNSS_FIX_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_LLH_COV_GNSS_FIX_MODE_MASK)) \
+                             << (SBP_POS_LLH_COV_GNSS_FIX_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_LLH_COV_GNSS_FIX_MODE_INVALID (0)
+#define SBP_POS_LLH_COV_GNSS_FIX_MODE_SINGLE_POINT_POSITION (1)
+#define SBP_POS_LLH_COV_GNSS_FIX_MODE_DIFFERENTIAL_GNSS (2)
+#define SBP_POS_LLH_COV_GNSS_FIX_MODE_FLOAT_RTK (3)
+#define SBP_POS_LLH_COV_GNSS_FIX_MODE_FIXED_RTK (4)
+#define SBP_POS_LLH_COV_GNSS_FIX_MODE_DEAD_RECKONING (5)
+#define SBP_POS_LLH_COV_GNSS_FIX_MODE_SBAS_POSITION (6)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
   double lat;        /**< Latitude [deg] */
@@ -503,6 +970,21 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_ECEF_GNSS          0x022D
+#define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_MASK (0x7)
+#define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_SHIFT (0u)
+#define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_GET(flags) \
+                             (((flags) >> SBP_VEL_ECEF_GNSS_VELOCITY_MODE_SHIFT) \
+                             & SBP_VEL_ECEF_GNSS_VELOCITY_MODE_MASK)
+#define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_VEL_ECEF_GNSS_VELOCITY_MODE_MASK)) \
+                             << (SBP_VEL_ECEF_GNSS_VELOCITY_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_INVALID (0)
+#define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
+#define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;         /**< GPS Time of Week [ms] */
   s32 x;           /**< Velocity ECEF X coordinate [mm/s] */
@@ -522,6 +1004,21 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_ECEF_COV_GNSS      0x0235
+#define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_MASK (0x7)
+#define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_SHIFT (0u)
+#define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_GET(flags) \
+                             (((flags) >> SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_SHIFT) \
+                             & SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_MASK)
+#define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_MASK)) \
+                             << (SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_INVALID (0)
+#define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
+#define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
   s32 x;          /**< Velocity ECEF X coordinate [mm/s] */
@@ -546,6 +1043,21 @@ typedef struct SBP_ATTR_PACKED {
  * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_NED_GNSS           0x022E
+#define SBP_VEL_NED_GNSS_VELOCITY_MODE_MASK (0x7)
+#define SBP_VEL_NED_GNSS_VELOCITY_MODE_SHIFT (0u)
+#define SBP_VEL_NED_GNSS_VELOCITY_MODE_GET(flags) \
+                             (((flags) >> SBP_VEL_NED_GNSS_VELOCITY_MODE_SHIFT) \
+                             & SBP_VEL_NED_GNSS_VELOCITY_MODE_MASK)
+#define SBP_VEL_NED_GNSS_VELOCITY_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_VEL_NED_GNSS_VELOCITY_MODE_MASK)) \
+                             << (SBP_VEL_NED_GNSS_VELOCITY_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_VEL_NED_GNSS_VELOCITY_MODE_INVALID (0)
+#define SBP_VEL_NED_GNSS_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
+#define SBP_VEL_NED_GNSS_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;           /**< GPS Time of Week [ms] */
   s32 n;             /**< Velocity North coordinate [mm/s] */
@@ -570,6 +1082,21 @@ typedef struct SBP_ATTR_PACKED {
  * portion of the 3x3 covariance matrix.
  */
 #define SBP_MSG_VEL_NED_COV_GNSS       0x0232
+#define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_MASK (0x7)
+#define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_SHIFT (0u)
+#define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_GET(flags) \
+                             (((flags) >> SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_SHIFT) \
+                             & SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_MASK)
+#define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_MASK)) \
+                             << (SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_INVALID (0)
+#define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
+#define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
   s32 n;          /**< Velocity North coordinate [mm/s] */
@@ -598,6 +1125,35 @@ typedef struct SBP_ATTR_PACKED {
  * products and is not available from Piksi Multi or Duro.
  */
 #define SBP_MSG_VEL_BODY               0x0213
+#define SBP_VEL_BODY_INS_NAVIGATION_MODE_MASK (0x3)
+#define SBP_VEL_BODY_INS_NAVIGATION_MODE_SHIFT (3u)
+#define SBP_VEL_BODY_INS_NAVIGATION_MODE_GET(flags) \
+                             (((flags) >> SBP_VEL_BODY_INS_NAVIGATION_MODE_SHIFT) \
+                             & SBP_VEL_BODY_INS_NAVIGATION_MODE_MASK)
+#define SBP_VEL_BODY_INS_NAVIGATION_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_VEL_BODY_INS_NAVIGATION_MODE_MASK)) \
+                             << (SBP_VEL_BODY_INS_NAVIGATION_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_VEL_BODY_INS_NAVIGATION_MODE_NONE (0)
+#define SBP_VEL_BODY_INS_NAVIGATION_MODE_INS_USED (1)
+#define SBP_VEL_BODY_VELOCITY_MODE_MASK (0x7)
+#define SBP_VEL_BODY_VELOCITY_MODE_SHIFT (0u)
+#define SBP_VEL_BODY_VELOCITY_MODE_GET(flags) \
+                             (((flags) >> SBP_VEL_BODY_VELOCITY_MODE_SHIFT) \
+                             & SBP_VEL_BODY_VELOCITY_MODE_MASK)
+#define SBP_VEL_BODY_VELOCITY_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_VEL_BODY_VELOCITY_MODE_MASK)) \
+                             << (SBP_VEL_BODY_VELOCITY_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_VEL_BODY_VELOCITY_MODE_INVALID (0)
+#define SBP_VEL_BODY_VELOCITY_MODE_MEASURED_DOPPLER_DERIVED (1)
+#define SBP_VEL_BODY_VELOCITY_MODE_COMPUTED_DOPPLER_DERIVED (2)
+#define SBP_VEL_BODY_VELOCITY_MODE_DEAD_RECKONING (3)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
   s32 x;          /**< Velocity in x direction [mm/s] */
@@ -620,6 +1176,7 @@ typedef struct SBP_ATTR_PACKED {
  * Differential solution
  */
 #define SBP_MSG_AGE_CORRECTIONS        0x0210
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;    /**< GPS Time of Week [ms] */
   u16 age;    /**< Age of the corrections (0xFFFF indicates invalid) [deciseconds] */
@@ -643,6 +1200,7 @@ typedef struct SBP_ATTR_PACKED {
  * these messages.
  */
 #define SBP_MSG_GPS_TIME_DEP_A         0x0100
+
 typedef struct SBP_ATTR_PACKED {
   u16 wn;             /**< GPS week number [weeks] */
   u32 tow;            /**< GPS time of week rounded to the nearest millisecond [ms] */
@@ -660,6 +1218,7 @@ from -500000 to 500000)
  * precision.
  */
 #define SBP_MSG_DOPS_DEP_A             0x0206
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;     /**< GPS Time of Week [ms] */
   u16 gdop;    /**< Geometric Dilution of Precision [0.01] */
@@ -682,6 +1241,47 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_POS_ECEF_DEP_A         0x0200
+#define SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
+#define SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
+#define SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_GET(flags) \
+                             (((flags) >> SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_SHIFT) \
+                             & SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_MASK)
+#define SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_MASK)) \
+                             << (SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_NO_REPAIR (0)
+#define SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_SOLUTION_CAME_FROM_RAIM_REPAIR (1)
+#define SBP_POS_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_MASK (0x1)
+#define SBP_POS_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_SHIFT (3u)
+#define SBP_POS_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_GET(flags) \
+                             (((flags) >> SBP_POS_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_SHIFT) \
+                             & SBP_POS_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_MASK)
+#define SBP_POS_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_MASK)) \
+                             << (SBP_POS_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_RAIM_CHECK_WAS_EXPLICITLY_DISABLED_OR_UNAVAILABLE (0)
+#define SBP_POS_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_RAIM_CHECK_WAS_AVAILABLE (1)
+#define SBP_POS_ECEF_DEP_A_FIX_MODE_MASK (0x7)
+#define SBP_POS_ECEF_DEP_A_FIX_MODE_SHIFT (0u)
+#define SBP_POS_ECEF_DEP_A_FIX_MODE_GET(flags) \
+                             (((flags) >> SBP_POS_ECEF_DEP_A_FIX_MODE_SHIFT) \
+                             & SBP_POS_ECEF_DEP_A_FIX_MODE_MASK)
+#define SBP_POS_ECEF_DEP_A_FIX_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_ECEF_DEP_A_FIX_MODE_MASK)) \
+                             << (SBP_POS_ECEF_DEP_A_FIX_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_ECEF_DEP_A_FIX_MODE_SINGLE_POINT_POSITIONING (0)
+#define SBP_POS_ECEF_DEP_A_FIX_MODE_FIXED_RTK (1)
+#define SBP_POS_ECEF_DEP_A_FIX_MODE_FLOAT_RTK (2)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;         /**< GPS Time of Week [ms] */
   double x;           /**< ECEF X coordinate [m] */
@@ -707,6 +1307,60 @@ to 0.
  * matching time-of-week (tow).
  */
 #define SBP_MSG_POS_LLH_DEP_A          0x0201
+#define SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
+#define SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_SHIFT (5u)
+#define SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_GET(flags) \
+                             (((flags) >> SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_SHIFT) \
+                             & SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_MASK)
+#define SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_MASK)) \
+                             << (SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_NO_REPAIR (0)
+#define SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_SOLUTION_CAME_FROM_RAIM_REPAIR (1)
+#define SBP_POS_LLH_DEP_A_RAIM_AVAILABILITY_FLAG_MASK (0x1)
+#define SBP_POS_LLH_DEP_A_RAIM_AVAILABILITY_FLAG_SHIFT (4u)
+#define SBP_POS_LLH_DEP_A_RAIM_AVAILABILITY_FLAG_GET(flags) \
+                             (((flags) >> SBP_POS_LLH_DEP_A_RAIM_AVAILABILITY_FLAG_SHIFT) \
+                             & SBP_POS_LLH_DEP_A_RAIM_AVAILABILITY_FLAG_MASK)
+#define SBP_POS_LLH_DEP_A_RAIM_AVAILABILITY_FLAG_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_LLH_DEP_A_RAIM_AVAILABILITY_FLAG_MASK)) \
+                             << (SBP_POS_LLH_DEP_A_RAIM_AVAILABILITY_FLAG_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_LLH_DEP_A_RAIM_AVAILABILITY_FLAG_RAIM_CHECK_WAS_EXPLICITLY_DISABLED_OR_UNAVAILABLE (0)
+#define SBP_POS_LLH_DEP_A_RAIM_AVAILABILITY_FLAG_RAIM_CHECK_WAS_AVAILABLE (1)
+#define SBP_POS_LLH_DEP_A_HEIGHT_MODE_MASK (0x1)
+#define SBP_POS_LLH_DEP_A_HEIGHT_MODE_SHIFT (3u)
+#define SBP_POS_LLH_DEP_A_HEIGHT_MODE_GET(flags) \
+                             (((flags) >> SBP_POS_LLH_DEP_A_HEIGHT_MODE_SHIFT) \
+                             & SBP_POS_LLH_DEP_A_HEIGHT_MODE_MASK)
+#define SBP_POS_LLH_DEP_A_HEIGHT_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_LLH_DEP_A_HEIGHT_MODE_MASK)) \
+                             << (SBP_POS_LLH_DEP_A_HEIGHT_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_LLH_DEP_A_HEIGHT_MODE_HEIGHT_ABOVE_WGS84_ELLIPSOID (0)
+#define SBP_POS_LLH_DEP_A_HEIGHT_MODE_HEIGHT_ABOVE_MEAN_SEA_LEVEL (1)
+#define SBP_POS_LLH_DEP_A_FIX_MODE_MASK (0x7)
+#define SBP_POS_LLH_DEP_A_FIX_MODE_SHIFT (0u)
+#define SBP_POS_LLH_DEP_A_FIX_MODE_GET(flags) \
+                             (((flags) >> SBP_POS_LLH_DEP_A_FIX_MODE_SHIFT) \
+                             & SBP_POS_LLH_DEP_A_FIX_MODE_MASK)
+#define SBP_POS_LLH_DEP_A_FIX_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_LLH_DEP_A_FIX_MODE_MASK)) \
+                             << (SBP_POS_LLH_DEP_A_FIX_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_LLH_DEP_A_FIX_MODE_SINGLE_POINT_POSITIONING (0)
+#define SBP_POS_LLH_DEP_A_FIX_MODE_FIXED_RTK (1)
+#define SBP_POS_LLH_DEP_A_FIX_MODE_FLOAT_RTK (2)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;           /**< GPS Time of Week [ms] */
   double lat;           /**< Latitude [deg] */
@@ -732,6 +1386,46 @@ implemented). Defaults to 0.
  * matching time-of-week (tow).
  */
 #define SBP_MSG_BASELINE_ECEF_DEP_A    0x0202
+#define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
+#define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
+#define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_GET(flags) \
+                             (((flags) >> SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_SHIFT) \
+                             & SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_MASK)
+#define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_MASK)) \
+                             << (SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_SHIFT)));} while(0)
+                             
+
+#define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_NO_REPAIR (0)
+#define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_SOLUTION_CAME_FROM_RAIM_REPAIR (1)
+#define SBP_BASELINE_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_MASK (0x1)
+#define SBP_BASELINE_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_SHIFT (3u)
+#define SBP_BASELINE_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_GET(flags) \
+                             (((flags) >> SBP_BASELINE_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_SHIFT) \
+                             & SBP_BASELINE_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_MASK)
+#define SBP_BASELINE_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_BASELINE_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_MASK)) \
+                             << (SBP_BASELINE_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_SHIFT)));} while(0)
+                             
+
+#define SBP_BASELINE_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_RAIM_CHECK_WAS_EXPLICITLY_DISABLED_OR_UNAVAILABLE (0)
+#define SBP_BASELINE_ECEF_DEP_A_RAIM_AVAILABILITY_FLAG_RAIM_CHECK_WAS_AVAILABLE (1)
+#define SBP_BASELINE_ECEF_DEP_A_FIX_MODE_MASK (0x7)
+#define SBP_BASELINE_ECEF_DEP_A_FIX_MODE_SHIFT (0u)
+#define SBP_BASELINE_ECEF_DEP_A_FIX_MODE_GET(flags) \
+                             (((flags) >> SBP_BASELINE_ECEF_DEP_A_FIX_MODE_SHIFT) \
+                             & SBP_BASELINE_ECEF_DEP_A_FIX_MODE_MASK)
+#define SBP_BASELINE_ECEF_DEP_A_FIX_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_BASELINE_ECEF_DEP_A_FIX_MODE_MASK)) \
+                             << (SBP_BASELINE_ECEF_DEP_A_FIX_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_BASELINE_ECEF_DEP_A_FIX_MODE_FLOAT_RTK (0)
+#define SBP_BASELINE_ECEF_DEP_A_FIX_MODE_FIXED_RTK (1)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;         /**< GPS Time of Week [ms] */
   s32 x;           /**< Baseline ECEF X coordinate [mm] */
@@ -754,6 +1448,46 @@ typedef struct SBP_ATTR_PACKED {
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_BASELINE_NED_DEP_A     0x0203
+#define SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
+#define SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
+#define SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_GET(flags) \
+                             (((flags) >> SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_SHIFT) \
+                             & SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_MASK)
+#define SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_MASK)) \
+                             << (SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_SHIFT)));} while(0)
+                             
+
+#define SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_NO_REPAIR (0)
+#define SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_SOLUTION_CAME_FROM_RAIM_REPAIR (1)
+#define SBP_BASELINE_NED_DEP_A_RAIM_AVAILABILITY_FLAG_MASK (0x1)
+#define SBP_BASELINE_NED_DEP_A_RAIM_AVAILABILITY_FLAG_SHIFT (3u)
+#define SBP_BASELINE_NED_DEP_A_RAIM_AVAILABILITY_FLAG_GET(flags) \
+                             (((flags) >> SBP_BASELINE_NED_DEP_A_RAIM_AVAILABILITY_FLAG_SHIFT) \
+                             & SBP_BASELINE_NED_DEP_A_RAIM_AVAILABILITY_FLAG_MASK)
+#define SBP_BASELINE_NED_DEP_A_RAIM_AVAILABILITY_FLAG_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_BASELINE_NED_DEP_A_RAIM_AVAILABILITY_FLAG_MASK)) \
+                             << (SBP_BASELINE_NED_DEP_A_RAIM_AVAILABILITY_FLAG_SHIFT)));} while(0)
+                             
+
+#define SBP_BASELINE_NED_DEP_A_RAIM_AVAILABILITY_FLAG_RAIM_CHECK_WAS_EXPLICITLY_DISABLED_OR_UNAVAILABLE (0)
+#define SBP_BASELINE_NED_DEP_A_RAIM_AVAILABILITY_FLAG_RAIM_CHECK_WAS_AVAILABLE (1)
+#define SBP_BASELINE_NED_DEP_A_FIX_MODE_MASK (0x7)
+#define SBP_BASELINE_NED_DEP_A_FIX_MODE_SHIFT (0u)
+#define SBP_BASELINE_NED_DEP_A_FIX_MODE_GET(flags) \
+                             (((flags) >> SBP_BASELINE_NED_DEP_A_FIX_MODE_SHIFT) \
+                             & SBP_BASELINE_NED_DEP_A_FIX_MODE_MASK)
+#define SBP_BASELINE_NED_DEP_A_FIX_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_BASELINE_NED_DEP_A_FIX_MODE_MASK)) \
+                             << (SBP_BASELINE_NED_DEP_A_FIX_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_BASELINE_NED_DEP_A_FIX_MODE_FLOAT_RTK (0)
+#define SBP_BASELINE_NED_DEP_A_FIX_MODE_FIXED_RTK (1)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;           /**< GPS Time of Week [ms] */
   s32 n;             /**< Baseline North coordinate [mm] */
@@ -777,6 +1511,7 @@ implemented). Defaults to 0.
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_ECEF_DEP_A         0x0204
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;         /**< GPS Time of Week [ms] */
   s32 x;           /**< Velocity ECEF X coordinate [mm/s] */
@@ -798,6 +1533,7 @@ to 0.
  * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_NED_DEP_A          0x0205
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;           /**< GPS Time of Week [ms] */
   s32 n;             /**< Velocity North coordinate [mm/s] */
@@ -821,6 +1557,46 @@ implemented). Defaults to 0.
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_BASELINE_HEADING_DEP_A 0x0207
+#define SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
+#define SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
+#define SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_GET(flags) \
+                             (((flags) >> SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_SHIFT) \
+                             & SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_MASK)
+#define SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_MASK)) \
+                             << (SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_SHIFT)));} while(0)
+                             
+
+#define SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_NO_REPAIR (0)
+#define SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_SOLUTION_CAME_FROM_RAIM_REPAIR (1)
+#define SBP_BASELINE_HEADING_DEP_A_RAIM_AVAILABILITY_FLAG_MASK (0x1)
+#define SBP_BASELINE_HEADING_DEP_A_RAIM_AVAILABILITY_FLAG_SHIFT (3u)
+#define SBP_BASELINE_HEADING_DEP_A_RAIM_AVAILABILITY_FLAG_GET(flags) \
+                             (((flags) >> SBP_BASELINE_HEADING_DEP_A_RAIM_AVAILABILITY_FLAG_SHIFT) \
+                             & SBP_BASELINE_HEADING_DEP_A_RAIM_AVAILABILITY_FLAG_MASK)
+#define SBP_BASELINE_HEADING_DEP_A_RAIM_AVAILABILITY_FLAG_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_BASELINE_HEADING_DEP_A_RAIM_AVAILABILITY_FLAG_MASK)) \
+                             << (SBP_BASELINE_HEADING_DEP_A_RAIM_AVAILABILITY_FLAG_SHIFT)));} while(0)
+                             
+
+#define SBP_BASELINE_HEADING_DEP_A_RAIM_AVAILABILITY_FLAG_RAIM_CHECK_WAS_EXPLICITLY_DISABLED_OR_UNAVAILABLE (0)
+#define SBP_BASELINE_HEADING_DEP_A_RAIM_AVAILABILITY_FLAG_RAIM_CHECK_WAS_AVAILABLE (1)
+#define SBP_BASELINE_HEADING_DEP_A_FIX_MODE_MASK (0x7)
+#define SBP_BASELINE_HEADING_DEP_A_FIX_MODE_SHIFT (0u)
+#define SBP_BASELINE_HEADING_DEP_A_FIX_MODE_GET(flags) \
+                             (((flags) >> SBP_BASELINE_HEADING_DEP_A_FIX_MODE_SHIFT) \
+                             & SBP_BASELINE_HEADING_DEP_A_FIX_MODE_MASK)
+#define SBP_BASELINE_HEADING_DEP_A_FIX_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_BASELINE_HEADING_DEP_A_FIX_MODE_MASK)) \
+                             << (SBP_BASELINE_HEADING_DEP_A_FIX_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_BASELINE_HEADING_DEP_A_FIX_MODE_FLOAT_RTK (0)
+#define SBP_BASELINE_HEADING_DEP_A_FIX_MODE_FIXED_RTK (1)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
   u32 heading;    /**< Heading [mdeg] */
@@ -836,6 +1612,22 @@ typedef struct SBP_ATTR_PACKED {
  * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_PROTECTION_LEVEL       0x0216
+#define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK (0x7)
+#define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT (0u)
+#define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_GET(flags) \
+                             (((flags) >> SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT) \
+                             & SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK)
+#define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK)) \
+                             << (SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT)));} while(0)
+                             
+
+#define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_SAFE_STATE_PROTECTION_LEVEL_SHALL_NOT_BE_USED_FOR_SAFETY_CRITICAL_APPLICATION (0)
+#define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_TIR_LEVEL_1 (1)
+#define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_TIR_LEVEL_2 (2)
+#define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_TIR_LEVEL_3 (3)
+
 typedef struct SBP_ATTR_PACKED {
   u32 tow;       /**< GPS Time of Week [ms] */
   u16 vpl;       /**< Vertical protection level [cm] */

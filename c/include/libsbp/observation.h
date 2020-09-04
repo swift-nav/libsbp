@@ -33,6 +33,7 @@ SBP_PACK_START
  *
 * Header of a GNSS observation message.
  */
+
 typedef struct SBP_ATTR_PACKED {
   sbp_gps_time_t t;        /**< GNSS time of this observation */
   u8 n_obs;    /**< Total number of observations. First nibble is the size
@@ -49,6 +50,7 @@ counter (ith packet of n)
  * doppler and 8-bits of fractional doppler. This doppler is defined
  * as positive for approaching satellites.
  */
+
 typedef struct SBP_ATTR_PACKED {
   s16 i;    /**< Doppler whole Hz [Hz] */
   u8 f;    /**< Doppler fractional part [Hz / 256] */
@@ -65,6 +67,7 @@ typedef struct SBP_ATTR_PACKED {
  * or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
  * peformed.
  */
+
 typedef struct SBP_ATTR_PACKED {
   u32 P;        /**< Pseudorange observation [2 cm] */
   carrier_phase_t L;        /**< Carrier phase observation with typical sign convention. [cycles] */
@@ -89,6 +92,7 @@ estimate for the signal is valid.
  *
  * Pseudorange and carrier phase network corrections for a satellite signal.
  */
+
 typedef struct SBP_ATTR_PACKED {
   u32 P;            /**< Pseudorange observation [2 cm] */
   carrier_phase_t L;            /**< Carrier phase observation with typical sign convention. [cycles] */
@@ -119,6 +123,7 @@ from 0 to 15 and the most significant nibble is reserved for future use.
  * with typical RTCMv3 GNSS observations.
  */
 #define SBP_MSG_OBS                      0x004A
+
 typedef struct SBP_ATTR_PACKED {
   observation_header_t header;    /**< Header of a GPS observation message */
   packed_obs_content_t obs[0];    /**< Pseudorange and carrier phase observation for a
@@ -136,6 +141,7 @@ satellite being tracked.
  * error in the pseudo-absolute position output.
  */
 #define SBP_MSG_BASE_POS_LLH             0x0044
+
 typedef struct SBP_ATTR_PACKED {
   double lat;       /**< Latitude [deg] */
   double lon;       /**< Longitude [deg] */
@@ -153,11 +159,13 @@ typedef struct SBP_ATTR_PACKED {
  * pseudo-absolute position output.
  */
 #define SBP_MSG_BASE_POS_ECEF            0x0048
+
 typedef struct SBP_ATTR_PACKED {
   double x;    /**< ECEF X coodinate [m] */
   double y;    /**< ECEF Y coordinate [m] */
   double z;    /**< ECEF Z coordinate [m] */
 } msg_base_pos_ecef_t;
+
 
 
 typedef struct SBP_ATTR_PACKED {
@@ -174,6 +182,7 @@ GLO: 0 = valid, non-zero = invalid
 } ephemeris_common_content_t;
 
 
+
 typedef struct SBP_ATTR_PACKED {
   sbp_gnss_signal_t sid;             /**< GNSS signal identifier (16 bit) */
   gps_time_sec_t toe;             /**< Time of Ephemerides */
@@ -185,6 +194,7 @@ GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
 Others: 0 = valid, non-zero = invalid
  */
 } ephemeris_common_content_dep_b_t;
+
 
 
 typedef struct SBP_ATTR_PACKED {
@@ -210,6 +220,7 @@ GLO: 0 = valid, non-zero = invalid
  * 20-III) for more details.
  */
 #define SBP_MSG_EPHEMERIS_GPS_DEP_E      0x0081
+
 typedef struct SBP_ATTR_PACKED {
   ephemeris_common_content_dep_a_t common;      /**< Values common for all ephemeris types */
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
@@ -243,6 +254,7 @@ typedef struct SBP_ATTR_PACKED {
  * ephemeris message using floats for size reduction.
  */
 #define SBP_MSG_EPHEMERIS_GPS_DEP_F      0x0086
+
 typedef struct SBP_ATTR_PACKED {
   ephemeris_common_content_dep_b_t common;      /**< Values common for all ephemeris types */
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
@@ -279,6 +291,7 @@ typedef struct SBP_ATTR_PACKED {
  * 20-III) for more details.
  */
 #define SBP_MSG_EPHEMERIS_GPS            0x008A
+
 typedef struct SBP_ATTR_PACKED {
   ephemeris_common_content_t common;      /**< Values common for all ephemeris types */
   float tgd;         /**< Group delay differential between L1 and L2 [s] */
@@ -313,6 +326,7 @@ typedef struct SBP_ATTR_PACKED {
  * velocity, and clock offset.
  */
 #define SBP_MSG_EPHEMERIS_QZSS           0x008E
+
 typedef struct SBP_ATTR_PACKED {
   ephemeris_common_content_t common;      /**< Values common for all ephemeris types */
   float tgd;         /**< Group delay differential between L1 and L2 [s] */
@@ -348,6 +362,7 @@ typedef struct SBP_ATTR_PACKED {
  * Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
  */
 #define SBP_MSG_EPHEMERIS_BDS            0x0089
+
 typedef struct SBP_ATTR_PACKED {
   ephemeris_common_content_t common;      /**< Values common for all ephemeris types */
   float tgd1;        /**< Group delay differential for B1 [s] */
@@ -390,6 +405,7 @@ IODE = mod (t_oc / 720, 240)
  * an ephemeris message with explicit source of NAV data.
  */
 #define SBP_MSG_EPHEMERIS_GAL_DEP_A      0x0095
+
 typedef struct SBP_ATTR_PACKED {
   ephemeris_common_content_t common;       /**< Values common for all ephemeris types */
   float bgd_e1e5a;    /**< E1-E5a Broadcast Group Delay [s] */
@@ -426,6 +442,7 @@ typedef struct SBP_ATTR_PACKED {
  * OS SIS ICD, Issue 1.3, December 2016 for more details.
  */
 #define SBP_MSG_EPHEMERIS_GAL            0x008D
+
 typedef struct SBP_ATTR_PACKED {
   ephemeris_common_content_t common;       /**< Values common for all ephemeris types */
   float bgd_e1e5a;    /**< E1-E5a Broadcast Group Delay [s] */
@@ -456,6 +473,7 @@ typedef struct SBP_ATTR_PACKED {
 
 
 #define SBP_MSG_EPHEMERIS_SBAS_DEP_A     0x0082
+
 typedef struct SBP_ATTR_PACKED {
   ephemeris_common_content_dep_a_t common;    /**< Values common for all ephemeris types */
   double pos[3];    /**< Position of the GEO at time toe [m] */
@@ -475,6 +493,7 @@ typedef struct SBP_ATTR_PACKED {
  * for more details.
  */
 #define SBP_MSG_EPHEMERIS_GLO_DEP_A      0x0083
+
 typedef struct SBP_ATTR_PACKED {
   ephemeris_common_content_dep_a_t common;    /**< Values common for all ephemeris types */
   double gamma;     /**< Relative deviation of predicted carrier frequency from nominal */
@@ -491,6 +510,7 @@ typedef struct SBP_ATTR_PACKED {
  * ephemeris message using floats for size reduction.
  */
 #define SBP_MSG_EPHEMERIS_SBAS_DEP_B     0x0084
+
 typedef struct SBP_ATTR_PACKED {
   ephemeris_common_content_dep_b_t common;    /**< Values common for all ephemeris types */
   double pos[3];    /**< Position of the GEO at time toe [m] */
@@ -502,6 +522,7 @@ typedef struct SBP_ATTR_PACKED {
 
 
 #define SBP_MSG_EPHEMERIS_SBAS           0x008C
+
 typedef struct SBP_ATTR_PACKED {
   ephemeris_common_content_t common;    /**< Values common for all ephemeris types */
   double pos[3];    /**< Position of the GEO at time toe [m] */
@@ -521,6 +542,7 @@ typedef struct SBP_ATTR_PACKED {
  * for more details.
  */
 #define SBP_MSG_EPHEMERIS_GLO_DEP_B      0x0085
+
 typedef struct SBP_ATTR_PACKED {
   ephemeris_common_content_dep_b_t common;    /**< Values common for all ephemeris types */
   double gamma;     /**< Relative deviation of predicted carrier frequency from nominal */
@@ -540,6 +562,7 @@ typedef struct SBP_ATTR_PACKED {
  * for more details.
  */
 #define SBP_MSG_EPHEMERIS_GLO_DEP_C      0x0087
+
 typedef struct SBP_ATTR_PACKED {
   ephemeris_common_content_dep_b_t common;    /**< Values common for all ephemeris types */
   double gamma;     /**< Relative deviation of predicted carrier frequency from nominal */
@@ -558,6 +581,7 @@ typedef struct SBP_ATTR_PACKED {
  * ephemeris message using floats for size reduction.
  */
 #define SBP_MSG_EPHEMERIS_GLO_DEP_D      0x0088
+
 typedef struct SBP_ATTR_PACKED {
   ephemeris_common_content_dep_b_t common;    /**< Values common for all ephemeris types */
   double gamma;     /**< Relative deviation of predicted carrier frequency from nominal */
@@ -580,6 +604,7 @@ typedef struct SBP_ATTR_PACKED {
  * for more details.
  */
 #define SBP_MSG_EPHEMERIS_GLO            0x008B
+
 typedef struct SBP_ATTR_PACKED {
   ephemeris_common_content_t common;    /**< Values common for all ephemeris types */
   float gamma;     /**< Relative deviation of predicted carrier frequency from nominal */
@@ -602,6 +627,7 @@ typedef struct SBP_ATTR_PACKED {
  * 20-III) for more details.
  */
 #define SBP_MSG_EPHEMERIS_DEP_D          0x0080
+
 typedef struct SBP_ATTR_PACKED {
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
   double c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
@@ -640,6 +666,7 @@ typedef struct SBP_ATTR_PACKED {
 * Deprecated.
  */
 #define SBP_MSG_EPHEMERIS_DEP_A          0x001A
+
 typedef struct SBP_ATTR_PACKED {
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
   double c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
@@ -675,6 +702,7 @@ typedef struct SBP_ATTR_PACKED {
 * Deprecated.
  */
 #define SBP_MSG_EPHEMERIS_DEP_B          0x0046
+
 typedef struct SBP_ATTR_PACKED {
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
   double c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
@@ -715,6 +743,7 @@ typedef struct SBP_ATTR_PACKED {
  * 20-III) for more details.
  */
 #define SBP_MSG_EPHEMERIS_DEP_C          0x0047
+
 typedef struct SBP_ATTR_PACKED {
   double tgd;         /**< Group delay differential between L1 and L2 [s] */
   double c_rs;        /**< Amplitude of the sine harmonic correction term to the orbit radius [m] */
@@ -752,6 +781,7 @@ typedef struct SBP_ATTR_PACKED {
  *
 * Header of a GPS observation message.
  */
+
 typedef struct SBP_ATTR_PACKED {
   gps_time_dep_t t;        /**< GPS time of this observation */
   u8 n_obs;    /**< Total number of observations. First nibble is the size
@@ -769,6 +799,7 @@ counter (ith packet of n)
  * sign convention than a typical GPS receiver and the phase has
  * the opposite sign as the pseudorange.
  */
+
 typedef struct SBP_ATTR_PACKED {
   s32 i;    /**< Carrier phase whole cycles [cycles] */
   u8 f;    /**< Carrier phase fractional part [cycles / 256] */
@@ -779,6 +810,7 @@ typedef struct SBP_ATTR_PACKED {
  *
 * Deprecated.
  */
+
 typedef struct SBP_ATTR_PACKED {
   u32 P;       /**< Pseudorange observation [cm] */
   carrier_phase_dep_a_t L;       /**< Carrier phase observation with opposite sign from typical convention */
@@ -796,6 +828,7 @@ carrier phase ambiguity may have changed.
  * Pseudorange and carrier phase observation for a satellite being
  * tracked.  Pseudoranges are referenced to a nominal pseudorange.
  */
+
 typedef struct SBP_ATTR_PACKED {
   u32 P;       /**< Pseudorange observation [cm] */
   carrier_phase_dep_a_t L;       /**< Carrier phase observation with opposite sign from typical convention. */
@@ -814,6 +847,7 @@ carrier phase ambiguity may have changed.
  * tracked. The observations are be interoperable with 3rd party
  * receivers and conform with typical RTCMv3 GNSS observations.
  */
+
 typedef struct SBP_ATTR_PACKED {
   u32 P;       /**< Pseudorange observation [2 cm] */
   carrier_phase_t L;       /**< Carrier phase observation with typical sign convention. [cycles] */
@@ -831,6 +865,7 @@ carrier phase ambiguity may have changed.
 * Deprecated.
  */
 #define SBP_MSG_OBS_DEP_A                0x0045
+
 typedef struct SBP_ATTR_PACKED {
   observation_header_dep_t header;    /**< Header of a GPS observation message */
   packed_obs_content_dep_a_t obs[0];    /**< Pseudorange and carrier phase observation for a
@@ -849,6 +884,7 @@ satellite being tracked.
  * observations.
  */
 #define SBP_MSG_OBS_DEP_B                0x0043
+
 typedef struct SBP_ATTR_PACKED {
   observation_header_dep_t header;    /**< Header of a GPS observation message */
   packed_obs_content_dep_b_t obs[0];    /**< Pseudorange and carrier phase observation for a
@@ -868,6 +904,7 @@ satellite being tracked.
  * with typical RTCMv3 GNSS observations.
  */
 #define SBP_MSG_OBS_DEP_C                0x0049
+
 typedef struct SBP_ATTR_PACKED {
   observation_header_dep_t header;    /**< Header of a GPS observation message */
   packed_obs_content_dep_c_t obs[0];    /**< Pseudorange and carrier phase observation for a
@@ -883,6 +920,7 @@ satellite being tracked.
  * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
  */
 #define SBP_MSG_IONO                     0x0090
+
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t t_nmct;    /**< Navigation Message Correction Table Valitidy Time */
   double a0;       
@@ -901,10 +939,12 @@ typedef struct SBP_ATTR_PACKED {
  * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
  */
 #define SBP_MSG_SV_CONFIGURATION_GPS_DEP 0x0091
+
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t t_nmct;      /**< Navigation Message Correction Table Valitidy Time */
   u32 l2c_mask;    /**< L2C capability mask, SV32 bit being MSB, SV1 bit being LSB */
 } msg_sv_configuration_gps_dep_t;
+
 
 
 typedef struct SBP_ATTR_PACKED {
@@ -931,6 +971,7 @@ https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
 
 
 #define SBP_MSG_GNSS_CAPB                0x0096
+
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t t_nmct;    /**< Navigation Message Correction Table Validity Time */
   gnss_capb_t gc;        /**< GNSS capabilities masks */
@@ -942,6 +983,7 @@ typedef struct SBP_ATTR_PACKED {
 * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
  */
 #define SBP_MSG_GROUP_DELAY_DEP_A        0x0092
+
 typedef struct SBP_ATTR_PACKED {
   gps_time_dep_t t_op;        /**< Data Predict Time of Week */
   u8 prn;         /**< Satellite number */
@@ -960,6 +1002,7 @@ LSB indicating tgd validity etc.
 * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
  */
 #define SBP_MSG_GROUP_DELAY_DEP_B        0x0093
+
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t t_op;        /**< Data Predict Time of Week */
   gnss_signal_dep_t sid;         /**< GNSS signal identifier */
@@ -978,6 +1021,7 @@ LSB indicating tgd validity etc.
 * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
  */
 #define SBP_MSG_GROUP_DELAY              0x0094
+
 typedef struct SBP_ATTR_PACKED {
   gps_time_sec_t t_op;        /**< Data Predict Time of Week */
   sbp_gnss_signal_t sid;         /**< GNSS signal identifier */
@@ -989,6 +1033,7 @@ LSB indicating tgd validity etc.
   s16 isc_l1ca;   
   s16 isc_l2c;    
 } msg_group_delay_t;
+
 
 
 typedef struct SBP_ATTR_PACKED {
@@ -1014,6 +1059,7 @@ Satellite health status for GLO:
     and suitable for navigation.
  */
 } almanac_common_content_t;
+
 
 
 typedef struct SBP_ATTR_PACKED {
@@ -1049,6 +1095,7 @@ Satellite health status for GLO:
  * (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
  */
 #define SBP_MSG_ALMANAC_GPS_DEP          0x0070
+
 typedef struct SBP_ATTR_PACKED {
   almanac_common_content_dep_t common;      /**< Values common for all almanac types */
   double m0;          /**< Mean anomaly at reference time [rad] */
@@ -1071,6 +1118,7 @@ typedef struct SBP_ATTR_PACKED {
  * (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
  */
 #define SBP_MSG_ALMANAC_GPS              0x0072
+
 typedef struct SBP_ATTR_PACKED {
   almanac_common_content_t common;      /**< Values common for all almanac types */
   double m0;          /**< Mean anomaly at reference time [rad] */
@@ -1093,6 +1141,7 @@ typedef struct SBP_ATTR_PACKED {
  * almanac" for details.
  */
 #define SBP_MSG_ALMANAC_GLO_DEP          0x0071
+
 typedef struct SBP_ATTR_PACKED {
   almanac_common_content_dep_t common;         /**< Values common for all almanac types */
   double lambda_na;      /**< Longitude of the first ascending node of the orbit in PZ-90.02
@@ -1115,6 +1164,7 @@ coordinate system
  * almanac" for details.
  */
 #define SBP_MSG_ALMANAC_GLO              0x0073
+
 typedef struct SBP_ATTR_PACKED {
   almanac_common_content_t common;         /**< Values common for all almanac types */
   double lambda_na;      /**< Longitude of the first ascending node of the orbit in PZ-90.02
@@ -1137,6 +1187,7 @@ coordinate system
  * manufacturers)
  */
 #define SBP_MSG_GLO_BIASES               0x0075
+
 typedef struct SBP_ATTR_PACKED {
   u8 mask;         /**< GLONASS FDMA signals mask [boolean] */
   s16 l1ca_bias;    /**< GLONASS L1 C/A Code-Phase Bias [m * 0.02] */
@@ -1150,6 +1201,7 @@ typedef struct SBP_ATTR_PACKED {
  *
 * Satellite azimuth and elevation.
  */
+
 typedef struct SBP_ATTR_PACKED {
   sbp_gnss_signal_t sid;    /**< GNSS signal identifier */
   u8 az;     /**< Azimuth angle (range 0..179) [deg * 2] */
@@ -1163,6 +1215,7 @@ typedef struct SBP_ATTR_PACKED {
  * that the device does have ephemeris or almanac for.
  */
 #define SBP_MSG_SV_AZ_EL                 0x0097
+
 typedef struct SBP_ATTR_PACKED {
   sv_az_el_t azel[0]; /**< Azimuth and elevation per satellite */
 } msg_sv_az_el_t;
@@ -1173,6 +1226,7 @@ typedef struct SBP_ATTR_PACKED {
  * The OSR message contains network corrections in an observation-like format
  */
 #define SBP_MSG_OSR                      0x0640
+
 typedef struct SBP_ATTR_PACKED {
   observation_header_t header;    /**< Header of a GPS observation message */
   packed_osr_content_t obs[0];    /**< Network correction for a

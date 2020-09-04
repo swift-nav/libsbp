@@ -47,6 +47,7 @@ SBP_PACK_START
  * to this message when it is received from sender ID 0x42.
  */
 #define SBP_MSG_FILEIO_READ_REQ      0x00A8
+
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;      /**< Read sequence number */
   u32 offset;        /**< File offset [bytes] */
@@ -64,6 +65,7 @@ typedef struct SBP_ATTR_PACKED {
  * preserved from the request.
  */
 #define SBP_MSG_FILEIO_READ_RESP     0x00A3
+
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Read sequence number */
   u8 contents[0]; /**< Contents of read file */
@@ -84,6 +86,7 @@ typedef struct SBP_ATTR_PACKED {
  * from sender ID 0x42.
  */
 #define SBP_MSG_FILEIO_READ_DIR_REQ  0x00A9
+
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Read sequence number */
   u32 offset;      /**< The offset to skip the first n elements of the file list
@@ -102,6 +105,7 @@ typedef struct SBP_ATTR_PACKED {
  * the response is preserved from the request.
  */
 #define SBP_MSG_FILEIO_READ_DIR_RESP 0x00AA
+
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Read sequence number */
   u8 contents[0]; /**< Contents of read directory */
@@ -116,6 +120,7 @@ typedef struct SBP_ATTR_PACKED {
  * process this message when it is received from sender ID 0x42.
  */
 #define SBP_MSG_FILEIO_REMOVE        0x00AC
+
 typedef struct SBP_ATTR_PACKED {
   char filename[0]; /**< Name of the file to delete */
 } msg_fileio_remove_t;
@@ -133,6 +138,7 @@ typedef struct SBP_ATTR_PACKED {
  * 0x42.
  */
 #define SBP_MSG_FILEIO_WRITE_REQ     0x00AD
+
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Write sequence number */
   u32 offset;      /**< Offset into the file at which to start writing in bytes [bytes] */
@@ -150,6 +156,7 @@ typedef struct SBP_ATTR_PACKED {
  * request.
  */
 #define SBP_MSG_FILEIO_WRITE_RESP    0x00AB
+
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Write sequence number */
 } msg_fileio_write_resp_t;
@@ -163,6 +170,7 @@ typedef struct SBP_ATTR_PACKED {
  * that can be in-flight during read or write operations.
  */
 #define SBP_MSG_FILEIO_CONFIG_REQ    0x1001
+
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Advice sequence number */
 } msg_fileio_config_req_t;
@@ -177,6 +185,7 @@ typedef struct SBP_ATTR_PACKED {
  * that can be in-flight during read or write operations.
  */
 #define SBP_MSG_FILEIO_CONFIG_RESP   0x1002
+
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;          /**< Advice sequence number */
   u32 window_size;       /**< The number of SBP packets in the data in-flight window */
