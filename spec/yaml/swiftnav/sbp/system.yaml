@@ -161,10 +161,10 @@ definitions:
               - 11-13:
                   desc: Motion State
                   values:
-                    - 0: Unknown or Init
-                    - 1: Arbitrary Motion
-                    - 2: Straight Motion
-                    - 3: Stationary
+                      - 0: Unknown or Init
+                      - 1: Arbitrary Motion
+                      - 2: Straight Motion
+                      - 3: Stationary
               - 10:
                   desc: Odometry Synch
                   values:
