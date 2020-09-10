@@ -167,7 +167,7 @@ public class SBPMessage {
         }
 
         public int[] getArrayofS16() {
-            return getArrayofS16(buf.remaining());
+            return getArrayofS16(buf.remaining() / 2);
         }
         public int[] getArrayofS16(int n) {
             int[] ret = new int[n];
@@ -177,7 +177,7 @@ public class SBPMessage {
         }
 
         public int[] getArrayofU16() {
-            return getArrayofU16(buf.remaining());
+            return getArrayofU16(buf.remaining() / 2);
         }
         public int[] getArrayofU16(int n) {
             int[] ret = new int[n];
@@ -187,7 +187,7 @@ public class SBPMessage {
         }
 
         public float[] getArrayofFloat() {
-            return getArrayofFloat(buf.remaining());
+            return getArrayofFloat(buf.remaining() / Float.BYTES);
         }
         public float[] getArrayofFloat(int n) {
             float [] ret = new float[n];
@@ -197,7 +197,7 @@ public class SBPMessage {
         }
 
         public double[] getArrayofDouble() {
-            return getArrayofDouble(buf.remaining());
+            return getArrayofDouble(buf.remaining() / Double.BYTES);
         }
         public double[] getArrayofDouble(int n) {
             double [] ret = new double[n];
