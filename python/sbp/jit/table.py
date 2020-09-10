@@ -35,6 +35,7 @@ from sbp.jit import vehicle as vehicle
 from sbp.jit import orientation as orientation
 from sbp.jit import sbas as sbas
 from sbp.jit import ssr as ssr
+from sbp.jit import msg as msg
 
 
 _SBP_TABLE = dict(list(acq.msg_classes.items())
@@ -85,4 +86,4 @@ def dispatch(msg_type, table=_SBP_TABLE):
     SBP message with a parsed payload.
 
     """
-    return table[msg_type]
+    return table.get(msg_type, msg.SBP)
