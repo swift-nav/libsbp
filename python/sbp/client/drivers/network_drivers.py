@@ -1,4 +1,4 @@
-# Copyright (C) 2015 Swift Navigation Inc.
+#https://github.com/swift-nav/libsbp/pull/845/commits/e0686bc2bef4792e788a9a5d89704a8e7198a8f9 Copyright (C) 2015 Swift Navigation Inc.
 # Contact: Bhaskar Mookerji <mookerji@swiftnav.com>
 #
 # This source is subject to the license found in the file 'LICENSE' which must
@@ -112,7 +112,7 @@ class TCPDriver(BaseDriver):
         """
 
         def read():
-            self.handle.recv(size)
+            return self.handle.recv(size)
 
         def validate_data(data):
             if not data:
@@ -137,6 +137,7 @@ class TCPDriver(BaseDriver):
             return self.handle.sendall(s)
         try:
             self._write_lock.acquire()
-            return self._perform_io(write)
+            count = self._perform_io(write)
         finally:
             self._write_lock.release()
+        return count
