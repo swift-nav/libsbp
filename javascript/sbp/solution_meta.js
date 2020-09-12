@@ -74,7 +74,7 @@ SolutionInputType.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites, as per last available solution from Starling GNSS engine
  * @field age_corrections number (unsigned 16-bit int, 2 bytes) Age of the corrections (0xFFFF indicates invalid), as per last available
  *   AGE_CORRECTIONS from Starling GNSS engine
- * @field alignment_status number (unsigned 8-bit int, 1 byte) Bits for reason why it cannot align (yet)
+ * @field alignment_status number (unsigned 8-bit int, 1 byte) State of alignment and the status and receipt of the alignment inputs
  * @field last_used_gnss_pos_tow number (unsigned 32-bit int, 4 bytes) Tow of last-used GNSS position measurement
  * @field last_used_gnss_vel_tow number (unsigned 32-bit int, 4 bytes) Tow of last-used GNSS velocity measurement
  * @field sol_in array Array of Metadata describing the sensors potentially involved in the solution.
@@ -118,12 +118,10 @@ MsgSolnMeta.prototype.fieldSpec.push(['last_used_gnss_vel_tow', 'writeUInt32LE',
 MsgSolnMeta.prototype.fieldSpec.push(['sol_in', 'array', SolutionInputType.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
- * SBP class for message GNSSInputType (0xFFE7).
+ * SBP class for message fragment GNSSInputType
  *
  * Metadata around the GNSS sensors involved in the fuzed solution. Accessible
- * through sol_in[N].flags
- * in a MSG_SOLN_META. Note: Just to build descriptive tables in documentation and
- * not actually used.
+ * through sol_in[N].flags in a MSG_SOLN_META.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field flags number (unsigned 8-bit int, 1 byte) flags that store all relevant info specific to this sensor type.
@@ -139,7 +137,6 @@ var GNSSInputType = function (sbp, fields) {
 };
 GNSSInputType.prototype = Object.create(SBP.prototype);
 GNSSInputType.prototype.messageType = "GNSSInputType";
-GNSSInputType.prototype.msg_type = 0xFFE7;
 GNSSInputType.prototype.constructor = GNSSInputType;
 GNSSInputType.prototype.parser = new Parser()
   .endianess('little')
@@ -148,15 +145,13 @@ GNSSInputType.prototype.fieldSpec = [];
 GNSSInputType.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 /**
- * SBP class for message IMUInputType (0xFFE8).
+ * SBP class for message fragment IMUInputType
  *
  * Metadata around the IMU sensors involved in the fuzed solution. Accessible
- * through sol_in[N].flags
- * in a MSG_SOLN_META. Note: Just to build descriptive tables in documentation and
- * not actually used.
+ * through sol_in[N].flags in a MSG_SOLN_META.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field flags number (unsigned 8-bit int, 1 byte) flags that store all relevant info specific to this sensor type.
+ * @field flags number (unsigned 8-bit int, 1 byte) Instrument time, grade, and architecture for a sensor.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -169,7 +164,6 @@ var IMUInputType = function (sbp, fields) {
 };
 IMUInputType.prototype = Object.create(SBP.prototype);
 IMUInputType.prototype.messageType = "IMUInputType";
-IMUInputType.prototype.msg_type = 0xFFE8;
 IMUInputType.prototype.constructor = IMUInputType;
 IMUInputType.prototype.parser = new Parser()
   .endianess('little')
@@ -178,15 +172,13 @@ IMUInputType.prototype.fieldSpec = [];
 IMUInputType.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 /**
- * SBP class for message OdoInputType (0xFFE9).
+ * SBP class for message fragment OdoInputType
  *
  * Metadata around the Odometry sensors involved in the fuzed solution. Accessible
- * through sol_in[N].flags
- * in a MSG_SOLN_META. Note: Just to build descriptive tables in documentation and
- * not actually used.
+ * through sol_in[N].flags in a MSG_SOLN_META.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field flags number (unsigned 8-bit int, 1 byte) flags that store all relevant info specific to this sensor type.
+ * @field flags number (unsigned 8-bit int, 1 byte) Instrument ODO rate, grade, and quality.
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
@@ -199,7 +191,6 @@ var OdoInputType = function (sbp, fields) {
 };
 OdoInputType.prototype = Object.create(SBP.prototype);
 OdoInputType.prototype.messageType = "OdoInputType";
-OdoInputType.prototype.msg_type = 0xFFE9;
 OdoInputType.prototype.constructor = OdoInputType;
 OdoInputType.prototype.parser = new Parser()
   .endianess('little')
@@ -211,10 +202,7 @@ module.exports = {
   SolutionInputType: SolutionInputType,
   0xFF0F: MsgSolnMeta,
   MsgSolnMeta: MsgSolnMeta,
-  0xFFE7: GNSSInputType,
   GNSSInputType: GNSSInputType,
-  0xFFE8: IMUInputType,
   IMUInputType: IMUInputType,
-  0xFFE9: OdoInputType,
   OdoInputType: OdoInputType,
 }
