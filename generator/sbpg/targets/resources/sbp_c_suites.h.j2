@@ -17,6 +17,7 @@
 
 Suite* edc_suite(void);
 Suite* sbp_suite(void);
+Suite* bitfield_macros_suite(void);
 
 ((*- for s in package_suites *))
 Suite* (((s.suite_name)))_suite(void);

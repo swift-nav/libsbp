@@ -256,12 +256,15 @@ make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
 ## Building on Windows
 
 In order to build on Windows, first install the necessary compilers per the
-instructions [on this Microsoft developer blog][1] install the 64-bit Python
-3.7 version of [Conda][2].  You'll also need to install [Chocolatey][3].
+instructions [on this Microsoft developer blog][1] (shortcut: install 
+[Microsoft Visual Studio Community 2019][msvsc2019] and select the 
+"native Python development" option) then install the 64-bit Python 3.7 
+version of [Conda][2].  You'll also need to install [Chocolatey][3].
 
 [1]: https://devblogs.microsoft.com/python/unable-to-find-vcvarsall-bat/
 [2]: https://docs.conda.io/en/latest/miniconda.html
 [3]: https://chocolatey.org/docs/installation
+[msvsc2019]: https://www.microsoft.com/en-us/download/details.aspx?id=48159
 
 For Chocolatey, the following packages are recommended:
 - make

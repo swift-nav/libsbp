@@ -72,6 +72,7 @@ SBP_PACK_START
  * "solution\0soln_freq\010\0".
  */
 #define SBP_MSG_SETTINGS_WRITE              0x00A0
+
 typedef struct SBP_ATTR_PACKED {
   char setting[0]; /**< A NULL-terminated and NULL-delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE\0"
@@ -90,6 +91,25 @@ typedef struct SBP_ATTR_PACKED {
  * "solution\0soln_freq\010\0".
  */
 #define SBP_MSG_SETTINGS_WRITE_RESP         0x00AF
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK (0x3)
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT (0u)
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_GET(flags) \
+                             (((flags) >> SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT) \
+                             & SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK)
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK)) \
+                             << (SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT)));} while(0)
+                             
+
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_ACCEPTED_VALUE_UPDATED (0)
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_VALUE_UNPARSABLE_OR_OUT_OF_RANGE (1)
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_REQUESTED_SETTING_DOES_NOT_EXIST (2)
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_SETTING_NAME_COULD_NOT_BE_PARSED (3)
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_SETTING_IS_READ_ONLY (4)
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_MODIFICATION_IS_TEMPORARILY_DISABLED (5)
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_UNSPECIFIED_ERROR (6)
+
 typedef struct SBP_ATTR_PACKED {
   u8 status;     /**< Write status */
   char setting[0]; /**< A NULL-terminated and delimited string with contents
@@ -110,6 +130,7 @@ typedef struct SBP_ATTR_PACKED {
  * message (msg_id 0x00A5).
  */
 #define SBP_MSG_SETTINGS_READ_REQ           0x00A4
+
 typedef struct SBP_ATTR_PACKED {
   char setting[0]; /**< A NULL-terminated and NULL-delimited string with contents
 "SECTION_SETTING\0SETTING\0"
@@ -128,6 +149,7 @@ typedef struct SBP_ATTR_PACKED {
  * "solution\0soln_freq\010\0".
  */
 #define SBP_MSG_SETTINGS_READ_RESP          0x00A5
+
 typedef struct SBP_ATTR_PACKED {
   char setting[0]; /**< A NULL-terminated and NULL-delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE\0"
@@ -143,6 +165,7 @@ typedef struct SBP_ATTR_PACKED {
  * "MSG_SETTINGS_READ_BY_INDEX_RESP".
  */
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_REQ  0x00A2
+
 typedef struct SBP_ATTR_PACKED {
   u16 index;    /**< An index into the device settings, with values ranging from
 0 to length(settings)
@@ -164,6 +187,7 @@ typedef struct SBP_ATTR_PACKED {
  * the device is "simulator\0enabled\0True\0enum:True,False\0"
  */
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_RESP 0x00A7
+
 typedef struct SBP_ATTR_PACKED {
   u16 index;      /**< An index into the device settings, with values ranging from
 0 to length(settings)
@@ -188,6 +212,7 @@ typedef struct SBP_ATTR_PACKED {
  * for this setting to set the initial value.
  */
 #define SBP_MSG_SETTINGS_REGISTER           0x00AE
+
 typedef struct SBP_ATTR_PACKED {
   char setting[0]; /**< A NULL-terminated and delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE".
@@ -203,6 +228,22 @@ typedef struct SBP_ATTR_PACKED {
  * and had a different value.
  */
 #define SBP_MSG_SETTINGS_REGISTER_RESP      0x01AF
+#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK (0x3)
+#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT (0u)
+#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_GET(flags) \
+                             (((flags) >> SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT) \
+                             & SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK)
+#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK)) \
+                             << (SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT)));} while(0)
+                             
+
+#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_ACCEPTED_REQUESTED_DEFAULT_VALUE_RETURNED (0)
+#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_ACCEPTED_SETTING_FOUND_IN_PERMANENT_STORAGE_VALUE_FROM_STORAGE_RETURNED (1)
+#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_REJECTED_SETTING_ALREADY_REGISTERED_VALUE_FROM_MEMORY_RETURNED (2)
+#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_REJECTED_MALFORMED_MESSAGE (3)
+
 typedef struct SBP_ATTR_PACKED {
   u8 status;     /**< Register status */
   char setting[0]; /**< A NULL-terminated and delimited string with contents

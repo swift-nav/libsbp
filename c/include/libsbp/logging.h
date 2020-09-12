@@ -35,6 +35,26 @@ SBP_PACK_START
  * ERROR, WARNING, DEBUG, INFO logging levels.
  */
 #define SBP_MSG_LOG       0x0401
+#define SBP_LOG_LOGGING_LEVEL_MASK (0x7)
+#define SBP_LOG_LOGGING_LEVEL_SHIFT (0u)
+#define SBP_LOG_LOGGING_LEVEL_GET(flags) \
+                             (((flags) >> SBP_LOG_LOGGING_LEVEL_SHIFT) \
+                             & SBP_LOG_LOGGING_LEVEL_MASK)
+#define SBP_LOG_LOGGING_LEVEL_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_LOG_LOGGING_LEVEL_MASK)) \
+                             << (SBP_LOG_LOGGING_LEVEL_SHIFT)));} while(0)
+                             
+
+#define SBP_LOG_LOGGING_LEVEL_EMERG (0)
+#define SBP_LOG_LOGGING_LEVEL_ALERT (1)
+#define SBP_LOG_LOGGING_LEVEL_CRIT (2)
+#define SBP_LOG_LOGGING_LEVEL_ERROR (3)
+#define SBP_LOG_LOGGING_LEVEL_WARN (4)
+#define SBP_LOG_LOGGING_LEVEL_NOTICE (5)
+#define SBP_LOG_LOGGING_LEVEL_INFO (6)
+#define SBP_LOG_LOGGING_LEVEL_DEBUG (7)
+
 typedef struct SBP_ATTR_PACKED {
   u8 level;    /**< Logging level */
   char text[0];  /**< Human-readable string */
@@ -52,6 +72,7 @@ typedef struct SBP_ATTR_PACKED {
  * Protocol 0 represents SBP and the remaining values are implementation defined.
  */
 #define SBP_MSG_FWD       0x0402
+
 typedef struct SBP_ATTR_PACKED {
   u8 source;         /**< source identifier */
   u8 protocol;       /**< protocol identifier */
@@ -64,6 +85,7 @@ typedef struct SBP_ATTR_PACKED {
 * Deprecated.
  */
 #define SBP_MSG_PRINT_DEP 0x0010
+
 typedef struct SBP_ATTR_PACKED {
   char text[0]; /**< Human-readable string */
 } msg_print_dep_t;

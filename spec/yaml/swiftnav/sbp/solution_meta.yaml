@@ -185,7 +185,6 @@ definitions:
      short_desc: Provides detail about the Odometry sensor, its timestamping mode,
                  and its quality for input to the fuzed solution.
      public: true
-     id: 1
      embedded_type: true
      desc: |
        Metadata around the Odometry sensors involved in the fuzed solution.

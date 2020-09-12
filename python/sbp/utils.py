@@ -38,7 +38,7 @@ def walk_json_dict(coll):
   if isinstance(coll, dict):
     return dict((k, walk_json_dict(v)) for (k, v) in iter(coll.items()))
   elif isinstance(coll, bytes):
-    return coll.decode('ascii')
+    return coll.decode('ascii', errors='replace')
   elif hasattr(coll, '__iter__') and not isinstance(coll, str):
     return [walk_json_dict(seq) for seq in coll]
   else:

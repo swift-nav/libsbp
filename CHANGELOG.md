@@ -1,5 +1,47 @@
 # Change Log
 
+## [v3.4.0](https://github.com/swift-nav/libsbp/tree/v3.4.0) (2020-09-12)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.3.1...v3.4.0)
+
+**Merged pull requests:**
+
+- Auto submodule update: cmake - Change implementation of working directory [\#850](https://github.com/swift-nav/libsbp/pull/850)
+- use generic class if message is unknown, replace on unicode errors \[INFRA-282\] [\#849](https://github.com/swift-nav/libsbp/pull/849)
+- Fix bugs in Java array decoding [\#848](https://github.com/swift-nav/libsbp/pull/848)
+- Improve SBP protocol PDF documentation \[INFRA-280\] [\#844](https://github.com/swift-nav/libsbp/pull/844)
+- \[SSR-117\] SSR Lat/Lon sign [\#842](https://github.com/swift-nav/libsbp/pull/842)
+- generate bitfield macros \[INFRA-265\] [\#841](https://github.com/swift-nav/libsbp/pull/841)
+
+## [v3.3.1](https://github.com/swift-nav/libsbp/tree/v3.3.1) (2020-08-28)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.3.0...v3.3.1)
+
+**Merged pull requests:**
+
+- json2json: maintain fields other than "data" \[INFRA-266\] [\#843](https://github.com/swift-nav/libsbp/pull/843)
+
+## [v3.3.0](https://github.com/swift-nav/libsbp/tree/v3.3.0) (2020-08-28)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.2.0...v3.3.0)
+
+**Merged pull requests:**
+
+- Merge starling output changes to master [\#840](https://github.com/swift-nav/libsbp/pull/840)
+- \[SSR-17\] Update SSR Tile IDs [\#839](https://github.com/swift-nav/libsbp/pull/839)
+- Guillaume/so 6/quick update group meta [\#836](https://github.com/swift-nav/libsbp/pull/836)
+- Update the docs and reorder bits for readability [\#835](https://github.com/swift-nav/libsbp/pull/835)
+- Update SSR atmo correction messages to allow multiple tiles. [\#834](https://github.com/swift-nav/libsbp/pull/834)
+- Make alignment status flags more sensible [\#833](https://github.com/swift-nav/libsbp/pull/833)
+- \[SO-6\] Add SOLN\_META message for Fuzed Wagon [\#832](https://github.com/swift-nav/libsbp/pull/832)
+- Update LICENSE to MIT [\#831](https://github.com/swift-nav/libsbp/pull/831)
+- \[HS-64\] Update docs and description for FastStart specs [\#829](https://github.com/swift-nav/libsbp/pull/829)
+- Auto submodule update: cmake - Add additional profiling tools [\#827](https://github.com/swift-nav/libsbp/pull/827)
+- Dzollo/pyserial timeout remove [\#821](https://github.com/swift-nav/libsbp/pull/821)
+- Update README.md [\#820](https://github.com/swift-nav/libsbp/pull/820)
+- \[SSR-95\] Clarify the ephemeris IOD definitions [\#814](https://github.com/swift-nav/libsbp/pull/814)
+
+
 ## [v3.2.0](https://github.com/swift-nav/libsbp/tree/v3.2.0) (2020-07-23)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.1.2...v3.2.0)

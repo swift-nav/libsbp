@@ -13,12 +13,14 @@
 Generator for c target.
 """
 
+import re
 from sbpg.targets.templating import *
 from sbpg.utils import markdown_links
 
 MESSAGES_TEMPLATE_NAME = "sbp_messages_template.h"
 VERSION_TEMPLATE_NAME = "sbp_version_template.h"
 MESSAGE_TRAITS_TEMPLATE_NAME = "sbp_message_traits_template.h"
+
 
 def commentify(value):
   """
@@ -38,7 +40,6 @@ def extensions(includes):
   """
   return ["".join([i.split(".")[0], ".h"]) for i in includes if i.split(".")[0] != "types"]
 
-import re
 
 CONSTRUCT_CODE = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
                       's64', 'float', 'double'])
@@ -86,11 +87,48 @@ def mk_size(field):
   else:
     return '%s;' % field.identifier
 
+def get_bitfield_basename(msg, item):
+    bitfield_name = item.get('desc', '').replace(" ", "_").upper()
+    base_string = "SBP_{}_{}".format(msg.upper().replace('MSG_', ''), bitfield_name)
+    base_string = re.sub('[^A-Za-z0-9_]+', '', base_string)
+    return base_string
+
+
+def create_bitfield_macros(field, msg):
+  ret_list = []
+  for item in field.options['fields'].value:
+    base_string = get_bitfield_basename(msg, item)
+    if not base_string.endswith("RESERVED"):
+      nbits = item.get('len')
+      bitrange = (item.get('range')).split(':')
+      start_bit = int(bitrange[0])
+      ret_list.append("#define {}_MASK ({})".format(base_string, hex((1 << nbits) - 1)))
+      ret_list.append("#define {}_SHIFT ({}u)".format(base_string, start_bit))
+      ret_list.append("""#define {}_GET(flags) \\
+                             (((flags) >> {}_SHIFT) \\
+                             & {}_MASK)""".format(base_string, base_string, base_string))
+      ret_list.append("""#define {}_SET(flags, val) \\
+                             do {{((flags) |= \\
+                             (((val) & ({}_MASK)) \\
+                             << ({}_SHIFT)));}} while(0)
+                             """.format(base_string, base_string, base_string))
+      ret_list.append("")
+      for value_obj in item.get('vals', []):
+        value_numerical = int(value_obj.get('value'))
+        value_description = value_obj.get('desc', None).upper()
+        value_description = re.sub(r'\([^)]*\)', '', value_description)
+        value_description = re.sub('[ \-]+', '_', value_description.strip())
+        value_description = re.sub('[^A-Za-z0-9_]+', '', value_description)
+        if value_description and value_description.upper() != 'RESERVED':
+          ret_list.append("#define {}_{} ({})".format(base_string, value_description,
+                                                      value_numerical))
+  return "\n".join(ret_list)
 
 JENV.filters['commentify'] = commentify
 JENV.filters['mk_id'] = mk_id
 JENV.filters['mk_size'] = mk_size
 JENV.filters['convert'] = convert
+JENV.filters['create_bitfield_macros'] = create_bitfield_macros
 
 def render_source(output_dir, package_spec):
   """

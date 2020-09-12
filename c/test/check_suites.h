@@ -17,6 +17,7 @@
 
 Suite* edc_suite(void);
 Suite* sbp_suite(void);
+Suite* bitfield_macros_suite(void);
 Suite* auto_check_sbp_acquisition_1_suite(void);
 Suite* auto_check_sbp_acquisition_2_suite(void);
 Suite* auto_check_sbp_navigation_3_suite(void);

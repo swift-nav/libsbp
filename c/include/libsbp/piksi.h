@@ -53,6 +53,20 @@ SBP_PACK_START
  * bootloader.
  */
 #define SBP_MSG_RESET                   0x00B6
+#define SBP_RESET_DEFAULT_SETTINGS_MASK (0x1)
+#define SBP_RESET_DEFAULT_SETTINGS_SHIFT (0u)
+#define SBP_RESET_DEFAULT_SETTINGS_GET(flags) \
+                             (((flags) >> SBP_RESET_DEFAULT_SETTINGS_SHIFT) \
+                             & SBP_RESET_DEFAULT_SETTINGS_MASK)
+#define SBP_RESET_DEFAULT_SETTINGS_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_RESET_DEFAULT_SETTINGS_MASK)) \
+                             << (SBP_RESET_DEFAULT_SETTINGS_SHIFT)));} while(0)
+                             
+
+#define SBP_RESET_DEFAULT_SETTINGS_PRESERVE_EXISTING_SETTINGS (0)
+#define SBP_RESET_DEFAULT_SETTINGS_RESORE_DEFAULT_SETTINGS (1)
+
 typedef struct SBP_ATTR_PACKED {
   u32 flags;    /**< Reset flags */
 } msg_reset_t;
@@ -90,6 +104,21 @@ typedef struct SBP_ATTR_PACKED {
  * Ambiguity Resolution (IAR) process.
  */
 #define SBP_MSG_RESET_FILTERS           0x0022
+#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_MASK (0x3)
+#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_SHIFT (0u)
+#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_GET(flags) \
+                             (((flags) >> SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_SHIFT) \
+                             & SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_MASK)
+#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_MASK)) \
+                             << (SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_SHIFT)));} while(0)
+                             
+
+#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_DGNSS_FILTER (0)
+#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_IAR_PROCESS (1)
+#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_INERTIAL_FILTER (2)
+
 typedef struct SBP_ATTR_PACKED {
   u8 filter;    /**< Filter flags */
 } msg_reset_filters_t;
@@ -109,6 +138,7 @@ typedef struct SBP_ATTR_PACKED {
  * thread. The reported percentage values must be normalized.
  */
 #define SBP_MSG_THREAD_STATE            0x0017
+
 typedef struct SBP_ATTR_PACKED {
   char name[20];      /**< Thread name (NULL terminated) */
   u16 cpu;           /**< Percentage cpu use for this thread. Values range from 0
@@ -124,6 +154,7 @@ typedef struct SBP_ATTR_PACKED {
  * of this UART channel. The reported percentage values must
  * be normalized.
  */
+
 typedef struct SBP_ATTR_PACKED {
   float tx_throughput;      /**< UART transmit throughput [kB/s] */
   float rx_throughput;      /**< UART receive throughput [kB/s] */
@@ -147,6 +178,7 @@ typedef struct SBP_ATTR_PACKED {
  * or missing sets will increase the period.  Long periods
  * can cause momentary RTK solution outages.
  */
+
 typedef struct SBP_ATTR_PACKED {
   s32 avg;        /**< Average period [ms] */
   s32 pmin;       /**< Minimum period [ms] */
@@ -163,6 +195,7 @@ typedef struct SBP_ATTR_PACKED {
  * receiver to give a precise measurement of the end-to-end
  * communication latency in the system.
  */
+
 typedef struct SBP_ATTR_PACKED {
   s32 avg;        /**< Average latency [ms] */
   s32 lmin;       /**< Minimum latency [ms] */
@@ -184,6 +217,7 @@ typedef struct SBP_ATTR_PACKED {
  * period indicates their likelihood of transmission.
  */
 #define SBP_MSG_UART_STATE              0x001D
+
 typedef struct SBP_ATTR_PACKED {
   uart_channel_t uart_a;        /**< State of UART A */
   uart_channel_t uart_b;        /**< State of UART B */
@@ -198,6 +232,7 @@ typedef struct SBP_ATTR_PACKED {
 * Deprecated
  */
 #define SBP_MSG_UART_STATE_DEPA         0x0018
+
 typedef struct SBP_ATTR_PACKED {
   uart_channel_t uart_a;       /**< State of UART A */
   uart_channel_t uart_b;       /**< State of UART B */
@@ -214,6 +249,7 @@ typedef struct SBP_ATTR_PACKED {
  * from satellite observations.
  */
 #define SBP_MSG_IAR_STATE               0x0019
+
 typedef struct SBP_ATTR_PACKED {
   u32 num_hyps;    /**< Number of integer ambiguity hypotheses remaining */
 } msg_iar_state_t;
@@ -225,6 +261,33 @@ typedef struct SBP_ATTR_PACKED {
  * from being used in various Piksi subsystems.
  */
 #define SBP_MSG_MASK_SATELLITE          0x002B
+#define SBP_MASK_SATELLITE_TRACKING_CHANNELS_MASK (0x1)
+#define SBP_MASK_SATELLITE_TRACKING_CHANNELS_SHIFT (1u)
+#define SBP_MASK_SATELLITE_TRACKING_CHANNELS_GET(flags) \
+                             (((flags) >> SBP_MASK_SATELLITE_TRACKING_CHANNELS_SHIFT) \
+                             & SBP_MASK_SATELLITE_TRACKING_CHANNELS_MASK)
+#define SBP_MASK_SATELLITE_TRACKING_CHANNELS_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_MASK_SATELLITE_TRACKING_CHANNELS_MASK)) \
+                             << (SBP_MASK_SATELLITE_TRACKING_CHANNELS_SHIFT)));} while(0)
+                             
+
+#define SBP_MASK_SATELLITE_TRACKING_CHANNELS_ENABLED (0)
+#define SBP_MASK_SATELLITE_TRACKING_CHANNELS_DROP_THIS_PRN_IF_CURRENTLY_TRACKING (1)
+#define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_MASK (0x1)
+#define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_SHIFT (0u)
+#define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_GET(flags) \
+                             (((flags) >> SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_SHIFT) \
+                             & SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_MASK)
+#define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_MASK)) \
+                             << (SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_SHIFT)));} while(0)
+                             
+
+#define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_ENABLED (0)
+#define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_SKIP_THIS_SATELLITE_ON_FUTURE_ACQUISITIONS (1)
+
 typedef struct SBP_ATTR_PACKED {
   u8 mask;    /**< Mask of systems that should ignore this satellite. */
   sbp_gnss_signal_t sid;     /**< GNSS signal for which the mask is applied */
@@ -236,6 +299,33 @@ typedef struct SBP_ATTR_PACKED {
 * Deprecated.
  */
 #define SBP_MSG_MASK_SATELLITE_DEP      0x001B
+#define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_MASK (0x1)
+#define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_SHIFT (1u)
+#define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_GET(flags) \
+                             (((flags) >> SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_SHIFT) \
+                             & SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_MASK)
+#define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_MASK)) \
+                             << (SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_SHIFT)));} while(0)
+                             
+
+#define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_ENABLED (0)
+#define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_DROP_THIS_PRN_IF_CURRENTLY_TRACKING (1)
+#define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_MASK (0x1)
+#define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_SHIFT (0u)
+#define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_GET(flags) \
+                             (((flags) >> SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_SHIFT) \
+                             & SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_MASK)
+#define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_MASK)) \
+                             << (SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_SHIFT)));} while(0)
+                             
+
+#define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_ENABLED (0)
+#define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_SKIP_THIS_SATELLITE_ON_FUTURE_ACQUISITIONS (1)
+
 typedef struct SBP_ATTR_PACKED {
   u8 mask;    /**< Mask of systems that should ignore this satellite. */
   gnss_signal_dep_t sid;     /**< GNSS signal for which the mask is applied */
@@ -249,6 +339,7 @@ typedef struct SBP_ATTR_PACKED {
  * available.
  */
 #define SBP_MSG_DEVICE_MONITOR          0x00B5
+
 typedef struct SBP_ATTR_PACKED {
   s16 dev_vin;            /**< Device V_in [V / 1000] */
   s16 cpu_vint;           /**< Processor V_int [V / 1000] */
@@ -265,6 +356,7 @@ typedef struct SBP_ATTR_PACKED {
  * code will be returned with MSG_COMMAND_RESP.
  */
 #define SBP_MSG_COMMAND_REQ             0x00B8
+
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Sequence number */
   char command[0];  /**< Command line to execute */
@@ -277,6 +369,7 @@ typedef struct SBP_ATTR_PACKED {
  * the command.  A return code of zero indicates success.
  */
 #define SBP_MSG_COMMAND_RESP            0x00B9
+
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Sequence number */
   s32 code;        /**< Exit code */
@@ -291,6 +384,7 @@ typedef struct SBP_ATTR_PACKED {
  * the correct command.
  */
 #define SBP_MSG_COMMAND_OUTPUT          0x00BC
+
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Sequence number */
   char line[0];     /**< Line of standard output or standard error */
@@ -312,6 +406,183 @@ typedef struct SBP_ATTR_PACKED {
  * in c.
  */
 #define SBP_MSG_NETWORK_STATE_RESP      0x00BB
+#define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_SHIFT (15u)
+#define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_GET(flags) \
+                             (((flags) >> SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_SHIFT) \
+                             & SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_MASK)
+#define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_MASK)) \
+                             << (SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_SHIFT)));} while(0)
+                             
+
+#define SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_SHIFT (14u)
+#define SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_GET(flags) \
+                             (((flags) >> SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_SHIFT) \
+                             & SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_MASK)
+#define SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_MASK)) \
+                             << (SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_SHIFT)));} while(0)
+                             
+
+#define SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_SHIFT (13u)
+#define SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_GET(flags) \
+                             (((flags) >> SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_SHIFT) \
+                             & SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_MASK)
+#define SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_MASK)) \
+                             << (SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_SHIFT)));} while(0)
+                             
+
+#define SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_SHIFT (12u)
+#define SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_GET(flags) \
+                             (((flags) >> SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_SHIFT) \
+                             & SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_MASK)
+#define SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_MASK)) \
+                             << (SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_SHIFT)));} while(0)
+                             
+
+#define SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_SHIFT (11u)
+#define SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_GET(flags) \
+                             (((flags) >> SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_SHIFT) \
+                             & SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_MASK)
+#define SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_MASK)) \
+                             << (SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_SHIFT)));} while(0)
+                             
+
+#define SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_SHIFT (10u)
+#define SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_GET(flags) \
+                             (((flags) >> SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_SHIFT) \
+                             & SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_MASK)
+#define SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_MASK)) \
+                             << (SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_SHIFT)));} while(0)
+                             
+
+#define SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_SHIFT (9u)
+#define SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_GET(flags) \
+                             (((flags) >> SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_SHIFT) \
+                             & SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_MASK)
+#define SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_MASK)) \
+                             << (SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_SHIFT)));} while(0)
+                             
+
+#define SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_SHIFT (8u)
+#define SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_GET(flags) \
+                             (((flags) >> SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_SHIFT) \
+                             & SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_MASK)
+#define SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_MASK)) \
+                             << (SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_SHIFT)));} while(0)
+                             
+
+#define SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_SHIFT (7u)
+#define SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_GET(flags) \
+                             (((flags) >> SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_SHIFT) \
+                             & SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_MASK)
+#define SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_MASK)) \
+                             << (SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_SHIFT)));} while(0)
+                             
+
+#define SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_SHIFT (6u)
+#define SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_GET(flags) \
+                             (((flags) >> SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_SHIFT) \
+                             & SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_MASK)
+#define SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_MASK)) \
+                             << (SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_SHIFT)));} while(0)
+                             
+
+#define SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_SHIFT (5u)
+#define SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_GET(flags) \
+                             (((flags) >> SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_SHIFT) \
+                             & SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_MASK)
+#define SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_MASK)) \
+                             << (SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_SHIFT)));} while(0)
+                             
+
+#define SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_SHIFT (4u)
+#define SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_GET(flags) \
+                             (((flags) >> SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_SHIFT) \
+                             & SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_MASK)
+#define SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_MASK)) \
+                             << (SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_SHIFT)));} while(0)
+                             
+
+#define SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_SHIFT (3u)
+#define SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_GET(flags) \
+                             (((flags) >> SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_SHIFT) \
+                             & SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_MASK)
+#define SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_MASK)) \
+                             << (SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_SHIFT)));} while(0)
+                             
+
+#define SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_SHIFT (2u)
+#define SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_GET(flags) \
+                             (((flags) >> SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_SHIFT) \
+                             & SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_MASK)
+#define SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_MASK)) \
+                             << (SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_SHIFT)));} while(0)
+                             
+
+#define SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_SHIFT (1u)
+#define SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_GET(flags) \
+                             (((flags) >> SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_SHIFT) \
+                             & SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_MASK)
+#define SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_MASK)) \
+                             << (SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_SHIFT)));} while(0)
+                             
+
+#define SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_SHIFT (0u)
+#define SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_GET(flags) \
+                             (((flags) >> SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_SHIFT) \
+                             & SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_MASK)
+#define SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_MASK)) \
+                             << (SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_SHIFT)));} while(0)
+                             
+
+
 typedef struct SBP_ATTR_PACKED {
   u8 ipv4_address[4];   /**< IPv4 address (all zero when unavailable) */
   u8 ipv4_mask_size;    /**< IPv4 netmask CIDR notation */
@@ -333,6 +604,7 @@ typedef struct SBP_ATTR_PACKED {
  * may vary, both a timestamp and period field is provided,
  * though may not necessarily be populated with a value. 
  */
+
 typedef struct SBP_ATTR_PACKED {
   u64 duration;          /**< Duration over which the measurement was collected [ms] */
   u64 total_bytes;       /**< Number of bytes handled in total within period */
@@ -347,6 +619,7 @@ typedef struct SBP_ATTR_PACKED {
  * The bandwidth usage, a list of usage by interface. 
  */
 #define SBP_MSG_NETWORK_BANDWIDTH_USAGE 0x00BD
+
 typedef struct SBP_ATTR_PACKED {
   network_usage_t interfaces[0]; /**< Usage measurement array */
 } msg_network_bandwidth_usage_t;
@@ -359,6 +632,7 @@ typedef struct SBP_ATTR_PACKED {
  * of the modem and its various parameters.
  */
 #define SBP_MSG_CELL_MODEM_STATUS       0x00BE
+
 typedef struct SBP_ATTR_PACKED {
   s8 signal_strength;      /**< Received cell signal strength in dBm, zero translates to unknown [dBm] */
   float signal_error_rate;    /**< BER as reported by the modem, zero translates to unknown */
@@ -371,6 +645,7 @@ typedef struct SBP_ATTR_PACKED {
 * Deprecated.
  */
 #define SBP_MSG_SPECAN_DEP              0x0050
+
 typedef struct SBP_ATTR_PACKED {
   u16 channel_tag;        /**< Channel ID */
   gps_time_dep_t t;                  /**< Receiver time of this observation */
@@ -392,6 +667,7 @@ typedef struct SBP_ATTR_PACKED {
  * Spectrum analyzer packet.
  */
 #define SBP_MSG_SPECAN                  0x0051
+
 typedef struct SBP_ATTR_PACKED {
   u16 channel_tag;        /**< Channel ID */
   sbp_gps_time_t t;                  /**< Receiver time of this observation */
@@ -418,6 +694,7 @@ typedef struct SBP_ATTR_PACKED {
  * A negative value implies an error for the particular gain stage as reported by the frontend.
  */
 #define SBP_MSG_FRONT_END_GAIN          0x00BF
+
 typedef struct SBP_ATTR_PACKED {
   s8 rf_gain[8]; /**< RF gain for each frontend channel [percent] */
   s8 if_gain[8]; /**< Intermediate frequency gain for each frontend channel [percent] */
