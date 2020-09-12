@@ -9,10 +9,17 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
+import os
+import re
+import shutil
+import subprocess
+import tempfile
+
 from operator import attrgetter
+
 from sbpg.targets.templating import *
 from sbpg.utils import fmt_repr
-import re
+
 
 # We sometimes need to remove underscores.  This will remove the latex
 # safe underscore character and replace with a space
@@ -308,9 +315,9 @@ def render_source(output_dir, package_specs, version):
                                umsgs=unstable_msgs,
                                prims=prims,
                                version=version))
-  import subprocess
-  import os
   os.chdir(output_dir)
-  subprocess.call(["pdflatex", "--enable-write18",
-                   "-shell-escape", "sbp_out.tex"])
-  subprocess.call(["mv", "sbp_out.pdf", "../docs/sbp.pdf"])
+  if "TEXMFVAR" not in os.environ:
+    os.environ["TEXMFVAR"] = "/tmp"
+  subprocess.check_call(["pdflatex", "--enable-write18",
+                         "-shell-escape", "sbp_out.tex"])
+  subprocess.check_call(["mv", "sbp_out.pdf", "../docs/sbp.pdf"])
