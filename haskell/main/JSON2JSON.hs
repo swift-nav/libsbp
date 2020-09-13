@@ -6,7 +6,7 @@
 -- Module:      JSON2JSON
 -- Copyright:   Copyright (C) 2015 Swift Navigation, Inc.
 -- License:     LGPL-3
--- Maintainer:  Swift Navigation <dev@swiftnav.com>
+-- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
 -- Portability: portable
 --
