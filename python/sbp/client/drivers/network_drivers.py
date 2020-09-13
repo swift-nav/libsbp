@@ -1,4 +1,4 @@
-#https://github.com/swift-nav/libsbp/pull/845/commits/e0686bc2bef4792e788a9a5d89704a8e7198a8f9 Copyright (C) 2015 Swift Navigation Inc.
+# Copyright (C) 2015 Swift Navigation Inc.
 # Contact: Bhaskar Mookerji <mookerji@swiftnav.com>
 #
 # This source is subject to the license found in the file 'LICENSE' which must
