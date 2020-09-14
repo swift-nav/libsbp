@@ -873,6 +873,7 @@ It also lists the atomic contents (i.e. types of messages included) of the Solut
   group_msgs : array
     An inorder list of message types included in the Solution Group,
 including GROUP_META itself
+
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 

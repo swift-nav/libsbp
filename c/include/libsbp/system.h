@@ -525,7 +525,8 @@ typedef struct SBP_ATTR_PACKED {
   u8 flags;           /**< Status flags (reserved) */
   u8 n_group_msgs;    /**< Size of list group_msgs */
   u16 group_msgs[0];   /**< An inorder list of message types included in the Solution Group,
-including GROUP_META itself */
+including GROUP_META itself
+ */
 } msg_group_meta_t;
 
 
