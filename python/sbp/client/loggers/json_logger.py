@@ -148,15 +148,19 @@ class JSONLogIterator(LogIterator):
             # Try next line, can lead to RecursionError if source is full of rubbish
             return self._next_conventional()
 
-    def _next_legacy(self):
+    def _next_legacy_inner(self):
         line = ''
+        for line in self.handle:
+            try:
+                yield self._extract_data(line)
+            except (ValueError, UnicodeDecodeError):
+                warn = "Bad JSON decoding for line %s" % (line,)
+                warnings.warn(warn, RuntimeWarning)
+
+    def _next_legacy(self):
         try:
-            for line in self.handle:
-                try:
-                    yield self._extract_data(line)
-                except (ValueError, UnicodeDecodeError):
-                    warn = "Bad JSON decoding for line %s" % (line,)
-                    warnings.warn(warn, RuntimeWarning)
+            for line in self._next_legacy_inner():
+                yield line
         except (ValueError, UnicodeDecodeError):
             warn = "Bad JSON decoding"
             warnings.warn(warn, RuntimeWarning)
