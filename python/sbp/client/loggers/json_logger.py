@@ -134,6 +134,7 @@ class JSONLogIterator(LogIterator):
         if self._broken:
             raise StopIteration
 
+        line = ''
         try:
             line = self.handle.readline()
 
@@ -148,12 +149,17 @@ class JSONLogIterator(LogIterator):
             return self._next_conventional()
 
     def _next_legacy(self):
-        for line in self.handle:
-            try:
-                yield self._extract_data(line)
-            except (ValueError, UnicodeDecodeError):
-                warn = "Bad JSON decoding for line %s" % line
-                warnings.warn(warn, RuntimeWarning)
+        line = ''
+        try:
+            for line in self.handle:
+                try:
+                    yield self._extract_data(line)
+                except (ValueError, UnicodeDecodeError):
+                    warn = "Bad JSON decoding for line %s" % (line,)
+                    warnings.warn(warn, RuntimeWarning)
+        except (ValueError, UnicodeDecodeError):
+            warn = "Bad JSON decoding"
+            warnings.warn(warn, RuntimeWarning)
         self.handle.seek(0, 0)
 
     def __next__(self):

@@ -11,7 +11,7 @@ except ImportError:
 
 setup(name='sbp_gen',
       description='Generator for Swift Binary Protocol',
-      long_description=open('README.md').read(),
+      long_description=open('README.md', 'rb').read().decode('utf8'),
       version='0.10',
       author='Swift Navigation',
       author_email='mookerji@swiftnav.com',

@@ -163,8 +163,8 @@ def exclude_jit_libs(lib):
 
 if __name__ == "__main__":
 
-    with open(os.path.join(setup_py_dir, 'README.rst')) as f:
-        readme = f.read()
+    with open(os.path.join(setup_py_dir, 'README.rst'), 'rb') as f:
+        readme = f.read().decode('utf8')
 
     write_version_py()
 
