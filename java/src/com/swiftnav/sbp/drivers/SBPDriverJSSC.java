@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Gareth McMullin <gareth@swiftnav.com>
+ * Contact: https://support.swiftnav.com
  *
  * Based on community contributed code:
  * https://groups.google.com/forum/#!topic/swiftnav-discuss/s0ouH81Lc88
