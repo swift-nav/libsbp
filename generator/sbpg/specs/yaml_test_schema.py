@@ -27,7 +27,7 @@ test = Schema({
   'msg': msg,
   'msg_type': Schema(str),
   'raw_json': Schema(str),
-  'raw_packet': Coerce(str),
+  'raw_packet': Coerce(bytes),
   'sbp': Schema({ Coerce(str): Coerce(str) }),
 })
 
