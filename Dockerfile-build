@@ -11,7 +11,7 @@
 # This describes an image that should be able to generate libsbp bindings.
 # See the README.md for instructions on how to use it.
 
-FROM debian:buster-slim
+FROM ubuntu:bionic
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -28,8 +28,6 @@ RUN \
       apt-utils \
       wget \
       curl \
-  && mkdir /usr/share/man/man1 \
-  && apt-get install -y \
       build-essential \
       pandoc \
       llvm \
@@ -39,8 +37,6 @@ RUN \
       gradle \
       texlive-science \
       texlive-fonts-extra \
-      haskell-stack \
-      haskell-platform \
       check \
       cmake \
       ccache \
@@ -51,17 +47,24 @@ RUN \
       imagemagick \
       libudev-dev \
       uuid-dev \
-  && npm install npm@latest -g \
-  && echo "deb http://ftp.debian.org/debian buster-backports main" >>/etc/apt/sources.list.d/buster-backports.list \
+      libgmp-dev \
+      zlib1g-dev \
+  && npm install npm@latest -g
+
+RUN add-apt-repository ppa:deadsnakes/ppa \
   && apt-get update \
   && apt-get install -y \
       python-pip \
-      python3 \
       python3-pip \
+      python3.5-dev \
+      python3.6-dev \
+      python3.7-dev \
+      python3.8-dev \
   && pip3 install tox \
   && pip install sphinx \
-  && rm -rf /var/lib/apt/lists/* \
-  && curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable --no-modify-path
+  && curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable --no-modify-path \
+  && curl -sSL https://get.haskellstack.org/ | sh \
+  && rm -rf /var/lib/apt/lists/*
 
 # Add a "dockerdev" user with sudo capabilities
 # 1000 is the first user ID issued on Ubuntu; might
