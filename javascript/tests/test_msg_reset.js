@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Joshua Gross <josh@swift-nav.com>
+ * Contact: Swift Navigation <dev@swift-nav.com>
  * This source is subject to the license found in the file 'LICENSE' which must
  * be distributed together with this source. All other rights reserved.
  *

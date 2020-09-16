@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2015 Swift Navigation Inc.
- * Contact: Gareth McMullin <gareth@swiftnav.com>
+ * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
  * be be distributed together with this source. All other rights reserved.
@@ -27,13 +27,13 @@ import java.net.MalformedURLException;
 
 import jssc.SerialPortException;
 
-public class SerialLink {
+public class TrackingState {
     private SBPHandler handler;
     private SBPFramer framer;
 
     public static void main(String[] args) {
         if (args.length == 1) {
-            new SerialLink(args[0]);
+            new TrackingState(args[0]);
         } else if (args.length == 2) {
             int baudrate = 0;
             try {
@@ -41,21 +41,22 @@ public class SerialLink {
             } catch (NumberFormatException e) {
                 usage();
             }
-            new SerialLink(args[0], baudrate);
+            new TrackingState(args[0], baudrate);
         } else {
             usage();
         }
     }
 
     public static void usage() {
-        System.out.println("usage: SerialLink <port> [baudrate]");
+        System.out.println("usage: TrackingState <port> [baudrate]");
         System.exit(-1);
     }
 
-    SerialLink(String port) {
+    TrackingState(String port) {
         this(port, SBPDriverJSSC.BAUDRATE_DEFAULT);
     }
-    SerialLink(String port, int baudrate) {
+
+    TrackingState(String port, int baudrate) {
         try {
             framer = new SBPFramer(new SBPDriverJSSC(port, baudrate));
             handler = new SBPHandler(framer);
@@ -87,15 +88,16 @@ public class SerialLink {
 
         boolean tracking = false;
         for (TrackingChannelState state : msg.states)
-            if (state.state != 0)
+            if (state.cn0 != 0)
                 tracking = true;
+
         if (!tracking)
             return;
 
         System.out.print("Tracking: ");
         for (TrackingChannelState state : msg.states) {
-            if (state.state != 0)
-                System.out.printf("PRN%d(%.1f) ", state.sid + 1, state.cn0);
+            if (state.cn0 != 0)
+                System.out.printf("sat=%d, code=%d, cn0=%.1f ", state.sid.sat, state.sid.code, state.cn0);
         }
         System.out.println();
     }

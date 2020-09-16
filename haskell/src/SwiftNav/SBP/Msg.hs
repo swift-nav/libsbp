@@ -8,7 +8,7 @@
 -- Module:      SwiftNav.SBP.Msg
 -- Copyright:   Copyright (C) 2015-2018 Swift Navigation, Inc.
 -- License:     MIT
--- Maintainer:  Swift Navigation <dev@swiftnav.com>
+-- Contact:     https://support.swiftnav.com
 -- Stability:   experimental
 -- Portability: portable
 --

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # Copyright (C) 2015-2018 Swift Navigation Inc.
-# Contact: Swift Navigation <dev@swiftnav.com>
+# Contact: https://support.swiftnav.com
 #
 # This source is subject to the license found in the file 'LICENSE' which must
 # be be distributed together with this source. All other rights reserved.
@@ -873,6 +873,7 @@ It also lists the atomic contents (i.e. types of messages included) of the Solut
   group_msgs : array
     An inorder list of message types included in the Solution Group,
 including GROUP_META itself
+
   sender : int
     Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
 

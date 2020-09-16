@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2015-2018 Swift Navigation Inc.
- * Contact: Swift Navigation <dev@swiftnav.com>
+ * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
  * be be distributed together with this source. All other rights reserved.
@@ -45,7 +45,8 @@ public class MsgGroupMeta extends SBPMessage {
     public int n_group_msgs;
     
     /** An inorder list of message types included in the Solution Group,
-including GROUP_META itself */
+including GROUP_META itself
+ */
     public int[] group_msgs;
     
 

@@ -1,5 +1,14 @@
 # Change Log
 
+## [v3.4.1](https://github.com/swift-nav/libsbp/tree/v3.4.1) (2020-09-14)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.0...v3.4.1)
+
+**Merged pull requests:**
+
+- Normalize contact addresses [\#852](https://github.com/swift-nav/libsbp/pull/852)
+- python: add reconnect logic to network write [\#851](https://github.com/swift-nav/libsbp/pull/851)
+
 ## [v3.4.0](https://github.com/swift-nav/libsbp/tree/v3.4.0) (2020-09-12)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.3.1...v3.4.0)

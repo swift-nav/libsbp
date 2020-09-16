@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2015-2018 Swift Navigation Inc.
- * Contact: Swift Navigation <dev@swiftnav.com>
+ * Contact: https://support.swiftnav.com
  *
  * This source is subject to the license found in the file 'LICENSE' which must
  * be be distributed together with this source. All other rights reserved.
@@ -25,7 +25,7 @@
 /** Protocol minor version. */
 #define SBP_MINOR_VERSION 4
 /** Protocol patch version. */
-#define SBP_PATCH_VERSION 0
+#define SBP_PATCH_VERSION 1
 
 /** \} */
 
