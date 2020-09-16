@@ -87,12 +87,21 @@ Some thoughts to consider when adding a new message:
 
 # Releasing New Versions of the Library
 
-Oh boy, so you've decided to release a new version of libsbp. It's recommended
-this process is performed on a Mac, as it has been known to go wrong on Linux.
+## Using Docker
 
-The v1.2.5 release for Python on PyPi failed to install due to missing
-`requirements.txt` file in the uploaded archive after a deployment was done on
-Ubuntu 16.04.
+It's highly recommended to use the docker container to run the release process,
+the docker container can be pulled from DockerHub and launched via this command:
+
+``docker run  -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2020.09.15``
+
+Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
+
+## The Process
+
+Oh boy, so you've decided to release a new version of libsbp.  It's recommended
+this process is performed using the above docker container.  You'll likely want
+to run the git commands outside of the container and the `make ...` commands
+inside the container (so you don't have to setup git inside the docker container).
 
 0. Branch and tag a new release. Tag the release version:
 
