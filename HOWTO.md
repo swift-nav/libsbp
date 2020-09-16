@@ -257,7 +257,7 @@ make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
 The Linux ARM build of libsbp can be done through docker via the following set
 of commands:
 ```
-docker run -v libsbp-arm-root:/root -v $PWD:/work --rm -it swiftnav/libsbp-arm:2020.05.07 libsbp-arm /bin/bash
+docker run -v libsbp-arm-root:/root -v $PWD:/work --rm -it swiftnav/libsbp-arm:2020.09.15 libsbp-arm /bin/bash
 cd /work
 make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
 ```
