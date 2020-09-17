@@ -228,6 +228,21 @@ typedef struct SBP_ATTR_PACKED {
 
 #define SBP_INS_STATUS_INS_TYPE_SMOOTHPOSE_LOOSELY_COUPLED (0)
 #define SBP_INS_STATUS_INS_TYPE_OTHER_LOOSELY_COUPLED (1)
+#define SBP_INS_STATUS_MOTION_STATE_MASK (0x7)
+#define SBP_INS_STATUS_MOTION_STATE_SHIFT (11u)
+#define SBP_INS_STATUS_MOTION_STATE_GET(flags) \
+                             (((flags) >> SBP_INS_STATUS_MOTION_STATE_SHIFT) \
+                             & SBP_INS_STATUS_MOTION_STATE_MASK)
+#define SBP_INS_STATUS_MOTION_STATE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_INS_STATUS_MOTION_STATE_MASK)) \
+                             << (SBP_INS_STATUS_MOTION_STATE_SHIFT)));} while(0)
+                             
+
+#define SBP_INS_STATUS_MOTION_STATE_UNKNOWN_OR_INIT (0)
+#define SBP_INS_STATUS_MOTION_STATE_ARBITRARY_MOTION (1)
+#define SBP_INS_STATUS_MOTION_STATE_STRAIGHT_MOTION (2)
+#define SBP_INS_STATUS_MOTION_STATE_STATIONARY (3)
 #define SBP_INS_STATUS_ODOMETRY_SYNCH_MASK (0x1)
 #define SBP_INS_STATUS_ODOMETRY_SYNCH_SHIFT (10u)
 #define SBP_INS_STATUS_ODOMETRY_SYNCH_GET(flags) \
