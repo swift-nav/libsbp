@@ -90,7 +90,7 @@ describe('test packages based on YAML descriptors, through the dispatcher', func
             var packetBuf = new Buffer(testSpec['raw_packet'], 'base64');
             rs.push(packetBuf.slice(0,packetBuf.length-5));
 
-            var requiredCalls = 1;
+            var requiredCalls = 2;
 
             // `length` is longer than one full buffer for these corrupted messages
             // similar issue to the above tests
