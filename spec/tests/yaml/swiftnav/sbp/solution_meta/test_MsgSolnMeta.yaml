@@ -1,0 +1,202 @@
+---
+description: Unit tests for swiftnav.sbp.solution_meta MsgSolnMeta v3.4.1.dev12+g7ff5295c.
+generated_on: 2020-09-18 18:23:45.596975
+package: sbp.solution_meta
+tests:
+
+- msg:
+    fields:
+      age_corrections: 5
+      alignment_status: 2
+      hdop: 89
+      last_used_gnss_pos_tow: 500066600
+      last_used_gnss_vel_tow: 500066600
+      n_sats: 11
+      pdop: 184
+      sol_in:
+      - flags: 0
+        sensor_type: 0
+      - flags: 2
+        sensor_type: 1
+      - flags: 0
+        sensor_type: 0
+      - flags: 0
+        sensor_type: 0
+      - flags: 0
+        sensor_type: 0
+      vdop: 162
+    module: sbp.solution_meta
+    name: MsgSolnMeta
+  msg_type: '0xff0f'
+  raw_json: '{"preamble": 85, "msg_type": 65295, "sender": 789, "length": 28, "payload":
+    "uABZAKIACwUAAihpzh0oac4dAAABAgAAAAAAAA==", "crc": 61701, "pdop": 184, "hdop":
+    89, "vdop": 162, "n_sats": 11, "age_corrections": 5, "alignment_status": 2, "last_used_gnss_pos_tow":
+    500066600, "last_used_gnss_vel_tow": 500066600, "sol_in": [{"sensor_type": 0,
+    "flags": 0}, {"sensor_type": 1, "flags": 2}, {"sensor_type": 0, "flags": 0}, {"sensor_type":
+    0, "flags": 0}, {"sensor_type": 0, "flags": 0}]}'
+  raw_packet: VQ//FQMcuABZAKIACwUAAihpzh0oac4dAAABAgAAAAAAAAXx
+  sbp:
+    crc: '0xf105'
+    length: 28
+    msg_type: '0xff0f'
+    payload: uABZAKIACwUAAihpzh0oac4dAAABAgAAAAAAAA==
+    preamble: '0x55'
+    sender: '0x315'
+
+- msg:
+    fields:
+      age_corrections: 6
+      alignment_status: 2
+      hdop: 89
+      last_used_gnss_pos_tow: 500066700
+      last_used_gnss_vel_tow: 500066700
+      n_sats: 11
+      pdop: 184
+      sol_in:
+      - flags: 0
+        sensor_type: 0
+      - flags: 2
+        sensor_type: 1
+      - flags: 0
+        sensor_type: 0
+      - flags: 0
+        sensor_type: 0
+      - flags: 0
+        sensor_type: 0
+      vdop: 162
+    module: sbp.solution_meta
+    name: MsgSolnMeta
+  msg_type: '0xff0f'
+  raw_json: '{"preamble": 85, "msg_type": 65295, "sender": 789, "length": 28, "payload":
+    "uABZAKIACwYAAoxpzh2Mac4dAAABAgAAAAAAAA==", "crc": 19021, "pdop": 184, "hdop":
+    89, "vdop": 162, "n_sats": 11, "age_corrections": 6, "alignment_status": 2, "last_used_gnss_pos_tow":
+    500066700, "last_used_gnss_vel_tow": 500066700, "sol_in": [{"sensor_type": 0,
+    "flags": 0}, {"sensor_type": 1, "flags": 2}, {"sensor_type": 0, "flags": 0}, {"sensor_type":
+    0, "flags": 0}, {"sensor_type": 0, "flags": 0}]}'
+  raw_packet: VQ//FQMcuABZAKIACwYAAoxpzh2Mac4dAAABAgAAAAAAAE1K
+  sbp:
+    crc: '0x4a4d'
+    length: 28
+    msg_type: '0xff0f'
+    payload: uABZAKIACwYAAoxpzh2Mac4dAAABAgAAAAAAAA==
+    preamble: '0x55'
+    sender: '0x315'
+
+- msg:
+    fields:
+      age_corrections: 7
+      alignment_status: 2
+      hdop: 89
+      last_used_gnss_pos_tow: 500066800
+      last_used_gnss_vel_tow: 500066800
+      n_sats: 11
+      pdop: 184
+      sol_in:
+      - flags: 0
+        sensor_type: 0
+      - flags: 2
+        sensor_type: 1
+      - flags: 0
+        sensor_type: 0
+      - flags: 0
+        sensor_type: 0
+      - flags: 0
+        sensor_type: 0
+      vdop: 162
+    module: sbp.solution_meta
+    name: MsgSolnMeta
+  msg_type: '0xff0f'
+  raw_json: '{"preamble": 85, "msg_type": 65295, "sender": 789, "length": 28, "payload":
+    "uABZAKIACwcAAvBpzh3wac4dAAABAgAAAAAAAA==", "crc": 1157, "pdop": 184, "hdop":
+    89, "vdop": 162, "n_sats": 11, "age_corrections": 7, "alignment_status": 2, "last_used_gnss_pos_tow":
+    500066800, "last_used_gnss_vel_tow": 500066800, "sol_in": [{"sensor_type": 0,
+    "flags": 0}, {"sensor_type": 1, "flags": 2}, {"sensor_type": 0, "flags": 0}, {"sensor_type":
+    0, "flags": 0}, {"sensor_type": 0, "flags": 0}]}'
+  raw_packet: VQ//FQMcuABZAKIACwcAAvBpzh3wac4dAAABAgAAAAAAAIUE
+  sbp:
+    crc: '0x485'
+    length: 28
+    msg_type: '0xff0f'
+    payload: uABZAKIACwcAAvBpzh3wac4dAAABAgAAAAAAAA==
+    preamble: '0x55'
+    sender: '0x315'
+
+- msg:
+    fields:
+      age_corrections: 8
+      alignment_status: 2
+      hdop: 89
+      last_used_gnss_pos_tow: 500066900
+      last_used_gnss_vel_tow: 500066900
+      n_sats: 11
+      pdop: 184
+      sol_in:
+      - flags: 0
+        sensor_type: 0
+      - flags: 2
+        sensor_type: 1
+      - flags: 0
+        sensor_type: 0
+      - flags: 0
+        sensor_type: 0
+      - flags: 0
+        sensor_type: 0
+      vdop: 162
+    module: sbp.solution_meta
+    name: MsgSolnMeta
+  msg_type: '0xff0f'
+  raw_json: '{"preamble": 85, "msg_type": 65295, "sender": 789, "length": 28, "payload":
+    "uABZAKIACwgAAlRqzh1Uas4dAAABAgAAAAAAAA==", "crc": 59779, "pdop": 184, "hdop":
+    89, "vdop": 162, "n_sats": 11, "age_corrections": 8, "alignment_status": 2, "last_used_gnss_pos_tow":
+    500066900, "last_used_gnss_vel_tow": 500066900, "sol_in": [{"sensor_type": 0,
+    "flags": 0}, {"sensor_type": 1, "flags": 2}, {"sensor_type": 0, "flags": 0}, {"sensor_type":
+    0, "flags": 0}, {"sensor_type": 0, "flags": 0}]}'
+  raw_packet: VQ//FQMcuABZAKIACwgAAlRqzh1Uas4dAAABAgAAAAAAAIPp
+  sbp:
+    crc: '0xe983'
+    length: 28
+    msg_type: '0xff0f'
+    payload: uABZAKIACwgAAlRqzh1Uas4dAAABAgAAAAAAAA==
+    preamble: '0x55'
+    sender: '0x315'
+
+- msg:
+    fields:
+      age_corrections: 9
+      alignment_status: 2
+      hdop: 89
+      last_used_gnss_pos_tow: 500067000
+      last_used_gnss_vel_tow: 500067000
+      n_sats: 11
+      pdop: 184
+      sol_in:
+      - flags: 0
+        sensor_type: 0
+      - flags: 2
+        sensor_type: 1
+      - flags: 0
+        sensor_type: 0
+      - flags: 0
+        sensor_type: 0
+      - flags: 0
+        sensor_type: 0
+      vdop: 162
+    module: sbp.solution_meta
+    name: MsgSolnMeta
+  msg_type: '0xff0f'
+  raw_json: '{"preamble": 85, "msg_type": 65295, "sender": 789, "length": 28, "payload":
+    "uABZAKIACwkAArhqzh24as4dAAABAgAAAAAAAA==", "crc": 8994, "pdop": 184, "hdop":
+    89, "vdop": 162, "n_sats": 11, "age_corrections": 9, "alignment_status": 2, "last_used_gnss_pos_tow":
+    500067000, "last_used_gnss_vel_tow": 500067000, "sol_in": [{"sensor_type": 0,
+    "flags": 0}, {"sensor_type": 1, "flags": 2}, {"sensor_type": 0, "flags": 0}, {"sensor_type":
+    0, "flags": 0}, {"sensor_type": 0, "flags": 0}]}'
+  raw_packet: VQ//FQMcuABZAKIACwkAArhqzh24as4dAAABAgAAAAAAACIj
+  sbp:
+    crc: '0x2322'
+    length: 28
+    msg_type: '0xff0f'
+    payload: uABZAKIACwkAArhqzh24as4dAAABAgAAAAAAAA==
+    preamble: '0x55'
+    sender: '0x315'
+version: 3.4.1.dev12+g7ff5295c
+...

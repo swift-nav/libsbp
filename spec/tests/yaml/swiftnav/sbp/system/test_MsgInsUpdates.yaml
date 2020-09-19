@@ -1,0 +1,127 @@
+---
+description: Unit tests for swiftnav.sbp.system MsgInsUpdates v3.4.1.dev12+g7ff5295c.
+generated_on: 2020-09-18 18:23:45.570601
+package: sbp.system
+tests:
+
+- msg:
+    fields:
+      gnsspos: 0
+      gnssvel: 0
+      nhc: 0
+      speed: 0
+      tow: 500066600
+      wheelticks: 0
+      zerovel: 0
+    module: sbp.system
+    name: MsgInsUpdates
+  msg_type: '0xff06'
+  raw_json: '{"preamble": 85, "msg_type": 65286, "sender": 789, "length": 10, "payload":
+    "KGnOHQAAAAAAAA==", "crc": 15017, "tow": 500066600, "gnsspos": 0, "gnssvel": 0,
+    "wheelticks": 0, "speed": 0, "nhc": 0, "zerovel": 0}'
+  raw_packet: VQb/FQMKKGnOHQAAAAAAAKk6
+  sbp:
+    crc: '0x3aa9'
+    length: 10
+    msg_type: '0xff06'
+    payload: KGnOHQAAAAAAAA==
+    preamble: '0x55'
+    sender: '0x315'
+
+- msg:
+    fields:
+      gnsspos: 0
+      gnssvel: 0
+      nhc: 0
+      speed: 0
+      tow: 500066700
+      wheelticks: 0
+      zerovel: 0
+    module: sbp.system
+    name: MsgInsUpdates
+  msg_type: '0xff06'
+  raw_json: '{"preamble": 85, "msg_type": 65286, "sender": 789, "length": 10, "payload":
+    "jGnOHQAAAAAAAA==", "crc": 19109, "tow": 500066700, "gnsspos": 0, "gnssvel": 0,
+    "wheelticks": 0, "speed": 0, "nhc": 0, "zerovel": 0}'
+  raw_packet: VQb/FQMKjGnOHQAAAAAAAKVK
+  sbp:
+    crc: '0x4aa5'
+    length: 10
+    msg_type: '0xff06'
+    payload: jGnOHQAAAAAAAA==
+    preamble: '0x55'
+    sender: '0x315'
+
+- msg:
+    fields:
+      gnsspos: 0
+      gnssvel: 0
+      nhc: 0
+      speed: 0
+      tow: 500066800
+      wheelticks: 0
+      zerovel: 0
+    module: sbp.system
+    name: MsgInsUpdates
+  msg_type: '0xff06'
+  raw_json: '{"preamble": 85, "msg_type": 65286, "sender": 789, "length": 10, "payload":
+    "8GnOHQAAAAAAAA==", "crc": 29274, "tow": 500066800, "gnsspos": 0, "gnssvel": 0,
+    "wheelticks": 0, "speed": 0, "nhc": 0, "zerovel": 0}'
+  raw_packet: VQb/FQMK8GnOHQAAAAAAAFpy
+  sbp:
+    crc: '0x725a'
+    length: 10
+    msg_type: '0xff06'
+    payload: 8GnOHQAAAAAAAA==
+    preamble: '0x55'
+    sender: '0x315'
+
+- msg:
+    fields:
+      gnsspos: 0
+      gnssvel: 0
+      nhc: 0
+      speed: 0
+      tow: 500066900
+      wheelticks: 0
+      zerovel: 0
+    module: sbp.system
+    name: MsgInsUpdates
+  msg_type: '0xff06'
+  raw_json: '{"preamble": 85, "msg_type": 65286, "sender": 789, "length": 10, "payload":
+    "VGrOHQAAAAAAAA==", "crc": 12050, "tow": 500066900, "gnsspos": 0, "gnssvel": 0,
+    "wheelticks": 0, "speed": 0, "nhc": 0, "zerovel": 0}'
+  raw_packet: VQb/FQMKVGrOHQAAAAAAABIv
+  sbp:
+    crc: '0x2f12'
+    length: 10
+    msg_type: '0xff06'
+    payload: VGrOHQAAAAAAAA==
+    preamble: '0x55'
+    sender: '0x315'
+
+- msg:
+    fields:
+      gnsspos: 0
+      gnssvel: 0
+      nhc: 0
+      speed: 0
+      tow: 500067000
+      wheelticks: 0
+      zerovel: 0
+    module: sbp.system
+    name: MsgInsUpdates
+  msg_type: '0xff06'
+  raw_json: '{"preamble": 85, "msg_type": 65286, "sender": 789, "length": 10, "payload":
+    "uGrOHQAAAAAAAA==", "crc": 26447, "tow": 500067000, "gnsspos": 0, "gnssvel": 0,
+    "wheelticks": 0, "speed": 0, "nhc": 0, "zerovel": 0}'
+  raw_packet: VQb/FQMKuGrOHQAAAAAAAE9n
+  sbp:
+    crc: '0x674f'
+    length: 10
+    msg_type: '0xff06'
+    payload: uGrOHQAAAAAAAA==
+    preamble: '0x55'
+    sender: '0x315'
+version: 3.4.1.dev12+g7ff5295c
+...

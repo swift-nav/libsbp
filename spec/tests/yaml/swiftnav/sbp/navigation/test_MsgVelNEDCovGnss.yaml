@@ -1,0 +1,167 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgVelNEDCovGnss v3.4.1.dev12+g7ff5295c.
+generated_on: 2020-09-18 18:23:44.977227
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      cov_d_d: 0.08186359703540802
+      cov_e_d: 0.0050189308822155
+      cov_e_e: 0.00996857974678278
+      cov_n_d: 0.013211467303335667
+      cov_n_e: -0.00013119776849634945
+      cov_n_n: 0.016259418800473213
+      d: 24
+      e: -4
+      flags: 2
+      n: -15
+      n_sats: 16
+      tow: 500066600
+    module: sbp.navigation
+    name: MsgVelNEDCovGnss
+  msg_type: '0x232'
+  raw_json: '{"preamble": 85, "msg_type": 562, "sender": 4096, "length": 42, "payload":
+    "KGnOHfH////8////GAAAAHkyhTwikgm56XRYPEFTIzzYdaQ7GqinPRAC", "crc": 65456, "tow":
+    500066600, "n": -15, "e": -4, "d": 24, "cov_n_n": 0.016259418800473213, "cov_n_e":
+    -0.00013119776849634945, "cov_n_d": 0.013211467303335667, "cov_e_e": 0.00996857974678278,
+    "cov_e_d": 0.0050189308822155, "cov_d_d": 0.08186359703540802, "n_sats": 16, "flags":
+    2}'
+  raw_packet: VTICABAqKGnOHfH////8////GAAAAHkyhTwikgm56XRYPEFTIzzYdaQ7GqinPRACsP8=
+  sbp:
+    crc: '0xffb0'
+    length: 42
+    msg_type: '0x232'
+    payload: KGnOHfH////8////GAAAAHkyhTwikgm56XRYPEFTIzzYdaQ7GqinPRAC
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      cov_d_d: 0.08186233043670654
+      cov_e_d: 0.005018504802137613
+      cov_e_e: 0.0099685899913311
+      cov_n_d: 0.01321119163185358
+      cov_n_e: -0.00013129241415299475
+      cov_n_n: 0.01625930890440941
+      d: 5
+      e: 5
+      flags: 2
+      n: 17
+      n_sats: 16
+      tow: 500066700
+    module: sbp.navigation
+    name: MsgVelNEDCovGnss
+  msg_type: '0x232'
+  raw_json: '{"preamble": 85, "msg_type": 562, "sender": 4096, "length": 42, "payload":
+    "jGnOHREAAAAFAAAABQAAAD4yhTyKqwm5wXNYPExTIzxFcqQ7cKenPRAC", "crc": 53513, "tow":
+    500066700, "n": 17, "e": 5, "d": 5, "cov_n_n": 0.01625930890440941, "cov_n_e":
+    -0.00013129241415299475, "cov_n_d": 0.01321119163185358, "cov_e_e": 0.0099685899913311,
+    "cov_e_d": 0.005018504802137613, "cov_d_d": 0.08186233043670654, "n_sats": 16,
+    "flags": 2}'
+  raw_packet: VTICABAqjGnOHREAAAAFAAAABQAAAD4yhTyKqwm5wXNYPExTIzxFcqQ7cKenPRACCdE=
+  sbp:
+    crc: '0xd109'
+    length: 42
+    msg_type: '0x232'
+    payload: jGnOHREAAAAFAAAABQAAAD4yhTyKqwm5wXNYPExTIzxFcqQ7cKenPRAC
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      cov_d_d: 0.08186107128858566
+      cov_e_d: 0.005018078256398439
+      cov_e_e: 0.009968599304556847
+      cov_n_d: 0.01321091502904892
+      cov_n_e: -0.00013138705980964005
+      cov_n_n: 0.016259199008345604
+      d: 11
+      e: 14
+      flags: 2
+      n: -10
+      n_sats: 16
+      tow: 500066800
+    module: sbp.navigation
+    name: MsgVelNEDCovGnss
+  msg_type: '0x232'
+  raw_json: '{"preamble": 85, "msg_type": 562, "sender": 4096, "length": 42, "payload":
+    "8GnOHfb///8OAAAACwAAAAMyhTzyxAm5mHJYPFZTIzyxbqQ7x6anPRAC", "crc": 33473, "tow":
+    500066800, "n": -10, "e": 14, "d": 11, "cov_n_n": 0.016259199008345604, "cov_n_e":
+    -0.00013138705980964005, "cov_n_d": 0.01321091502904892, "cov_e_e": 0.009968599304556847,
+    "cov_e_d": 0.005018078256398439, "cov_d_d": 0.08186107128858566, "n_sats": 16,
+    "flags": 2}'
+  raw_packet: VTICABAq8GnOHfb///8OAAAACwAAAAMyhTzyxAm5mHJYPFZTIzyxbqQ7x6anPRACwYI=
+  sbp:
+    crc: '0x82c1'
+    length: 42
+    msg_type: '0x232'
+    payload: 8GnOHfb///8OAAAACwAAAAMyhTzyxAm5mHJYPFZTIzyxbqQ7x6anPRAC
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      cov_d_d: 0.08185981214046478
+      cov_e_d: 0.0050176517106592655
+      cov_e_e: 0.009968608617782593
+      cov_n_d: 0.013210639357566833
+      cov_n_e: -0.00013148169091437012
+      cov_n_n: 0.0162590891122818
+      d: 24
+      e: 0
+      flags: 2
+      n: 12
+      n_sats: 16
+      tow: 500066900
+    module: sbp.navigation
+    name: MsgVelNEDCovGnss
+  msg_type: '0x232'
+  raw_json: '{"preamble": 85, "msg_type": 562, "sender": 4096, "length": 42, "payload":
+    "VGrOHQwAAAAAAAAAGAAAAMgxhTxZ3gm5cHFYPGBTIzwda6Q7HqanPRAC", "crc": 21205, "tow":
+    500066900, "n": 12, "e": 0, "d": 24, "cov_n_n": 0.0162590891122818, "cov_n_e":
+    -0.00013148169091437012, "cov_n_d": 0.013210639357566833, "cov_e_e": 0.009968608617782593,
+    "cov_e_d": 0.0050176517106592655, "cov_d_d": 0.08185981214046478, "n_sats": 16,
+    "flags": 2}'
+  raw_packet: VTICABAqVGrOHQwAAAAAAAAAGAAAAMgxhTxZ3gm5cHFYPGBTIzwda6Q7HqanPRAC1VI=
+  sbp:
+    crc: '0x52d5'
+    length: 42
+    msg_type: '0x232'
+    payload: VGrOHQwAAAAAAAAAGAAAAMgxhTxZ3gm5cHFYPGBTIzwda6Q7HqanPRAC
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      cov_d_d: 0.0818585529923439
+      cov_e_d: 0.005017225164920092
+      cov_e_e: 0.009968618862330914
+      cov_n_d: 0.013210362754762173
+      cov_n_e: -0.0001315763220191002
+      cov_n_n: 0.016258979216217995
+      d: -41
+      e: 1
+      flags: 2
+      n: 3
+      n_sats: 16
+      tow: 500067000
+    module: sbp.navigation
+    name: MsgVelNEDCovGnss
+  msg_type: '0x232'
+  raw_json: '{"preamble": 85, "msg_type": 562, "sender": 4096, "length": 42, "payload":
+    "uGrOHQMAAAABAAAA1////40xhTzA9wm5R3BYPGtTIzyJZ6Q7daWnPRAC", "crc": 47669, "tow":
+    500067000, "n": 3, "e": 1, "d": -41, "cov_n_n": 0.016258979216217995, "cov_n_e":
+    -0.0001315763220191002, "cov_n_d": 0.013210362754762173, "cov_e_e": 0.009968618862330914,
+    "cov_e_d": 0.005017225164920092, "cov_d_d": 0.0818585529923439, "n_sats": 16,
+    "flags": 2}'
+  raw_packet: VTICABAquGrOHQMAAAABAAAA1////40xhTzA9wm5R3BYPGtTIzyJZ6Q7daWnPRACNbo=
+  sbp:
+    crc: '0xba35'
+    length: 42
+    msg_type: '0x232'
+    payload: uGrOHQMAAAABAAAA1////40xhTzA9wm5R3BYPGtTIzyJZ6Q7daWnPRAC
+    preamble: '0x55'
+    sender: '0x1000'
+version: 3.4.1.dev12+g7ff5295c
+...

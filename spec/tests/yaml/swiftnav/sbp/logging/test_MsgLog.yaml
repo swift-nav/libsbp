@@ -1,0 +1,83 @@
+---
+description: Unit tests for swiftnav.sbp.logging MsgLog v3.4.1.dev12+g7ff5295c-dirty.
+generated_on: 2020-09-18 18:32:15.365082
+package: sbp.logging
+tests:
+
+- msg:
+    fields:
+      level: 5
+      text: "MCU FW version: v1.0.2-3-gc9285c5-dirty\0"
+    module: sbp.logging
+    name: MsgLog
+  msg_type: '0x401'
+  raw_json: '{"preamble": 85, "msg_type": 1025, "sender": 170, "length": 41, "payload":
+    "BU1DVSBGVyB2ZXJzaW9uOiB2MS4wLjItMy1nYzkyODVjNS1kaXJ0eQA=", "crc": 61647, "level":
+    5, "text": "MCU FW version: v1.0.2-3-gc9285c5-dirty\u0000"}'
+  raw_packet: VQEEqgApBU1DVSBGVyB2ZXJzaW9uOiB2MS4wLjItMy1nYzkyODVjNS1kaXJ0eQDP8A==
+  sbp:
+    crc: '0xf0cf'
+    length: 41
+    msg_type: '0x401'
+    payload: BU1DVSBGVyB2ZXJzaW9uOiB2MS4wLjItMy1nYzkyODVjNS1kaXJ0eQA=
+    preamble: '0x55'
+    sender: '0xaa'
+
+- msg:
+    fields:
+      level: 5
+      text: "MCU Unique ID: 0042001A-31395119-35333634\0"
+    module: sbp.logging
+    name: MsgLog
+  msg_type: '0x401'
+  raw_json: '{"preamble": 85, "msg_type": 1025, "sender": 170, "length": 43, "payload":
+    "BU1DVSBVbmlxdWUgSUQ6IDAwNDIwMDFBLTMxMzk1MTE5LTM1MzMzNjM0AA==", "crc": 2463, "level":
+    5, "text": "MCU Unique ID: 0042001A-31395119-35333634\u0000"}'
+  raw_packet: VQEEqgArBU1DVSBVbmlxdWUgSUQ6IDAwNDIwMDFBLTMxMzk1MTE5LTM1MzMzNjM0AJ8J
+  sbp:
+    crc: '0x99f'
+    length: 43
+    msg_type: '0x401'
+    payload: BU1DVSBVbmlxdWUgSUQ6IDAwNDIwMDFBLTMxMzk1MTE5LTM1MzMzNjM0AA==
+    preamble: '0x55'
+    sender: '0xaa'
+
+- msg:
+    fields:
+      level: 5
+      text: "PGM HW version: 01097-01 Rev 03\0"
+    module: sbp.logging
+    name: MsgLog
+  msg_type: '0x401'
+  raw_json: '{"preamble": 85, "msg_type": 1025, "sender": 170, "length": 33, "payload":
+    "BVBHTSBIVyB2ZXJzaW9uOiAwMTA5Ny0wMSBSZXYgMDMA", "crc": 28656, "level": 5, "text":
+    "PGM HW version: 01097-01 Rev 03\u0000"}'
+  raw_packet: VQEEqgAhBVBHTSBIVyB2ZXJzaW9uOiAwMTA5Ny0wMSBSZXYgMDMA8G8=
+  sbp:
+    crc: '0x6ff0'
+    length: 33
+    msg_type: '0x401'
+    payload: BVBHTSBIVyB2ZXJzaW9uOiAwMTA5Ny0wMSBSZXYgMDMA
+    preamble: '0x55'
+    sender: '0xaa'
+
+- msg:
+    fields:
+      level: 5
+      text: "PGM process version: 01109-01 Rev 02\0"
+    module: sbp.logging
+    name: MsgLog
+  msg_type: '0x401'
+  raw_json: '{"preamble": 85, "msg_type": 1025, "sender": 170, "length": 38, "payload":
+    "BVBHTSBwcm9jZXNzIHZlcnNpb246IDAxMTA5LTAxIFJldiAwMgA=", "crc": 64908, "level":
+    5, "text": "PGM process version: 01109-01 Rev 02\u0000"}'
+  raw_packet: VQEEqgAmBVBHTSBwcm9jZXNzIHZlcnNpb246IDAxMTA5LTAxIFJldiAwMgCM/Q==
+  sbp:
+    crc: '0xfd8c'
+    length: 38
+    msg_type: '0x401'
+    payload: BVBHTSBwcm9jZXNzIHZlcnNpb246IDAxMTA5LTAxIFJldiAwMgA=
+    preamble: '0x55'
+    sender: '0xaa'
+version: 3.4.1.dev12+g7ff5295c-dirty
+...

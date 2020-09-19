@@ -1,0 +1,322 @@
+---
+description: Unit tests for swiftnav.sbp.observation MsgEphemerisGal v3.4.1.dev12+g7ff5295c.
+generated_on: 2020-09-18 18:23:45.936384
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      af0: 0.0027377924416214223
+      af1: -4.3741010813391755e-11
+      af2: 0.0
+      bgd_e1e5a: 3.958120942115784e-09
+      bgd_e1e5b: 4.423782229423523e-09
+      c_ic: -2.7939677238464355e-08
+      c_is: 5.587935447692871e-09
+      c_rc: 280.125
+      c_rs: -72.71875
+      c_uc: -3.3099204301834106e-06
+      c_us: 3.242865204811096e-06
+      common:
+        fit_interval: 14400
+        health_bits: 0
+        sid:
+          code: 14
+          sat: 26
+        toe:
+          tow: 499200
+          wn: 2122
+        ura: 3.119999885559082
+        valid: 1
+      dn: 2.8640478705183966e-09
+      ecc: 0.00023651926312595606
+      inc: 0.985511758817649
+      inc_dot: 7.10743891050207e-11
+      iodc: 64
+      iode: 64
+      m0: -0.6073780937012754
+      omega0: 0.9345657669068792
+      omegadot: -5.668450399426048e-09
+      source: 0
+      sqrta: 5440.6088581085205
+      toc:
+        tow: 499200
+        wn: 2122
+      w: 3.06917874848284
+    module: sbp.observation
+    name: MsgEphemerisGal
+  msg_type: '0x8d'
+  raw_json: '{"preamble": 85, "msg_type": 141, "sender": 51228, "length": 153, "payload":
+    "Gg4AngcASggUrkdAQDgAAAEAAACIMQAAmDEAcJHCABCMQwAgXrYAoFk2AADwsgAAwDGEnISdG5ooPiQfGC+kb+O/AAAAAEUALz8AACDem0C1QEZwmnf25+0/n7q08YZYOL7+fnKWrY0IQGw/vvRPie8/Dv+AXmqJ0z3///8fkW1mP/7/////C8i9AAAAAACeBwBKCEAAQAAA",
+    "crc": 16461, "common": {"sid": {"sat": 26, "code": 14}, "toe": {"tow": 499200,
+    "wn": 2122}, "ura": 3.119999885559082, "fit_interval": 14400, "valid": 1, "health_bits":
+    0}, "bgd_e1e5a": 3.958120942115784e-09, "bgd_e1e5b": 4.423782229423523e-09, "c_rs":
+    -72.71875, "c_rc": 280.125, "c_uc": -3.3099204301834106e-06, "c_us": 3.242865204811096e-06,
+    "c_ic": -2.7939677238464355e-08, "c_is": 5.587935447692871e-09, "dn": 2.8640478705183966e-09,
+    "m0": -0.6073780937012754, "ecc": 0.00023651926312595606, "sqrta": 5440.6088581085205,
+    "omega0": 0.9345657669068792, "omegadot": -5.668450399426048e-09, "w": 3.06917874848284,
+    "inc": 0.985511758817649, "inc_dot": 7.10743891050207e-11, "af0": 0.0027377924416214223,
+    "af1": -4.3741010813391755e-11, "af2": 0.0, "toc": {"tow": 499200, "wn": 2122},
+    "iode": 64, "iodc": 64, "source": 0}'
+  raw_packet: VY0AHMiZGg4AngcASggUrkdAQDgAAAEAAACIMQAAmDEAcJHCABCMQwAgXrYAoFk2AADwsgAAwDGEnISdG5ooPiQfGC+kb+O/AAAAAEUALz8AACDem0C1QEZwmnf25+0/n7q08YZYOL7+fnKWrY0IQGw/vvRPie8/Dv+AXmqJ0z3///8fkW1mP/7/////C8i9AAAAAACeBwBKCEAAQAAATUA=
+  sbp:
+    crc: '0x404d'
+    length: 153
+    msg_type: '0x8d'
+    payload: Gg4AngcASggUrkdAQDgAAAEAAACIMQAAmDEAcJHCABCMQwAgXrYAoFk2AADwsgAAwDGEnISdG5ooPiQfGC+kb+O/AAAAAEUALz8AACDem0C1QEZwmnf25+0/n7q08YZYOL7+fnKWrY0IQGw/vvRPie8/Dv+AXmqJ0z3///8fkW1mP/7/////C8i9AAAAAACeBwBKCEAAQAAA
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      af0: -0.00046285247663035983
+      af1: 1.84741111297626e-13
+      af2: 0.0
+      bgd_e1e5a: -5.3551048040390015e-09
+      bgd_e1e5b: -6.05359673500061e-09
+      c_ic: -9.313225746154785e-09
+      c_is: 4.6566128730773926e-08
+      c_rc: 288.8125
+      c_rs: -88.59375
+      c_uc: -4.239380359649658e-06
+      c_us: 2.8796494007110596e-06
+      common:
+        fit_interval: 14400
+        health_bits: 0
+        sid:
+          code: 14
+          sat: 33
+        toe:
+          tow: 497400
+          wn: 2122
+        ura: 3.119999885559082
+        valid: 1
+      dn: 2.719756145903179e-09
+      ecc: 6.174109876155853e-05
+      inc: 0.9923100634800401
+      inc_dot: 3.893019302737314e-11
+      iodc: 61
+      iode: 61
+      m0: -2.1903136386461908
+      omega0: 0.9284548538028198
+      omegadot: -5.670593345831224e-09
+      source: 0
+      sqrta: 5440.603193283081
+      toc:
+        tow: 497400
+        wn: 2122
+      w: -2.6142072993586285
+    module: sbp.observation
+    name: MsgEphemerisGal
+  msg_type: '0x8d'
+  raw_json: '{"preamble": 85, "msg_type": 141, "sender": 51228, "length": 153, "payload":
+    "IQ74lgcASggUrkdAQDgAAAEAAAC4sQAA0LEAMLHCAGiQQwBAjrYAQEE2AAAgsgAASDPLv3yYzlwnPsa+LyjDhQHAAAAAAGAvED8AAOBqmkC1QIeoHPTmte0/A6FEIeJaOL6nrT2E5ekEwDxuxAgBwe8/Zg7CBfBmxT3///8/YFU+v/7//////0k9AAAAAPiWBwBKCD0APQAA",
+    "crc": 6313, "common": {"sid": {"sat": 33, "code": 14}, "toe": {"tow": 497400,
+    "wn": 2122}, "ura": 3.119999885559082, "fit_interval": 14400, "valid": 1, "health_bits":
+    0}, "bgd_e1e5a": -5.3551048040390015e-09, "bgd_e1e5b": -6.05359673500061e-09,
+    "c_rs": -88.59375, "c_rc": 288.8125, "c_uc": -4.239380359649658e-06, "c_us": 2.8796494007110596e-06,
+    "c_ic": -9.313225746154785e-09, "c_is": 4.6566128730773926e-08, "dn": 2.719756145903179e-09,
+    "m0": -2.1903136386461908, "ecc": 6.174109876155853e-05, "sqrta": 5440.603193283081,
+    "omega0": 0.9284548538028198, "omegadot": -5.670593345831224e-09, "w": -2.6142072993586285,
+    "inc": 0.9923100634800401, "inc_dot": 3.893019302737314e-11, "af0": -0.00046285247663035983,
+    "af1": 1.84741111297626e-13, "af2": 0.0, "toc": {"tow": 497400, "wn": 2122}, "iode":
+    61, "iodc": 61, "source": 0}'
+  raw_packet: VY0AHMiZIQ74lgcASggUrkdAQDgAAAEAAAC4sQAA0LEAMLHCAGiQQwBAjrYAQEE2AAAgsgAASDPLv3yYzlwnPsa+LyjDhQHAAAAAAGAvED8AAOBqmkC1QIeoHPTmte0/A6FEIeJaOL6nrT2E5ekEwDxuxAgBwe8/Zg7CBfBmxT3///8/YFU+v/7//////0k9AAAAAPiWBwBKCD0APQAAqRg=
+  sbp:
+    crc: '0x18a9'
+    length: 153
+    msg_type: '0x8d'
+    payload: IQ74lgcASggUrkdAQDgAAAEAAAC4sQAA0LEAMLHCAGiQQwBAjrYAQEE2AAAgsgAASDPLv3yYzlwnPsa+LyjDhQHAAAAAAGAvED8AAOBqmkC1QIeoHPTmte0/A6FEIeJaOL6nrT2E5ekEwDxuxAgBwe8/Zg7CBfBmxT3///8/YFU+v/7//////0k9AAAAAPiWBwBKCD0APQAA
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      af0: 7.600791286677121e-05
+      af1: 9.436007530894129e-12
+      af2: 0.0
+      bgd_e1e5a: -5.587935447692871e-09
+      bgd_e1e5b: -5.820766091346741e-09
+      c_ic: -4.284083843231201e-08
+      c_is: -2.7939677238464355e-08
+      c_rc: 158.4375
+      c_rs: -7.65625
+      c_uc: -3.688037395477295e-07
+      c_us: 8.480623364448547e-06
+      common:
+        fit_interval: 14400
+        health_bits: 0
+        sid:
+          code: 14
+          sat: 19
+        toe:
+          tow: 499200
+          wn: 2122
+        ura: 3.119999885559082
+        valid: 1
+      dn: 3.4029988914202875e-09
+      ecc: 7.352512329816818e-05
+      inc: 0.9602396632077127
+      inc_dot: 2.7608292853357283e-10
+      iodc: 64
+      iode: 64
+      m0: 0.9103355308317173
+      omega0: 3.0358214308795257
+      omegadot: -5.525230148013418e-09
+      source: 0
+      sqrta: 5440.609079360962
+      toc:
+        tow: 499200
+        wn: 2122
+      w: -1.2435193599955705
+    module: sbp.observation
+    name: MsgEphemerisGal
+  msg_type: '0x8d'
+  raw_json: '{"preamble": 85, "msg_type": 141, "sender": 51228, "length": 153, "payload":
+    "Ew4AngcASggUrkdAQDgAAAEAAADAsQAAyLEAAPXAAHAeQwAAxrQASA43AAA4swAA8LJzS0IRRjstPonjqfp3Ie0/AAAAADBGEz8AAKDsm0C1QOf8EL9cSQhAdL/4Bg67N74x+3GOdOXzv+OSuYdIuu4/Cndc+eb48j3/////zewTP///////v6Q9AAAAAACeBwBKCEAAQAAA",
+    "crc": 49923, "common": {"sid": {"sat": 19, "code": 14}, "toe": {"tow": 499200,
+    "wn": 2122}, "ura": 3.119999885559082, "fit_interval": 14400, "valid": 1, "health_bits":
+    0}, "bgd_e1e5a": -5.587935447692871e-09, "bgd_e1e5b": -5.820766091346741e-09,
+    "c_rs": -7.65625, "c_rc": 158.4375, "c_uc": -3.688037395477295e-07, "c_us": 8.480623364448547e-06,
+    "c_ic": -4.284083843231201e-08, "c_is": -2.7939677238464355e-08, "dn": 3.4029988914202875e-09,
+    "m0": 0.9103355308317173, "ecc": 7.352512329816818e-05, "sqrta": 5440.609079360962,
+    "omega0": 3.0358214308795257, "omegadot": -5.525230148013418e-09, "w": -1.2435193599955705,
+    "inc": 0.9602396632077127, "inc_dot": 2.7608292853357283e-10, "af0": 7.600791286677121e-05,
+    "af1": 9.436007530894129e-12, "af2": 0.0, "toc": {"tow": 499200, "wn": 2122},
+    "iode": 64, "iodc": 64, "source": 0}'
+  raw_packet: VY0AHMiZEw4AngcASggUrkdAQDgAAAEAAADAsQAAyLEAAPXAAHAeQwAAxrQASA43AAA4swAA8LJzS0IRRjstPonjqfp3Ie0/AAAAADBGEz8AAKDsm0C1QOf8EL9cSQhAdL/4Bg67N74x+3GOdOXzv+OSuYdIuu4/Cndc+eb48j3/////zewTP///////v6Q9AAAAAACeBwBKCEAAQAAAA8M=
+  sbp:
+    crc: '0xc303'
+    length: 153
+    msg_type: '0x8d'
+    payload: Ew4AngcASggUrkdAQDgAAAEAAADAsQAAyLEAAPXAAHAeQwAAxrQASA43AAA4swAA8LJzS0IRRjstPonjqfp3Ie0/AAAAADBGEz8AAKDsm0C1QOf8EL9cSQhAdL/4Bg67N74x+3GOdOXzv+OSuYdIuu4/Cndc+eb48j3/////zewTP///////v6Q9AAAAAACeBwBKCEAAQAAA
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      af0: 0.0027377924416214223
+      af1: -4.3741010813391755e-11
+      af2: 0.0
+      bgd_e1e5a: 3.958120942115784e-09
+      bgd_e1e5b: 4.423782229423523e-09
+      c_ic: -2.7939677238464355e-08
+      c_is: 5.587935447692871e-09
+      c_rc: 280.125
+      c_rs: -72.71875
+      c_uc: -3.3099204301834106e-06
+      c_us: 3.242865204811096e-06
+      common:
+        fit_interval: 14400
+        health_bits: 0
+        sid:
+          code: 14
+          sat: 26
+        toe:
+          tow: 499200
+          wn: 2122
+        ura: 3.119999885559082
+        valid: 1
+      dn: 2.8640478705183966e-09
+      ecc: 0.00023651926312595606
+      inc: 0.985511758817649
+      inc_dot: 7.10743891050207e-11
+      iodc: 64
+      iode: 64
+      m0: -0.6073780937012754
+      omega0: 0.9345657669068792
+      omegadot: -5.668450399426048e-09
+      source: 0
+      sqrta: 5440.6088581085205
+      toc:
+        tow: 499200
+        wn: 2122
+      w: 3.06917874848284
+    module: sbp.observation
+    name: MsgEphemerisGal
+  msg_type: '0x8d'
+  raw_json: '{"preamble": 85, "msg_type": 141, "sender": 51228, "length": 153, "payload":
+    "Gg4AngcASggUrkdAQDgAAAEAAACIMQAAmDEAcJHCABCMQwAgXrYAoFk2AADwsgAAwDGEnISdG5ooPiQfGC+kb+O/AAAAAEUALz8AACDem0C1QEZwmnf25+0/n7q08YZYOL7+fnKWrY0IQGw/vvRPie8/Dv+AXmqJ0z3///8fkW1mP/7/////C8i9AAAAAACeBwBKCEAAQAAA",
+    "crc": 16461, "common": {"sid": {"sat": 26, "code": 14}, "toe": {"tow": 499200,
+    "wn": 2122}, "ura": 3.119999885559082, "fit_interval": 14400, "valid": 1, "health_bits":
+    0}, "bgd_e1e5a": 3.958120942115784e-09, "bgd_e1e5b": 4.423782229423523e-09, "c_rs":
+    -72.71875, "c_rc": 280.125, "c_uc": -3.3099204301834106e-06, "c_us": 3.242865204811096e-06,
+    "c_ic": -2.7939677238464355e-08, "c_is": 5.587935447692871e-09, "dn": 2.8640478705183966e-09,
+    "m0": -0.6073780937012754, "ecc": 0.00023651926312595606, "sqrta": 5440.6088581085205,
+    "omega0": 0.9345657669068792, "omegadot": -5.668450399426048e-09, "w": 3.06917874848284,
+    "inc": 0.985511758817649, "inc_dot": 7.10743891050207e-11, "af0": 0.0027377924416214223,
+    "af1": -4.3741010813391755e-11, "af2": 0.0, "toc": {"tow": 499200, "wn": 2122},
+    "iode": 64, "iodc": 64, "source": 0}'
+  raw_packet: VY0AHMiZGg4AngcASggUrkdAQDgAAAEAAACIMQAAmDEAcJHCABCMQwAgXrYAoFk2AADwsgAAwDGEnISdG5ooPiQfGC+kb+O/AAAAAEUALz8AACDem0C1QEZwmnf25+0/n7q08YZYOL7+fnKWrY0IQGw/vvRPie8/Dv+AXmqJ0z3///8fkW1mP/7/////C8i9AAAAAACeBwBKCEAAQAAATUA=
+  sbp:
+    crc: '0x404d'
+    length: 153
+    msg_type: '0x8d'
+    payload: Gg4AngcASggUrkdAQDgAAAEAAACIMQAAmDEAcJHCABCMQwAgXrYAoFk2AADwsgAAwDGEnISdG5ooPiQfGC+kb+O/AAAAAEUALz8AACDem0C1QEZwmnf25+0/n7q08YZYOL7+fnKWrY0IQGw/vvRPie8/Dv+AXmqJ0z3///8fkW1mP/7/////C8i9AAAAAACeBwBKCEAAQAAA
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      af0: -0.0004740656004287302
+      af1: -2.70006239588838e-13
+      af2: 0.0
+      bgd_e1e5a: 2.561137080192566e-09
+      bgd_e1e5b: 2.7939677238464355e-09
+      c_ic: 4.470348358154297e-08
+      c_is: 1.862645149230957e-09
+      c_rc: 157.5625
+      c_rs: 111.4375
+      c_uc: 5.083158612251282e-06
+      c_us: 8.974224328994751e-06
+      common:
+        fit_interval: 14400
+        health_bits: 0
+        sid:
+          code: 14
+          sat: 31
+        toe:
+          tow: 499200
+          wn: 2122
+        ura: 3.119999885559082
+        valid: 1
+      dn: 2.6147517720495303e-09
+      ecc: 0.0004427171079441905
+      inc: 0.9805731419501476
+      inc_dot: -3.4072847842306404e-10
+      iodc: 64
+      iode: 64
+      m0: -1.4842457980979706
+      omega0: -1.152405318330012
+      omegadot: -5.347722754117964e-09
+      source: 0
+      sqrta: 5440.625150680542
+      toc:
+        tow: 499200
+        wn: 2122
+      w: -1.8186656891716209
+    module: sbp.observation
+    name: MsgEphemerisGal
+  msg_type: '0x8d'
+  raw_json: '{"preamble": 85, "msg_type": 141, "sender": 51228, "length": 153, "payload":
+    "Hw4AngcASggUrkdAQDgAAAEAAAAwMQAAQDEA4N5CAJAdQwCQqjYAkBY3AABAMwAAADFtjWZj5nUmPjXmoIV4v/e/AAAAgI8DPT8AAOAJoEC1QARsH49AcPK/Bl4+I+L3Nr4yl5UxQRn9vxJhAO3aYO8/A4QBpihq973///8/gBE/v////////1K9AAAAAACeBwBKCEAAQAAA",
+    "crc": 984, "common": {"sid": {"sat": 31, "code": 14}, "toe": {"tow": 499200,
+    "wn": 2122}, "ura": 3.119999885559082, "fit_interval": 14400, "valid": 1, "health_bits":
+    0}, "bgd_e1e5a": 2.561137080192566e-09, "bgd_e1e5b": 2.7939677238464355e-09, "c_rs":
+    111.4375, "c_rc": 157.5625, "c_uc": 5.083158612251282e-06, "c_us": 8.974224328994751e-06,
+    "c_ic": 4.470348358154297e-08, "c_is": 1.862645149230957e-09, "dn": 2.6147517720495303e-09,
+    "m0": -1.4842457980979706, "ecc": 0.0004427171079441905, "sqrta": 5440.625150680542,
+    "omega0": -1.152405318330012, "omegadot": -5.347722754117964e-09, "w": -1.8186656891716209,
+    "inc": 0.9805731419501476, "inc_dot": -3.4072847842306404e-10, "af0": -0.0004740656004287302,
+    "af1": -2.70006239588838e-13, "af2": 0.0, "toc": {"tow": 499200, "wn": 2122},
+    "iode": 64, "iodc": 64, "source": 0}'
+  raw_packet: VY0AHMiZHw4AngcASggUrkdAQDgAAAEAAAAwMQAAQDEA4N5CAJAdQwCQqjYAkBY3AABAMwAAADFtjWZj5nUmPjXmoIV4v/e/AAAAgI8DPT8AAOAJoEC1QARsH49AcPK/Bl4+I+L3Nr4yl5UxQRn9vxJhAO3aYO8/A4QBpihq973///8/gBE/v////////1K9AAAAAACeBwBKCEAAQAAA2AM=
+  sbp:
+    crc: '0x3d8'
+    length: 153
+    msg_type: '0x8d'
+    payload: Hw4AngcASggUrkdAQDgAAAEAAAAwMQAAQDEA4N5CAJAdQwCQqjYAkBY3AABAMwAAADFtjWZj5nUmPjXmoIV4v/e/AAAAgI8DPT8AAOAJoEC1QARsH49AcPK/Bl4+I+L3Nr4yl5UxQRn9vxJhAO3aYO8/A4QBpihq973///8/gBE/v////////1K9AAAAAACeBwBKCEAAQAAA
+    preamble: '0x55'
+    sender: '0xc81c'
+version: 3.4.1.dev12+g7ff5295c
+...

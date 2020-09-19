@@ -1,0 +1,107 @@
+---
+description: Unit tests for swiftnav.sbp.observation MsgBasePosECEF v3.4.1.dev12+g7ff5295c.
+generated_on: 2020-09-18 18:23:45.718658
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      x: -2715668.8018
+      y: -4371277.9681
+      z: 3755474.6092
+    module: sbp.observation
+    name: MsgBasePosECEF
+  msg_type: '0x48'
+  raw_json: '{"preamble": 85, "msg_type": 72, "sender": 0, "length": 24, "payload":
+    "5WGhZgq4RMG0WfV906xQwf5D+k3ppkxB", "crc": 47527, "x": -2715668.8018, "y": -4371277.9681,
+    "z": 3755474.6092}'
+  raw_packet: VUgAAAAY5WGhZgq4RMG0WfV906xQwf5D+k3ppkxBp7k=
+  sbp:
+    crc: '0xb9a7'
+    length: 24
+    msg_type: '0x48'
+    payload: 5WGhZgq4RMG0WfV906xQwf5D+k3ppkxB
+    preamble: '0x55'
+    sender: '0x0'
+
+- msg:
+    fields:
+      x: -2684185.4532
+      y: -4320601.5743
+      z: 3835340.2343
+    module: sbp.observation
+    name: MsgBasePosECEF
+  msg_type: '0x48'
+  raw_json: '{"preamble": 85, "msg_type": 72, "sender": 51228, "length": 24, "payload":
+    "JXUCuox6RMHKVMFkVntQwduK/R3mQk1B", "crc": 40530, "x": -2684185.4532, "y": -4320601.5743,
+    "z": 3835340.2343}'
+  raw_packet: VUgAHMgYJXUCuox6RMHKVMFkVntQwduK/R3mQk1BUp4=
+  sbp:
+    crc: '0x9e52'
+    length: 24
+    msg_type: '0x48'
+    payload: JXUCuox6RMHKVMFkVntQwduK/R3mQk1B
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      x: -2715668.8018
+      y: -4371277.9681
+      z: 3755474.6092
+    module: sbp.observation
+    name: MsgBasePosECEF
+  msg_type: '0x48'
+  raw_json: '{"preamble": 85, "msg_type": 72, "sender": 0, "length": 24, "payload":
+    "5WGhZgq4RMG0WfV906xQwf5D+k3ppkxB", "crc": 47527, "x": -2715668.8018, "y": -4371277.9681,
+    "z": 3755474.6092}'
+  raw_packet: VUgAAAAY5WGhZgq4RMG0WfV906xQwf5D+k3ppkxBp7k=
+  sbp:
+    crc: '0xb9a7'
+    length: 24
+    msg_type: '0x48'
+    payload: 5WGhZgq4RMG0WfV906xQwf5D+k3ppkxB
+    preamble: '0x55'
+    sender: '0x0'
+
+- msg:
+    fields:
+      x: -2684186.25
+      y: -4320602.1485
+      z: 3835340.2265
+    module: sbp.observation
+    name: MsgBasePosECEF
+  msg_type: '0x48'
+  raw_json: '{"preamble": 85, "msg_type": 72, "sender": 51228, "length": 24, "payload":
+    "AAAAII16RMElBoGJVntQwbbz/RzmQk1B", "crc": 18744, "x": -2684186.25, "y": -4320602.1485,
+    "z": 3835340.2265}'
+  raw_packet: VUgAHMgYAAAAII16RMElBoGJVntQwbbz/RzmQk1BOEk=
+  sbp:
+    crc: '0x4938'
+    length: 24
+    msg_type: '0x48'
+    payload: AAAAII16RMElBoGJVntQwbbz/RzmQk1B
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      x: -2715668.8018
+      y: -4371277.9681
+      z: 3755474.6092
+    module: sbp.observation
+    name: MsgBasePosECEF
+  msg_type: '0x48'
+  raw_json: '{"preamble": 85, "msg_type": 72, "sender": 0, "length": 24, "payload":
+    "5WGhZgq4RMG0WfV906xQwf5D+k3ppkxB", "crc": 47527, "x": -2715668.8018, "y": -4371277.9681,
+    "z": 3755474.6092}'
+  raw_packet: VUgAAAAY5WGhZgq4RMG0WfV906xQwf5D+k3ppkxBp7k=
+  sbp:
+    crc: '0xb9a7'
+    length: 24
+    msg_type: '0x48'
+    payload: 5WGhZgq4RMG0WfV906xQwf5D+k3ppkxB
+    preamble: '0x55'
+    sender: '0x0'
+version: 3.4.1.dev12+g7ff5295c
+...

@@ -1,0 +1,102 @@
+---
+description: Unit tests for swiftnav.sbp.imu MsgImuAux v3.4.1.dev12+g7ff5295c.
+generated_on: 2020-09-18 18:23:45.692712
+package: sbp.imu
+tests:
+
+- msg:
+    fields:
+      imu_conf: 66
+      imu_type: 1
+      temp: 5340
+    module: sbp.imu
+    name: MsgImuAux
+  msg_type: '0x901'
+  raw_json: '{"preamble": 85, "msg_type": 2305, "sender": 51228, "length": 4, "payload":
+    "AdwUQg==", "crc": 11326, "imu_type": 1, "temp": 5340, "imu_conf": 66}'
+  raw_packet: VQEJHMgEAdwUQj4s
+  sbp:
+    crc: '0x2c3e'
+    length: 4
+    msg_type: '0x901'
+    payload: AdwUQg==
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      imu_conf: 66
+      imu_type: 1
+      temp: 5400
+    module: sbp.imu
+    name: MsgImuAux
+  msg_type: '0x901'
+  raw_json: '{"preamble": 85, "msg_type": 2305, "sender": 51228, "length": 4, "payload":
+    "ARgVQg==", "crc": 58680, "imu_type": 1, "temp": 5400, "imu_conf": 66}'
+  raw_packet: VQEJHMgEARgVQjjl
+  sbp:
+    crc: '0xe538'
+    length: 4
+    msg_type: '0x901'
+    payload: ARgVQg==
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      imu_conf: 66
+      imu_type: 1
+      temp: 5417
+    module: sbp.imu
+    name: MsgImuAux
+  msg_type: '0x901'
+  raw_json: '{"preamble": 85, "msg_type": 2305, "sender": 51228, "length": 4, "payload":
+    "ASkVQg==", "crc": 6061, "imu_type": 1, "temp": 5417, "imu_conf": 66}'
+  raw_packet: VQEJHMgEASkVQq0X
+  sbp:
+    crc: '0x17ad'
+    length: 4
+    msg_type: '0x901'
+    payload: ASkVQg==
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      imu_conf: 66
+      imu_type: 1
+      temp: 5447
+    module: sbp.imu
+    name: MsgImuAux
+  msg_type: '0x901'
+  raw_json: '{"preamble": 85, "msg_type": 2305, "sender": 51228, "length": 4, "payload":
+    "AUcVQg==", "crc": 38855, "imu_type": 1, "temp": 5447, "imu_conf": 66}'
+  raw_packet: VQEJHMgEAUcVQseX
+  sbp:
+    crc: '0x97c7'
+    length: 4
+    msg_type: '0x901'
+    payload: AUcVQg==
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      imu_conf: 66
+      imu_type: 1
+      temp: 5480
+    module: sbp.imu
+    name: MsgImuAux
+  msg_type: '0x901'
+  raw_json: '{"preamble": 85, "msg_type": 2305, "sender": 51228, "length": 4, "payload":
+    "AWgVQg==", "crc": 15664, "imu_type": 1, "temp": 5480, "imu_conf": 66}'
+  raw_packet: VQEJHMgEAWgVQjA9
+  sbp:
+    crc: '0x3d30'
+    length: 4
+    msg_type: '0x901'
+    payload: AWgVQg==
+    preamble: '0x55'
+    sender: '0xc81c'
+version: 3.4.1.dev12+g7ff5295c
+...

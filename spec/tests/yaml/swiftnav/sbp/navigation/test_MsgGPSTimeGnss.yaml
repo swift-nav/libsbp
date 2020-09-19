@@ -1,0 +1,112 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgGPSTimeGnss v3.4.1.dev12+g7ff5295c.
+generated_on: 2020-09-18 18:23:44.774682
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      flags: 1
+      ns_residual: 25
+      tow: 500066600
+      wn: 2122
+    module: sbp.navigation
+    name: MsgGPSTimeGnss
+  msg_type: '0x104'
+  raw_json: '{"preamble": 85, "msg_type": 260, "sender": 4096, "length": 11, "payload":
+    "Sggoac4dGQAAAAE=", "crc": 56545, "wn": 2122, "tow": 500066600, "ns_residual":
+    25, "flags": 1}'
+  raw_packet: VQQBABALSggoac4dGQAAAAHh3A==
+  sbp:
+    crc: '0xdce1'
+    length: 11
+    msg_type: '0x104'
+    payload: Sggoac4dGQAAAAE=
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      flags: 1
+      ns_residual: 25
+      tow: 500066700
+      wn: 2122
+    module: sbp.navigation
+    name: MsgGPSTimeGnss
+  msg_type: '0x104'
+  raw_json: '{"preamble": 85, "msg_type": 260, "sender": 4096, "length": 11, "payload":
+    "SgiMac4dGQAAAAE=", "crc": 22592, "wn": 2122, "tow": 500066700, "ns_residual":
+    25, "flags": 1}'
+  raw_packet: VQQBABALSgiMac4dGQAAAAFAWA==
+  sbp:
+    crc: '0x5840'
+    length: 11
+    msg_type: '0x104'
+    payload: SgiMac4dGQAAAAE=
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      flags: 1
+      ns_residual: 25
+      tow: 500066800
+      wn: 2122
+    module: sbp.navigation
+    name: MsgGPSTimeGnss
+  msg_type: '0x104'
+  raw_json: '{"preamble": 85, "msg_type": 260, "sender": 4096, "length": 11, "payload":
+    "Sgjwac4dGQAAAAE=", "crc": 18059, "wn": 2122, "tow": 500066800, "ns_residual":
+    25, "flags": 1}'
+  raw_packet: VQQBABALSgjwac4dGQAAAAGLRg==
+  sbp:
+    crc: '0x468b'
+    length: 11
+    msg_type: '0x104'
+    payload: Sgjwac4dGQAAAAE=
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      flags: 1
+      ns_residual: 25
+      tow: 500066900
+      wn: 2122
+    module: sbp.navigation
+    name: MsgGPSTimeGnss
+  msg_type: '0x104'
+  raw_json: '{"preamble": 85, "msg_type": 260, "sender": 4096, "length": 11, "payload":
+    "SghUas4dGQAAAAE=", "crc": 2655, "wn": 2122, "tow": 500066900, "ns_residual":
+    25, "flags": 1}'
+  raw_packet: VQQBABALSghUas4dGQAAAAFfCg==
+  sbp:
+    crc: '0xa5f'
+    length: 11
+    msg_type: '0x104'
+    payload: SghUas4dGQAAAAE=
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      flags: 1
+      ns_residual: 25
+      tow: 500067000
+      wn: 2122
+    module: sbp.navigation
+    name: MsgGPSTimeGnss
+  msg_type: '0x104'
+  raw_json: '{"preamble": 85, "msg_type": 260, "sender": 4096, "length": 11, "payload":
+    "Sgi4as4dGQAAAAE=", "crc": 63704, "wn": 2122, "tow": 500067000, "ns_residual":
+    25, "flags": 1}'
+  raw_packet: VQQBABALSgi4as4dGQAAAAHY+A==
+  sbp:
+    crc: '0xf8d8'
+    length: 11
+    msg_type: '0x104'
+    payload: Sgi4as4dGQAAAAE=
+    preamble: '0x55'
+    sender: '0x1000'
+version: 3.4.1.dev12+g7ff5295c
+...
