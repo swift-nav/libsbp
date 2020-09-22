@@ -29,6 +29,9 @@ impl SbpString {
     pub fn as_bytes(&self) -> &[u8] {
         &self.0
     }
+    pub fn to_string(&self) -> String {
+        String::from_utf8_lossy(&self.0).into()
+    }
 }
 
 #[cfg(feature = "sbp_serde")]
@@ -60,7 +63,13 @@ impl From<String> for SbpString {
 
 impl Into<String> for SbpString {
     fn into(self) -> String {
-        String::from_utf8_lossy(&self.0).into()
+        self.to_string()
+    }
+}
+
+impl Into<String> for &SbpString {
+    fn into(self) -> String {
+        self.to_string()
     }
 }
 
@@ -317,5 +326,21 @@ mod tests {
         let sbp_message = sbp_message.as_sbp_message();
 
         assert_eq!(sbp_message.sbp_size(), 72);
+    }
+
+    #[test]
+    fn sbp_string() {
+
+        use crate::SbpString;
+
+        let sbp_str = SbpString(b"1234".to_vec());
+        let s = sbp_str.to_string();
+
+        assert_eq!("1234", s);
+
+        let sbp_str = SbpString(b"1234\xFF".to_vec());
+        let s = sbp_str.to_string();
+
+        assert_eq!("1234\u{FFFD}", s);
     }
 }
