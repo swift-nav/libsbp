@@ -1,5 +1,19 @@
 # Change Log
 
+## [v3.4.2](https://github.com/swift-nav/libsbp/tree/v3.4.2) (2020-09-22)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.1...v3.4.2)
+
+**Merged pull requests:**
+
+- rust: add explicit to\_string for SbpString [\#859](https://github.com/swift-nav/libsbp/pull/859)
+- fixup font issue \[INFRA-293\] [\#858](https://github.com/swift-nav/libsbp/pull/858)
+- Bump cmake \(back\) to most recent. [\#857](https://github.com/swift-nav/libsbp/pull/857)
+- Fix java examples so they at least compile [\#855](https://github.com/swift-nav/libsbp/pull/855)
+- Add Python 3.5/3.8 to libsbp builder, update ARM [\#854](https://github.com/swift-nav/libsbp/pull/854)
+- fix tox tests for Python 3.5 [\#853](https://github.com/swift-nav/libsbp/pull/853)
+- Add bits for ins motion state [\#845](https://github.com/swift-nav/libsbp/pull/845)
+
 ## [v3.4.1](https://github.com/swift-nav/libsbp/tree/v3.4.1) (2020-09-14)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.0...v3.4.1)

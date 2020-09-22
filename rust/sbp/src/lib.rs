@@ -330,7 +330,6 @@ mod tests {
 
     #[test]
     fn sbp_string() {
-
         use crate::SbpString;
 
         let sbp_str = SbpString(b"1234".to_vec());
