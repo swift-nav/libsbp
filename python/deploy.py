@@ -234,11 +234,11 @@ def build_wheel_conda(conda_dir, deploy_dir, py_version):
     ])
     subprocess.check_call([
         "conda", "run", "-p", conda_dir] + DASHDASH + [
-        "pip", "install", "--upgrade", "pip"
+        "python", "-m", "pip", "install", "--upgrade", "pip"
     ])
     subprocess.check_call([
         "conda", "run", "-p", conda_dir] + DASHDASH + [
-        "pip", "install", "twine", "numpy"
+        "python", "-m", "pip", "install", "twine", "numpy"
     ])
 
     if platform.system() == "Linux" and platform.machine().startswith("x86"):
@@ -251,7 +251,7 @@ def build_wheel_conda(conda_dir, deploy_dir, py_version):
 
     subprocess.check_call([
         "conda", "run", "-p", conda_dir] + DASHDASH + [
-        "pip", "install", "--ignore-installed", 
+        "python", "-m", "pip", "install", "--ignore-installed", 
         "-r", "setup_requirements.txt",
         "-r", "test_requirements.txt",
     ])
@@ -260,7 +260,7 @@ def build_wheel_conda(conda_dir, deploy_dir, py_version):
 
     subprocess.check_call([
         "conda", "run", "-p", conda_dir] + DASHDASH + [
-        "pip", "install", "--ignore-installed", 
+        "python", "-m", "pip", "install", "--ignore-installed", 
         "-r", "requirements{}.txt".format(suffix),
         "-r", "setup_requirements{}.txt".format(suffix),
     ])
@@ -305,13 +305,12 @@ for py_version in py_versions():
         build_wheel(conda_dir, deploy_dir, py_version)
     finally:
         os.chdir(script_dir)
-        if platform.system() != "Linux" or not platform.machine().startswith("arm"):
-            shutil.rmtree(conda_tmp_dir)
-        else:
-            subprocess.check_call(["rm", "-fr", conda_dir])
+        # Workaround a permission denied errors that happens on Windows
         if platform.system() == "Windows":
-            # Workaround a permission denied error that happens for the copied
-            #   .git directory...
+            subprocess.check_call(["rmdir", "/s", "/q", conda_dir], shell=True)
+        else:
+            subprocess.check_call(["rm", "-rf", conda_dir])
+        if platform.system() == "Windows":
             subprocess.check_call(["rmdir", "/s", "/q", deploy_dir], shell=True)
         else:
-            shutil.rmtree(deploy_dir)
+            subprocess.check_call(["rm", "-rf", deploy_dir])
