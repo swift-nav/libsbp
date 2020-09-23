@@ -265,15 +265,18 @@ make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
 ## Building on Windows
 
 In order to build on Windows, first install the necessary compilers per the
-instructions [on this Microsoft developer blog][1] (shortcut: install 
-[Microsoft Visual Studio Community 2019][msvsc2019] and select the 
-"native Python development" option) then install the 64-bit Python 3.7 
+instructions [on this Microsoft developer blog][1] (shortcut: install
+[Microsoft Visual Studio Community 2019][msvsc2019] and select the "native
+Python development" option, or you can install [Visual Studio Build
+Tools][vcbuildtools] and install the "C++ build tools", also make sure to
+install MSVC v140 and MSCV v141.  Afterwards install the 64-bit Python 3.7
 version of [Conda][2].  You'll also need to install [Chocolatey][3].
 
 [1]: https://devblogs.microsoft.com/python/unable-to-find-vcvarsall-bat/
 [2]: https://docs.conda.io/en/latest/miniconda.html
 [3]: https://chocolatey.org/docs/installation
 [msvsc2019]: https://www.microsoft.com/en-us/download/details.aspx?id=48159
+[vcbuildtools]: https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2019
 
 For Chocolatey, the following packages are recommended:
 - make
@@ -293,10 +296,24 @@ Import-BatchEnvironment 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Com
 $env:CONDA_FORCE_32BIT = 0
 ```
 
+Or if you install the Visual Studio Build tools:
+
+```
+Import-BatchEnvironment 'C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars64.bat'
+$env:CONDA_FORCE_32BIT = 1
+```
+
 And for 32-bit:
 ```
 Import-BatchEnvironment 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars32.bat'
 $env:CONDA_FORCE_32BIT = 1
+```
+
+Or if you install the Visual Studio Build tools:
+
+```
+Import-BatchEnvironment 'C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars32.bat'
+$env:CONDA_FORCE_32BIT = 0
 ```
 
 Then invoke the `dist-python` target from `libsbp` (with appropriate PyPI auth).
