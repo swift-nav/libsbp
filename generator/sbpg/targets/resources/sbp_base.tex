@@ -189,10 +189,10 @@ contents.
  \par As an example, consider this framed series of bytes read from a
  serial port:
 \begin{verbatim}
-55 02 02 cc 04 14 70 3d d0 18 cf ef ff ff ef e8 ff ff f0 18 00 00 00 00 05 00 43 94
+55 0b 02 cc 04 14 70 3d d0 18 cf ef ff ff ef e8 ff ff f0 18 00 00 00 00 05 00 15 dc
 \end{verbatim}
 This byte array decodes into a \texttt{MSG\_BASELINE\_ECEF} (see
-pg.~\pageref{sec:MSG_POS_ECEF}), which reports the baseline position
+pg.~\pageref{sec:MSG_BASELINE_ECEF}), which reports the baseline position
 solution of the rover receiver relative to the base station receiver
 in Earth Centered Earth Fixed (ECEF) coordinates. The segments of this
 byte array and its contents break down as follows:
@@ -204,7 +204,7 @@ byte array and its contents break down as follows:
     Field Name & Type & Value & Bytestring Segment\\
     \midrule
     {Preamble} & u8 & 0x55 & \verb!55! \\
-    {Message Type}& u16 & \texttt{MSG\_BASELINE\_ECEF} & \verb!02 02! \\
+    {Message Type}& u16 & \texttt{MSG\_BASELINE\_ECEF} & \verb!0b 02! \\
     {Sender}& u16 & 1228 & \verb!cc 04! \\
     {Length}& u8 & 20 &  \verb!14! \\
     {Payload}& & --- & \verb!70 3d d0 18 cf ef ff ff ef e8 ff ff! \\
@@ -217,7 +217,7 @@ byte array and its contents break down as follows:
     \quad~.accuracy & u16 & 0 & \verb!00 00! \\
     \quad~.nsats & u8 & 5 & \verb!05! \\
     \quad~.flags & u8 & 0 & \verb!00! \\
-    {CRC} & u16 & 0x9443 & \verb!43 94! \\
+    {CRC} & u16 & 0x9443 & \verb!15 dc! \\
     \bottomrule
   \end{tabular}
   \caption{SBP breakdown for \texttt{MSG\_BASELINE\_ECEF}}
