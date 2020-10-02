@@ -56,10 +56,11 @@ definitions:
            units: (XX)InputType
            desc: Refer to each InputType description
 
- - MSG_SOLN_META:
+ - MSG_SOLN_META_DEP_A:
      id: 0xFF0F
-     short_desc: Solution Sensors Metadata
-     public: true
+     short_desc: Deprecated
+     desc: Deprecated.
+     public: False
      desc: |
        This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
        It focuses primarly, but not only, on GNSS metadata.
@@ -108,6 +109,45 @@ definitions:
            type: u32
            units: ms
            desc: Tow of last-used GNSS velocity measurement
+       - sol_in:
+           type: array
+           fill: SolutionInputType
+           desc: Array of Metadata describing the sensors potentially involved in the solution.
+             Each element in the array represents a single sensor type and consists of flags containing (meta)data
+             pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc.
+
+ - MSG_SOLN_META:
+     id: 0xFF0E
+     short_desc: Solution Sensors Metadata
+     public: true
+     desc: |
+       This message contains all metadata about the sensors received and/or used in computing the sensorfusion solution.
+       It focuses primarly, but not only, on GNSS metadata.
+     fields:
+       - tow:
+           type: u32
+           units: ms
+           desc: GPS time of week rounded to the nearest millisecond
+       - pdop:
+           type: u16
+           units: 0.01
+           desc: Position Dilution of Precision, as per last available DOPS from Starling GNSS engine
+       - hdop:
+           type: u16
+           units: 0.01
+           desc: Horizontal Dilution of Precision, as per last available DOPS from Starling GNSS engine
+       - vdop:
+           type: u16
+           units: 0.01
+           desc: Vertical Dilution of Precision, as per last available DOPS from Starling GNSS engine
+       - age_corrections:
+           type: u16
+           units: deciseconds
+           desc: Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine
+       - age_gnss:
+           type: u16
+           units: ms
+           desc: Age of the last received valid GNSS solution (0xFFFF indicates invalid)
        - sol_in:
            type: array
            fill: SolutionInputType
