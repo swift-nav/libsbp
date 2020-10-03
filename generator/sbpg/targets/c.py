@@ -79,11 +79,11 @@ def mk_size(field):
   if name == "string" and field.options.get('size', None):
     return "%s[%d];" % (field.identifier, field.options.get('size').value)
   elif name == "string":
-    return "%s[0];" % field.identifier
+    return "%s[];" % field.identifier
   elif name == "array" and field.options.get('size', None):
     return "%s[%d];" % (field.identifier, field.options.get('size').value)
   elif name == "array":
-    return "%s[0];" % field.identifier
+    return "%s[];" % field.identifier
   else:
     return '%s;' % field.identifier
 
