@@ -50,6 +50,11 @@ typedef uint64_t u64;
 
 #endif
 
+/** Macro for handling variable array size */
+#ifndef SBP_VARIABLE_ARRAY_SIZE
+#define SBP_VARIABLE_ARRAY_SIZE 0
+#endif
+
 /* Set packing based upon toolchain */
 #if defined(__GNUC__) || defined(__clang__)
 
@@ -67,7 +72,7 @@ typedef uint64_t u64;
 
 #if !defined(SBP_PACK_START) || !defined(SBP_PACK_END) || !defined(SBP_ATTR_PACKED)
 #error Unknown compiler, please override SBP_PACK_START, SBP_PACK_END, and SBP_ATTR_PACKED
-#endif 
+#endif
 
 #endif /* toolchaing packing macros */
 
