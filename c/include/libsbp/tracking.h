@@ -550,7 +550,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_TRACKING_STATE                0x0041
 
 typedef struct SBP_ATTR_PACKED {
-  tracking_channel_state_t states[0]; /**< Signal tracking channel state */
+  tracking_channel_state_t states[SBP_VARIABLE_ARRAY_SIZE]; /**< Signal tracking channel state */
 } msg_tracking_state_t;
 
 
@@ -578,7 +578,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_MEASUREMENT_STATE             0x0061
 
 typedef struct SBP_ATTR_PACKED {
-  measurement_state_t states[0]; /**< ME signal tracking channel state */
+  measurement_state_t states[SBP_VARIABLE_ARRAY_SIZE]; /**< ME signal tracking channel state */
 } msg_measurement_state_t;
 
 
@@ -664,7 +664,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_TRACKING_STATE_DEP_A          0x0016
 
 typedef struct SBP_ATTR_PACKED {
-  tracking_channel_state_dep_a_t states[0]; /**< Satellite tracking channel state */
+  tracking_channel_state_dep_a_t states[SBP_VARIABLE_ARRAY_SIZE]; /**< Satellite tracking channel state */
 } msg_tracking_state_dep_a_t;
 
 
@@ -687,7 +687,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_TRACKING_STATE_DEP_B          0x0013
 
 typedef struct SBP_ATTR_PACKED {
-  tracking_channel_state_dep_b_t states[0]; /**< Signal tracking channel state */
+  tracking_channel_state_dep_b_t states[SBP_VARIABLE_ARRAY_SIZE]; /**< Signal tracking channel state */
 } msg_tracking_state_dep_b_t;
 
 

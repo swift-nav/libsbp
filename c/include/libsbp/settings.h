@@ -74,7 +74,7 @@ SBP_PACK_START
 #define SBP_MSG_SETTINGS_WRITE              0x00A0
 
 typedef struct SBP_ATTR_PACKED {
-  char setting[0]; /**< A NULL-terminated and NULL-delimited string with contents
+  char setting[SBP_VARIABLE_ARRAY_SIZE]; /**< A NULL-terminated and NULL-delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE\0"
  */
 } msg_settings_write_t;
@@ -112,7 +112,7 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   u8 status;     /**< Write status */
-  char setting[0]; /**< A NULL-terminated and delimited string with contents
+  char setting[SBP_VARIABLE_ARRAY_SIZE]; /**< A NULL-terminated and delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE\0" 
  */
 } msg_settings_write_resp_t;
@@ -132,7 +132,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_SETTINGS_READ_REQ           0x00A4
 
 typedef struct SBP_ATTR_PACKED {
-  char setting[0]; /**< A NULL-terminated and NULL-delimited string with contents
+  char setting[SBP_VARIABLE_ARRAY_SIZE]; /**< A NULL-terminated and NULL-delimited string with contents
 "SECTION_SETTING\0SETTING\0"
  */
 } msg_settings_read_req_t;
@@ -151,7 +151,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_SETTINGS_READ_RESP          0x00A5
 
 typedef struct SBP_ATTR_PACKED {
-  char setting[0]; /**< A NULL-terminated and NULL-delimited string with contents
+  char setting[SBP_VARIABLE_ARRAY_SIZE]; /**< A NULL-terminated and NULL-delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE\0"
  
  */
@@ -192,7 +192,7 @@ typedef struct SBP_ATTR_PACKED {
   u16 index;      /**< An index into the device settings, with values ranging from
 0 to length(settings)
  */
-  char setting[0]; /**< A NULL-terminated and delimited string with contents
+  char setting[SBP_VARIABLE_ARRAY_SIZE]; /**< A NULL-terminated and delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
  */
 } msg_settings_read_by_index_resp_t;
@@ -214,7 +214,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_SETTINGS_REGISTER           0x00AE
 
 typedef struct SBP_ATTR_PACKED {
-  char setting[0]; /**< A NULL-terminated and delimited string with contents
+  char setting[SBP_VARIABLE_ARRAY_SIZE]; /**< A NULL-terminated and delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE".
  */
 } msg_settings_register_t;
@@ -246,7 +246,7 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   u8 status;     /**< Register status */
-  char setting[0]; /**< A NULL-terminated and delimited string with contents
+  char setting[SBP_VARIABLE_ARRAY_SIZE]; /**< A NULL-terminated and delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined
 according to the status field.
  */

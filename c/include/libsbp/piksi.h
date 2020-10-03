@@ -359,7 +359,7 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Sequence number */
-  char command[0];  /**< Command line to execute */
+  char command[SBP_VARIABLE_ARRAY_SIZE]; /**< Command line to execute */
 } msg_command_req_t;
 
 
@@ -387,7 +387,7 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Sequence number */
-  char line[0];     /**< Line of standard output or standard error */
+  char line[SBP_VARIABLE_ARRAY_SIZE]; /**< Line of standard output or standard error */
 } msg_command_output_t;
 
 
@@ -621,7 +621,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_NETWORK_BANDWIDTH_USAGE 0x00BD
 
 typedef struct SBP_ATTR_PACKED {
-  network_usage_t interfaces[0]; /**< Usage measurement array */
+  network_usage_t interfaces[SBP_VARIABLE_ARRAY_SIZE]; /**< Usage measurement array */
 } msg_network_bandwidth_usage_t;
 
 
@@ -636,7 +636,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   s8 signal_strength;      /**< Received cell signal strength in dBm, zero translates to unknown [dBm] */
   float signal_error_rate;    /**< BER as reported by the modem, zero translates to unknown */
-  u8 reserved[0];          /**< Unspecified data TBD for this schema */
+  u8 reserved[SBP_VARIABLE_ARRAY_SIZE]; /**< Unspecified data TBD for this schema */
 } msg_cell_modem_status_t;
 
 
@@ -657,7 +657,7 @@ typedef struct SBP_ATTR_PACKED {
  [dB] */
   float amplitude_unit;     /**< Amplitude unit value of points in this packet
  [dB] */
-  u8 amplitude_value[0]; /**< Amplitude values (in the above units) of points in this packet
+  u8 amplitude_value[SBP_VARIABLE_ARRAY_SIZE]; /**< Amplitude values (in the above units) of points in this packet
  */
 } msg_specan_dep_t;
 
@@ -679,7 +679,7 @@ typedef struct SBP_ATTR_PACKED {
  [dB] */
   float amplitude_unit;     /**< Amplitude unit value of points in this packet
  [dB] */
-  u8 amplitude_value[0]; /**< Amplitude values (in the above units) of points in this packet
+  u8 amplitude_value[SBP_VARIABLE_ARRAY_SIZE]; /**< Amplitude values (in the above units) of points in this packet
  */
 } msg_specan_t;
 

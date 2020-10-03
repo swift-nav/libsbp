@@ -36,7 +36,7 @@ SBP_PACK_START
 #define SBP_MSG_USER_DATA 0x0800
 
 typedef struct SBP_ATTR_PACKED {
-  u8 contents[0]; /**< User data payload */
+  u8 contents[SBP_VARIABLE_ARRAY_SIZE]; /**< User data payload */
 } msg_user_data_t;
 
 

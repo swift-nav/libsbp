@@ -76,7 +76,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 alignment_status;          /**< State of alignment and the status and receipt of the alignment inputs */
   u32 last_used_gnss_pos_tow;    /**< Tow of last-used GNSS position measurement [ms] */
   u32 last_used_gnss_vel_tow;    /**< Tow of last-used GNSS velocity measurement [ms] */
-  solution_input_type_t sol_in[0];                 /**< Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc. */
+  solution_input_type_t sol_in[SBP_VARIABLE_ARRAY_SIZE]; /**< Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc. */
 } msg_soln_meta_t;
 
 

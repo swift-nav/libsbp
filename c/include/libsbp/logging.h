@@ -57,7 +57,7 @@ SBP_PACK_START
 
 typedef struct SBP_ATTR_PACKED {
   u8 level;    /**< Logging level */
-  char text[0];  /**< Human-readable string */
+  char text[SBP_VARIABLE_ARRAY_SIZE]; /**< Human-readable string */
 } msg_log_t;
 
 
@@ -76,7 +76,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u8 source;         /**< source identifier */
   u8 protocol;       /**< protocol identifier */
-  char fwd_payload[0]; /**< variable length wrapped binary message */
+  char fwd_payload[SBP_VARIABLE_ARRAY_SIZE]; /**< variable length wrapped binary message */
 } msg_fwd_t;
 
 
@@ -87,7 +87,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_PRINT_DEP 0x0010
 
 typedef struct SBP_ATTR_PACKED {
-  char text[0]; /**< Human-readable string */
+  char text[SBP_VARIABLE_ARRAY_SIZE]; /**< Human-readable string */
 } msg_print_dep_t;
 
 
