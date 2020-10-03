@@ -44,6 +44,19 @@ def extensions(includes):
 CONSTRUCT_CODE = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
                       's64', 'float', 'double'])
 
+CONSTRUCT_SIZE = {
+  'u8': 1,
+  'u16': 2,
+  'u32': 4,
+  'u64': 8,
+  's8': 1,
+  's16': 2,
+  's32': 4,
+  's64': 8,
+  'float': 4,
+  'double': 8,
+}
+
 COLLISIONS = set(['GnssSignal', 'GPSTime'])
 
 def convert(value):
@@ -72,18 +85,43 @@ def mk_id(field):
   else:
     return name
 
-def mk_size(field):
+def field_size(field, msgs):
+  name = field.type_id
+  if name == "string" and field.options.get('size', None):
+    return field.options.get('size').value
+  elif name == "string":
+    return 0
+  elif name == "array" and field.options.get('size', None):
+    return field.options.get('size').value
+  elif name == "array":
+    return 0
+  elif name in CONSTRUCT_CODE:
+    return CONSTRUCT_SIZE[name]
+  else:
+    # TODO need to find size of struct here.
+    print(name)
+    print(field)
+    print(msgs)
+  return 0
+
+def fields_size(fields, msgs):
+  size = 255
+  for field in fields:
+    size -= field_size(field, msgs)
+  return size
+
+def mk_size(field, fields, msgs):
   """Builds an identifier for a container type.
   """
   name = field.type_id
   if name == "string" and field.options.get('size', None):
     return "%s[%d];" % (field.identifier, field.options.get('size').value)
   elif name == "string":
-    return "%s[0];" % field.identifier
+    return "%s[%d];" % (field.identifier, fields_size(fields, msgs))
   elif name == "array" and field.options.get('size', None):
     return "%s[%d];" % (field.identifier, field.options.get('size').value)
   elif name == "array":
-    return "%s[0];" % field.identifier
+    return "%s[%d];" % (field.identifier, fields_size(fields, msgs))
   else:
     return '%s;' % field.identifier
 
