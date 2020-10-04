@@ -46,6 +46,19 @@ CONSTRUCT_CODE = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
 
 COLLISIONS = set(['GnssSignal', 'GPSTime'])
 
+def field_is_variable_sized(field):
+  """Tests a field for variable sizing if array or string
+  """
+  name = field.type_id
+  if name == "string" or name == "array":
+    size = field.options.get('size', None)
+    if size is not None:
+      return False
+    else:
+      return True
+  else:
+    return False
+
 def convert(value):
   """Converts to a C language appropriate identifier format.
 
@@ -124,6 +137,7 @@ def create_bitfield_macros(field, msg):
                                                       value_numerical))
   return "\n".join(ret_list)
 
+JENV.filters['field_is_variable_sized'] = field_is_variable_sized
 JENV.filters['commentify'] = commentify
 JENV.filters['mk_id'] = mk_id
 JENV.filters['mk_size'] = mk_size
