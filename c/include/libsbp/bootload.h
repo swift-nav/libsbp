@@ -75,7 +75,9 @@ SBP_PACK_START
 
 typedef struct SBP_ATTR_PACKED {
   u32 flags;      /**< Bootloader flags */
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
   char version[0]; /**< Bootloader version number */
+#endif
 } msg_bootloader_handshake_resp_t;
 
 
@@ -125,10 +127,12 @@ on the right.
 * Deprecated.
  */
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A 0x00B0
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
 
 typedef struct SBP_ATTR_PACKED {
   u8 handshake[0]; /**< Version number string (not NULL terminated) */
 } msg_bootloader_handshake_dep_a_t;
+#endif
 
 
 /** \} */

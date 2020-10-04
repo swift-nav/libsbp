@@ -98,7 +98,9 @@ typedef struct SBP_ATTR_PACKED {
   u8 flags;          /**< Status flags */
   u16 latency;        /**< Latency of observation receipt [deci-seconds] */
   u8 num_signals;    /**< Number of signals from base station */
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
   char source[0];      /**< Corrections source string */
+#endif
 } msg_dgnss_status_t;
 
 
@@ -330,7 +332,9 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   u8 id;           /**< Index representing the type of telemetry in use.  It is implemention defined. */
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
   char telemetry[0]; /**< Comma separated list of values as defined by the index */
+#endif
 } msg_csac_telemetry_t;
 
 
@@ -344,7 +348,9 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   u8 id;                  /**< Index representing the type of telemetry in use.  It is implemention defined. */
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
   char telemetry_labels[0]; /**< Comma separated list of telemetry field values */
+#endif
 } msg_csac_telemetry_labels_t;
 
 
@@ -539,9 +545,11 @@ typedef struct SBP_ATTR_PACKED {
   u8 group_id;        /**< Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss */
   u8 flags;           /**< Status flags (reserved) */
   u8 n_group_msgs;    /**< Size of list group_msgs */
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
   u16 group_msgs[0];   /**< An inorder list of message types included in the Solution Group,
 including GROUP_META itself
  */
+#endif
 } msg_group_meta_t;
 
 
