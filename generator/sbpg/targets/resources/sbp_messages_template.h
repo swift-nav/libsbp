@@ -50,15 +50,36 @@ SBP_PACK_START
 ((*- endfor *))
 ((*- endif *))
 
+((*- if m.fields|first == m.fields|last *))
+((*- if (m.fields|first)|field_is_variable_sized *))
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+((*- endif *))
+((*- endif *))
+
 typedef struct SBP_ATTR_PACKED {
   ((*- for f in m.fields *))
+  ((*- if m.fields|first != m.fields|last *))
+  ((*- if f|field_is_variable_sized *))
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+  ((*- endif *))
+  ((*- endif *))
   ((*- if f.desc *))
   (((f|mk_id))) ((((f|mk_size).ljust(m.max_fid_len+4)))) /**< (((f.desc))) ((* if f.units *))[(((f.units)))] ((* endif *))*/
   ((*- else *))
   (((f|mk_id))) ((((f|mk_size).ljust(m.max_fid_len+4))))
   ((*- endif *))
+  ((*- if m.fields|first != m.fields|last *))
+  ((*- if f|field_is_variable_sized *))
+#endif
+  ((*- endif *))
+  ((*- endif *))
   ((*- endfor *))
 } (((m.identifier|convert)));
+((*- if m.fields|first == m.fields|last *))
+((*- if (m.fields|first)|field_is_variable_sized *))
+#endif
+((*- endif *))
+((*- endif *))
 ((*- endif *))
 
 ((* endfor *))
