@@ -44,28 +44,28 @@ typedef struct SBP_ATTR_PACKED {
 } solution_input_type_t;
 
 
-/** Solution Sensors Metadata
+/** Deprecated
  *
  * This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
  * It focuses primarly, but not only, on GNSS metadata.
  */
-#define SBP_MSG_SOLN_META 0xFF0F
-#define SBP_SOLN_META_ALIGNMENT_STATUS_MASK (0x7)
-#define SBP_SOLN_META_ALIGNMENT_STATUS_SHIFT (0u)
-#define SBP_SOLN_META_ALIGNMENT_STATUS_GET(flags) \
-                             (((flags) >> SBP_SOLN_META_ALIGNMENT_STATUS_SHIFT) \
-                             & SBP_SOLN_META_ALIGNMENT_STATUS_MASK)
-#define SBP_SOLN_META_ALIGNMENT_STATUS_SET(flags, val) \
+#define SBP_MSG_SOLN_META_DEP_A 0xFF0F
+#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_MASK (0x7)
+#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SHIFT (0u)
+#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_GET(flags) \
+                             (((flags) >> SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SHIFT) \
+                             & SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_MASK)
+#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SET(flags, val) \
                              do {((flags) |= \
-                             (((val) & (SBP_SOLN_META_ALIGNMENT_STATUS_MASK)) \
-                             << (SBP_SOLN_META_ALIGNMENT_STATUS_SHIFT)));} while(0)
+                             (((val) & (SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_MASK)) \
+                             << (SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SHIFT)));} while(0)
                              
 
-#define SBP_SOLN_META_ALIGNMENT_STATUS_UNKNOWN_REASON_OR_ALREADY_ALIGNED (0)
-#define SBP_SOLN_META_ALIGNMENT_STATUS_SEED_VALUES_LOADED_AND_ALIGNMENT_IN_PROGRESS (1)
-#define SBP_SOLN_META_ALIGNMENT_STATUS_NO_SEED_VALUES_AND_ALIGNMENT_IN_PROGRESS (2)
-#define SBP_SOLN_META_ALIGNMENT_STATUS_SEED_VALUES_LOADED_BUT_NO_GNSS_MEASUREMENTS (3)
-#define SBP_SOLN_META_ALIGNMENT_STATUS_NO_SEED_VALUES_NOR_GNSS_MEASUREMENTS (4)
+#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_UNKNOWN_REASON_OR_ALREADY_ALIGNED (0)
+#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SEED_VALUES_LOADED_AND_ALIGNMENT_IN_PROGRESS (1)
+#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_NO_SEED_VALUES_AND_ALIGNMENT_IN_PROGRESS (2)
+#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SEED_VALUES_LOADED_BUT_NO_GNSS_MEASUREMENTS (3)
+#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_NO_SEED_VALUES_NOR_GNSS_MEASUREMENTS (4)
 
 typedef struct SBP_ATTR_PACKED {
   u16 pdop;                      /**< Position Dilution of Precision, as per last available DOPS from Starling GNSS engine [0.01] */
@@ -77,6 +77,24 @@ typedef struct SBP_ATTR_PACKED {
   u32 last_used_gnss_pos_tow;    /**< Tow of last-used GNSS position measurement [ms] */
   u32 last_used_gnss_vel_tow;    /**< Tow of last-used GNSS velocity measurement [ms] */
   solution_input_type_t sol_in[0];                 /**< Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc. */
+} msg_soln_meta_dep_a_t;
+
+
+/** Solution Sensors Metadata
+ *
+ * This message contains all metadata about the sensors received and/or used in computing the sensorfusion solution.
+ * It focuses primarly, but not only, on GNSS metadata.
+ */
+#define SBP_MSG_SOLN_META       0xFF0E
+
+typedef struct SBP_ATTR_PACKED {
+  u32 tow;                /**< GPS time of week rounded to the nearest millisecond [ms] */
+  u16 pdop;               /**< Position Dilution of Precision, as per last available DOPS from Starling GNSS engine [0.01] */
+  u16 hdop;               /**< Horizontal Dilution of Precision, as per last available DOPS from Starling GNSS engine [0.01] */
+  u16 vdop;               /**< Vertical Dilution of Precision, as per last available DOPS from Starling GNSS engine [0.01] */
+  u16 age_corrections;    /**< Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine [deciseconds] */
+  u16 age_gnss;           /**< Age of the last received valid GNSS solution (0xFFFF indicates invalid) [ms] */
+  solution_input_type_t sol_in[0];          /**< Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc. */
 } msg_soln_meta_t;
 
 

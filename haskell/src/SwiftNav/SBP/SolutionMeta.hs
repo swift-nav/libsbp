@@ -64,37 +64,98 @@ instance Binary SolutionInputType where
 $(makeJSON "_solutionInputType_" ''SolutionInputType)
 $(makeLenses ''SolutionInputType)
 
-msgSolnMeta :: Word16
-msgSolnMeta = 0xFF0F
+msgSolnMetaDepA :: Word16
+msgSolnMetaDepA = 0xFF0F
 
--- | SBP class for message MSG_SOLN_META (0xFF0F).
+-- | SBP class for message MSG_SOLN_META_DEP_A (0xFF0F).
 --
 -- This message contains all metadata about the sensors received and/or used in
 -- computing the Fuzed Solution. It focuses primarly, but not only, on GNSS
 -- metadata.
-data MsgSolnMeta = MsgSolnMeta
-  { _msgSolnMeta_pdop                 :: !Word16
+data MsgSolnMetaDepA = MsgSolnMetaDepA
+  { _msgSolnMetaDepA_pdop                 :: !Word16
     -- ^ Position Dilution of Precision, as per last available DOPS from Starling
     -- GNSS engine
-  , _msgSolnMeta_hdop                 :: !Word16
+  , _msgSolnMetaDepA_hdop                 :: !Word16
     -- ^ Horizontal Dilution of Precision, as per last available DOPS from
     -- Starling GNSS engine
-  , _msgSolnMeta_vdop                 :: !Word16
+  , _msgSolnMetaDepA_vdop                 :: !Word16
     -- ^ Vertical Dilution of Precision, as per last available DOPS from Starling
     -- GNSS engine
-  , _msgSolnMeta_n_sats               :: !Word8
+  , _msgSolnMetaDepA_n_sats               :: !Word8
     -- ^ Number of satellites, as per last available solution from Starling GNSS
     -- engine
-  , _msgSolnMeta_age_corrections      :: !Word16
+  , _msgSolnMetaDepA_age_corrections      :: !Word16
     -- ^ Age of the corrections (0xFFFF indicates invalid), as per last available
     -- AGE_CORRECTIONS from Starling GNSS engine
-  , _msgSolnMeta_alignment_status     :: !Word8
+  , _msgSolnMetaDepA_alignment_status     :: !Word8
     -- ^ State of alignment and the status and receipt of the alignment inputs
-  , _msgSolnMeta_last_used_gnss_pos_tow :: !Word32
+  , _msgSolnMetaDepA_last_used_gnss_pos_tow :: !Word32
     -- ^ Tow of last-used GNSS position measurement
-  , _msgSolnMeta_last_used_gnss_vel_tow :: !Word32
+  , _msgSolnMetaDepA_last_used_gnss_vel_tow :: !Word32
     -- ^ Tow of last-used GNSS velocity measurement
-  , _msgSolnMeta_sol_in               :: ![SolutionInputType]
+  , _msgSolnMetaDepA_sol_in               :: ![SolutionInputType]
+    -- ^ Array of Metadata describing the sensors potentially involved in the
+    -- solution. Each element in the array represents a single sensor type and
+    -- consists of flags containing (meta)data pertaining to that specific
+    -- single sensor. Refer to each (XX)InputType descriptor in the present
+    -- doc.
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSolnMetaDepA where
+  get = do
+    _msgSolnMetaDepA_pdop <- getWord16le
+    _msgSolnMetaDepA_hdop <- getWord16le
+    _msgSolnMetaDepA_vdop <- getWord16le
+    _msgSolnMetaDepA_n_sats <- getWord8
+    _msgSolnMetaDepA_age_corrections <- getWord16le
+    _msgSolnMetaDepA_alignment_status <- getWord8
+    _msgSolnMetaDepA_last_used_gnss_pos_tow <- getWord32le
+    _msgSolnMetaDepA_last_used_gnss_vel_tow <- getWord32le
+    _msgSolnMetaDepA_sol_in <- whileM (not <$> isEmpty) get
+    pure MsgSolnMetaDepA {..}
+
+  put MsgSolnMetaDepA {..} = do
+    putWord16le _msgSolnMetaDepA_pdop
+    putWord16le _msgSolnMetaDepA_hdop
+    putWord16le _msgSolnMetaDepA_vdop
+    putWord8 _msgSolnMetaDepA_n_sats
+    putWord16le _msgSolnMetaDepA_age_corrections
+    putWord8 _msgSolnMetaDepA_alignment_status
+    putWord32le _msgSolnMetaDepA_last_used_gnss_pos_tow
+    putWord32le _msgSolnMetaDepA_last_used_gnss_vel_tow
+    mapM_ put _msgSolnMetaDepA_sol_in
+
+$(makeSBP 'msgSolnMetaDepA ''MsgSolnMetaDepA)
+$(makeJSON "_msgSolnMetaDepA_" ''MsgSolnMetaDepA)
+$(makeLenses ''MsgSolnMetaDepA)
+
+msgSolnMeta :: Word16
+msgSolnMeta = 0xFF0E
+
+-- | SBP class for message MSG_SOLN_META (0xFF0E).
+--
+-- This message contains all metadata about the sensors received and/or used in
+-- computing the sensorfusion solution. It focuses primarly, but not only, on
+-- GNSS metadata.
+data MsgSolnMeta = MsgSolnMeta
+  { _msgSolnMeta_tow           :: !Word32
+    -- ^ GPS time of week rounded to the nearest millisecond
+  , _msgSolnMeta_pdop          :: !Word16
+    -- ^ Position Dilution of Precision, as per last available DOPS from Starling
+    -- GNSS engine
+  , _msgSolnMeta_hdop          :: !Word16
+    -- ^ Horizontal Dilution of Precision, as per last available DOPS from
+    -- Starling GNSS engine
+  , _msgSolnMeta_vdop          :: !Word16
+    -- ^ Vertical Dilution of Precision, as per last available DOPS from Starling
+    -- GNSS engine
+  , _msgSolnMeta_age_corrections :: !Word16
+    -- ^ Age of the corrections (0xFFFF indicates invalid), as per last available
+    -- AGE_CORRECTIONS from Starling GNSS engine
+  , _msgSolnMeta_age_gnss      :: !Word16
+    -- ^ Age of the last received valid GNSS solution (0xFFFF indicates invalid)
+  , _msgSolnMeta_sol_in        :: ![SolutionInputType]
     -- ^ Array of Metadata describing the sensors potentially involved in the
     -- solution. Each element in the array represents a single sensor type and
     -- consists of flags containing (meta)data pertaining to that specific
@@ -104,26 +165,22 @@ data MsgSolnMeta = MsgSolnMeta
 
 instance Binary MsgSolnMeta where
   get = do
+    _msgSolnMeta_tow <- getWord32le
     _msgSolnMeta_pdop <- getWord16le
     _msgSolnMeta_hdop <- getWord16le
     _msgSolnMeta_vdop <- getWord16le
-    _msgSolnMeta_n_sats <- getWord8
     _msgSolnMeta_age_corrections <- getWord16le
-    _msgSolnMeta_alignment_status <- getWord8
-    _msgSolnMeta_last_used_gnss_pos_tow <- getWord32le
-    _msgSolnMeta_last_used_gnss_vel_tow <- getWord32le
+    _msgSolnMeta_age_gnss <- getWord16le
     _msgSolnMeta_sol_in <- whileM (not <$> isEmpty) get
     pure MsgSolnMeta {..}
 
   put MsgSolnMeta {..} = do
+    putWord32le _msgSolnMeta_tow
     putWord16le _msgSolnMeta_pdop
     putWord16le _msgSolnMeta_hdop
     putWord16le _msgSolnMeta_vdop
-    putWord8 _msgSolnMeta_n_sats
     putWord16le _msgSolnMeta_age_corrections
-    putWord8 _msgSolnMeta_alignment_status
-    putWord32le _msgSolnMeta_last_used_gnss_pos_tow
-    putWord32le _msgSolnMeta_last_used_gnss_vel_tow
+    putWord16le _msgSolnMeta_age_gnss
     mapM_ put _msgSolnMeta_sol_in
 
 $(makeSBP 'msgSolnMeta ''MsgSolnMeta)

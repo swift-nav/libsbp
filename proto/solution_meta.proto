@@ -36,19 +36,17 @@ message SolutionInputType {
 
 /** Solution Sensors Metadata
  *
- * This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
+ * This message contains all metadata about the sensors received and/or used in computing the sensorfusion solution.
  * It focuses primarly, but not only, on GNSS metadata.
  */
 message MsgSolnMeta {
-    uint32 pdop = 1;
-    uint32 hdop = 2;
-    uint32 vdop = 3;
-    uint32 n_sats = 4;
+    uint32 tow = 1;
+    uint32 pdop = 2;
+    uint32 hdop = 3;
+    uint32 vdop = 4;
     uint32 age_corrections = 5;
-    uint32 alignment_status = 6;
-    uint32 last_used_gnss_pos_tow = 7;
-    uint32 last_used_gnss_vel_tow = 8;
-    repeated SolutionInputType sol_in = 9;
+    uint32 age_gnss = 6;
+    repeated SolutionInputType sol_in = 7;
 }
 
 /** Instruments the physical type of GNSS sensor input to the fuzed solution.

@@ -202,6 +202,7 @@ data SBPMsg =
    | SBPMsgSettingsWrite MsgSettingsWrite Msg
    | SBPMsgSettingsWriteResp MsgSettingsWriteResp Msg
    | SBPMsgSolnMeta MsgSolnMeta Msg
+   | SBPMsgSolnMetaDepA MsgSolnMetaDepA Msg
    | SBPMsgSpecan MsgSpecan Msg
    | SBPMsgSpecanDep MsgSpecanDep Msg
    | SBPMsgSsrCodeBiases MsgSsrCodeBiases Msg
@@ -408,6 +409,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgSettingsWrite = SBPMsgSettingsWrite (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSettingsWriteResp = SBPMsgSettingsWriteResp (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSolnMeta = SBPMsgSolnMeta (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSolnMetaDepA = SBPMsgSolnMetaDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSpecan = SBPMsgSpecan (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSpecanDep = SBPMsgSpecanDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrCodeBiases = SBPMsgSsrCodeBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -606,6 +608,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgSettingsWrite _ m) = put m
       encoder (SBPMsgSettingsWriteResp _ m) = put m
       encoder (SBPMsgSolnMeta _ m) = put m
+      encoder (SBPMsgSolnMetaDepA _ m) = put m
       encoder (SBPMsgSpecan _ m) = put m
       encoder (SBPMsgSpecanDep _ m) = put m
       encoder (SBPMsgSsrCodeBiases _ m) = put m
@@ -808,6 +811,7 @@ instance FromJSON SBPMsg where
         | msgType == msgSettingsWrite = SBPMsgSettingsWrite <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSettingsWriteResp = SBPMsgSettingsWriteResp <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSolnMeta = SBPMsgSolnMeta <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSolnMetaDepA = SBPMsgSolnMetaDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSpecan = SBPMsgSpecan <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSpecanDep = SBPMsgSpecanDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrCodeBiases = SBPMsgSsrCodeBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1011,6 +1015,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgSettingsWrite n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSettingsWriteResp n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSolnMeta n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSolnMetaDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSpecan n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSpecanDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrCodeBiases n m) = toJSON n <<>> toJSON m
@@ -1208,6 +1213,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgSettingsWrite n m) = SBPMsgSettingsWrite n <$> f m
   msg f (SBPMsgSettingsWriteResp n m) = SBPMsgSettingsWriteResp n <$> f m
   msg f (SBPMsgSolnMeta n m) = SBPMsgSolnMeta n <$> f m
+  msg f (SBPMsgSolnMetaDepA n m) = SBPMsgSolnMetaDepA n <$> f m
   msg f (SBPMsgSpecan n m) = SBPMsgSpecan n <$> f m
   msg f (SBPMsgSpecanDep n m) = SBPMsgSpecanDep n <$> f m
   msg f (SBPMsgSsrCodeBiases n m) = SBPMsgSsrCodeBiases n <$> f m

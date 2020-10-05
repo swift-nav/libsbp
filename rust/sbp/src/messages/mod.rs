@@ -192,6 +192,7 @@ use self::settings::MsgSettingsSave;
 use self::settings::MsgSettingsWrite;
 use self::settings::MsgSettingsWriteResp;
 use self::solution_meta::MsgSolnMeta;
+use self::solution_meta::MsgSolnMetaDepA;
 use self::ssr::MsgSsrCodeBiases;
 use self::ssr::MsgSsrGridDefinitionDepA;
 use self::ssr::MsgSsrGriddedCorrection;
@@ -433,6 +434,7 @@ pub enum SBP {
     MsgGnssTimeOffset(MsgGnssTimeOffset),
     MsgGroupMeta(MsgGroupMeta),
     MsgSolnMeta(MsgSolnMeta),
+    MsgSolnMetaDepA(MsgSolnMetaDepA),
     MsgHeartbeat(MsgHeartbeat),
     Unknown(Unknown),
 }
@@ -1395,10 +1397,15 @@ impl SBP {
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgGroupMeta(msg))
             }
-            65295 => {
+            65294 => {
                 let mut msg = MsgSolnMeta::parse(payload)?;
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgSolnMeta(msg))
+            }
+            65295 => {
+                let mut msg = MsgSolnMetaDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgSolnMetaDepA(msg))
             }
             65535 => {
                 let mut msg = MsgHeartbeat::parse(payload)?;
@@ -1611,6 +1618,7 @@ impl SBP {
             SBP::MsgGnssTimeOffset(msg) => msg,
             SBP::MsgGroupMeta(msg) => msg,
             SBP::MsgSolnMeta(msg) => msg,
+            SBP::MsgSolnMetaDepA(msg) => msg,
             SBP::MsgHeartbeat(msg) => msg,
             SBP::Unknown(msg) => msg,
         }

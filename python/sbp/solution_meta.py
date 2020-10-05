@@ -182,11 +182,11 @@ Accessible through sol_in[N].flags in a MSG_SOLN_META.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return OdoInputType.build(d)
     
-SBP_MSG_SOLN_META = 0xFF0F
-class MsgSolnMeta(SBP):
-  """SBP class for message MSG_SOLN_META (0xFF0F).
+SBP_MSG_SOLN_META_DEP_A = 0xFF0F
+class MsgSolnMetaDepA(SBP):
+  """SBP class for message MSG_SOLN_META_DEP_A (0xFF0F).
 
-  You can have MSG_SOLN_META inherit its fields directly
+  You can have MSG_SOLN_META_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -245,13 +245,13 @@ It focuses primarly, but not only, on GNSS metadata.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgSolnMeta,
+      super( MsgSolnMetaDepA,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgSolnMeta, self).__init__()
-      self.msg_type = SBP_MSG_SOLN_META
+      super( MsgSolnMetaDepA, self).__init__()
+      self.msg_type = SBP_MSG_SOLN_META_DEP_A
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.pdop = kwargs.pop('pdop')
       self.hdop = kwargs.pop('hdop')
@@ -261,6 +261,127 @@ It focuses primarly, but not only, on GNSS metadata.
       self.alignment_status = kwargs.pop('alignment_status')
       self.last_used_gnss_pos_tow = kwargs.pop('last_used_gnss_pos_tow')
       self.last_used_gnss_vel_tow = kwargs.pop('last_used_gnss_vel_tow')
+      self.sol_in = kwargs.pop('sol_in')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSolnMetaDepA.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSolnMetaDepA(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSolnMetaDepA._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSolnMetaDepA._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSolnMetaDepA._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSolnMetaDepA, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_SOLN_META = 0xFF0E
+class MsgSolnMeta(SBP):
+  """SBP class for message MSG_SOLN_META (0xFF0E).
+
+  You can have MSG_SOLN_META inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message contains all metadata about the sensors received and/or used in computing the sensorfusion solution.
+It focuses primarly, but not only, on GNSS metadata.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS time of week rounded to the nearest millisecond
+  pdop : int
+    Position Dilution of Precision, as per last available DOPS from Starling GNSS engine
+  hdop : int
+    Horizontal Dilution of Precision, as per last available DOPS from Starling GNSS engine
+  vdop : int
+    Vertical Dilution of Precision, as per last available DOPS from Starling GNSS engine
+  age_corrections : int
+    Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine
+  age_gnss : int
+    Age of the last received valid GNSS solution (0xFFFF indicates invalid)
+  sol_in : array
+    Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc.
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'pdop' / construct.Int16ul,
+                   'hdop' / construct.Int16ul,
+                   'vdop' / construct.Int16ul,
+                   'age_corrections' / construct.Int16ul,
+                   'age_gnss' / construct.Int16ul,
+                   construct.GreedyRange('sol_in' / construct.Struct(SolutionInputType._parser)),)
+  __slots__ = [
+               'tow',
+               'pdop',
+               'hdop',
+               'vdop',
+               'age_corrections',
+               'age_gnss',
+               'sol_in',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSolnMeta,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSolnMeta, self).__init__()
+      self.msg_type = SBP_MSG_SOLN_META
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.pdop = kwargs.pop('pdop')
+      self.hdop = kwargs.pop('hdop')
+      self.vdop = kwargs.pop('vdop')
+      self.age_corrections = kwargs.pop('age_corrections')
+      self.age_gnss = kwargs.pop('age_gnss')
       self.sol_in = kwargs.pop('sol_in')
 
   def __repr__(self):
@@ -315,5 +436,6 @@ It focuses primarly, but not only, on GNSS metadata.
     
 
 msg_classes = {
-  0xFF0F: MsgSolnMeta,
+  0xFF0F: MsgSolnMetaDepA,
+  0xFF0E: MsgSolnMeta,
 }
