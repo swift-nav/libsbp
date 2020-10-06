@@ -175,6 +175,7 @@ import com.swiftnav.sbp.settings.MsgSettingsReadByIndexResp;
 import com.swiftnav.sbp.settings.MsgSettingsReadByIndexDone;
 import com.swiftnav.sbp.settings.MsgSettingsRegister;
 import com.swiftnav.sbp.settings.MsgSettingsRegisterResp;
+import com.swiftnav.sbp.solution_meta.MsgSolnMetaDepA;
 import com.swiftnav.sbp.solution_meta.MsgSolnMeta;
 import com.swiftnav.sbp.ssr.MsgSsrOrbitClock;
 import com.swiftnav.sbp.ssr.MsgSsrCodeBiases;
@@ -532,6 +533,8 @@ final class MessageTable {
                 return new MsgSettingsRegister(msg);
             case MsgSettingsRegisterResp.TYPE:
                 return new MsgSettingsRegisterResp(msg);
+            case MsgSolnMetaDepA.TYPE:
+                return new MsgSolnMetaDepA(msg);
             case MsgSolnMeta.TYPE:
                 return new MsgSolnMeta(msg);
             case MsgSsrOrbitClock.TYPE:

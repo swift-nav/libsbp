@@ -58,7 +58,7 @@ SolutionInputType.prototype.fieldSpec.push(['sensor_type', 'writeUInt8', 1]);
 SolutionInputType.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 /**
- * SBP class for message MSG_SOLN_META (0xFF0F).
+ * SBP class for message MSG_SOLN_META_DEP_A (0xFF0F).
  *
  * This message contains all metadata about the sensors received and/or used in
  * computing the Fuzed Solution. It focuses primarly, but not only, on GNSS
@@ -84,18 +84,18 @@ SolutionInputType.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgSolnMeta = function (sbp, fields) {
+var MsgSolnMetaDepA = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_SOLN_META";
+  this.messageType = "MSG_SOLN_META_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgSolnMeta.prototype = Object.create(SBP.prototype);
-MsgSolnMeta.prototype.messageType = "MSG_SOLN_META";
-MsgSolnMeta.prototype.msg_type = 0xFF0F;
-MsgSolnMeta.prototype.constructor = MsgSolnMeta;
-MsgSolnMeta.prototype.parser = new Parser()
+MsgSolnMetaDepA.prototype = Object.create(SBP.prototype);
+MsgSolnMetaDepA.prototype.messageType = "MSG_SOLN_META_DEP_A";
+MsgSolnMetaDepA.prototype.msg_type = 0xFF0F;
+MsgSolnMetaDepA.prototype.constructor = MsgSolnMetaDepA;
+MsgSolnMetaDepA.prototype.parser = new Parser()
   .endianess('little')
   .uint16('pdop')
   .uint16('hdop')
@@ -106,15 +106,69 @@ MsgSolnMeta.prototype.parser = new Parser()
   .uint32('last_used_gnss_pos_tow')
   .uint32('last_used_gnss_vel_tow')
   .array('sol_in', { type: SolutionInputType.prototype.parser, readUntil: 'eof' });
+MsgSolnMetaDepA.prototype.fieldSpec = [];
+MsgSolnMetaDepA.prototype.fieldSpec.push(['pdop', 'writeUInt16LE', 2]);
+MsgSolnMetaDepA.prototype.fieldSpec.push(['hdop', 'writeUInt16LE', 2]);
+MsgSolnMetaDepA.prototype.fieldSpec.push(['vdop', 'writeUInt16LE', 2]);
+MsgSolnMetaDepA.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
+MsgSolnMetaDepA.prototype.fieldSpec.push(['age_corrections', 'writeUInt16LE', 2]);
+MsgSolnMetaDepA.prototype.fieldSpec.push(['alignment_status', 'writeUInt8', 1]);
+MsgSolnMetaDepA.prototype.fieldSpec.push(['last_used_gnss_pos_tow', 'writeUInt32LE', 4]);
+MsgSolnMetaDepA.prototype.fieldSpec.push(['last_used_gnss_vel_tow', 'writeUInt32LE', 4]);
+MsgSolnMetaDepA.prototype.fieldSpec.push(['sol_in', 'array', SolutionInputType.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+
+/**
+ * SBP class for message MSG_SOLN_META (0xFF0E).
+ *
+ * This message contains all metadata about the sensors received and/or used in
+ * computing the sensorfusion solution. It focuses primarly, but not only, on GNSS
+ * metadata.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS time of week rounded to the nearest millisecond
+ * @field pdop number (unsigned 16-bit int, 2 bytes) Position Dilution of Precision, as per last available DOPS from Starling GNSS
+ *   engine
+ * @field hdop number (unsigned 16-bit int, 2 bytes) Horizontal Dilution of Precision, as per last available DOPS from Starling GNSS
+ *   engine
+ * @field vdop number (unsigned 16-bit int, 2 bytes) Vertical Dilution of Precision, as per last available DOPS from Starling GNSS
+ *   engine
+ * @field age_corrections number (unsigned 16-bit int, 2 bytes) Age of the corrections (0xFFFF indicates invalid), as per last available
+ *   AGE_CORRECTIONS from Starling GNSS engine
+ * @field age_gnss number (unsigned 16-bit int, 2 bytes) Age of the last received valid GNSS solution (0xFFFF indicates invalid)
+ * @field sol_in array Array of Metadata describing the sensors potentially involved in the solution.
+ *   Each element in the array represents a single sensor type and consists of flags
+ *   containing (meta)data pertaining to that specific single sensor. Refer to each
+ *   (XX)InputType descriptor in the present doc.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSolnMeta = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SOLN_META";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSolnMeta.prototype = Object.create(SBP.prototype);
+MsgSolnMeta.prototype.messageType = "MSG_SOLN_META";
+MsgSolnMeta.prototype.msg_type = 0xFF0E;
+MsgSolnMeta.prototype.constructor = MsgSolnMeta;
+MsgSolnMeta.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .uint16('pdop')
+  .uint16('hdop')
+  .uint16('vdop')
+  .uint16('age_corrections')
+  .uint16('age_gnss')
+  .array('sol_in', { type: SolutionInputType.prototype.parser, readUntil: 'eof' });
 MsgSolnMeta.prototype.fieldSpec = [];
+MsgSolnMeta.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
 MsgSolnMeta.prototype.fieldSpec.push(['pdop', 'writeUInt16LE', 2]);
 MsgSolnMeta.prototype.fieldSpec.push(['hdop', 'writeUInt16LE', 2]);
 MsgSolnMeta.prototype.fieldSpec.push(['vdop', 'writeUInt16LE', 2]);
-MsgSolnMeta.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
 MsgSolnMeta.prototype.fieldSpec.push(['age_corrections', 'writeUInt16LE', 2]);
-MsgSolnMeta.prototype.fieldSpec.push(['alignment_status', 'writeUInt8', 1]);
-MsgSolnMeta.prototype.fieldSpec.push(['last_used_gnss_pos_tow', 'writeUInt32LE', 4]);
-MsgSolnMeta.prototype.fieldSpec.push(['last_used_gnss_vel_tow', 'writeUInt32LE', 4]);
+MsgSolnMeta.prototype.fieldSpec.push(['age_gnss', 'writeUInt16LE', 2]);
 MsgSolnMeta.prototype.fieldSpec.push(['sol_in', 'array', SolutionInputType.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
@@ -200,7 +254,9 @@ OdoInputType.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 module.exports = {
   SolutionInputType: SolutionInputType,
-  0xFF0F: MsgSolnMeta,
+  0xFF0F: MsgSolnMetaDepA,
+  MsgSolnMetaDepA: MsgSolnMetaDepA,
+  0xFF0E: MsgSolnMeta,
   MsgSolnMeta: MsgSolnMeta,
   GNSSInputType: GNSSInputType,
   IMUInputType: IMUInputType,

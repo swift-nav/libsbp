@@ -22,21 +22,18 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_SOLN_META (0xFF0E).
+/** SBP class for message MSG_SOLN_META_DEP_A (0xFF0F).
  *
- * You can have MSG_SOLN_META inherent its fields directly from
+ * You can have MSG_SOLN_META_DEP_A inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This message contains all metadata about the sensors received and/or used in computing the sensorfusion solution.
+ * This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
  * It focuses primarly, but not only, on GNSS metadata. */
 
-public class MsgSolnMeta extends SBPMessage {
-    public static final int TYPE = 0xFF0E;
+public class MsgSolnMetaDepA extends SBPMessage {
+    public static final int TYPE = 0xFF0F;
 
-    
-    /** GPS time of week rounded to the nearest millisecond */
-    public long tow;
     
     /** Position Dilution of Precision, as per last available DOPS from Starling GNSS engine */
     public int pdop;
@@ -47,19 +44,28 @@ public class MsgSolnMeta extends SBPMessage {
     /** Vertical Dilution of Precision, as per last available DOPS from Starling GNSS engine */
     public int vdop;
     
+    /** Number of satellites, as per last available solution from Starling GNSS engine */
+    public int n_sats;
+    
     /** Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine */
     public int age_corrections;
     
-    /** Age of the last received valid GNSS solution (0xFFFF indicates invalid) */
-    public int age_gnss;
+    /** State of alignment and the status and receipt of the alignment inputs */
+    public int alignment_status;
+    
+    /** Tow of last-used GNSS position measurement */
+    public long last_used_gnss_pos_tow;
+    
+    /** Tow of last-used GNSS velocity measurement */
+    public long last_used_gnss_vel_tow;
     
     /** Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc. */
     public SolutionInputType[] sol_in;
     
 
-    public MsgSolnMeta (int sender) { super(sender, TYPE); }
-    public MsgSolnMeta () { super(TYPE); }
-    public MsgSolnMeta (SBPMessage msg) throws SBPBinaryException {
+    public MsgSolnMetaDepA (int sender) { super(sender, TYPE); }
+    public MsgSolnMetaDepA () { super(TYPE); }
+    public MsgSolnMetaDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -67,35 +73,41 @@ public class MsgSolnMeta extends SBPMessage {
     @Override
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
-        tow = parser.getU32();
         pdop = parser.getU16();
         hdop = parser.getU16();
         vdop = parser.getU16();
+        n_sats = parser.getU8();
         age_corrections = parser.getU16();
-        age_gnss = parser.getU16();
+        alignment_status = parser.getU8();
+        last_used_gnss_pos_tow = parser.getU32();
+        last_used_gnss_vel_tow = parser.getU32();
         sol_in = parser.getArray(SolutionInputType.class);
     }
 
     @Override
     protected void build(Builder builder) {
-        builder.putU32(tow);
         builder.putU16(pdop);
         builder.putU16(hdop);
         builder.putU16(vdop);
+        builder.putU8(n_sats);
         builder.putU16(age_corrections);
-        builder.putU16(age_gnss);
+        builder.putU8(alignment_status);
+        builder.putU32(last_used_gnss_pos_tow);
+        builder.putU32(last_used_gnss_vel_tow);
         builder.putArray(sol_in);
     }
 
     @Override
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
-        obj.put("tow", tow);
         obj.put("pdop", pdop);
         obj.put("hdop", hdop);
         obj.put("vdop", vdop);
+        obj.put("n_sats", n_sats);
         obj.put("age_corrections", age_corrections);
-        obj.put("age_gnss", age_gnss);
+        obj.put("alignment_status", alignment_status);
+        obj.put("last_used_gnss_pos_tow", last_used_gnss_pos_tow);
+        obj.put("last_used_gnss_vel_tow", last_used_gnss_vel_tow);
         obj.put("sol_in", SBPStruct.toJSONArray(sol_in));
         return obj;
     }

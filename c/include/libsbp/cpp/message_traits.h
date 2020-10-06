@@ -1136,6 +1136,12 @@ struct MessageTraits<msg_group_meta_t> {
 
 template<>
 struct MessageTraits<msg_soln_meta_t> {
+  static constexpr u16 id = 65294;
+};
+
+
+template<>
+struct MessageTraits<msg_soln_meta_dep_a_t> {
   static constexpr u16 id = 65295;
 };
 

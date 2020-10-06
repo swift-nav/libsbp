@@ -65,11 +65,11 @@ The content of flags, for each sensor type, is described in the relevant structu
     return res, off, length
 
   
-SBP_MSG_SOLN_META = 0xFF0F
-class MsgSolnMeta(SBP):
-  """SBP class for message MSG_SOLN_META (0xFF0F).
+SBP_MSG_SOLN_META_DEP_A = 0xFF0F
+class MsgSolnMetaDepA(SBP):
+  """SBP class for message MSG_SOLN_META_DEP_A (0xFF0F).
 
-  You can have MSG_SOLN_META inherit its fields directly
+  You can have MSG_SOLN_META_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -124,6 +124,61 @@ It focuses primarly, but not only, on GNSS metadata.
     self.alignment_status = res['alignment_status']
     self.last_used_gnss_pos_tow = res['last_used_gnss_pos_tow']
     self.last_used_gnss_vel_tow = res['last_used_gnss_vel_tow']
+    self.sol_in = res['sol_in']
+    return res, off, length
+
+  
+SBP_MSG_SOLN_META = 0xFF0E
+class MsgSolnMeta(SBP):
+  """SBP class for message MSG_SOLN_META (0xFF0E).
+
+  You can have MSG_SOLN_META inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message contains all metadata about the sensors received and/or used in computing the sensorfusion solution.
+It focuses primarly, but not only, on GNSS metadata.
+
+
+  """
+  __slots__ = ['tow',
+               'pdop',
+               'hdop',
+               'vdop',
+               'age_corrections',
+               'age_gnss',
+               'sol_in',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__tow, offset, length) = get_u32(buf, offset, length)
+    ret['tow'] = __tow
+    (__pdop, offset, length) = get_u16(buf, offset, length)
+    ret['pdop'] = __pdop
+    (__hdop, offset, length) = get_u16(buf, offset, length)
+    ret['hdop'] = __hdop
+    (__vdop, offset, length) = get_u16(buf, offset, length)
+    ret['vdop'] = __vdop
+    (__age_corrections, offset, length) = get_u16(buf, offset, length)
+    ret['age_corrections'] = __age_corrections
+    (__age_gnss, offset, length) = get_u16(buf, offset, length)
+    ret['age_gnss'] = __age_gnss
+    (__sol_in, offset, length) = get_array(SolutionInputType.parse_members)(buf, offset, length)
+    ret['sol_in'] = __sol_in
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.tow = res['tow']
+    self.pdop = res['pdop']
+    self.hdop = res['hdop']
+    self.vdop = res['vdop']
+    self.age_corrections = res['age_corrections']
+    self.age_gnss = res['age_gnss']
     self.sol_in = res['sol_in']
     return res, off, length
 
@@ -220,5 +275,6 @@ Accessible through sol_in[N].flags in a MSG_SOLN_META.
   
 
 msg_classes = {
-  0xFF0F: MsgSolnMeta,
+  0xFF0F: MsgSolnMetaDepA,
+  0xFF0E: MsgSolnMeta,
 }

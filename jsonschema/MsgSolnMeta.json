@@ -13,28 +13,24 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgSolnMeta",
   "title":"MsgSolnMeta",
-  "description":"This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.,\nIt focuses primarly, but not only, on GNSS metadata.\n",
+  "description":"This message contains all metadata about the sensors received and/or used in computing the sensorfusion solution.,\nIt focuses primarly, but not only, on GNSS metadata.\n",
   "type": "object",
   "properties": {
+    "tow": {"type": "integer"},
     "pdop": {"type": "integer"},
     "hdop": {"type": "integer"},
     "vdop": {"type": "integer"},
-    "n_sats": {"type": "integer"},
     "age_corrections": {"type": "integer"},
-    "alignment_status": {"type": "integer"},
-    "last_used_gnss_pos_tow": {"type": "integer"},
-    "last_used_gnss_vel_tow": {"type": "integer"},
+    "age_gnss": {"type": "integer"},
     "sol_in": {"type": "array", "items": {"$ref": "SolutionInputType.json"}}
   },
   "required": [
+    "tow",
     "pdop",
     "hdop",
     "vdop",
-    "n_sats",
     "age_corrections",
-    "alignment_status",
-    "last_used_gnss_pos_tow",
-    "last_used_gnss_vel_tow",
+    "age_gnss",
     "sol_in"
   ]
 }
