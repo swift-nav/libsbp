@@ -134,7 +134,7 @@ MsgSolnMetaDepA.prototype.fieldSpec.push(['sol_in', 'array', SolutionInputType.p
  *   engine
  * @field age_corrections number (unsigned 16-bit int, 2 bytes) Age of the corrections (0xFFFF indicates invalid), as per last available
  *   AGE_CORRECTIONS from Starling GNSS engine
- * @field age_gnss number (unsigned 16-bit int, 2 bytes) Age of the last received valid GNSS solution (0xFFFF indicates invalid)
+ * @field age_gnss number (unsigned 32-bit int, 4 bytes) Age of the last received valid GNSS solution
  * @field sol_in array Array of Metadata describing the sensors potentially involved in the solution.
  *   Each element in the array represents a single sensor type and consists of flags
  *   containing (meta)data pertaining to that specific single sensor. Refer to each
@@ -160,7 +160,7 @@ MsgSolnMeta.prototype.parser = new Parser()
   .uint16('hdop')
   .uint16('vdop')
   .uint16('age_corrections')
-  .uint16('age_gnss')
+  .uint32('age_gnss')
   .array('sol_in', { type: SolutionInputType.prototype.parser, readUntil: 'eof' });
 MsgSolnMeta.prototype.fieldSpec = [];
 MsgSolnMeta.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
@@ -168,7 +168,7 @@ MsgSolnMeta.prototype.fieldSpec.push(['pdop', 'writeUInt16LE', 2]);
 MsgSolnMeta.prototype.fieldSpec.push(['hdop', 'writeUInt16LE', 2]);
 MsgSolnMeta.prototype.fieldSpec.push(['vdop', 'writeUInt16LE', 2]);
 MsgSolnMeta.prototype.fieldSpec.push(['age_corrections', 'writeUInt16LE', 2]);
-MsgSolnMeta.prototype.fieldSpec.push(['age_gnss', 'writeUInt16LE', 2]);
+MsgSolnMeta.prototype.fieldSpec.push(['age_gnss', 'writeUInt32LE', 4]);
 MsgSolnMeta.prototype.fieldSpec.push(['sol_in', 'array', SolutionInputType.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**

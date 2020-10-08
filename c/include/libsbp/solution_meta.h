@@ -93,7 +93,7 @@ typedef struct SBP_ATTR_PACKED {
   u16 hdop;               /**< Horizontal Dilution of Precision, as per last available DOPS from Starling GNSS engine [0.01] */
   u16 vdop;               /**< Vertical Dilution of Precision, as per last available DOPS from Starling GNSS engine [0.01] */
   u16 age_corrections;    /**< Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine [deciseconds] */
-  u16 age_gnss;           /**< Age of the last received valid GNSS solution (0xFFFF indicates invalid) [ms] */
+  u32 age_gnss;           /**< Age of the last received valid GNSS solution [ms] */
   solution_input_type_t sol_in[0];          /**< Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc. */
 } msg_soln_meta_t;
 

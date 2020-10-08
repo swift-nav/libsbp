@@ -163,7 +163,7 @@ It focuses primarly, but not only, on GNSS metadata.
     ret['vdop'] = __vdop
     (__age_corrections, offset, length) = get_u16(buf, offset, length)
     ret['age_corrections'] = __age_corrections
-    (__age_gnss, offset, length) = get_u16(buf, offset, length)
+    (__age_gnss, offset, length) = get_u32(buf, offset, length)
     ret['age_gnss'] = __age_gnss
     (__sol_in, offset, length) = get_array(SolutionInputType.parse_members)(buf, offset, length)
     ret['sol_in'] = __sol_in
