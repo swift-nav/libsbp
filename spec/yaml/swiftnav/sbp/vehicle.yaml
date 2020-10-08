@@ -43,8 +43,15 @@ definitions:
             type: u8
             desc: Status flags
             fields:
-                  - 5-7:
+                  - 6-7:
                       desc: Reserved
+                  - 5-6:
+                      desc: Vehicle Metadata
+                      values:
+                          - 0: Unavailable
+                          - 1: FWD
+                          - 2: Rev
+                          - 3: Park
                   - 3-4:
                       desc: Velocity Source
                       values:
@@ -88,6 +95,13 @@ definitions:
             fields:
                   - 2-7:
                       desc: Reserved
+                  - 2-3:
+                      desc: Vehicle Metadata
+                      values:
+                          - 0: Unavailable
+                          - 1: FWD
+                          - 2: Rev
+                          - 3: Park
                   - 0-1:
                       desc: Synchronization type
                       values:
