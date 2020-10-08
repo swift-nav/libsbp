@@ -50,8 +50,8 @@ public class MsgSolnMeta extends SBPMessage {
     /** Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine */
     public int age_corrections;
     
-    /** Age of the last received valid GNSS solution (0xFFFF indicates invalid) */
-    public int age_gnss;
+    /** Age of the last received valid GNSS solution */
+    public long age_gnss;
     
     /** Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc. */
     public SolutionInputType[] sol_in;
@@ -72,7 +72,7 @@ public class MsgSolnMeta extends SBPMessage {
         hdop = parser.getU16();
         vdop = parser.getU16();
         age_corrections = parser.getU16();
-        age_gnss = parser.getU16();
+        age_gnss = parser.getU32();
         sol_in = parser.getArray(SolutionInputType.class);
     }
 
@@ -83,7 +83,7 @@ public class MsgSolnMeta extends SBPMessage {
         builder.putU16(hdop);
         builder.putU16(vdop);
         builder.putU16(age_corrections);
-        builder.putU16(age_gnss);
+        builder.putU32(age_gnss);
         builder.putArray(sol_in);
     }
 
