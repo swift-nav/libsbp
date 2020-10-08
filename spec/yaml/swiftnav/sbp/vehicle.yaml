@@ -49,8 +49,8 @@ definitions:
                       desc: Vehicle Metadata
                       values:
                           - 0: Unavailable
-                          - 1: FWD
-                          - 2: Rev
+                          - 1: Forward 
+                          - 2: Reverse
                           - 3: Park
                   - 3-4:
                       desc: Velocity Source
@@ -99,8 +99,8 @@ definitions:
                       desc: Vehicle Metadata
                       values:
                           - 0: Unavailable
-                          - 1: FWD
-                          - 2: Rev
+                          - 1: Forward 
+                          - 2: Reverse
                           - 3: Park
                   - 0-1:
                       desc: Synchronization type
