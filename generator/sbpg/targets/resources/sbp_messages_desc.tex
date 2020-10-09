@@ -25,15 +25,15 @@
     Offset (bytes) & Size (bytes) & Format & Units & Name & Description \\
     \midrule
     ((*- for f in m.fields *))
-      $(((f.offset)))$ &
-      $(((f.size)))$ &
+      $\mathtt{(((f.offset)))}$ &
+      $\mathtt{(((f.size)))}$ &
       (((f.fmt))) &
       (((f.units|escape_tex))) &
       \texttt{(((f.name|escape_tex)))} &
       \hangindent=0.5em{(((f.desc|escape_tex)))} \\
       ((*- endfor *))
     \midrule
-    & $(((m.size)))$ & & & & Total Payload Length\\
+    & $\mathtt{(((m.size)))}$ & & & & Total Payload Length\\
     \bottomrule
   \end{tabularx}
   \caption{(((m.name|escape_tex))) 
@@ -113,15 +113,15 @@
     Offset (bytes) & Size (bytes) & Format & Units & Name & Description \\
     \midrule
     ((*- for f in m.fields *))
-      $(((f.offset)))$ &
-      $(((f.size)))$ &
+      $\mathtt{(((f.offset)))}$ &
+      $\mathtt{(((f.size)))}$ &
       (((f.fmt))) &
       (((f.units|escape_tex))) &
       \texttt{(((f.name|escape_tex)))} &
       \hangindent=0.5em{(((f.desc|escape_tex)))} \\
       ((*- endfor *))
     \midrule
-    & $(((m.size)))$ & & & & Total Payload Length\\
+    & $\mathtt{(((m.size)))}$ & & & & Total Payload Length\\
     \bottomrule
   \end{tabularx}
   \caption{(((m.name|escape_tex))) (((('0x%04X'|format(m.sbp_id))))) message structure}
