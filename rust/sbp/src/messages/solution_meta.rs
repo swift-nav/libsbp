@@ -150,8 +150,8 @@ pub struct MsgSolnMeta {
     /// Age of the corrections (0xFFFF indicates invalid), as per last available
     /// AGE_CORRECTIONS from Starling GNSS engine
     pub age_corrections: u16,
-    /// Age of the last received valid GNSS solution (0xFFFF indicates invalid)
-    pub age_gnss: u16,
+    /// Age of the last received valid GNSS solution
+    pub age_gnss: u32,
     /// Array of Metadata describing the sensors potentially involved in the
     /// solution. Each element in the array represents a single sensor type and
     /// consists of flags containing (meta)data pertaining to that specific
@@ -170,7 +170,7 @@ impl MsgSolnMeta {
             hdop: _buf.read_u16::<LittleEndian>()?,
             vdop: _buf.read_u16::<LittleEndian>()?,
             age_corrections: _buf.read_u16::<LittleEndian>()?,
-            age_gnss: _buf.read_u16::<LittleEndian>()?,
+            age_gnss: _buf.read_u32::<LittleEndian>()?,
             sol_in: SolutionInputType::parse_array(_buf)?,
         } )
     }

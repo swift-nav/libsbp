@@ -153,8 +153,8 @@ data MsgSolnMeta = MsgSolnMeta
   , _msgSolnMeta_age_corrections :: !Word16
     -- ^ Age of the corrections (0xFFFF indicates invalid), as per last available
     -- AGE_CORRECTIONS from Starling GNSS engine
-  , _msgSolnMeta_age_gnss      :: !Word16
-    -- ^ Age of the last received valid GNSS solution (0xFFFF indicates invalid)
+  , _msgSolnMeta_age_gnss      :: !Word32
+    -- ^ Age of the last received valid GNSS solution
   , _msgSolnMeta_sol_in        :: ![SolutionInputType]
     -- ^ Array of Metadata describing the sensors potentially involved in the
     -- solution. Each element in the array represents a single sensor type and
@@ -170,7 +170,7 @@ instance Binary MsgSolnMeta where
     _msgSolnMeta_hdop <- getWord16le
     _msgSolnMeta_vdop <- getWord16le
     _msgSolnMeta_age_corrections <- getWord16le
-    _msgSolnMeta_age_gnss <- getWord16le
+    _msgSolnMeta_age_gnss <- getWord32le
     _msgSolnMeta_sol_in <- whileM (not <$> isEmpty) get
     pure MsgSolnMeta {..}
 
@@ -180,7 +180,7 @@ instance Binary MsgSolnMeta where
     putWord16le _msgSolnMeta_hdop
     putWord16le _msgSolnMeta_vdop
     putWord16le _msgSolnMeta_age_corrections
-    putWord16le _msgSolnMeta_age_gnss
+    putWord32le _msgSolnMeta_age_gnss
     mapM_ put _msgSolnMeta_sol_in
 
 $(makeSBP 'msgSolnMeta ''MsgSolnMeta)

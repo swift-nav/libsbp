@@ -341,7 +341,7 @@ It focuses primarly, but not only, on GNSS metadata.
   age_corrections : int
     Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine
   age_gnss : int
-    Age of the last received valid GNSS solution (0xFFFF indicates invalid)
+    Age of the last received valid GNSS solution
   sol_in : array
     Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc.
   sender : int
@@ -354,7 +354,7 @@ It focuses primarly, but not only, on GNSS metadata.
                    'hdop' / construct.Int16ul,
                    'vdop' / construct.Int16ul,
                    'age_corrections' / construct.Int16ul,
-                   'age_gnss' / construct.Int16ul,
+                   'age_gnss' / construct.Int32ul,
                    construct.GreedyRange('sol_in' / construct.Struct(SolutionInputType._parser)),)
   __slots__ = [
                'tow',

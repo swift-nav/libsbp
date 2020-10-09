@@ -145,9 +145,9 @@ definitions:
            units: deciseconds
            desc: Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine
        - age_gnss:
-           type: u16
+           type: u32
            units: ms
-           desc: Age of the last received valid GNSS solution (0xFFFF indicates invalid)
+           desc: Age of the last received valid GNSS solution
        - sol_in:
            type: array
            fill: SolutionInputType
