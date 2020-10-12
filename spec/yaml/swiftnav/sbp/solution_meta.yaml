@@ -41,15 +41,15 @@ definitions:
                    - 1: Received and used
                    - 2: Received but not used
              - 0-2:
-                 desc: Sensory Type
+                 desc: Sensor Type
                  values:
-                   - 0: GNSS Position (see GNSSInputType)
-                   - 1: GNSS Velocity Displacement (see GNSSInputType)
-                   - 2: GNSS Velocity Doppler (see GNSSInputType)
-                   - 3: Odometry Ticks (see OdoInputType)
-                   - 4: Odometry Speed (see OdoInputType)
-                   - 5: IMU Sensor (see IMUInputType)
-                   - 6: Reserved
+                   - 0: Invalid
+                   - 1: GNSS Position (see GNSSInputType)
+                   - 2: GNSS Velocity Displacement (see GNSSInputType)
+                   - 3: GNSS Velocity Doppler (see GNSSInputType)
+                   - 4: Odometry Ticks (see OdoInputType)
+                   - 5: Odometry Speed (see OdoInputType)
+                   - 6: IMU Sensor (see IMUInputType)
                    - 7: Reserved
        - flags:
            type: u8
