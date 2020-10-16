@@ -40,6 +40,21 @@ SBP_PACK_START
  * with GNSS.
  */
 #define SBP_MSG_ODOMETRY  0x0903
+#define SBP_ODOMETRY_VEHICLE_METADATA_MASK (0x3)
+#define SBP_ODOMETRY_VEHICLE_METADATA_SHIFT (5u)
+#define SBP_ODOMETRY_VEHICLE_METADATA_GET(flags) \
+                             (((flags) >> SBP_ODOMETRY_VEHICLE_METADATA_SHIFT) \
+                             & SBP_ODOMETRY_VEHICLE_METADATA_MASK)
+#define SBP_ODOMETRY_VEHICLE_METADATA_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_ODOMETRY_VEHICLE_METADATA_MASK)) \
+                             << (SBP_ODOMETRY_VEHICLE_METADATA_SHIFT)));} while(0)
+                             
+
+#define SBP_ODOMETRY_VEHICLE_METADATA_UNAVAILABLE (0)
+#define SBP_ODOMETRY_VEHICLE_METADATA_FORWARD (1)
+#define SBP_ODOMETRY_VEHICLE_METADATA_REVERSE (2)
+#define SBP_ODOMETRY_VEHICLE_METADATA_PARK (3)
 #define SBP_ODOMETRY_VELOCITY_SOURCE_MASK (0x3)
 #define SBP_ODOMETRY_VELOCITY_SOURCE_SHIFT (3u)
 #define SBP_ODOMETRY_VELOCITY_SOURCE_GET(flags) \
@@ -95,6 +110,21 @@ for the exact source of this timestamp.
  * with GNSS.
  */
 #define SBP_MSG_WHEELTICK 0x0904
+#define SBP_WHEELTICK_VEHICLE_METADATA_MASK (0x3)
+#define SBP_WHEELTICK_VEHICLE_METADATA_SHIFT (2u)
+#define SBP_WHEELTICK_VEHICLE_METADATA_GET(flags) \
+                             (((flags) >> SBP_WHEELTICK_VEHICLE_METADATA_SHIFT) \
+                             & SBP_WHEELTICK_VEHICLE_METADATA_MASK)
+#define SBP_WHEELTICK_VEHICLE_METADATA_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_WHEELTICK_VEHICLE_METADATA_MASK)) \
+                             << (SBP_WHEELTICK_VEHICLE_METADATA_SHIFT)));} while(0)
+                             
+
+#define SBP_WHEELTICK_VEHICLE_METADATA_UNAVAILABLE (0)
+#define SBP_WHEELTICK_VEHICLE_METADATA_FORWARD (1)
+#define SBP_WHEELTICK_VEHICLE_METADATA_REVERSE (2)
+#define SBP_WHEELTICK_VEHICLE_METADATA_PARK (3)
 #define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_MASK (0x3)
 #define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_SHIFT (0u)
 #define SBP_WHEELTICK_SYNCHRONIZATION_TYPE_GET(flags) \
