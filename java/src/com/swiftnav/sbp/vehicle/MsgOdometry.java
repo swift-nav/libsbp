@@ -35,7 +35,7 @@ import org.json.JSONArray;
  * source 0 through 3.
  * If using "processor time" time tags, the receiving end will expect a
  * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry measurements
- * with GNSS. */
+ * with GNSS. Processor time shall roll over to zero after one week. */
 
 public class MsgOdometry extends SBPMessage {
     public static final int TYPE = 0x0903;

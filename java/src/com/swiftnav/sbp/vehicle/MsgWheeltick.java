@@ -37,7 +37,7 @@ import org.json.JSONArray;
  * tick count reached the value given by the contents of this message as accurately as possible.
  * If using "local CPU time" time tags, the receiving end will expect a
  * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise wheeltick measurements
- * with GNSS. */
+ * with GNSS. Local CPU time shall roll over to zero after one week. */
 
 public class MsgWheeltick extends SBPMessage {
     public static final int TYPE = 0x0904;

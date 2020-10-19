@@ -37,7 +37,7 @@ SBP_PACK_START
  * source 0 through 3.
  * If using "processor time" time tags, the receiving end will expect a
  * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry measurements
- * with GNSS.
+ * with GNSS. Processor time shall roll over to zero after one week.
  */
 #define SBP_MSG_ODOMETRY  0x0903
 #define SBP_ODOMETRY_VEHICLE_METADATA_MASK (0x3)
@@ -107,7 +107,7 @@ for the exact source of this timestamp.
  * tick count reached the value given by the contents of this message as accurately as possible.
  * If using "local CPU time" time tags, the receiving end will expect a
  * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise wheeltick measurements
- * with GNSS.
+ * with GNSS. Local CPU time shall roll over to zero after one week.
  */
 #define SBP_MSG_WHEELTICK 0x0904
 #define SBP_WHEELTICK_VEHICLE_METADATA_MASK (0x3)
