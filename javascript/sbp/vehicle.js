@@ -33,7 +33,7 @@ var UInt64 = require('cuint').UINT64;
  * sources of this message  which are labeled arbitrarily  source 0 through 3. If
  * using "processor time" time tags, the receiving end will expect a
  * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry
- * measurements with GNSS.
+ * measurements with GNSS. Processor time shall roll over to zero after one week.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) Time field representing either milliseconds in the GPS Week or local CPU time
@@ -77,7 +77,7 @@ MsgOdometry.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * count reached the value given by the contents of this message as accurately as
  * possible. If using "local CPU time" time tags, the receiving end will expect a
  * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise wheeltick
- * measurements with GNSS.
+ * measurements with GNSS. Local CPU time shall roll over to zero after one week.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field time number (unsigned 64-bit int, 8 bytes) Time field representing either microseconds since the last PPS, microseconds in

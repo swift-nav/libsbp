@@ -43,7 +43,7 @@ There are 4 possible user-defined sources of this message  which are labeled arb
 source 0 through 3.
 If using "processor time" time tags, the receiving end will expect a
 `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry measurements
-with GNSS.
+with GNSS. Processor time shall roll over to zero after one week.
 
 
   """
@@ -90,7 +90,7 @@ The timestamp associated with this message should represent the time when the ac
 tick count reached the value given by the contents of this message as accurately as possible.
 If using "local CPU time" time tags, the receiving end will expect a
 `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise wheeltick measurements
-with GNSS.
+with GNSS. Local CPU time shall roll over to zero after one week.
 
 
   """
