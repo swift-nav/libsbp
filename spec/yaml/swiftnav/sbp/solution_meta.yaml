@@ -68,22 +68,22 @@ definitions:
        - pdop:
            type: u16
            units: 0.01
-           desc: Position Dilution of Precision, as per last available DOPS from Starling GNSS engine
+           desc: Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
        - hdop:
            type: u16
            units: 0.01
-           desc: Horizontal Dilution of Precision, as per last available DOPS from Starling GNSS engine
+           desc: Horizontal Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
        - vdop:
            type: u16
            units: 0.01
-           desc: Vertical Dilution of Precision, as per last available DOPS from Starling GNSS engine
+           desc: Vertical Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
        - n_sats:
            type: u8
-           desc: Number of satellites, as per last available solution from Starling GNSS engine
+           desc: Number of satellites as per last available solution from PVT engine
        - age_corrections:
            type: u16
            units: deciseconds
-           desc: Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine
+           desc: Age of corrections as per last available AGE_CORRECTIONS from PVT engine (0xFFFF indicates invalid)
        - alignment_status:
            type: u8
            desc: State of alignment and the status and receipt of the alignment inputs
@@ -131,19 +131,19 @@ definitions:
        - pdop:
            type: u16
            units: 0.01
-           desc: Position Dilution of Precision, as per last available DOPS from Starling GNSS engine
+           desc: Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
        - hdop:
            type: u16
            units: 0.01
-           desc: Horizontal Dilution of Precision, as per last available DOPS from Starling GNSS engine
+           desc: Horizontal Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
        - vdop:
            type: u16
            units: 0.01
-           desc: Vertical Dilution of Precision, as per last available DOPS from Starling GNSS engine
+           desc: Vertical Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
        - age_corrections:
            type: u16
            units: deciseconds
-           desc: Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine
+           desc: Age of corrections as per last available AGE_CORRECTIONS from PVT engine (0xFFFF indicates invalid)
        - age_gnss:
            type: u32
            units: ms
