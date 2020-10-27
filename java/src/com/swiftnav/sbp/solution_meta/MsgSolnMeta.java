@@ -38,16 +38,16 @@ public class MsgSolnMeta extends SBPMessage {
     /** GPS time of week rounded to the nearest millisecond */
     public long tow;
     
-    /** Position Dilution of Precision, as per last available DOPS from Starling GNSS engine */
+    /** Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) */
     public int pdop;
     
-    /** Horizontal Dilution of Precision, as per last available DOPS from Starling GNSS engine */
+    /** Horizontal Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) */
     public int hdop;
     
-    /** Vertical Dilution of Precision, as per last available DOPS from Starling GNSS engine */
+    /** Vertical Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) */
     public int vdop;
     
-    /** Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine */
+    /** Age of corrections as per last available AGE_CORRECTIONS from PVT engine (0xFFFF indicates invalid) */
     public int age_corrections;
     
     /** Age of the last received valid GNSS solution */

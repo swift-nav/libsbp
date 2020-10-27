@@ -35,19 +35,19 @@ public class MsgSolnMetaDepA extends SBPMessage {
     public static final int TYPE = 0xFF0F;
 
     
-    /** Position Dilution of Precision, as per last available DOPS from Starling GNSS engine */
+    /** Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) */
     public int pdop;
     
-    /** Horizontal Dilution of Precision, as per last available DOPS from Starling GNSS engine */
+    /** Horizontal Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) */
     public int hdop;
     
-    /** Vertical Dilution of Precision, as per last available DOPS from Starling GNSS engine */
+    /** Vertical Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) */
     public int vdop;
     
-    /** Number of satellites, as per last available solution from Starling GNSS engine */
+    /** Number of satellites as per last available solution from PVT engine */
     public int n_sats;
     
-    /** Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine */
+    /** Age of corrections as per last available AGE_CORRECTIONS from PVT engine (0xFFFF indicates invalid) */
     public int age_corrections;
     
     /** State of alignment and the status and receipt of the alignment inputs */

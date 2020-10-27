@@ -138,17 +138,17 @@ pub struct MsgSolnMeta {
     pub sender_id: Option<u16>,
     /// GPS time of week rounded to the nearest millisecond
     pub tow: u32,
-    /// Position Dilution of Precision, as per last available DOPS from Starling
-    /// GNSS engine
+    /// Position Dilution of Precision as per last available DOPS from PVT
+    /// engine (0xFFFF indicates invalid)
     pub pdop: u16,
-    /// Horizontal Dilution of Precision, as per last available DOPS from
-    /// Starling GNSS engine
+    /// Horizontal Dilution of Precision as per last available DOPS from PVT
+    /// engine (0xFFFF indicates invalid)
     pub hdop: u16,
-    /// Vertical Dilution of Precision, as per last available DOPS from Starling
-    /// GNSS engine
+    /// Vertical Dilution of Precision as per last available DOPS from PVT
+    /// engine (0xFFFF indicates invalid)
     pub vdop: u16,
-    /// Age of the corrections (0xFFFF indicates invalid), as per last available
-    /// AGE_CORRECTIONS from Starling GNSS engine
+    /// Age of corrections as per last available AGE_CORRECTIONS from PVT engine
+    /// (0xFFFF indicates invalid)
     pub age_corrections: u16,
     /// Age of the last received valid GNSS solution
     pub age_gnss: u32,
@@ -229,20 +229,19 @@ impl crate::serialize::SbpSerialize for MsgSolnMeta {
 #[allow(non_snake_case)]
 pub struct MsgSolnMetaDepA {
     pub sender_id: Option<u16>,
-    /// Position Dilution of Precision, as per last available DOPS from Starling
-    /// GNSS engine
+    /// Position Dilution of Precision as per last available DOPS from PVT
+    /// engine (0xFFFF indicates invalid)
     pub pdop: u16,
-    /// Horizontal Dilution of Precision, as per last available DOPS from
-    /// Starling GNSS engine
+    /// Horizontal Dilution of Precision as per last available DOPS from PVT
+    /// engine (0xFFFF indicates invalid)
     pub hdop: u16,
-    /// Vertical Dilution of Precision, as per last available DOPS from Starling
-    /// GNSS engine
+    /// Vertical Dilution of Precision as per last available DOPS from PVT
+    /// engine (0xFFFF indicates invalid)
     pub vdop: u16,
-    /// Number of satellites, as per last available solution from Starling GNSS
-    /// engine
+    /// Number of satellites as per last available solution from PVT engine
     pub n_sats: u8,
-    /// Age of the corrections (0xFFFF indicates invalid), as per last available
-    /// AGE_CORRECTIONS from Starling GNSS engine
+    /// Age of corrections as per last available AGE_CORRECTIONS from PVT engine
+    /// (0xFFFF indicates invalid)
     pub age_corrections: u16,
     /// State of alignment and the status and receipt of the alignment inputs
     pub alignment_status: u8,

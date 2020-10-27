@@ -74,20 +74,19 @@ msgSolnMetaDepA = 0xFF0F
 -- metadata.
 data MsgSolnMetaDepA = MsgSolnMetaDepA
   { _msgSolnMetaDepA_pdop                 :: !Word16
-    -- ^ Position Dilution of Precision, as per last available DOPS from Starling
-    -- GNSS engine
+    -- ^ Position Dilution of Precision as per last available DOPS from PVT
+    -- engine (0xFFFF indicates invalid)
   , _msgSolnMetaDepA_hdop                 :: !Word16
-    -- ^ Horizontal Dilution of Precision, as per last available DOPS from
-    -- Starling GNSS engine
+    -- ^ Horizontal Dilution of Precision as per last available DOPS from PVT
+    -- engine (0xFFFF indicates invalid)
   , _msgSolnMetaDepA_vdop                 :: !Word16
-    -- ^ Vertical Dilution of Precision, as per last available DOPS from Starling
-    -- GNSS engine
+    -- ^ Vertical Dilution of Precision as per last available DOPS from PVT
+    -- engine (0xFFFF indicates invalid)
   , _msgSolnMetaDepA_n_sats               :: !Word8
-    -- ^ Number of satellites, as per last available solution from Starling GNSS
-    -- engine
+    -- ^ Number of satellites as per last available solution from PVT engine
   , _msgSolnMetaDepA_age_corrections      :: !Word16
-    -- ^ Age of the corrections (0xFFFF indicates invalid), as per last available
-    -- AGE_CORRECTIONS from Starling GNSS engine
+    -- ^ Age of corrections as per last available AGE_CORRECTIONS from PVT engine
+    -- (0xFFFF indicates invalid)
   , _msgSolnMetaDepA_alignment_status     :: !Word8
     -- ^ State of alignment and the status and receipt of the alignment inputs
   , _msgSolnMetaDepA_last_used_gnss_pos_tow :: !Word32
@@ -142,17 +141,17 @@ data MsgSolnMeta = MsgSolnMeta
   { _msgSolnMeta_tow           :: !Word32
     -- ^ GPS time of week rounded to the nearest millisecond
   , _msgSolnMeta_pdop          :: !Word16
-    -- ^ Position Dilution of Precision, as per last available DOPS from Starling
-    -- GNSS engine
+    -- ^ Position Dilution of Precision as per last available DOPS from PVT
+    -- engine (0xFFFF indicates invalid)
   , _msgSolnMeta_hdop          :: !Word16
-    -- ^ Horizontal Dilution of Precision, as per last available DOPS from
-    -- Starling GNSS engine
+    -- ^ Horizontal Dilution of Precision as per last available DOPS from PVT
+    -- engine (0xFFFF indicates invalid)
   , _msgSolnMeta_vdop          :: !Word16
-    -- ^ Vertical Dilution of Precision, as per last available DOPS from Starling
-    -- GNSS engine
+    -- ^ Vertical Dilution of Precision as per last available DOPS from PVT
+    -- engine (0xFFFF indicates invalid)
   , _msgSolnMeta_age_corrections :: !Word16
-    -- ^ Age of the corrections (0xFFFF indicates invalid), as per last available
-    -- AGE_CORRECTIONS from Starling GNSS engine
+    -- ^ Age of corrections as per last available AGE_CORRECTIONS from PVT engine
+    -- (0xFFFF indicates invalid)
   , _msgSolnMeta_age_gnss      :: !Word32
     -- ^ Age of the last received valid GNSS solution
   , _msgSolnMeta_sol_in        :: ![SolutionInputType]
