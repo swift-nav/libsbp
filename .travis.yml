@@ -83,6 +83,8 @@ matrix:
     - env:
         - TRAVIS_TARGET=codecov
         - CMAKEFLAGS="-DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug"
+      before_install:
+        - sudo rm $(which cmake) # Remove Travis-provided CMake (too old)
       script:
         - make test-c
       after_success:
