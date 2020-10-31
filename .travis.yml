@@ -12,6 +12,9 @@ language: generic
 
 addons:
   apt:
+    sources:
+      - sourceline: 'deb https://apt.kitware.com/ubuntu/ bionic main'
+        key_url: https://apt.kitware.com/keys/kitware-archive-latest.asc
     packages:
       - build-essential
       - doxygen
@@ -36,6 +39,7 @@ matrix:
       language: python
       python: 3.7-dev
       before_install:
+        - sudo rm $(which cmake) # Remove Travis-provided CMake (too old)
         - sudo apt-get -qq update
         - sudo apt-get install gcc python2.7 python2.7-dev
         # https://linuxize.com/post/how-to-install-python-3-8-on-ubuntu-18-04/
@@ -51,6 +55,7 @@ matrix:
     - env:
         - TRAVIS_TARGET=default JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
       before_install:
+        - sudo rm $(which cmake) # Remove Travis-provided CMake (too old)
         - mkdir -p $HOME/texlive && curl -L https://github.com/urdh/texlive-blob/releases/download/20160619/texlive.tar.xz | tar -JxC $HOME/texlive
         - export PATH="$PATH:$HOME/texlive/bin/x86_64-linux"
         # Install stack
@@ -78,6 +83,8 @@ matrix:
     - env:
         - TRAVIS_TARGET=codecov
         - CMAKEFLAGS="-DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug"
+      before_install:
+        - sudo rm $(which cmake) # Remove Travis-provided CMake (too old)
       script:
         - make test-c
       after_success:
@@ -101,6 +108,7 @@ matrix:
       python:
         - "3.7"
       before_install:
+        - sudo rm $(which cmake) # Remove Travis-provided CMake (too old)
         - source ./scripts/travis_benchmark_install.bash
       script:
         - ./scripts/travis_benchmark.bash
