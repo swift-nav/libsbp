@@ -158,10 +158,10 @@ definitions:
              - 30-31:
                  desc: Time status
                  values:
-                   - 0: Age can not be used to retrieve TOM
-                   - 1: Age can be used to retrieve TOM
-                   - 2: Reserved
-                   - 3: Reserved
+                     - 0: Age can not be used to retrieve TOM
+                     - 1: Age can be used to retrieve TOM
+                     - 2: Reserved
+                     - 3: Reserved
              - 0-29:
                  desc: Age of the last received valid GNSS solution
        - sol_in:

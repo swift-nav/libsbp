@@ -129,7 +129,13 @@ impl crate::serialize::SbpSerialize for IMUInputType {
 /// Solution Sensors Metadata
 ///
 /// This message contains all metadata about the sensors received and/or used in computing the sensorfusion solution.
-/// It focuses primarly, but not only, on GNSS metadata.
+/// It focuses primarly, but not only, on GNSS metadata. Re. the age of the last received valid GNSS solution,
+/// the highest two bits are Time status, which indicates whether age gnss can or can not be used
+/// to retrieve time of measurement (noted TOM, aka time of validity), i.e. to be used in conjuction with
+/// the tow field of other navigation messages. If it can be used (value 1), substract from tow in
+/// navigation message to retrieve the time of measurement. Useful before alignment is complete in
+/// the Fusion Engine, when outputted solution is the last received valid GNSS solution and its tow
+/// is not that of Time Of Measurement.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone)]
@@ -150,7 +156,7 @@ pub struct MsgSolnMeta {
     /// Age of the corrections (0xFFFF indicates invalid), as per last available
     /// AGE_CORRECTIONS from Starling GNSS engine
     pub age_corrections: u16,
-    /// Age of the last received valid GNSS solution
+    /// Age and Time Status of the last received valid GNSS solution.
     pub age_gnss: u32,
     /// Array of Metadata describing the sensors potentially involved in the
     /// solution. Each element in the array represents a single sensor type and
