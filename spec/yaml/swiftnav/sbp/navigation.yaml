@@ -335,8 +335,13 @@ definitions:
             type: u8
             desc: Status flags
             fields:
-              - 5-7:
+              - 6-7:
                   desc: Reserved
+              - 5-5:
+                  desc: Type of Reported tow
+                  values:
+                      - 0: Time of Measurement
+                      - 1: Other
               - 3-4:
                   desc: Inertial Navigation Mode
                   values:
@@ -414,8 +419,13 @@ definitions:
             type: u8
             desc: Status flags
             fields:
-              - 5-7:
+              - 6-7:
                   desc: Reserved
+              - 5-5:
+                  desc: Type of Reported tow
+                  values:
+                      - 0: Time of Measurement
+                      - 1: Other
               - 3-4:
                   desc: Inertial Navigation Mode
                   values:
@@ -476,8 +486,13 @@ definitions:
             type: u8
             desc: Status flags
             fields:
-              - 5-7:
+              - 6-7:
                   desc: Reserved
+              - 5-5:
+                  desc: Type of Reported tow
+                  values:
+                      - 0: Time of Measurement
+                      - 1: Other
               - 3-4:
                   desc: Inertial Navigation Mode
                   values:
@@ -555,8 +570,13 @@ definitions:
             type: u8
             desc: Status flags
             fields:
-              - 5-7:
+              - 6-7:
                   desc: Reserved
+              - 5-5:
+                  desc: Type of Reported tow
+                  values:
+                      - 0: Time of Measurement
+                      - 1: Other
               - 3-4:
                   desc: Inertial Navigation Mode
                   values:
@@ -714,8 +734,13 @@ definitions:
               type: u8
               desc: Status flags
               fields:
-                - 5-7:
+                - 6-7:
                     desc: Reserved
+                - 5-5:
+                    desc: Type of Reported tow
+                    values:
+                        - 0: Time of Measurement
+                        - 1: Other
                 - 3-4:
                     desc: INS Navigation Mode
                     values:
@@ -784,8 +809,13 @@ definitions:
               type: u8
               desc: Status flags
               fields:
-                - 5-7:
+                - 6-7:
                     desc: Reserved
+                - 5-5:
+                    desc: Type of Reported tow
+                    values:
+                        - 0: Time of Measurement
+                        - 1: Other
                 - 3-4:
                     desc: INS Navigation Mode
                     values:
@@ -841,8 +871,13 @@ definitions:
               type: u8
               desc: Status flags
               fields:
-                - 5-7:
+                - 6-7:
                     desc: Reserved
+                - 5-5:
+                    desc: Type of Reported tow
+                    values:
+                        - 0: Time of Measurement
+                        - 1: Other
                 - 3-4:
                     desc: INS Navigation Mode
                     values:
@@ -914,8 +949,13 @@ definitions:
               type: u8
               desc: Status flags
               fields:
-                - 5-7:
+                - 6-7:
                     desc: Reserved
+                - 5-5:
+                    desc: Type of Reported tow
+                    values:
+                        - 0: Time of Measurement
+                        - 1: Other
                 - 3-4:
                     desc: INS Navigation Mode
                     values:
