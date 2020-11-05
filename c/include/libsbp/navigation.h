@@ -286,6 +286,19 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_POS_ECEF               0x0209
+#define SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_MASK (0x1)
+#define SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_SHIFT (5u)
+#define SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_GET(flags) \
+                             (((flags) >> SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_SHIFT) \
+                             & SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_MASK)
+#define SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_MASK)) \
+                             << (SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_TIME_OF_MEASUREMENT (0)
+#define SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_OTHER (1)
 #define SBP_POS_ECEF_INERTIAL_NAVIGATION_MODE_MASK (0x3)
 #define SBP_POS_ECEF_INERTIAL_NAVIGATION_MODE_SHIFT (3u)
 #define SBP_POS_ECEF_INERTIAL_NAVIGATION_MODE_GET(flags) \
@@ -342,6 +355,19 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_POS_ECEF_COV           0x0214
+#define SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
+#define SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
+#define SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_GET(flags) \
+                             (((flags) >> SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_SHIFT) \
+                             & SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_MASK)
+#define SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_MASK)) \
+                             << (SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_TIME_OF_MEASUREMENT (0)
+#define SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_OTHER (1)
 #define SBP_POS_ECEF_COV_INERTIAL_NAVIGATION_MODE_MASK (0x3)
 #define SBP_POS_ECEF_COV_INERTIAL_NAVIGATION_MODE_SHIFT (3u)
 #define SBP_POS_ECEF_COV_INERTIAL_NAVIGATION_MODE_GET(flags) \
@@ -402,6 +428,19 @@ typedef struct SBP_ATTR_PACKED {
  * matching time-of-week (tow).
  */
 #define SBP_MSG_POS_LLH                0x020A
+#define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_MASK (0x1)
+#define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_SHIFT (5u)
+#define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_GET(flags) \
+                             (((flags) >> SBP_POS_LLH_TYPE_OF_REPORTED_TOW_SHIFT) \
+                             & SBP_POS_LLH_TYPE_OF_REPORTED_TOW_MASK)
+#define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_LLH_TYPE_OF_REPORTED_TOW_MASK)) \
+                             << (SBP_POS_LLH_TYPE_OF_REPORTED_TOW_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_TIME_OF_MEASUREMENT (0)
+#define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_OTHER (1)
 #define SBP_POS_LLH_INERTIAL_NAVIGATION_MODE_MASK (0x3)
 #define SBP_POS_LLH_INERTIAL_NAVIGATION_MODE_SHIFT (3u)
 #define SBP_POS_LLH_INERTIAL_NAVIGATION_MODE_GET(flags) \
@@ -458,6 +497,19 @@ typedef struct SBP_ATTR_PACKED {
  * measurement and care should be taken with the sign convention.
  */
 #define SBP_MSG_POS_LLH_COV            0x0211
+#define SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
+#define SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
+#define SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_GET(flags) \
+                             (((flags) >> SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_SHIFT) \
+                             & SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_MASK)
+#define SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_MASK)) \
+                             << (SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_SHIFT)));} while(0)
+                             
+
+#define SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_TIME_OF_MEASUREMENT (0)
+#define SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_OTHER (1)
 #define SBP_POS_LLH_COV_INERTIAL_NAVIGATION_MODE_MASK (0x3)
 #define SBP_POS_LLH_COV_INERTIAL_NAVIGATION_MODE_SHIFT (3u)
 #define SBP_POS_LLH_COV_INERTIAL_NAVIGATION_MODE_GET(flags) \
@@ -587,6 +639,19 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_ECEF               0x020D
+#define SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_MASK (0x1)
+#define SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_SHIFT (5u)
+#define SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_GET(flags) \
+                             (((flags) >> SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_SHIFT) \
+                             & SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_MASK)
+#define SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_MASK)) \
+                             << (SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_SHIFT)));} while(0)
+                             
+
+#define SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_TIME_OF_MEASUREMENT (0)
+#define SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_OTHER (1)
 #define SBP_VEL_ECEF_INS_NAVIGATION_MODE_MASK (0x3)
 #define SBP_VEL_ECEF_INS_NAVIGATION_MODE_SHIFT (3u)
 #define SBP_VEL_ECEF_INS_NAVIGATION_MODE_GET(flags) \
@@ -635,6 +700,19 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_ECEF_COV           0x0215
+#define SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
+#define SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
+#define SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_GET(flags) \
+                             (((flags) >> SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_SHIFT) \
+                             & SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_MASK)
+#define SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_MASK)) \
+                             << (SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_SHIFT)));} while(0)
+                             
+
+#define SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_TIME_OF_MEASUREMENT (0)
+#define SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_OTHER (1)
 #define SBP_VEL_ECEF_COV_INS_NAVIGATION_MODE_MASK (0x3)
 #define SBP_VEL_ECEF_COV_INS_NAVIGATION_MODE_SHIFT (3u)
 #define SBP_VEL_ECEF_COV_INS_NAVIGATION_MODE_GET(flags) \
@@ -688,6 +766,19 @@ typedef struct SBP_ATTR_PACKED {
  * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_VEL_NED                0x020E
+#define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_MASK (0x1)
+#define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_SHIFT (5u)
+#define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_GET(flags) \
+                             (((flags) >> SBP_VEL_NED_TYPE_OF_REPORTED_TOW_SHIFT) \
+                             & SBP_VEL_NED_TYPE_OF_REPORTED_TOW_MASK)
+#define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_VEL_NED_TYPE_OF_REPORTED_TOW_MASK)) \
+                             << (SBP_VEL_NED_TYPE_OF_REPORTED_TOW_SHIFT)));} while(0)
+                             
+
+#define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_TIME_OF_MEASUREMENT (0)
+#define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_OTHER (1)
 #define SBP_VEL_NED_INS_NAVIGATION_MODE_MASK (0x3)
 #define SBP_VEL_NED_INS_NAVIGATION_MODE_SHIFT (3u)
 #define SBP_VEL_NED_INS_NAVIGATION_MODE_GET(flags) \
@@ -741,6 +832,19 @@ typedef struct SBP_ATTR_PACKED {
  * portion of the 3x3 covariance matrix.
  */
 #define SBP_MSG_VEL_NED_COV            0x0212
+#define SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
+#define SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
+#define SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_GET(flags) \
+                             (((flags) >> SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_SHIFT) \
+                             & SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_MASK)
+#define SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_MASK)) \
+                             << (SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_SHIFT)));} while(0)
+                             
+
+#define SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_TIME_OF_MEASUREMENT (0)
+#define SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_OTHER (1)
 #define SBP_VEL_NED_COV_INS_NAVIGATION_MODE_MASK (0x3)
 #define SBP_VEL_NED_COV_INS_NAVIGATION_MODE_SHIFT (3u)
 #define SBP_VEL_NED_COV_INS_NAVIGATION_MODE_GET(flags) \
