@@ -12,7 +12,7 @@ use self::nom::sequence::tuple;
 use crate::messages::SBP;
 use crate::Result;
 use crate::SbpString;
-use std::io::Read;
+use std::io::{BufReader, Read};
 
 const MSG_HEADER_LEN: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/ + 1 /*len*/;
 
@@ -73,16 +73,31 @@ pub fn frame(input: &[u8]) -> (Result<SBP>, usize) {
 /// the stream. A Parser buffers some data locally to
 /// reduce the number of
 /// calls to read data.
-pub struct Parser {
+pub struct Parser<R>
+where
+    R: Read,
+{
+    reader: BufReader<R>,
     buffer: Vec<u8>,
 }
 
-impl Parser {
+impl<R> Parser<R>
+where
+    R: Read,
+{
     const BUF_SIZE: usize = 1024usize;
 
     /// Creates a new Parser object
-    pub fn new() -> Parser {
-        Parser { buffer: vec![0; 0] }
+    pub fn new(reader: R) -> Parser<R> {
+        Parser {
+            reader: BufReader::new(reader),
+            buffer: vec![0; 0],
+        }
+    }
+
+    /// Consumes the Parser object and returns the inner reader object
+    pub fn into_inner(self) -> R {
+        self.reader.into_inner()
     }
 
     /// Attempts to read a single SBP message from the
@@ -92,16 +107,16 @@ impl Parser {
     /// as needed
     /// until either a message is successfully parsed or an
     /// error occurs
-    pub fn parse<R: Read>(&mut self, input: &mut R) -> Result<SBP> {
+    pub fn parse(&mut self) -> Result<SBP> {
         if self.buffer.len() == 0 {
-            self.read_more(input)?;
+            self.read_more()?;
         }
 
         loop {
             match self.parse_remaining() {
                 Ok(msg) => break Ok(msg),
                 Err(crate::Error::NotEnoughData) => {
-                    if let Err(e) = self.read_more(input) {
+                    if let Err(e) = self.read_more() {
                         break Err(e);
                     }
                 }
@@ -110,9 +125,9 @@ impl Parser {
         }
     }
 
-    fn read_more<R: Read>(&mut self, input: &mut R) -> Result<usize> {
-        let mut local_buffer = vec![0; Parser::BUF_SIZE];
-        let read_bytes = input.read(local_buffer.as_mut())?;
+    fn read_more(&mut self) -> Result<usize> {
+        let mut local_buffer = vec![0; Self::BUF_SIZE];
+        let read_bytes = self.reader.read(local_buffer.as_mut())?;
         if read_bytes == 0 {
             return Err(crate::Error::IoError(std::io::Error::new(
                 std::io::ErrorKind::UnexpectedEof,
