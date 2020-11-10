@@ -3,6 +3,7 @@
 //! see the protocol specification documentation at https://github.com/swift-nav/libsbp/tree/master/docs
 
 pub mod framer;
+mod handler;
 pub mod messages;
 pub mod parser;
 pub mod serialize;

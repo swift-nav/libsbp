@@ -73,16 +73,20 @@ pub fn frame(input: &[u8]) -> (Result<SBP>, usize) {
 /// the stream. A Parser buffers some data locally to
 /// reduce the number of
 /// calls to read data.
-pub struct Parser {
+pub struct Parser<'a> {
     buffer: Vec<u8>,
+    handlers: Vec<Box<dyn crate::handler::HandleSbpMessage + 'a>>,
 }
 
-impl Parser {
+impl<'a> Parser<'a> {
     const BUF_SIZE: usize = 1024usize;
 
     /// Creates a new Parser object
-    pub fn new() -> Parser {
-        Parser { buffer: vec![0; 0] }
+    pub fn new() -> Parser<'a> {
+        Parser {
+            buffer: vec![0; 0],
+            handlers: Vec::new(),
+        }
     }
 
     /// Attempts to read a single SBP message from the
@@ -108,6 +112,25 @@ impl Parser {
                 Err(e) => break Err(e),
             };
         }
+    }
+
+    pub fn parse_and_handle<R: Read>(&mut self, input: &mut R) -> Result<()> {
+        loop {
+            let msg = self.parse(input)?;
+            for handler in self.handlers.iter_mut() {
+                handler.handle_message(&msg);
+            }
+        }
+    }
+
+    pub fn add_handler<T, U>(&mut self, func: U)
+      where
+          T: 'a + crate::messages::SBPMessage,
+          U: 'a + FnMut(&T),
+          crate::handler::Handler<T, U>: crate::handler::HandleSbpMessage {
+        // use crate::handler::HandleSbpMessage;
+        use crate::messages::navigation;
+        self.handlers.push(Box::new(crate::handler::Handler::new(func)));
     }
 
     fn read_more<R: Read>(&mut self, input: &mut R) -> Result<usize> {

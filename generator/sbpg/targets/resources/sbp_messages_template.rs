@@ -123,4 +123,15 @@ impl crate::serialize::SbpSerialize for (((m.identifier|camel_case))) {
         ((*- endif *))
     }
 }
+
+((*- if m.is_real_message *))
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<(((m.identifier|camel_case))), T> where T: FnMut(&(((m.identifier|camel_case)))) {
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::(((m.identifier|camel_case)))(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
+((*- endif *))
 ((* endfor *))
