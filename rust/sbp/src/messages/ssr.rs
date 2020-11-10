@@ -535,6 +535,17 @@ impl crate::serialize::SbpSerialize for MsgSsrCodeBiases {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSsrCodeBiases, T>
+where
+    T: FnMut(&MsgSsrCodeBiases),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSsrCodeBiases(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Gridded troposphere and STEC correction residuals.
 ///
@@ -596,6 +607,17 @@ impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrection {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSsrGriddedCorrection, T>
+where
+    T: FnMut(&MsgSsrGriddedCorrection),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSsrGriddedCorrection(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone)]
@@ -652,6 +674,17 @@ impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrectionDepA {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSsrGriddedCorrectionDepA, T>
+where
+    T: FnMut(&MsgSsrGriddedCorrectionDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSsrGriddedCorrectionDepA(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone)]
@@ -705,6 +738,18 @@ impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrectionNoStdDepA {
         size += self.header.sbp_size();
         size += self.element.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage
+    for crate::handler::Handler<MsgSsrGriddedCorrectionNoStdDepA, T>
+where
+    T: FnMut(&MsgSsrGriddedCorrectionNoStdDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSsrGriddedCorrectionNoStdDepA(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -763,6 +808,17 @@ impl crate::serialize::SbpSerialize for MsgSsrGridDefinitionDepA {
         size += self.header.sbp_size();
         size += self.rle_list.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSsrGridDefinitionDepA, T>
+where
+    T: FnMut(&MsgSsrGridDefinitionDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSsrGridDefinitionDepA(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -889,6 +945,17 @@ impl crate::serialize::SbpSerialize for MsgSsrOrbitClock {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSsrOrbitClock, T>
+where
+    T: FnMut(&MsgSsrOrbitClock),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSsrOrbitClock(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone)]
@@ -1006,6 +1073,17 @@ impl crate::serialize::SbpSerialize for MsgSsrOrbitClockDepA {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSsrOrbitClockDepA, T>
+where
+    T: FnMut(&MsgSsrOrbitClockDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSsrOrbitClockDepA(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Precise phase biases correction
 ///
@@ -1107,6 +1185,17 @@ impl crate::serialize::SbpSerialize for MsgSsrPhaseBiases {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSsrPhaseBiases, T>
+where
+    T: FnMut(&MsgSsrPhaseBiases),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSsrPhaseBiases(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// STEC correction polynomial coeffcients.
 ///
@@ -1171,6 +1260,17 @@ impl crate::serialize::SbpSerialize for MsgSsrStecCorrection {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSsrStecCorrection, T>
+where
+    T: FnMut(&MsgSsrStecCorrection),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSsrStecCorrection(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone)]
@@ -1224,6 +1324,17 @@ impl crate::serialize::SbpSerialize for MsgSsrStecCorrectionDepA {
         size += self.header.sbp_size();
         size += self.stec_sat_list.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSsrStecCorrectionDepA, T>
+where
+    T: FnMut(&MsgSsrStecCorrectionDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSsrStecCorrectionDepA(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -1345,6 +1456,17 @@ impl crate::serialize::SbpSerialize for MsgSsrTileDefinition {
         size += self.cols.sbp_size();
         size += self.bitmask.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSsrTileDefinition, T>
+where
+    T: FnMut(&MsgSsrTileDefinition),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSsrTileDefinition(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 

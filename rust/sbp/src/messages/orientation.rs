@@ -104,6 +104,17 @@ impl crate::serialize::SbpSerialize for MsgAngularRate {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgAngularRate, T>
+where
+    T: FnMut(&MsgAngularRate),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgAngularRate(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Heading relative to True North
 ///
@@ -174,6 +185,17 @@ impl crate::serialize::SbpSerialize for MsgBaselineHeading {
         size += self.n_sats.sbp_size();
         size += self.flags.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgBaselineHeading, T>
+where
+    T: FnMut(&MsgBaselineHeading),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgBaselineHeading(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -267,6 +289,17 @@ impl crate::serialize::SbpSerialize for MsgOrientEuler {
         size += self.yaw_accuracy.sbp_size();
         size += self.flags.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgOrientEuler, T>
+where
+    T: FnMut(&MsgOrientEuler),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgOrientEuler(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -370,5 +403,16 @@ impl crate::serialize::SbpSerialize for MsgOrientQuat {
         size += self.z_accuracy.sbp_size();
         size += self.flags.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgOrientQuat, T>
+where
+    T: FnMut(&MsgOrientQuat),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgOrientQuat(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }

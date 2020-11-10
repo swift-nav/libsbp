@@ -93,3 +93,14 @@ impl crate::serialize::SbpSerialize for MsgSbasRaw {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSbasRaw, T>
+where
+    T: FnMut(&MsgSbasRaw),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSbasRaw(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}

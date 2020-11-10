@@ -100,3 +100,14 @@ impl crate::serialize::SbpSerialize for MsgExtEvent {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgExtEvent, T>
+where
+    T: FnMut(&MsgExtEvent),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgExtEvent(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}

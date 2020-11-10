@@ -142,6 +142,17 @@ impl crate::serialize::SbpSerialize for MsgAlmanac {
         0
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgAlmanac, T>
+where
+    T: FnMut(&MsgAlmanac),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgAlmanac(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Cell modem information update message
 ///
@@ -208,6 +219,17 @@ impl crate::serialize::SbpSerialize for MsgCellModemStatus {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgCellModemStatus, T>
+where
+    T: FnMut(&MsgCellModemStatus),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgCellModemStatus(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Command output
 ///
@@ -268,6 +290,17 @@ impl crate::serialize::SbpSerialize for MsgCommandOutput {
         size += self.sequence.sbp_size();
         size += self.line.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgCommandOutput, T>
+where
+    T: FnMut(&MsgCommandOutput),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgCommandOutput(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -331,6 +364,17 @@ impl crate::serialize::SbpSerialize for MsgCommandReq {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgCommandReq, T>
+where
+    T: FnMut(&MsgCommandReq),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgCommandReq(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Exit code from executed command (device => host)
 ///
@@ -391,6 +435,17 @@ impl crate::serialize::SbpSerialize for MsgCommandResp {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgCommandResp, T>
+where
+    T: FnMut(&MsgCommandResp),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgCommandResp(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Legacy message for CW interference channel (Piksi => host)
 ///
@@ -440,6 +495,17 @@ impl crate::serialize::SbpSerialize for MsgCwResults {
         0
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgCwResults, T>
+where
+    T: FnMut(&MsgCwResults),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgCwResults(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Legacy message for CW interference channel (host => Piksi)
 ///
@@ -487,6 +553,17 @@ impl crate::serialize::SbpSerialize for MsgCwStart {
 
     fn sbp_size(&self) -> usize {
         0
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgCwStart, T>
+where
+    T: FnMut(&MsgCwStart),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgCwStart(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -565,6 +642,17 @@ impl crate::serialize::SbpSerialize for MsgDeviceMonitor {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgDeviceMonitor, T>
+where
+    T: FnMut(&MsgDeviceMonitor),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgDeviceMonitor(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// RF AGC status
 ///
@@ -629,6 +717,17 @@ impl crate::serialize::SbpSerialize for MsgFrontEndGain {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgFrontEndGain, T>
+where
+    T: FnMut(&MsgFrontEndGain),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgFrontEndGain(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// State of the Integer Ambiguity Resolution (IAR) process
 ///
@@ -686,6 +785,17 @@ impl crate::serialize::SbpSerialize for MsgIarState {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgIarState, T>
+where
+    T: FnMut(&MsgIarState),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgIarState(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Deprecated
 ///
@@ -731,6 +841,17 @@ impl crate::serialize::SbpSerialize for MsgInitBaseDep {
 
     fn sbp_size(&self) -> usize {
         0
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgInitBaseDep, T>
+where
+    T: FnMut(&MsgInitBaseDep),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgInitBaseDep(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -793,6 +914,17 @@ impl crate::serialize::SbpSerialize for MsgMaskSatellite {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgMaskSatellite, T>
+where
+    T: FnMut(&MsgMaskSatellite),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgMaskSatellite(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Deprecated
 ///
@@ -852,6 +984,17 @@ impl crate::serialize::SbpSerialize for MsgMaskSatelliteDep {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgMaskSatelliteDep, T>
+where
+    T: FnMut(&MsgMaskSatelliteDep),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgMaskSatelliteDep(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Bandwidth usage reporting message
 ///
@@ -906,6 +1049,17 @@ impl crate::serialize::SbpSerialize for MsgNetworkBandwidthUsage {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgNetworkBandwidthUsage, T>
+where
+    T: FnMut(&MsgNetworkBandwidthUsage),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgNetworkBandwidthUsage(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Request state of Piksi network interfaces
 ///
@@ -952,6 +1106,17 @@ impl crate::serialize::SbpSerialize for MsgNetworkStateReq {
 
     fn sbp_size(&self) -> usize {
         0
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgNetworkStateReq, T>
+where
+    T: FnMut(&MsgNetworkStateReq),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgNetworkStateReq(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -1045,6 +1210,17 @@ impl crate::serialize::SbpSerialize for MsgNetworkStateResp {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgNetworkStateResp, T>
+where
+    T: FnMut(&MsgNetworkStateResp),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgNetworkStateResp(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Reset the device (host => Piksi)
 ///
@@ -1100,6 +1276,17 @@ impl crate::serialize::SbpSerialize for MsgReset {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgReset, T>
+where
+    T: FnMut(&MsgReset),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgReset(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Reset the device (host => Piksi)
 ///
@@ -1146,6 +1333,17 @@ impl crate::serialize::SbpSerialize for MsgResetDep {
 
     fn sbp_size(&self) -> usize {
         0
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgResetDep, T>
+where
+    T: FnMut(&MsgResetDep),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgResetDep(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -1203,6 +1401,17 @@ impl crate::serialize::SbpSerialize for MsgResetFilters {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgResetFilters, T>
+where
+    T: FnMut(&MsgResetFilters),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgResetFilters(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Send GPS time from host (host => Piksi)
 ///
@@ -1249,6 +1458,17 @@ impl crate::serialize::SbpSerialize for MsgSetTime {
 
     fn sbp_size(&self) -> usize {
         0
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSetTime, T>
+where
+    T: FnMut(&MsgSetTime),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSetTime(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -1335,6 +1555,17 @@ impl crate::serialize::SbpSerialize for MsgSpecan {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSpecan, T>
+where
+    T: FnMut(&MsgSpecan),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSpecan(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Deprecated
 ///
@@ -1419,6 +1650,17 @@ impl crate::serialize::SbpSerialize for MsgSpecanDep {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSpecanDep, T>
+where
+    T: FnMut(&MsgSpecanDep),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSpecanDep(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// State of an RTOS thread
 ///
@@ -1484,6 +1726,17 @@ impl crate::serialize::SbpSerialize for MsgThreadState {
         size += self.cpu.sbp_size();
         size += self.stack_free.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgThreadState, T>
+where
+    T: FnMut(&MsgThreadState),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgThreadState(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -1568,6 +1821,17 @@ impl crate::serialize::SbpSerialize for MsgUartState {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgUartState, T>
+where
+    T: FnMut(&MsgUartState),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgUartState(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Deprecated
 ///
@@ -1635,6 +1899,17 @@ impl crate::serialize::SbpSerialize for MsgUartStateDepa {
         size += self.uart_ftdi.sbp_size();
         size += self.latency.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgUartStateDepa, T>
+where
+    T: FnMut(&MsgUartStateDepa),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgUartStateDepa(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 

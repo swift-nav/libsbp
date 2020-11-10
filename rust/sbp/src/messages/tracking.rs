@@ -80,6 +80,17 @@ impl crate::serialize::SbpSerialize for MsgMeasurementState {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgMeasurementState, T>
+where
+    T: FnMut(&MsgMeasurementState),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgMeasurementState(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Tracking channel correlations
 ///
@@ -145,6 +156,17 @@ impl crate::serialize::SbpSerialize for MsgTrackingIq {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgTrackingIq, T>
+where
+    T: FnMut(&MsgTrackingIq),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgTrackingIq(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Deprecated
 ///
@@ -207,6 +229,17 @@ impl crate::serialize::SbpSerialize for MsgTrackingIqDepA {
         size += self.sid.sbp_size();
         size += self.corrs.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgTrackingIqDepA, T>
+where
+    T: FnMut(&MsgTrackingIqDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgTrackingIqDepA(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -274,6 +307,17 @@ impl crate::serialize::SbpSerialize for MsgTrackingIqDepB {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgTrackingIqDepB, T>
+where
+    T: FnMut(&MsgTrackingIqDepB),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgTrackingIqDepB(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Signal tracking channel states
 ///
@@ -330,6 +374,17 @@ impl crate::serialize::SbpSerialize for MsgTrackingState {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgTrackingState, T>
+where
+    T: FnMut(&MsgTrackingState),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgTrackingState(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Deprecated
 ///
@@ -384,6 +439,17 @@ impl crate::serialize::SbpSerialize for MsgTrackingStateDepA {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgTrackingStateDepA, T>
+where
+    T: FnMut(&MsgTrackingStateDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgTrackingStateDepA(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Deprecated.
 ///
@@ -436,6 +502,17 @@ impl crate::serialize::SbpSerialize for MsgTrackingStateDepB {
         let mut size = 0;
         size += self.states.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgTrackingStateDepB, T>
+where
+    T: FnMut(&MsgTrackingStateDepB),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgTrackingStateDepB(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -598,6 +675,17 @@ impl crate::serialize::SbpSerialize for MsgTrackingStateDetailedDep {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgTrackingStateDetailedDep, T>
+where
+    T: FnMut(&MsgTrackingStateDetailedDep),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgTrackingStateDetailedDep(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Detailed signal tracking channel states. DEPRECATED.
 ///
@@ -757,6 +845,18 @@ impl crate::serialize::SbpSerialize for MsgTrackingStateDetailedDepA {
         size += self.pset_flags.sbp_size();
         size += self.misc_flags.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage
+    for crate::handler::Handler<MsgTrackingStateDetailedDepA, T>
+where
+    T: FnMut(&MsgTrackingStateDetailedDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgTrackingStateDetailedDepA(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 

@@ -87,6 +87,17 @@ impl crate::serialize::SbpSerialize for MsgFileioConfigReq {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgFileioConfigReq, T>
+where
+    T: FnMut(&MsgFileioConfigReq),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgFileioConfigReq(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Response with advice on the optimal configuration for FileIO.
 
@@ -158,6 +169,17 @@ impl crate::serialize::SbpSerialize for MsgFileioConfigResp {
         size += self.batch_size.sbp_size();
         size += self.fileio_version.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgFileioConfigResp, T>
+where
+    T: FnMut(&MsgFileioConfigResp),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgFileioConfigResp(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -233,6 +255,17 @@ impl crate::serialize::SbpSerialize for MsgFileioReadDirReq {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgFileioReadDirReq, T>
+where
+    T: FnMut(&MsgFileioReadDirReq),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgFileioReadDirReq(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Files listed in a directory (host <= device)
 ///
@@ -295,6 +328,17 @@ impl crate::serialize::SbpSerialize for MsgFileioReadDirResp {
         size += self.sequence.sbp_size();
         size += self.contents.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgFileioReadDirResp, T>
+where
+    T: FnMut(&MsgFileioReadDirResp),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgFileioReadDirResp(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -373,6 +417,17 @@ impl crate::serialize::SbpSerialize for MsgFileioReadReq {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgFileioReadReq, T>
+where
+    T: FnMut(&MsgFileioReadReq),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgFileioReadReq(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// File read from the file system (host <= device)
 ///
@@ -436,6 +491,17 @@ impl crate::serialize::SbpSerialize for MsgFileioReadResp {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgFileioReadResp, T>
+where
+    T: FnMut(&MsgFileioReadResp),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgFileioReadResp(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Delete a file from the file system (host => device)
 ///
@@ -491,6 +557,17 @@ impl crate::serialize::SbpSerialize for MsgFileioRemove {
         let mut size = 0;
         size += self.filename.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgFileioRemove, T>
+where
+    T: FnMut(&MsgFileioRemove),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgFileioRemove(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -569,6 +646,17 @@ impl crate::serialize::SbpSerialize for MsgFileioWriteReq {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgFileioWriteReq, T>
+where
+    T: FnMut(&MsgFileioWriteReq),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgFileioWriteReq(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// File written to (host <= device)
 ///
@@ -625,5 +713,16 @@ impl crate::serialize::SbpSerialize for MsgFileioWriteResp {
         let mut size = 0;
         size += self.sequence.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgFileioWriteResp, T>
+where
+    T: FnMut(&MsgFileioWriteResp),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgFileioWriteResp(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }

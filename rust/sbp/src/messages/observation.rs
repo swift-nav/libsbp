@@ -737,6 +737,17 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGlo {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgAlmanacGlo, T>
+where
+    T: FnMut(&MsgAlmanacGlo),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgAlmanacGlo(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Satellite broadcast ephemeris for GLO
 ///
@@ -828,6 +839,17 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGloDep {
         size += self.epsilon.sbp_size();
         size += self.omega.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgAlmanacGloDep, T>
+where
+    T: FnMut(&MsgAlmanacGloDep),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgAlmanacGloDep(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -932,6 +954,17 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGPS {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgAlmanacGPS, T>
+where
+    T: FnMut(&MsgAlmanacGPS),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgAlmanacGPS(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Satellite broadcast ephemeris for GPS
 ///
@@ -1034,6 +1067,17 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGPSDep {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgAlmanacGPSDep, T>
+where
+    T: FnMut(&MsgAlmanacGPSDep),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgAlmanacGPSDep(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Base station position in ECEF
 ///
@@ -1103,6 +1147,17 @@ impl crate::serialize::SbpSerialize for MsgBasePosECEF {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgBasePosECEF, T>
+where
+    T: FnMut(&MsgBasePosECEF),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgBasePosECEF(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Base station position
 ///
@@ -1169,6 +1224,17 @@ impl crate::serialize::SbpSerialize for MsgBasePosLLH {
         size += self.lon.sbp_size();
         size += self.height.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgBasePosLLH, T>
+where
+    T: FnMut(&MsgBasePosLLH),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgBasePosLLH(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -1347,6 +1413,17 @@ impl crate::serialize::SbpSerialize for MsgEphemerisBds {
         size += self.iode.sbp_size();
         size += self.iodc.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgEphemerisBds, T>
+where
+    T: FnMut(&MsgEphemerisBds),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgEphemerisBds(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -1530,6 +1607,17 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepA {
         size += self.healthy.sbp_size();
         size += self.prn.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgEphemerisDepA, T>
+where
+    T: FnMut(&MsgEphemerisDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgEphemerisDepA(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -1718,6 +1806,17 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepB {
         size += self.prn.sbp_size();
         size += self.iode.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgEphemerisDepB, T>
+where
+    T: FnMut(&MsgEphemerisDepB),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgEphemerisDepB(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -1922,6 +2021,17 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepC {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgEphemerisDepC, T>
+where
+    T: FnMut(&MsgEphemerisDepC),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgEphemerisDepC(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Satellite broadcast ephemeris
 ///
@@ -2124,6 +2234,17 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepD {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgEphemerisDepD, T>
+where
+    T: FnMut(&MsgEphemerisDepD),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgEphemerisDepD(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Satellite broadcast ephemeris for Galileo
 ///
@@ -2305,6 +2426,17 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGal {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgEphemerisGal, T>
+where
+    T: FnMut(&MsgEphemerisGal),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgEphemerisGal(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Deprecated
 ///
@@ -2479,6 +2611,17 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGalDepA {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgEphemerisGalDepA, T>
+where
+    T: FnMut(&MsgEphemerisGalDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgEphemerisGalDepA(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Satellite broadcast ephemeris for GLO
 ///
@@ -2577,6 +2720,17 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGlo {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgEphemerisGlo, T>
+where
+    T: FnMut(&MsgEphemerisGlo),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgEphemerisGlo(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Satellite broadcast ephemeris for GLO
 ///
@@ -2660,6 +2814,17 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepA {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgEphemerisGloDepA, T>
+where
+    T: FnMut(&MsgEphemerisGloDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgEphemerisGloDepA(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Satellite broadcast ephemeris for GLO
 ///
@@ -2741,6 +2906,17 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepB {
         size += self.vel.sbp_size();
         size += self.acc.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgEphemerisGloDepB, T>
+where
+    T: FnMut(&MsgEphemerisGloDepB),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgEphemerisGloDepB(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -2836,6 +3012,17 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepC {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgEphemerisGloDepC, T>
+where
+    T: FnMut(&MsgEphemerisGloDepC),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgEphemerisGloDepC(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Deprecated
 ///
@@ -2929,6 +3116,17 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepD {
         size += self.fcn.sbp_size();
         size += self.iod.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgEphemerisGloDepD, T>
+where
+    T: FnMut(&MsgEphemerisGloDepD),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgEphemerisGloDepD(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -3103,6 +3301,17 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGPS {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgEphemerisGPS, T>
+where
+    T: FnMut(&MsgEphemerisGPS),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgEphemerisGPS(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Satellite broadcast ephemeris for GPS
 ///
@@ -3275,6 +3484,17 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGPSDepE {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgEphemerisGPSDepE, T>
+where
+    T: FnMut(&MsgEphemerisGPSDepE),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgEphemerisGPSDepE(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Deprecated
 ///
@@ -3442,6 +3662,17 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGPSDepF {
         size += self.iode.sbp_size();
         size += self.iodc.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgEphemerisGPSDepF, T>
+where
+    T: FnMut(&MsgEphemerisGPSDepF),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgEphemerisGPSDepF(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -3614,6 +3845,17 @@ impl crate::serialize::SbpSerialize for MsgEphemerisQzss {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgEphemerisQzss, T>
+where
+    T: FnMut(&MsgEphemerisQzss),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgEphemerisQzss(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone)]
@@ -3689,6 +3931,17 @@ impl crate::serialize::SbpSerialize for MsgEphemerisSbas {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgEphemerisSbas, T>
+where
+    T: FnMut(&MsgEphemerisSbas),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgEphemerisSbas(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone)]
@@ -3762,6 +4015,17 @@ impl crate::serialize::SbpSerialize for MsgEphemerisSbasDepA {
         size += self.a_gf0.sbp_size();
         size += self.a_gf1.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgEphemerisSbasDepA, T>
+where
+    T: FnMut(&MsgEphemerisSbasDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgEphemerisSbasDepA(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -3844,6 +4108,17 @@ impl crate::serialize::SbpSerialize for MsgEphemerisSbasDepB {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgEphemerisSbasDepB, T>
+where
+    T: FnMut(&MsgEphemerisSbasDepB),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgEphemerisSbasDepB(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// GLONASS L1/L2 Code-Phase biases
 ///
@@ -3921,6 +4196,17 @@ impl crate::serialize::SbpSerialize for MsgGloBiases {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgGloBiases, T>
+where
+    T: FnMut(&MsgGloBiases),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgGloBiases(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone)]
@@ -3974,6 +4260,17 @@ impl crate::serialize::SbpSerialize for MsgGnssCapb {
         size += self.t_nmct.sbp_size();
         size += self.gc.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgGnssCapb, T>
+where
+    T: FnMut(&MsgGnssCapb),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgGnssCapb(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -4053,6 +4350,17 @@ impl crate::serialize::SbpSerialize for MsgGroupDelay {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgGroupDelay, T>
+where
+    T: FnMut(&MsgGroupDelay),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgGroupDelay(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Group Delay
 ///
@@ -4130,6 +4438,17 @@ impl crate::serialize::SbpSerialize for MsgGroupDelayDepA {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgGroupDelayDepA, T>
+where
+    T: FnMut(&MsgGroupDelayDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgGroupDelayDepA(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Group Delay
 ///
@@ -4205,6 +4524,17 @@ impl crate::serialize::SbpSerialize for MsgGroupDelayDepB {
         size += self.isc_l1ca.sbp_size();
         size += self.isc_l2c.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgGroupDelayDepB, T>
+where
+    T: FnMut(&MsgGroupDelayDepB),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgGroupDelayDepB(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -4295,6 +4625,17 @@ impl crate::serialize::SbpSerialize for MsgIono {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgIono, T>
+where
+    T: FnMut(&MsgIono),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgIono(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// GPS satellite observations
 ///
@@ -4360,6 +4701,17 @@ impl crate::serialize::SbpSerialize for MsgObs {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgObs, T>
+where
+    T: FnMut(&MsgObs),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgObs(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Deprecated
 ///
@@ -4417,6 +4769,17 @@ impl crate::serialize::SbpSerialize for MsgObsDepA {
         size += self.header.sbp_size();
         size += self.obs.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgObsDepA, T>
+where
+    T: FnMut(&MsgObsDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgObsDepA(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -4481,6 +4844,17 @@ impl crate::serialize::SbpSerialize for MsgObsDepB {
         size += self.header.sbp_size();
         size += self.obs.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgObsDepB, T>
+where
+    T: FnMut(&MsgObsDepB),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgObsDepB(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -4548,6 +4922,17 @@ impl crate::serialize::SbpSerialize for MsgObsDepC {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgObsDepC, T>
+where
+    T: FnMut(&MsgObsDepC),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgObsDepC(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// OSR corrections
 ///
@@ -4607,6 +4992,17 @@ impl crate::serialize::SbpSerialize for MsgOsr {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgOsr, T>
+where
+    T: FnMut(&MsgOsr),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgOsr(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Satellite azimuths and elevations
 ///
@@ -4660,6 +5056,17 @@ impl crate::serialize::SbpSerialize for MsgSvAzEl {
         let mut size = 0;
         size += self.azel.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSvAzEl, T>
+where
+    T: FnMut(&MsgSvAzEl),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSvAzEl(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -4719,6 +5126,17 @@ impl crate::serialize::SbpSerialize for MsgSvConfigurationGPSDep {
         size += self.t_nmct.sbp_size();
         size += self.l2c_mask.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSvConfigurationGPSDep, T>
+where
+    T: FnMut(&MsgSvConfigurationGPSDep),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSvConfigurationGPSDep(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 

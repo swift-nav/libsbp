@@ -93,6 +93,17 @@ impl crate::serialize::SbpSerialize for MsgFwd {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgFwd, T>
+where
+    T: FnMut(&MsgFwd),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgFwd(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Plaintext logging messages with levels
 ///
@@ -154,6 +165,17 @@ impl crate::serialize::SbpSerialize for MsgLog {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgLog, T>
+where
+    T: FnMut(&MsgLog),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgLog(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Deprecated
 ///
@@ -206,5 +228,16 @@ impl crate::serialize::SbpSerialize for MsgPrintDep {
         let mut size = 0;
         size += self.text.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgPrintDep, T>
+where
+    T: FnMut(&MsgPrintDep),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgPrintDep(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }

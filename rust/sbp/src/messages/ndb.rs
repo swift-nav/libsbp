@@ -120,3 +120,14 @@ impl crate::serialize::SbpSerialize for MsgNdbEvent {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgNdbEvent, T>
+where
+    T: FnMut(&MsgNdbEvent),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgNdbEvent(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}

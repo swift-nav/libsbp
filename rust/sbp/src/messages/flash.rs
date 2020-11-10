@@ -84,6 +84,17 @@ impl crate::serialize::SbpSerialize for MsgFlashDone {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgFlashDone, T>
+where
+    T: FnMut(&MsgFlashDone),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgFlashDone(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Erase sector of device flash memory (host => device).
 ///
@@ -145,6 +156,17 @@ impl crate::serialize::SbpSerialize for MsgFlashErase {
         size += self.target.sbp_size();
         size += self.sector_num.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgFlashErase, T>
+where
+    T: FnMut(&MsgFlashErase),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgFlashErase(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -221,6 +243,17 @@ impl crate::serialize::SbpSerialize for MsgFlashProgram {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgFlashProgram, T>
+where
+    T: FnMut(&MsgFlashProgram),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgFlashProgram(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Read STM or M25 flash address request (host => device).
 ///
@@ -289,6 +322,17 @@ impl crate::serialize::SbpSerialize for MsgFlashReadReq {
         size += self.addr_start.sbp_size();
         size += self.addr_len.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgFlashReadReq, T>
+where
+    T: FnMut(&MsgFlashReadReq),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgFlashReadReq(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -361,6 +405,17 @@ impl crate::serialize::SbpSerialize for MsgFlashReadResp {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgFlashReadResp, T>
+where
+    T: FnMut(&MsgFlashReadResp),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgFlashReadResp(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Write M25 flash status register (host => device)
 ///
@@ -414,6 +469,17 @@ impl crate::serialize::SbpSerialize for MsgM25FlashWriteStatus {
         let mut size = 0;
         size += self.status.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgM25FlashWriteStatus, T>
+where
+    T: FnMut(&MsgM25FlashWriteStatus),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgM25FlashWriteStatus(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -471,6 +537,17 @@ impl crate::serialize::SbpSerialize for MsgStmFlashLockSector {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgStmFlashLockSector, T>
+where
+    T: FnMut(&MsgStmFlashLockSector),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgStmFlashLockSector(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Unlock sector of STM flash memory (host => device)
 ///
@@ -526,6 +603,17 @@ impl crate::serialize::SbpSerialize for MsgStmFlashUnlockSector {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgStmFlashUnlockSector, T>
+where
+    T: FnMut(&MsgStmFlashUnlockSector),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgStmFlashUnlockSector(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Read device's hardcoded unique ID request (host => device)
 
@@ -575,6 +663,17 @@ impl crate::serialize::SbpSerialize for MsgStmUniqueIdReq {
 
     fn sbp_size(&self) -> usize {
         0
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgStmUniqueIdReq, T>
+where
+    T: FnMut(&MsgStmUniqueIdReq),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgStmUniqueIdReq(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -633,5 +732,16 @@ impl crate::serialize::SbpSerialize for MsgStmUniqueIdResp {
         let mut size = 0;
         size += self.stm_id.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgStmUniqueIdResp, T>
+where
+    T: FnMut(&MsgStmUniqueIdResp),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgStmUniqueIdResp(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }

@@ -95,6 +95,17 @@ impl crate::serialize::SbpSerialize for MsgSettingsReadByIndexDone {
         0
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSettingsReadByIndexDone, T>
+where
+    T: FnMut(&MsgSettingsReadByIndexDone),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSettingsReadByIndexDone(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Read setting by direct index (host => device)
 ///
@@ -150,6 +161,17 @@ impl crate::serialize::SbpSerialize for MsgSettingsReadByIndexReq {
         let mut size = 0;
         size += self.index.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSettingsReadByIndexReq, T>
+where
+    T: FnMut(&MsgSettingsReadByIndexReq),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSettingsReadByIndexReq(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -222,6 +244,17 @@ impl crate::serialize::SbpSerialize for MsgSettingsReadByIndexResp {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSettingsReadByIndexResp, T>
+where
+    T: FnMut(&MsgSettingsReadByIndexResp),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSettingsReadByIndexResp(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Read device configuration settings (host => device)
 ///
@@ -282,6 +315,17 @@ impl crate::serialize::SbpSerialize for MsgSettingsReadReq {
         let mut size = 0;
         size += self.setting.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSettingsReadReq, T>
+where
+    T: FnMut(&MsgSettingsReadReq),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSettingsReadReq(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -345,6 +389,17 @@ impl crate::serialize::SbpSerialize for MsgSettingsReadResp {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSettingsReadResp, T>
+where
+    T: FnMut(&MsgSettingsReadResp),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSettingsReadResp(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Register setting and default value (device => host)
 ///
@@ -400,6 +455,17 @@ impl crate::serialize::SbpSerialize for MsgSettingsRegister {
         let mut size = 0;
         size += self.setting.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSettingsRegister, T>
+where
+    T: FnMut(&MsgSettingsRegister),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSettingsRegister(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -466,6 +532,17 @@ impl crate::serialize::SbpSerialize for MsgSettingsRegisterResp {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSettingsRegisterResp, T>
+where
+    T: FnMut(&MsgSettingsRegisterResp),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSettingsRegisterResp(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Save settings to flash (host => device)
 ///
@@ -512,6 +589,17 @@ impl crate::serialize::SbpSerialize for MsgSettingsSave {
 
     fn sbp_size(&self) -> usize {
         0
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSettingsSave, T>
+where
+    T: FnMut(&MsgSettingsSave),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSettingsSave(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -573,6 +661,17 @@ impl crate::serialize::SbpSerialize for MsgSettingsWrite {
         let mut size = 0;
         size += self.setting.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSettingsWrite, T>
+where
+    T: FnMut(&MsgSettingsWrite),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSettingsWrite(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -639,5 +738,16 @@ impl crate::serialize::SbpSerialize for MsgSettingsWriteResp {
         size += self.status.sbp_size();
         size += self.setting.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSettingsWriteResp, T>
+where
+    T: FnMut(&MsgSettingsWriteResp),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSettingsWriteResp(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }

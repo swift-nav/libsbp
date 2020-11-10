@@ -84,6 +84,17 @@ impl crate::serialize::SbpSerialize for MsgCsacTelemetry {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgCsacTelemetry, T>
+where
+    T: FnMut(&MsgCsacTelemetry),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgCsacTelemetry(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Experimental telemetry message labels
 ///
@@ -144,6 +155,17 @@ impl crate::serialize::SbpSerialize for MsgCsacTelemetryLabels {
         size += self.id.sbp_size();
         size += self.telemetry_labels.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgCsacTelemetryLabels, T>
+where
+    T: FnMut(&MsgCsacTelemetryLabels),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgCsacTelemetryLabels(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -217,6 +239,17 @@ impl crate::serialize::SbpSerialize for MsgDgnssStatus {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgDgnssStatus, T>
+where
+    T: FnMut(&MsgDgnssStatus),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgDgnssStatus(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Offset of the local time with respect to GNSS time
 ///
@@ -286,6 +319,17 @@ impl crate::serialize::SbpSerialize for MsgGnssTimeOffset {
         size += self.microseconds.sbp_size();
         size += self.flags.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgGnssTimeOffset, T>
+where
+    T: FnMut(&MsgGnssTimeOffset),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgGnssTimeOffset(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -359,6 +403,17 @@ impl crate::serialize::SbpSerialize for MsgGroupMeta {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgGroupMeta, T>
+where
+    T: FnMut(&MsgGroupMeta),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgGroupMeta(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// System heartbeat message
 ///
@@ -422,6 +477,17 @@ impl crate::serialize::SbpSerialize for MsgHeartbeat {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgHeartbeat, T>
+where
+    T: FnMut(&MsgHeartbeat),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgHeartbeat(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Inertial Navigation System status message
 ///
@@ -475,6 +541,17 @@ impl crate::serialize::SbpSerialize for MsgInsStatus {
         let mut size = 0;
         size += self.flags.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgInsStatus, T>
+where
+    T: FnMut(&MsgInsStatus),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgInsStatus(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -562,6 +639,17 @@ impl crate::serialize::SbpSerialize for MsgInsUpdates {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgInsUpdates, T>
+where
+    T: FnMut(&MsgInsUpdates),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgInsUpdates(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// System start-up message
 ///
@@ -627,5 +715,16 @@ impl crate::serialize::SbpSerialize for MsgStartup {
         size += self.startup_type.sbp_size();
         size += self.reserved.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgStartup, T>
+where
+    T: FnMut(&MsgStartup),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgStartup(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }

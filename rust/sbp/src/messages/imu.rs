@@ -88,6 +88,17 @@ impl crate::serialize::SbpSerialize for MsgImuAux {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgImuAux, T>
+where
+    T: FnMut(&MsgImuAux),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgImuAux(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Raw IMU data
 ///
@@ -183,5 +194,16 @@ impl crate::serialize::SbpSerialize for MsgImuRaw {
         size += self.gyr_y.sbp_size();
         size += self.gyr_z.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgImuRaw, T>
+where
+    T: FnMut(&MsgImuRaw),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgImuRaw(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }

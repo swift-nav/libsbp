@@ -218,6 +218,17 @@ impl crate::serialize::SbpSerialize for MsgSolnMeta {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSolnMeta, T>
+where
+    T: FnMut(&MsgSolnMeta),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSolnMeta(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Deprecated
 ///
@@ -320,6 +331,17 @@ impl crate::serialize::SbpSerialize for MsgSolnMetaDepA {
         size += self.last_used_gnss_vel_tow.sbp_size();
         size += self.sol_in.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgSolnMetaDepA, T>
+where
+    T: FnMut(&MsgSolnMetaDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgSolnMetaDepA(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 

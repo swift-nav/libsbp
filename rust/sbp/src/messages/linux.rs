@@ -98,6 +98,17 @@ impl crate::serialize::SbpSerialize for MsgLinuxCpuState {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgLinuxCpuState, T>
+where
+    T: FnMut(&MsgLinuxCpuState),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgLinuxCpuState(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// List CPU state on the system
 ///
@@ -173,6 +184,17 @@ impl crate::serialize::SbpSerialize for MsgLinuxMemState {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgLinuxMemState, T>
+where
+    T: FnMut(&MsgLinuxMemState),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgLinuxMemState(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Summary of processes with large amounts of open file descriptors
 ///
@@ -242,6 +264,17 @@ impl crate::serialize::SbpSerialize for MsgLinuxProcessFdCount {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgLinuxProcessFdCount, T>
+where
+    T: FnMut(&MsgLinuxProcessFdCount),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgLinuxProcessFdCount(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Summary of open file descriptors on the system
 ///
@@ -303,6 +336,17 @@ impl crate::serialize::SbpSerialize for MsgLinuxProcessFdSummary {
         size += self.sys_fd_count.sbp_size();
         size += self.most_opened.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgLinuxProcessFdSummary, T>
+where
+    T: FnMut(&MsgLinuxProcessFdSummary),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgLinuxProcessFdSummary(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -386,6 +430,17 @@ impl crate::serialize::SbpSerialize for MsgLinuxProcessSocketCounts {
         size += self.socket_states.sbp_size();
         size += self.cmdline.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgLinuxProcessSocketCounts, T>
+where
+    T: FnMut(&MsgLinuxProcessSocketCounts),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgLinuxProcessSocketCounts(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -482,6 +537,17 @@ impl crate::serialize::SbpSerialize for MsgLinuxProcessSocketQueues {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgLinuxProcessSocketQueues, T>
+where
+    T: FnMut(&MsgLinuxProcessSocketQueues),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgLinuxProcessSocketQueues(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Summary of socket usage across the system
 ///
@@ -553,6 +619,17 @@ impl crate::serialize::SbpSerialize for MsgLinuxSocketUsage {
         size += self.socket_state_counts.sbp_size();
         size += self.socket_type_counts.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgLinuxSocketUsage, T>
+where
+    T: FnMut(&MsgLinuxSocketUsage),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgLinuxSocketUsage(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -632,5 +709,16 @@ impl crate::serialize::SbpSerialize for MsgLinuxSysState {
         size += self.procs_stopping.sbp_size();
         size += self.pid_count.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgLinuxSysState, T>
+where
+    T: FnMut(&MsgLinuxSysState),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgLinuxSysState(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }

@@ -95,6 +95,17 @@ impl crate::serialize::SbpSerialize for MsgOdometry {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgOdometry, T>
+where
+    T: FnMut(&MsgOdometry),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgOdometry(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Accumulated wheeltick count message
 ///
@@ -176,5 +187,16 @@ impl crate::serialize::SbpSerialize for MsgWheeltick {
         size += self.source.sbp_size();
         size += self.ticks.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgWheeltick, T>
+where
+    T: FnMut(&MsgWheeltick),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgWheeltick(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }

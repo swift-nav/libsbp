@@ -100,6 +100,17 @@ impl crate::serialize::SbpSerialize for MsgAgeCorrections {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgAgeCorrections, T>
+where
+    T: FnMut(&MsgAgeCorrections),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgAgeCorrections(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Baseline Position in ECEF
 ///
@@ -186,6 +197,17 @@ impl crate::serialize::SbpSerialize for MsgBaselineECEF {
         size += self.n_sats.sbp_size();
         size += self.flags.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgBaselineECEF, T>
+where
+    T: FnMut(&MsgBaselineECEF),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgBaselineECEF(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -276,6 +298,17 @@ impl crate::serialize::SbpSerialize for MsgBaselineECEFDepA {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgBaselineECEFDepA, T>
+where
+    T: FnMut(&MsgBaselineECEFDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgBaselineECEFDepA(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Heading relative to True North
 ///
@@ -345,6 +378,17 @@ impl crate::serialize::SbpSerialize for MsgBaselineHeadingDepA {
         size += self.n_sats.sbp_size();
         size += self.flags.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgBaselineHeadingDepA, T>
+where
+    T: FnMut(&MsgBaselineHeadingDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgBaselineHeadingDepA(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -441,6 +485,17 @@ impl crate::serialize::SbpSerialize for MsgBaselineNED {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgBaselineNED, T>
+where
+    T: FnMut(&MsgBaselineNED),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgBaselineNED(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Baseline in NED
 ///
@@ -535,6 +590,17 @@ impl crate::serialize::SbpSerialize for MsgBaselineNEDDepA {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgBaselineNEDDepA, T>
+where
+    T: FnMut(&MsgBaselineNEDDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgBaselineNEDDepA(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Dilution of Precision
 ///
@@ -622,6 +688,17 @@ impl crate::serialize::SbpSerialize for MsgDops {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgDops, T>
+where
+    T: FnMut(&MsgDops),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgDops(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Dilution of Precision
 ///
@@ -701,6 +778,17 @@ impl crate::serialize::SbpSerialize for MsgDopsDepA {
         size += self.hdop.sbp_size();
         size += self.vdop.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgDopsDepA, T>
+where
+    T: FnMut(&MsgDopsDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgDopsDepA(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -785,6 +873,17 @@ impl crate::serialize::SbpSerialize for MsgGPSTime {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgGPSTime, T>
+where
+    T: FnMut(&MsgGPSTime),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgGPSTime(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// GPS Time (v1.0)
 ///
@@ -867,6 +966,17 @@ impl crate::serialize::SbpSerialize for MsgGPSTimeDepA {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgGPSTimeDepA, T>
+where
+    T: FnMut(&MsgGPSTimeDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgGPSTimeDepA(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// GPS Time
 ///
@@ -947,6 +1057,17 @@ impl crate::serialize::SbpSerialize for MsgGPSTimeGnss {
         size += self.ns_residual.sbp_size();
         size += self.flags.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgGPSTimeGnss, T>
+where
+    T: FnMut(&MsgGPSTimeGnss),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgGPSTimeGnss(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -1038,6 +1159,17 @@ impl crate::serialize::SbpSerialize for MsgPosECEF {
         size += self.n_sats.sbp_size();
         size += self.flags.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgPosECEF, T>
+where
+    T: FnMut(&MsgPosECEF),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgPosECEF(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -1157,6 +1289,17 @@ impl crate::serialize::SbpSerialize for MsgPosECEFCov {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgPosECEFCov, T>
+where
+    T: FnMut(&MsgPosECEFCov),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgPosECEFCov(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// GNSS-only Position in ECEF
 ///
@@ -1274,6 +1417,17 @@ impl crate::serialize::SbpSerialize for MsgPosECEFCovGnss {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgPosECEFCovGnss, T>
+where
+    T: FnMut(&MsgPosECEFCovGnss),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgPosECEFCovGnss(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Single-point position in ECEF
 ///
@@ -1365,6 +1519,17 @@ impl crate::serialize::SbpSerialize for MsgPosECEFDepA {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgPosECEFDepA, T>
+where
+    T: FnMut(&MsgPosECEFDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgPosECEFDepA(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// GNSS-only Position in ECEF
 ///
@@ -1454,6 +1619,17 @@ impl crate::serialize::SbpSerialize for MsgPosECEFGnss {
         size += self.n_sats.sbp_size();
         size += self.flags.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgPosECEFGnss, T>
+where
+    T: FnMut(&MsgPosECEFGnss),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgPosECEFGnss(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -1550,6 +1726,17 @@ impl crate::serialize::SbpSerialize for MsgPosLLH {
         size += self.n_sats.sbp_size();
         size += self.flags.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgPosLLH, T>
+where
+    T: FnMut(&MsgPosLLH),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgPosLLH(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -1668,6 +1855,17 @@ impl crate::serialize::SbpSerialize for MsgPosLLHCov {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgPosLLHCov, T>
+where
+    T: FnMut(&MsgPosLLHCov),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgPosLLHCov(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// GNSS-only Geodetic Position
 ///
@@ -1784,6 +1982,17 @@ impl crate::serialize::SbpSerialize for MsgPosLLHCovGnss {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgPosLLHCovGnss, T>
+where
+    T: FnMut(&MsgPosLLHCovGnss),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgPosLLHCovGnss(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Geodetic Position
 ///
@@ -1878,6 +2087,17 @@ impl crate::serialize::SbpSerialize for MsgPosLLHDepA {
         size += self.n_sats.sbp_size();
         size += self.flags.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgPosLLHDepA, T>
+where
+    T: FnMut(&MsgPosLLHDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgPosLLHDepA(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -1976,6 +2196,17 @@ impl crate::serialize::SbpSerialize for MsgPosLLHGnss {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgPosLLHGnss, T>
+where
+    T: FnMut(&MsgPosLLHGnss),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgPosLLHGnss(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Computed Position and Protection Level
 ///
@@ -2060,6 +2291,17 @@ impl crate::serialize::SbpSerialize for MsgProtectionLevel {
         size += self.height.sbp_size();
         size += self.flags.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgProtectionLevel, T>
+where
+    T: FnMut(&MsgProtectionLevel),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgProtectionLevel(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -2157,6 +2399,17 @@ impl crate::serialize::SbpSerialize for MsgUtcTime {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgUtcTime, T>
+where
+    T: FnMut(&MsgUtcTime),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgUtcTime(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// UTC Time
 ///
@@ -2250,6 +2503,17 @@ impl crate::serialize::SbpSerialize for MsgUtcTimeGnss {
         size += self.seconds.sbp_size();
         size += self.ns.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgUtcTimeGnss, T>
+where
+    T: FnMut(&MsgUtcTimeGnss),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgUtcTimeGnss(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -2368,6 +2632,17 @@ impl crate::serialize::SbpSerialize for MsgVelBody {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgVelBody, T>
+where
+    T: FnMut(&MsgVelBody),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgVelBody(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Velocity in ECEF
 ///
@@ -2452,6 +2727,17 @@ impl crate::serialize::SbpSerialize for MsgVelECEF {
         size += self.n_sats.sbp_size();
         size += self.flags.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgVelECEF, T>
+where
+    T: FnMut(&MsgVelECEF),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgVelECEF(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -2565,6 +2851,17 @@ impl crate::serialize::SbpSerialize for MsgVelECEFCov {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgVelECEFCov, T>
+where
+    T: FnMut(&MsgVelECEFCov),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgVelECEFCov(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// GNSS-only Velocity in ECEF
 ///
@@ -2676,6 +2973,17 @@ impl crate::serialize::SbpSerialize for MsgVelECEFCovGnss {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgVelECEFCovGnss, T>
+where
+    T: FnMut(&MsgVelECEFCovGnss),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgVelECEFCovGnss(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Velocity in ECEF
 ///
@@ -2762,6 +3070,17 @@ impl crate::serialize::SbpSerialize for MsgVelECEFDepA {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgVelECEFDepA, T>
+where
+    T: FnMut(&MsgVelECEFDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgVelECEFDepA(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// GNSS-only Velocity in ECEF
 ///
@@ -2846,6 +3165,17 @@ impl crate::serialize::SbpSerialize for MsgVelECEFGnss {
         size += self.n_sats.sbp_size();
         size += self.flags.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgVelECEFGnss, T>
+where
+    T: FnMut(&MsgVelECEFGnss),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgVelECEFGnss(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -2938,6 +3268,17 @@ impl crate::serialize::SbpSerialize for MsgVelNED {
         size += self.n_sats.sbp_size();
         size += self.flags.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgVelNED, T>
+where
+    T: FnMut(&MsgVelNED),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgVelNED(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -3054,6 +3395,17 @@ impl crate::serialize::SbpSerialize for MsgVelNEDCov {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgVelNEDCov, T>
+where
+    T: FnMut(&MsgVelNEDCov),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgVelNEDCov(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// GNSS-only Velocity in NED
 ///
@@ -3168,6 +3520,17 @@ impl crate::serialize::SbpSerialize for MsgVelNEDCovGnss {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgVelNEDCovGnss, T>
+where
+    T: FnMut(&MsgVelNEDCovGnss),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgVelNEDCovGnss(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Velocity in NED
 ///
@@ -3260,6 +3623,17 @@ impl crate::serialize::SbpSerialize for MsgVelNEDDepA {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgVelNEDDepA, T>
+where
+    T: FnMut(&MsgVelNEDDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgVelNEDDepA(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// GNSS-only Velocity in NED
 ///
@@ -3350,5 +3724,16 @@ impl crate::serialize::SbpSerialize for MsgVelNEDGnss {
         size += self.n_sats.sbp_size();
         size += self.flags.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgVelNEDGnss, T>
+where
+    T: FnMut(&MsgVelNEDGnss),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgVelNEDGnss(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }

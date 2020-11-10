@@ -81,6 +81,17 @@ impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeDepA {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgBootloaderHandshakeDepA, T>
+where
+    T: FnMut(&MsgBootloaderHandshakeDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgBootloaderHandshakeDepA(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Bootloading handshake request (host => device)
 ///
@@ -128,6 +139,17 @@ impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeReq {
 
     fn sbp_size(&self) -> usize {
         0
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgBootloaderHandshakeReq, T>
+where
+    T: FnMut(&MsgBootloaderHandshakeReq),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgBootloaderHandshakeReq(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -193,6 +215,17 @@ impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeResp {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgBootloaderHandshakeResp, T>
+where
+    T: FnMut(&MsgBootloaderHandshakeResp),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgBootloaderHandshakeResp(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Bootloader jump to application (host => device)
 ///
@@ -247,6 +280,17 @@ impl crate::serialize::SbpSerialize for MsgBootloaderJumpToApp {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgBootloaderJumpToApp, T>
+where
+    T: FnMut(&MsgBootloaderJumpToApp),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgBootloaderJumpToApp(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Read FPGA device ID over UART request (host => device)
 ///
@@ -297,6 +341,17 @@ impl crate::serialize::SbpSerialize for MsgNapDeviceDnaReq {
 
     fn sbp_size(&self) -> usize {
         0
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgNapDeviceDnaReq, T>
+where
+    T: FnMut(&MsgNapDeviceDnaReq),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgNapDeviceDnaReq(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -356,5 +411,16 @@ impl crate::serialize::SbpSerialize for MsgNapDeviceDnaResp {
         let mut size = 0;
         size += self.dna.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgNapDeviceDnaResp, T>
+where
+    T: FnMut(&MsgNapDeviceDnaResp),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgNapDeviceDnaResp(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }

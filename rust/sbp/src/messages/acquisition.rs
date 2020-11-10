@@ -309,6 +309,17 @@ impl crate::serialize::SbpSerialize for MsgAcqResult {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgAcqResult, T>
+where
+    T: FnMut(&MsgAcqResult),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgAcqResult(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Deprecated
 ///
@@ -378,6 +389,17 @@ impl crate::serialize::SbpSerialize for MsgAcqResultDepA {
         size += self.cf.sbp_size();
         size += self.prn.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgAcqResultDepA, T>
+where
+    T: FnMut(&MsgAcqResultDepA),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgAcqResultDepA(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
 
@@ -450,6 +472,17 @@ impl crate::serialize::SbpSerialize for MsgAcqResultDepB {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgAcqResultDepB, T>
+where
+    T: FnMut(&MsgAcqResultDepB),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgAcqResultDepB(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Deprecated
 ///
@@ -519,6 +552,17 @@ impl crate::serialize::SbpSerialize for MsgAcqResultDepC {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgAcqResultDepC, T>
+where
+    T: FnMut(&MsgAcqResultDepC),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgAcqResultDepC(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Acquisition perfomance measurement and debug
 ///
@@ -574,6 +618,17 @@ impl crate::serialize::SbpSerialize for MsgAcqSvProfile {
         size
     }
 }
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgAcqSvProfile, T>
+where
+    T: FnMut(&MsgAcqSvProfile),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgAcqSvProfile(msg) => self.handle(msg),
+            _ => (),
+        }
+    }
+}
 
 /// Deprecated.
 ///
@@ -626,5 +681,16 @@ impl crate::serialize::SbpSerialize for MsgAcqSvProfileDep {
         let mut size = 0;
         size += self.acq_sv_profile.sbp_size();
         size
+    }
+}
+impl<T> crate::handler::HandleSbpMessage for crate::handler::Handler<MsgAcqSvProfileDep, T>
+where
+    T: FnMut(&MsgAcqSvProfileDep),
+{
+    fn handle_message(&mut self, msg: &crate::messages::SBP) {
+        match msg {
+            crate::messages::SBP::MsgAcqSvProfileDep(msg) => self.handle(msg),
+            _ => (),
+        }
     }
 }
