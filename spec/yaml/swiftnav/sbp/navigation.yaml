@@ -27,7 +27,13 @@ description: |
   device settings.  By default, the vehicle body frame is configured to be
   coincident with the antenna phase center.  When there is no inertial
   navigation, the solution will be reported at the phase center of the antenna.
-  There is no inertial navigation capability on Piksi Multi or Duro. 
+  There is no inertial navigation capability on Piksi Multi or Duro.
+
+  The tow field, when valid, is most often the Time of Measurement. When this
+  is the case, the 5th bit of flags is set to the default value of 0.
+  When this is not the case, the tow may be a time of arrival or a local
+  system timestamp, irrespective of the time reference (GPS Week or else),
+  but not a Time of Measurement.
 
 stable: True
 public: True
@@ -335,8 +341,13 @@ definitions:
             type: u8
             desc: Status flags
             fields:
-              - 5-7:
+              - 6-7:
                   desc: Reserved
+              - 5-5:
+                  desc: TOW type
+                  values:
+                      - 0: Time of Measurement
+                      - 1: Other
               - 3-4:
                   desc: Inertial Navigation Mode
                   values:
@@ -414,8 +425,13 @@ definitions:
             type: u8
             desc: Status flags
             fields:
-              - 5-7:
+              - 6-7:
                   desc: Reserved
+              - 5-5:
+                  desc: Type of Reported tow
+                  values:
+                      - 0: Time of Measurement
+                      - 1: Other
               - 3-4:
                   desc: Inertial Navigation Mode
                   values:
@@ -476,8 +492,13 @@ definitions:
             type: u8
             desc: Status flags
             fields:
-              - 5-7:
+              - 6-7:
                   desc: Reserved
+              - 5-5:
+                  desc: Type of Reported tow
+                  values:
+                      - 0: Time of Measurement
+                      - 1: Other
               - 3-4:
                   desc: Inertial Navigation Mode
                   values:
@@ -555,8 +576,13 @@ definitions:
             type: u8
             desc: Status flags
             fields:
-              - 5-7:
+              - 6-7:
                   desc: Reserved
+              - 5-5:
+                  desc: Type of Reported tow
+                  values:
+                      - 0: Time of Measurement
+                      - 1: Other
               - 3-4:
                   desc: Inertial Navigation Mode
                   values:
@@ -714,8 +740,13 @@ definitions:
               type: u8
               desc: Status flags
               fields:
-                - 5-7:
+                - 6-7:
                     desc: Reserved
+                - 5-5:
+                    desc: Type of Reported tow
+                    values:
+                        - 0: Time of Measurement
+                        - 1: Other
                 - 3-4:
                     desc: INS Navigation Mode
                     values:
@@ -784,8 +815,13 @@ definitions:
               type: u8
               desc: Status flags
               fields:
-                - 5-7:
+                - 6-7:
                     desc: Reserved
+                - 5-5:
+                    desc: Type of Reported tow
+                    values:
+                        - 0: Time of Measurement
+                        - 1: Other
                 - 3-4:
                     desc: INS Navigation Mode
                     values:
@@ -841,8 +877,13 @@ definitions:
               type: u8
               desc: Status flags
               fields:
-                - 5-7:
+                - 6-7:
                     desc: Reserved
+                - 5-5:
+                    desc: Type of Reported tow
+                    values:
+                        - 0: Time of Measurement
+                        - 1: Other
                 - 3-4:
                     desc: INS Navigation Mode
                     values:
@@ -914,8 +955,13 @@ definitions:
               type: u8
               desc: Status flags
               fields:
-                - 5-7:
+                - 6-7:
                     desc: Reserved
+                - 5-5:
+                    desc: Type of Reported tow
+                    values:
+                        - 0: Time of Measurement
+                        - 1: Other
                 - 3-4:
                     desc: INS Navigation Mode
                     values:

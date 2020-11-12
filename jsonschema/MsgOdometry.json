@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgOdometry",
   "title":"MsgOdometry",
-  "description":"Message representing the x component of vehicle velocity in the user frame at the odometry,\nreference point(s) specified by the user. The offset for the odometry reference point and ,\nthe definition and origin of the user frame are defined through the device settings interface.,\nThere are 4 possible user-defined sources of this message  which are labeled arbitrarily ,\nsource 0 through 3.,\nIf using \"processor time\" time tags, the receiving end will expect a,\n`MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry measurements,\nwith GNSS.\n",
+  "description":"Message representing the x component of vehicle velocity in the user frame at the odometry,\nreference point(s) specified by the user. The offset for the odometry reference point and ,\nthe definition and origin of the user frame are defined through the device settings interface.,\nThere are 4 possible user-defined sources of this message  which are labeled arbitrarily ,\nsource 0 through 3.,\nIf using \"processor time\" time tags, the receiving end will expect a,\n`MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry measurements,\nwith GNSS. Processor time shall roll over to zero after one week.\n",
   "type": "object",
   "properties": {
     "tow": {"type": "integer"},
