@@ -123,7 +123,7 @@ MsgSolnMetaDepA.prototype.fieldSpec.push(['sol_in', 'array', SolutionInputType.p
  * This message contains all metadata about the sensors received and/or used in
  * computing the sensorfusion solution. It focuses primarly, but not only, on GNSS
  * metadata. Regarding the age of the last received valid GNSS solution, the
- * highest two bits are Time status, indicating whether age gnss can or can not be
+ * highest two bits are time status, indicating whether age gnss can or can not be
  * used to retrieve time of measurement (noted TOM, also known as time of validity)
  * If it can, substract 'age gnss' from 'tow' in navigation messages to get TOM.
  * Can be used before alignment is complete in the Fusion Engine, when output

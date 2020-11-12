@@ -34,7 +34,13 @@
  * device settings.  By default, the vehicle body frame is configured to be
  * coincident with the antenna phase center.  When there is no inertial
  * navigation, the solution will be reported at the phase center of the antenna.
- * There is no inertial navigation capability on Piksi Multi or Duro. 
+ * There is no inertial navigation capability on Piksi Multi or Duro.
+ * 
+ * The tow field, when valid, is most often the Time of Measurement. When this
+ * is the case, the 5th bit of flags is set to the default value of 0.
+ * When this is not the case, the tow may be a time of arrival or a local
+ * system timestamp, irrespective of the time reference (GPS Week or else),
+ * but not a Time of Measurement.
  * \{ */
 
 #ifndef LIBSBP_NAVIGATION_MESSAGES_H
@@ -286,19 +292,19 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 #define SBP_MSG_POS_ECEF               0x0209
-#define SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_MASK (0x1)
-#define SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_SHIFT (5u)
-#define SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_GET(flags) \
-                             (((flags) >> SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_SHIFT) \
-                             & SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_MASK)
-#define SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_SET(flags, val) \
+#define SBP_POS_ECEF_TOW_TYPE_MASK (0x1)
+#define SBP_POS_ECEF_TOW_TYPE_SHIFT (5u)
+#define SBP_POS_ECEF_TOW_TYPE_GET(flags) \
+                             (((flags) >> SBP_POS_ECEF_TOW_TYPE_SHIFT) \
+                             & SBP_POS_ECEF_TOW_TYPE_MASK)
+#define SBP_POS_ECEF_TOW_TYPE_SET(flags, val) \
                              do {((flags) |= \
-                             (((val) & (SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_MASK)) \
-                             << (SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_SHIFT)));} while(0)
+                             (((val) & (SBP_POS_ECEF_TOW_TYPE_MASK)) \
+                             << (SBP_POS_ECEF_TOW_TYPE_SHIFT)));} while(0)
                              
 
-#define SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_TIME_OF_MEASUREMENT (0)
-#define SBP_POS_ECEF_TYPE_OF_REPORTED_TOW_OTHER (1)
+#define SBP_POS_ECEF_TOW_TYPE_TIME_OF_MEASUREMENT (0)
+#define SBP_POS_ECEF_TOW_TYPE_OTHER (1)
 #define SBP_POS_ECEF_INERTIAL_NAVIGATION_MODE_MASK (0x3)
 #define SBP_POS_ECEF_INERTIAL_NAVIGATION_MODE_SHIFT (3u)
 #define SBP_POS_ECEF_INERTIAL_NAVIGATION_MODE_GET(flags) \
