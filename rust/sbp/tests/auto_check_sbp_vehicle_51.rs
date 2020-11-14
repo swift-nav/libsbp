@@ -24,8 +24,8 @@ fn test_auto_check_sbp_vehicle_51() {
         let payload: Vec<u8> = vec![85, 3, 9, 66, 0, 9, 8, 0, 0, 0, 7, 0, 0, 0, 1, 52, 99];
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new();
-        let msg_result = parser.parse(&mut &payload[..]);
+        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
+        let msg_result = parser.parse();
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
         match &sbp_msg {
