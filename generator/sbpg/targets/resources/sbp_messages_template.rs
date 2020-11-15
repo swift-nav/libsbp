@@ -15,14 +15,13 @@
 
 //! (((description | replace("\n", "\n//! "))))
 
-extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian,ReadBytesExt};
-#[cfg(feature = "sbp_serde")]
-use serde::{Serialize, Deserialize};
+use byteorder::{LittleEndian,ReadBytesExt};
 
 #[allow(unused_imports)]
 use crate::SbpString;
+#[allow(unused_imports)]
+use crate::serialize::SbpSerialize;
 
 ((*- for i in includes *))
 use super::(((i)))::*;
@@ -35,11 +34,12 @@ use super::(((i)))::*;
 (((m.desc|commentify)))
 ///
 ((*- endif *))
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct (((m.identifier|camel_case))) {
     ((*- if m.is_real_message *))
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     ((*- endif *))
     ((*- for f in m.fields *))
@@ -96,9 +96,17 @@ impl super::SBPMessage for (((m.identifier|camel_case))) {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(
+        &self,
+        frame: &mut Vec<u8>,
+    ) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 ((*- endif *))

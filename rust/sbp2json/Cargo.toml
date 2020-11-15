@@ -11,21 +11,27 @@ version = "3.4.4"
 authors = ["Swift Navigation <dev@swiftnav.com>"]
 edition = "2018"
 
+[dependencies.sbp]
+path = "../sbp"
+features = ["sbp_serde", "json"]
+
 [dependencies]
 structopt = "0.3"
-lazy_static = "1.4"
+env_logger = "0.8.2"
+
+[dependencies.tokio]
+version = "0.3.3"
+default-features = false
+features = ["rt-multi-thread", "io-util", "io-std"]
 
 [target.'cfg(all(not(windows), not(target_env = "musl")))'.dependencies]
 jemallocator = "0.3"
 
-[dependencies.sbp]
-path = "../sbp"
-features = ["sbp2json"]
-
 [dev-dependencies]
 sha2 = "0.8"
 hex = "0.4"
-serde_json = "1.0"
+assert_cmd = "1.0.1"
+serde_json = "1"
 
 [profile.release]
 lto = true
@@ -33,12 +39,12 @@ codegen-units = 1
 
 [[bin]]
 name = "sbp2json"
-path = "src/sbp2json.rs"
+path = "src/bin/sbp2json.rs"
 
 [[bin]]
 name = "json2sbp"
-path = "src/json2sbp.rs"
+path = "src/bin/json2sbp.rs"
 
 [[bin]]
 name = "json2json"
-path = "src/json2json.rs"
+path = "src/bin/json2json.rs"

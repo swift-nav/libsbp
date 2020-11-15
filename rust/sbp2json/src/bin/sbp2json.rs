@@ -1,18 +1,10 @@
-use std::boxed::Box;
-use std::io::Write;
-use std::rc::Rc;
-
-use lazy_static::lazy_static;
 use structopt::StructOpt;
-
-use sbp::sbp2json::{sbp2json_read_loop, Result, StdoutFlusher};
+use tokio::runtime;
 
 #[cfg(all(not(windows), not(target_env = "musl")))]
 #[global_allocator]
 static ALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
 
-#[derive(Debug, StructOpt)]
-#[structopt(name = "sbp2json", verbatim_doc_comment)]
 /// Convert binary SBP data to JSON.
 ///
 /// Typical usage:
@@ -22,6 +14,8 @@ static ALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
 /// Or combined with socat:
 ///
 ///     socat tcp:192.168.1.222:55555 - | sbp2json
+#[derive(Debug, StructOpt)]
+#[structopt(name = "sbp2json", verbatim_doc_comment)]
 pub struct Options {
     /// Try to be compatible with the float formatting of the Haskell version of sbp2json
     #[structopt(long = "float-compat")]
@@ -36,19 +30,22 @@ pub struct Options {
     debug_memory: bool,
 }
 
-lazy_static! {
-    static ref STDOUT: std::io::Stdout = std::io::stdout();
-}
-
-fn main() -> Result<()> {
+fn main() {
     let options = Options::from_args();
-    let mut stdout: Rc<Box<dyn Write>> = Rc::new(Box::new(STDOUT.lock()));
-    let _stdout_flusher = StdoutFlusher::new(&STDOUT);
-    sbp2json_read_loop(
-        options.debug,
-        options.debug_memory,
-        options.float_compat,
-        &mut std::io::stdin().lock(),
-        &mut stdout,
-    )
+
+    if options.debug {
+        std::env::set_var("RUST_LOG", "debug");
+    }
+
+    env_logger::init();
+
+    let rt = runtime::Builder::new_multi_thread().build().unwrap();
+
+    rt.block_on(async {
+        let stdin = tokio::io::stdin();
+        let stdout = tokio::io::stdout();
+
+        sbp::codec::json::sbp2json(stdin, stdout).await
+    })
+    .unwrap()
 }

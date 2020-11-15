@@ -22,19 +22,19 @@ use self::(((p.identifier|mod_name)))::(((m.identifier|camel_case)));
 ((*- endfor *))
 use self::unknown::Unknown;
 
-#[cfg(feature = "sbp_serde")]
-use serde::{Serialize, Deserialize};
 use crate::serialize::SbpSerialize;
-use crate::framer::FramerError;
 
+#[enum_dispatch::enum_dispatch]
 pub trait SBPMessage: SbpSerialize {
     fn get_message_type(&self) -> u16;
     fn get_sender_id(&self) -> Option<u16>;
     fn set_sender_id(&mut self, new_id: u16);
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, FramerError>;
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError>;
+    fn write_frame(&self, buf: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError>;
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[enum_dispatch::enum_dispatch(SbpSerialize, SBPMessage)]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize), serde(untagged))]
 #[derive(Debug, Clone)]
 pub enum SBP {
     ((*- for m in msgs *))
@@ -45,7 +45,7 @@ pub enum SBP {
 
 impl SBP {
     pub fn parse(msg_id: u16, sender_id: u16, payload: &mut &[u8]) -> Result<SBP, crate::Error> {
-        let x: Result<SBP, crate::Error> = match msg_id {
+        match msg_id {
             ((*- for m in msgs *))
             (((m.sbp_id))) => {
                 let mut msg = (((m.identifier|camel_case)))::parse(payload)?;
@@ -54,19 +54,6 @@ impl SBP {
             },
             ((*- endfor *))
             _ => Ok(SBP::Unknown( Unknown{ msg_id: msg_id, sender_id: sender_id, payload: payload.to_vec() } ))
-        };
-        match x {
-            Ok(x) => Ok(x),
-            Err(_) => Err(crate::Error::ParseError),
-        }
-    }
-
-    pub fn as_sbp_message<'a>(&'a self) -> &dyn SBPMessage {
-        match self {
-            ((*- for m in msgs *))
-            SBP::(((m.identifier|camel_case)))( msg ) => msg,
-            ((*- endfor *))
-            SBP::Unknown(msg) => msg,
         }
     }
 }

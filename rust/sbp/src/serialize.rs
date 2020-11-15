@@ -1,5 +1,6 @@
-use crate::SbpString;
+use crate::{messages::SBP, SbpString};
 
+#[enum_dispatch::enum_dispatch]
 pub trait SbpSerialize {
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>);
     fn sbp_size(&self) -> usize;
@@ -87,8 +88,7 @@ impl SbpSerialize for i64 {
 
 impl SbpSerialize for f32 {
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        // This really should be self.to_le_bytes().to_vec() once it's a stable feature
-        buf.extend(&self.to_bits().to_le_bytes());
+        buf.extend(&self.to_le_bytes());
     }
 
     fn sbp_size(&self) -> usize {
@@ -98,8 +98,7 @@ impl SbpSerialize for f32 {
 
 impl SbpSerialize for f64 {
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        // This really should be self.to_le_bytes().to_vec() once it's a stable feature
-        buf.extend(&self.to_bits().to_le_bytes());
+        buf.extend(&self.to_le_bytes());
     }
 
     fn sbp_size(&self) -> usize {

@@ -14,12 +14,11 @@
 //****************************************************************************/
 //! Messages from a vehicle.
 
-extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
-#[cfg(feature = "sbp_serde")]
-use serde::{Deserialize, Serialize};
+use byteorder::{LittleEndian, ReadBytesExt};
 
+#[allow(unused_imports)]
+use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
 
@@ -27,17 +26,17 @@ use crate::SbpString;
 ///
 /// Message representing the x component of vehicle velocity in the user frame at the odometry
 /// reference point(s) specified by the user. The offset for the odometry reference point and
-/// the definition and origin of the user frame are defined through the device settings interface.
-/// There are 4 possible user-defined sources of this message  which are labeled arbitrarily
-/// source 0 through 3.
+/// the definition and origin of the user frame are defined through the device settings
+/// interface. There are 4 possible user-defined sources of this message  which are labeled
+/// arbitrarily source 0 through 3.
 /// If using "processor time" time tags, the receiving end will expect a
-/// `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry measurements
-/// with GNSS. Processor time shall roll over to zero after one week.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+/// `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry
+/// measurements with GNSS. Processor time shall roll over to zero after one week.
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgOdometry {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Time field representing either milliseconds in the GPS Week or local CPU
     /// time from the producing system in milliseconds.  See the tow_source flag
@@ -73,9 +72,14 @@ impl super::SBPMessage for MsgOdometry {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -104,15 +108,15 @@ impl crate::serialize::SbpSerialize for MsgOdometry {
 /// The source of this message is identified by the source field, which is an integer ranging
 /// from 0 to 255.
 /// The timestamp associated with this message should represent the time when the accumulated
-/// tick count reached the value given by the contents of this message as accurately as possible.
-/// If using "local CPU time" time tags, the receiving end will expect a
-/// `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise wheeltick measurements
-/// with GNSS. Local CPU time shall roll over to zero after one week.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+/// tick count reached the value given by the contents of this message as accurately as
+/// possible. If using "local CPU time" time tags, the receiving end will expect a
+/// `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise wheeltick
+/// measurements with GNSS. Local CPU time shall roll over to zero after one week.
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgWheeltick {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Time field representing either microseconds since the last PPS,
     /// microseconds in the GPS Week or local CPU time from the producing system
@@ -154,9 +158,14 @@ impl super::SBPMessage for MsgWheeltick {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 

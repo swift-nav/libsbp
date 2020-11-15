@@ -9,29 +9,35 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/tracking/test_MsgTrackingStateDetailedDep.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from
+// spec/tests/yaml/swiftnav/sbp/tracking/test_MsgTrackingStateDetailedDep.yaml by generate.py.
+// Do not modify by hand!
 
-extern crate sbp;
+use sbp::iter_messages;
 use sbp::messages::SBPMessage;
 
 mod common;
 #[allow(unused_imports)]
 use common::AlmostEq;
 
+use std::io::Cursor;
+
 #[test]
 fn test_auto_check_sbp_tracking_50() {
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 17, 0, 59, 103, 55, 163, 151, 112, 215, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 39, 5, 0, 0, 169, 177, 208, 54, 15, 0, 0, 0, 85, 61, 0, 0, 39, 0, 1, 0, 0, 0, 0,
             0, 0, 0, 40, 0, 108, 1, 0, 11, 0, 0, 9, 166, 214,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgTrackingStateDetailedDep(msg) => {
                 assert_eq!(
@@ -170,22 +176,23 @@ fn test_auto_check_sbp_tracking_50() {
             }
             _ => panic!("Invalid message type! Expected a MsgTrackingStateDetailedDep"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 17, 0, 59, 103, 55, 97, 251, 61, 245, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 18, 7, 0, 0, 14, 175, 208, 54, 15, 0, 0, 0, 51, 61, 0, 0, 30, 0, 1, 0, 0, 0, 0, 0,
             0, 0, 40, 0, 224, 1, 0, 11, 0, 0, 9, 136, 179,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgTrackingStateDetailedDep(msg) => {
                 assert_eq!(
@@ -324,22 +331,23 @@ fn test_auto_check_sbp_tracking_50() {
             }
             _ => panic!("Invalid message type! Expected a MsgTrackingStateDetailedDep"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 17, 0, 59, 103, 55, 139, 218, 236, 18, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 250, 8, 0, 0, 8, 179, 208, 54, 15, 0, 0, 0, 67, 61, 0, 0, 22, 0, 2, 0, 0, 0, 0, 0,
             0, 0, 40, 0, 27, 1, 0, 11, 0, 2, 9, 217, 159,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgTrackingStateDetailedDep(msg) => {
                 assert_eq!(
@@ -478,22 +486,23 @@ fn test_auto_check_sbp_tracking_50() {
             }
             _ => panic!("Invalid message type! Expected a MsgTrackingStateDetailedDep"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 17, 0, 59, 103, 55, 255, 251, 170, 48, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 226, 10, 0, 0, 125, 181, 208, 54, 15, 0, 0, 0, 29, 61, 0, 0, 10, 0, 2, 0, 0, 0, 0,
             0, 0, 0, 40, 0, 220, 1, 0, 11, 0, 3, 9, 66, 95,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgTrackingStateDetailedDep(msg) => {
                 assert_eq!(
@@ -632,22 +641,23 @@ fn test_auto_check_sbp_tracking_50() {
             }
             _ => panic!("Invalid message type! Expected a MsgTrackingStateDetailedDep"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 17, 0, 59, 103, 55, 189, 95, 120, 78, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 203, 12, 0, 0, 64, 184, 208, 54, 15, 0, 0, 0, 24, 61, 0, 0, 4, 0, 3, 0, 0, 0, 0, 0,
             0, 0, 40, 0, 2, 1, 0, 11, 0, 3, 9, 194, 206,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgTrackingStateDetailedDep(msg) => {
                 assert_eq!(
@@ -786,8 +796,7 @@ fn test_auto_check_sbp_tracking_50() {
             }
             _ => panic!("Invalid message type! Expected a MsgTrackingStateDetailedDep"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
 }

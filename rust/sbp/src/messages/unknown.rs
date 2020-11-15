@@ -1,6 +1,4 @@
-use super::SBPMessage;
-use crate::framer;
-use crate::serialize::SbpSerialize;
+use crate::{messages::SBPMessage, serialize::SbpSerialize};
 
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
@@ -36,8 +34,13 @@ impl SBPMessage for Unknown {
         self.sender_id = new_id;
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
