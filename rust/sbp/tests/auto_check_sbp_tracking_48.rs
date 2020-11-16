@@ -29,8 +29,8 @@ fn test_auto_check_sbp_tracking_48() {
         ];
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new();
-        let msg_result = parser.parse(&mut &payload[..]);
+        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
+        let msg_result = parser.parse();
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
         match &sbp_msg {
@@ -228,8 +228,8 @@ fn test_auto_check_sbp_tracking_48() {
         ];
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new();
-        let msg_result = parser.parse(&mut &payload[..]);
+        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
+        let msg_result = parser.parse();
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
         match &sbp_msg {
@@ -427,8 +427,8 @@ fn test_auto_check_sbp_tracking_48() {
         ];
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new();
-        let msg_result = parser.parse(&mut &payload[..]);
+        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
+        let msg_result = parser.parse();
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
         match &sbp_msg {
@@ -626,8 +626,8 @@ fn test_auto_check_sbp_tracking_48() {
         ];
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new();
-        let msg_result = parser.parse(&mut &payload[..]);
+        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
+        let msg_result = parser.parse();
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
         match &sbp_msg {
@@ -821,8 +821,8 @@ fn test_auto_check_sbp_tracking_48() {
         ];
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new();
-        let msg_result = parser.parse(&mut &payload[..]);
+        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
+        let msg_result = parser.parse();
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
         match &sbp_msg {
@@ -1016,8 +1016,8 @@ fn test_auto_check_sbp_tracking_48() {
         ];
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new();
-        let msg_result = parser.parse(&mut &payload[..]);
+        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
+        let msg_result = parser.parse();
         assert!(msg_result.is_ok());
         let sbp_msg = msg_result.unwrap();
         match &sbp_msg {
