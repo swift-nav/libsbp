@@ -38,7 +38,6 @@ RUN \
       texlive-science \
       texlive-fonts-extra \
       check \
-      cmake \
       ccache \
       pkg-config \
       doxygen \
@@ -65,6 +64,12 @@ RUN add-apt-repository ppa:deadsnakes/ppa \
   && curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable --no-modify-path \
   && curl -sSL https://get.haskellstack.org/ | sh \
   && rm -rf /var/lib/apt/lists/*
+
+RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null \
+  && add-apt-repository 'deb https://apt.kitware.com/ubuntu/ bionic main' \ 
+  && apt-get update \
+  && apt-get install -y \
+    cmake
 
 # Add a "dockerdev" user with sudo capabilities
 # 1000 is the first user ID issued on Ubuntu; might

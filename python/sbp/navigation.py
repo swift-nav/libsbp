@@ -28,7 +28,13 @@ all messages are reported in the vehicle body frame as defined by
 device settings.  By default, the vehicle body frame is configured to be
 coincident with the antenna phase center.  When there is no inertial
 navigation, the solution will be reported at the phase center of the antenna.
-There is no inertial navigation capability on Piksi Multi or Duro. 
+There is no inertial navigation capability on Piksi Multi or Duro.
+
+The tow field, when valid, is most often the Time of Measurement. When this
+is the case, the 5th bit of flags is set to the default value of 0.
+When this is not the case, the tow may be a time of arrival or a local
+system timestamp, irrespective of the time reference (GPS Week or else),
+but not a Time of Measurement.
 
 """
 

@@ -65,15 +65,15 @@ SolutionInputType.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  * metadata.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field pdop number (unsigned 16-bit int, 2 bytes) Position Dilution of Precision as per last available DOPS from PVT engine
- *   (0xFFFF indicates invalid)
- * @field hdop number (unsigned 16-bit int, 2 bytes) Horizontal Dilution of Precision as per last available DOPS from PVT engine
- *   (0xFFFF indicates invalid)
- * @field vdop number (unsigned 16-bit int, 2 bytes) Vertical Dilution of Precision as per last available DOPS from PVT engine
- *   (0xFFFF indicates invalid)
- * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites as per last available solution from PVT engine
- * @field age_corrections number (unsigned 16-bit int, 2 bytes) Age of corrections as per last available AGE_CORRECTIONS from PVT engine (0xFFFF
- *   indicates invalid)
+ * @field pdop number (unsigned 16-bit int, 2 bytes) Position Dilution of Precision, as per last available DOPS from Starling GNSS
+ *   engine
+ * @field hdop number (unsigned 16-bit int, 2 bytes) Horizontal Dilution of Precision, as per last available DOPS from Starling GNSS
+ *   engine
+ * @field vdop number (unsigned 16-bit int, 2 bytes) Vertical Dilution of Precision, as per last available DOPS from Starling GNSS
+ *   engine
+ * @field n_sats number (unsigned 8-bit int, 1 byte) Number of satellites, as per last available solution from Starling GNSS engine
+ * @field age_corrections number (unsigned 16-bit int, 2 bytes) Age of the corrections (0xFFFF indicates invalid), as per last available
+ *   AGE_CORRECTIONS from Starling GNSS engine
  * @field alignment_status number (unsigned 8-bit int, 1 byte) State of alignment and the status and receipt of the alignment inputs
  * @field last_used_gnss_pos_tow number (unsigned 32-bit int, 4 bytes) Tow of last-used GNSS position measurement
  * @field last_used_gnss_vel_tow number (unsigned 32-bit int, 4 bytes) Tow of last-used GNSS velocity measurement
@@ -122,19 +122,24 @@ MsgSolnMetaDepA.prototype.fieldSpec.push(['sol_in', 'array', SolutionInputType.p
  *
  * This message contains all metadata about the sensors received and/or used in
  * computing the sensorfusion solution. It focuses primarly, but not only, on GNSS
- * metadata.
+ * metadata. Regarding the age of the last received valid GNSS solution, the
+ * highest two bits are time status, indicating whether age gnss can or can not be
+ * used to retrieve time of measurement (noted TOM, also known as time of validity)
+ * If it can, substract 'age gnss' from 'tow' in navigation messages to get TOM.
+ * Can be used before alignment is complete in the Fusion Engine, when output
+ * solution is the last received valid GNSS solution and its tow is not a TOM.
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS time of week rounded to the nearest millisecond
- * @field pdop number (unsigned 16-bit int, 2 bytes) Position Dilution of Precision as per last available DOPS from PVT engine
- *   (0xFFFF indicates invalid)
- * @field hdop number (unsigned 16-bit int, 2 bytes) Horizontal Dilution of Precision as per last available DOPS from PVT engine
- *   (0xFFFF indicates invalid)
- * @field vdop number (unsigned 16-bit int, 2 bytes) Vertical Dilution of Precision as per last available DOPS from PVT engine
- *   (0xFFFF indicates invalid)
- * @field age_corrections number (unsigned 16-bit int, 2 bytes) Age of corrections as per last available AGE_CORRECTIONS from PVT engine (0xFFFF
- *   indicates invalid)
- * @field age_gnss number (unsigned 32-bit int, 4 bytes) Age of the last received valid GNSS solution
+ * @field pdop number (unsigned 16-bit int, 2 bytes) Position Dilution of Precision, as per last available DOPS from Starling GNSS
+ *   engine
+ * @field hdop number (unsigned 16-bit int, 2 bytes) Horizontal Dilution of Precision, as per last available DOPS from Starling GNSS
+ *   engine
+ * @field vdop number (unsigned 16-bit int, 2 bytes) Vertical Dilution of Precision, as per last available DOPS from Starling GNSS
+ *   engine
+ * @field age_corrections number (unsigned 16-bit int, 2 bytes) Age of the corrections (0xFFFF indicates invalid), as per last available
+ *   AGE_CORRECTIONS from Starling GNSS engine
+ * @field age_gnss number (unsigned 32-bit int, 4 bytes) Age and Time Status of the last received valid GNSS solution.
  * @field sol_in array Array of Metadata describing the sensors potentially involved in the solution.
  *   Each element in the array represents a single sensor type and consists of flags
  *   containing (meta)data pertaining to that specific single sensor. Refer to each
