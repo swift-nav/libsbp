@@ -200,15 +200,15 @@ It focuses primarly, but not only, on GNSS metadata.
   sbp : SBP
     SBP parent object to inherit from.
   pdop : int
-    Position Dilution of Precision, as per last available DOPS from Starling GNSS engine
+    Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
   hdop : int
-    Horizontal Dilution of Precision, as per last available DOPS from Starling GNSS engine
+    Horizontal Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
   vdop : int
-    Vertical Dilution of Precision, as per last available DOPS from Starling GNSS engine
+    Vertical Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
   n_sats : int
-    Number of satellites, as per last available solution from Starling GNSS engine
+    Number of satellites as per last available solution from PVT engine
   age_corrections : int
-    Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine
+    Age of corrections as per last available AGE_CORRECTIONS from PVT engine (0xFFFF indicates invalid)
   alignment_status : int
     State of alignment and the status and receipt of the alignment inputs
   last_used_gnss_pos_tow : int
@@ -337,13 +337,13 @@ complete in the Fusion Engine, when output solution is the last received valid G
   tow : int
     GPS time of week rounded to the nearest millisecond
   pdop : int
-    Position Dilution of Precision, as per last available DOPS from Starling GNSS engine
+    Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
   hdop : int
-    Horizontal Dilution of Precision, as per last available DOPS from Starling GNSS engine
+    Horizontal Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
   vdop : int
-    Vertical Dilution of Precision, as per last available DOPS from Starling GNSS engine
+    Vertical Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)
   age_corrections : int
-    Age of the corrections (0xFFFF indicates invalid), as per last available AGE_CORRECTIONS from Starling GNSS engine
+    Age of corrections as per last available AGE_CORRECTIONS from PVT engine (0xFFFF indicates invalid)
   age_gnss : int
     Age and Time Status of the last received valid GNSS solution.
   sol_in : array
