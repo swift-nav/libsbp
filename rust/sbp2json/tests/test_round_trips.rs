@@ -26,21 +26,6 @@ fn test_sbp2json() {
 }
 
 #[test]
-#[ignore = "takes a very long time. use `    -- --ignored` to run this"]
-fn test_sbp2json_long() {
-    let tranform1 = |reader, writer| run_sbp2json(reader, writer);
-    let tranform2 = |reader, writer| run_json2sbp(reader, writer);
-
-    test_round_trip(
-        tranform1,
-        tranform2,
-        "sbp2json_long",
-        "long.sbp",
-        make_none_transform!(),
-    )
-}
-
-#[test]
 fn test_json2sbp() {
     let tranform1 = |reader, writer| run_json2sbp(reader, writer);
     let tranform2 = |reader, writer| run_sbp2json(reader, writer);
