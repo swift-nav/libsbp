@@ -12,11 +12,10 @@ use std::{
     fmt, result,
 };
 
-use futures::{executor::block_on_stream, io::AllowStdIo, stream::Stream};
+use futures::stream::Stream;
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use tokio::io::AsyncRead;
-use tokio_util::compat::FuturesAsyncReadCompatExt;
 
 use crate::{
     codec::sbp::SbpCodec,
@@ -32,17 +31,19 @@ pub fn stream_messages<R: AsyncRead>(input: R) -> impl Stream<Item = Result<SBP>
     SbpCodec::decode_reader(input)
 }
 
+#[cfg(feature = "blocking")]
 pub fn iter_messages<R: std::io::Read>(input: R) -> impl Iterator<Item = Result<SBP>> {
-    let input = AllowStdIo::new(input);
+    use tokio_util::compat::FuturesAsyncReadCompatExt;
+
+    let input = futures::io::AllowStdIo::new(input);
     let stream = stream_messages(input.compat());
-    block_on_stream(stream).into_iter()
+    futures::executor::block_on_stream(stream).into_iter()
 }
 
 #[cfg(feature = "json")]
 pub mod json {
-    use futures::{executor::block_on_stream, io::AllowStdIo, Stream};
+    use futures::Stream;
     use tokio::io::AsyncRead;
-    use tokio_util::compat::FuturesAsyncReadCompatExt;
 
     use crate::{codec::json::JsonDecoder, messages::SBP, Result};
 
@@ -52,10 +53,13 @@ pub mod json {
         JsonDecoder::decode_reader(src)
     }
 
+    #[cfg(feature = "blocking")]
     pub fn iter_messages<R: std::io::Read>(input: R) -> impl Iterator<Item = Result<SBP>> {
-        let input = AllowStdIo::new(input);
+        use tokio_util::compat::FuturesAsyncReadCompatExt;
+
+        let input = futures::io::AllowStdIo::new(input);
         let stream = stream_messages(input.compat());
-        block_on_stream(stream).into_iter()
+        futures::executor::block_on_stream(stream).into_iter()
     }
 }
 

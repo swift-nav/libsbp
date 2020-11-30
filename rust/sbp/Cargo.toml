@@ -19,6 +19,8 @@ keywords = ["encoding", "parsing"]
 [features]
 sbp_serde = ["serde"]
 json = ["serde_json", "serde", "base64"]
+blocking = ["futures/executor", "tokio-util/compat"]
+default = ["blocking"]
 
 [lib]
 path = "src/lib.rs"
@@ -27,12 +29,12 @@ path = "src/lib.rs"
 byteorder = "1.2.1"
 bytes = "0.6.0"
 crc16 = "*"
-futures = "0.3.8"
 nom = "5.1.1"
 thiserror = "1.0.22"
 log = "0.4.11"
 enum_dispatch = "0.3.4"
-tokio-util = { version = "0.5.0", features = ["compat", "codec"] }
+futures = { version = "0.3.8", default-features = false }
+tokio-util = { version = "0.5.0", default-features = false, features = ["codec"] }
 serde = { version = "1", features = ["derive"], optional = true }
 serde_json = { version = "1", optional = true }
 base64 = {version = "0.13", optional = true}

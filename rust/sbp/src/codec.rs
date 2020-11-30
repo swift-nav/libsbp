@@ -9,7 +9,7 @@ pub mod sbp {
         Result,
     };
 
-    pub(crate) struct SbpCodec {
+    pub struct SbpCodec {
         frame: Vec<u8>,
     }
 
