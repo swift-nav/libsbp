@@ -2,12 +2,13 @@ use std::{
     env,
     fs::{self, File},
     ops::Drop,
-    path::PathBuf,
+    path::{Path, PathBuf},
     process::{Command, Stdio},
     vec::Vec,
 };
 
 use assert_cmd::{assert::OutputAssertExt, cargo::CommandCargoExt};
+use serde_json::{Deserializer, Value};
 use sha2::{Digest, Sha256};
 
 pub fn run_sbp2json(reader: File, writer: File) {
@@ -106,6 +107,7 @@ pub fn test_round_trip<F1, F2, F3>(
     test_name: &str,
     input_filename: &str,
     mut third_transform: Option<ThirdTransform<F3>>,
+    json: bool,
 ) where
     F1: FnMut(File, File),
     F2: FnMut(File, File),
@@ -148,8 +150,6 @@ pub fn test_round_trip<F1, F2, F3>(
         let input_path = root.join(&second_transform_output);
         let output_path = root.join(&third_transform_output);
 
-        eprintln!("{}", input_path.display());
-
         del_test_output.add_test_output(&output_path);
 
         let input_file = File::open(input_path).expect("could not open third transform input file");
@@ -170,18 +170,31 @@ pub fn test_round_trip<F1, F2, F3>(
 
     del_test_output.add_test_output(&output_path);
 
-    let mut input_file = File::open(&input_path).unwrap();
-    let mut output_file = File::open(&output_path).unwrap();
+    assert!(file_equals(input_path, output_path, json));
+}
 
+fn file_equals<P: AsRef<Path>>(input: P, output: P, json: bool) -> bool {
+    let input_path = input.as_ref();
+    let output_path = output.as_ref();
+
+    eprintln!("input: {:?}, output: {:?}", &input_path, &output_path);
+
+    let input_file = File::open(&input_path).unwrap();
+    let output_file = File::open(&output_path).unwrap();
+
+    if json {
+        json_file_equals(input_file, output_file)
+    } else {
+        binary_file_equals(input_file, output_file)
+    }
+}
+
+fn binary_file_equals(mut a: File, mut b: File) -> bool {
     let mut input_file_hash = Sha256::new();
     let mut output_file_hash = Sha256::new();
 
-    std::io::copy(&mut input_file, &mut input_file_hash)
-        .map(|_| ())
-        .unwrap();
-    std::io::copy(&mut output_file, &mut output_file_hash)
-        .map(|_| ())
-        .unwrap();
+    std::io::copy(&mut a, &mut input_file_hash).unwrap();
+    std::io::copy(&mut b, &mut output_file_hash).unwrap();
 
     let input_digest = input_file_hash.result();
     let output_digest = output_file_hash.result();
@@ -189,5 +202,24 @@ pub fn test_round_trip<F1, F2, F3>(
     let input_hex_digest = hex::encode(&input_digest[..]);
     let output_hex_digest = hex::encode(&output_digest[..]);
 
-    assert_eq!(input_hex_digest, output_hex_digest);
+    input_hex_digest == output_hex_digest
+}
+
+fn json_file_equals(a: File, b: File) -> bool {
+    let a = Deserializer::from_reader(a)
+        .into_iter::<Value>()
+        .map(Result::unwrap);
+
+    let b = Deserializer::from_reader(b)
+        .into_iter::<Value>()
+        .map(Result::unwrap);
+
+    let wrong = a.zip(b).find(|(a, b)| a != b);
+
+    if wrong.is_some() {
+        eprintln!("json values not equal: {:#?}", wrong);
+        false
+    } else {
+        true
+    }
 }

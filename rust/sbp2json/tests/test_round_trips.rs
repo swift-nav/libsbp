@@ -22,6 +22,7 @@ fn test_sbp2json() {
         "sbp2json",
         "roundtrip.sbp",
         make_none_transform!(),
+        false,
     )
 }
 
@@ -36,6 +37,7 @@ fn test_json2sbp() {
         "json2sbp",
         "roundtrip.json",
         make_none_transform!(),
+        true,
     )
 }
 
@@ -55,6 +57,7 @@ fn test_json2json() {
         "json2json",
         "roundtrip.json2json.input",
         Some(third_transform),
+        true,
     )
 }
 
