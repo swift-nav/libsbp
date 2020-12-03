@@ -208,13 +208,24 @@ fn binary_file_equals(mut a: File, mut b: File) -> bool {
 fn json_file_equals(a: File, b: File) -> bool {
     let a = Deserializer::from_reader(a)
         .into_iter::<Value>()
-        .map(Result::unwrap);
+        .map(Result::unwrap)
+        .collect::<Vec<_>>();
 
     let b = Deserializer::from_reader(b)
         .into_iter::<Value>()
-        .map(Result::unwrap);
+        .map(Result::unwrap)
+        .collect::<Vec<_>>();
 
-    let wrong = a.zip(b).find(|(a, b)| a != b);
+    if a.len() != b.len() {
+        eprintln!(
+            "unequal number of values in json files: a: {}, b: {}",
+            a.len(),
+            b.len()
+        );
+        return false;
+    }
+
+    let wrong = a.into_iter().zip(b).find(|(a, b)| a != b);
 
     if wrong.is_some() {
         eprintln!("json values not equal: {:#?}", wrong);
