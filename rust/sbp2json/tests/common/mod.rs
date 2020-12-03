@@ -225,10 +225,15 @@ fn json_file_equals(a: File, b: File) -> bool {
         return false;
     }
 
-    let wrong = a.into_iter().zip(b).find(|(a, b)| a != b);
+    let wrong = a
+        .iter()
+        .zip(b.iter())
+        .map(|(a, b)| assert_json_diff::assert_json_eq_no_panic(a, b))
+        .enumerate()
+        .find(|(_, res)| res.is_err());
 
-    if wrong.is_some() {
-        eprintln!("json values not equal: {:#?}", wrong);
+    if let Some(wrong) = wrong {
+        eprintln!("value mismatch at line {}\n{}", wrong.0, wrong.1.unwrap_err());
         false
     } else {
         true
