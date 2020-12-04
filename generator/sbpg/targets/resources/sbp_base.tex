@@ -131,7 +131,7 @@ detection\footnote{CCITT 16-bit CRC Implementation uses parameters
     \midrule
     $\mathtt{0}$ & $\mathtt{1}$ & {Preamble} & Denotes the start of frame transmission. Always 0x55. \\
     $\mathtt{1}$ & $\mathtt{2}$ & {Message Type} & Identifies the payload contents. \\
-    $\mathtt{3}$ & $\mathtt{2}$ & {Sender} & \hangindent=0.5em{A unique identifier of the sender. On the Piksi, this is set to the 2 least significant bytes of the device serial number. A stream of SBP messages may also include sender IDs for forwarded messages. By default, clients of `libsbp` use a sender id value of `0x42`.  Sender id '0x42' is used to represent device controllers such as the Piksi Console.} \\
+    $\mathtt{3}$ & $\mathtt{2}$ & {Sender} & A unique identifier of the sender.\footnotemark \\
     $\mathtt{5}$ & $\mathtt{1}$ & {Length} & Length (bytes) of the {Payload} field. \\
     $\mathtt{6}$ & $\mathtt{N}$ & {Payload} & Binary message contents. \\
     $\mathtt{N+6}$ & $\mathtt{2}$ & {CRC} & \hangindent=0.5em{Cyclic Redundancy Check of the frame's binary data from the Message Type up to the end of Payload (does not include the Preamble).} \\
@@ -142,6 +142,7 @@ detection\footnote{CCITT 16-bit CRC Implementation uses parameters
   \caption{Swift Binary Protocol message structure. $\mathtt{N}$ denotes a variable-length size.}
   \label{tab:message}
 \end{table}
+\footnotetext{By default, clients of `libsbp` use a sender id value of `0x42` which represents device controllers such as the Piksi Console. On the Piksi, the sender ID is set to the 2 least significant bytes of the device serial number. A stream of SBP messages may also include sender IDs for forwarded messages from other systems. For instance, when using Starling as a hosted software product, Sender 0x1000 (4096) indicates a message originated from the GNSS subsystem, while sender 0x315 (789) indicates a message originated from the sensor fusion subsystem. Sender 0 always indicates the message has been forwarded and contains some form of differential corrections.}
 
 \section{NMEA-0183}
 \label{sec:NMEA}
