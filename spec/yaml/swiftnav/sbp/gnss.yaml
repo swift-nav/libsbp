@@ -45,6 +45,7 @@ definitions:
                       - 13: BDS2 B2 
                       - 14: GAL E1B
                       - 20: GAL E7I
+                      - 47: BDS3 B2a
 
  - SvId:
     short_desc: Space vehicle identifier
