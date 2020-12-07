@@ -75,7 +75,7 @@ pub mod json {
     use bytes::{Buf, BufMut, BytesMut};
     use futures::StreamExt;
     use serde::{de::DeserializeOwned, Deserialize, Serialize};
-    use serde_json::{Deserializer, Value};
+    use serde_json::{ser::Formatter, Deserializer, Serializer, Value};
     use tokio::io::{AsyncRead, AsyncWrite};
     use tokio_util::codec::{Decoder, Encoder, FramedRead, FramedWrite};
 
@@ -306,8 +306,8 @@ pub mod json {
             let common = self.get_common_fields(&msg)?;
             let output = JsonOutput { common, msg };
 
-            let mut writer = dst.writer();
-            serde_json::to_writer(&mut writer, &output)?;
+            let mut ser = Serializer::with_formatter(dst.writer(), HaskellishFloatFormatter {});
+            output.serialize(&mut ser)?;
             dst.put_slice(b"\n");
 
             Ok(())
@@ -344,11 +344,40 @@ pub mod json {
                 other: input.other,
             };
 
-            let mut writer = dst.writer();
-            serde_json::to_writer(&mut writer, &output)?;
+            let mut ser = Serializer::with_formatter(dst.writer(), HaskellishFloatFormatter {});
+            output.serialize(&mut ser)?;
             dst.put_slice(b"\n");
 
             Ok(())
+        }
+    }
+
+    /// Provide Haskell style formatting (sort of).  See `haskellish_float`.
+    struct HaskellishFloatFormatter {}
+
+    impl Formatter for HaskellishFloatFormatter {
+        #[inline]
+        fn write_f32<W: ?Sized>(&mut self, writer: &mut W, value: f32) -> std::io::Result<()>
+        where
+            W: std::io::Write,
+        {
+            if value == 0.0 || value.abs() >= 0.1 && value.abs() <= 9_999_999.0 {
+                write!(writer, "{}", value)
+            } else {
+                write!(writer, "{:e}", value)
+            }
+        }
+
+        #[inline]
+        fn write_f64<W: ?Sized>(&mut self, writer: &mut W, value: f64) -> std::io::Result<()>
+        where
+            W: std::io::Write,
+        {
+            if value == 0.0 || value.abs() >= 0.1 && value.abs() <= 9_999_999.0 {
+                write!(writer, "{}", value)
+            } else {
+                write!(writer, "{:e}", value)
+            }
         }
     }
 }

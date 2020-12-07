@@ -232,8 +232,8 @@ fn json_file_equals(a: File, b: File) -> bool {
         .enumerate()
         .find(|(_, res)| res.is_err());
 
-    if let Some(wrong) = wrong {
-        eprintln!("value mismatch at line {}\n{}", wrong.0, wrong.1.unwrap_err());
+    if let Some((line, Err(err))) = wrong {
+        eprintln!("value mismatch at line {}\n{}", line, err);
         false
     } else {
         true
