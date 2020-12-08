@@ -185,12 +185,11 @@ if __name__ == "__main__":
     else:
         print('Detected LIBSBP_BUILD_ANY, building without sbp.jit support...')
 
-    if sys.version_info.major == 2 and sys.version_info.minor == 7:
-        with open(os.path.join(setup_py_dir, 'requirements_nojit.txt')) as f:
-            INSTALL_REQUIRES = [i.strip() for i in f.readlines() if not exclude_jit_libs(i.strip())]
-    else:
-        with open(os.path.join(setup_py_dir, 'requirements.txt')) as f:
-            INSTALL_REQUIRES = [i.strip() for i in f.readlines() if not exclude_jit_libs(i.strip())]
+    with open(os.path.join(setup_py_dir, 'requirements.txt')) as f:
+        INSTALL_REQUIRES = [
+            i.strip()
+            for i in f.readlines() if not exclude_jit_libs(i.strip())
+        ]
 
     with open(os.path.join(setup_py_dir, 'test_requirements.txt')) as f:
         TEST_REQUIRES = [i.strip() for i in f.readlines()]
