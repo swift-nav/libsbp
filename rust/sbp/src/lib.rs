@@ -12,13 +12,10 @@ use std::{
     fmt, result,
 };
 
-use futures::stream::Stream;
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
-use tokio::io::AsyncRead;
 
 use crate::{
-    codec::sbp::SbpCodec,
     messages::{SBPMessage, SBP},
     serialize::SbpSerialize,
 };
@@ -27,9 +24,8 @@ pub const SBP_MAX_PAYLOAD_SIZE: usize = 255;
 pub const MSG_HEADER_LEN: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/ + 1 /*len*/;
 pub const MSG_CRC_LEN: usize = 2;
 
-pub fn stream_messages<R: AsyncRead>(input: R) -> impl Stream<Item = Result<SBP>> {
-    SbpCodec::decode_reader(input)
-}
+
+pub use crate::codec::sbp::stream_messages;
 
 #[cfg(feature = "blocking")]
 pub fn iter_messages<R: std::io::Read>(input: R) -> impl Iterator<Item = Result<SBP>> {

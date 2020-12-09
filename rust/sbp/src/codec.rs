@@ -1,31 +1,36 @@
-pub mod sbp {
+#[cfg(feature = "json")]
+pub use json::{json2json, json2sbp, sbp2json};
+
+pub(crate) mod sbp {
     use bytes::{Buf, BufMut, BytesMut};
+    use futures::stream::Stream;
     use tokio::io::{AsyncRead, AsyncWrite};
     use tokio_util::codec::{Decoder, Encoder, FramedRead, FramedWrite};
 
     use crate::{
         messages::{SBPMessage, SBP},
         parser::{parse_sbp, ParseResult},
-        Result,
+        Error, Result,
     };
 
-    pub struct SbpCodec {
-        frame: Vec<u8>,
+    const MAX_FRAME_LENGTH: usize =
+        crate::MSG_HEADER_LEN + crate::SBP_MAX_PAYLOAD_SIZE + crate::MSG_CRC_LEN;
+
+    pub fn stream_messages<R: AsyncRead>(input: R) -> impl Stream<Item = Result<SBP>> {
+        SbpDecoder::decode_reader(input)
     }
 
-    impl SbpCodec {
-        pub fn decode_reader<R: AsyncRead>(input: R) -> FramedRead<R, SbpCodec> {
-            FramedRead::new(input, SbpCodec { frame: Vec::new() })
-        }
+    pub struct SbpDecoder {}
 
-        pub fn encode_writer<W: AsyncWrite>(writer: W) -> FramedWrite<W, SbpCodec> {
-            FramedWrite::new(writer, SbpCodec { frame: Vec::new() })
+    impl SbpDecoder {
+        pub fn decode_reader<R: AsyncRead>(input: R) -> FramedRead<R, SbpDecoder> {
+            FramedRead::new(input, SbpDecoder {})
         }
     }
 
-    impl Decoder for SbpCodec {
+    impl Decoder for SbpDecoder {
         type Item = SBP;
-        type Error = crate::Error;
+        type Error = Error;
 
         fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>> {
             match parse_sbp(&src) {
@@ -40,9 +45,7 @@ pub mod sbp {
                     Ok(None)
                 }
                 ParseResult::Incomplete => {
-                    src.reserve(
-                        crate::MSG_HEADER_LEN + crate::SBP_MAX_PAYLOAD_SIZE + crate::MSG_CRC_LEN,
-                    );
+                    src.reserve(MAX_FRAME_LENGTH);
                     Ok(None)
                 }
             }
@@ -56,8 +59,23 @@ pub mod sbp {
         }
     }
 
-    impl Encoder<SBP> for SbpCodec {
-        type Error = crate::Error;
+    pub struct SbpEncoder {
+        frame: Vec<u8>,
+    }
+
+    impl SbpEncoder {
+        pub fn encode_writer<W: AsyncWrite>(writer: W) -> FramedWrite<W, SbpEncoder> {
+            FramedWrite::new(
+                writer,
+                SbpEncoder {
+                    frame: Vec::with_capacity(MAX_FRAME_LENGTH),
+                },
+            )
+        }
+    }
+
+    impl Encoder<SBP> for SbpEncoder {
+        type Error = Error;
 
         fn encode(&mut self, msg: SBP, dst: &mut BytesMut) -> Result<()> {
             self.frame.clear();
@@ -71,7 +89,7 @@ pub mod sbp {
 }
 
 #[cfg(feature = "json")]
-pub mod json {
+pub(crate) mod json {
     use std::collections::HashMap;
 
     use bytes::{Buf, BufMut, BytesMut};
@@ -93,7 +111,7 @@ pub mod json {
         W: AsyncWrite,
     {
         let source = JsonDecoder::decode_reader(input);
-        let sink = super::sbp::SbpCodec::encode_writer(output);
+        let sink = super::sbp::SbpEncoder::encode_writer(output);
         source.forward(sink).await
     }
 
@@ -112,7 +130,7 @@ pub mod json {
         R: AsyncRead,
         W: AsyncWrite,
     {
-        let source = super::sbp::SbpCodec::decode_reader(input);
+        let source = super::sbp::SbpDecoder::decode_reader(input);
         let sink = JsonEncoder::encode_writer(output);
         source.forward(sink).await
     }

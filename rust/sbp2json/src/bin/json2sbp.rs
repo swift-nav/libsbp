@@ -33,7 +33,7 @@ fn main() {
         let stdin = tokio::io::stdin();
         let stdout = tokio::io::stdout();
 
-        sbp::codec::json::json2sbp(stdin, stdout).await
+        sbp::codec::json2sbp(stdin, stdout).await
     })
     .unwrap()
 }
