@@ -372,8 +372,18 @@ pub(crate) mod json {
         }
     }
 
-    /// Provide Haskell style formatting (sort of).  See `haskellish_float`.
+    /// Provide Haskell style formatting. Output should be similar to: https://hackage.haskell.org/package/base-4.8.2.0/docs/Numeric.html#v:showFloat
     struct HaskellishFloatFormatter {}
+
+    macro_rules! show_float {
+        ($writer:expr, $value:expr) => {
+            if $value == 0.0 || $value.abs() >= 0.1 && $value.abs() <= 9_999_999.0 {
+                write!($writer, "{}", $value)
+            } else {
+                write!($writer, "{:e}", $value)
+            }
+        };
+    }
 
     impl Formatter for HaskellishFloatFormatter {
         #[inline]
@@ -381,11 +391,7 @@ pub(crate) mod json {
         where
             W: std::io::Write,
         {
-            if value == 0.0 || value.abs() >= 0.1 && value.abs() <= 9_999_999.0 {
-                write!(writer, "{}", value)
-            } else {
-                write!(writer, "{:e}", value)
-            }
+            show_float!(writer, value)
         }
 
         #[inline]
@@ -393,11 +399,7 @@ pub(crate) mod json {
         where
             W: std::io::Write,
         {
-            if value == 0.0 || value.abs() >= 0.1 && value.abs() <= 9_999_999.0 {
-                write!(writer, "{}", value)
-            } else {
-                write!(writer, "{:e}", value)
-            }
+            show_float!(writer, value)
         }
     }
 }
