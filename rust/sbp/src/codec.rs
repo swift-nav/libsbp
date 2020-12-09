@@ -102,7 +102,7 @@ pub(crate) mod json {
     use crate::{
         messages::{SBPMessage, SBP},
         serialize::SbpSerialize,
-        Result,
+        Error, Result,
     };
 
     pub async fn json2sbp<R, W>(input: R, output: W) -> Result<()>
@@ -176,7 +176,7 @@ pub(crate) mod json {
 
             self.payload_buf.clear();
             base64::decode_config_buf(data.payload, base64::STANDARD, &mut self.payload_buf)
-                .map_err(|err| crate::Error::JsonParseError {
+                .map_err(|err| Error::JsonParseError {
                     details: format!("Invalid base64 payload: {}", err),
                 })?;
             let mut payload = self.payload_buf.as_slice();
@@ -187,7 +187,7 @@ pub(crate) mod json {
 
     impl Decoder for JsonDecoder {
         type Item = SBP;
-        type Error = crate::Error;
+        type Error = Error;
 
         fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>> {
             let value = match decode_one::<JsonInput>(src)? {
@@ -226,7 +226,7 @@ pub(crate) mod json {
 
     impl Decoder for Json2JsonDecoder {
         type Item = Json2JsonInput;
-        type Error = crate::Error;
+        type Error = Error;
 
         fn decode(&mut self, src: &mut BytesMut) -> Result<Option<Self::Item>> {
             decode_one::<Json2JsonInput>(src)
@@ -320,7 +320,7 @@ pub(crate) mod json {
     }
 
     impl Encoder<SBP> for JsonEncoder {
-        type Error = crate::Error;
+        type Error = Error;
 
         fn encode(&mut self, msg: SBP, dst: &mut BytesMut) -> Result<()> {
             let common = self.get_common_fields(&msg)?;
@@ -343,11 +343,11 @@ pub(crate) mod json {
     }
 
     impl Encoder<Json2JsonInput> for JsonEncoder {
-        type Error = crate::Error;
+        type Error = Error;
 
         fn encode(&mut self, input: Json2JsonInput, dst: &mut BytesMut) -> Result<()> {
             let payload =
-                base64::decode(input.data.payload).map_err(|err| crate::Error::JsonParseError {
+                base64::decode(input.data.payload).map_err(|err| Error::JsonParseError {
                     details: format!("Invalid base64 payload: {}", err),
                 })?;
 
