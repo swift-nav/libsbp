@@ -40,7 +40,9 @@ pub mod sbp {
                     Ok(None)
                 }
                 ParseResult::Incomplete => {
-                    src.reserve(crate::MSG_HEADER_LEN + crate::SBP_MAX_PAYLOAD_SIZE);
+                    src.reserve(
+                        crate::MSG_HEADER_LEN + crate::SBP_MAX_PAYLOAD_SIZE + crate::MSG_CRC_LEN,
+                    );
                     Ok(None)
                 }
             }
