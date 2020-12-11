@@ -108,7 +108,7 @@ performance on par with the Haskell and Rust variants.
 The quickest method to get going is to just pull a prebuilt copy from DockerHub
 (no guarantees on freshness):
 
-``docker run  -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2020.09.15``
+``docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2020.12.11``
 
 Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
 
@@ -130,7 +130,7 @@ You can then make this image operate on your local workspace like this:
 
 `cd ..`  (back up to the root of the repo)
 
-``docker run  -v $PWD:/mnt/workspace  -i -t libsbp-build:latest``
+``docker run --rm -v $PWD:/mnt/workspace  -i -t libsbp-build:latest``
 
 #### Using the docker image
 
