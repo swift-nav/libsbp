@@ -37,7 +37,11 @@ fn main() {
         let stdin = tokio::io::stdin();
         let stdout = tokio::io::stdout();
 
-        sbp::codec::json2json(stdin, stdout).await
+        if options.float_compat {
+            sbp::codec::json2json(stdin, stdout, sbp::codec::HaskellishFloatFormatter {}).await
+        } else {
+            sbp::codec::json2json(stdin, stdout, sbp::codec::CompactFormatter {}).await
+        }
     })
     .unwrap()
 }

@@ -24,10 +24,6 @@ pub struct Options {
     /// Print debugging messages to standard error
     #[structopt(short = "d", long)]
     debug: bool,
-
-    /// Print debugging messages about memory usage to standard error
-    #[structopt(short = "m", long = "debug-memory")]
-    debug_memory: bool,
 }
 
 fn main() {
@@ -45,7 +41,11 @@ fn main() {
         let stdin = tokio::io::stdin();
         let stdout = tokio::io::stdout();
 
-        sbp::codec::sbp2json(stdin, stdout).await
+        if options.float_compat {
+            sbp::codec::sbp2json(stdin, stdout, sbp::codec::HaskellishFloatFormatter {}).await
+        } else {
+            sbp::codec::sbp2json(stdin, stdout, sbp::codec::CompactFormatter {}).await
+        }
     })
     .unwrap()
 }

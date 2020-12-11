@@ -13,24 +13,30 @@ use sha2::{Digest, Sha256};
 
 pub fn run_sbp2json(reader: File, writer: File) {
     run_bin("sbp2json", reader, writer)
+        .arg("--float-compat")
+        .assert()
+        .success();
 }
 
 pub fn run_json2sbp(reader: File, writer: File) {
-    run_bin("json2sbp", reader, writer)
+    run_bin("json2sbp", reader, writer).assert().success();
 }
 
 pub fn run_json2json(reader: File, writer: File) {
     run_bin("json2json", reader, writer)
+        .arg("--float-compat")
+        .assert()
+        .success();
 }
 
-fn run_bin(name: &str, reader: File, writer: File) {
+fn run_bin(name: &str, reader: File, writer: File) -> Command {
     let mut cmd = Command::cargo_bin(name).unwrap();
 
     cmd.stdin(reader);
     cmd.stdout(writer);
     cmd.stderr(Stdio::inherit());
 
-    cmd.assert().success();
+    cmd
 }
 
 pub fn find_project_root() -> Option<PathBuf> {

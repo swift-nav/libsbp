@@ -1,5 +1,5 @@
 #[cfg(feature = "json")]
-pub use json::{json2json, json2sbp, sbp2json};
+pub use json::{json2json, json2sbp, sbp2json, CompactFormatter, HaskellishFloatFormatter};
 
 pub(crate) mod sbp {
     use bytes::{Buf, BufMut, BytesMut};
@@ -99,6 +99,8 @@ pub(crate) mod json {
     use tokio::io::{AsyncRead, AsyncWrite};
     use tokio_util::codec::{Decoder, Encoder, FramedRead, FramedWrite};
 
+    pub use serde_json::ser::CompactFormatter;
+
     use crate::{
         messages::{SBPMessage, SBP},
         serialize::SbpSerialize,
@@ -115,23 +117,25 @@ pub(crate) mod json {
         source.forward(sink).await
     }
 
-    pub async fn json2json<R, W>(input: R, output: W) -> Result<()>
+    pub async fn json2json<R, W, F>(input: R, output: W, formatter: F) -> Result<()>
     where
         R: AsyncRead + Unpin,
         W: AsyncWrite,
+        F: Formatter + Clone,
     {
         let source = Json2JsonDecoder::decode_reader(input);
-        let sink = JsonEncoder::encode_writer(output);
+        let sink = JsonEncoder::encode_writer(output, formatter);
         source.forward(sink).await
     }
 
-    pub async fn sbp2json<R, W>(input: R, output: W) -> Result<()>
+    pub async fn sbp2json<R, W, F>(input: R, output: W, formatter: F) -> Result<()>
     where
         R: AsyncRead,
         W: AsyncWrite,
+        F: Formatter + Clone,
     {
         let source = super::sbp::SbpDecoder::decode_reader(input);
-        let sink = JsonEncoder::encode_writer(output);
+        let sink = JsonEncoder::encode_writer(output, formatter);
         source.forward(sink).await
     }
 
@@ -257,20 +261,25 @@ pub(crate) mod json {
         sender: u16,
     }
 
-    struct JsonEncoder {
+    struct JsonEncoder<F> {
         payload_buf: String,
         frame_buf: Vec<u8>,
+        formatter: F,
     }
 
-    impl JsonEncoder {
-        pub fn encode_writer<W: AsyncWrite>(sink: W) -> FramedWrite<W, JsonEncoder> {
+    impl<F: Formatter + Clone> JsonEncoder<F> {
+        pub fn encode_writer<W: AsyncWrite>(
+            sink: W,
+            formatter: F,
+        ) -> FramedWrite<W, JsonEncoder<F>> {
             const BASE64_SBP_MAX_PAYLOAD_SIZE: usize = crate::SBP_MAX_PAYLOAD_SIZE / 3 * 4 + 4;
 
             FramedWrite::new(
                 sink,
-                Self {
+                JsonEncoder {
                     frame_buf: Vec::with_capacity(crate::SBP_MAX_PAYLOAD_SIZE),
                     payload_buf: String::with_capacity(BASE64_SBP_MAX_PAYLOAD_SIZE),
+                    formatter,
                 },
             )
         }
@@ -319,14 +328,15 @@ pub(crate) mod json {
         msg: SBP,
     }
 
-    impl Encoder<SBP> for JsonEncoder {
+    impl<F: Formatter + Clone> Encoder<SBP> for JsonEncoder<F> {
         type Error = Error;
 
         fn encode(&mut self, msg: SBP, dst: &mut BytesMut) -> Result<()> {
+            let formatter = self.formatter.clone();
             let common = self.get_common_fields(&msg)?;
             let output = JsonOutput { common, msg };
 
-            let mut ser = Serializer::with_formatter(dst.writer(), HaskellishFloatFormatter {});
+            let mut ser = Serializer::with_formatter(dst.writer(), formatter);
             output.serialize(&mut ser)?;
             dst.put_slice(b"\n");
 
@@ -342,10 +352,12 @@ pub(crate) mod json {
         other: HashMap<String, Value>,
     }
 
-    impl Encoder<Json2JsonInput> for JsonEncoder {
+    impl<F: Formatter + Clone> Encoder<Json2JsonInput> for JsonEncoder<F> {
         type Error = Error;
 
         fn encode(&mut self, input: Json2JsonInput, dst: &mut BytesMut) -> Result<()> {
+            let formatter = self.formatter.clone();
+
             let payload =
                 base64::decode(input.data.payload).map_err(|err| Error::JsonParseError {
                     details: format!("Invalid base64 payload: {}", err),
@@ -364,7 +376,7 @@ pub(crate) mod json {
                 other: input.other,
             };
 
-            let mut ser = Serializer::with_formatter(dst.writer(), HaskellishFloatFormatter {});
+            let mut ser = Serializer::with_formatter(dst.writer(), formatter);
             output.serialize(&mut ser)?;
             dst.put_slice(b"\n");
 
@@ -373,7 +385,8 @@ pub(crate) mod json {
     }
 
     /// Provide Haskell style formatting. Output should be similar to: https://hackage.haskell.org/package/base-4.8.2.0/docs/Numeric.html#v:showFloat
-    struct HaskellishFloatFormatter {}
+    #[derive(Clone)]
+    pub struct HaskellishFloatFormatter {}
 
     macro_rules! show_float {
         ($writer:expr, $value:expr) => {
