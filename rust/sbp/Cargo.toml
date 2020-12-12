@@ -17,31 +17,27 @@ edition = "2018"
 keywords = ["encoding", "parsing"]
 
 [features]
+default = ["blocking"]
 sbp_serde = ["serde"]
 json = ["serde_json", "serde", "base64"]
-blocking = ["futures/executor", "tokio-util/compat"]
-default = ["blocking"]
+blocking = ["futures/executor"]
 
 [lib]
 path = "src/lib.rs"
 
 [dependencies]
 byteorder = "1.2.1"
-bytes = "0.6.0"
+bytes = "0.5.6"
 crc16 = "*"
-nom = "5.1.1"
-thiserror = "1.0.22"
-log = "0.4.11"
 enum_dispatch = "0.3.4"
 futures = { version = "0.3.8", default-features = false }
-tokio-util = { version = "0.5.0", default-features = false, features = ["codec"] }
+futures_codec = "0.4.1"
+log = "0.4.11"
+nom = "6.0.1"
+thiserror = "1.0.22"
 serde = { version = "1", features = ["derive"], optional = true }
 serde_json = { version = "1", optional = true }
 base64 = {version = "0.13", optional = true}
-
-[dependencies.tokio]
-version = "0.3"
-default-features = false
 
 [dev-dependencies]
 serialport = "2.1.0"

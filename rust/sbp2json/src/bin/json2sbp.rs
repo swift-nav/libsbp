@@ -30,8 +30,8 @@ fn main() {
     let rt = runtime::Builder::new_multi_thread().build().unwrap();
 
     rt.block_on(async {
-        let stdin = tokio::io::stdin();
-        let stdout = tokio::io::stdout();
+        let stdin = sbp2json::stdin();
+        let stdout = sbp2json::stdout();
 
         sbp::codec::json2sbp(stdin, stdout).await
     })

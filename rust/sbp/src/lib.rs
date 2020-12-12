@@ -28,10 +28,8 @@ pub use crate::codec::sbp::stream_messages;
 
 #[cfg(feature = "blocking")]
 pub fn iter_messages<R: std::io::Read>(input: R) -> impl Iterator<Item = Result<SBP>> {
-    use tokio_util::compat::FuturesAsyncReadCompatExt;
-
     let input = futures::io::AllowStdIo::new(input);
-    let stream = stream_messages(input.compat());
+    let stream = stream_messages(input);
     futures::executor::block_on_stream(stream).into_iter()
 }
 
@@ -43,10 +41,8 @@ pub mod json {
 
     #[cfg(feature = "blocking")]
     pub fn iter_messages<R: std::io::Read>(input: R) -> impl Iterator<Item = Result<SBP>> {
-        use tokio_util::compat::FuturesAsyncReadCompatExt;
-
         let input = futures::io::AllowStdIo::new(input);
-        let stream = stream_messages(input.compat());
+        let stream = stream_messages(input);
         futures::executor::block_on_stream(stream).into_iter()
     }
 }

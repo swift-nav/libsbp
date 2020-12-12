@@ -3,9 +3,11 @@ pub use json::{json2json, json2sbp, sbp2json, CompactFormatter, HaskellishFloatF
 
 pub(crate) mod sbp {
     use bytes::{Buf, BufMut, BytesMut};
-    use futures::stream::Stream;
-    use tokio::io::{AsyncRead, AsyncWrite};
-    use tokio_util::codec::{Decoder, Encoder, FramedRead, FramedWrite};
+    use futures::{
+        io::{AsyncRead, AsyncWrite},
+        stream::Stream,
+    };
+    use futures_codec::{Decoder, Encoder, FramedRead, FramedWrite};
 
     use crate::{
         messages::{SBPMessage, SBP},
@@ -16,14 +18,14 @@ pub(crate) mod sbp {
     const MAX_FRAME_LENGTH: usize =
         crate::MSG_HEADER_LEN + crate::SBP_MAX_PAYLOAD_SIZE + crate::MSG_CRC_LEN;
 
-    pub fn stream_messages<R: AsyncRead>(input: R) -> impl Stream<Item = Result<SBP>> {
+    pub fn stream_messages<R: AsyncRead + Unpin>(input: R) -> impl Stream<Item = Result<SBP>> {
         SbpDecoder::decode_reader(input)
     }
 
     pub struct SbpDecoder {}
 
     impl SbpDecoder {
-        pub fn decode_reader<R: AsyncRead>(input: R) -> FramedRead<R, SbpDecoder> {
+        pub fn decode_reader<R: AsyncRead + Unpin>(input: R) -> FramedRead<R, SbpDecoder> {
             FramedRead::new(input, SbpDecoder {})
         }
     }
@@ -52,10 +54,12 @@ pub(crate) mod sbp {
         }
 
         fn decode_eof(&mut self, buf: &mut BytesMut) -> Result<Option<Self::Item>> {
-            match self.decode(buf) {
+            let res = match self.decode(buf) {
                 Ok(Some(frame)) => Ok(Some(frame)),
                 _ => Ok(None),
-            }
+            };
+            buf.clear();
+            res
         }
     }
 
@@ -74,7 +78,8 @@ pub(crate) mod sbp {
         }
     }
 
-    impl Encoder<SBP> for SbpEncoder {
+    impl Encoder for SbpEncoder {
+        type Item = SBP;
         type Error = Error;
 
         fn encode(&mut self, msg: SBP, dst: &mut BytesMut) -> Result<()> {
@@ -90,14 +95,16 @@ pub(crate) mod sbp {
 
 #[cfg(feature = "json")]
 pub(crate) mod json {
-    use std::collections::HashMap;
+    use std::{borrow::Cow, collections::HashMap};
 
-    use bytes::{Buf, BufMut, BytesMut};
-    use futures::stream::{Stream, StreamExt};
+    use bytes::{buf::BufMutExt, Buf, BufMut, BytesMut};
+    use futures::{
+        io::{AsyncRead, AsyncWrite},
+        stream::{Stream, StreamExt},
+    };
+    use futures_codec::{Decoder, Encoder, FramedRead, FramedWrite};
     use serde::{de::DeserializeOwned, Deserialize, Serialize};
     use serde_json::{ser::Formatter, Deserializer, Serializer, Value};
-    use tokio::io::{AsyncRead, AsyncWrite};
-    use tokio_util::codec::{Decoder, Encoder, FramedRead, FramedWrite};
 
     pub use serde_json::ser::CompactFormatter;
 
@@ -116,7 +123,7 @@ pub(crate) mod json {
     pub async fn json2sbp<R, W>(input: R, output: W) -> Result<()>
     where
         R: AsyncRead + Unpin,
-        W: AsyncWrite,
+        W: AsyncWrite + Unpin,
     {
         let source = JsonDecoder::decode_reader(input);
         let sink = super::sbp::SbpEncoder::encode_writer(output);
@@ -126,18 +133,18 @@ pub(crate) mod json {
     pub async fn json2json<R, W, F>(input: R, output: W, formatter: F) -> Result<()>
     where
         R: AsyncRead + Unpin,
-        W: AsyncWrite,
+        W: AsyncWrite + Unpin,
         F: Formatter + Clone,
     {
         let source = Json2JsonDecoder::decode_reader(input);
-        let sink = JsonEncoder::encode_writer(output, formatter);
+        let sink = Json2JsonEncoder::encode_writer(output, formatter);
         source.forward(sink).await
     }
 
     pub async fn sbp2json<R, W, F>(input: R, output: W, formatter: F) -> Result<()>
     where
-        R: AsyncRead,
-        W: AsyncWrite,
+        R: AsyncRead + Unpin,
+        W: AsyncWrite + Unpin,
         F: Formatter + Clone,
     {
         let source = super::sbp::SbpDecoder::decode_reader(input);
@@ -262,7 +269,7 @@ pub(crate) mod json {
         crc: u16,
         length: u8,
         msg_type: u16,
-        payload: &'a str,
+        payload: Cow<'a, str>,
         preamble: u8,
         sender: u16,
     }
@@ -289,40 +296,6 @@ pub(crate) mod json {
                 },
             )
         }
-
-        fn get_common_fields(&mut self, msg: &SBP) -> Result<CommonJson> {
-            self.payload_buf.clear();
-            self.frame_buf.clear();
-
-            let length = msg.sbp_size();
-
-            msg.write_frame(&mut self.frame_buf)?;
-
-            let crc = {
-                let crc_b0 = self.frame_buf[crate::MSG_HEADER_LEN + length
-                    ..crate::MSG_HEADER_LEN + length + crate::MSG_CRC_LEN][0]
-                    as u16;
-                let crc_b1 = self.frame_buf[crate::MSG_HEADER_LEN + length
-                    ..crate::MSG_HEADER_LEN + length + crate::MSG_CRC_LEN][1]
-                    as u16;
-                (crc_b1 << 8) | crc_b0
-            };
-
-            base64::encode_config_buf(
-                &self.frame_buf[crate::MSG_HEADER_LEN..crate::MSG_HEADER_LEN + length],
-                base64::STANDARD,
-                &mut self.payload_buf,
-            );
-
-            Ok(CommonJson {
-                preamble: 0x55,
-                sender: msg.get_sender_id().unwrap_or(0),
-                msg_type: msg.get_message_type(),
-                length: length as u8,
-                payload: &self.payload_buf,
-                crc,
-            })
-        }
     }
 
     #[derive(Debug, Serialize)]
@@ -334,12 +307,13 @@ pub(crate) mod json {
         msg: SBP,
     }
 
-    impl<F: Formatter + Clone> Encoder<SBP> for JsonEncoder<F> {
+    impl<F: Formatter + Clone> Encoder for JsonEncoder<F> {
+        type Item = SBP;
         type Error = Error;
 
         fn encode(&mut self, msg: SBP, dst: &mut BytesMut) -> Result<()> {
             let formatter = self.formatter.clone();
-            let common = self.get_common_fields(&msg)?;
+            let common = get_common_fields(&mut self.payload_buf, &mut self.frame_buf, &msg)?;
             let output = JsonOutput { common, msg };
 
             let mut ser = Serializer::with_formatter(dst.writer(), formatter);
@@ -358,7 +332,32 @@ pub(crate) mod json {
         other: HashMap<String, Value>,
     }
 
-    impl<F: Formatter + Clone> Encoder<Json2JsonInput> for JsonEncoder<F> {
+    struct Json2JsonEncoder<F> {
+        payload_buf: String,
+        frame_buf: Vec<u8>,
+        formatter: F,
+    }
+
+    impl<F: Formatter + Clone> Json2JsonEncoder<F> {
+        pub fn encode_writer<W: AsyncWrite>(
+            sink: W,
+            formatter: F,
+        ) -> FramedWrite<W, Json2JsonEncoder<F>> {
+            const BASE64_SBP_MAX_PAYLOAD_SIZE: usize = crate::SBP_MAX_PAYLOAD_SIZE / 3 * 4 + 4;
+
+            FramedWrite::new(
+                sink,
+                Json2JsonEncoder {
+                    frame_buf: Vec::with_capacity(crate::SBP_MAX_PAYLOAD_SIZE),
+                    payload_buf: String::with_capacity(BASE64_SBP_MAX_PAYLOAD_SIZE),
+                    formatter,
+                },
+            )
+        }
+    }
+
+    impl<F: Formatter + Clone> Encoder for Json2JsonEncoder<F> {
+        type Item = Json2JsonInput;
         type Error = Error;
 
         fn encode(&mut self, input: Json2JsonInput, dst: &mut BytesMut) -> Result<()> {
@@ -376,7 +375,7 @@ pub(crate) mod json {
 
             let output = Json2JsonOutput {
                 data: JsonOutput {
-                    common: self.get_common_fields(&msg)?,
+                    common: get_common_fields(&mut self.payload_buf, &mut self.frame_buf, &msg)?,
                     msg,
                 },
                 other: input.other,
@@ -388,6 +387,44 @@ pub(crate) mod json {
 
             Ok(())
         }
+    }
+
+    fn get_common_fields<'a>(
+        payload_buf: &'a mut String,
+        frame_buf: &'a mut Vec<u8>,
+        msg: &SBP,
+    ) -> Result<CommonJson<'a>> {
+        payload_buf.clear();
+        frame_buf.clear();
+
+        let length = msg.sbp_size();
+
+        msg.write_frame(frame_buf)?;
+
+        let crc = {
+            let crc_b0 = frame_buf[crate::MSG_HEADER_LEN + length
+                ..crate::MSG_HEADER_LEN + length + crate::MSG_CRC_LEN][0]
+                as u16;
+            let crc_b1 = frame_buf[crate::MSG_HEADER_LEN + length
+                ..crate::MSG_HEADER_LEN + length + crate::MSG_CRC_LEN][1]
+                as u16;
+            (crc_b1 << 8) | crc_b0
+        };
+
+        base64::encode_config_buf(
+            &frame_buf[crate::MSG_HEADER_LEN..crate::MSG_HEADER_LEN + length],
+            base64::STANDARD,
+            payload_buf,
+        );
+
+        Ok(CommonJson {
+            preamble: 0x55,
+            sender: msg.get_sender_id().unwrap_or(0),
+            msg_type: msg.get_message_type(),
+            length: length as u8,
+            payload: Cow::Borrowed(payload_buf),
+            crc,
+        })
     }
 
     /// Provide Haskell style formatting. Output should be similar to: https://hackage.haskell.org/package/base-4.8.2.0/docs/Numeric.html#v:showFloat
