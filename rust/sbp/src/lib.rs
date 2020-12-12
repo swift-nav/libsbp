@@ -24,7 +24,6 @@ pub const SBP_MAX_PAYLOAD_SIZE: usize = 255;
 pub const MSG_HEADER_LEN: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/ + 1 /*len*/;
 pub const MSG_CRC_LEN: usize = 2;
 
-
 pub use crate::codec::sbp::stream_messages;
 
 #[cfg(feature = "blocking")]
@@ -38,16 +37,9 @@ pub fn iter_messages<R: std::io::Read>(input: R) -> impl Iterator<Item = Result<
 
 #[cfg(feature = "json")]
 pub mod json {
-    use futures::Stream;
-    use tokio::io::AsyncRead;
+    use crate::{messages::SBP, Result};
 
-    use crate::{codec::json::JsonDecoder, messages::SBP, Result};
-
-    pub fn stream_messages<R: AsyncRead + Unpin>(
-        src: R,
-    ) -> impl Stream<Item = Result<SBP>> + Unpin {
-        JsonDecoder::decode_reader(src)
-    }
+    pub use crate::codec::json::stream_messages;
 
     #[cfg(feature = "blocking")]
     pub fn iter_messages<R: std::io::Read>(input: R) -> impl Iterator<Item = Result<SBP>> {

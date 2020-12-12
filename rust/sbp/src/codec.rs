@@ -93,7 +93,7 @@ pub(crate) mod json {
     use std::collections::HashMap;
 
     use bytes::{Buf, BufMut, BytesMut};
-    use futures::StreamExt;
+    use futures::stream::{Stream, StreamExt};
     use serde::{de::DeserializeOwned, Deserialize, Serialize};
     use serde_json::{ser::Formatter, Deserializer, Serializer, Value};
     use tokio::io::{AsyncRead, AsyncWrite};
@@ -106,6 +106,12 @@ pub(crate) mod json {
         serialize::SbpSerialize,
         Error, Result,
     };
+
+    pub fn stream_messages<R: AsyncRead + Unpin>(
+        src: R,
+    ) -> impl Stream<Item = Result<SBP>> + Unpin {
+        JsonDecoder::decode_reader(src)
+    }
 
     pub async fn json2sbp<R, W>(input: R, output: W) -> Result<()>
     where
