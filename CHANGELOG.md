@@ -1,5 +1,43 @@
 # Change Log
 
+## [v3.4.5](https://github.com/swift-nav/libsbp/tree/v3.4.5) (2020-12-12)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.4...v3.4.5)
+
+**Merged pull requests:**
+
+- docker: update docs for most recent tag \[INFRA-333\] [\#891](https://github.com/swift-nav/libsbp/pull/891)
+- Bump ini from 1.3.5 to 1.3.7 [\#890](https://github.com/swift-nav/libsbp/pull/890)
+- Add environment markers to requirements.txt [\#889](https://github.com/swift-nav/libsbp/pull/889)
+- Add B2a to list of signals available in MSG\_OBS [\#886](https://github.com/swift-nav/libsbp/pull/886)
+- Clean up Rust parser implementation [\#883](https://github.com/swift-nav/libsbp/pull/883)
+- \[SEN-466\] new flags for fixed fuzed rate [\#880](https://github.com/swift-nav/libsbp/pull/880)
+- Auto submodule update: cmake - Disable pal test libs by default \(\#70\) [\#879](https://github.com/swift-nav/libsbp/pull/879)
+- Bump check submodule [\#878](https://github.com/swift-nav/libsbp/pull/878)
+- Specify that 0xFFFF is used to indicate invalid PDOP/HDOP/VDOP [\#877](https://github.com/swift-nav/libsbp/pull/877)
+- Dzollo/vehicle metadata flags [\#876](https://github.com/swift-nav/libsbp/pull/876)
+- \[SEN-456\] Update documentation for week rollover on odometry message timestamps [\#875](https://github.com/swift-nav/libsbp/pull/875)
+- Revert "odometry: add flags for fwd, park and reverse" [\#874](https://github.com/swift-nav/libsbp/pull/874)
+- update sol in default sensor type \[SEN-448\] [\#873](https://github.com/swift-nav/libsbp/pull/873)
+- odometry: add flags for fwd, park and reverse [\#872](https://github.com/swift-nav/libsbp/pull/872)
+
+## [v3.4.4](https://github.com/swift-nav/libsbp/tree/v3.4.4) (2020-10-12)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.3...v3.4.4)
+
+## [v3.4.3](https://github.com/swift-nav/libsbp/tree/v3.4.3) (2020-10-12)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.2...v3.4.3)
+
+**Merged pull requests:**
+
+- Guillaume/sen 444/change age gnss type in solnmeta [\#871](https://github.com/swift-nav/libsbp/pull/871)
+- Per graphic design rec., switch to Roboto [\#870](https://github.com/swift-nav/libsbp/pull/870)
+- Auto submodule update: cmake - Add possibility to log total memory from profiling tools into a file [\#865](https://github.com/swift-nav/libsbp/pull/865)
+- \[SR-146\] Updates to solution meta message [\#864](https://github.com/swift-nav/libsbp/pull/864)
+- Auto submodule update: cmake - Starling third party fix \(\#65\) [\#861](https://github.com/swift-nav/libsbp/pull/861)
+- Fix example SBP message in SBP Specification [\#860](https://github.com/swift-nav/libsbp/pull/860)
+
 ## [v3.4.2](https://github.com/swift-nav/libsbp/tree/v3.4.2) (2020-09-22)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.1...v3.4.2)
