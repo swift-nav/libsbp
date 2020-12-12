@@ -47,6 +47,7 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+short_py_pretty.json
 
 # Translations
 *.mo
@@ -68,6 +69,7 @@ sbp_out.*
 # Haskell
 .stack-work/
 .build/
+stack.yaml.lock
 
 # rust
 Cargo.lock
