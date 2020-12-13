@@ -1,7 +1,7 @@
 #[cfg(feature = "json")]
 pub use json::{json2json, json2sbp, sbp2json, CompactFormatter, HaskellishFloatFormatter};
 
-pub(crate) mod sbp {
+pub mod sbp {
     use bytes::{Buf, BufMut, BytesMut};
     use futures::{
         io::{AsyncRead, AsyncWrite},
@@ -94,7 +94,7 @@ pub(crate) mod sbp {
 }
 
 #[cfg(feature = "json")]
-pub(crate) mod json {
+pub mod json {
     use std::{borrow::Cow, collections::HashMap};
 
     use bytes::{buf::BufMutExt, Buf, BufMut, BytesMut};
