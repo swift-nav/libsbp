@@ -95,7 +95,7 @@ pub mod sbp {
 
 #[cfg(feature = "json")]
 pub mod json {
-    use std::{borrow::Cow, collections::HashMap};
+    use std::collections::HashMap;
 
     use bytes::{buf::BufMutExt, Buf, BufMut, BytesMut};
     use futures::{
@@ -107,6 +107,8 @@ pub mod json {
     use serde_json::{ser::Formatter, Deserializer, Serializer, Value};
 
     pub use serde_json::ser::CompactFormatter;
+
+    const BASE64_SBP_MAX_PAYLOAD_SIZE: usize = crate::SBP_MAX_PAYLOAD_SIZE / 3 * 4 + 4;
 
     use crate::{
         messages::{SBPMessage, SBP},
@@ -269,7 +271,7 @@ pub mod json {
         crc: u16,
         length: u8,
         msg_type: u16,
-        payload: Cow<'a, str>,
+        payload: &'a str,
         preamble: u8,
         sender: u16,
     }
@@ -285,8 +287,6 @@ pub mod json {
             sink: W,
             formatter: F,
         ) -> FramedWrite<W, JsonEncoder<F>> {
-            const BASE64_SBP_MAX_PAYLOAD_SIZE: usize = crate::SBP_MAX_PAYLOAD_SIZE / 3 * 4 + 4;
-
             FramedWrite::new(
                 sink,
                 JsonEncoder {
@@ -343,8 +343,6 @@ pub mod json {
             sink: W,
             formatter: F,
         ) -> FramedWrite<W, Json2JsonEncoder<F>> {
-            const BASE64_SBP_MAX_PAYLOAD_SIZE: usize = crate::SBP_MAX_PAYLOAD_SIZE / 3 * 4 + 4;
-
             FramedWrite::new(
                 sink,
                 Json2JsonEncoder {
@@ -422,7 +420,7 @@ pub mod json {
             sender: msg.get_sender_id().unwrap_or(0),
             msg_type: msg.get_message_type(),
             length: length as u8,
-            payload: Cow::Borrowed(payload_buf),
+            payload: payload_buf,
             crc,
         })
     }
