@@ -1,3 +1,1 @@
 setuptools==41.0.1
-numba==0.47
-llvmlite==0.31.0

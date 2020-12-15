@@ -8,21 +8,16 @@ import platform
 import tempfile
 import subprocess
 
-ALL_PY_VERSIONS = ["3.5", "3.6", "3.7", "3.8"]
+ALL_PY_VERSIONS = ["3.6", "3.7", "3.8", "3.9"]
 
 SKIP_PY_VERS = os.environ.get("SKIP_PY_VERS", "").split(",") 
 
-if 'PYPI_USERNAME' not in os.environ:
-    print("\n!!! Please set PYPI_USERNAME in the environment !!!\n\n")
+if 'PYPI_USERNAME' not in os.environ or 'PYPI_PASSWORD' not in os.environ:
+    print("\n>>> WARNING: set PYPI_USERNAME and PYPI_PASSWORD to push to PyPI\n\n")
     sys.exit(1)
 
-PYPI_USERNAME = os.environ['PYPI_USERNAME']
-
-if 'PYPI_PASSWORD' not in os.environ:
-    print("\n!!! Please set PYPI_PASSWORD in the environment !!!\n\n")
-    sys.exit(1)
-
-PYPI_PASSWORD = os.environ['PYPI_PASSWORD']
+PYPI_USERNAME = os.environ.get('PYPI_USERNAME', None)
+PYPI_PASSWORD = os.environ.get('PYPI_PASSWORD', None)
 
 if 'SBP_VERSION' not in os.environ:
     print("\n!!! Please set SBP_VERSION in the environment !!!\n\n")
@@ -61,15 +56,18 @@ def twine_upload(conda_dir, wheel, py_version="3.7", use_conda=True):
     else:
         raise RuntimeError("Unsupported Python version: {} (platform: {})".format(py_version, platform.machine()))
 
-    invoke = subprocess.check_call if not USE_TEST_PYPI else subprocess.call
-    ret = invoke(cmd_prefix + [
-        "twine", "upload", "-u", PYPI_USERNAME, "-p", PYPI_PASSWORD] + ([
-        "--repository-url", "https://test.pypi.org/legacy/"]
-            if USE_TEST_PYPI else []
-        ) + [wheel])
+    if PYPI_USERNAME is not None and PYPI_PASSWORD is not None:
+        invoke = subprocess.check_call if not USE_TEST_PYPI else subprocess.call
+        ret = invoke(cmd_prefix + [
+            "twine", "upload", "-u", PYPI_USERNAME, "-p", PYPI_PASSWORD] + ([
+            "--repository-url", "https://test.pypi.org/legacy/"]
+                if USE_TEST_PYPI else []
+            ) + [wheel])
+    else:
+        print(">>> WARNING: not pushing to PyPI (one of PYPI_USERNAME or PYPI_PASSWORD was empty)")
 
     if USE_TEST_PYPI and ret != 0:
-        print(">>> Warning: twine upload returned exit code {}".format(ret))
+        print(">>> WARNING: twine upload returned exit code {}".format(ret))
 
 
 def build_wheel_native(conda_dir, deploy_dir, py_version):
@@ -101,7 +99,7 @@ def build_wheel_native(conda_dir, deploy_dir, py_version):
     ])
     subprocess.check_call([
         python, "-m",
-        "pip", "install", "twine", "numpy", "cython", "wheel", "setuptools"
+        "pip", "install", "twine", "numpy~=1.19", "numba==0.47", "llvmlite==0.31", "cython", "wheel", "setuptools"
     ])
 
     print(">>> Installing setup deps in Python {} environment...".format(py_version))
@@ -238,7 +236,7 @@ def build_wheel_conda(conda_dir, deploy_dir, py_version):
     ])
     subprocess.check_call([
         "conda", "run", "-p", conda_dir] + DASHDASH + [
-        "python", "-m", "pip", "install", "twine", "numpy"
+        "python", "-m", "pip", "install", "twine", "numpy~=1.19", "numba==0.47", "llvmlite==0.31"
     ])
 
     if platform.system() == "Linux" and platform.machine().startswith("x86"):
@@ -251,7 +249,7 @@ def build_wheel_conda(conda_dir, deploy_dir, py_version):
 
     subprocess.check_call([
         "conda", "run", "-p", conda_dir] + DASHDASH + [
-        "python", "-m", "pip", "install", "--ignore-installed", 
+        "python", "-m", "pip", "install",
         "-r", "setup_requirements.txt",
         "-r", "test_requirements.txt",
     ])
@@ -260,7 +258,7 @@ def build_wheel_conda(conda_dir, deploy_dir, py_version):
 
     subprocess.check_call([
         "conda", "run", "-p", conda_dir] + DASHDASH + [
-        "python", "-m", "pip", "install", "--ignore-installed", 
+        "python", "-m", "pip", "install",
         "-r", "requirements{}.txt".format(suffix),
         "-r", "setup_requirements{}.txt".format(suffix),
     ])
