@@ -216,5 +216,6 @@ if __name__ == "__main__":
         ext_modules=ext_modules,
         scripts=['bin/sbp2json'],
         extras_require={
-          'jit': ['numpy~=1.19', 'numba==0.47', 'llvmlite==0.31', 'pybase64', 'python-rapidjson~=1.0']
+          'jit': ['numpy~=1.19', 'numba==0.47', 'llvmlite==0.31', 'pybase64', 'python-rapidjson~=1.0'],
+          'aot': ['numpy~=1.19', 'pybase64', 'python-rapidjson~=1.0']
         })
