@@ -201,7 +201,7 @@ def sbp_main(args):
         read_offset += read_length
         buffer_remaining -= read_length
         while True:
-            if not SBP_NO_JIT:
+            if SBP_NO_JIT:
                 from construct.core import StreamError
                 bytes_available = read_offset - unconsumed_offset
                 b = buf[unconsumed_offset:(unconsumed_offset + bytes_available)]
