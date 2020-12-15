@@ -80,18 +80,16 @@ def build_wheel_native(conda_dir, deploy_dir, py_version):
     if py_version not in ALL_PY_VERSIONS:
         raise RuntimeError("Unsupported Python version")
 
+    if not py_version.startswith("3."):
+        raise RuntimeError("Unsupported Python version")
+
     python = "{}/bin/python{}".format(py_version_prefix, py_version_suffix)
 
     subprocess.check_call(["apt-get", "update"])
 
-    if py_version.startswith("3."):
-        subprocess.check_call(["apt-get", "install", "-y",
-            "python3", "python3-pip", "python3-dev", "python3-setuptools"
-        ])
-    else:
-        subprocess.check_call(["apt-get", "install", "-y",
-            "python", "python-pip", "python-dev", "python-setuptools"
-        ])
+    subprocess.check_call(["apt-get", "install", "-y",
+        "python3", "python3-pip", "python3-dev", "python3-setuptools"
+    ])
     
     subprocess.check_call([
         python, "-m",
