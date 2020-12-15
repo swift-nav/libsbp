@@ -10,7 +10,7 @@ from sbp.msg import SBP_PREAMBLE
 from sbp import msg as msg_nojit
 from sbp.table import dispatch as dispatch_nojit
 
-SBP_NO_JIT = os.environ.get('SBP_NO_JIT') is not None
+SBP_NO_JIT = os.environ.get('SBP_NO_JIT', False)
 
 if not SBP_NO_JIT:
     try:
