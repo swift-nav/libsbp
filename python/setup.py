@@ -204,7 +204,7 @@ if __name__ == "__main__":
         description='Python bindings for Swift Binary Protocol',
         long_description=readme,
         author='Swift Navigation',
-        author_email='dev@swiftnav.com',
+        author_email='dev@swift-nav.com',
         url='https://github.com/swift-nav/libsbp',
         classifiers=CLASSIFIERS,
         packages=PACKAGES,

@@ -53,7 +53,7 @@ def base_cl_options():
                         default=sys.stdin, help="the input file, stdin by default")
 
     group_json = parser.add_argument_group('json specific arguments')
-    if HAS_NUMPY:
+    if HAS_NUMPY and sys.version_info[0] >= 3:
         group_json.add_argument(
             "--judicious-rounding",
             action="store_true",
@@ -73,13 +73,8 @@ def get_args():
     parser = base_cl_options()
     args = parser.parse_args()
 
-    if args.mode == 'rapidjson' and len(sys.argv) > 3:
+    if args.mode == 'rapidjson' and getattr(args, 'judicious_rounding', False):
         print('ERROR: rapidjson mode does not support given arguments', file=sys.stderr)
-        parser.print_help()
-        return None
-
-    if args.judicious_rounding and sys.version_info[0] < 3:
-        print('ERROR: Must be using Python 3.6 or newer for --judicious-rounding', file=sys.stderr)
         parser.print_help()
         return None
 
@@ -157,7 +152,7 @@ def get_jsonable(res):
 
 def dump(args, res):
     if 'json' == args.mode:
-        if args.judicious_rounding:
+        if getattr(args, 'judicious_rounding', False):
             assert not NONUMPY, "The 'numpy' package is required for the --judicious-rounding option"
             encoder_cls=SbpJSONEncoder
         else:
@@ -177,7 +172,7 @@ def configure_judicious_rounding(args):
         _m = msg
     except NameError:
         _m = msg_nojit
-    _m.SBP.judicious_rounding = args.judicious_rounding
+    _m.SBP.judicious_rounding = getattr(args, 'judicious_rounding', False)
 
 
 def sbp_main(args):
