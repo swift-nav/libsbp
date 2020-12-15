@@ -153,7 +153,7 @@ def get_jsonable(res):
 def dump(args, res):
     if 'json' == args.mode:
         if getattr(args, 'judicious_rounding', False):
-            assert not NONUMPY, "The 'numpy' package is required for the --judicious-rounding option"
+            assert HAS_NUMPY, "The 'numpy' package is required for the --judicious-rounding option"
             encoder_cls=SbpJSONEncoder
         else:
             encoder_cls=None

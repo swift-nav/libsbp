@@ -95,6 +95,8 @@ def build_wheel_native(conda_dir, deploy_dir, py_version):
         python, "-m",
         "pip", "install", "--upgrade", "pip"
     ])
+
+    # TODO: see if it's possible to pin a specific version of numpy for windows
     subprocess.check_call([
         python, "-m",
         "pip", "install", "twine", "numpy~=1.19", "numba==0.47", "llvmlite==0.31", "cython", "wheel", "setuptools"
