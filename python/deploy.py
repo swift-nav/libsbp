@@ -8,7 +8,7 @@ import platform
 import tempfile
 import subprocess
 
-ALL_PY_VERSIONS = ["3.6", "3.7", "3.8", "3.9"]
+ALL_PY_VERSIONS = ["3.6", "3.7", "3.8"]
 
 SKIP_PY_VERS = os.environ.get("SKIP_PY_VERS", "").split(",") 
 
