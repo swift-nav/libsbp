@@ -12,11 +12,12 @@ from sbp.table import dispatch as dispatch_nojit
 
 SBP_NO_JIT = os.environ.get('SBP_NO_JIT') is not None
 
-try:
-    from sbp.jit import msg
-    from sbp.jit.table import dispatch
-except ImportError:
-    SBP_NO_JIT = True
+if not SBP_NO_JIT:
+    try:
+        from sbp.jit import msg
+        from sbp.jit.table import dispatch
+    except ImportError:
+        SBP_NO_JIT = True
 
 try:
     import numpy as np
