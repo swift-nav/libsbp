@@ -1,13 +1,28 @@
+mod decoder;
+use decoder::Decoder;
+
+mod encoder;
+use encoder::Encoder;
+
+cfg_blocking! {
+    mod blocking;
+}
+
+cfg_async! {
+    mod framed_read;
+    use framed_read::FramedRead;
+
+    mod framed_write;
+    use framed_write::FramedWrite;
+
+    mod fuse;
+}
+
 #[cfg(feature = "json")]
 pub use json::{json2json, json2sbp, sbp2json, CompactFormatter, HaskellishFloatFormatter};
 
 pub mod sbp {
     use bytes::{Buf, BufMut, BytesMut};
-    use futures::{
-        io::{AsyncRead, AsyncWrite},
-        stream::Stream,
-    };
-    use futures_codec::{Decoder, Encoder, FramedRead, FramedWrite};
 
     use crate::{
         messages::{SBPMessage, SBP},
@@ -15,18 +30,40 @@ pub mod sbp {
         Error, Result,
     };
 
+    use super::{Decoder, Encoder};
+
     const MAX_FRAME_LENGTH: usize =
         crate::MSG_HEADER_LEN + crate::SBP_MAX_PAYLOAD_SIZE + crate::MSG_CRC_LEN;
 
-    pub fn stream_messages<R: AsyncRead + Unpin>(input: R) -> impl Stream<Item = Result<SBP>> {
-        SbpDecoder::decode_reader(input)
-    }
-
     pub struct SbpDecoder {}
 
-    impl SbpDecoder {
-        pub fn decode_reader<R: AsyncRead + Unpin>(input: R) -> FramedRead<R, SbpDecoder> {
-            FramedRead::new(input, SbpDecoder {})
+    cfg_blocking! {
+        pub fn iter_messages<R: std::io::Read>(input: R) -> impl Iterator<Item = Result<SBP>> {
+            SbpDecoder::decode_reader(input)
+        }
+
+        impl SbpDecoder {
+            pub fn decode_reader<R: std::io::Read>(
+                input: R,
+            ) -> super::blocking::FramedRead<R, SbpDecoder> {
+                super::blocking::FramedRead::new(input, SbpDecoder {})
+            }
+        }
+    }
+
+    cfg_async! {
+        pub fn stream_messages<R: futures::io::AsyncRead + Unpin>(
+            input: R,
+        ) -> impl futures::Stream<Item = Result<SBP>> {
+            SbpDecoder::decode_reader_async(input)
+        }
+
+        impl SbpDecoder {
+            pub fn decode_reader_async<R: futures::io::AsyncRead>(
+                input: R,
+            ) -> super::FramedRead<R, SbpDecoder> {
+                super::FramedRead::new(input, SbpDecoder {})
+            }
         }
     }
 
@@ -67,14 +104,18 @@ pub mod sbp {
         frame: Vec<u8>,
     }
 
-    impl SbpEncoder {
-        pub fn encode_writer<W: AsyncWrite>(writer: W) -> FramedWrite<W, SbpEncoder> {
-            FramedWrite::new(
-                writer,
-                SbpEncoder {
-                    frame: Vec::with_capacity(MAX_FRAME_LENGTH),
-                },
-            )
+    cfg_async! {
+        impl SbpEncoder {
+            pub fn encode_writer_async<W: futures::io::AsyncWrite>(
+                writer: W,
+            ) -> super::FramedWrite<W, SbpEncoder> {
+                super::FramedWrite::new(
+                    writer,
+                    SbpEncoder {
+                        frame: Vec::with_capacity(MAX_FRAME_LENGTH),
+                    },
+                )
+            }
         }
     }
 
@@ -97,14 +138,26 @@ pub mod sbp {
 pub mod json {
     use std::collections::HashMap;
 
-    use bytes::{buf::BufMutExt, Buf, BufMut, BytesMut};
-    use futures::{
-        io::{AsyncRead, AsyncWrite},
-        stream::{Stream, StreamExt},
-    };
-    use futures_codec::{Decoder, Encoder, FramedRead, FramedWrite};
+    use bytes::{Buf, BufMut, BytesMut};
     use serde::{de::DeserializeOwned, Deserialize, Serialize};
     use serde_json::{ser::Formatter, Deserializer, Serializer, Value};
+
+    use super::{Decoder, Encoder};
+
+    cfg_blocking! {
+        use std::io::Read;
+
+        use super::blocking;
+    }
+
+    cfg_async! {
+        use futures::{
+            io::{AsyncRead, AsyncWrite},
+            stream::{Stream, StreamExt},
+        };
+
+        use super::{FramedRead, FramedWrite};
+    }
 
     pub use serde_json::ser::CompactFormatter;
 
@@ -116,42 +169,50 @@ pub mod json {
         Error, Result,
     };
 
-    pub fn stream_messages<R: AsyncRead + Unpin>(
-        src: R,
-    ) -> impl Stream<Item = Result<SBP>> + Unpin {
-        JsonDecoder::decode_reader(src)
+    cfg_blocking! {
+        pub fn iter_messages<R: std::io::Read>(input: R) -> impl Iterator<Item = Result<SBP>> {
+            JsonDecoder::decode_reader(input)
+        }
     }
 
-    pub async fn json2sbp<R, W>(input: R, output: W) -> Result<()>
-    where
-        R: AsyncRead + Unpin,
-        W: AsyncWrite + Unpin,
-    {
-        let source = JsonDecoder::decode_reader(input);
-        let sink = super::sbp::SbpEncoder::encode_writer(output);
-        source.forward(sink).await
-    }
+    cfg_async! {
+        pub fn stream_messages<R: AsyncRead + Unpin>(
+            src: R,
+        ) -> impl Stream<Item = Result<SBP>> + Unpin {
+            JsonDecoder::decode_reader_async(src)
+        }
 
-    pub async fn json2json<R, W, F>(input: R, output: W, formatter: F) -> Result<()>
-    where
-        R: AsyncRead + Unpin,
-        W: AsyncWrite + Unpin,
-        F: Formatter + Clone,
-    {
-        let source = Json2JsonDecoder::decode_reader(input);
-        let sink = Json2JsonEncoder::encode_writer(output, formatter);
-        source.forward(sink).await
-    }
+        pub async fn json2sbp<R, W>(input: R, output: W) -> Result<()>
+        where
+            R: AsyncRead + Unpin,
+            W: AsyncWrite + Unpin,
+        {
+            let source = JsonDecoder::decode_reader_async(input);
+            let sink = super::sbp::SbpEncoder::encode_writer_async(output);
+            source.forward(sink).await
+        }
 
-    pub async fn sbp2json<R, W, F>(input: R, output: W, formatter: F) -> Result<()>
-    where
-        R: AsyncRead + Unpin,
-        W: AsyncWrite + Unpin,
-        F: Formatter + Clone,
-    {
-        let source = super::sbp::SbpDecoder::decode_reader(input);
-        let sink = JsonEncoder::encode_writer(output, formatter);
-        source.forward(sink).await
+        pub async fn json2json<R, W, F>(input: R, output: W, formatter: F) -> Result<()>
+        where
+            R: AsyncRead + Unpin,
+            W: AsyncWrite + Unpin,
+            F: Formatter + Clone,
+        {
+            let source = Json2JsonDecoder::decode_reader_async(input);
+            let sink = Json2JsonEncoder::encode_writer_async(output, formatter);
+            source.forward(sink).await
+        }
+
+        pub async fn sbp2json<R, W, F>(input: R, output: W, formatter: F) -> Result<()>
+        where
+            R: AsyncRead + Unpin,
+            W: AsyncWrite + Unpin,
+            F: Formatter + Clone,
+        {
+            let source = super::sbp::SbpDecoder::decode_reader_async(input);
+            let sink = JsonEncoder::encode_writer_async(output, formatter);
+            source.forward(sink).await
+        }
     }
 
     #[derive(Debug, Deserialize)]
@@ -181,15 +242,6 @@ pub mod json {
     }
 
     impl JsonDecoder {
-        pub fn decode_reader<R: AsyncRead>(input: R) -> FramedRead<R, JsonDecoder> {
-            FramedRead::new(
-                input,
-                JsonDecoder {
-                    payload_buf: Vec::with_capacity(crate::SBP_MAX_PAYLOAD_SIZE),
-                },
-            )
-        }
-
         fn parse_json(&mut self, input: JsonInput) -> Result<SBP> {
             let data = input.into_inner();
 
@@ -201,6 +253,32 @@ pub mod json {
             let mut payload = self.payload_buf.as_slice();
 
             SBP::parse(data.msg_type, data.sender, &mut payload)
+        }
+    }
+
+    cfg_blocking! {
+        impl JsonDecoder {
+            pub fn decode_reader<R: Read>(input: R) -> blocking::FramedRead<R, JsonDecoder> {
+                blocking::FramedRead::new(
+                    input,
+                    JsonDecoder {
+                        payload_buf: Vec::with_capacity(crate::SBP_MAX_PAYLOAD_SIZE),
+                    },
+                )
+            }
+        }
+    }
+
+    cfg_async! {
+        impl JsonDecoder {
+            pub fn decode_reader_async<R: AsyncRead>(input: R) -> FramedRead<R, JsonDecoder> {
+                FramedRead::new(
+                    input,
+                    JsonDecoder {
+                        payload_buf: Vec::with_capacity(crate::SBP_MAX_PAYLOAD_SIZE),
+                    },
+                )
+            }
         }
     }
 
@@ -237,9 +315,11 @@ pub mod json {
 
     struct Json2JsonDecoder {}
 
-    impl Json2JsonDecoder {
-        pub fn decode_reader<R: AsyncRead>(input: R) -> FramedRead<R, Json2JsonDecoder> {
-            FramedRead::new(input, Json2JsonDecoder {})
+    cfg_async! {
+        impl Json2JsonDecoder {
+            pub fn decode_reader_async<R: AsyncRead>(input: R) -> FramedRead<R, Json2JsonDecoder> {
+                FramedRead::new(input, Json2JsonDecoder {})
+            }
         }
     }
 
@@ -282,19 +362,21 @@ pub mod json {
         formatter: F,
     }
 
-    impl<F: Formatter + Clone> JsonEncoder<F> {
-        pub fn encode_writer<W: AsyncWrite>(
-            sink: W,
-            formatter: F,
-        ) -> FramedWrite<W, JsonEncoder<F>> {
-            FramedWrite::new(
-                sink,
-                JsonEncoder {
-                    frame_buf: Vec::with_capacity(crate::SBP_MAX_PAYLOAD_SIZE),
-                    payload_buf: String::with_capacity(BASE64_SBP_MAX_PAYLOAD_SIZE),
-                    formatter,
-                },
-            )
+    cfg_async! {
+        impl<F: Formatter + Clone> JsonEncoder<F> {
+            pub fn encode_writer_async<W: AsyncWrite>(
+                sink: W,
+                formatter: F,
+            ) -> FramedWrite<W, JsonEncoder<F>> {
+                FramedWrite::new(
+                    sink,
+                    JsonEncoder {
+                        frame_buf: Vec::with_capacity(crate::SBP_MAX_PAYLOAD_SIZE),
+                        payload_buf: String::with_capacity(BASE64_SBP_MAX_PAYLOAD_SIZE),
+                        formatter,
+                    },
+                )
+            }
         }
     }
 
@@ -338,19 +420,21 @@ pub mod json {
         formatter: F,
     }
 
-    impl<F: Formatter + Clone> Json2JsonEncoder<F> {
-        pub fn encode_writer<W: AsyncWrite>(
-            sink: W,
-            formatter: F,
-        ) -> FramedWrite<W, Json2JsonEncoder<F>> {
-            FramedWrite::new(
-                sink,
-                Json2JsonEncoder {
-                    frame_buf: Vec::with_capacity(crate::SBP_MAX_PAYLOAD_SIZE),
-                    payload_buf: String::with_capacity(BASE64_SBP_MAX_PAYLOAD_SIZE),
-                    formatter,
-                },
-            )
+    cfg_async! {
+        impl<F: Formatter + Clone> Json2JsonEncoder<F> {
+            pub fn encode_writer_async<W: AsyncWrite>(
+                sink: W,
+                formatter: F,
+            ) -> FramedWrite<W, Json2JsonEncoder<F>> {
+                FramedWrite::new(
+                    sink,
+                    Json2JsonEncoder {
+                        frame_buf: Vec::with_capacity(crate::SBP_MAX_PAYLOAD_SIZE),
+                        payload_buf: String::with_capacity(BASE64_SBP_MAX_PAYLOAD_SIZE),
+                        formatter,
+                    },
+                )
+            }
         }
     }
 

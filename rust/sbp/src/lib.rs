@@ -2,6 +2,9 @@
 //! made by Swift Navigation. For language agnostic description of the protocol please
 //! see the protocol specification documentation at https://github.com/swift-nav/libsbp/tree/master/docs
 
+#[macro_use]
+mod cfg;
+
 pub mod codec;
 pub mod messages;
 pub(crate) mod parser;
@@ -21,28 +24,23 @@ pub const SBP_MAX_PAYLOAD_SIZE: usize = 255;
 pub const MSG_HEADER_LEN: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/ + 1 /*len*/;
 pub const MSG_CRC_LEN: usize = 2;
 
-pub use crate::codec::sbp::stream_messages;
-
-#[cfg(feature = "blocking")]
-pub fn iter_messages<R: std::io::Read>(
-    input: R,
-) -> impl Iterator<Item = Result<crate::messages::SBP>> {
-    let input = futures::io::AllowStdIo::new(input);
-    let stream = stream_messages(input);
-    futures::executor::block_on_stream(stream).into_iter()
+cfg_async! {
+    pub use crate::codec::sbp::stream_messages;
 }
 
-#[cfg(feature = "json")]
-pub mod json {
-    pub use crate::codec::json::stream_messages;
+cfg_blocking! {
+    pub use crate::codec::sbp::iter_messages;
+}
 
-    #[cfg(feature = "blocking")]
-    pub fn iter_messages<R: std::io::Read>(
-        input: R,
-    ) -> impl Iterator<Item = crate::Result<crate::messages::SBP>> {
-        let input = futures::io::AllowStdIo::new(input);
-        let stream = stream_messages(input);
-        futures::executor::block_on_stream(stream).into_iter()
+cfg_json! {
+    pub mod json {
+        cfg_async! {
+            pub use crate::codec::json::stream_messages;
+        }
+
+        cfg_blocking! {
+            pub use crate::codec::json::iter_messages;
+        }
     }
 }
 

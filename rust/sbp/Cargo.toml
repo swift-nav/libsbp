@@ -18,26 +18,29 @@ keywords = ["encoding", "parsing"]
 
 [features]
 default = ["blocking"]
+blocking = []
+async = ["futures", "pin-project-lite"]
 sbp_serde = ["serde"]
 json = ["serde_json", "serde", "base64"]
-blocking = ["futures/executor"]
 
 [lib]
 path = "src/lib.rs"
 
 [dependencies]
 byteorder = "1.2.1"
-bytes = "0.5.6"
+bytes = "0.6"
 crc16 = "*"
 enum_dispatch = "0.3.4"
-futures = { version = "0.3.8", default-features = false }
-futures_codec = "0.4.1"
 log = "0.4.11"
 nom = "6.0.1"
 thiserror = "1.0.22"
+
+futures = { version = "0.3.8", optional = true }
+pin-project-lite = { version = "0.2.0", optional = true }
+
 serde = { version = "1", features = ["derive"], optional = true }
 serde_json = { version = "1", optional = true }
-base64 = {version = "0.13", optional = true}
+base64 = { version = "0.13", optional = true }
 
 [dev-dependencies]
 serialport = "2.1.0"
