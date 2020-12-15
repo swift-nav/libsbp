@@ -28,14 +28,14 @@ import sys
 SENDER_ID = _SENDER_ID
 SBP_PREAMBLE = _SBP_PREAMBLE
 
-NOJIT = False
-NONUMPY = False
+SBP_NO_JIT = False
 
 try:
   import importlib
   import numpy as np
+  HAS_NUMPY = True
 except ImportError:
-  NONUMPY = True
+  HAS_NUMPY = False
 
 parse_jit_crc16 = None
 parse_jit = None
@@ -80,21 +80,21 @@ def no_jit_fallback():
   parse_jit_crc16 = _parse_jit_crc16
 
 
-if not NONUMPY:
+if HAS_NUMPY:
   np_crc16_tab = np.array(crc16_tab, dtype=np.uint16)
   crc_buffer = np.zeros(512, dtype=np.uint8)
   parse_jit = try_import_jit()
   if parse_jit is not None:
     parse_jit_crc16 = parse_jit.crc16jit
   else:
-    NOJIT = True
+    SBP_NO_JIT = True
     no_jit_fallback()
 else:
   no_jit_fallback()
 
 
 def crc16(s, crc=0):
-  if NONUMPY or NOJIT:
+  if not HAS_NUMPY or SBP_NO_JIT:
     return crc16_nojit(s, crc)
   crc_buffer[:len(s)] = bytearray(s)
   return parse_jit.crc16jit(crc_buffer, 0, crc, len(s))
@@ -213,7 +213,7 @@ class SBP(object):
     """Pack to framed binary message.
 
     """
-    if NONUMPY:
+    if not HAS_NUMPY:
       buf = bytearray(512)
       packed_len = self._get_framed(buf, 0, self._copy_payload)
       return bytes(buf[:packed_len])

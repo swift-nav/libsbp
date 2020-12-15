@@ -1,4 +1,4 @@
-construct~=2.9.33
+construct==2.9.33
 pyftdi~=0.13.4
 pylibftdi
 pyserial

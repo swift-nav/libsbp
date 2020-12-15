@@ -10,18 +10,23 @@ from sbp.msg import SBP_PREAMBLE
 from sbp import msg as msg_nojit
 from sbp.table import dispatch as dispatch_nojit
 
-NORM = os.environ.get('NOJIT') is not None
+SBP_NO_JIT = os.environ.get('SBP_NO_JIT') is not None
+
 try:
     from sbp.jit import msg
     from sbp.jit.table import dispatch
 except ImportError:
-    NORM = "y"
+    SBP_NO_JIT = True
 
-NONUMPY = False
 try:
     import numpy as np
+    HAS_NUMPY = True
+    def get_buffer(size):
+        return np.zeros(size, dtype=np.uint8)
 except ImportError:
-    NONUMPY = True
+    HAS_NUMPY = False
+    def get_buffer(size):
+        return bytearray(size)
 
 DEFAULT_JSON='rapidjson'
 JSON_CHOICES=['json', 'rapidjson']
@@ -43,12 +48,15 @@ def base_cl_options():
     import argparse
     parser = argparse.ArgumentParser(prog="sbp2json", description="Swift Navigation SBP to JSON parser")
     parser.add_argument('--mode', type=str, choices=JSON_CHOICES, default=DEFAULT_JSON)
+    parser.add_argument('file', nargs='?', metavar='FILE', type=argparse.FileType('rb'),
+                        default=sys.stdin, help="the input file, stdin by default")
 
     group_json = parser.add_argument_group('json specific arguments')
-    group_json.add_argument(
-        "--judicious-rounding",
-        action="store_true",
-        help="Use Numpy's judicious rounding and reprentation precision. Only on Python 3.5 and forward.")
+    if HAS_NUMPY:
+        group_json.add_argument(
+            "--judicious-rounding",
+            action="store_true",
+            help="Use Numpy's judicious rounding.")
     group_json.add_argument(
         "--sort-keys",
         action="store_true",
@@ -65,12 +73,12 @@ def get_args():
     args = parser.parse_args()
 
     if args.mode == 'rapidjson' and len(sys.argv) > 3:
-        print('ERROR: rapidjson mode does not support given arguments')
+        print('ERROR: rapidjson mode does not support given arguments', file=sys.stderr)
         parser.print_help()
         return None
 
     if args.judicious_rounding and sys.version_info[0] < 3:
-        print('ERROR: Must be using Python 3.5 or newer for --float-meta')
+        print('ERROR: Must be using Python 3.6 or newer for --judicious-rounding', file=sys.stderr)
         parser.print_help()
         return None
 
@@ -145,6 +153,7 @@ def get_jsonable(res):
         return res.to_json_dict()
     return res
 
+
 def dump(args, res):
     if 'json' == args.mode:
         if args.judicious_rounding:
@@ -162,13 +171,6 @@ def dump(args, res):
     sys.stdout.write("\n")
 
 
-def get_buffer(size):
-    if NONUMPY:
-        return bytearray(size)
-    else:
-        return np.zeros(size, dtype=np.uint8)
-
-
 def configure_judicious_rounding(args):
     try:
         _m = msg
@@ -180,7 +182,7 @@ def configure_judicious_rounding(args):
 def sbp_main(args):
     configure_judicious_rounding(args)
     header_len = 6
-    reader = io.open(sys.stdin.fileno(), 'rb')
+    reader = io.open(args.file.fileno(), 'rb')
     buf = get_buffer(4096)
     unconsumed_offset = 0
     read_offset = 0
@@ -203,7 +205,7 @@ def sbp_main(args):
         read_offset += read_length
         buffer_remaining -= read_length
         while True:
-            if NORM:
+            if not SBP_NO_JIT:
                 from construct.core import StreamError
                 bytes_available = read_offset - unconsumed_offset
                 b = buf[unconsumed_offset:(unconsumed_offset + bytes_available)]
