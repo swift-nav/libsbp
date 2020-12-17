@@ -20,11 +20,18 @@ set_target_properties(sbp PROPERTIES
         C_STANDARD_REQUIRED ON)
 target_code_coverage(sbp AUTO ALL)
 
+if (MINGW)
+  if (CMAKE_C_COMPILER_VERSION VERSION_GREATER "4.7.0" AND CMAKE_C_COMPILER_VERSION VERSION_LESS "8.0.0")
+    message(WARNING "Detected MinGW adding __attribute__((packed)) workaround")
+    target_compile_options(sbp PUBLIC "-mno-ms-bitfields")
+  endif()
+endif()
+
 install(TARGETS sbp
         EXPORT sbp-export
         DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR})
 install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/libsbp/" DESTINATION "${CMAKE_INSTALL_FULL_INCLUDEDIR}/libsbp")
 
 export(EXPORT sbp-export
-        NAMESPACE LibSbp::
-        FILE ${PROJECT_BINARY_DIR}/LibSbpImport.cmake)
+       NAMESPACE LibSbp::
+       FILE ${PROJECT_BINARY_DIR}/LibSbpImport.cmake)
