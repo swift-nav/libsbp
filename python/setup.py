@@ -151,16 +151,6 @@ def write_version_py(filename=VERSION_PY_PATH):
                                             is_released=IS_RELEASED))
 
 
-def exclude_jit_libs(lib):
-    if 'sbp.jit' in PACKAGES:
-        return False
-    excluded_libs = ['python-rapidjson', 'pybase64', 'numpy']
-    for excluded_lib in excluded_libs:
-        if excluded_lib in lib:
-            return True
-    return False
-
-
 if __name__ == "__main__":
 
     with open(os.path.join(setup_py_dir, 'README.rst'), 'rb') as f:
@@ -188,10 +178,7 @@ if __name__ == "__main__":
         pass
 
     with open(os.path.join(setup_py_dir, 'requirements.txt')) as f:
-        INSTALL_REQUIRES = [
-            i.strip()
-            for i in f.readlines() if not exclude_jit_libs(i.strip())
-        ]
+        INSTALL_REQUIRES = [i.strip() for i in f.readlines()]
 
     with open(os.path.join(setup_py_dir, 'test_requirements.txt')) as f:
         TEST_REQUIRES = [i.strip() for i in f.readlines()]
