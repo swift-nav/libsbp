@@ -9,4 +9,5 @@ ADD . /work
 
 RUN pip3 install -r /work/setup_requirements.txt
 RUN pip3 install -r /work/requirements.txt
-RUN python3 /work/setup.py install
+
+RUN pip install .[jit]
