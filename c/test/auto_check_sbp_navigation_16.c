@@ -105,38 +105,38 @@ START_TEST( test_auto_check_sbp_navigation_16 )
     sbp_send_message(&sbp_state, 0x211, 66, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
           "sbp_process threw an error!");
     }
 
-    fail_unless(n_callbacks_logged == 1,
+    ck_assert_msg(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 66,
+    ck_assert_msg(last_sender_id == 66,
         "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
+    ck_assert_msg(last_len == sizeof(test_data),
         "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data))
           == 0,
         "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     msg_pos_llh_cov_t* msg = ( msg_pos_llh_cov_t *)((void *)last_msg + 6);
     // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless((msg->cov_d_d*100 - 2.0*100) < 0.05, "incorrect value for cov_d_d, expected 2.0, is %f", msg->cov_d_d);
-    fail_unless((msg->cov_e_d*100 - 1.0*100) < 0.05, "incorrect value for cov_e_d, expected 1.0, is %f", msg->cov_e_d);
-    fail_unless((msg->cov_e_e*100 - 6.0*100) < 0.05, "incorrect value for cov_e_e, expected 6.0, is %f", msg->cov_e_e);
-    fail_unless((msg->cov_n_d*100 - 8.0*100) < 0.05, "incorrect value for cov_n_d, expected 8.0, is %f", msg->cov_n_d);
-    fail_unless((msg->cov_n_e*100 - 5.0*100) < 0.05, "incorrect value for cov_n_e, expected 5.0, is %f", msg->cov_n_e);
-    fail_unless((msg->cov_n_n*100 - 7.0*100) < 0.05, "incorrect value for cov_n_n, expected 7.0, is %f", msg->cov_n_n);
-    fail_unless(msg->flags == 5, "incorrect value for flags, expected 5, is %d", msg->flags);
-    fail_unless((msg->height*100 - 0.0*100) < 0.05, "incorrect value for height, expected 0.0, is %f", msg->height);
-    fail_unless((msg->lat*100 - 0.0*100) < 0.05, "incorrect value for lat, expected 0.0, is %f", msg->lat);
-    fail_unless((msg->lon*100 - 7.0*100) < 0.05, "incorrect value for lon, expected 7.0, is %f", msg->lon);
-    fail_unless(msg->n_sats == 5, "incorrect value for n_sats, expected 5, is %d", msg->n_sats);
-    fail_unless(msg->tow == 7, "incorrect value for tow, expected 7, is %d", msg->tow);
+    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg((msg->cov_d_d*100 - 2.0*100) < 0.05, "incorrect value for cov_d_d, expected 2.0, is %f", msg->cov_d_d);
+    ck_assert_msg((msg->cov_e_d*100 - 1.0*100) < 0.05, "incorrect value for cov_e_d, expected 1.0, is %f", msg->cov_e_d);
+    ck_assert_msg((msg->cov_e_e*100 - 6.0*100) < 0.05, "incorrect value for cov_e_e, expected 6.0, is %f", msg->cov_e_e);
+    ck_assert_msg((msg->cov_n_d*100 - 8.0*100) < 0.05, "incorrect value for cov_n_d, expected 8.0, is %f", msg->cov_n_d);
+    ck_assert_msg((msg->cov_n_e*100 - 5.0*100) < 0.05, "incorrect value for cov_n_e, expected 5.0, is %f", msg->cov_n_e);
+    ck_assert_msg((msg->cov_n_n*100 - 7.0*100) < 0.05, "incorrect value for cov_n_n, expected 7.0, is %f", msg->cov_n_n);
+    ck_assert_msg(msg->flags == 5, "incorrect value for flags, expected 5, is %d", msg->flags);
+    ck_assert_msg((msg->height*100 - 0.0*100) < 0.05, "incorrect value for height, expected 0.0, is %f", msg->height);
+    ck_assert_msg((msg->lat*100 - 0.0*100) < 0.05, "incorrect value for lat, expected 0.0, is %f", msg->lat);
+    ck_assert_msg((msg->lon*100 - 7.0*100) < 0.05, "incorrect value for lon, expected 7.0, is %f", msg->lon);
+    ck_assert_msg(msg->n_sats == 5, "incorrect value for n_sats, expected 5, is %d", msg->n_sats);
+    ck_assert_msg(msg->tow == 7, "incorrect value for tow, expected 7, is %d", msg->tow);
   }
 }
 END_TEST

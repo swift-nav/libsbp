@@ -105,37 +105,37 @@ START_TEST( test_auto_check_sbp_navigation_23 )
     sbp_send_message(&sbp_state, 0x212, 66, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
           "sbp_process threw an error!");
     }
 
-    fail_unless(n_callbacks_logged == 1,
+    ck_assert_msg(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 66,
+    ck_assert_msg(last_sender_id == 66,
         "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
+    ck_assert_msg(last_len == sizeof(test_data),
         "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data))
           == 0,
         "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     msg_vel_ned_cov_t* msg = ( msg_vel_ned_cov_t *)((void *)last_msg + 6);
     // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless((msg->cov_d_d*100 - 1.0*100) < 0.05, "incorrect value for cov_d_d, expected 1.0, is %f", msg->cov_d_d);
-    fail_unless((msg->cov_e_d*100 - 1.0*100) < 0.05, "incorrect value for cov_e_d, expected 1.0, is %f", msg->cov_e_d);
-    fail_unless((msg->cov_e_e*100 - 1.0*100) < 0.05, "incorrect value for cov_e_e, expected 1.0, is %f", msg->cov_e_e);
-    fail_unless((msg->cov_n_d*100 - 1.0*100) < 0.05, "incorrect value for cov_n_d, expected 1.0, is %f", msg->cov_n_d);
-    fail_unless((msg->cov_n_e*100 - 1.0*100) < 0.05, "incorrect value for cov_n_e, expected 1.0, is %f", msg->cov_n_e);
-    fail_unless((msg->cov_n_n*100 - 1.0*100) < 0.05, "incorrect value for cov_n_n, expected 1.0, is %f", msg->cov_n_n);
-    fail_unless(msg->e == 1, "incorrect value for e, expected 1, is %d", msg->e);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->n == 1, "incorrect value for n, expected 1, is %d", msg->n);
-    fail_unless(msg->n_sats == 10, "incorrect value for n_sats, expected 10, is %d", msg->n_sats);
-    fail_unless(msg->tow == 100, "incorrect value for tow, expected 100, is %d", msg->tow);
+    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg((msg->cov_d_d*100 - 1.0*100) < 0.05, "incorrect value for cov_d_d, expected 1.0, is %f", msg->cov_d_d);
+    ck_assert_msg((msg->cov_e_d*100 - 1.0*100) < 0.05, "incorrect value for cov_e_d, expected 1.0, is %f", msg->cov_e_d);
+    ck_assert_msg((msg->cov_e_e*100 - 1.0*100) < 0.05, "incorrect value for cov_e_e, expected 1.0, is %f", msg->cov_e_e);
+    ck_assert_msg((msg->cov_n_d*100 - 1.0*100) < 0.05, "incorrect value for cov_n_d, expected 1.0, is %f", msg->cov_n_d);
+    ck_assert_msg((msg->cov_n_e*100 - 1.0*100) < 0.05, "incorrect value for cov_n_e, expected 1.0, is %f", msg->cov_n_e);
+    ck_assert_msg((msg->cov_n_n*100 - 1.0*100) < 0.05, "incorrect value for cov_n_n, expected 1.0, is %f", msg->cov_n_n);
+    ck_assert_msg(msg->e == 1, "incorrect value for e, expected 1, is %d", msg->e);
+    ck_assert_msg(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    ck_assert_msg(msg->n == 1, "incorrect value for n, expected 1, is %d", msg->n);
+    ck_assert_msg(msg->n_sats == 10, "incorrect value for n_sats, expected 10, is %d", msg->n_sats);
+    ck_assert_msg(msg->tow == 100, "incorrect value for tow, expected 100, is %d", msg->tow);
   }
 }
 END_TEST

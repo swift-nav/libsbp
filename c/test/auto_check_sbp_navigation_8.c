@@ -105,33 +105,33 @@ START_TEST( test_auto_check_sbp_navigation_8 )
     sbp_send_message(&sbp_state, 0x208, 66, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
           "sbp_process threw an error!");
     }
 
-    fail_unless(n_callbacks_logged == 1,
+    ck_assert_msg(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 66,
+    ck_assert_msg(last_sender_id == 66,
         "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
+    ck_assert_msg(last_len == sizeof(test_data),
         "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data))
           == 0,
         "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     msg_dops_t* msg = ( msg_dops_t *)((void *)last_msg + 6);
     // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->gdop == 2, "incorrect value for gdop, expected 2, is %d", msg->gdop);
-    fail_unless(msg->hdop == 5, "incorrect value for hdop, expected 5, is %d", msg->hdop);
-    fail_unless(msg->pdop == 6, "incorrect value for pdop, expected 6, is %d", msg->pdop);
-    fail_unless(msg->tdop == 5, "incorrect value for tdop, expected 5, is %d", msg->tdop);
-    fail_unless(msg->tow == 100, "incorrect value for tow, expected 100, is %d", msg->tow);
-    fail_unless(msg->vdop == 5, "incorrect value for vdop, expected 5, is %d", msg->vdop);
+    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    ck_assert_msg(msg->gdop == 2, "incorrect value for gdop, expected 2, is %d", msg->gdop);
+    ck_assert_msg(msg->hdop == 5, "incorrect value for hdop, expected 5, is %d", msg->hdop);
+    ck_assert_msg(msg->pdop == 6, "incorrect value for pdop, expected 6, is %d", msg->pdop);
+    ck_assert_msg(msg->tdop == 5, "incorrect value for tdop, expected 5, is %d", msg->tdop);
+    ck_assert_msg(msg->tow == 100, "incorrect value for tow, expected 100, is %d", msg->tow);
+    ck_assert_msg(msg->vdop == 5, "incorrect value for vdop, expected 5, is %d", msg->vdop);
   }
 }
 END_TEST
