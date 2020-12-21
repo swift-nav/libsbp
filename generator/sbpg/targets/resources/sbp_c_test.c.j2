@@ -89,7 +89,7 @@ START_TEST( test_(((s.suite_name))) )
 
     ((*- macro compare_value(prefix, value) *))
     ((*- if value is string_type *))
-    fail_unless(strstr(msg->(((prefix))), (((value|str_escape)))) != NULL, "incorrect value for msg->(((prefix))), expected string '%s', is '%s'", (((value|str_escape))), msg->(((prefix))));
+    ck_assert_msg(strstr(msg->(((prefix))), (((value|str_escape)))) != NULL, "incorrect value for msg->(((prefix))), expected string '%s', is '%s'", (((value|str_escape))), msg->(((prefix))));
     ((*- elif value is array_type *))
     ((*- for ff in value *))((( compare_value( (((prefix))) + '[' + (((loop.index0|to_str))) + ']', (((ff))) ) )))((*- endfor *))
     ((*- elif value is dict_type *))
@@ -97,9 +97,9 @@ START_TEST( test_(((s.suite_name))) )
     ((*- elif value is float_type *))((=
         Note: the ("%.12g"|format(value)|float) filter is intended to keep float
         literal precision unchanged whether generated under Python 2.7 or 3.x. =))
-    fail_unless((msg->(((prefix)))*100 - ((("%.12g"|format(value)|float)))*100) < 0.05, "incorrect value for (((prefix))), expected ((("%.12g"|format(value)|float))), is %f", msg->(((prefix))));
+    ck_assert_msg((msg->(((prefix)))*100 - ((("%.12g"|format(value)|float)))*100) < 0.05, "incorrect value for (((prefix))), expected ((("%.12g"|format(value)|float))), is %f", msg->(((prefix))));
     ((*- else *))
-    fail_unless(msg->(((prefix))) == (((value))), "incorrect value for (((prefix))), expected (((value))), is %d", msg->(((prefix))));
+    ck_assert_msg(msg->(((prefix))) == (((value))), "incorrect value for (((prefix))), expected (((value))), is %d", msg->(((prefix))));
     ((*- endif *))
     ((*- endmacro *))
 
@@ -123,27 +123,27 @@ START_TEST( test_(((s.suite_name))) )
     sbp_send_message(&sbp_state, (((t.msg_type))), (((t.raw_json_obj.sender))), sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
           "sbp_process threw an error!");
     }
 
-    fail_unless(n_callbacks_logged == 1,
+    ck_assert_msg(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == (((t.raw_json_obj.sender))),
+    ck_assert_msg(last_sender_id == (((t.raw_json_obj.sender))),
         "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
+    ck_assert_msg(last_len == sizeof(test_data),
         "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data))
           == 0,
         "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     ((*- if t.fields *))
     (((t.msg_type_name|convert)))* msg = ( (((t.msg_type_name|convert))) *)((void *)last_msg + 6);
     // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ((*- for f in t.fieldskeys *))(((compare_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
     ((*- endif *))
   }
