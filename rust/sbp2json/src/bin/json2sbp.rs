@@ -1,5 +1,7 @@
+use std::io;
+
+use sbp::codec::converters::blocking::json2sbp;
 use structopt::StructOpt;
-use tokio::runtime;
 
 #[cfg(all(not(windows), not(target_env = "musl")))]
 #[global_allocator]
@@ -18,7 +20,7 @@ struct Options {
     debug: bool,
 }
 
-fn main() {
+fn main() -> sbp::Result<()> {
     let options = Options::from_args();
 
     if options.debug {
@@ -27,13 +29,8 @@ fn main() {
 
     env_logger::init();
 
-    let rt = runtime::Builder::new_multi_thread().build().unwrap();
+    let stdin = io::stdin();
+    let stdout = io::stdout();
 
-    rt.block_on(async {
-        let stdin = sbp2json::stdin();
-        let stdout = sbp2json::stdout();
-
-        sbp::codec::json2sbp(stdin, stdout).await
-    })
-    .unwrap()
+    json2sbp(stdin, stdout)
 }

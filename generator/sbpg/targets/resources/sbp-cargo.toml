@@ -18,26 +18,44 @@ keywords = ["encoding", "parsing"]
 
 [features]
 default = ["blocking"]
+blocking = ["futures_codec/blocking"]
+async = ["futures", "futures_codec/async"]
 sbp_serde = ["serde"]
-json = ["serde_json", "serde", "base64"]
-blocking = ["futures/executor"]
+json = ["sbp_serde", "serde_json", "base64"]
 
 [lib]
 path = "src/lib.rs"
 
 [dependencies]
-byteorder = "1.2.1"
-bytes = "0.5.6"
+byteorder = "1.2"
+bytes = "0.6"
 crc16 = "*"
-enum_dispatch = "0.3.4"
-futures = { version = "0.3.8", default-features = false }
-futures_codec = "0.4.1"
-log = "0.4.11"
-nom = "6.0.1"
-thiserror = "1.0.22"
-serde = { version = "1", features = ["derive"], optional = true }
-serde_json = { version = "1", optional = true }
-base64 = {version = "0.13", optional = true}
+enum_dispatch = "0.3"
+log = "0.4"
+nom = "6.0"
+thiserror = "1.0"
+
+[dependencies.serde]
+version = "1"
+features = ["derive"]
+optional = true
+
+[dependencies.serde_json]
+version = "1"
+optional = true
+
+[dependencies.base64]
+version = "0.13"
+optional = true
+
+[dependencies.futures]
+version = "0.3"
+optional = true
+
+[dependencies.futures_codec]
+git = "https://github.com/swift-nav/futures-codec.git"
+branch = "notoriaga/sync"
+default-features = false
 
 [dev-dependencies]
 serialport = "2.1.0"

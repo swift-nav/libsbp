@@ -21,29 +21,19 @@ pub const SBP_MAX_PAYLOAD_SIZE: usize = 255;
 pub const MSG_HEADER_LEN: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/ + 1 /*len*/;
 pub const MSG_CRC_LEN: usize = 2;
 
-pub use crate::codec::sbp::stream_messages;
+#[cfg(feature = "async")]
+pub use codec::sbp::stream_messages;
 
 #[cfg(feature = "blocking")]
-pub fn iter_messages<R: std::io::Read>(
-    input: R,
-) -> impl Iterator<Item = Result<crate::messages::SBP>> {
-    let input = futures::io::AllowStdIo::new(input);
-    let stream = stream_messages(input);
-    futures::executor::block_on_stream(stream).into_iter()
-}
+pub use codec::sbp::iter_messages;
 
 #[cfg(feature = "json")]
 pub mod json {
+    #[cfg(feature = "async")]
     pub use crate::codec::json::stream_messages;
 
     #[cfg(feature = "blocking")]
-    pub fn iter_messages<R: std::io::Read>(
-        input: R,
-    ) -> impl Iterator<Item = crate::Result<crate::messages::SBP>> {
-        let input = futures::io::AllowStdIo::new(input);
-        let stream = stream_messages(input);
-        futures::executor::block_on_stream(stream).into_iter()
-    }
+    pub use crate::codec::json::iter_messages;
 }
 
 #[derive(Debug, Clone)]
