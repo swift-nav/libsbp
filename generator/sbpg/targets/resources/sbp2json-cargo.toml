@@ -11,6 +11,10 @@ version = "(((release)))"
 authors = ["Swift Navigation <dev@swiftnav.com>"]
 edition = "2018"
 
+[dependencies.sbp]
+path = "../sbp"
+features = ["json"]
+
 [dependencies]
 structopt = "0.3"
 env_logger = "0.8.2"

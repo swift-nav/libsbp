@@ -13,7 +13,7 @@ edition = "2018"
 
 [dependencies.sbp]
 path = "../sbp"
-features = ["sbp_serde", "json"]
+features = ["json"]
 
 [dependencies]
 structopt = "0.3"

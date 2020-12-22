@@ -1,6 +1,5 @@
-use crate::{messages::SBP, SbpString};
+use crate::SbpString;
 
-#[enum_dispatch::enum_dispatch]
 pub trait SbpSerialize {
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>);
     fn sbp_size(&self) -> usize;
