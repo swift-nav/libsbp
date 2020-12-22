@@ -5,8 +5,12 @@ pub mod sbp;
 #[cfg(feature = "json")]
 pub use json::{CompactFormatter, HaskellishFloatFormatter};
 
-#[cfg(all(feature = "json", any(feature = "blocking", feature = "async")))]
+#[cfg(feature = "json")]
 pub mod converters {
+    #[cfg(feature = "async")]
+    use futures_codec::{FramedRead, FramedWrite};
+
+    #[cfg(feature = "async")]
     use crate::{
         codec::{
             json::{Json2JsonDecoder, Json2JsonEncoder, JsonDecoder, JsonEncoder},
@@ -21,8 +25,8 @@ pub mod converters {
         R: futures::AsyncRead + Unpin,
         W: futures::AsyncWrite + Unpin,
     {
-        let source = futures_codec::FramedRead::new(input, JsonDecoder::new());
-        let sink = futures_codec::FramedWrite::new(output, SbpEncoder::new());
+        let source = FramedRead::new(input, JsonDecoder::new());
+        let sink = FramedWrite::new(output, SbpEncoder::new());
         futures::StreamExt::forward(source, sink).await
     }
 
@@ -33,8 +37,8 @@ pub mod converters {
         W: futures::AsyncWrite + Unpin,
         F: serde_json::ser::Formatter + Clone,
     {
-        let source = futures_codec::FramedRead::new(input, Json2JsonDecoder {});
-        let sink = futures_codec::FramedWrite::new(output, Json2JsonEncoder::new(formatter));
+        let source = FramedRead::new(input, Json2JsonDecoder {});
+        let sink = FramedWrite::new(output, Json2JsonEncoder::new(formatter));
         futures::StreamExt::forward(source, sink).await
     }
 
@@ -45,8 +49,8 @@ pub mod converters {
         W: futures::AsyncWrite + Unpin,
         F: serde_json::ser::Formatter + Clone,
     {
-        let source = futures_codec::FramedRead::new(input, SbpDecoder::new());
-        let sink = futures_codec::FramedWrite::new(output, JsonEncoder::new(formatter));
+        let source = FramedRead::new(input, SbpDecoder::new());
+        let sink = FramedWrite::new(output, JsonEncoder::new(formatter));
         futures::StreamExt::forward(source, sink).await
     }
 
