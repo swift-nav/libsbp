@@ -1,5 +1,5 @@
 use bytes::{Buf, BufMut, BytesMut};
-use futures_codec::{Decoder, Encoder, FramedRead};
+use dencode::{Decoder, Encoder, FramedRead};
 
 use crate::{
     messages::{SBPMessage, SBP},
@@ -17,9 +17,8 @@ pub fn stream_messages<R: futures::AsyncRead + Unpin>(
     FramedRead::new(input, SbpDecoder::new())
 }
 
-#[cfg(feature = "blocking")]
 pub fn iter_messages<R: std::io::Read>(input: R) -> impl Iterator<Item = Result<SBP>> {
-    FramedRead::new_blocking(input, SbpDecoder::new())
+    FramedRead::new(input, SbpDecoder::new())
 }
 
 pub struct SbpDecoder {}

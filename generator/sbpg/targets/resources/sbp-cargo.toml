@@ -17,9 +17,8 @@ edition = "2018"
 keywords = ["encoding", "parsing"]
 
 [features]
-default = ["blocking"]
-blocking = ["futures_codec/blocking"]
-async = ["futures", "futures_codec/async"]
+default = []
+async = ["futures", "dencode/async"]
 sbp_serde = ["serde"]
 json = ["sbp_serde", "serde_json", "base64"]
 
@@ -28,7 +27,7 @@ path = "src/lib.rs"
 
 [dependencies]
 byteorder = "1.2"
-bytes = "0.6"
+bytes = "1.0"
 crc16 = "*"
 log = "0.4"
 nom = "6.0"
@@ -51,9 +50,8 @@ optional = true
 version = "0.3"
 optional = true
 
-[dependencies.futures_codec]
-git = "https://github.com/swift-nav/futures-codec.git"
-branch = "notoriaga/sync"
+[dependencies.dencode]
+version = "0.1.0"
 default-features = false
 
 [dev-dependencies]

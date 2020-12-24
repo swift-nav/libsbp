@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use bytes::{Buf, BufMut, BytesMut};
-use futures_codec::{Decoder, Encoder};
+use dencode::{Decoder, Encoder};
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use serde_json::{ser::Formatter, Deserializer, Serializer, Value};
 
@@ -15,18 +15,17 @@ use crate::{
     Error, Result,
 };
 
+pub fn iter_messages<R: std::io::Read>(
+    input: R,
+) -> impl Iterator<Item = Result<crate::messages::SBP>> {
+    dencode::FramedRead::new(input, JsonDecoder::new())
+}
+
 #[cfg(feature = "async")]
 pub fn stream_messages<R: futures::AsyncRead + Unpin>(
     input: R,
 ) -> impl futures::Stream<Item = Result<SBP>> {
-    futures_codec::FramedRead::new(input, JsonDecoder::new())
-}
-
-#[cfg(feature = "blocking")]
-pub fn iter_messages<R: std::io::Read>(
-    input: R,
-) -> impl Iterator<Item = Result<crate::messages::SBP>> {
-    futures_codec::FramedRead::new_blocking(input, JsonDecoder::new())
+    dencode::FramedRead::new(input, JsonDecoder::new())
 }
 
 #[derive(Debug, Deserialize)]

@@ -1,6 +1,6 @@
 use std::io;
 
-use sbp::codec::{converters::blocking::json2json, CompactFormatter, HaskellishFloatFormatter};
+use sbp::codec::{converters::json2json, CompactFormatter, HaskellishFloatFormatter};
 use structopt::StructOpt;
 
 #[cfg(all(not(windows), not(target_env = "musl")))]
