@@ -88,7 +88,7 @@ quicktype-elm: 				deps-quicktype-elm 				gen-quicktype-elm 				test-quicktype-e
 
 # Prerequisite verification
 verify-prereq-generator:
-ifdef WINDOWS
+ifeq ($(OS), Windows_NT)
 	@python --version 1> nul 2> nul || (echo I require `python` but it's not installed. Aborting. & echo. & echo. & echo Have you installed Python? & echo. & exit 1)
 	@pip --version 1> nul 2> nul || (echo I require `pip` but it's not installed. Aborting. & echo. & echo. & echo Have you installed pip? & echo. & exit 1)
 else
@@ -115,7 +115,7 @@ verify-prereq-javascript: verify-prereq-generator
 	@command -v mocha  1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`mocha\` but it's not installed. Aborting.\n\nHave you installed mocha? See the JavaScript readme at \`javascript/README.md\` for setup instructions.\n"; exit 1; }
 
 verify-prereq-java: verify-prereq-generator
-ifdef WINDOWS
+ifeq ($(OS), Windows_NT)
 	@gradle --version 1> nul 2> nul || (echo I require `gradle` but it's not installed. Aborting. & echo. & echo. & echo Have you installed gradle? See the Java readme at `java/README.rst` for setup instructions. & echo. & exit 1)
 else
 	@command -v gradle  1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`gradle\` but it's not installed. Aborting.\n\nHave you installed gradle? See the Java readme at \`java/README.rst\` for setup instructions.\n"; exit 1; }
