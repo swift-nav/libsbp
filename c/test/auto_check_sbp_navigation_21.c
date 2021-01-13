@@ -105,33 +105,33 @@ START_TEST( test_auto_check_sbp_navigation_21 )
     sbp_send_message(&sbp_state, 0x204, 55286, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
           "sbp_process threw an error!");
     }
 
-    fail_unless(n_callbacks_logged == 1,
+    ck_assert_msg(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 55286,
+    ck_assert_msg(last_sender_id == 55286,
         "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
+    ck_assert_msg(last_len == sizeof(test_data),
         "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data))
           == 0,
         "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     msg_vel_ecef_dep_a_t* msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
-    fail_unless(msg->tow == 2567700, "incorrect value for tow, expected 2567700, is %d", msg->tow);
-    fail_unless(msg->x == 3034, "incorrect value for x, expected 3034, is %d", msg->x);
-    fail_unless(msg->y == -2682, "incorrect value for y, expected -2682, is %d", msg->y);
-    fail_unless(msg->z == -861, "incorrect value for z, expected -861, is %d", msg->z);
+    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
+    ck_assert_msg(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    ck_assert_msg(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    ck_assert_msg(msg->tow == 2567700, "incorrect value for tow, expected 2567700, is %d", msg->tow);
+    ck_assert_msg(msg->x == 3034, "incorrect value for x, expected 3034, is %d", msg->x);
+    ck_assert_msg(msg->y == -2682, "incorrect value for y, expected -2682, is %d", msg->y);
+    ck_assert_msg(msg->z == -861, "incorrect value for z, expected -861, is %d", msg->z);
   }
   // Test successful parsing of a message
   {
@@ -152,33 +152,33 @@ START_TEST( test_auto_check_sbp_navigation_21 )
     sbp_send_message(&sbp_state, 0x204, 55286, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
           "sbp_process threw an error!");
     }
 
-    fail_unless(n_callbacks_logged == 1,
+    ck_assert_msg(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 55286,
+    ck_assert_msg(last_sender_id == 55286,
         "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
+    ck_assert_msg(last_len == sizeof(test_data),
         "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data))
           == 0,
         "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     msg_vel_ecef_dep_a_t* msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
-    fail_unless(msg->tow == 2567800, "incorrect value for tow, expected 2567800, is %d", msg->tow);
-    fail_unless(msg->x == 2884, "incorrect value for x, expected 2884, is %d", msg->x);
-    fail_unless(msg->y == -2536, "incorrect value for y, expected -2536, is %d", msg->y);
-    fail_unless(msg->z == -804, "incorrect value for z, expected -804, is %d", msg->z);
+    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
+    ck_assert_msg(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    ck_assert_msg(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    ck_assert_msg(msg->tow == 2567800, "incorrect value for tow, expected 2567800, is %d", msg->tow);
+    ck_assert_msg(msg->x == 2884, "incorrect value for x, expected 2884, is %d", msg->x);
+    ck_assert_msg(msg->y == -2536, "incorrect value for y, expected -2536, is %d", msg->y);
+    ck_assert_msg(msg->z == -804, "incorrect value for z, expected -804, is %d", msg->z);
   }
   // Test successful parsing of a message
   {
@@ -199,33 +199,33 @@ START_TEST( test_auto_check_sbp_navigation_21 )
     sbp_send_message(&sbp_state, 0x204, 55286, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
           "sbp_process threw an error!");
     }
 
-    fail_unless(n_callbacks_logged == 1,
+    ck_assert_msg(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 55286,
+    ck_assert_msg(last_sender_id == 55286,
         "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
+    ck_assert_msg(last_len == sizeof(test_data),
         "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data))
           == 0,
         "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     msg_vel_ecef_dep_a_t* msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
-    fail_unless(msg->tow == 2567900, "incorrect value for tow, expected 2567900, is %d", msg->tow);
-    fail_unless(msg->x == 2837, "incorrect value for x, expected 2837, is %d", msg->x);
-    fail_unless(msg->y == -2483, "incorrect value for y, expected -2483, is %d", msg->y);
-    fail_unless(msg->z == -777, "incorrect value for z, expected -777, is %d", msg->z);
+    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
+    ck_assert_msg(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    ck_assert_msg(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    ck_assert_msg(msg->tow == 2567900, "incorrect value for tow, expected 2567900, is %d", msg->tow);
+    ck_assert_msg(msg->x == 2837, "incorrect value for x, expected 2837, is %d", msg->x);
+    ck_assert_msg(msg->y == -2483, "incorrect value for y, expected -2483, is %d", msg->y);
+    ck_assert_msg(msg->z == -777, "incorrect value for z, expected -777, is %d", msg->z);
   }
   // Test successful parsing of a message
   {
@@ -246,33 +246,33 @@ START_TEST( test_auto_check_sbp_navigation_21 )
     sbp_send_message(&sbp_state, 0x204, 55286, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
           "sbp_process threw an error!");
     }
 
-    fail_unless(n_callbacks_logged == 1,
+    ck_assert_msg(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 55286,
+    ck_assert_msg(last_sender_id == 55286,
         "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
+    ck_assert_msg(last_len == sizeof(test_data),
         "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data))
           == 0,
         "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     msg_vel_ecef_dep_a_t* msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
-    fail_unless(msg->tow == 2568000, "incorrect value for tow, expected 2568000, is %d", msg->tow);
-    fail_unless(msg->x == 2937, "incorrect value for x, expected 2937, is %d", msg->x);
-    fail_unless(msg->y == -2558, "incorrect value for y, expected -2558, is %d", msg->y);
-    fail_unless(msg->z == -790, "incorrect value for z, expected -790, is %d", msg->z);
+    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
+    ck_assert_msg(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    ck_assert_msg(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    ck_assert_msg(msg->tow == 2568000, "incorrect value for tow, expected 2568000, is %d", msg->tow);
+    ck_assert_msg(msg->x == 2937, "incorrect value for x, expected 2937, is %d", msg->x);
+    ck_assert_msg(msg->y == -2558, "incorrect value for y, expected -2558, is %d", msg->y);
+    ck_assert_msg(msg->z == -790, "incorrect value for z, expected -790, is %d", msg->z);
   }
   // Test successful parsing of a message
   {
@@ -293,33 +293,33 @@ START_TEST( test_auto_check_sbp_navigation_21 )
     sbp_send_message(&sbp_state, 0x204, 55286, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
           "sbp_process threw an error!");
     }
 
-    fail_unless(n_callbacks_logged == 1,
+    ck_assert_msg(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 55286,
+    ck_assert_msg(last_sender_id == 55286,
         "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
+    ck_assert_msg(last_len == sizeof(test_data),
         "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data))
           == 0,
         "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     msg_vel_ecef_dep_a_t* msg = ( msg_vel_ecef_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
-    fail_unless(msg->tow == 2568100, "incorrect value for tow, expected 2568100, is %d", msg->tow);
-    fail_unless(msg->x == 2847, "incorrect value for x, expected 2847, is %d", msg->x);
-    fail_unless(msg->y == -2467, "incorrect value for y, expected -2467, is %d", msg->y);
-    fail_unless(msg->z == -752, "incorrect value for z, expected -752, is %d", msg->z);
+    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", msg->accuracy);
+    ck_assert_msg(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    ck_assert_msg(msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", msg->n_sats);
+    ck_assert_msg(msg->tow == 2568100, "incorrect value for tow, expected 2568100, is %d", msg->tow);
+    ck_assert_msg(msg->x == 2847, "incorrect value for x, expected 2847, is %d", msg->x);
+    ck_assert_msg(msg->y == -2467, "incorrect value for y, expected -2467, is %d", msg->y);
+    ck_assert_msg(msg->z == -752, "incorrect value for z, expected -752, is %d", msg->z);
   }
 }
 END_TEST

@@ -105,30 +105,30 @@ START_TEST( test_auto_check_sbp_system_35 )
     sbp_send_message(&sbp_state, 0xff02, 66, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
           "sbp_process threw an error!");
     }
 
-    fail_unless(n_callbacks_logged == 1,
+    ck_assert_msg(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 66,
+    ck_assert_msg(last_sender_id == 66,
         "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
+    ck_assert_msg(last_len == sizeof(test_data),
         "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data))
           == 0,
         "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     msg_dgnss_status_t* msg = ( msg_dgnss_status_t *)((void *)last_msg + 6);
     // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
-    fail_unless(msg->latency == 50, "incorrect value for latency, expected 50, is %d", msg->latency);
-    fail_unless(msg->num_signals == 12, "incorrect value for num_signals, expected 12, is %d", msg->num_signals);
-    fail_unless(strstr(msg->source, ((char []){(char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107,0})) != NULL, "incorrect value for msg->source, expected string '%s', is '%s'", ((char []){(char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107,0}), msg->source);
+    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(msg->flags == 0, "incorrect value for flags, expected 0, is %d", msg->flags);
+    ck_assert_msg(msg->latency == 50, "incorrect value for latency, expected 50, is %d", msg->latency);
+    ck_assert_msg(msg->num_signals == 12, "incorrect value for num_signals, expected 12, is %d", msg->num_signals);
+    ck_assert_msg(strstr(msg->source, ((char []){(char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107,0})) != NULL, "incorrect value for msg->source, expected string '%s', is '%s'", ((char []){(char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107,0}), msg->source);
   }
 }
 END_TEST
