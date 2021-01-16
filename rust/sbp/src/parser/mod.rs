@@ -10,8 +10,9 @@ use self::nom::multi::length_data;
 use self::nom::number::complete::{le_u16, le_u8};
 use self::nom::sequence::tuple;
 use crate::messages::SBP;
-use crate::Result;
 use crate::SbpString;
+use crate::{Error, Result};
+use std::convert::TryInto;
 use std::io::{BufReader, Read};
 
 const MSG_HEADER_LEN: usize = 1 /*preamble*/ + 2 /*msg_type*/ + 2 /*sender_id*/ + 1 /*len*/;
@@ -257,50 +258,50 @@ pub(crate) fn read_u8_array(buf: &mut &[u8]) -> Result<Vec<u8>> {
     Ok(buf.to_vec())
 }
 
-pub(crate) fn read_u8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u8>> {
+pub(crate) fn read_u8_array_fixed<const N: usize>(buf: &mut &[u8]) -> Result<[u8; N]> {
     let mut v = Vec::new();
-    for _ in 0..n {
+    for _ in 0..N {
         v.push(buf.read_u8()?);
     }
-    Ok(v)
+    v.try_into().map_err(|_| Error::ParseError)
 }
 
-pub(crate) fn read_s8_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i8>> {
+pub(crate) fn read_s8_array_fixed<const N: usize>(buf: &mut &[u8]) -> Result<[i8; N]> {
     let mut v = Vec::new();
-    for _ in 0..n {
+    for _ in 0..N {
         v.push(buf.read_i8()?);
     }
-    Ok(v)
+    v.try_into().map_err(|_| Error::ParseError)
 }
 
-pub(crate) fn read_s16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<i16>> {
+pub(crate) fn read_s16_array_fixed<const N: usize>(buf: &mut &[u8]) -> Result<[i16; N]> {
     let mut v = Vec::new();
-    for _ in 0..n {
+    for _ in 0..N {
         v.push(buf.read_i16::<LittleEndian>()?);
     }
-    Ok(v)
+    v.try_into().map_err(|_| Error::ParseError)
 }
 
-pub(crate) fn read_u16_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<u16>> {
+pub(crate) fn read_u16_array_fixed<const N: usize>(buf: &mut &[u8]) -> Result<[u16; N]> {
     let mut v = Vec::new();
-    for _ in 0..n {
+    for _ in 0..N {
         v.push(buf.read_u16::<LittleEndian>()?);
     }
-    Ok(v)
+    v.try_into().map_err(|_| Error::ParseError)
 }
 
-pub(crate) fn read_float_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f32>> {
+pub(crate) fn read_float_array_fixed<const N: usize>(buf: &mut &[u8]) -> Result<[f32; N]> {
     let mut v = Vec::new();
-    for _ in 0..n {
+    for _ in 0..N {
         v.push(buf.read_f32::<LittleEndian>()?);
     }
-    Ok(v)
+    v.try_into().map_err(|_| Error::ParseError)
 }
 
-pub(crate) fn read_double_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<f64>> {
+pub(crate) fn read_double_array_fixed<const N: usize>(buf: &mut &[u8]) -> Result<[f64; N]> {
     let mut v = Vec::new();
-    for _ in 0..n {
+    for _ in 0..N {
         v.push(buf.read_f64::<LittleEndian>()?);
     }
-    Ok(v)
+    v.try_into().map_err(|_| Error::ParseError)
 }

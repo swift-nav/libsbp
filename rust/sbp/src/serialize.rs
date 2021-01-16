@@ -117,18 +117,32 @@ impl SbpSerialize for SbpString {
     }
 }
 
-impl<T: SbpSerialize> SbpSerialize for Vec<T> {
+impl<T: SbpSerialize> SbpSerialize for &'_ [T] {
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
-        for item in self.into_iter() {
-            item.append_to_sbp_buffer(buf);
-        }
+        self.iter().for_each(|item| item.append_to_sbp_buffer(buf));
     }
 
     fn sbp_size(&self) -> usize {
-        let mut total = 0;
-        for item in self.iter() {
-            total += item.sbp_size();
-        }
-        total
+        self.iter().map(|item| item.sbp_size()).sum()
+    }
+}
+
+impl<T: SbpSerialize> SbpSerialize for Vec<T> {
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.as_slice().append_to_sbp_buffer(buf)
+    }
+
+    fn sbp_size(&self) -> usize {
+        self.as_slice().sbp_size()
+    }
+}
+
+impl<T: SbpSerialize, const SIZE: usize> SbpSerialize for [T; SIZE] {
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.as_ref().append_to_sbp_buffer(buf)
+    }
+
+    fn sbp_size(&self) -> usize {
+        self.as_ref().sbp_size()
     }
 }

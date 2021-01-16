@@ -15,6 +15,9 @@
 
 //! (((description | replace("\n", "\n//! "))))
 
+#[allow(unused_imports)]
+use std::convert::TryInto;
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian,ReadBytesExt};
@@ -72,12 +75,12 @@ impl (((m.identifier|camel_case))) {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<(((m.identifier|camel_case)))>, crate::Error> {
+    pub fn parse_array_fixed<const N: usize>(buf: &mut &[u8]) -> Result<[(((m.identifier|camel_case))); N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push( (((m.identifier|camel_case)))::parse(buf)? );
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
     ((*- endif *))
 }

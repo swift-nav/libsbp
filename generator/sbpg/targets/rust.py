@@ -60,7 +60,10 @@ def type_map(field):
     return TYPE_MAP[field.type_id]
   elif field.type_id == 'array':
     t = field.options['fill'].value
-    return "Vec<{}>".format(TYPE_MAP.get(t, t))
+    if field.options.get('size', None):
+        return "[{}; {}]".format(TYPE_MAP.get(t,t), field.options.get('size').value)
+    else:
+        return "Vec<{}>".format(TYPE_MAP.get(t, t))
   else:
     return field.type_id
 
@@ -88,12 +91,12 @@ def parse_type(field):
     t = field.options['fill'].value
     if t in TYPE_MAP.keys():
       if 'size' in field.options:
-        return 'crate::parser::read_%s_array_limit(_buf, %d)' % (t, field.options['size'].value)
+        return 'crate::parser::read_%s_array_fixed(_buf)' % t
       else:
         return 'crate::parser::read_%s_array(_buf)' % t
     else:
       if 'size' in field.options:
-        return '%s::parse_array_limit(_buf, %d)' % (t, field.options['size'].value)
+        return '%s::parse_array_fixed(_buf)' % t
       else:
         return '%s::parse_array(_buf)' % t
   else:
