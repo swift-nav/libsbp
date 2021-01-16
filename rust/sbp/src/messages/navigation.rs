@@ -38,17 +38,11 @@
 //! but not a Time of Measurement.
 //!
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 /// Age of corrections
 ///
@@ -66,13 +60,13 @@ pub struct MsgAgeCorrections {
     pub age: u16,
 }
 
-impl MsgAgeCorrections {
+impl SbpParse<MsgAgeCorrections> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAgeCorrections, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgAgeCorrections> {
         Ok( MsgAgeCorrections{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            age: _buf.read_u16::<LittleEndian>()?,
+            tow: self.parse()?,
+            age: self.parse()?,
         } )
     }
 }
@@ -139,18 +133,18 @@ pub struct MsgBaselineECEF {
     pub flags: u8,
 }
 
-impl MsgBaselineECEF {
+impl SbpParse<MsgBaselineECEF> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineECEF, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgBaselineECEF> {
         Ok( MsgBaselineECEF{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_i32::<LittleEndian>()?,
-            y: _buf.read_i32::<LittleEndian>()?,
-            z: _buf.read_i32::<LittleEndian>()?,
-            accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            x: self.parse()?,
+            y: self.parse()?,
+            z: self.parse()?,
+            accuracy: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -227,18 +221,18 @@ pub struct MsgBaselineECEFDepA {
     pub flags: u8,
 }
 
-impl MsgBaselineECEFDepA {
+impl SbpParse<MsgBaselineECEFDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineECEFDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgBaselineECEFDepA> {
         Ok( MsgBaselineECEFDepA{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_i32::<LittleEndian>()?,
-            y: _buf.read_i32::<LittleEndian>()?,
-            z: _buf.read_i32::<LittleEndian>()?,
-            accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            x: self.parse()?,
+            y: self.parse()?,
+            z: self.parse()?,
+            accuracy: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -307,15 +301,15 @@ pub struct MsgBaselineHeadingDepA {
     pub flags: u8,
 }
 
-impl MsgBaselineHeadingDepA {
+impl SbpParse<MsgBaselineHeadingDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineHeadingDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgBaselineHeadingDepA> {
         Ok( MsgBaselineHeadingDepA{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            heading: _buf.read_u32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            heading: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -389,19 +383,19 @@ pub struct MsgBaselineNED {
     pub flags: u8,
 }
 
-impl MsgBaselineNED {
+impl SbpParse<MsgBaselineNED> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNED, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgBaselineNED> {
         Ok( MsgBaselineNED{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            n: _buf.read_i32::<LittleEndian>()?,
-            e: _buf.read_i32::<LittleEndian>()?,
-            d: _buf.read_i32::<LittleEndian>()?,
-            h_accuracy: _buf.read_u16::<LittleEndian>()?,
-            v_accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            n: self.parse()?,
+            e: self.parse()?,
+            d: self.parse()?,
+            h_accuracy: self.parse()?,
+            v_accuracy: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -483,19 +477,19 @@ pub struct MsgBaselineNEDDepA {
     pub flags: u8,
 }
 
-impl MsgBaselineNEDDepA {
+impl SbpParse<MsgBaselineNEDDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineNEDDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgBaselineNEDDepA> {
         Ok( MsgBaselineNEDDepA{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            n: _buf.read_i32::<LittleEndian>()?,
-            e: _buf.read_i32::<LittleEndian>()?,
-            d: _buf.read_i32::<LittleEndian>()?,
-            h_accuracy: _buf.read_u16::<LittleEndian>()?,
-            v_accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            n: self.parse()?,
+            e: self.parse()?,
+            d: self.parse()?,
+            h_accuracy: self.parse()?,
+            v_accuracy: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -573,18 +567,18 @@ pub struct MsgDops {
     pub flags: u8,
 }
 
-impl MsgDops {
+impl SbpParse<MsgDops> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDops, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgDops> {
         Ok( MsgDops{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            gdop: _buf.read_u16::<LittleEndian>()?,
-            pdop: _buf.read_u16::<LittleEndian>()?,
-            tdop: _buf.read_u16::<LittleEndian>()?,
-            hdop: _buf.read_u16::<LittleEndian>()?,
-            vdop: _buf.read_u16::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            gdop: self.parse()?,
+            pdop: self.parse()?,
+            tdop: self.parse()?,
+            hdop: self.parse()?,
+            vdop: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -657,17 +651,17 @@ pub struct MsgDopsDepA {
     pub vdop: u16,
 }
 
-impl MsgDopsDepA {
+impl SbpParse<MsgDopsDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDopsDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgDopsDepA> {
         Ok( MsgDopsDepA{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            gdop: _buf.read_u16::<LittleEndian>()?,
-            pdop: _buf.read_u16::<LittleEndian>()?,
-            tdop: _buf.read_u16::<LittleEndian>()?,
-            hdop: _buf.read_u16::<LittleEndian>()?,
-            vdop: _buf.read_u16::<LittleEndian>()?,
+            tow: self.parse()?,
+            gdop: self.parse()?,
+            pdop: self.parse()?,
+            tdop: self.parse()?,
+            hdop: self.parse()?,
+            vdop: self.parse()?,
         } )
     }
 }
@@ -745,15 +739,15 @@ pub struct MsgGPSTime {
     pub flags: u8,
 }
 
-impl MsgGPSTime {
+impl SbpParse<MsgGPSTime> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTime, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgGPSTime> {
         Ok( MsgGPSTime{
             sender_id: None,
-            wn: _buf.read_u16::<LittleEndian>()?,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            ns_residual: _buf.read_i32::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
+            wn: self.parse()?,
+            tow: self.parse()?,
+            ns_residual: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -827,15 +821,15 @@ pub struct MsgGPSTimeDepA {
     pub flags: u8,
 }
 
-impl MsgGPSTimeDepA {
+impl SbpParse<MsgGPSTimeDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTimeDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgGPSTimeDepA> {
         Ok( MsgGPSTimeDepA{
             sender_id: None,
-            wn: _buf.read_u16::<LittleEndian>()?,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            ns_residual: _buf.read_i32::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
+            wn: self.parse()?,
+            tow: self.parse()?,
+            ns_residual: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -909,15 +903,15 @@ pub struct MsgGPSTimeGnss {
     pub flags: u8,
 }
 
-impl MsgGPSTimeGnss {
+impl SbpParse<MsgGPSTimeGnss> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGPSTimeGnss, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgGPSTimeGnss> {
         Ok( MsgGPSTimeGnss{
             sender_id: None,
-            wn: _buf.read_u16::<LittleEndian>()?,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            ns_residual: _buf.read_i32::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
+            wn: self.parse()?,
+            tow: self.parse()?,
+            ns_residual: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -991,18 +985,18 @@ pub struct MsgPosECEF {
     pub flags: u8,
 }
 
-impl MsgPosECEF {
+impl SbpParse<MsgPosECEF> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEF, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgPosECEF> {
         Ok( MsgPosECEF{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_f64::<LittleEndian>()?,
-            y: _buf.read_f64::<LittleEndian>()?,
-            z: _buf.read_f64::<LittleEndian>()?,
-            accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            x: self.parse()?,
+            y: self.parse()?,
+            z: self.parse()?,
+            accuracy: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -1093,23 +1087,23 @@ pub struct MsgPosECEFCov {
     pub flags: u8,
 }
 
-impl MsgPosECEFCov {
+impl SbpParse<MsgPosECEFCov> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFCov, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgPosECEFCov> {
         Ok( MsgPosECEFCov{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_f64::<LittleEndian>()?,
-            y: _buf.read_f64::<LittleEndian>()?,
-            z: _buf.read_f64::<LittleEndian>()?,
-            cov_x_x: _buf.read_f32::<LittleEndian>()?,
-            cov_x_y: _buf.read_f32::<LittleEndian>()?,
-            cov_x_z: _buf.read_f32::<LittleEndian>()?,
-            cov_y_y: _buf.read_f32::<LittleEndian>()?,
-            cov_y_z: _buf.read_f32::<LittleEndian>()?,
-            cov_z_z: _buf.read_f32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            x: self.parse()?,
+            y: self.parse()?,
+            z: self.parse()?,
+            cov_x_x: self.parse()?,
+            cov_x_y: self.parse()?,
+            cov_x_z: self.parse()?,
+            cov_y_y: self.parse()?,
+            cov_y_z: self.parse()?,
+            cov_z_z: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -1210,23 +1204,23 @@ pub struct MsgPosECEFCovGnss {
     pub flags: u8,
 }
 
-impl MsgPosECEFCovGnss {
+impl SbpParse<MsgPosECEFCovGnss> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFCovGnss, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgPosECEFCovGnss> {
         Ok( MsgPosECEFCovGnss{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_f64::<LittleEndian>()?,
-            y: _buf.read_f64::<LittleEndian>()?,
-            z: _buf.read_f64::<LittleEndian>()?,
-            cov_x_x: _buf.read_f32::<LittleEndian>()?,
-            cov_x_y: _buf.read_f32::<LittleEndian>()?,
-            cov_x_z: _buf.read_f32::<LittleEndian>()?,
-            cov_y_y: _buf.read_f32::<LittleEndian>()?,
-            cov_y_z: _buf.read_f32::<LittleEndian>()?,
-            cov_z_z: _buf.read_f32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            x: self.parse()?,
+            y: self.parse()?,
+            z: self.parse()?,
+            cov_x_x: self.parse()?,
+            cov_x_y: self.parse()?,
+            cov_x_z: self.parse()?,
+            cov_y_y: self.parse()?,
+            cov_y_z: self.parse()?,
+            cov_z_z: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -1316,18 +1310,18 @@ pub struct MsgPosECEFDepA {
     pub flags: u8,
 }
 
-impl MsgPosECEFDepA {
+impl SbpParse<MsgPosECEFDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgPosECEFDepA> {
         Ok( MsgPosECEFDepA{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_f64::<LittleEndian>()?,
-            y: _buf.read_f64::<LittleEndian>()?,
-            z: _buf.read_f64::<LittleEndian>()?,
-            accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            x: self.parse()?,
+            y: self.parse()?,
+            z: self.parse()?,
+            accuracy: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -1407,18 +1401,18 @@ pub struct MsgPosECEFGnss {
     pub flags: u8,
 }
 
-impl MsgPosECEFGnss {
+impl SbpParse<MsgPosECEFGnss> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosECEFGnss, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgPosECEFGnss> {
         Ok( MsgPosECEFGnss{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_f64::<LittleEndian>()?,
-            y: _buf.read_f64::<LittleEndian>()?,
-            z: _buf.read_f64::<LittleEndian>()?,
-            accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            x: self.parse()?,
+            y: self.parse()?,
+            z: self.parse()?,
+            accuracy: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -1500,19 +1494,19 @@ pub struct MsgPosLLH {
     pub flags: u8,
 }
 
-impl MsgPosLLH {
+impl SbpParse<MsgPosLLH> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLH, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgPosLLH> {
         Ok( MsgPosLLH{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            lat: _buf.read_f64::<LittleEndian>()?,
-            lon: _buf.read_f64::<LittleEndian>()?,
-            height: _buf.read_f64::<LittleEndian>()?,
-            h_accuracy: _buf.read_u16::<LittleEndian>()?,
-            v_accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            lat: self.parse()?,
+            lon: self.parse()?,
+            height: self.parse()?,
+            h_accuracy: self.parse()?,
+            v_accuracy: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -1604,23 +1598,23 @@ pub struct MsgPosLLHCov {
     pub flags: u8,
 }
 
-impl MsgPosLLHCov {
+impl SbpParse<MsgPosLLHCov> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHCov, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgPosLLHCov> {
         Ok( MsgPosLLHCov{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            lat: _buf.read_f64::<LittleEndian>()?,
-            lon: _buf.read_f64::<LittleEndian>()?,
-            height: _buf.read_f64::<LittleEndian>()?,
-            cov_n_n: _buf.read_f32::<LittleEndian>()?,
-            cov_n_e: _buf.read_f32::<LittleEndian>()?,
-            cov_n_d: _buf.read_f32::<LittleEndian>()?,
-            cov_e_e: _buf.read_f32::<LittleEndian>()?,
-            cov_e_d: _buf.read_f32::<LittleEndian>()?,
-            cov_d_d: _buf.read_f32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            lat: self.parse()?,
+            lon: self.parse()?,
+            height: self.parse()?,
+            cov_n_n: self.parse()?,
+            cov_n_e: self.parse()?,
+            cov_n_d: self.parse()?,
+            cov_e_e: self.parse()?,
+            cov_e_d: self.parse()?,
+            cov_d_d: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -1720,23 +1714,23 @@ pub struct MsgPosLLHCovGnss {
     pub flags: u8,
 }
 
-impl MsgPosLLHCovGnss {
+impl SbpParse<MsgPosLLHCovGnss> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHCovGnss, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgPosLLHCovGnss> {
         Ok( MsgPosLLHCovGnss{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            lat: _buf.read_f64::<LittleEndian>()?,
-            lon: _buf.read_f64::<LittleEndian>()?,
-            height: _buf.read_f64::<LittleEndian>()?,
-            cov_n_n: _buf.read_f32::<LittleEndian>()?,
-            cov_n_e: _buf.read_f32::<LittleEndian>()?,
-            cov_n_d: _buf.read_f32::<LittleEndian>()?,
-            cov_e_e: _buf.read_f32::<LittleEndian>()?,
-            cov_e_d: _buf.read_f32::<LittleEndian>()?,
-            cov_d_d: _buf.read_f32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            lat: self.parse()?,
+            lon: self.parse()?,
+            height: self.parse()?,
+            cov_n_n: self.parse()?,
+            cov_n_e: self.parse()?,
+            cov_n_d: self.parse()?,
+            cov_e_e: self.parse()?,
+            cov_e_d: self.parse()?,
+            cov_d_d: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -1828,19 +1822,19 @@ pub struct MsgPosLLHDepA {
     pub flags: u8,
 }
 
-impl MsgPosLLHDepA {
+impl SbpParse<MsgPosLLHDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgPosLLHDepA> {
         Ok( MsgPosLLHDepA{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            lat: _buf.read_f64::<LittleEndian>()?,
-            lon: _buf.read_f64::<LittleEndian>()?,
-            height: _buf.read_f64::<LittleEndian>()?,
-            h_accuracy: _buf.read_u16::<LittleEndian>()?,
-            v_accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            lat: self.parse()?,
+            lon: self.parse()?,
+            height: self.parse()?,
+            h_accuracy: self.parse()?,
+            v_accuracy: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -1924,19 +1918,19 @@ pub struct MsgPosLLHGnss {
     pub flags: u8,
 }
 
-impl MsgPosLLHGnss {
+impl SbpParse<MsgPosLLHGnss> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPosLLHGnss, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgPosLLHGnss> {
         Ok( MsgPosLLHGnss{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            lat: _buf.read_f64::<LittleEndian>()?,
-            lon: _buf.read_f64::<LittleEndian>()?,
-            height: _buf.read_f64::<LittleEndian>()?,
-            h_accuracy: _buf.read_u16::<LittleEndian>()?,
-            v_accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            lat: self.parse()?,
+            lon: self.parse()?,
+            height: self.parse()?,
+            h_accuracy: self.parse()?,
+            v_accuracy: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -2013,18 +2007,18 @@ pub struct MsgProtectionLevel {
     pub flags: u8,
 }
 
-impl MsgProtectionLevel {
+impl SbpParse<MsgProtectionLevel> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgProtectionLevel, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgProtectionLevel> {
         Ok( MsgProtectionLevel{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            vpl: _buf.read_u16::<LittleEndian>()?,
-            hpl: _buf.read_u16::<LittleEndian>()?,
-            lat: _buf.read_f64::<LittleEndian>()?,
-            lon: _buf.read_f64::<LittleEndian>()?,
-            height: _buf.read_f64::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            vpl: self.parse()?,
+            hpl: self.parse()?,
+            lat: self.parse()?,
+            lon: self.parse()?,
+            height: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -2102,20 +2096,20 @@ pub struct MsgUtcTime {
     pub ns: u32,
 }
 
-impl MsgUtcTime {
+impl SbpParse<MsgUtcTime> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUtcTime, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgUtcTime> {
         Ok( MsgUtcTime{
             sender_id: None,
-            flags: _buf.read_u8()?,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            year: _buf.read_u16::<LittleEndian>()?,
-            month: _buf.read_u8()?,
-            day: _buf.read_u8()?,
-            hours: _buf.read_u8()?,
-            minutes: _buf.read_u8()?,
-            seconds: _buf.read_u8()?,
-            ns: _buf.read_u32::<LittleEndian>()?,
+            flags: self.parse()?,
+            tow: self.parse()?,
+            year: self.parse()?,
+            month: self.parse()?,
+            day: self.parse()?,
+            hours: self.parse()?,
+            minutes: self.parse()?,
+            seconds: self.parse()?,
+            ns: self.parse()?,
         } )
     }
 }
@@ -2197,20 +2191,20 @@ pub struct MsgUtcTimeGnss {
     pub ns: u32,
 }
 
-impl MsgUtcTimeGnss {
+impl SbpParse<MsgUtcTimeGnss> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUtcTimeGnss, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgUtcTimeGnss> {
         Ok( MsgUtcTimeGnss{
             sender_id: None,
-            flags: _buf.read_u8()?,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            year: _buf.read_u16::<LittleEndian>()?,
-            month: _buf.read_u8()?,
-            day: _buf.read_u8()?,
-            hours: _buf.read_u8()?,
-            minutes: _buf.read_u8()?,
-            seconds: _buf.read_u8()?,
-            ns: _buf.read_u32::<LittleEndian>()?,
+            flags: self.parse()?,
+            tow: self.parse()?,
+            year: self.parse()?,
+            month: self.parse()?,
+            day: self.parse()?,
+            hours: self.parse()?,
+            minutes: self.parse()?,
+            seconds: self.parse()?,
+            ns: self.parse()?,
         } )
     }
 }
@@ -2304,23 +2298,23 @@ pub struct MsgVelBody {
     pub flags: u8,
 }
 
-impl MsgVelBody {
+impl SbpParse<MsgVelBody> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelBody, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgVelBody> {
         Ok( MsgVelBody{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_i32::<LittleEndian>()?,
-            y: _buf.read_i32::<LittleEndian>()?,
-            z: _buf.read_i32::<LittleEndian>()?,
-            cov_x_x: _buf.read_f32::<LittleEndian>()?,
-            cov_x_y: _buf.read_f32::<LittleEndian>()?,
-            cov_x_z: _buf.read_f32::<LittleEndian>()?,
-            cov_y_y: _buf.read_f32::<LittleEndian>()?,
-            cov_y_z: _buf.read_f32::<LittleEndian>()?,
-            cov_z_z: _buf.read_f32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            x: self.parse()?,
+            y: self.parse()?,
+            z: self.parse()?,
+            cov_x_x: self.parse()?,
+            cov_x_y: self.parse()?,
+            cov_x_z: self.parse()?,
+            cov_y_y: self.parse()?,
+            cov_y_z: self.parse()?,
+            cov_z_z: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -2405,18 +2399,18 @@ pub struct MsgVelECEF {
     pub flags: u8,
 }
 
-impl MsgVelECEF {
+impl SbpParse<MsgVelECEF> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEF, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgVelECEF> {
         Ok( MsgVelECEF{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_i32::<LittleEndian>()?,
-            y: _buf.read_i32::<LittleEndian>()?,
-            z: _buf.read_i32::<LittleEndian>()?,
-            accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            x: self.parse()?,
+            y: self.parse()?,
+            z: self.parse()?,
+            accuracy: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -2501,23 +2495,23 @@ pub struct MsgVelECEFCov {
     pub flags: u8,
 }
 
-impl MsgVelECEFCov {
+impl SbpParse<MsgVelECEFCov> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFCov, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgVelECEFCov> {
         Ok( MsgVelECEFCov{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_i32::<LittleEndian>()?,
-            y: _buf.read_i32::<LittleEndian>()?,
-            z: _buf.read_i32::<LittleEndian>()?,
-            cov_x_x: _buf.read_f32::<LittleEndian>()?,
-            cov_x_y: _buf.read_f32::<LittleEndian>()?,
-            cov_x_z: _buf.read_f32::<LittleEndian>()?,
-            cov_y_y: _buf.read_f32::<LittleEndian>()?,
-            cov_y_z: _buf.read_f32::<LittleEndian>()?,
-            cov_z_z: _buf.read_f32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            x: self.parse()?,
+            y: self.parse()?,
+            z: self.parse()?,
+            cov_x_x: self.parse()?,
+            cov_x_y: self.parse()?,
+            cov_x_z: self.parse()?,
+            cov_y_y: self.parse()?,
+            cov_y_z: self.parse()?,
+            cov_z_z: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -2612,23 +2606,23 @@ pub struct MsgVelECEFCovGnss {
     pub flags: u8,
 }
 
-impl MsgVelECEFCovGnss {
+impl SbpParse<MsgVelECEFCovGnss> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFCovGnss, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgVelECEFCovGnss> {
         Ok( MsgVelECEFCovGnss{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_i32::<LittleEndian>()?,
-            y: _buf.read_i32::<LittleEndian>()?,
-            z: _buf.read_i32::<LittleEndian>()?,
-            cov_x_x: _buf.read_f32::<LittleEndian>()?,
-            cov_x_y: _buf.read_f32::<LittleEndian>()?,
-            cov_x_z: _buf.read_f32::<LittleEndian>()?,
-            cov_y_y: _buf.read_f32::<LittleEndian>()?,
-            cov_y_z: _buf.read_f32::<LittleEndian>()?,
-            cov_z_z: _buf.read_f32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            x: self.parse()?,
+            y: self.parse()?,
+            z: self.parse()?,
+            cov_x_x: self.parse()?,
+            cov_x_y: self.parse()?,
+            cov_x_z: self.parse()?,
+            cov_y_y: self.parse()?,
+            cov_y_z: self.parse()?,
+            cov_z_z: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -2713,18 +2707,18 @@ pub struct MsgVelECEFDepA {
     pub flags: u8,
 }
 
-impl MsgVelECEFDepA {
+impl SbpParse<MsgVelECEFDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgVelECEFDepA> {
         Ok( MsgVelECEFDepA{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_i32::<LittleEndian>()?,
-            y: _buf.read_i32::<LittleEndian>()?,
-            z: _buf.read_i32::<LittleEndian>()?,
-            accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            x: self.parse()?,
+            y: self.parse()?,
+            z: self.parse()?,
+            accuracy: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -2799,18 +2793,18 @@ pub struct MsgVelECEFGnss {
     pub flags: u8,
 }
 
-impl MsgVelECEFGnss {
+impl SbpParse<MsgVelECEFGnss> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelECEFGnss, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgVelECEFGnss> {
         Ok( MsgVelECEFGnss{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_i32::<LittleEndian>()?,
-            y: _buf.read_i32::<LittleEndian>()?,
-            z: _buf.read_i32::<LittleEndian>()?,
-            accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            x: self.parse()?,
+            y: self.parse()?,
+            z: self.parse()?,
+            accuracy: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -2888,19 +2882,19 @@ pub struct MsgVelNED {
     pub flags: u8,
 }
 
-impl MsgVelNED {
+impl SbpParse<MsgVelNED> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNED, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgVelNED> {
         Ok( MsgVelNED{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            n: _buf.read_i32::<LittleEndian>()?,
-            e: _buf.read_i32::<LittleEndian>()?,
-            d: _buf.read_i32::<LittleEndian>()?,
-            h_accuracy: _buf.read_u16::<LittleEndian>()?,
-            v_accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            n: self.parse()?,
+            e: self.parse()?,
+            d: self.parse()?,
+            h_accuracy: self.parse()?,
+            v_accuracy: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -2990,23 +2984,23 @@ pub struct MsgVelNEDCov {
     pub flags: u8,
 }
 
-impl MsgVelNEDCov {
+impl SbpParse<MsgVelNEDCov> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDCov, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgVelNEDCov> {
         Ok( MsgVelNEDCov{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            n: _buf.read_i32::<LittleEndian>()?,
-            e: _buf.read_i32::<LittleEndian>()?,
-            d: _buf.read_i32::<LittleEndian>()?,
-            cov_n_n: _buf.read_f32::<LittleEndian>()?,
-            cov_n_e: _buf.read_f32::<LittleEndian>()?,
-            cov_n_d: _buf.read_f32::<LittleEndian>()?,
-            cov_e_e: _buf.read_f32::<LittleEndian>()?,
-            cov_e_d: _buf.read_f32::<LittleEndian>()?,
-            cov_d_d: _buf.read_f32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            n: self.parse()?,
+            e: self.parse()?,
+            d: self.parse()?,
+            cov_n_n: self.parse()?,
+            cov_n_e: self.parse()?,
+            cov_n_d: self.parse()?,
+            cov_e_e: self.parse()?,
+            cov_e_d: self.parse()?,
+            cov_d_d: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -3104,23 +3098,23 @@ pub struct MsgVelNEDCovGnss {
     pub flags: u8,
 }
 
-impl MsgVelNEDCovGnss {
+impl SbpParse<MsgVelNEDCovGnss> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDCovGnss, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgVelNEDCovGnss> {
         Ok( MsgVelNEDCovGnss{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            n: _buf.read_i32::<LittleEndian>()?,
-            e: _buf.read_i32::<LittleEndian>()?,
-            d: _buf.read_i32::<LittleEndian>()?,
-            cov_n_n: _buf.read_f32::<LittleEndian>()?,
-            cov_n_e: _buf.read_f32::<LittleEndian>()?,
-            cov_n_d: _buf.read_f32::<LittleEndian>()?,
-            cov_e_e: _buf.read_f32::<LittleEndian>()?,
-            cov_e_d: _buf.read_f32::<LittleEndian>()?,
-            cov_d_d: _buf.read_f32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            n: self.parse()?,
+            e: self.parse()?,
+            d: self.parse()?,
+            cov_n_n: self.parse()?,
+            cov_n_e: self.parse()?,
+            cov_n_d: self.parse()?,
+            cov_e_e: self.parse()?,
+            cov_e_d: self.parse()?,
+            cov_d_d: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -3208,19 +3202,19 @@ pub struct MsgVelNEDDepA {
     pub flags: u8,
 }
 
-impl MsgVelNEDDepA {
+impl SbpParse<MsgVelNEDDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgVelNEDDepA> {
         Ok( MsgVelNEDDepA{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            n: _buf.read_i32::<LittleEndian>()?,
-            e: _buf.read_i32::<LittleEndian>()?,
-            d: _buf.read_i32::<LittleEndian>()?,
-            h_accuracy: _buf.read_u16::<LittleEndian>()?,
-            v_accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            n: self.parse()?,
+            e: self.parse()?,
+            d: self.parse()?,
+            h_accuracy: self.parse()?,
+            v_accuracy: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -3300,19 +3294,19 @@ pub struct MsgVelNEDGnss {
     pub flags: u8,
 }
 
-impl MsgVelNEDGnss {
+impl SbpParse<MsgVelNEDGnss> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgVelNEDGnss, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgVelNEDGnss> {
         Ok( MsgVelNEDGnss{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            n: _buf.read_i32::<LittleEndian>()?,
-            e: _buf.read_i32::<LittleEndian>()?,
-            d: _buf.read_i32::<LittleEndian>()?,
-            h_accuracy: _buf.read_u16::<LittleEndian>()?,
-            v_accuracy: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            n: self.parse()?,
+            e: self.parse()?,
+            d: self.parse()?,
+            h_accuracy: self.parse()?,
+            v_accuracy: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }

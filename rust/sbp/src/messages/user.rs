@@ -15,17 +15,11 @@
 //! Messages reserved for use by the user.
 //!
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 /// User data
 ///
@@ -41,12 +35,12 @@ pub struct MsgUserData {
     pub contents: Vec<u8>,
 }
 
-impl MsgUserData {
+impl SbpParse<MsgUserData> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgUserData, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgUserData> {
         Ok( MsgUserData{
             sender_id: None,
-            contents: crate::parser::read_u8_array(_buf)?,
+            contents: self.parse()?,
         } )
     }
 }

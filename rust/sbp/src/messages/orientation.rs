@@ -14,17 +14,11 @@
 //****************************************************************************/
 //! Orientation Messages
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 /// Vehicle Body Frame instantaneous angular rates
 ///
@@ -55,16 +49,16 @@ pub struct MsgAngularRate {
     pub flags: u8,
 }
 
-impl MsgAngularRate {
+impl SbpParse<MsgAngularRate> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAngularRate, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgAngularRate> {
         Ok( MsgAngularRate{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            x: _buf.read_i32::<LittleEndian>()?,
-            y: _buf.read_i32::<LittleEndian>()?,
-            z: _buf.read_i32::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            x: self.parse()?,
+            y: self.parse()?,
+            z: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -130,15 +124,15 @@ pub struct MsgBaselineHeading {
     pub flags: u8,
 }
 
-impl MsgBaselineHeading {
+impl SbpParse<MsgBaselineHeading> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBaselineHeading, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgBaselineHeading> {
         Ok( MsgBaselineHeading{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            heading: _buf.read_u32::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            heading: self.parse()?,
+            n_sats: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -211,19 +205,19 @@ pub struct MsgOrientEuler {
     pub flags: u8,
 }
 
-impl MsgOrientEuler {
+impl SbpParse<MsgOrientEuler> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOrientEuler, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgOrientEuler> {
         Ok( MsgOrientEuler{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            roll: _buf.read_i32::<LittleEndian>()?,
-            pitch: _buf.read_i32::<LittleEndian>()?,
-            yaw: _buf.read_i32::<LittleEndian>()?,
-            roll_accuracy: _buf.read_f32::<LittleEndian>()?,
-            pitch_accuracy: _buf.read_f32::<LittleEndian>()?,
-            yaw_accuracy: _buf.read_f32::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            roll: self.parse()?,
+            pitch: self.parse()?,
+            yaw: self.parse()?,
+            roll_accuracy: self.parse()?,
+            pitch_accuracy: self.parse()?,
+            yaw_accuracy: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -308,21 +302,21 @@ pub struct MsgOrientQuat {
     pub flags: u8,
 }
 
-impl MsgOrientQuat {
+impl SbpParse<MsgOrientQuat> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOrientQuat, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgOrientQuat> {
         Ok( MsgOrientQuat{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            w: _buf.read_i32::<LittleEndian>()?,
-            x: _buf.read_i32::<LittleEndian>()?,
-            y: _buf.read_i32::<LittleEndian>()?,
-            z: _buf.read_i32::<LittleEndian>()?,
-            w_accuracy: _buf.read_f32::<LittleEndian>()?,
-            x_accuracy: _buf.read_f32::<LittleEndian>()?,
-            y_accuracy: _buf.read_f32::<LittleEndian>()?,
-            z_accuracy: _buf.read_f32::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            w: self.parse()?,
+            x: self.parse()?,
+            y: self.parse()?,
+            z: self.parse()?,
+            w_accuracy: self.parse()?,
+            x_accuracy: self.parse()?,
+            y_accuracy: self.parse()?,
+            z_accuracy: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }

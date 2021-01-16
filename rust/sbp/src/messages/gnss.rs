@@ -14,17 +14,11 @@
 //****************************************************************************/
 //! Various structs shared between modules
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 /// GNSS carrier phase measurement.
 ///
@@ -43,30 +37,13 @@ pub struct CarrierPhase {
     pub f: u8,
 }
 
-impl CarrierPhase {
+impl SbpParse<CarrierPhase> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<CarrierPhase, crate::Error> {
+    fn parse(&mut self) -> crate::Result<CarrierPhase> {
         Ok( CarrierPhase{
-            i: _buf.read_i32::<LittleEndian>()?,
-            f: _buf.read_u8()?,
+            i: self.parse()?,
+            f: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CarrierPhase>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(CarrierPhase::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[CarrierPhase; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(CarrierPhase::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -105,31 +82,14 @@ pub struct GPSTime {
     pub wn: u16,
 }
 
-impl GPSTime {
+impl SbpParse<GPSTime> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GPSTime, crate::Error> {
+    fn parse(&mut self) -> crate::Result<GPSTime> {
         Ok( GPSTime{
-            tow: _buf.read_u32::<LittleEndian>()?,
-            ns_residual: _buf.read_i32::<LittleEndian>()?,
-            wn: _buf.read_u16::<LittleEndian>()?,
+            tow: self.parse()?,
+            ns_residual: self.parse()?,
+            wn: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTime>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GPSTime::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[GPSTime; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(GPSTime::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -166,30 +126,13 @@ pub struct GPSTimeDep {
     pub wn: u16,
 }
 
-impl GPSTimeDep {
+impl SbpParse<GPSTimeDep> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GPSTimeDep, crate::Error> {
+    fn parse(&mut self) -> crate::Result<GPSTimeDep> {
         Ok( GPSTimeDep{
-            tow: _buf.read_u32::<LittleEndian>()?,
-            wn: _buf.read_u16::<LittleEndian>()?,
+            tow: self.parse()?,
+            wn: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTimeDep>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GPSTimeDep::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[GPSTimeDep; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(GPSTimeDep::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -224,30 +167,13 @@ pub struct GPSTimeSec {
     pub wn: u16,
 }
 
-impl GPSTimeSec {
+impl SbpParse<GPSTimeSec> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GPSTimeSec, crate::Error> {
+    fn parse(&mut self) -> crate::Result<GPSTimeSec> {
         Ok( GPSTimeSec{
-            tow: _buf.read_u32::<LittleEndian>()?,
-            wn: _buf.read_u16::<LittleEndian>()?,
+            tow: self.parse()?,
+            wn: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GPSTimeSec>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GPSTimeSec::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[GPSTimeSec; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(GPSTimeSec::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -281,30 +207,13 @@ pub struct GnssSignal {
     pub code: u8,
 }
 
-impl GnssSignal {
+impl SbpParse<GnssSignal> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GnssSignal, crate::Error> {
+    fn parse(&mut self) -> crate::Result<GnssSignal> {
         Ok( GnssSignal{
-            sat: _buf.read_u8()?,
-            code: _buf.read_u8()?,
+            sat: self.parse()?,
+            code: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssSignal>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GnssSignal::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[GnssSignal; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(GnssSignal::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -341,31 +250,14 @@ pub struct GnssSignalDep {
     pub reserved: u8,
 }
 
-impl GnssSignalDep {
+impl SbpParse<GnssSignalDep> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GnssSignalDep, crate::Error> {
+    fn parse(&mut self) -> crate::Result<GnssSignalDep> {
         Ok( GnssSignalDep{
-            sat: _buf.read_u16::<LittleEndian>()?,
-            code: _buf.read_u8()?,
-            reserved: _buf.read_u8()?,
+            sat: self.parse()?,
+            code: self.parse()?,
+            reserved: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssSignalDep>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GnssSignalDep::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[GnssSignalDep; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(GnssSignalDep::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -401,28 +293,13 @@ pub struct SvId {
     pub constellation: u8,
 }
 
-impl SvId {
+impl SbpParse<SvId> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<SvId, crate::Error> {
+    fn parse(&mut self) -> crate::Result<SvId> {
         Ok( SvId{
-            satId: _buf.read_u8()?,
-            constellation: _buf.read_u8()?,
+            satId: self.parse()?,
+            constellation: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SvId>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(SvId::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(buf: &mut &[u8]) -> Result<[SvId; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(SvId::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 

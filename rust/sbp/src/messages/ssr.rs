@@ -14,18 +14,12 @@
 //****************************************************************************/
 //! Precise State Space Representation (SSR) corrections format
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 use super::gnss::*;
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 /// SSR code biases corrections for a particular satellite.
 ///
@@ -42,30 +36,13 @@ pub struct CodeBiasesContent {
     pub value: i16,
 }
 
-impl CodeBiasesContent {
+impl SbpParse<CodeBiasesContent> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<CodeBiasesContent, crate::Error> {
+    fn parse(&mut self) -> crate::Result<CodeBiasesContent> {
         Ok( CodeBiasesContent{
-            code: _buf.read_u8()?,
-            value: _buf.read_i16::<LittleEndian>()?,
+            code: self.parse()?,
+            value: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CodeBiasesContent>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(CodeBiasesContent::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[CodeBiasesContent; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(CodeBiasesContent::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -109,34 +86,17 @@ pub struct GridDefinitionHeaderDepA {
     pub seq_num: u8,
 }
 
-impl GridDefinitionHeaderDepA {
+impl SbpParse<GridDefinitionHeaderDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GridDefinitionHeaderDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<GridDefinitionHeaderDepA> {
         Ok( GridDefinitionHeaderDepA{
-            region_size_inverse: _buf.read_u8()?,
-            area_width: _buf.read_u16::<LittleEndian>()?,
-            lat_nw_corner_enc: _buf.read_u16::<LittleEndian>()?,
-            lon_nw_corner_enc: _buf.read_u16::<LittleEndian>()?,
-            num_msgs: _buf.read_u8()?,
-            seq_num: _buf.read_u8()?,
+            region_size_inverse: self.parse()?,
+            area_width: self.parse()?,
+            lat_nw_corner_enc: self.parse()?,
+            lon_nw_corner_enc: self.parse()?,
+            num_msgs: self.parse()?,
+            seq_num: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GridDefinitionHeaderDepA>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GridDefinitionHeaderDepA::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[GridDefinitionHeaderDepA; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(GridDefinitionHeaderDepA::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -180,31 +140,14 @@ pub struct GridElement {
     pub stec_residuals: Vec<STECResidual>,
 }
 
-impl GridElement {
+impl SbpParse<GridElement> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GridElement, crate::Error> {
+    fn parse(&mut self) -> crate::Result<GridElement> {
         Ok( GridElement{
-            index: _buf.read_u16::<LittleEndian>()?,
-            tropo_delay_correction: TroposphericDelayCorrection::parse(_buf)?,
-            stec_residuals: STECResidual::parse_array(_buf)?,
+            index: self.parse()?,
+            tropo_delay_correction: self.parse()?,
+            stec_residuals: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GridElement>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GridElement::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[GridElement; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(GridElement::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -242,31 +185,14 @@ pub struct GridElementNoStd {
     pub stec_residuals: Vec<STECResidualNoStd>,
 }
 
-impl GridElementNoStd {
+impl SbpParse<GridElementNoStd> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GridElementNoStd, crate::Error> {
+    fn parse(&mut self) -> crate::Result<GridElementNoStd> {
         Ok( GridElementNoStd{
-            index: _buf.read_u16::<LittleEndian>()?,
-            tropo_delay_correction: TroposphericDelayCorrectionNoStd::parse(_buf)?,
-            stec_residuals: STECResidualNoStd::parse_array(_buf)?,
+            index: self.parse()?,
+            tropo_delay_correction: self.parse()?,
+            stec_residuals: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GridElementNoStd>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GridElementNoStd::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[GridElementNoStd; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(GridElementNoStd::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -317,36 +243,19 @@ pub struct GriddedCorrectionHeader {
     pub tropo_quality_indicator: u8,
 }
 
-impl GriddedCorrectionHeader {
+impl SbpParse<GriddedCorrectionHeader> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GriddedCorrectionHeader, crate::Error> {
+    fn parse(&mut self) -> crate::Result<GriddedCorrectionHeader> {
         Ok( GriddedCorrectionHeader{
-            tile_set_id: _buf.read_u16::<LittleEndian>()?,
-            tile_id: _buf.read_u16::<LittleEndian>()?,
-            time: GPSTimeSec::parse(_buf)?,
-            num_msgs: _buf.read_u16::<LittleEndian>()?,
-            seq_num: _buf.read_u16::<LittleEndian>()?,
-            update_interval: _buf.read_u8()?,
-            iod_atmo: _buf.read_u8()?,
-            tropo_quality_indicator: _buf.read_u8()?,
+            tile_set_id: self.parse()?,
+            tile_id: self.parse()?,
+            time: self.parse()?,
+            num_msgs: self.parse()?,
+            seq_num: self.parse()?,
+            update_interval: self.parse()?,
+            iod_atmo: self.parse()?,
+            tropo_quality_indicator: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GriddedCorrectionHeader>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GriddedCorrectionHeader::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[GriddedCorrectionHeader; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(GriddedCorrectionHeader::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -403,34 +312,17 @@ pub struct GriddedCorrectionHeaderDepA {
     pub tropo_quality_indicator: u8,
 }
 
-impl GriddedCorrectionHeaderDepA {
+impl SbpParse<GriddedCorrectionHeaderDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GriddedCorrectionHeaderDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<GriddedCorrectionHeaderDepA> {
         Ok( GriddedCorrectionHeaderDepA{
-            time: GPSTimeSec::parse(_buf)?,
-            num_msgs: _buf.read_u16::<LittleEndian>()?,
-            seq_num: _buf.read_u16::<LittleEndian>()?,
-            update_interval: _buf.read_u8()?,
-            iod_atmo: _buf.read_u8()?,
-            tropo_quality_indicator: _buf.read_u8()?,
+            time: self.parse()?,
+            num_msgs: self.parse()?,
+            seq_num: self.parse()?,
+            update_interval: self.parse()?,
+            iod_atmo: self.parse()?,
+            tropo_quality_indicator: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GriddedCorrectionHeaderDepA>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GriddedCorrectionHeaderDepA::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[GriddedCorrectionHeaderDepA; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(GriddedCorrectionHeaderDepA::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -483,16 +375,16 @@ pub struct MsgSsrCodeBiases {
     pub biases: Vec<CodeBiasesContent>,
 }
 
-impl MsgSsrCodeBiases {
+impl SbpParse<MsgSsrCodeBiases> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrCodeBiases, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSsrCodeBiases> {
         Ok( MsgSsrCodeBiases{
             sender_id: None,
-            time: GPSTimeSec::parse(_buf)?,
-            sid: GnssSignal::parse(_buf)?,
-            update_interval: _buf.read_u8()?,
-            iod_ssr: _buf.read_u8()?,
-            biases: CodeBiasesContent::parse_array(_buf)?,
+            time: self.parse()?,
+            sid: self.parse()?,
+            update_interval: self.parse()?,
+            iod_ssr: self.parse()?,
+            biases: self.parse()?,
         } )
     }
 }
@@ -553,13 +445,13 @@ pub struct MsgSsrGriddedCorrection {
     pub element: GridElement,
 }
 
-impl MsgSsrGriddedCorrection {
+impl SbpParse<MsgSsrGriddedCorrection> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGriddedCorrection, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSsrGriddedCorrection> {
         Ok( MsgSsrGriddedCorrection{
             sender_id: None,
-            header: GriddedCorrectionHeader::parse(_buf)?,
-            element: GridElement::parse(_buf)?,
+            header: self.parse()?,
+            element: self.parse()?,
         } )
     }
 }
@@ -609,13 +501,13 @@ pub struct MsgSsrGriddedCorrectionDepA {
     pub element: GridElement,
 }
 
-impl MsgSsrGriddedCorrectionDepA {
+impl SbpParse<MsgSsrGriddedCorrectionDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGriddedCorrectionDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSsrGriddedCorrectionDepA> {
         Ok( MsgSsrGriddedCorrectionDepA{
             sender_id: None,
-            header: GriddedCorrectionHeaderDepA::parse(_buf)?,
-            element: GridElement::parse(_buf)?,
+            header: self.parse()?,
+            element: self.parse()?,
         } )
     }
 }
@@ -664,13 +556,13 @@ pub struct MsgSsrGriddedCorrectionNoStdDepA {
     pub element: GridElementNoStd,
 }
 
-impl MsgSsrGriddedCorrectionNoStdDepA {
+impl SbpParse<MsgSsrGriddedCorrectionNoStdDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGriddedCorrectionNoStdDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSsrGriddedCorrectionNoStdDepA> {
         Ok( MsgSsrGriddedCorrectionNoStdDepA{
             sender_id: None,
-            header: GriddedCorrectionHeaderDepA::parse(_buf)?,
-            element: GridElementNoStd::parse(_buf)?,
+            header: self.parse()?,
+            element: self.parse()?,
         } )
     }
 }
@@ -722,13 +614,13 @@ pub struct MsgSsrGridDefinitionDepA {
     pub rle_list: Vec<u8>,
 }
 
-impl MsgSsrGridDefinitionDepA {
+impl SbpParse<MsgSsrGridDefinitionDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrGridDefinitionDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSsrGridDefinitionDepA> {
         Ok( MsgSsrGridDefinitionDepA{
             sender_id: None,
-            header: GridDefinitionHeaderDepA::parse(_buf)?,
-            rle_list: crate::parser::read_u8_array(_buf)?,
+            header: self.parse()?,
+            rle_list: self.parse()?,
         } )
     }
 }
@@ -810,25 +702,25 @@ pub struct MsgSsrOrbitClock {
     pub c2: i32,
 }
 
-impl MsgSsrOrbitClock {
+impl SbpParse<MsgSsrOrbitClock> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrOrbitClock, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSsrOrbitClock> {
         Ok( MsgSsrOrbitClock{
             sender_id: None,
-            time: GPSTimeSec::parse(_buf)?,
-            sid: GnssSignal::parse(_buf)?,
-            update_interval: _buf.read_u8()?,
-            iod_ssr: _buf.read_u8()?,
-            iod: _buf.read_u32::<LittleEndian>()?,
-            radial: _buf.read_i32::<LittleEndian>()?,
-            along: _buf.read_i32::<LittleEndian>()?,
-            cross: _buf.read_i32::<LittleEndian>()?,
-            dot_radial: _buf.read_i32::<LittleEndian>()?,
-            dot_along: _buf.read_i32::<LittleEndian>()?,
-            dot_cross: _buf.read_i32::<LittleEndian>()?,
-            c0: _buf.read_i32::<LittleEndian>()?,
-            c1: _buf.read_i32::<LittleEndian>()?,
-            c2: _buf.read_i32::<LittleEndian>()?,
+            time: self.parse()?,
+            sid: self.parse()?,
+            update_interval: self.parse()?,
+            iod_ssr: self.parse()?,
+            iod: self.parse()?,
+            radial: self.parse()?,
+            along: self.parse()?,
+            cross: self.parse()?,
+            dot_radial: self.parse()?,
+            dot_along: self.parse()?,
+            dot_cross: self.parse()?,
+            c0: self.parse()?,
+            c1: self.parse()?,
+            c2: self.parse()?,
         } )
     }
 }
@@ -927,25 +819,25 @@ pub struct MsgSsrOrbitClockDepA {
     pub c2: i32,
 }
 
-impl MsgSsrOrbitClockDepA {
+impl SbpParse<MsgSsrOrbitClockDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrOrbitClockDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSsrOrbitClockDepA> {
         Ok( MsgSsrOrbitClockDepA{
             sender_id: None,
-            time: GPSTimeSec::parse(_buf)?,
-            sid: GnssSignal::parse(_buf)?,
-            update_interval: _buf.read_u8()?,
-            iod_ssr: _buf.read_u8()?,
-            iod: _buf.read_u8()?,
-            radial: _buf.read_i32::<LittleEndian>()?,
-            along: _buf.read_i32::<LittleEndian>()?,
-            cross: _buf.read_i32::<LittleEndian>()?,
-            dot_radial: _buf.read_i32::<LittleEndian>()?,
-            dot_along: _buf.read_i32::<LittleEndian>()?,
-            dot_cross: _buf.read_i32::<LittleEndian>()?,
-            c0: _buf.read_i32::<LittleEndian>()?,
-            c1: _buf.read_i32::<LittleEndian>()?,
-            c2: _buf.read_i32::<LittleEndian>()?,
+            time: self.parse()?,
+            sid: self.parse()?,
+            update_interval: self.parse()?,
+            iod_ssr: self.parse()?,
+            iod: self.parse()?,
+            radial: self.parse()?,
+            along: self.parse()?,
+            cross: self.parse()?,
+            dot_radial: self.parse()?,
+            dot_along: self.parse()?,
+            dot_cross: self.parse()?,
+            c0: self.parse()?,
+            c1: self.parse()?,
+            c2: self.parse()?,
         } )
     }
 }
@@ -1043,20 +935,20 @@ pub struct MsgSsrPhaseBiases {
     pub biases: Vec<PhaseBiasesContent>,
 }
 
-impl MsgSsrPhaseBiases {
+impl SbpParse<MsgSsrPhaseBiases> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrPhaseBiases, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSsrPhaseBiases> {
         Ok( MsgSsrPhaseBiases{
             sender_id: None,
-            time: GPSTimeSec::parse(_buf)?,
-            sid: GnssSignal::parse(_buf)?,
-            update_interval: _buf.read_u8()?,
-            iod_ssr: _buf.read_u8()?,
-            dispersive_bias: _buf.read_u8()?,
-            mw_consistency: _buf.read_u8()?,
-            yaw: _buf.read_u16::<LittleEndian>()?,
-            yaw_rate: _buf.read_i8()?,
-            biases: PhaseBiasesContent::parse_array(_buf)?,
+            time: self.parse()?,
+            sid: self.parse()?,
+            update_interval: self.parse()?,
+            iod_ssr: self.parse()?,
+            dispersive_bias: self.parse()?,
+            mw_consistency: self.parse()?,
+            yaw: self.parse()?,
+            yaw_rate: self.parse()?,
+            biases: self.parse()?,
         } )
     }
 }
@@ -1128,13 +1020,13 @@ pub struct MsgSsrStecCorrection {
     pub stec_sat_list: Vec<STECSatElement>,
 }
 
-impl MsgSsrStecCorrection {
+impl SbpParse<MsgSsrStecCorrection> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrStecCorrection, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSsrStecCorrection> {
         Ok( MsgSsrStecCorrection{
             sender_id: None,
-            header: STECHeader::parse(_buf)?,
-            stec_sat_list: STECSatElement::parse_array(_buf)?,
+            header: self.parse()?,
+            stec_sat_list: self.parse()?,
         } )
     }
 }
@@ -1183,13 +1075,13 @@ pub struct MsgSsrStecCorrectionDepA {
     pub stec_sat_list: Vec<STECSatElement>,
 }
 
-impl MsgSsrStecCorrectionDepA {
+impl SbpParse<MsgSsrStecCorrectionDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrStecCorrectionDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSsrStecCorrectionDepA> {
         Ok( MsgSsrStecCorrectionDepA{
             sender_id: None,
-            header: STECHeaderDepA::parse(_buf)?,
-            stec_sat_list: STECSatElement::parse_array(_buf)?,
+            header: self.parse()?,
+            stec_sat_list: self.parse()?,
         } )
     }
 }
@@ -1283,20 +1175,20 @@ pub struct MsgSsrTileDefinition {
     pub bitmask: u64,
 }
 
-impl MsgSsrTileDefinition {
+impl SbpParse<MsgSsrTileDefinition> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrTileDefinition, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSsrTileDefinition> {
         Ok( MsgSsrTileDefinition{
             sender_id: None,
-            tile_set_id: _buf.read_u16::<LittleEndian>()?,
-            tile_id: _buf.read_u16::<LittleEndian>()?,
-            corner_nw_lat: _buf.read_i16::<LittleEndian>()?,
-            corner_nw_lon: _buf.read_i16::<LittleEndian>()?,
-            spacing_lat: _buf.read_u16::<LittleEndian>()?,
-            spacing_lon: _buf.read_u16::<LittleEndian>()?,
-            rows: _buf.read_u16::<LittleEndian>()?,
-            cols: _buf.read_u16::<LittleEndian>()?,
-            bitmask: _buf.read_u64::<LittleEndian>()?,
+            tile_set_id: self.parse()?,
+            tile_id: self.parse()?,
+            corner_nw_lat: self.parse()?,
+            corner_nw_lon: self.parse()?,
+            spacing_lat: self.parse()?,
+            spacing_lon: self.parse()?,
+            rows: self.parse()?,
+            cols: self.parse()?,
+            bitmask: self.parse()?,
         } )
     }
 }
@@ -1370,33 +1262,16 @@ pub struct PhaseBiasesContent {
     pub bias: i32,
 }
 
-impl PhaseBiasesContent {
+impl SbpParse<PhaseBiasesContent> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<PhaseBiasesContent, crate::Error> {
+    fn parse(&mut self) -> crate::Result<PhaseBiasesContent> {
         Ok( PhaseBiasesContent{
-            code: _buf.read_u8()?,
-            integer_indicator: _buf.read_u8()?,
-            widelane_integer_indicator: _buf.read_u8()?,
-            discontinuity_counter: _buf.read_u8()?,
-            bias: _buf.read_i32::<LittleEndian>()?,
+            code: self.parse()?,
+            integer_indicator: self.parse()?,
+            widelane_integer_indicator: self.parse()?,
+            discontinuity_counter: self.parse()?,
+            bias: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PhaseBiasesContent>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(PhaseBiasesContent::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[PhaseBiasesContent; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(PhaseBiasesContent::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -1448,35 +1323,18 @@ pub struct STECHeader {
     pub iod_atmo: u8,
 }
 
-impl STECHeader {
+impl SbpParse<STECHeader> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<STECHeader, crate::Error> {
+    fn parse(&mut self) -> crate::Result<STECHeader> {
         Ok( STECHeader{
-            tile_set_id: _buf.read_u16::<LittleEndian>()?,
-            tile_id: _buf.read_u16::<LittleEndian>()?,
-            time: GPSTimeSec::parse(_buf)?,
-            num_msgs: _buf.read_u8()?,
-            seq_num: _buf.read_u8()?,
-            update_interval: _buf.read_u8()?,
-            iod_atmo: _buf.read_u8()?,
+            tile_set_id: self.parse()?,
+            tile_id: self.parse()?,
+            time: self.parse()?,
+            num_msgs: self.parse()?,
+            seq_num: self.parse()?,
+            update_interval: self.parse()?,
+            iod_atmo: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECHeader>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(STECHeader::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[STECHeader; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(STECHeader::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -1528,33 +1386,16 @@ pub struct STECHeaderDepA {
     pub iod_atmo: u8,
 }
 
-impl STECHeaderDepA {
+impl SbpParse<STECHeaderDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<STECHeaderDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<STECHeaderDepA> {
         Ok( STECHeaderDepA{
-            time: GPSTimeSec::parse(_buf)?,
-            num_msgs: _buf.read_u8()?,
-            seq_num: _buf.read_u8()?,
-            update_interval: _buf.read_u8()?,
-            iod_atmo: _buf.read_u8()?,
+            time: self.parse()?,
+            num_msgs: self.parse()?,
+            seq_num: self.parse()?,
+            update_interval: self.parse()?,
+            iod_atmo: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECHeaderDepA>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(STECHeaderDepA::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[STECHeaderDepA; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(STECHeaderDepA::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -1596,31 +1437,14 @@ pub struct STECResidual {
     pub stddev: u8,
 }
 
-impl STECResidual {
+impl SbpParse<STECResidual> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<STECResidual, crate::Error> {
+    fn parse(&mut self) -> crate::Result<STECResidual> {
         Ok( STECResidual{
-            sv_id: SvId::parse(_buf)?,
-            residual: _buf.read_i16::<LittleEndian>()?,
-            stddev: _buf.read_u8()?,
+            sv_id: self.parse()?,
+            residual: self.parse()?,
+            stddev: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECResidual>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(STECResidual::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[STECResidual; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(STECResidual::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -1655,30 +1479,13 @@ pub struct STECResidualNoStd {
     pub residual: i16,
 }
 
-impl STECResidualNoStd {
+impl SbpParse<STECResidualNoStd> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<STECResidualNoStd, crate::Error> {
+    fn parse(&mut self) -> crate::Result<STECResidualNoStd> {
         Ok( STECResidualNoStd{
-            sv_id: SvId::parse(_buf)?,
-            residual: _buf.read_i16::<LittleEndian>()?,
+            sv_id: self.parse()?,
+            residual: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECResidualNoStd>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(STECResidualNoStd::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[STECResidualNoStd; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(STECResidualNoStd::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -1714,31 +1521,14 @@ pub struct STECSatElement {
     pub stec_coeff: [i16; 4],
 }
 
-impl STECSatElement {
+impl SbpParse<STECSatElement> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<STECSatElement, crate::Error> {
+    fn parse(&mut self) -> crate::Result<STECSatElement> {
         Ok( STECSatElement{
-            sv_id: SvId::parse(_buf)?,
-            stec_quality_indicator: _buf.read_u8()?,
-            stec_coeff: crate::parser::read_s16_array_fixed(_buf)?,
+            sv_id: self.parse()?,
+            stec_quality_indicator: self.parse()?,
+            stec_coeff: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECSatElement>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(STECSatElement::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[STECSatElement; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(STECSatElement::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -1776,31 +1566,14 @@ pub struct TroposphericDelayCorrection {
     pub stddev: u8,
 }
 
-impl TroposphericDelayCorrection {
+impl SbpParse<TroposphericDelayCorrection> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<TroposphericDelayCorrection, crate::Error> {
+    fn parse(&mut self) -> crate::Result<TroposphericDelayCorrection> {
         Ok( TroposphericDelayCorrection{
-            hydro: _buf.read_i16::<LittleEndian>()?,
-            wet: _buf.read_i8()?,
-            stddev: _buf.read_u8()?,
+            hydro: self.parse()?,
+            wet: self.parse()?,
+            stddev: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<TroposphericDelayCorrection>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(TroposphericDelayCorrection::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[TroposphericDelayCorrection; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(TroposphericDelayCorrection::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -1835,32 +1608,13 @@ pub struct TroposphericDelayCorrectionNoStd {
     pub wet: i8,
 }
 
-impl TroposphericDelayCorrectionNoStd {
+impl SbpParse<TroposphericDelayCorrectionNoStd> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<TroposphericDelayCorrectionNoStd, crate::Error> {
+    fn parse(&mut self) -> crate::Result<TroposphericDelayCorrectionNoStd> {
         Ok( TroposphericDelayCorrectionNoStd{
-            hydro: _buf.read_i16::<LittleEndian>()?,
-            wet: _buf.read_i8()?,
+            hydro: self.parse()?,
+            wet: self.parse()?,
         } )
-    }
-    pub fn parse_array(
-        buf: &mut &[u8],
-    ) -> Result<Vec<TroposphericDelayCorrectionNoStd>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(TroposphericDelayCorrectionNoStd::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[TroposphericDelayCorrectionNoStd; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(TroposphericDelayCorrectionNoStd::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 

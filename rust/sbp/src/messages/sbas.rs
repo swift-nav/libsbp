@@ -14,18 +14,12 @@
 //****************************************************************************/
 //! SBAS data
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 use super::gnss::*;
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 /// Raw SBAS data
 ///
@@ -47,15 +41,15 @@ pub struct MsgSbasRaw {
     pub data: [u8; 27],
 }
 
-impl MsgSbasRaw {
+impl SbpParse<MsgSbasRaw> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSbasRaw, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSbasRaw> {
         Ok( MsgSbasRaw{
             sender_id: None,
-            sid: GnssSignal::parse(_buf)?,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            message_type: _buf.read_u8()?,
-            data: crate::parser::read_u8_array_fixed(_buf)?,
+            sid: self.parse()?,
+            tow: self.parse()?,
+            message_type: self.parse()?,
+            data: self.parse()?,
         } )
     }
 }

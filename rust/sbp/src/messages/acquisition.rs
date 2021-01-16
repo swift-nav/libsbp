@@ -14,18 +14,12 @@
 //****************************************************************************/
 //! Satellite acquisition messages from the device.
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 use super::gnss::*;
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 /// Acq perfomance measurement and debug
 ///
@@ -63,40 +57,23 @@ pub struct AcqSvProfile {
     pub cp: u32,
 }
 
-impl AcqSvProfile {
+impl SbpParse<AcqSvProfile> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfile, crate::Error> {
+    fn parse(&mut self) -> crate::Result<AcqSvProfile> {
         Ok( AcqSvProfile{
-            job_type: _buf.read_u8()?,
-            status: _buf.read_u8()?,
-            cn0: _buf.read_u16::<LittleEndian>()?,
-            int_time: _buf.read_u8()?,
-            sid: GnssSignal::parse(_buf)?,
-            bin_width: _buf.read_u16::<LittleEndian>()?,
-            timestamp: _buf.read_u32::<LittleEndian>()?,
-            time_spent: _buf.read_u32::<LittleEndian>()?,
-            cf_min: _buf.read_i32::<LittleEndian>()?,
-            cf_max: _buf.read_i32::<LittleEndian>()?,
-            cf: _buf.read_i32::<LittleEndian>()?,
-            cp: _buf.read_u32::<LittleEndian>()?,
+            job_type: self.parse()?,
+            status: self.parse()?,
+            cn0: self.parse()?,
+            int_time: self.parse()?,
+            sid: self.parse()?,
+            bin_width: self.parse()?,
+            timestamp: self.parse()?,
+            time_spent: self.parse()?,
+            cf_min: self.parse()?,
+            cf_max: self.parse()?,
+            cf: self.parse()?,
+            cp: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfile>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(AcqSvProfile::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[AcqSvProfile; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(AcqSvProfile::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -169,40 +146,23 @@ pub struct AcqSvProfileDep {
     pub cp: u32,
 }
 
-impl AcqSvProfileDep {
+impl SbpParse<AcqSvProfileDep> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<AcqSvProfileDep, crate::Error> {
+    fn parse(&mut self) -> crate::Result<AcqSvProfileDep> {
         Ok( AcqSvProfileDep{
-            job_type: _buf.read_u8()?,
-            status: _buf.read_u8()?,
-            cn0: _buf.read_u16::<LittleEndian>()?,
-            int_time: _buf.read_u8()?,
-            sid: GnssSignalDep::parse(_buf)?,
-            bin_width: _buf.read_u16::<LittleEndian>()?,
-            timestamp: _buf.read_u32::<LittleEndian>()?,
-            time_spent: _buf.read_u32::<LittleEndian>()?,
-            cf_min: _buf.read_i32::<LittleEndian>()?,
-            cf_max: _buf.read_i32::<LittleEndian>()?,
-            cf: _buf.read_i32::<LittleEndian>()?,
-            cp: _buf.read_u32::<LittleEndian>()?,
+            job_type: self.parse()?,
+            status: self.parse()?,
+            cn0: self.parse()?,
+            int_time: self.parse()?,
+            sid: self.parse()?,
+            bin_width: self.parse()?,
+            timestamp: self.parse()?,
+            time_spent: self.parse()?,
+            cf_min: self.parse()?,
+            cf_max: self.parse()?,
+            cf: self.parse()?,
+            cp: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AcqSvProfileDep>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(AcqSvProfileDep::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[AcqSvProfileDep; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(AcqSvProfileDep::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -264,15 +224,15 @@ pub struct MsgAcqResult {
     pub sid: GnssSignal,
 }
 
-impl MsgAcqResult {
+impl SbpParse<MsgAcqResult> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResult, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgAcqResult> {
         Ok( MsgAcqResult{
             sender_id: None,
-            cn0: _buf.read_f32::<LittleEndian>()?,
-            cp: _buf.read_f32::<LittleEndian>()?,
-            cf: _buf.read_f32::<LittleEndian>()?,
-            sid: GnssSignal::parse(_buf)?,
+            cn0: self.parse()?,
+            cp: self.parse()?,
+            cf: self.parse()?,
+            sid: self.parse()?,
         } )
     }
 }
@@ -335,15 +295,15 @@ pub struct MsgAcqResultDepA {
     pub prn: u8,
 }
 
-impl MsgAcqResultDepA {
+impl SbpParse<MsgAcqResultDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgAcqResultDepA> {
         Ok( MsgAcqResultDepA{
             sender_id: None,
-            snr: _buf.read_f32::<LittleEndian>()?,
-            cp: _buf.read_f32::<LittleEndian>()?,
-            cf: _buf.read_f32::<LittleEndian>()?,
-            prn: _buf.read_u8()?,
+            snr: self.parse()?,
+            cp: self.parse()?,
+            cf: self.parse()?,
+            prn: self.parse()?,
         } )
     }
 }
@@ -405,15 +365,15 @@ pub struct MsgAcqResultDepB {
     pub sid: GnssSignalDep,
 }
 
-impl MsgAcqResultDepB {
+impl SbpParse<MsgAcqResultDepB> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepB, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgAcqResultDepB> {
         Ok( MsgAcqResultDepB{
             sender_id: None,
-            snr: _buf.read_f32::<LittleEndian>()?,
-            cp: _buf.read_f32::<LittleEndian>()?,
-            cf: _buf.read_f32::<LittleEndian>()?,
-            sid: GnssSignalDep::parse(_buf)?,
+            snr: self.parse()?,
+            cp: self.parse()?,
+            cf: self.parse()?,
+            sid: self.parse()?,
         } )
     }
 }
@@ -474,15 +434,15 @@ pub struct MsgAcqResultDepC {
     pub sid: GnssSignalDep,
 }
 
-impl MsgAcqResultDepC {
+impl SbpParse<MsgAcqResultDepC> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqResultDepC, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgAcqResultDepC> {
         Ok( MsgAcqResultDepC{
             sender_id: None,
-            cn0: _buf.read_f32::<LittleEndian>()?,
-            cp: _buf.read_f32::<LittleEndian>()?,
-            cf: _buf.read_f32::<LittleEndian>()?,
-            sid: GnssSignalDep::parse(_buf)?,
+            cn0: self.parse()?,
+            cp: self.parse()?,
+            cf: self.parse()?,
+            sid: self.parse()?,
         } )
     }
 }
@@ -538,12 +498,12 @@ pub struct MsgAcqSvProfile {
     pub acq_sv_profile: Vec<AcqSvProfile>,
 }
 
-impl MsgAcqSvProfile {
+impl SbpParse<MsgAcqSvProfile> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfile, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgAcqSvProfile> {
         Ok( MsgAcqSvProfile{
             sender_id: None,
-            acq_sv_profile: AcqSvProfile::parse_array(_buf)?,
+            acq_sv_profile: self.parse()?,
         } )
     }
 }
@@ -592,12 +552,12 @@ pub struct MsgAcqSvProfileDep {
     pub acq_sv_profile: Vec<AcqSvProfileDep>,
 }
 
-impl MsgAcqSvProfileDep {
+impl SbpParse<MsgAcqSvProfileDep> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAcqSvProfileDep, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgAcqSvProfileDep> {
         Ok( MsgAcqSvProfileDep{
             sender_id: None,
-            acq_sv_profile: AcqSvProfileDep::parse_array(_buf)?,
+            acq_sv_profile: self.parse()?,
         } )
     }
 }

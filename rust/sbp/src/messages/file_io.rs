@@ -22,17 +22,11 @@
 //! host request and the device response.
 //!
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 /// Request advice on the optimal configuration for FileIO.
 ///
@@ -50,12 +44,12 @@ pub struct MsgFileioConfigReq {
     pub sequence: u32,
 }
 
-impl MsgFileioConfigReq {
+impl SbpParse<MsgFileioConfigReq> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigReq, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgFileioConfigReq> {
         Ok( MsgFileioConfigReq{
             sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
+            sequence: self.parse()?,
         } )
     }
 }
@@ -114,15 +108,15 @@ pub struct MsgFileioConfigResp {
     pub fileio_version: u32,
 }
 
-impl MsgFileioConfigResp {
+impl SbpParse<MsgFileioConfigResp> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioConfigResp, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgFileioConfigResp> {
         Ok( MsgFileioConfigResp{
             sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
-            window_size: _buf.read_u32::<LittleEndian>()?,
-            batch_size: _buf.read_u32::<LittleEndian>()?,
-            fileio_version: _buf.read_u32::<LittleEndian>()?,
+            sequence: self.parse()?,
+            window_size: self.parse()?,
+            batch_size: self.parse()?,
+            fileio_version: self.parse()?,
         } )
     }
 }
@@ -187,17 +181,17 @@ pub struct MsgFileioReadDirReq {
     /// The offset to skip the first n elements of the file list
     pub offset: u32,
     /// Name of the directory to list
-    pub dirname: SbpString,
+    pub dirname: UnboundedSbpString,
 }
 
-impl MsgFileioReadDirReq {
+impl SbpParse<MsgFileioReadDirReq> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadDirReq, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgFileioReadDirReq> {
         Ok( MsgFileioReadDirReq{
             sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
-            offset: _buf.read_u32::<LittleEndian>()?,
-            dirname: crate::parser::read_string(_buf)?,
+            sequence: self.parse()?,
+            offset: self.parse()?,
+            dirname: self.parse()?,
         } )
     }
 }
@@ -257,13 +251,13 @@ pub struct MsgFileioReadDirResp {
     pub contents: Vec<u8>,
 }
 
-impl MsgFileioReadDirResp {
+impl SbpParse<MsgFileioReadDirResp> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadDirResp, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgFileioReadDirResp> {
         Ok( MsgFileioReadDirResp{
             sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
-            contents: crate::parser::read_u8_array(_buf)?,
+            sequence: self.parse()?,
+            contents: self.parse()?,
         } )
     }
 }
@@ -324,18 +318,18 @@ pub struct MsgFileioReadReq {
     /// Chunk size to read
     pub chunk_size: u8,
     /// Name of the file to read from
-    pub filename: SbpString,
+    pub filename: UnboundedSbpString,
 }
 
-impl MsgFileioReadReq {
+impl SbpParse<MsgFileioReadReq> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadReq, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgFileioReadReq> {
         Ok( MsgFileioReadReq{
             sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
-            offset: _buf.read_u32::<LittleEndian>()?,
-            chunk_size: _buf.read_u8()?,
-            filename: crate::parser::read_string(_buf)?,
+            sequence: self.parse()?,
+            offset: self.parse()?,
+            chunk_size: self.parse()?,
+            filename: self.parse()?,
         } )
     }
 }
@@ -396,13 +390,13 @@ pub struct MsgFileioReadResp {
     pub contents: Vec<u8>,
 }
 
-impl MsgFileioReadResp {
+impl SbpParse<MsgFileioReadResp> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioReadResp, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgFileioReadResp> {
         Ok( MsgFileioReadResp{
             sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
-            contents: crate::parser::read_u8_array(_buf)?,
+            sequence: self.parse()?,
+            contents: self.parse()?,
         } )
     }
 }
@@ -453,15 +447,15 @@ impl crate::serialize::SbpSerialize for MsgFileioReadResp {
 pub struct MsgFileioRemove {
     pub sender_id: Option<u16>,
     /// Name of the file to delete
-    pub filename: SbpString,
+    pub filename: UnboundedSbpString,
 }
 
-impl MsgFileioRemove {
+impl SbpParse<MsgFileioRemove> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioRemove, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgFileioRemove> {
         Ok( MsgFileioRemove{
             sender_id: None,
-            filename: crate::parser::read_string(_buf)?,
+            filename: self.parse()?,
         } )
     }
 }
@@ -518,20 +512,20 @@ pub struct MsgFileioWriteReq {
     /// Offset into the file at which to start writing in bytes
     pub offset: u32,
     /// Name of the file to write to
-    pub filename: SbpString,
+    pub filename: UnboundedSbpString,
     /// Variable-length array of data to write
     pub data: Vec<u8>,
 }
 
-impl MsgFileioWriteReq {
+impl SbpParse<MsgFileioWriteReq> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteReq, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgFileioWriteReq> {
         Ok( MsgFileioWriteReq{
             sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
-            offset: _buf.read_u32::<LittleEndian>()?,
-            filename: crate::parser::read_string(_buf)?,
-            data: crate::parser::read_u8_array(_buf)?,
+            sequence: self.parse()?,
+            offset: self.parse()?,
+            filename: self.parse()?,
+            data: self.parse()?,
         } )
     }
 }
@@ -590,12 +584,12 @@ pub struct MsgFileioWriteResp {
     pub sequence: u32,
 }
 
-impl MsgFileioWriteResp {
+impl SbpParse<MsgFileioWriteResp> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFileioWriteResp, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgFileioWriteResp> {
         Ok( MsgFileioWriteResp{
             sender_id: None,
-            sequence: _buf.read_u32::<LittleEndian>()?,
+            sequence: self.parse()?,
         } )
     }
 }

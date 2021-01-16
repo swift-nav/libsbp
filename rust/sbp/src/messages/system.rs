@@ -14,17 +14,11 @@
 //****************************************************************************/
 //! Standardized system messages from Swift Navigation devices.
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 /// Experimental telemetry message
 ///
@@ -41,16 +35,16 @@ pub struct MsgCsacTelemetry {
     /// defined.
     pub id: u8,
     /// Comma separated list of values as defined by the index
-    pub telemetry: SbpString,
+    pub telemetry: UnboundedSbpString,
 }
 
-impl MsgCsacTelemetry {
+impl SbpParse<MsgCsacTelemetry> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCsacTelemetry, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgCsacTelemetry> {
         Ok( MsgCsacTelemetry{
             sender_id: None,
-            id: _buf.read_u8()?,
-            telemetry: crate::parser::read_string(_buf)?,
+            id: self.parse()?,
+            telemetry: self.parse()?,
         } )
     }
 }
@@ -103,16 +97,16 @@ pub struct MsgCsacTelemetryLabels {
     /// defined.
     pub id: u8,
     /// Comma separated list of telemetry field values
-    pub telemetry_labels: SbpString,
+    pub telemetry_labels: UnboundedSbpString,
 }
 
-impl MsgCsacTelemetryLabels {
+impl SbpParse<MsgCsacTelemetryLabels> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgCsacTelemetryLabels, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgCsacTelemetryLabels> {
         Ok( MsgCsacTelemetryLabels{
             sender_id: None,
-            id: _buf.read_u8()?,
-            telemetry_labels: crate::parser::read_string(_buf)?,
+            id: self.parse()?,
+            telemetry_labels: self.parse()?,
         } )
     }
 }
@@ -168,18 +162,18 @@ pub struct MsgDgnssStatus {
     /// Number of signals from base station
     pub num_signals: u8,
     /// Corrections source string
-    pub source: SbpString,
+    pub source: UnboundedSbpString,
 }
 
-impl MsgDgnssStatus {
+impl SbpParse<MsgDgnssStatus> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgDgnssStatus, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgDgnssStatus> {
         Ok( MsgDgnssStatus{
             sender_id: None,
-            flags: _buf.read_u8()?,
-            latency: _buf.read_u16::<LittleEndian>()?,
-            num_signals: _buf.read_u8()?,
-            source: crate::parser::read_string(_buf)?,
+            flags: self.parse()?,
+            latency: self.parse()?,
+            num_signals: self.parse()?,
+            source: self.parse()?,
         } )
     }
 }
@@ -242,15 +236,15 @@ pub struct MsgGnssTimeOffset {
     pub flags: u8,
 }
 
-impl MsgGnssTimeOffset {
+impl SbpParse<MsgGnssTimeOffset> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGnssTimeOffset, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgGnssTimeOffset> {
         Ok( MsgGnssTimeOffset{
             sender_id: None,
-            weeks: _buf.read_i16::<LittleEndian>()?,
-            milliseconds: _buf.read_i32::<LittleEndian>()?,
-            microseconds: _buf.read_i16::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
+            weeks: self.parse()?,
+            milliseconds: self.parse()?,
+            microseconds: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -313,15 +307,15 @@ pub struct MsgGroupMeta {
     pub group_msgs: Vec<u16>,
 }
 
-impl MsgGroupMeta {
+impl SbpParse<MsgGroupMeta> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupMeta, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgGroupMeta> {
         Ok( MsgGroupMeta{
             sender_id: None,
-            group_id: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-            n_group_msgs: _buf.read_u8()?,
-            group_msgs: crate::parser::read_u16_array(_buf)?,
+            group_id: self.parse()?,
+            flags: self.parse()?,
+            n_group_msgs: self.parse()?,
+            group_msgs: self.parse()?,
         } )
     }
 }
@@ -385,12 +379,12 @@ pub struct MsgHeartbeat {
     pub flags: u32,
 }
 
-impl MsgHeartbeat {
+impl SbpParse<MsgHeartbeat> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgHeartbeat, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgHeartbeat> {
         Ok( MsgHeartbeat{
             sender_id: None,
-            flags: _buf.read_u32::<LittleEndian>()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -440,12 +434,12 @@ pub struct MsgInsStatus {
     pub flags: u32,
 }
 
-impl MsgInsStatus {
+impl SbpParse<MsgInsStatus> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgInsStatus, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgInsStatus> {
         Ok( MsgInsStatus{
             sender_id: None,
-            flags: _buf.read_u32::<LittleEndian>()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -507,18 +501,18 @@ pub struct MsgInsUpdates {
     pub zerovel: u8,
 }
 
-impl MsgInsUpdates {
+impl SbpParse<MsgInsUpdates> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgInsUpdates, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgInsUpdates> {
         Ok( MsgInsUpdates{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            gnsspos: _buf.read_u8()?,
-            gnssvel: _buf.read_u8()?,
-            wheelticks: _buf.read_u8()?,
-            speed: _buf.read_u8()?,
-            nhc: _buf.read_u8()?,
-            zerovel: _buf.read_u8()?,
+            tow: self.parse()?,
+            gnsspos: self.parse()?,
+            gnssvel: self.parse()?,
+            wheelticks: self.parse()?,
+            speed: self.parse()?,
+            nhc: self.parse()?,
+            zerovel: self.parse()?,
         } )
     }
 }
@@ -586,14 +580,14 @@ pub struct MsgStartup {
     pub reserved: u16,
 }
 
-impl MsgStartup {
+impl SbpParse<MsgStartup> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStartup, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgStartup> {
         Ok( MsgStartup{
             sender_id: None,
-            cause: _buf.read_u8()?,
-            startup_type: _buf.read_u8()?,
-            reserved: _buf.read_u16::<LittleEndian>()?,
+            cause: self.parse()?,
+            startup_type: self.parse()?,
+            reserved: self.parse()?,
         } )
     }
 }

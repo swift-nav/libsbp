@@ -14,17 +14,11 @@
 //****************************************************************************/
 //! Standardized Metadata messages for Fuzed Solution from Swift Navigation devices.
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 /// Instruments the physical type of GNSS sensor input to the fuzed solution.
 ///
@@ -39,29 +33,12 @@ pub struct GNSSInputType {
     pub flags: u8,
 }
 
-impl GNSSInputType {
+impl SbpParse<GNSSInputType> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GNSSInputType, crate::Error> {
+    fn parse(&mut self) -> crate::Result<GNSSInputType> {
         Ok( GNSSInputType{
-            flags: _buf.read_u8()?,
+            flags: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GNSSInputType>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GNSSInputType::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[GNSSInputType; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(GNSSInputType::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -91,29 +68,12 @@ pub struct IMUInputType {
     pub flags: u8,
 }
 
-impl IMUInputType {
+impl SbpParse<IMUInputType> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<IMUInputType, crate::Error> {
+    fn parse(&mut self) -> crate::Result<IMUInputType> {
         Ok( IMUInputType{
-            flags: _buf.read_u8()?,
+            flags: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<IMUInputType>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(IMUInputType::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[IMUInputType; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(IMUInputType::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -168,18 +128,18 @@ pub struct MsgSolnMeta {
     pub sol_in: Vec<SolutionInputType>,
 }
 
-impl MsgSolnMeta {
+impl SbpParse<MsgSolnMeta> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSolnMeta, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSolnMeta> {
         Ok( MsgSolnMeta{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            pdop: _buf.read_u16::<LittleEndian>()?,
-            hdop: _buf.read_u16::<LittleEndian>()?,
-            vdop: _buf.read_u16::<LittleEndian>()?,
-            age_corrections: _buf.read_u16::<LittleEndian>()?,
-            age_gnss: _buf.read_u32::<LittleEndian>()?,
-            sol_in: SolutionInputType::parse_array(_buf)?,
+            tow: self.parse()?,
+            pdop: self.parse()?,
+            hdop: self.parse()?,
+            vdop: self.parse()?,
+            age_corrections: self.parse()?,
+            age_gnss: self.parse()?,
+            sol_in: self.parse()?,
         } )
     }
 }
@@ -265,20 +225,20 @@ pub struct MsgSolnMetaDepA {
     pub sol_in: Vec<SolutionInputType>,
 }
 
-impl MsgSolnMetaDepA {
+impl SbpParse<MsgSolnMetaDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSolnMetaDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSolnMetaDepA> {
         Ok( MsgSolnMetaDepA{
             sender_id: None,
-            pdop: _buf.read_u16::<LittleEndian>()?,
-            hdop: _buf.read_u16::<LittleEndian>()?,
-            vdop: _buf.read_u16::<LittleEndian>()?,
-            n_sats: _buf.read_u8()?,
-            age_corrections: _buf.read_u16::<LittleEndian>()?,
-            alignment_status: _buf.read_u8()?,
-            last_used_gnss_pos_tow: _buf.read_u32::<LittleEndian>()?,
-            last_used_gnss_vel_tow: _buf.read_u32::<LittleEndian>()?,
-            sol_in: SolutionInputType::parse_array(_buf)?,
+            pdop: self.parse()?,
+            hdop: self.parse()?,
+            vdop: self.parse()?,
+            n_sats: self.parse()?,
+            age_corrections: self.parse()?,
+            alignment_status: self.parse()?,
+            last_used_gnss_pos_tow: self.parse()?,
+            last_used_gnss_vel_tow: self.parse()?,
+            sol_in: self.parse()?,
         } )
     }
 }
@@ -343,29 +303,12 @@ pub struct OdoInputType {
     pub flags: u8,
 }
 
-impl OdoInputType {
+impl SbpParse<OdoInputType> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<OdoInputType, crate::Error> {
+    fn parse(&mut self) -> crate::Result<OdoInputType> {
         Ok( OdoInputType{
-            flags: _buf.read_u8()?,
+            flags: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<OdoInputType>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(OdoInputType::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[OdoInputType; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(OdoInputType::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -401,30 +344,13 @@ pub struct SolutionInputType {
     pub flags: u8,
 }
 
-impl SolutionInputType {
+impl SbpParse<SolutionInputType> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<SolutionInputType, crate::Error> {
+    fn parse(&mut self) -> crate::Result<SolutionInputType> {
         Ok( SolutionInputType{
-            sensor_type: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
+            sensor_type: self.parse()?,
+            flags: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SolutionInputType>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(SolutionInputType::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[SolutionInputType; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(SolutionInputType::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 

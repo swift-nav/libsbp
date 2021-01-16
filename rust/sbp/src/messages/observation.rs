@@ -14,18 +14,12 @@
 //****************************************************************************/
 //! Satellite observation messages from the device.
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 use super::gnss::*;
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 #[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
 #[derive(Debug, Clone)]
@@ -54,34 +48,17 @@ pub struct AlmanacCommonContent {
     pub health_bits: u8,
 }
 
-impl AlmanacCommonContent {
+impl SbpParse<AlmanacCommonContent> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<AlmanacCommonContent, crate::Error> {
+    fn parse(&mut self) -> crate::Result<AlmanacCommonContent> {
         Ok( AlmanacCommonContent{
-            sid: GnssSignal::parse(_buf)?,
-            toa: GPSTimeSec::parse(_buf)?,
-            ura: _buf.read_f64::<LittleEndian>()?,
-            fit_interval: _buf.read_u32::<LittleEndian>()?,
-            valid: _buf.read_u8()?,
-            health_bits: _buf.read_u8()?,
+            sid: self.parse()?,
+            toa: self.parse()?,
+            ura: self.parse()?,
+            fit_interval: self.parse()?,
+            valid: self.parse()?,
+            health_bits: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AlmanacCommonContent>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(AlmanacCommonContent::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[AlmanacCommonContent; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(AlmanacCommonContent::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -135,34 +112,17 @@ pub struct AlmanacCommonContentDep {
     pub health_bits: u8,
 }
 
-impl AlmanacCommonContentDep {
+impl SbpParse<AlmanacCommonContentDep> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<AlmanacCommonContentDep, crate::Error> {
+    fn parse(&mut self) -> crate::Result<AlmanacCommonContentDep> {
         Ok( AlmanacCommonContentDep{
-            sid: GnssSignalDep::parse(_buf)?,
-            toa: GPSTimeSec::parse(_buf)?,
-            ura: _buf.read_f64::<LittleEndian>()?,
-            fit_interval: _buf.read_u32::<LittleEndian>()?,
-            valid: _buf.read_u8()?,
-            health_bits: _buf.read_u8()?,
+            sid: self.parse()?,
+            toa: self.parse()?,
+            ura: self.parse()?,
+            fit_interval: self.parse()?,
+            valid: self.parse()?,
+            health_bits: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<AlmanacCommonContentDep>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(AlmanacCommonContentDep::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[AlmanacCommonContentDep; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(AlmanacCommonContentDep::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -207,30 +167,13 @@ pub struct CarrierPhaseDepA {
     pub f: u8,
 }
 
-impl CarrierPhaseDepA {
+impl SbpParse<CarrierPhaseDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<CarrierPhaseDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<CarrierPhaseDepA> {
         Ok( CarrierPhaseDepA{
-            i: _buf.read_i32::<LittleEndian>()?,
-            f: _buf.read_u8()?,
+            i: self.parse()?,
+            f: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<CarrierPhaseDepA>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(CarrierPhaseDepA::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[CarrierPhaseDepA; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(CarrierPhaseDepA::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -266,30 +209,13 @@ pub struct Doppler {
     pub f: u8,
 }
 
-impl Doppler {
+impl SbpParse<Doppler> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<Doppler, crate::Error> {
+    fn parse(&mut self) -> crate::Result<Doppler> {
         Ok( Doppler{
-            i: _buf.read_i16::<LittleEndian>()?,
-            f: _buf.read_u8()?,
+            i: self.parse()?,
+            f: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<Doppler>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(Doppler::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[Doppler; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(Doppler::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -327,34 +253,17 @@ pub struct EphemerisCommonContent {
     pub health_bits: u8,
 }
 
-impl EphemerisCommonContent {
+impl SbpParse<EphemerisCommonContent> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<EphemerisCommonContent, crate::Error> {
+    fn parse(&mut self) -> crate::Result<EphemerisCommonContent> {
         Ok( EphemerisCommonContent{
-            sid: GnssSignal::parse(_buf)?,
-            toe: GPSTimeSec::parse(_buf)?,
-            ura: _buf.read_f32::<LittleEndian>()?,
-            fit_interval: _buf.read_u32::<LittleEndian>()?,
-            valid: _buf.read_u8()?,
-            health_bits: _buf.read_u8()?,
+            sid: self.parse()?,
+            toe: self.parse()?,
+            ura: self.parse()?,
+            fit_interval: self.parse()?,
+            valid: self.parse()?,
+            health_bits: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<EphemerisCommonContent>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(EphemerisCommonContent::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[EphemerisCommonContent; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(EphemerisCommonContent::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -400,34 +309,17 @@ pub struct EphemerisCommonContentDepA {
     pub health_bits: u8,
 }
 
-impl EphemerisCommonContentDepA {
+impl SbpParse<EphemerisCommonContentDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<EphemerisCommonContentDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<EphemerisCommonContentDepA> {
         Ok( EphemerisCommonContentDepA{
-            sid: GnssSignalDep::parse(_buf)?,
-            toe: GPSTimeDep::parse(_buf)?,
-            ura: _buf.read_f64::<LittleEndian>()?,
-            fit_interval: _buf.read_u32::<LittleEndian>()?,
-            valid: _buf.read_u8()?,
-            health_bits: _buf.read_u8()?,
+            sid: self.parse()?,
+            toe: self.parse()?,
+            ura: self.parse()?,
+            fit_interval: self.parse()?,
+            valid: self.parse()?,
+            health_bits: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<EphemerisCommonContentDepA>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(EphemerisCommonContentDepA::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[EphemerisCommonContentDepA; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(EphemerisCommonContentDepA::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -473,34 +365,17 @@ pub struct EphemerisCommonContentDepB {
     pub health_bits: u8,
 }
 
-impl EphemerisCommonContentDepB {
+impl SbpParse<EphemerisCommonContentDepB> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<EphemerisCommonContentDepB, crate::Error> {
+    fn parse(&mut self) -> crate::Result<EphemerisCommonContentDepB> {
         Ok( EphemerisCommonContentDepB{
-            sid: GnssSignal::parse(_buf)?,
-            toe: GPSTimeSec::parse(_buf)?,
-            ura: _buf.read_f64::<LittleEndian>()?,
-            fit_interval: _buf.read_u32::<LittleEndian>()?,
-            valid: _buf.read_u8()?,
-            health_bits: _buf.read_u8()?,
+            sid: self.parse()?,
+            toe: self.parse()?,
+            ura: self.parse()?,
+            fit_interval: self.parse()?,
+            valid: self.parse()?,
+            health_bits: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<EphemerisCommonContentDepB>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(EphemerisCommonContentDepB::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[EphemerisCommonContentDepB; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(EphemerisCommonContentDepB::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -565,43 +440,26 @@ pub struct GnssCapb {
     pub gal_e5: u64,
 }
 
-impl GnssCapb {
+impl SbpParse<GnssCapb> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<GnssCapb, crate::Error> {
+    fn parse(&mut self) -> crate::Result<GnssCapb> {
         Ok( GnssCapb{
-            gps_active: _buf.read_u64::<LittleEndian>()?,
-            gps_l2c: _buf.read_u64::<LittleEndian>()?,
-            gps_l5: _buf.read_u64::<LittleEndian>()?,
-            glo_active: _buf.read_u32::<LittleEndian>()?,
-            glo_l2of: _buf.read_u32::<LittleEndian>()?,
-            glo_l3: _buf.read_u32::<LittleEndian>()?,
-            sbas_active: _buf.read_u64::<LittleEndian>()?,
-            sbas_l5: _buf.read_u64::<LittleEndian>()?,
-            bds_active: _buf.read_u64::<LittleEndian>()?,
-            bds_d2nav: _buf.read_u64::<LittleEndian>()?,
-            bds_b2: _buf.read_u64::<LittleEndian>()?,
-            bds_b2a: _buf.read_u64::<LittleEndian>()?,
-            qzss_active: _buf.read_u32::<LittleEndian>()?,
-            gal_active: _buf.read_u64::<LittleEndian>()?,
-            gal_e5: _buf.read_u64::<LittleEndian>()?,
+            gps_active: self.parse()?,
+            gps_l2c: self.parse()?,
+            gps_l5: self.parse()?,
+            glo_active: self.parse()?,
+            glo_l2of: self.parse()?,
+            glo_l3: self.parse()?,
+            sbas_active: self.parse()?,
+            sbas_l5: self.parse()?,
+            bds_active: self.parse()?,
+            bds_d2nav: self.parse()?,
+            bds_b2: self.parse()?,
+            bds_b2a: self.parse()?,
+            qzss_active: self.parse()?,
+            gal_active: self.parse()?,
+            gal_e5: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<GnssCapb>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(GnssCapb::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[GnssCapb; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(GnssCapb::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -677,19 +535,19 @@ pub struct MsgAlmanacGlo {
     pub omega: f64,
 }
 
-impl MsgAlmanacGlo {
+impl SbpParse<MsgAlmanacGlo> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGlo, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgAlmanacGlo> {
         Ok( MsgAlmanacGlo{
             sender_id: None,
-            common: AlmanacCommonContent::parse(_buf)?,
-            lambda_na: _buf.read_f64::<LittleEndian>()?,
-            t_lambda_na: _buf.read_f64::<LittleEndian>()?,
-            i: _buf.read_f64::<LittleEndian>()?,
-            t: _buf.read_f64::<LittleEndian>()?,
-            t_dot: _buf.read_f64::<LittleEndian>()?,
-            epsilon: _buf.read_f64::<LittleEndian>()?,
-            omega: _buf.read_f64::<LittleEndian>()?,
+            common: self.parse()?,
+            lambda_na: self.parse()?,
+            t_lambda_na: self.parse()?,
+            i: self.parse()?,
+            t: self.parse()?,
+            t_dot: self.parse()?,
+            epsilon: self.parse()?,
+            omega: self.parse()?,
         } )
     }
 }
@@ -770,19 +628,19 @@ pub struct MsgAlmanacGloDep {
     pub omega: f64,
 }
 
-impl MsgAlmanacGloDep {
+impl SbpParse<MsgAlmanacGloDep> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGloDep, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgAlmanacGloDep> {
         Ok( MsgAlmanacGloDep{
             sender_id: None,
-            common: AlmanacCommonContentDep::parse(_buf)?,
-            lambda_na: _buf.read_f64::<LittleEndian>()?,
-            t_lambda_na: _buf.read_f64::<LittleEndian>()?,
-            i: _buf.read_f64::<LittleEndian>()?,
-            t: _buf.read_f64::<LittleEndian>()?,
-            t_dot: _buf.read_f64::<LittleEndian>()?,
-            epsilon: _buf.read_f64::<LittleEndian>()?,
-            omega: _buf.read_f64::<LittleEndian>()?,
+            common: self.parse()?,
+            lambda_na: self.parse()?,
+            t_lambda_na: self.parse()?,
+            i: self.parse()?,
+            t: self.parse()?,
+            t_dot: self.parse()?,
+            epsilon: self.parse()?,
+            omega: self.parse()?,
         } )
     }
 }
@@ -866,21 +724,21 @@ pub struct MsgAlmanacGPS {
     pub af1: f64,
 }
 
-impl MsgAlmanacGPS {
+impl SbpParse<MsgAlmanacGPS> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGPS, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgAlmanacGPS> {
         Ok( MsgAlmanacGPS{
             sender_id: None,
-            common: AlmanacCommonContent::parse(_buf)?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
+            common: self.parse()?,
+            m0: self.parse()?,
+            ecc: self.parse()?,
+            sqrta: self.parse()?,
+            omega0: self.parse()?,
+            omegadot: self.parse()?,
+            w: self.parse()?,
+            inc: self.parse()?,
+            af0: self.parse()?,
+            af1: self.parse()?,
         } )
     }
 }
@@ -968,21 +826,21 @@ pub struct MsgAlmanacGPSDep {
     pub af1: f64,
 }
 
-impl MsgAlmanacGPSDep {
+impl SbpParse<MsgAlmanacGPSDep> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgAlmanacGPSDep, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgAlmanacGPSDep> {
         Ok( MsgAlmanacGPSDep{
             sender_id: None,
-            common: AlmanacCommonContentDep::parse(_buf)?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
+            common: self.parse()?,
+            m0: self.parse()?,
+            ecc: self.parse()?,
+            sqrta: self.parse()?,
+            omega0: self.parse()?,
+            omegadot: self.parse()?,
+            w: self.parse()?,
+            inc: self.parse()?,
+            af0: self.parse()?,
+            af1: self.parse()?,
         } )
     }
 }
@@ -1058,14 +916,14 @@ pub struct MsgBasePosECEF {
     pub z: f64,
 }
 
-impl MsgBasePosECEF {
+impl SbpParse<MsgBasePosECEF> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBasePosECEF, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgBasePosECEF> {
         Ok( MsgBasePosECEF{
             sender_id: None,
-            x: _buf.read_f64::<LittleEndian>()?,
-            y: _buf.read_f64::<LittleEndian>()?,
-            z: _buf.read_f64::<LittleEndian>()?,
+            x: self.parse()?,
+            y: self.parse()?,
+            z: self.parse()?,
         } )
     }
 }
@@ -1126,14 +984,14 @@ pub struct MsgBasePosLLH {
     pub height: f64,
 }
 
-impl MsgBasePosLLH {
+impl SbpParse<MsgBasePosLLH> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgBasePosLLH, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgBasePosLLH> {
         Ok( MsgBasePosLLH{
             sender_id: None,
-            lat: _buf.read_f64::<LittleEndian>()?,
-            lon: _buf.read_f64::<LittleEndian>()?,
-            height: _buf.read_f64::<LittleEndian>()?,
+            lat: self.parse()?,
+            lon: self.parse()?,
+            height: self.parse()?,
         } )
     }
 }
@@ -1241,35 +1099,35 @@ pub struct MsgEphemerisBds {
     pub iodc: u16,
 }
 
-impl MsgEphemerisBds {
+impl SbpParse<MsgEphemerisBds> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisBds, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgEphemerisBds> {
         Ok( MsgEphemerisBds{
             sender_id: None,
-            common: EphemerisCommonContent::parse(_buf)?,
-            tgd1: _buf.read_f32::<LittleEndian>()?,
-            tgd2: _buf.read_f32::<LittleEndian>()?,
-            c_rs: _buf.read_f32::<LittleEndian>()?,
-            c_rc: _buf.read_f32::<LittleEndian>()?,
-            c_uc: _buf.read_f32::<LittleEndian>()?,
-            c_us: _buf.read_f32::<LittleEndian>()?,
-            c_ic: _buf.read_f32::<LittleEndian>()?,
-            c_is: _buf.read_f32::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f32::<LittleEndian>()?,
-            af2: _buf.read_f32::<LittleEndian>()?,
-            toc: GPSTimeSec::parse(_buf)?,
-            iode: _buf.read_u8()?,
-            iodc: _buf.read_u16::<LittleEndian>()?,
+            common: self.parse()?,
+            tgd1: self.parse()?,
+            tgd2: self.parse()?,
+            c_rs: self.parse()?,
+            c_rc: self.parse()?,
+            c_uc: self.parse()?,
+            c_us: self.parse()?,
+            c_ic: self.parse()?,
+            c_is: self.parse()?,
+            dn: self.parse()?,
+            m0: self.parse()?,
+            ecc: self.parse()?,
+            sqrta: self.parse()?,
+            omega0: self.parse()?,
+            omegadot: self.parse()?,
+            w: self.parse()?,
+            inc: self.parse()?,
+            inc_dot: self.parse()?,
+            af0: self.parse()?,
+            af1: self.parse()?,
+            af2: self.parse()?,
+            toc: self.parse()?,
+            iode: self.parse()?,
+            iodc: self.parse()?,
         } )
     }
 }
@@ -1418,37 +1276,37 @@ pub struct MsgEphemerisDepA {
     pub prn: u8,
 }
 
-impl MsgEphemerisDepA {
+impl SbpParse<MsgEphemerisDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgEphemerisDepA> {
         Ok( MsgEphemerisDepA{
             sender_id: None,
-            tgd: _buf.read_f64::<LittleEndian>()?,
-            c_rs: _buf.read_f64::<LittleEndian>()?,
-            c_rc: _buf.read_f64::<LittleEndian>()?,
-            c_uc: _buf.read_f64::<LittleEndian>()?,
-            c_us: _buf.read_f64::<LittleEndian>()?,
-            c_ic: _buf.read_f64::<LittleEndian>()?,
-            c_is: _buf.read_f64::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
-            af2: _buf.read_f64::<LittleEndian>()?,
-            toe_tow: _buf.read_f64::<LittleEndian>()?,
-            toe_wn: _buf.read_u16::<LittleEndian>()?,
-            toc_tow: _buf.read_f64::<LittleEndian>()?,
-            toc_wn: _buf.read_u16::<LittleEndian>()?,
-            valid: _buf.read_u8()?,
-            healthy: _buf.read_u8()?,
-            prn: _buf.read_u8()?,
+            tgd: self.parse()?,
+            c_rs: self.parse()?,
+            c_rc: self.parse()?,
+            c_uc: self.parse()?,
+            c_us: self.parse()?,
+            c_ic: self.parse()?,
+            c_is: self.parse()?,
+            dn: self.parse()?,
+            m0: self.parse()?,
+            ecc: self.parse()?,
+            sqrta: self.parse()?,
+            omega0: self.parse()?,
+            omegadot: self.parse()?,
+            w: self.parse()?,
+            inc: self.parse()?,
+            inc_dot: self.parse()?,
+            af0: self.parse()?,
+            af1: self.parse()?,
+            af2: self.parse()?,
+            toe_tow: self.parse()?,
+            toe_wn: self.parse()?,
+            toc_tow: self.parse()?,
+            toc_wn: self.parse()?,
+            valid: self.parse()?,
+            healthy: self.parse()?,
+            prn: self.parse()?,
         } )
     }
 }
@@ -1603,38 +1461,38 @@ pub struct MsgEphemerisDepB {
     pub iode: u8,
 }
 
-impl MsgEphemerisDepB {
+impl SbpParse<MsgEphemerisDepB> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepB, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgEphemerisDepB> {
         Ok( MsgEphemerisDepB{
             sender_id: None,
-            tgd: _buf.read_f64::<LittleEndian>()?,
-            c_rs: _buf.read_f64::<LittleEndian>()?,
-            c_rc: _buf.read_f64::<LittleEndian>()?,
-            c_uc: _buf.read_f64::<LittleEndian>()?,
-            c_us: _buf.read_f64::<LittleEndian>()?,
-            c_ic: _buf.read_f64::<LittleEndian>()?,
-            c_is: _buf.read_f64::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
-            af2: _buf.read_f64::<LittleEndian>()?,
-            toe_tow: _buf.read_f64::<LittleEndian>()?,
-            toe_wn: _buf.read_u16::<LittleEndian>()?,
-            toc_tow: _buf.read_f64::<LittleEndian>()?,
-            toc_wn: _buf.read_u16::<LittleEndian>()?,
-            valid: _buf.read_u8()?,
-            healthy: _buf.read_u8()?,
-            prn: _buf.read_u8()?,
-            iode: _buf.read_u8()?,
+            tgd: self.parse()?,
+            c_rs: self.parse()?,
+            c_rc: self.parse()?,
+            c_uc: self.parse()?,
+            c_us: self.parse()?,
+            c_ic: self.parse()?,
+            c_is: self.parse()?,
+            dn: self.parse()?,
+            m0: self.parse()?,
+            ecc: self.parse()?,
+            sqrta: self.parse()?,
+            omega0: self.parse()?,
+            omegadot: self.parse()?,
+            w: self.parse()?,
+            inc: self.parse()?,
+            inc_dot: self.parse()?,
+            af0: self.parse()?,
+            af1: self.parse()?,
+            af2: self.parse()?,
+            toe_tow: self.parse()?,
+            toe_wn: self.parse()?,
+            toc_tow: self.parse()?,
+            toc_wn: self.parse()?,
+            valid: self.parse()?,
+            healthy: self.parse()?,
+            prn: self.parse()?,
+            iode: self.parse()?,
         } )
     }
 }
@@ -1799,40 +1657,40 @@ pub struct MsgEphemerisDepC {
     pub reserved: u32,
 }
 
-impl MsgEphemerisDepC {
+impl SbpParse<MsgEphemerisDepC> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepC, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgEphemerisDepC> {
         Ok( MsgEphemerisDepC{
             sender_id: None,
-            tgd: _buf.read_f64::<LittleEndian>()?,
-            c_rs: _buf.read_f64::<LittleEndian>()?,
-            c_rc: _buf.read_f64::<LittleEndian>()?,
-            c_uc: _buf.read_f64::<LittleEndian>()?,
-            c_us: _buf.read_f64::<LittleEndian>()?,
-            c_ic: _buf.read_f64::<LittleEndian>()?,
-            c_is: _buf.read_f64::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
-            af2: _buf.read_f64::<LittleEndian>()?,
-            toe_tow: _buf.read_f64::<LittleEndian>()?,
-            toe_wn: _buf.read_u16::<LittleEndian>()?,
-            toc_tow: _buf.read_f64::<LittleEndian>()?,
-            toc_wn: _buf.read_u16::<LittleEndian>()?,
-            valid: _buf.read_u8()?,
-            healthy: _buf.read_u8()?,
-            sid: GnssSignalDep::parse(_buf)?,
-            iode: _buf.read_u8()?,
-            iodc: _buf.read_u16::<LittleEndian>()?,
-            reserved: _buf.read_u32::<LittleEndian>()?,
+            tgd: self.parse()?,
+            c_rs: self.parse()?,
+            c_rc: self.parse()?,
+            c_uc: self.parse()?,
+            c_us: self.parse()?,
+            c_ic: self.parse()?,
+            c_is: self.parse()?,
+            dn: self.parse()?,
+            m0: self.parse()?,
+            ecc: self.parse()?,
+            sqrta: self.parse()?,
+            omega0: self.parse()?,
+            omegadot: self.parse()?,
+            w: self.parse()?,
+            inc: self.parse()?,
+            inc_dot: self.parse()?,
+            af0: self.parse()?,
+            af1: self.parse()?,
+            af2: self.parse()?,
+            toe_tow: self.parse()?,
+            toe_wn: self.parse()?,
+            toc_tow: self.parse()?,
+            toc_wn: self.parse()?,
+            valid: self.parse()?,
+            healthy: self.parse()?,
+            sid: self.parse()?,
+            iode: self.parse()?,
+            iodc: self.parse()?,
+            reserved: self.parse()?,
         } )
     }
 }
@@ -2001,40 +1859,40 @@ pub struct MsgEphemerisDepD {
     pub reserved: u32,
 }
 
-impl MsgEphemerisDepD {
+impl SbpParse<MsgEphemerisDepD> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisDepD, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgEphemerisDepD> {
         Ok( MsgEphemerisDepD{
             sender_id: None,
-            tgd: _buf.read_f64::<LittleEndian>()?,
-            c_rs: _buf.read_f64::<LittleEndian>()?,
-            c_rc: _buf.read_f64::<LittleEndian>()?,
-            c_uc: _buf.read_f64::<LittleEndian>()?,
-            c_us: _buf.read_f64::<LittleEndian>()?,
-            c_ic: _buf.read_f64::<LittleEndian>()?,
-            c_is: _buf.read_f64::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
-            af2: _buf.read_f64::<LittleEndian>()?,
-            toe_tow: _buf.read_f64::<LittleEndian>()?,
-            toe_wn: _buf.read_u16::<LittleEndian>()?,
-            toc_tow: _buf.read_f64::<LittleEndian>()?,
-            toc_wn: _buf.read_u16::<LittleEndian>()?,
-            valid: _buf.read_u8()?,
-            healthy: _buf.read_u8()?,
-            sid: GnssSignalDep::parse(_buf)?,
-            iode: _buf.read_u8()?,
-            iodc: _buf.read_u16::<LittleEndian>()?,
-            reserved: _buf.read_u32::<LittleEndian>()?,
+            tgd: self.parse()?,
+            c_rs: self.parse()?,
+            c_rc: self.parse()?,
+            c_uc: self.parse()?,
+            c_us: self.parse()?,
+            c_ic: self.parse()?,
+            c_is: self.parse()?,
+            dn: self.parse()?,
+            m0: self.parse()?,
+            ecc: self.parse()?,
+            sqrta: self.parse()?,
+            omega0: self.parse()?,
+            omegadot: self.parse()?,
+            w: self.parse()?,
+            inc: self.parse()?,
+            inc_dot: self.parse()?,
+            af0: self.parse()?,
+            af1: self.parse()?,
+            af2: self.parse()?,
+            toe_tow: self.parse()?,
+            toe_wn: self.parse()?,
+            toc_tow: self.parse()?,
+            toc_wn: self.parse()?,
+            valid: self.parse()?,
+            healthy: self.parse()?,
+            sid: self.parse()?,
+            iode: self.parse()?,
+            iodc: self.parse()?,
+            reserved: self.parse()?,
         } )
     }
 }
@@ -2194,36 +2052,36 @@ pub struct MsgEphemerisGal {
     pub source: u8,
 }
 
-impl MsgEphemerisGal {
+impl SbpParse<MsgEphemerisGal> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGal, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgEphemerisGal> {
         Ok( MsgEphemerisGal{
             sender_id: None,
-            common: EphemerisCommonContent::parse(_buf)?,
-            bgd_e1e5a: _buf.read_f32::<LittleEndian>()?,
-            bgd_e1e5b: _buf.read_f32::<LittleEndian>()?,
-            c_rs: _buf.read_f32::<LittleEndian>()?,
-            c_rc: _buf.read_f32::<LittleEndian>()?,
-            c_uc: _buf.read_f32::<LittleEndian>()?,
-            c_us: _buf.read_f32::<LittleEndian>()?,
-            c_ic: _buf.read_f32::<LittleEndian>()?,
-            c_is: _buf.read_f32::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
-            af2: _buf.read_f32::<LittleEndian>()?,
-            toc: GPSTimeSec::parse(_buf)?,
-            iode: _buf.read_u16::<LittleEndian>()?,
-            iodc: _buf.read_u16::<LittleEndian>()?,
-            source: _buf.read_u8()?,
+            common: self.parse()?,
+            bgd_e1e5a: self.parse()?,
+            bgd_e1e5b: self.parse()?,
+            c_rs: self.parse()?,
+            c_rc: self.parse()?,
+            c_uc: self.parse()?,
+            c_us: self.parse()?,
+            c_ic: self.parse()?,
+            c_is: self.parse()?,
+            dn: self.parse()?,
+            m0: self.parse()?,
+            ecc: self.parse()?,
+            sqrta: self.parse()?,
+            omega0: self.parse()?,
+            omegadot: self.parse()?,
+            w: self.parse()?,
+            inc: self.parse()?,
+            inc_dot: self.parse()?,
+            af0: self.parse()?,
+            af1: self.parse()?,
+            af2: self.parse()?,
+            toc: self.parse()?,
+            iode: self.parse()?,
+            iodc: self.parse()?,
+            source: self.parse()?,
         } )
     }
 }
@@ -2371,35 +2229,35 @@ pub struct MsgEphemerisGalDepA {
     pub iodc: u16,
 }
 
-impl MsgEphemerisGalDepA {
+impl SbpParse<MsgEphemerisGalDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGalDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgEphemerisGalDepA> {
         Ok( MsgEphemerisGalDepA{
             sender_id: None,
-            common: EphemerisCommonContent::parse(_buf)?,
-            bgd_e1e5a: _buf.read_f32::<LittleEndian>()?,
-            bgd_e1e5b: _buf.read_f32::<LittleEndian>()?,
-            c_rs: _buf.read_f32::<LittleEndian>()?,
-            c_rc: _buf.read_f32::<LittleEndian>()?,
-            c_uc: _buf.read_f32::<LittleEndian>()?,
-            c_us: _buf.read_f32::<LittleEndian>()?,
-            c_ic: _buf.read_f32::<LittleEndian>()?,
-            c_is: _buf.read_f32::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
-            af2: _buf.read_f32::<LittleEndian>()?,
-            toc: GPSTimeSec::parse(_buf)?,
-            iode: _buf.read_u16::<LittleEndian>()?,
-            iodc: _buf.read_u16::<LittleEndian>()?,
+            common: self.parse()?,
+            bgd_e1e5a: self.parse()?,
+            bgd_e1e5b: self.parse()?,
+            c_rs: self.parse()?,
+            c_rc: self.parse()?,
+            c_uc: self.parse()?,
+            c_us: self.parse()?,
+            c_ic: self.parse()?,
+            c_is: self.parse()?,
+            dn: self.parse()?,
+            m0: self.parse()?,
+            ecc: self.parse()?,
+            sqrta: self.parse()?,
+            omega0: self.parse()?,
+            omegadot: self.parse()?,
+            w: self.parse()?,
+            inc: self.parse()?,
+            inc_dot: self.parse()?,
+            af0: self.parse()?,
+            af1: self.parse()?,
+            af2: self.parse()?,
+            toc: self.parse()?,
+            iode: self.parse()?,
+            iodc: self.parse()?,
         } )
     }
 }
@@ -2514,20 +2372,20 @@ pub struct MsgEphemerisGlo {
     pub iod: u8,
 }
 
-impl MsgEphemerisGlo {
+impl SbpParse<MsgEphemerisGlo> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGlo, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgEphemerisGlo> {
         Ok( MsgEphemerisGlo{
             sender_id: None,
-            common: EphemerisCommonContent::parse(_buf)?,
-            gamma: _buf.read_f32::<LittleEndian>()?,
-            tau: _buf.read_f32::<LittleEndian>()?,
-            d_tau: _buf.read_f32::<LittleEndian>()?,
-            pos: crate::parser::read_double_array_fixed(_buf)?,
-            vel: crate::parser::read_double_array_fixed(_buf)?,
-            acc: crate::parser::read_float_array_fixed(_buf)?,
-            fcn: _buf.read_u8()?,
-            iod: _buf.read_u8()?,
+            common: self.parse()?,
+            gamma: self.parse()?,
+            tau: self.parse()?,
+            d_tau: self.parse()?,
+            pos: self.parse()?,
+            vel: self.parse()?,
+            acc: self.parse()?,
+            fcn: self.parse()?,
+            iod: self.parse()?,
         } )
     }
 }
@@ -2606,17 +2464,17 @@ pub struct MsgEphemerisGloDepA {
     pub acc: [f64; 3],
 }
 
-impl MsgEphemerisGloDepA {
+impl SbpParse<MsgEphemerisGloDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgEphemerisGloDepA> {
         Ok( MsgEphemerisGloDepA{
             sender_id: None,
-            common: EphemerisCommonContentDepA::parse(_buf)?,
-            gamma: _buf.read_f64::<LittleEndian>()?,
-            tau: _buf.read_f64::<LittleEndian>()?,
-            pos: crate::parser::read_double_array_fixed(_buf)?,
-            vel: crate::parser::read_double_array_fixed(_buf)?,
-            acc: crate::parser::read_double_array_fixed(_buf)?,
+            common: self.parse()?,
+            gamma: self.parse()?,
+            tau: self.parse()?,
+            pos: self.parse()?,
+            vel: self.parse()?,
+            acc: self.parse()?,
         } )
     }
 }
@@ -2689,17 +2547,17 @@ pub struct MsgEphemerisGloDepB {
     pub acc: [f64; 3],
 }
 
-impl MsgEphemerisGloDepB {
+impl SbpParse<MsgEphemerisGloDepB> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepB, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgEphemerisGloDepB> {
         Ok( MsgEphemerisGloDepB{
             sender_id: None,
-            common: EphemerisCommonContentDepB::parse(_buf)?,
-            gamma: _buf.read_f64::<LittleEndian>()?,
-            tau: _buf.read_f64::<LittleEndian>()?,
-            pos: crate::parser::read_double_array_fixed(_buf)?,
-            vel: crate::parser::read_double_array_fixed(_buf)?,
-            acc: crate::parser::read_double_array_fixed(_buf)?,
+            common: self.parse()?,
+            gamma: self.parse()?,
+            tau: self.parse()?,
+            pos: self.parse()?,
+            vel: self.parse()?,
+            acc: self.parse()?,
         } )
     }
 }
@@ -2776,19 +2634,19 @@ pub struct MsgEphemerisGloDepC {
     pub fcn: u8,
 }
 
-impl MsgEphemerisGloDepC {
+impl SbpParse<MsgEphemerisGloDepC> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepC, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgEphemerisGloDepC> {
         Ok( MsgEphemerisGloDepC{
             sender_id: None,
-            common: EphemerisCommonContentDepB::parse(_buf)?,
-            gamma: _buf.read_f64::<LittleEndian>()?,
-            tau: _buf.read_f64::<LittleEndian>()?,
-            d_tau: _buf.read_f64::<LittleEndian>()?,
-            pos: crate::parser::read_double_array_fixed(_buf)?,
-            vel: crate::parser::read_double_array_fixed(_buf)?,
-            acc: crate::parser::read_double_array_fixed(_buf)?,
-            fcn: _buf.read_u8()?,
+            common: self.parse()?,
+            gamma: self.parse()?,
+            tau: self.parse()?,
+            d_tau: self.parse()?,
+            pos: self.parse()?,
+            vel: self.parse()?,
+            acc: self.parse()?,
+            fcn: self.parse()?,
         } )
     }
 }
@@ -2868,20 +2726,20 @@ pub struct MsgEphemerisGloDepD {
     pub iod: u8,
 }
 
-impl MsgEphemerisGloDepD {
+impl SbpParse<MsgEphemerisGloDepD> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGloDepD, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgEphemerisGloDepD> {
         Ok( MsgEphemerisGloDepD{
             sender_id: None,
-            common: EphemerisCommonContentDepB::parse(_buf)?,
-            gamma: _buf.read_f64::<LittleEndian>()?,
-            tau: _buf.read_f64::<LittleEndian>()?,
-            d_tau: _buf.read_f64::<LittleEndian>()?,
-            pos: crate::parser::read_double_array_fixed(_buf)?,
-            vel: crate::parser::read_double_array_fixed(_buf)?,
-            acc: crate::parser::read_double_array_fixed(_buf)?,
-            fcn: _buf.read_u8()?,
-            iod: _buf.read_u8()?,
+            common: self.parse()?,
+            gamma: self.parse()?,
+            tau: self.parse()?,
+            d_tau: self.parse()?,
+            pos: self.parse()?,
+            vel: self.parse()?,
+            acc: self.parse()?,
+            fcn: self.parse()?,
+            iod: self.parse()?,
         } )
     }
 }
@@ -2998,34 +2856,34 @@ pub struct MsgEphemerisGPS {
     pub iodc: u16,
 }
 
-impl MsgEphemerisGPS {
+impl SbpParse<MsgEphemerisGPS> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPS, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgEphemerisGPS> {
         Ok( MsgEphemerisGPS{
             sender_id: None,
-            common: EphemerisCommonContent::parse(_buf)?,
-            tgd: _buf.read_f32::<LittleEndian>()?,
-            c_rs: _buf.read_f32::<LittleEndian>()?,
-            c_rc: _buf.read_f32::<LittleEndian>()?,
-            c_uc: _buf.read_f32::<LittleEndian>()?,
-            c_us: _buf.read_f32::<LittleEndian>()?,
-            c_ic: _buf.read_f32::<LittleEndian>()?,
-            c_is: _buf.read_f32::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f32::<LittleEndian>()?,
-            af1: _buf.read_f32::<LittleEndian>()?,
-            af2: _buf.read_f32::<LittleEndian>()?,
-            toc: GPSTimeSec::parse(_buf)?,
-            iode: _buf.read_u8()?,
-            iodc: _buf.read_u16::<LittleEndian>()?,
+            common: self.parse()?,
+            tgd: self.parse()?,
+            c_rs: self.parse()?,
+            c_rc: self.parse()?,
+            c_uc: self.parse()?,
+            c_us: self.parse()?,
+            c_ic: self.parse()?,
+            c_is: self.parse()?,
+            dn: self.parse()?,
+            m0: self.parse()?,
+            ecc: self.parse()?,
+            sqrta: self.parse()?,
+            omega0: self.parse()?,
+            omegadot: self.parse()?,
+            w: self.parse()?,
+            inc: self.parse()?,
+            inc_dot: self.parse()?,
+            af0: self.parse()?,
+            af1: self.parse()?,
+            af2: self.parse()?,
+            toc: self.parse()?,
+            iode: self.parse()?,
+            iodc: self.parse()?,
         } )
     }
 }
@@ -3170,34 +3028,34 @@ pub struct MsgEphemerisGPSDepE {
     pub iodc: u16,
 }
 
-impl MsgEphemerisGPSDepE {
+impl SbpParse<MsgEphemerisGPSDepE> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPSDepE, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgEphemerisGPSDepE> {
         Ok( MsgEphemerisGPSDepE{
             sender_id: None,
-            common: EphemerisCommonContentDepA::parse(_buf)?,
-            tgd: _buf.read_f64::<LittleEndian>()?,
-            c_rs: _buf.read_f64::<LittleEndian>()?,
-            c_rc: _buf.read_f64::<LittleEndian>()?,
-            c_uc: _buf.read_f64::<LittleEndian>()?,
-            c_us: _buf.read_f64::<LittleEndian>()?,
-            c_ic: _buf.read_f64::<LittleEndian>()?,
-            c_is: _buf.read_f64::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
-            af2: _buf.read_f64::<LittleEndian>()?,
-            toc: GPSTimeDep::parse(_buf)?,
-            iode: _buf.read_u8()?,
-            iodc: _buf.read_u16::<LittleEndian>()?,
+            common: self.parse()?,
+            tgd: self.parse()?,
+            c_rs: self.parse()?,
+            c_rc: self.parse()?,
+            c_uc: self.parse()?,
+            c_us: self.parse()?,
+            c_ic: self.parse()?,
+            c_is: self.parse()?,
+            dn: self.parse()?,
+            m0: self.parse()?,
+            ecc: self.parse()?,
+            sqrta: self.parse()?,
+            omega0: self.parse()?,
+            omegadot: self.parse()?,
+            w: self.parse()?,
+            inc: self.parse()?,
+            inc_dot: self.parse()?,
+            af0: self.parse()?,
+            af1: self.parse()?,
+            af2: self.parse()?,
+            toc: self.parse()?,
+            iode: self.parse()?,
+            iodc: self.parse()?,
         } )
     }
 }
@@ -3339,34 +3197,34 @@ pub struct MsgEphemerisGPSDepF {
     pub iodc: u16,
 }
 
-impl MsgEphemerisGPSDepF {
+impl SbpParse<MsgEphemerisGPSDepF> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisGPSDepF, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgEphemerisGPSDepF> {
         Ok( MsgEphemerisGPSDepF{
             sender_id: None,
-            common: EphemerisCommonContentDepB::parse(_buf)?,
-            tgd: _buf.read_f64::<LittleEndian>()?,
-            c_rs: _buf.read_f64::<LittleEndian>()?,
-            c_rc: _buf.read_f64::<LittleEndian>()?,
-            c_uc: _buf.read_f64::<LittleEndian>()?,
-            c_us: _buf.read_f64::<LittleEndian>()?,
-            c_ic: _buf.read_f64::<LittleEndian>()?,
-            c_is: _buf.read_f64::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f64::<LittleEndian>()?,
-            af1: _buf.read_f64::<LittleEndian>()?,
-            af2: _buf.read_f64::<LittleEndian>()?,
-            toc: GPSTimeSec::parse(_buf)?,
-            iode: _buf.read_u8()?,
-            iodc: _buf.read_u16::<LittleEndian>()?,
+            common: self.parse()?,
+            tgd: self.parse()?,
+            c_rs: self.parse()?,
+            c_rc: self.parse()?,
+            c_uc: self.parse()?,
+            c_us: self.parse()?,
+            c_ic: self.parse()?,
+            c_is: self.parse()?,
+            dn: self.parse()?,
+            m0: self.parse()?,
+            ecc: self.parse()?,
+            sqrta: self.parse()?,
+            omega0: self.parse()?,
+            omegadot: self.parse()?,
+            w: self.parse()?,
+            inc: self.parse()?,
+            inc_dot: self.parse()?,
+            af0: self.parse()?,
+            af1: self.parse()?,
+            af2: self.parse()?,
+            toc: self.parse()?,
+            iode: self.parse()?,
+            iodc: self.parse()?,
         } )
     }
 }
@@ -3509,34 +3367,34 @@ pub struct MsgEphemerisQzss {
     pub iodc: u16,
 }
 
-impl MsgEphemerisQzss {
+impl SbpParse<MsgEphemerisQzss> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisQzss, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgEphemerisQzss> {
         Ok( MsgEphemerisQzss{
             sender_id: None,
-            common: EphemerisCommonContent::parse(_buf)?,
-            tgd: _buf.read_f32::<LittleEndian>()?,
-            c_rs: _buf.read_f32::<LittleEndian>()?,
-            c_rc: _buf.read_f32::<LittleEndian>()?,
-            c_uc: _buf.read_f32::<LittleEndian>()?,
-            c_us: _buf.read_f32::<LittleEndian>()?,
-            c_ic: _buf.read_f32::<LittleEndian>()?,
-            c_is: _buf.read_f32::<LittleEndian>()?,
-            dn: _buf.read_f64::<LittleEndian>()?,
-            m0: _buf.read_f64::<LittleEndian>()?,
-            ecc: _buf.read_f64::<LittleEndian>()?,
-            sqrta: _buf.read_f64::<LittleEndian>()?,
-            omega0: _buf.read_f64::<LittleEndian>()?,
-            omegadot: _buf.read_f64::<LittleEndian>()?,
-            w: _buf.read_f64::<LittleEndian>()?,
-            inc: _buf.read_f64::<LittleEndian>()?,
-            inc_dot: _buf.read_f64::<LittleEndian>()?,
-            af0: _buf.read_f32::<LittleEndian>()?,
-            af1: _buf.read_f32::<LittleEndian>()?,
-            af2: _buf.read_f32::<LittleEndian>()?,
-            toc: GPSTimeSec::parse(_buf)?,
-            iode: _buf.read_u8()?,
-            iodc: _buf.read_u16::<LittleEndian>()?,
+            common: self.parse()?,
+            tgd: self.parse()?,
+            c_rs: self.parse()?,
+            c_rc: self.parse()?,
+            c_uc: self.parse()?,
+            c_us: self.parse()?,
+            c_ic: self.parse()?,
+            c_is: self.parse()?,
+            dn: self.parse()?,
+            m0: self.parse()?,
+            ecc: self.parse()?,
+            sqrta: self.parse()?,
+            omega0: self.parse()?,
+            omegadot: self.parse()?,
+            w: self.parse()?,
+            inc: self.parse()?,
+            inc_dot: self.parse()?,
+            af0: self.parse()?,
+            af1: self.parse()?,
+            af2: self.parse()?,
+            toc: self.parse()?,
+            iode: self.parse()?,
+            iodc: self.parse()?,
         } )
     }
 }
@@ -3635,17 +3493,17 @@ pub struct MsgEphemerisSbas {
     pub a_gf1: f32,
 }
 
-impl MsgEphemerisSbas {
+impl SbpParse<MsgEphemerisSbas> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbas, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgEphemerisSbas> {
         Ok( MsgEphemerisSbas{
             sender_id: None,
-            common: EphemerisCommonContent::parse(_buf)?,
-            pos: crate::parser::read_double_array_fixed(_buf)?,
-            vel: crate::parser::read_float_array_fixed(_buf)?,
-            acc: crate::parser::read_float_array_fixed(_buf)?,
-            a_gf0: _buf.read_f32::<LittleEndian>()?,
-            a_gf1: _buf.read_f32::<LittleEndian>()?,
+            common: self.parse()?,
+            pos: self.parse()?,
+            vel: self.parse()?,
+            acc: self.parse()?,
+            a_gf0: self.parse()?,
+            a_gf1: self.parse()?,
         } )
     }
 }
@@ -3710,17 +3568,17 @@ pub struct MsgEphemerisSbasDepA {
     pub a_gf1: f64,
 }
 
-impl MsgEphemerisSbasDepA {
+impl SbpParse<MsgEphemerisSbasDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbasDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgEphemerisSbasDepA> {
         Ok( MsgEphemerisSbasDepA{
             sender_id: None,
-            common: EphemerisCommonContentDepA::parse(_buf)?,
-            pos: crate::parser::read_double_array_fixed(_buf)?,
-            vel: crate::parser::read_double_array_fixed(_buf)?,
-            acc: crate::parser::read_double_array_fixed(_buf)?,
-            a_gf0: _buf.read_f64::<LittleEndian>()?,
-            a_gf1: _buf.read_f64::<LittleEndian>()?,
+            common: self.parse()?,
+            pos: self.parse()?,
+            vel: self.parse()?,
+            acc: self.parse()?,
+            a_gf0: self.parse()?,
+            a_gf1: self.parse()?,
         } )
     }
 }
@@ -3790,17 +3648,17 @@ pub struct MsgEphemerisSbasDepB {
     pub a_gf1: f64,
 }
 
-impl MsgEphemerisSbasDepB {
+impl SbpParse<MsgEphemerisSbasDepB> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgEphemerisSbasDepB, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgEphemerisSbasDepB> {
         Ok( MsgEphemerisSbasDepB{
             sender_id: None,
-            common: EphemerisCommonContentDepB::parse(_buf)?,
-            pos: crate::parser::read_double_array_fixed(_buf)?,
-            vel: crate::parser::read_double_array_fixed(_buf)?,
-            acc: crate::parser::read_double_array_fixed(_buf)?,
-            a_gf0: _buf.read_f64::<LittleEndian>()?,
-            a_gf1: _buf.read_f64::<LittleEndian>()?,
+            common: self.parse()?,
+            pos: self.parse()?,
+            vel: self.parse()?,
+            acc: self.parse()?,
+            a_gf0: self.parse()?,
+            a_gf1: self.parse()?,
         } )
     }
 }
@@ -3870,16 +3728,16 @@ pub struct MsgGloBiases {
     pub l2p_bias: i16,
 }
 
-impl MsgGloBiases {
+impl SbpParse<MsgGloBiases> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGloBiases, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgGloBiases> {
         Ok( MsgGloBiases{
             sender_id: None,
-            mask: _buf.read_u8()?,
-            l1ca_bias: _buf.read_i16::<LittleEndian>()?,
-            l1p_bias: _buf.read_i16::<LittleEndian>()?,
-            l2ca_bias: _buf.read_i16::<LittleEndian>()?,
-            l2p_bias: _buf.read_i16::<LittleEndian>()?,
+            mask: self.parse()?,
+            l1ca_bias: self.parse()?,
+            l1p_bias: self.parse()?,
+            l2ca_bias: self.parse()?,
+            l2p_bias: self.parse()?,
         } )
     }
 }
@@ -3934,13 +3792,13 @@ pub struct MsgGnssCapb {
     pub gc: GnssCapb,
 }
 
-impl MsgGnssCapb {
+impl SbpParse<MsgGnssCapb> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGnssCapb, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgGnssCapb> {
         Ok( MsgGnssCapb{
             sender_id: None,
-            t_nmct: GPSTimeSec::parse(_buf)?,
-            gc: GnssCapb::parse(_buf)?,
+            t_nmct: self.parse()?,
+            gc: self.parse()?,
         } )
     }
 }
@@ -3999,17 +3857,17 @@ pub struct MsgGroupDelay {
     pub isc_l2c: i16,
 }
 
-impl MsgGroupDelay {
+impl SbpParse<MsgGroupDelay> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelay, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgGroupDelay> {
         Ok( MsgGroupDelay{
             sender_id: None,
-            t_op: GPSTimeSec::parse(_buf)?,
-            sid: GnssSignal::parse(_buf)?,
-            valid: _buf.read_u8()?,
-            tgd: _buf.read_i16::<LittleEndian>()?,
-            isc_l1ca: _buf.read_i16::<LittleEndian>()?,
-            isc_l2c: _buf.read_i16::<LittleEndian>()?,
+            t_op: self.parse()?,
+            sid: self.parse()?,
+            valid: self.parse()?,
+            tgd: self.parse()?,
+            isc_l1ca: self.parse()?,
+            isc_l2c: self.parse()?,
         } )
     }
 }
@@ -4076,17 +3934,17 @@ pub struct MsgGroupDelayDepA {
     pub isc_l2c: i16,
 }
 
-impl MsgGroupDelayDepA {
+impl SbpParse<MsgGroupDelayDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelayDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgGroupDelayDepA> {
         Ok( MsgGroupDelayDepA{
             sender_id: None,
-            t_op: GPSTimeDep::parse(_buf)?,
-            prn: _buf.read_u8()?,
-            valid: _buf.read_u8()?,
-            tgd: _buf.read_i16::<LittleEndian>()?,
-            isc_l1ca: _buf.read_i16::<LittleEndian>()?,
-            isc_l2c: _buf.read_i16::<LittleEndian>()?,
+            t_op: self.parse()?,
+            prn: self.parse()?,
+            valid: self.parse()?,
+            tgd: self.parse()?,
+            isc_l1ca: self.parse()?,
+            isc_l2c: self.parse()?,
         } )
     }
 }
@@ -4153,17 +4011,17 @@ pub struct MsgGroupDelayDepB {
     pub isc_l2c: i16,
 }
 
-impl MsgGroupDelayDepB {
+impl SbpParse<MsgGroupDelayDepB> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgGroupDelayDepB, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgGroupDelayDepB> {
         Ok( MsgGroupDelayDepB{
             sender_id: None,
-            t_op: GPSTimeSec::parse(_buf)?,
-            sid: GnssSignalDep::parse(_buf)?,
-            valid: _buf.read_u8()?,
-            tgd: _buf.read_i16::<LittleEndian>()?,
-            isc_l1ca: _buf.read_i16::<LittleEndian>()?,
-            isc_l2c: _buf.read_i16::<LittleEndian>()?,
+            t_op: self.parse()?,
+            sid: self.parse()?,
+            valid: self.parse()?,
+            tgd: self.parse()?,
+            isc_l1ca: self.parse()?,
+            isc_l2c: self.parse()?,
         } )
     }
 }
@@ -4232,20 +4090,20 @@ pub struct MsgIono {
     pub b3: f64,
 }
 
-impl MsgIono {
+impl SbpParse<MsgIono> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgIono, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgIono> {
         Ok( MsgIono{
             sender_id: None,
-            t_nmct: GPSTimeSec::parse(_buf)?,
-            a0: _buf.read_f64::<LittleEndian>()?,
-            a1: _buf.read_f64::<LittleEndian>()?,
-            a2: _buf.read_f64::<LittleEndian>()?,
-            a3: _buf.read_f64::<LittleEndian>()?,
-            b0: _buf.read_f64::<LittleEndian>()?,
-            b1: _buf.read_f64::<LittleEndian>()?,
-            b2: _buf.read_f64::<LittleEndian>()?,
-            b3: _buf.read_f64::<LittleEndian>()?,
+            t_nmct: self.parse()?,
+            a0: self.parse()?,
+            a1: self.parse()?,
+            a2: self.parse()?,
+            a3: self.parse()?,
+            b0: self.parse()?,
+            b1: self.parse()?,
+            b2: self.parse()?,
+            b3: self.parse()?,
         } )
     }
 }
@@ -4318,13 +4176,13 @@ pub struct MsgObs {
     pub obs: Vec<PackedObsContent>,
 }
 
-impl MsgObs {
+impl SbpParse<MsgObs> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObs, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgObs> {
         Ok( MsgObs{
             sender_id: None,
-            header: ObservationHeader::parse(_buf)?,
-            obs: PackedObsContent::parse_array(_buf)?,
+            header: self.parse()?,
+            obs: self.parse()?,
         } )
     }
 }
@@ -4377,13 +4235,13 @@ pub struct MsgObsDepA {
     pub obs: Vec<PackedObsContentDepA>,
 }
 
-impl MsgObsDepA {
+impl SbpParse<MsgObsDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgObsDepA> {
         Ok( MsgObsDepA{
             sender_id: None,
-            header: ObservationHeaderDep::parse(_buf)?,
-            obs: PackedObsContentDepA::parse_array(_buf)?,
+            header: self.parse()?,
+            obs: self.parse()?,
         } )
     }
 }
@@ -4441,13 +4299,13 @@ pub struct MsgObsDepB {
     pub obs: Vec<PackedObsContentDepB>,
 }
 
-impl MsgObsDepB {
+impl SbpParse<MsgObsDepB> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepB, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgObsDepB> {
         Ok( MsgObsDepB{
             sender_id: None,
-            header: ObservationHeaderDep::parse(_buf)?,
-            obs: PackedObsContentDepB::parse_array(_buf)?,
+            header: self.parse()?,
+            obs: self.parse()?,
         } )
     }
 }
@@ -4506,13 +4364,13 @@ pub struct MsgObsDepC {
     pub obs: Vec<PackedObsContentDepC>,
 }
 
-impl MsgObsDepC {
+impl SbpParse<MsgObsDepC> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgObsDepC, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgObsDepC> {
         Ok( MsgObsDepC{
             sender_id: None,
-            header: ObservationHeaderDep::parse(_buf)?,
-            obs: PackedObsContentDepC::parse_array(_buf)?,
+            header: self.parse()?,
+            obs: self.parse()?,
         } )
     }
 }
@@ -4565,13 +4423,13 @@ pub struct MsgOsr {
     pub obs: Vec<PackedOsrContent>,
 }
 
-impl MsgOsr {
+impl SbpParse<MsgOsr> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOsr, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgOsr> {
         Ok( MsgOsr{
             sender_id: None,
-            header: ObservationHeader::parse(_buf)?,
-            obs: PackedOsrContent::parse_array(_buf)?,
+            header: self.parse()?,
+            obs: self.parse()?,
         } )
     }
 }
@@ -4623,12 +4481,12 @@ pub struct MsgSvAzEl {
     pub azel: Vec<SvAzEl>,
 }
 
-impl MsgSvAzEl {
+impl SbpParse<MsgSvAzEl> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSvAzEl, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSvAzEl> {
         Ok( MsgSvAzEl{
             sender_id: None,
-            azel: SvAzEl::parse_array(_buf)?,
+            azel: self.parse()?,
         } )
     }
 }
@@ -4679,13 +4537,13 @@ pub struct MsgSvConfigurationGPSDep {
     pub l2c_mask: u32,
 }
 
-impl MsgSvConfigurationGPSDep {
+impl SbpParse<MsgSvConfigurationGPSDep> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSvConfigurationGPSDep, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSvConfigurationGPSDep> {
         Ok( MsgSvConfigurationGPSDep{
             sender_id: None,
-            t_nmct: GPSTimeSec::parse(_buf)?,
-            l2c_mask: _buf.read_u32::<LittleEndian>()?,
+            t_nmct: self.parse()?,
+            l2c_mask: self.parse()?,
         } )
     }
 }
@@ -4738,30 +4596,13 @@ pub struct ObservationHeader {
     pub n_obs: u8,
 }
 
-impl ObservationHeader {
+impl SbpParse<ObservationHeader> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<ObservationHeader, crate::Error> {
+    fn parse(&mut self) -> crate::Result<ObservationHeader> {
         Ok( ObservationHeader{
-            t: GPSTime::parse(_buf)?,
-            n_obs: _buf.read_u8()?,
+            t: self.parse()?,
+            n_obs: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<ObservationHeader>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(ObservationHeader::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[ObservationHeader; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(ObservationHeader::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -4795,30 +4636,13 @@ pub struct ObservationHeaderDep {
     pub n_obs: u8,
 }
 
-impl ObservationHeaderDep {
+impl SbpParse<ObservationHeaderDep> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<ObservationHeaderDep, crate::Error> {
+    fn parse(&mut self) -> crate::Result<ObservationHeaderDep> {
         Ok( ObservationHeaderDep{
-            t: GPSTimeDep::parse(_buf)?,
-            n_obs: _buf.read_u8()?,
+            t: self.parse()?,
+            n_obs: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<ObservationHeaderDep>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(ObservationHeaderDep::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[ObservationHeaderDep; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(ObservationHeaderDep::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -4874,35 +4698,18 @@ pub struct PackedObsContent {
     pub sid: GnssSignal,
 }
 
-impl PackedObsContent {
+impl SbpParse<PackedObsContent> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContent, crate::Error> {
+    fn parse(&mut self) -> crate::Result<PackedObsContent> {
         Ok( PackedObsContent{
-            P: _buf.read_u32::<LittleEndian>()?,
-            L: CarrierPhase::parse(_buf)?,
-            D: Doppler::parse(_buf)?,
-            cn0: _buf.read_u8()?,
-            lock: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-            sid: GnssSignal::parse(_buf)?,
+            P: self.parse()?,
+            L: self.parse()?,
+            D: self.parse()?,
+            cn0: self.parse()?,
+            lock: self.parse()?,
+            flags: self.parse()?,
+            sid: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContent>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(PackedObsContent::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[PackedObsContent; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(PackedObsContent::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -4953,33 +4760,16 @@ pub struct PackedObsContentDepA {
     pub prn: u8,
 }
 
-impl PackedObsContentDepA {
+impl SbpParse<PackedObsContentDepA> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContentDepA, crate::Error> {
+    fn parse(&mut self) -> crate::Result<PackedObsContentDepA> {
         Ok( PackedObsContentDepA{
-            P: _buf.read_u32::<LittleEndian>()?,
-            L: CarrierPhaseDepA::parse(_buf)?,
-            cn0: _buf.read_u8()?,
-            lock: _buf.read_u16::<LittleEndian>()?,
-            prn: _buf.read_u8()?,
+            P: self.parse()?,
+            L: self.parse()?,
+            cn0: self.parse()?,
+            lock: self.parse()?,
+            prn: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContentDepA>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(PackedObsContentDepA::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[PackedObsContentDepA; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(PackedObsContentDepA::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -5027,33 +4817,16 @@ pub struct PackedObsContentDepB {
     pub sid: GnssSignalDep,
 }
 
-impl PackedObsContentDepB {
+impl SbpParse<PackedObsContentDepB> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContentDepB, crate::Error> {
+    fn parse(&mut self) -> crate::Result<PackedObsContentDepB> {
         Ok( PackedObsContentDepB{
-            P: _buf.read_u32::<LittleEndian>()?,
-            L: CarrierPhaseDepA::parse(_buf)?,
-            cn0: _buf.read_u8()?,
-            lock: _buf.read_u16::<LittleEndian>()?,
-            sid: GnssSignalDep::parse(_buf)?,
+            P: self.parse()?,
+            L: self.parse()?,
+            cn0: self.parse()?,
+            lock: self.parse()?,
+            sid: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContentDepB>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(PackedObsContentDepB::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[PackedObsContentDepB; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(PackedObsContentDepB::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -5102,33 +4875,16 @@ pub struct PackedObsContentDepC {
     pub sid: GnssSignalDep,
 }
 
-impl PackedObsContentDepC {
+impl SbpParse<PackedObsContentDepC> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedObsContentDepC, crate::Error> {
+    fn parse(&mut self) -> crate::Result<PackedObsContentDepC> {
         Ok( PackedObsContentDepC{
-            P: _buf.read_u32::<LittleEndian>()?,
-            L: CarrierPhase::parse(_buf)?,
-            cn0: _buf.read_u8()?,
-            lock: _buf.read_u16::<LittleEndian>()?,
-            sid: GnssSignalDep::parse(_buf)?,
+            P: self.parse()?,
+            L: self.parse()?,
+            cn0: self.parse()?,
+            lock: self.parse()?,
+            sid: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedObsContentDepC>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(PackedObsContentDepC::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[PackedObsContentDepC; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(PackedObsContentDepC::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -5184,36 +4940,19 @@ pub struct PackedOsrContent {
     pub range_std: u16,
 }
 
-impl PackedOsrContent {
+impl SbpParse<PackedOsrContent> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<PackedOsrContent, crate::Error> {
+    fn parse(&mut self) -> crate::Result<PackedOsrContent> {
         Ok( PackedOsrContent{
-            P: _buf.read_u32::<LittleEndian>()?,
-            L: CarrierPhase::parse(_buf)?,
-            lock: _buf.read_u8()?,
-            flags: _buf.read_u8()?,
-            sid: GnssSignal::parse(_buf)?,
-            iono_std: _buf.read_u16::<LittleEndian>()?,
-            tropo_std: _buf.read_u16::<LittleEndian>()?,
-            range_std: _buf.read_u16::<LittleEndian>()?,
+            P: self.parse()?,
+            L: self.parse()?,
+            lock: self.parse()?,
+            flags: self.parse()?,
+            sid: self.parse()?,
+            iono_std: self.parse()?,
+            tropo_std: self.parse()?,
+            range_std: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<PackedOsrContent>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(PackedOsrContent::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(
-        buf: &mut &[u8],
-    ) -> Result<[PackedOsrContent; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(PackedOsrContent::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -5260,29 +4999,14 @@ pub struct SvAzEl {
     pub el: i8,
 }
 
-impl SvAzEl {
+impl SbpParse<SvAzEl> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<SvAzEl, crate::Error> {
+    fn parse(&mut self) -> crate::Result<SvAzEl> {
         Ok( SvAzEl{
-            sid: GnssSignal::parse(_buf)?,
-            az: _buf.read_u8()?,
-            el: _buf.read_i8()?,
+            sid: self.parse()?,
+            az: self.parse()?,
+            el: self.parse()?,
         } )
-    }
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SvAzEl>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push(SvAzEl::parse(buf)?);
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(buf: &mut &[u8]) -> Result<[SvAzEl; N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push(SvAzEl::parse(buf)?);
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 

@@ -16,17 +16,11 @@
 //! e.g. camera shutter time.
 //!
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 /// Reports timestamped external pin event
 ///
@@ -51,16 +45,16 @@ pub struct MsgExtEvent {
     pub pin: u8,
 }
 
-impl MsgExtEvent {
+impl SbpParse<MsgExtEvent> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgExtEvent, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgExtEvent> {
         Ok( MsgExtEvent{
             sender_id: None,
-            wn: _buf.read_u16::<LittleEndian>()?,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            ns_residual: _buf.read_i32::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
-            pin: _buf.read_u8()?,
+            wn: self.parse()?,
+            tow: self.parse()?,
+            ns_residual: self.parse()?,
+            flags: self.parse()?,
+            pin: self.parse()?,
         } )
     }
 }

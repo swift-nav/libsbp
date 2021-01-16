@@ -15,17 +15,11 @@
 //! Linux state monitoring.
 //!
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 /// List CPU state on the system
 ///
@@ -44,21 +38,21 @@ pub struct MsgLinuxCpuState {
     /// percent of cpu used, expressed as a fraction of 256
     pub pcpu: u8,
     /// fixed length string representing the thread name
-    pub tname: SbpString,
+    pub tname: BoundedSbpString<15>,
     /// the command line (as much as it fits in the remaining packet)
-    pub cmdline: SbpString,
+    pub cmdline: UnboundedSbpString,
 }
 
-impl MsgLinuxCpuState {
+impl SbpParse<MsgLinuxCpuState> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxCpuState, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgLinuxCpuState> {
         Ok( MsgLinuxCpuState{
             sender_id: None,
-            index: _buf.read_u8()?,
-            pid: _buf.read_u16::<LittleEndian>()?,
-            pcpu: _buf.read_u8()?,
-            tname: crate::parser::read_string_limit(_buf, 15)?,
-            cmdline: crate::parser::read_string(_buf)?,
+            index: self.parse()?,
+            pid: self.parse()?,
+            pcpu: self.parse()?,
+            tname: self.parse()?,
+            cmdline: self.parse()?,
         } )
     }
 }
@@ -119,21 +113,21 @@ pub struct MsgLinuxMemState {
     /// percent of memory used, expressed as a fraction of 256
     pub pmem: u8,
     /// fixed length string representing the thread name
-    pub tname: SbpString,
+    pub tname: BoundedSbpString<15>,
     /// the command line (as much as it fits in the remaining packet)
-    pub cmdline: SbpString,
+    pub cmdline: UnboundedSbpString,
 }
 
-impl MsgLinuxMemState {
+impl SbpParse<MsgLinuxMemState> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxMemState, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgLinuxMemState> {
         Ok( MsgLinuxMemState{
             sender_id: None,
-            index: _buf.read_u8()?,
-            pid: _buf.read_u16::<LittleEndian>()?,
-            pmem: _buf.read_u8()?,
-            tname: crate::parser::read_string_limit(_buf, 15)?,
-            cmdline: crate::parser::read_string(_buf)?,
+            index: self.parse()?,
+            pid: self.parse()?,
+            pmem: self.parse()?,
+            tname: self.parse()?,
+            cmdline: self.parse()?,
         } )
     }
 }
@@ -193,18 +187,18 @@ pub struct MsgLinuxProcessFdCount {
     /// a count of the number of file descriptors opened by the process
     pub fd_count: u16,
     /// the command line of the process in question
-    pub cmdline: SbpString,
+    pub cmdline: UnboundedSbpString,
 }
 
-impl MsgLinuxProcessFdCount {
+impl SbpParse<MsgLinuxProcessFdCount> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessFdCount, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgLinuxProcessFdCount> {
         Ok( MsgLinuxProcessFdCount{
             sender_id: None,
-            index: _buf.read_u8()?,
-            pid: _buf.read_u16::<LittleEndian>()?,
-            fd_count: _buf.read_u16::<LittleEndian>()?,
-            cmdline: crate::parser::read_string(_buf)?,
+            index: self.parse()?,
+            pid: self.parse()?,
+            fd_count: self.parse()?,
+            cmdline: self.parse()?,
         } )
     }
 }
@@ -262,16 +256,16 @@ pub struct MsgLinuxProcessFdSummary {
     /// being reported.  That is, in C string syntax
     /// "32\0/var/log/syslog\012\0/tmp/foo\0" with the end of the list being 2
     /// NULL terminators in a row.
-    pub most_opened: SbpString,
+    pub most_opened: UnboundedSbpString,
 }
 
-impl MsgLinuxProcessFdSummary {
+impl SbpParse<MsgLinuxProcessFdSummary> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessFdSummary, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgLinuxProcessFdSummary> {
         Ok( MsgLinuxProcessFdSummary{
             sender_id: None,
-            sys_fd_count: _buf.read_u32::<LittleEndian>()?,
-            most_opened: crate::parser::read_string(_buf)?,
+            sys_fd_count: self.parse()?,
+            most_opened: self.parse()?,
         } )
     }
 }
@@ -333,20 +327,20 @@ pub struct MsgLinuxProcessSocketCounts {
     /// (listen), 0x400 (closing), 0x800 (unconnected),   and 0x8000 (unknown)
     pub socket_states: u16,
     /// the command line of the process in question
-    pub cmdline: SbpString,
+    pub cmdline: UnboundedSbpString,
 }
 
-impl MsgLinuxProcessSocketCounts {
+impl SbpParse<MsgLinuxProcessSocketCounts> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessSocketCounts, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgLinuxProcessSocketCounts> {
         Ok( MsgLinuxProcessSocketCounts{
             sender_id: None,
-            index: _buf.read_u8()?,
-            pid: _buf.read_u16::<LittleEndian>()?,
-            socket_count: _buf.read_u16::<LittleEndian>()?,
-            socket_types: _buf.read_u16::<LittleEndian>()?,
-            socket_states: _buf.read_u16::<LittleEndian>()?,
-            cmdline: crate::parser::read_string(_buf)?,
+            index: self.parse()?,
+            pid: self.parse()?,
+            socket_count: self.parse()?,
+            socket_types: self.parse()?,
+            socket_states: self.parse()?,
+            cmdline: self.parse()?,
         } )
     }
 }
@@ -419,24 +413,24 @@ pub struct MsgLinuxProcessSocketQueues {
     pub socket_states: u16,
     /// Address of the largest queue, remote or local depending on the
     /// directionality of the connection.
-    pub address_of_largest: SbpString,
+    pub address_of_largest: BoundedSbpString<64>,
     /// the command line of the process in question
-    pub cmdline: SbpString,
+    pub cmdline: UnboundedSbpString,
 }
 
-impl MsgLinuxProcessSocketQueues {
+impl SbpParse<MsgLinuxProcessSocketQueues> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxProcessSocketQueues, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgLinuxProcessSocketQueues> {
         Ok( MsgLinuxProcessSocketQueues{
             sender_id: None,
-            index: _buf.read_u8()?,
-            pid: _buf.read_u16::<LittleEndian>()?,
-            recv_queued: _buf.read_u16::<LittleEndian>()?,
-            send_queued: _buf.read_u16::<LittleEndian>()?,
-            socket_types: _buf.read_u16::<LittleEndian>()?,
-            socket_states: _buf.read_u16::<LittleEndian>()?,
-            address_of_largest: crate::parser::read_string_limit(_buf, 64)?,
-            cmdline: crate::parser::read_string(_buf)?,
+            index: self.parse()?,
+            pid: self.parse()?,
+            recv_queued: self.parse()?,
+            send_queued: self.parse()?,
+            socket_types: self.parse()?,
+            socket_states: self.parse()?,
+            address_of_largest: self.parse()?,
+            cmdline: self.parse()?,
         } )
     }
 }
@@ -509,15 +503,15 @@ pub struct MsgLinuxSocketUsage {
     pub socket_type_counts: [u16; 16],
 }
 
-impl MsgLinuxSocketUsage {
+impl SbpParse<MsgLinuxSocketUsage> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSocketUsage, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgLinuxSocketUsage> {
         Ok( MsgLinuxSocketUsage{
             sender_id: None,
-            avg_queue_depth: _buf.read_u32::<LittleEndian>()?,
-            max_queue_depth: _buf.read_u32::<LittleEndian>()?,
-            socket_state_counts: crate::parser::read_u16_array_fixed(_buf)?,
-            socket_type_counts: crate::parser::read_u16_array_fixed(_buf)?,
+            avg_queue_depth: self.parse()?,
+            max_queue_depth: self.parse()?,
+            socket_state_counts: self.parse()?,
+            socket_type_counts: self.parse()?,
         } )
     }
 }
@@ -582,17 +576,17 @@ pub struct MsgLinuxSysState {
     pub pid_count: u16,
 }
 
-impl MsgLinuxSysState {
+impl SbpParse<MsgLinuxSysState> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSysState, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgLinuxSysState> {
         Ok( MsgLinuxSysState{
             sender_id: None,
-            mem_total: _buf.read_u16::<LittleEndian>()?,
-            pcpu: _buf.read_u8()?,
-            pmem: _buf.read_u8()?,
-            procs_starting: _buf.read_u16::<LittleEndian>()?,
-            procs_stopping: _buf.read_u16::<LittleEndian>()?,
-            pid_count: _buf.read_u16::<LittleEndian>()?,
+            mem_total: self.parse()?,
+            pcpu: self.parse()?,
+            pmem: self.parse()?,
+            procs_starting: self.parse()?,
+            procs_stopping: self.parse()?,
+            pid_count: self.parse()?,
         } )
     }
 }

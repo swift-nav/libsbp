@@ -14,17 +14,11 @@
 //****************************************************************************/
 //! Magnetometer (mag) messages.
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 /// Raw magnetometer data
 ///
@@ -48,16 +42,16 @@ pub struct MsgMagRaw {
     pub mag_z: i16,
 }
 
-impl MsgMagRaw {
+impl SbpParse<MsgMagRaw> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgMagRaw, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgMagRaw> {
         Ok( MsgMagRaw{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            tow_f: _buf.read_u8()?,
-            mag_x: _buf.read_i16::<LittleEndian>()?,
-            mag_y: _buf.read_i16::<LittleEndian>()?,
-            mag_z: _buf.read_i16::<LittleEndian>()?,
+            tow: self.parse()?,
+            tow_f: self.parse()?,
+            mag_x: self.parse()?,
+            mag_y: self.parse()?,
+            mag_z: self.parse()?,
         } )
     }
 }

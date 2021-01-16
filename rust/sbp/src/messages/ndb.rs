@@ -15,18 +15,12 @@
 //! Messages for logging NDB events.
 //!
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 use super::gnss::*;
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 /// Navigation DataBase Event
 ///
@@ -62,19 +56,19 @@ pub struct MsgNdbEvent {
     pub original_sender: u16,
 }
 
-impl MsgNdbEvent {
+impl SbpParse<MsgNdbEvent> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgNdbEvent, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgNdbEvent> {
         Ok( MsgNdbEvent{
             sender_id: None,
-            recv_time: _buf.read_u64::<LittleEndian>()?,
-            event: _buf.read_u8()?,
-            object_type: _buf.read_u8()?,
-            result: _buf.read_u8()?,
-            data_source: _buf.read_u8()?,
-            object_sid: GnssSignal::parse(_buf)?,
-            src_sid: GnssSignal::parse(_buf)?,
-            original_sender: _buf.read_u16::<LittleEndian>()?,
+            recv_time: self.parse()?,
+            event: self.parse()?,
+            object_type: self.parse()?,
+            result: self.parse()?,
+            data_source: self.parse()?,
+            object_sid: self.parse()?,
+            src_sid: self.parse()?,
+            original_sender: self.parse()?,
         } )
     }
 }

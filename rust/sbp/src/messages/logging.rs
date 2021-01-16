@@ -15,17 +15,11 @@
 //! Logging and debugging messages from the device.
 //!
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 /// Wrapper for FWD a separate stream of information over SBP
 ///
@@ -47,17 +41,17 @@ pub struct MsgFwd {
     /// protocol identifier
     pub protocol: u8,
     /// variable length wrapped binary message
-    pub fwd_payload: SbpString,
+    pub fwd_payload: UnboundedSbpString,
 }
 
-impl MsgFwd {
+impl SbpParse<MsgFwd> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFwd, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgFwd> {
         Ok( MsgFwd{
             sender_id: None,
-            source: _buf.read_u8()?,
-            protocol: _buf.read_u8()?,
-            fwd_payload: crate::parser::read_string(_buf)?,
+            source: self.parse()?,
+            protocol: self.parse()?,
+            fwd_payload: self.parse()?,
         } )
     }
 }
@@ -111,16 +105,16 @@ pub struct MsgLog {
     /// Logging level
     pub level: u8,
     /// Human-readable string
-    pub text: SbpString,
+    pub text: UnboundedSbpString,
 }
 
-impl MsgLog {
+impl SbpParse<MsgLog> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLog, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgLog> {
         Ok( MsgLog{
             sender_id: None,
-            level: _buf.read_u8()?,
-            text: crate::parser::read_string(_buf)?,
+            level: self.parse()?,
+            text: self.parse()?,
         } )
     }
 }
@@ -168,15 +162,15 @@ impl crate::serialize::SbpSerialize for MsgLog {
 pub struct MsgPrintDep {
     pub sender_id: Option<u16>,
     /// Human-readable string
-    pub text: SbpString,
+    pub text: UnboundedSbpString,
 }
 
-impl MsgPrintDep {
+impl SbpParse<MsgPrintDep> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgPrintDep, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgPrintDep> {
         Ok( MsgPrintDep{
             sender_id: None,
-            text: crate::parser::read_string(_buf)?,
+            text: self.parse()?,
         } )
     }
 }

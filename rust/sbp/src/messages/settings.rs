@@ -40,17 +40,11 @@
 //! reference and example.
 //!
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 /// Finished reading settings (host <= device)
 ///
@@ -63,9 +57,9 @@ pub struct MsgSettingsReadByIndexDone {
     pub sender_id: Option<u16>,
 }
 
-impl MsgSettingsReadByIndexDone {
+impl SbpParse<MsgSettingsReadByIndexDone> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexDone, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSettingsReadByIndexDone> {
         Ok( MsgSettingsReadByIndexDone{
             sender_id: None,
         } )
@@ -115,12 +109,12 @@ pub struct MsgSettingsReadByIndexReq {
     pub index: u16,
 }
 
-impl MsgSettingsReadByIndexReq {
+impl SbpParse<MsgSettingsReadByIndexReq> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexReq, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSettingsReadByIndexReq> {
         Ok( MsgSettingsReadByIndexReq{
             sender_id: None,
-            index: _buf.read_u16::<LittleEndian>()?,
+            index: self.parse()?,
         } )
     }
 }
@@ -179,16 +173,16 @@ pub struct MsgSettingsReadByIndexResp {
     pub index: u16,
     /// A NULL-terminated and delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
-    pub setting: SbpString,
+    pub setting: UnboundedSbpString,
 }
 
-impl MsgSettingsReadByIndexResp {
+impl SbpParse<MsgSettingsReadByIndexResp> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadByIndexResp, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSettingsReadByIndexResp> {
         Ok( MsgSettingsReadByIndexResp{
             sender_id: None,
-            index: _buf.read_u16::<LittleEndian>()?,
-            setting: crate::parser::read_string(_buf)?,
+            index: self.parse()?,
+            setting: self.parse()?,
         } )
     }
 }
@@ -244,15 +238,15 @@ pub struct MsgSettingsReadReq {
     pub sender_id: Option<u16>,
     /// A NULL-terminated and NULL-delimited string with contents
     /// "SECTION_SETTING\0SETTING\0"
-    pub setting: SbpString,
+    pub setting: UnboundedSbpString,
 }
 
-impl MsgSettingsReadReq {
+impl SbpParse<MsgSettingsReadReq> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadReq, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSettingsReadReq> {
         Ok( MsgSettingsReadReq{
             sender_id: None,
-            setting: crate::parser::read_string(_buf)?,
+            setting: self.parse()?,
         } )
     }
 }
@@ -305,15 +299,15 @@ pub struct MsgSettingsReadResp {
     pub sender_id: Option<u16>,
     /// A NULL-terminated and NULL-delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE\0"
-    pub setting: SbpString,
+    pub setting: UnboundedSbpString,
 }
 
-impl MsgSettingsReadResp {
+impl SbpParse<MsgSettingsReadResp> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsReadResp, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSettingsReadResp> {
         Ok( MsgSettingsReadResp{
             sender_id: None,
-            setting: crate::parser::read_string(_buf)?,
+            setting: self.parse()?,
         } )
     }
 }
@@ -362,15 +356,15 @@ pub struct MsgSettingsRegister {
     pub sender_id: Option<u16>,
     /// A NULL-terminated and delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE".
-    pub setting: SbpString,
+    pub setting: UnboundedSbpString,
 }
 
-impl MsgSettingsRegister {
+impl SbpParse<MsgSettingsRegister> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsRegister, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSettingsRegister> {
         Ok( MsgSettingsRegister{
             sender_id: None,
-            setting: crate::parser::read_string(_buf)?,
+            setting: self.parse()?,
         } )
     }
 }
@@ -423,16 +417,16 @@ pub struct MsgSettingsRegisterResp {
     /// A NULL-terminated and delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined
     /// according to the status field.
-    pub setting: SbpString,
+    pub setting: UnboundedSbpString,
 }
 
-impl MsgSettingsRegisterResp {
+impl SbpParse<MsgSettingsRegisterResp> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsRegisterResp, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSettingsRegisterResp> {
         Ok( MsgSettingsRegisterResp{
             sender_id: None,
-            status: _buf.read_u8()?,
-            setting: crate::parser::read_string(_buf)?,
+            status: self.parse()?,
+            setting: self.parse()?,
         } )
     }
 }
@@ -482,9 +476,9 @@ pub struct MsgSettingsSave {
     pub sender_id: Option<u16>,
 }
 
-impl MsgSettingsSave {
+impl SbpParse<MsgSettingsSave> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsSave, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSettingsSave> {
         Ok( MsgSettingsSave{
             sender_id: None,
         } )
@@ -535,15 +529,15 @@ pub struct MsgSettingsWrite {
     pub sender_id: Option<u16>,
     /// A NULL-terminated and NULL-delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE\0"
-    pub setting: SbpString,
+    pub setting: UnboundedSbpString,
 }
 
-impl MsgSettingsWrite {
+impl SbpParse<MsgSettingsWrite> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWrite, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSettingsWrite> {
         Ok( MsgSettingsWrite{
             sender_id: None,
-            setting: crate::parser::read_string(_buf)?,
+            setting: self.parse()?,
         } )
     }
 }
@@ -598,16 +592,16 @@ pub struct MsgSettingsWriteResp {
     pub status: u8,
     /// A NULL-terminated and delimited string with contents
     /// "SECTION_SETTING\0SETTING\0VALUE\0"
-    pub setting: SbpString,
+    pub setting: UnboundedSbpString,
 }
 
-impl MsgSettingsWriteResp {
+impl SbpParse<MsgSettingsWriteResp> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSettingsWriteResp, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgSettingsWriteResp> {
         Ok( MsgSettingsWriteResp{
             sender_id: None,
-            status: _buf.read_u8()?,
-            setting: crate::parser::read_string(_buf)?,
+            status: self.parse()?,
+            setting: self.parse()?,
         } )
     }
 }

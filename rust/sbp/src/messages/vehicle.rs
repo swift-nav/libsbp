@@ -14,17 +14,11 @@
 //****************************************************************************/
 //! Messages from a vehicle.
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 /// Vehicle forward (x-axis) velocity
 ///
@@ -52,14 +46,14 @@ pub struct MsgOdometry {
     pub flags: u8,
 }
 
-impl MsgOdometry {
+impl SbpParse<MsgOdometry> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgOdometry, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgOdometry> {
         Ok( MsgOdometry{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            velocity: _buf.read_i32::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
+            tow: self.parse()?,
+            velocity: self.parse()?,
+            flags: self.parse()?,
         } )
     }
 }
@@ -132,15 +126,15 @@ pub struct MsgWheeltick {
     pub ticks: i32,
 }
 
-impl MsgWheeltick {
+impl SbpParse<MsgWheeltick> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgWheeltick, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgWheeltick> {
         Ok( MsgWheeltick{
             sender_id: None,
-            time: _buf.read_u64::<LittleEndian>()?,
-            flags: _buf.read_u8()?,
-            source: _buf.read_u8()?,
-            ticks: _buf.read_i32::<LittleEndian>()?,
+            time: self.parse()?,
+            flags: self.parse()?,
+            source: self.parse()?,
+            ticks: self.parse()?,
         } )
     }
 }

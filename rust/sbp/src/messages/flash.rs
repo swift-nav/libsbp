@@ -19,17 +19,11 @@
 //! to Piksi Multi.
 //!
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 /// Flash response message (host <= device).
 ///
@@ -47,12 +41,12 @@ pub struct MsgFlashDone {
     pub response: u8,
 }
 
-impl MsgFlashDone {
+impl SbpParse<MsgFlashDone> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashDone, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgFlashDone> {
         Ok( MsgFlashDone{
             sender_id: None,
-            response: _buf.read_u8()?,
+            response: self.parse()?,
         } )
     }
 }
@@ -107,13 +101,13 @@ pub struct MsgFlashErase {
     pub sector_num: u32,
 }
 
-impl MsgFlashErase {
+impl SbpParse<MsgFlashErase> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashErase, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgFlashErase> {
         Ok( MsgFlashErase{
             sender_id: None,
-            target: _buf.read_u8()?,
-            sector_num: _buf.read_u32::<LittleEndian>()?,
+            target: self.parse()?,
+            sector_num: self.parse()?,
         } )
     }
 }
@@ -175,15 +169,15 @@ pub struct MsgFlashProgram {
     pub data: Vec<u8>,
 }
 
-impl MsgFlashProgram {
+impl SbpParse<MsgFlashProgram> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashProgram, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgFlashProgram> {
         Ok( MsgFlashProgram{
             sender_id: None,
-            target: _buf.read_u8()?,
-            addr_start: crate::parser::read_u8_array_fixed(_buf)?,
-            addr_len: _buf.read_u8()?,
-            data: crate::parser::read_u8_array(_buf)?,
+            target: self.parse()?,
+            addr_start: self.parse()?,
+            addr_len: self.parse()?,
+            data: self.parse()?,
         } )
     }
 }
@@ -248,14 +242,14 @@ pub struct MsgFlashReadReq {
     pub addr_len: u8,
 }
 
-impl MsgFlashReadReq {
+impl SbpParse<MsgFlashReadReq> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashReadReq, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgFlashReadReq> {
         Ok( MsgFlashReadReq{
             sender_id: None,
-            target: _buf.read_u8()?,
-            addr_start: crate::parser::read_u8_array_fixed(_buf)?,
-            addr_len: _buf.read_u8()?,
+            target: self.parse()?,
+            addr_start: self.parse()?,
+            addr_len: self.parse()?,
         } )
     }
 }
@@ -318,14 +312,14 @@ pub struct MsgFlashReadResp {
     pub addr_len: u8,
 }
 
-impl MsgFlashReadResp {
+impl SbpParse<MsgFlashReadResp> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgFlashReadResp, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgFlashReadResp> {
         Ok( MsgFlashReadResp{
             sender_id: None,
-            target: _buf.read_u8()?,
-            addr_start: crate::parser::read_u8_array_fixed(_buf)?,
-            addr_len: _buf.read_u8()?,
+            target: self.parse()?,
+            addr_start: self.parse()?,
+            addr_len: self.parse()?,
         } )
     }
 }
@@ -379,12 +373,12 @@ pub struct MsgM25FlashWriteStatus {
     pub status: [u8; 1],
 }
 
-impl MsgM25FlashWriteStatus {
+impl SbpParse<MsgM25FlashWriteStatus> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgM25FlashWriteStatus, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgM25FlashWriteStatus> {
         Ok( MsgM25FlashWriteStatus{
             sender_id: None,
-            status: crate::parser::read_u8_array_fixed(_buf)?,
+            status: self.parse()?,
         } )
     }
 }
@@ -434,12 +428,12 @@ pub struct MsgStmFlashLockSector {
     pub sector: u32,
 }
 
-impl MsgStmFlashLockSector {
+impl SbpParse<MsgStmFlashLockSector> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmFlashLockSector, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgStmFlashLockSector> {
         Ok( MsgStmFlashLockSector{
             sender_id: None,
-            sector: _buf.read_u32::<LittleEndian>()?,
+            sector: self.parse()?,
         } )
     }
 }
@@ -489,12 +483,12 @@ pub struct MsgStmFlashUnlockSector {
     pub sector: u32,
 }
 
-impl MsgStmFlashUnlockSector {
+impl SbpParse<MsgStmFlashUnlockSector> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmFlashUnlockSector, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgStmFlashUnlockSector> {
         Ok( MsgStmFlashUnlockSector{
             sender_id: None,
-            sector: _buf.read_u32::<LittleEndian>()?,
+            sector: self.parse()?,
         } )
     }
 }
@@ -545,9 +539,9 @@ pub struct MsgStmUniqueIdReq {
     pub sender_id: Option<u16>,
 }
 
-impl MsgStmUniqueIdReq {
+impl SbpParse<MsgStmUniqueIdReq> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmUniqueIdReq, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgStmUniqueIdReq> {
         Ok( MsgStmUniqueIdReq{
             sender_id: None,
         } )
@@ -598,12 +592,12 @@ pub struct MsgStmUniqueIdResp {
     pub stm_id: [u8; 12],
 }
 
-impl MsgStmUniqueIdResp {
+impl SbpParse<MsgStmUniqueIdResp> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmUniqueIdResp, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgStmUniqueIdResp> {
         Ok( MsgStmUniqueIdResp{
             sender_id: None,
-            stm_id: crate::parser::read_u8_array_fixed(_buf)?,
+            stm_id: self.parse()?,
         } )
     }
 }

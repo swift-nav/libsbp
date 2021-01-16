@@ -14,17 +14,11 @@
 //****************************************************************************/
 //! Inertial Measurement Unit (IMU) messages.
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
 
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, BoundedSbpString, UnboundedSbpString};
 
 /// Auxiliary IMU data
 ///
@@ -45,14 +39,14 @@ pub struct MsgImuAux {
     pub imu_conf: u8,
 }
 
-impl MsgImuAux {
+impl SbpParse<MsgImuAux> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuAux, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgImuAux> {
         Ok( MsgImuAux{
             sender_id: None,
-            imu_type: _buf.read_u8()?,
-            temp: _buf.read_i16::<LittleEndian>()?,
-            imu_conf: _buf.read_u8()?,
+            imu_type: self.parse()?,
+            temp: self.parse()?,
+            imu_conf: self.parse()?,
         } )
     }
 }
@@ -127,19 +121,19 @@ pub struct MsgImuRaw {
     pub gyr_z: i16,
 }
 
-impl MsgImuRaw {
+impl SbpParse<MsgImuRaw> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgImuRaw, crate::Error> {
+    fn parse(&mut self) -> crate::Result<MsgImuRaw> {
         Ok( MsgImuRaw{
             sender_id: None,
-            tow: _buf.read_u32::<LittleEndian>()?,
-            tow_f: _buf.read_u8()?,
-            acc_x: _buf.read_i16::<LittleEndian>()?,
-            acc_y: _buf.read_i16::<LittleEndian>()?,
-            acc_z: _buf.read_i16::<LittleEndian>()?,
-            gyr_x: _buf.read_i16::<LittleEndian>()?,
-            gyr_y: _buf.read_i16::<LittleEndian>()?,
-            gyr_z: _buf.read_i16::<LittleEndian>()?,
+            tow: self.parse()?,
+            tow_f: self.parse()?,
+            acc_x: self.parse()?,
+            acc_y: self.parse()?,
+            acc_z: self.parse()?,
+            gyr_x: self.parse()?,
+            gyr_y: self.parse()?,
+            gyr_z: self.parse()?,
         } )
     }
 }
