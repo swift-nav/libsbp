@@ -14,6 +14,9 @@
 //****************************************************************************/
 //! Precise State Space Representation (SSR) corrections format
 
+#[allow(unused_imports)]
+use std::convert::TryInto;
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
@@ -55,15 +58,14 @@ impl CodeBiasesContent {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<CodeBiasesContent>, crate::Error> {
+    ) -> Result<[CodeBiasesContent; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(CodeBiasesContent::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -127,15 +129,14 @@ impl GridDefinitionHeaderDepA {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<GridDefinitionHeaderDepA>, crate::Error> {
+    ) -> Result<[GridDefinitionHeaderDepA; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(GridDefinitionHeaderDepA::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -196,12 +197,14 @@ impl GridElement {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GridElement>, crate::Error> {
+    pub fn parse_array_fixed<const N: usize>(
+        buf: &mut &[u8],
+    ) -> Result<[GridElement; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(GridElement::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -256,15 +259,14 @@ impl GridElementNoStd {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<GridElementNoStd>, crate::Error> {
+    ) -> Result<[GridElementNoStd; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(GridElementNoStd::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -337,15 +339,14 @@ impl GriddedCorrectionHeader {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<GriddedCorrectionHeader>, crate::Error> {
+    ) -> Result<[GriddedCorrectionHeader; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(GriddedCorrectionHeader::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -422,15 +423,14 @@ impl GriddedCorrectionHeaderDepA {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<GriddedCorrectionHeaderDepA>, crate::Error> {
+    ) -> Result<[GriddedCorrectionHeaderDepA; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(GriddedCorrectionHeaderDepA::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -1389,15 +1389,14 @@ impl PhaseBiasesContent {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<PhaseBiasesContent>, crate::Error> {
+    ) -> Result<[PhaseBiasesContent; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(PhaseBiasesContent::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -1470,12 +1469,14 @@ impl STECHeader {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<STECHeader>, crate::Error> {
+    pub fn parse_array_fixed<const N: usize>(
+        buf: &mut &[u8],
+    ) -> Result<[STECHeader; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(STECHeader::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -1546,15 +1547,14 @@ impl STECHeaderDepA {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<STECHeaderDepA>, crate::Error> {
+    ) -> Result<[STECHeaderDepA; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(STECHeaderDepA::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -1613,12 +1613,14 @@ impl STECResidual {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<STECResidual>, crate::Error> {
+    pub fn parse_array_fixed<const N: usize>(
+        buf: &mut &[u8],
+    ) -> Result<[STECResidual; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(STECResidual::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -1669,15 +1671,14 @@ impl STECResidualNoStd {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<STECResidualNoStd>, crate::Error> {
+    ) -> Result<[STECResidualNoStd; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(STECResidualNoStd::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -1710,7 +1711,7 @@ pub struct STECSatElement {
     /// in units of TECU instead of m.
     pub stec_quality_indicator: u8,
     /// Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
-    pub stec_coeff: Vec<i16>,
+    pub stec_coeff: [i16; 4],
 }
 
 impl STECSatElement {
@@ -1719,7 +1720,7 @@ impl STECSatElement {
         Ok( STECSatElement{
             sv_id: SvId::parse(_buf)?,
             stec_quality_indicator: _buf.read_u8()?,
-            stec_coeff: crate::parser::read_s16_array_limit(_buf, 4)?,
+            stec_coeff: crate::parser::read_s16_array_fixed(_buf)?,
         } )
     }
     pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<STECSatElement>, crate::Error> {
@@ -1730,15 +1731,14 @@ impl STECSatElement {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<STECSatElement>, crate::Error> {
+    ) -> Result<[STECSatElement; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(STECSatElement::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -1793,15 +1793,14 @@ impl TroposphericDelayCorrection {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<TroposphericDelayCorrection>, crate::Error> {
+    ) -> Result<[TroposphericDelayCorrection; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(TroposphericDelayCorrection::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -1854,15 +1853,14 @@ impl TroposphericDelayCorrectionNoStd {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<TroposphericDelayCorrectionNoStd>, crate::Error> {
+    ) -> Result<[TroposphericDelayCorrectionNoStd; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(TroposphericDelayCorrectionNoStd::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 

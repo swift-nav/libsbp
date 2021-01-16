@@ -19,6 +19,9 @@
 //! to Piksi Multi.
 //!
 
+#[allow(unused_imports)]
+use std::convert::TryInto;
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
@@ -165,7 +168,7 @@ pub struct MsgFlashProgram {
     /// Target flags
     pub target: u8,
     /// Starting address offset to program
-    pub addr_start: Vec<u8>,
+    pub addr_start: [u8; 3],
     /// Length of set of addresses to program, counting up from starting address
     pub addr_len: u8,
     /// Data to program addresses with, with length N=addr_len
@@ -178,7 +181,7 @@ impl MsgFlashProgram {
         Ok( MsgFlashProgram{
             sender_id: None,
             target: _buf.read_u8()?,
-            addr_start: crate::parser::read_u8_array_limit(_buf, 3)?,
+            addr_start: crate::parser::read_u8_array_fixed(_buf)?,
             addr_len: _buf.read_u8()?,
             data: crate::parser::read_u8_array(_buf)?,
         } )
@@ -240,7 +243,7 @@ pub struct MsgFlashReadReq {
     /// Target flags
     pub target: u8,
     /// Starting address offset to read from
-    pub addr_start: Vec<u8>,
+    pub addr_start: [u8; 3],
     /// Length of set of addresses to read, counting up from starting address
     pub addr_len: u8,
 }
@@ -251,7 +254,7 @@ impl MsgFlashReadReq {
         Ok( MsgFlashReadReq{
             sender_id: None,
             target: _buf.read_u8()?,
-            addr_start: crate::parser::read_u8_array_limit(_buf, 3)?,
+            addr_start: crate::parser::read_u8_array_fixed(_buf)?,
             addr_len: _buf.read_u8()?,
         } )
     }
@@ -310,7 +313,7 @@ pub struct MsgFlashReadResp {
     /// Target flags
     pub target: u8,
     /// Starting address offset to read from
-    pub addr_start: Vec<u8>,
+    pub addr_start: [u8; 3],
     /// Length of set of addresses to read, counting up from starting address
     pub addr_len: u8,
 }
@@ -321,7 +324,7 @@ impl MsgFlashReadResp {
         Ok( MsgFlashReadResp{
             sender_id: None,
             target: _buf.read_u8()?,
-            addr_start: crate::parser::read_u8_array_limit(_buf, 3)?,
+            addr_start: crate::parser::read_u8_array_fixed(_buf)?,
             addr_len: _buf.read_u8()?,
         } )
     }
@@ -373,7 +376,7 @@ impl crate::serialize::SbpSerialize for MsgFlashReadResp {
 pub struct MsgM25FlashWriteStatus {
     pub sender_id: Option<u16>,
     /// Byte to write to the M25 flash status register
-    pub status: Vec<u8>,
+    pub status: [u8; 1],
 }
 
 impl MsgM25FlashWriteStatus {
@@ -381,7 +384,7 @@ impl MsgM25FlashWriteStatus {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgM25FlashWriteStatus, crate::Error> {
         Ok( MsgM25FlashWriteStatus{
             sender_id: None,
-            status: crate::parser::read_u8_array_limit(_buf, 1)?,
+            status: crate::parser::read_u8_array_fixed(_buf)?,
         } )
     }
 }
@@ -592,7 +595,7 @@ impl crate::serialize::SbpSerialize for MsgStmUniqueIdReq {
 pub struct MsgStmUniqueIdResp {
     pub sender_id: Option<u16>,
     /// Device unique ID
-    pub stm_id: Vec<u8>,
+    pub stm_id: [u8; 12],
 }
 
 impl MsgStmUniqueIdResp {
@@ -600,7 +603,7 @@ impl MsgStmUniqueIdResp {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgStmUniqueIdResp, crate::Error> {
         Ok( MsgStmUniqueIdResp{
             sender_id: None,
-            stm_id: crate::parser::read_u8_array_limit(_buf, 12)?,
+            stm_id: crate::parser::read_u8_array_fixed(_buf)?,
         } )
     }
 }

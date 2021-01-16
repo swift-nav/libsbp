@@ -15,6 +15,9 @@
 //! Messages reserved for use by the user.
 //!
 
+#[allow(unused_imports)]
+use std::convert::TryInto;
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};

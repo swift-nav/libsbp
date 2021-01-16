@@ -15,6 +15,9 @@
 //! Linux state monitoring.
 //!
 
+#[allow(unused_imports)]
+use std::convert::TryInto;
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
@@ -499,11 +502,11 @@ pub struct MsgLinuxSocketUsage {
     /// A count for each socket type reported in the `socket_types_reported`
     /// field, the first entry corresponds to the first enabled bit in
     /// `types_reported`.
-    pub socket_state_counts: Vec<u16>,
+    pub socket_state_counts: [u16; 16],
     /// A count for each socket type reported in the `socket_types_reported`
     /// field, the first entry corresponds to the first enabled bit in
     /// `types_reported`.
-    pub socket_type_counts: Vec<u16>,
+    pub socket_type_counts: [u16; 16],
 }
 
 impl MsgLinuxSocketUsage {
@@ -513,8 +516,8 @@ impl MsgLinuxSocketUsage {
             sender_id: None,
             avg_queue_depth: _buf.read_u32::<LittleEndian>()?,
             max_queue_depth: _buf.read_u32::<LittleEndian>()?,
-            socket_state_counts: crate::parser::read_u16_array_limit(_buf, 16)?,
-            socket_type_counts: crate::parser::read_u16_array_limit(_buf, 16)?,
+            socket_state_counts: crate::parser::read_u16_array_fixed(_buf)?,
+            socket_type_counts: crate::parser::read_u16_array_fixed(_buf)?,
         } )
     }
 }

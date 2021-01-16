@@ -14,6 +14,9 @@
 //****************************************************************************/
 //! Various structs shared between modules
 
+#[allow(unused_imports)]
+use std::convert::TryInto;
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
@@ -56,12 +59,14 @@ impl CarrierPhase {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<CarrierPhase>, crate::Error> {
+    pub fn parse_array_fixed<const N: usize>(
+        buf: &mut &[u8],
+    ) -> Result<[CarrierPhase; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(CarrierPhase::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -117,12 +122,14 @@ impl GPSTime {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GPSTime>, crate::Error> {
+    pub fn parse_array_fixed<const N: usize>(
+        buf: &mut &[u8],
+    ) -> Result<[GPSTime; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(GPSTime::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -175,12 +182,14 @@ impl GPSTimeDep {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GPSTimeDep>, crate::Error> {
+    pub fn parse_array_fixed<const N: usize>(
+        buf: &mut &[u8],
+    ) -> Result<[GPSTimeDep; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(GPSTimeDep::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -231,12 +240,14 @@ impl GPSTimeSec {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GPSTimeSec>, crate::Error> {
+    pub fn parse_array_fixed<const N: usize>(
+        buf: &mut &[u8],
+    ) -> Result<[GPSTimeSec; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(GPSTimeSec::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -286,12 +297,14 @@ impl GnssSignal {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GnssSignal>, crate::Error> {
+    pub fn parse_array_fixed<const N: usize>(
+        buf: &mut &[u8],
+    ) -> Result<[GnssSignal; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(GnssSignal::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -345,15 +358,14 @@ impl GnssSignalDep {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<GnssSignalDep>, crate::Error> {
+    ) -> Result<[GnssSignalDep; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(GnssSignalDep::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -405,12 +417,12 @@ impl SvId {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<SvId>, crate::Error> {
+    pub fn parse_array_fixed<const N: usize>(buf: &mut &[u8]) -> Result<[SvId; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(SvId::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 

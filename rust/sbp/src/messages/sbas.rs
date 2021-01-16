@@ -14,6 +14,9 @@
 //****************************************************************************/
 //! SBAS data
 
+#[allow(unused_imports)]
+use std::convert::TryInto;
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
@@ -41,7 +44,7 @@ pub struct MsgSbasRaw {
     /// SBAS message type (0-63)
     pub message_type: u8,
     /// Raw SBAS data field of 212 bits (last byte padded with zeros).
-    pub data: Vec<u8>,
+    pub data: [u8; 27],
 }
 
 impl MsgSbasRaw {
@@ -52,7 +55,7 @@ impl MsgSbasRaw {
             sid: GnssSignal::parse(_buf)?,
             tow: _buf.read_u32::<LittleEndian>()?,
             message_type: _buf.read_u8()?,
-            data: crate::parser::read_u8_array_limit(_buf, 27)?,
+            data: crate::parser::read_u8_array_fixed(_buf)?,
         } )
     }
 }

@@ -19,6 +19,9 @@
 //! host request and the device response.
 //!
 
+#[allow(unused_imports)]
+use std::convert::TryInto;
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
@@ -315,7 +318,7 @@ impl crate::serialize::SbpSerialize for MsgNapDeviceDnaReq {
 pub struct MsgNapDeviceDnaResp {
     pub sender_id: Option<u16>,
     /// 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded on the right.
-    pub dna: Vec<u8>,
+    pub dna: [u8; 8],
 }
 
 impl MsgNapDeviceDnaResp {
@@ -323,7 +326,7 @@ impl MsgNapDeviceDnaResp {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgNapDeviceDnaResp, crate::Error> {
         Ok( MsgNapDeviceDnaResp{
             sender_id: None,
-            dna: crate::parser::read_u8_array_limit(_buf, 8)?,
+            dna: crate::parser::read_u8_array_fixed(_buf)?,
         } )
     }
 }

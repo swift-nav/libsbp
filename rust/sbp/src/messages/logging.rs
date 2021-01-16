@@ -15,6 +15,9 @@
 //! Logging and debugging messages from the device.
 //!
 
+#[allow(unused_imports)]
+use std::convert::TryInto;
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};

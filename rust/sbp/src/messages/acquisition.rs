@@ -14,6 +14,9 @@
 //****************************************************************************/
 //! Satellite acquisition messages from the device.
 
+#[allow(unused_imports)]
+use std::convert::TryInto;
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
@@ -86,12 +89,14 @@ impl AcqSvProfile {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<AcqSvProfile>, crate::Error> {
+    pub fn parse_array_fixed<const N: usize>(
+        buf: &mut &[u8],
+    ) -> Result<[AcqSvProfile; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(AcqSvProfile::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -190,15 +195,14 @@ impl AcqSvProfileDep {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<AcqSvProfileDep>, crate::Error> {
+    ) -> Result<[AcqSvProfileDep; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(AcqSvProfileDep::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 

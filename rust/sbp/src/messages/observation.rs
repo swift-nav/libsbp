@@ -14,6 +14,9 @@
 //****************************************************************************/
 //! Satellite observation messages from the device.
 
+#[allow(unused_imports)]
+use std::convert::TryInto;
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
@@ -71,15 +74,14 @@ impl AlmanacCommonContent {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<AlmanacCommonContent>, crate::Error> {
+    ) -> Result<[AlmanacCommonContent; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(AlmanacCommonContent::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -153,15 +155,14 @@ impl AlmanacCommonContentDep {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<AlmanacCommonContentDep>, crate::Error> {
+    ) -> Result<[AlmanacCommonContentDep; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(AlmanacCommonContentDep::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -222,15 +223,14 @@ impl CarrierPhaseDepA {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<CarrierPhaseDepA>, crate::Error> {
+    ) -> Result<[CarrierPhaseDepA; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(CarrierPhaseDepA::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -282,12 +282,14 @@ impl Doppler {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<Doppler>, crate::Error> {
+    pub fn parse_array_fixed<const N: usize>(
+        buf: &mut &[u8],
+    ) -> Result<[Doppler; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(Doppler::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -345,15 +347,14 @@ impl EphemerisCommonContent {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<EphemerisCommonContent>, crate::Error> {
+    ) -> Result<[EphemerisCommonContent; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(EphemerisCommonContent::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -419,15 +420,14 @@ impl EphemerisCommonContentDepA {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<EphemerisCommonContentDepA>, crate::Error> {
+    ) -> Result<[EphemerisCommonContentDepA; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(EphemerisCommonContentDepA::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -493,15 +493,14 @@ impl EphemerisCommonContentDepB {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<EphemerisCommonContentDepB>, crate::Error> {
+    ) -> Result<[EphemerisCommonContentDepB; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(EphemerisCommonContentDepB::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -595,12 +594,14 @@ impl GnssCapb {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<GnssCapb>, crate::Error> {
+    pub fn parse_array_fixed<const N: usize>(
+        buf: &mut &[u8],
+    ) -> Result<[GnssCapb; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(GnssCapb::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -2502,11 +2503,11 @@ pub struct MsgEphemerisGlo {
     /// Equipment delay between L1 and L2
     pub d_tau: f32,
     /// Position of the SV at tb in PZ-90.02 coordinates system
-    pub pos: Vec<f64>,
+    pub pos: [f64; 3],
     /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
-    pub vel: Vec<f64>,
+    pub vel: [f64; 3],
     /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
-    pub acc: Vec<f32>,
+    pub acc: [f32; 3],
     /// Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
     pub fcn: u8,
     /// Issue of data. Equal to the 7 bits of the immediate data word t_b
@@ -2522,9 +2523,9 @@ impl MsgEphemerisGlo {
             gamma: _buf.read_f32::<LittleEndian>()?,
             tau: _buf.read_f32::<LittleEndian>()?,
             d_tau: _buf.read_f32::<LittleEndian>()?,
-            pos: crate::parser::read_double_array_limit(_buf, 3)?,
-            vel: crate::parser::read_double_array_limit(_buf, 3)?,
-            acc: crate::parser::read_float_array_limit(_buf, 3)?,
+            pos: crate::parser::read_double_array_fixed(_buf)?,
+            vel: crate::parser::read_double_array_fixed(_buf)?,
+            acc: crate::parser::read_float_array_fixed(_buf)?,
             fcn: _buf.read_u8()?,
             iod: _buf.read_u8()?,
         } )
@@ -2598,11 +2599,11 @@ pub struct MsgEphemerisGloDepA {
     /// Correction to the SV time
     pub tau: f64,
     /// Position of the SV at tb in PZ-90.02 coordinates system
-    pub pos: Vec<f64>,
+    pub pos: [f64; 3],
     /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
-    pub vel: Vec<f64>,
+    pub vel: [f64; 3],
     /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
-    pub acc: Vec<f64>,
+    pub acc: [f64; 3],
 }
 
 impl MsgEphemerisGloDepA {
@@ -2613,9 +2614,9 @@ impl MsgEphemerisGloDepA {
             common: EphemerisCommonContentDepA::parse(_buf)?,
             gamma: _buf.read_f64::<LittleEndian>()?,
             tau: _buf.read_f64::<LittleEndian>()?,
-            pos: crate::parser::read_double_array_limit(_buf, 3)?,
-            vel: crate::parser::read_double_array_limit(_buf, 3)?,
-            acc: crate::parser::read_double_array_limit(_buf, 3)?,
+            pos: crate::parser::read_double_array_fixed(_buf)?,
+            vel: crate::parser::read_double_array_fixed(_buf)?,
+            acc: crate::parser::read_double_array_fixed(_buf)?,
         } )
     }
 }
@@ -2681,11 +2682,11 @@ pub struct MsgEphemerisGloDepB {
     /// Correction to the SV time
     pub tau: f64,
     /// Position of the SV at tb in PZ-90.02 coordinates system
-    pub pos: Vec<f64>,
+    pub pos: [f64; 3],
     /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
-    pub vel: Vec<f64>,
+    pub vel: [f64; 3],
     /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
-    pub acc: Vec<f64>,
+    pub acc: [f64; 3],
 }
 
 impl MsgEphemerisGloDepB {
@@ -2696,9 +2697,9 @@ impl MsgEphemerisGloDepB {
             common: EphemerisCommonContentDepB::parse(_buf)?,
             gamma: _buf.read_f64::<LittleEndian>()?,
             tau: _buf.read_f64::<LittleEndian>()?,
-            pos: crate::parser::read_double_array_limit(_buf, 3)?,
-            vel: crate::parser::read_double_array_limit(_buf, 3)?,
-            acc: crate::parser::read_double_array_limit(_buf, 3)?,
+            pos: crate::parser::read_double_array_fixed(_buf)?,
+            vel: crate::parser::read_double_array_fixed(_buf)?,
+            acc: crate::parser::read_double_array_fixed(_buf)?,
         } )
     }
 }
@@ -2766,11 +2767,11 @@ pub struct MsgEphemerisGloDepC {
     /// Equipment delay between L1 and L2
     pub d_tau: f64,
     /// Position of the SV at tb in PZ-90.02 coordinates system
-    pub pos: Vec<f64>,
+    pub pos: [f64; 3],
     /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
-    pub vel: Vec<f64>,
+    pub vel: [f64; 3],
     /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
-    pub acc: Vec<f64>,
+    pub acc: [f64; 3],
     /// Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
     pub fcn: u8,
 }
@@ -2784,9 +2785,9 @@ impl MsgEphemerisGloDepC {
             gamma: _buf.read_f64::<LittleEndian>()?,
             tau: _buf.read_f64::<LittleEndian>()?,
             d_tau: _buf.read_f64::<LittleEndian>()?,
-            pos: crate::parser::read_double_array_limit(_buf, 3)?,
-            vel: crate::parser::read_double_array_limit(_buf, 3)?,
-            acc: crate::parser::read_double_array_limit(_buf, 3)?,
+            pos: crate::parser::read_double_array_fixed(_buf)?,
+            vel: crate::parser::read_double_array_fixed(_buf)?,
+            acc: crate::parser::read_double_array_fixed(_buf)?,
             fcn: _buf.read_u8()?,
         } )
     }
@@ -2856,11 +2857,11 @@ pub struct MsgEphemerisGloDepD {
     /// Equipment delay between L1 and L2
     pub d_tau: f64,
     /// Position of the SV at tb in PZ-90.02 coordinates system
-    pub pos: Vec<f64>,
+    pub pos: [f64; 3],
     /// Velocity vector of the SV at tb in PZ-90.02 coordinates system
-    pub vel: Vec<f64>,
+    pub vel: [f64; 3],
     /// Acceleration vector of the SV at tb in PZ-90.02 coordinates sys
-    pub acc: Vec<f64>,
+    pub acc: [f64; 3],
     /// Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
     pub fcn: u8,
     /// Issue of data. Equal to the 7 bits of the immediate data word t_b
@@ -2876,9 +2877,9 @@ impl MsgEphemerisGloDepD {
             gamma: _buf.read_f64::<LittleEndian>()?,
             tau: _buf.read_f64::<LittleEndian>()?,
             d_tau: _buf.read_f64::<LittleEndian>()?,
-            pos: crate::parser::read_double_array_limit(_buf, 3)?,
-            vel: crate::parser::read_double_array_limit(_buf, 3)?,
-            acc: crate::parser::read_double_array_limit(_buf, 3)?,
+            pos: crate::parser::read_double_array_fixed(_buf)?,
+            vel: crate::parser::read_double_array_fixed(_buf)?,
+            acc: crate::parser::read_double_array_fixed(_buf)?,
             fcn: _buf.read_u8()?,
             iod: _buf.read_u8()?,
         } )
@@ -3623,11 +3624,11 @@ pub struct MsgEphemerisSbas {
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
     /// Position of the GEO at time toe
-    pub pos: Vec<f64>,
+    pub pos: [f64; 3],
     /// Velocity of the GEO at time toe
-    pub vel: Vec<f32>,
+    pub vel: [f32; 3],
     /// Acceleration of the GEO at time toe
-    pub acc: Vec<f32>,
+    pub acc: [f32; 3],
     /// Time offset of the GEO clock w.r.t. SBAS Network Time
     pub a_gf0: f32,
     /// Drift of the GEO clock w.r.t. SBAS Network Time
@@ -3640,9 +3641,9 @@ impl MsgEphemerisSbas {
         Ok( MsgEphemerisSbas{
             sender_id: None,
             common: EphemerisCommonContent::parse(_buf)?,
-            pos: crate::parser::read_double_array_limit(_buf, 3)?,
-            vel: crate::parser::read_float_array_limit(_buf, 3)?,
-            acc: crate::parser::read_float_array_limit(_buf, 3)?,
+            pos: crate::parser::read_double_array_fixed(_buf)?,
+            vel: crate::parser::read_float_array_fixed(_buf)?,
+            acc: crate::parser::read_float_array_fixed(_buf)?,
             a_gf0: _buf.read_f32::<LittleEndian>()?,
             a_gf1: _buf.read_f32::<LittleEndian>()?,
         } )
@@ -3698,11 +3699,11 @@ pub struct MsgEphemerisSbasDepA {
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepA,
     /// Position of the GEO at time toe
-    pub pos: Vec<f64>,
+    pub pos: [f64; 3],
     /// Velocity of the GEO at time toe
-    pub vel: Vec<f64>,
+    pub vel: [f64; 3],
     /// Acceleration of the GEO at time toe
-    pub acc: Vec<f64>,
+    pub acc: [f64; 3],
     /// Time offset of the GEO clock w.r.t. SBAS Network Time
     pub a_gf0: f64,
     /// Drift of the GEO clock w.r.t. SBAS Network Time
@@ -3715,9 +3716,9 @@ impl MsgEphemerisSbasDepA {
         Ok( MsgEphemerisSbasDepA{
             sender_id: None,
             common: EphemerisCommonContentDepA::parse(_buf)?,
-            pos: crate::parser::read_double_array_limit(_buf, 3)?,
-            vel: crate::parser::read_double_array_limit(_buf, 3)?,
-            acc: crate::parser::read_double_array_limit(_buf, 3)?,
+            pos: crate::parser::read_double_array_fixed(_buf)?,
+            vel: crate::parser::read_double_array_fixed(_buf)?,
+            acc: crate::parser::read_double_array_fixed(_buf)?,
             a_gf0: _buf.read_f64::<LittleEndian>()?,
             a_gf1: _buf.read_f64::<LittleEndian>()?,
         } )
@@ -3778,11 +3779,11 @@ pub struct MsgEphemerisSbasDepB {
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepB,
     /// Position of the GEO at time toe
-    pub pos: Vec<f64>,
+    pub pos: [f64; 3],
     /// Velocity of the GEO at time toe
-    pub vel: Vec<f64>,
+    pub vel: [f64; 3],
     /// Acceleration of the GEO at time toe
-    pub acc: Vec<f64>,
+    pub acc: [f64; 3],
     /// Time offset of the GEO clock w.r.t. SBAS Network Time
     pub a_gf0: f64,
     /// Drift of the GEO clock w.r.t. SBAS Network Time
@@ -3795,9 +3796,9 @@ impl MsgEphemerisSbasDepB {
         Ok( MsgEphemerisSbasDepB{
             sender_id: None,
             common: EphemerisCommonContentDepB::parse(_buf)?,
-            pos: crate::parser::read_double_array_limit(_buf, 3)?,
-            vel: crate::parser::read_double_array_limit(_buf, 3)?,
-            acc: crate::parser::read_double_array_limit(_buf, 3)?,
+            pos: crate::parser::read_double_array_fixed(_buf)?,
+            vel: crate::parser::read_double_array_fixed(_buf)?,
+            acc: crate::parser::read_double_array_fixed(_buf)?,
             a_gf0: _buf.read_f64::<LittleEndian>()?,
             a_gf1: _buf.read_f64::<LittleEndian>()?,
         } )
@@ -4753,15 +4754,14 @@ impl ObservationHeader {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<ObservationHeader>, crate::Error> {
+    ) -> Result<[ObservationHeader; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(ObservationHeader::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -4811,15 +4811,14 @@ impl ObservationHeaderDep {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<ObservationHeaderDep>, crate::Error> {
+    ) -> Result<[ObservationHeaderDep; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(ObservationHeaderDep::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -4896,15 +4895,14 @@ impl PackedObsContent {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<PackedObsContent>, crate::Error> {
+    ) -> Result<[PackedObsContent; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(PackedObsContent::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -4974,15 +4972,14 @@ impl PackedObsContentDepA {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<PackedObsContentDepA>, crate::Error> {
+    ) -> Result<[PackedObsContentDepA; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(PackedObsContentDepA::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -5049,15 +5046,14 @@ impl PackedObsContentDepB {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<PackedObsContentDepB>, crate::Error> {
+    ) -> Result<[PackedObsContentDepB; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(PackedObsContentDepB::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -5125,15 +5121,14 @@ impl PackedObsContentDepC {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<PackedObsContentDepC>, crate::Error> {
+    ) -> Result<[PackedObsContentDepC; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(PackedObsContentDepC::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -5211,15 +5206,14 @@ impl PackedOsrContent {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<PackedOsrContent>, crate::Error> {
+    ) -> Result<[PackedOsrContent; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(PackedOsrContent::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -5283,12 +5277,12 @@ impl SvAzEl {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<SvAzEl>, crate::Error> {
+    pub fn parse_array_fixed<const N: usize>(buf: &mut &[u8]) -> Result<[SvAzEl; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(SvAzEl::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 

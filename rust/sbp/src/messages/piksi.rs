@@ -17,6 +17,9 @@
 //! may no longer be used.
 //!
 
+#[allow(unused_imports)]
+use std::convert::TryInto;
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
@@ -67,12 +70,14 @@ impl Latency {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<Latency>, crate::Error> {
+    pub fn parse_array_fixed<const N: usize>(
+        buf: &mut &[u8],
+    ) -> Result<[Latency; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(Latency::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -581,9 +586,9 @@ impl crate::serialize::SbpSerialize for MsgDeviceMonitor {
 pub struct MsgFrontEndGain {
     pub sender_id: Option<u16>,
     /// RF gain for each frontend channel
-    pub rf_gain: Vec<i8>,
+    pub rf_gain: [i8; 8],
     /// Intermediate frequency gain for each frontend channel
-    pub if_gain: Vec<i8>,
+    pub if_gain: [i8; 8],
 }
 
 impl MsgFrontEndGain {
@@ -591,8 +596,8 @@ impl MsgFrontEndGain {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgFrontEndGain, crate::Error> {
         Ok( MsgFrontEndGain{
             sender_id: None,
-            rf_gain: crate::parser::read_s8_array_limit(_buf, 8)?,
-            if_gain: crate::parser::read_s8_array_limit(_buf, 8)?,
+            rf_gain: crate::parser::read_s8_array_fixed(_buf)?,
+            if_gain: crate::parser::read_s8_array_fixed(_buf)?,
         } )
     }
 }
@@ -967,11 +972,11 @@ impl crate::serialize::SbpSerialize for MsgNetworkStateReq {
 pub struct MsgNetworkStateResp {
     pub sender_id: Option<u16>,
     /// IPv4 address (all zero when unavailable)
-    pub ipv4_address: Vec<u8>,
+    pub ipv4_address: [u8; 4],
     /// IPv4 netmask CIDR notation
     pub ipv4_mask_size: u8,
     /// IPv6 address (all zero when unavailable)
-    pub ipv6_address: Vec<u8>,
+    pub ipv6_address: [u8; 16],
     /// IPv6 netmask CIDR notation
     pub ipv6_mask_size: u8,
     /// Number of Rx bytes
@@ -989,9 +994,9 @@ impl MsgNetworkStateResp {
     pub fn parse(_buf: &mut &[u8]) -> Result<MsgNetworkStateResp, crate::Error> {
         Ok( MsgNetworkStateResp{
             sender_id: None,
-            ipv4_address: crate::parser::read_u8_array_limit(_buf, 4)?,
+            ipv4_address: crate::parser::read_u8_array_fixed(_buf)?,
             ipv4_mask_size: _buf.read_u8()?,
-            ipv6_address: crate::parser::read_u8_array_limit(_buf, 16)?,
+            ipv6_address: crate::parser::read_u8_array_fixed(_buf)?,
             ipv6_mask_size: _buf.read_u8()?,
             rx_bytes: _buf.read_u32::<LittleEndian>()?,
             tx_bytes: _buf.read_u32::<LittleEndian>()?,
@@ -1682,12 +1687,14 @@ impl NetworkUsage {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<NetworkUsage>, crate::Error> {
+    pub fn parse_array_fixed<const N: usize>(
+        buf: &mut &[u8],
+    ) -> Result<[NetworkUsage; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(NetworkUsage::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -1753,12 +1760,12 @@ impl Period {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<Period>, crate::Error> {
+    pub fn parse_array_fixed<const N: usize>(buf: &mut &[u8]) -> Result<[Period; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(Period::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -1825,12 +1832,14 @@ impl UARTChannel {
         Ok(v)
     }
 
-    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<UARTChannel>, crate::Error> {
+    pub fn parse_array_fixed<const N: usize>(
+        buf: &mut &[u8],
+    ) -> Result<[UARTChannel; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(UARTChannel::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 

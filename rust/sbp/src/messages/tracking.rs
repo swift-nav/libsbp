@@ -15,6 +15,9 @@
 //! Satellite code and carrier-phase tracking messages from the device.
 //!
 
+#[allow(unused_imports)]
+use std::convert::TryInto;
+
 extern crate byteorder;
 #[allow(unused_imports)]
 use self::byteorder::{LittleEndian, ReadBytesExt};
@@ -96,7 +99,7 @@ pub struct MsgTrackingIq {
     /// GNSS signal identifier
     pub sid: GnssSignal,
     /// Early, Prompt and Late correlations
-    pub corrs: Vec<TrackingChannelCorrelation>,
+    pub corrs: [TrackingChannelCorrelation; 3],
 }
 
 impl MsgTrackingIq {
@@ -106,7 +109,7 @@ impl MsgTrackingIq {
             sender_id: None,
             channel: _buf.read_u8()?,
             sid: GnssSignal::parse(_buf)?,
-            corrs: TrackingChannelCorrelation::parse_array_limit(_buf, 3)?,
+            corrs: TrackingChannelCorrelation::parse_array_fixed(_buf)?,
         } )
     }
 }
@@ -160,7 +163,7 @@ pub struct MsgTrackingIqDepA {
     /// GNSS signal identifier
     pub sid: GnssSignalDep,
     /// Early, Prompt and Late correlations
-    pub corrs: Vec<TrackingChannelCorrelationDep>,
+    pub corrs: [TrackingChannelCorrelationDep; 3],
 }
 
 impl MsgTrackingIqDepA {
@@ -170,7 +173,7 @@ impl MsgTrackingIqDepA {
             sender_id: None,
             channel: _buf.read_u8()?,
             sid: GnssSignalDep::parse(_buf)?,
-            corrs: TrackingChannelCorrelationDep::parse_array_limit(_buf, 3)?,
+            corrs: TrackingChannelCorrelationDep::parse_array_fixed(_buf)?,
         } )
     }
 }
@@ -225,7 +228,7 @@ pub struct MsgTrackingIqDepB {
     /// GNSS signal identifier
     pub sid: GnssSignal,
     /// Early, Prompt and Late correlations
-    pub corrs: Vec<TrackingChannelCorrelationDep>,
+    pub corrs: [TrackingChannelCorrelationDep; 3],
 }
 
 impl MsgTrackingIqDepB {
@@ -235,7 +238,7 @@ impl MsgTrackingIqDepB {
             sender_id: None,
             channel: _buf.read_u8()?,
             sid: GnssSignal::parse(_buf)?,
-            corrs: TrackingChannelCorrelationDep::parse_array_limit(_buf, 3)?,
+            corrs: TrackingChannelCorrelationDep::parse_array_fixed(_buf)?,
         } )
     }
 }
@@ -795,15 +798,14 @@ impl MeasurementState {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<MeasurementState>, crate::Error> {
+    ) -> Result<[MeasurementState; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(MeasurementState::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -852,15 +854,14 @@ impl TrackingChannelCorrelation {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<TrackingChannelCorrelation>, crate::Error> {
+    ) -> Result<[TrackingChannelCorrelation; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(TrackingChannelCorrelation::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -911,15 +912,14 @@ impl TrackingChannelCorrelationDep {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<TrackingChannelCorrelationDep>, crate::Error> {
+    ) -> Result<[TrackingChannelCorrelationDep; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(TrackingChannelCorrelationDep::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -972,15 +972,14 @@ impl TrackingChannelState {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<TrackingChannelState>, crate::Error> {
+    ) -> Result<[TrackingChannelState; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(TrackingChannelState::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -1034,15 +1033,14 @@ impl TrackingChannelStateDepA {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<TrackingChannelStateDepA>, crate::Error> {
+    ) -> Result<[TrackingChannelStateDepA; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(TrackingChannelStateDepA::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
@@ -1096,15 +1094,14 @@ impl TrackingChannelStateDepB {
         Ok(v)
     }
 
-    pub fn parse_array_limit(
+    pub fn parse_array_fixed<const N: usize>(
         buf: &mut &[u8],
-        n: usize,
-    ) -> Result<Vec<TrackingChannelStateDepB>, crate::Error> {
+    ) -> Result<[TrackingChannelStateDepB; N], crate::Error> {
         let mut v = Vec::new();
-        for _ in 0..n {
+        for _ in 0..N {
             v.push(TrackingChannelStateDepB::parse(buf)?);
         }
-        Ok(v)
+        v.try_into().map_err(|_| crate::Error::ParseError)
     }
 }
 
