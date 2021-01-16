@@ -10,7 +10,7 @@ pub mod serialize;
 #[cfg(feature = "sbp2json")]
 pub mod sbp2json;
 
-use std::convert::{From, Into};
+use std::convert::{From, Into, TryFrom};
 use std::error;
 use std::fmt;
 use std::result;
@@ -22,66 +22,157 @@ pub type Result<T> = result::Result<T, Error>;
 
 pub const SBP_MAX_PAYLOAD_SIZE: usize = 255;
 
-#[derive(Debug, Clone)]
-pub struct SbpString(Vec<u8>);
+pub trait SbpString {
+    fn as_bytes(&self) -> &[u8];
+    fn to_string(&self) -> String;
+}
 
-impl SbpString {
-    pub fn as_bytes(&self) -> &[u8] {
+#[derive(Debug, Clone)]
+pub struct UnboundedSbpString(Vec<u8>);
+
+impl SbpString for UnboundedSbpString {
+    fn as_bytes(&self) -> &[u8] {
         &self.0
     }
-    pub fn to_string(&self) -> String {
+    fn to_string(&self) -> String {
         String::from_utf8_lossy(&self.0).into()
     }
 }
 
-#[cfg(feature = "sbp_serde")]
-impl Serialize for SbpString {
-    fn serialize<S>(&self, serializer: S) -> result::Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        let s: String = self.clone().into();
-        serializer.serialize_str(&s)
+impl fmt::Display for UnboundedSbpString {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "SbpString({})", SbpString::to_string(self))
     }
 }
 
 #[cfg(feature = "sbp_serde")]
-impl<'de> Deserialize<'de> for SbpString {
+impl<'de> Deserialize<'de> for UnboundedSbpString {
     fn deserialize<D>(deserializer: D) -> result::Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        Deserialize::deserialize(deserializer).map(|s: String| SbpString::from(s))
+        Deserialize::deserialize(deserializer).map(|s: String| UnboundedSbpString::from(s))
     }
 }
 
-impl From<String> for SbpString {
-    fn from(s: String) -> SbpString {
-        SbpString(s.as_bytes().to_vec())
+#[cfg(feature = "sbp_serde")]
+impl Serialize for UnboundedSbpString {
+    fn serialize<S>(&self, serializer: S) -> result::Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let s = SbpString::to_string(self);
+        serializer.serialize_str(&s)
     }
 }
 
-impl Into<String> for SbpString {
-    fn into(self) -> String {
-        self.to_string()
+impl From<UnboundedSbpString> for String {
+    fn from(s: UnboundedSbpString) -> String {
+        SbpString::to_string(&s)
     }
 }
 
-impl Into<String> for &SbpString {
-    fn into(self) -> String {
-        self.to_string()
+impl From<UnboundedSbpString> for Vec<u8> {
+    fn from(s: UnboundedSbpString) -> Vec<u8> {
+        s.0
     }
 }
 
-impl Into<Vec<u8>> for SbpString {
-    fn into(self) -> Vec<u8> {
-        self.0
+impl From<String> for UnboundedSbpString {
+    fn from(s: String) -> UnboundedSbpString {
+        UnboundedSbpString(s.into_bytes())
     }
 }
 
-impl fmt::Display for SbpString {
+impl TryFrom<&mut &[u8]> for UnboundedSbpString {
+    type Error = Error;
+    fn try_from(buf: &mut &[u8]) -> Result<UnboundedSbpString> {
+        let amount = buf.len();
+        let (head, tail) = buf.split_at(amount);
+        *buf = tail;
+        Ok(UnboundedSbpString(head.to_vec()))
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct BoundedSbpString<const SIZE: usize>([u8; SIZE]);
+
+impl<const SIZE: usize> SbpString for BoundedSbpString<SIZE> {
+    fn as_bytes(&self) -> &[u8] {
+        &self.0
+    }
+    fn to_string(&self) -> String {
+        String::from_utf8_lossy(&self.0).into()
+    }
+}
+
+impl<const SIZE: usize> Default for BoundedSbpString<SIZE> {
+    fn default() -> BoundedSbpString<SIZE> {
+        BoundedSbpString([0; SIZE])
+    }
+}
+
+impl<const SIZE: usize> fmt::Display for BoundedSbpString<SIZE> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "SbpString({})", Into::<String>::into(self.clone()))
+        write!(f, "SbpString({})", SbpString::to_string(self))
+    }
+}
+
+#[cfg(feature = "sbp_serde")]
+impl<'de, const SIZE: usize> Deserialize<'de> for BoundedSbpString<SIZE> {
+    fn deserialize<D>(deserializer: D) -> result::Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        Deserialize::deserialize(deserializer).map(|s: String| BoundedSbpString::<SIZE>::from(s))
+    }
+}
+
+#[cfg(feature = "sbp_serde")]
+impl<const SIZE: usize> Serialize for BoundedSbpString<SIZE> {
+    fn serialize<S>(&self, serializer: S) -> result::Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let s = SbpString::to_string(self);
+        serializer.serialize_str(&s)
+    }
+}
+
+impl<const SIZE: usize> From<BoundedSbpString<SIZE>> for String {
+    fn from(s: BoundedSbpString<SIZE>) -> String {
+        SbpString::to_string(&s)
+    }
+}
+
+impl<const SIZE: usize> From<BoundedSbpString<SIZE>> for Vec<u8> {
+    fn from(s: BoundedSbpString<SIZE>) -> Vec<u8> {
+        s.0.into()
+    }
+}
+
+impl<const SIZE: usize> From<String> for BoundedSbpString<SIZE> {
+    fn from(s: String) -> BoundedSbpString<SIZE> {
+        let len = std::cmp::min(SIZE, s.len());
+        let s = &s[..len];
+
+        let mut result = BoundedSbpString::<SIZE>::default();
+        result.0[..len].copy_from_slice(s.as_bytes());
+        result
+    }
+}
+
+impl<const SIZE: usize> TryFrom<&mut &[u8]> for BoundedSbpString<SIZE> {
+    type Error = Error;
+    fn try_from(buf: &mut &[u8]) -> Result<BoundedSbpString<SIZE>> {
+        let amount = std::cmp::min(SIZE, buf.len());
+        let (head, tail) = buf.split_at(amount);
+
+        let mut s = BoundedSbpString::<SIZE>::default();
+        s.0[..amount].copy_from_slice(head);
+        *buf = tail;
+
+        Ok(s)
     }
 }
 
@@ -127,6 +218,8 @@ impl From<std::io::Error> for Error {
 
 #[cfg(test)]
 mod tests {
+    use crate::{SbpString, UnboundedSbpString};
+
     #[test]
     fn baseline_ecef() {
         let baseline_ecef_payload = [
@@ -330,15 +423,13 @@ mod tests {
 
     #[test]
     fn sbp_string() {
-        use crate::SbpString;
-
-        let sbp_str = SbpString(b"1234".to_vec());
-        let s = sbp_str.to_string();
+        let sbp_str = UnboundedSbpString(b"1234".to_vec());
+        let s = SbpString::to_string(&sbp_str);
 
         assert_eq!("1234", s);
 
-        let sbp_str = SbpString(b"1234\xFF".to_vec());
-        let s = sbp_str.to_string();
+        let sbp_str = UnboundedSbpString(b"1234\xFF".to_vec());
+        let s = SbpString::to_string(&sbp_str);
 
         assert_eq!("1234\u{FFFD}", s);
     }

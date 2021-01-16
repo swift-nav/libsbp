@@ -10,7 +10,7 @@ use self::nom::multi::length_data;
 use self::nom::number::complete::{le_u16, le_u8};
 use self::nom::sequence::tuple;
 use crate::messages::SBP;
-use crate::SbpString;
+use crate::{BoundedSbpString, UnboundedSbpString};
 use crate::{Error, Result};
 use std::convert::TryInto;
 use std::io::{BufReader, Read};
@@ -170,20 +170,114 @@ where
     }
 }
 
-pub(crate) fn read_string(buf: &mut &[u8]) -> Result<SbpString> {
-    let amount = buf.len();
-    let (head, tail) = buf.split_at(amount);
-    *buf = tail;
-    Ok(SbpString(head.to_vec()))
+pub(crate) trait SbpParse<T> {
+    fn parse(&mut self) -> Result<T>;
 }
 
-pub(crate) fn read_string_limit(buf: &mut &[u8], n: usize) -> Result<SbpString> {
-    let n = std::cmp::min(n, buf.len());
-    let (mut head, tail) = buf.split_at(n);
-    read_string(&mut head).map(|sbp_string| {
-        *buf = tail;
-        sbp_string
-    })
+impl SbpParse<u8> for &[u8] {
+    fn parse(&mut self) -> Result<u8> {
+        self.read_u8().map_err(|e| Error::IoError(e))
+    }
+}
+
+impl SbpParse<i8> for &[u8] {
+    fn parse(&mut self) -> Result<i8> {
+        self.read_i8().map_err(|e| Error::IoError(e))
+    }
+}
+
+impl SbpParse<u16> for &[u8] {
+    fn parse(&mut self) -> Result<u16> {
+        self.read_u16::<LittleEndian>()
+            .map_err(|e| Error::IoError(e))
+    }
+}
+
+impl SbpParse<i16> for &[u8] {
+    fn parse(&mut self) -> Result<i16> {
+        self.read_i16::<LittleEndian>()
+            .map_err(|e| Error::IoError(e))
+    }
+}
+
+impl SbpParse<u32> for &[u8] {
+    fn parse(&mut self) -> Result<u32> {
+        self.read_u32::<LittleEndian>()
+            .map_err(|e| Error::IoError(e))
+    }
+}
+
+impl SbpParse<i32> for &[u8] {
+    fn parse(&mut self) -> Result<i32> {
+        self.read_i32::<LittleEndian>()
+            .map_err(|e| Error::IoError(e))
+    }
+}
+
+impl SbpParse<u64> for &[u8] {
+    fn parse(&mut self) -> Result<u64> {
+        self.read_u64::<LittleEndian>()
+            .map_err(|e| Error::IoError(e))
+    }
+}
+
+impl SbpParse<i64> for &[u8] {
+    fn parse(&mut self) -> Result<i64> {
+        self.read_i64::<LittleEndian>()
+            .map_err(|e| Error::IoError(e))
+    }
+}
+
+impl SbpParse<f32> for &[u8] {
+    fn parse(&mut self) -> Result<f32> {
+        self.read_f32::<LittleEndian>()
+            .map_err(|e| Error::IoError(e))
+    }
+}
+
+impl SbpParse<f64> for &[u8] {
+    fn parse(&mut self) -> Result<f64> {
+        self.read_f64::<LittleEndian>()
+            .map_err(|e| Error::IoError(e))
+    }
+}
+
+impl<'a, T, const SIZE: usize> SbpParse<[T; SIZE]> for &'a [u8]
+where
+    &'a [u8]: SbpParse<T>,
+{
+    fn parse(&mut self) -> Result<[T; SIZE]> {
+        let mut vec = Vec::new();
+        for _ in 0..SIZE {
+            vec.push(self.parse()?);
+        }
+        vec.try_into().map_err(|_| crate::Error::ParseError)
+    }
+}
+
+impl<'a, T> SbpParse<Vec<T>> for &'a [u8]
+where
+    &'a [u8]: SbpParse<T>,
+{
+    fn parse(&mut self) -> Result<Vec<T>> {
+        let mut vec = Vec::new();
+        while self.len() > 0 {
+            vec.push(self.parse()?);
+        }
+        Ok(vec)
+    }
+}
+
+impl SbpParse<UnboundedSbpString> for &[u8] {
+    fn parse(&mut self) -> Result<UnboundedSbpString> {
+        self.try_into()
+    }
+}
+
+impl<const SIZE: usize> SbpParse<BoundedSbpString<SIZE>> for &[u8] {
+    fn parse(&mut self) -> Result<BoundedSbpString<SIZE>> {
+        self.try_into()
+    }
 }
 
 #[test]
@@ -198,7 +292,7 @@ fn test_read_string_invalid_utf8() {
 
     let mut slice = &buf[..];
 
-    let sbp_string = read_string(&mut slice).unwrap();
+    let sbp_string: UnboundedSbpString = (&mut slice).parse().unwrap();
 
     let string: String = sbp_string.clone().into();
     let vec: Vec<u8> = sbp_string.into();
@@ -213,33 +307,28 @@ fn test_read_string() {
     let v = b"hi, imma string";
     let mut slice = &v[..];
 
-    let string: String = read_string(&mut slice).unwrap().into();
+    let string: String = SbpParse::<UnboundedSbpString>::parse(&mut slice)
+        .unwrap()
+        .into();
     assert_eq!(string, "hi, imma string".to_string());
 
-    let string: String = read_string(&mut slice).unwrap().into();
+    let string: String = SbpParse::<UnboundedSbpString>::parse(&mut slice)
+        .unwrap()
+        .into();
     assert_eq!(string, "".to_string());
 
     let v = b"hi, imma string";
     let mut slice = &v[..];
 
-    let string: String = read_string_limit(&mut slice, 8).unwrap().into();
+    let string: String = SbpParse::<BoundedSbpString<8>>::parse(&mut slice)
+        .unwrap()
+        .into();
     assert_eq!(string, "hi, imma".to_string());
 
-    let string: String = read_string_limit(&mut slice, 8).unwrap().into();
-    assert_eq!(string, " string".to_string());
-}
-
-pub(crate) fn read_u16_array(buf: &mut &[u8]) -> Result<Vec<u16>> {
-    // buf is in fact an array of u16, so at least 2 u8 elem, unless buf is empty
-    let iter = buf.chunks_exact(2);
-    // collect() guarantees that it will return Err if at least one Err is found while iterating over the Vec
-    // https://doc.rust-lang.org/std/iter/trait.FromIterator.html#method.from_iter-14
-    // map_err necessary to convert the generic read_u16's Error into our Error enum type
-    // LittleEndian means chunks are read from right-to-left
-    let v = iter
-        .map(|mut x| x.read_u16::<LittleEndian>().map_err(|e| e.into()))
-        .collect();
-    v
+    let string: String = SbpParse::<BoundedSbpString<8>>::parse(&mut slice)
+        .unwrap()
+        .into();
+    assert_eq!(string, " string\0".to_string());
 }
 
 #[test]
@@ -250,58 +339,6 @@ fn test_read_u16_array() {
     // 0b00010000+0b00000001
     expected_vec.push(4097);
     expected_vec.push(258);
-    let returned_vec = read_u16_array(&mut &mock_data[..]).unwrap();
+    let returned_vec: Vec<u16> = (&mut &mock_data[..]).parse().unwrap();
     assert_eq!(expected_vec, returned_vec);
-}
-
-pub(crate) fn read_u8_array(buf: &mut &[u8]) -> Result<Vec<u8>> {
-    Ok(buf.to_vec())
-}
-
-pub(crate) fn read_u8_array_fixed<const N: usize>(buf: &mut &[u8]) -> Result<[u8; N]> {
-    let mut v = Vec::new();
-    for _ in 0..N {
-        v.push(buf.read_u8()?);
-    }
-    v.try_into().map_err(|_| Error::ParseError)
-}
-
-pub(crate) fn read_s8_array_fixed<const N: usize>(buf: &mut &[u8]) -> Result<[i8; N]> {
-    let mut v = Vec::new();
-    for _ in 0..N {
-        v.push(buf.read_i8()?);
-    }
-    v.try_into().map_err(|_| Error::ParseError)
-}
-
-pub(crate) fn read_s16_array_fixed<const N: usize>(buf: &mut &[u8]) -> Result<[i16; N]> {
-    let mut v = Vec::new();
-    for _ in 0..N {
-        v.push(buf.read_i16::<LittleEndian>()?);
-    }
-    v.try_into().map_err(|_| Error::ParseError)
-}
-
-pub(crate) fn read_u16_array_fixed<const N: usize>(buf: &mut &[u8]) -> Result<[u16; N]> {
-    let mut v = Vec::new();
-    for _ in 0..N {
-        v.push(buf.read_u16::<LittleEndian>()?);
-    }
-    v.try_into().map_err(|_| Error::ParseError)
-}
-
-pub(crate) fn read_float_array_fixed<const N: usize>(buf: &mut &[u8]) -> Result<[f32; N]> {
-    let mut v = Vec::new();
-    for _ in 0..N {
-        v.push(buf.read_f32::<LittleEndian>()?);
-    }
-    v.try_into().map_err(|_| Error::ParseError)
-}
-
-pub(crate) fn read_double_array_fixed<const N: usize>(buf: &mut &[u8]) -> Result<[f64; N]> {
-    let mut v = Vec::new();
-    for _ in 0..N {
-        v.push(buf.read_f64::<LittleEndian>()?);
-    }
-    v.try_into().map_err(|_| Error::ParseError)
 }

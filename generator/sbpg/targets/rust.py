@@ -52,8 +52,7 @@ TYPE_MAP = {'u8': 'u8',
             's32': 'i32',
             's64': 'i64',
             'float': 'f32',
-            'double': 'f64',
-            'string': 'SbpString'}
+            'double': 'f64'}
 
 def type_map(field):
   if field.type_id in TYPE_MAP:
@@ -64,6 +63,11 @@ def type_map(field):
         return "[{}; {}]".format(TYPE_MAP.get(t,t), field.options.get('size').value)
     else:
         return "Vec<{}>".format(TYPE_MAP.get(t, t))
+  elif field.type_id == 'string':
+      if field.options.get('size', None):
+          return "BoundedSbpString<{}>".format(field.options.get('size').value)
+      else:
+          return "UnboundedSbpString"
   else:
     return field.type_id
 

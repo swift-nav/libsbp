@@ -15,17 +15,11 @@
 
 //! (((description | replace("\n", "\n//! "))))
 
-#[allow(unused_imports)]
-use std::convert::TryInto;
-
-extern crate byteorder;
-#[allow(unused_imports)]
-use self::byteorder::{LittleEndian,ReadBytesExt};
 #[cfg(feature = "sbp_serde")]
 use serde::{Serialize, Deserialize};
 
 #[allow(unused_imports)]
-use crate::SbpString;
+use crate::{parser::SbpParse, UnboundedSbpString, BoundedSbpString};
 
 ((*- for i in includes *))
 use super::(((i)))::*;
@@ -53,36 +47,18 @@ pub struct (((m.identifier|camel_case))) {
     ((*- endfor *))
 }
 
-impl (((m.identifier|camel_case))) {
+impl SbpParse<(((m.identifier|camel_case)))> for &[u8] {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<(((m.identifier|camel_case))), crate::Error> {
+    fn parse(&mut self) -> crate::Result<(((m.identifier|camel_case)))> {
         Ok( (((m.identifier|camel_case))){
             ((*- if m.is_real_message *))
             sender_id: None,
             ((*- endif *))
             ((*- for f in m.fields *))
-            (((f.identifier))): (((f|parse_type)))?,
+            (((f.identifier))): self.parse()?,
             ((*- endfor *))
         } )
     }
-
-    ((*- if not m.is_real_message *))
-    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<(((m.identifier|camel_case)))>, crate::Error> {
-        let mut v = Vec::new();
-        while buf.len() > 0 {
-            v.push( (((m.identifier|camel_case)))::parse(buf)? );
-        }
-        Ok(v)
-    }
-
-    pub fn parse_array_fixed<const N: usize>(buf: &mut &[u8]) -> Result<[(((m.identifier|camel_case))); N], crate::Error> {
-        let mut v = Vec::new();
-        for _ in 0..N {
-            v.push( (((m.identifier|camel_case)))::parse(buf)? );
-        }
-        v.try_into().map_err(|_| crate::Error::ParseError)
-    }
-    ((*- endif *))
 }
 
 ((*- if m.is_real_message *))

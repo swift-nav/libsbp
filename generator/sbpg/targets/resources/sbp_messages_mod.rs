@@ -26,6 +26,7 @@ use self::unknown::Unknown;
 use serde::{Serialize, Deserialize};
 use crate::serialize::SbpSerialize;
 use crate::framer::FramerError;
+use crate::parser::SbpParse;
 
 pub trait SBPMessage: SbpSerialize {
     fn get_message_type(&self) -> u16;
@@ -48,7 +49,7 @@ impl SBP {
         let x: Result<SBP, crate::Error> = match msg_id {
             ((*- for m in msgs *))
             (((m.sbp_id))) => {
-                let mut msg = (((m.identifier|camel_case)))::parse(payload)?;
+                let mut msg: (((m.identifier|camel_case))) = payload.parse()?;
                 msg.set_sender_id(sender_id);
                 Ok(SBP::(((m.identifier|camel_case)))(msg))
             },
