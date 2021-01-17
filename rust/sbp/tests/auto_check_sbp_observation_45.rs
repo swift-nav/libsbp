@@ -9,32 +9,37 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/test_observation.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/test_observation.yaml by
+// generate.py. Do not modify by hand!
 
-extern crate sbp;
+use sbp::iter_messages;
 use sbp::messages::SBPMessage;
 
 mod common;
 #[allow(unused_imports)]
 use common::AlmostEq;
 
+use std::io::Cursor;
+
 #[test]
 fn test_auto_check_sbp_observation_45() {
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 69, 0, 195, 4, 98, 56, 158, 67, 24, 46, 7, 32, 56, 235, 249, 121, 244, 114, 255,
             255, 33, 46, 67, 218, 0, 238, 203, 70, 124, 22, 25, 3, 0, 98, 43, 184, 157, 2, 176,
             133, 197, 125, 126, 71, 253, 255, 185, 39, 68, 55, 3, 60, 173, 162, 131, 98, 231, 253,
             255, 139, 30, 33, 16, 10, 128, 178, 248, 136, 42, 113, 253, 255, 40, 20, 42, 71, 13,
             246, 246, 17, 135, 255, 51, 3, 0, 64, 27, 108, 249, 22, 210, 41, 114, 118, 131, 48,
             255, 255, 31, 52, 226, 58, 30, 23, 217,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgObsDepA(msg) => {
                 assert_eq!(
@@ -277,21 +282,22 @@ fn test_auto_check_sbp_observation_45() {
             }
             _ => panic!("Invalid message type! Expected a MsgObsDepA"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 69, 0, 195, 4, 20, 56, 158, 67, 24, 46, 7, 33, 84, 52, 164, 117, 102, 32, 0, 0,
             147, 62, 62, 250, 31, 234, 14,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgObsDepA(msg) => {
                 assert_eq!(
@@ -354,25 +360,26 @@ fn test_auto_check_sbp_observation_45() {
             }
             _ => panic!("Invalid message type! Expected a MsgObsDepA"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 69, 0, 195, 4, 98, 0, 159, 67, 24, 46, 7, 32, 32, 209, 249, 121, 145, 114, 255,
             255, 141, 45, 67, 218, 0, 177, 128, 70, 124, 79, 27, 3, 0, 159, 44, 184, 157, 2, 59,
             135, 197, 125, 175, 69, 253, 255, 77, 40, 68, 55, 3, 211, 172, 162, 131, 177, 229, 253,
             255, 20, 31, 33, 16, 10, 128, 178, 248, 136, 116, 111, 253, 255, 94, 21, 42, 71, 13,
             182, 173, 17, 135, 37, 54, 3, 0, 214, 27, 108, 249, 22, 91, 20, 114, 118, 240, 47, 255,
             255, 129, 52, 226, 58, 30, 200, 119,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgObsDepA(msg) => {
                 assert_eq!(
@@ -615,21 +622,22 @@ fn test_auto_check_sbp_observation_45() {
             }
             _ => panic!("Invalid message type! Expected a MsgObsDepA"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 69, 0, 195, 4, 20, 0, 159, 67, 24, 46, 7, 33, 49, 19, 164, 117, 120, 32, 0, 0, 222,
             63, 62, 250, 31, 11, 231,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgObsDepA(msg) => {
                 assert_eq!(
@@ -692,24 +700,25 @@ fn test_auto_check_sbp_observation_45() {
             }
             _ => panic!("Invalid message type! Expected a MsgObsDepA"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 69, 0, 195, 4, 72, 96, 162, 68, 24, 46, 7, 16, 87, 132, 217, 121, 121, 148, 255,
             255, 189, 43, 175, 147, 0, 132, 64, 200, 125, 106, 31, 254, 255, 1, 41, 14, 177, 3,
             128, 178, 248, 136, 70, 68, 254, 255, 166, 18, 184, 133, 13, 24, 127, 178, 134, 6, 25,
             2, 0, 249, 28, 33, 96, 22, 170, 104, 86, 118, 67, 112, 255, 255, 203, 56, 208, 88, 30,
             43, 107,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgObsDepA(msg) => {
                 assert_eq!(
@@ -892,24 +901,25 @@ fn test_auto_check_sbp_observation_45() {
             }
             _ => panic!("Invalid message type! Expected a MsgObsDepA"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 69, 0, 195, 4, 72, 40, 163, 68, 24, 46, 7, 16, 132, 107, 217, 121, 14, 148, 255,
             255, 1, 44, 175, 147, 0, 129, 66, 200, 125, 148, 29, 254, 255, 153, 41, 14, 177, 3,
             128, 178, 248, 136, 143, 66, 254, 255, 222, 18, 184, 133, 13, 158, 53, 178, 134, 42,
             27, 2, 0, 237, 30, 33, 96, 22, 38, 83, 86, 118, 168, 111, 255, 255, 45, 56, 208, 88,
             30, 1, 175,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgObsDepA(msg) => {
                 assert_eq!(
@@ -1092,12 +1102,11 @@ fn test_auto_check_sbp_observation_45() {
             }
             _ => panic!("Invalid message type! Expected a MsgObsDepA"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 70, 0, 195, 4, 176, 0, 0, 0, 0, 0, 0, 60, 190, 0, 0, 0, 0, 0, 186, 82, 192, 0, 0,
             0, 0, 0, 76, 109, 64, 0, 0, 0, 0, 0, 132, 208, 190, 0, 0, 0, 0, 0, 254, 220, 62, 0, 0,
             0, 0, 0, 0, 113, 62, 0, 0, 0, 0, 0, 0, 133, 190, 28, 36, 25, 81, 223, 254, 52, 62, 220,
@@ -1107,13 +1116,15 @@ fn test_auto_check_sbp_observation_45() {
             97, 167, 246, 189, 0, 0, 0, 0, 192, 180, 229, 190, 0, 0, 0, 0, 0, 0, 112, 189, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 12, 25, 65, 46, 7, 0, 0, 0, 0, 128, 12, 25, 65, 46, 7,
             1, 1, 3, 0, 225, 156,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgEphemerisDepB(msg) => {
                 assert_eq!(
@@ -1266,12 +1277,11 @@ fn test_auto_check_sbp_observation_45() {
             }
             _ => panic!("Invalid message type! Expected a MsgEphemerisDepB"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 70, 0, 195, 4, 176, 0, 0, 0, 0, 0, 0, 68, 190, 0, 0, 0, 0, 0, 72, 66, 64, 0, 0, 0,
             0, 128, 188, 115, 64, 0, 0, 0, 0, 0, 80, 193, 62, 0, 0, 0, 0, 0, 164, 204, 62, 0, 0, 0,
             0, 0, 0, 130, 62, 0, 0, 0, 0, 0, 0, 128, 62, 72, 181, 127, 6, 208, 225, 52, 62, 158,
@@ -1281,13 +1291,15 @@ fn test_auto_check_sbp_observation_45() {
             36, 10, 242, 61, 0, 0, 0, 0, 176, 91, 19, 63, 0, 0, 0, 0, 0, 0, 137, 189, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 128, 12, 25, 65, 46, 7, 0, 0, 0, 0, 128, 12, 25, 65, 46, 7, 1,
             1, 13, 0, 180, 21,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgEphemerisDepB(msg) => {
                 assert_eq!(
@@ -1440,12 +1452,11 @@ fn test_auto_check_sbp_observation_45() {
             }
             _ => panic!("Invalid message type! Expected a MsgEphemerisDepB"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 70, 0, 195, 4, 176, 0, 0, 0, 0, 0, 0, 56, 62, 0, 0, 0, 0, 0, 40, 81, 192, 0, 0, 0,
             0, 0, 129, 109, 64, 0, 0, 0, 0, 0, 28, 205, 190, 0, 0, 0, 0, 0, 76, 223, 62, 0, 0, 0,
             0, 0, 0, 105, 190, 0, 0, 0, 0, 0, 0, 92, 190, 134, 161, 223, 255, 243, 43, 51, 62, 146,
@@ -1455,13 +1466,15 @@ fn test_auto_check_sbp_observation_45() {
             194, 30, 247, 189, 0, 0, 0, 0, 0, 104, 222, 190, 0, 0, 0, 0, 0, 0, 96, 61, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 128, 12, 25, 65, 46, 7, 0, 0, 0, 0, 128, 12, 25, 65, 46, 7, 1,
             1, 0, 0, 222, 152,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgEphemerisDepB(msg) => {
                 assert_eq!(
@@ -1614,12 +1627,11 @@ fn test_auto_check_sbp_observation_45() {
             }
             _ => panic!("Invalid message type! Expected a MsgEphemerisDepB"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 70, 0, 195, 4, 176, 0, 0, 0, 0, 0, 0, 68, 190, 0, 0, 0, 0, 0, 72, 66, 64, 0, 0, 0,
             0, 128, 188, 115, 64, 0, 0, 0, 0, 0, 80, 193, 62, 0, 0, 0, 0, 0, 164, 204, 62, 0, 0, 0,
             0, 0, 0, 130, 62, 0, 0, 0, 0, 0, 0, 128, 62, 72, 181, 127, 6, 208, 225, 52, 62, 158,
@@ -1629,13 +1641,15 @@ fn test_auto_check_sbp_observation_45() {
             36, 10, 242, 61, 0, 0, 0, 0, 176, 91, 19, 63, 0, 0, 0, 0, 0, 0, 137, 189, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 128, 12, 25, 65, 46, 7, 0, 0, 0, 0, 128, 12, 25, 65, 46, 7, 1,
             1, 13, 0, 180, 21,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgEphemerisDepB(msg) => {
                 assert_eq!(
@@ -1788,12 +1802,11 @@ fn test_auto_check_sbp_observation_45() {
             }
             _ => panic!("Invalid message type! Expected a MsgEphemerisDepB"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 70, 0, 195, 4, 176, 0, 0, 0, 0, 0, 128, 85, 190, 0, 0, 0, 0, 0, 156, 69, 64, 0, 0,
             0, 0, 128, 19, 115, 64, 0, 0, 0, 0, 0, 160, 193, 62, 0, 0, 0, 0, 0, 152, 207, 62, 0, 0,
             0, 0, 0, 0, 97, 190, 0, 0, 0, 0, 0, 192, 139, 190, 26, 26, 13, 149, 16, 152, 54, 62,
@@ -1803,13 +1816,15 @@ fn test_auto_check_sbp_observation_45() {
             43, 224, 157, 244, 61, 0, 0, 0, 0, 232, 4, 26, 191, 0, 0, 0, 0, 0, 0, 134, 189, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 12, 25, 65, 46, 7, 0, 0, 0, 0, 128, 12, 25, 65, 46,
             7, 1, 1, 22, 0, 99, 61,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgEphemerisDepB(msg) => {
                 assert_eq!(
@@ -1962,12 +1977,11 @@ fn test_auto_check_sbp_observation_45() {
             }
             _ => panic!("Invalid message type! Expected a MsgEphemerisDepB"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 70, 0, 195, 4, 176, 0, 0, 0, 0, 0, 0, 77, 190, 0, 0, 0, 0, 0, 122, 83, 192, 0, 0,
             0, 0, 0, 233, 110, 64, 0, 0, 0, 0, 0, 60, 207, 190, 0, 0, 0, 0, 0, 28, 222, 62, 0, 0,
             0, 0, 0, 128, 120, 62, 0, 0, 0, 0, 0, 0, 108, 62, 10, 230, 183, 140, 214, 230, 50, 62,
@@ -1977,13 +1991,15 @@ fn test_auto_check_sbp_observation_45() {
             100, 254, 51, 54, 4, 190, 0, 0, 0, 0, 50, 242, 52, 63, 0, 0, 0, 0, 0, 0, 114, 189, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 12, 25, 65, 46, 7, 0, 0, 0, 0, 128, 12, 25, 65,
             46, 7, 1, 1, 30, 0, 170, 33,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgEphemerisDepB(msg) => {
                 assert_eq!(
@@ -2136,8 +2152,7 @@ fn test_auto_check_sbp_observation_45() {
             }
             _ => panic!("Invalid message type! Expected a MsgEphemerisDepB"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
 }

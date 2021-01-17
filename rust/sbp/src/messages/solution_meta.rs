@@ -14,12 +14,11 @@
 //****************************************************************************/
 //! Standardized Metadata messages for Fuzed Solution from Swift Navigation devices.
 
-extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
-#[cfg(feature = "sbp_serde")]
-use serde::{Deserialize, Serialize};
+use byteorder::{LittleEndian, ReadBytesExt};
 
+#[allow(unused_imports)]
+use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
 
@@ -27,8 +26,7 @@ use crate::SbpString;
 ///
 /// Metadata around the GNSS sensors involved in the fuzed solution.
 /// Accessible through sol_in[N].flags in a MSG_SOLN_META.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GNSSInputType {
@@ -76,12 +74,12 @@ impl crate::serialize::SbpSerialize for GNSSInputType {
     }
 }
 
-/// Provides detail about the IMU sensor, its timestamping mode, and its quality for input to the fuzed solution.
+/// Provides detail about the IMU sensor, its timestamping mode, and its quality for input to
+/// the fuzed solution.
 ///
 /// Metadata around the IMU sensors involved in the fuzed solution.
 /// Accessible through sol_in[N].flags in a MSG_SOLN_META.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct IMUInputType {
@@ -128,17 +126,19 @@ impl crate::serialize::SbpSerialize for IMUInputType {
 
 /// Solution Sensors Metadata
 ///
-/// This message contains all metadata about the sensors received and/or used in computing the sensorfusion solution.
-/// It focuses primarly, but not only, on GNSS metadata.
-/// Regarding the age of the last received valid GNSS solution, the highest two bits are time status, indicating
-/// whether age gnss can or can not be used to retrieve time of measurement (noted TOM, also known as time of validity)
-/// If it can, substract 'age gnss' from 'tow' in navigation messages to get TOM. Can be used before alignment is
-/// complete in the Fusion Engine, when output solution is the last received valid GNSS solution and its tow is not a TOM.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+/// This message contains all metadata about the sensors received and/or used in computing the
+/// sensorfusion solution. It focuses primarly, but not only, on GNSS metadata.
+/// Regarding the age of the last received valid GNSS solution, the highest two bits are time
+/// status, indicating whether age gnss can or can not be used to retrieve time of measurement
+/// (noted TOM, also known as time of validity) If it can, substract 'age gnss' from 'tow' in
+/// navigation messages to get TOM. Can be used before alignment is complete in the Fusion
+/// Engine, when output solution is the last received valid GNSS solution and its tow is not a
+/// TOM.
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSolnMeta {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS time of week rounded to the nearest millisecond
     pub tow: u32,
@@ -192,9 +192,14 @@ impl super::SBPMessage for MsgSolnMeta {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -225,13 +230,13 @@ impl crate::serialize::SbpSerialize for MsgSolnMeta {
 
 /// Deprecated
 ///
-/// This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
-/// It focuses primarly, but not only, on GNSS metadata.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+/// This message contains all metadata about the sensors received and/or used in computing the
+/// Fuzed Solution. It focuses primarly, but not only, on GNSS metadata.
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSolnMetaDepA {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Position Dilution of Precision as per last available DOPS from PVT
     /// engine (0xFFFF indicates invalid)
@@ -291,9 +296,14 @@ impl super::SBPMessage for MsgSolnMetaDepA {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -326,12 +336,12 @@ impl crate::serialize::SbpSerialize for MsgSolnMetaDepA {
     }
 }
 
-/// Provides detail about the Odometry sensor, its timestamping mode, and its quality for input to the fuzed solution.
+/// Provides detail about the Odometry sensor, its timestamping mode, and its quality for input
+/// to the fuzed solution.
 ///
 /// Metadata around the Odometry sensors involved in the fuzed solution.
 /// Accessible through sol_in[N].flags in a MSG_SOLN_META.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct OdoInputType {
@@ -383,9 +393,9 @@ impl crate::serialize::SbpSerialize for OdoInputType {
 /// The sensor_type field tells you which sensor we are talking about. It also tells you
 /// whether the sensor data was actually used or not.
 /// The flags field, always a u8, contains the sensor-specific data.
-/// The content of flags, for each sensor type, is described in the relevant structures in this section.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+/// The content of flags, for each sensor type, is described in the relevant structures in this
+/// section.
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct SolutionInputType {

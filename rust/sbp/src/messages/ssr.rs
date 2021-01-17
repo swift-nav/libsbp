@@ -14,13 +14,12 @@
 //****************************************************************************/
 //! Precise State Space Representation (SSR) corrections format
 
-extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
-#[cfg(feature = "sbp_serde")]
-use serde::{Deserialize, Serialize};
+use byteorder::{LittleEndian, ReadBytesExt};
 
 use super::gnss::*;
+#[allow(unused_imports)]
+use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
 
@@ -28,8 +27,7 @@ use crate::SbpString;
 ///
 /// Code biases are to be added to pseudorange.
 /// The corrections conform with typical RTCMv3 MT1059 and 1065.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct CodeBiasesContent {
@@ -86,8 +84,7 @@ impl crate::serialize::SbpSerialize for CodeBiasesContent {
 ///
 /// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
 /// Also includes an RLE encoded validity list.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GridDefinitionHeaderDepA {
@@ -166,8 +163,7 @@ impl crate::serialize::SbpSerialize for GridDefinitionHeaderDepA {
 ///
 /// Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
 /// stddev) for each satellite at the grid point.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GridElement {
@@ -226,8 +222,7 @@ impl crate::serialize::SbpSerialize for GridElement {
 ///
 /// Contains one tropo delay, plus STEC residuals for each satellite at the
 /// grid point.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GridElementNoStd {
@@ -290,8 +285,7 @@ impl crate::serialize::SbpSerialize for GridElementNoStd {
 /// The LPP message contains nested variable length arrays
 /// which are not suppported in SBP, so each grid point will
 /// be identified by the index.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GriddedCorrectionHeader {
@@ -381,8 +375,7 @@ impl crate::serialize::SbpSerialize for GriddedCorrectionHeader {
 /// The 3GPP message contains nested variable length arrays
 /// which are not suppported in SBP, so each grid point will
 /// be identified by the index.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GriddedCorrectionHeaderDepA {
@@ -463,11 +456,11 @@ impl crate::serialize::SbpSerialize for GriddedCorrectionHeaderDepA {
 /// to the pseudorange of the corresponding signal
 /// to get corrected pseudorange. It is typically
 /// an equivalent to the 1059 and 1065 RTCM message types
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrCodeBiases {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GNSS reference time of the correction
     pub time: GPSTimeSec,
@@ -509,9 +502,14 @@ impl super::SBPMessage for MsgSsrCodeBiases {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -541,11 +539,11 @@ impl crate::serialize::SbpSerialize for MsgSsrCodeBiases {
 /// STEC residuals are per space vehicle, troposphere is not.
 ///
 /// It is typically equivalent to the QZSS CLAS Sub Type 9 messages
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGriddedCorrection {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a gridded correction message
     pub header: GriddedCorrectionHeader,
@@ -576,9 +574,14 @@ impl super::SBPMessage for MsgSsrGriddedCorrection {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -597,10 +600,11 @@ impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrection {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGriddedCorrectionDepA {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a Gridded Correction message
     pub header: GriddedCorrectionHeaderDepA,
@@ -632,9 +636,14 @@ impl super::SBPMessage for MsgSsrGriddedCorrectionDepA {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -653,10 +662,11 @@ impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrectionDepA {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGriddedCorrectionNoStdDepA {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a Gridded Correction message
     pub header: GriddedCorrectionHeaderDepA,
@@ -687,9 +697,14 @@ impl super::SBPMessage for MsgSsrGriddedCorrectionNoStdDepA {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -708,10 +723,11 @@ impl crate::serialize::SbpSerialize for MsgSsrGriddedCorrectionNoStdDepA {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrGridDefinitionDepA {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a Gridded Correction message
     pub header: GridDefinitionHeaderDepA,
@@ -745,9 +761,14 @@ impl super::SBPMessage for MsgSsrGridDefinitionDepA {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -772,11 +793,11 @@ impl crate::serialize::SbpSerialize for MsgSsrGridDefinitionDepA {
 /// to be applied as a delta correction to broadcast
 /// ephemeris and is typically an equivalent to the 1060
 /// and 1066 RTCM message types
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrOrbitClock {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GNSS reference time of the correction
     pub time: GPSTimeSec,
@@ -845,9 +866,14 @@ impl super::SBPMessage for MsgSsrOrbitClock {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -890,10 +916,11 @@ impl crate::serialize::SbpSerialize for MsgSsrOrbitClock {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrOrbitClockDepA {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GNSS reference time of the correction
     pub time: GPSTimeSec,
@@ -962,9 +989,14 @@ impl super::SBPMessage for MsgSsrOrbitClockDepA {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -1015,11 +1047,11 @@ impl crate::serialize::SbpSerialize for MsgSsrOrbitClockDepA {
 /// well as the satellite yaw angle to be applied to compute
 /// the phase wind-up correction.
 /// It is typically an equivalent to the 1265 RTCM message types
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrPhaseBiases {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GNSS reference time of the correction
     pub time: GPSTimeSec,
@@ -1073,9 +1105,14 @@ impl super::SBPMessage for MsgSsrPhaseBiases {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -1116,11 +1153,11 @@ impl crate::serialize::SbpSerialize for MsgSsrPhaseBiases {
 /// of the atmospheric delay.
 ///
 /// It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrStecCorrection {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a STEC polynomial coeffcient message.
     pub header: STECHeader,
@@ -1151,9 +1188,14 @@ impl super::SBPMessage for MsgSsrStecCorrection {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -1172,10 +1214,11 @@ impl crate::serialize::SbpSerialize for MsgSsrStecCorrection {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrStecCorrectionDepA {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a STEC message
     pub header: STECHeaderDepA,
@@ -1206,9 +1249,14 @@ impl super::SBPMessage for MsgSsrStecCorrectionDepA {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -1237,11 +1285,11 @@ impl crate::serialize::SbpSerialize for MsgSsrStecCorrectionDepA {
 /// Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
 /// element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
 /// correction points, not lists of points.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSsrTileDefinition {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Unique identifier of the tile set this tile belongs to.
     pub tile_set_id: u16,
@@ -1313,9 +1361,14 @@ impl super::SBPMessage for MsgSsrTileDefinition {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -1352,8 +1405,7 @@ impl crate::serialize::SbpSerialize for MsgSsrTileDefinition {
 ///
 /// Phase biases are to be added to carrier phase measurements.
 /// The corrections conform with typical RTCMv3 MT1059 and 1065.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct PhaseBiasesContent {
@@ -1427,8 +1479,7 @@ impl crate::serialize::SbpSerialize for PhaseBiasesContent {
 /// A full set of STEC information will likely span multiple SBP
 /// messages, since SBP message a limited to 255 bytes.  The header
 /// is used to tie multiple SBP messages into a sequence.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct STECHeader {
@@ -1509,8 +1560,7 @@ impl crate::serialize::SbpSerialize for STECHeader {
 /// A full set of STEC information will likely span multiple SBP
 /// messages, since SBP message a limited to 255 bytes.  The header
 /// is used to tie multiple SBP messages into a sequence.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct STECHeaderDepA {
@@ -1583,8 +1633,7 @@ impl crate::serialize::SbpSerialize for STECHeaderDepA {
 ///
 /// STEC residual (mean and standard deviation) for the given satellite
 /// at the grid point,
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct STECResidual {
@@ -1642,8 +1691,7 @@ impl crate::serialize::SbpSerialize for STECResidual {
 /// None
 ///
 /// STEC residual for the given satellite at the grid point.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct STECResidualNoStd {
@@ -1699,8 +1747,7 @@ impl crate::serialize::SbpSerialize for STECResidualNoStd {
 /// None
 ///
 /// STEC polynomial for the given satellite.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct STECSatElement {
@@ -1763,8 +1810,7 @@ impl crate::serialize::SbpSerialize for STECSatElement {
 ///
 /// Troposphere vertical delays (mean and standard deviation) at the grid
 /// point.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct TroposphericDelayCorrection {
@@ -1825,8 +1871,7 @@ impl crate::serialize::SbpSerialize for TroposphericDelayCorrection {
 /// None
 ///
 /// Troposphere vertical delays at the grid point.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct TroposphericDelayCorrectionNoStd {

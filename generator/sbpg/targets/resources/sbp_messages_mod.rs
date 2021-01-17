@@ -22,19 +22,17 @@ use self::(((p.identifier|mod_name)))::(((m.identifier|camel_case)));
 ((*- endfor *))
 use self::unknown::Unknown;
 
-#[cfg(feature = "sbp_serde")]
-use serde::{Serialize, Deserialize};
 use crate::serialize::SbpSerialize;
-use crate::framer::FramerError;
 
 pub trait SBPMessage: SbpSerialize {
     fn get_message_type(&self) -> u16;
     fn get_sender_id(&self) -> Option<u16>;
     fn set_sender_id(&mut self, new_id: u16);
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, FramerError>;
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError>;
+    fn write_frame(&self, buf: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError>;
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize), serde(untagged))]
 #[derive(Debug, Clone)]
 pub enum SBP {
     ((*- for m in msgs *))
@@ -45,7 +43,7 @@ pub enum SBP {
 
 impl SBP {
     pub fn parse(msg_id: u16, sender_id: u16, payload: &mut &[u8]) -> Result<SBP, crate::Error> {
-        let x: Result<SBP, crate::Error> = match msg_id {
+        match msg_id {
             ((*- for m in msgs *))
             (((m.sbp_id))) => {
                 let mut msg = (((m.identifier|camel_case)))::parse(payload)?;
@@ -54,20 +52,116 @@ impl SBP {
             },
             ((*- endfor *))
             _ => Ok(SBP::Unknown( Unknown{ msg_id: msg_id, sender_id: sender_id, payload: payload.to_vec() } ))
-        };
-        match x {
-            Ok(x) => Ok(x),
-            Err(_) => Err(crate::Error::ParseError),
-        }
-    }
-
-    pub fn as_sbp_message<'a>(&'a self) -> &dyn SBPMessage {
-        match self {
-            ((*- for m in msgs *))
-            SBP::(((m.identifier|camel_case)))( msg ) => msg,
-            ((*- endfor *))
-            SBP::Unknown(msg) => msg,
         }
     }
 }
 
+impl crate::SBPMessage for SBP {
+    fn get_message_type(&self) -> u16 {
+        match self {
+            ((*- for m in msgs *))
+            SBP::(((m.identifier|camel_case)))(msg) => {
+                msg.get_message_type()
+            },
+            ((*- endfor *))
+            SBP::Unknown(msg) => {
+                msg.get_message_type()
+            },
+        }
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        match self {
+            ((*- for m in msgs *))
+            SBP::(((m.identifier|camel_case)))(msg) => {
+                msg.get_sender_id()
+            },
+            ((*- endfor *))
+            SBP::Unknown(msg) => {
+                msg.get_sender_id()
+            },
+        }
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        match self {
+            ((*- for m in msgs *))
+            SBP::(((m.identifier|camel_case)))(msg) => {
+                msg.set_sender_id(new_id)
+            },
+            ((*- endfor *))
+            SBP::Unknown(msg) => {
+                msg.set_sender_id(new_id)
+            },
+        }
+    }
+
+    fn to_frame(&self) -> Result<Vec<u8>, crate::FramerError> {
+        match self {
+            ((*- for m in msgs *))
+            SBP::(((m.identifier|camel_case)))(msg) => {
+                msg.to_frame()
+            },
+            ((*- endfor *))
+            SBP::Unknown(msg) => {
+                msg.to_frame()
+            },
+        }
+    }
+
+    fn write_frame(&self, buf: &mut Vec<u8>) -> Result<(), crate::FramerError> {
+        match self {
+            ((*- for m in msgs *))
+            SBP::(((m.identifier|camel_case)))(msg) => {
+                msg.write_frame(buf)
+            },
+            ((*- endfor *))
+            SBP::Unknown(msg) => {
+                msg.write_frame(buf)
+            },
+        }
+    }
+}
+
+
+impl crate::SbpSerialize for SBP {
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        match self {
+            ((*- for m in msgs *))
+            SBP::(((m.identifier|camel_case)))(msg) => {
+                msg.append_to_sbp_buffer(buf)
+            },
+            ((*- endfor *))
+            SBP::Unknown(msg) => {
+                msg.append_to_sbp_buffer(buf)
+            },
+        }
+    }
+
+    fn sbp_size(&self) -> usize {
+        match self {
+            ((*- for m in msgs *))
+            SBP::(((m.identifier|camel_case)))(msg) => {
+                msg.sbp_size()
+            },
+            ((*- endfor *))
+            SBP::Unknown(msg) => {
+                msg.sbp_size()
+            },
+        }
+    }
+}
+
+((*- for m in msgs *))
+impl From<(((m.identifier|camel_case)))> for SBP {
+    fn from(msg: (((m.identifier|camel_case)))) -> Self {
+        SBP::(((m.identifier|camel_case)))(msg)
+    }
+}
+((*- endfor *))
+
+impl From<Unknown> for SBP {
+    fn from(msg: Unknown) -> Self {
+        SBP::Unknown(msg)
+    }
+}
