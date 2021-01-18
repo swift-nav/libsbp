@@ -30,6 +30,7 @@ CLASSIFIERS = [
   'Programming Language :: Python :: 3.6',
   'Programming Language :: Python :: 3.7',
   'Programming Language :: Python :: 3.8',
+  'Programming Language :: Python :: 3.9',
 ]
 
 PACKAGES = find_packages(exclude=["tests", "bench", "tests.*", "sbp.jit"])
@@ -202,10 +203,17 @@ if __name__ == "__main__":
         zip_safe=False,
         ext_modules=ext_modules,
         scripts=['bin/sbp2json'],
-        # numpy is pinned on windows because of a bug: https://tinyurl.com/y3dm3h86
         extras_require={
-          'jit': ["numpy==1.19.3 ; sys_platform == 'win32'", "numpy~=1.18 ; sys_platform != 'win32'",
-                  'numba==0.47', 'llvmlite==0.31', 'pybase64', 'python-rapidjson~=1.0'],
-          'aot': ["numpy==1.19.3 ; sys_platform == 'win32'", "numpy~=1.18 ; sys_platform != 'win32'",
-                  'pybase64', 'python-rapidjson~=1.0']
+          'jit': [
+              'numpy~=1.18',
+              'pybase64',
+              'python-rapidjson~=1.0'
+              'numba==0.47',
+              'llvmlite==0.31',
+          ],
+          'aot': [
+              'numpy~=1.18',
+              'pybase64',
+              'python-rapidjson~=1.0'
+          ]
         })
