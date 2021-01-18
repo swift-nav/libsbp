@@ -14,17 +14,16 @@
 //****************************************************************************/
 //! Satellite observation messages from the device.
 
-extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
-#[cfg(feature = "sbp_serde")]
-use serde::{Deserialize, Serialize};
+use byteorder::{LittleEndian, ReadBytesExt};
 
 use super::gnss::*;
 #[allow(unused_imports)]
+use crate::serialize::SbpSerialize;
+#[allow(unused_imports)]
 use crate::SbpString;
 
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct AlmanacCommonContent {
@@ -106,7 +105,7 @@ impl crate::serialize::SbpSerialize for AlmanacCommonContent {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct AlmanacCommonContentDep {
@@ -195,8 +194,7 @@ impl crate::serialize::SbpSerialize for AlmanacCommonContentDep {
 /// cycles and 8-bits of fractional cycles. This has the opposite
 /// sign convention than a typical GPS receiver and the phase has
 /// the opposite sign as the pseudorange.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct CarrierPhaseDepA {
@@ -255,8 +253,7 @@ impl crate::serialize::SbpSerialize for CarrierPhaseDepA {
 /// fixed point number with Q16.8 layout, i.e. 16-bits of whole
 /// doppler and 8-bits of fractional doppler. This doppler is defined
 /// as positive for approaching satellites.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct Doppler {
@@ -306,7 +303,7 @@ impl crate::serialize::SbpSerialize for Doppler {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct EphemerisCommonContent {
@@ -380,7 +377,7 @@ impl crate::serialize::SbpSerialize for EphemerisCommonContent {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct EphemerisCommonContentDepA {
@@ -454,7 +451,7 @@ impl crate::serialize::SbpSerialize for EphemerisCommonContentDepA {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct EphemerisCommonContentDepB {
@@ -528,7 +525,7 @@ impl crate::serialize::SbpSerialize for EphemerisCommonContentDepB {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct GnssCapb {
@@ -651,11 +648,11 @@ impl crate::serialize::SbpSerialize for GnssCapb {
 /// data is not very precise and is considered valid for up to several months.
 /// Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
 /// almanac" for details.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGlo {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all almanac types
     pub common: AlmanacCommonContent,
@@ -705,9 +702,14 @@ impl super::SBPMessage for MsgAlmanacGlo {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -744,11 +746,11 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGlo {
 /// data is not very precise and is considered valid for up to several months.
 /// Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
 /// almanac" for details.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGloDep {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all almanac types
     pub common: AlmanacCommonContentDep,
@@ -798,9 +800,14 @@ impl super::SBPMessage for MsgAlmanacGloDep {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -837,11 +844,11 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGloDep {
 /// data is not very precise and is considered valid for up to several months.
 /// Please see the Navstar GPS Space Segment/Navigation user interfaces
 /// (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGPS {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all almanac types
     pub common: AlmanacCommonContent,
@@ -896,9 +903,14 @@ impl super::SBPMessage for MsgAlmanacGPS {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -939,11 +951,11 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGPS {
 /// data is not very precise and is considered valid for up to several months.
 /// Please see the Navstar GPS Space Segment/Navigation user interfaces
 /// (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgAlmanacGPSDep {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all almanac types
     pub common: AlmanacCommonContentDep,
@@ -998,9 +1010,14 @@ impl super::SBPMessage for MsgAlmanacGPSDep {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -1043,11 +1060,11 @@ impl crate::serialize::SbpSerialize for MsgAlmanacGPSDep {
 /// is required to be a high-accuracy surveyed location of the base
 /// station. Any error here will result in an error in the
 /// pseudo-absolute position output.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBasePosECEF {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// ECEF X coodinate
     pub x: f64,
@@ -1081,9 +1098,14 @@ impl super::SBPMessage for MsgBasePosECEF {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -1111,11 +1133,11 @@ impl crate::serialize::SbpSerialize for MsgBasePosECEF {
 /// positioning, and is required to be a high-accuracy surveyed
 /// location of the base station. Any error here will result in an
 /// error in the pseudo-absolute position output.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgBasePosLLH {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Latitude
     pub lat: f64,
@@ -1149,9 +1171,14 @@ impl super::SBPMessage for MsgBasePosLLH {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -1178,11 +1205,11 @@ impl crate::serialize::SbpSerialize for MsgBasePosLLH {
 /// parameters that is used to calculate BDS satellite position,
 /// velocity, and clock offset. Please see the BeiDou Navigation
 /// Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisBds {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
@@ -1285,9 +1312,14 @@ impl super::SBPMessage for MsgEphemerisBds {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -1353,11 +1385,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisBds {
 /// Deprecated
 ///
 /// Deprecated.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepA {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Group delay differential between L1 and L2
     pub tgd: f64,
@@ -1464,9 +1496,14 @@ impl super::SBPMessage for MsgEphemerisDepA {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -1536,11 +1573,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepA {
 /// Deprecated
 ///
 /// Deprecated.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepB {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Group delay differential between L1 and L2
     pub tgd: f64,
@@ -1650,9 +1687,14 @@ impl super::SBPMessage for MsgEphemerisDepB {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -1728,11 +1770,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepB {
 /// velocity, and clock offset. Please see the Navstar GPS
 /// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
 /// 20-III) for more details.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepC {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Group delay differential between L1 and L2
     pub tgd: f64,
@@ -1848,9 +1890,14 @@ impl super::SBPMessage for MsgEphemerisDepC {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -1930,11 +1977,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepC {
 /// velocity, and clock offset. Please see the Navstar GPS
 /// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
 /// 20-III) for more details.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisDepD {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Group delay differential between L1 and L2
     pub tgd: f64,
@@ -2050,9 +2097,14 @@ impl super::SBPMessage for MsgEphemerisDepD {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -2131,11 +2183,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisDepD {
 /// parameters that is used to calculate Galileo satellite position,
 /// velocity, and clock offset. Please see the Signal In Space ICD
 /// OS SIS ICD, Issue 1.3, December 2016 for more details.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGal {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
@@ -2239,9 +2291,14 @@ impl super::SBPMessage for MsgEphemerisGal {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -2310,11 +2367,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGal {
 ///
 /// This observation message has been deprecated in favor of
 /// an ephemeris message with explicit source of NAV data.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGalDepA {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
@@ -2415,9 +2472,14 @@ impl super::SBPMessage for MsgEphemerisGalDepA {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -2487,11 +2549,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGalDepA {
 /// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
 /// Characteristics of words of immediate information (ephemeris parameters)"
 /// for more details.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGlo {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
@@ -2543,9 +2605,14 @@ impl super::SBPMessage for MsgEphemerisGlo {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -2585,11 +2652,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGlo {
 /// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
 /// Characteristics of words of immediate information (ephemeris parameters)"
 /// for more details.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepA {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepA,
@@ -2632,9 +2699,14 @@ impl super::SBPMessage for MsgEphemerisGloDepA {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -2668,11 +2740,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepA {
 /// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
 /// Characteristics of words of immediate information (ephemeris parameters)"
 /// for more details.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepB {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepB,
@@ -2715,9 +2787,14 @@ impl super::SBPMessage for MsgEphemerisGloDepB {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -2751,11 +2828,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepB {
 /// velocity, and clock offset. Please see the GLO ICD 5.1 "Table 4.5
 /// Characteristics of words of immediate information (ephemeris parameters)"
 /// for more details.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepC {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepB,
@@ -2804,9 +2881,14 @@ impl super::SBPMessage for MsgEphemerisGloDepC {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -2841,11 +2923,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepC {
 ///
 /// This observation message has been deprecated in favor of
 /// ephemeris message using floats for size reduction.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGloDepD {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepB,
@@ -2897,9 +2979,14 @@ impl super::SBPMessage for MsgEphemerisGloDepD {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -2939,11 +3026,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGloDepD {
 /// velocity, and clock offset. Please see the Navstar GPS
 /// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
 /// 20-III) for more details.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGPS {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
@@ -3041,9 +3128,14 @@ impl super::SBPMessage for MsgEphemerisGPS {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -3111,11 +3203,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGPS {
 /// velocity, and clock offset. Please see the Navstar GPS
 /// Space Segment/Navigation user interfaces (ICD-GPS-200, Table
 /// 20-III) for more details.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGPSDepE {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepA,
@@ -3213,9 +3305,14 @@ impl super::SBPMessage for MsgEphemerisGPSDepE {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -3280,11 +3377,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGPSDepE {
 ///
 /// This observation message has been deprecated in favor of
 /// ephemeris message using floats for size reduction.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisGPSDepF {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepB,
@@ -3382,9 +3479,14 @@ impl super::SBPMessage for MsgEphemerisGPSDepF {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -3450,11 +3552,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisGPSDepF {
 /// The ephemeris message returns a set of satellite orbit
 /// parameters that is used to calculate QZSS satellite position,
 /// velocity, and clock offset.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisQzss {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
@@ -3552,9 +3654,14 @@ impl super::SBPMessage for MsgEphemerisQzss {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -3615,10 +3722,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisQzss {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbas {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContent,
@@ -3661,9 +3769,14 @@ impl super::SBPMessage for MsgEphemerisSbas {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -3690,10 +3803,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisSbas {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbasDepA {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepA,
@@ -3736,9 +3850,14 @@ impl super::SBPMessage for MsgEphemerisSbasDepA {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -3769,11 +3888,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisSbasDepA {
 ///
 /// This observation message has been deprecated in favor of
 /// ephemeris message using floats for size reduction.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgEphemerisSbasDepB {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Values common for all ephemeris types
     pub common: EphemerisCommonContentDepB,
@@ -3816,9 +3935,14 @@ impl super::SBPMessage for MsgEphemerisSbasDepB {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -3851,11 +3975,11 @@ impl crate::serialize::SbpSerialize for MsgEphemerisSbasDepB {
 /// GPS+GLONASS integer ambiguity resolution for baselines
 /// with mixed receiver types (e.g. receiver of different
 /// manufacturers)
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGloBiases {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GLONASS FDMA signals mask
     pub mask: u8,
@@ -3895,9 +4019,14 @@ impl super::SBPMessage for MsgGloBiases {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -3922,10 +4051,11 @@ impl crate::serialize::SbpSerialize for MsgGloBiases {
     }
 }
 
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGnssCapb {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Navigation Message Correction Table Validity Time
     pub t_nmct: GPSTimeSec,
@@ -3956,9 +4086,14 @@ impl super::SBPMessage for MsgGnssCapb {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -3980,11 +4115,11 @@ impl crate::serialize::SbpSerialize for MsgGnssCapb {
 /// Group Delay
 ///
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGroupDelay {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Data Predict Time of Week
     pub t_op: GPSTimeSec,
@@ -4025,9 +4160,14 @@ impl super::SBPMessage for MsgGroupDelay {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -4057,11 +4197,11 @@ impl crate::serialize::SbpSerialize for MsgGroupDelay {
 /// Group Delay
 ///
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGroupDelayDepA {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Data Predict Time of Week
     pub t_op: GPSTimeDep,
@@ -4102,9 +4242,14 @@ impl super::SBPMessage for MsgGroupDelayDepA {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -4134,11 +4279,11 @@ impl crate::serialize::SbpSerialize for MsgGroupDelayDepA {
 /// Group Delay
 ///
 /// Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGroupDelayDepB {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Data Predict Time of Week
     pub t_op: GPSTimeSec,
@@ -4179,9 +4324,14 @@ impl super::SBPMessage for MsgGroupDelayDepB {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -4213,11 +4363,11 @@ impl crate::serialize::SbpSerialize for MsgGroupDelayDepB {
 /// The ionospheric parameters which allow the "L1 only" or "L2 only" user to
 /// utilize the ionospheric model for computation of the ionospheric delay.
 /// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgIono {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Navigation Message Correction Table Valitidy Time
     pub t_nmct: GPSTimeSec,
@@ -4261,9 +4411,14 @@ impl super::SBPMessage for MsgIono {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -4305,11 +4460,11 @@ impl crate::serialize::SbpSerialize for MsgIono {
 /// whole cycles and 8-bits of fractional cycles). The observations
 /// are be interoperable with 3rd party receivers and conform
 /// with typical RTCMv3 GNSS observations.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgObs {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a GPS observation message
     pub header: ObservationHeader,
@@ -4340,9 +4495,14 @@ impl super::SBPMessage for MsgObs {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -4364,11 +4524,11 @@ impl crate::serialize::SbpSerialize for MsgObs {
 /// Deprecated
 ///
 /// Deprecated.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgObsDepA {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a GPS observation message
     pub header: ObservationHeaderDep,
@@ -4399,9 +4559,14 @@ impl super::SBPMessage for MsgObsDepA {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -4428,11 +4593,11 @@ impl crate::serialize::SbpSerialize for MsgObsDepA {
 /// a nominal pseudorange which are not interoperable with
 /// most 3rd party GNSS receievers or typical RTCMv3
 /// observations.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgObsDepB {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a GPS observation message
     pub header: ObservationHeaderDep,
@@ -4463,9 +4628,14 @@ impl super::SBPMessage for MsgObsDepB {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -4493,11 +4663,11 @@ impl crate::serialize::SbpSerialize for MsgObsDepB {
 /// whole cycles and 8-bits of fractional cycles). The observations
 /// are interoperable with 3rd party receivers and conform
 /// with typical RTCMv3 GNSS observations.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgObsDepC {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a GPS observation message
     pub header: ObservationHeaderDep,
@@ -4528,9 +4698,14 @@ impl super::SBPMessage for MsgObsDepC {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -4552,11 +4727,11 @@ impl crate::serialize::SbpSerialize for MsgObsDepC {
 /// OSR corrections
 ///
 /// The OSR message contains network corrections in an observation-like format
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgOsr {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Header of a GPS observation message
     pub header: ObservationHeader,
@@ -4587,9 +4762,14 @@ impl super::SBPMessage for MsgOsr {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -4612,11 +4792,11 @@ impl crate::serialize::SbpSerialize for MsgOsr {
 ///
 /// Azimuth and elevation angles of all the visible satellites
 /// that the device does have ephemeris or almanac for.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSvAzEl {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Azimuth and elevation per satellite
     pub azel: Vec<SvAzEl>,
@@ -4644,9 +4824,14 @@ impl super::SBPMessage for MsgSvAzEl {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -4666,11 +4851,11 @@ impl crate::serialize::SbpSerialize for MsgSvAzEl {
 /// L2C capability mask
 ///
 /// Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgSvConfigurationGPSDep {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Navigation Message Correction Table Valitidy Time
     pub t_nmct: GPSTimeSec,
@@ -4701,9 +4886,14 @@ impl super::SBPMessage for MsgSvConfigurationGPSDep {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -4725,8 +4915,7 @@ impl crate::serialize::SbpSerialize for MsgSvConfigurationGPSDep {
 /// Header for observation message.
 ///
 /// Header of a GNSS observation message.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct ObservationHeader {
@@ -4783,8 +4972,7 @@ impl crate::serialize::SbpSerialize for ObservationHeader {
 /// Header for observation message.
 ///
 /// Header of a GPS observation message.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct ObservationHeaderDep {
@@ -4847,8 +5035,7 @@ impl crate::serialize::SbpSerialize for ObservationHeaderDep {
 /// Carrier phase observations are not guaranteed to be aligned to the RINEX 3
 /// or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
 /// peformed.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct PackedObsContent {
@@ -4936,8 +5123,7 @@ impl crate::serialize::SbpSerialize for PackedObsContent {
 /// Deprecated
 ///
 /// Deprecated.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct PackedObsContentDepA {
@@ -5011,8 +5197,7 @@ impl crate::serialize::SbpSerialize for PackedObsContentDepA {
 ///
 /// Pseudorange and carrier phase observation for a satellite being
 /// tracked.  Pseudoranges are referenced to a nominal pseudorange.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct PackedObsContentDepB {
@@ -5087,8 +5272,7 @@ impl crate::serialize::SbpSerialize for PackedObsContentDepB {
 /// Pseudorange and carrier phase observation for a satellite being
 /// tracked. The observations are be interoperable with 3rd party
 /// receivers and conform with typical RTCMv3 GNSS observations.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct PackedObsContentDepC {
@@ -5161,8 +5345,7 @@ impl crate::serialize::SbpSerialize for PackedObsContentDepC {
 /// Network correction for a particular satellite signal.
 ///
 /// Pseudorange and carrier phase network corrections for a satellite signal.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct PackedOsrContent {
@@ -5253,8 +5436,7 @@ impl crate::serialize::SbpSerialize for PackedOsrContent {
 /// Satellite azimuth and elevation.
 ///
 /// Satellite azimuth and elevation.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct SvAzEl {

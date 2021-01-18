@@ -105,29 +105,29 @@ START_TEST( test_auto_check_sbp_piksi_31 )
     sbp_send_message(&sbp_state, 0x17, 55286, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
           "sbp_process threw an error!");
     }
 
-    fail_unless(n_callbacks_logged == 1,
+    ck_assert_msg(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 55286,
+    ck_assert_msg(last_sender_id == 55286,
         "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
+    ck_assert_msg(last_len == sizeof(test_data),
         "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data))
           == 0,
         "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     msg_thread_state_t* msg = ( msg_thread_state_t *)((void *)last_msg + 6);
     // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->cpu == 0, "incorrect value for cpu, expected 0, is %d", msg->cpu);
-    fail_unless(strstr(msg->name, ((char []){(char)109,(char)97,(char)105,(char)110,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)109,(char)97,(char)105,(char)110,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
-    fail_unless(msg->stack_free == 2460, "incorrect value for stack_free, expected 2460, is %d", msg->stack_free);
+    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(msg->cpu == 0, "incorrect value for cpu, expected 0, is %d", msg->cpu);
+    ck_assert_msg(strstr(msg->name, ((char []){(char)109,(char)97,(char)105,(char)110,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)109,(char)97,(char)105,(char)110,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
+    ck_assert_msg(msg->stack_free == 2460, "incorrect value for stack_free, expected 2460, is %d", msg->stack_free);
   }
   // Test successful parsing of a message
   {
@@ -148,29 +148,29 @@ START_TEST( test_auto_check_sbp_piksi_31 )
     sbp_send_message(&sbp_state, 0x17, 55286, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
           "sbp_process threw an error!");
     }
 
-    fail_unless(n_callbacks_logged == 1,
+    ck_assert_msg(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 55286,
+    ck_assert_msg(last_sender_id == 55286,
         "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
+    ck_assert_msg(last_len == sizeof(test_data),
         "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data))
           == 0,
         "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     msg_thread_state_t* msg = ( msg_thread_state_t *)((void *)last_msg + 6);
     // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->cpu == 595, "incorrect value for cpu, expected 595, is %d", msg->cpu);
-    fail_unless(strstr(msg->name, ((char []){(char)105,(char)100,(char)108,(char)101,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)105,(char)100,(char)108,(char)101,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
-    fail_unless(msg->stack_free == 36, "incorrect value for stack_free, expected 36, is %d", msg->stack_free);
+    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(msg->cpu == 595, "incorrect value for cpu, expected 595, is %d", msg->cpu);
+    ck_assert_msg(strstr(msg->name, ((char []){(char)105,(char)100,(char)108,(char)101,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)105,(char)100,(char)108,(char)101,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
+    ck_assert_msg(msg->stack_free == 36, "incorrect value for stack_free, expected 36, is %d", msg->stack_free);
   }
   // Test successful parsing of a message
   {
@@ -191,29 +191,29 @@ START_TEST( test_auto_check_sbp_piksi_31 )
     sbp_send_message(&sbp_state, 0x17, 55286, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
           "sbp_process threw an error!");
     }
 
-    fail_unless(n_callbacks_logged == 1,
+    ck_assert_msg(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 55286,
+    ck_assert_msg(last_sender_id == 55286,
         "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
+    ck_assert_msg(last_len == sizeof(test_data),
         "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data))
           == 0,
         "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     msg_thread_state_t* msg = ( msg_thread_state_t *)((void *)last_msg + 6);
     // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->cpu == 14, "incorrect value for cpu, expected 14, is %d", msg->cpu);
-    fail_unless(strstr(msg->name, ((char []){(char)78,(char)65,(char)80,(char)32,(char)73,(char)83,(char)82,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)78,(char)65,(char)80,(char)32,(char)73,(char)83,(char)82,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
-    fail_unless(msg->stack_free == 1140, "incorrect value for stack_free, expected 1140, is %d", msg->stack_free);
+    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(msg->cpu == 14, "incorrect value for cpu, expected 14, is %d", msg->cpu);
+    ck_assert_msg(strstr(msg->name, ((char []){(char)78,(char)65,(char)80,(char)32,(char)73,(char)83,(char)82,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)78,(char)65,(char)80,(char)32,(char)73,(char)83,(char)82,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
+    ck_assert_msg(msg->stack_free == 1140, "incorrect value for stack_free, expected 1140, is %d", msg->stack_free);
   }
   // Test successful parsing of a message
   {
@@ -234,29 +234,29 @@ START_TEST( test_auto_check_sbp_piksi_31 )
     sbp_send_message(&sbp_state, 0x17, 55286, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
           "sbp_process threw an error!");
     }
 
-    fail_unless(n_callbacks_logged == 1,
+    ck_assert_msg(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 55286,
+    ck_assert_msg(last_sender_id == 55286,
         "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
+    ck_assert_msg(last_len == sizeof(test_data),
         "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data))
           == 0,
         "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     msg_thread_state_t* msg = ( msg_thread_state_t *)((void *)last_msg + 6);
     // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->cpu == 1, "incorrect value for cpu, expected 1, is %d", msg->cpu);
-    fail_unless(strstr(msg->name, ((char []){(char)83,(char)66,(char)80,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)83,(char)66,(char)80,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
-    fail_unless(msg->stack_free == 5060, "incorrect value for stack_free, expected 5060, is %d", msg->stack_free);
+    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(msg->cpu == 1, "incorrect value for cpu, expected 1, is %d", msg->cpu);
+    ck_assert_msg(strstr(msg->name, ((char []){(char)83,(char)66,(char)80,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)83,(char)66,(char)80,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
+    ck_assert_msg(msg->stack_free == 5060, "incorrect value for stack_free, expected 5060, is %d", msg->stack_free);
   }
   // Test successful parsing of a message
   {
@@ -277,29 +277,29 @@ START_TEST( test_auto_check_sbp_piksi_31 )
     sbp_send_message(&sbp_state, 0x17, 55286, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
           "sbp_process threw an error!");
     }
 
-    fail_unless(n_callbacks_logged == 1,
+    ck_assert_msg(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 55286,
+    ck_assert_msg(last_sender_id == 55286,
         "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
+    ck_assert_msg(last_len == sizeof(test_data),
         "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data))
           == 0,
         "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     msg_thread_state_t* msg = ( msg_thread_state_t *)((void *)last_msg + 6);
     // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->cpu == 7, "incorrect value for cpu, expected 7, is %d", msg->cpu);
-    fail_unless(strstr(msg->name, ((char []){(char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)97,(char)99,(char)113,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)97,(char)99,(char)113,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
-    fail_unless(msg->stack_free == 2324, "incorrect value for stack_free, expected 2324, is %d", msg->stack_free);
+    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(msg->cpu == 7, "incorrect value for cpu, expected 7, is %d", msg->cpu);
+    ck_assert_msg(strstr(msg->name, ((char []){(char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)97,(char)99,(char)113,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0})) != NULL, "incorrect value for msg->name, expected string '%s', is '%s'", ((char []){(char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)97,(char)99,(char)113,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,0}), msg->name);
+    ck_assert_msg(msg->stack_free == 2324, "incorrect value for stack_free, expected 2324, is %d", msg->stack_free);
   }
 }
 END_TEST

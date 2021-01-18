@@ -11,12 +11,14 @@
 
 // This file was auto-generated from (((s.src_filename))) by generate.py. Do not modify by hand!
 
-extern crate sbp;
 use sbp::messages::SBPMessage;
+use sbp::iter_messages;
 
 mod common;
 #[allow(unused_imports)]
 use common::AlmostEq;
+
+use std::io::Cursor;
 
 ((*- macro compare_value(prefix, value) *))
 ((*- if value is string_type *))
@@ -39,13 +41,15 @@ fn test_(((s.suite_name)))()
 {
     ((*- for t in s.tests *))
     {
-        let payload : Vec<u8> = vec![ ((*- for p in t.packet_as_byte_array *))(((p))),((*- endfor *)) ];
+        let mut payload = Cursor::new(vec![ ((*- for p in t.packet_as_byte_array *))(((p))),((*- endfor *)) ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::(((t.msg.name)))(msg) => {
                 assert_eq!( msg.get_message_type(), (((t.msg_type))), "Incorrect message type, expected (((t.msg_type))), is {}", msg.get_message_type());
@@ -55,9 +59,8 @@ fn test_(((s.suite_name)))()
             },
             _ => panic!("Invalid message type! Expected a (((t.msg.name)))"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     ((*- endfor *))
 }

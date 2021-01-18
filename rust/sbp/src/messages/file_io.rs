@@ -20,14 +20,12 @@
 //!
 //! Note that some of these messages share the same message type ID for both the
 //! host request and the device response.
-//!
 
-extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
-#[cfg(feature = "sbp_serde")]
-use serde::{Deserialize, Serialize};
+use byteorder::{LittleEndian, ReadBytesExt};
 
+#[allow(unused_imports)]
+use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
 
@@ -37,11 +35,11 @@ use crate::SbpString;
 /// transfer.  Newer version of FileIO can support greater
 /// throughput by supporting a large window of FileIO data
 /// that can be in-flight during read or write operations.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioConfigReq {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Advice sequence number
     pub sequence: u32,
@@ -69,9 +67,14 @@ impl super::SBPMessage for MsgFileioConfigReq {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -95,11 +98,11 @@ impl crate::serialize::SbpSerialize for MsgFileioConfigReq {
 /// transfer.  Newer version of FileIO can support greater
 /// throughput by supporting a large window of FileIO data
 /// that can be in-flight during read or write operations.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioConfigResp {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Advice sequence number
     pub sequence: u32,
@@ -136,9 +139,14 @@ impl super::SBPMessage for MsgFileioConfigResp {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -173,11 +181,11 @@ impl crate::serialize::SbpSerialize for MsgFileioConfigResp {
 /// MSG_PRINT message will print "Invalid fileio read message".
 /// A device will only respond to this message when it is received
 /// from sender ID 0x42.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadDirReq {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Read sequence number
     pub sequence: u32,
@@ -211,9 +219,14 @@ impl super::SBPMessage for MsgFileioReadDirReq {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -242,11 +255,11 @@ impl crate::serialize::SbpSerialize for MsgFileioReadDirReq {
 /// multiple SBP packets and the end of the list is identified by an
 /// entry containing just the character 0xFF. The sequence number in
 /// the response is preserved from the request.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadDirResp {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Read sequence number
     pub sequence: u32,
@@ -277,9 +290,14 @@ impl super::SBPMessage for MsgFileioReadDirResp {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -308,11 +326,11 @@ impl crate::serialize::SbpSerialize for MsgFileioReadDirResp {
 /// If the message is invalid, a followup MSG_PRINT message will
 /// print "Invalid fileio read message". A device will only respond
 /// to this message when it is received from sender ID 0x42.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadReq {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Read sequence number
     pub sequence: u32,
@@ -349,9 +367,14 @@ impl super::SBPMessage for MsgFileioReadReq {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -381,11 +404,11 @@ impl crate::serialize::SbpSerialize for MsgFileioReadReq {
 /// message where the message length field indicates how many bytes
 /// were succesfully read. The sequence number in the response is
 /// preserved from the request.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioReadResp {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Read sequence number
     pub sequence: u32,
@@ -416,9 +439,14 @@ impl super::SBPMessage for MsgFileioReadResp {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -443,11 +471,11 @@ impl crate::serialize::SbpSerialize for MsgFileioReadResp {
 /// If the message is invalid, a followup MSG_PRINT message will
 /// print "Invalid fileio remove message". A device will only
 /// process this message when it is received from sender ID 0x42.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioRemove {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Name of the file to delete
     pub filename: SbpString,
@@ -475,9 +503,14 @@ impl super::SBPMessage for MsgFileioRemove {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -504,11 +537,11 @@ impl crate::serialize::SbpSerialize for MsgFileioRemove {
 /// message will print "Invalid fileio write message". A device will
 /// only  process this message when it is received from sender ID
 /// 0x42.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioWriteReq {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Write sequence number
     pub sequence: u32,
@@ -545,9 +578,14 @@ impl super::SBPMessage for MsgFileioWriteReq {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -577,11 +615,11 @@ impl crate::serialize::SbpSerialize for MsgFileioWriteReq {
 /// original MSG_FILEIO_WRITE_REQ message to check integrity of the
 /// write. The sequence number in the response is preserved from the
 /// request.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgFileioWriteResp {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Write sequence number
     pub sequence: u32,
@@ -609,9 +647,14 @@ impl super::SBPMessage for MsgFileioWriteResp {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 

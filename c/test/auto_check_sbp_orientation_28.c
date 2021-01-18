@@ -105,34 +105,34 @@ START_TEST( test_auto_check_sbp_orientation_28 )
     sbp_send_message(&sbp_state, 0x221, 66, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
           "sbp_process threw an error!");
     }
 
-    fail_unless(n_callbacks_logged == 1,
+    ck_assert_msg(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 66,
+    ck_assert_msg(last_sender_id == 66,
         "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
+    ck_assert_msg(last_len == sizeof(test_data),
         "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data))
           == 0,
         "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     msg_orient_euler_t* msg = ( msg_orient_euler_t *)((void *)last_msg + 6);
     // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(msg->flags == 3, "incorrect value for flags, expected 3, is %d", msg->flags);
-    fail_unless(msg->pitch == 2, "incorrect value for pitch, expected 2, is %d", msg->pitch);
-    fail_unless((msg->pitch_accuracy*100 - 3.0*100) < 0.05, "incorrect value for pitch_accuracy, expected 3.0, is %f", msg->pitch_accuracy);
-    fail_unless(msg->roll == 1, "incorrect value for roll, expected 1, is %d", msg->roll);
-    fail_unless((msg->roll_accuracy*100 - 7.0*100) < 0.05, "incorrect value for roll_accuracy, expected 7.0, is %f", msg->roll_accuracy);
-    fail_unless(msg->tow == 1, "incorrect value for tow, expected 1, is %d", msg->tow);
-    fail_unless(msg->yaw == 8, "incorrect value for yaw, expected 8, is %d", msg->yaw);
-    fail_unless((msg->yaw_accuracy*100 - 7.0*100) < 0.05, "incorrect value for yaw_accuracy, expected 7.0, is %f", msg->yaw_accuracy);
+    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(msg->flags == 3, "incorrect value for flags, expected 3, is %d", msg->flags);
+    ck_assert_msg(msg->pitch == 2, "incorrect value for pitch, expected 2, is %d", msg->pitch);
+    ck_assert_msg((msg->pitch_accuracy*100 - 3.0*100) < 0.05, "incorrect value for pitch_accuracy, expected 3.0, is %f", msg->pitch_accuracy);
+    ck_assert_msg(msg->roll == 1, "incorrect value for roll, expected 1, is %d", msg->roll);
+    ck_assert_msg((msg->roll_accuracy*100 - 7.0*100) < 0.05, "incorrect value for roll_accuracy, expected 7.0, is %f", msg->roll_accuracy);
+    ck_assert_msg(msg->tow == 1, "incorrect value for tow, expected 1, is %d", msg->tow);
+    ck_assert_msg(msg->yaw == 8, "incorrect value for yaw, expected 8, is %d", msg->yaw);
+    ck_assert_msg((msg->yaw_accuracy*100 - 7.0*100) < 0.05, "incorrect value for yaw_accuracy, expected 7.0, is %f", msg->yaw_accuracy);
   }
 }
 END_TEST

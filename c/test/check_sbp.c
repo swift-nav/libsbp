@@ -217,52 +217,52 @@ START_TEST(test_sbp_process)
   sbp_send_message(&s, 0x2269, 0x42, sizeof(test_data), test_data, &dummy_write);
 
   while (dummy_rd < dummy_wr) {
-    fail_unless(sbp_process(&s, &dummy_read) >= SBP_OK,
+    ck_assert_msg(sbp_process(&s, &dummy_read) >= SBP_OK,
         "sbp_process threw an error!");
   }
 
-  fail_unless(n_callbacks_logged == 1,
+  ck_assert_msg(n_callbacks_logged == 1,
       "one callback should have been logged");
-  fail_unless(last_sender_id == 0x42,
+  ck_assert_msg(last_sender_id == 0x42,
       "sender_id decoded incorrectly");
-  fail_unless(last_len == sizeof(test_data),
+  ck_assert_msg(last_len == sizeof(test_data),
       "len decoded incorrectly");
-  fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+  ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data))
         == 0,
       "test data decoded incorrectly");
-  fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+  ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
       "context pointer incorrectly passed");
 
   sbp_register_callback(&s, 0x2270, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
-  fail_unless(sbp_find_callback(&s, 0x2270) != 0,
+  ck_assert_msg(sbp_find_callback(&s, 0x2270) != 0,
     "second callback not found");
 
   sbp_remove_callback(&s, &n2);
-  fail_unless(sbp_find_callback(&s, 0x2270) == 0,
+  ck_assert_msg(sbp_find_callback(&s, 0x2270) == 0,
     "callback not removed");
 
   logging_reset();
   sbp_send_message(&s, 0x2269, 0x4243, 0, 0, &dummy_write);
 
-  fail_unless(last_io_context == &DUMMY_MEMORY_FOR_IO,
+  ck_assert_msg(last_io_context == &DUMMY_MEMORY_FOR_IO,
       "io context pointer incorrectly passed");
 
   last_io_context = 0;
 
   while (dummy_rd < dummy_wr) {
-    fail_unless(sbp_process(&s, &dummy_read) >= SBP_OK,
+    ck_assert_msg(sbp_process(&s, &dummy_read) >= SBP_OK,
         "sbp_process threw an error! (2)");
   }
 
-  fail_unless(last_io_context == &DUMMY_MEMORY_FOR_IO,
+  ck_assert_msg(last_io_context == &DUMMY_MEMORY_FOR_IO,
       "io context pointer incorrectly passed");
 
 
-  fail_unless(n_callbacks_logged == 1,
+  ck_assert_msg(n_callbacks_logged == 1,
       "one callback should have been logged (2)");
-  fail_unless(last_sender_id == 0x4243,
+  ck_assert_msg(last_sender_id == 0x4243,
       "sender_id decoded incorrectly (2)");
-  fail_unless(last_len == 0,
+  ck_assert_msg(last_len == 0,
       "len decoded incorrectly (2)");
 
   logging_reset();
@@ -273,11 +273,11 @@ START_TEST(test_sbp_process)
     ret |= sbp_process(&s, &dummy_read);
   }
 
-  fail_unless(ret == SBP_OK_CALLBACK_UNDEFINED,
+  ck_assert_msg(ret == SBP_OK_CALLBACK_UNDEFINED,
       "sbp_process should have returned SBP_OK_CALLBACK_UNDEFINED "
       "if no cb was registered for that message type");
 
-  fail_unless(n_callbacks_logged == 0,
+  ck_assert_msg(n_callbacks_logged == 0,
       "no callbacks should have been logged");
 
   u8 awesome_message[] = {0x55, 0x33, 0x22, 0x77, 0x66,
@@ -292,17 +292,17 @@ START_TEST(test_sbp_process)
   sbp_register_callback(&s, 0x2233, &logging_callback, 0, &m);
 
   while (dummy_rd < dummy_wr) {
-    fail_unless(sbp_process(&s, &dummy_read) >= SBP_OK,
+    ck_assert_msg(sbp_process(&s, &dummy_read) >= SBP_OK,
         "sbp_process threw an error! (3)");
   }
 
-  fail_unless(n_callbacks_logged == 1,
+  ck_assert_msg(n_callbacks_logged == 1,
       "one callback should have been logged (3)");
-  fail_unless(last_sender_id == 0x6677,
+  ck_assert_msg(last_sender_id == 0x6677,
       "sender_id decoded incorrectly (3)");
-  fail_unless(last_len == 2,
+  ck_assert_msg(last_len == 2,
       "len decoded incorrectly (3)");
-  fail_unless(memcmp(last_msg, &awesome_message[6], 2)
+  ck_assert_msg(memcmp(last_msg, &awesome_message[6], 2)
         == 0,
       "test data decoded incorrectly (3)");
 
@@ -318,11 +318,11 @@ START_TEST(test_sbp_process)
     ret |= sbp_process(&s, &dummy_read);
   }
 
-  fail_unless(ret == SBP_CRC_ERROR,
+  ck_assert_msg(ret == SBP_CRC_ERROR,
       "sbp_process should have returned SBP_CRC_ERROR "
       "for malformed message");
 
-  fail_unless(n_callbacks_logged == 0,
+  ck_assert_msg(n_callbacks_logged == 0,
       "no callbacks should have been logged (2)");
 
   /* Test sbp_process with a one-byte-at-a-time read process */
@@ -340,17 +340,17 @@ START_TEST(test_sbp_process)
   sbp_register_callback(&s, 0x2233, &logging_callback, 0, &p);
 
   while (dummy_rd < dummy_wr) {
-    fail_unless(sbp_process(&s, &dummy_read_single_byte) >= SBP_OK,
+    ck_assert_msg(sbp_process(&s, &dummy_read_single_byte) >= SBP_OK,
         "sbp_process threw an error! (3)");
   }
 
-  fail_unless(n_callbacks_logged == 1,
+  ck_assert_msg(n_callbacks_logged == 1,
       "one callback should have been logged (3)");
-  fail_unless(last_sender_id == 0x6677,
+  ck_assert_msg(last_sender_id == 0x6677,
       "sender_id decoded incorrectly (3)");
-  fail_unless(last_len == 2,
+  ck_assert_msg(last_len == 2,
       "len decoded incorrectly (3)");
-  fail_unless(memcmp(last_msg, &awesome_message2[6], 2)
+  ck_assert_msg(memcmp(last_msg, &awesome_message2[6], 2)
         == 0,
       "test data decoded incorrectly (3)");
 
@@ -370,17 +370,17 @@ START_TEST(test_sbp_process)
   sbp_register_callback(&s, 0x2233, &logging_callback, 0, &q);
 
   while (dummy_rd < dummy_wr) {
-    fail_unless(sbp_process(&s, &dummy_read_single_byte) >= SBP_OK,
+    ck_assert_msg(sbp_process(&s, &dummy_read_single_byte) >= SBP_OK,
         "sbp_process threw an error! (3)");
   }
 
-  fail_unless(n_callbacks_logged == 1,
+  ck_assert_msg(n_callbacks_logged == 1,
       "one callback should have been logged (3)");
-  fail_unless(last_sender_id == 0x6677,
+  ck_assert_msg(last_sender_id == 0x6677,
       "sender_id decoded incorrectly (3)");
-  fail_unless(last_len == 2,
+  ck_assert_msg(last_len == 2,
       "len decoded incorrectly (3)");
-  fail_unless(memcmp(last_msg, &crappy_then_awesome_message[10], 2)
+  ck_assert_msg(memcmp(last_msg, &crappy_then_awesome_message[10], 2)
         == 0,
       "test data decoded incorrectly (3)");
 
@@ -407,37 +407,37 @@ START_TEST(test_sbp_frame)
   sbp_send_message(&s, 0x2269, 0x42, sizeof(test_data), test_data, &dummy_write);
 
   while (dummy_rd < dummy_wr) {
-    fail_unless(sbp_process(&s, &dummy_read) >= SBP_OK,
+    ck_assert_msg(sbp_process(&s, &dummy_read) >= SBP_OK,
         "sbp_process threw an error!");
   }
 
-  fail_unless(n_frame_callbacks_logged == 1,
+  ck_assert_msg(n_frame_callbacks_logged == 1,
       "one frame callback should have been logged");
-  fail_unless(last_frame_sender_id == 0x42,
+  ck_assert_msg(last_frame_sender_id == 0x42,
       "sender_id decoded incorrectly");
-  fail_unless(last_frame_payload_len == sizeof(test_data),
+  ck_assert_msg(last_frame_payload_len == sizeof(test_data),
       "len decoded incorrectly");
-  fail_unless(last_frame_len == sizeof(test_data) + 8,
+  ck_assert_msg(last_frame_len == sizeof(test_data) + 8,
       "frame len decoded incorrectly");
-  fail_unless(last_frame_msg_type == 0x2269,
+  ck_assert_msg(last_frame_msg_type == 0x2269,
       "msg_type decoded incorrectly");
   char test[1024];
   char* ptr = test;
   for (int i = 0; i < last_frame_len; i++) {
     ptr += sprintf(ptr, "%02X", last_frame[i]);
   }
-  fail_unless(memcmp(last_frame, test_frame, sizeof(test_frame)-1)
+  ck_assert_msg(memcmp(last_frame, test_frame, sizeof(test_frame)-1)
         == 0,
       "decoded incorrectly %s", test);
-  fail_unless(last_frame_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+  ck_assert_msg(last_frame_context == &DUMMY_MEMORY_FOR_CALLBACKS,
       "context pointer incorrectly passed");
 
   sbp_register_frame_callback(&s, 0x2270, &frame_logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
-  fail_unless(sbp_find_callback(&s, 0x2270) != 0,
+  ck_assert_msg(sbp_find_callback(&s, 0x2270) != 0,
     "second callback not found");
 
   sbp_remove_callback(&s, &n2);
-  fail_unless(sbp_find_callback(&s, 0x2270) == 0,
+  ck_assert_msg(sbp_find_callback(&s, 0x2270) == 0,
     "callback not removed");
 
   /* Test sbp_process with both a frame callback and a not frame callback */
@@ -455,13 +455,13 @@ START_TEST(test_sbp_frame)
   sbp_send_message(&s, 0x2269, 0x42, sizeof(test_data), test_data, &dummy_write);
 
   while (dummy_rd < dummy_wr) {
-    fail_unless(sbp_process(&s, &dummy_read_single_byte) >= SBP_OK,
+    ck_assert_msg(sbp_process(&s, &dummy_read_single_byte) >= SBP_OK,
         "sbp_process threw an error! (3)");
   }
 
-  fail_unless(n_callbacks_logged == 1,
+  ck_assert_msg(n_callbacks_logged == 1,
       "one regular callback should have been logged (3)");
-  fail_unless(n_frame_callbacks_logged == 1,
+  ck_assert_msg(n_frame_callbacks_logged == 1,
       "one frame callback should have been logged (3)");
 
   /* now remove frame callback and make sure that the regular callback is still there */
@@ -469,11 +469,11 @@ START_TEST(test_sbp_frame)
   dummy_reset();
   sbp_send_message(&s, 0x2269, 0x42, sizeof(test_data), test_data, &dummy_write);
   while (dummy_rd < dummy_wr) {
-    fail_unless(sbp_process(&s, &dummy_read_single_byte) >= SBP_OK,
+    ck_assert_msg(sbp_process(&s, &dummy_read_single_byte) >= SBP_OK,
         "sbp_process threw an error! (3)");
   }
 
-  fail_unless(n_callbacks_logged == 2,
+  ck_assert_msg(n_callbacks_logged == 2,
       "two regular callback should have been logged (3)");
 
   /* now test that no frame callback with bad msg and direct writing to buffer */
@@ -489,17 +489,17 @@ START_TEST(test_sbp_frame)
   sbp_register_frame_callback(&s, 0x2233, &frame_logging_callback, 0, &m);
 
   while (dummy_rd < dummy_wr) {
-    fail_unless(sbp_process(&s, &dummy_read) >= SBP_OK,
+    ck_assert_msg(sbp_process(&s, &dummy_read) >= SBP_OK,
         "sbp_process threw an error! (3)");
   }
 
-  fail_unless(n_frame_callbacks_logged == 1,
+  ck_assert_msg(n_frame_callbacks_logged == 1,
       "one callback should have been logged (3)");
-  fail_unless(last_frame_sender_id == 0x6677,
+  ck_assert_msg(last_frame_sender_id == 0x6677,
       "sender_id decoded incorrectly (3)");
-  fail_unless(last_frame_payload_len == 2,
+  ck_assert_msg(last_frame_payload_len == 2,
       "len decoded incorrectly (3)");
-  fail_unless(memcmp(last_frame, awesome_message, sizeof(awesome_message))
+  ck_assert_msg(memcmp(last_frame, awesome_message, sizeof(awesome_message))
         == 0,
       "test data decoded incorrectly (3) %x", last_frame[sizeof(awesome_message)-1]);
 
@@ -515,11 +515,11 @@ START_TEST(test_sbp_frame)
     ret |= sbp_process(&s, &dummy_read);
   }
 
-  fail_unless(ret == SBP_CRC_ERROR,
+  ck_assert_msg(ret == SBP_CRC_ERROR,
       "sbp_process should have returned SBP_CRC_ERROR "
       "for malformed message");
 
-  fail_unless(n_frame_callbacks_logged == 0,
+  ck_assert_msg(n_frame_callbacks_logged == 0,
       "no frame callbacks should have been logged (2)");
 
 }
@@ -546,17 +546,17 @@ START_TEST(test_sbp_all_msg)
   sbp_send_message(&s, 0x2270, 0x43, sizeof(msg_2), msg_2, &dummy_write);
 
   while (dummy_rd < dummy_wr) {
-    fail_unless(sbp_process(&s, &dummy_read) >= SBP_OK,
+    ck_assert_msg(sbp_process(&s, &dummy_read) >= SBP_OK,
         "sbp_process threw an error!");
   }
 
-  fail_unless(n_frame_callbacks_logged == 2,
+  ck_assert_msg(n_frame_callbacks_logged == 2,
       "two frame callback should have been logged, %u were", n_frame_callbacks_logged);
-  fail_unless(last_frame_sender_id == 0x43,
+  ck_assert_msg(last_frame_sender_id == 0x43,
       "sender_id decoded incorrectly");
-  fail_unless(last_frame_payload_len == sizeof(msg_2),
+  ck_assert_msg(last_frame_payload_len == sizeof(msg_2),
       "len decoded incorrectly");
-  fail_unless(last_frame_len == sizeof(msg_2) + 8,
+  ck_assert_msg(last_frame_len == sizeof(msg_2) + 8,
       "frame len decoded incorrectly");
 }
 END_TEST
@@ -585,25 +585,25 @@ START_TEST(test_sbp_big_msg)
   s8 ret = SBP_OK;
   while (dummy_rd < dummy_wr) {
     ret = sbp_process(&s, &dummy_read);
-    fail_unless(ret >= SBP_OK,
+    ck_assert_msg(ret >= SBP_OK,
         "sbp_process threw an error! error_code: %d", ret);
   }
 
-  fail_unless(n_frame_callbacks_logged == 1,
+  ck_assert_msg(n_frame_callbacks_logged == 1,
       "one frame callback should have been logged, %u were", n_frame_callbacks_logged);
-  fail_unless(n_callbacks_logged == 1,
+  ck_assert_msg(n_callbacks_logged == 1,
       "one callbackx should have been logged, %u were", n_frame_callbacks_logged);
-  fail_unless(last_frame_sender_id == 0x42,
+  ck_assert_msg(last_frame_sender_id == 0x42,
       "sender_id decoded incorrectly");
-  fail_unless(last_frame_payload_len == sizeof(big_msg),
+  ck_assert_msg(last_frame_payload_len == sizeof(big_msg),
       "len decoded incorrectly");
-  fail_unless(last_frame_len == SBP_MAX_FRAME_LEN,
+  ck_assert_msg(last_frame_len == SBP_MAX_FRAME_LEN,
       "frame len decoded incorrectly");
-  fail_unless(memcmp(SBP_FRAME_MSG_PAYLOAD(last_frame), big_msg, sizeof(big_msg))
+  ck_assert_msg(memcmp(SBP_FRAME_MSG_PAYLOAD(last_frame), big_msg, sizeof(big_msg))
         == 0,
       "frame data decoded incorrectly (3) %x");
   /* check that CRC wasn't chopped off */
-  fail_unless((last_frame[262]  == 0x35 && last_frame[261] == 0xA6),
+  ck_assert_msg((last_frame[262]  == 0x35 && last_frame[261] == 0xA6),
       "CRC was incorrect. Should be %x and was %x", 0x35A6,  *((u16*) &(last_frame[261])));
 }
 END_TEST
@@ -618,22 +618,22 @@ START_TEST(test_sbp_send_message)
 
   u8 smsg[] = { 0x22, 0x33 };
 
-  fail_unless(sbp_send_message(&s, 0x2233, 0x4455, 0, smsg, 0) == SBP_NULL_ERROR,
+  ck_assert_msg(sbp_send_message(&s, 0x2233, 0x4455, 0, smsg, 0) == SBP_NULL_ERROR,
       "sbp_send_message should return an error if write is NULL");
 
   dummy_reset();
-  fail_unless(sbp_send_message(&s, 0x2233, 0x4455, 1, 0, &dummy_write)
+  ck_assert_msg(sbp_send_message(&s, 0x2233, 0x4455, 1, 0, &dummy_write)
         == SBP_NULL_ERROR,
       "sbp_send_message should return an error if payload is NULL and len != 0");
 
   dummy_reset();
-  fail_unless(sbp_send_message(&s, 0x2233, 0x4455, 0, 0, &dummy_write)
+  ck_assert_msg(sbp_send_message(&s, 0x2233, 0x4455, 0, 0, &dummy_write)
         == SBP_OK,
       "sbp_send_message should return OK if payload is NULL and len == 0");
 
   u8 zero_len_message[] = {0x55, 0x33, 0x22, 0x55, 0x44, 0x00, 0x2C, 0x4C};
 
-  fail_unless(memcmp(dummy_buff, zero_len_message, sizeof(zero_len_message))
+  ck_assert_msg(memcmp(dummy_buff, zero_len_message, sizeof(zero_len_message))
         == 0,
       "sbp_send_message encode error for len = 0");
 
@@ -643,7 +643,7 @@ START_TEST(test_sbp_send_message)
   u8 awesome_message[] = {0x55, 0x33, 0x22, 0x77, 0x66,
                           0x02, 0x22, 0x33, 0x8A, 0x33};
 
-  fail_unless(memcmp(dummy_buff, awesome_message, sizeof(awesome_message))
+  ck_assert_msg(memcmp(dummy_buff, awesome_message, sizeof(awesome_message))
         == 0,
       "sbp_send_message encode error for test message");
 }
@@ -658,10 +658,10 @@ START_TEST(test_callbacks)
   /* Start with no callbacks registered.  */
   sbp_clear_callbacks(&s);
 
-  fail_unless(sbp_find_callback(&s, 0x1234) == 0,
+  ck_assert_msg(sbp_find_callback(&s, 0x1234) == 0,
       "sbp_find_callback should return NULL if no callbacks registered");
 
-  fail_unless(sbp_register_callback(&s, 0x2233, &test_callback, 0, 0) == SBP_NULL_ERROR,
+  ck_assert_msg(sbp_register_callback(&s, 0x2233, &test_callback, 0, 0) == SBP_NULL_ERROR,
       "sbp_register_callback should return an error if node is NULL");
 
   /* Add a first callback. */
@@ -670,24 +670,24 @@ START_TEST(test_callbacks)
 
   int NUMBER = 42;
 
-  fail_unless(sbp_register_callback(&s, 0x2233, 0, 0, &n) == SBP_NULL_ERROR,
+  ck_assert_msg(sbp_register_callback(&s, 0x2233, 0, 0, &n) == SBP_NULL_ERROR,
       "sbp_register_callback should return an error if cb is NULL");
 
-  fail_unless(sbp_register_callback(&s, 0x2233, &test_callback, &NUMBER, &n) == SBP_OK,
+  ck_assert_msg(sbp_register_callback(&s, 0x2233, &test_callback, &NUMBER, &n) == SBP_OK,
       "sbp_register_callback should return success if everything is groovy");
 
-  fail_unless(sbp_register_callback(&s, 0x2233, &test_callback, 0, &n)
+  ck_assert_msg(sbp_register_callback(&s, 0x2233, &test_callback, 0, &n)
         == SBP_CALLBACK_ERROR,
       "sbp_register_callback should return SBP_CALLBACK_ERROR if a callback "
       "of the same type is already registered");
 
-  fail_unless(sbp_find_callback(&s, 0x1234) == 0,
+  ck_assert_msg(sbp_find_callback(&s, 0x1234) == 0,
       "sbp_find_callback should return NULL if callback not registered");
 
-  fail_unless(sbp_find_callback(&s, 0x2233) == &n,
+  ck_assert_msg(sbp_find_callback(&s, 0x2233) == &n,
       "sbp_find_callback didn't return the correct callback node pointer");
 
-  fail_unless(sbp_find_callback(&s, 0x2233)->context == &NUMBER,
+  ck_assert_msg(sbp_find_callback(&s, 0x2233)->context == &NUMBER,
       "sbp_find_callback didn't return the correct context pointer");
 
   /* Add a second callback. */
@@ -696,36 +696,36 @@ START_TEST(test_callbacks)
 
   int NUMBER2 = 84;
 
-  fail_unless(sbp_register_callback(&s, 0x1234, &test_callback2, &NUMBER2, &m) == SBP_OK,
+  ck_assert_msg(sbp_register_callback(&s, 0x1234, &test_callback2, &NUMBER2, &m) == SBP_OK,
       "sbp_register_callback should return success if everything is groovy (2)");
 
-  fail_unless(sbp_find_callback(&s, 0x2233) == &n,
+  ck_assert_msg(sbp_find_callback(&s, 0x2233) == &n,
       "sbp_find_callback didn't return the correct callback function pointer (2)");
 
-  fail_unless(sbp_find_callback(&s, 0x2233)->context == &NUMBER,
+  ck_assert_msg(sbp_find_callback(&s, 0x2233)->context == &NUMBER,
       "sbp_find_callback didn't return the correct context pointer");
 
-  fail_unless(sbp_find_callback(&s, 0x1234) == &m,
+  ck_assert_msg(sbp_find_callback(&s, 0x1234) == &m,
       "sbp_find_callback didn't return the correct callback function pointer (3)");
 
-  fail_unless(sbp_find_callback(&s, 0x1234)->context == &NUMBER2,
+  ck_assert_msg(sbp_find_callback(&s, 0x1234)->context == &NUMBER2,
       "sbp_find_callback didn't return the correct context pointer");
 
-  fail_unless(sbp_register_callback(&s, 0x1234, &test_callback, 0, &n)
+  ck_assert_msg(sbp_register_callback(&s, 0x1234, &test_callback, 0, &n)
         == SBP_CALLBACK_ERROR,
       "sbp_register_callback should return SBP_CALLBACK_ERROR if a callback "
       "of the same type is already registered (2)");
 
-  fail_unless(sbp_find_callback(&s, 0x7788) == 0,
+  ck_assert_msg(sbp_find_callback(&s, 0x7788) == 0,
       "sbp_find_callback should return NULL if callback not registered (2)");
 
   /* Clear all the registered callbacks and check they can no longer be found. */
   sbp_clear_callbacks(&s);
 
-  fail_unless(sbp_find_callback(&s, 0x1234) == 0,
+  ck_assert_msg(sbp_find_callback(&s, 0x1234) == 0,
       "sbp_find_callback should return NULL if no callbacks registered (2)");
 
-  fail_unless(sbp_find_callback(&s, 0x2233) == 0,
+  ck_assert_msg(sbp_find_callback(&s, 0x2233) == 0,
       "sbp_find_callback should return NULL if no callbacks registered (3)");
 
 }
@@ -740,10 +740,10 @@ START_TEST(test_frame_callbacks)
   /* Start with no callbacks registered.  */
   sbp_clear_callbacks(&s);
 
-  fail_unless(sbp_find_callback(&s, 0x1234) == 0,
+  ck_assert_msg(sbp_find_callback(&s, 0x1234) == 0,
       "sbp_find_callback should return NULL if no callbacks registered");
 
-  fail_unless(sbp_register_frame_callback(&s, 0x2233, &test_frame_callback, 0, 0) == SBP_NULL_ERROR,
+  ck_assert_msg(sbp_register_frame_callback(&s, 0x2233, &test_frame_callback, 0, 0) == SBP_NULL_ERROR,
       "sbp_register_frame_callback should return an error if node is NULL");
 
   /* Add a first callback. */
@@ -752,24 +752,24 @@ START_TEST(test_frame_callbacks)
 
   int NUMBER = 42;
 
-  fail_unless(sbp_register_frame_callback(&s, 0x2233, 0, 0, &n) == SBP_NULL_ERROR,
+  ck_assert_msg(sbp_register_frame_callback(&s, 0x2233, 0, 0, &n) == SBP_NULL_ERROR,
       "sbp_register_callback should return an error if cb is NULL");
 
-  fail_unless(sbp_register_frame_callback(&s, 0x2233, &test_frame_callback, &NUMBER, &n) == SBP_OK,
+  ck_assert_msg(sbp_register_frame_callback(&s, 0x2233, &test_frame_callback, &NUMBER, &n) == SBP_OK,
       "sbp_register_callback should return success if everything is groovy");
 
-  fail_unless(sbp_register_frame_callback(&s, 0x2233, &test_frame_callback, 0, &n)
+  ck_assert_msg(sbp_register_frame_callback(&s, 0x2233, &test_frame_callback, 0, &n)
         == SBP_CALLBACK_ERROR,
       "sbp_register_callback should return SBP_CALLBACK_ERROR if a callback "
       "of the same type is already registered");
 
-  fail_unless(sbp_find_callback(&s, 0x1234) == 0,
+  ck_assert_msg(sbp_find_callback(&s, 0x1234) == 0,
       "sbp_find_callback should return NULL if callback not registered");
 
-  fail_unless(sbp_find_callback(&s, 0x2233) == &n,
+  ck_assert_msg(sbp_find_callback(&s, 0x2233) == &n,
       "sbp_find_callback didn't return the correct callback node pointer");
 
-  fail_unless(sbp_find_callback(&s, 0x2233)->context == &NUMBER,
+  ck_assert_msg(sbp_find_callback(&s, 0x2233)->context == &NUMBER,
       "sbp_find_callback didn't return the correct context pointer");
 
   /* Add a second callback. */
@@ -778,37 +778,37 @@ START_TEST(test_frame_callbacks)
 
   int NUMBER2 = 84;
 
-  fail_unless(sbp_register_frame_callback(&s, 0x1234, &test_frame_callback2, &NUMBER2, &m) == SBP_OK,
+  ck_assert_msg(sbp_register_frame_callback(&s, 0x1234, &test_frame_callback2, &NUMBER2, &m) == SBP_OK,
       "sbp_register_callback should return success if everything is groovy (2)");
 
-  fail_unless(sbp_find_callback(&s, 0x2233) == &n,
+  ck_assert_msg(sbp_find_callback(&s, 0x2233) == &n,
       "sbp_find_callback didn't return the correct callback function pointer (2)");
 
-  fail_unless(sbp_find_callback(&s, 0x2233)->context == &NUMBER,
+  ck_assert_msg(sbp_find_callback(&s, 0x2233)->context == &NUMBER,
       "sbp_find_callback didn't return the correct context pointer");
 
-  fail_unless(sbp_find_callback(&s, 0x1234) == &m,
+  ck_assert_msg(sbp_find_callback(&s, 0x1234) == &m,
       "sbp_find_callback didn't return the correct callback function pointer (3)");
 
-  fail_unless(sbp_find_callback(&s, 0x1234)->context == &NUMBER2,
+  ck_assert_msg(sbp_find_callback(&s, 0x1234)->context == &NUMBER2,
       "sbp_find_callback didn't return the correct context pointer");
 
-  fail_unless(sbp_register_frame_callback(&s, 0x1234, &test_frame_callback, 0, &n)
+  ck_assert_msg(sbp_register_frame_callback(&s, 0x1234, &test_frame_callback, 0, &n)
         == SBP_CALLBACK_ERROR,
       "sbp_register_callback should return SBP_CALLBACK_ERROR if a callback "
       "of the same type is already registered (2)");
 
-  fail_unless(sbp_find_callback(&s, 0x7788) == 0,
+  ck_assert_msg(sbp_find_callback(&s, 0x7788) == 0,
       "sbp_find_callback should return NULL if callback not registered (2)");
 
   /* Clear all the registered callbacks and check they can no longer be found. */
 
   sbp_clear_callbacks(&s);
 
-  fail_unless(sbp_find_callback(&s, 0x1234) == 0,
+  ck_assert_msg(sbp_find_callback(&s, 0x1234) == 0,
       "sbp_find_callback should return NULL if no callbacks registered (2)");
 
-  fail_unless(sbp_find_callback(&s, 0x2233) == 0,
+  ck_assert_msg(sbp_find_callback(&s, 0x2233) == 0,
       "sbp_find_callback should return NULL if no callbacks registered (3)");
 
 }
@@ -832,13 +832,13 @@ START_TEST(test_msg_buff_backwards_compatibility)
   sbp_send_message(&s, 0x2269, 0x42, sizeof(test_data), test_data, &dummy_write);
 
   while (dummy_rd < dummy_wr) {
-    fail_unless(sbp_process(&s, &dummy_read) >= SBP_OK,
+    ck_assert_msg(sbp_process(&s, &dummy_read) >= SBP_OK,
         "sbp_process threw an error!");
   }
-   fail_unless(s.msg_buff[0] == 0x01, "msg_buff backwards compatibility broken!");
-   fail_unless(s.msg_buff[1] == 0x02, "msg_buff backwards compatibility broken!");
-   fail_unless(s.msg_buff[2] == 0x03, "msg_buff backwards compatibility broken!");
-   fail_unless(s.msg_buff[3] == 0x04, "msg_buff backwards compatibility broken!");
+   ck_assert_msg(s.msg_buff[0] == 0x01, "msg_buff backwards compatibility broken!");
+   ck_assert_msg(s.msg_buff[1] == 0x02, "msg_buff backwards compatibility broken!");
+   ck_assert_msg(s.msg_buff[2] == 0x03, "msg_buff backwards compatibility broken!");
+   ck_assert_msg(s.msg_buff[3] == 0x04, "msg_buff backwards compatibility broken!");
 }
 END_TEST
 

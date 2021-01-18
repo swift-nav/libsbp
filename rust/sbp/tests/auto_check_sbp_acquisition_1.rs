@@ -9,28 +9,34 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/acquisition/test_MsgAcqResultDepB.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from
+// spec/tests/yaml/swiftnav/sbp/acquisition/test_MsgAcqResultDepB.yaml by generate.py. Do not
+// modify by hand!
 
-extern crate sbp;
+use sbp::iter_messages;
 use sbp::messages::SBPMessage;
 
 mod common;
 #[allow(unused_imports)]
 use common::AlmostEq;
 
+use std::io::Cursor;
+
 #[test]
 fn test_auto_check_sbp_acquisition_1() {
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 20, 0, 246, 215, 16, 137, 167, 18, 66, 0, 0, 161, 67, 240, 24, 156, 69, 9, 0, 0, 0,
             80, 195,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgAcqResultDepB(msg) => {
                 assert_eq!(
@@ -78,21 +84,22 @@ fn test_auto_check_sbp_acquisition_1() {
             }
             _ => panic!("Invalid message type! Expected a MsgAcqResultDepB"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 20, 0, 246, 215, 16, 206, 172, 16, 66, 0, 192, 82, 68, 198, 199, 0, 198, 3, 0, 0,
             0, 149, 143,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgAcqResultDepB(msg) => {
                 assert_eq!(
@@ -140,21 +147,22 @@ fn test_auto_check_sbp_acquisition_1() {
             }
             _ => panic!("Invalid message type! Expected a MsgAcqResultDepB"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 20, 0, 246, 215, 16, 228, 27, 15, 66, 0, 128, 70, 68, 228, 74, 148, 69, 18, 0, 0,
             0, 179, 155,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgAcqResultDepB(msg) => {
                 assert_eq!(
@@ -202,21 +210,22 @@ fn test_auto_check_sbp_acquisition_1() {
             }
             _ => panic!("Invalid message type! Expected a MsgAcqResultDepB"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 20, 0, 246, 215, 16, 46, 199, 14, 66, 0, 64, 129, 67, 240, 24, 28, 69, 17, 0, 0, 0,
             18, 181,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgAcqResultDepB(msg) => {
                 assert_eq!(
@@ -264,21 +273,22 @@ fn test_auto_check_sbp_acquisition_1() {
             }
             _ => panic!("Invalid message type! Expected a MsgAcqResultDepB"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
     {
-        let payload: Vec<u8> = vec![
+        let mut payload = Cursor::new(vec![
             85, 20, 0, 246, 215, 16, 194, 24, 14, 66, 0, 128, 2, 68, 129, 193, 249, 195, 5, 0, 0,
             0, 35, 203,
-        ];
+        ]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgAcqResultDepB(msg) => {
                 assert_eq!(
@@ -326,8 +336,7 @@ fn test_auto_check_sbp_acquisition_1() {
             }
             _ => panic!("Invalid message type! Expected a MsgAcqResultDepB"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
 }

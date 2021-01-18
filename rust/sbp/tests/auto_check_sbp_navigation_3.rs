@@ -9,25 +9,31 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgAgeCorrections.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from
+// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgAgeCorrections.yaml by generate.py. Do not
+// modify by hand!
 
-extern crate sbp;
+use sbp::iter_messages;
 use sbp::messages::SBPMessage;
 
 mod common;
 #[allow(unused_imports)]
 use common::AlmostEq;
 
+use std::io::Cursor;
+
 #[test]
 fn test_auto_check_sbp_navigation_3() {
     {
-        let payload: Vec<u8> = vec![85, 16, 2, 66, 0, 6, 100, 0, 0, 0, 30, 0, 233, 202];
+        let mut payload = Cursor::new(vec![85, 16, 2, 66, 0, 6, 100, 0, 0, 0, 30, 0, 233, 202]);
 
         // Test the round trip payload parsing
-        let mut parser = sbp::parser::Parser::new(std::io::Cursor::new(&payload));
-        let msg_result = parser.parse();
-        assert!(msg_result.is_ok());
-        let sbp_msg = msg_result.unwrap();
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
         match &sbp_msg {
             sbp::messages::SBP::MsgAgeCorrections(msg) => {
                 assert_eq!(
@@ -55,8 +61,7 @@ fn test_auto_check_sbp_navigation_3() {
             }
             _ => panic!("Invalid message type! Expected a MsgAgeCorrections"),
         };
-
-        let frame = sbp::framer::to_frame(sbp_msg.as_sbp_message()).unwrap();
-        assert_eq!(frame, payload);
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
     }
 }

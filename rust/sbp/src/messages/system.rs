@@ -14,12 +14,11 @@
 //****************************************************************************/
 //! Standardized system messages from Swift Navigation devices.
 
-extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
-#[cfg(feature = "sbp_serde")]
-use serde::{Deserialize, Serialize};
+use byteorder::{LittleEndian, ReadBytesExt};
 
+#[allow(unused_imports)]
+use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
 
@@ -28,11 +27,11 @@ use crate::SbpString;
 /// The CSAC telemetry message has an implementation defined telemetry string
 /// from a device. It is not produced or available on general Swift Products.
 /// It is intended to be a low rate message for status purposes.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgCsacTelemetry {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Index representing the type of telemetry in use.  It is implemention
     /// defined.
@@ -64,9 +63,14 @@ impl super::SBPMessage for MsgCsacTelemetry {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -90,11 +94,11 @@ impl crate::serialize::SbpSerialize for MsgCsacTelemetry {
 /// The CSAC telemetry message provides labels for each member of the string
 /// produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
 /// rate than the MSG_CSAC_TELEMETRY.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgCsacTelemetryLabels {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Index representing the type of telemetry in use.  It is implemention
     /// defined.
@@ -126,9 +130,14 @@ impl super::SBPMessage for MsgCsacTelemetryLabels {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -152,11 +161,11 @@ impl crate::serialize::SbpSerialize for MsgCsacTelemetryLabels {
 /// This message provides information about the receipt of Differential
 /// corrections.  It is expected to be sent with each receipt of a complete
 /// corrections packet.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgDgnssStatus {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Status flags
     pub flags: u8,
@@ -193,9 +202,14 @@ impl super::SBPMessage for MsgDgnssStatus {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -223,11 +237,11 @@ impl crate::serialize::SbpSerialize for MsgDgnssStatus {
 /// The GNSS time offset message contains the information that is needed to translate messages
 /// tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the sender
 /// producing this message.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGnssTimeOffset {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Weeks portion of the time offset
     pub weeks: i16,
@@ -264,9 +278,14 @@ impl super::SBPMessage for MsgGnssTimeOffset {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -293,11 +312,11 @@ impl crate::serialize::SbpSerialize for MsgGnssTimeOffset {
 ///
 /// This leading message lists the time metadata of the Solution Group.
 /// It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgGroupMeta {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss
     pub group_id: u8,
@@ -335,9 +354,14 @@ impl super::SBPMessage for MsgGroupMeta {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -372,11 +396,11 @@ impl crate::serialize::SbpSerialize for MsgGroupMeta {
 /// The system error flag is used to indicate that an error has
 /// occurred in the system. To determine the source of the error,
 /// the remaining error flags should be inspected.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgHeartbeat {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Status flags
     pub flags: u32,
@@ -404,9 +428,14 @@ impl super::SBPMessage for MsgHeartbeat {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -427,11 +456,11 @@ impl crate::serialize::SbpSerialize for MsgHeartbeat {
 ///
 /// The INS status message describes the state of the operation
 /// and initialization of the inertial navigation system.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgInsStatus {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Status flags
     pub flags: u32,
@@ -459,9 +488,14 @@ impl super::SBPMessage for MsgInsStatus {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -480,13 +514,14 @@ impl crate::serialize::SbpSerialize for MsgInsStatus {
 
 /// Inertial Navigation System update status message
 ///
-/// The INS update status message contains informations about executed and rejected INS updates.
-/// This message is expected to be extended in the future as new types of measurements are being added.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+/// The INS update status message contains informations about executed and rejected INS
+/// updates. This message is expected to be extended in the future as new types of measurements
+/// are being added.
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgInsUpdates {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
     pub tow: u32,
@@ -532,9 +567,14 @@ impl super::SBPMessage for MsgInsUpdates {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -569,11 +609,11 @@ impl crate::serialize::SbpSerialize for MsgInsUpdates {
 /// start-up. It notifies the host or other attached devices that
 /// the system has started and is now ready to respond to commands
 /// or configuration requests.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgStartup {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Cause of startup
     pub cause: u8,
@@ -607,9 +647,14 @@ impl super::SBPMessage for MsgStartup {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 

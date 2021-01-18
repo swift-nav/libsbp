@@ -3,13 +3,11 @@
 //! Note that this example requires that you have `libudev` installed
 //! before you can compile it
 
-extern crate sbp;
-extern crate serialport;
-
-use sbp::messages::SBP;
-use sbp::Error;
-use serialport::prelude::*;
 use std::time::Duration;
+
+use serialport::prelude::*;
+
+use sbp::{iter_messages, messages::SBP, Error};
 
 fn main() {
     let s = SerialPortSettings {
@@ -21,18 +19,15 @@ fn main() {
         timeout: Duration::from_millis(1000),
     };
 
-    let port = serialport::open_with_settings("/dev/ttyUSB0", &s).expect("open failed");
+    let mut port = serialport::open_with_settings("/dev/ttyUSB0", &s).expect("open failed");
 
-    let mut parser = sbp::parser::Parser::new(port);
-    loop {
-        match parser.parse() {
+    for msg in iter_messages(&mut port) {
+        match msg {
             Ok(SBP::MsgLog(x)) => println!("{}", x.text),
             Ok(SBP::MsgPosLLH(x)) => println!("{} {} {}", x.lat, x.lon, x.height),
             Ok(_) => (),
 
-            Err(Error::NotEnoughData) => (),
-            Err(Error::UnrecoverableFailure) => (),
-            Err(Error::ParseError) => (),
+            Err(Error::ParseError { .. }) => (),
             Err(Error::IoError(ref x)) if x.kind() == std::io::ErrorKind::TimedOut => (),
 
             Err(e) => {

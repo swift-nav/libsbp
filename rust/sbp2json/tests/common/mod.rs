@@ -1,16 +1,43 @@
-use std::boxed::Box;
-use std::env;
-use std::fs;
-use std::fs::File;
-use std::io::prelude::*;
-use std::ops::Drop;
-use std::path::PathBuf;
-use std::rc::Rc;
-use std::vec::Vec;
+use std::{
+    env,
+    fs::{self, File},
+    ops::Drop,
+    path::{Path, PathBuf},
+    process::{Command, Stdio},
+    vec::Vec,
+};
 
+use assert_cmd::{assert::OutputAssertExt, cargo::CommandCargoExt};
+use serde_json::{Deserializer, Value};
 use sha2::{Digest, Sha256};
 
-use sbp::sbp2json::Result;
+pub fn run_sbp2json(reader: File, writer: File) {
+    run_bin("sbp2json", reader, writer)
+        .arg("--float-compat")
+        .assert()
+        .success();
+}
+
+pub fn run_json2sbp(reader: File, writer: File) {
+    run_bin("json2sbp", reader, writer).assert().success();
+}
+
+pub fn run_json2json(reader: File, writer: File) {
+    run_bin("json2json", reader, writer)
+        .arg("--float-compat")
+        .assert()
+        .success();
+}
+
+fn run_bin(name: &str, reader: File, writer: File) -> Command {
+    let mut cmd = Command::cargo_bin(name).unwrap();
+
+    cmd.stdin(reader);
+    cmd.stdout(writer);
+    cmd.stderr(Stdio::inherit());
+
+    cmd
+}
 
 pub fn find_project_root() -> Option<PathBuf> {
     let exe = env::current_exe();
@@ -38,12 +65,14 @@ pub struct DeleteTestOutput {
 
 impl Drop for DeleteTestOutput {
     fn drop(&mut self) {
+        let skip_delete =
+            env::var("RUST_SKIP_DELETE_TEST_DATA").map_or(false, |var| !var.is_empty());
+        if skip_delete {
+            return;
+        }
         for file in &self.files {
             if file.as_path().exists() {
-                let skip_delete = env::var("RUST_SKIP_DELETE_TEST_DATA");
-                if skip_delete.is_err() || skip_delete.unwrap().is_empty() {
-                    fs::remove_file(file).expect("could not delete file");
-                }
+                let _ = fs::remove_file(file).map_err(|e| format!("could not delete file: {}", e));
             }
         }
     }
@@ -60,7 +89,7 @@ impl DeleteTestOutput {
 
 pub struct ThirdTransform<F>
 where
-    F: FnMut(&mut dyn Read, &mut Rc<Box<dyn Write>>) -> Result<()>,
+    F: FnMut(File, File),
 {
     pub transform: F,
     pub expected_output: String,
@@ -69,7 +98,7 @@ where
 #[macro_export]
 macro_rules! make_none_transform {
     () => {{
-        let empty_closure = |_: &mut dyn Read, _: &mut Rc<Box<dyn Write>>| -> Result<()> { Ok(()) };
+        let empty_closure = |_: File, _: File| ();
         let s = Some(ThirdTransform {
             transform: empty_closure,
             expected_output: "".into(),
@@ -84,11 +113,11 @@ pub fn test_round_trip<F1, F2, F3>(
     test_name: &str,
     input_filename: &str,
     mut third_transform: Option<ThirdTransform<F3>>,
-) -> Result<()>
-where
-    F1: FnMut(&mut dyn Read, &mut Rc<Box<dyn Write>>) -> Result<()>,
-    F2: FnMut(&mut dyn Read, &mut Rc<Box<dyn Write>>) -> Result<()>,
-    F3: FnMut(&mut dyn Read, &mut Rc<Box<dyn Write>>) -> Result<()>,
+    json: bool,
+) where
+    F1: FnMut(File, File),
+    F2: FnMut(File, File),
+    F3: FnMut(File, File),
 {
     let mut del_test_output = DeleteTestOutput::new();
 
@@ -98,51 +127,42 @@ where
     let first_transform_output = format!("test_data/test_{}.output.first_transform", test_name);
     let second_transform_output = format!("test_data/test_{}.output.second_transform", test_name);
     let third_transform_output = format!("test_data/test_{}.output.third_transform", test_name);
-    let output_path = root.join(first_transform_output.clone());
+    let output_path = root.join(&first_transform_output);
 
     {
         del_test_output.add_test_output(&output_path);
 
-        let mut input_file =
-            File::open(input_path.clone()).expect("could not open first transform input file");
+        let input_file =
+            File::open(&input_path).expect("could not open first transform input file");
         let output_file =
-            File::create(output_path).expect("could not create first transform output file");
+            File::create(&output_path).expect("could not create first transform output file");
 
-        let mut output_file: Rc<Box<dyn Write>> = Rc::new(Box::new(output_file));
+        first_transform(input_file, output_file);
 
-        first_transform(&mut input_file, &mut output_file)?;
-
-        let input_path = root.join(first_transform_output);
-        let output_path = root.join(second_transform_output.clone());
+        let input_path = root.join(&first_transform_output);
+        let output_path = root.join(&second_transform_output);
 
         del_test_output.add_test_output(&output_path);
 
-        let mut input_file =
-            File::open(input_path).expect("could not open second transform input file");
+        let input_file =
+            File::open(&input_path).expect("could not open second transform input file");
         let output_file =
-            File::create(output_path).expect("could not create second transform output file");
+            File::create(&output_path).expect("could not create second transform output file");
 
-        let mut output_file: Rc<Box<dyn Write>> = Rc::new(Box::new(output_file));
-
-        second_transform(&mut input_file, &mut output_file)?;
+        second_transform(input_file, output_file);
     }
 
     if let Some(third_transform) = &mut third_transform {
-        let input_path = root.join(second_transform_output.clone());
-        let output_path = root.join(third_transform_output.clone());
-
-        eprintln!("{}", input_path.display());
+        let input_path = root.join(&second_transform_output);
+        let output_path = root.join(&third_transform_output);
 
         del_test_output.add_test_output(&output_path);
 
-        let mut input_file =
-            File::open(input_path).expect("could not open third transform input file");
+        let input_file = File::open(input_path).expect("could not open third transform input file");
         let output_file =
             File::create(output_path).expect("could not create third transform output file");
 
-        let mut output_file: Rc<Box<dyn Write>> = Rc::new(Box::new(output_file));
-
-        (third_transform.transform)(&mut input_file, &mut output_file)?;
+        (third_transform.transform)(input_file, output_file);
     }
 
     let (input_path, output_path) = if let Some(third_transform) = third_transform {
@@ -156,14 +176,31 @@ where
 
     del_test_output.add_test_output(&output_path);
 
-    let mut input_file = File::open(input_path)?;
-    let mut output_file = File::open(output_path)?;
+    assert!(file_equals(input_path, output_path, json));
+}
 
+fn file_equals<P: AsRef<Path>>(input: P, output: P, json: bool) -> bool {
+    let input_path = input.as_ref();
+    let output_path = output.as_ref();
+
+    eprintln!("input: {:?}, output: {:?}", &input_path, &output_path);
+
+    let input_file = File::open(&input_path).unwrap();
+    let output_file = File::open(&output_path).unwrap();
+
+    if json {
+        json_file_equals(input_file, output_file)
+    } else {
+        binary_file_equals(input_file, output_file)
+    }
+}
+
+fn binary_file_equals(mut a: File, mut b: File) -> bool {
     let mut input_file_hash = Sha256::new();
     let mut output_file_hash = Sha256::new();
 
-    std::io::copy(&mut input_file, &mut input_file_hash).map(|_| ())?;
-    std::io::copy(&mut output_file, &mut output_file_hash).map(|_| ())?;
+    std::io::copy(&mut a, &mut input_file_hash).unwrap();
+    std::io::copy(&mut b, &mut output_file_hash).unwrap();
 
     let input_digest = input_file_hash.result();
     let output_digest = output_file_hash.result();
@@ -171,7 +208,40 @@ where
     let input_hex_digest = hex::encode(&input_digest[..]);
     let output_hex_digest = hex::encode(&output_digest[..]);
 
-    assert_eq!(input_hex_digest, output_hex_digest);
+    input_hex_digest == output_hex_digest
+}
 
-    Ok(())
+fn json_file_equals(a: File, b: File) -> bool {
+    let a = Deserializer::from_reader(a)
+        .into_iter::<Value>()
+        .map(Result::unwrap)
+        .collect::<Vec<_>>();
+
+    let b = Deserializer::from_reader(b)
+        .into_iter::<Value>()
+        .map(Result::unwrap)
+        .collect::<Vec<_>>();
+
+    if a.len() != b.len() {
+        eprintln!(
+            "unequal number of values in json files: a: {}, b: {}",
+            a.len(),
+            b.len()
+        );
+        return false;
+    }
+
+    let wrong = a
+        .iter()
+        .zip(b.iter())
+        .map(|(a, b)| assert_json_diff::assert_json_eq_no_panic(a, b))
+        .enumerate()
+        .find(|(_, res)| res.is_err());
+
+    if let Some((line, Err(err))) = wrong {
+        eprintln!("value mismatch at line {}\n{}", line, err);
+        false
+    } else {
+        true
+    }
 }

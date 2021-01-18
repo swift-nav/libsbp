@@ -14,14 +14,12 @@
 //****************************************************************************/
 //! Messages reporting accurately-timestamped external events,
 //! e.g. camera shutter time.
-//!
 
-extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
-#[cfg(feature = "sbp_serde")]
-use serde::{Deserialize, Serialize};
+use byteorder::{LittleEndian, ReadBytesExt};
 
+#[allow(unused_imports)]
+use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
 
@@ -29,11 +27,11 @@ use crate::SbpString;
 ///
 /// Reports detection of an external event, the GPS time it occurred,
 /// which pin it was and whether it was rising or falling.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgExtEvent {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS week number
     pub wn: u16,
@@ -74,9 +72,14 @@ impl super::SBPMessage for MsgExtEvent {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 

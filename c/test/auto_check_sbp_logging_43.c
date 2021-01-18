@@ -105,29 +105,29 @@ START_TEST( test_auto_check_sbp_logging_43 )
     sbp_send_message(&sbp_state, 0x402, 66, sizeof(test_data), test_data, &dummy_write);
 
     while (dummy_rd < dummy_wr) {
-      fail_unless(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
           "sbp_process threw an error!");
     }
 
-    fail_unless(n_callbacks_logged == 1,
+    ck_assert_msg(n_callbacks_logged == 1,
         "one callback should have been logged");
-    fail_unless(last_sender_id == 66,
+    ck_assert_msg(last_sender_id == 66,
         "sender_id decoded incorrectly");
-    fail_unless(last_len == sizeof(test_data),
+    ck_assert_msg(last_len == sizeof(test_data),
         "len decoded incorrectly");
-    fail_unless(memcmp(last_msg, test_data, sizeof(test_data))
+    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data))
           == 0,
         "test data decoded incorrectly");
-    fail_unless(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
         "context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     msg_fwd_t* msg = ( msg_fwd_t *)((void *)last_msg + 6);
     // Run tests against fields
-    fail_unless(msg != 0, "stub to prevent warnings if msg isn't used");
-    fail_unless(strstr(msg->fwd_payload, ((char []){(char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103,0})) != NULL, "incorrect value for msg->fwd_payload, expected string '%s', is '%s'", ((char []){(char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103,0}), msg->fwd_payload);
-    fail_unless(msg->protocol == 0, "incorrect value for protocol, expected 0, is %d", msg->protocol);
-    fail_unless(msg->source == 0, "incorrect value for source, expected 0, is %d", msg->source);
+    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(strstr(msg->fwd_payload, ((char []){(char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103,0})) != NULL, "incorrect value for msg->fwd_payload, expected string '%s', is '%s'", ((char []){(char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103,0}), msg->fwd_payload);
+    ck_assert_msg(msg->protocol == 0, "incorrect value for protocol, expected 0, is %d", msg->protocol);
+    ck_assert_msg(msg->source == 0, "incorrect value for source, expected 0, is %d", msg->source);
   }
 }
 END_TEST

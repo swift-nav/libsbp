@@ -14,12 +14,11 @@
 //****************************************************************************/
 //! Inertial Measurement Unit (IMU) messages.
 
-extern crate byteorder;
 #[allow(unused_imports)]
-use self::byteorder::{LittleEndian, ReadBytesExt};
-#[cfg(feature = "sbp_serde")]
-use serde::{Deserialize, Serialize};
+use byteorder::{LittleEndian, ReadBytesExt};
 
+#[allow(unused_imports)]
+use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
 
@@ -28,11 +27,11 @@ use crate::SbpString;
 /// Auxiliary data specific to a particular IMU. The `imu_type` field will
 /// always be consistent but the rest of the payload is device specific and
 /// depends on the value of `imu_type`.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgImuAux {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// IMU type
     pub imu_type: u8,
@@ -66,9 +65,14 @@ impl super::SBPMessage for MsgImuAux {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
@@ -100,11 +104,11 @@ impl crate::serialize::SbpSerialize for MsgImuAux {
 /// with GNSS. The timestamp must wrap around to zero when reaching one week (604800 seconds).
 ///
 /// The time-tagging mode should not change throughout a run.
-///
-#[cfg_attr(feature = "sbp_serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct MsgImuRaw {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// Milliseconds since reference epoch and time status.
     pub tow: u32,
@@ -153,9 +157,14 @@ impl super::SBPMessage for MsgImuRaw {
         self.sender_id = Some(new_id);
     }
 
-    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::framer::FramerError> {
-        let trait_object = self as &dyn super::SBPMessage;
-        crate::framer::to_frame(trait_object)
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
     }
 }
 
