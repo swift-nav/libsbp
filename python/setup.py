@@ -206,14 +206,14 @@ if __name__ == "__main__":
         extras_require={
           'jit': [
               'numpy~=1.18',
-              'pybase64',
-              'python-rapidjson~=1.0'
+              'pybase64~=0.3',
+              'python-rapidjson~=1.0',
               'numba==0.47',
               'llvmlite==0.31',
           ],
           'aot': [
               'numpy~=1.18',
-              'pybase64',
-              'python-rapidjson~=1.0'
+              'pybase64~=0.3',
+              'python-rapidjson~=1.0',
           ]
         })
