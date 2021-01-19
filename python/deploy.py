@@ -77,12 +77,6 @@ def build_wheel_native(conda_dir, deploy_dir, py_version):
     py_version_prefix = "/usr/local"
     py_version_suffix = py_version
 
-    if py_version not in ALL_PY_VERSIONS:
-        raise RuntimeError("Unsupported Python version")
-
-    if not py_version.startswith("3."):
-        raise RuntimeError("Unsupported Python version")
-
     python = "{}/bin/python{}".format(py_version_prefix, py_version_suffix)
 
     subprocess.check_call(["apt-get", "update"])
@@ -272,6 +266,8 @@ def build_native_on_arm(py_version):
 
 
 def build_wheel(conda_dir, deploy_dir, py_version):
+    if py_version not in ALL_PY_VERSIONS:
+        raise RuntimeError(f"Unsupported Python version: {py_version}, must be one of {ALL_PY_VERSIONS!r}")
     if build_native_on_arm(py_version):
         build_wheel_native(conda_dir, deploy_dir, py_version)
     else:
