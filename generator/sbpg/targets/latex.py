@@ -188,7 +188,8 @@ def handle_fields(definitions, fields, prefix, offset, multiplier):
       if 'size' in f.options:
         name = "%s[%s]" % (f.options['fill'].value, str(f.options['size'].value))
         size = field_sizes[f.options['fill'].value] * f.options['size'].value
-        item = FieldItem(prefix_name, name, offset, size,
+        adj_offset = "%dN+%d" % (multiplier, offset) if multiplier else offset
+        item = FieldItem(prefix_name, name, adj_offset, size,
                          str(f.units), f.desc, n_with_values, bitfields)
         items.append(item)
         offset += size
@@ -207,7 +208,8 @@ def handle_fields(definitions, fields, prefix, offset, multiplier):
       if 'size' in f.options:
         name = "string"
         size = field_sizes['u8'] * f.options['size'].value
-        item = FieldItem(prefix_name, name, offset, size,
+        adj_offset = "%dN+%d" % (multiplier, offset) if multiplier else offset
+        item = FieldItem(prefix_name, name, adj_offset, size,
                          str(f.units), f.desc, n_with_values, bitfields)
         items.append(item)
         offset += size
