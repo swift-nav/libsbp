@@ -18,7 +18,7 @@ SBP_PATCH_VERSION := $(word 3, $(subst ., , $(SBP_VERSION)))
 
 CHANGELOG_MAX_ISSUES := 100
 
-.PHONY: help test release dist clean all docs pdf html c deps-c gen-c test-c python deps-python gen-python test-python javascript deps-javascript gen-javascript test-javascript java deps-java gen-java test-java haskell deps-haskell gen-haskell test-haskell haskell deps-protobuf gen-protobuf test-protobuf verify-prereq-generator verify-prereq-c verify-prereq-javascript verify-prereq-python verify-prereq-java verify-prereq-haskell verify-prereq-protobuf mapping rust deps-rust gen-rust test-rust deps-jsonschema gen-jsonschema test-jsonschema verify-prereq-jsonschema deps-quicktype-typescript gen-quicktype-typescript test-quicktype-typescript verify-prereq-quicktype-typescript deps-quicktype-javascript gen-quicktype-javascript test-quicktype-javascript verify-prereq-quicktype-javascript deps-quicktype-elm gen-quicktype-elm test-quicktype-elm verify-prereq-quicktype-elm 
+.PHONY: help test release dist clean all docs pdf html c deps-c gen-c test-c python deps-python gen-python test-python javascript deps-javascript gen-javascript test-javascript java deps-java gen-java test-java haskell deps-haskell gen-haskell test-haskell haskell deps-protobuf gen-protobuf test-protobuf verify-prereq-generator verify-prereq-c verify-prereq-javascript verify-prereq-python verify-prereq-java verify-prereq-haskell verify-prereq-protobuf mapping rust deps-rust gen-rust test-rust deps-jsonschema gen-jsonschema test-jsonschema verify-prereq-jsonschema deps-quicktype-typescript gen-quicktype-typescript test-quicktype-typescript verify-prereq-quicktype-typescript deps-quicktype-javascript gen-quicktype-javascript test-quicktype-javascript verify-prereq-quicktype-javascript deps-quicktype-elm gen-quicktype-elm test-quicktype-elm verify-prereq-quicktype-elm
 
 # Functions
 define announce-begin
@@ -59,7 +59,7 @@ help:
 	@echo "  release      to handle some release tasks"
 	@echo "  test         to run all tests"
 	@echo
-	@echo "JSON Schema specific targets:" 
+	@echo "JSON Schema specific targets:"
 	@echo "  quicktype-typescript   generate TypeScript module from JSON Schema"
 	@echo "  quicktype-javascript   generate JavaScript module from JSON Schema"
 	@echo "  quicktype-elm          generate Elm module from JSON Schema"
@@ -248,7 +248,7 @@ gen-rust:
 	-o $(SWIFTNAV_ROOT)/rust/sbp/tests/ \
                        -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
 	               --test-rust
-	
+
 	cd $(SWIFTNAV_ROOT)/rust/sbp && cargo fmt
 	$(call announce-begin,"Finished generating Rust bindings")
 
@@ -305,7 +305,7 @@ test-c:
 
 test-python:
 	$(call announce-begin,"Running Python tests")
-ifdef TRAVIS_TARGET
+ifdef CI
 	cd $(SWIFTNAV_ROOT)/python/ && tox -- $(SWIFTNAV_ROOT)/haskell
 else
 	cd $(SWIFTNAV_ROOT)/python/ && tox --skip-missing-interpreters

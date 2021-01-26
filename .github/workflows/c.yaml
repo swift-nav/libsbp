@@ -1,0 +1,31 @@
+name: C
+
+on:
+  push:
+    tags:
+      - "*"
+  pull_request:
+
+jobs:
+  coverage:
+    name: Test
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup
+        run: |
+          sudo apt-get -qq update
+          sudo apt-get -qq install lcov
+
+      - name: Run tests
+        run: make test-c
+        env:
+          CMAKEFLAGS: -DCODE_COVERAGE=ON -DCMAKE_BUILD_TYPE=Debug
+
+      - name: Upload coverage to codecov.io
+        run: |
+          bash <(curl -s https://codecov.io/bash) -s c/build || echo "Codecov did not collect coverage reports";

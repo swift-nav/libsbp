@@ -1,0 +1,9 @@
+name: publish
+description: Publish a GitHub release
+inputs:
+  pattern:
+    description: "Glob pattern to find artifacts"
+    required: true
+runs:
+  using: node12
+  main: dist/index.js

@@ -1,0 +1,33 @@
+name: Benchmarks
+
+on:
+  push:
+    tags:
+      - "*"
+  pull_request:
+
+jobs:
+  benchmark:
+    name: Benchmark
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup
+        run: |
+          set -ex
+          sudo apt-get -qq update
+          sudo apt-get install gcc python2.7 python2.7-dev
+          # https://linuxize.com/post/how-to-install-python-3-8-on-ubuntu-18-04/
+          sudo apt-get install software-properties-common
+          sudo add-apt-repository -y ppa:deadsnakes/ppa
+          sudo apt-get install python3.5 python3.5-dev
+          sudo apt-get install python3.8 python3.8-dev
+          pip3 install tox wheel
+
+      - name: Run benchmarks
+        run: |
+          source ./scripts/ci_benchmark_install.bash
+          ./scripts/ci_benchmark.bash
+        env:
+          VIA_DOCKER: y

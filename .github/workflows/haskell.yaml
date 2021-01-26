@@ -1,0 +1,55 @@
+name: Haskell
+
+on:
+  push:
+    tags:
+      - "*"
+  pull_request:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: haskell/actions/setup@v1
+        with:
+          enable-stack: true
+
+      - name: Build binaries
+        id: build
+        working-directory: ./haskell
+        run: |
+          VERSION="$(git describe --always --tags --dirty)"
+          BUILD_TRIPLET="$(cc -dumpmachine)"
+          ARTIFACT_NAME="sbp_tools_haskell-${VERSION}-${BUILD_TRIPLET}.tar.gz"
+
+          mkdir ./bins
+          stack install --local-bin-path ./bins
+          tar -C ./bins -czf $ARTIFACT_NAME \
+            sbp2json \
+            sbp2prettyjson \
+            sbp2yaml \
+            json2sbp \
+            json2json \
+            sbp2nmea
+          echo "::set-output name=artifact_name::$ARTIFACT_NAME"
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ steps.build.outputs.artifact_name }}
+          path: ./haskell/${{ steps.build.outputs.artifact_name }}
+
+  publish:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs:
+      - build
+    name: Publish github release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

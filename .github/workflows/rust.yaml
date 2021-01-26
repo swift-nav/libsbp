@@ -1,0 +1,112 @@
+name: Rust
+
+on:
+  push:
+    tags:
+      - "*"
+  pull_request:
+
+jobs:
+  # lint:
+  #   name: Format and lint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+
+  #     - uses: ./.github/actions/setup-rust
+
+  #     - uses: actions-rs/toolchain@v1
+  #       with:
+  #         profile: minimal
+  #         toolchain: stable
+  #         override: true
+  #         components: rustfmt
+
+  #     - uses: actions-rs/cargo@v1
+  #       name: Format Check
+  #       with:
+  #         command: fmt
+  #         args: -- --check
+
+  # test:
+  #   name: Tests
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+
+  #     - uses: ./.github/actions/setup-rust
+
+  #     - uses: actions-rs/toolchain@v1
+  #       with:
+  #         profile: minimal
+  #         toolchain: stable
+  #         override: true
+
+  #     - name: Run tests
+  #       run: make test-rust
+
+  build:
+    name: Build binaries
+    # needs:
+    #   - lint
+    #   - test
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          # - macos-latest
+        run:
+          - |
+            VERSION="$(git describe --always --tags --dirty)"
+            BUILD_TRIPLET="$(cc -dumpmachine)"
+            ARTIFACT_NAME="sbp_tools-${VERSION}-${BUILD_TRIPLET}.tar.gz"
+
+            cargo build --all --release
+            strip target/release/{sbp2json,json2sbp,json2json}
+            tar -C "target/release" -czf $ARTIFACT_NAME sbp2json json2sbp json2json
+            echo "::set-output name=artifact_name::$ARTIFACT_NAME"
+        # include:
+        #   - os: windows-latest
+        #     run: |
+        #       VERSION="$(git describe --always --tags --dirty)"
+        #       BUILD_TRIPLET="$(clang -dumpmachine)"
+        #       ARTIFACT_NAME="sbp_tools-${VERSION}-${BUILD_TRIPLET}.zip"
+        #       cargo build --all --release
+        #       cd target/release
+        #       strip sbp2json.exe json2sbp.exe json2json.exe
+        #       7z a -tzip ../../$ARTIFACT_NAME sbp2json.exe json2sbp.exe json2json.exe
+        #       echo "::set-output name=artifact_name::$ARTIFACT_NAME"
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/setup-rust
+
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Build ${{ matrix.os }} binaries
+        id: build
+        run: ${{ matrix.run }}
+        shell: bash
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ steps.build.outputs.artifact_name }}
+          path: ${{ steps.build.outputs.artifact_name }}
+
+  publish:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs:
+      - build
+    name: Publish github release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ./.github/actions/publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
