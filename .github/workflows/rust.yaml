@@ -7,54 +7,54 @@ on:
   pull_request:
 
 jobs:
-  # lint:
-  #   name: Format and lint
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
+  lint:
+    name: Format and lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
 
-  #     - uses: ./.github/actions/setup-rust
+      - uses: ./.github/actions/setup-rust
 
-  #     - uses: actions-rs/toolchain@v1
-  #       with:
-  #         profile: minimal
-  #         toolchain: stable
-  #         override: true
-  #         components: rustfmt
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+          components: rustfmt
 
-  #     - uses: actions-rs/cargo@v1
-  #       name: Format Check
-  #       with:
-  #         command: fmt
-  #         args: -- --check
+      - uses: actions-rs/cargo@v1
+        name: Format Check
+        with:
+          command: fmt
+          args: -- --check
 
-  # test:
-  #   name: Tests
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
 
-  #     - uses: ./.github/actions/setup-rust
+      - uses: ./.github/actions/setup-rust
 
-  #     - uses: actions-rs/toolchain@v1
-  #       with:
-  #         profile: minimal
-  #         toolchain: stable
-  #         override: true
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
 
-  #     - name: Run tests
-  #       run: make test-rust
+      - name: Run tests
+        run: make test-rust
 
   build:
     name: Build binaries
-    # needs:
-    #   - lint
-    #   - test
+    needs:
+      - lint
+      - test
     strategy:
       matrix:
         os:
           - ubuntu-latest
-          # - macos-latest
+          - macos-latest
         run:
           - |
             VERSION="$(git describe --always --tags --dirty)"
@@ -65,17 +65,17 @@ jobs:
             strip target/release/{sbp2json,json2sbp,json2json}
             tar -C "target/release" -czf $ARTIFACT_NAME sbp2json json2sbp json2json
             echo "::set-output name=artifact_name::$ARTIFACT_NAME"
-        # include:
-        #   - os: windows-latest
-        #     run: |
-        #       VERSION="$(git describe --always --tags --dirty)"
-        #       BUILD_TRIPLET="$(clang -dumpmachine)"
-        #       ARTIFACT_NAME="sbp_tools-${VERSION}-${BUILD_TRIPLET}.zip"
-        #       cargo build --all --release
-        #       cd target/release
-        #       strip sbp2json.exe json2sbp.exe json2json.exe
-        #       7z a -tzip ../../$ARTIFACT_NAME sbp2json.exe json2sbp.exe json2json.exe
-        #       echo "::set-output name=artifact_name::$ARTIFACT_NAME"
+        include:
+          - os: windows-latest
+            run: |
+              VERSION="$(git describe --always --tags --dirty)"
+              BUILD_TRIPLET="$(clang -dumpmachine)"
+              ARTIFACT_NAME="sbp_tools-${VERSION}-${BUILD_TRIPLET}.zip"
+              cargo build --all --release
+              cd target/release
+              strip sbp2json.exe json2sbp.exe json2json.exe
+              7z a -tzip ../../$ARTIFACT_NAME sbp2json.exe json2sbp.exe json2json.exe
+              echo "::set-output name=artifact_name::$ARTIFACT_NAME"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
