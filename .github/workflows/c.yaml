@@ -5,7 +5,8 @@ on:
     tags:
       - "*"
   pull_request:
-
+    paths:
+      - "c/**"
 jobs:
   coverage:
     name: Test

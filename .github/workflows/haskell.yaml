@@ -5,7 +5,8 @@ on:
     tags:
       - "*"
   pull_request:
-
+    paths:
+      - "haskell/**"
 jobs:
   build:
     name: Build

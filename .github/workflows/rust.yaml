@@ -5,7 +5,8 @@ on:
     tags:
       - "*"
   pull_request:
-
+    paths:
+      - "rust/**"
 jobs:
   lint:
     name: Format and lint
