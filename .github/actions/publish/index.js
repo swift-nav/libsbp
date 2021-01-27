@@ -38,17 +38,16 @@ async function createRelease() {
 
   let tag = context.ref.replace("refs/tags/", "");
 
-  let exists = await ghClient.repos
+  let release = await ghClient.repos
     .getReleaseByTag({
       owner,
       repo,
       tag,
     })
-    .then(() => true)
     .catch(() => false);
 
-  if (exists) {
-    return;
+  if (!!release) {
+    return release;
   }
 
   let response = await ghClient.repos.createRelease({

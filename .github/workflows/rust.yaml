@@ -56,27 +56,7 @@ jobs:
         os:
           - ubuntu-latest
           - macos-latest
-        run:
-          - |
-            VERSION="$(git describe --always --tags --dirty)"
-            BUILD_TRIPLET="$(cc -dumpmachine)"
-            ARTIFACT_NAME="sbp_tools-${VERSION}-${BUILD_TRIPLET}.tar.gz"
-
-            cargo build --all --release
-            strip target/release/{sbp2json,json2sbp,json2json}
-            tar -C "target/release" -czf $ARTIFACT_NAME sbp2json json2sbp json2json
-            echo "::set-output name=artifact_name::$ARTIFACT_NAME"
-        include:
-          - os: windows-latest
-            run: |
-              VERSION="$(git describe --always --tags --dirty)"
-              BUILD_TRIPLET="$(clang -dumpmachine)"
-              ARTIFACT_NAME="sbp_tools-${VERSION}-${BUILD_TRIPLET}.zip"
-              cargo build --all --release
-              cd target/release
-              strip sbp2json.exe json2sbp.exe json2json.exe
-              7z a -tzip ../../$ARTIFACT_NAME sbp2json.exe json2sbp.exe json2json.exe
-              echo "::set-output name=artifact_name::$ARTIFACT_NAME"
+          - windows-latest
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -91,7 +71,7 @@ jobs:
 
       - name: Build ${{ matrix.os }} binaries
         id: build
-        run: ${{ matrix.run }}
+        run: ./scripts/ci_build_rust.bash
         shell: bash
 
       - uses: actions/upload-artifact@v2
