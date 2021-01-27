@@ -14,7 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: ./.github/actions/setup-rust
+      - run: ./scripts/ci_prepare_rust.bash
+        shell: bash
 
       - uses: actions-rs/toolchain@v1
         with:
@@ -35,7 +36,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: ./.github/actions/setup-rust
+      - run: ./scripts/ci_prepare_rust.bash
+        shell: bash
 
       - uses: actions-rs/toolchain@v1
         with:
@@ -61,7 +63,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: ./.github/actions/setup-rust
+      - run: ./scripts/ci_prepare_rust.bash
+        shell: bash
 
       - uses: actions-rs/toolchain@v1
         with:
