@@ -9,4 +9,7 @@ ADD . /work
 
 RUN pip3 install -r /work/setup_requirements.txt
 RUN pip3 install -r /work/requirements.txt
+
+RUN pip3 install numpy~=1.19 numba==0.47 llvmlite==0.31 cython wheel setuptools pybase64 python-rapidjson~=1.0
+
 RUN python3 /work/setup.py install

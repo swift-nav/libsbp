@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -ex
 
 TESTDATA_ROOT=$(git rev-parse --show-toplevel)/test_data
 INPUT_SHORT=$TESTDATA_ROOT/short.sbp

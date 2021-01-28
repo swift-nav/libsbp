@@ -26,10 +26,11 @@ CLASSIFIERS = [
   'Topic :: Scientific/Engineering :: Interface Engine/Protocol Translator',
   'Topic :: Software Development :: Libraries :: Python Modules',
   'Programming Language :: Python :: 2.7',
-  'Programming Language :: Python :: 3.4',
   'Programming Language :: Python :: 3.5',
   'Programming Language :: Python :: 3.6',
   'Programming Language :: Python :: 3.7',
+  'Programming Language :: Python :: 3.8',
+  'Programming Language :: Python :: 3.9',
 ]
 
 PACKAGES = find_packages(exclude=["tests", "bench", "tests.*", "sbp.jit"])
@@ -96,7 +97,7 @@ def git_version():
     try:
         out = _minimal_ext_cmd(['git', 'describe', '--tags'])
     except OSError:
-        out = ''
+        out = b''
     git_description = out.strip().decode('ascii')
     expr = r'.*?\-(?P<count>\d+)-g(?P<hash>[a-fA-F0-9]+)'
     match = re.match(expr, git_description)
@@ -151,16 +152,6 @@ def write_version_py(filename=VERSION_PY_PATH):
                                             is_released=IS_RELEASED))
 
 
-def exclude_jit_libs(lib):
-    if 'sbp.jit' in PACKAGES:
-        return False
-    excluded_libs = ['python-rapidjson', 'pybase64', 'numpy']
-    for excluded_lib in excluded_libs:
-        if excluded_lib in lib:
-            return True
-    return False
-
-
 if __name__ == "__main__":
 
     with open(os.path.join(setup_py_dir, 'README.rst'), 'rb') as f:
@@ -173,7 +164,9 @@ if __name__ == "__main__":
 
     ext_modules = None
 
-    if not os.environ.get('LIBSBP_BUILD_ANY', None):
+    try:
+        import numba
+        import numpy
         try:
             from sbp.jit.parse import cc
             ext_modules = [cc.distutils_extension()]
@@ -182,33 +175,45 @@ if __name__ == "__main__":
             print('WARNING: sbp.jit will be unavailable, the setup script tried to compile the sbp.jit module...\n'
                   'but it failed, this usually means that the LLVM libraries are not present (or supported) on\n'
                   'this platform.  Try installing the LLVM library for this platform and re-installing.')
-    else:
-        print('Detected LIBSBP_BUILD_ANY, building without sbp.jit support...')
+    except ImportError:
+        pass
 
     with open(os.path.join(setup_py_dir, 'requirements.txt')) as f:
-        INSTALL_REQUIRES = [
-            i.strip()
-            for i in f.readlines() if not exclude_jit_libs(i.strip())
-        ]
+        INSTALL_REQUIRES = [i.strip() for i in f.readlines()]
 
     with open(os.path.join(setup_py_dir, 'test_requirements.txt')) as f:
         TEST_REQUIRES = [i.strip() for i in f.readlines()]
 
     print("Discovered packages: {0}".format(PACKAGES))
 
-    setup(name='sbp',
-          version=sbp_version,
-          description='Python bindings for Swift Binary Protocol',
-          long_description=readme,
-          author='Swift Navigation',
-          author_email='dev@swiftnav.com',
-          url='https://github.com/swift-nav/libsbp',
-          classifiers=CLASSIFIERS,
-          packages=PACKAGES,
-          platforms=PLATFORMS,
-          install_requires=INSTALL_REQUIRES,
-          tests_require=TEST_REQUIRES,
-          use_2to3=False,
-          zip_safe=False,
-          ext_modules=ext_modules,
-          scripts=['bin/sbp2json'])
+    setup(
+        name='sbp',
+        version=sbp_version,
+        description='Python bindings for Swift Binary Protocol',
+        long_description=readme,
+        author='Swift Navigation',
+        author_email='dev@swift-nav.com',
+        url='https://github.com/swift-nav/libsbp',
+        classifiers=CLASSIFIERS,
+        packages=PACKAGES,
+        platforms=PLATFORMS,
+        install_requires=INSTALL_REQUIRES,
+        tests_require=TEST_REQUIRES,
+        use_2to3=False,
+        zip_safe=False,
+        ext_modules=ext_modules,
+        scripts=['bin/sbp2json'],
+        extras_require={
+          'jit': [
+              'numpy~=1.18',
+              'pybase64~=0.3',
+              'python-rapidjson~=1.0',
+              'numba==0.47',
+              'llvmlite==0.31',
+          ],
+          'aot': [
+              'numpy~=1.18',
+              'pybase64~=0.3',
+              'python-rapidjson~=1.0',
+          ]
+        })

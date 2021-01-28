@@ -1,0 +1,41 @@
+# escape=`
+
+FROM mcr.microsoft.com/windows:1903
+
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+
+RUN `
+  Set-ExecutionPolicy Bypass -Scope Process -Force; `
+  [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
+  iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+RUN `
+  choco install -y miniconda3; `
+  choco install -y make; `
+  choco install -y vcredist15; `
+  choco install -y vcredist2019; `
+  choco install -y git
+
+RUN ["choco", "install", "-y", "visualstudio2019-workload-vctools"]
+
+USER ContainerAdministrator
+
+RUN Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+
+SHELL ["CMD.EXE", "/C"]
+RUN setx /M PATH "%PATH%;c:\tools\miniconda3;c:\tools\miniconda3\condabin"
+
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+RUN Set-ExecutionPolicy RemoteSigned
+
+USER ContainerUser
+
+RUN `
+    Install-Module posh-vs -Force -Verbose -Scope CurrentUser; `
+    conda init
+
+WORKDIR C:/work
+
+ENTRYPOINT ["powershell.exe", "-NoLogo", "-ExecutionPolicy", "Bypass"]
+
+# vim: ft=dockerfile

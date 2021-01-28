@@ -1,9 +1,4 @@
 construct==2.9.33
-pyftdi==0.13.*
+pyftdi~=0.13.4
 pylibftdi
 pyserial
-requests==2.20.*
-numpy~=1.18 ; python_version == '3.5'
-numpy==1.19.3 ; python_version >= '3.6'
-pybase64 ; python_version >= '3.0'
-python-rapidjson==0.9.1 ; python_version >= '3.0'
