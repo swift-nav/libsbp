@@ -15,11 +15,11 @@
 #include <sbp.h>
 
 
-int DUMMY_MEMORY_FOR_CALLBACKS = 0xdeadbeef;
-int DUMMY_MEMORY_FOR_IO = 0xdead0000;
+int DUMMY_MEMORY_FOR_CALLBACKS = (int)0xdeadbeef;
+int DUMMY_MEMORY_FOR_IO = (int)0xdead0000;
 
-u32 dummy_wr = 0;
-u32 dummy_rd = 0;
+u32 dummy_wr = 0u;
+u32 dummy_rd = 0u;
 u8 dummy_buff[1024];
 void* last_io_context;
 
@@ -35,7 +35,7 @@ s32 dummy_write(u8 *buff, u32 n, void* context)
  u32 real_n = n;//(dummy_n > n) ? n : dummy_n;
  memcpy(dummy_buff + dummy_wr, buff, real_n);
  dummy_wr += real_n;
- return real_n;
+ return (s32)real_n;
 }
 
 s32 dummy_read(u8 *buff, u32 n, void* context)
@@ -44,7 +44,7 @@ s32 dummy_read(u8 *buff, u32 n, void* context)
  u32 real_n = n;//(dummy_n > n) ? n : dummy_n;
  memcpy(buff, dummy_buff + dummy_rd, real_n);
  dummy_rd += real_n;
- return real_n;
+ return (s32)real_n;
 }
 
 s32 dummy_read_single_byte(u8 *buff, u32 n, void* context)
@@ -121,6 +121,7 @@ void logging_callback(u16 sender_id, u8 len, u8 msg[], void* context)
 void frame_logging_callback(u16 sender_id, u16 msg_type, u8 payload_len,
                             u8 payload[], u16 frame_len, u8 frame[],
                             void *context) {
+  (void)payload;
   n_frame_callbacks_logged++;
   last_frame_sender_id = sender_id;
   last_frame_msg_type = msg_type;
@@ -449,7 +450,6 @@ START_TEST(test_sbp_frame)
   dummy_reset();
   sbp_clear_callbacks(&s);
 
-  static sbp_msg_callbacks_node_t q;
   sbp_register_callback(&s, 0x2269, &logging_callback, 0, &n3);
   sbp_register_frame_callback(&s, 0x2269, &frame_logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n4);
   sbp_send_message(&s, 0x2269, 0x42, sizeof(test_data), test_data, &dummy_write);
@@ -576,7 +576,7 @@ START_TEST(test_sbp_big_msg)
   sbp_register_callback(&s, 0x2269, &logging_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
   u8 big_msg[SBP_MAX_PAYLOAD_LEN];
-  for(int i = 0; i < sizeof(big_msg); i++) { big_msg[i]=i;}
+  for(int i = 0; i < (int)sizeof(big_msg); i++) { big_msg[i]=(u8)i;}
 
   dummy_reset();
   logging_reset();
@@ -601,7 +601,7 @@ START_TEST(test_sbp_big_msg)
       "frame len decoded incorrectly");
   ck_assert_msg(memcmp(SBP_FRAME_MSG_PAYLOAD(last_frame), big_msg, sizeof(big_msg))
         == 0,
-      "frame data decoded incorrectly (3) %x");
+      "frame data decoded incorrectly (3)");
   /* check that CRC wasn't chopped off */
   ck_assert_msg((last_frame[262]  == 0x35 && last_frame[261] == 0xA6),
       "CRC was incorrect. Should be %x and was %x", 0x35A6,  *((u16*) &(last_frame[261])));

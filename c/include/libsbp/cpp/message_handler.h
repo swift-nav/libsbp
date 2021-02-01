@@ -49,7 +49,7 @@ inline void sbp_cb_passthrough(uint16_t sender_id, uint8_t len, uint8_t msg[], v
   assert(nullptr != context);
 
   auto instance = static_cast<ClassT *>(context);
-  auto val = reinterpret_cast<MsgT *>(msg);
+  auto val = reinterpret_cast<MsgT *>(msg); // NOLINT
   ((*instance).*(func))(sender_id, len, *val);
 }
 
@@ -70,7 +70,7 @@ template<typename MsgType, typename... OtherTypes>
 class CallbackInterface : CallbackInterface<OtherTypes...> {
  public:
   CallbackInterface() = default;
-  virtual ~CallbackInterface() = default;
+  ~CallbackInterface() override = default;
 
   using CallbackInterface<OtherTypes...>::handle_sbp_msg;
   virtual void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const MsgType& msg) = 0;
@@ -155,7 +155,7 @@ template<typename... MsgTypes>
       details::CallbackInterface<MsgTypes...>::register_callback(state_.get_state(), callback_nodes_.data());
     }
 
-    virtual ~MessageHandler() {
+    ~MessageHandler() override {
         for (auto& node : callback_nodes_) {
             sbp_remove_callback(state_.get_state(), &node);
         }

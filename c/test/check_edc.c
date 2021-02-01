@@ -13,7 +13,7 @@
 #include <check.h>
 #include <edc.h>
 
-const u8 *test_data = (u8*)"123456789";
+const u8 *test_data = (const u8*)"123456789";
 
 START_TEST(test_crc16_ccitt)
 {

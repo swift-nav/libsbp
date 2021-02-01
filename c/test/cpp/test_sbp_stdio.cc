@@ -26,9 +26,9 @@ struct SbpHeaderParams {
 
 class MsgObsHandler : private sbp::MessageHandler<msg_obs_t> {
 public:
-  MsgObsHandler(sbp::State *state) : sbp::MessageHandler<msg_obs_t>(state), state_(state) {}
+  explicit MsgObsHandler(sbp::State *state) : sbp::MessageHandler<msg_obs_t>(state), state_(state) {}
 
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const msg_obs_t &msg) {
+  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const msg_obs_t &msg) override {
     header_params_.sender_id = sender_id;
     header_params_.msg_type = SBP_MSG_OBS;
     header_params_.payload_len = message_length;
@@ -38,6 +38,7 @@ public:
   void write_message() const {
     state_->send_message(header_params_.msg_type, header_params_.sender_id,
                          header_params_.payload_len,
+                         // NOLINTNEXTLINE
                          reinterpret_cast<const uint8_t *>(&header_params_.payload));
   }
 
@@ -53,7 +54,7 @@ private:
 
 class SbpStdioTest : public ::testing::Test {
 protected:
-  int num_entries_in_file(const std::string &input_file) {
+  static int num_entries_in_file(const std::string &input_file) {
     sbp::SbpFileReader reader = sbp::SbpFileReader(input_file.data());
     sbp::State state;
     state.set_reader(&reader);
@@ -72,7 +73,7 @@ protected:
     return count;
   }
 
-  void write_to_file(const std::string &input_file, const std::string &output_file) {
+  static void write_to_file(const std::string &input_file, const std::string &output_file) {
     sbp::SbpFileReader reader = sbp::SbpFileReader(input_file.data());
     sbp::SbpFileWriter writer = sbp::SbpFileWriter(output_file.data());
     sbp::State state;

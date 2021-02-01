@@ -181,18 +181,22 @@ static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type,
                                         void *context,
                                         sbp_msg_callbacks_node_t *node) {
   /* Check our callback function pointer isn't NULL. */
-  if (cb == 0)
+  if (cb == 0) {
     return SBP_NULL_ERROR;
+  }
 
   /* Check our callback node pointer isn't NULL. */
-  if (node == 0)
+  if (node == 0) {
     return SBP_NULL_ERROR;
+  }
 
-  for (sbp_msg_callbacks_node_t *n = s->sbp_msg_callbacks_head; n; n = n->next)
+  for (sbp_msg_callbacks_node_t *n = s->sbp_msg_callbacks_head; n; n = n->next) {
     if ((n == node) ||
         ((n->cb == cb) && (n->msg_type == msg_type) &&
-         (n->context == context) && n->cb_type == cb_type))
+         (n->context == context) && n->cb_type == cb_type)) {
       return SBP_CALLBACK_ERROR;
+    }
+  }
 
   /* Fill in our new sbp_msg_callback_node_t. */
   node->msg_type = msg_type;
@@ -216,8 +220,9 @@ static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type,
    * add our new node to the end.
    */
   sbp_msg_callbacks_node_t *p = s->sbp_msg_callbacks_head;
-  while (p->next)
+  while (p->next) {
     p = p->next;
+  }
 
   p->next = node;
 
@@ -237,14 +242,13 @@ s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node)
   if (s->sbp_msg_callbacks_head == node) {
     s->sbp_msg_callbacks_head = node->next;
     return SBP_OK;
-  } else {
+  }
     for (n = s->sbp_msg_callbacks_head; n; n = n->next) {
       if (n->next == node) {
         n->next = node->next;
         return SBP_OK;
       }
     }
-  }
   return SBP_CALLBACK_ERROR;
 }
 
@@ -362,7 +366,9 @@ static s8 sbp_state_read_to_frame_buffer(sbp_state_t *s,
                                          u8 to_read)
 {
     s32 rd = (*read)(s->frame_buff + s->frame_len, to_read, s->io_context);
-    if (0 > rd) return SBP_READ_ERROR;
+    if (0 > rd) {
+      return SBP_READ_ERROR;
+    }
     s->frame_len += rd;
     s->n_read += rd;
     return SBP_OK;
@@ -443,8 +449,10 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
   switch (s->state) {
   case WAITING:
     rd = (*read)(&temp, sizeof(temp), s->io_context);
-    if (0 > rd) return SBP_READ_ERROR;
-    if (sizeof(temp) == rd)
+    if (0 > rd) {
+      return SBP_READ_ERROR;
+    }
+    if (sizeof(temp) == rd) {
       if (temp == SBP_PREAMBLE) {
         /* set frame_buff and n_read to 0 after each preamble. */
         sbp_state_frame_buffer_clear(s);
@@ -452,11 +460,14 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
         s->n_read = 0;
         s->state = GET_TYPE;
       }
+    }
     break;
 
   case GET_TYPE:
     ret = sbp_state_read_to_frame_buffer(s, read, sizeof(s->msg_type)-s->n_read);
-    if (ret != SBP_OK) return ret;
+    if (ret != SBP_OK) {
+      return ret;
+    }
     if (s->n_read >= sizeof(s->msg_type)) {
       s->msg_type =  sbp_u8_array_to_u16(&(s->frame_buff[SBP_FRAME_OFFSET_MSGTYPE]));
       s->n_read = 0;
@@ -466,7 +477,9 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
 
   case GET_SENDER:
     ret = sbp_state_read_to_frame_buffer(s, read, sizeof(s->sender_id)-s->n_read);
-    if (ret != SBP_OK) return ret;
+    if (ret != SBP_OK) {
+      return ret;
+    }
     if (s->n_read >= sizeof(s->sender_id)) {
       s->sender_id = sbp_u8_array_to_u16(&(s->frame_buff[SBP_FRAME_OFFSET_SENDERID]));
       s->n_read = 0;
@@ -476,7 +489,9 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
 
   case GET_LEN:
     ret = sbp_state_read_to_frame_buffer(s, read, sizeof(s->msg_len)-s->n_read);
-    if (ret != SBP_OK) return ret;
+    if (ret != SBP_OK) {
+      return ret;
+    }
     if (s->n_read == sizeof(s->msg_len)) {
       s->msg_len = s->frame_buff[SBP_FRAME_OFFSET_MSGLEN];
       s->n_read = 0;
@@ -487,7 +502,9 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
   case GET_MSG:
     /* Not received whole message yet, try and read some more. */
     ret = sbp_state_read_to_frame_buffer(s, read, s->msg_len - s->n_read);
-    if (ret != SBP_OK) return ret;
+    if (ret != SBP_OK) {
+      return ret;
+    }
     if (s->msg_len - s->n_read <= 0) {
       s->n_read = 0;
       s->state = GET_CRC;
@@ -496,7 +513,9 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
 
   case GET_CRC:
     ret = sbp_state_read_to_frame_buffer(s, read, SBP_CRC_LEN - s->n_read);
-    if (ret != SBP_OK) return ret;
+    if (ret != SBP_OK) {
+      return ret;
+    }
     if (s->n_read >= SBP_CRC_LEN) {
       s->state = WAITING;
       s->crc = sbp_u8_array_to_u16(&(s->frame_buff[SBP_FRAME_OFFSET_CRC(s->msg_len)]));
@@ -510,9 +529,8 @@ s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context))
                                 s->msg_len, SBP_FRAME_MSG_PAYLOAD(s->frame_buff),
                                 s->frame_len, s->frame_buff, SBP_CALLBACK_ALL_MASK);
         return ret;
-      } else {
-        return SBP_CRC_ERROR;
-      }
+      } 
+      return SBP_CRC_ERROR;
     }
     break;
 
@@ -632,37 +650,59 @@ s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *pay
                     s32 (*write)(u8 *buff, u32 n, void *context))
 {
   /* Check our payload data pointer isn't NULL unless len = 0. */
-  if (len != 0 && payload == 0)
+  if (len != 0 && payload == 0) {
     return SBP_NULL_ERROR;
+  }
 
   /* Check our write function pointer isn't NULL. */
-  if ((0 == s) || (0 == write))
+  if ((0 == s) || (0 == write)) {
     return SBP_NULL_ERROR;
+  }
 
   u16 crc;
   s32 wr = 0;
 
   u8 preamble = SBP_PREAMBLE;
   wr = (*write)(&preamble, 1, s->io_context);
-  if (0 > wr) return SBP_WRITE_ERROR;
-  if (wr != 1) return SBP_SEND_ERROR;
+  if (0 > wr) {
+    return SBP_WRITE_ERROR;
+  }
+  if (wr != 1) {
+    return SBP_SEND_ERROR;
+  }
 
   wr = (*write)((u8*)&msg_type, 2, s->io_context);
-  if (0 > wr) return SBP_WRITE_ERROR;
-  if (wr != 2) return SBP_SEND_ERROR;
+  if (0 > wr) {
+    return SBP_WRITE_ERROR;
+  }
+  if (wr != 2) {
+    return SBP_SEND_ERROR;
+  }
 
   wr = (*write)((u8*)&sender_id, 2, s->io_context);
-  if (0 > wr) return SBP_WRITE_ERROR;
-  if (wr != 2) return SBP_SEND_ERROR;
+  if (0 > wr) {
+    return SBP_WRITE_ERROR;
+  }
+  if (wr != 2) {
+    return SBP_SEND_ERROR;
+  }
 
   wr = (*write)(&len, 1, s->io_context);
-  if (0 > wr) return SBP_WRITE_ERROR;
-  if (wr != 1) return SBP_SEND_ERROR;
+  if (0 > wr) {
+    return SBP_WRITE_ERROR;
+  }
+  if (wr != 1) {
+    return SBP_SEND_ERROR;
+  }
 
   if (len > 0) {
     wr = (*write)(payload, len, s->io_context);
-    if (0 > wr) return SBP_WRITE_ERROR;
-    if (wr != len) return SBP_SEND_ERROR;
+    if (0 > wr) {
+      return SBP_WRITE_ERROR;
+    }
+    if (wr != len) {
+      return SBP_SEND_ERROR;
+    }
   }
 
   crc = crc16_ccitt((u8*)&(msg_type), 2, 0);
@@ -671,8 +711,12 @@ s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len, u8 *pay
   crc = crc16_ccitt(payload, len, crc);
 
   wr = (*write)((u8*)&crc, 2, s->io_context);
-  if (0 > wr) return SBP_WRITE_ERROR;
-  if (wr != 2) return SBP_SEND_ERROR;
+  if (0 > wr) {
+    return SBP_WRITE_ERROR;
+  }
+  if (wr != 2) {
+    return SBP_SEND_ERROR;
+  }
 
   return SBP_OK;
 }

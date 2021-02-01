@@ -21,19 +21,20 @@ namespace sbp {
 
 class SbpFileReader : public sbp::IReader {
   public:
-    SbpFileReader(const char *file_path)
+    explicit SbpFileReader(const char *file_path)
       : file_stream_(file_path, std::ios::binary | std::ios_base::in) {}
 
     bool is_open() const { return file_stream_.is_open(); }
 
     bool eof() const { return file_stream_.eof(); }
 
-    s32 read(u8 *buffer, const u32 buffer_length) {
+    s32 read(u8 *buffer, const u32 buffer_length) override {
       auto start_index = file_stream_.tellg();
       if (start_index == -1) {
         return -1;
       }
 
+      // NOLINTNEXTLINE
       file_stream_.read(reinterpret_cast<char *>(buffer), buffer_length);
       auto end_index = file_stream_.tellg();
       if (end_index == -1 || file_stream_.fail()) {
@@ -49,14 +50,15 @@ class SbpFileReader : public sbp::IReader {
 
 class SbpFileWriter : public sbp::IWriter {
   public:
-    SbpFileWriter(const char *file_path)
+    explicit SbpFileWriter(const char *file_path)
       : file_stream_(file_path, std::ios::binary | std::ios_base::out) {}
 
     bool is_open() const { return file_stream_.is_open(); };
 
     bool eof() const { return file_stream_.eof(); }
 
-    s32 write(const u8 *buffer, const u32 buffer_length) {
+    s32 write(const u8 *buffer, const u32 buffer_length) override {
+      // NOLINTNEXTLINE
       file_stream_.write(reinterpret_cast<const char *>(buffer), buffer_length);
       return static_cast<s32>(buffer_length);
     }

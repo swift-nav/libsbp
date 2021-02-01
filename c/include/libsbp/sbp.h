@@ -29,17 +29,17 @@ extern "C" {
 /** Return value indicating message decoded with no associated callback in sbp_process. */
 #define SBP_OK_CALLBACK_UNDEFINED 2
 /** Return value indicating an error with the callback (function defined). */
-#define SBP_CALLBACK_ERROR       -1
+#define SBP_CALLBACK_ERROR       (-1)
 /** Return value indicating a CRC error. */
-#define SBP_CRC_ERROR            -2
+#define SBP_CRC_ERROR            (-2)
 /** Return value indicating an error occured whilst sending an SBP message. */
-#define SBP_SEND_ERROR           -3
+#define SBP_SEND_ERROR           (-3)
 /** Return value indicating an error occured because an argument was NULL. */
-#define SBP_NULL_ERROR           -4
+#define SBP_NULL_ERROR           (-4)
 /** Return value indicating an error occured in the write() operation. */
-#define SBP_WRITE_ERROR          -5
+#define SBP_WRITE_ERROR          (-5)
 /** Return value indicating an error occured in the read() operation. */
-#define SBP_READ_ERROR           -6
+#define SBP_READ_ERROR           (-6)
 
 /** Default sender ID. Intended for messages sent from the host to the device. */
 #define SBP_SENDER_ID 0x42
@@ -63,11 +63,11 @@ extern "C" {
 /** Frame offset for the preamble. */
 #define SBP_FRAME_OFFSET_MSG (SBP_FRAME_OFFSET_MSGLEN + sizeof(u8))
 /** Frame offset for the CRC is a function of msg length. */
-#define SBP_FRAME_OFFSET_CRC(msg_len) (SBP_FRAME_OFFSET_MSG + msg_len)
-#define SBP_FRAME_CALC_LEN(msg_len) (SBP_HEADER_LEN + msg_len + SBP_CRC_LEN)
+#define SBP_FRAME_OFFSET_CRC(msg_len) (SBP_FRAME_OFFSET_MSG + (msg_len))
+#define SBP_FRAME_CALC_LEN(msg_len) (SBP_HEADER_LEN + (msg_len) + SBP_CRC_LEN)
 
 /** Get message payload pointer from frame */
-#define SBP_FRAME_MSG_PAYLOAD(frame_ptr) (&(frame_ptr[SBP_FRAME_OFFSET_MSG]))
+#define SBP_FRAME_MSG_PAYLOAD(frame_ptr) (&((frame_ptr)[SBP_FRAME_OFFSET_MSG]))
 
 /** SBP_MSG_ID to use to register frame callback for ALL messages. */
 #define SBP_MSG_ALL 0
