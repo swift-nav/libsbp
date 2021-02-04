@@ -16,8 +16,10 @@ swift_create_project_options(
     )
 include(CodeCoverage)
 include(TestTargets)
+include(ClangFormat)
 add_code_coverage_all_targets()
 swift_setup_clang_tidy(PATTERNS 'src/*.c')
+swift_setup_clang_format()
 
 if(libsbp_BUILD_TESTS)
   find_package(Googletest)

@@ -29,5 +29,4 @@
 
 /** \} */
 
-
 #endif /* LIBSBP_VERSION_H */

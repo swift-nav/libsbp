@@ -13,20 +13,22 @@
 #ifndef SBP_CPP_FRAME_HANDLER_H
 #define SBP_CPP_FRAME_HANDLER_H
 
-#include <cassert>
 #include <array>
+#include <cassert>
 
-#include <libsbp/cpp/state.h>
 #include <libsbp/cpp/message_traits.h>
+#include <libsbp/cpp/state.h>
 
 namespace sbp {
 
 /**
- * A helper function for calling a C++ object member function from a libsbp frame callback.
+ * A helper function for calling a C++ object member function from a libsbp
+ * frame callback.
  *
- * This function is registered with libsbp as a callback and calls the `handle_sbp_frame`
- * member function of an object from that callback passing through all of the arguments.
- * The instance of the object is passed in via the `context` parameter.
+ * This function is registered with libsbp as a callback and calls the
+ * `handle_sbp_frame` member function of an object from that callback passing
+ * through all of the arguments. The instance of the object is passed in via the
+ * `context` parameter.
  *
  * @tparam ClassT The class type to call the function on
  *
@@ -38,7 +40,7 @@ namespace sbp {
  * @param frame A pointer to the frame, is forwarded
  * @param context Pointer to an instance of `ClassT` to use
  */
-template<typename ClassT>
+template <typename ClassT>
 inline void sbp_frame_cb_passthrough(uint16_t sender_id, uint16_t msg_type,
                                      uint8_t payload_len, uint8_t payload[],
                                      uint16_t frame_len, uint8_t frame[],
@@ -46,7 +48,8 @@ inline void sbp_frame_cb_passthrough(uint16_t sender_id, uint16_t msg_type,
   assert(nullptr != context);
 
   auto instance = static_cast<ClassT *>(context);
-  instance->handle_sbp_frame(sender_id, msg_type, payload_len, payload, frame_len, frame);
+  instance->handle_sbp_frame(sender_id, msg_type, payload_len, payload,
+                             frame_len, frame);
 }
 
 /**
@@ -54,8 +57,8 @@ inline void sbp_frame_cb_passthrough(uint16_t sender_id, uint16_t msg_type,
  *
  * Application classes should derive from this class if they wish to handle
  * entire frames of specific SBP messages with a member function. `FrameHandler`
- * instantiates all of the callback nodes, and registers the member function with
- * the given `sbp_state_t`.
+ * instantiates all of the callback nodes, and registers the member function
+ * with the given `sbp_state_t`.
  *
  * Classes that derive from `FrameHandler` need to implement
  * @code
@@ -63,20 +66,21 @@ inline void sbp_frame_cb_passthrough(uint16_t sender_id, uint16_t msg_type,
  *                         uint8_t payload_len, uint8_t payload[],
  *                         uint16_t frame_len, uint8_t frame[]);
  * @endcode
- * 
- * This member function will be called for each message specified in the template parameters.
- * You will be able to differentiate the message types based on the `msg_type` argument.
  *
- * Due to the nature of the callback registration in libsbp we dissallow copying or
- * moving of `FrameHandler`.
+ * This member function will be called for each message specified in the
+ * template parameters. You will be able to differentiate the message types
+ * based on the `msg_type` argument.
  *
- * @note It should not matter if the class derives publicly or privately from `FrameHandler`
- * or if the `handle_sbp_frame` function is public or private.
+ * Due to the nature of the callback registration in libsbp we dissallow copying
+ * or moving of `FrameHandler`.
+ *
+ * @note It should not matter if the class derives publicly or privately from
+ * `FrameHandler` or if the `handle_sbp_frame` function is public or private.
  *
  * @example
- * class ECEFHandler : private sbp::FrameHandler<msg_gps_time_t, msg_pos_ecef_t> {
- *   public:
- *     ECEFHandler(sbp::State *state) : sbp::FrameHandler<msg_gps_time_t, msg_pos_ecef_t>(state) {
+ * class ECEFHandler : private sbp::FrameHandler<msg_gps_time_t, msg_pos_ecef_t>
+ * { public: ECEFHandler(sbp::State *state) : sbp::FrameHandler<msg_gps_time_t,
+ * msg_pos_ecef_t>(state) {
  *       // The callbacks have already been registered
  *       // Perform other initialization tasks
  *     }
@@ -90,41 +94,38 @@ inline void sbp_frame_cb_passthrough(uint16_t sender_id, uint16_t msg_type,
  *
  * @tparam MsgTypes List of SBP message types to register callbacks for
  */
-template<typename ...MsgTypes>
-class FrameHandler {
-    static constexpr size_t kMsgCount = sizeof...(MsgTypes);
+template <typename... MsgTypes> class FrameHandler {
+  static constexpr size_t kMsgCount = sizeof...(MsgTypes);
 
-    State &state_;
-    std::array<sbp_msg_callbacks_node_t, kMsgCount> callback_nodes_;
+  State &state_;
+  std::array<sbp_msg_callbacks_node_t, kMsgCount> callback_nodes_;
 
-  public:
+public:
+  explicit FrameHandler(State *state) : state_(*state), callback_nodes_() {
+    static constexpr std::array<uint16_t, kMsgCount> ids = {
+        sbp::MessageTraits<MsgTypes>::id...};
 
-    explicit FrameHandler(State *state) : state_(*state), callback_nodes_() {
-        static constexpr std::array<uint16_t, kMsgCount> ids = { sbp::MessageTraits<MsgTypes>::id... };
-
-        for (size_t i = 0; i < kMsgCount; ++i) {
-            sbp_register_frame_callback(state_.get_state(),
-                    ids[i],
-                    &sbp_frame_cb_passthrough<FrameHandler>,
-                    this,
-                    &callback_nodes_[i]);
-        }
+    for (size_t i = 0; i < kMsgCount; ++i) {
+      sbp_register_frame_callback(state_.get_state(), ids[i],
+                                  &sbp_frame_cb_passthrough<FrameHandler>, this,
+                                  &callback_nodes_[i]);
     }
+  }
 
-    virtual ~FrameHandler() {
-        for (auto& node : callback_nodes_) {
-            sbp_remove_callback(state_.get_state(), &node);
-        }
+  virtual ~FrameHandler() {
+    for (auto &node : callback_nodes_) {
+      sbp_remove_callback(state_.get_state(), &node);
     }
+  }
 
-    FrameHandler(const FrameHandler&) = delete;
-    FrameHandler(FrameHandler&& other) = delete;
-    FrameHandler& operator=(const FrameHandler&) = delete;
-    FrameHandler& operator=(FrameHandler&&) = delete;
-    
-    virtual void handle_sbp_frame(uint16_t sender_id, uint16_t msg_type,
-                                     uint8_t payload_len, uint8_t payload[],
-                                     uint16_t frame_len, uint8_t frame[]) = 0;
+  FrameHandler(const FrameHandler &) = delete;
+  FrameHandler(FrameHandler &&other) = delete;
+  FrameHandler &operator=(const FrameHandler &) = delete;
+  FrameHandler &operator=(FrameHandler &&) = delete;
+
+  virtual void handle_sbp_frame(uint16_t sender_id, uint16_t msg_type,
+                                uint8_t payload_len, uint8_t payload[],
+                                uint16_t frame_len, uint8_t frame[]) = 0;
 };
 
 /**
@@ -142,11 +143,11 @@ class FrameHandler {
  *                         uint16_t frame_len, uint8_t frame[]);
  * @endcode
  *
- * Due to the nature of the callback registration in libsbp we dissallow copying or
- * moving of `AllFrameHandler`.
+ * Due to the nature of the callback registration in libsbp we dissallow copying
+ * or moving of `AllFrameHandler`.
  *
- * @note It should not matter if the class derives publicly or privately from `AllFrameHandler`
- * or if the `handle_sbp_frame` function is public or private.
+ * @note It should not matter if the class derives publicly or privately from
+ * `AllFrameHandler` or if the `handle_sbp_frame` function is public or private.
  *
  * @example
  * class EverythingHandler : private sbp::AllFrameHandler {
@@ -165,30 +166,28 @@ class FrameHandler {
  *
  */
 class AllFrameHandler {
-    State &state_;
-    sbp_msg_callbacks_node_t callback_node_;
+  State &state_;
+  sbp_msg_callbacks_node_t callback_node_;
 
-  public:
+public:
+  explicit AllFrameHandler(State *state) : state_(*state), callback_node_() {
+    sbp_register_all_msg_callback(state_.get_state(),
+                                  sbp_frame_cb_passthrough<AllFrameHandler>,
+                                  this, &callback_node_);
+  }
 
-    explicit AllFrameHandler(State *state) : state_(*state), callback_node_() {
-      sbp_register_all_msg_callback(state_.get_state(),
-              sbp_frame_cb_passthrough<AllFrameHandler>,
-              this,
-              &callback_node_);
-    }
+  virtual ~AllFrameHandler() {
+    sbp_remove_callback(state_.get_state(), &callback_node_);
+  }
 
-    virtual ~AllFrameHandler() {
-        sbp_remove_callback(state_.get_state(), &callback_node_);
-    }
+  AllFrameHandler(const AllFrameHandler &) = delete;
+  AllFrameHandler(AllFrameHandler &&other) = delete;
+  AllFrameHandler &operator=(const AllFrameHandler &) = delete;
+  AllFrameHandler &operator=(AllFrameHandler &&) = delete;
 
-    AllFrameHandler(const AllFrameHandler&) = delete;
-    AllFrameHandler(AllFrameHandler&& other) = delete;
-    AllFrameHandler& operator=(const AllFrameHandler&) = delete;
-    AllFrameHandler& operator=(AllFrameHandler&&) = delete;
-    
-    virtual void handle_sbp_frame(uint16_t sender_id, uint16_t msg_type,
-                                     uint8_t payload_len, uint8_t payload[],
-                                     uint16_t frame_len, uint8_t frame[]) = 0;
+  virtual void handle_sbp_frame(uint16_t sender_id, uint16_t msg_type,
+                                uint8_t payload_len, uint8_t payload[],
+                                uint16_t frame_len, uint8_t frame[]) = 0;
 };
 
 } /* namespace sbp */

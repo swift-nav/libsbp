@@ -16,8 +16,7 @@ void usage(char *prog_name) {
   fprintf(stderr, "usage: %s [-p serial port]\n", prog_name);
 }
 
-void setup_port()
-{
+void setup_port() {
   int result;
 
   printf("Attempting to configure the serial port...\n");
@@ -60,14 +59,12 @@ void setup_port()
   printf("Configured the number of stop bits... done.\n");
 }
 
-void heartbeat_callback(u16 sender_id, u8 len, u8 msg[], void *context)
-{
+void heartbeat_callback(u16 sender_id, u8 len, u8 msg[], void *context) {
   (void)sender_id, (void)len, (void)msg, (void)context;
   fprintf(stdout, "%s\n", __FUNCTION__);
 }
 
-s32 piksi_port_read(u8 *buff, u32 n, void *context)
-{
+s32 piksi_port_read(u8 *buff, u32 n, void *context) {
   (void)context;
   s32 result;
 
@@ -76,8 +73,7 @@ s32 piksi_port_read(u8 *buff, u32 n, void *context)
   return result;
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
   int opt;
   int result = 0;
 
@@ -90,22 +86,22 @@ int main(int argc, char **argv)
 
   while ((opt = getopt(argc, argv, "p:")) != -1) {
     switch (opt) {
-      case 'p':
-        serial_port_name = (char *)calloc(strlen(optarg) + 1, sizeof(char));
-        if (!serial_port_name) {
-          fprintf(stderr, "Cannot allocate memory!\n");
-          exit(EXIT_FAILURE);
-        }
-        strcpy(serial_port_name, optarg);
-        break;
-      case 'h':
-        usage(argv[0]);
+    case 'p':
+      serial_port_name = (char *)calloc(strlen(optarg) + 1, sizeof(char));
+      if (!serial_port_name) {
+        fprintf(stderr, "Cannot allocate memory!\n");
         exit(EXIT_FAILURE);
+      }
+      strcpy(serial_port_name, optarg);
+      break;
+    case 'h':
+      usage(argv[0]);
+      exit(EXIT_FAILURE);
     }
   }
 
   if (!serial_port_name) {
-    fprintf(stderr, "Please supply the serial port path where the Piksi is " \
+    fprintf(stderr, "Please supply the serial port path where the Piksi is "
                     "connected!\n");
     exit(EXIT_FAILURE);
   }
@@ -131,7 +127,7 @@ int main(int argc, char **argv)
   sbp_register_callback(&s, SBP_MSG_HEARTBEAT, &heartbeat_callback, NULL,
                         &heartbeat_callback_node);
 
-  while(1) {
+  while (1) {
     sbp_process(&s, &piksi_port_read);
   }
 
