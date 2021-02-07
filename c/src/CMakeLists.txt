@@ -15,10 +15,10 @@ target_compile_options(sbp PRIVATE ${LIBSBP_COMPILER_OPTIONS})
 
 target_include_directories(sbp PUBLIC ${PROJECT_SOURCE_DIR}/include)
 set_target_properties(sbp PROPERTIES
-        POSITION_INDEPENDENT_CODE ON
-        C_STANDARD 99
-        C_STANDARD_REQUIRED ON)
+        POSITION_INDEPENDENT_CODE ON)
 target_code_coverage(sbp AUTO ALL)
+swift_set_language_standards(sbp)
+swift_set_compile_options(sbp REMOVE -Wconversion)
 
 if (MINGW)
   if (CMAKE_C_COMPILER_VERSION VERSION_GREATER "4.7.0" AND CMAKE_C_COMPILER_VERSION VERSION_LESS "8.0.0")

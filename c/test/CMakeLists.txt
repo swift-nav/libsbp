@@ -36,5 +36,15 @@ swift_add_test(test-libsbp
   LINK
     ${TEST_LIBS}
   )
+swift_set_compile_options(test-libsbp 
+  REMOVE 
+    -Wconversion 
+    -Wpointer-arith
+    -Wformat
+    -Wformat-security
+    -Wformat-y2k
+  ADD
+    -Wformat=0
+)
 
 add_subdirectory(cpp)

@@ -6,6 +6,9 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake" "${CMAKE_CURRENT_LIST_DI
 include(GNUInstallDirs)
 include(CCache)
 include(SwiftCmakeOptions)
+include(CompileOptions)
+include(LanguageStandards)
+include(ClangTidy)
 swift_create_project_options(
     HAS_TESTS
     HAS_DOCS
@@ -14,23 +17,10 @@ swift_create_project_options(
 include(CodeCoverage)
 include(TestTargets)
 add_code_coverage_all_targets()
+swift_setup_clang_tidy(PATTERNS 'src/*.c')
 
 if(libsbp_BUILD_TESTS)
   find_package(Googletest)
-endif()
-
-##########################################################
-# Set some reasonable default compiler flags.
-# Users of LibSbp that need different flags to be used can specify them
-# when invoking cmake (cmake -DLIBSBP_CFLAGS:STRING="-Os -ffunction-sections")
-# or by editing the CMakeCache.txt manually after invoking cmake
-##########################################################
-if(MSVC)
-    set(LIBSBP_CFLAGS "/Wall" CACHE STRING "Compile flags for libsbp.")
-elseif(CMAKE_C_COMPILER_ID MATCHES "ARMCC")
-    # Warnings are on by default in armcc
-else()
-    set(LIBSBP_CFLAGS "-Wall -Werror" CACHE STRING "Compile flags for libsbp.")
 endif()
 
 add_subdirectory(src)
