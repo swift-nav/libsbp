@@ -200,9 +200,12 @@ definitions:
                   desc: SBP major protocol version number
               - 0-7:
                   desc: SBP minor protocol version number
+        - sequence:
+            type: u32
+            desc: Increments on each status report sent
         - uptime:
             type: u32
-            desc: Number of seconds since system start-up
+            desc: Number of milliseconds since system start-up
         - status:
             type: array
             fill: SubSystemReport
