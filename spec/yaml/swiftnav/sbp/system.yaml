@@ -136,6 +136,7 @@ definitions:
 
  - SubSystemReport:
     short_desc: Sub-system Status report
+    embedded_type: true
     desc: |
       Report the general and specific state of a sub-system
     fields:
