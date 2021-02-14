@@ -148,6 +148,7 @@ def render_source(output_dir, package_spec):
 
 def render_version(output_dir, release):
   destination_filename = "%s/version.h" % output_dir
+  release += ".0"
   major, minor, patch = release.split('.')[:3]
   py_template = JENV.get_template(VERSION_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:

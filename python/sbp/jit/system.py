@@ -151,6 +151,96 @@ the remaining error flags should be inspected.
     return res, off, length
 
   
+class SubSystemReport(object):
+  """SBP class for message SubSystemReport
+
+  You can have SubSystemReport inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  Report the general and specific state of a sub-system
+
+
+  """
+  __slots__ = ['component',
+               'generic',
+               'specific',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__component, offset, length) = get_u16(buf, offset, length)
+    ret['component'] = __component
+    (__generic, offset, length) = get_u8(buf, offset, length)
+    ret['generic'] = __generic
+    (__specific, offset, length) = get_u8(buf, offset, length)
+    ret['specific'] = __specific
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.component = res['component']
+    self.generic = res['generic']
+    self.specific = res['specific']
+    return res, off, length
+
+  
+SBP_MSG_STATUS_REPORT = 0xFFFE
+class MsgStatusReport(SBP):
+  """SBP class for message MSG_STATUS_REPORT (0xFFFE).
+
+  You can have MSG_STATUS_REPORT inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The status report is sent periodically to inform the host
+or other attached devices that the system is running. It is
+used to monitor system malfunctions. It contains status
+reports that indicate to the host the status of each sub-system and
+whether it is operating correctly.
+
+Interpretation of the subsystem specific status code is product dependent.
+Refer to product documentation for details.
+
+
+  """
+  __slots__ = ['reporting_system',
+               'sbp_version',
+               'sequence',
+               'uptime',
+               'status',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__reporting_system, offset, length) = get_u16(buf, offset, length)
+    ret['reporting_system'] = __reporting_system
+    (__sbp_version, offset, length) = get_u16(buf, offset, length)
+    ret['sbp_version'] = __sbp_version
+    (__sequence, offset, length) = get_u32(buf, offset, length)
+    ret['sequence'] = __sequence
+    (__uptime, offset, length) = get_u32(buf, offset, length)
+    ret['uptime'] = __uptime
+    (__status, offset, length) = get_array(SubSystemReport.parse_members)(buf, offset, length)
+    ret['status'] = __status
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.reporting_system = res['reporting_system']
+    self.sbp_version = res['sbp_version']
+    self.sequence = res['sequence']
+    self.uptime = res['uptime']
+    self.status = res['status']
+    return res, off, length
+
+  
 SBP_MSG_INS_STATUS = 0xFF03
 class MsgInsStatus(SBP):
   """SBP class for message MSG_INS_STATUS (0xFF03).
@@ -401,6 +491,7 @@ msg_classes = {
   0xFF00: MsgStartup,
   0xFF02: MsgDgnssStatus,
   0xFFFF: MsgHeartbeat,
+  0xFFFE: MsgStatusReport,
   0xFF03: MsgInsStatus,
   0xFF04: MsgCsacTelemetry,
   0xFF05: MsgCsacTelemetryLabels,

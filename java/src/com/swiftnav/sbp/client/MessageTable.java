@@ -191,6 +191,7 @@ import com.swiftnav.sbp.ssr.MsgSsrGridDefinitionDepA;
 import com.swiftnav.sbp.system.MsgStartup;
 import com.swiftnav.sbp.system.MsgDgnssStatus;
 import com.swiftnav.sbp.system.MsgHeartbeat;
+import com.swiftnav.sbp.system.MsgStatusReport;
 import com.swiftnav.sbp.system.MsgInsStatus;
 import com.swiftnav.sbp.system.MsgCsacTelemetry;
 import com.swiftnav.sbp.system.MsgCsacTelemetryLabels;
@@ -565,6 +566,8 @@ final class MessageTable {
                 return new MsgDgnssStatus(msg);
             case MsgHeartbeat.TYPE:
                 return new MsgHeartbeat(msg);
+            case MsgStatusReport.TYPE:
+                return new MsgStatusReport(msg);
             case MsgInsStatus.TYPE:
                 return new MsgInsStatus(msg);
             case MsgCsacTelemetry.TYPE:

@@ -62,6 +62,35 @@ message MsgHeartbeat {
     uint32 flags = 1;
 }
 
+/** Sub-system Status report
+ *
+ * Report the general and specific state of a sub-system
+ */
+message SubSystemReport {
+    uint32 component = 1;
+    uint32 generic = 2;
+    uint32 specific = 3;
+}
+
+/** Status report message
+ *
+ * The status report is sent periodically to inform the host
+ * or other attached devices that the system is running. It is
+ * used to monitor system malfunctions. It contains status
+ * reports that indicate to the host the status of each sub-system and
+ * whether it is operating correctly.
+ * 
+ * Interpretation of the subsystem specific status code is product dependent.
+ * Refer to product documentation for details.
+ */
+message MsgStatusReport {
+    uint32 reporting_system = 1;
+    uint32 sbp_version = 2;
+    uint32 sequence = 3;
+    uint32 uptime = 4;
+    repeated SubSystemReport status = 5;
+}
+
 /** Inertial Navigation System status message
  *
  * The INS status message describes the state of the operation

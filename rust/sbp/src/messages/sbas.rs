@@ -27,6 +27,7 @@ use crate::SbpString;
 ///
 /// This message is sent once per second per SBAS satellite. ME checks the
 /// parity of the data block and sends only blocks that pass the check.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
