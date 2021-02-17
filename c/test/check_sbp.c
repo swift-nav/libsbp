@@ -604,7 +604,7 @@ START_TEST(test_sbp_big_msg)
       "frame data decoded incorrectly (3)");
   /* check that CRC wasn't chopped off */
   ck_assert_msg((last_frame[262]  == 0x35 && last_frame[261] == 0xA6),
-      "CRC was incorrect. Should be %x and was %x", 0x35A6,  *((u16*) &(last_frame[261])));
+      "CRC was incorrect. Should be 0x%x%x and was 0x%x%x", 0x35, 0xA6,  last_frame[262], last_frame[261]);
 }
 END_TEST
 
