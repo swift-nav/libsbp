@@ -57,12 +57,13 @@ END_TEST
 START_TEST(test_ins_status_bitfields)
 {
 // TODO(?) : This test case currently failing
-return;
 msg_ins_status_t ins_status = {.flags = 0};
 SBP_INS_STATUS_INS_TYPE_SET(ins_status.flags, SBP_INS_STATUS_INS_TYPE_SMOOTHPOSE_LOOSELY_COUPLED);
 fail_unless(ins_status.flags == 0);
 SBP_INS_STATUS_INS_TYPE_SET(ins_status.flags, SBP_INS_STATUS_INS_TYPE_OTHER_LOOSELY_COUPLED);
-fail_unless(ins_status.flags == 0x80000000);
+/* INS_TYPE is 3 MSBs of the word, "OTHER" is described by value 1, setting
+ * bit 29 to 1 makes 0x20000000.  */
+fail_unless(ins_status.flags == 0x20000000);
 
 }
 END_TEST
