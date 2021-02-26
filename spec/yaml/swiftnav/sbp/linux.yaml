@@ -20,9 +20,9 @@ include:
 
 definitions:
 
- - MSG_LINUX_CPU_STATE:
+ - MSG_LINUX_CPU_STATE_DEP_A:
     id: 0x7F00
-    short_desc: List CPU state on the system
+    short_desc: List CPU state on the system. DEPRECATED.
     public: false
     desc: |
       This message indicates the process state of the top 10 heaviest
@@ -45,9 +45,9 @@ definitions:
           type: string
           desc: the command line (as much as it fits in the remaining packet)
 
- - MSG_LINUX_MEM_STATE:
+ - MSG_LINUX_MEM_STATE_DEP_A:
     id: 0x7F01
-    short_desc: List memory state on the system
+    short_desc: List memory state on the system. DEPRECATED.
     public: false
     desc: |
       This message indicates the process state of the top 10 heaviest
@@ -70,10 +70,10 @@ definitions:
           type: string
           desc: the command line (as much as it fits in the remaining packet)
 
- - MSG_LINUX_SYS_STATE:
+ - MSG_LINUX_SYS_STATE_DEP_A:
     id: 0x7F02
     public: false
-    short_desc: CPU, Memory and Process Starts/Stops
+    short_desc: CPU, Memory and Process Starts/Stops. DEPRECATED.
     desc: |
       This presents a summary of CPU and memory utilization.
     fields:
@@ -240,7 +240,7 @@ definitions:
              syntax "32\0/var/log/syslog\012\0/tmp/foo\0" with the end
              of the list being 2 NULL terminators in a row.
 
- - MSG_LINUX_CPU_STATE_TIMESTAMPED:
+ - MSG_LINUX_CPU_STATE:
      id: 0x7F08
      short_desc: List CPU state on the system
      public: false
@@ -278,7 +278,7 @@ definitions:
            desc: the command line (as much as it fits in the remaining packet)
 
 
- - MSG_LINUX_MEM_STATE_TIMESTAMPED:
+ - MSG_LINUX_MEM_STATE:
      id: 0x7F09
      short_desc: List memory state on the system
      public: false
@@ -315,7 +315,7 @@ definitions:
            type: string
            desc: the command line (as much as it fits in the remaining packet)
 
- - MSG_LINUX_SYS_STATE_TIMESTAMPED:
+ - MSG_LINUX_SYS_STATE:
      id: 0x7F0A
      public: false
      short_desc: CPU, Memory and Process Starts/Stops.
