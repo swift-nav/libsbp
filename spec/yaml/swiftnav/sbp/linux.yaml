@@ -47,7 +47,7 @@ definitions:
 
  - MSG_LINUX_MEM_STATE:
     id: 0x7F01
-    short_desc: List CPU state on the system
+    short_desc: List memory state on the system
     public: false
     desc: |
       This message indicates the process state of the top 10 heaviest
@@ -239,3 +239,116 @@ definitions:
              name whose count it being reported.  That is, in C string
              syntax "32\0/var/log/syslog\012\0/tmp/foo\0" with the end
              of the list being 2 NULL terminators in a row.
+
+ - MSG_LINUX_CPU_STATE_TIMESTAMPED:
+     id: 0x7F08
+     short_desc: List CPU state on the system
+     public: false
+     desc: |
+       This message indicates the process state of the top 10 heaviest
+       consumers of CPU on the system, including a timestamp.
+     fields:
+       - index:
+           type: u8
+           desc: sequence of this status message, values from 0-9
+       - pid:
+           type: u16
+           desc: the PID of the process
+       - pcpu:
+           type: u8
+           desc: percent of cpu used, expressed as a fraction of 256
+       - time:
+           type: u32
+           desc: timestamp of message, refer to flags field for how to interpret
+       - flags:
+           type: u8
+           desc: flags
+           fields:
+             - 0-2:
+                 desc: timestamp type
+                 values:
+                   - 0: System time in seconds
+                   - 1: GPS TOW in milliseconds
+       - tname:
+           type: string
+           size: 15
+           desc: fixed length string representing the thread name
+       - cmdline:
+           type: string
+           desc: the command line (as much as it fits in the remaining packet)
+
+
+ - MSG_LINUX_MEM_STATE_TIMESTAMPED:
+     id: 0x7F09
+     short_desc: List memory state on the system
+     public: false
+     desc: |
+       This message indicates the process state of the top 10 heaviest
+       consumers of memory on the system, including a timestamp.
+     fields:
+       - index:
+           type: u8
+           desc: sequence of this status message, values from 0-9
+       - pid:
+           type: u16
+           desc: the PID of the process
+       - pmem:
+           type: u8
+           desc: percent of memory used, expressed as a fraction of 256
+       - time:
+           type: u32
+           desc: timestamp of message, refer to flags field for how to interpret
+       - flags:
+           type: u8
+           desc: flags
+           fields:
+             - 0-2:
+                 desc: timestamp type
+                 values:
+                   - 0: System time in seconds
+                   - 1: GPS TOW in milliseconds
+       - tname:
+           type: string
+           size: 15
+           desc: fixed length string representing the thread name
+       - cmdline:
+           type: string
+           desc: the command line (as much as it fits in the remaining packet)
+
+ - MSG_LINUX_SYS_STATE_TIMESTAMPED:
+     id: 0x7F0A
+     public: false
+     short_desc: CPU, Memory and Process Starts/Stops.
+     desc: |
+       This presents a summary of CPU and memory utilization, including a timestamp.
+     fields:
+       - mem_total:
+           type: u16
+           desc: total system memory
+       - pcpu:
+           type: u8
+           desc: percent of total cpu currently utilized
+       - pmem:
+           type: u8
+           desc: percent of total memory currently utilized
+       - procs_starting:
+           type: u16
+           desc: number of processes that started during collection phase
+       - procs_stopping:
+           type: u16
+           desc: number of processes that stopped during collection phase
+       - pid_count:
+           type: u16
+           desc: the count of processes on the system
+       - time:
+           type: u32
+           desc: timestamp of message, refer to flags field for how to interpret
+       - flags:
+           type: u8
+           desc: flags
+           fields:
+             - 0-2:
+                 desc: timestamp type
+                 values:
+                   - 0: System time in seconds
+                   - 1: GPS TOW in milliseconds
