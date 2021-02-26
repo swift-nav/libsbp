@@ -22,16 +22,16 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_LINUX_SYS_STATE (0x7F0A).
+/** SBP class for message MSG_LINUX_SYS_STATE_DEP_A (0x7F02).
  *
- * You can have MSG_LINUX_SYS_STATE inherent its fields directly from
+ * You can have MSG_LINUX_SYS_STATE_DEP_A inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
- * This presents a summary of CPU and memory utilization, including a timestamp. */
+ * This presents a summary of CPU and memory utilization. */
 
-public class MsgLinuxSysState extends SBPMessage {
-    public static final int TYPE = 0x7F0A;
+public class MsgLinuxSysStateDepA extends SBPMessage {
+    public static final int TYPE = 0x7F02;
 
     
     /** total system memory */
@@ -52,16 +52,10 @@ public class MsgLinuxSysState extends SBPMessage {
     /** the count of processes on the system */
     public int pid_count;
     
-    /** timestamp of message, refer to flags field for how to interpret */
-    public long time;
-    
-    /** flags */
-    public int flags;
-    
 
-    public MsgLinuxSysState (int sender) { super(sender, TYPE); }
-    public MsgLinuxSysState () { super(TYPE); }
-    public MsgLinuxSysState (SBPMessage msg) throws SBPBinaryException {
+    public MsgLinuxSysStateDepA (int sender) { super(sender, TYPE); }
+    public MsgLinuxSysStateDepA () { super(TYPE); }
+    public MsgLinuxSysStateDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -75,8 +69,6 @@ public class MsgLinuxSysState extends SBPMessage {
         procs_starting = parser.getU16();
         procs_stopping = parser.getU16();
         pid_count = parser.getU16();
-        time = parser.getU32();
-        flags = parser.getU8();
     }
 
     @Override
@@ -87,8 +79,6 @@ public class MsgLinuxSysState extends SBPMessage {
         builder.putU16(procs_starting);
         builder.putU16(procs_stopping);
         builder.putU16(pid_count);
-        builder.putU32(time);
-        builder.putU8(flags);
     }
 
     @Override
@@ -100,8 +90,6 @@ public class MsgLinuxSysState extends SBPMessage {
         obj.put("procs_starting", procs_starting);
         obj.put("procs_stopping", procs_stopping);
         obj.put("pid_count", pid_count);
-        obj.put("time", time);
-        obj.put("flags", flags);
         return obj;
     }
 }

@@ -20,45 +20,6 @@ syntax = "proto3";
 package swiftnav.sbp.linux;
 
 
-/** List CPU state on the system
- *
- * This message indicates the process state of the top 10 heaviest
- * consumers of CPU on the system.
- */
-message MsgLinuxCpuState {
-    uint32 index = 1;
-    uint32 pid = 2;
-    uint32 pcpu = 3;
-    string tname = 4;
-    string cmdline = 5;
-}
-
-/** List CPU state on the system
- *
- * This message indicates the process state of the top 10 heaviest
- * consumers of memory on the system.
- */
-message MsgLinuxMemState {
-    uint32 index = 1;
-    uint32 pid = 2;
-    uint32 pmem = 3;
-    string tname = 4;
-    string cmdline = 5;
-}
-
-/** CPU, Memory and Process Starts/Stops
- *
- * This presents a summary of CPU and memory utilization.
- */
-message MsgLinuxSysState {
-    uint32 mem_total = 1;
-    uint32 pcpu = 2;
-    uint32 pmem = 3;
-    uint32 procs_starting = 4;
-    uint32 procs_stopping = 5;
-    uint32 pid_count = 6;
-}
-
 /** A list of processes with high socket counts
  *
  * Top 10 list of processes with high socket counts.
@@ -116,4 +77,49 @@ message MsgLinuxProcessFdCount {
 message MsgLinuxProcessFdSummary {
     uint32 sys_fd_count = 1;
     string most_opened = 2;
+}
+
+/** List CPU state on the system
+ *
+ * This message indicates the process state of the top 10 heaviest
+ * consumers of CPU on the system, including a timestamp.
+ */
+message MsgLinuxCpuState {
+    uint32 index = 1;
+    uint32 pid = 2;
+    uint32 pcpu = 3;
+    uint32 time = 4;
+    uint32 flags = 5;
+    string tname = 6;
+    string cmdline = 7;
+}
+
+/** List memory state on the system
+ *
+ * This message indicates the process state of the top 10 heaviest
+ * consumers of memory on the system, including a timestamp.
+ */
+message MsgLinuxMemState {
+    uint32 index = 1;
+    uint32 pid = 2;
+    uint32 pmem = 3;
+    uint32 time = 4;
+    uint32 flags = 5;
+    string tname = 6;
+    string cmdline = 7;
+}
+
+/** CPU, Memory and Process Starts/Stops.
+ *
+ * This presents a summary of CPU and memory utilization, including a timestamp.
+ */
+message MsgLinuxSysState {
+    uint32 mem_total = 1;
+    uint32 pcpu = 2;
+    uint32 pmem = 3;
+    uint32 procs_starting = 4;
+    uint32 procs_stopping = 5;
+    uint32 pid_count = 6;
+    uint32 time = 7;
+    uint32 flags = 8;
 }

@@ -14,6 +14,7 @@
 //****************************************************************************/
 //! Messages reporting accurately-timestamped external events,
 //! e.g. camera shutter time.
+//!
 
 #[allow(unused_imports)]
 use byteorder::{LittleEndian, ReadBytesExt};
@@ -27,6 +28,7 @@ use crate::SbpString;
 ///
 /// Reports detection of an external event, the GPS time it occurred,
 /// which pin it was and whether it was rising or falling.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]

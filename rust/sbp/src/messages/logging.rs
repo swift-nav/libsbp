@@ -13,6 +13,7 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 //! Logging and debugging messages from the device.
+//!
 
 #[allow(unused_imports)]
 use byteorder::{LittleEndian, ReadBytesExt};
@@ -31,6 +32,7 @@ use crate::SbpString;
 /// The source identifier indicates from what interface a forwarded stream derived.
 /// The protocol identifier identifies what the expected protocol the forwarded msg contains.
 /// Protocol 0 represents SBP and the remaining values are implementation defined.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -102,6 +104,7 @@ impl crate::serialize::SbpSerialize for MsgFwd {
 /// This message contains a human-readable payload string from the
 /// device containing errors, warnings and informational messages at
 /// ERROR, WARNING, DEBUG, INFO logging levels.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -166,6 +169,7 @@ impl crate::serialize::SbpSerialize for MsgLog {
 /// Deprecated
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]

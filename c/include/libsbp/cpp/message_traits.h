@@ -1039,19 +1039,19 @@ struct MessageTraits<msg_sbas_raw_t> {
 
 
 template<>
-struct MessageTraits<msg_linux_cpu_state_t> {
+struct MessageTraits<msg_linux_cpu_state_dep_a_t> {
   static constexpr u16 id = 32512;
 };
 
 
 template<>
-struct MessageTraits<msg_linux_mem_state_t> {
+struct MessageTraits<msg_linux_mem_state_dep_a_t> {
   static constexpr u16 id = 32513;
 };
 
 
 template<>
-struct MessageTraits<msg_linux_sys_state_t> {
+struct MessageTraits<msg_linux_sys_state_dep_a_t> {
   static constexpr u16 id = 32514;
 };
 
@@ -1083,6 +1083,24 @@ struct MessageTraits<msg_linux_process_fd_count_t> {
 template<>
 struct MessageTraits<msg_linux_process_fd_summary_t> {
   static constexpr u16 id = 32519;
+};
+
+
+template<>
+struct MessageTraits<msg_linux_cpu_state_t> {
+  static constexpr u16 id = 32520;
+};
+
+
+template<>
+struct MessageTraits<msg_linux_mem_state_t> {
+  static constexpr u16 id = 32521;
+};
+
+
+template<>
+struct MessageTraits<msg_linux_sys_state_t> {
+  static constexpr u16 id = 32522;
 };
 
 

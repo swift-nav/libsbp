@@ -27,6 +27,7 @@ use crate::SbpString;
 /// The CSAC telemetry message has an implementation defined telemetry string
 /// from a device. It is not produced or available on general Swift Products.
 /// It is intended to be a low rate message for status purposes.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -94,6 +95,7 @@ impl crate::serialize::SbpSerialize for MsgCsacTelemetry {
 /// The CSAC telemetry message provides labels for each member of the string
 /// produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
 /// rate than the MSG_CSAC_TELEMETRY.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -161,6 +163,7 @@ impl crate::serialize::SbpSerialize for MsgCsacTelemetryLabels {
 /// This message provides information about the receipt of Differential
 /// corrections.  It is expected to be sent with each receipt of a complete
 /// corrections packet.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -237,6 +240,7 @@ impl crate::serialize::SbpSerialize for MsgDgnssStatus {
 /// The GNSS time offset message contains the information that is needed to translate messages
 /// tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the sender
 /// producing this message.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -312,6 +316,7 @@ impl crate::serialize::SbpSerialize for MsgGnssTimeOffset {
 ///
 /// This leading message lists the time metadata of the Solution Group.
 /// It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -396,6 +401,7 @@ impl crate::serialize::SbpSerialize for MsgGroupMeta {
 /// The system error flag is used to indicate that an error has
 /// occurred in the system. To determine the source of the error,
 /// the remaining error flags should be inspected.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -456,6 +462,7 @@ impl crate::serialize::SbpSerialize for MsgHeartbeat {
 ///
 /// The INS status message describes the state of the operation
 /// and initialization of the inertial navigation system.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -514,9 +521,9 @@ impl crate::serialize::SbpSerialize for MsgInsStatus {
 
 /// Inertial Navigation System update status message
 ///
-/// The INS update status message contains informations about executed and rejected INS
-/// updates. This message is expected to be extended in the future as new types of measurements
-/// are being added.
+/// The INS update status message contains informations about executed and rejected INS updates.
+/// This message is expected to be extended in the future as new types of measurements are being added.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -609,6 +616,7 @@ impl crate::serialize::SbpSerialize for MsgInsUpdates {
 /// start-up. It notifies the host or other attached devices that
 /// the system has started and is now ready to respond to commands
 /// or configuration requests.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]

@@ -13,12 +13,14 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgLinuxCpuState",
   "title":"MsgLinuxCpuState",
-  "description":"This message indicates the process state of the top 10 heaviest,\nconsumers of CPU on the system.\n",
+  "description":"This message indicates the process state of the top 10 heaviest,\nconsumers of CPU on the system, including a timestamp.\n",
   "type": "object",
   "properties": {
     "index": {"type": "integer"},
     "pid": {"type": "integer"},
     "pcpu": {"type": "integer"},
+    "time": {"type": "integer"},
+    "flags": {"type": "integer"},
     "tname": {"type": "string"},
     "cmdline": {"type": "string"}
   },
@@ -26,6 +28,8 @@
     "index",
     "pid",
     "pcpu",
+    "time",
+    "flags",
     "tname",
     "cmdline"
   ]

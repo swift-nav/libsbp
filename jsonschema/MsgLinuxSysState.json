@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#MsgLinuxSysState",
   "title":"MsgLinuxSysState",
-  "description":"This presents a summary of CPU and memory utilization.\n",
+  "description":"This presents a summary of CPU and memory utilization, including a timestamp.\n",
   "type": "object",
   "properties": {
     "mem_total": {"type": "integer"},
@@ -21,7 +21,9 @@
     "pmem": {"type": "integer"},
     "procs_starting": {"type": "integer"},
     "procs_stopping": {"type": "integer"},
-    "pid_count": {"type": "integer"}
+    "pid_count": {"type": "integer"},
+    "time": {"type": "integer"},
+    "flags": {"type": "integer"}
   },
   "required": [
     "mem_total",
@@ -29,6 +31,8 @@
     "pmem",
     "procs_starting",
     "procs_stopping",
-    "pid_count"
+    "pid_count",
+    "time",
+    "flags"
   ]
 }

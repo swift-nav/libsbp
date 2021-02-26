@@ -13,6 +13,7 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 //! Messages for logging NDB events.
+//!
 
 #[allow(unused_imports)]
 use byteorder::{LittleEndian, ReadBytesExt};
@@ -27,6 +28,7 @@ use crate::SbpString;
 ///
 /// This message is sent out when an object is stored into NDB. If needed
 /// message could also be sent out when fetching an object from NDB.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]

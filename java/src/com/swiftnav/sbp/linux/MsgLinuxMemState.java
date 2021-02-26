@@ -22,17 +22,17 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_LINUX_MEM_STATE (0x7F01).
+/** SBP class for message MSG_LINUX_MEM_STATE (0x7F09).
  *
  * You can have MSG_LINUX_MEM_STATE inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
  * This message indicates the process state of the top 10 heaviest
- * consumers of memory on the system. */
+ * consumers of memory on the system, including a timestamp. */
 
 public class MsgLinuxMemState extends SBPMessage {
-    public static final int TYPE = 0x7F01;
+    public static final int TYPE = 0x7F09;
 
     
     /** sequence of this status message, values from 0-9 */
@@ -43,6 +43,12 @@ public class MsgLinuxMemState extends SBPMessage {
     
     /** percent of memory used, expressed as a fraction of 256 */
     public int pmem;
+    
+    /** timestamp of message, refer to flags field for how to interpret */
+    public long time;
+    
+    /** flags */
+    public int flags;
     
     /** fixed length string representing the thread name */
     public String tname;
@@ -64,6 +70,8 @@ public class MsgLinuxMemState extends SBPMessage {
         index = parser.getU8();
         pid = parser.getU16();
         pmem = parser.getU8();
+        time = parser.getU32();
+        flags = parser.getU8();
         tname = parser.getString(15);
         cmdline = parser.getString();
     }
@@ -73,6 +81,8 @@ public class MsgLinuxMemState extends SBPMessage {
         builder.putU8(index);
         builder.putU16(pid);
         builder.putU8(pmem);
+        builder.putU32(time);
+        builder.putU8(flags);
         builder.putString(tname, 15);
         builder.putString(cmdline);
     }
@@ -83,6 +93,8 @@ public class MsgLinuxMemState extends SBPMessage {
         obj.put("index", index);
         obj.put("pid", pid);
         obj.put("pmem", pmem);
+        obj.put("time", time);
+        obj.put("flags", flags);
         obj.put("tname", tname);
         obj.put("cmdline", cmdline);
         return obj;

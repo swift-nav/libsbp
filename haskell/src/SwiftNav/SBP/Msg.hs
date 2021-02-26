@@ -147,13 +147,16 @@ data SBPMsg =
    | SBPMsgInsUpdates MsgInsUpdates Msg
    | SBPMsgIono MsgIono Msg
    | SBPMsgLinuxCpuState MsgLinuxCpuState Msg
+   | SBPMsgLinuxCpuStateDepA MsgLinuxCpuStateDepA Msg
    | SBPMsgLinuxMemState MsgLinuxMemState Msg
+   | SBPMsgLinuxMemStateDepA MsgLinuxMemStateDepA Msg
    | SBPMsgLinuxProcessFdCount MsgLinuxProcessFdCount Msg
    | SBPMsgLinuxProcessFdSummary MsgLinuxProcessFdSummary Msg
    | SBPMsgLinuxProcessSocketCounts MsgLinuxProcessSocketCounts Msg
    | SBPMsgLinuxProcessSocketQueues MsgLinuxProcessSocketQueues Msg
    | SBPMsgLinuxSocketUsage MsgLinuxSocketUsage Msg
    | SBPMsgLinuxSysState MsgLinuxSysState Msg
+   | SBPMsgLinuxSysStateDepA MsgLinuxSysStateDepA Msg
    | SBPMsgLog MsgLog Msg
    | SBPMsgM25FlashWriteStatus MsgM25FlashWriteStatus Msg
    | SBPMsgMagRaw MsgMagRaw Msg
@@ -354,13 +357,16 @@ instance Binary SBPMsg where
           | _msgSBPType == msgInsUpdates = SBPMsgInsUpdates (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgIono = SBPMsgIono (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxCpuState = SBPMsgLinuxCpuState (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgLinuxCpuStateDepA = SBPMsgLinuxCpuStateDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxMemState = SBPMsgLinuxMemState (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgLinuxMemStateDepA = SBPMsgLinuxMemStateDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxProcessFdCount = SBPMsgLinuxProcessFdCount (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxProcessFdSummary = SBPMsgLinuxProcessFdSummary (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxProcessSocketCounts = SBPMsgLinuxProcessSocketCounts (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxProcessSocketQueues = SBPMsgLinuxProcessSocketQueues (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxSocketUsage = SBPMsgLinuxSocketUsage (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLinuxSysState = SBPMsgLinuxSysState (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgLinuxSysStateDepA = SBPMsgLinuxSysStateDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgLog = SBPMsgLog (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgMagRaw = SBPMsgMagRaw (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -553,13 +559,16 @@ instance Binary SBPMsg where
       encoder (SBPMsgInsUpdates _ m) = put m
       encoder (SBPMsgIono _ m) = put m
       encoder (SBPMsgLinuxCpuState _ m) = put m
+      encoder (SBPMsgLinuxCpuStateDepA _ m) = put m
       encoder (SBPMsgLinuxMemState _ m) = put m
+      encoder (SBPMsgLinuxMemStateDepA _ m) = put m
       encoder (SBPMsgLinuxProcessFdCount _ m) = put m
       encoder (SBPMsgLinuxProcessFdSummary _ m) = put m
       encoder (SBPMsgLinuxProcessSocketCounts _ m) = put m
       encoder (SBPMsgLinuxProcessSocketQueues _ m) = put m
       encoder (SBPMsgLinuxSocketUsage _ m) = put m
       encoder (SBPMsgLinuxSysState _ m) = put m
+      encoder (SBPMsgLinuxSysStateDepA _ m) = put m
       encoder (SBPMsgLog _ m) = put m
       encoder (SBPMsgM25FlashWriteStatus _ m) = put m
       encoder (SBPMsgMagRaw _ m) = put m
@@ -756,13 +765,16 @@ instance FromJSON SBPMsg where
         | msgType == msgInsUpdates = SBPMsgInsUpdates <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgIono = SBPMsgIono <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxCpuState = SBPMsgLinuxCpuState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgLinuxCpuStateDepA = SBPMsgLinuxCpuStateDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxMemState = SBPMsgLinuxMemState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgLinuxMemStateDepA = SBPMsgLinuxMemStateDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxProcessFdCount = SBPMsgLinuxProcessFdCount <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxProcessFdSummary = SBPMsgLinuxProcessFdSummary <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxProcessSocketCounts = SBPMsgLinuxProcessSocketCounts <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxProcessSocketQueues = SBPMsgLinuxProcessSocketQueues <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxSocketUsage = SBPMsgLinuxSocketUsage <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLinuxSysState = SBPMsgLinuxSysState <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgLinuxSysStateDepA = SBPMsgLinuxSysStateDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgLog = SBPMsgLog <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgM25FlashWriteStatus = SBPMsgM25FlashWriteStatus <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgMagRaw = SBPMsgMagRaw <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -960,13 +972,16 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgInsUpdates n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgIono n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxCpuState n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgLinuxCpuStateDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxMemState n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgLinuxMemStateDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxProcessFdCount n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxProcessFdSummary n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxProcessSocketCounts n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxProcessSocketQueues n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxSocketUsage n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLinuxSysState n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgLinuxSysStateDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgLog n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgM25FlashWriteStatus n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgMagRaw n m) = toJSON n <<>> toJSON m
@@ -1158,13 +1173,16 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgInsUpdates n m) = SBPMsgInsUpdates n <$> f m
   msg f (SBPMsgIono n m) = SBPMsgIono n <$> f m
   msg f (SBPMsgLinuxCpuState n m) = SBPMsgLinuxCpuState n <$> f m
+  msg f (SBPMsgLinuxCpuStateDepA n m) = SBPMsgLinuxCpuStateDepA n <$> f m
   msg f (SBPMsgLinuxMemState n m) = SBPMsgLinuxMemState n <$> f m
+  msg f (SBPMsgLinuxMemStateDepA n m) = SBPMsgLinuxMemStateDepA n <$> f m
   msg f (SBPMsgLinuxProcessFdCount n m) = SBPMsgLinuxProcessFdCount n <$> f m
   msg f (SBPMsgLinuxProcessFdSummary n m) = SBPMsgLinuxProcessFdSummary n <$> f m
   msg f (SBPMsgLinuxProcessSocketCounts n m) = SBPMsgLinuxProcessSocketCounts n <$> f m
   msg f (SBPMsgLinuxProcessSocketQueues n m) = SBPMsgLinuxProcessSocketQueues n <$> f m
   msg f (SBPMsgLinuxSocketUsage n m) = SBPMsgLinuxSocketUsage n <$> f m
   msg f (SBPMsgLinuxSysState n m) = SBPMsgLinuxSysState n <$> f m
+  msg f (SBPMsgLinuxSysStateDepA n m) = SBPMsgLinuxSysStateDepA n <$> f m
   msg f (SBPMsgLog n m) = SBPMsgLog n <$> f m
   msg f (SBPMsgM25FlashWriteStatus n m) = SBPMsgM25FlashWriteStatus n <$> f m
   msg f (SBPMsgMagRaw n m) = SBPMsgMagRaw n <$> f m
