@@ -13,6 +13,7 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 //! Linux state monitoring.
+//!
 
 #[allow(unused_imports)]
 use byteorder::{LittleEndian, ReadBytesExt};
@@ -25,7 +26,8 @@ use crate::SbpString;
 /// List CPU state on the system
 ///
 /// This message indicates the process state of the top 10 heaviest
-/// consumers of CPU on the system.
+/// consumers of CPU on the system, including a timestamp.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -38,6 +40,10 @@ pub struct MsgLinuxCpuState {
     pub pid: u16,
     /// percent of cpu used, expressed as a fraction of 256
     pub pcpu: u8,
+    /// timestamp of message, refer to flags field for how to interpret
+    pub time: u32,
+    /// flags
+    pub flags: u8,
     /// fixed length string representing the thread name
     pub tname: SbpString,
     /// the command line (as much as it fits in the remaining packet)
@@ -52,6 +58,8 @@ impl MsgLinuxCpuState {
             index: _buf.read_u8()?,
             pid: _buf.read_u16::<LittleEndian>()?,
             pcpu: _buf.read_u8()?,
+            time: _buf.read_u32::<LittleEndian>()?,
+            flags: _buf.read_u8()?,
             tname: crate::parser::read_string_limit(_buf, 15)?,
             cmdline: crate::parser::read_string(_buf)?,
         } )
@@ -59,7 +67,7 @@ impl MsgLinuxCpuState {
 }
 impl super::SBPMessage for MsgLinuxCpuState {
     fn get_message_type(&self) -> u16 {
-        32512
+        32520
     }
 
     fn get_sender_id(&self) -> Option<u16> {
@@ -87,6 +95,91 @@ impl crate::serialize::SbpSerialize for MsgLinuxCpuState {
         self.index.append_to_sbp_buffer(buf);
         self.pid.append_to_sbp_buffer(buf);
         self.pcpu.append_to_sbp_buffer(buf);
+        self.time.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+        self.tname.append_to_sbp_buffer(buf);
+        self.cmdline.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.index.sbp_size();
+        size += self.pid.sbp_size();
+        size += self.pcpu.sbp_size();
+        size += self.time.sbp_size();
+        size += self.flags.sbp_size();
+        size += self.tname.sbp_size();
+        size += self.cmdline.sbp_size();
+        size
+    }
+}
+
+/// List CPU state on the system. DEPRECATED.
+///
+/// This message indicates the process state of the top 10 heaviest
+/// consumers of CPU on the system.
+///
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[derive(Debug, Clone)]
+#[allow(non_snake_case)]
+pub struct MsgLinuxCpuStateDepA {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    pub sender_id: Option<u16>,
+    /// sequence of this status message, values from 0-9
+    pub index: u8,
+    /// the PID of the process
+    pub pid: u16,
+    /// percent of cpu used, expressed as a fraction of 256
+    pub pcpu: u8,
+    /// fixed length string representing the thread name
+    pub tname: SbpString,
+    /// the command line (as much as it fits in the remaining packet)
+    pub cmdline: SbpString,
+}
+
+impl MsgLinuxCpuStateDepA {
+    #[rustfmt::skip]
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxCpuStateDepA, crate::Error> {
+        Ok( MsgLinuxCpuStateDepA{
+            sender_id: None,
+            index: _buf.read_u8()?,
+            pid: _buf.read_u16::<LittleEndian>()?,
+            pcpu: _buf.read_u8()?,
+            tname: crate::parser::read_string_limit(_buf, 15)?,
+            cmdline: crate::parser::read_string(_buf)?,
+        } )
+    }
+}
+impl super::SBPMessage for MsgLinuxCpuStateDepA {
+    fn get_message_type(&self) -> u16 {
+        32512
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgLinuxCpuStateDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.index.append_to_sbp_buffer(buf);
+        self.pid.append_to_sbp_buffer(buf);
+        self.pcpu.append_to_sbp_buffer(buf);
         self.tname.append_to_sbp_buffer(buf);
         self.cmdline.append_to_sbp_buffer(buf);
     }
@@ -102,10 +195,11 @@ impl crate::serialize::SbpSerialize for MsgLinuxCpuState {
     }
 }
 
-/// List CPU state on the system
+/// List memory state on the system
 ///
 /// This message indicates the process state of the top 10 heaviest
-/// consumers of memory on the system.
+/// consumers of memory on the system, including a timestamp.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -118,6 +212,10 @@ pub struct MsgLinuxMemState {
     pub pid: u16,
     /// percent of memory used, expressed as a fraction of 256
     pub pmem: u8,
+    /// timestamp of message, refer to flags field for how to interpret
+    pub time: u32,
+    /// flags
+    pub flags: u8,
     /// fixed length string representing the thread name
     pub tname: SbpString,
     /// the command line (as much as it fits in the remaining packet)
@@ -132,6 +230,8 @@ impl MsgLinuxMemState {
             index: _buf.read_u8()?,
             pid: _buf.read_u16::<LittleEndian>()?,
             pmem: _buf.read_u8()?,
+            time: _buf.read_u32::<LittleEndian>()?,
+            flags: _buf.read_u8()?,
             tname: crate::parser::read_string_limit(_buf, 15)?,
             cmdline: crate::parser::read_string(_buf)?,
         } )
@@ -139,7 +239,7 @@ impl MsgLinuxMemState {
 }
 impl super::SBPMessage for MsgLinuxMemState {
     fn get_message_type(&self) -> u16 {
-        32513
+        32521
     }
 
     fn get_sender_id(&self) -> Option<u16> {
@@ -167,6 +267,91 @@ impl crate::serialize::SbpSerialize for MsgLinuxMemState {
         self.index.append_to_sbp_buffer(buf);
         self.pid.append_to_sbp_buffer(buf);
         self.pmem.append_to_sbp_buffer(buf);
+        self.time.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+        self.tname.append_to_sbp_buffer(buf);
+        self.cmdline.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.index.sbp_size();
+        size += self.pid.sbp_size();
+        size += self.pmem.sbp_size();
+        size += self.time.sbp_size();
+        size += self.flags.sbp_size();
+        size += self.tname.sbp_size();
+        size += self.cmdline.sbp_size();
+        size
+    }
+}
+
+/// List memory state on the system. DEPRECATED.
+///
+/// This message indicates the process state of the top 10 heaviest
+/// consumers of memory on the system.
+///
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[derive(Debug, Clone)]
+#[allow(non_snake_case)]
+pub struct MsgLinuxMemStateDepA {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    pub sender_id: Option<u16>,
+    /// sequence of this status message, values from 0-9
+    pub index: u8,
+    /// the PID of the process
+    pub pid: u16,
+    /// percent of memory used, expressed as a fraction of 256
+    pub pmem: u8,
+    /// fixed length string representing the thread name
+    pub tname: SbpString,
+    /// the command line (as much as it fits in the remaining packet)
+    pub cmdline: SbpString,
+}
+
+impl MsgLinuxMemStateDepA {
+    #[rustfmt::skip]
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxMemStateDepA, crate::Error> {
+        Ok( MsgLinuxMemStateDepA{
+            sender_id: None,
+            index: _buf.read_u8()?,
+            pid: _buf.read_u16::<LittleEndian>()?,
+            pmem: _buf.read_u8()?,
+            tname: crate::parser::read_string_limit(_buf, 15)?,
+            cmdline: crate::parser::read_string(_buf)?,
+        } )
+    }
+}
+impl super::SBPMessage for MsgLinuxMemStateDepA {
+    fn get_message_type(&self) -> u16 {
+        32513
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgLinuxMemStateDepA {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.index.append_to_sbp_buffer(buf);
+        self.pid.append_to_sbp_buffer(buf);
+        self.pmem.append_to_sbp_buffer(buf);
         self.tname.append_to_sbp_buffer(buf);
         self.cmdline.append_to_sbp_buffer(buf);
     }
@@ -185,6 +370,7 @@ impl crate::serialize::SbpSerialize for MsgLinuxMemState {
 /// Summary of processes with large amounts of open file descriptors
 ///
 /// Top 10 list of processes with a large number of open file descriptors.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -259,6 +445,7 @@ impl crate::serialize::SbpSerialize for MsgLinuxProcessFdCount {
 /// Summary of open file descriptors on the system
 ///
 /// Summary of open file descriptors on the system.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -327,6 +514,7 @@ impl crate::serialize::SbpSerialize for MsgLinuxProcessFdSummary {
 /// A list of processes with high socket counts
 ///
 /// Top 10 list of processes with high socket counts.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -415,6 +603,7 @@ impl crate::serialize::SbpSerialize for MsgLinuxProcessSocketCounts {
 /// A list of processes with deep socket queues
 ///
 /// Top 10 list of sockets with deep queues.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -514,6 +703,7 @@ impl crate::serialize::SbpSerialize for MsgLinuxProcessSocketQueues {
 /// Summary of socket usage across the system
 ///
 /// Summaries the socket usage across the system.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -589,9 +779,10 @@ impl crate::serialize::SbpSerialize for MsgLinuxSocketUsage {
     }
 }
 
-/// CPU, Memory and Process Starts/Stops
+/// CPU, Memory and Process Starts/Stops.
 ///
-/// This presents a summary of CPU and memory utilization.
+/// This presents a summary of CPU and memory utilization, including a timestamp.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -610,6 +801,10 @@ pub struct MsgLinuxSysState {
     pub procs_stopping: u16,
     /// the count of processes on the system
     pub pid_count: u16,
+    /// timestamp of message, refer to flags field for how to interpret
+    pub time: u32,
+    /// flags
+    pub flags: u8,
 }
 
 impl MsgLinuxSysState {
@@ -623,10 +818,101 @@ impl MsgLinuxSysState {
             procs_starting: _buf.read_u16::<LittleEndian>()?,
             procs_stopping: _buf.read_u16::<LittleEndian>()?,
             pid_count: _buf.read_u16::<LittleEndian>()?,
+            time: _buf.read_u32::<LittleEndian>()?,
+            flags: _buf.read_u8()?,
         } )
     }
 }
 impl super::SBPMessage for MsgLinuxSysState {
+    fn get_message_type(&self) -> u16 {
+        32522
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgLinuxSysState {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.mem_total.append_to_sbp_buffer(buf);
+        self.pcpu.append_to_sbp_buffer(buf);
+        self.pmem.append_to_sbp_buffer(buf);
+        self.procs_starting.append_to_sbp_buffer(buf);
+        self.procs_stopping.append_to_sbp_buffer(buf);
+        self.pid_count.append_to_sbp_buffer(buf);
+        self.time.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.mem_total.sbp_size();
+        size += self.pcpu.sbp_size();
+        size += self.pmem.sbp_size();
+        size += self.procs_starting.sbp_size();
+        size += self.procs_stopping.sbp_size();
+        size += self.pid_count.sbp_size();
+        size += self.time.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
+/// CPU, Memory and Process Starts/Stops. DEPRECATED.
+///
+/// This presents a summary of CPU and memory utilization.
+///
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[derive(Debug, Clone)]
+#[allow(non_snake_case)]
+pub struct MsgLinuxSysStateDepA {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    pub sender_id: Option<u16>,
+    /// total system memory
+    pub mem_total: u16,
+    /// percent of total cpu currently utilized
+    pub pcpu: u8,
+    /// percent of total memory currently utilized
+    pub pmem: u8,
+    /// number of processes that started during collection phase
+    pub procs_starting: u16,
+    /// number of processes that stopped during collection phase
+    pub procs_stopping: u16,
+    /// the count of processes on the system
+    pub pid_count: u16,
+}
+
+impl MsgLinuxSysStateDepA {
+    #[rustfmt::skip]
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgLinuxSysStateDepA, crate::Error> {
+        Ok( MsgLinuxSysStateDepA{
+            sender_id: None,
+            mem_total: _buf.read_u16::<LittleEndian>()?,
+            pcpu: _buf.read_u8()?,
+            pmem: _buf.read_u8()?,
+            procs_starting: _buf.read_u16::<LittleEndian>()?,
+            procs_stopping: _buf.read_u16::<LittleEndian>()?,
+            pid_count: _buf.read_u16::<LittleEndian>()?,
+        } )
+    }
+}
+impl super::SBPMessage for MsgLinuxSysStateDepA {
     fn get_message_type(&self) -> u16 {
         32514
     }
@@ -650,7 +936,7 @@ impl super::SBPMessage for MsgLinuxSysState {
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgLinuxSysState {
+impl crate::serialize::SbpSerialize for MsgLinuxSysStateDepA {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.mem_total.append_to_sbp_buffer(buf);

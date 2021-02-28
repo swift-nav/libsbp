@@ -22,17 +22,17 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 
-/** SBP class for message MSG_LINUX_CPU_STATE (0x7F08).
+/** SBP class for message MSG_LINUX_MEM_STATE_DEP_A (0x7F01).
  *
- * You can have MSG_LINUX_CPU_STATE inherent its fields directly from
+ * You can have MSG_LINUX_MEM_STATE_DEP_A inherent its fields directly from
  * an inherited SBP object, or construct it inline using a dict of its
  * fields.
  *
  * This message indicates the process state of the top 10 heaviest
- * consumers of CPU on the system, including a timestamp. */
+ * consumers of memory on the system. */
 
-public class MsgLinuxCpuState extends SBPMessage {
-    public static final int TYPE = 0x7F08;
+public class MsgLinuxMemStateDepA extends SBPMessage {
+    public static final int TYPE = 0x7F01;
 
     
     /** sequence of this status message, values from 0-9 */
@@ -41,14 +41,8 @@ public class MsgLinuxCpuState extends SBPMessage {
     /** the PID of the process */
     public int pid;
     
-    /** percent of cpu used, expressed as a fraction of 256 */
-    public int pcpu;
-    
-    /** timestamp of message, refer to flags field for how to interpret */
-    public long time;
-    
-    /** flags */
-    public int flags;
+    /** percent of memory used, expressed as a fraction of 256 */
+    public int pmem;
     
     /** fixed length string representing the thread name */
     public String tname;
@@ -57,9 +51,9 @@ public class MsgLinuxCpuState extends SBPMessage {
     public String cmdline;
     
 
-    public MsgLinuxCpuState (int sender) { super(sender, TYPE); }
-    public MsgLinuxCpuState () { super(TYPE); }
-    public MsgLinuxCpuState (SBPMessage msg) throws SBPBinaryException {
+    public MsgLinuxMemStateDepA (int sender) { super(sender, TYPE); }
+    public MsgLinuxMemStateDepA () { super(TYPE); }
+    public MsgLinuxMemStateDepA (SBPMessage msg) throws SBPBinaryException {
         super(msg);
         assert msg.type != TYPE;
     }
@@ -69,9 +63,7 @@ public class MsgLinuxCpuState extends SBPMessage {
         /* Parse fields from binary */
         index = parser.getU8();
         pid = parser.getU16();
-        pcpu = parser.getU8();
-        time = parser.getU32();
-        flags = parser.getU8();
+        pmem = parser.getU8();
         tname = parser.getString(15);
         cmdline = parser.getString();
     }
@@ -80,9 +72,7 @@ public class MsgLinuxCpuState extends SBPMessage {
     protected void build(Builder builder) {
         builder.putU8(index);
         builder.putU16(pid);
-        builder.putU8(pcpu);
-        builder.putU32(time);
-        builder.putU8(flags);
+        builder.putU8(pmem);
         builder.putString(tname, 15);
         builder.putString(cmdline);
     }
@@ -92,9 +82,7 @@ public class MsgLinuxCpuState extends SBPMessage {
         JSONObject obj = super.toJSON();
         obj.put("index", index);
         obj.put("pid", pid);
-        obj.put("pcpu", pcpu);
-        obj.put("time", time);
-        obj.put("flags", flags);
+        obj.put("pmem", pmem);
         obj.put("tname", tname);
         obj.put("cmdline", cmdline);
         return obj;

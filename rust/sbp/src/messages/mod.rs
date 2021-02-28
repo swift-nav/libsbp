@@ -66,13 +66,16 @@ use self::flash::MsgStmUniqueIdResp;
 use self::imu::MsgImuAux;
 use self::imu::MsgImuRaw;
 use self::linux::MsgLinuxCpuState;
+use self::linux::MsgLinuxCpuStateDepA;
 use self::linux::MsgLinuxMemState;
+use self::linux::MsgLinuxMemStateDepA;
 use self::linux::MsgLinuxProcessFdCount;
 use self::linux::MsgLinuxProcessFdSummary;
 use self::linux::MsgLinuxProcessSocketCounts;
 use self::linux::MsgLinuxProcessSocketQueues;
 use self::linux::MsgLinuxSocketUsage;
 use self::linux::MsgLinuxSysState;
+use self::linux::MsgLinuxSysStateDepA;
 use self::logging::MsgFwd;
 use self::logging::MsgLog;
 use self::logging::MsgPrintDep;
@@ -415,14 +418,17 @@ pub enum SBP {
     MsgFileioConfigReq(MsgFileioConfigReq),
     MsgFileioConfigResp(MsgFileioConfigResp),
     MsgSbasRaw(MsgSbasRaw),
-    MsgLinuxCpuState(MsgLinuxCpuState),
-    MsgLinuxMemState(MsgLinuxMemState),
-    MsgLinuxSysState(MsgLinuxSysState),
+    MsgLinuxCpuStateDepA(MsgLinuxCpuStateDepA),
+    MsgLinuxMemStateDepA(MsgLinuxMemStateDepA),
+    MsgLinuxSysStateDepA(MsgLinuxSysStateDepA),
     MsgLinuxProcessSocketCounts(MsgLinuxProcessSocketCounts),
     MsgLinuxProcessSocketQueues(MsgLinuxProcessSocketQueues),
     MsgLinuxSocketUsage(MsgLinuxSocketUsage),
     MsgLinuxProcessFdCount(MsgLinuxProcessFdCount),
     MsgLinuxProcessFdSummary(MsgLinuxProcessFdSummary),
+    MsgLinuxCpuState(MsgLinuxCpuState),
+    MsgLinuxMemState(MsgLinuxMemState),
+    MsgLinuxSysState(MsgLinuxSysState),
     MsgStartup(MsgStartup),
     MsgDgnssStatus(MsgDgnssStatus),
     MsgInsStatus(MsgInsStatus),
@@ -1316,19 +1322,19 @@ impl SBP {
                 Ok(SBP::MsgSbasRaw(msg))
             }
             32512 => {
-                let mut msg = MsgLinuxCpuState::parse(payload)?;
+                let mut msg = MsgLinuxCpuStateDepA::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgLinuxCpuState(msg))
+                Ok(SBP::MsgLinuxCpuStateDepA(msg))
             }
             32513 => {
-                let mut msg = MsgLinuxMemState::parse(payload)?;
+                let mut msg = MsgLinuxMemStateDepA::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgLinuxMemState(msg))
+                Ok(SBP::MsgLinuxMemStateDepA(msg))
             }
             32514 => {
-                let mut msg = MsgLinuxSysState::parse(payload)?;
+                let mut msg = MsgLinuxSysStateDepA::parse(payload)?;
                 msg.set_sender_id(sender_id);
-                Ok(SBP::MsgLinuxSysState(msg))
+                Ok(SBP::MsgLinuxSysStateDepA(msg))
             }
             32515 => {
                 let mut msg = MsgLinuxProcessSocketCounts::parse(payload)?;
@@ -1354,6 +1360,21 @@ impl SBP {
                 let mut msg = MsgLinuxProcessFdSummary::parse(payload)?;
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgLinuxProcessFdSummary(msg))
+            }
+            32520 => {
+                let mut msg = MsgLinuxCpuState::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgLinuxCpuState(msg))
+            }
+            32521 => {
+                let mut msg = MsgLinuxMemState::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgLinuxMemState(msg))
+            }
+            32522 => {
+                let mut msg = MsgLinuxSysState::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgLinuxSysState(msg))
             }
             65280 => {
                 let mut msg = MsgStartup::parse(payload)?;
@@ -1597,14 +1618,17 @@ impl crate::SBPMessage for SBP {
             SBP::MsgFileioConfigReq(msg) => msg.get_message_type(),
             SBP::MsgFileioConfigResp(msg) => msg.get_message_type(),
             SBP::MsgSbasRaw(msg) => msg.get_message_type(),
-            SBP::MsgLinuxCpuState(msg) => msg.get_message_type(),
-            SBP::MsgLinuxMemState(msg) => msg.get_message_type(),
-            SBP::MsgLinuxSysState(msg) => msg.get_message_type(),
+            SBP::MsgLinuxCpuStateDepA(msg) => msg.get_message_type(),
+            SBP::MsgLinuxMemStateDepA(msg) => msg.get_message_type(),
+            SBP::MsgLinuxSysStateDepA(msg) => msg.get_message_type(),
             SBP::MsgLinuxProcessSocketCounts(msg) => msg.get_message_type(),
             SBP::MsgLinuxProcessSocketQueues(msg) => msg.get_message_type(),
             SBP::MsgLinuxSocketUsage(msg) => msg.get_message_type(),
             SBP::MsgLinuxProcessFdCount(msg) => msg.get_message_type(),
             SBP::MsgLinuxProcessFdSummary(msg) => msg.get_message_type(),
+            SBP::MsgLinuxCpuState(msg) => msg.get_message_type(),
+            SBP::MsgLinuxMemState(msg) => msg.get_message_type(),
+            SBP::MsgLinuxSysState(msg) => msg.get_message_type(),
             SBP::MsgStartup(msg) => msg.get_message_type(),
             SBP::MsgDgnssStatus(msg) => msg.get_message_type(),
             SBP::MsgInsStatus(msg) => msg.get_message_type(),
@@ -1797,14 +1821,17 @@ impl crate::SBPMessage for SBP {
             SBP::MsgFileioConfigReq(msg) => msg.get_sender_id(),
             SBP::MsgFileioConfigResp(msg) => msg.get_sender_id(),
             SBP::MsgSbasRaw(msg) => msg.get_sender_id(),
-            SBP::MsgLinuxCpuState(msg) => msg.get_sender_id(),
-            SBP::MsgLinuxMemState(msg) => msg.get_sender_id(),
-            SBP::MsgLinuxSysState(msg) => msg.get_sender_id(),
+            SBP::MsgLinuxCpuStateDepA(msg) => msg.get_sender_id(),
+            SBP::MsgLinuxMemStateDepA(msg) => msg.get_sender_id(),
+            SBP::MsgLinuxSysStateDepA(msg) => msg.get_sender_id(),
             SBP::MsgLinuxProcessSocketCounts(msg) => msg.get_sender_id(),
             SBP::MsgLinuxProcessSocketQueues(msg) => msg.get_sender_id(),
             SBP::MsgLinuxSocketUsage(msg) => msg.get_sender_id(),
             SBP::MsgLinuxProcessFdCount(msg) => msg.get_sender_id(),
             SBP::MsgLinuxProcessFdSummary(msg) => msg.get_sender_id(),
+            SBP::MsgLinuxCpuState(msg) => msg.get_sender_id(),
+            SBP::MsgLinuxMemState(msg) => msg.get_sender_id(),
+            SBP::MsgLinuxSysState(msg) => msg.get_sender_id(),
             SBP::MsgStartup(msg) => msg.get_sender_id(),
             SBP::MsgDgnssStatus(msg) => msg.get_sender_id(),
             SBP::MsgInsStatus(msg) => msg.get_sender_id(),
@@ -1997,14 +2024,17 @@ impl crate::SBPMessage for SBP {
             SBP::MsgFileioConfigReq(msg) => msg.set_sender_id(new_id),
             SBP::MsgFileioConfigResp(msg) => msg.set_sender_id(new_id),
             SBP::MsgSbasRaw(msg) => msg.set_sender_id(new_id),
-            SBP::MsgLinuxCpuState(msg) => msg.set_sender_id(new_id),
-            SBP::MsgLinuxMemState(msg) => msg.set_sender_id(new_id),
-            SBP::MsgLinuxSysState(msg) => msg.set_sender_id(new_id),
+            SBP::MsgLinuxCpuStateDepA(msg) => msg.set_sender_id(new_id),
+            SBP::MsgLinuxMemStateDepA(msg) => msg.set_sender_id(new_id),
+            SBP::MsgLinuxSysStateDepA(msg) => msg.set_sender_id(new_id),
             SBP::MsgLinuxProcessSocketCounts(msg) => msg.set_sender_id(new_id),
             SBP::MsgLinuxProcessSocketQueues(msg) => msg.set_sender_id(new_id),
             SBP::MsgLinuxSocketUsage(msg) => msg.set_sender_id(new_id),
             SBP::MsgLinuxProcessFdCount(msg) => msg.set_sender_id(new_id),
             SBP::MsgLinuxProcessFdSummary(msg) => msg.set_sender_id(new_id),
+            SBP::MsgLinuxCpuState(msg) => msg.set_sender_id(new_id),
+            SBP::MsgLinuxMemState(msg) => msg.set_sender_id(new_id),
+            SBP::MsgLinuxSysState(msg) => msg.set_sender_id(new_id),
             SBP::MsgStartup(msg) => msg.set_sender_id(new_id),
             SBP::MsgDgnssStatus(msg) => msg.set_sender_id(new_id),
             SBP::MsgInsStatus(msg) => msg.set_sender_id(new_id),
@@ -2197,14 +2227,17 @@ impl crate::SBPMessage for SBP {
             SBP::MsgFileioConfigReq(msg) => msg.to_frame(),
             SBP::MsgFileioConfigResp(msg) => msg.to_frame(),
             SBP::MsgSbasRaw(msg) => msg.to_frame(),
-            SBP::MsgLinuxCpuState(msg) => msg.to_frame(),
-            SBP::MsgLinuxMemState(msg) => msg.to_frame(),
-            SBP::MsgLinuxSysState(msg) => msg.to_frame(),
+            SBP::MsgLinuxCpuStateDepA(msg) => msg.to_frame(),
+            SBP::MsgLinuxMemStateDepA(msg) => msg.to_frame(),
+            SBP::MsgLinuxSysStateDepA(msg) => msg.to_frame(),
             SBP::MsgLinuxProcessSocketCounts(msg) => msg.to_frame(),
             SBP::MsgLinuxProcessSocketQueues(msg) => msg.to_frame(),
             SBP::MsgLinuxSocketUsage(msg) => msg.to_frame(),
             SBP::MsgLinuxProcessFdCount(msg) => msg.to_frame(),
             SBP::MsgLinuxProcessFdSummary(msg) => msg.to_frame(),
+            SBP::MsgLinuxCpuState(msg) => msg.to_frame(),
+            SBP::MsgLinuxMemState(msg) => msg.to_frame(),
+            SBP::MsgLinuxSysState(msg) => msg.to_frame(),
             SBP::MsgStartup(msg) => msg.to_frame(),
             SBP::MsgDgnssStatus(msg) => msg.to_frame(),
             SBP::MsgInsStatus(msg) => msg.to_frame(),
@@ -2397,14 +2430,17 @@ impl crate::SBPMessage for SBP {
             SBP::MsgFileioConfigReq(msg) => msg.write_frame(buf),
             SBP::MsgFileioConfigResp(msg) => msg.write_frame(buf),
             SBP::MsgSbasRaw(msg) => msg.write_frame(buf),
-            SBP::MsgLinuxCpuState(msg) => msg.write_frame(buf),
-            SBP::MsgLinuxMemState(msg) => msg.write_frame(buf),
-            SBP::MsgLinuxSysState(msg) => msg.write_frame(buf),
+            SBP::MsgLinuxCpuStateDepA(msg) => msg.write_frame(buf),
+            SBP::MsgLinuxMemStateDepA(msg) => msg.write_frame(buf),
+            SBP::MsgLinuxSysStateDepA(msg) => msg.write_frame(buf),
             SBP::MsgLinuxProcessSocketCounts(msg) => msg.write_frame(buf),
             SBP::MsgLinuxProcessSocketQueues(msg) => msg.write_frame(buf),
             SBP::MsgLinuxSocketUsage(msg) => msg.write_frame(buf),
             SBP::MsgLinuxProcessFdCount(msg) => msg.write_frame(buf),
             SBP::MsgLinuxProcessFdSummary(msg) => msg.write_frame(buf),
+            SBP::MsgLinuxCpuState(msg) => msg.write_frame(buf),
+            SBP::MsgLinuxMemState(msg) => msg.write_frame(buf),
+            SBP::MsgLinuxSysState(msg) => msg.write_frame(buf),
             SBP::MsgStartup(msg) => msg.write_frame(buf),
             SBP::MsgDgnssStatus(msg) => msg.write_frame(buf),
             SBP::MsgInsStatus(msg) => msg.write_frame(buf),
@@ -2599,14 +2635,17 @@ impl crate::SbpSerialize for SBP {
             SBP::MsgFileioConfigReq(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgFileioConfigResp(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgSbasRaw(msg) => msg.append_to_sbp_buffer(buf),
-            SBP::MsgLinuxCpuState(msg) => msg.append_to_sbp_buffer(buf),
-            SBP::MsgLinuxMemState(msg) => msg.append_to_sbp_buffer(buf),
-            SBP::MsgLinuxSysState(msg) => msg.append_to_sbp_buffer(buf),
+            SBP::MsgLinuxCpuStateDepA(msg) => msg.append_to_sbp_buffer(buf),
+            SBP::MsgLinuxMemStateDepA(msg) => msg.append_to_sbp_buffer(buf),
+            SBP::MsgLinuxSysStateDepA(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgLinuxProcessSocketCounts(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgLinuxProcessSocketQueues(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgLinuxSocketUsage(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgLinuxProcessFdCount(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgLinuxProcessFdSummary(msg) => msg.append_to_sbp_buffer(buf),
+            SBP::MsgLinuxCpuState(msg) => msg.append_to_sbp_buffer(buf),
+            SBP::MsgLinuxMemState(msg) => msg.append_to_sbp_buffer(buf),
+            SBP::MsgLinuxSysState(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgStartup(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgDgnssStatus(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgInsStatus(msg) => msg.append_to_sbp_buffer(buf),
@@ -2799,14 +2838,17 @@ impl crate::SbpSerialize for SBP {
             SBP::MsgFileioConfigReq(msg) => msg.sbp_size(),
             SBP::MsgFileioConfigResp(msg) => msg.sbp_size(),
             SBP::MsgSbasRaw(msg) => msg.sbp_size(),
-            SBP::MsgLinuxCpuState(msg) => msg.sbp_size(),
-            SBP::MsgLinuxMemState(msg) => msg.sbp_size(),
-            SBP::MsgLinuxSysState(msg) => msg.sbp_size(),
+            SBP::MsgLinuxCpuStateDepA(msg) => msg.sbp_size(),
+            SBP::MsgLinuxMemStateDepA(msg) => msg.sbp_size(),
+            SBP::MsgLinuxSysStateDepA(msg) => msg.sbp_size(),
             SBP::MsgLinuxProcessSocketCounts(msg) => msg.sbp_size(),
             SBP::MsgLinuxProcessSocketQueues(msg) => msg.sbp_size(),
             SBP::MsgLinuxSocketUsage(msg) => msg.sbp_size(),
             SBP::MsgLinuxProcessFdCount(msg) => msg.sbp_size(),
             SBP::MsgLinuxProcessFdSummary(msg) => msg.sbp_size(),
+            SBP::MsgLinuxCpuState(msg) => msg.sbp_size(),
+            SBP::MsgLinuxMemState(msg) => msg.sbp_size(),
+            SBP::MsgLinuxSysState(msg) => msg.sbp_size(),
             SBP::MsgStartup(msg) => msg.sbp_size(),
             SBP::MsgDgnssStatus(msg) => msg.sbp_size(),
             SBP::MsgInsStatus(msg) => msg.sbp_size(),
@@ -3697,19 +3739,19 @@ impl From<MsgSbasRaw> for SBP {
         SBP::MsgSbasRaw(msg)
     }
 }
-impl From<MsgLinuxCpuState> for SBP {
-    fn from(msg: MsgLinuxCpuState) -> Self {
-        SBP::MsgLinuxCpuState(msg)
+impl From<MsgLinuxCpuStateDepA> for SBP {
+    fn from(msg: MsgLinuxCpuStateDepA) -> Self {
+        SBP::MsgLinuxCpuStateDepA(msg)
     }
 }
-impl From<MsgLinuxMemState> for SBP {
-    fn from(msg: MsgLinuxMemState) -> Self {
-        SBP::MsgLinuxMemState(msg)
+impl From<MsgLinuxMemStateDepA> for SBP {
+    fn from(msg: MsgLinuxMemStateDepA) -> Self {
+        SBP::MsgLinuxMemStateDepA(msg)
     }
 }
-impl From<MsgLinuxSysState> for SBP {
-    fn from(msg: MsgLinuxSysState) -> Self {
-        SBP::MsgLinuxSysState(msg)
+impl From<MsgLinuxSysStateDepA> for SBP {
+    fn from(msg: MsgLinuxSysStateDepA) -> Self {
+        SBP::MsgLinuxSysStateDepA(msg)
     }
 }
 impl From<MsgLinuxProcessSocketCounts> for SBP {
@@ -3735,6 +3777,21 @@ impl From<MsgLinuxProcessFdCount> for SBP {
 impl From<MsgLinuxProcessFdSummary> for SBP {
     fn from(msg: MsgLinuxProcessFdSummary) -> Self {
         SBP::MsgLinuxProcessFdSummary(msg)
+    }
+}
+impl From<MsgLinuxCpuState> for SBP {
+    fn from(msg: MsgLinuxCpuState) -> Self {
+        SBP::MsgLinuxCpuState(msg)
+    }
+}
+impl From<MsgLinuxMemState> for SBP {
+    fn from(msg: MsgLinuxMemState) -> Self {
+        SBP::MsgLinuxMemState(msg)
+    }
+}
+impl From<MsgLinuxSysState> for SBP {
+    fn from(msg: MsgLinuxSysState) -> Self {
+        SBP::MsgLinuxSysState(msg)
     }
 }
 impl From<MsgStartup> for SBP {

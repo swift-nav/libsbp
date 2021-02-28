@@ -28,11 +28,11 @@ from sbp.jit.msg import get_array, get_fixed_array
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/linux.yaml with generate.py.
 # Please do not hand edit!
-SBP_MSG_LINUX_CPU_STATE = 0x7F00
-class MsgLinuxCpuState(SBP):
-  """SBP class for message MSG_LINUX_CPU_STATE (0x7F00).
+SBP_MSG_LINUX_CPU_STATE_DEP_A = 0x7F00
+class MsgLinuxCpuStateDepA(SBP):
+  """SBP class for message MSG_LINUX_CPU_STATE_DEP_A (0x7F00).
 
-  You can have MSG_LINUX_CPU_STATE inherit its fields directly
+  You can have MSG_LINUX_CPU_STATE_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -75,11 +75,11 @@ consumers of CPU on the system.
     return res, off, length
 
   
-SBP_MSG_LINUX_MEM_STATE = 0x7F01
-class MsgLinuxMemState(SBP):
-  """SBP class for message MSG_LINUX_MEM_STATE (0x7F01).
+SBP_MSG_LINUX_MEM_STATE_DEP_A = 0x7F01
+class MsgLinuxMemStateDepA(SBP):
+  """SBP class for message MSG_LINUX_MEM_STATE_DEP_A (0x7F01).
 
-  You can have MSG_LINUX_MEM_STATE inherit its fields directly
+  You can have MSG_LINUX_MEM_STATE_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -122,11 +122,11 @@ consumers of memory on the system.
     return res, off, length
 
   
-SBP_MSG_LINUX_SYS_STATE = 0x7F02
-class MsgLinuxSysState(SBP):
-  """SBP class for message MSG_LINUX_SYS_STATE (0x7F02).
+SBP_MSG_LINUX_SYS_STATE_DEP_A = 0x7F02
+class MsgLinuxSysStateDepA(SBP):
+  """SBP class for message MSG_LINUX_SYS_STATE_DEP_A (0x7F02).
 
-  You can have MSG_LINUX_SYS_STATE inherit its fields directly
+  You can have MSG_LINUX_SYS_STATE_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -398,14 +398,185 @@ class MsgLinuxProcessFdSummary(SBP):
     return res, off, length
 
   
+SBP_MSG_LINUX_CPU_STATE = 0x7F08
+class MsgLinuxCpuState(SBP):
+  """SBP class for message MSG_LINUX_CPU_STATE (0x7F08).
+
+  You can have MSG_LINUX_CPU_STATE inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message indicates the process state of the top 10 heaviest
+consumers of CPU on the system, including a timestamp.
+
+
+  """
+  __slots__ = ['index',
+               'pid',
+               'pcpu',
+               'time',
+               'flags',
+               'tname',
+               'cmdline',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__index, offset, length) = get_u8(buf, offset, length)
+    ret['index'] = __index
+    (__pid, offset, length) = get_u16(buf, offset, length)
+    ret['pid'] = __pid
+    (__pcpu, offset, length) = get_u8(buf, offset, length)
+    ret['pcpu'] = __pcpu
+    (__time, offset, length) = get_u32(buf, offset, length)
+    ret['time'] = __time
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    (__tname, offset, length) = get_fixed_string(15)(buf, offset, length)
+    ret['tname'] = __tname
+    (__cmdline, offset, length) = get_string(buf, offset, length)
+    ret['cmdline'] = __cmdline
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.index = res['index']
+    self.pid = res['pid']
+    self.pcpu = res['pcpu']
+    self.time = res['time']
+    self.flags = res['flags']
+    self.tname = res['tname']
+    self.cmdline = res['cmdline']
+    return res, off, length
+
+  
+SBP_MSG_LINUX_MEM_STATE = 0x7F09
+class MsgLinuxMemState(SBP):
+  """SBP class for message MSG_LINUX_MEM_STATE (0x7F09).
+
+  You can have MSG_LINUX_MEM_STATE inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message indicates the process state of the top 10 heaviest
+consumers of memory on the system, including a timestamp.
+
+
+  """
+  __slots__ = ['index',
+               'pid',
+               'pmem',
+               'time',
+               'flags',
+               'tname',
+               'cmdline',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__index, offset, length) = get_u8(buf, offset, length)
+    ret['index'] = __index
+    (__pid, offset, length) = get_u16(buf, offset, length)
+    ret['pid'] = __pid
+    (__pmem, offset, length) = get_u8(buf, offset, length)
+    ret['pmem'] = __pmem
+    (__time, offset, length) = get_u32(buf, offset, length)
+    ret['time'] = __time
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    (__tname, offset, length) = get_fixed_string(15)(buf, offset, length)
+    ret['tname'] = __tname
+    (__cmdline, offset, length) = get_string(buf, offset, length)
+    ret['cmdline'] = __cmdline
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.index = res['index']
+    self.pid = res['pid']
+    self.pmem = res['pmem']
+    self.time = res['time']
+    self.flags = res['flags']
+    self.tname = res['tname']
+    self.cmdline = res['cmdline']
+    return res, off, length
+
+  
+SBP_MSG_LINUX_SYS_STATE = 0x7F0A
+class MsgLinuxSysState(SBP):
+  """SBP class for message MSG_LINUX_SYS_STATE (0x7F0A).
+
+  You can have MSG_LINUX_SYS_STATE inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This presents a summary of CPU and memory utilization, including a timestamp.
+
+
+  """
+  __slots__ = ['mem_total',
+               'pcpu',
+               'pmem',
+               'procs_starting',
+               'procs_stopping',
+               'pid_count',
+               'time',
+               'flags',
+               ]
+  @classmethod
+  def parse_members(cls, buf, offset, length):
+    ret = {}
+    (__mem_total, offset, length) = get_u16(buf, offset, length)
+    ret['mem_total'] = __mem_total
+    (__pcpu, offset, length) = get_u8(buf, offset, length)
+    ret['pcpu'] = __pcpu
+    (__pmem, offset, length) = get_u8(buf, offset, length)
+    ret['pmem'] = __pmem
+    (__procs_starting, offset, length) = get_u16(buf, offset, length)
+    ret['procs_starting'] = __procs_starting
+    (__procs_stopping, offset, length) = get_u16(buf, offset, length)
+    ret['procs_stopping'] = __procs_stopping
+    (__pid_count, offset, length) = get_u16(buf, offset, length)
+    ret['pid_count'] = __pid_count
+    (__time, offset, length) = get_u32(buf, offset, length)
+    ret['time'] = __time
+    (__flags, offset, length) = get_u8(buf, offset, length)
+    ret['flags'] = __flags
+    return ret, offset, length
+
+  def _unpack_members(self, buf, offset, length):
+    res, off, length = self.parse_members(buf, offset, length)
+    if off == offset:
+      return {}, offset, length
+    self.mem_total = res['mem_total']
+    self.pcpu = res['pcpu']
+    self.pmem = res['pmem']
+    self.procs_starting = res['procs_starting']
+    self.procs_stopping = res['procs_stopping']
+    self.pid_count = res['pid_count']
+    self.time = res['time']
+    self.flags = res['flags']
+    return res, off, length
+
+  
 
 msg_classes = {
-  0x7F00: MsgLinuxCpuState,
-  0x7F01: MsgLinuxMemState,
-  0x7F02: MsgLinuxSysState,
+  0x7F00: MsgLinuxCpuStateDepA,
+  0x7F01: MsgLinuxMemStateDepA,
+  0x7F02: MsgLinuxSysStateDepA,
   0x7F03: MsgLinuxProcessSocketCounts,
   0x7F04: MsgLinuxProcessSocketQueues,
   0x7F05: MsgLinuxSocketUsage,
   0x7F06: MsgLinuxProcessFdCount,
   0x7F07: MsgLinuxProcessFdSummary,
+  0x7F08: MsgLinuxCpuState,
+  0x7F09: MsgLinuxMemState,
+  0x7F0A: MsgLinuxSysState,
 }
