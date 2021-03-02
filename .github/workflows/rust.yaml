@@ -95,7 +95,7 @@ jobs:
         with:
           path: artifacts
 
-      - name: Display structure of downloaded files
+      - name: Show artifacts
         run: ls -R
         working-directory: artifacts
 
