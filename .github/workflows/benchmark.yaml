@@ -4,9 +4,8 @@ on:
   push:
     tags:
       - "*"
-    branches:
-      - "master"
   pull_request:
+
 jobs:
   benchmark:
     name: Benchmark

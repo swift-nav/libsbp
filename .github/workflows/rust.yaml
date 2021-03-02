@@ -4,9 +4,9 @@ on:
   push:
     tags:
       - "*"
-    branches:
-      - master
   pull_request:
+    paths:
+      - "rust/**"
 jobs:
   lint:
     name: Format and lint

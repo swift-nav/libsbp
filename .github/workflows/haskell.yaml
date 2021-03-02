@@ -1,41 +1,17 @@
 name: Haskell
 
 on:
-  push:
-    tags:
-      - "*"
-    branches:
-      - master
+  # push:
+  #   tags:
+  #     - "*"
   pull_request:
+    paths:
+      - "haskell/**"
 jobs:
-  changes:
-    runs-on: ubuntu-latest
-    outputs:
-      haskell: ${{ steps.filter.outputs.haskell }}
-    steps:
-      - uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          filters: |
-            haskell:
-              - 'haskell/**'
-
   build:
     name: Build
-    needs: [changes]
-    if: |
-      startsWith(github.ref, 'refs/tags/v') ||
-      needs.changes.outputs.haskell == 'true' ||
-      contains(github.event.head_commit.message, '[ci all]')"
     runs-on: ubuntu-latest
     steps:
-      - uses: dorny/paths-filter@v2
-        id: changes
-        with:
-          filters: |
-            src:
-              - 'haskell/**'
-
       - uses: actions/checkout@v2
 
       - uses: haskell/actions/setup@v1
@@ -79,7 +55,7 @@ jobs:
         with:
           path: artifacts
 
-      - name: Show artifacts
+      - name: Display structure of downloaded files
         run: ls -R
         working-directory: artifacts
 
