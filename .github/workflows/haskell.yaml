@@ -27,11 +27,11 @@ jobs:
         run: |
           VERSION="$(git describe --always --tags --dirty)"
           BUILD_TRIPLET="$(cc -dumpmachine)"
-          ARTIFACT_NAME="sbp_tools_haskell-${VERSION}-${BUILD_TRIPLET}.tar.gz"
+          ARTIFACT_NAME="sbp_tools_haskell-${VERSION}-${BUILD_TRIPLET}.zip"
 
           mkdir ./bins
           stack install --local-bin-path ./bins
-          tar -C ./bins -czf $ARTIFACT_NAME \
+          zip -r ./bins -czf $ARTIFACT_NAME \
             sbp2json \
             sbp2prettyjson \
             sbp2yaml \
@@ -66,7 +66,7 @@ jobs:
         uses: svenstaro/upload-release-action@v1-release
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: "artifacts/**/*.zip"
+          file: "artifacts/*/*.zip"
           tag: ${{ github.ref }}
           overwrite: true
           file_glob: true
