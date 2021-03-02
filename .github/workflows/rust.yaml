@@ -2,11 +2,14 @@ name: Rust
 
 on:
   push:
+    branches:
+      - main
     tags:
       - "*"
   pull_request:
     paths:
       - "rust/**"
+  workflow_dispatch:
 jobs:
   lint:
     name: Format and lint

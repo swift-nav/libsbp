@@ -1,12 +1,15 @@
 name: Haskell
 
 on:
-  # push:
-  #   tags:
-  #     - "*"
+  push:
+    branches:
+      - main
+    tags:
+      - "*"
   pull_request:
     paths:
       - "haskell/**"
+  workflow_dispatch:
 jobs:
   build:
     name: Build
@@ -55,7 +58,7 @@ jobs:
         with:
           path: artifacts
 
-      - name: Display structure of downloaded files
+      - name: Show artifacts
         run: ls -R
         working-directory: artifacts
 
@@ -63,7 +66,7 @@ jobs:
         uses: svenstaro/upload-release-action@v1-release
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: "@(artifacts/**/*.zip|artifacts/**/*.tar.gz)"
+          file: "artifacts/**/*.zip"
           tag: ${{ github.ref }}
           overwrite: true
           file_glob: true

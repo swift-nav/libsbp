@@ -2,11 +2,14 @@ name: C
 
 on:
   push:
+    branches:
+      - main
     tags:
       - "*"
   pull_request:
     paths:
       - "c/**"
+  workflow_dispatch:
 jobs:
   coverage:
     name: Test
