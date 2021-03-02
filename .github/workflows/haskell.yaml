@@ -30,7 +30,8 @@ jobs:
 
           mkdir ./bins
           stack install --local-bin-path ./bins
-          zip -r ./bins -czf $ARTIFACT_NAME \
+          cd ./bins
+          zip ../$ARTIFACT_NAME \
             sbp2json \
             sbp2prettyjson \
             sbp2yaml \
