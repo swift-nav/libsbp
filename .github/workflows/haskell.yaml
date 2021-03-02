@@ -1,9 +1,9 @@
 name: Haskell
 
 on:
-  push:
-    tags:
-      - "*"
+  # push:
+  #   tags:
+  #     - "*"
   pull_request:
     paths:
       - "haskell/**"
