@@ -19,7 +19,6 @@ env/
 build/
 develop-eggs/
 dist/
-!.github/**/dist
 downloads/
 eggs/
 lib/
