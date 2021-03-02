@@ -1,5 +1,4 @@
 name: Haskell
-
 on:
   workflow_dispatch:
   push:

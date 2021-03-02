@@ -1,5 +1,4 @@
 name: C
-
 on:
   workflow_dispatch:
   push:

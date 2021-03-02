@@ -1,5 +1,4 @@
 name: Benchmarks
-
 on:
   workflow_dispatch:
   push:
