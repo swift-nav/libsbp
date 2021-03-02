@@ -4,9 +4,9 @@ on:
   push:
     tags:
       - "*"
+    branches:
+      - master
   pull_request:
-    paths:
-      - "c/**"
 jobs:
   coverage:
     name: Test
