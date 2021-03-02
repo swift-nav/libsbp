@@ -51,6 +51,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: ./.github/actions/publish
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/download-artifact@v2
+        with:
+          path: artifacts
+
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: artifacts
+
+      - name: Upload Release
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: "@(artifacts/**/*.zip|artifacts/**/*.tar.gz)"
+          tag: ${{ github.ref }}
+          overwrite: true
+          file_glob: true

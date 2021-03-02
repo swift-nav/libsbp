@@ -1,5 +1,0 @@
-name: publish
-description: Publish a GitHub release
-runs:
-  using: node12
-  main: dist/index.js
