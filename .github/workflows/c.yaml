@@ -1,6 +1,7 @@
 name: C
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -9,7 +10,6 @@ on:
   pull_request:
     paths:
       - "c/**"
-  workflow_dispatch:
 jobs:
   coverage:
     name: Test

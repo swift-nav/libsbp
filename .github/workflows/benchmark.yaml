@@ -1,13 +1,17 @@
 name: Benchmarks
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
     tags:
       - "*"
   pull_request:
-  workflow_dispatch:
+    paths:
+      - "python/**"
+      - "haskell/**"
+      - "rust/**"
 jobs:
   benchmark:
     name: Benchmark
