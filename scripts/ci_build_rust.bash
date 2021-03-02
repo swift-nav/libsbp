@@ -6,7 +6,7 @@ VERSION="$(git describe --always --tags --dirty)"
 
 if [ "$RUNNER_OS" == "Linux" ] || [ "$RUNNER_OS" == "macOS" ]; then
     BUILD_TRIPLET="$(cc -dumpmachine)"
-    ARTIFACT_NAME="sbp_tools-${VERSION}-${BUILD_TRIPLET}.tar.gz"
+    ARTIFACT_NAME="sbp_tools-${VERSION}-${BUILD_TRIPLET}.zip"
     EXECUTABLES=("sbp2json" "json2sbp" "json2json")
     PACKAGE_CMD="zip -r ../../$ARTIFACT_NAME "${EXECUTABLES[@]}""
 elif [ "$RUNNER_OS" == "Windows" ]; then
