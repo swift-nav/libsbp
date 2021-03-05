@@ -128,7 +128,7 @@ inside the container (so you don't have to setup git inside the docker container
    running a release.  [Install Nixpkgs](https://nixos.org/nix/download.html)
    and then run `nix-shell` prior to running `make all`.
 
-2. Run make tagets for each language and re-tag.  For python:
+2. Run make targets for each language and re-tag.  For python:
 
     ```shell
     make python
@@ -158,6 +158,10 @@ inside the container (so you don't have to setup git inside the docker container
     ```shell
     make docs
     ```
+   
+   Be sure to inspect the [docs](docs/sbp.pdf) manually, as LaTeX sometimes needs to be run multiple
+   times to compile properly. If something looks off with the docs, run `make docs` repeatedly until 
+   the issue is fixed.
 
    Then commit the docs and re-tag:
 

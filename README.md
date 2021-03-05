@@ -14,6 +14,7 @@
   * [Installing development Python versions](#installing-development-python-versions)
   * [Adding development version as a pip dependency](#adding-development-version-as-a-pip-dependency)
   * [Installing from source](#installing-from-source)
+- [SBP Development Procedures](#sbp-development-procedures)  
 - [SBP Protocol Specification](#sbp-protocol-specification)
 - [JSON Schema Definitions](#json-schema-definitions)
 - [LICENSE](#license)
@@ -103,14 +104,24 @@ performance on par with the Haskell and Rust variants.
 
 ### Using Docker
 
+Before you begin, make sure you have [Docker](https://docs.docker.com/docker-for-mac/install/) installed.
+Start [Docker desktop](https://docs.docker.com/docker-for-mac/). 
+
 #### Fetching the prebuilt image from DockerHub
 
 The quickest method to get going is to just pull a prebuilt copy from DockerHub
-(no guarantees on freshness):
+(no guarantees on freshness) by running the following on your command line:
 
 ``docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2020.12.11``
 
+This will mount your local copy of the libsbp repository onto the image.
+
 Check this [link](https://hub.docker.com/r/swiftnav/libsbp-build/tags) for newer tags.
+Alternatively, you could run
+
+``docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:latest-master``
+
+if you are facing issues with compilation and the tags are out of date as well.
 
 #### Creating your own image
 
@@ -134,7 +145,14 @@ You can then make this image operate on your local workspace like this:
 
 #### Using the docker image
 
-Once in the image, simply type `make all` to gererate all the libsbp bindings.
+Once in the image, simply type `make all` to generate all the libsbp bindings.
+This could take several hours to run.
+
+When you are finished, quit Docker so that it would not unnecessarily use up resources on your machine. 
+
+If you run into issues during the generation process, try running `make clean`. 
+Alternatively, you could recompile from a clean, newly-cloned libsbp repository on your machine,
+which would minimize the chance of running into compilation issues from an old build.
 
 ### Installing from package managers
 Some bindings are available on package managers:
@@ -203,6 +221,10 @@ are both valid. To see a list of all valid targets, run `make help`.
 3. to run both the generator and the Python tests on specific Python versions,
    specify both envs, e.g., `GENENV=py37 TOXENV=py27,py37 make python`
 
+## SBP Development Procedures
+
+See the [HOW-TO](HOWTO.md) page for instructions on adding new messages, 
+updating the [documentation](docs/sbp.pdf), and releasing new versions of this library.
 
 ## SBP Protocol Specification
 
