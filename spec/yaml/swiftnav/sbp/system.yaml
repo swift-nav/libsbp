@@ -138,7 +138,8 @@ definitions:
     short_desc: Sub-system Status report
     embedded_type: true
     desc: |
-      Report the general and specific state of a sub-system
+      Report the general and specific state of a sub-system.  If the generic
+      state is reported as initializing, the specific state should be ignored.
     fields:
         - component:
             type: u16
@@ -162,7 +163,7 @@ definitions:
                   desc: Generic
                   values:
                       - 0: OK/Nominal
-                      - 1: Initialising
+                      - 1: Initializing
                       - 2: Unknown
                       - 3: Degraded
                       - 4: Unusable
@@ -180,8 +181,9 @@ definitions:
         reports that indicate to the host the status of each sub-system and
         whether it is operating correctly.
 
-        Interpretation of the subsystem specific status code is product dependent.
-        Refer to product documentation for details.
+        Interpretation of the subsystem specific status code is product
+        dependent, but if the generic status code is initializing, it should
+        be ignored.  Refer to product documentation for details.
     fields:
         - reporting_system:
             type: u16
@@ -205,7 +207,7 @@ definitions:
             desc: Increments on each status report sent
         - uptime:
             type: u32
-            desc: Number of milliseconds since system start-up
+            desc: Number of seconds since system start-up
         - status:
             type: array
             fill: SubSystemReport
