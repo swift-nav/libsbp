@@ -217,7 +217,6 @@ data SBPMsg =
    | SBPMsgSsrStecCorrectionDepA MsgSsrStecCorrectionDepA Msg
    | SBPMsgSsrTileDefinition MsgSsrTileDefinition Msg
    | SBPMsgStartup MsgStartup Msg
-   | SBPMsgStatusReport MsgStatusReport Msg
    | SBPMsgStmFlashLockSector MsgStmFlashLockSector Msg
    | SBPMsgStmFlashUnlockSector MsgStmFlashUnlockSector Msg
    | SBPMsgStmUniqueIdReq MsgStmUniqueIdReq Msg
@@ -425,7 +424,6 @@ instance Binary SBPMsg where
           | _msgSBPType == msgSsrStecCorrectionDepA = SBPMsgSsrStecCorrectionDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrTileDefinition = SBPMsgSsrTileDefinition (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStartup = SBPMsgStartup (decode (fromStrict (unBytes _msgSBPPayload))) m
-          | _msgSBPType == msgStatusReport = SBPMsgStatusReport (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStmFlashLockSector = SBPMsgStmFlashLockSector (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgStmUniqueIdReq = SBPMsgStmUniqueIdReq (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -625,7 +623,6 @@ instance Binary SBPMsg where
       encoder (SBPMsgSsrStecCorrectionDepA _ m) = put m
       encoder (SBPMsgSsrTileDefinition _ m) = put m
       encoder (SBPMsgStartup _ m) = put m
-      encoder (SBPMsgStatusReport _ m) = put m
       encoder (SBPMsgStmFlashLockSector _ m) = put m
       encoder (SBPMsgStmFlashUnlockSector _ m) = put m
       encoder (SBPMsgStmUniqueIdReq _ m) = put m
@@ -829,7 +826,6 @@ instance FromJSON SBPMsg where
         | msgType == msgSsrStecCorrectionDepA = SBPMsgSsrStecCorrectionDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrTileDefinition = SBPMsgSsrTileDefinition <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStartup = SBPMsgStartup <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
-        | msgType == msgStatusReport = SBPMsgStatusReport <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStmFlashLockSector = SBPMsgStmFlashLockSector <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStmFlashUnlockSector = SBPMsgStmFlashUnlockSector <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgStmUniqueIdReq = SBPMsgStmUniqueIdReq <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1034,7 +1030,6 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgSsrStecCorrectionDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrTileDefinition n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStartup n m) = toJSON n <<>> toJSON m
-  toJSON (SBPMsgStatusReport n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStmFlashLockSector n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStmFlashUnlockSector n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgStmUniqueIdReq _ m) = toJSON m
@@ -1233,7 +1228,6 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgSsrStecCorrectionDepA n m) = SBPMsgSsrStecCorrectionDepA n <$> f m
   msg f (SBPMsgSsrTileDefinition n m) = SBPMsgSsrTileDefinition n <$> f m
   msg f (SBPMsgStartup n m) = SBPMsgStartup n <$> f m
-  msg f (SBPMsgStatusReport n m) = SBPMsgStatusReport n <$> f m
   msg f (SBPMsgStmFlashLockSector n m) = SBPMsgStmFlashLockSector n <$> f m
   msg f (SBPMsgStmFlashUnlockSector n m) = SBPMsgStmFlashUnlockSector n <$> f m
   msg f (SBPMsgStmUniqueIdReq n m) = SBPMsgStmUniqueIdReq n <$> f m

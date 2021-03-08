@@ -33,7 +33,6 @@ use crate::SbpString;
 /// direction, and the vehicle z-axis should be aligned with the down direction.
 /// This message will only be available in future INS versions of Swift Products
 /// and is not produced by Piksi Multi or Duro.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -116,7 +115,6 @@ impl crate::serialize::SbpSerialize for MsgAngularRate {
 /// to the rover relative to True North. The full GPS time is given by the
 /// preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended
 /// that time-matched RTK mode is used when the base station is moving.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -195,7 +193,6 @@ impl crate::serialize::SbpSerialize for MsgBaselineHeading {
 /// in order to rotate the from a frame aligned with the local-level NED frame
 /// to the vehicle body frame.  This message will only be available in future
 /// INS versions of Swift Products and is not produced by Piksi Multi or Duro.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -294,7 +291,6 @@ impl crate::serialize::SbpSerialize for MsgOrientEuler {
 /// vector assuming that the LSB of each component as a value of 2^-31. This message will only
 /// be available in future INS versions of Swift Products and is not produced by Piksi Multi
 /// or Duro.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]

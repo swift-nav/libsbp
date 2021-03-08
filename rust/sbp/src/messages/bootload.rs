@@ -17,7 +17,6 @@
 //!
 //! Note that some of these messages share the same message type ID for both the
 //! host request and the device response.
-//!
 
 #[allow(unused_imports)]
 use byteorder::{LittleEndian, ReadBytesExt};
@@ -30,7 +29,6 @@ use crate::SbpString;
 /// Deprecated
 ///
 /// Deprecated.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -92,7 +90,6 @@ impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeDepA {
 /// The handshake message request from the host establishes a
 /// handshake between the device bootloader and the host. The
 /// response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -149,7 +146,6 @@ impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeReq {
 /// request from the host is MSG_BOOTLOADER_HANDSHAKE_REQ.  The
 /// payload contains the bootloader version number and the SBP
 /// protocol version number.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -214,7 +210,6 @@ impl crate::serialize::SbpSerialize for MsgBootloaderHandshakeResp {
 /// Bootloader jump to application (host => device)
 ///
 /// The host initiates the bootloader to jump to the application.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -279,7 +274,6 @@ impl crate::serialize::SbpSerialize for MsgBootloaderJumpToApp {
 /// responds with a MSG_NAP_DEVICE_DNA_RESP message with the
 /// device ID in the payload. Note that this ID is tied to the FPGA,
 /// and not related to the Piksi's serial number.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -337,7 +331,6 @@ impl crate::serialize::SbpSerialize for MsgNapDeviceDnaReq {
 /// responds with a MSG_NAP_DEVICE_DNA_RESP messagage with the
 /// device ID in the payload. Note that this ID is tied to the FPGA,
 /// and not related to the Piksi's serial number.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]

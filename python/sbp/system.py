@@ -25,52 +25,6 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 # Please do not hand edit!
 
 
-class SubSystemReport(object):
-  """SubSystemReport.
-  
-  Report the general and specific state of a sub-system
-
-  
-  Parameters
-  ----------
-  component : int
-    Identity of reporting subsystem
-  generic : int
-    Generic form status report
-  specific : int
-    Subsystem specific status code
-
-  """
-  _parser = construct.Embedded(construct.Struct(
-                     'component' / construct.Int16ul,
-                     'generic' / construct.Int8ul,
-                     'specific' / construct.Int8ul,))
-  __slots__ = [
-               'component',
-               'generic',
-               'specific',
-              ]
-
-  def __init__(self, payload=None, **kwargs):
-    if payload:
-      self.from_binary(payload)
-    else:
-      self.component = kwargs.pop('component')
-      self.generic = kwargs.pop('generic')
-      self.specific = kwargs.pop('specific')
-
-  def __repr__(self):
-    return fmt_repr(self)
-  
-  def from_binary(self, d):
-    p = SubSystemReport._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return SubSystemReport.build(d)
-    
 SBP_MSG_STARTUP = 0xFF00
 class MsgStartup(SBP):
   """SBP class for message MSG_STARTUP (0xFF00).
@@ -376,123 +330,6 @@ the remaining error flags should be inspected.
   def to_json_dict(self):
     self.to_binary()
     d = super( MsgHeartbeat, self).to_json_dict()
-    j = walk_json_dict(exclude_fields(self))
-    d.update(j)
-    return d
-    
-SBP_MSG_STATUS_REPORT = 0xFFFE
-class MsgStatusReport(SBP):
-  """SBP class for message MSG_STATUS_REPORT (0xFFFE).
-
-  You can have MSG_STATUS_REPORT inherit its fields directly
-  from an inherited SBP object, or construct it inline using a dict
-  of its fields.
-
-  
-  The status report is sent periodically to inform the host
-or other attached devices that the system is running. It is
-used to monitor system malfunctions. It contains status
-reports that indicate to the host the status of each sub-system and
-whether it is operating correctly.
-
-Interpretation of the subsystem specific status code is product dependent.
-Refer to product documentation for details.
-
-
-  Parameters
-  ----------
-  sbp : SBP
-    SBP parent object to inherit from.
-  reporting_system : int
-    Identity of reporting system
-  sbp_version : int
-    SBP protocol version
-  sequence : int
-    Increments on each status report sent
-  uptime : int
-    Number of milliseconds since system start-up
-  status : array
-    Reported status of individual subsystems
-  sender : int
-    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
-
-  """
-  _parser = construct.Struct(
-                   'reporting_system' / construct.Int16ul,
-                   'sbp_version' / construct.Int16ul,
-                   'sequence' / construct.Int32ul,
-                   'uptime' / construct.Int32ul,
-                   construct.GreedyRange('status' / construct.Struct(SubSystemReport._parser)),)
-  __slots__ = [
-               'reporting_system',
-               'sbp_version',
-               'sequence',
-               'uptime',
-               'status',
-              ]
-
-  def __init__(self, sbp=None, **kwargs):
-    if sbp:
-      super( MsgStatusReport,
-             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
-                            sbp.payload, sbp.crc)
-      self.from_binary(sbp.payload)
-    else:
-      super( MsgStatusReport, self).__init__()
-      self.msg_type = SBP_MSG_STATUS_REPORT
-      self.sender = kwargs.pop('sender', SENDER_ID)
-      self.reporting_system = kwargs.pop('reporting_system')
-      self.sbp_version = kwargs.pop('sbp_version')
-      self.sequence = kwargs.pop('sequence')
-      self.uptime = kwargs.pop('uptime')
-      self.status = kwargs.pop('status')
-
-  def __repr__(self):
-    return fmt_repr(self)
-
-  @staticmethod
-  def from_json(s):
-    """Given a JSON-encoded string s, build a message object.
-
-    """
-    d = json.loads(s)
-    return MsgStatusReport.from_json_dict(d)
-
-  @staticmethod
-  def from_json_dict(d):
-    sbp = SBP.from_json_dict(d)
-    return MsgStatusReport(sbp, **d)
-
- 
-  def from_binary(self, d):
-    """Given a binary payload d, update the appropriate payload fields of
-    the message.
-
-    """
-    p = MsgStatusReport._parser.parse(d)
-    for n in self.__class__.__slots__:
-      setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    """Produce a framed/packed SBP message.
-
-    """
-    c = containerize(exclude_fields(self))
-    self.payload = MsgStatusReport._parser.build(c)
-    return self.pack()
-
-  def into_buffer(self, buf, offset):
-    """Produce a framed/packed SBP message into the provided buffer and offset.
-
-    """
-    self.payload = containerize(exclude_fields(self))
-    self.parser = MsgStatusReport._parser
-    self.stream_payload.reset(buf, offset)
-    return self.pack_into(buf, offset, self._build_payload)
-
-  def to_json_dict(self):
-    self.to_binary()
-    d = super( MsgStatusReport, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -1123,7 +960,6 @@ msg_classes = {
   0xFF00: MsgStartup,
   0xFF02: MsgDgnssStatus,
   0xFFFF: MsgHeartbeat,
-  0xFFFE: MsgStatusReport,
   0xFF03: MsgInsStatus,
   0xFF04: MsgCsacTelemetry,
   0xFF05: MsgCsacTelemetryLabels,

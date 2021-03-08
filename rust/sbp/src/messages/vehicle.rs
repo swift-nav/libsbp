@@ -26,13 +26,12 @@ use crate::SbpString;
 ///
 /// Message representing the x component of vehicle velocity in the user frame at the odometry
 /// reference point(s) specified by the user. The offset for the odometry reference point and
-/// the definition and origin of the user frame are defined through the device settings interface.
-/// There are 4 possible user-defined sources of this message  which are labeled arbitrarily
-/// source 0 through 3.
+/// the definition and origin of the user frame are defined through the device settings
+/// interface. There are 4 possible user-defined sources of this message  which are labeled
+/// arbitrarily source 0 through 3.
 /// If using "processor time" time tags, the receiving end will expect a
-/// `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry measurements
-/// with GNSS. Processor time shall roll over to zero after one week.
-///
+/// `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry
+/// measurements with GNSS. Processor time shall roll over to zero after one week.
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -109,11 +108,10 @@ impl crate::serialize::SbpSerialize for MsgOdometry {
 /// The source of this message is identified by the source field, which is an integer ranging
 /// from 0 to 255.
 /// The timestamp associated with this message should represent the time when the accumulated
-/// tick count reached the value given by the contents of this message as accurately as possible.
-/// If using "local CPU time" time tags, the receiving end will expect a
-/// `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise wheeltick measurements
-/// with GNSS. Local CPU time shall roll over to zero after one week.
-///
+/// tick count reached the value given by the contents of this message as accurately as
+/// possible. If using "local CPU time" time tags, the receiving end will expect a
+/// `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise wheeltick
+/// measurements with GNSS. Local CPU time shall roll over to zero after one week.
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]

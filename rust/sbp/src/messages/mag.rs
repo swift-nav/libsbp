@@ -25,7 +25,6 @@ use crate::SbpString;
 /// Raw magnetometer data
 ///
 /// Raw data from the magnetometer.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]

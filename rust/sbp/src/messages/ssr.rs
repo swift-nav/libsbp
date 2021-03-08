@@ -27,7 +27,6 @@ use crate::SbpString;
 ///
 /// Code biases are to be added to pseudorange.
 /// The corrections conform with typical RTCMv3 MT1059 and 1065.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -85,7 +84,6 @@ impl crate::serialize::SbpSerialize for CodeBiasesContent {
 ///
 /// Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
 /// Also includes an RLE encoded validity list.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -165,7 +163,6 @@ impl crate::serialize::SbpSerialize for GridDefinitionHeaderDepA {
 ///
 /// Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
 /// stddev) for each satellite at the grid point.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -225,7 +222,6 @@ impl crate::serialize::SbpSerialize for GridElement {
 ///
 /// Contains one tropo delay, plus STEC residuals for each satellite at the
 /// grid point.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -289,7 +285,6 @@ impl crate::serialize::SbpSerialize for GridElementNoStd {
 /// The LPP message contains nested variable length arrays
 /// which are not suppported in SBP, so each grid point will
 /// be identified by the index.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -380,7 +375,6 @@ impl crate::serialize::SbpSerialize for GriddedCorrectionHeader {
 /// The 3GPP message contains nested variable length arrays
 /// which are not suppported in SBP, so each grid point will
 /// be identified by the index.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -462,7 +456,6 @@ impl crate::serialize::SbpSerialize for GriddedCorrectionHeaderDepA {
 /// to the pseudorange of the corresponding signal
 /// to get corrected pseudorange. It is typically
 /// an equivalent to the 1059 and 1065 RTCM message types
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -546,7 +539,6 @@ impl crate::serialize::SbpSerialize for MsgSsrCodeBiases {
 /// STEC residuals are per space vehicle, troposphere is not.
 ///
 /// It is typically equivalent to the QZSS CLAS Sub Type 9 messages
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -801,7 +793,6 @@ impl crate::serialize::SbpSerialize for MsgSsrGridDefinitionDepA {
 /// to be applied as a delta correction to broadcast
 /// ephemeris and is typically an equivalent to the 1060
 /// and 1066 RTCM message types
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -1056,7 +1047,6 @@ impl crate::serialize::SbpSerialize for MsgSsrOrbitClockDepA {
 /// well as the satellite yaw angle to be applied to compute
 /// the phase wind-up correction.
 /// It is typically an equivalent to the 1265 RTCM message types
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -1163,7 +1153,6 @@ impl crate::serialize::SbpSerialize for MsgSsrPhaseBiases {
 /// of the atmospheric delay.
 ///
 /// It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -1296,7 +1285,6 @@ impl crate::serialize::SbpSerialize for MsgSsrStecCorrectionDepA {
 /// Based on ETSI TS 137 355 V16.1.0 (LTE Positioning Protocol) information
 /// element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
 /// correction points, not lists of points.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -1417,7 +1405,6 @@ impl crate::serialize::SbpSerialize for MsgSsrTileDefinition {
 ///
 /// Phase biases are to be added to carrier phase measurements.
 /// The corrections conform with typical RTCMv3 MT1059 and 1065.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -1492,7 +1479,6 @@ impl crate::serialize::SbpSerialize for PhaseBiasesContent {
 /// A full set of STEC information will likely span multiple SBP
 /// messages, since SBP message a limited to 255 bytes.  The header
 /// is used to tie multiple SBP messages into a sequence.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -1574,7 +1560,6 @@ impl crate::serialize::SbpSerialize for STECHeader {
 /// A full set of STEC information will likely span multiple SBP
 /// messages, since SBP message a limited to 255 bytes.  The header
 /// is used to tie multiple SBP messages into a sequence.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -1648,7 +1633,6 @@ impl crate::serialize::SbpSerialize for STECHeaderDepA {
 ///
 /// STEC residual (mean and standard deviation) for the given satellite
 /// at the grid point,
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -1707,7 +1691,6 @@ impl crate::serialize::SbpSerialize for STECResidual {
 /// None
 ///
 /// STEC residual for the given satellite at the grid point.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -1764,7 +1747,6 @@ impl crate::serialize::SbpSerialize for STECResidualNoStd {
 /// None
 ///
 /// STEC polynomial for the given satellite.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -1828,7 +1810,6 @@ impl crate::serialize::SbpSerialize for STECSatElement {
 ///
 /// Troposphere vertical delays (mean and standard deviation) at the grid
 /// point.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -1890,7 +1871,6 @@ impl crate::serialize::SbpSerialize for TroposphericDelayCorrection {
 /// None
 ///
 /// Troposphere vertical delays at the grid point.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]

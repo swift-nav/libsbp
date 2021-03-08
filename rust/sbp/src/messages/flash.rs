@@ -17,7 +17,6 @@
 //! Swift Navigation devices: the STM32 flash and the M25Pxx FPGA
 //! configuration flash from Piksi 2.3.1.  This module does not apply
 //! to Piksi Multi.
-//!
 
 #[allow(unused_imports)]
 use byteorder::{LittleEndian, ReadBytesExt};
@@ -33,7 +32,6 @@ use crate::SbpString;
 /// flash memory requests from the host to the device. Flash read
 /// and write messages, such as MSG_FLASH_READ_REQ, or
 /// MSG_FLASH_PROGRAM, may return this message on failure.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -97,7 +95,6 @@ impl crate::serialize::SbpSerialize for MsgFlashDone {
 /// MSG_FLASH_DONE message containing the return code - FLASH_OK (0)
 /// on success or FLASH_INVALID_FLASH (1) if the flash specified is
 /// invalid.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -167,7 +164,6 @@ impl crate::serialize::SbpSerialize for MsgFlashErase {
 /// on success, or FLASH_INVALID_LEN (2) if the maximum write size
 /// is exceeded. Note that the sector-containing addresses must be
 /// erased before addresses can be programmed.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -248,7 +244,6 @@ impl crate::serialize::SbpSerialize for MsgFlashProgram {
 /// FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
 /// FLASH_INVALID_ADDR (3) if the address is outside of the allowed
 /// range.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -324,7 +319,6 @@ impl crate::serialize::SbpSerialize for MsgFlashReadReq {
 /// FLASH_INVALID_LEN (2) if the maximum read size is exceeded or
 /// FLASH_INVALID_ADDR (3) if the address is outside of the allowed
 /// range.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -395,7 +389,6 @@ impl crate::serialize::SbpSerialize for MsgFlashReadResp {
 ///
 /// The flash status message writes to the 8-bit M25 flash status
 /// register. The device replies with a MSG_FLASH_DONE message.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -456,7 +449,6 @@ impl crate::serialize::SbpSerialize for MsgM25FlashWriteStatus {
 ///
 /// The flash lock message locks a sector of the STM flash
 /// memory. The device replies with a MSG_FLASH_DONE message.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -517,7 +509,6 @@ impl crate::serialize::SbpSerialize for MsgStmFlashLockSector {
 ///
 /// The flash unlock message unlocks a sector of the STM flash
 /// memory. The device replies with a MSG_FLASH_DONE message.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -581,7 +572,6 @@ impl crate::serialize::SbpSerialize for MsgStmFlashUnlockSector {
 /// requests the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device
 /// responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
 /// ID in the payload.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -638,7 +628,6 @@ impl crate::serialize::SbpSerialize for MsgStmUniqueIdReq {
 /// requests the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device
 /// responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
 /// ID in the payload..
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]

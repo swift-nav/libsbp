@@ -27,7 +27,6 @@ use crate::SbpString;
 /// Auxiliary data specific to a particular IMU. The `imu_type` field will
 /// always be consistent but the rest of the payload is device specific and
 /// depends on the value of `imu_type`.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -105,7 +104,6 @@ impl crate::serialize::SbpSerialize for MsgImuAux {
 /// with GNSS. The timestamp must wrap around to zero when reaching one week (604800 seconds).
 ///
 /// The time-tagging mode should not change throughout a run.
-///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
