@@ -134,6 +134,85 @@ definitions:
                       - 0: System Healthy
                       - 1: An error has occurred
 
+ - SubSystemReport:
+    short_desc: Sub-system Status report
+    embedded_type: true
+    desc: |
+      Report the general and specific state of a sub-system.  If the generic
+      state is reported as initializing, the specific state should be ignored.
+    fields:
+        - component:
+            type: u16
+            desc: Identity of reporting subsystem
+            fields:
+              - 0-15:
+                  desc: Subsystem
+                  values:
+                      - 0: Primary GNSS Antenna
+                      - 1: Measurement Engine
+                      - 2: Corrections Client
+                      - 3: Differential GNSS Engine
+                      - 4: CAN
+                      - 5: Wheel Odometry
+                      - 6: Sensor Fusion Engine
+        - generic:
+            type: u8
+            desc: Generic form status report
+            fields:
+              - 0-7:
+                  desc: Generic
+                  values:
+                      - 0: OK/Nominal
+                      - 1: Initializing
+                      - 2: Unknown
+                      - 3: Degraded
+                      - 4: Unusable
+        - specific:
+            type: u8
+            desc: Subsystem specific status code
+
+ - MSG_STATUS_REPORT:
+    id: 0xFFFE
+    short_desc: Status report message
+    desc: |
+        The status report is sent periodically to inform the host
+        or other attached devices that the system is running. It is
+        used to monitor system malfunctions. It contains status
+        reports that indicate to the host the status of each sub-system and
+        whether it is operating correctly.
+
+        Interpretation of the subsystem specific status code is product
+        dependent, but if the generic status code is initializing, it should
+        be ignored.  Refer to product documentation for details.
+    fields:
+        - reporting_system:
+            type: u16
+            desc: Identity of reporting system
+            fields:
+              - 0-15:
+                 desc: System
+                 values:
+                     - 0: Starling
+                     - 1: Precision GNSS Module (PGM)
+        - sbp_version:
+            type: u16
+            desc: SBP protocol version
+            fields:
+              - 8-16:
+                  desc: SBP major protocol version number
+              - 0-7:
+                  desc: SBP minor protocol version number
+        - sequence:
+            type: u32
+            desc: Increments on each status report sent
+        - uptime:
+            type: u32
+            desc: Number of seconds since system start-up
+        - status:
+            type: array
+            fill: SubSystemReport
+            desc: Reported status of individual subsystems
+
  - MSG_INS_STATUS:
     id: 0xFF03
     short_desc: Inertial Navigation System status message
