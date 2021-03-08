@@ -682,3 +682,154 @@ impl crate::serialize::SbpSerialize for MsgStartup {
         size
     }
 }
+
+/// Status report message
+///
+/// The status report is sent periodically to inform the host
+/// or other attached devices that the system is running. It is
+/// used to monitor system malfunctions. It contains status
+/// reports that indicate to the host the status of each sub-system and
+/// whether it is operating correctly.
+///
+/// Interpretation of the subsystem specific status code is product
+/// dependent, but if the generic status code is initializing, it should
+/// be ignored.  Refer to product documentation for details.
+///
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[derive(Debug, Clone)]
+#[allow(non_snake_case)]
+pub struct MsgStatusReport {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    pub sender_id: Option<u16>,
+    /// Identity of reporting system
+    pub reporting_system: u16,
+    /// SBP protocol version
+    pub sbp_version: u16,
+    /// Increments on each status report sent
+    pub sequence: u32,
+    /// Number of seconds since system start-up
+    pub uptime: u32,
+    /// Reported status of individual subsystems
+    pub status: Vec<SubSystemReport>,
+}
+
+impl MsgStatusReport {
+    #[rustfmt::skip]
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgStatusReport, crate::Error> {
+        Ok( MsgStatusReport{
+            sender_id: None,
+            reporting_system: _buf.read_u16::<LittleEndian>()?,
+            sbp_version: _buf.read_u16::<LittleEndian>()?,
+            sequence: _buf.read_u32::<LittleEndian>()?,
+            uptime: _buf.read_u32::<LittleEndian>()?,
+            status: SubSystemReport::parse_array(_buf)?,
+        } )
+    }
+}
+impl super::SBPMessage for MsgStatusReport {
+    fn get_message_type(&self) -> u16 {
+        65534
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgStatusReport {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.reporting_system.append_to_sbp_buffer(buf);
+        self.sbp_version.append_to_sbp_buffer(buf);
+        self.sequence.append_to_sbp_buffer(buf);
+        self.uptime.append_to_sbp_buffer(buf);
+        self.status.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.reporting_system.sbp_size();
+        size += self.sbp_version.sbp_size();
+        size += self.sequence.sbp_size();
+        size += self.uptime.sbp_size();
+        size += self.status.sbp_size();
+        size
+    }
+}
+
+/// Sub-system Status report
+///
+/// Report the general and specific state of a sub-system.  If the generic
+/// state is reported as initializing, the specific state should be ignored.
+///
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[derive(Debug, Clone)]
+#[allow(non_snake_case)]
+pub struct SubSystemReport {
+    /// Identity of reporting subsystem
+    pub component: u16,
+    /// Generic form status report
+    pub generic: u8,
+    /// Subsystem specific status code
+    pub specific: u8,
+}
+
+impl SubSystemReport {
+    #[rustfmt::skip]
+    pub fn parse(_buf: &mut &[u8]) -> Result<SubSystemReport, crate::Error> {
+        Ok( SubSystemReport{
+            component: _buf.read_u16::<LittleEndian>()?,
+            generic: _buf.read_u8()?,
+            specific: _buf.read_u8()?,
+        } )
+    }
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SubSystemReport>, crate::Error> {
+        let mut v = Vec::new();
+        while buf.len() > 0 {
+            v.push(SubSystemReport::parse(buf)?);
+        }
+        Ok(v)
+    }
+
+    pub fn parse_array_limit(
+        buf: &mut &[u8],
+        n: usize,
+    ) -> Result<Vec<SubSystemReport>, crate::Error> {
+        let mut v = Vec::new();
+        for _ in 0..n {
+            v.push(SubSystemReport::parse(buf)?);
+        }
+        Ok(v)
+    }
+}
+
+impl crate::serialize::SbpSerialize for SubSystemReport {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.component.append_to_sbp_buffer(buf);
+        self.generic.append_to_sbp_buffer(buf);
+        self.specific.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.component.sbp_size();
+        size += self.generic.sbp_size();
+        size += self.specific.sbp_size();
+        size
+    }
+}
