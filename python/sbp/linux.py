@@ -26,11 +26,11 @@ from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
 # Please do not hand edit!
 
 
-SBP_MSG_LINUX_CPU_STATE = 0x7F00
-class MsgLinuxCpuState(SBP):
-  """SBP class for message MSG_LINUX_CPU_STATE (0x7F00).
+SBP_MSG_LINUX_CPU_STATE_DEP_A = 0x7F00
+class MsgLinuxCpuStateDepA(SBP):
+  """SBP class for message MSG_LINUX_CPU_STATE_DEP_A (0x7F00).
 
-  You can have MSG_LINUX_CPU_STATE inherit its fields directly
+  You can have MSG_LINUX_CPU_STATE_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -73,13 +73,13 @@ consumers of CPU on the system.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgLinuxCpuState,
+      super( MsgLinuxCpuStateDepA,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgLinuxCpuState, self).__init__()
-      self.msg_type = SBP_MSG_LINUX_CPU_STATE
+      super( MsgLinuxCpuStateDepA, self).__init__()
+      self.msg_type = SBP_MSG_LINUX_CPU_STATE_DEP_A
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.index = kwargs.pop('index')
       self.pid = kwargs.pop('pid')
@@ -96,12 +96,12 @@ consumers of CPU on the system.
 
     """
     d = json.loads(s)
-    return MsgLinuxCpuState.from_json_dict(d)
+    return MsgLinuxCpuStateDepA.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgLinuxCpuState(sbp, **d)
+    return MsgLinuxCpuStateDepA(sbp, **d)
 
  
   def from_binary(self, d):
@@ -109,7 +109,7 @@ consumers of CPU on the system.
     the message.
 
     """
-    p = MsgLinuxCpuState._parser.parse(d)
+    p = MsgLinuxCpuStateDepA._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -118,7 +118,7 @@ consumers of CPU on the system.
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgLinuxCpuState._parser.build(c)
+    self.payload = MsgLinuxCpuStateDepA._parser.build(c)
     return self.pack()
 
   def into_buffer(self, buf, offset):
@@ -126,22 +126,22 @@ consumers of CPU on the system.
 
     """
     self.payload = containerize(exclude_fields(self))
-    self.parser = MsgLinuxCpuState._parser
+    self.parser = MsgLinuxCpuStateDepA._parser
     self.stream_payload.reset(buf, offset)
     return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgLinuxCpuState, self).to_json_dict()
+    d = super( MsgLinuxCpuStateDepA, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
     
-SBP_MSG_LINUX_MEM_STATE = 0x7F01
-class MsgLinuxMemState(SBP):
-  """SBP class for message MSG_LINUX_MEM_STATE (0x7F01).
+SBP_MSG_LINUX_MEM_STATE_DEP_A = 0x7F01
+class MsgLinuxMemStateDepA(SBP):
+  """SBP class for message MSG_LINUX_MEM_STATE_DEP_A (0x7F01).
 
-  You can have MSG_LINUX_MEM_STATE inherit its fields directly
+  You can have MSG_LINUX_MEM_STATE_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -184,13 +184,13 @@ consumers of memory on the system.
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgLinuxMemState,
+      super( MsgLinuxMemStateDepA,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgLinuxMemState, self).__init__()
-      self.msg_type = SBP_MSG_LINUX_MEM_STATE
+      super( MsgLinuxMemStateDepA, self).__init__()
+      self.msg_type = SBP_MSG_LINUX_MEM_STATE_DEP_A
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.index = kwargs.pop('index')
       self.pid = kwargs.pop('pid')
@@ -207,12 +207,12 @@ consumers of memory on the system.
 
     """
     d = json.loads(s)
-    return MsgLinuxMemState.from_json_dict(d)
+    return MsgLinuxMemStateDepA.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgLinuxMemState(sbp, **d)
+    return MsgLinuxMemStateDepA(sbp, **d)
 
  
   def from_binary(self, d):
@@ -220,7 +220,7 @@ consumers of memory on the system.
     the message.
 
     """
-    p = MsgLinuxMemState._parser.parse(d)
+    p = MsgLinuxMemStateDepA._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -229,7 +229,7 @@ consumers of memory on the system.
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgLinuxMemState._parser.build(c)
+    self.payload = MsgLinuxMemStateDepA._parser.build(c)
     return self.pack()
 
   def into_buffer(self, buf, offset):
@@ -237,22 +237,22 @@ consumers of memory on the system.
 
     """
     self.payload = containerize(exclude_fields(self))
-    self.parser = MsgLinuxMemState._parser
+    self.parser = MsgLinuxMemStateDepA._parser
     self.stream_payload.reset(buf, offset)
     return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgLinuxMemState, self).to_json_dict()
+    d = super( MsgLinuxMemStateDepA, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
     
-SBP_MSG_LINUX_SYS_STATE = 0x7F02
-class MsgLinuxSysState(SBP):
-  """SBP class for message MSG_LINUX_SYS_STATE (0x7F02).
+SBP_MSG_LINUX_SYS_STATE_DEP_A = 0x7F02
+class MsgLinuxSysStateDepA(SBP):
+  """SBP class for message MSG_LINUX_SYS_STATE_DEP_A (0x7F02).
 
-  You can have MSG_LINUX_SYS_STATE inherit its fields directly
+  You can have MSG_LINUX_SYS_STATE_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -298,13 +298,13 @@ class MsgLinuxSysState(SBP):
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
-      super( MsgLinuxSysState,
+      super( MsgLinuxSysStateDepA,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
       self.from_binary(sbp.payload)
     else:
-      super( MsgLinuxSysState, self).__init__()
-      self.msg_type = SBP_MSG_LINUX_SYS_STATE
+      super( MsgLinuxSysStateDepA, self).__init__()
+      self.msg_type = SBP_MSG_LINUX_SYS_STATE_DEP_A
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.mem_total = kwargs.pop('mem_total')
       self.pcpu = kwargs.pop('pcpu')
@@ -322,12 +322,12 @@ class MsgLinuxSysState(SBP):
 
     """
     d = json.loads(s)
-    return MsgLinuxSysState.from_json_dict(d)
+    return MsgLinuxSysStateDepA.from_json_dict(d)
 
   @staticmethod
   def from_json_dict(d):
     sbp = SBP.from_json_dict(d)
-    return MsgLinuxSysState(sbp, **d)
+    return MsgLinuxSysStateDepA(sbp, **d)
 
  
   def from_binary(self, d):
@@ -335,7 +335,7 @@ class MsgLinuxSysState(SBP):
     the message.
 
     """
-    p = MsgLinuxSysState._parser.parse(d)
+    p = MsgLinuxSysStateDepA._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
 
@@ -344,7 +344,7 @@ class MsgLinuxSysState(SBP):
 
     """
     c = containerize(exclude_fields(self))
-    self.payload = MsgLinuxSysState._parser.build(c)
+    self.payload = MsgLinuxSysStateDepA._parser.build(c)
     return self.pack()
 
   def into_buffer(self, buf, offset):
@@ -352,13 +352,13 @@ class MsgLinuxSysState(SBP):
 
     """
     self.payload = containerize(exclude_fields(self))
-    self.parser = MsgLinuxSysState._parser
+    self.parser = MsgLinuxSysStateDepA._parser
     self.stream_payload.reset(buf, offset)
     return self.pack_into(buf, offset, self._build_payload)
 
   def to_json_dict(self):
     self.to_binary()
-    d = super( MsgLinuxSysState, self).to_json_dict()
+    d = super( MsgLinuxSysStateDepA, self).to_json_dict()
     j = walk_json_dict(exclude_fields(self))
     d.update(j)
     return d
@@ -935,14 +935,384 @@ of the list being 2 NULL terminators in a row.
     d.update(j)
     return d
     
+SBP_MSG_LINUX_CPU_STATE = 0x7F08
+class MsgLinuxCpuState(SBP):
+  """SBP class for message MSG_LINUX_CPU_STATE (0x7F08).
+
+  You can have MSG_LINUX_CPU_STATE inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message indicates the process state of the top 10 heaviest
+consumers of CPU on the system, including a timestamp.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  index : int
+    sequence of this status message, values from 0-9
+  pid : int
+    the PID of the process
+  pcpu : int
+    percent of cpu used, expressed as a fraction of 256
+  time : int
+    timestamp of message, refer to flags field for how to interpret
+  flags : int
+    flags
+  tname : string
+    fixed length string representing the thread name
+  cmdline : string
+    the command line (as much as it fits in the remaining packet)
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'index' / construct.Int8ul,
+                   'pid' / construct.Int16ul,
+                   'pcpu' / construct.Int8ul,
+                   'time' / construct.Int32ul,
+                   'flags' / construct.Int8ul,
+                   'tname'/ construct.Bytes(15),
+                   'cmdline' / construct.GreedyBytes,)
+  __slots__ = [
+               'index',
+               'pid',
+               'pcpu',
+               'time',
+               'flags',
+               'tname',
+               'cmdline',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgLinuxCpuState,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgLinuxCpuState, self).__init__()
+      self.msg_type = SBP_MSG_LINUX_CPU_STATE
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.index = kwargs.pop('index')
+      self.pid = kwargs.pop('pid')
+      self.pcpu = kwargs.pop('pcpu')
+      self.time = kwargs.pop('time')
+      self.flags = kwargs.pop('flags')
+      self.tname = kwargs.pop('tname')
+      self.cmdline = kwargs.pop('cmdline')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgLinuxCpuState.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgLinuxCpuState(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgLinuxCpuState._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgLinuxCpuState._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgLinuxCpuState._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgLinuxCpuState, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_LINUX_MEM_STATE = 0x7F09
+class MsgLinuxMemState(SBP):
+  """SBP class for message MSG_LINUX_MEM_STATE (0x7F09).
+
+  You can have MSG_LINUX_MEM_STATE inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message indicates the process state of the top 10 heaviest
+consumers of memory on the system, including a timestamp.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  index : int
+    sequence of this status message, values from 0-9
+  pid : int
+    the PID of the process
+  pmem : int
+    percent of memory used, expressed as a fraction of 256
+  time : int
+    timestamp of message, refer to flags field for how to interpret
+  flags : int
+    flags
+  tname : string
+    fixed length string representing the thread name
+  cmdline : string
+    the command line (as much as it fits in the remaining packet)
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'index' / construct.Int8ul,
+                   'pid' / construct.Int16ul,
+                   'pmem' / construct.Int8ul,
+                   'time' / construct.Int32ul,
+                   'flags' / construct.Int8ul,
+                   'tname'/ construct.Bytes(15),
+                   'cmdline' / construct.GreedyBytes,)
+  __slots__ = [
+               'index',
+               'pid',
+               'pmem',
+               'time',
+               'flags',
+               'tname',
+               'cmdline',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgLinuxMemState,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgLinuxMemState, self).__init__()
+      self.msg_type = SBP_MSG_LINUX_MEM_STATE
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.index = kwargs.pop('index')
+      self.pid = kwargs.pop('pid')
+      self.pmem = kwargs.pop('pmem')
+      self.time = kwargs.pop('time')
+      self.flags = kwargs.pop('flags')
+      self.tname = kwargs.pop('tname')
+      self.cmdline = kwargs.pop('cmdline')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgLinuxMemState.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgLinuxMemState(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgLinuxMemState._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgLinuxMemState._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgLinuxMemState._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgLinuxMemState, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_LINUX_SYS_STATE = 0x7F0A
+class MsgLinuxSysState(SBP):
+  """SBP class for message MSG_LINUX_SYS_STATE (0x7F0A).
+
+  You can have MSG_LINUX_SYS_STATE inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This presents a summary of CPU and memory utilization, including a timestamp.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  mem_total : int
+    total system memory
+  pcpu : int
+    percent of total cpu currently utilized
+  pmem : int
+    percent of total memory currently utilized
+  procs_starting : int
+    number of processes that started during collection phase
+  procs_stopping : int
+    number of processes that stopped during collection phase
+  pid_count : int
+    the count of processes on the system
+  time : int
+    timestamp of message, refer to flags field for how to interpret
+  flags : int
+    flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'mem_total' / construct.Int16ul,
+                   'pcpu' / construct.Int8ul,
+                   'pmem' / construct.Int8ul,
+                   'procs_starting' / construct.Int16ul,
+                   'procs_stopping' / construct.Int16ul,
+                   'pid_count' / construct.Int16ul,
+                   'time' / construct.Int32ul,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'mem_total',
+               'pcpu',
+               'pmem',
+               'procs_starting',
+               'procs_stopping',
+               'pid_count',
+               'time',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgLinuxSysState,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgLinuxSysState, self).__init__()
+      self.msg_type = SBP_MSG_LINUX_SYS_STATE
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.mem_total = kwargs.pop('mem_total')
+      self.pcpu = kwargs.pop('pcpu')
+      self.pmem = kwargs.pop('pmem')
+      self.procs_starting = kwargs.pop('procs_starting')
+      self.procs_stopping = kwargs.pop('procs_stopping')
+      self.pid_count = kwargs.pop('pid_count')
+      self.time = kwargs.pop('time')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgLinuxSysState.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgLinuxSysState(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgLinuxSysState._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgLinuxSysState._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgLinuxSysState._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgLinuxSysState, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 
 msg_classes = {
-  0x7F00: MsgLinuxCpuState,
-  0x7F01: MsgLinuxMemState,
-  0x7F02: MsgLinuxSysState,
+  0x7F00: MsgLinuxCpuStateDepA,
+  0x7F01: MsgLinuxMemStateDepA,
+  0x7F02: MsgLinuxSysStateDepA,
   0x7F03: MsgLinuxProcessSocketCounts,
   0x7F04: MsgLinuxProcessSocketQueues,
   0x7F05: MsgLinuxSocketUsage,
   0x7F06: MsgLinuxProcessFdCount,
   0x7F07: MsgLinuxProcessFdSummary,
+  0x7F08: MsgLinuxCpuState,
+  0x7F09: MsgLinuxMemState,
+  0x7F0A: MsgLinuxSysState,
 }

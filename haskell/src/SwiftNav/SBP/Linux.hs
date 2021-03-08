@@ -35,128 +35,128 @@ import SwiftNav.SBP.Types
 {-# ANN module ("HLint: ignore Use newtype instead of data"::String) #-}
 
 
-msgLinuxCpuState :: Word16
-msgLinuxCpuState = 0x7F00
+msgLinuxCpuStateDepA :: Word16
+msgLinuxCpuStateDepA = 0x7F00
 
--- | SBP class for message MSG_LINUX_CPU_STATE (0x7F00).
+-- | SBP class for message MSG_LINUX_CPU_STATE_DEP_A (0x7F00).
 --
 -- This message indicates the process state of the top 10 heaviest consumers of
 -- CPU on the system.
-data MsgLinuxCpuState = MsgLinuxCpuState
-  { _msgLinuxCpuState_index :: !Word8
+data MsgLinuxCpuStateDepA = MsgLinuxCpuStateDepA
+  { _msgLinuxCpuStateDepA_index :: !Word8
     -- ^ sequence of this status message, values from 0-9
-  , _msgLinuxCpuState_pid   :: !Word16
+  , _msgLinuxCpuStateDepA_pid   :: !Word16
     -- ^ the PID of the process
-  , _msgLinuxCpuState_pcpu  :: !Word8
+  , _msgLinuxCpuStateDepA_pcpu  :: !Word8
     -- ^ percent of cpu used, expressed as a fraction of 256
-  , _msgLinuxCpuState_tname :: !Text
+  , _msgLinuxCpuStateDepA_tname :: !Text
     -- ^ fixed length string representing the thread name
-  , _msgLinuxCpuState_cmdline :: !Text
+  , _msgLinuxCpuStateDepA_cmdline :: !Text
     -- ^ the command line (as much as it fits in the remaining packet)
   } deriving ( Show, Read, Eq )
 
-instance Binary MsgLinuxCpuState where
+instance Binary MsgLinuxCpuStateDepA where
   get = do
-    _msgLinuxCpuState_index <- getWord8
-    _msgLinuxCpuState_pid <- getWord16le
-    _msgLinuxCpuState_pcpu <- getWord8
-    _msgLinuxCpuState_tname <- decodeUtf8 <$> getByteString 15
-    _msgLinuxCpuState_cmdline <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
-    pure MsgLinuxCpuState {..}
+    _msgLinuxCpuStateDepA_index <- getWord8
+    _msgLinuxCpuStateDepA_pid <- getWord16le
+    _msgLinuxCpuStateDepA_pcpu <- getWord8
+    _msgLinuxCpuStateDepA_tname <- decodeUtf8 <$> getByteString 15
+    _msgLinuxCpuStateDepA_cmdline <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    pure MsgLinuxCpuStateDepA {..}
 
-  put MsgLinuxCpuState {..} = do
-    putWord8 _msgLinuxCpuState_index
-    putWord16le _msgLinuxCpuState_pid
-    putWord8 _msgLinuxCpuState_pcpu
-    putByteString $ encodeUtf8 _msgLinuxCpuState_tname
-    putByteString $ encodeUtf8 _msgLinuxCpuState_cmdline
+  put MsgLinuxCpuStateDepA {..} = do
+    putWord8 _msgLinuxCpuStateDepA_index
+    putWord16le _msgLinuxCpuStateDepA_pid
+    putWord8 _msgLinuxCpuStateDepA_pcpu
+    putByteString $ encodeUtf8 _msgLinuxCpuStateDepA_tname
+    putByteString $ encodeUtf8 _msgLinuxCpuStateDepA_cmdline
 
-$(makeSBP 'msgLinuxCpuState ''MsgLinuxCpuState)
-$(makeJSON "_msgLinuxCpuState_" ''MsgLinuxCpuState)
-$(makeLenses ''MsgLinuxCpuState)
+$(makeSBP 'msgLinuxCpuStateDepA ''MsgLinuxCpuStateDepA)
+$(makeJSON "_msgLinuxCpuStateDepA_" ''MsgLinuxCpuStateDepA)
+$(makeLenses ''MsgLinuxCpuStateDepA)
 
-msgLinuxMemState :: Word16
-msgLinuxMemState = 0x7F01
+msgLinuxMemStateDepA :: Word16
+msgLinuxMemStateDepA = 0x7F01
 
--- | SBP class for message MSG_LINUX_MEM_STATE (0x7F01).
+-- | SBP class for message MSG_LINUX_MEM_STATE_DEP_A (0x7F01).
 --
 -- This message indicates the process state of the top 10 heaviest consumers of
 -- memory on the system.
-data MsgLinuxMemState = MsgLinuxMemState
-  { _msgLinuxMemState_index :: !Word8
+data MsgLinuxMemStateDepA = MsgLinuxMemStateDepA
+  { _msgLinuxMemStateDepA_index :: !Word8
     -- ^ sequence of this status message, values from 0-9
-  , _msgLinuxMemState_pid   :: !Word16
+  , _msgLinuxMemStateDepA_pid   :: !Word16
     -- ^ the PID of the process
-  , _msgLinuxMemState_pmem  :: !Word8
+  , _msgLinuxMemStateDepA_pmem  :: !Word8
     -- ^ percent of memory used, expressed as a fraction of 256
-  , _msgLinuxMemState_tname :: !Text
+  , _msgLinuxMemStateDepA_tname :: !Text
     -- ^ fixed length string representing the thread name
-  , _msgLinuxMemState_cmdline :: !Text
+  , _msgLinuxMemStateDepA_cmdline :: !Text
     -- ^ the command line (as much as it fits in the remaining packet)
   } deriving ( Show, Read, Eq )
 
-instance Binary MsgLinuxMemState where
+instance Binary MsgLinuxMemStateDepA where
   get = do
-    _msgLinuxMemState_index <- getWord8
-    _msgLinuxMemState_pid <- getWord16le
-    _msgLinuxMemState_pmem <- getWord8
-    _msgLinuxMemState_tname <- decodeUtf8 <$> getByteString 15
-    _msgLinuxMemState_cmdline <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
-    pure MsgLinuxMemState {..}
+    _msgLinuxMemStateDepA_index <- getWord8
+    _msgLinuxMemStateDepA_pid <- getWord16le
+    _msgLinuxMemStateDepA_pmem <- getWord8
+    _msgLinuxMemStateDepA_tname <- decodeUtf8 <$> getByteString 15
+    _msgLinuxMemStateDepA_cmdline <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    pure MsgLinuxMemStateDepA {..}
 
-  put MsgLinuxMemState {..} = do
-    putWord8 _msgLinuxMemState_index
-    putWord16le _msgLinuxMemState_pid
-    putWord8 _msgLinuxMemState_pmem
-    putByteString $ encodeUtf8 _msgLinuxMemState_tname
-    putByteString $ encodeUtf8 _msgLinuxMemState_cmdline
+  put MsgLinuxMemStateDepA {..} = do
+    putWord8 _msgLinuxMemStateDepA_index
+    putWord16le _msgLinuxMemStateDepA_pid
+    putWord8 _msgLinuxMemStateDepA_pmem
+    putByteString $ encodeUtf8 _msgLinuxMemStateDepA_tname
+    putByteString $ encodeUtf8 _msgLinuxMemStateDepA_cmdline
 
-$(makeSBP 'msgLinuxMemState ''MsgLinuxMemState)
-$(makeJSON "_msgLinuxMemState_" ''MsgLinuxMemState)
-$(makeLenses ''MsgLinuxMemState)
+$(makeSBP 'msgLinuxMemStateDepA ''MsgLinuxMemStateDepA)
+$(makeJSON "_msgLinuxMemStateDepA_" ''MsgLinuxMemStateDepA)
+$(makeLenses ''MsgLinuxMemStateDepA)
 
-msgLinuxSysState :: Word16
-msgLinuxSysState = 0x7F02
+msgLinuxSysStateDepA :: Word16
+msgLinuxSysStateDepA = 0x7F02
 
--- | SBP class for message MSG_LINUX_SYS_STATE (0x7F02).
+-- | SBP class for message MSG_LINUX_SYS_STATE_DEP_A (0x7F02).
 --
 -- This presents a summary of CPU and memory utilization.
-data MsgLinuxSysState = MsgLinuxSysState
-  { _msgLinuxSysState_mem_total    :: !Word16
+data MsgLinuxSysStateDepA = MsgLinuxSysStateDepA
+  { _msgLinuxSysStateDepA_mem_total    :: !Word16
     -- ^ total system memory
-  , _msgLinuxSysState_pcpu         :: !Word8
+  , _msgLinuxSysStateDepA_pcpu         :: !Word8
     -- ^ percent of total cpu currently utilized
-  , _msgLinuxSysState_pmem         :: !Word8
+  , _msgLinuxSysStateDepA_pmem         :: !Word8
     -- ^ percent of total memory currently utilized
-  , _msgLinuxSysState_procs_starting :: !Word16
+  , _msgLinuxSysStateDepA_procs_starting :: !Word16
     -- ^ number of processes that started during collection phase
-  , _msgLinuxSysState_procs_stopping :: !Word16
+  , _msgLinuxSysStateDepA_procs_stopping :: !Word16
     -- ^ number of processes that stopped during collection phase
-  , _msgLinuxSysState_pid_count    :: !Word16
+  , _msgLinuxSysStateDepA_pid_count    :: !Word16
     -- ^ the count of processes on the system
   } deriving ( Show, Read, Eq )
 
-instance Binary MsgLinuxSysState where
+instance Binary MsgLinuxSysStateDepA where
   get = do
-    _msgLinuxSysState_mem_total <- getWord16le
-    _msgLinuxSysState_pcpu <- getWord8
-    _msgLinuxSysState_pmem <- getWord8
-    _msgLinuxSysState_procs_starting <- getWord16le
-    _msgLinuxSysState_procs_stopping <- getWord16le
-    _msgLinuxSysState_pid_count <- getWord16le
-    pure MsgLinuxSysState {..}
+    _msgLinuxSysStateDepA_mem_total <- getWord16le
+    _msgLinuxSysStateDepA_pcpu <- getWord8
+    _msgLinuxSysStateDepA_pmem <- getWord8
+    _msgLinuxSysStateDepA_procs_starting <- getWord16le
+    _msgLinuxSysStateDepA_procs_stopping <- getWord16le
+    _msgLinuxSysStateDepA_pid_count <- getWord16le
+    pure MsgLinuxSysStateDepA {..}
 
-  put MsgLinuxSysState {..} = do
-    putWord16le _msgLinuxSysState_mem_total
-    putWord8 _msgLinuxSysState_pcpu
-    putWord8 _msgLinuxSysState_pmem
-    putWord16le _msgLinuxSysState_procs_starting
-    putWord16le _msgLinuxSysState_procs_stopping
-    putWord16le _msgLinuxSysState_pid_count
+  put MsgLinuxSysStateDepA {..} = do
+    putWord16le _msgLinuxSysStateDepA_mem_total
+    putWord8 _msgLinuxSysStateDepA_pcpu
+    putWord8 _msgLinuxSysStateDepA_pmem
+    putWord16le _msgLinuxSysStateDepA_procs_starting
+    putWord16le _msgLinuxSysStateDepA_procs_stopping
+    putWord16le _msgLinuxSysStateDepA_pid_count
 
-$(makeSBP 'msgLinuxSysState ''MsgLinuxSysState)
-$(makeJSON "_msgLinuxSysState_" ''MsgLinuxSysState)
-$(makeLenses ''MsgLinuxSysState)
+$(makeSBP 'msgLinuxSysStateDepA ''MsgLinuxSysStateDepA)
+$(makeJSON "_msgLinuxSysStateDepA_" ''MsgLinuxSysStateDepA)
+$(makeLenses ''MsgLinuxSysStateDepA)
 
 msgLinuxProcessSocketCounts :: Word16
 msgLinuxProcessSocketCounts = 0x7F03
@@ -365,3 +365,151 @@ instance Binary MsgLinuxProcessFdSummary where
 $(makeSBP 'msgLinuxProcessFdSummary ''MsgLinuxProcessFdSummary)
 $(makeJSON "_msgLinuxProcessFdSummary_" ''MsgLinuxProcessFdSummary)
 $(makeLenses ''MsgLinuxProcessFdSummary)
+
+msgLinuxCpuState :: Word16
+msgLinuxCpuState = 0x7F08
+
+-- | SBP class for message MSG_LINUX_CPU_STATE (0x7F08).
+--
+-- This message indicates the process state of the top 10 heaviest consumers of
+-- CPU on the system, including a timestamp.
+data MsgLinuxCpuState = MsgLinuxCpuState
+  { _msgLinuxCpuState_index :: !Word8
+    -- ^ sequence of this status message, values from 0-9
+  , _msgLinuxCpuState_pid   :: !Word16
+    -- ^ the PID of the process
+  , _msgLinuxCpuState_pcpu  :: !Word8
+    -- ^ percent of cpu used, expressed as a fraction of 256
+  , _msgLinuxCpuState_time  :: !Word32
+    -- ^ timestamp of message, refer to flags field for how to interpret
+  , _msgLinuxCpuState_flags :: !Word8
+    -- ^ flags
+  , _msgLinuxCpuState_tname :: !Text
+    -- ^ fixed length string representing the thread name
+  , _msgLinuxCpuState_cmdline :: !Text
+    -- ^ the command line (as much as it fits in the remaining packet)
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgLinuxCpuState where
+  get = do
+    _msgLinuxCpuState_index <- getWord8
+    _msgLinuxCpuState_pid <- getWord16le
+    _msgLinuxCpuState_pcpu <- getWord8
+    _msgLinuxCpuState_time <- getWord32le
+    _msgLinuxCpuState_flags <- getWord8
+    _msgLinuxCpuState_tname <- decodeUtf8 <$> getByteString 15
+    _msgLinuxCpuState_cmdline <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    pure MsgLinuxCpuState {..}
+
+  put MsgLinuxCpuState {..} = do
+    putWord8 _msgLinuxCpuState_index
+    putWord16le _msgLinuxCpuState_pid
+    putWord8 _msgLinuxCpuState_pcpu
+    putWord32le _msgLinuxCpuState_time
+    putWord8 _msgLinuxCpuState_flags
+    putByteString $ encodeUtf8 _msgLinuxCpuState_tname
+    putByteString $ encodeUtf8 _msgLinuxCpuState_cmdline
+
+$(makeSBP 'msgLinuxCpuState ''MsgLinuxCpuState)
+$(makeJSON "_msgLinuxCpuState_" ''MsgLinuxCpuState)
+$(makeLenses ''MsgLinuxCpuState)
+
+msgLinuxMemState :: Word16
+msgLinuxMemState = 0x7F09
+
+-- | SBP class for message MSG_LINUX_MEM_STATE (0x7F09).
+--
+-- This message indicates the process state of the top 10 heaviest consumers of
+-- memory on the system, including a timestamp.
+data MsgLinuxMemState = MsgLinuxMemState
+  { _msgLinuxMemState_index :: !Word8
+    -- ^ sequence of this status message, values from 0-9
+  , _msgLinuxMemState_pid   :: !Word16
+    -- ^ the PID of the process
+  , _msgLinuxMemState_pmem  :: !Word8
+    -- ^ percent of memory used, expressed as a fraction of 256
+  , _msgLinuxMemState_time  :: !Word32
+    -- ^ timestamp of message, refer to flags field for how to interpret
+  , _msgLinuxMemState_flags :: !Word8
+    -- ^ flags
+  , _msgLinuxMemState_tname :: !Text
+    -- ^ fixed length string representing the thread name
+  , _msgLinuxMemState_cmdline :: !Text
+    -- ^ the command line (as much as it fits in the remaining packet)
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgLinuxMemState where
+  get = do
+    _msgLinuxMemState_index <- getWord8
+    _msgLinuxMemState_pid <- getWord16le
+    _msgLinuxMemState_pmem <- getWord8
+    _msgLinuxMemState_time <- getWord32le
+    _msgLinuxMemState_flags <- getWord8
+    _msgLinuxMemState_tname <- decodeUtf8 <$> getByteString 15
+    _msgLinuxMemState_cmdline <- decodeUtf8 . toStrict <$> getRemainingLazyByteString
+    pure MsgLinuxMemState {..}
+
+  put MsgLinuxMemState {..} = do
+    putWord8 _msgLinuxMemState_index
+    putWord16le _msgLinuxMemState_pid
+    putWord8 _msgLinuxMemState_pmem
+    putWord32le _msgLinuxMemState_time
+    putWord8 _msgLinuxMemState_flags
+    putByteString $ encodeUtf8 _msgLinuxMemState_tname
+    putByteString $ encodeUtf8 _msgLinuxMemState_cmdline
+
+$(makeSBP 'msgLinuxMemState ''MsgLinuxMemState)
+$(makeJSON "_msgLinuxMemState_" ''MsgLinuxMemState)
+$(makeLenses ''MsgLinuxMemState)
+
+msgLinuxSysState :: Word16
+msgLinuxSysState = 0x7F0A
+
+-- | SBP class for message MSG_LINUX_SYS_STATE (0x7F0A).
+--
+-- This presents a summary of CPU and memory utilization, including a
+-- timestamp.
+data MsgLinuxSysState = MsgLinuxSysState
+  { _msgLinuxSysState_mem_total    :: !Word16
+    -- ^ total system memory
+  , _msgLinuxSysState_pcpu         :: !Word8
+    -- ^ percent of total cpu currently utilized
+  , _msgLinuxSysState_pmem         :: !Word8
+    -- ^ percent of total memory currently utilized
+  , _msgLinuxSysState_procs_starting :: !Word16
+    -- ^ number of processes that started during collection phase
+  , _msgLinuxSysState_procs_stopping :: !Word16
+    -- ^ number of processes that stopped during collection phase
+  , _msgLinuxSysState_pid_count    :: !Word16
+    -- ^ the count of processes on the system
+  , _msgLinuxSysState_time         :: !Word32
+    -- ^ timestamp of message, refer to flags field for how to interpret
+  , _msgLinuxSysState_flags        :: !Word8
+    -- ^ flags
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgLinuxSysState where
+  get = do
+    _msgLinuxSysState_mem_total <- getWord16le
+    _msgLinuxSysState_pcpu <- getWord8
+    _msgLinuxSysState_pmem <- getWord8
+    _msgLinuxSysState_procs_starting <- getWord16le
+    _msgLinuxSysState_procs_stopping <- getWord16le
+    _msgLinuxSysState_pid_count <- getWord16le
+    _msgLinuxSysState_time <- getWord32le
+    _msgLinuxSysState_flags <- getWord8
+    pure MsgLinuxSysState {..}
+
+  put MsgLinuxSysState {..} = do
+    putWord16le _msgLinuxSysState_mem_total
+    putWord8 _msgLinuxSysState_pcpu
+    putWord8 _msgLinuxSysState_pmem
+    putWord16le _msgLinuxSysState_procs_starting
+    putWord16le _msgLinuxSysState_procs_stopping
+    putWord16le _msgLinuxSysState_pid_count
+    putWord32le _msgLinuxSysState_time
+    putWord8 _msgLinuxSysState_flags
+
+$(makeSBP 'msgLinuxSysState ''MsgLinuxSysState)
+$(makeJSON "_msgLinuxSysState_" ''MsgLinuxSysState)
+$(makeLenses ''MsgLinuxSysState)

@@ -13,6 +13,7 @@
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
 //! Messages reserved for use by the user.
+//!
 
 #[allow(unused_imports)]
 use byteorder::{LittleEndian, ReadBytesExt};
@@ -26,6 +27,7 @@ use crate::SbpString;
 ///
 /// This message can contain any application specific user data up to a
 /// maximum length of 255 bytes per message.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]

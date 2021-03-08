@@ -28,6 +28,7 @@ use crate::SbpString;
 /// Profile for a specific SV for debugging purposes
 /// The message describes SV profile during acquisition time.
 /// The message is used to debug and measure the performance.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -131,6 +132,7 @@ impl crate::serialize::SbpSerialize for AcqSvProfile {
 /// Deprecated
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -241,6 +243,7 @@ impl crate::serialize::SbpSerialize for AcqSvProfileDep {
 /// frequency range. It contains the parameters of the point in the
 /// acquisition search space with the best carrier-to-noise (CN/0)
 /// ratio.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -315,6 +318,7 @@ impl crate::serialize::SbpSerialize for MsgAcqResult {
 /// Deprecated
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -391,6 +395,7 @@ impl crate::serialize::SbpSerialize for MsgAcqResultDepA {
 /// Deprecated
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -466,6 +471,7 @@ impl crate::serialize::SbpSerialize for MsgAcqResultDepB {
 /// Deprecated
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -541,6 +547,7 @@ impl crate::serialize::SbpSerialize for MsgAcqResultDepC {
 ///
 /// The message describes all SV profiles during acquisition time.
 /// The message is used to debug and measure the performance.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
@@ -600,6 +607,7 @@ impl crate::serialize::SbpSerialize for MsgAcqSvProfile {
 /// Deprecated.
 ///
 /// Deprecated.
+///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]

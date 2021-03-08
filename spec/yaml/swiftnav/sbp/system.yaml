@@ -226,7 +226,7 @@ definitions:
                   desc: INS Type
                   values:
                       - 0: Smoothpose Loosely Coupled
-                      - 1: Other Loosely Coupled
+                      - 1: Starling
                       - 2: Reserved
                       - 3: Reserved
                       - 4: Reserved

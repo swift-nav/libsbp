@@ -24,7 +24,7 @@ var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
 
 /**
- * SBP class for message MSG_LINUX_CPU_STATE (0x7F00).
+ * SBP class for message MSG_LINUX_CPU_STATE_DEP_A (0x7F00).
  *
  * This message indicates the process state of the top 10 heaviest consumers of CPU
  * on the system.
@@ -38,33 +38,33 @@ var UInt64 = require('cuint').UINT64;
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgLinuxCpuState = function (sbp, fields) {
+var MsgLinuxCpuStateDepA = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_LINUX_CPU_STATE";
+  this.messageType = "MSG_LINUX_CPU_STATE_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgLinuxCpuState.prototype = Object.create(SBP.prototype);
-MsgLinuxCpuState.prototype.messageType = "MSG_LINUX_CPU_STATE";
-MsgLinuxCpuState.prototype.msg_type = 0x7F00;
-MsgLinuxCpuState.prototype.constructor = MsgLinuxCpuState;
-MsgLinuxCpuState.prototype.parser = new Parser()
+MsgLinuxCpuStateDepA.prototype = Object.create(SBP.prototype);
+MsgLinuxCpuStateDepA.prototype.messageType = "MSG_LINUX_CPU_STATE_DEP_A";
+MsgLinuxCpuStateDepA.prototype.msg_type = 0x7F00;
+MsgLinuxCpuStateDepA.prototype.constructor = MsgLinuxCpuStateDepA;
+MsgLinuxCpuStateDepA.prototype.parser = new Parser()
   .endianess('little')
   .uint8('index')
   .uint16('pid')
   .uint8('pcpu')
   .string('tname', { length: 15 })
   .string('cmdline', { greedy: true });
-MsgLinuxCpuState.prototype.fieldSpec = [];
-MsgLinuxCpuState.prototype.fieldSpec.push(['index', 'writeUInt8', 1]);
-MsgLinuxCpuState.prototype.fieldSpec.push(['pid', 'writeUInt16LE', 2]);
-MsgLinuxCpuState.prototype.fieldSpec.push(['pcpu', 'writeUInt8', 1]);
-MsgLinuxCpuState.prototype.fieldSpec.push(['tname', 'string', 15]);
-MsgLinuxCpuState.prototype.fieldSpec.push(['cmdline', 'string', null]);
+MsgLinuxCpuStateDepA.prototype.fieldSpec = [];
+MsgLinuxCpuStateDepA.prototype.fieldSpec.push(['index', 'writeUInt8', 1]);
+MsgLinuxCpuStateDepA.prototype.fieldSpec.push(['pid', 'writeUInt16LE', 2]);
+MsgLinuxCpuStateDepA.prototype.fieldSpec.push(['pcpu', 'writeUInt8', 1]);
+MsgLinuxCpuStateDepA.prototype.fieldSpec.push(['tname', 'string', 15]);
+MsgLinuxCpuStateDepA.prototype.fieldSpec.push(['cmdline', 'string', null]);
 
 /**
- * SBP class for message MSG_LINUX_MEM_STATE (0x7F01).
+ * SBP class for message MSG_LINUX_MEM_STATE_DEP_A (0x7F01).
  *
  * This message indicates the process state of the top 10 heaviest consumers of
  * memory on the system.
@@ -78,33 +78,33 @@ MsgLinuxCpuState.prototype.fieldSpec.push(['cmdline', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgLinuxMemState = function (sbp, fields) {
+var MsgLinuxMemStateDepA = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_LINUX_MEM_STATE";
+  this.messageType = "MSG_LINUX_MEM_STATE_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgLinuxMemState.prototype = Object.create(SBP.prototype);
-MsgLinuxMemState.prototype.messageType = "MSG_LINUX_MEM_STATE";
-MsgLinuxMemState.prototype.msg_type = 0x7F01;
-MsgLinuxMemState.prototype.constructor = MsgLinuxMemState;
-MsgLinuxMemState.prototype.parser = new Parser()
+MsgLinuxMemStateDepA.prototype = Object.create(SBP.prototype);
+MsgLinuxMemStateDepA.prototype.messageType = "MSG_LINUX_MEM_STATE_DEP_A";
+MsgLinuxMemStateDepA.prototype.msg_type = 0x7F01;
+MsgLinuxMemStateDepA.prototype.constructor = MsgLinuxMemStateDepA;
+MsgLinuxMemStateDepA.prototype.parser = new Parser()
   .endianess('little')
   .uint8('index')
   .uint16('pid')
   .uint8('pmem')
   .string('tname', { length: 15 })
   .string('cmdline', { greedy: true });
-MsgLinuxMemState.prototype.fieldSpec = [];
-MsgLinuxMemState.prototype.fieldSpec.push(['index', 'writeUInt8', 1]);
-MsgLinuxMemState.prototype.fieldSpec.push(['pid', 'writeUInt16LE', 2]);
-MsgLinuxMemState.prototype.fieldSpec.push(['pmem', 'writeUInt8', 1]);
-MsgLinuxMemState.prototype.fieldSpec.push(['tname', 'string', 15]);
-MsgLinuxMemState.prototype.fieldSpec.push(['cmdline', 'string', null]);
+MsgLinuxMemStateDepA.prototype.fieldSpec = [];
+MsgLinuxMemStateDepA.prototype.fieldSpec.push(['index', 'writeUInt8', 1]);
+MsgLinuxMemStateDepA.prototype.fieldSpec.push(['pid', 'writeUInt16LE', 2]);
+MsgLinuxMemStateDepA.prototype.fieldSpec.push(['pmem', 'writeUInt8', 1]);
+MsgLinuxMemStateDepA.prototype.fieldSpec.push(['tname', 'string', 15]);
+MsgLinuxMemStateDepA.prototype.fieldSpec.push(['cmdline', 'string', null]);
 
 /**
- * SBP class for message MSG_LINUX_SYS_STATE (0x7F02).
+ * SBP class for message MSG_LINUX_SYS_STATE_DEP_A (0x7F02).
  *
  * This presents a summary of CPU and memory utilization.
  *
@@ -118,18 +118,18 @@ MsgLinuxMemState.prototype.fieldSpec.push(['cmdline', 'string', null]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
-var MsgLinuxSysState = function (sbp, fields) {
+var MsgLinuxSysStateDepA = function (sbp, fields) {
   SBP.call(this, sbp);
-  this.messageType = "MSG_LINUX_SYS_STATE";
+  this.messageType = "MSG_LINUX_SYS_STATE_DEP_A";
   this.fields = (fields || this.parser.parse(sbp.payload));
 
   return this;
 };
-MsgLinuxSysState.prototype = Object.create(SBP.prototype);
-MsgLinuxSysState.prototype.messageType = "MSG_LINUX_SYS_STATE";
-MsgLinuxSysState.prototype.msg_type = 0x7F02;
-MsgLinuxSysState.prototype.constructor = MsgLinuxSysState;
-MsgLinuxSysState.prototype.parser = new Parser()
+MsgLinuxSysStateDepA.prototype = Object.create(SBP.prototype);
+MsgLinuxSysStateDepA.prototype.messageType = "MSG_LINUX_SYS_STATE_DEP_A";
+MsgLinuxSysStateDepA.prototype.msg_type = 0x7F02;
+MsgLinuxSysStateDepA.prototype.constructor = MsgLinuxSysStateDepA;
+MsgLinuxSysStateDepA.prototype.parser = new Parser()
   .endianess('little')
   .uint16('mem_total')
   .uint8('pcpu')
@@ -137,13 +137,13 @@ MsgLinuxSysState.prototype.parser = new Parser()
   .uint16('procs_starting')
   .uint16('procs_stopping')
   .uint16('pid_count');
-MsgLinuxSysState.prototype.fieldSpec = [];
-MsgLinuxSysState.prototype.fieldSpec.push(['mem_total', 'writeUInt16LE', 2]);
-MsgLinuxSysState.prototype.fieldSpec.push(['pcpu', 'writeUInt8', 1]);
-MsgLinuxSysState.prototype.fieldSpec.push(['pmem', 'writeUInt8', 1]);
-MsgLinuxSysState.prototype.fieldSpec.push(['procs_starting', 'writeUInt16LE', 2]);
-MsgLinuxSysState.prototype.fieldSpec.push(['procs_stopping', 'writeUInt16LE', 2]);
-MsgLinuxSysState.prototype.fieldSpec.push(['pid_count', 'writeUInt16LE', 2]);
+MsgLinuxSysStateDepA.prototype.fieldSpec = [];
+MsgLinuxSysStateDepA.prototype.fieldSpec.push(['mem_total', 'writeUInt16LE', 2]);
+MsgLinuxSysStateDepA.prototype.fieldSpec.push(['pcpu', 'writeUInt8', 1]);
+MsgLinuxSysStateDepA.prototype.fieldSpec.push(['pmem', 'writeUInt8', 1]);
+MsgLinuxSysStateDepA.prototype.fieldSpec.push(['procs_starting', 'writeUInt16LE', 2]);
+MsgLinuxSysStateDepA.prototype.fieldSpec.push(['procs_stopping', 'writeUInt16LE', 2]);
+MsgLinuxSysStateDepA.prototype.fieldSpec.push(['pid_count', 'writeUInt16LE', 2]);
 
 /**
  * SBP class for message MSG_LINUX_PROCESS_SOCKET_COUNTS (0x7F03).
@@ -351,13 +351,153 @@ MsgLinuxProcessFdSummary.prototype.fieldSpec = [];
 MsgLinuxProcessFdSummary.prototype.fieldSpec.push(['sys_fd_count', 'writeUInt32LE', 4]);
 MsgLinuxProcessFdSummary.prototype.fieldSpec.push(['most_opened', 'string', null]);
 
+/**
+ * SBP class for message MSG_LINUX_CPU_STATE (0x7F08).
+ *
+ * This message indicates the process state of the top 10 heaviest consumers of CPU
+ * on the system, including a timestamp.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field index number (unsigned 8-bit int, 1 byte) sequence of this status message, values from 0-9
+ * @field pid number (unsigned 16-bit int, 2 bytes) the PID of the process
+ * @field pcpu number (unsigned 8-bit int, 1 byte) percent of cpu used, expressed as a fraction of 256
+ * @field time number (unsigned 32-bit int, 4 bytes) timestamp of message, refer to flags field for how to interpret
+ * @field flags number (unsigned 8-bit int, 1 byte) flags
+ * @field tname string fixed length string representing the thread name
+ * @field cmdline string the command line (as much as it fits in the remaining packet)
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgLinuxCpuState = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_LINUX_CPU_STATE";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgLinuxCpuState.prototype = Object.create(SBP.prototype);
+MsgLinuxCpuState.prototype.messageType = "MSG_LINUX_CPU_STATE";
+MsgLinuxCpuState.prototype.msg_type = 0x7F08;
+MsgLinuxCpuState.prototype.constructor = MsgLinuxCpuState;
+MsgLinuxCpuState.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('index')
+  .uint16('pid')
+  .uint8('pcpu')
+  .uint32('time')
+  .uint8('flags')
+  .string('tname', { length: 15 })
+  .string('cmdline', { greedy: true });
+MsgLinuxCpuState.prototype.fieldSpec = [];
+MsgLinuxCpuState.prototype.fieldSpec.push(['index', 'writeUInt8', 1]);
+MsgLinuxCpuState.prototype.fieldSpec.push(['pid', 'writeUInt16LE', 2]);
+MsgLinuxCpuState.prototype.fieldSpec.push(['pcpu', 'writeUInt8', 1]);
+MsgLinuxCpuState.prototype.fieldSpec.push(['time', 'writeUInt32LE', 4]);
+MsgLinuxCpuState.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+MsgLinuxCpuState.prototype.fieldSpec.push(['tname', 'string', 15]);
+MsgLinuxCpuState.prototype.fieldSpec.push(['cmdline', 'string', null]);
+
+/**
+ * SBP class for message MSG_LINUX_MEM_STATE (0x7F09).
+ *
+ * This message indicates the process state of the top 10 heaviest consumers of
+ * memory on the system, including a timestamp.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field index number (unsigned 8-bit int, 1 byte) sequence of this status message, values from 0-9
+ * @field pid number (unsigned 16-bit int, 2 bytes) the PID of the process
+ * @field pmem number (unsigned 8-bit int, 1 byte) percent of memory used, expressed as a fraction of 256
+ * @field time number (unsigned 32-bit int, 4 bytes) timestamp of message, refer to flags field for how to interpret
+ * @field flags number (unsigned 8-bit int, 1 byte) flags
+ * @field tname string fixed length string representing the thread name
+ * @field cmdline string the command line (as much as it fits in the remaining packet)
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgLinuxMemState = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_LINUX_MEM_STATE";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgLinuxMemState.prototype = Object.create(SBP.prototype);
+MsgLinuxMemState.prototype.messageType = "MSG_LINUX_MEM_STATE";
+MsgLinuxMemState.prototype.msg_type = 0x7F09;
+MsgLinuxMemState.prototype.constructor = MsgLinuxMemState;
+MsgLinuxMemState.prototype.parser = new Parser()
+  .endianess('little')
+  .uint8('index')
+  .uint16('pid')
+  .uint8('pmem')
+  .uint32('time')
+  .uint8('flags')
+  .string('tname', { length: 15 })
+  .string('cmdline', { greedy: true });
+MsgLinuxMemState.prototype.fieldSpec = [];
+MsgLinuxMemState.prototype.fieldSpec.push(['index', 'writeUInt8', 1]);
+MsgLinuxMemState.prototype.fieldSpec.push(['pid', 'writeUInt16LE', 2]);
+MsgLinuxMemState.prototype.fieldSpec.push(['pmem', 'writeUInt8', 1]);
+MsgLinuxMemState.prototype.fieldSpec.push(['time', 'writeUInt32LE', 4]);
+MsgLinuxMemState.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+MsgLinuxMemState.prototype.fieldSpec.push(['tname', 'string', 15]);
+MsgLinuxMemState.prototype.fieldSpec.push(['cmdline', 'string', null]);
+
+/**
+ * SBP class for message MSG_LINUX_SYS_STATE (0x7F0A).
+ *
+ * This presents a summary of CPU and memory utilization, including a timestamp.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field mem_total number (unsigned 16-bit int, 2 bytes) total system memory
+ * @field pcpu number (unsigned 8-bit int, 1 byte) percent of total cpu currently utilized
+ * @field pmem number (unsigned 8-bit int, 1 byte) percent of total memory currently utilized
+ * @field procs_starting number (unsigned 16-bit int, 2 bytes) number of processes that started during collection phase
+ * @field procs_stopping number (unsigned 16-bit int, 2 bytes) number of processes that stopped during collection phase
+ * @field pid_count number (unsigned 16-bit int, 2 bytes) the count of processes on the system
+ * @field time number (unsigned 32-bit int, 4 bytes) timestamp of message, refer to flags field for how to interpret
+ * @field flags number (unsigned 8-bit int, 1 byte) flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgLinuxSysState = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_LINUX_SYS_STATE";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgLinuxSysState.prototype = Object.create(SBP.prototype);
+MsgLinuxSysState.prototype.messageType = "MSG_LINUX_SYS_STATE";
+MsgLinuxSysState.prototype.msg_type = 0x7F0A;
+MsgLinuxSysState.prototype.constructor = MsgLinuxSysState;
+MsgLinuxSysState.prototype.parser = new Parser()
+  .endianess('little')
+  .uint16('mem_total')
+  .uint8('pcpu')
+  .uint8('pmem')
+  .uint16('procs_starting')
+  .uint16('procs_stopping')
+  .uint16('pid_count')
+  .uint32('time')
+  .uint8('flags');
+MsgLinuxSysState.prototype.fieldSpec = [];
+MsgLinuxSysState.prototype.fieldSpec.push(['mem_total', 'writeUInt16LE', 2]);
+MsgLinuxSysState.prototype.fieldSpec.push(['pcpu', 'writeUInt8', 1]);
+MsgLinuxSysState.prototype.fieldSpec.push(['pmem', 'writeUInt8', 1]);
+MsgLinuxSysState.prototype.fieldSpec.push(['procs_starting', 'writeUInt16LE', 2]);
+MsgLinuxSysState.prototype.fieldSpec.push(['procs_stopping', 'writeUInt16LE', 2]);
+MsgLinuxSysState.prototype.fieldSpec.push(['pid_count', 'writeUInt16LE', 2]);
+MsgLinuxSysState.prototype.fieldSpec.push(['time', 'writeUInt32LE', 4]);
+MsgLinuxSysState.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
 module.exports = {
-  0x7F00: MsgLinuxCpuState,
-  MsgLinuxCpuState: MsgLinuxCpuState,
-  0x7F01: MsgLinuxMemState,
-  MsgLinuxMemState: MsgLinuxMemState,
-  0x7F02: MsgLinuxSysState,
-  MsgLinuxSysState: MsgLinuxSysState,
+  0x7F00: MsgLinuxCpuStateDepA,
+  MsgLinuxCpuStateDepA: MsgLinuxCpuStateDepA,
+  0x7F01: MsgLinuxMemStateDepA,
+  MsgLinuxMemStateDepA: MsgLinuxMemStateDepA,
+  0x7F02: MsgLinuxSysStateDepA,
+  MsgLinuxSysStateDepA: MsgLinuxSysStateDepA,
   0x7F03: MsgLinuxProcessSocketCounts,
   MsgLinuxProcessSocketCounts: MsgLinuxProcessSocketCounts,
   0x7F04: MsgLinuxProcessSocketQueues,
@@ -368,4 +508,10 @@ module.exports = {
   MsgLinuxProcessFdCount: MsgLinuxProcessFdCount,
   0x7F07: MsgLinuxProcessFdSummary,
   MsgLinuxProcessFdSummary: MsgLinuxProcessFdSummary,
+  0x7F08: MsgLinuxCpuState,
+  MsgLinuxCpuState: MsgLinuxCpuState,
+  0x7F09: MsgLinuxMemState,
+  MsgLinuxMemState: MsgLinuxMemState,
+  0x7F0A: MsgLinuxSysState,
+  MsgLinuxSysState: MsgLinuxSysState,
 }
