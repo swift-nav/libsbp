@@ -26,6 +26,8 @@ use byteorder::{LittleEndian, ReadBytesExt};
 use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
+#[allow(unused_imports)]
+use serde_json::{json, Value};
 
 /// Flash response message (host <= device).
 ///
@@ -54,6 +56,15 @@ impl MsgFlashDone {
     }
 }
 impl super::SBPMessage for MsgFlashDone {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         224
     }
@@ -121,6 +132,15 @@ impl MsgFlashErase {
     }
 }
 impl super::SBPMessage for MsgFlashErase {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         226
     }
@@ -197,6 +217,15 @@ impl MsgFlashProgram {
     }
 }
 impl super::SBPMessage for MsgFlashProgram {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         230
     }
@@ -275,6 +304,15 @@ impl MsgFlashReadReq {
     }
 }
 impl super::SBPMessage for MsgFlashReadReq {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         231
     }
@@ -351,6 +389,15 @@ impl MsgFlashReadResp {
     }
 }
 impl super::SBPMessage for MsgFlashReadResp {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         225
     }
@@ -416,6 +463,15 @@ impl MsgM25FlashWriteStatus {
     }
 }
 impl super::SBPMessage for MsgM25FlashWriteStatus {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         243
     }
@@ -477,6 +533,15 @@ impl MsgStmFlashLockSector {
     }
 }
 impl super::SBPMessage for MsgStmFlashLockSector {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         227
     }
@@ -538,6 +603,15 @@ impl MsgStmFlashUnlockSector {
     }
 }
 impl super::SBPMessage for MsgStmFlashUnlockSector {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         228
     }
@@ -599,6 +673,15 @@ impl MsgStmUniqueIdReq {
     }
 }
 impl super::SBPMessage for MsgStmUniqueIdReq {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         232
     }
@@ -659,6 +742,15 @@ impl MsgStmUniqueIdResp {
     }
 }
 impl super::SBPMessage for MsgStmUniqueIdResp {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         229
     }

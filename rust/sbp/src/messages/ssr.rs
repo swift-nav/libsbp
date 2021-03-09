@@ -22,6 +22,8 @@ use super::gnss::*;
 use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
+#[allow(unused_imports)]
+use serde_json::{json, Value};
 
 /// SSR code biases corrections for a particular satellite.
 ///
@@ -497,6 +499,15 @@ impl MsgSsrCodeBiases {
     }
 }
 impl super::SBPMessage for MsgSsrCodeBiases {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         1505
     }
@@ -570,6 +581,15 @@ impl MsgSsrGriddedCorrection {
     }
 }
 impl super::SBPMessage for MsgSsrGriddedCorrection {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         1532
     }
@@ -632,6 +652,15 @@ impl MsgSsrGriddedCorrectionDepA {
     }
 }
 impl super::SBPMessage for MsgSsrGriddedCorrectionDepA {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         1530
     }
@@ -693,6 +722,15 @@ impl MsgSsrGriddedCorrectionNoStdDepA {
     }
 }
 impl super::SBPMessage for MsgSsrGriddedCorrectionNoStdDepA {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         1520
     }
@@ -757,6 +795,15 @@ impl MsgSsrGridDefinitionDepA {
     }
 }
 impl super::SBPMessage for MsgSsrGridDefinitionDepA {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         1525
     }
@@ -863,6 +910,15 @@ impl MsgSsrOrbitClock {
     }
 }
 impl super::SBPMessage for MsgSsrOrbitClock {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         1501
     }
@@ -986,6 +1042,15 @@ impl MsgSsrOrbitClockDepA {
     }
 }
 impl super::SBPMessage for MsgSsrOrbitClockDepA {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         1500
     }
@@ -1103,6 +1168,15 @@ impl MsgSsrPhaseBiases {
     }
 }
 impl super::SBPMessage for MsgSsrPhaseBiases {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         1510
     }
@@ -1187,6 +1261,15 @@ impl MsgSsrStecCorrection {
     }
 }
 impl super::SBPMessage for MsgSsrStecCorrection {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         1531
     }
@@ -1248,6 +1331,15 @@ impl MsgSsrStecCorrectionDepA {
     }
 }
 impl super::SBPMessage for MsgSsrStecCorrectionDepA {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         1515
     }
@@ -1361,6 +1453,15 @@ impl MsgSsrTileDefinition {
     }
 }
 impl super::SBPMessage for MsgSsrTileDefinition {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         1526
     }

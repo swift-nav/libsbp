@@ -1,4 +1,6 @@
 use crate::{messages::SBPMessage, serialize::SbpSerialize};
+#[allow(unused_imports)]
+use serde_json::{json, Value};
 
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Serialize};
@@ -22,6 +24,15 @@ impl SbpSerialize for Unknown {
 }
 
 impl SBPMessage for Unknown {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         self.msg_id
     }

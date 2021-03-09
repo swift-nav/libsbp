@@ -25,6 +25,7 @@ use self::unknown::Unknown;
 use crate::serialize::SbpSerialize;
 
 pub trait SBPMessage: SbpSerialize {
+    fn get_message_name(&self) -> String;
     fn get_message_type(&self) -> u16;
     fn get_sender_id(&self) -> Option<u16>;
     fn set_sender_id(&mut self, new_id: u16);
@@ -57,6 +58,19 @@ impl SBP {
 }
 
 impl crate::SBPMessage for SBP {
+    fn get_message_name(&self) -> String {
+        match self {
+            ((*- for m in msgs *))
+            SBP::(((m.identifier|camel_case)))(msg) => {
+                msg.get_message_name()
+            },
+            ((*- endfor *))
+            SBP::Unknown(msg) => {
+                msg.get_message_name()
+            },
+        }
+    }
+
     fn get_message_type(&self) -> u16 {
         match self {
             ((*- for m in msgs *))

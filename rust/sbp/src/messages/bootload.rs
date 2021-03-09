@@ -26,6 +26,8 @@ use byteorder::{LittleEndian, ReadBytesExt};
 use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
+#[allow(unused_imports)]
+use serde_json::{json, Value};
 
 /// Deprecated
 ///
@@ -51,6 +53,15 @@ impl MsgBootloaderHandshakeDepA {
     }
 }
 impl super::SBPMessage for MsgBootloaderHandshakeDepA {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         176
     }
@@ -110,6 +121,15 @@ impl MsgBootloaderHandshakeReq {
     }
 }
 impl super::SBPMessage for MsgBootloaderHandshakeReq {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         179
     }
@@ -173,6 +193,15 @@ impl MsgBootloaderHandshakeResp {
     }
 }
 impl super::SBPMessage for MsgBootloaderHandshakeResp {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         180
     }
@@ -235,6 +264,15 @@ impl MsgBootloaderJumpToApp {
     }
 }
 impl super::SBPMessage for MsgBootloaderJumpToApp {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         177
     }
@@ -297,6 +335,15 @@ impl MsgNapDeviceDnaReq {
     }
 }
 impl super::SBPMessage for MsgNapDeviceDnaReq {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         222
     }
@@ -358,6 +405,15 @@ impl MsgNapDeviceDnaResp {
     }
 }
 impl super::SBPMessage for MsgNapDeviceDnaResp {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         221
     }

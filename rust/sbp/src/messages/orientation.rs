@@ -21,6 +21,8 @@ use byteorder::{LittleEndian, ReadBytesExt};
 use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
+#[allow(unused_imports)]
+use serde_json::{json, Value};
 
 /// Vehicle Body Frame instantaneous angular rates
 ///
@@ -66,6 +68,15 @@ impl MsgAngularRate {
     }
 }
 impl super::SBPMessage for MsgAngularRate {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         546
     }
@@ -146,6 +157,15 @@ impl MsgBaselineHeading {
     }
 }
 impl super::SBPMessage for MsgBaselineHeading {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         527
     }
@@ -237,6 +257,15 @@ impl MsgOrientEuler {
     }
 }
 impl super::SBPMessage for MsgOrientEuler {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         545
     }
@@ -342,6 +371,15 @@ impl MsgOrientQuat {
     }
 }
 impl super::SBPMessage for MsgOrientQuat {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         544
     }

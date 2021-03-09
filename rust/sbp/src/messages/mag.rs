@@ -21,6 +21,8 @@ use byteorder::{LittleEndian, ReadBytesExt};
 use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
+#[allow(unused_imports)]
+use serde_json::{json, Value};
 
 /// Raw magnetometer data
 ///
@@ -59,6 +61,15 @@ impl MsgMagRaw {
     }
 }
 impl super::SBPMessage for MsgMagRaw {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         2306
     }

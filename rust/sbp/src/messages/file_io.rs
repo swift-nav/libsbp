@@ -29,6 +29,8 @@ use byteorder::{LittleEndian, ReadBytesExt};
 use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
+#[allow(unused_imports)]
+use serde_json::{json, Value};
 
 /// Request advice on the optimal configuration for FileIO.
 ///
@@ -57,6 +59,15 @@ impl MsgFileioConfigReq {
     }
 }
 impl super::SBPMessage for MsgFileioConfigReq {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         4097
     }
@@ -130,6 +141,15 @@ impl MsgFileioConfigResp {
     }
 }
 impl super::SBPMessage for MsgFileioConfigResp {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         4098
     }
@@ -211,6 +231,15 @@ impl MsgFileioReadDirReq {
     }
 }
 impl super::SBPMessage for MsgFileioReadDirReq {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         169
     }
@@ -283,6 +312,15 @@ impl MsgFileioReadDirResp {
     }
 }
 impl super::SBPMessage for MsgFileioReadDirResp {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         170
     }
@@ -361,6 +399,15 @@ impl MsgFileioReadReq {
     }
 }
 impl super::SBPMessage for MsgFileioReadReq {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         168
     }
@@ -434,6 +481,15 @@ impl MsgFileioReadResp {
     }
 }
 impl super::SBPMessage for MsgFileioReadResp {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         163
     }
@@ -499,6 +555,15 @@ impl MsgFileioRemove {
     }
 }
 impl super::SBPMessage for MsgFileioRemove {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         172
     }
@@ -575,6 +640,15 @@ impl MsgFileioWriteReq {
     }
 }
 impl super::SBPMessage for MsgFileioWriteReq {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         173
     }
@@ -645,6 +719,15 @@ impl MsgFileioWriteResp {
     }
 }
 impl super::SBPMessage for MsgFileioWriteResp {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         171
     }

@@ -22,6 +22,8 @@ use byteorder::{LittleEndian, ReadBytesExt};
 use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
+#[allow(unused_imports)]
+use serde_json::{json, Value};
 
 /// Wrapper for FWD a separate stream of information over SBP
 ///
@@ -59,6 +61,15 @@ impl MsgFwd {
     }
 }
 impl super::SBPMessage for MsgFwd {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         1026
     }
@@ -128,6 +139,15 @@ impl MsgLog {
     }
 }
 impl super::SBPMessage for MsgLog {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         1025
     }
@@ -190,6 +210,15 @@ impl MsgPrintDep {
     }
 }
 impl super::SBPMessage for MsgPrintDep {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         16
     }

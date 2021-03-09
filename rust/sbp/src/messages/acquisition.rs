@@ -22,6 +22,8 @@ use super::gnss::*;
 use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
+#[allow(unused_imports)]
+use serde_json::{json, Value};
 
 /// Acq perfomance measurement and debug
 ///
@@ -273,6 +275,15 @@ impl MsgAcqResult {
     }
 }
 impl super::SBPMessage for MsgAcqResult {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         47
     }
@@ -350,6 +361,15 @@ impl MsgAcqResultDepA {
     }
 }
 impl super::SBPMessage for MsgAcqResultDepA {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         21
     }
@@ -426,6 +446,15 @@ impl MsgAcqResultDepB {
     }
 }
 impl super::SBPMessage for MsgAcqResultDepB {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         20
     }
@@ -501,6 +530,15 @@ impl MsgAcqResultDepC {
     }
 }
 impl super::SBPMessage for MsgAcqResultDepC {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         31
     }
@@ -568,6 +606,15 @@ impl MsgAcqSvProfile {
     }
 }
 impl super::SBPMessage for MsgAcqSvProfile {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         46
     }
@@ -628,6 +675,15 @@ impl MsgAcqSvProfileDep {
     }
 }
 impl super::SBPMessage for MsgAcqSvProfileDep {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         30
     }

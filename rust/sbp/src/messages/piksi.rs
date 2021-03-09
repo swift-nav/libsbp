@@ -25,6 +25,8 @@ use super::gnss::*;
 use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
+#[allow(unused_imports)]
+use serde_json::{json, Value};
 
 /// Receiver-to-base station latency
 ///
@@ -116,6 +118,15 @@ impl MsgAlmanac {
     }
 }
 impl super::SBPMessage for MsgAlmanac {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         105
     }
@@ -180,6 +191,15 @@ impl MsgCellModemStatus {
     }
 }
 impl super::SBPMessage for MsgCellModemStatus {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         190
     }
@@ -250,6 +270,15 @@ impl MsgCommandOutput {
     }
 }
 impl super::SBPMessage for MsgCommandOutput {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         188
     }
@@ -317,6 +346,15 @@ impl MsgCommandReq {
     }
 }
 impl super::SBPMessage for MsgCommandReq {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         184
     }
@@ -383,6 +421,15 @@ impl MsgCommandResp {
     }
 }
 impl super::SBPMessage for MsgCommandResp {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         185
     }
@@ -444,6 +491,15 @@ impl MsgCwResults {
     }
 }
 impl super::SBPMessage for MsgCwResults {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         192
     }
@@ -499,6 +555,15 @@ impl MsgCwStart {
     }
 }
 impl super::SBPMessage for MsgCwStart {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         193
     }
@@ -569,6 +634,15 @@ impl MsgDeviceMonitor {
     }
 }
 impl super::SBPMessage for MsgDeviceMonitor {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         181
     }
@@ -645,6 +719,15 @@ impl MsgFrontEndGain {
     }
 }
 impl super::SBPMessage for MsgFrontEndGain {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         191
     }
@@ -710,6 +793,15 @@ impl MsgIarState {
     }
 }
 impl super::SBPMessage for MsgIarState {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         25
     }
@@ -767,6 +859,15 @@ impl MsgInitBaseDep {
     }
 }
 impl super::SBPMessage for MsgInitBaseDep {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         35
     }
@@ -827,6 +928,15 @@ impl MsgMaskSatellite {
     }
 }
 impl super::SBPMessage for MsgMaskSatellite {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         43
     }
@@ -892,6 +1002,15 @@ impl MsgMaskSatelliteDep {
     }
 }
 impl super::SBPMessage for MsgMaskSatelliteDep {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         27
     }
@@ -954,6 +1073,15 @@ impl MsgNetworkBandwidthUsage {
     }
 }
 impl super::SBPMessage for MsgNetworkBandwidthUsage {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         189
     }
@@ -1012,6 +1140,15 @@ impl MsgNetworkStateReq {
     }
 }
 impl super::SBPMessage for MsgNetworkStateReq {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         186
     }
@@ -1091,6 +1228,15 @@ impl MsgNetworkStateResp {
     }
 }
 impl super::SBPMessage for MsgNetworkStateResp {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         187
     }
@@ -1166,6 +1312,15 @@ impl MsgReset {
     }
 }
 impl super::SBPMessage for MsgReset {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         182
     }
@@ -1224,6 +1379,15 @@ impl MsgResetDep {
     }
 }
 impl super::SBPMessage for MsgResetDep {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         178
     }
@@ -1281,6 +1445,15 @@ impl MsgResetFilters {
     }
 }
 impl super::SBPMessage for MsgResetFilters {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         34
     }
@@ -1339,6 +1512,15 @@ impl MsgSetTime {
     }
 }
 impl super::SBPMessage for MsgSetTime {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         104
     }
@@ -1413,6 +1595,15 @@ impl MsgSpecan {
     }
 }
 impl super::SBPMessage for MsgSpecan {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         81
     }
@@ -1503,6 +1694,15 @@ impl MsgSpecanDep {
     }
 }
 impl super::SBPMessage for MsgSpecanDep {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         80
     }
@@ -1584,6 +1784,15 @@ impl MsgThreadState {
     }
 }
 impl super::SBPMessage for MsgThreadState {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         23
     }
@@ -1668,6 +1877,15 @@ impl MsgUartState {
     }
 }
 impl super::SBPMessage for MsgUartState {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         29
     }
@@ -1745,6 +1963,15 @@ impl MsgUartStateDepa {
     }
 }
 impl super::SBPMessage for MsgUartStateDepa {
+    fn get_message_name(&self) -> String {
+        if let Value::Object(obj) = json!(&self) {
+            if let Some(key) = obj.keys().next() {
+                return key.to_string();
+            }
+        }
+        String::from("Unknown")
+    }
+
     fn get_message_type(&self) -> u16 {
         24
     }
