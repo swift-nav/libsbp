@@ -276,7 +276,7 @@ definitions:
                       - 3: GNSS Outage exceeds max duration
                       - 4: FastStart seeding
                       - 5: FastStart validating
-                  
+                      - 6: Validating unsafe fast start seed
  - MSG_CSAC_TELEMETRY:
     id: 0xFF04
     short_desc: Experimental telemetry message
