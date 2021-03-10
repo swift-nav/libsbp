@@ -21,8 +21,6 @@ use byteorder::{LittleEndian, ReadBytesExt};
 use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
-#[allow(unused_imports)]
-use serde_json::{json, Value};
 
 /// Instruments the physical type of GNSS sensor input to the fuzed solution.
 ///
@@ -182,13 +180,8 @@ impl MsgSolnMeta {
     }
 }
 impl super::SBPMessage for MsgSolnMeta {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_SOLN_META"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -296,13 +289,8 @@ impl MsgSolnMetaDepA {
     }
 }
 impl super::SBPMessage for MsgSolnMetaDepA {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_SOLN_META_DEP_A"
     }
 
     fn get_message_type(&self) -> u16 {

@@ -23,8 +23,6 @@ use super::gnss::*;
 use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
-#[allow(unused_imports)]
-use serde_json::{json, Value};
 
 /// Measurement Engine signal tracking channel states
 ///
@@ -52,13 +50,8 @@ impl MsgMeasurementState {
     }
 }
 impl super::SBPMessage for MsgMeasurementState {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_MEASUREMENT_STATE"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -128,13 +121,8 @@ impl MsgTrackingIq {
     }
 }
 impl super::SBPMessage for MsgTrackingIq {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_TRACKING_IQ"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -207,13 +195,8 @@ impl MsgTrackingIqDepA {
     }
 }
 impl super::SBPMessage for MsgTrackingIqDepA {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_TRACKING_IQ_DEP_A"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -287,13 +270,8 @@ impl MsgTrackingIqDepB {
     }
 }
 impl super::SBPMessage for MsgTrackingIqDepB {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_TRACKING_IQ_DEP_B"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -362,13 +340,8 @@ impl MsgTrackingState {
     }
 }
 impl super::SBPMessage for MsgTrackingState {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_TRACKING_STATE"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -431,13 +404,8 @@ impl MsgTrackingStateDepA {
     }
 }
 impl super::SBPMessage for MsgTrackingStateDepA {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_TRACKING_STATE_DEP_A"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -500,13 +468,8 @@ impl MsgTrackingStateDepB {
     }
 }
 impl super::SBPMessage for MsgTrackingStateDepB {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_TRACKING_STATE_DEP_B"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -635,13 +598,8 @@ impl MsgTrackingStateDetailedDep {
     }
 }
 impl super::SBPMessage for MsgTrackingStateDetailedDep {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_TRACKING_STATE_DETAILED_DEP"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -811,13 +769,8 @@ impl MsgTrackingStateDetailedDepA {
     }
 }
 impl super::SBPMessage for MsgTrackingStateDetailedDepA {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_TRACKING_STATE_DETAILED_DEP_A"
     }
 
     fn get_message_type(&self) -> u16 {

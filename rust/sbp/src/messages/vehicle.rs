@@ -21,8 +21,6 @@ use byteorder::{LittleEndian, ReadBytesExt};
 use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
-#[allow(unused_imports)]
-use serde_json::{json, Value};
 
 /// Vehicle forward (x-axis) velocity
 ///
@@ -63,13 +61,8 @@ impl MsgOdometry {
     }
 }
 impl super::SBPMessage for MsgOdometry {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_ODOMETRY"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -159,13 +152,8 @@ impl MsgWheeltick {
     }
 }
 impl super::SBPMessage for MsgWheeltick {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_WHEELTICK"
     }
 
     fn get_message_type(&self) -> u16 {

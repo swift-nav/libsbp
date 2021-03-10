@@ -29,8 +29,6 @@ use byteorder::{LittleEndian, ReadBytesExt};
 use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
-#[allow(unused_imports)]
-use serde_json::{json, Value};
 
 /// Request advice on the optimal configuration for FileIO.
 ///
@@ -59,13 +57,8 @@ impl MsgFileioConfigReq {
     }
 }
 impl super::SBPMessage for MsgFileioConfigReq {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_FILEIO_CONFIG_REQ"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -141,13 +134,8 @@ impl MsgFileioConfigResp {
     }
 }
 impl super::SBPMessage for MsgFileioConfigResp {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_FILEIO_CONFIG_RESP"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -231,13 +219,8 @@ impl MsgFileioReadDirReq {
     }
 }
 impl super::SBPMessage for MsgFileioReadDirReq {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_FILEIO_READ_DIR_REQ"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -312,13 +295,8 @@ impl MsgFileioReadDirResp {
     }
 }
 impl super::SBPMessage for MsgFileioReadDirResp {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_FILEIO_READ_DIR_RESP"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -399,13 +377,8 @@ impl MsgFileioReadReq {
     }
 }
 impl super::SBPMessage for MsgFileioReadReq {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_FILEIO_READ_REQ"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -481,13 +454,8 @@ impl MsgFileioReadResp {
     }
 }
 impl super::SBPMessage for MsgFileioReadResp {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_FILEIO_READ_RESP"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -555,13 +523,8 @@ impl MsgFileioRemove {
     }
 }
 impl super::SBPMessage for MsgFileioRemove {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_FILEIO_REMOVE"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -640,13 +603,8 @@ impl MsgFileioWriteReq {
     }
 }
 impl super::SBPMessage for MsgFileioWriteReq {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_FILEIO_WRITE_REQ"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -719,13 +677,8 @@ impl MsgFileioWriteResp {
     }
 }
 impl super::SBPMessage for MsgFileioWriteResp {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_FILEIO_WRITE_RESP"
     }
 
     fn get_message_type(&self) -> u16 {

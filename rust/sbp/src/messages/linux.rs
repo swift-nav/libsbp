@@ -22,8 +22,6 @@ use byteorder::{LittleEndian, ReadBytesExt};
 use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
-#[allow(unused_imports)]
-use serde_json::{json, Value};
 
 /// List CPU state on the system
 ///
@@ -68,13 +66,8 @@ impl MsgLinuxCpuState {
     }
 }
 impl super::SBPMessage for MsgLinuxCpuState {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_LINUX_CPU_STATE"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -162,13 +155,8 @@ impl MsgLinuxCpuStateDepA {
     }
 }
 impl super::SBPMessage for MsgLinuxCpuStateDepA {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_LINUX_CPU_STATE_DEP_A"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -258,13 +246,8 @@ impl MsgLinuxMemState {
     }
 }
 impl super::SBPMessage for MsgLinuxMemState {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_LINUX_MEM_STATE"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -352,13 +335,8 @@ impl MsgLinuxMemStateDepA {
     }
 }
 impl super::SBPMessage for MsgLinuxMemStateDepA {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_LINUX_MEM_STATE_DEP_A"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -438,13 +416,8 @@ impl MsgLinuxProcessFdCount {
     }
 }
 impl super::SBPMessage for MsgLinuxProcessFdCount {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_LINUX_PROCESS_FD_COUNT"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -520,13 +493,8 @@ impl MsgLinuxProcessFdSummary {
     }
 }
 impl super::SBPMessage for MsgLinuxProcessFdSummary {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_LINUX_PROCESS_FD_SUMMARY"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -610,13 +578,8 @@ impl MsgLinuxProcessSocketCounts {
     }
 }
 impl super::SBPMessage for MsgLinuxProcessSocketCounts {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_LINUX_PROCESS_SOCKET_COUNTS"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -715,13 +678,8 @@ impl MsgLinuxProcessSocketQueues {
     }
 }
 impl super::SBPMessage for MsgLinuxProcessSocketQueues {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_LINUX_PROCESS_SOCKET_QUEUES"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -811,13 +769,8 @@ impl MsgLinuxSocketUsage {
     }
 }
 impl super::SBPMessage for MsgLinuxSocketUsage {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_LINUX_SOCKET_USAGE"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -907,13 +860,8 @@ impl MsgLinuxSysState {
     }
 }
 impl super::SBPMessage for MsgLinuxSysState {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_LINUX_SYS_STATE"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -1005,13 +953,8 @@ impl MsgLinuxSysStateDepA {
     }
 }
 impl super::SBPMessage for MsgLinuxSysStateDepA {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_LINUX_SYS_STATE_DEP_A"
     }
 
     fn get_message_type(&self) -> u16 {

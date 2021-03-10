@@ -23,8 +23,6 @@ use super::gnss::*;
 use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
-#[allow(unused_imports)]
-use serde_json::{json, Value};
 
 /// Navigation DataBase Event
 ///
@@ -78,13 +76,8 @@ impl MsgNdbEvent {
     }
 }
 impl super::SBPMessage for MsgNdbEvent {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_NDB_EVENT"
     }
 
     fn get_message_type(&self) -> u16 {

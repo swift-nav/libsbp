@@ -22,8 +22,6 @@ use super::gnss::*;
 use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
-#[allow(unused_imports)]
-use serde_json::{json, Value};
 
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -695,13 +693,8 @@ impl MsgAlmanacGlo {
     }
 }
 impl super::SBPMessage for MsgAlmanacGlo {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_ALMANAC_GLO"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -803,13 +796,8 @@ impl MsgAlmanacGloDep {
     }
 }
 impl super::SBPMessage for MsgAlmanacGloDep {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_ALMANAC_GLO_DEP"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -916,13 +904,8 @@ impl MsgAlmanacGPS {
     }
 }
 impl super::SBPMessage for MsgAlmanacGPS {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_ALMANAC_GPS"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -1033,13 +1016,8 @@ impl MsgAlmanacGPSDep {
     }
 }
 impl super::SBPMessage for MsgAlmanacGPSDep {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_ALMANAC_GPS_DEP"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -1131,13 +1109,8 @@ impl MsgBasePosECEF {
     }
 }
 impl super::SBPMessage for MsgBasePosECEF {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_BASE_POS_ECEF"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -1214,13 +1187,8 @@ impl MsgBasePosLLH {
     }
 }
 impl super::SBPMessage for MsgBasePosLLH {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_BASE_POS_LLH"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -1365,13 +1333,8 @@ impl MsgEphemerisBds {
     }
 }
 impl super::SBPMessage for MsgEphemerisBds {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_EPHEMERIS_BDS"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -1559,13 +1522,8 @@ impl MsgEphemerisDepA {
     }
 }
 impl super::SBPMessage for MsgEphemerisDepA {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_EPHEMERIS_DEP_A"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -1760,13 +1718,8 @@ impl MsgEphemerisDepB {
     }
 }
 impl super::SBPMessage for MsgEphemerisDepB {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_EPHEMERIS_DEP_B"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -1973,13 +1926,8 @@ impl MsgEphemerisDepC {
     }
 }
 impl super::SBPMessage for MsgEphemerisDepC {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_EPHEMERIS_DEP_C"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -2190,13 +2138,8 @@ impl MsgEphemerisDepD {
     }
 }
 impl super::SBPMessage for MsgEphemerisDepD {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_EPHEMERIS_DEP_D"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -2394,13 +2337,8 @@ impl MsgEphemerisGal {
     }
 }
 impl super::SBPMessage for MsgEphemerisGal {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_EPHEMERIS_GAL"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -2585,13 +2523,8 @@ impl MsgEphemerisGalDepA {
     }
 }
 impl super::SBPMessage for MsgEphemerisGalDepA {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_EPHEMERIS_GAL_DEP_A"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -2728,13 +2661,8 @@ impl MsgEphemerisGlo {
     }
 }
 impl super::SBPMessage for MsgEphemerisGlo {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_EPHEMERIS_GLO"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -2832,13 +2760,8 @@ impl MsgEphemerisGloDepA {
     }
 }
 impl super::SBPMessage for MsgEphemerisGloDepA {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_EPHEMERIS_GLO_DEP_A"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -2930,13 +2853,8 @@ impl MsgEphemerisGloDepB {
     }
 }
 impl super::SBPMessage for MsgEphemerisGloDepB {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_EPHEMERIS_GLO_DEP_B"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -3034,13 +2952,8 @@ impl MsgEphemerisGloDepC {
     }
 }
 impl super::SBPMessage for MsgEphemerisGloDepC {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_EPHEMERIS_GLO_DEP_C"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -3142,13 +3055,8 @@ impl MsgEphemerisGloDepD {
     }
 }
 impl super::SBPMessage for MsgEphemerisGloDepD {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_EPHEMERIS_GLO_DEP_D"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -3301,13 +3209,8 @@ impl MsgEphemerisGPS {
     }
 }
 impl super::SBPMessage for MsgEphemerisGPS {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_EPHEMERIS_GPS"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -3488,13 +3391,8 @@ impl MsgEphemerisGPSDepE {
     }
 }
 impl super::SBPMessage for MsgEphemerisGPSDepE {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_EPHEMERIS_GPS_DEP_E"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -3672,13 +3570,8 @@ impl MsgEphemerisGPSDepF {
     }
 }
 impl super::SBPMessage for MsgEphemerisGPSDepF {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_EPHEMERIS_GPS_DEP_F"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -3857,13 +3750,8 @@ impl MsgEphemerisQzss {
     }
 }
 impl super::SBPMessage for MsgEphemerisQzss {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_EPHEMERIS_QZSS"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -3981,13 +3869,8 @@ impl MsgEphemerisSbas {
     }
 }
 impl super::SBPMessage for MsgEphemerisSbas {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_EPHEMERIS_SBAS"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -4071,13 +3954,8 @@ impl MsgEphemerisSbasDepA {
     }
 }
 impl super::SBPMessage for MsgEphemerisSbasDepA {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_EPHEMERIS_SBAS_DEP_A"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -4166,13 +4044,8 @@ impl MsgEphemerisSbasDepB {
     }
 }
 impl super::SBPMessage for MsgEphemerisSbasDepB {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_EPHEMERIS_SBAS_DEP_B"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -4260,13 +4133,8 @@ impl MsgGloBiases {
     }
 }
 impl super::SBPMessage for MsgGloBiases {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_GLO_BIASES"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -4336,13 +4204,8 @@ impl MsgGnssCapb {
     }
 }
 impl super::SBPMessage for MsgGnssCapb {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_GNSS_CAPB"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -4420,13 +4283,8 @@ impl MsgGroupDelay {
     }
 }
 impl super::SBPMessage for MsgGroupDelay {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_GROUP_DELAY"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -4512,13 +4370,8 @@ impl MsgGroupDelayDepA {
     }
 }
 impl super::SBPMessage for MsgGroupDelayDepA {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_GROUP_DELAY_DEP_A"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -4604,13 +4457,8 @@ impl MsgGroupDelayDepB {
     }
 }
 impl super::SBPMessage for MsgGroupDelayDepB {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_GROUP_DELAY_DEP_B"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -4701,13 +4549,8 @@ impl MsgIono {
     }
 }
 impl super::SBPMessage for MsgIono {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_IONO"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -4795,13 +4638,8 @@ impl MsgObs {
     }
 }
 impl super::SBPMessage for MsgObs {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_OBS"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -4869,13 +4707,8 @@ impl MsgObsDepA {
     }
 }
 impl super::SBPMessage for MsgObsDepA {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_OBS_DEP_A"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -4948,13 +4781,8 @@ impl MsgObsDepB {
     }
 }
 impl super::SBPMessage for MsgObsDepB {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_OBS_DEP_B"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -5028,13 +4856,8 @@ impl MsgObsDepC {
     }
 }
 impl super::SBPMessage for MsgObsDepC {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_OBS_DEP_C"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -5102,13 +4925,8 @@ impl MsgOsr {
     }
 }
 impl super::SBPMessage for MsgOsr {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_OSR"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -5174,13 +4992,8 @@ impl MsgSvAzEl {
     }
 }
 impl super::SBPMessage for MsgSvAzEl {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_SV_AZ_EL"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -5246,13 +5059,8 @@ impl MsgSvConfigurationGPSDep {
     }
 }
 impl super::SBPMessage for MsgSvConfigurationGPSDep {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_SV_CONFIGURATION_GPS_DEP"
     }
 
     fn get_message_type(&self) -> u16 {

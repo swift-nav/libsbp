@@ -21,8 +21,6 @@ use byteorder::{LittleEndian, ReadBytesExt};
 use crate::serialize::SbpSerialize;
 #[allow(unused_imports)]
 use crate::SbpString;
-#[allow(unused_imports)]
-use serde_json::{json, Value};
 
 /// Experimental telemetry message
 ///
@@ -54,13 +52,8 @@ impl MsgCsacTelemetry {
     }
 }
 impl super::SBPMessage for MsgCsacTelemetry {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_CSAC_TELEMETRY"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -131,13 +124,8 @@ impl MsgCsacTelemetryLabels {
     }
 }
 impl super::SBPMessage for MsgCsacTelemetryLabels {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_CSAC_TELEMETRY_LABELS"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -213,13 +201,8 @@ impl MsgDgnssStatus {
     }
 }
 impl super::SBPMessage for MsgDgnssStatus {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_DGNSS_STATUS"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -299,13 +282,8 @@ impl MsgGnssTimeOffset {
     }
 }
 impl super::SBPMessage for MsgGnssTimeOffset {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_GNSS_TIME_OFFSET"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -385,13 +363,8 @@ impl MsgGroupMeta {
     }
 }
 impl super::SBPMessage for MsgGroupMeta {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_GROUP_META"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -469,13 +442,8 @@ impl MsgHeartbeat {
     }
 }
 impl super::SBPMessage for MsgHeartbeat {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_HEARTBEAT"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -539,13 +507,8 @@ impl MsgInsStatus {
     }
 }
 impl super::SBPMessage for MsgInsStatus {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_INS_STATUS"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -627,13 +590,8 @@ impl MsgInsUpdates {
     }
 }
 impl super::SBPMessage for MsgInsUpdates {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_INS_UPDATES"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -717,13 +675,8 @@ impl MsgStartup {
     }
 }
 impl super::SBPMessage for MsgStartup {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_STARTUP"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -810,13 +763,8 @@ impl MsgStatusReport {
     }
 }
 impl super::SBPMessage for MsgStatusReport {
-    fn get_message_name(&self) -> String {
-        if let Value::Object(obj) = json!(&self) {
-            if let Some(key) = obj.keys().next() {
-                return key.to_string();
-            }
-        }
-        String::from("Unknown")
+    fn get_message_name(&self) -> &'static str {
+        "MSG_STATUS_REPORT"
     }
 
     fn get_message_type(&self) -> u16 {
