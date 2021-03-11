@@ -204,8 +204,9 @@ used to monitor system malfunctions. It contains status
 reports that indicate to the host the status of each sub-system and
 whether it is operating correctly.
 
-Interpretation of the subsystem specific status code is product dependent.
-Refer to product documentation for details.
+Interpretation of the subsystem specific status code is product
+dependent, but if the generic status code is initializing, it should
+be ignored.  Refer to product documentation for details.
 
 
   """
