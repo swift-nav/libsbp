@@ -180,6 +180,10 @@ impl MsgSolnMeta {
     }
 }
 impl super::SBPMessage for MsgSolnMeta {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_SOLN_META"
+    }
+
     fn get_message_type(&self) -> u16 {
         65294
     }
@@ -285,6 +289,10 @@ impl MsgSolnMetaDepA {
     }
 }
 impl super::SBPMessage for MsgSolnMetaDepA {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_SOLN_META_DEP_A"
+    }
+
     fn get_message_type(&self) -> u16 {
         65295
     }

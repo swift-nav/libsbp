@@ -48,6 +48,10 @@ impl MsgUserData {
     }
 }
 impl super::SBPMessage for MsgUserData {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_USER_DATA"
+    }
+
     fn get_message_type(&self) -> u16 {
         2048
     }

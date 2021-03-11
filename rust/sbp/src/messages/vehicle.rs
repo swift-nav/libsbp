@@ -61,6 +61,10 @@ impl MsgOdometry {
     }
 }
 impl super::SBPMessage for MsgOdometry {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_ODOMETRY"
+    }
+
     fn get_message_type(&self) -> u16 {
         2307
     }
@@ -148,6 +152,10 @@ impl MsgWheeltick {
     }
 }
 impl super::SBPMessage for MsgWheeltick {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_WHEELTICK"
+    }
+
     fn get_message_type(&self) -> u16 {
         2308
     }

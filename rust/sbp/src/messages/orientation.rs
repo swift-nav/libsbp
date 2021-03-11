@@ -66,6 +66,10 @@ impl MsgAngularRate {
     }
 }
 impl super::SBPMessage for MsgAngularRate {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_ANGULAR_RATE"
+    }
+
     fn get_message_type(&self) -> u16 {
         546
     }
@@ -146,6 +150,10 @@ impl MsgBaselineHeading {
     }
 }
 impl super::SBPMessage for MsgBaselineHeading {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_BASELINE_HEADING"
+    }
+
     fn get_message_type(&self) -> u16 {
         527
     }
@@ -237,6 +245,10 @@ impl MsgOrientEuler {
     }
 }
 impl super::SBPMessage for MsgOrientEuler {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_ORIENT_EULER"
+    }
+
     fn get_message_type(&self) -> u16 {
         545
     }
@@ -342,6 +354,10 @@ impl MsgOrientQuat {
     }
 }
 impl super::SBPMessage for MsgOrientQuat {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_ORIENT_QUAT"
+    }
+
     fn get_message_type(&self) -> u16 {
         544
     }
