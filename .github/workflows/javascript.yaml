@@ -1,0 +1,20 @@
+name: JavaScript
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    tags:
+      - "*"
+  pull_request:
+  #!   paths:
+  #!     - "javascript/**"
+jobs:
+  coverage:
+    name: Test
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run tests
+        run: make test-javascript

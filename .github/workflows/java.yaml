@@ -1,0 +1,20 @@
+name: Java
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    tags:
+      - "*"
+  pull_request:
+  #!   paths:
+  #!     - "java/**"
+jobs:
+  coverage:
+    name: Test
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run tests
+        run: make test-java
