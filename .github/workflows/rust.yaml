@@ -16,8 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup
-        run: ./scripts/ci_prepare_rust.bash
+      - run: ./scripts/ci_prepare_rust.bash
+        shell: bash
 
       - uses: actions-rs/toolchain@v1
         with:
@@ -38,8 +38,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup
-        run: ./scripts/ci_prepare_rust.bash
+      - run: ./scripts/ci_prepare_rust.bash
+        shell: bash
 
       - uses: actions-rs/toolchain@v1
         with:
@@ -63,8 +63,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup
-        run: ./scripts/ci_prepare_rust.bash
+      - run: ./scripts/ci_prepare_rust.bash
+        shell: bash
 
       - uses: actions-rs/toolchain@v1
         with:
@@ -75,6 +75,7 @@ jobs:
       - name: Build ${{ matrix.os }} binaries
         id: build
         run: ./scripts/ci_build_rust.bash
+        shell: bash
 
       - uses: actions/upload-artifact@v2
         with:
