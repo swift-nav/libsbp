@@ -394,6 +394,24 @@ definitions:
             type: u8
             desc: Status flags (reserved)
 
+ - MSG_PPS_TIME:
+    id: 0xFF08
+    short_desc: Local time at detection of PPS pulse
+    desc: |
+        The PPS time message contains the value of the CPU local time in
+        microseconds at the moment a pulse is detected on the PPS input.
+        This is to be used for syncronisation of sensor data sampled with
+        a local timestamp (e.g. IMU or wheeltick messages) where GNSS time
+        is unknown to the sender.
+    fields:
+        - time:
+            type: u64
+            units: us
+            desc: CPU local time in microseconds
+        - reserved:
+            type: u8
+            desc: Reserved, set to zero
+
  - MSG_GROUP_META:
      id: 0xFF0A  # 65290
      short_desc: Solution Group Metadata
