@@ -11,8 +11,6 @@
 
 import pytest
 
-pytest.importorskip("numpy")
-
 from sbp.msg import SBP
 from sbp.client.loggers.base_logger import LogIterator
 from sbp.client.loggers.json_logger import JSONLogIterator

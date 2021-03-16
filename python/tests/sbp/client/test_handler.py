@@ -10,8 +10,6 @@
 
 import pytest
 
-pytest.importorskip("numpy")
-
 import io
 import itertools
 import time
@@ -19,7 +17,7 @@ import threading
 import gc
 
 from sbp.client import *
-from sbp.msg            import SBP
+from sbp.msg import SBP
 from sbp.logging import MsgLog
 
 class CallbackCounter(object):
