@@ -23,37 +23,6 @@ Install package from PyPI (use ``sudo ...`` to install globally)::
 
   $ pip install sbp
 
-Installing extras to enable JIT speed-ups
------------------------------------------
-
-The ``sbp.jit`` package is a mostly source compatible alternative to the
-``sbp`` package which includes natively compiled speed-ups, built with the
-`Numba`_ library.
-
-.. _Numba: https://numba.pydata.org
-
-These speed-ups are optionally enabled because they are only compatible with a
-subset of systems and hardware (typically Linux on x86_64/ARM, macOS on x86_64,
-and Windows on x86/x86_64).
-
-To enable these speed-ups the package includes several "extras" that enable
-either the JIT (just-in-time) or AOT (ahead-of-time) compiled speed-ups.
-
-The recommend route is to install the AOT "extra" to enable these speed-ups
-(use ``sudo ...`` to install globally)::
-
-  $ pip install sbp[aot]
-
-To enable JIT, which will compile the speed-ups when the ``sbp.jit`` package is
-imported, install the package from PyPI with the "JIT" extra enabled (this will
-pull in Numba, which will in turn require a Python LLVM package)::
-
-  $ pip install sbp[jit]
-
-Or locally from the repository::
-
-  $ pip install ./python[jit]
-
 Setup using a virtual environment
 ---------------------------------
 
