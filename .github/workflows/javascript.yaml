@@ -9,7 +9,7 @@ on:
   pull_request:
     paths:
       - "javascript/**"
-      - .github/workflows/rust.yaml
+      - .github/workflows/javascript.yaml
 jobs:
   coverage:
     name: Test
