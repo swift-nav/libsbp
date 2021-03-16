@@ -9,6 +9,7 @@ on:
   pull_request:
     paths:
       - "java/**"
+      - .github/workflows/java.yaml
 jobs:
   coverage:
     name: Test

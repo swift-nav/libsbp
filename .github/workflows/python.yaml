@@ -9,6 +9,7 @@ on:
   pull_request:
     paths:
       - "python/**"
+      - .github/workflows/python.yaml
 jobs:
   coverage:
     name: Test

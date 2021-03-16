@@ -11,6 +11,7 @@ on:
       - "python/**"
       - "haskell/**"
       - "rust/**"
+      - .github/workflows/benchmark.yaml
 jobs:
   benchmark:
     name: Benchmark

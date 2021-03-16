@@ -9,6 +9,7 @@ on:
   pull_request:
     paths:
       - "rust/**"
+      - .github/workflows/rust.yaml
 jobs:
   lint:
     name: Format and lint
