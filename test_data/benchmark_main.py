@@ -64,7 +64,7 @@ def main():
 
     if not os.environ.get("BENCHMARK_SKIP_SBP2JSON"):
         subprocess.run(
-            ['hyperfine', '--warmup', '1', '--runs', '5', '--show-output',
+            ['hyperfine', '--warmup', '3', '--runs', '5', '--show-output',
              '--export-json', 'benchmark_sbp2json.json',
              '-L', 'lang', 'rust,python,haskell',
              './test_data/benchmark/sbp2json_{lang}.py'],
@@ -88,7 +88,7 @@ def main():
 
     if not os.environ.get("BENCHMARK_SKIP_JSON2SBP"):
         subprocess.run(
-            ['hyperfine', '--warmup', '1', '--show-output',
+            ['hyperfine', '--warmup', '3', '--show-output',
              '--export-json', 'benchmark_json2sbp.json',
              '-L', 'lang', 'rust,haskell',
              './test_data/benchmark/json2sbp_{lang}.py'],
@@ -112,7 +112,7 @@ def main():
         benchmark_input_json2json.write(json_data)
 
     subprocess.run(
-        ['hyperfine', '--warmup', '1', '--show-output',
+        ['hyperfine', '--warmup', '3', '--show-output',
          '--export-json', 'benchmark_json2json.json',
          '-L', 'lang', 'rust,haskell',
          './test_data/benchmark/json2json_{lang}.py'],
