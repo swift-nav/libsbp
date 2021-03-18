@@ -8,6 +8,8 @@ on:
       - "*"
   pull_request:
     paths:
+      - requirements.txt
+      - tox.ini
       - "python/**"
       - .github/workflows/python.yaml
 jobs:

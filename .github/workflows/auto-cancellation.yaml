@@ -1,4 +1,4 @@
-name: auto cancellation running job
+name: Cancel old jobs
 on: pull_request
 jobs:
   cancel:
