@@ -314,7 +314,7 @@ endif
 
 test-javascript:
 	$(call announce-begin,"Running JavaScript tests")
-	npm install; \
+	npm install
 	npm test
 	$(call announce-end,"Finished running JavaScript tests")
 
