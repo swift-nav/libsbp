@@ -8,9 +8,10 @@ on:
       - "*"
   pull_request:
     paths:
+      - "python/**"
       - requirements.txt
       - tox.ini
-      - "python/**"
+      - scripts/ci_prepare_python.bash
       - .github/workflows/python.yaml
 jobs:
   coverage:

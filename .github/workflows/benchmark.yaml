@@ -11,6 +11,8 @@ on:
       - "python/**"
       - "haskell/**"
       - "rust/**"
+      - scripts/ci_benchmark.bash
+      - scripts/ci_benchmark_install.bash
       - .github/workflows/benchmark.yaml
 jobs:
   benchmark:

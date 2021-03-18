@@ -8,9 +8,9 @@ on:
       - "*"
   pull_request:
     paths:
-      - "package.json"
-      - "package-lock.json"
       - "javascript/**"
+      - package.json
+      - package-lock.json
       - .github/workflows/javascript.yaml
 jobs:
   coverage:
