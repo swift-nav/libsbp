@@ -8,7 +8,7 @@ if [ "$RUNNER_OS" == "Linux" ]; then
 elif [ "$RUNNER_OS" == "macOS" ]; then
     brew install cmake
 elif [ "$RUNNER_OS" == "Windows" ]; then
-    echo "C:\msys64\mingw64\bin" >>$GITHUB_PATH
+    echo "C:\msys64\mingw64\bin" >>"$GITHUB_PATH"
 else
     echo "$RUNNER_OS not supported"
     exit 1
