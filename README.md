@@ -95,8 +95,8 @@ The tool can then be invoked as follows:
 python3 -m sbp2json <sbp.bin
 ```
 
-On select platforms this Python tool is accelerated with native code and has
-performance on par with the Haskell and Rust variants.
+The performance of the Python version is significantly slower than Rust and Haskell,
+but works on all platforms that Python itself supports.
 
 ## Building / installing
 
