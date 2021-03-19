@@ -1,0 +1,27 @@
+name: Python
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    tags:
+      - "*"
+  pull_request:
+    paths:
+      - "python/**"
+      - requirements.txt
+      - tox.ini
+      - scripts/ci_prepare_python.bash
+      - .github/workflows/python.yaml
+jobs:
+  coverage:
+    name: Test
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup
+        run: ./scripts/ci_prepare_python.bash
+
+      - name: Run tests
+        run: make test-python

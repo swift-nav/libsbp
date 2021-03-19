@@ -1,7 +1,5 @@
 ## Specification and Bindings for Swift Binary Protocol
 
-[![Build status][1]][2]
-
 <!-- toc -->
 
 - [Installing sbp2json, json2sbp, json2json and related tools](#installing-sbp2json-json2sbp-json2json-and-related-tools)
@@ -254,6 +252,3 @@ HOWTO for instructions on updating these schemas.
 Copyright © 2020 Swift Navigation
 
 Distributed under MIT.
-
-[1]: https://travis-ci.org/swift-nav/libsbp.svg?branch=master
-[2]: https://travis-ci.org/swift-nav/libsbp
