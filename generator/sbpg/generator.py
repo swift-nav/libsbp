@@ -34,9 +34,6 @@ def get_args():
   parser.add_argument('--python',
                       action="store_true",
                       help='Target language: Python.')
-  parser.add_argument('--python_jit',
-                      action="store_true",
-                      help='Target language: Python (JIT).')
   parser.add_argument('--javascript',
                       action="store_true",
                       help='Target language: JavaScript.')
@@ -84,7 +81,7 @@ def main():
     # Parse and validate arguments.
     args = get_args().parse_args()
     verbose = args.verbose
-    assert args.jsonschema or args.python_jit or args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.protobuf or args.java or args.rust or args.test_rust, \
+    assert args.jsonschema or args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.protobuf or args.java or args.rust or args.test_rust, \
         "Please specify a target language."
     input_file = os.path.abspath(args.input_file[0])
     assert len(args.input_file) == 1
@@ -128,9 +125,6 @@ def main():
         if args.python:
           import sbpg.targets.python as py
           py.render_source(output_dir, parsed)
-        if args.python_jit:
-          import sbpg.targets.pythonNG as py_jit
-          py_jit.render_source(output_dir, parsed)
         elif args.javascript:
           import sbpg.targets.javascript as js
           js.render_source(output_dir, parsed)

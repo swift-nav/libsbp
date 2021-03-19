@@ -28,7 +28,7 @@ import sys
 SENDER_ID = _SENDER_ID
 SBP_PREAMBLE = _SBP_PREAMBLE
 
-SBP_NO_JIT = False
+SBP_NO_JIT = True
 
 try:
   import importlib
@@ -42,28 +42,10 @@ parse_jit = None
 
 
 def try_import_jit():
-  '''
-  Try to import the pre-compiled version of the "jit" libraries for parsing SBP data.
-  This should only fail on systems that do not have support for Numba (or LLVM).  For
-  system where it does fail, we fall back to parsing without the pre-compile (or JIT
-  compiled) module.
-  '''
-  parse_jit_name = "parse_jit_py{}".format(str(sys.version_info[0]) + str(sys.version_info[1]))
-  if parse_jit_name in (name for loader, name, ispkg in iter_modules()):
-    # found in sys.path
-    parse_jit = importlib.import_module(parse_jit_name)
-  elif parse_jit_name in (name for loader, name, ispkg in iter_modules(['sbp/jit'])):
-    # found in sbp.jit
-    parse_jit = importlib.import_module('sbp.jit.' + parse_jit_name)
-  else:
-    # not found -> compile
-    try:
-      from sbp.jit import parse
-      parse.compile()
-      parse_jit = importlib.import_module('sbp.jit.' + parse_jit_name)
-    except ImportError:
-      return None
-  return parse_jit
+  from warnings import warn
+
+  warn("sbp.jit has been removed", UserWarning, stacklevel=1)
+  return None
 
 
 def no_jit_fallback():
@@ -83,11 +65,10 @@ def no_jit_fallback():
 if HAS_NUMPY:
   np_crc16_tab = np.array(crc16_tab, dtype=np.uint16)
   crc_buffer = np.zeros(512, dtype=np.uint8)
-  parse_jit = try_import_jit()
+  parse_jit = None
   if parse_jit is not None:
     parse_jit_crc16 = parse_jit.crc16jit
   else:
-    SBP_NO_JIT = True
     no_jit_fallback()
 else:
   no_jit_fallback()

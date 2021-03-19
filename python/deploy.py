@@ -92,7 +92,7 @@ def build_wheel_native(conda_dir, deploy_dir, py_version):
 
     subprocess.check_call([
         python, "-m",
-        "pip", "install", "twine", "numpy~=1.19", "numba==0.47", "llvmlite==0.31", "cython", "wheel", "setuptools"
+        "pip", "install", "twine", "numpy~=1.19", "cython", "wheel", "setuptools"
     ])
 
     print(">>> Installing setup deps in Python {} environment...".format(py_version))
@@ -229,7 +229,7 @@ def build_wheel_conda(conda_dir, deploy_dir, py_version):
     ])
     subprocess.check_call([
         "conda", "run", "-p", conda_dir] + DASHDASH + [
-        "python", "-m", "pip", "install", "twine", "numpy~=1.19", "numba==0.47", "llvmlite==0.31"
+        "python", "-m", "pip", "install", "twine", "numpy~=1.19"
     ])
 
     if platform.system() == "Linux" and platform.machine().startswith("x86"):

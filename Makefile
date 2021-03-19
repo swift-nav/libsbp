@@ -50,7 +50,6 @@ help:
 	@echo "  html         to make all HTML language docs"
 	@echo "  pdf          to make SBP LaTeX datasheet"
 	@echo "  python       to make Python bindings"
-	@echo "  python-jit   to make Python (JIT) bindings"
 	@echo "  haskell      to make Haskell bindings"
 	@echo "  java         to make Java bindings"
 	@echo "  rust         to make Rust bindings"
@@ -72,9 +71,7 @@ clean:
 docs: verify-prereq-docs pdf html
 
 c:            deps-c          gen-c          test-c
-python-nojit: deps-python     gen-python-nojit
-python-jit:   deps-python     gen-python-jit
-python:       python-nojit python-jit test-python
+python:     deps-python     gen-python     test-python
 javascript: deps-javascript gen-javascript test-javascript
 java:       deps-java       gen-java       test-java
 haskell:    deps-haskell    gen-haskell    test-haskell
@@ -185,22 +182,13 @@ gen-c:
 
 	$(call announce-end,"Finished generating C. Please check $(SWIFTNAV_ROOT)/c/include/libsbp.")
 
-gen-python-nojit:
+gen-python:
 	$(call announce-begin,"Generating Python bindings")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/python/sbp/ \
                        -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
 		       --python
-	$(call announce-end,"Finished generating Python bindings. Please check $(SWIFTNAV_ROOT)/python/sbp")
-
-gen-python-jit:
-	$(call announce-begin,"Generating Python bindings")
-	cd $(SWIFTNAV_ROOT)/generator; \
-	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
-		       -o $(SWIFTNAV_ROOT)/python/sbp/jit \
-                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
-		       --python_jit
 	$(call announce-end,"Finished generating Python bindings. Please check $(SWIFTNAV_ROOT)/python/sbp")
 
 gen-javascript:
