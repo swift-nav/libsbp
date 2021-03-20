@@ -147,7 +147,9 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_ACQ_SV_PROFILE     0x002E
 
 typedef struct SBP_ATTR_PACKED {
+#ifndef __cplusplus
   acq_sv_profile_t acq_sv_profile[0]; /**< SV profiles during acquisition time */
+#endif
 } msg_acq_sv_profile_t;
 
 
@@ -158,7 +160,9 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_ACQ_SV_PROFILE_DEP 0x001E
 
 typedef struct SBP_ATTR_PACKED {
+#ifndef __cplusplus
   acq_sv_profile_dep_t acq_sv_profile[0]; /**< SV profiles during acquisition time */
+#endif
 } msg_acq_sv_profile_dep_t;
 
 

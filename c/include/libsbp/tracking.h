@@ -550,7 +550,9 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_TRACKING_STATE                0x0041
 
 typedef struct SBP_ATTR_PACKED {
+#ifndef __cplusplus
   tracking_channel_state_t states[0]; /**< Signal tracking channel state */
+#endif
 } msg_tracking_state_t;
 
 
@@ -578,7 +580,9 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_MEASUREMENT_STATE             0x0061
 
 typedef struct SBP_ATTR_PACKED {
+#ifndef __cplusplus
   measurement_state_t states[0]; /**< ME signal tracking channel state */
+#endif
 } msg_measurement_state_t;
 
 
@@ -664,7 +668,9 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_TRACKING_STATE_DEP_A          0x0016
 
 typedef struct SBP_ATTR_PACKED {
+#ifndef __cplusplus
   tracking_channel_state_dep_a_t states[0]; /**< Satellite tracking channel state */
+#endif
 } msg_tracking_state_dep_a_t;
 
 
@@ -687,7 +693,9 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_TRACKING_STATE_DEP_B          0x0013
 
 typedef struct SBP_ATTR_PACKED {
+#ifndef __cplusplus
   tracking_channel_state_dep_b_t states[0]; /**< Signal tracking channel state */
+#endif
 } msg_tracking_state_dep_b_t;
 
 

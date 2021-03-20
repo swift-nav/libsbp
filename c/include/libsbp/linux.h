@@ -40,7 +40,9 @@ typedef struct SBP_ATTR_PACKED {
   u16 pid;        /**< the PID of the process */
   u8 pcpu;       /**< percent of cpu used, expressed as a fraction of 256 */
   char tname[15];  /**< fixed length string representing the thread name */
+#ifndef __cplusplus
   char cmdline[0]; /**< the command line (as much as it fits in the remaining packet) */
+#endif
 } msg_linux_cpu_state_dep_a_t;
 
 
@@ -56,7 +58,9 @@ typedef struct SBP_ATTR_PACKED {
   u16 pid;        /**< the PID of the process */
   u8 pmem;       /**< percent of memory used, expressed as a fraction of 256 */
   char tname[15];  /**< fixed length string representing the thread name */
+#ifndef __cplusplus
   char cmdline[0]; /**< the command line (as much as it fits in the remaining packet) */
+#endif
 } msg_linux_mem_state_dep_a_t;
 
 
@@ -96,7 +100,9 @@ typedef struct SBP_ATTR_PACKED {
   0x100 (last-ack), 0x200 (listen), 0x400 (closing), 0x800 (unconnected),
   and 0x8000 (unknown)
  */
+#ifndef __cplusplus
   char cmdline[0];       /**< the command line of the process in question */
+#endif
 } msg_linux_process_socket_counts_t;
 
 
@@ -124,7 +130,9 @@ typedef struct SBP_ATTR_PACKED {
   char address_of_largest[64]; /**< Address of the largest queue, remote or local depending on the directionality
 of the connection.
  */
+#ifndef __cplusplus
   char cmdline[0];            /**< the command line of the process in question */
+#endif
 } msg_linux_process_socket_queues_t;
 
 
@@ -156,7 +164,9 @@ typedef struct SBP_ATTR_PACKED {
   u8 index;       /**< sequence of this status message, values from 0-9 */
   u16 pid;         /**< the PID of the process in question */
   u16 fd_count;    /**< a count of the number of file descriptors opened by the process */
+#ifndef __cplusplus
   char cmdline[0];  /**< the command line of the process in question */
+#endif
 } msg_linux_process_fd_count_t;
 
 
@@ -168,12 +178,14 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   u32 sys_fd_count;    /**< count of total FDs open on the system */
+#ifndef __cplusplus
   char most_opened[0];  /**< A null delimited list of strings which alternates between
 a string representation of the process count and the file
 name whose count it being reported.  That is, in C string
 syntax "32\0/var/log/syslog\012\0/tmp/foo\0" with the end
 of the list being 2 NULL terminators in a row.
  */
+#endif
 } msg_linux_process_fd_summary_t;
 
 
@@ -204,7 +216,9 @@ typedef struct SBP_ATTR_PACKED {
   u32 time;       /**< timestamp of message, refer to flags field for how to interpret */
   u8 flags;      /**< flags */
   char tname[15];  /**< fixed length string representing the thread name */
+#ifndef __cplusplus
   char cmdline[0]; /**< the command line (as much as it fits in the remaining packet) */
+#endif
 } msg_linux_cpu_state_t;
 
 
@@ -235,7 +249,9 @@ typedef struct SBP_ATTR_PACKED {
   u32 time;       /**< timestamp of message, refer to flags field for how to interpret */
   u8 flags;      /**< flags */
   char tname[15];  /**< fixed length string representing the thread name */
+#ifndef __cplusplus
   char cmdline[0]; /**< the command line (as much as it fits in the remaining packet) */
+#endif
 } msg_linux_mem_state_t;
 
 
