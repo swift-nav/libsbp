@@ -30,10 +30,20 @@ struct MessageTraits;
 
 ((* for m in msgs *))
 ((*- if m.fields *))
+((*- if m.fields|first == m.fields|last *))
+((*- if (m.fields|first)|field_is_variable_sized *))
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+((*- endif *))
+((*- endif *))
 template<>
 struct MessageTraits<(((m.identifier|convert)))> {
   static constexpr u16 id = (((m.sbp_id)));
 };
+((*- if m.fields|first == m.fields|last *))
+((*- if (m.fields|first)|field_is_variable_sized *))
+#endif
+((*- endif *))
+((*- endif *))
 ((* endif *))
 ((* endfor *))
 

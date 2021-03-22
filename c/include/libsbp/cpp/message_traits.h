@@ -48,10 +48,12 @@ template<typename>
 struct MessageTraits;
 
 
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
 template<>
 struct MessageTraits<msg_print_dep_t> {
   static constexpr u16 id = 16;
 };
+#endif
 
 
 template<>
@@ -60,10 +62,12 @@ struct MessageTraits<msg_tracking_state_detailed_dep_t> {
 };
 
 
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
 template<>
 struct MessageTraits<msg_tracking_state_dep_b_t> {
   static constexpr u16 id = 19;
 };
+#endif
 
 
 template<>
@@ -78,10 +82,12 @@ struct MessageTraits<msg_acq_result_dep_a_t> {
 };
 
 
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
 template<>
 struct MessageTraits<msg_tracking_state_dep_a_t> {
   static constexpr u16 id = 22;
 };
+#endif
 
 
 template<>
@@ -126,10 +132,12 @@ struct MessageTraits<msg_uart_state_t> {
 };
 
 
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
 template<>
 struct MessageTraits<msg_acq_sv_profile_dep_t> {
   static constexpr u16 id = 30;
 };
+#endif
 
 
 template<>
@@ -169,10 +177,12 @@ struct MessageTraits<msg_tracking_iq_t> {
 };
 
 
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
 template<>
 struct MessageTraits<msg_acq_sv_profile_t> {
   static constexpr u16 id = 46;
 };
+#endif
 
 
 template<>
@@ -181,10 +191,12 @@ struct MessageTraits<msg_acq_result_t> {
 };
 
 
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
 template<>
 struct MessageTraits<msg_tracking_state_t> {
   static constexpr u16 id = 65;
 };
+#endif
 
 
 template<>
@@ -247,10 +259,12 @@ struct MessageTraits<msg_specan_t> {
 };
 
 
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
 template<>
 struct MessageTraits<msg_measurement_state_t> {
   static constexpr u16 id = 97;
 };
+#endif
 
 
 
@@ -417,16 +431,20 @@ struct MessageTraits<msg_gnss_capb_t> {
 };
 
 
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
 template<>
 struct MessageTraits<msg_sv_az_el_t> {
   static constexpr u16 id = 151;
 };
+#endif
 
 
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
 template<>
 struct MessageTraits<msg_settings_write_t> {
   static constexpr u16 id = 160;
 };
+#endif
 
 
 
@@ -442,16 +460,20 @@ struct MessageTraits<msg_fileio_read_resp_t> {
 };
 
 
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
 template<>
 struct MessageTraits<msg_settings_read_req_t> {
   static constexpr u16 id = 164;
 };
+#endif
 
 
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
 template<>
 struct MessageTraits<msg_settings_read_resp_t> {
   static constexpr u16 id = 165;
 };
+#endif
 
 
 
@@ -485,10 +507,12 @@ struct MessageTraits<msg_fileio_write_resp_t> {
 };
 
 
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
 template<>
 struct MessageTraits<msg_fileio_remove_t> {
   static constexpr u16 id = 172;
 };
+#endif
 
 
 template<>
@@ -497,10 +521,12 @@ struct MessageTraits<msg_fileio_write_req_t> {
 };
 
 
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
 template<>
 struct MessageTraits<msg_settings_register_t> {
   static constexpr u16 id = 174;
 };
+#endif
 
 
 template<>
@@ -509,10 +535,12 @@ struct MessageTraits<msg_settings_write_resp_t> {
 };
 
 
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
 template<>
 struct MessageTraits<msg_bootloader_handshake_dep_a_t> {
   static constexpr u16 id = 176;
 };
+#endif
 
 
 template<>
@@ -566,10 +594,12 @@ struct MessageTraits<msg_command_output_t> {
 };
 
 
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
 template<>
 struct MessageTraits<msg_network_bandwidth_usage_t> {
   static constexpr u16 id = 189;
 };
+#endif
 
 
 template<>
@@ -984,10 +1014,12 @@ struct MessageTraits<msg_osr_t> {
 };
 
 
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
 template<>
 struct MessageTraits<msg_user_data_t> {
   static constexpr u16 id = 2048;
 };
+#endif
 
 
 template<>
