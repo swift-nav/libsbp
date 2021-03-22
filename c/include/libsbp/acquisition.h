@@ -145,10 +145,12 @@ typedef struct SBP_ATTR_PACKED {
  * The message is used to debug and measure the performance.
  */
 #define SBP_MSG_ACQ_SV_PROFILE     0x002E
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
 
 typedef struct SBP_ATTR_PACKED {
   acq_sv_profile_t acq_sv_profile[0]; /**< SV profiles during acquisition time */
 } msg_acq_sv_profile_t;
+#endif
 
 
 /** Deprecated.
@@ -156,10 +158,12 @@ typedef struct SBP_ATTR_PACKED {
 * Deprecated.
  */
 #define SBP_MSG_ACQ_SV_PROFILE_DEP 0x001E
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
 
 typedef struct SBP_ATTR_PACKED {
   acq_sv_profile_dep_t acq_sv_profile[0]; /**< SV profiles during acquisition time */
 } msg_acq_sv_profile_dep_t;
+#endif
 
 
 /** \} */
