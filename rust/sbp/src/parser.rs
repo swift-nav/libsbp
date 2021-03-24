@@ -260,11 +260,11 @@ mod tests {
         let reader = Cursor::new(packet);
         let mut msgs = crate::iter_messages(reader);
 
+        let res = msgs.next().unwrap().unwrap_err();
+        assert!(matches!(res, Error::CrcError { .. }));
+
         let res = msgs.next().unwrap();
         assert!(res.is_ok());
-
-        let res = msgs.next();
-        assert!(res.is_none());
     }
 
     #[test]

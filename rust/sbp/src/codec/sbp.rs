@@ -42,8 +42,7 @@ impl Decoder for SbpDecoder {
             }
             ParseResult::Err((bytes_read, err)) => {
                 src.advance(bytes_read);
-                log::warn!("{}", err);
-                Ok(None)
+                Err(err)
             }
             ParseResult::Incomplete => {
                 src.reserve(MAX_FRAME_LENGTH);
