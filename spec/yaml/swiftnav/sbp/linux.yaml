@@ -324,7 +324,7 @@ definitions:
      fields:
        - mem_total:
            type: u16
-           desc: total system memory
+           desc: total system memory, in MiB
        - pcpu:
            type: u8
            desc: percent of total cpu currently utilized
