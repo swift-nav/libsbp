@@ -51,7 +51,7 @@ typedef uint64_t u64;
 #endif
 
 /* Set packing based upon toolchain */
-#if defined(__GNUC__) || defined(__clang__)
+#if defined(__GNUC__) || defined(__clang__) || defined(__ghs__)
 
 #define SBP_PACK_START /* Intentionally empty */
 #define SBP_PACK_END /* Intentionally empty */
