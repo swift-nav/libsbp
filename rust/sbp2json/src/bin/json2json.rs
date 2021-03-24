@@ -22,6 +22,10 @@ struct Options {
     /// Try to be compatible with the float formatting of the Haskell version of sbp2json
     #[structopt(long = "float-compat")]
     float_compat: bool,
+
+    /// Flush output on every message
+    #[structopt(long)]
+    message_buffered: bool,
 }
 
 fn main() -> sbp::Result<()> {
@@ -37,8 +41,13 @@ fn main() -> sbp::Result<()> {
     let stdout = io::stdout();
 
     if options.float_compat {
-        json2json(stdin, stdout, HaskellishFloatFormatter {})
+        json2json(
+            stdin,
+            stdout,
+            HaskellishFloatFormatter {},
+            options.message_buffered,
+        )
     } else {
-        json2json(stdin, stdout, CompactFormatter {})
+        json2json(stdin, stdout, CompactFormatter {}, options.message_buffered)
     }
 }

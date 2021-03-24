@@ -18,6 +18,10 @@ struct Options {
     /// Print debugging messages to standard error
     #[structopt(long)]
     debug: bool,
+
+    /// Flush output on every message
+    #[structopt(long)]
+    message_buffered: bool,
 }
 
 fn main() -> sbp::Result<()> {
@@ -32,5 +36,5 @@ fn main() -> sbp::Result<()> {
     let stdin = io::stdin();
     let stdout = io::stdout();
 
-    json2sbp(stdin, stdout)
+    json2sbp(stdin, stdout, options.message_buffered)
 }
