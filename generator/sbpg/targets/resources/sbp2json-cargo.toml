@@ -17,7 +17,8 @@ features = ["json"]
 
 [dependencies]
 structopt = "0.3"
-env_logger = "0.8.2"
+env_logger = "0.8"
+atty = "0.2"
 
 [target.'cfg(all(not(windows), not(target_env = "musl")))'.dependencies]
 jemallocator = "0.3"

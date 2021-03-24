@@ -20,8 +20,8 @@ struct Options {
     debug: bool,
 
     /// Flush output on every message
-    #[structopt(long)]
-    message_buffered: bool,
+    #[structopt(long = "unbuffered")]
+    unbuffered: bool,
 }
 
 fn main() -> sbp::Result<()> {
@@ -36,5 +36,7 @@ fn main() -> sbp::Result<()> {
     let stdin = io::stdin();
     let stdout = io::stdout();
 
-    json2sbp(stdin, stdout, options.message_buffered)
+    let buffered = atty::isnt(atty::Stream::Stdout) && !options.unbuffered;
+
+    json2sbp(stdin, stdout, buffered)
 }

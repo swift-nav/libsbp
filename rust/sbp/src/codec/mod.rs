@@ -20,7 +20,7 @@ pub mod converters {
         Error, Result,
     };
 
-    pub fn json2sbp<R, W>(input: R, output: W, message_buffered: bool) -> Result<()>
+    pub fn json2sbp<R, W>(input: R, output: W, unbuffered: bool) -> Result<()>
     where
         R: Read,
         W: Write,
@@ -28,7 +28,7 @@ pub mod converters {
         let source = FramedRead::new(input, JsonDecoder::new());
         let sink = FramedWrite::new(output, SbpEncoder::new());
 
-        maybe_message_buffered(source, sink, message_buffered)?;
+        maybe_send_unbuffered(source, sink, unbuffered)?;
 
         Ok(())
     }
@@ -37,7 +37,7 @@ pub mod converters {
         input: R,
         output: W,
         formatter: F,
-        message_buffered: bool,
+        unbufferd: bool,
     ) -> Result<()>
     where
         R: Read,
@@ -47,7 +47,7 @@ pub mod converters {
         let source = FramedRead::new(input, Json2JsonDecoder {});
         let sink = FramedWrite::new(output, Json2JsonEncoder::new(formatter));
 
-        maybe_message_buffered(source, sink, message_buffered)?;
+        maybe_send_unbuffered(source, sink, unbufferd)?;
 
         Ok(())
     }
@@ -56,7 +56,7 @@ pub mod converters {
         input: R,
         output: W,
         formatter: F,
-        message_buffered: bool,
+        unbuffered: bool,
     ) -> Result<()>
     where
         R: Read,
@@ -66,15 +66,15 @@ pub mod converters {
         let source = FramedRead::new(input, SbpDecoder {});
         let sink = FramedWrite::new(output, JsonEncoder::new(formatter));
 
-        maybe_message_buffered(source, sink, message_buffered)?;
+        maybe_send_unbuffered(source, sink, unbuffered)?;
 
         Ok(())
     }
 
-    fn maybe_message_buffered<R, W, D, E>(
+    fn maybe_send_unbuffered<R, W, D, E>(
         mut source: FramedRead<R, D>,
         mut sink: FramedWrite<W, E>,
-        message_buffered: bool,
+        unbuffered: bool,
     ) -> Result<()>
     where
         R: Read,
@@ -82,7 +82,7 @@ pub mod converters {
         D: Decoder<Item = E::Item, Error = Error>,
         E: Encoder<Error = Error>,
     {
-        if message_buffered {
+        if unbuffered {
             while let Some(msg) = source.next() {
                 sink.send(msg?)?;
             }
