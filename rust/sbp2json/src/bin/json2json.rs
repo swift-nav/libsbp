@@ -1,7 +1,9 @@
 use std::io;
 
-use sbp::codec::{converters::json2json, CompactFormatter, HaskellishFloatFormatter};
+use sbp::codec::json::{CompactFormatter, HaskellishFloatFormatter};
 use structopt::StructOpt;
+
+use converters::json2json;
 
 #[cfg(all(not(windows), not(target_env = "musl")))]
 #[global_allocator]
@@ -24,8 +26,8 @@ struct Options {
     float_compat: bool,
 
     /// Flush output on every message
-    #[structopt(long)]
-    message_buffered: bool,
+    #[structopt(long = "unbuffered")]
+    unbuffered: bool,
 }
 
 fn main() -> sbp::Result<()> {
@@ -40,14 +42,11 @@ fn main() -> sbp::Result<()> {
     let stdin = io::stdin();
     let stdout = io::stdout();
 
+    let unbuffered = atty::is(atty::Stream::Stdout) || options.unbuffered;
+
     if options.float_compat {
-        json2json(
-            stdin,
-            stdout,
-            HaskellishFloatFormatter {},
-            options.message_buffered,
-        )
+        json2json(stdin, stdout, HaskellishFloatFormatter {}, unbuffered)
     } else {
-        json2json(stdin, stdout, CompactFormatter {}, options.message_buffered)
+        json2json(stdin, stdout, CompactFormatter {}, unbuffered)
     }
 }
