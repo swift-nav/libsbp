@@ -1194,7 +1194,7 @@ class MsgLinuxSysState(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   mem_total : int
-    total system memory
+    total system memory, in MiB
   pcpu : int
     percent of total cpu currently utilized
   pmem : int

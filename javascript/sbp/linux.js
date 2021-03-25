@@ -449,7 +449,7 @@ MsgLinuxMemState.prototype.fieldSpec.push(['cmdline', 'string', null]);
  * This presents a summary of CPU and memory utilization, including a timestamp.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field mem_total number (unsigned 16-bit int, 2 bytes) total system memory
+ * @field mem_total number (unsigned 16-bit int, 2 bytes) total system memory, in MiB
  * @field pcpu number (unsigned 8-bit int, 1 byte) percent of total cpu currently utilized
  * @field pmem number (unsigned 8-bit int, 1 byte) percent of total memory currently utilized
  * @field procs_starting number (unsigned 16-bit int, 2 bytes) number of processes that started during collection phase

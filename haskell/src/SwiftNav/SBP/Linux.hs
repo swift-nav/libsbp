@@ -471,7 +471,7 @@ msgLinuxSysState = 0x7F0A
 -- timestamp.
 data MsgLinuxSysState = MsgLinuxSysState
   { _msgLinuxSysState_mem_total    :: !Word16
-    -- ^ total system memory
+    -- ^ total system memory, in MiB
   , _msgLinuxSysState_pcpu         :: !Word8
     -- ^ percent of total cpu currently utilized
   , _msgLinuxSysState_pmem         :: !Word8

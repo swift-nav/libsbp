@@ -825,7 +825,7 @@ impl crate::serialize::SbpSerialize for MsgLinuxSocketUsage {
 pub struct MsgLinuxSysState {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
-    /// total system memory
+    /// total system memory, in MiB
     pub mem_total: u16,
     /// percent of total cpu currently utilized
     pub pcpu: u8,
