@@ -10,7 +10,8 @@ sudo add-apt-repository -y ppa:deadsnakes/ppa
 sudo apt-get install python3.5 python3.5-dev
 sudo apt-get install python3.7 python3.7-dev
 sudo apt-get install python3.8 python3.8-dev
-pip3 install tox wheel setuptools
+sudo apt-get tox
+pip3 install wheel setuptools
 
 pushd haskell
 
