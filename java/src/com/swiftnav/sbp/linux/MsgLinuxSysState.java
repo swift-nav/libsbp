@@ -34,7 +34,7 @@ public class MsgLinuxSysState extends SBPMessage {
     public static final int TYPE = 0x7F0A;
 
     
-    /** total system memory */
+    /** total system memory, in MiB */
     public int mem_total;
     
     /** percent of total cpu currently utilized */

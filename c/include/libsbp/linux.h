@@ -259,7 +259,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_GPS_TOW_IN_MILLISECONDS (1)
 
 typedef struct SBP_ATTR_PACKED {
-  u16 mem_total;         /**< total system memory */
+  u16 mem_total;         /**< total system memory, in MiB */
   u8 pcpu;              /**< percent of total cpu currently utilized */
   u8 pmem;              /**< percent of total memory currently utilized */
   u16 procs_starting;    /**< number of processes that started during collection phase */
