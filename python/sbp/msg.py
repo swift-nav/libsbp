@@ -44,8 +44,8 @@ class UnpackError(ValueError):
   pass
 
 
-def crc16(s):
-  return binascii.crc_hqx(s, 0)
+def crc16(d, s=0):
+  return binascii.crc_hqx(d, s)
 
 
 class _StreamPayload(object):
