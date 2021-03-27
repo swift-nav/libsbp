@@ -9,12 +9,15 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-import base64
+import binascii
 import copy
 import json
 import struct
+try:
+  import pybase64 as base64
+except ImportError:
+  import base64
 
-import construct
 
 from sbp.constants import SENDER_ID as _SENDER_ID
 from sbp.constants import SBP_PREAMBLE as _SBP_PREAMBLE
@@ -28,65 +31,21 @@ import sys
 SENDER_ID = _SENDER_ID
 SBP_PREAMBLE = _SBP_PREAMBLE
 
-SBP_NO_JIT = True
+_HEADER_FMT = '<BHHB'
+_HEADER_LEN = struct.calcsize(_HEADER_FMT)
+_HEADER_PARSER = struct.Struct(_HEADER_FMT)
 
-try:
-  import importlib
-  import numpy as np
-  HAS_NUMPY = True
-except ImportError:
-  HAS_NUMPY = False
-
-parse_jit_crc16 = None
-parse_jit = None
+_CRC_FMT = '<H'
+_CRC_LEN = struct.calcsize(_CRC_FMT)
+_CRC_PARSER = struct.Struct(_CRC_FMT)
 
 
-def try_import_jit():
-  from warnings import warn
-
-  warn("sbp.jit has been removed", UserWarning, stacklevel=1)
-  return None
+class UnpackError(ValueError):
+  pass
 
 
-def no_jit_fallback():
-  global parse_jit_crc16
-  global np_crc16_tab
-  global crc_buffer
-  global parse_jit
-  np_crc16_tab = None
-  crc_buffer = None
-  parse_jit = None
-  def _parse_jit_crc16(buf, offset, crc, l):
-    _crc_buffer = bytearray(buf[offset:(offset+l)])
-    return crc16_nojit(_crc_buffer, crc)
-  parse_jit_crc16 = _parse_jit_crc16
-
-
-if HAS_NUMPY:
-  np_crc16_tab = np.array(crc16_tab, dtype=np.uint16)
-  crc_buffer = np.zeros(512, dtype=np.uint8)
-  parse_jit = None
-  if parse_jit is not None:
-    parse_jit_crc16 = parse_jit.crc16jit
-  else:
-    no_jit_fallback()
-else:
-  no_jit_fallback()
-
-
-def crc16(s, crc=0):
-  if not HAS_NUMPY or SBP_NO_JIT:
-    return crc16_nojit(s, crc)
-  crc_buffer[:len(s)] = bytearray(s)
-  return parse_jit.crc16jit(crc_buffer, 0, crc, len(s))
-
-
-def crc16_nojit(s, crc=0):
-  """CRC16 implementation acording to CCITT standards."""
-  for ch in bytearray(s):  # bytearray's elements are integers in both python 2 and 3
-    crc = ((crc << 8) & 0xFFFF) ^ crc16_tab[((crc >> 8) & 0xFF) ^ (ch & 0xFF)]
-    crc &= 0xFFFF
-  return crc
+def crc16(s):
+  return binascii.crc_hqx(s, 0)
 
 
 class _StreamPayload(object):
@@ -114,13 +73,6 @@ class SBP(object):
 
   """
 
-  _parser = construct.Struct(
-                   'preamble'/construct.Int8ul,
-                   'msg_type'/construct.Int16ul,
-                   'sender'/construct.Int16ul,
-                   'length'/construct.Int8ul,
-                   'payload'/construct.Bytes(lambda ctx: ctx.length),
-                   'crc'/construct.Int16ul,)
   __slots__ = ['preamble',
                'msg_type',
                'sender',
@@ -129,12 +81,6 @@ class SBP(object):
                'crc',
                'stream_payload',
                'parser']
-
-  _header_fmt = '<BHHB'
-  _header_len = struct.calcsize(_header_fmt)
-
-  _crc_fmt = '<H'
-  _crc_len = struct.calcsize(_crc_fmt)
 
   def __init__(self, msg_type=None, sender=SENDER_ID,
                length=None, payload=None, crc=None):
@@ -173,64 +119,56 @@ class SBP(object):
     """Returns the framed message and updates the CRC.
 
     """
-    header_offset = offset + self._header_len
+    header_offset = offset + _HEADER_LEN
     self.length = insert_payload(buf, header_offset, self.payload)
-    struct.pack_into(self._header_fmt,
-                     buf,
-                     offset,
-                     self.preamble,
-                     self.msg_type,
-                     self.sender,
-                     self.length)
+    _HEADER_PARSER.pack_into(buf,
+                             offset,
+                             self.preamble,
+                             self.msg_type,
+                             self.sender,
+                             self.length)
     crc_offset = header_offset + self.length
     preamble_bytes = 1
-    crc_over_len = self._header_len + self.length - preamble_bytes
-    self.crc = parse_jit_crc16(buf, offset+1, 0, crc_over_len)
-    struct.pack_into(self._crc_fmt, buf, crc_offset, self.crc)
-    length = preamble_bytes + crc_over_len + self._crc_len
+    crc_over_len = _HEADER_LEN + self.length - preamble_bytes
+    self.crc = crc16(buf[1:1+crc_over_len])
+    _CRC_PARSER.pack_into(buf, crc_offset, self.crc)
+    length = preamble_bytes + crc_over_len + _CRC_LEN
     return length
 
   def pack(self):
-    """Pack to framed binary message.
-
-    """
-    if not HAS_NUMPY:
-      buf = bytearray(512)
-      packed_len = self._get_framed(buf, 0, self._copy_payload)
-      return bytes(buf[:packed_len])
-    else:
-      buf = np.zeros(512, dtype=np.uint8)
-      packed_len = self._get_framed(buf, 0, self._copy_payload)
-      d = buf[:packed_len]
-      return d.tobytes()
+    """Pack to framed binary message."""
+    buf = bytearray(512)
+    packed_len = self._get_framed(buf, 0, self._copy_payload)
+    return bytes(buf[:packed_len])
 
   def pack_into(self, buf, offset, write_payload):
-    """Pack to framed binary message.
-
-    """
+    """Pack to framed binary message."""
     return self._get_framed(buf, offset, write_payload)
 
   @staticmethod
-  def calc_crc(msg):
-    ret = struct.pack("<BHHB", SBP_PREAMBLE, msg.msg_type, msg.sender, len(msg.payload))
-    ret += msg.payload
-    return crc16(ret[1:])
+  def calc_crc(msg_type, sender, payload):
+    msgbuf = bytearray(256)
+    _HEADER_PARSER.pack_into(msgbuf, 0, SBP_PREAMBLE, msg_type, sender, len(payload))
+    msgbuf[_HEADER_LEN:_HEADER_LEN+len(payload)] = payload
+    return crc16(msgbuf[1:_HEADER_LEN+len(payload)])
 
   @staticmethod
   def unpack(d):
     """Unpack and return a framed binary message.
-
     """
-    p = SBP._parser.parse(d)
-
-    assert p.preamble == SBP_PREAMBLE, "Invalid preamble 0x%x." % p.preamble
-
-    if p.crc != SBP.calc_crc(p):
-      exc = ValueError("CRC error")
-      exc.malformed_msg = SBP(p.msg_type, p.sender, p.length, p.payload, p.crc)
-      raise exc
-
-    return SBP(p.msg_type, p.sender, p.length, p.payload, p.crc)
+    try:
+      preamble, msg_type, sender, length = _HEADER_PARSER.unpack(d[:_HEADER_LEN])
+      assert preamble == SBP_PREAMBLE, "Invalid preamble 0x%x." % preamble
+      payload = d[_HEADER_LEN:_HEADER_LEN+length]
+      (crc,) = _CRC_PARSER.unpack(d[_HEADER_LEN+length:_HEADER_LEN+length+_CRC_LEN])
+      computed_crc = SBP.calc_crc(msg_type, sender, payload)
+      if crc != computed_crc:
+        exc = ValueError("CRC error: found {}, expected {}".format(computed_crc, crc))
+        exc.malformed_msg = SBP(msg_type, sender, length, payload, crc)
+        raise exc
+      return SBP(msg_type, sender, length, payload, crc)
+    except struct.error:
+      raise UnpackError()
 
   def copy(self):
     return copy.deepcopy(self)
@@ -242,25 +180,20 @@ class SBP(object):
     return fmt % p
 
   def to_binary(self):
-    ret = struct.pack("<BHHB", SBP_PREAMBLE,
-                      self.msg_type, self.sender, len(self.payload))
+    ret = _HEADER_PARSER.pack(SBP_PREAMBLE, self.msg_type, self.sender, len(self.payload))
     ret += self.payload
     crc = crc16(ret[1:])
-    ret += struct.pack("<H", crc)
+    ret += _CRC_PARSER.pack(crc)
     return ret
 
   def to_json(self, sort_keys=False):
-    """Produce a JSON-encoded SBP message.
-
-    """
+    """Produce a JSON-encoded SBP message."""
     d = self.to_json_dict()
     return json.dumps(d, sort_keys=sort_keys)
 
   @staticmethod
   def from_json(s):
-    """Given a JSON-encoded message, build an object.
-
-    """
+    """Given a JSON-encoded message, build an object."""
     d = json.loads(s)
     sbp = SBP.from_json_dict(d)
     return sbp

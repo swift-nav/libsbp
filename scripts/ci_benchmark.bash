@@ -61,7 +61,7 @@ sudo chown -R "$USER:$USER" "$PWD"
 
 rust_bins="$HOME/.docker-cache/cargo/work/release"
 
-mkdir bin
+mkdir -p bin
 
 cp "$rust_bins/sbp2json" bin
 cp "$rust_bins/json2sbp" bin
