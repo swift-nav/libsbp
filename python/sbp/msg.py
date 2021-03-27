@@ -18,15 +18,10 @@ try:
 except ImportError:
   import base64
 
-
 from sbp.constants import SENDER_ID as _SENDER_ID
 from sbp.constants import SBP_PREAMBLE as _SBP_PREAMBLE
 from sbp.constants import crc16_tab
 
-
-from pkgutil import iter_modules
-
-import sys
 
 SENDER_ID = _SENDER_ID
 SBP_PREAMBLE = _SBP_PREAMBLE
@@ -38,6 +33,13 @@ _HEADER_PARSER = struct.Struct(_HEADER_FMT)
 _CRC_FMT = '<H'
 _CRC_LEN = struct.calcsize(_CRC_FMT)
 _CRC_PARSER = struct.Struct(_CRC_FMT)
+
+
+def try_import_jit():
+  from warnings import warn
+
+  warn("sbp.jit has been removed", UserWarning, stacklevel=1)
+  return None
 
 
 class UnpackError(ValueError):
