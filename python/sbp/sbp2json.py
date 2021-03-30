@@ -41,6 +41,7 @@ def base_cl_options():
     import argparse
     parser = argparse.ArgumentParser(prog="sbp2json", description="Swift Navigation SBP to JSON parser")
     parser.add_argument('--mode', type=str, choices=JSON_CHOICES, default=DEFAULT_JSON)
+    parser.add_argument('--include', nargs="+", type=int, default=[])
     parser.add_argument('file', nargs='?', metavar='FILE', type=argparse.FileType('rb'),
                         default=sys.stdin, help="the input file, stdin by default")
 
@@ -81,6 +82,7 @@ def sbp_main(args):
     unconsumed_offset = 0
     read_offset = 0
     buffer_remaining = len(buf)
+    include = set(args.include)
     while True:
         if buffer_remaining == 0:
             buf[0:(read_offset - unconsumed_offset)] = buf[unconsumed_offset:read_offset]
@@ -107,8 +109,9 @@ def sbp_main(args):
             else:
                 try:
                     m = sbp.msg.SBP.unpack(b)
-                    m = sbp.table.dispatch(m)
-                    dump(args, m)
+                    if include and m.msg_type in include:
+                        m = sbp.table.dispatch(m)
+                        dump(args, m)
                     consumed = header_len + m.length + 2
                 except (UnpackError, StreamError):
                     break
