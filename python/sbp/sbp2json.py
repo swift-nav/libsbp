@@ -104,7 +104,7 @@ def sbp_main(args):
             else:
                 try:
                     m = sbp.msg.SBP.unpack(b)
-                    if include and m.msg_type in include:
+                    if not include or m.msg_type in include:
                         m = sbp.table.dispatch(m)
                         dump(args, m)
                     consumed = header_len + m.length + 2
