@@ -169,7 +169,7 @@ class SBP(object):
       raise UnpackError("invalid CRC")
     computed_crc = SBP.calc_crc(msg_type, sender, payload)
     if crc != computed_crc:
-      exc = UnpackError("CRC error: found {}, expected {}".format(computed_crc, crc))
+      exc = UnpackError("CRC error: computed {}, parsed {}".format(computed_crc, crc))
       exc.malformed_msg = SBP(msg_type, sender, length, payload, crc)
       raise exc
     return SBP(msg_type, sender, length, payload, crc)
