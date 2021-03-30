@@ -10,6 +10,6 @@ ADD . /work
 RUN pip3 install -r /work/setup_requirements.txt
 RUN pip3 install -r /work/requirements.txt
 
-RUN pip3 install numpy~=1.19 cython wheel setuptools python-rapidjson~=1.0
+RUN pip3 install wheel setuptools
 
-RUN python3 /work/setup.py install
+RUN pip3 install '.[sbp2json]'

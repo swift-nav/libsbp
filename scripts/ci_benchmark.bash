@@ -96,7 +96,7 @@ else
   pip3 install -r setup_requirements.txt
   pip3 install -r requirements.txt
 
-  python3 setup.py install
+  pip3 install '.[sbp2json]'
 fi
 
 popd
