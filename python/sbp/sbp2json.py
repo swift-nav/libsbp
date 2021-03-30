@@ -7,8 +7,6 @@ import io
 
 import json
 
-import decimal as dec
-
 from construct.core import StreamError
 
 import sbp.msg
@@ -17,9 +15,6 @@ import sbp.table
 from sbp.msg import SBP_PREAMBLE
 from sbp.msg import UnpackError
 
-
-def get_buffer(size):
-    return bytearray(size)
 
 DEFAULT_JSON='rapidjson'
 JSON_CHOICES=['json', 'rapidjson']
@@ -34,14 +29,14 @@ try:
 except NameError:
     memoryview = lambda x: x
 
-dec.getcontext().rounding = dec.ROUND_HALF_UP
-
 
 def base_cl_options():
     import argparse
     parser = argparse.ArgumentParser(prog="sbp2json", description="Swift Navigation SBP to JSON parser")
-    parser.add_argument('--mode', type=str, choices=JSON_CHOICES, default=DEFAULT_JSON)
-    parser.add_argument('--include', nargs="+", type=int, default=[])
+    parser.add_argument('--mode', type=str, choices=JSON_CHOICES, default=DEFAULT_JSON,
+                        help="the JSON serialization library to use, default: {}".format(DEFAULT_JSON))
+    parser.add_argument('--include', nargs="+", type=int, default=[],
+                        help="list of SBP message IDs to include, empty means all")
     parser.add_argument('file', nargs='?', metavar='FILE', type=argparse.FileType('rb'),
                         default=sys.stdin, help="the input file, stdin by default")
 
@@ -78,7 +73,7 @@ def dump(args, res):
 def sbp_main(args):
     header_len = 6
     reader = io.open(args.file.fileno(), 'rb')
-    buf = memoryview(get_buffer(4096))
+    buf = memoryview(bytearray(4096))
     unconsumed_offset = 0
     read_offset = 0
     buffer_remaining = len(buf)

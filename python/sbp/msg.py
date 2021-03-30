@@ -156,21 +156,23 @@ class SBP(object):
 
   @staticmethod
   def unpack(d):
-    """Unpack and return a framed binary message.
-    """
+    """Unpack and return a framed binary message."""
     try:
       preamble, msg_type, sender, length = _HEADER_PARSER.unpack(d[:_HEADER_LEN])
-      assert preamble == SBP_PREAMBLE, "Invalid preamble 0x%x." % preamble
-      payload = d[_HEADER_LEN:_HEADER_LEN+length]
-      (crc,) = _CRC_PARSER.unpack(d[_HEADER_LEN+length:_HEADER_LEN+length+_CRC_LEN])
-      computed_crc = SBP.calc_crc(msg_type, sender, payload)
-      if crc != computed_crc:
-        exc = ValueError("CRC error: found {}, expected {}".format(computed_crc, crc))
-        exc.malformed_msg = SBP(msg_type, sender, length, payload, crc)
-        raise exc
-      return SBP(msg_type, sender, length, payload, crc)
     except struct.error:
-      raise UnpackError()
+      raise UnpackError("invalid header")
+    assert preamble == SBP_PREAMBLE, "Invalid preamble 0x%x." % preamble
+    payload = d[_HEADER_LEN:_HEADER_LEN+length]
+    try:
+      (crc,) = _CRC_PARSER.unpack(d[_HEADER_LEN+length:_HEADER_LEN+length+_CRC_LEN])
+    except struct.error:
+      raise UnpackError("invalid CRC")
+    computed_crc = SBP.calc_crc(msg_type, sender, payload)
+    if crc != computed_crc:
+      exc = UnpackError("CRC error: found {}, expected {}".format(computed_crc, crc))
+      exc.malformed_msg = SBP(msg_type, sender, length, payload, crc)
+      raise exc
+    return SBP(msg_type, sender, length, payload, crc)
 
   def copy(self):
     return copy.deepcopy(self)
