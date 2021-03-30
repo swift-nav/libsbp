@@ -191,7 +191,7 @@ if __name__ == "__main__":
         scripts=['bin/sbp2json'],
         extras_require={
           'sbp2json': [
-              'numpy~=1.18',
               'python-rapidjson~=1.0',
+              'pybase64~=1.1',
           ]
         })

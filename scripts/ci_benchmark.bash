@@ -61,7 +61,7 @@ sudo chown -R "$USER:$USER" "$PWD"
 
 rust_bins="$HOME/.docker-cache/cargo/work/release"
 
-mkdir bin
+mkdir -p bin
 
 cp "$rust_bins/sbp2json" bin
 cp "$rust_bins/json2sbp" bin
@@ -96,7 +96,7 @@ else
   pip3 install -r setup_requirements.txt
   pip3 install -r requirements.txt
 
-  python3 setup.py install
+  pip3 install '.[sbp2json]'
 fi
 
 popd
