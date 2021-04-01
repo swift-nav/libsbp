@@ -24,6 +24,7 @@ if(APPLE)
 endif()
 
 swift_add_test(test-libsbp
+  UNIT_TEST
   POST_BUILD
   SRCS
     check_main.c
