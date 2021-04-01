@@ -16,6 +16,7 @@ Generator for c target.
 import re
 from sbpg.targets.templating import *
 from sbpg.utils import markdown_links
+from sbpg import ReleaseVersion
 
 MESSAGES_TEMPLATE_NAME = "sbp_messages_template.h"
 VERSION_TEMPLATE_NAME = "sbp_version_template.h"
@@ -146,12 +147,14 @@ def render_source(output_dir, package_spec):
                                timestamp=package_spec.creation_timestamp,
                                include=extensions(package_spec.includes)))
 
-def render_version(output_dir, release):
+def render_version(output_dir, release: ReleaseVersion):
   destination_filename = "%s/version.h" % output_dir
-  major, minor, patch = release.split('.')[:3]
   py_template = JENV.get_template(VERSION_TEMPLATE_NAME)
-  with open(destination_filename, 'w') as f:
-    f.write(py_template.render(major=major, minor=minor, patch=patch))
+  with open(destination_filename, 'w') as output_file:
+    output_file.write(py_template.render(major=release.major,
+                                         minor=release.minor,
+                                         patch=release.patch,
+                                         full_version=release.full_version))
 
 def render_traits(output_dir, package_specs):
   msgs = []

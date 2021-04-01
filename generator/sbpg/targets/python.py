@@ -18,6 +18,7 @@ files.
 
 from sbpg.targets.templating import JENV, ACRONYMS
 from sbpg.utils import comment_links
+from sbpg import ReleaseVersion
 import copy
 
 TEMPLATE_NAME = "sbp_construct_template.py.j2"
@@ -123,10 +124,11 @@ def render_source(output_dir, package_spec, jenv=JENV):
                                description=package_spec.description))
 
 
-def render_version(output_dir, release):
+def render_version(output_dir, release: ReleaseVersion):
   destination_filename = "%s/RELEASE-VERSION" % output_dir
   print(destination_filename)
-  major, minor, patch = release.split('.')[:3]
   py_template = JENV.get_template(VERSION_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
-    f.write(py_template.render(major=major, minor=minor, patch=patch))
+    f.write(py_template.render(major=release.major,
+                               minor=release.minor,
+                               patch=release.patch_pre))
