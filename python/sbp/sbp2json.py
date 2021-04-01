@@ -12,14 +12,7 @@ from sbp.msg import SBP_PREAMBLE
 from sbp import msg as msg_nojit
 from sbp.table import dispatch as dispatch_nojit
 
-SBP_NO_JIT = os.environ.get('SBP_NO_JIT', False)
-
-if not SBP_NO_JIT:
-    try:
-        from sbp.jit import msg
-        from sbp.jit.table import dispatch
-    except ImportError:
-        SBP_NO_JIT = True
+SBP_NO_JIT = True
 
 try:
     import numpy as np
@@ -170,10 +163,7 @@ def dump(args, res):
 
 
 def configure_judicious_rounding(args):
-    try:
-        _m = msg
-    except NameError:
-        _m = msg_nojit
+    _m = msg_nojit
     _m.SBP.judicious_rounding = getattr(args, 'judicious_rounding', False)
 
 
@@ -203,36 +193,25 @@ def sbp_main(args):
         read_offset += read_length
         buffer_remaining -= read_length
         while True:
-            if SBP_NO_JIT:
-                from construct.core import StreamError
-                bytes_available = read_offset - unconsumed_offset
-                b = buf[unconsumed_offset:(unconsumed_offset + bytes_available)]
-                if len(b) == 0:
-                    break
-                if b[0] != SBP_PREAMBLE:
-                    consumed = 1
-                else:
-                    try:
-                        m = msg_nojit.SBP.unpack(b)
-                        m = dispatch_nojit(m)
-                        dump(args, m)
-                        consumed = header_len + m.length + 2
-                    except StreamError:
-                        # Framing failed, find next preamble
-                        consumed = 1
-                    except ValueError as exc:
-                        # CRC error, skip malformed message and find next preamble
-                        consumed = header_len + exc.malformed_msg.length
+            from construct.core import StreamError
+            bytes_available = read_offset - unconsumed_offset
+            b = buf[unconsumed_offset:(unconsumed_offset + bytes_available)]
+            if len(b) == 0:
+                break
+            if b[0] != SBP_PREAMBLE:
+                consumed = 1
             else:
-                consumed, payload_len, msg_type, sender, crc, crc_fail = \
-                    msg.unpack_payload(buf, unconsumed_offset, (read_offset - unconsumed_offset))
-                if not crc_fail and msg_type != 0:
-                    payload = buf[unconsumed_offset + header_len:unconsumed_offset + header_len + payload_len]
-                    m = dispatch(msg_type)(msg_type, sender, payload_len, payload, crc)
-                    res, offset, length = m.unpack(buf, unconsumed_offset + header_len, payload_len)
-                    dump(args, res)
-                if consumed == 0:
-                    break
+                try:
+                    m = msg_nojit.SBP.unpack(b)
+                    m = dispatch_nojit(m)
+                    dump(args, m)
+                    consumed = header_len + m.length + 2
+                except StreamError:
+                    # Framing failed, find next preamble
+                    consumed = 1
+                except ValueError as exc:
+                    # CRC error, skip malformed message and find next preamble
+                    consumed = header_len + exc.malformed_msg.length
             unconsumed_offset += consumed
 
 

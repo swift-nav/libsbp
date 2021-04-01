@@ -33,7 +33,7 @@ CLASSIFIERS = [
   'Programming Language :: Python :: 3.9',
 ]
 
-PACKAGES = find_packages(exclude=["tests", "bench", "tests.*", "sbp.jit"])
+PACKAGES = find_packages(exclude=["tests", "bench", "tests.*"])
 
 PLATFORMS = [
   'linux',
@@ -164,20 +164,6 @@ if __name__ == "__main__":
 
     ext_modules = None
 
-    try:
-        import numba
-        import numpy
-        try:
-            from sbp.jit.parse import cc
-            ext_modules = [cc.distutils_extension()]
-            PACKAGES.extend(['sbp.jit'])
-        except:
-            print('WARNING: sbp.jit will be unavailable, the setup script tried to compile the sbp.jit module...\n'
-                  'but it failed, this usually means that the LLVM libraries are not present (or supported) on\n'
-                  'this platform.  Try installing the LLVM library for this platform and re-installing.')
-    except ImportError:
-        pass
-
     with open(os.path.join(setup_py_dir, 'requirements.txt')) as f:
         INSTALL_REQUIRES = [i.strip() for i in f.readlines()]
 
@@ -204,16 +190,8 @@ if __name__ == "__main__":
         ext_modules=ext_modules,
         scripts=['bin/sbp2json'],
         extras_require={
-          'jit': [
+          'sbp2json': [
               'numpy~=1.18',
-              'pybase64~=0.3',
-              'python-rapidjson~=1.0',
-              'numba==0.47',
-              'llvmlite==0.31',
-          ],
-          'aot': [
-              'numpy~=1.18',
-              'pybase64~=0.3',
               'python-rapidjson~=1.0',
           ]
         })

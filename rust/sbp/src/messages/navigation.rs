@@ -74,6 +74,10 @@ impl MsgAgeCorrections {
     }
 }
 impl super::SBPMessage for MsgAgeCorrections {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_AGE_CORRECTIONS"
+    }
+
     fn get_message_type(&self) -> u16 {
         528
     }
@@ -158,6 +162,10 @@ impl MsgBaselineECEF {
     }
 }
 impl super::SBPMessage for MsgBaselineECEF {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_BASELINE_ECEF"
+    }
+
     fn get_message_type(&self) -> u16 {
         523
     }
@@ -252,6 +260,10 @@ impl MsgBaselineECEFDepA {
     }
 }
 impl super::SBPMessage for MsgBaselineECEFDepA {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_BASELINE_ECEF_DEP_A"
+    }
+
     fn get_message_type(&self) -> u16 {
         514
     }
@@ -335,6 +347,10 @@ impl MsgBaselineHeadingDepA {
     }
 }
 impl super::SBPMessage for MsgBaselineHeadingDepA {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_BASELINE_HEADING_DEP_A"
+    }
+
     fn get_message_type(&self) -> u16 {
         519
     }
@@ -427,6 +443,10 @@ impl MsgBaselineNED {
     }
 }
 impl super::SBPMessage for MsgBaselineNED {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_BASELINE_NED"
+    }
+
     fn get_message_type(&self) -> u16 {
         524
     }
@@ -527,6 +547,10 @@ impl MsgBaselineNEDDepA {
     }
 }
 impl super::SBPMessage for MsgBaselineNEDDepA {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_BASELINE_NED_DEP_A"
+    }
+
     fn get_message_type(&self) -> u16 {
         515
     }
@@ -622,6 +646,10 @@ impl MsgDops {
     }
 }
 impl super::SBPMessage for MsgDops {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_DOPS"
+    }
+
     fn get_message_type(&self) -> u16 {
         520
     }
@@ -711,6 +739,10 @@ impl MsgDopsDepA {
     }
 }
 impl super::SBPMessage for MsgDopsDepA {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_DOPS_DEP_A"
+    }
+
     fn get_message_type(&self) -> u16 {
         518
     }
@@ -803,6 +835,10 @@ impl MsgGPSTime {
     }
 }
 impl super::SBPMessage for MsgGPSTime {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_GPS_TIME"
+    }
+
     fn get_message_type(&self) -> u16 {
         258
     }
@@ -891,6 +927,10 @@ impl MsgGPSTimeDepA {
     }
 }
 impl super::SBPMessage for MsgGPSTimeDepA {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_GPS_TIME_DEP_A"
+    }
+
     fn get_message_type(&self) -> u16 {
         256
     }
@@ -979,6 +1019,10 @@ impl MsgGPSTimeGnss {
     }
 }
 impl super::SBPMessage for MsgGPSTimeGnss {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_GPS_TIME_GNSS"
+    }
+
     fn get_message_type(&self) -> u16 {
         260
     }
@@ -1070,6 +1114,10 @@ impl MsgPosECEF {
     }
 }
 impl super::SBPMessage for MsgPosECEF {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_POS_ECEF"
+    }
+
     fn get_message_type(&self) -> u16 {
         521
     }
@@ -1183,6 +1231,10 @@ impl MsgPosECEFCov {
     }
 }
 impl super::SBPMessage for MsgPosECEFCov {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_POS_ECEF_COV"
+    }
+
     fn get_message_type(&self) -> u16 {
         532
     }
@@ -1306,6 +1358,10 @@ impl MsgPosECEFCovGnss {
     }
 }
 impl super::SBPMessage for MsgPosECEFCovGnss {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_POS_ECEF_COV_GNSS"
+    }
+
     fn get_message_type(&self) -> u16 {
         564
     }
@@ -1413,6 +1469,10 @@ impl MsgPosECEFDepA {
     }
 }
 impl super::SBPMessage for MsgPosECEFDepA {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_POS_ECEF_DEP_A"
+    }
+
     fn get_message_type(&self) -> u16 {
         512
     }
@@ -1510,6 +1570,10 @@ impl MsgPosECEFGnss {
     }
 }
 impl super::SBPMessage for MsgPosECEFGnss {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_POS_ECEF_GNSS"
+    }
+
     fn get_message_type(&self) -> u16 {
         553
     }
@@ -1610,6 +1674,10 @@ impl MsgPosLLH {
     }
 }
 impl super::SBPMessage for MsgPosLLH {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_POS_LLH"
+    }
+
     fn get_message_type(&self) -> u16 {
         522
     }
@@ -1724,6 +1792,10 @@ impl MsgPosLLHCov {
     }
 }
 impl super::SBPMessage for MsgPosLLHCov {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_POS_LLH_COV"
+    }
+
     fn get_message_type(&self) -> u16 {
         529
     }
@@ -1846,6 +1918,10 @@ impl MsgPosLLHCovGnss {
     }
 }
 impl super::SBPMessage for MsgPosLLHCovGnss {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_POS_LLH_COV_GNSS"
+    }
+
     fn get_message_type(&self) -> u16 {
         561
     }
@@ -1956,6 +2032,10 @@ impl MsgPosLLHDepA {
     }
 }
 impl super::SBPMessage for MsgPosLLHDepA {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_POS_LLH_DEP_A"
+    }
+
     fn get_message_type(&self) -> u16 {
         513
     }
@@ -2058,6 +2138,10 @@ impl MsgPosLLHGnss {
     }
 }
 impl super::SBPMessage for MsgPosLLHGnss {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_POS_LLH_GNSS"
+    }
+
     fn get_message_type(&self) -> u16 {
         554
     }
@@ -2152,6 +2236,10 @@ impl MsgProtectionLevel {
     }
 }
 impl super::SBPMessage for MsgProtectionLevel {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_PROTECTION_LEVEL"
+    }
+
     fn get_message_type(&self) -> u16 {
         534
     }
@@ -2249,6 +2337,10 @@ impl MsgUtcTime {
     }
 }
 impl super::SBPMessage for MsgUtcTime {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_UTC_TIME"
+    }
+
     fn get_message_type(&self) -> u16 {
         259
     }
@@ -2350,6 +2442,10 @@ impl MsgUtcTimeGnss {
     }
 }
 impl super::SBPMessage for MsgUtcTimeGnss {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_UTC_TIME_GNSS"
+    }
+
     fn get_message_type(&self) -> u16 {
         261
     }
@@ -2466,6 +2562,10 @@ impl MsgVelBody {
     }
 }
 impl super::SBPMessage for MsgVelBody {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_VEL_BODY"
+    }
+
     fn get_message_type(&self) -> u16 {
         531
     }
@@ -2568,6 +2668,10 @@ impl MsgVelECEF {
     }
 }
 impl super::SBPMessage for MsgVelECEF {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_VEL_ECEF"
+    }
+
     fn get_message_type(&self) -> u16 {
         525
     }
@@ -2675,6 +2779,10 @@ impl MsgVelECEFCov {
     }
 }
 impl super::SBPMessage for MsgVelECEFCov {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_VEL_ECEF_COV"
+    }
+
     fn get_message_type(&self) -> u16 {
         533
     }
@@ -2792,6 +2900,10 @@ impl MsgVelECEFCovGnss {
     }
 }
 impl super::SBPMessage for MsgVelECEFCovGnss {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_VEL_ECEF_COV_GNSS"
+    }
+
     fn get_message_type(&self) -> u16 {
         565
     }
@@ -2894,6 +3006,10 @@ impl MsgVelECEFDepA {
     }
 }
 impl super::SBPMessage for MsgVelECEFDepA {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_VEL_ECEF_DEP_A"
+    }
+
     fn get_message_type(&self) -> u16 {
         516
     }
@@ -2986,6 +3102,10 @@ impl MsgVelECEFGnss {
     }
 }
 impl super::SBPMessage for MsgVelECEFGnss {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_VEL_ECEF_GNSS"
+    }
+
     fn get_message_type(&self) -> u16 {
         557
     }
@@ -3082,6 +3202,10 @@ impl MsgVelNED {
     }
 }
 impl super::SBPMessage for MsgVelNED {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_VEL_NED"
+    }
+
     fn get_message_type(&self) -> u16 {
         526
     }
@@ -3194,6 +3318,10 @@ impl MsgVelNEDCov {
     }
 }
 impl super::SBPMessage for MsgVelNEDCov {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_VEL_NED_COV"
+    }
+
     fn get_message_type(&self) -> u16 {
         530
     }
@@ -3314,6 +3442,10 @@ impl MsgVelNEDCovGnss {
     }
 }
 impl super::SBPMessage for MsgVelNEDCovGnss {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_VEL_NED_COV_GNSS"
+    }
+
     fn get_message_type(&self) -> u16 {
         562
     }
@@ -3420,6 +3552,10 @@ impl MsgVelNEDDepA {
     }
 }
 impl super::SBPMessage for MsgVelNEDDepA {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_VEL_NED_DEP_A"
+    }
+
     fn get_message_type(&self) -> u16 {
         517
     }
@@ -3518,6 +3654,10 @@ impl MsgVelNEDGnss {
     }
 }
 impl super::SBPMessage for MsgVelNEDGnss {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_VEL_NED_GNSS"
+    }
+
     fn get_message_type(&self) -> u16 {
         558
     }

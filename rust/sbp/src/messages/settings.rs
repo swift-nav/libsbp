@@ -69,6 +69,10 @@ impl MsgSettingsReadByIndexDone {
     }
 }
 impl super::SBPMessage for MsgSettingsReadByIndexDone {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_SETTINGS_READ_BY_INDEX_DONE"
+    }
+
     fn get_message_type(&self) -> u16 {
         166
     }
@@ -128,6 +132,10 @@ impl MsgSettingsReadByIndexReq {
     }
 }
 impl super::SBPMessage for MsgSettingsReadByIndexReq {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_SETTINGS_READ_BY_INDEX_REQ"
+    }
+
     fn get_message_type(&self) -> u16 {
         162
     }
@@ -202,6 +210,10 @@ impl MsgSettingsReadByIndexResp {
     }
 }
 impl super::SBPMessage for MsgSettingsReadByIndexResp {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_SETTINGS_READ_BY_INDEX_RESP"
+    }
+
     fn get_message_type(&self) -> u16 {
         167
     }
@@ -272,6 +284,10 @@ impl MsgSettingsReadReq {
     }
 }
 impl super::SBPMessage for MsgSettingsReadReq {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_SETTINGS_READ_REQ"
+    }
+
     fn get_message_type(&self) -> u16 {
         164
     }
@@ -339,6 +355,10 @@ impl MsgSettingsReadResp {
     }
 }
 impl super::SBPMessage for MsgSettingsReadResp {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_SETTINGS_READ_RESP"
+    }
+
     fn get_message_type(&self) -> u16 {
         165
     }
@@ -402,6 +422,10 @@ impl MsgSettingsRegister {
     }
 }
 impl super::SBPMessage for MsgSettingsRegister {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_SETTINGS_REGISTER"
+    }
+
     fn get_message_type(&self) -> u16 {
         174
     }
@@ -470,6 +494,10 @@ impl MsgSettingsRegisterResp {
     }
 }
 impl super::SBPMessage for MsgSettingsRegisterResp {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_SETTINGS_REGISTER_RESP"
+    }
+
     fn get_message_type(&self) -> u16 {
         431
     }
@@ -530,6 +558,10 @@ impl MsgSettingsSave {
     }
 }
 impl super::SBPMessage for MsgSettingsSave {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_SETTINGS_SAVE"
+    }
+
     fn get_message_type(&self) -> u16 {
         161
     }
@@ -593,6 +625,10 @@ impl MsgSettingsWrite {
     }
 }
 impl super::SBPMessage for MsgSettingsWrite {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_SETTINGS_WRITE"
+    }
+
     fn get_message_type(&self) -> u16 {
         160
     }
@@ -663,6 +699,10 @@ impl MsgSettingsWriteResp {
     }
 }
 impl super::SBPMessage for MsgSettingsWriteResp {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_SETTINGS_WRITE_RESP"
+    }
+
     fn get_message_type(&self) -> u16 {
         175
     }

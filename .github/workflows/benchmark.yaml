@@ -1,0 +1,32 @@
+name: Benchmarks
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    tags:
+      - "*"
+  pull_request:
+    paths:
+      - "python/**"
+      - "haskell/**"
+      - "rust/**"
+      - scripts/ci_benchmark.bash
+      - scripts/ci_benchmark_install.bash
+      - .github/workflows/benchmark.yaml
+jobs:
+  benchmark:
+    name: Benchmark
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup
+        run: ./scripts/ci_prepare_python.bash
+
+      - name: Run benchmarks
+        run: |
+          source ./scripts/ci_benchmark_install.bash
+          ./scripts/ci_benchmark.bash
+        env:
+          VIA_DOCKER: y

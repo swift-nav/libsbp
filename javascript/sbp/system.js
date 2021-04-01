@@ -129,6 +129,83 @@ MsgHeartbeat.prototype.fieldSpec = [];
 MsgHeartbeat.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
 
 /**
+ * SBP class for message fragment SubSystemReport
+ *
+ * Report the general and specific state of a sub-system.  If the generic state is
+ * reported as initializing, the specific state should be ignored.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field component number (unsigned 16-bit int, 2 bytes) Identity of reporting subsystem
+ * @field generic number (unsigned 8-bit int, 1 byte) Generic form status report
+ * @field specific number (unsigned 8-bit int, 1 byte) Subsystem specific status code
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var SubSystemReport = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "SubSystemReport";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+SubSystemReport.prototype = Object.create(SBP.prototype);
+SubSystemReport.prototype.messageType = "SubSystemReport";
+SubSystemReport.prototype.constructor = SubSystemReport;
+SubSystemReport.prototype.parser = new Parser()
+  .endianess('little')
+  .uint16('component')
+  .uint8('generic')
+  .uint8('specific');
+SubSystemReport.prototype.fieldSpec = [];
+SubSystemReport.prototype.fieldSpec.push(['component', 'writeUInt16LE', 2]);
+SubSystemReport.prototype.fieldSpec.push(['generic', 'writeUInt8', 1]);
+SubSystemReport.prototype.fieldSpec.push(['specific', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_STATUS_REPORT (0xFFFE).
+ *
+ * The status report is sent periodically to inform the host or other attached
+ * devices that the system is running. It is used to monitor system malfunctions.
+ * It contains status reports that indicate to the host the status of each sub-
+ * system and whether it is operating correctly.  Interpretation of the subsystem
+ * specific status code is product dependent, but if the generic status code is
+ * initializing, it should be ignored.  Refer to product documentation for details.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field reporting_system number (unsigned 16-bit int, 2 bytes) Identity of reporting system
+ * @field sbp_version number (unsigned 16-bit int, 2 bytes) SBP protocol version
+ * @field sequence number (unsigned 32-bit int, 4 bytes) Increments on each status report sent
+ * @field uptime number (unsigned 32-bit int, 4 bytes) Number of seconds since system start-up
+ * @field status array Reported status of individual subsystems
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgStatusReport = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_STATUS_REPORT";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgStatusReport.prototype = Object.create(SBP.prototype);
+MsgStatusReport.prototype.messageType = "MSG_STATUS_REPORT";
+MsgStatusReport.prototype.msg_type = 0xFFFE;
+MsgStatusReport.prototype.constructor = MsgStatusReport;
+MsgStatusReport.prototype.parser = new Parser()
+  .endianess('little')
+  .uint16('reporting_system')
+  .uint16('sbp_version')
+  .uint32('sequence')
+  .uint32('uptime')
+  .array('status', { type: SubSystemReport.prototype.parser, readUntil: 'eof' });
+MsgStatusReport.prototype.fieldSpec = [];
+MsgStatusReport.prototype.fieldSpec.push(['reporting_system', 'writeUInt16LE', 2]);
+MsgStatusReport.prototype.fieldSpec.push(['sbp_version', 'writeUInt16LE', 2]);
+MsgStatusReport.prototype.fieldSpec.push(['sequence', 'writeUInt32LE', 4]);
+MsgStatusReport.prototype.fieldSpec.push(['uptime', 'writeUInt32LE', 4]);
+MsgStatusReport.prototype.fieldSpec.push(['status', 'array', SubSystemReport.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+
+/**
  * SBP class for message MSG_INS_STATUS (0xFF03).
  *
  * The INS status message describes the state of the operation and initialization
@@ -351,6 +428,9 @@ module.exports = {
   MsgDgnssStatus: MsgDgnssStatus,
   0xFFFF: MsgHeartbeat,
   MsgHeartbeat: MsgHeartbeat,
+  SubSystemReport: SubSystemReport,
+  0xFFFE: MsgStatusReport,
+  MsgStatusReport: MsgStatusReport,
   0xFF03: MsgInsStatus,
   MsgInsStatus: MsgInsStatus,
   0xFF04: MsgCsacTelemetry,

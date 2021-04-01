@@ -134,6 +134,79 @@ $(makeSBP 'msgHeartbeat ''MsgHeartbeat)
 $(makeJSON "_msgHeartbeat_" ''MsgHeartbeat)
 $(makeLenses ''MsgHeartbeat)
 
+-- | SubSystemReport.
+--
+-- Report the general and specific state of a sub-system.  If the generic state
+-- is reported as initializing, the specific state should be ignored.
+data SubSystemReport = SubSystemReport
+  { _subSystemReport_component :: !Word16
+    -- ^ Identity of reporting subsystem
+  , _subSystemReport_generic :: !Word8
+    -- ^ Generic form status report
+  , _subSystemReport_specific :: !Word8
+    -- ^ Subsystem specific status code
+  } deriving ( Show, Read, Eq )
+
+instance Binary SubSystemReport where
+  get = do
+    _subSystemReport_component <- getWord16le
+    _subSystemReport_generic <- getWord8
+    _subSystemReport_specific <- getWord8
+    pure SubSystemReport {..}
+
+  put SubSystemReport {..} = do
+    putWord16le _subSystemReport_component
+    putWord8 _subSystemReport_generic
+    putWord8 _subSystemReport_specific
+
+$(makeJSON "_subSystemReport_" ''SubSystemReport)
+$(makeLenses ''SubSystemReport)
+
+msgStatusReport :: Word16
+msgStatusReport = 0xFFFE
+
+-- | SBP class for message MSG_STATUS_REPORT (0xFFFE).
+--
+-- The status report is sent periodically to inform the host or other attached
+-- devices that the system is running. It is used to monitor system
+-- malfunctions. It contains status reports that indicate to the host the
+-- status of each sub-system and whether it is operating correctly.
+-- Interpretation of the subsystem specific status code is product dependent,
+-- but if the generic status code is initializing, it should be ignored.  Refer
+-- to product documentation for details.
+data MsgStatusReport = MsgStatusReport
+  { _msgStatusReport_reporting_system :: !Word16
+    -- ^ Identity of reporting system
+  , _msgStatusReport_sbp_version    :: !Word16
+    -- ^ SBP protocol version
+  , _msgStatusReport_sequence       :: !Word32
+    -- ^ Increments on each status report sent
+  , _msgStatusReport_uptime         :: !Word32
+    -- ^ Number of seconds since system start-up
+  , _msgStatusReport_status         :: ![SubSystemReport]
+    -- ^ Reported status of individual subsystems
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgStatusReport where
+  get = do
+    _msgStatusReport_reporting_system <- getWord16le
+    _msgStatusReport_sbp_version <- getWord16le
+    _msgStatusReport_sequence <- getWord32le
+    _msgStatusReport_uptime <- getWord32le
+    _msgStatusReport_status <- whileM (not <$> isEmpty) get
+    pure MsgStatusReport {..}
+
+  put MsgStatusReport {..} = do
+    putWord16le _msgStatusReport_reporting_system
+    putWord16le _msgStatusReport_sbp_version
+    putWord32le _msgStatusReport_sequence
+    putWord32le _msgStatusReport_uptime
+    mapM_ put _msgStatusReport_status
+
+$(makeSBP 'msgStatusReport ''MsgStatusReport)
+$(makeJSON "_msgStatusReport_" ''MsgStatusReport)
+$(makeLenses ''MsgStatusReport)
+
 msgInsStatus :: Word16
 msgInsStatus = 0xFF03
 

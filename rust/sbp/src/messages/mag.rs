@@ -59,6 +59,10 @@ impl MsgMagRaw {
     }
 }
 impl super::SBPMessage for MsgMagRaw {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_MAG_RAW"
+    }
+
     fn get_message_type(&self) -> u16 {
         2306
     }

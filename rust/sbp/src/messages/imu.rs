@@ -54,6 +54,10 @@ impl MsgImuAux {
     }
 }
 impl super::SBPMessage for MsgImuAux {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_IMU_AUX"
+    }
+
     fn get_message_type(&self) -> u16 {
         2305
     }
@@ -147,6 +151,10 @@ impl MsgImuRaw {
     }
 }
 impl super::SBPMessage for MsgImuRaw {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_IMU_RAW"
+    }
+
     fn get_message_type(&self) -> u16 {
         2304
     }

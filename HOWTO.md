@@ -128,7 +128,7 @@ inside the container (so you don't have to setup git inside the docker container
    running a release.  [Install Nixpkgs](https://nixos.org/nix/download.html)
    and then run `nix-shell` prior to running `make all`.
 
-2. Run make tagets for each language and re-tag.  For python:
+2. Run make targets for each language and re-tag.  For python:
 
     ```shell
     make python
@@ -158,6 +158,10 @@ inside the container (so you don't have to setup git inside the docker container
     ```shell
     make docs
     ```
+   
+   Be sure to inspect the [docs](docs/sbp.pdf) manually, as LaTeX sometimes needs to be run multiple
+   times to compile properly. If something looks off with the docs, run `make docs` repeatedly until 
+   the issue is fixed.
 
    Then commit the docs and re-tag:
 
@@ -227,11 +231,9 @@ at the moment.
 
 # Distributing Python
 
-Python package distribution requires compilation for the JIT accelerated
-`sbp.jit` package.  This package uses the Python `numba` library, which
-supports AOT compilation of a native Python extension.  The distributions
-for each platform can be created by running the `make dist-python` target
-on each platform (Windows, Mac OS X, Linux x86/ARM through docker).
+Python package distribution for each platform can be created by running the
+`make dist-python` target on each platform
+(Windows, Mac OS X, Linux x86/ARM through docker).
 
 For example, running this:
 
@@ -239,9 +241,9 @@ For example, running this:
 make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=...
 ```
 
-...will produce and upload a `.whl` appropriate for that platform.  A
-wheel that targets any platform (this build disables Numba/Numpy support)
-can be produced and uploaded by running the following command:
+...will produce and upload a `.whl` appropriate for that platform.
+A wheel that targets any platform can be produced and uploaded by
+running the following command:
 
 ```
 make dist-python PYPI_USERNAME=swiftnav PYPI_PASSWORD=... LIBSBP_BUILD_ANY=y

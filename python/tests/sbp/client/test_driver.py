@@ -11,8 +11,6 @@
 
 import pytest
 
-pytest.importorskip("numpy")
-
 from sbp.client.drivers.network_drivers import TCPDriver
 from sbp.client import Handler, Framer
 from sbp.logging import MsgPrintDep, MsgLog, SBP_MSG_PRINT_DEP

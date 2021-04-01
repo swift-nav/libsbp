@@ -150,6 +150,16 @@ definitions:
             desc: |
               Correction flags.
             fields:
+              - 4:
+                  desc: Invalid phase corrections
+                  values:
+                      - 0: Valid phase corrections
+                      - 1: Do not use phase corrections
+              - 3:
+                  desc: Invalid code corrections
+                  values:
+                      - 0: Valid code corrections
+                      - 1: Do not use code corrections
               - 2:
                   desc: Full fixing flag
                   values:

@@ -76,6 +76,10 @@ impl MsgNdbEvent {
     }
 }
 impl super::SBPMessage for MsgNdbEvent {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_NDB_EVENT"
+    }
+
     fn get_message_type(&self) -> u16 {
         1024
     }

@@ -211,6 +211,111 @@ typedef struct SBP_ATTR_PACKED {
 } msg_heartbeat_t;
 
 
+/** Sub-system Status report
+ *
+ * Report the general and specific state of a sub-system.  If the generic
+ * state is reported as initializing, the specific state should be ignored.
+ */
+#define SBP_SUBSYSTEMREPORT_SUBSYSTEM_MASK (0xffff)
+#define SBP_SUBSYSTEMREPORT_SUBSYSTEM_SHIFT (0u)
+#define SBP_SUBSYSTEMREPORT_SUBSYSTEM_GET(flags) \
+                             (((flags) >> SBP_SUBSYSTEMREPORT_SUBSYSTEM_SHIFT) \
+                             & SBP_SUBSYSTEMREPORT_SUBSYSTEM_MASK)
+#define SBP_SUBSYSTEMREPORT_SUBSYSTEM_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_SUBSYSTEMREPORT_SUBSYSTEM_MASK)) \
+                             << (SBP_SUBSYSTEMREPORT_SUBSYSTEM_SHIFT)));} while(0)
+                             
+
+#define SBP_SUBSYSTEMREPORT_SUBSYSTEM_PRIMARY_GNSS_ANTENNA (0)
+#define SBP_SUBSYSTEMREPORT_SUBSYSTEM_MEASUREMENT_ENGINE (1)
+#define SBP_SUBSYSTEMREPORT_SUBSYSTEM_CORRECTIONS_CLIENT (2)
+#define SBP_SUBSYSTEMREPORT_SUBSYSTEM_DIFFERENTIAL_GNSS_ENGINE (3)
+#define SBP_SUBSYSTEMREPORT_SUBSYSTEM_CAN (4)
+#define SBP_SUBSYSTEMREPORT_SUBSYSTEM_WHEEL_ODOMETRY (5)
+#define SBP_SUBSYSTEMREPORT_SUBSYSTEM_SENSOR_FUSION_ENGINE (6)
+#define SBP_SUBSYSTEMREPORT_GENERIC_MASK (0xff)
+#define SBP_SUBSYSTEMREPORT_GENERIC_SHIFT (0u)
+#define SBP_SUBSYSTEMREPORT_GENERIC_GET(flags) \
+                             (((flags) >> SBP_SUBSYSTEMREPORT_GENERIC_SHIFT) \
+                             & SBP_SUBSYSTEMREPORT_GENERIC_MASK)
+#define SBP_SUBSYSTEMREPORT_GENERIC_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_SUBSYSTEMREPORT_GENERIC_MASK)) \
+                             << (SBP_SUBSYSTEMREPORT_GENERIC_SHIFT)));} while(0)
+                             
+
+#define SBP_SUBSYSTEMREPORT_GENERIC_OKNOMINAL (0)
+#define SBP_SUBSYSTEMREPORT_GENERIC_INITIALIZING (1)
+#define SBP_SUBSYSTEMREPORT_GENERIC_UNKNOWN (2)
+#define SBP_SUBSYSTEMREPORT_GENERIC_DEGRADED (3)
+#define SBP_SUBSYSTEMREPORT_GENERIC_UNUSABLE (4)
+
+typedef struct SBP_ATTR_PACKED {
+  u16 component;    /**< Identity of reporting subsystem */
+  u8 generic;      /**< Generic form status report */
+  u8 specific;     /**< Subsystem specific status code */
+} sub_system_report_t;
+
+
+/** Status report message
+ *
+ * The status report is sent periodically to inform the host
+ * or other attached devices that the system is running. It is
+ * used to monitor system malfunctions. It contains status
+ * reports that indicate to the host the status of each sub-system and
+ * whether it is operating correctly.
+ * 
+ * Interpretation of the subsystem specific status code is product
+ * dependent, but if the generic status code is initializing, it should
+ * be ignored.  Refer to product documentation for details.
+ */
+#define SBP_MSG_STATUS_REPORT         0xFFFE
+#define SBP_STATUS_REPORT_SYSTEM_MASK (0xffff)
+#define SBP_STATUS_REPORT_SYSTEM_SHIFT (0u)
+#define SBP_STATUS_REPORT_SYSTEM_GET(flags) \
+                             (((flags) >> SBP_STATUS_REPORT_SYSTEM_SHIFT) \
+                             & SBP_STATUS_REPORT_SYSTEM_MASK)
+#define SBP_STATUS_REPORT_SYSTEM_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_STATUS_REPORT_SYSTEM_MASK)) \
+                             << (SBP_STATUS_REPORT_SYSTEM_SHIFT)));} while(0)
+                             
+
+#define SBP_STATUS_REPORT_SYSTEM_STARLING (0)
+#define SBP_STATUS_REPORT_SYSTEM_PRECISION_GNSS_MODULE (1)
+#define SBP_STATUS_REPORT_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK (0x1ff)
+#define SBP_STATUS_REPORT_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT (8u)
+#define SBP_STATUS_REPORT_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_GET(flags) \
+                             (((flags) >> SBP_STATUS_REPORT_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT) \
+                             & SBP_STATUS_REPORT_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK)
+#define SBP_STATUS_REPORT_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_STATUS_REPORT_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK)) \
+                             << (SBP_STATUS_REPORT_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT)));} while(0)
+                             
+
+#define SBP_STATUS_REPORT_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK (0xff)
+#define SBP_STATUS_REPORT_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT (0u)
+#define SBP_STATUS_REPORT_SBP_MINOR_PROTOCOL_VERSION_NUMBER_GET(flags) \
+                             (((flags) >> SBP_STATUS_REPORT_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT) \
+                             & SBP_STATUS_REPORT_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK)
+#define SBP_STATUS_REPORT_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_STATUS_REPORT_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK)) \
+                             << (SBP_STATUS_REPORT_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT)));} while(0)
+                             
+
+
+typedef struct SBP_ATTR_PACKED {
+  u16 reporting_system;    /**< Identity of reporting system */
+  u16 sbp_version;         /**< SBP protocol version */
+  u32 sequence;            /**< Increments on each status report sent */
+  u32 uptime;              /**< Number of seconds since system start-up */
+  sub_system_report_t status[0];           /**< Reported status of individual subsystems */
+} msg_status_report_t;
+
+
 /** Inertial Navigation System status message
  *
  * The INS status message describes the state of the operation
@@ -316,6 +421,7 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_INS_STATUS_MODE_GNSS_OUTAGE_EXCEEDS_MAX_DURATION (3)
 #define SBP_INS_STATUS_MODE_FASTSTART_SEEDING (4)
 #define SBP_INS_STATUS_MODE_FASTSTART_VALIDATING (5)
+#define SBP_INS_STATUS_MODE_VALIDATING_UNSAFE_FAST_START_SEED (6)
 
 typedef struct SBP_ATTR_PACKED {
   u32 flags;    /**< Status flags */
