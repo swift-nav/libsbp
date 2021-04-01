@@ -15,6 +15,7 @@ Generator for rust target.
 
 from sbpg.targets.templating import *
 from sbpg.utils import markdown_links
+from sbpg import ReleaseVersion
 
 SBP_CARGO_TEMPLATE = "sbp-cargo.toml"
 SBP2JSON_CARGO_TEMPLATE = "sbp2json-cargo.toml"
@@ -144,15 +145,15 @@ def render_mod(output_dir, package_specs):
                                msgs=sorted(msgs, key=lambda msg: msg.sbp_id)))
 
 
-def render_sbp_cargo_toml(output_dir, release):
+def render_sbp_cargo_toml(output_dir, release: ReleaseVersion):
   destination_filename = "%s/sbp/Cargo.toml" % output_dir
   py_template = JENV.get_template(SBP_CARGO_TEMPLATE)
   with open(destination_filename, 'w') as f:
-    f.write(py_template.render(release=release))
+    f.write(py_template.render(release=release.full_version))
 
 
-def render_sbp2json_cargo_toml(output_dir, release):
+def render_sbp2json_cargo_toml(output_dir, release: ReleaseVersion):
   destination_filename = "%s/sbp2json/Cargo.toml" % output_dir
   py_template = JENV.get_template(SBP2JSON_CARGO_TEMPLATE)
   with open(destination_filename, 'w') as f:
-    f.write(py_template.render(release=release))
+    f.write(py_template.render(release=release.full_version))

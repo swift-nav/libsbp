@@ -148,7 +148,7 @@ inside the container (so you don't have to setup git inside the docker container
 
     ```shell
     make c haskell javascript rust
-    git add c/include/libsbp/version.h haskell/sbp.cabal package.json package-lock.json rust/sbp/Cargo.toml
+    git add c/include/libsbp/version.h haskell/sbp.cabal javascript/sbp/RELEASE-VERSION package.json package-lock.json rust/sbp/Cargo.toml
     git commit -m 'INCREMENTED_TAG'
     git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
     ```

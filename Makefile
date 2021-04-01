@@ -11,10 +11,8 @@ SBP_TESTS_SPEC_DIR := $(SWIFTNAV_ROOT)/spec/tests/yaml/
 GENENV ?= py  # the system's default python version
 SBP_GEN_BIN := tox -e $(GENENV) --
 
-SBP_VERSION := $(shell python python/sbp/version.py)
-SBP_MAJOR_VERSION := $(word 1, $(subst ., , $(SBP_VERSION)))
-SBP_MINOR_VERSION := $(word 2, $(subst ., , $(SBP_VERSION)))
-SBP_PATCH_VERSION := $(word 3, $(subst ., , $(SBP_VERSION)))
+SBP_VERSION := $(shell git describe --always --tags)
+SBP_VERSION_UNPREFIXED := $(shell echo $(SBP_VERSION) | sed 's/^v//')
 
 CHANGELOG_MAX_ISSUES := 100
 
@@ -70,7 +68,7 @@ clean:
 	rm -r $(SWIFTNAV_ROOT)/c/build
 docs: verify-prereq-docs pdf html
 
-c:            deps-c          gen-c          test-c
+c:          deps-c          gen-c          test-c
 python:     deps-python     gen-python     test-python
 javascript: deps-javascript gen-javascript test-javascript
 java:       deps-java       gen-java       test-java
@@ -79,9 +77,9 @@ rust:       deps-rust       gen-rust       test-rust
 protobuf:   deps-protobuf   gen-protobuf   test-protobuf
 jsonschema: deps-jsonschema gen-jsonschema test-jsonschema
 
-quicktype-typescript: deps-quicktype-typescript gen-quicktype-typescript 	test-quicktype-typescript
-quicktype-javascript: deps-quicktype-javascript gen-quicktype-javascript 	test-quicktype-javascript
-quicktype-elm: 				deps-quicktype-elm 				gen-quicktype-elm 				test-quicktype-elm
+quicktype-typescript: deps-quicktype-typescript gen-quicktype-typescript test-quicktype-typescript
+quicktype-javascript: deps-quicktype-javascript gen-quicktype-javascript test-quicktype-javascript
+quicktype-elm:        deps-quicktype-elm        gen-quicktype-elm        test-quicktype-elm
 
 # Prerequisite verification
 verify-prereq-generator:
@@ -170,14 +168,14 @@ gen-c:
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/c/include/libsbp \
-                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
+		       -r $(SBP_VERSION) \
 	               --c
 
 	$(call announce-begin,"Generating C tests")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_TESTS_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/c/test \
-                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
+		       -r $(SBP_VERSION) \
 	               --test-c
 
 	$(call announce-end,"Finished generating C. Please check $(SWIFTNAV_ROOT)/c/include/libsbp.")
@@ -187,7 +185,7 @@ gen-python:
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/python/sbp/ \
-                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
+		       -r $(SBP_VERSION) \
 		       --python
 	$(call announce-end,"Finished generating Python bindings. Please check $(SWIFTNAV_ROOT)/python/sbp")
 
@@ -196,11 +194,11 @@ gen-javascript:
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/javascript/sbp/ \
-                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
+		       -r $(SBP_VERSION_UNPREFIXED) \
 		       --javascript
 	cd $(SWIFTNAV_ROOT)
 	$(call announce-begin,"Bumping NPM version")
-	@- npm version "v$(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION)" --no-git-tag-version >/dev/null 2>&1
+	@- npm version "$(shell cat javascript/sbp/RELEASE-VERSION)" --no-git-tag-version >/dev/null 2>&1
 	@- npm run webpack >/dev/null 2>&1
 	$(call announce-end,"Finished generating JavaScript bindings. Please check $(SWIFTNAV_ROOT)/javascript/sbp")
 
@@ -209,7 +207,7 @@ gen-java:
 	cd $(SWIFTNAV_ROOT)/generator && \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/java/src/ \
-		       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION) \
+		       -r $(SBP_VERSION) \
 		       --java
 	$(call announce-end,"Finished generating Java bindings. Please check $(SWIFTNAV_ROOT)/java/src/sbp")
 
@@ -218,34 +216,45 @@ gen-haskell:
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 					-o $(SWIFTNAV_ROOT)/haskell/ \
-					-r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
+					-r $(SBP_VERSION_UNPREFIXED) \
 					--haskell
 	$(call announce-begin,"Finished generating Haskell bindings")
 
 gen-rust:
 	$(call announce-begin,"Generating Rust bindings")
+
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 					-o $(SWIFTNAV_ROOT)/rust/ \
-					-r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
+					-r $(SBP_VERSION_UNPREFIXED) \
 					--rust
 
+	$(call announce-end,"Finished generating Rust bindings")
+
 	$(call announce-begin,"Generating Rust tests")
+
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_TESTS_SPEC_DIR) \
 	-o $(SWIFTNAV_ROOT)/rust/sbp/tests/ \
-                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
+		       -r $(SBP_VERSION_UNPREFIXED) \
 	               --test-rust
 
+	$(call announce-end,"Finished generating Rust tests")
+
+	$(call announce-begin,"Formatting Rust code")
+
 	cd $(SWIFTNAV_ROOT)/rust/sbp && cargo fmt
-	$(call announce-begin,"Finished generating Rust bindings")
+
+	$(call announce-end,"Finished formatting Rust code")
+
+	$(call announce-end,"Finished generating Rust bindings")
 
 gen-protobuf:
 	$(call announce-begin,"Generating Protocol Buffers bindings")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 					-o $(SWIFTNAV_ROOT)/proto/ \
-					-r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
+					-r $(SBP_VERSION) \
 					--protobuf
 	$(call announce-begin,"Finished generating Protocol Buffers bindings")
 
@@ -254,7 +263,7 @@ gen-jsonschema:
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 					-o $(SWIFTNAV_ROOT)/jsonschema/ \
-					-r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
+					-r $(SBP_VERSION) \
 					--jsonschema
 	$(call announce-begin,"Finished generating JSON Schema definitions")
 
@@ -288,7 +297,7 @@ test-c:
 	cd $(SWIFTNAV_ROOT)/c; \
 	mkdir -p build/ && cd build/; \
 	cmake $(CMAKEFLAGS) ../; \
-	make
+	$(MAKE)
 	$(call announce-end,"Finished running C tests")
 
 test-python:
@@ -345,7 +354,7 @@ test-quicktype-elm:
 
 dist-python:
 	$(call announce-begin,"Deploying Python package")
-	make -C $(SWIFTNAV_ROOT)/python SBP_VERSION="$(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION)" deploy
+	$(MAKE) -C $(SWIFTNAV_ROOT)/python SBP_VERSION="$(SBP_VERSION)" deploy
 	$(call announce-end,"Finished deploying Python package")
 
 dist-javascript:
@@ -360,19 +369,25 @@ dist-haskell:
 
 dist-pdf:
 	$(call announce-begin,"Deploying PDF documentation")
-	make pdf_dist
+	$(MAKE) pdf_dist
 	$(call announce-begin,"Finished deploying PDF documentation")
 
 dist: dist-python dist-javascript dist-haskell dist-pdf
 
 pdf:
 	$(call announce-begin,"Generating PDF datasheet documentation")
+	$(MAKE) pdf-for-real
+	# This is a big hack, but we do this twice to ensure that all tables
+	#   within the PDF get generated correctly.
+	$(MAKE) pdf-for-real
+	$(call announce-end,"Finished! Please check $(SWIFTNAV_ROOT)/latex and $(SWIFTNAV_ROOT)/docs")
+
+pdf-for-real:
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
 		       -o $(SWIFTNAV_ROOT)/latex/ \
-                       -r $(SBP_MAJOR_VERSION).$(SBP_MINOR_VERSION).$(SBP_PATCH_VERSION) \
+		       -r $(SBP_VERSION) \
 	               --latex
-	$(call announce-end,"Finished! Please check $(SWIFTNAV_ROOT)/latex and $(SWIFTNAV_ROOT)/docs")
 
 pdf_dist:
 	s3cmd put  $(SWIFTNAV_ROOT)/docs/sbp.pdf s3://downloads.swiftnav.com/sbp/docs/sbp_$(SBP_VERSION).pdf
@@ -380,12 +395,13 @@ pdf_dist:
 html:
 	$(call announce-begin,"Generating bindings documentation")
 	$(call announce-begin,"Generating C bindings documentation")
-	cd $(SWIFTNAV_ROOT)/c; \
-	mkdir -p build/ && cd build/; \
-	cmake ../; \
-	make docs
+	cd $(SWIFTNAV_ROOT)/c && \
+	  mkdir -p build      && \
+	  cd build            && \
+	  cmake ..            && \
+	  $(MAKE) docs
 	$(call announce-begin,"Generating Python documentation")
-	cd $(SWIFTNAV_ROOT)/python/docs/ && make html
+	$(MAKE) -C $(SWIFTNAV_ROOT)/python/docs html
 	$(call announce-end,"Finished generating documentation")
 
 release:
@@ -400,10 +416,10 @@ release:
 
 mapping:
 	@egrep -h '^( - MSG|    id:)' spec/yaml/swiftnav/sbp/*.yaml |\
-    sed 'N;s/\n//' |\
-    awk '{printf("%s  %5d  %s\n", $$4, $$4, $$2)}' |\
-		sed 's/:$$//' |\
-    sort
+	 sed 'N;s/\n//' |\
+	 awk '{printf("%s  %5d  %s\n", $$4, $$4, $$2)}' |\
+	 sed 's/:$$//' |\
+	 sort
 
 benchmark:
 	@PYTHONPATH=$(PWD)/test_data ./test_data/benchmark_main.py

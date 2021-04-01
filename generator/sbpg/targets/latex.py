@@ -19,6 +19,7 @@ from operator import attrgetter
 
 from sbpg.targets.templating import *
 from sbpg.utils import fmt_repr
+from sbpg import ReleaseVersion
 
 
 # We sometimes need to remove underscores.  This will remove the latex
@@ -264,7 +265,7 @@ def handle_fields(definitions, fields, prefix, offset, multiplier):
       offset += size
   return (items, offset, multiplier)
 
-def render_source(output_dir, package_specs, version):
+def render_source(output_dir, package_specs, version: ReleaseVersion):
   """
   Render and output
   """
@@ -316,7 +317,7 @@ def render_source(output_dir, package_specs, version):
     f.write(py_template.render(msgs=stable_msgs,
                                umsgs=unstable_msgs,
                                prims=prims,
-                               version=version))
+                               version=version.full_version))
   os.chdir(output_dir)
   if "TEXMFVAR" not in os.environ:
     os.environ["TEXMFVAR"] = "/tmp"
