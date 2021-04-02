@@ -27,6 +27,9 @@
 /** Protocol patch version. */
 #define SBP_PATCH_VERSION 5
 
+/** Full SBP version string. */
+#define SBP_VERSION "3.4.6-alpha"
+
 /** \} */
 
 
