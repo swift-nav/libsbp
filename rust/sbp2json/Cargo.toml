@@ -7,7 +7,7 @@
 
 [package]
 name = "sbp2json"
-version = "3.4.6-alpha"
+version = "3.4.7-alpha"
 authors = ["Swift Navigation <dev@swiftnav.com>"]
 edition = "2018"
 
