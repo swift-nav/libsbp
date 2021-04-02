@@ -1,5 +1,42 @@
 # Change Log
 
+## [v3.4.6](https://github.com/swift-nav/libsbp/tree/v3.4.6) (2021-04-02)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.5...v3.4.6)
+
+**Closed issues:**
+
+- JavaScript build error in serialport [\#927](https://github.com/swift-nav/libsbp/issues/927)
+- cmake/common/\* missing in source archives [\#862](https://github.com/swift-nav/libsbp/issues/862)
+- Problem making Java version on Windows [\#847](https://github.com/swift-nav/libsbp/issues/847)
+
+**Merged pull requests:**
+
+- Add INS status mode [\#926](https://github.com/swift-nav/libsbp/pull/926) ([reimerix](https://github.com/reimerix))
+- Bump elliptic from 6.5.3 to 6.5.4 [\#924](https://github.com/swift-nav/libsbp/pull/924) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update docs on how to compile Libsbp [\#923](https://github.com/swift-nav/libsbp/pull/923) ([lkloh](https://github.com/lkloh))
+- fix SBP docs [\#922](https://github.com/swift-nav/libsbp/pull/922) ([lkloh](https://github.com/lkloh))
+- undid previous commit [\#920](https://github.com/swift-nav/libsbp/pull/920) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Update OSR flag in the SBP docs [\#918](https://github.com/swift-nav/libsbp/pull/918) ([lkloh](https://github.com/lkloh))
+- Add timestamped versions of resource usage messages [\#917](https://github.com/swift-nav/libsbp/pull/917) ([IsakTjernberg](https://github.com/IsakTjernberg))
+- cmake - Trigger submodules, json encoded [\#916](https://github.com/swift-nav/libsbp/pull/916) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Bitfield macros [\#915](https://github.com/swift-nav/libsbp/pull/915) ([denniszollo](https://github.com/denniszollo))
+- cmake - remove no strict aliasing from common compile flags \(\#75\) [\#914](https://github.com/swift-nav/libsbp/pull/914) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- check - Merge pull request \#307 from jflopezfernandez/docs/format-github-readme [\#913](https://github.com/swift-nav/libsbp/pull/913) ([akleeman](https://github.com/akleeman))
+- Pin npm to version 6 in CI stage [\#910](https://github.com/swift-nav/libsbp/pull/910) ([woodfell](https://github.com/woodfell))
+- Common compile flags [\#909](https://github.com/swift-nav/libsbp/pull/909) ([woodfell](https://github.com/woodfell))
+- cmake - add swiftlets\_ENABLE\_TEST\_LIBS [\#908](https://github.com/swift-nav/libsbp/pull/908) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Fix the documented offset for fixed length arrays [\#904](https://github.com/swift-nav/libsbp/pull/904) ([jbangelo](https://github.com/jbangelo))
+- Add support for Windows in the Java portion of the Makefile. [\#901](https://github.com/swift-nav/libsbp/pull/901) ([john-michaelburke](https://github.com/john-michaelburke))
+- Replace fail\_unless with ck\_assert\_msg [\#900](https://github.com/swift-nav/libsbp/pull/900) ([reimerix](https://github.com/reimerix))
+- c: toggle C++ on to fix configure error [\#899](https://github.com/swift-nav/libsbp/pull/899) ([silverjam](https://github.com/silverjam))
+- cmake - clang-format-diff: compare to most recent tag on current branch \(\#73\) [\#898](https://github.com/swift-nav/libsbp/pull/898) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- add workaround for MinGW GCC bug [\#897](https://github.com/swift-nav/libsbp/pull/897) ([silverjam](https://github.com/silverjam))
+- cmake - clang-format-diff improvements [\#895](https://github.com/swift-nav/libsbp/pull/895) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- python: better PEP 508 compliance [\#894](https://github.com/swift-nav/libsbp/pull/894) ([silverjam](https://github.com/silverjam))
+- Add generic system status reporting message [\#885](https://github.com/swift-nav/libsbp/pull/885) ([gsmcmullin](https://github.com/gsmcmullin))
+- Add async rust parser [\#884](https://github.com/swift-nav/libsbp/pull/884) ([notoriaga](https://github.com/notoriaga))
+
 ## [v3.4.5](https://github.com/swift-nav/libsbp/tree/v3.4.5) (2020-12-12)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.4...v3.4.5)
@@ -122,8 +159,8 @@
 
 **Merged pull requests:**
 
-- python: remove accidental numpy import [INFRA-243] [\#818](https://github.com/swift-nav/libsbp/pull/818)
-- Auto submodule update: cmake - Standardize system include targets \(\#62\) [\#817](https://github.com/swift-nav/libsbp/pull/817)
+- python: remove accidental numpy import [\#818](https://github.com/swift-nav/libsbp/pull/818)
+- cmake - Standardize system include targets [\#817](https://github.com/swift-nav/libsbp/pull/817)
 
 ## [v3.1.1](https://github.com/swift-nav/libsbp/tree/v3.1.1) (2020-06-08)
 
