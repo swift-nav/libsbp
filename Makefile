@@ -406,12 +406,12 @@ html:
 
 release:
 	$(call announce-begin,"Run release boilerplate")
-	github_changelog_generator --no-author \
-				   --max-issues $(CHANGELOG_MAX_ISSUES) \
-				   -t $(CHANGELOG_GITHUB_TOKEN)$ \
-				   --user swift-nav --project libsbp \
-				   -o DRAFT_CHANGELOG.md \
-				   swift-nav/libsbp
+	docker run -it --rm -v $(PWD):/usr/local/src/your-app ferrarimarco/github-changelog-generator \
+	  --max-issues $(CHANGELOG_MAX_ISSUES) \
+	  -t $(CHANGELOG_GITHUB_TOKEN)$ \
+	  --user swift-nav --project libsbp \
+	  -o DRAFT_CHANGELOG.md \
+	  swift-nav/libsbp
 	$(call announce-end,"Added CHANGELOG details to DRAFT_CHANGELOG.md!")
 
 mapping:
