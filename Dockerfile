@@ -58,6 +58,7 @@ RUN add-apt-repository ppa:deadsnakes/ppa \
       python3.6-dev \
       python3.7-dev \
       python3.8-dev \
+      python3.9-dev python3.9-dist \
   && pip3 install tox \
   && pip install sphinx \
   && curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable --no-modify-path \
