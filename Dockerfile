@@ -15,8 +15,11 @@ FROM ubuntu:bionic
 
 ARG DEBIAN_FRONTEND=noninteractive
 
+ENV NODE_VERSION=v12.22.0
+
 ENV RUSTUP_HOME=/rust
 ENV CARGO_HOME=/cargo
+
 ENV PATH=/usr/lib/ccache:/cargo/bin:/rust/bin:${PATH}
 
 RUN \
@@ -31,9 +34,6 @@ RUN \
       build-essential \
       pandoc \
       llvm \
-      nodejs \
-      npm \
-      mocha \
       gradle \
       texlive-science \
       texlive-fonts-extra \
@@ -47,8 +47,7 @@ RUN \
       libudev-dev \
       uuid-dev \
       libgmp-dev \
-      zlib1g-dev \
-  && npm install npm@latest -g
+      zlib1g-dev
 
 RUN add-apt-repository ppa:deadsnakes/ppa \
   && apt-get update \
@@ -71,11 +70,24 @@ RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/nul
   && apt-get install -y \
     cmake
 
+ENV NVM_DIR /opt/nvm
+
+RUN mkdir -p $NVM_DIR \
+  && curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.38.0/install.sh | bash \
+  && . $NVM_DIR/nvm.sh \
+  && nvm install $NODE_VERSION
+
+ENV NODE_PATH $NVM_DIR/versions/node/$NODE_VERSION/lib/node_modules
+ENV PATH      $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
+
+RUN npm install npm@latest mocha -g
+
 # Add a "dockerdev" user with sudo capabilities
 # 1000 is the first user ID issued on Ubuntu; might
 # be different for Mac users. Might need to add more.
 RUN useradd -u 1000 -ms /bin/bash -G sudo dockerdev \
     && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers \
+    && find $NVM_DIR -exec chmod a+rw {} \; \
     && find $RUSTUP_HOME -exec chmod a+rw {} \; \
     && find $CARGO_HOME -exec chmod a+rw {} \;
 
@@ -83,3 +95,5 @@ WORKDIR /mnt/workspace
 USER dockerdev
 
 RUN stack install --resolver lts-10.10 sbp
+
+# vim: ft=dockerfile
