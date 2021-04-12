@@ -25,9 +25,9 @@ struct Options {
     #[structopt(long = "float-compat")]
     float_compat: bool,
 
-    /// Flush output on every message
-    #[structopt(long = "unbuffered")]
-    unbuffered: bool,
+    /// Buffer output before flushing
+    #[structopt(short, long)]
+    buffered: bool,
 }
 
 fn main() -> sbp::Result<()> {
@@ -42,11 +42,9 @@ fn main() -> sbp::Result<()> {
     let stdin = io::stdin();
     let stdout = io::stdout();
 
-    let unbuffered = atty::is(atty::Stream::Stdout) || options.unbuffered;
-
     if options.float_compat {
-        json2json(stdin, stdout, HaskellishFloatFormatter {}, unbuffered)
+        json2json(stdin, stdout, HaskellishFloatFormatter {}, options.buffered)
     } else {
-        json2json(stdin, stdout, CompactFormatter {}, unbuffered)
+        json2json(stdin, stdout, CompactFormatter {}, options.buffered)
     }
 }
