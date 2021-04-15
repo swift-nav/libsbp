@@ -14,3 +14,4 @@ construct
 pytest-cov
 pytest-xdist
 dataclasses
+stringcase

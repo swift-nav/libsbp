@@ -16,7 +16,7 @@ SBP_VERSION_UNPREFIXED := $(shell echo $(SBP_VERSION) | sed 's/^v//')
 
 CHANGELOG_MAX_ISSUES := 100
 
-.PHONY: help test release dist clean all docs pdf html c deps-c gen-c test-c python deps-python gen-python test-python javascript deps-javascript gen-javascript test-javascript java deps-java gen-java test-java haskell deps-haskell gen-haskell test-haskell haskell deps-protobuf gen-protobuf test-protobuf verify-prereq-generator verify-prereq-c verify-prereq-javascript verify-prereq-python verify-prereq-java verify-prereq-haskell verify-prereq-protobuf mapping rust deps-rust gen-rust test-rust deps-jsonschema gen-jsonschema test-jsonschema verify-prereq-jsonschema deps-quicktype-typescript gen-quicktype-typescript test-quicktype-typescript verify-prereq-quicktype-typescript deps-quicktype-javascript gen-quicktype-javascript test-quicktype-javascript verify-prereq-quicktype-javascript deps-quicktype-elm gen-quicktype-elm test-quicktype-elm verify-prereq-quicktype-elm
+.PHONY: help test release dist clean all docs pdf html c deps-c gen-c test-c cpp deps-cpp gen-cpp test-cpp python deps-python gen-python test-python javascript deps-javascript gen-javascript test-javascript java deps-java gen-java test-java haskell deps-haskell gen-haskell test-haskell haskell deps-protobuf gen-protobuf test-protobuf verify-prereq-generator verify-prereq-c verify-prereq-cpp verify-prereq-javascript verify-prereq-python verify-prereq-java verify-prereq-haskell verify-prereq-protobuf mapping rust deps-rust gen-rust test-rust deps-jsonschema gen-jsonschema test-jsonschema verify-prereq-jsonschema deps-quicktype-typescript gen-quicktype-typescript test-quicktype-typescript verify-prereq-quicktype-typescript deps-quicktype-javascript gen-quicktype-javascript test-quicktype-javascript verify-prereq-quicktype-javascript deps-quicktype-elm gen-quicktype-elm test-quicktype-elm verify-prereq-quicktype-elm
 
 # Functions
 define announce-begin
@@ -43,6 +43,7 @@ help:
 	@echo "  all          to make SBP clients across all languages"
 	@echo "  clean        to remove any output files"
 	@echo "  c            to make C headers"
+	@echo "  cpp          to make C++ headers"
 	@echo "  dist         to distribute packages"
 	@echo "  docs         to make HTML and pdf documentation"
 	@echo "  html         to make all HTML language docs"
@@ -62,13 +63,14 @@ help:
 	@echo "  quicktype-elm          generate Elm module from JSON Schema"
 	@echo
 
-all: c python javascript java docs haskell protobuf rust jsonschema
+all: c cpp python javascript java docs haskell protobuf rust jsonschema
 clean:
 	@echo "Removing the ./c/build directory..."
 	rm -r $(SWIFTNAV_ROOT)/c/build
 docs: verify-prereq-docs pdf html
 
 c:          deps-c          gen-c          test-c
+cpp:        deps-cpp        gen-cpp        test-cpp
 python:     deps-python     gen-python     test-python
 javascript: deps-javascript gen-javascript test-javascript
 java:       deps-java       gen-java       test-java
@@ -96,6 +98,9 @@ verify-prereq-c: verify-prereq-generator
 	@command -v cmake        1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`cmake\` but it's not installed. Aborting.\n\nHave you installed cmake? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
 	@command -v pkg-config   1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`pkg-config\` but it's not installed. Aborting.\n\nHave you installed pkg-config? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
 	@command -v doxygen      1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`doxygen\` but it's not installed. Aborting.\n\nHave you installed doxygen? See the C readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
+
+verify-prereq-cpp: verify-prereq-generator
+	@command -v cmake        1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`cmake\` but it's not installed. Aborting.\n\nHave you installed cmake? See the C++ readme at \`c/README.md\` for setup instructions.\n"; exit 1; }
 
 verify-prereq-python: verify-prereq-generator
 	@command -v python 1>/dev/null 2>/dev/null || { echo >&2 -e "I require \`python\` but it's not installed. Aborting.\n\nHave you installed Python? See the Python readme at \`python/README.rst\` for setup instructions.\n"; exit 1; }
@@ -136,6 +141,8 @@ verify-prereq-docs: verify-prereq-generator
 # Dependencies
 
 deps-c: verify-prereq-c
+
+deps-cpp: verify-prereq-cpp
 
 deps-python: verify-prereq-python
 
@@ -179,6 +186,16 @@ gen-c:
 	               --test-c
 
 	$(call announce-end,"Finished generating C. Please check $(SWIFTNAV_ROOT)/c/include/libsbp.")
+
+gen-cpp:
+	$(call announce-begin,"Generating C++ headers")
+	cd $(SWIFTNAV_ROOT)/generator; \
+	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
+		       -o $(SWIFTNAV_ROOT)/c/include/libsbp \
+		       -r $(SBP_VERSION) \
+	           --cpp
+
+	$(call announce-end,"Finished generating C++. Please check $(SWIFTNAV_ROOT)/c/include/libsbp.")
 
 gen-python:
 	$(call announce-begin,"Generating Python bindings")
@@ -284,7 +301,7 @@ gen-quicktype-elm:
 
 # Testers
 
-test: test-all-begin test-c test-java test-python test-haskell test-javascript test-rust test-all-end
+test: test-all-begin test-c test-cpp test-java test-python test-haskell test-javascript test-rust test-all-end
 
 test-all-begin:
 	$(call announce-begin,"Running all tests")
@@ -299,6 +316,14 @@ test-c:
 	cmake $(CMAKEFLAGS) ../; \
 	$(MAKE)
 	$(call announce-end,"Finished running C tests")
+
+test-cpp:
+	$(call announce-begin,"Running C++ tests")
+	cd $(SWIFTNAV_ROOT)/c; \
+	mkdir -p build/ && cd build/; \
+	cmake $(CMAKEFLAGS) ../; \
+	$(MAKE) test-libsbp-cpp
+	$(call announce-end,"Finished running C++ tests")
 
 test-python:
 	$(call announce-begin,"Running Python tests")

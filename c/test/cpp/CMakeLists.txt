@@ -1,10 +1,11 @@
+FILE(GLOB generated_cpp_tests auto_*.cc)
+
 swift_add_test(test-libsbp-cpp
     UNIT_TEST
     POST_BUILD
     SRCS
         test_sbp_stdio.cc
-    INCLUDE
-        ${PROJECT_SOURCE_DIR}/include/libsbp
+        ${generated_cpp_tests}
     LINK
         sbp
         gtest_main)
