@@ -105,7 +105,7 @@ def main():
     # Parse and validate arguments.
     args = get_args().parse_args()
     verbose = args.verbose
-    assert args.jsonschema or args.python or args.javascript or args.c or args.test_c or args.cpp or args.haskell or args.latex or args.protobuf or args.java or args.rust or args.test_rust, \
+    assert args.jsonschema or args.python or args.javascript or args.c or args.test_c or args.cpp or args.test_cpp or args.haskell or args.latex or args.protobuf or args.java or args.rust or args.test_rust, \
         "Please specify a target language."
     input_file = os.path.abspath(args.input_file[0])
     assert len(args.input_file) == 1
@@ -160,6 +160,9 @@ def main():
         elif args.test_c:
           import sbpg.targets.test_c as test_c
           test_c.render_source(output_dir, parsed)
+        elif args.test_cpp:
+          import sbpg.targets.test_cpp as test_cpp
+          test_cpp.render_source(output_dir, parsed)
         elif args.haskell:
           import sbpg.targets.haskell as hs
           hs.render_source(output_dir, parsed)

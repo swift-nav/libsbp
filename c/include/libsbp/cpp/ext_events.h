@@ -34,13 +34,13 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgExtEvent {
-    u16 wn /** GPS week number [weeks] */
-    u32 tow /** GPS time of week rounded to the nearest millisecond [ms] */
-    s32 ns_residual /** Nanosecond residual of millisecond-rounded TOW (ranges
+    u16 wn; /** GPS week number [weeks] */
+    u32 tow; /** GPS time of week rounded to the nearest millisecond [ms] */
+    s32 ns_residual; /** Nanosecond residual of millisecond-rounded TOW (ranges
 from -500000 to 500000)
  [ns] */
-    u8 flags /** Flags */
-    u8 pin /** Pin number.  0..9 = DEBUG0..9. */
+    u8 flags; /** Flags */
+    u8 pin; /** Pin number.  0..9 = DEBUG0..9. */
   };
 
   

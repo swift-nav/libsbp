@@ -36,10 +36,10 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgBaselineHeading {
-    u32 tow /** GPS Time of Week [ms] */
-    u32 heading /** Heading [mdeg] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    u32 heading; /** Heading [mdeg] */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -56,16 +56,16 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgOrientQuat {
-    u32 tow /** GPS Time of Week [ms] */
-    s32 w /** Real component [2^-31] */
-    s32 x /** 1st imaginary component [2^-31] */
-    s32 y /** 2nd imaginary component [2^-31] */
-    s32 z /** 3rd imaginary component [2^-31] */
-    float w_accuracy /** Estimated standard deviation of w [N/A] */
-    float x_accuracy /** Estimated standard deviation of x [N/A] */
-    float y_accuracy /** Estimated standard deviation of y [N/A] */
-    float z_accuracy /** Estimated standard deviation of z [N/A] */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    s32 w; /** Real component [2^-31] */
+    s32 x; /** 1st imaginary component [2^-31] */
+    s32 y; /** 2nd imaginary component [2^-31] */
+    s32 z; /** 3rd imaginary component [2^-31] */
+    float w_accuracy; /** Estimated standard deviation of w [N/A] */
+    float x_accuracy; /** Estimated standard deviation of x [N/A] */
+    float y_accuracy; /** Estimated standard deviation of y [N/A] */
+    float z_accuracy; /** Estimated standard deviation of z [N/A] */
+    u8 flags; /** Status flags */
   };
 
   
@@ -82,14 +82,14 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgOrientEuler {
-    u32 tow /** GPS Time of Week [ms] */
-    s32 roll /** rotation about the forward axis of the vehicle [microdegrees] */
-    s32 pitch /** rotation about the rightward axis of the vehicle [microdegrees] */
-    s32 yaw /** rotation about the downward axis of the vehicle [microdegrees] */
-    float roll_accuracy /** Estimated standard deviation of roll [degrees] */
-    float pitch_accuracy /** Estimated standard deviation of pitch [degrees] */
-    float yaw_accuracy /** Estimated standard deviation of yaw [degrees] */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    s32 roll; /** rotation about the forward axis of the vehicle [microdegrees] */
+    s32 pitch; /** rotation about the rightward axis of the vehicle [microdegrees] */
+    s32 yaw; /** rotation about the downward axis of the vehicle [microdegrees] */
+    float roll_accuracy; /** Estimated standard deviation of roll [degrees] */
+    float pitch_accuracy; /** Estimated standard deviation of pitch [degrees] */
+    float yaw_accuracy; /** Estimated standard deviation of yaw [degrees] */
+    u8 flags; /** Status flags */
   };
 
   
@@ -110,11 +110,11 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgAngularRate {
-    u32 tow /** GPS Time of Week [ms] */
-    s32 x /** angular rate about x axis [microdegrees/s] */
-    s32 y /** angular rate about y axis [microdegrees/s] */
-    s32 z /** angular rate about z axis [microdegrees/s] */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    s32 x; /** angular rate about x axis [microdegrees/s] */
+    s32 y; /** angular rate about y axis [microdegrees/s] */
+    s32 z; /** angular rate about z axis [microdegrees/s] */
+    u8 flags; /** Status flags */
   };
 
   

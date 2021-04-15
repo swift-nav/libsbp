@@ -33,14 +33,14 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgMagRaw {
-    u32 tow /** Milliseconds since start of GPS week. If the high bit is set, the
+    u32 tow; /** Milliseconds since start of GPS week. If the high bit is set, the
 time is unknown or invalid.
  [ms] */
-    u8 tow_f /** Milliseconds since start of GPS week, fractional part
+    u8 tow_f; /** Milliseconds since start of GPS week, fractional part
  [ms / 256] */
-    s16 mag_x /** Magnetic field in the body frame X axis [microteslas] */
-    s16 mag_y /** Magnetic field in the body frame Y axis [microteslas] */
-    s16 mag_z /** Magnetic field in the body frame Z axis [microteslas] */
+    s16 mag_x; /** Magnetic field in the body frame X axis [microteslas] */
+    s16 mag_y; /** Magnetic field in the body frame Y axis [microteslas] */
+    s16 mag_z; /** Magnetic field in the body frame Z axis [microteslas] */
   };
 
   

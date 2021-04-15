@@ -38,9 +38,9 @@ namespace sbp {
 
   template<size_t DATA_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + sizeof(u8) + sizeof(u8) + 0) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgFlashProgram {
-    u8 target /** Target flags */
+    u8 target; /** Target flags */
     u8 addr_start[3]; /** Starting address offset to program [bytes] */
-    u8 addr_len /** Length of set of addresses to program, counting up from
+    u8 addr_len; /** Length of set of addresses to program, counting up from
 starting address
  [bytes] */
     u8 data[DATA_COUNT]; /** Data to program addresses with, with length N=addr_len */
@@ -59,7 +59,7 @@ starting address
 
   
   struct SBP_ATTR_PACKED MsgFlashDone {
-    u8 response /** Response flags */
+    u8 response; /** Response flags */
   };
 
   
@@ -78,9 +78,9 @@ starting address
 
   
   struct SBP_ATTR_PACKED MsgFlashReadReq {
-    u8 target /** Target flags */
+    u8 target; /** Target flags */
     u8 addr_start[3]; /** Starting address offset to read from [bytes] */
-    u8 addr_len /** Length of set of addresses to read, counting up from
+    u8 addr_len; /** Length of set of addresses to read, counting up from
 starting address
  [bytes] */
   };
@@ -101,9 +101,9 @@ starting address
 
   
   struct SBP_ATTR_PACKED MsgFlashReadResp {
-    u8 target /** Target flags */
+    u8 target; /** Target flags */
     u8 addr_start[3]; /** Starting address offset to read from [bytes] */
-    u8 addr_len /** Length of set of addresses to read, counting up from
+    u8 addr_len; /** Length of set of addresses to read, counting up from
 starting address
  [bytes] */
   };
@@ -122,8 +122,8 @@ starting address
 
   
   struct SBP_ATTR_PACKED MsgFlashErase {
-    u8 target /** Target flags */
-    u32 sector_num /** Flash sector number to erase (0-11 for the STM, 0-15 for
+    u8 target; /** Target flags */
+    u32 sector_num; /** Flash sector number to erase (0-11 for the STM, 0-15 for
 the M25)
  */
   };
@@ -139,7 +139,7 @@ the M25)
 
   
   struct SBP_ATTR_PACKED MsgStmFlashLockSector {
-    u32 sector /** Flash sector number to lock */
+    u32 sector; /** Flash sector number to lock */
   };
 
   
@@ -153,7 +153,7 @@ the M25)
 
   
   struct SBP_ATTR_PACKED MsgStmFlashUnlockSector {
-    u32 sector /** Flash sector number to unlock */
+    u32 sector; /** Flash sector number to unlock */
   };
 
   

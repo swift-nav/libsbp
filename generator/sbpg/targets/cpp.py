@@ -52,7 +52,11 @@ def pascal_case(value):
     return value
 
 def snake_case(value):
-  return stringcase.snakecase(value)
+  if value.isupper():
+    # assuming SCREAMING_SNAKE_CASE
+    return value.lower()
+  else:
+    return stringcase.snakecase(value)
 
 def screaming_snake_case(value):
   return stringcase.snakecase(value).upper()
@@ -86,7 +90,7 @@ def mk_size(field):
   elif name == 'array':
     return '%s[%s];' % (field.identifier, '{}_COUNT'.format(screaming_snake_case(field.identifier)))
   else:
-    return field.identifier
+    return '%s;' % field.identifier
 
 def mk_template(message, all_messages):
   normal_field_types = []

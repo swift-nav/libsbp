@@ -35,21 +35,21 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgNdbEvent {
-    u64 recv_time /** HW time in milliseconds. [ms] */
-    u8 event /** Event type. */
-    u8 object_type /** Event object type. */
-    u8 result /** Event result. */
-    u8 data_source /** Data source for STORE event, reserved for other events. */
-    GnssSignal object_sid /** GNSS signal identifier,
+    u64 recv_time; /** HW time in milliseconds. [ms] */
+    u8 event; /** Event type. */
+    u8 object_type; /** Event object type. */
+    u8 result; /** Event result. */
+    u8 data_source; /** Data source for STORE event, reserved for other events. */
+    GnssSignal object_sid; /** GNSS signal identifier,
 If object_type is Ephemeris OR Almanac, sid indicates for which
 signal the object belongs to. Reserved in other cases.
  */
-    GnssSignal src_sid /** GNSS signal identifier,
+    GnssSignal src_sid; /** GNSS signal identifier,
 If object_type is Almanac, Almanac WN, Iono OR L2C capabilities
 AND data_source is NDB_DS_RECEIVER sid indicates from which SV
 data was decoded. Reserved in other cases.
  */
-    u16 original_sender /** A unique identifier of the sending hardware. For v1.0,
+    u16 original_sender; /** A unique identifier of the sending hardware. For v1.0,
 set to the 2 least significant bytes of the device serial
 number, valid only if data_source is NDB_DS_SBP. Reserved in case
 of other data_source.

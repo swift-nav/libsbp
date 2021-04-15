@@ -36,9 +36,9 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgStartup {
-    u8 cause /** Cause of startup */
-    u8 startup_type /** Startup type */
-    u16 reserved /** Reserved */
+    u8 cause; /** Cause of startup */
+    u8 startup_type; /** Startup type */
+    u16 reserved; /** Reserved */
   };
 
   
@@ -53,9 +53,9 @@ namespace sbp {
 
   template<size_t SOURCE_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + sizeof(u16) + sizeof(u8) + 0) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgDgnssStatus {
-    u8 flags /** Status flags */
-    u16 latency /** Latency of observation receipt [deci-seconds] */
-    u8 num_signals /** Number of signals from base station */
+    u8 flags; /** Status flags */
+    u16 latency; /** Latency of observation receipt [deci-seconds] */
+    u8 num_signals; /** Number of signals from base station */
     char source[SOURCE_COUNT]; /** Corrections source string */
   };
 
@@ -78,7 +78,7 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgHeartbeat {
-    u32 flags /** Status flags */
+    u32 flags; /** Status flags */
   };
 
   
@@ -91,9 +91,9 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED SubSystemReport {
-    u16 component /** Identity of reporting subsystem */
-    u8 generic /** Generic form status report */
-    u8 specific /** Subsystem specific status code */
+    u16 component; /** Identity of reporting subsystem */
+    u8 generic; /** Generic form status report */
+    u8 specific; /** Subsystem specific status code */
   };
 
   
@@ -114,10 +114,10 @@ namespace sbp {
 
   template<size_t STATUS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u16) + sizeof(u16) + sizeof(u32) + sizeof(u32) + 0) / sizeof(SubSystemReport)>
   struct SBP_ATTR_PACKED MsgStatusReport {
-    u16 reporting_system /** Identity of reporting system */
-    u16 sbp_version /** SBP protocol version */
-    u32 sequence /** Increments on each status report sent */
-    u32 uptime /** Number of seconds since system start-up */
+    u16 reporting_system; /** Identity of reporting system */
+    u16 sbp_version; /** SBP protocol version */
+    u32 sequence; /** Increments on each status report sent */
+    u32 uptime; /** Number of seconds since system start-up */
     SubSystemReport status[STATUS_COUNT]; /** Reported status of individual subsystems */
   };
 
@@ -132,7 +132,7 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgInsStatus {
-    u32 flags /** Status flags */
+    u32 flags; /** Status flags */
   };
 
   
@@ -147,7 +147,7 @@ namespace sbp {
 
   template<size_t TELEMETRY_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + 0) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgCsacTelemetry {
-    u8 id /** Index representing the type of telemetry in use.  It is implemention defined. */
+    u8 id; /** Index representing the type of telemetry in use.  It is implemention defined. */
     char telemetry[TELEMETRY_COUNT]; /** Comma separated list of values as defined by the index */
   };
 
@@ -163,7 +163,7 @@ namespace sbp {
 
   template<size_t TELEMETRY_LABELS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + 0) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgCsacTelemetryLabels {
-    u8 id /** Index representing the type of telemetry in use.  It is implemention defined. */
+    u8 id; /** Index representing the type of telemetry in use.  It is implemention defined. */
     char telemetry_labels[TELEMETRY_LABELS_COUNT]; /** Comma separated list of telemetry field values */
   };
 
@@ -178,13 +178,13 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgInsUpdates {
-    u32 tow /** GPS Time of Week [ms] */
-    u8 gnsspos /** GNSS position update status flags */
-    u8 gnssvel /** GNSS velocity update status flags */
-    u8 wheelticks /** Wheelticks update status flags */
-    u8 speed /** Wheelticks update status flags */
-    u8 nhc /** NHC update status flags */
-    u8 zerovel /** Zero velocity update status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    u8 gnsspos; /** GNSS position update status flags */
+    u8 gnssvel; /** GNSS velocity update status flags */
+    u8 wheelticks; /** Wheelticks update status flags */
+    u8 speed; /** Wheelticks update status flags */
+    u8 nhc; /** NHC update status flags */
+    u8 zerovel; /** Zero velocity update status flags */
   };
 
   
@@ -199,10 +199,10 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgGnssTimeOffset {
-    s16 weeks /** Weeks portion of the time offset [weeks] */
-    s32 milliseconds /** Milliseconds portion of the time offset [ms] */
-    s16 microseconds /** Microseconds portion of the time offset [microseconds] */
-    u8 flags /** Status flags (reserved) */
+    s16 weeks; /** Weeks portion of the time offset [weeks] */
+    s32 milliseconds; /** Milliseconds portion of the time offset [ms] */
+    s16 microseconds; /** Microseconds portion of the time offset [microseconds] */
+    u8 flags; /** Status flags (reserved) */
   };
 
   
@@ -216,9 +216,9 @@ namespace sbp {
 
   template<size_t GROUP_MSGS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + sizeof(u8) + sizeof(u8) + 0) / sizeof(u16)>
   struct SBP_ATTR_PACKED MsgGroupMeta {
-    u8 group_id /** Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss */
-    u8 flags /** Status flags (reserved) */
-    u8 n_group_msgs /** Size of list group_msgs */
+    u8 group_id; /** Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss */
+    u8 flags; /** Status flags (reserved) */
+    u8 n_group_msgs; /** Size of list group_msgs */
     u16 group_msgs[GROUP_MSGS_COUNT]; /** An inorder list of message types included in the Solution Group,
 including GROUP_META itself
  */

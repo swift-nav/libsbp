@@ -45,12 +45,12 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgGpsTime {
-    u16 wn /** GPS week number [weeks] */
-    u32 tow /** GPS time of week rounded to the nearest millisecond [ms] */
-    s32 ns_residual /** Nanosecond residual of millisecond-rounded TOW (ranges
+    u16 wn; /** GPS week number [weeks] */
+    u32 tow; /** GPS time of week rounded to the nearest millisecond [ms] */
+    s32 ns_residual; /** Nanosecond residual of millisecond-rounded TOW (ranges
 from -500000 to 500000)
  [ns] */
-    u8 flags /** Status flags (reserved) */
+    u8 flags; /** Status flags (reserved) */
   };
 
   
@@ -75,12 +75,12 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgGpsTimeGnss {
-    u16 wn /** GPS week number [weeks] */
-    u32 tow /** GPS time of week rounded to the nearest millisecond [ms] */
-    s32 ns_residual /** Nanosecond residual of millisecond-rounded TOW (ranges
+    u16 wn; /** GPS week number [weeks] */
+    u32 tow; /** GPS time of week rounded to the nearest millisecond [ms] */
+    s32 ns_residual; /** Nanosecond residual of millisecond-rounded TOW (ranges
 from -500000 to 500000)
  [ns] */
-    u8 flags /** Status flags (reserved) */
+    u8 flags; /** Status flags (reserved) */
   };
 
   
@@ -94,15 +94,15 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgUtcTime {
-    u8 flags /** Indicates source and time validity */
-    u32 tow /** GPS time of week rounded to the nearest millisecond [ms] */
-    u16 year /** Year [year] */
-    u8 month /** Month (range 1 .. 12) [months] */
-    u8 day /** days in the month (range 1-31) [day] */
-    u8 hours /** hours of day (range 0-23) [hours] */
-    u8 minutes /** minutes of hour (range 0-59) [minutes] */
-    u8 seconds /** seconds of minute (range 0-60) rounded down [seconds] */
-    u32 ns /** nanoseconds of second (range 0-999999999) [nanoseconds] */
+    u8 flags; /** Indicates source and time validity */
+    u32 tow; /** GPS time of week rounded to the nearest millisecond [ms] */
+    u16 year; /** Year [year] */
+    u8 month; /** Month (range 1 .. 12) [months] */
+    u8 day; /** days in the month (range 1-31) [day] */
+    u8 hours; /** hours of day (range 0-23) [hours] */
+    u8 minutes; /** minutes of hour (range 0-59) [minutes] */
+    u8 seconds; /** seconds of minute (range 0-60) rounded down [seconds] */
+    u32 ns; /** nanoseconds of second (range 0-999999999) [nanoseconds] */
   };
 
   
@@ -116,15 +116,15 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgUtcTimeGnss {
-    u8 flags /** Indicates source and time validity */
-    u32 tow /** GPS time of week rounded to the nearest millisecond [ms] */
-    u16 year /** Year [year] */
-    u8 month /** Month (range 1 .. 12) [months] */
-    u8 day /** days in the month (range 1-31) [day] */
-    u8 hours /** hours of day (range 0-23) [hours] */
-    u8 minutes /** minutes of hour (range 0-59) [minutes] */
-    u8 seconds /** seconds of minute (range 0-60) rounded down [seconds] */
-    u32 ns /** nanoseconds of second (range 0-999999999) [nanoseconds] */
+    u8 flags; /** Indicates source and time validity */
+    u32 tow; /** GPS time of week rounded to the nearest millisecond [ms] */
+    u16 year; /** Year [year] */
+    u8 month; /** Month (range 1 .. 12) [months] */
+    u8 day; /** days in the month (range 1-31) [day] */
+    u8 hours; /** hours of day (range 0-23) [hours] */
+    u8 minutes; /** minutes of hour (range 0-59) [minutes] */
+    u8 seconds; /** seconds of minute (range 0-60) rounded down [seconds] */
+    u32 ns; /** nanoseconds of second (range 0-999999999) [nanoseconds] */
   };
 
   
@@ -140,13 +140,13 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgDops {
-    u32 tow /** GPS Time of Week [ms] */
-    u16 gdop /** Geometric Dilution of Precision [0.01] */
-    u16 pdop /** Position Dilution of Precision [0.01] */
-    u16 tdop /** Time Dilution of Precision [0.01] */
-    u16 hdop /** Horizontal Dilution of Precision [0.01] */
-    u16 vdop /** Vertical Dilution of Precision [0.01] */
-    u8 flags /** Indicates the position solution with which the DOPS message corresponds */
+    u32 tow; /** GPS Time of Week [ms] */
+    u16 gdop; /** Geometric Dilution of Precision [0.01] */
+    u16 pdop; /** Position Dilution of Precision [0.01] */
+    u16 tdop; /** Time Dilution of Precision [0.01] */
+    u16 hdop; /** Horizontal Dilution of Precision [0.01] */
+    u16 vdop; /** Vertical Dilution of Precision [0.01] */
+    u8 flags; /** Indicates the position solution with which the DOPS message corresponds */
   };
 
   
@@ -166,13 +166,13 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgPosEcef {
-    u32 tow /** GPS Time of Week [ms] */
-    double x /** ECEF X coordinate [m] */
-    double y /** ECEF Y coordinate [m] */
-    double z /** ECEF Z coordinate [m] */
-    u16 accuracy /** Position estimated standard deviation [mm] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    double x; /** ECEF X coordinate [m] */
+    double y; /** ECEF Y coordinate [m] */
+    double z; /** ECEF Z coordinate [m] */
+    u16 accuracy; /** Position estimated standard deviation [mm] */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -193,18 +193,18 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgPosEcefCov {
-    u32 tow /** GPS Time of Week [ms] */
-    double x /** ECEF X coordinate [m] */
-    double y /** ECEF Y coordinate [m] */
-    double z /** ECEF Z coordinate [m] */
-    float cov_x_x /** Estimated variance of x [m^2] */
-    float cov_x_y /** Estimated covariance of x and y [m^2] */
-    float cov_x_z /** Estimated covariance of x and z [m^2] */
-    float cov_y_y /** Estimated variance of y [m^2] */
-    float cov_y_z /** Estimated covariance of y and z [m^2] */
-    float cov_z_z /** Estimated variance of z [m^2] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    double x; /** ECEF X coordinate [m] */
+    double y; /** ECEF Y coordinate [m] */
+    double z; /** ECEF Z coordinate [m] */
+    float cov_x_x; /** Estimated variance of x [m^2] */
+    float cov_x_y; /** Estimated covariance of x and y [m^2] */
+    float cov_x_z; /** Estimated covariance of x and z [m^2] */
+    float cov_y_y; /** Estimated variance of y [m^2] */
+    float cov_y_z; /** Estimated covariance of y and z [m^2] */
+    float cov_z_z; /** Estimated variance of z [m^2] */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -224,14 +224,14 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgPosLlh {
-    u32 tow /** GPS Time of Week [ms] */
-    double lat /** Latitude [deg] */
-    double lon /** Longitude [deg] */
-    double height /** Height above WGS84 ellipsoid [m] */
-    u16 h_accuracy /** Horizontal position estimated standard deviation [mm] */
-    u16 v_accuracy /** Vertical position estimated standard deviation [mm] */
-    u8 n_sats /** Number of satellites used in solution. */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    double lat; /** Latitude [deg] */
+    double lon; /** Longitude [deg] */
+    double height; /** Height above WGS84 ellipsoid [m] */
+    u16 h_accuracy; /** Horizontal position estimated standard deviation [mm] */
+    u16 v_accuracy; /** Vertical position estimated standard deviation [mm] */
+    u8 n_sats; /** Number of satellites used in solution. */
+    u8 flags; /** Status flags */
   };
 
   
@@ -251,18 +251,18 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgPosLlhCov {
-    u32 tow /** GPS Time of Week [ms] */
-    double lat /** Latitude [deg] */
-    double lon /** Longitude [deg] */
-    double height /** Height above WGS84 ellipsoid [m] */
-    float cov_n_n /** Estimated variance of northing [m^2] */
-    float cov_n_e /** Covariance of northing and easting [m^2] */
-    float cov_n_d /** Covariance of northing and downward measurement [m^2] */
-    float cov_e_e /** Estimated variance of easting [m^2] */
-    float cov_e_d /** Covariance of easting and downward measurement [m^2] */
-    float cov_d_d /** Estimated variance of downward measurement [m^2] */
-    u8 n_sats /** Number of satellites used in solution. */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    double lat; /** Latitude [deg] */
+    double lon; /** Longitude [deg] */
+    double height; /** Height above WGS84 ellipsoid [m] */
+    float cov_n_n; /** Estimated variance of northing [m^2] */
+    float cov_n_e; /** Covariance of northing and easting [m^2] */
+    float cov_n_d; /** Covariance of northing and downward measurement [m^2] */
+    float cov_e_e; /** Estimated variance of easting [m^2] */
+    float cov_e_d; /** Covariance of easting and downward measurement [m^2] */
+    float cov_d_d; /** Estimated variance of downward measurement [m^2] */
+    u8 n_sats; /** Number of satellites used in solution. */
+    u8 flags; /** Status flags */
   };
 
   
@@ -279,13 +279,13 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgBaselineEcef {
-    u32 tow /** GPS Time of Week [ms] */
-    s32 x /** Baseline ECEF X coordinate [mm] */
-    s32 y /** Baseline ECEF Y coordinate [mm] */
-    s32 z /** Baseline ECEF Z coordinate [mm] */
-    u16 accuracy /** Position estimated standard deviation [mm] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    s32 x; /** Baseline ECEF X coordinate [mm] */
+    s32 y; /** Baseline ECEF Y coordinate [mm] */
+    s32 z; /** Baseline ECEF Z coordinate [mm] */
+    u16 accuracy; /** Position estimated standard deviation [mm] */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -303,14 +303,14 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgBaselineNed {
-    u32 tow /** GPS Time of Week [ms] */
-    s32 n /** Baseline North coordinate [mm] */
-    s32 e /** Baseline East coordinate [mm] */
-    s32 d /** Baseline Down coordinate [mm] */
-    u16 h_accuracy /** Horizontal position estimated standard deviation [mm] */
-    u16 v_accuracy /** Vertical position estimated standard deviation [mm] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    s32 n; /** Baseline North coordinate [mm] */
+    s32 e; /** Baseline East coordinate [mm] */
+    s32 d; /** Baseline Down coordinate [mm] */
+    u16 h_accuracy; /** Horizontal position estimated standard deviation [mm] */
+    u16 v_accuracy; /** Vertical position estimated standard deviation [mm] */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -325,14 +325,14 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgVelEcef {
-    u32 tow /** GPS Time of Week [ms] */
-    s32 x /** Velocity ECEF X coordinate [mm/s] */
-    s32 y /** Velocity ECEF Y coordinate [mm/s] */
-    s32 z /** Velocity ECEF Z coordinate [mm/s] */
-    u16 accuracy /** Velocity estimated standard deviation
+    u32 tow; /** GPS Time of Week [ms] */
+    s32 x; /** Velocity ECEF X coordinate [mm/s] */
+    s32 y; /** Velocity ECEF Y coordinate [mm/s] */
+    s32 z; /** Velocity ECEF Z coordinate [mm/s] */
+    u16 accuracy; /** Velocity estimated standard deviation
  [mm/s] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -347,18 +347,18 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgVelEcefCov {
-    u32 tow /** GPS Time of Week [ms] */
-    s32 x /** Velocity ECEF X coordinate [mm/s] */
-    s32 y /** Velocity ECEF Y coordinate [mm/s] */
-    s32 z /** Velocity ECEF Z coordinate [mm/s] */
-    float cov_x_x /** Estimated variance of x [m^2/s^2] */
-    float cov_x_y /** Estimated covariance of x and y [m^2/s^2] */
-    float cov_x_z /** Estimated covariance of x and z [m^2/s^2] */
-    float cov_y_y /** Estimated variance of y [m^2/s^2] */
-    float cov_y_z /** Estimated covariance of y and z [m^2/s^2] */
-    float cov_z_z /** Estimated variance of z [m^2/s^2] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    s32 x; /** Velocity ECEF X coordinate [mm/s] */
+    s32 y; /** Velocity ECEF Y coordinate [mm/s] */
+    s32 z; /** Velocity ECEF Z coordinate [mm/s] */
+    float cov_x_x; /** Estimated variance of x [m^2/s^2] */
+    float cov_x_y; /** Estimated covariance of x and y [m^2/s^2] */
+    float cov_x_z; /** Estimated covariance of x and z [m^2/s^2] */
+    float cov_y_y; /** Estimated variance of y [m^2/s^2] */
+    float cov_y_z; /** Estimated covariance of y and z [m^2/s^2] */
+    float cov_z_z; /** Estimated variance of z [m^2/s^2] */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -374,16 +374,16 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgVelNed {
-    u32 tow /** GPS Time of Week [ms] */
-    s32 n /** Velocity North coordinate [mm/s] */
-    s32 e /** Velocity East coordinate [mm/s] */
-    s32 d /** Velocity Down coordinate [mm/s] */
-    u16 h_accuracy /** Horizontal velocity estimated standard deviation
+    u32 tow; /** GPS Time of Week [ms] */
+    s32 n; /** Velocity North coordinate [mm/s] */
+    s32 e; /** Velocity East coordinate [mm/s] */
+    s32 d; /** Velocity Down coordinate [mm/s] */
+    u16 h_accuracy; /** Horizontal velocity estimated standard deviation
  [mm/s] */
-    u16 v_accuracy /** Vertical velocity estimated standard deviation
+    u16 v_accuracy; /** Vertical velocity estimated standard deviation
  [mm/s] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -401,18 +401,18 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgVelNedCov {
-    u32 tow /** GPS Time of Week [ms] */
-    s32 n /** Velocity North coordinate [mm/s] */
-    s32 e /** Velocity East coordinate [mm/s] */
-    s32 d /** Velocity Down coordinate [mm/s] */
-    float cov_n_n /** Estimated variance of northward measurement [m^2] */
-    float cov_n_e /** Covariance of northward and eastward measurement [m^2] */
-    float cov_n_d /** Covariance of northward and downward measurement [m^2] */
-    float cov_e_e /** Estimated variance of eastward measurement [m^2] */
-    float cov_e_d /** Covariance of eastward and downward measurement [m^2] */
-    float cov_d_d /** Estimated variance of downward measurement [m^2] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    s32 n; /** Velocity North coordinate [mm/s] */
+    s32 e; /** Velocity East coordinate [mm/s] */
+    s32 d; /** Velocity Down coordinate [mm/s] */
+    float cov_n_n; /** Estimated variance of northward measurement [m^2] */
+    float cov_n_e; /** Covariance of northward and eastward measurement [m^2] */
+    float cov_n_d; /** Covariance of northward and downward measurement [m^2] */
+    float cov_e_e; /** Estimated variance of eastward measurement [m^2] */
+    float cov_e_d; /** Covariance of eastward and downward measurement [m^2] */
+    float cov_d_d; /** Estimated variance of downward measurement [m^2] */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -432,13 +432,13 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgPosEcefGnss {
-    u32 tow /** GPS Time of Week [ms] */
-    double x /** ECEF X coordinate [m] */
-    double y /** ECEF Y coordinate [m] */
-    double z /** ECEF Z coordinate [m] */
-    u16 accuracy /** Position estimated standard deviation [mm] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    double x; /** ECEF X coordinate [m] */
+    double y; /** ECEF Y coordinate [m] */
+    double z; /** ECEF Z coordinate [m] */
+    u16 accuracy; /** Position estimated standard deviation [mm] */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -459,18 +459,18 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgPosEcefCovGnss {
-    u32 tow /** GPS Time of Week [ms] */
-    double x /** ECEF X coordinate [m] */
-    double y /** ECEF Y coordinate [m] */
-    double z /** ECEF Z coordinate [m] */
-    float cov_x_x /** Estimated variance of x [m^2] */
-    float cov_x_y /** Estimated covariance of x and y [m^2] */
-    float cov_x_z /** Estimated covariance of x and z [m^2] */
-    float cov_y_y /** Estimated variance of y [m^2] */
-    float cov_y_z /** Estimated covariance of y and z [m^2] */
-    float cov_z_z /** Estimated variance of z [m^2] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    double x; /** ECEF X coordinate [m] */
+    double y; /** ECEF Y coordinate [m] */
+    double z; /** ECEF Z coordinate [m] */
+    float cov_x_x; /** Estimated variance of x [m^2] */
+    float cov_x_y; /** Estimated covariance of x and y [m^2] */
+    float cov_x_z; /** Estimated covariance of x and z [m^2] */
+    float cov_y_y; /** Estimated variance of y [m^2] */
+    float cov_y_z; /** Estimated covariance of y and z [m^2] */
+    float cov_z_z; /** Estimated variance of z [m^2] */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -490,14 +490,14 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgPosLlhGnss {
-    u32 tow /** GPS Time of Week [ms] */
-    double lat /** Latitude [deg] */
-    double lon /** Longitude [deg] */
-    double height /** Height above WGS84 ellipsoid [m] */
-    u16 h_accuracy /** Horizontal position estimated standard deviation [mm] */
-    u16 v_accuracy /** Vertical position estimated standard deviation [mm] */
-    u8 n_sats /** Number of satellites used in solution. */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    double lat; /** Latitude [deg] */
+    double lon; /** Longitude [deg] */
+    double height; /** Height above WGS84 ellipsoid [m] */
+    u16 h_accuracy; /** Horizontal position estimated standard deviation [mm] */
+    u16 v_accuracy; /** Vertical position estimated standard deviation [mm] */
+    u8 n_sats; /** Number of satellites used in solution. */
+    u8 flags; /** Status flags */
   };
 
   
@@ -517,18 +517,18 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgPosLlhCovGnss {
-    u32 tow /** GPS Time of Week [ms] */
-    double lat /** Latitude [deg] */
-    double lon /** Longitude [deg] */
-    double height /** Height above WGS84 ellipsoid [m] */
-    float cov_n_n /** Estimated variance of northing [m^2] */
-    float cov_n_e /** Covariance of northing and easting [m^2] */
-    float cov_n_d /** Covariance of northing and downward measurement [m^2] */
-    float cov_e_e /** Estimated variance of easting [m^2] */
-    float cov_e_d /** Covariance of easting and downward measurement [m^2] */
-    float cov_d_d /** Estimated variance of downward measurement [m^2] */
-    u8 n_sats /** Number of satellites used in solution. */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    double lat; /** Latitude [deg] */
+    double lon; /** Longitude [deg] */
+    double height; /** Height above WGS84 ellipsoid [m] */
+    float cov_n_n; /** Estimated variance of northing [m^2] */
+    float cov_n_e; /** Covariance of northing and easting [m^2] */
+    float cov_n_d; /** Covariance of northing and downward measurement [m^2] */
+    float cov_e_e; /** Estimated variance of easting [m^2] */
+    float cov_e_d; /** Covariance of easting and downward measurement [m^2] */
+    float cov_d_d; /** Estimated variance of downward measurement [m^2] */
+    u8 n_sats; /** Number of satellites used in solution. */
+    u8 flags; /** Status flags */
   };
 
   
@@ -543,14 +543,14 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgVelEcefGnss {
-    u32 tow /** GPS Time of Week [ms] */
-    s32 x /** Velocity ECEF X coordinate [mm/s] */
-    s32 y /** Velocity ECEF Y coordinate [mm/s] */
-    s32 z /** Velocity ECEF Z coordinate [mm/s] */
-    u16 accuracy /** Velocity estimated standard deviation
+    u32 tow; /** GPS Time of Week [ms] */
+    s32 x; /** Velocity ECEF X coordinate [mm/s] */
+    s32 y; /** Velocity ECEF Y coordinate [mm/s] */
+    s32 z; /** Velocity ECEF Z coordinate [mm/s] */
+    u16 accuracy; /** Velocity estimated standard deviation
  [mm/s] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -565,18 +565,18 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgVelEcefCovGnss {
-    u32 tow /** GPS Time of Week [ms] */
-    s32 x /** Velocity ECEF X coordinate [mm/s] */
-    s32 y /** Velocity ECEF Y coordinate [mm/s] */
-    s32 z /** Velocity ECEF Z coordinate [mm/s] */
-    float cov_x_x /** Estimated variance of x [m^2/s^2] */
-    float cov_x_y /** Estimated covariance of x and y [m^2/s^2] */
-    float cov_x_z /** Estimated covariance of x and z [m^2/s^2] */
-    float cov_y_y /** Estimated variance of y [m^2/s^2] */
-    float cov_y_z /** Estimated covariance of y and z [m^2/s^2] */
-    float cov_z_z /** Estimated variance of z [m^2/s^2] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    s32 x; /** Velocity ECEF X coordinate [mm/s] */
+    s32 y; /** Velocity ECEF Y coordinate [mm/s] */
+    s32 z; /** Velocity ECEF Z coordinate [mm/s] */
+    float cov_x_x; /** Estimated variance of x [m^2/s^2] */
+    float cov_x_y; /** Estimated covariance of x and y [m^2/s^2] */
+    float cov_x_z; /** Estimated covariance of x and z [m^2/s^2] */
+    float cov_y_y; /** Estimated variance of y [m^2/s^2] */
+    float cov_y_z; /** Estimated covariance of y and z [m^2/s^2] */
+    float cov_z_z; /** Estimated variance of z [m^2/s^2] */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -592,16 +592,16 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgVelNedGnss {
-    u32 tow /** GPS Time of Week [ms] */
-    s32 n /** Velocity North coordinate [mm/s] */
-    s32 e /** Velocity East coordinate [mm/s] */
-    s32 d /** Velocity Down coordinate [mm/s] */
-    u16 h_accuracy /** Horizontal velocity estimated standard deviation
+    u32 tow; /** GPS Time of Week [ms] */
+    s32 n; /** Velocity North coordinate [mm/s] */
+    s32 e; /** Velocity East coordinate [mm/s] */
+    s32 d; /** Velocity Down coordinate [mm/s] */
+    u16 h_accuracy; /** Horizontal velocity estimated standard deviation
  [mm/s] */
-    u16 v_accuracy /** Vertical velocity estimated standard deviation
+    u16 v_accuracy; /** Vertical velocity estimated standard deviation
  [mm/s] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -619,18 +619,18 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgVelNedCovGnss {
-    u32 tow /** GPS Time of Week [ms] */
-    s32 n /** Velocity North coordinate [mm/s] */
-    s32 e /** Velocity East coordinate [mm/s] */
-    s32 d /** Velocity Down coordinate [mm/s] */
-    float cov_n_n /** Estimated variance of northward measurement [m^2] */
-    float cov_n_e /** Covariance of northward and eastward measurement [m^2] */
-    float cov_n_d /** Covariance of northward and downward measurement [m^2] */
-    float cov_e_e /** Estimated variance of eastward measurement [m^2] */
-    float cov_e_d /** Covariance of eastward and downward measurement [m^2] */
-    float cov_d_d /** Estimated variance of downward measurement [m^2] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    s32 n; /** Velocity North coordinate [mm/s] */
+    s32 e; /** Velocity East coordinate [mm/s] */
+    s32 d; /** Velocity Down coordinate [mm/s] */
+    float cov_n_n; /** Estimated variance of northward measurement [m^2] */
+    float cov_n_e; /** Covariance of northward and eastward measurement [m^2] */
+    float cov_n_d; /** Covariance of northward and downward measurement [m^2] */
+    float cov_e_e; /** Estimated variance of eastward measurement [m^2] */
+    float cov_e_d; /** Covariance of eastward and downward measurement [m^2] */
+    float cov_d_d; /** Estimated variance of downward measurement [m^2] */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -650,18 +650,18 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgVelBody {
-    u32 tow /** GPS Time of Week [ms] */
-    s32 x /** Velocity in x direction [mm/s] */
-    s32 y /** Velocity in y direction [mm/s] */
-    s32 z /** Velocity in z direction [mm/s] */
-    float cov_x_x /** Estimated variance of x [m^2] */
-    float cov_x_y /** Covariance of x and y [m^2] */
-    float cov_x_z /** Covariance of x and z [m^2] */
-    float cov_y_y /** Estimated variance of y [m^2] */
-    float cov_y_z /** Covariance of y and z [m^2] */
-    float cov_z_z /** Estimated variance of z [m^2] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    s32 x; /** Velocity in x direction [mm/s] */
+    s32 y; /** Velocity in y direction [mm/s] */
+    s32 z; /** Velocity in z direction [mm/s] */
+    float cov_x_x; /** Estimated variance of x [m^2] */
+    float cov_x_y; /** Covariance of x and y [m^2] */
+    float cov_x_z; /** Covariance of x and z [m^2] */
+    float cov_y_y; /** Estimated variance of y [m^2] */
+    float cov_y_z; /** Covariance of y and z [m^2] */
+    float cov_z_z; /** Estimated variance of z [m^2] */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -675,8 +675,8 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgAgeCorrections {
-    u32 tow /** GPS Time of Week [ms] */
-    u16 age /** Age of the corrections (0xFFFF indicates invalid) [deciseconds] */
+    u32 tow; /** GPS Time of Week [ms] */
+    u16 age; /** Age of the corrections (0xFFFF indicates invalid) [deciseconds] */
   };
 
   
@@ -701,12 +701,12 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgGpsTimeDepA {
-    u16 wn /** GPS week number [weeks] */
-    u32 tow /** GPS time of week rounded to the nearest millisecond [ms] */
-    s32 ns_residual /** Nanosecond residual of millisecond-rounded TOW (ranges
+    u16 wn; /** GPS week number [weeks] */
+    u32 tow; /** GPS time of week rounded to the nearest millisecond [ms] */
+    s32 ns_residual; /** Nanosecond residual of millisecond-rounded TOW (ranges
 from -500000 to 500000)
  [ns] */
-    u8 flags /** Status flags (reserved) */
+    u8 flags; /** Status flags (reserved) */
   };
 
   
@@ -721,12 +721,12 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgDopsDepA {
-    u32 tow /** GPS Time of Week [ms] */
-    u16 gdop /** Geometric Dilution of Precision [0.01] */
-    u16 pdop /** Position Dilution of Precision [0.01] */
-    u16 tdop /** Time Dilution of Precision [0.01] */
-    u16 hdop /** Horizontal Dilution of Precision [0.01] */
-    u16 vdop /** Vertical Dilution of Precision [0.01] */
+    u32 tow; /** GPS Time of Week [ms] */
+    u16 gdop; /** Geometric Dilution of Precision [0.01] */
+    u16 pdop; /** Position Dilution of Precision [0.01] */
+    u16 tdop; /** Time Dilution of Precision [0.01] */
+    u16 hdop; /** Horizontal Dilution of Precision [0.01] */
+    u16 vdop; /** Vertical Dilution of Precision [0.01] */
   };
 
   
@@ -746,15 +746,15 @@ from -500000 to 500000)
 
   
   struct SBP_ATTR_PACKED MsgPosEcefDepA {
-    u32 tow /** GPS Time of Week [ms] */
-    double x /** ECEF X coordinate [m] */
-    double y /** ECEF Y coordinate [m] */
-    double z /** ECEF Z coordinate [m] */
-    u16 accuracy /** Position accuracy estimate (not implemented). Defaults
+    u32 tow; /** GPS Time of Week [ms] */
+    double x; /** ECEF X coordinate [m] */
+    double y; /** ECEF Y coordinate [m] */
+    double z; /** ECEF Z coordinate [m] */
+    u16 accuracy; /** Position accuracy estimate (not implemented). Defaults
 to 0.
  [mm] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -774,18 +774,18 @@ to 0.
 
   
   struct SBP_ATTR_PACKED MsgPosLlhDepA {
-    u32 tow /** GPS Time of Week [ms] */
-    double lat /** Latitude [deg] */
-    double lon /** Longitude [deg] */
-    double height /** Height [m] */
-    u16 h_accuracy /** Horizontal position accuracy estimate (not
+    u32 tow; /** GPS Time of Week [ms] */
+    double lat; /** Latitude [deg] */
+    double lon; /** Longitude [deg] */
+    double height; /** Height [m] */
+    u16 h_accuracy; /** Horizontal position accuracy estimate (not
 implemented). Defaults to 0.
  [mm] */
-    u16 v_accuracy /** Vertical position accuracy estimate (not
+    u16 v_accuracy; /** Vertical position accuracy estimate (not
 implemented). Defaults to 0.
  [mm] */
-    u8 n_sats /** Number of satellites used in solution. */
-    u8 flags /** Status flags */
+    u8 n_sats; /** Number of satellites used in solution. */
+    u8 flags; /** Status flags */
   };
 
   
@@ -802,14 +802,14 @@ implemented). Defaults to 0.
 
   
   struct SBP_ATTR_PACKED MsgBaselineEcefDepA {
-    u32 tow /** GPS Time of Week [ms] */
-    s32 x /** Baseline ECEF X coordinate [mm] */
-    s32 y /** Baseline ECEF Y coordinate [mm] */
-    s32 z /** Baseline ECEF Z coordinate [mm] */
-    u16 accuracy /** Position accuracy estimate
+    u32 tow; /** GPS Time of Week [ms] */
+    s32 x; /** Baseline ECEF X coordinate [mm] */
+    s32 y; /** Baseline ECEF Y coordinate [mm] */
+    s32 z; /** Baseline ECEF Z coordinate [mm] */
+    u16 accuracy; /** Position accuracy estimate
  [mm] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -827,18 +827,18 @@ implemented). Defaults to 0.
 
   
   struct SBP_ATTR_PACKED MsgBaselineNedDepA {
-    u32 tow /** GPS Time of Week [ms] */
-    s32 n /** Baseline North coordinate [mm] */
-    s32 e /** Baseline East coordinate [mm] */
-    s32 d /** Baseline Down coordinate [mm] */
-    u16 h_accuracy /** Horizontal position accuracy estimate (not
+    u32 tow; /** GPS Time of Week [ms] */
+    s32 n; /** Baseline North coordinate [mm] */
+    s32 e; /** Baseline East coordinate [mm] */
+    s32 d; /** Baseline Down coordinate [mm] */
+    u16 h_accuracy; /** Horizontal position accuracy estimate (not
 implemented). Defaults to 0.
  [mm] */
-    u16 v_accuracy /** Vertical position accuracy estimate (not
+    u16 v_accuracy; /** Vertical position accuracy estimate (not
 implemented). Defaults to 0.
  [mm] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -853,15 +853,15 @@ implemented). Defaults to 0.
 
   
   struct SBP_ATTR_PACKED MsgVelEcefDepA {
-    u32 tow /** GPS Time of Week [ms] */
-    s32 x /** Velocity ECEF X coordinate [mm/s] */
-    s32 y /** Velocity ECEF Y coordinate [mm/s] */
-    s32 z /** Velocity ECEF Z coordinate [mm/s] */
-    u16 accuracy /** Velocity accuracy estimate (not implemented). Defaults
+    u32 tow; /** GPS Time of Week [ms] */
+    s32 x; /** Velocity ECEF X coordinate [mm/s] */
+    s32 y; /** Velocity ECEF Y coordinate [mm/s] */
+    s32 z; /** Velocity ECEF Z coordinate [mm/s] */
+    u16 accuracy; /** Velocity accuracy estimate (not implemented). Defaults
 to 0.
  [mm/s] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags (reserved) */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags (reserved) */
   };
 
   
@@ -877,18 +877,18 @@ to 0.
 
   
   struct SBP_ATTR_PACKED MsgVelNedDepA {
-    u32 tow /** GPS Time of Week [ms] */
-    s32 n /** Velocity North coordinate [mm/s] */
-    s32 e /** Velocity East coordinate [mm/s] */
-    s32 d /** Velocity Down coordinate [mm/s] */
-    u16 h_accuracy /** Horizontal velocity accuracy estimate (not
+    u32 tow; /** GPS Time of Week [ms] */
+    s32 n; /** Velocity North coordinate [mm/s] */
+    s32 e; /** Velocity East coordinate [mm/s] */
+    s32 d; /** Velocity Down coordinate [mm/s] */
+    u16 h_accuracy; /** Horizontal velocity accuracy estimate (not
 implemented). Defaults to 0.
  [mm/s] */
-    u16 v_accuracy /** Vertical velocity accuracy estimate (not
+    u16 v_accuracy; /** Vertical velocity accuracy estimate (not
 implemented). Defaults to 0.
  [mm/s] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags (reserved) */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags (reserved) */
   };
 
   
@@ -903,10 +903,10 @@ implemented). Defaults to 0.
 
   
   struct SBP_ATTR_PACKED MsgBaselineHeadingDepA {
-    u32 tow /** GPS Time of Week [ms] */
-    u32 heading /** Heading [mdeg] */
-    u8 n_sats /** Number of satellites used in solution */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    u32 heading; /** Heading [mdeg] */
+    u8 n_sats; /** Number of satellites used in solution */
+    u8 flags; /** Status flags */
   };
 
   
@@ -921,13 +921,13 @@ implemented). Defaults to 0.
 
   
   struct SBP_ATTR_PACKED MsgProtectionLevel {
-    u32 tow /** GPS Time of Week [ms] */
-    u16 vpl /** Vertical protection level [cm] */
-    u16 hpl /** Horizontal protection level [cm] */
-    double lat /** Latitude [deg] */
-    double lon /** Longitude [deg] */
-    double height /** Height [m] */
-    u8 flags /** Status flags */
+    u32 tow; /** GPS Time of Week [ms] */
+    u16 vpl; /** Vertical protection level [cm] */
+    u16 hpl; /** Horizontal protection level [cm] */
+    double lat; /** Latitude [deg] */
+    double lon; /** Longitude [deg] */
+    double height; /** Height [m] */
+    u8 flags; /** Status flags */
   };
 
   

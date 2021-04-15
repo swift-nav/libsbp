@@ -33,8 +33,8 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED ObservationHeader {
-    GPSTime t /** GNSS time of this observation */
-    u8 n_obs /** Total number of observations. First nibble is the size
+    GPSTime t; /** GNSS time of this observation */
+    u8 n_obs; /** Total number of observations. First nibble is the size
 of the sequence (n), second nibble is the zero-indexed
 counter (ith packet of n)
  */
@@ -52,8 +52,8 @@ counter (ith packet of n)
 
   
   struct SBP_ATTR_PACKED Doppler {
-    s16 i /** Doppler whole Hz [Hz] */
-    u8 f /** Doppler fractional part [Hz / 256] */
+    s16 i; /** Doppler whole Hz [Hz] */
+    u8 f; /** Doppler fractional part [Hz / 256] */
   };
 
   
@@ -71,22 +71,22 @@ counter (ith packet of n)
 
   
   struct SBP_ATTR_PACKED PackedObsContent {
-    u32 P /** Pseudorange observation [2 cm] */
-    CarrierPhase L /** Carrier phase observation with typical sign convention. [cycles] */
-    Doppler D /** Doppler observation with typical sign convention. [Hz] */
-    u8 cn0 /** Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4] */
-    u8 lock /** Lock timer. This value gives an indication of the time
+    u32 P; /** Pseudorange observation [2 cm] */
+    CarrierPhase L; /** Carrier phase observation with typical sign convention. [cycles] */
+    Doppler D; /** Doppler observation with typical sign convention. [Hz] */
+    u8 cn0; /** Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4] */
+    u8 lock; /** Lock timer. This value gives an indication of the time
 for which a signal has maintained continuous phase lock.
 Whenever a signal has lost and regained lock, this
 value is reset to zero. It is encoded according to DF402 from
 the RTCM 10403.2 Amendment 2 specification.  Valid values range
 from 0 to 15 and the most significant nibble is reserved for future use.
  */
-    u8 flags /** Measurement status flags. A bit field of flags providing the
+    u8 flags; /** Measurement status flags. A bit field of flags providing the
 status of this observation.  If this field is 0 it means only the Cn0
 estimate for the signal is valid.
  */
-    GnssSignal sid /** GNSS signal identifier (16 bit) */
+    GnssSignal sid; /** GNSS signal identifier (16 bit) */
   };
 
   
@@ -98,21 +98,21 @@ estimate for the signal is valid.
 
   
   struct SBP_ATTR_PACKED PackedOsrContent {
-    u32 P /** Pseudorange observation [2 cm] */
-    CarrierPhase L /** Carrier phase observation with typical sign convention. [cycles] */
-    u8 lock /** Lock timer. This value gives an indication of the time
+    u32 P; /** Pseudorange observation [2 cm] */
+    CarrierPhase L; /** Carrier phase observation with typical sign convention. [cycles] */
+    u8 lock; /** Lock timer. This value gives an indication of the time
 for which a signal has maintained continuous phase lock.
 Whenever a signal has lost and regained lock, this
 value is reset to zero. It is encoded according to DF402 from
 the RTCM 10403.2 Amendment 2 specification.  Valid values range
 from 0 to 15 and the most significant nibble is reserved for future use.
  */
-    u8 flags /** Correction flags.
+    u8 flags; /** Correction flags.
  */
-    GnssSignal sid /** GNSS signal identifier (16 bit) */
-    u16 iono_std /** Slant ionospheric correction standard deviation [5 mm] */
-    u16 tropo_std /** Slant tropospheric correction standard deviation [5 mm] */
-    u16 range_std /** Orbit/clock/bias correction projected on range standard deviation [5 mm] */
+    GnssSignal sid; /** GNSS signal identifier (16 bit) */
+    u16 iono_std; /** Slant ionospheric correction standard deviation [5 mm] */
+    u16 tropo_std; /** Slant tropospheric correction standard deviation [5 mm] */
+    u16 range_std; /** Orbit/clock/bias correction projected on range standard deviation [5 mm] */
   };
 
   
@@ -131,7 +131,7 @@ from 0 to 15 and the most significant nibble is reserved for future use.
 
   template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(ObservationHeader) + 0) / sizeof(PackedObsContent)>
   struct SBP_ATTR_PACKED MsgObs {
-    ObservationHeader header /** Header of a GPS observation message */
+    ObservationHeader header; /** Header of a GPS observation message */
     PackedObsContent obs[OBS_COUNT]; /** Pseudorange and carrier phase observation for a
 satellite being tracked.
  */
@@ -151,9 +151,9 @@ satellite being tracked.
 
   
   struct SBP_ATTR_PACKED MsgBasePosLlh {
-    double lat /** Latitude [deg] */
-    double lon /** Longitude [deg] */
-    double height /** Height [m] */
+    double lat; /** Latitude [deg] */
+    double lon; /** Longitude [deg] */
+    double height; /** Height [m] */
   };
 
   
@@ -171,21 +171,21 @@ satellite being tracked.
 
   
   struct SBP_ATTR_PACKED MsgBasePosEcef {
-    double x /** ECEF X coodinate [m] */
-    double y /** ECEF Y coordinate [m] */
-    double z /** ECEF Z coordinate [m] */
+    double x; /** ECEF X coodinate [m] */
+    double y; /** ECEF Y coordinate [m] */
+    double z; /** ECEF Z coordinate [m] */
   };
 
   
 
   
   struct SBP_ATTR_PACKED EphemerisCommonContent {
-    GnssSignal sid /** GNSS signal identifier (16 bit) */
-    GPSTimeSec toe /** Time of Ephemerides */
-    float ura /** User Range Accuracy [m] */
-    u32 fit_interval /** Curve fit interval [s] */
-    u8 valid /** Status of ephemeris, 1 = valid, 0 = invalid */
-    u8 health_bits /** Satellite health status.
+    GnssSignal sid; /** GNSS signal identifier (16 bit) */
+    GPSTimeSec toe; /** Time of Ephemerides */
+    float ura; /** User Range Accuracy [m] */
+    u32 fit_interval; /** Curve fit interval [s] */
+    u8 valid; /** Status of ephemeris, 1 = valid, 0 = invalid */
+    u8 health_bits; /** Satellite health status.
 GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
 SBAS: 0 = valid, non-zero = invalid
 GLO: 0 = valid, non-zero = invalid
@@ -196,12 +196,12 @@ GLO: 0 = valid, non-zero = invalid
 
   
   struct SBP_ATTR_PACKED EphemerisCommonContentDepB {
-    GnssSignal sid /** GNSS signal identifier (16 bit) */
-    GPSTimeSec toe /** Time of Ephemerides */
-    double ura /** User Range Accuracy [m] */
-    u32 fit_interval /** Curve fit interval [s] */
-    u8 valid /** Status of ephemeris, 1 = valid, 0 = invalid */
-    u8 health_bits /** Satellite health status.
+    GnssSignal sid; /** GNSS signal identifier (16 bit) */
+    GPSTimeSec toe; /** Time of Ephemerides */
+    double ura; /** User Range Accuracy [m] */
+    u32 fit_interval; /** Curve fit interval [s] */
+    u8 valid; /** Status of ephemeris, 1 = valid, 0 = invalid */
+    u8 health_bits; /** Satellite health status.
 GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
 Others: 0 = valid, non-zero = invalid
  */
@@ -211,12 +211,12 @@ Others: 0 = valid, non-zero = invalid
 
   
   struct SBP_ATTR_PACKED EphemerisCommonContentDepA {
-    GnssSignalDep sid /** GNSS signal identifier */
-    GPSTimeDep toe /** Time of Ephemerides */
-    double ura /** User Range Accuracy [m] */
-    u32 fit_interval /** Curve fit interval [s] */
-    u8 valid /** Status of ephemeris, 1 = valid, 0 = invalid */
-    u8 health_bits /** Satellite health status.
+    GnssSignalDep sid; /** GNSS signal identifier */
+    GPSTimeDep toe; /** Time of Ephemerides */
+    double ura; /** User Range Accuracy [m] */
+    u32 fit_interval; /** Curve fit interval [s] */
+    u8 valid; /** Status of ephemeris, 1 = valid, 0 = invalid */
+    u8 health_bits; /** Satellite health status.
 GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
 SBAS: 0 = valid, non-zero = invalid
 GLO: 0 = valid, non-zero = invalid
@@ -237,29 +237,29 @@ GLO: 0 = valid, non-zero = invalid
 
   
   struct SBP_ATTR_PACKED MsgEphemerisGpsDepE {
-    EphemerisCommonContentDepA common /** Values common for all ephemeris types */
-    double tgd /** Group delay differential between L1 and L2 [s] */
-    double c_rs /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
-    double c_rc /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
-    double c_uc /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
-    double c_us /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
-    double c_ic /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
-    double c_is /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
-    double dn /** Mean motion difference [rad/s] */
-    double m0 /** Mean anomaly at reference time [rad] */
-    double ecc /** Eccentricity of satellite orbit */
-    double sqrta /** Square root of the semi-major axis of orbit [m^(1/2)] */
-    double omega0 /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
-    double omegadot /** Rate of right ascension [rad/s] */
-    double w /** Argument of perigee [rad] */
-    double inc /** Inclination [rad] */
-    double inc_dot /** Inclination first derivative [rad/s] */
-    double af0 /** Polynomial clock correction coefficient (clock bias) [s] */
-    double af1 /** Polynomial clock correction coefficient (clock drift) [s/s] */
-    double af2 /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
-    GPSTimeDep toc /** Clock reference */
-    u8 iode /** Issue of ephemeris data */
-    u16 iodc /** Issue of clock data */
+    EphemerisCommonContentDepA common; /** Values common for all ephemeris types */
+    double tgd; /** Group delay differential between L1 and L2 [s] */
+    double c_rs; /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
+    double c_rc; /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+    double c_uc; /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+    double c_us; /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+    double c_ic; /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+    double c_is; /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+    double dn; /** Mean motion difference [rad/s] */
+    double m0; /** Mean anomaly at reference time [rad] */
+    double ecc; /** Eccentricity of satellite orbit */
+    double sqrta; /** Square root of the semi-major axis of orbit [m^(1/2)] */
+    double omega0; /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
+    double omegadot; /** Rate of right ascension [rad/s] */
+    double w; /** Argument of perigee [rad] */
+    double inc; /** Inclination [rad] */
+    double inc_dot; /** Inclination first derivative [rad/s] */
+    double af0; /** Polynomial clock correction coefficient (clock bias) [s] */
+    double af1; /** Polynomial clock correction coefficient (clock drift) [s/s] */
+    double af2; /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
+    GPSTimeDep toc; /** Clock reference */
+    u8 iode; /** Issue of ephemeris data */
+    u16 iodc; /** Issue of clock data */
   };
 
   
@@ -273,29 +273,29 @@ GLO: 0 = valid, non-zero = invalid
 
   
   struct SBP_ATTR_PACKED MsgEphemerisGpsDepF {
-    EphemerisCommonContentDepB common /** Values common for all ephemeris types */
-    double tgd /** Group delay differential between L1 and L2 [s] */
-    double c_rs /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
-    double c_rc /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
-    double c_uc /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
-    double c_us /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
-    double c_ic /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
-    double c_is /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
-    double dn /** Mean motion difference [rad/s] */
-    double m0 /** Mean anomaly at reference time [rad] */
-    double ecc /** Eccentricity of satellite orbit */
-    double sqrta /** Square root of the semi-major axis of orbit [m^(1/2)] */
-    double omega0 /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
-    double omegadot /** Rate of right ascension [rad/s] */
-    double w /** Argument of perigee [rad] */
-    double inc /** Inclination [rad] */
-    double inc_dot /** Inclination first derivative [rad/s] */
-    double af0 /** Polynomial clock correction coefficient (clock bias) [s] */
-    double af1 /** Polynomial clock correction coefficient (clock drift) [s/s] */
-    double af2 /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
-    GPSTimeSec toc /** Clock reference */
-    u8 iode /** Issue of ephemeris data */
-    u16 iodc /** Issue of clock data */
+    EphemerisCommonContentDepB common; /** Values common for all ephemeris types */
+    double tgd; /** Group delay differential between L1 and L2 [s] */
+    double c_rs; /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
+    double c_rc; /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+    double c_uc; /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+    double c_us; /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+    double c_ic; /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+    double c_is; /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+    double dn; /** Mean motion difference [rad/s] */
+    double m0; /** Mean anomaly at reference time [rad] */
+    double ecc; /** Eccentricity of satellite orbit */
+    double sqrta; /** Square root of the semi-major axis of orbit [m^(1/2)] */
+    double omega0; /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
+    double omegadot; /** Rate of right ascension [rad/s] */
+    double w; /** Argument of perigee [rad] */
+    double inc; /** Inclination [rad] */
+    double inc_dot; /** Inclination first derivative [rad/s] */
+    double af0; /** Polynomial clock correction coefficient (clock bias) [s] */
+    double af1; /** Polynomial clock correction coefficient (clock drift) [s/s] */
+    double af2; /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
+    GPSTimeSec toc; /** Clock reference */
+    u8 iode; /** Issue of ephemeris data */
+    u16 iodc; /** Issue of clock data */
   };
 
   
@@ -312,29 +312,29 @@ GLO: 0 = valid, non-zero = invalid
 
   
   struct SBP_ATTR_PACKED MsgEphemerisGps {
-    EphemerisCommonContent common /** Values common for all ephemeris types */
-    float tgd /** Group delay differential between L1 and L2 [s] */
-    float c_rs /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
-    float c_rc /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
-    float c_uc /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
-    float c_us /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
-    float c_ic /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
-    float c_is /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
-    double dn /** Mean motion difference [rad/s] */
-    double m0 /** Mean anomaly at reference time [rad] */
-    double ecc /** Eccentricity of satellite orbit */
-    double sqrta /** Square root of the semi-major axis of orbit [m^(1/2)] */
-    double omega0 /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
-    double omegadot /** Rate of right ascension [rad/s] */
-    double w /** Argument of perigee [rad] */
-    double inc /** Inclination [rad] */
-    double inc_dot /** Inclination first derivative [rad/s] */
-    float af0 /** Polynomial clock correction coefficient (clock bias) [s] */
-    float af1 /** Polynomial clock correction coefficient (clock drift) [s/s] */
-    float af2 /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
-    GPSTimeSec toc /** Clock reference */
-    u8 iode /** Issue of ephemeris data */
-    u16 iodc /** Issue of clock data */
+    EphemerisCommonContent common; /** Values common for all ephemeris types */
+    float tgd; /** Group delay differential between L1 and L2 [s] */
+    float c_rs; /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
+    float c_rc; /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+    float c_uc; /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+    float c_us; /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+    float c_ic; /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+    float c_is; /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+    double dn; /** Mean motion difference [rad/s] */
+    double m0; /** Mean anomaly at reference time [rad] */
+    double ecc; /** Eccentricity of satellite orbit */
+    double sqrta; /** Square root of the semi-major axis of orbit [m^(1/2)] */
+    double omega0; /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
+    double omegadot; /** Rate of right ascension [rad/s] */
+    double w; /** Argument of perigee [rad] */
+    double inc; /** Inclination [rad] */
+    double inc_dot; /** Inclination first derivative [rad/s] */
+    float af0; /** Polynomial clock correction coefficient (clock bias) [s] */
+    float af1; /** Polynomial clock correction coefficient (clock drift) [s/s] */
+    float af2; /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
+    GPSTimeSec toc; /** Clock reference */
+    u8 iode; /** Issue of ephemeris data */
+    u16 iodc; /** Issue of clock data */
   };
 
   
@@ -349,29 +349,29 @@ GLO: 0 = valid, non-zero = invalid
 
   
   struct SBP_ATTR_PACKED MsgEphemerisQzss {
-    EphemerisCommonContent common /** Values common for all ephemeris types */
-    float tgd /** Group delay differential between L1 and L2 [s] */
-    float c_rs /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
-    float c_rc /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
-    float c_uc /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
-    float c_us /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
-    float c_ic /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
-    float c_is /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
-    double dn /** Mean motion difference [rad/s] */
-    double m0 /** Mean anomaly at reference time [rad] */
-    double ecc /** Eccentricity of satellite orbit */
-    double sqrta /** Square root of the semi-major axis of orbit [m^(1/2)] */
-    double omega0 /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
-    double omegadot /** Rate of right ascension [rad/s] */
-    double w /** Argument of perigee [rad] */
-    double inc /** Inclination [rad] */
-    double inc_dot /** Inclination first derivative [rad/s] */
-    float af0 /** Polynomial clock correction coefficient (clock bias) [s] */
-    float af1 /** Polynomial clock correction coefficient (clock drift) [s/s] */
-    float af2 /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
-    GPSTimeSec toc /** Clock reference */
-    u8 iode /** Issue of ephemeris data */
-    u16 iodc /** Issue of clock data */
+    EphemerisCommonContent common; /** Values common for all ephemeris types */
+    float tgd; /** Group delay differential between L1 and L2 [s] */
+    float c_rs; /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
+    float c_rc; /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+    float c_uc; /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+    float c_us; /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+    float c_ic; /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+    float c_is; /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+    double dn; /** Mean motion difference [rad/s] */
+    double m0; /** Mean anomaly at reference time [rad] */
+    double ecc; /** Eccentricity of satellite orbit */
+    double sqrta; /** Square root of the semi-major axis of orbit [m^(1/2)] */
+    double omega0; /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
+    double omegadot; /** Rate of right ascension [rad/s] */
+    double w; /** Argument of perigee [rad] */
+    double inc; /** Inclination [rad] */
+    double inc_dot; /** Inclination first derivative [rad/s] */
+    float af0; /** Polynomial clock correction coefficient (clock bias) [s] */
+    float af1; /** Polynomial clock correction coefficient (clock drift) [s/s] */
+    float af2; /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
+    GPSTimeSec toc; /** Clock reference */
+    u8 iode; /** Issue of ephemeris data */
+    u16 iodc; /** Issue of clock data */
   };
 
   
@@ -387,34 +387,34 @@ GLO: 0 = valid, non-zero = invalid
 
   
   struct SBP_ATTR_PACKED MsgEphemerisBds {
-    EphemerisCommonContent common /** Values common for all ephemeris types */
-    float tgd1 /** Group delay differential for B1 [s] */
-    float tgd2 /** Group delay differential for B2 [s] */
-    float c_rs /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
-    float c_rc /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
-    float c_uc /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
-    float c_us /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
-    float c_ic /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
-    float c_is /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
-    double dn /** Mean motion difference [rad/s] */
-    double m0 /** Mean anomaly at reference time [rad] */
-    double ecc /** Eccentricity of satellite orbit */
-    double sqrta /** Square root of the semi-major axis of orbit [m^(1/2)] */
-    double omega0 /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
-    double omegadot /** Rate of right ascension [rad/s] */
-    double w /** Argument of perigee [rad] */
-    double inc /** Inclination [rad] */
-    double inc_dot /** Inclination first derivative [rad/s] */
-    double af0 /** Polynomial clock correction coefficient (clock bias) [s] */
-    float af1 /** Polynomial clock correction coefficient (clock drift) [s/s] */
-    float af2 /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
-    GPSTimeSec toc /** Clock reference */
-    u8 iode /** Issue of ephemeris data
+    EphemerisCommonContent common; /** Values common for all ephemeris types */
+    float tgd1; /** Group delay differential for B1 [s] */
+    float tgd2; /** Group delay differential for B2 [s] */
+    float c_rs; /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
+    float c_rc; /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+    float c_uc; /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+    float c_us; /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+    float c_ic; /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+    float c_is; /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+    double dn; /** Mean motion difference [rad/s] */
+    double m0; /** Mean anomaly at reference time [rad] */
+    double ecc; /** Eccentricity of satellite orbit */
+    double sqrta; /** Square root of the semi-major axis of orbit [m^(1/2)] */
+    double omega0; /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
+    double omegadot; /** Rate of right ascension [rad/s] */
+    double w; /** Argument of perigee [rad] */
+    double inc; /** Inclination [rad] */
+    double inc_dot; /** Inclination first derivative [rad/s] */
+    double af0; /** Polynomial clock correction coefficient (clock bias) [s] */
+    float af1; /** Polynomial clock correction coefficient (clock drift) [s/s] */
+    float af2; /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
+    GPSTimeSec toc; /** Clock reference */
+    u8 iode; /** Issue of ephemeris data
 
 Calculated from the navigation data parameter t_oe per RTCM/CSNO recommendation:
 IODE = mod (t_oe / 720, 240)
  */
-    u16 iodc /** Issue of clock data
+    u16 iodc; /** Issue of clock data
 
 Calculated from the navigation data parameter t_oe per RTCM/CSNO recommendation:
 IODE = mod (t_oc / 720, 240)
@@ -432,30 +432,30 @@ IODE = mod (t_oc / 720, 240)
 
   
   struct SBP_ATTR_PACKED MsgEphemerisGalDepA {
-    EphemerisCommonContent common /** Values common for all ephemeris types */
-    float bgd_e1e5a /** E1-E5a Broadcast Group Delay [s] */
-    float bgd_e1e5b /** E1-E5b Broadcast Group Delay [s] */
-    float c_rs /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
-    float c_rc /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
-    float c_uc /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
-    float c_us /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
-    float c_ic /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
-    float c_is /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
-    double dn /** Mean motion difference [rad/s] */
-    double m0 /** Mean anomaly at reference time [rad] */
-    double ecc /** Eccentricity of satellite orbit */
-    double sqrta /** Square root of the semi-major axis of orbit [m^(1/2)] */
-    double omega0 /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
-    double omegadot /** Rate of right ascension [rad/s] */
-    double w /** Argument of perigee [rad] */
-    double inc /** Inclination [rad] */
-    double inc_dot /** Inclination first derivative [rad/s] */
-    double af0 /** Polynomial clock correction coefficient (clock bias) [s] */
-    double af1 /** Polynomial clock correction coefficient (clock drift) [s/s] */
-    float af2 /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
-    GPSTimeSec toc /** Clock reference */
-    u16 iode /** Issue of data (IODnav) */
-    u16 iodc /** Issue of data (IODnav). Always equal to iode */
+    EphemerisCommonContent common; /** Values common for all ephemeris types */
+    float bgd_e1e5a; /** E1-E5a Broadcast Group Delay [s] */
+    float bgd_e1e5b; /** E1-E5b Broadcast Group Delay [s] */
+    float c_rs; /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
+    float c_rc; /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+    float c_uc; /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+    float c_us; /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+    float c_ic; /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+    float c_is; /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+    double dn; /** Mean motion difference [rad/s] */
+    double m0; /** Mean anomaly at reference time [rad] */
+    double ecc; /** Eccentricity of satellite orbit */
+    double sqrta; /** Square root of the semi-major axis of orbit [m^(1/2)] */
+    double omega0; /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
+    double omegadot; /** Rate of right ascension [rad/s] */
+    double w; /** Argument of perigee [rad] */
+    double inc; /** Inclination [rad] */
+    double inc_dot; /** Inclination first derivative [rad/s] */
+    double af0; /** Polynomial clock correction coefficient (clock bias) [s] */
+    double af1; /** Polynomial clock correction coefficient (clock drift) [s/s] */
+    float af2; /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
+    GPSTimeSec toc; /** Clock reference */
+    u16 iode; /** Issue of data (IODnav) */
+    u16 iodc; /** Issue of data (IODnav). Always equal to iode */
   };
 
   
@@ -471,31 +471,31 @@ IODE = mod (t_oc / 720, 240)
 
   
   struct SBP_ATTR_PACKED MsgEphemerisGal {
-    EphemerisCommonContent common /** Values common for all ephemeris types */
-    float bgd_e1e5a /** E1-E5a Broadcast Group Delay [s] */
-    float bgd_e1e5b /** E1-E5b Broadcast Group Delay [s] */
-    float c_rs /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
-    float c_rc /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
-    float c_uc /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
-    float c_us /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
-    float c_ic /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
-    float c_is /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
-    double dn /** Mean motion difference [rad/s] */
-    double m0 /** Mean anomaly at reference time [rad] */
-    double ecc /** Eccentricity of satellite orbit */
-    double sqrta /** Square root of the semi-major axis of orbit [m^(1/2)] */
-    double omega0 /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
-    double omegadot /** Rate of right ascension [rad/s] */
-    double w /** Argument of perigee [rad] */
-    double inc /** Inclination [rad] */
-    double inc_dot /** Inclination first derivative [rad/s] */
-    double af0 /** Polynomial clock correction coefficient (clock bias) [s] */
-    double af1 /** Polynomial clock correction coefficient (clock drift) [s/s] */
-    float af2 /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
-    GPSTimeSec toc /** Clock reference */
-    u16 iode /** Issue of data (IODnav) */
-    u16 iodc /** Issue of data (IODnav). Always equal to iode */
-    u8 source /** 0=I/NAV, 1=F/NAV */
+    EphemerisCommonContent common; /** Values common for all ephemeris types */
+    float bgd_e1e5a; /** E1-E5a Broadcast Group Delay [s] */
+    float bgd_e1e5b; /** E1-E5b Broadcast Group Delay [s] */
+    float c_rs; /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
+    float c_rc; /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+    float c_uc; /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+    float c_us; /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+    float c_ic; /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+    float c_is; /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+    double dn; /** Mean motion difference [rad/s] */
+    double m0; /** Mean anomaly at reference time [rad] */
+    double ecc; /** Eccentricity of satellite orbit */
+    double sqrta; /** Square root of the semi-major axis of orbit [m^(1/2)] */
+    double omega0; /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
+    double omegadot; /** Rate of right ascension [rad/s] */
+    double w; /** Argument of perigee [rad] */
+    double inc; /** Inclination [rad] */
+    double inc_dot; /** Inclination first derivative [rad/s] */
+    double af0; /** Polynomial clock correction coefficient (clock bias) [s] */
+    double af1; /** Polynomial clock correction coefficient (clock drift) [s/s] */
+    float af2; /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
+    GPSTimeSec toc; /** Clock reference */
+    u16 iode; /** Issue of data (IODnav) */
+    u16 iodc; /** Issue of data (IODnav). Always equal to iode */
+    u8 source; /** 0=I/NAV, 1=F/NAV */
   };
 
   
@@ -503,12 +503,12 @@ IODE = mod (t_oc / 720, 240)
 
   
   struct SBP_ATTR_PACKED MsgEphemerisSbasDepA {
-    EphemerisCommonContentDepA common /** Values common for all ephemeris types */
+    EphemerisCommonContentDepA common; /** Values common for all ephemeris types */
     double pos[3]; /** Position of the GEO at time toe [m] */
     double vel[3]; /** Velocity of the GEO at time toe [m/s] */
     double acc[3]; /** Acceleration of the GEO at time toe [m/s^2] */
-    double a_gf0 /** Time offset of the GEO clock w.r.t. SBAS Network Time [s] */
-    double a_gf1 /** Drift of the GEO clock w.r.t. SBAS Network Time [s/s] */
+    double a_gf0; /** Time offset of the GEO clock w.r.t. SBAS Network Time [s] */
+    double a_gf1; /** Drift of the GEO clock w.r.t. SBAS Network Time [s/s] */
   };
 
   
@@ -525,9 +525,9 @@ IODE = mod (t_oc / 720, 240)
 
   
   struct SBP_ATTR_PACKED MsgEphemerisGloDepA {
-    EphemerisCommonContentDepA common /** Values common for all ephemeris types */
-    double gamma /** Relative deviation of predicted carrier frequency from nominal */
-    double tau /** Correction to the SV time [s] */
+    EphemerisCommonContentDepA common; /** Values common for all ephemeris types */
+    double gamma; /** Relative deviation of predicted carrier frequency from nominal */
+    double tau; /** Correction to the SV time [s] */
     double pos[3]; /** Position of the SV at tb in PZ-90.02 coordinates system [m] */
     double vel[3]; /** Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s] */
     double acc[3]; /** Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2] */
@@ -544,12 +544,12 @@ IODE = mod (t_oc / 720, 240)
 
   
   struct SBP_ATTR_PACKED MsgEphemerisSbasDepB {
-    EphemerisCommonContentDepB common /** Values common for all ephemeris types */
+    EphemerisCommonContentDepB common; /** Values common for all ephemeris types */
     double pos[3]; /** Position of the GEO at time toe [m] */
     double vel[3]; /** Velocity of the GEO at time toe [m/s] */
     double acc[3]; /** Acceleration of the GEO at time toe [m/s^2] */
-    double a_gf0 /** Time offset of the GEO clock w.r.t. SBAS Network Time [s] */
-    double a_gf1 /** Drift of the GEO clock w.r.t. SBAS Network Time [s/s] */
+    double a_gf0; /** Time offset of the GEO clock w.r.t. SBAS Network Time [s] */
+    double a_gf1; /** Drift of the GEO clock w.r.t. SBAS Network Time [s/s] */
   };
 
   
@@ -557,12 +557,12 @@ IODE = mod (t_oc / 720, 240)
 
   
   struct SBP_ATTR_PACKED MsgEphemerisSbas {
-    EphemerisCommonContent common /** Values common for all ephemeris types */
+    EphemerisCommonContent common; /** Values common for all ephemeris types */
     double pos[3]; /** Position of the GEO at time toe [m] */
     float vel[3]; /** Velocity of the GEO at time toe [m/s] */
     float acc[3]; /** Acceleration of the GEO at time toe [m/s^2] */
-    float a_gf0 /** Time offset of the GEO clock w.r.t. SBAS Network Time [s] */
-    float a_gf1 /** Drift of the GEO clock w.r.t. SBAS Network Time [s/s] */
+    float a_gf0; /** Time offset of the GEO clock w.r.t. SBAS Network Time [s] */
+    float a_gf1; /** Drift of the GEO clock w.r.t. SBAS Network Time [s/s] */
   };
 
   
@@ -579,9 +579,9 @@ IODE = mod (t_oc / 720, 240)
 
   
   struct SBP_ATTR_PACKED MsgEphemerisGloDepB {
-    EphemerisCommonContentDepB common /** Values common for all ephemeris types */
-    double gamma /** Relative deviation of predicted carrier frequency from nominal */
-    double tau /** Correction to the SV time [s] */
+    EphemerisCommonContentDepB common; /** Values common for all ephemeris types */
+    double gamma; /** Relative deviation of predicted carrier frequency from nominal */
+    double tau; /** Correction to the SV time [s] */
     double pos[3]; /** Position of the SV at tb in PZ-90.02 coordinates system [m] */
     double vel[3]; /** Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s] */
     double acc[3]; /** Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2] */
@@ -601,14 +601,14 @@ IODE = mod (t_oc / 720, 240)
 
   
   struct SBP_ATTR_PACKED MsgEphemerisGloDepC {
-    EphemerisCommonContentDepB common /** Values common for all ephemeris types */
-    double gamma /** Relative deviation of predicted carrier frequency from nominal */
-    double tau /** Correction to the SV time [s] */
-    double d_tau /** Equipment delay between L1 and L2 [s] */
+    EphemerisCommonContentDepB common; /** Values common for all ephemeris types */
+    double gamma; /** Relative deviation of predicted carrier frequency from nominal */
+    double tau; /** Correction to the SV time [s] */
+    double d_tau; /** Equipment delay between L1 and L2 [s] */
     double pos[3]; /** Position of the SV at tb in PZ-90.02 coordinates system [m] */
     double vel[3]; /** Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s] */
     double acc[3]; /** Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2] */
-    u8 fcn /** Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
+    u8 fcn; /** Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
   };
 
   
@@ -622,15 +622,15 @@ IODE = mod (t_oc / 720, 240)
 
   
   struct SBP_ATTR_PACKED MsgEphemerisGloDepD {
-    EphemerisCommonContentDepB common /** Values common for all ephemeris types */
-    double gamma /** Relative deviation of predicted carrier frequency from nominal */
-    double tau /** Correction to the SV time [s] */
-    double d_tau /** Equipment delay between L1 and L2 [s] */
+    EphemerisCommonContentDepB common; /** Values common for all ephemeris types */
+    double gamma; /** Relative deviation of predicted carrier frequency from nominal */
+    double tau; /** Correction to the SV time [s] */
+    double d_tau; /** Equipment delay between L1 and L2 [s] */
     double pos[3]; /** Position of the SV at tb in PZ-90.02 coordinates system [m] */
     double vel[3]; /** Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s] */
     double acc[3]; /** Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2] */
-    u8 fcn /** Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
-    u8 iod /** Issue of data. Equal to the 7 bits of the immediate data word t_b */
+    u8 fcn; /** Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
+    u8 iod; /** Issue of data. Equal to the 7 bits of the immediate data word t_b */
   };
 
   
@@ -647,15 +647,15 @@ IODE = mod (t_oc / 720, 240)
 
   
   struct SBP_ATTR_PACKED MsgEphemerisGlo {
-    EphemerisCommonContent common /** Values common for all ephemeris types */
-    float gamma /** Relative deviation of predicted carrier frequency from nominal */
-    float tau /** Correction to the SV time [s] */
-    float d_tau /** Equipment delay between L1 and L2 [s] */
+    EphemerisCommonContent common; /** Values common for all ephemeris types */
+    float gamma; /** Relative deviation of predicted carrier frequency from nominal */
+    float tau; /** Correction to the SV time [s] */
+    float d_tau; /** Equipment delay between L1 and L2 [s] */
     double pos[3]; /** Position of the SV at tb in PZ-90.02 coordinates system [m] */
     double vel[3]; /** Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s] */
     float acc[3]; /** Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2] */
-    u8 fcn /** Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
-    u8 iod /** Issue of data. Equal to the 7 bits of the immediate data word t_b */
+    u8 fcn; /** Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
+    u8 iod; /** Issue of data. Equal to the 7 bits of the immediate data word t_b */
   };
 
   
@@ -672,35 +672,35 @@ IODE = mod (t_oc / 720, 240)
 
   
   struct SBP_ATTR_PACKED MsgEphemerisDepD {
-    double tgd /** Group delay differential between L1 and L2 [s] */
-    double c_rs /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
-    double c_rc /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
-    double c_uc /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
-    double c_us /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
-    double c_ic /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
-    double c_is /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
-    double dn /** Mean motion difference [rad/s] */
-    double m0 /** Mean anomaly at reference time [rad] */
-    double ecc /** Eccentricity of satellite orbit */
-    double sqrta /** Square root of the semi-major axis of orbit [m^(1/2)] */
-    double omega0 /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
-    double omegadot /** Rate of right ascension [rad/s] */
-    double w /** Argument of perigee [rad] */
-    double inc /** Inclination [rad] */
-    double inc_dot /** Inclination first derivative [rad/s] */
-    double af0 /** Polynomial clock correction coefficient (clock bias) [s] */
-    double af1 /** Polynomial clock correction coefficient (clock drift) [s/s] */
-    double af2 /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
-    double toe_tow /** Time of week [s] */
-    u16 toe_wn /** Week number [week] */
-    double toc_tow /** Clock reference time of week [s] */
-    u16 toc_wn /** Clock reference week number [week] */
-    u8 valid /** Is valid? */
-    u8 healthy /** Satellite is healthy? */
-    GnssSignalDep sid /** GNSS signal identifier */
-    u8 iode /** Issue of ephemeris data */
-    u16 iodc /** Issue of clock data */
-    u32 reserved /** Reserved field */
+    double tgd; /** Group delay differential between L1 and L2 [s] */
+    double c_rs; /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
+    double c_rc; /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+    double c_uc; /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+    double c_us; /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+    double c_ic; /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+    double c_is; /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+    double dn; /** Mean motion difference [rad/s] */
+    double m0; /** Mean anomaly at reference time [rad] */
+    double ecc; /** Eccentricity of satellite orbit */
+    double sqrta; /** Square root of the semi-major axis of orbit [m^(1/2)] */
+    double omega0; /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
+    double omegadot; /** Rate of right ascension [rad/s] */
+    double w; /** Argument of perigee [rad] */
+    double inc; /** Inclination [rad] */
+    double inc_dot; /** Inclination first derivative [rad/s] */
+    double af0; /** Polynomial clock correction coefficient (clock bias) [s] */
+    double af1; /** Polynomial clock correction coefficient (clock drift) [s/s] */
+    double af2; /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
+    double toe_tow; /** Time of week [s] */
+    u16 toe_wn; /** Week number [week] */
+    double toc_tow; /** Clock reference time of week [s] */
+    u16 toc_wn; /** Clock reference week number [week] */
+    u8 valid; /** Is valid? */
+    u8 healthy; /** Satellite is healthy? */
+    GnssSignalDep sid; /** GNSS signal identifier */
+    u8 iode; /** Issue of ephemeris data */
+    u16 iodc; /** Issue of clock data */
+    u32 reserved; /** Reserved field */
   };
 
   
@@ -713,32 +713,32 @@ IODE = mod (t_oc / 720, 240)
 
   
   struct SBP_ATTR_PACKED MsgEphemerisDepA {
-    double tgd /** Group delay differential between L1 and L2 [s] */
-    double c_rs /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
-    double c_rc /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
-    double c_uc /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
-    double c_us /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
-    double c_ic /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
-    double c_is /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
-    double dn /** Mean motion difference [rad/s] */
-    double m0 /** Mean anomaly at reference time [rad] */
-    double ecc /** Eccentricity of satellite orbit */
-    double sqrta /** Square root of the semi-major axis of orbit [m^(1/2)] */
-    double omega0 /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
-    double omegadot /** Rate of right ascension [rad/s] */
-    double w /** Argument of perigee [rad] */
-    double inc /** Inclination [rad] */
-    double inc_dot /** Inclination first derivative [rad/s] */
-    double af0 /** Polynomial clock correction coefficient (clock bias) [s] */
-    double af1 /** Polynomial clock correction coefficient (clock drift) [s/s] */
-    double af2 /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
-    double toe_tow /** Time of week [s] */
-    u16 toe_wn /** Week number [week] */
-    double toc_tow /** Clock reference time of week [s] */
-    u16 toc_wn /** Clock reference week number [week] */
-    u8 valid /** Is valid? */
-    u8 healthy /** Satellite is healthy? */
-    u8 prn /** PRN being tracked */
+    double tgd; /** Group delay differential between L1 and L2 [s] */
+    double c_rs; /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
+    double c_rc; /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+    double c_uc; /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+    double c_us; /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+    double c_ic; /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+    double c_is; /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+    double dn; /** Mean motion difference [rad/s] */
+    double m0; /** Mean anomaly at reference time [rad] */
+    double ecc; /** Eccentricity of satellite orbit */
+    double sqrta; /** Square root of the semi-major axis of orbit [m^(1/2)] */
+    double omega0; /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
+    double omegadot; /** Rate of right ascension [rad/s] */
+    double w; /** Argument of perigee [rad] */
+    double inc; /** Inclination [rad] */
+    double inc_dot; /** Inclination first derivative [rad/s] */
+    double af0; /** Polynomial clock correction coefficient (clock bias) [s] */
+    double af1; /** Polynomial clock correction coefficient (clock drift) [s/s] */
+    double af2; /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
+    double toe_tow; /** Time of week [s] */
+    u16 toe_wn; /** Week number [week] */
+    double toc_tow; /** Clock reference time of week [s] */
+    u16 toc_wn; /** Clock reference week number [week] */
+    u8 valid; /** Is valid? */
+    u8 healthy; /** Satellite is healthy? */
+    u8 prn; /** PRN being tracked */
   };
 
   
@@ -751,33 +751,33 @@ IODE = mod (t_oc / 720, 240)
 
   
   struct SBP_ATTR_PACKED MsgEphemerisDepB {
-    double tgd /** Group delay differential between L1 and L2 [s] */
-    double c_rs /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
-    double c_rc /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
-    double c_uc /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
-    double c_us /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
-    double c_ic /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
-    double c_is /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
-    double dn /** Mean motion difference [rad/s] */
-    double m0 /** Mean anomaly at reference time [rad] */
-    double ecc /** Eccentricity of satellite orbit */
-    double sqrta /** Square root of the semi-major axis of orbit [m^(1/2)] */
-    double omega0 /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
-    double omegadot /** Rate of right ascension [rad/s] */
-    double w /** Argument of perigee [rad] */
-    double inc /** Inclination [rad] */
-    double inc_dot /** Inclination first derivative [rad/s] */
-    double af0 /** Polynomial clock correction coefficient (clock bias) [s] */
-    double af1 /** Polynomial clock correction coefficient (clock drift) [s/s] */
-    double af2 /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
-    double toe_tow /** Time of week [s] */
-    u16 toe_wn /** Week number [week] */
-    double toc_tow /** Clock reference time of week [s] */
-    u16 toc_wn /** Clock reference week number [week] */
-    u8 valid /** Is valid? */
-    u8 healthy /** Satellite is healthy? */
-    u8 prn /** PRN being tracked */
-    u8 iode /** Issue of ephemeris data */
+    double tgd; /** Group delay differential between L1 and L2 [s] */
+    double c_rs; /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
+    double c_rc; /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+    double c_uc; /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+    double c_us; /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+    double c_ic; /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+    double c_is; /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+    double dn; /** Mean motion difference [rad/s] */
+    double m0; /** Mean anomaly at reference time [rad] */
+    double ecc; /** Eccentricity of satellite orbit */
+    double sqrta; /** Square root of the semi-major axis of orbit [m^(1/2)] */
+    double omega0; /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
+    double omegadot; /** Rate of right ascension [rad/s] */
+    double w; /** Argument of perigee [rad] */
+    double inc; /** Inclination [rad] */
+    double inc_dot; /** Inclination first derivative [rad/s] */
+    double af0; /** Polynomial clock correction coefficient (clock bias) [s] */
+    double af1; /** Polynomial clock correction coefficient (clock drift) [s/s] */
+    double af2; /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
+    double toe_tow; /** Time of week [s] */
+    u16 toe_wn; /** Week number [week] */
+    double toc_tow; /** Clock reference time of week [s] */
+    u16 toc_wn; /** Clock reference week number [week] */
+    u8 valid; /** Is valid? */
+    u8 healthy; /** Satellite is healthy? */
+    u8 prn; /** PRN being tracked */
+    u8 iode; /** Issue of ephemeris data */
   };
 
   
@@ -794,35 +794,35 @@ IODE = mod (t_oc / 720, 240)
 
   
   struct SBP_ATTR_PACKED MsgEphemerisDepC {
-    double tgd /** Group delay differential between L1 and L2 [s] */
-    double c_rs /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
-    double c_rc /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
-    double c_uc /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
-    double c_us /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
-    double c_ic /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
-    double c_is /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
-    double dn /** Mean motion difference [rad/s] */
-    double m0 /** Mean anomaly at reference time [rad] */
-    double ecc /** Eccentricity of satellite orbit */
-    double sqrta /** Square root of the semi-major axis of orbit [m^(1/2)] */
-    double omega0 /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
-    double omegadot /** Rate of right ascension [rad/s] */
-    double w /** Argument of perigee [rad] */
-    double inc /** Inclination [rad] */
-    double inc_dot /** Inclination first derivative [rad/s] */
-    double af0 /** Polynomial clock correction coefficient (clock bias) [s] */
-    double af1 /** Polynomial clock correction coefficient (clock drift) [s/s] */
-    double af2 /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
-    double toe_tow /** Time of week [s] */
-    u16 toe_wn /** Week number [week] */
-    double toc_tow /** Clock reference time of week [s] */
-    u16 toc_wn /** Clock reference week number [week] */
-    u8 valid /** Is valid? */
-    u8 healthy /** Satellite is healthy? */
-    GnssSignalDep sid /** GNSS signal identifier */
-    u8 iode /** Issue of ephemeris data */
-    u16 iodc /** Issue of clock data */
-    u32 reserved /** Reserved field */
+    double tgd; /** Group delay differential between L1 and L2 [s] */
+    double c_rs; /** Amplitude of the sine harmonic correction term to the orbit radius [m] */
+    double c_rc; /** Amplitude of the cosine harmonic correction term to the orbit radius [m] */
+    double c_uc; /** Amplitude of the cosine harmonic correction term to the argument of latitude [rad] */
+    double c_us; /** Amplitude of the sine harmonic correction term to the argument of latitude [rad] */
+    double c_ic; /** Amplitude of the cosine harmonic correction term to the angle of inclination [rad] */
+    double c_is; /** Amplitude of the sine harmonic correction term to the angle of inclination [rad] */
+    double dn; /** Mean motion difference [rad/s] */
+    double m0; /** Mean anomaly at reference time [rad] */
+    double ecc; /** Eccentricity of satellite orbit */
+    double sqrta; /** Square root of the semi-major axis of orbit [m^(1/2)] */
+    double omega0; /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
+    double omegadot; /** Rate of right ascension [rad/s] */
+    double w; /** Argument of perigee [rad] */
+    double inc; /** Inclination [rad] */
+    double inc_dot; /** Inclination first derivative [rad/s] */
+    double af0; /** Polynomial clock correction coefficient (clock bias) [s] */
+    double af1; /** Polynomial clock correction coefficient (clock drift) [s/s] */
+    double af2; /** Polynomial clock correction coefficient (rate of clock drift) [s/s^2] */
+    double toe_tow; /** Time of week [s] */
+    u16 toe_wn; /** Week number [week] */
+    double toc_tow; /** Clock reference time of week [s] */
+    u16 toc_wn; /** Clock reference week number [week] */
+    u8 valid; /** Is valid? */
+    u8 healthy; /** Satellite is healthy? */
+    GnssSignalDep sid; /** GNSS signal identifier */
+    u8 iode; /** Issue of ephemeris data */
+    u16 iodc; /** Issue of clock data */
+    u32 reserved; /** Reserved field */
   };
 
   
@@ -834,8 +834,8 @@ IODE = mod (t_oc / 720, 240)
 
   
   struct SBP_ATTR_PACKED ObservationHeaderDep {
-    GPSTimeDep t /** GPS time of this observation */
-    u8 n_obs /** Total number of observations. First nibble is the size
+    GPSTimeDep t; /** GPS time of this observation */
+    u8 n_obs; /** Total number of observations. First nibble is the size
 of the sequence (n), second nibble is the zero-indexed
 counter (ith packet of n)
  */
@@ -854,8 +854,8 @@ counter (ith packet of n)
 
   
   struct SBP_ATTR_PACKED CarrierPhaseDepA {
-    s32 i /** Carrier phase whole cycles [cycles] */
-    u8 f /** Carrier phase fractional part [cycles / 256] */
+    s32 i; /** Carrier phase whole cycles [cycles] */
+    u8 f; /** Carrier phase fractional part [cycles / 256] */
   };
 
   
@@ -867,14 +867,14 @@ counter (ith packet of n)
 
   
   struct SBP_ATTR_PACKED PackedObsContentDepA {
-    u32 P /** Pseudorange observation [cm] */
-    CarrierPhaseDepA L /** Carrier phase observation with opposite sign from typical convention */
-    u8 cn0 /** Carrier-to-Noise density [dB Hz / 4] */
-    u16 lock /** Lock indicator. This value changes whenever a satellite
+    u32 P; /** Pseudorange observation [cm] */
+    CarrierPhaseDepA L; /** Carrier phase observation with opposite sign from typical convention */
+    u8 cn0; /** Carrier-to-Noise density [dB Hz / 4] */
+    u16 lock; /** Lock indicator. This value changes whenever a satellite
 signal has lost and regained lock, indicating that the
 carrier phase ambiguity may have changed.
  */
-    u8 prn /** PRN-1 identifier of the satellite signal */
+    u8 prn; /** PRN-1 identifier of the satellite signal */
   };
 
   
@@ -887,14 +887,14 @@ carrier phase ambiguity may have changed.
 
   
   struct SBP_ATTR_PACKED PackedObsContentDepB {
-    u32 P /** Pseudorange observation [cm] */
-    CarrierPhaseDepA L /** Carrier phase observation with opposite sign from typical convention. */
-    u8 cn0 /** Carrier-to-Noise density [dB Hz / 4] */
-    u16 lock /** Lock indicator. This value changes whenever a satellite
+    u32 P; /** Pseudorange observation [cm] */
+    CarrierPhaseDepA L; /** Carrier phase observation with opposite sign from typical convention. */
+    u8 cn0; /** Carrier-to-Noise density [dB Hz / 4] */
+    u16 lock; /** Lock indicator. This value changes whenever a satellite
 signal has lost and regained lock, indicating that the
 carrier phase ambiguity may have changed.
  */
-    GnssSignalDep sid /** GNSS signal identifier */
+    GnssSignalDep sid; /** GNSS signal identifier */
   };
 
   
@@ -908,14 +908,14 @@ carrier phase ambiguity may have changed.
 
   
   struct SBP_ATTR_PACKED PackedObsContentDepC {
-    u32 P /** Pseudorange observation [2 cm] */
-    CarrierPhase L /** Carrier phase observation with typical sign convention. [cycles] */
-    u8 cn0 /** Carrier-to-Noise density [dB Hz / 4] */
-    u16 lock /** Lock indicator. This value changes whenever a satellite
+    u32 P; /** Pseudorange observation [2 cm] */
+    CarrierPhase L; /** Carrier phase observation with typical sign convention. [cycles] */
+    u8 cn0; /** Carrier-to-Noise density [dB Hz / 4] */
+    u16 lock; /** Lock indicator. This value changes whenever a satellite
 signal has lost and regained lock, indicating that the
 carrier phase ambiguity may have changed.
  */
-    GnssSignalDep sid /** GNSS signal identifier */
+    GnssSignalDep sid; /** GNSS signal identifier */
   };
 
   
@@ -928,7 +928,7 @@ carrier phase ambiguity may have changed.
 
   template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(ObservationHeaderDep) + 0) / sizeof(PackedObsContentDepA)>
   struct SBP_ATTR_PACKED MsgObsDepA {
-    ObservationHeaderDep header /** Header of a GPS observation message */
+    ObservationHeaderDep header; /** Header of a GPS observation message */
     PackedObsContentDepA obs[OBS_COUNT]; /** Pseudorange and carrier phase observation for a
 satellite being tracked.
  */
@@ -949,7 +949,7 @@ satellite being tracked.
 
   template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(ObservationHeaderDep) + 0) / sizeof(PackedObsContentDepB)>
   struct SBP_ATTR_PACKED MsgObsDepB {
-    ObservationHeaderDep header /** Header of a GPS observation message */
+    ObservationHeaderDep header; /** Header of a GPS observation message */
     PackedObsContentDepB obs[OBS_COUNT]; /** Pseudorange and carrier phase observation for a
 satellite being tracked.
  */
@@ -971,7 +971,7 @@ satellite being tracked.
 
   template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(ObservationHeaderDep) + 0) / sizeof(PackedObsContentDepC)>
   struct SBP_ATTR_PACKED MsgObsDepC {
-    ObservationHeaderDep header /** Header of a GPS observation message */
+    ObservationHeaderDep header; /** Header of a GPS observation message */
     PackedObsContentDepC obs[OBS_COUNT]; /** Pseudorange and carrier phase observation for a
 satellite being tracked.
  */
@@ -989,15 +989,15 @@ satellite being tracked.
 
   
   struct SBP_ATTR_PACKED MsgIono {
-    GPSTimeSec t_nmct /** Navigation Message Correction Table Valitidy Time */
-    double a0
-    double a1
-    double a2
-    double a3
-    double b0
-    double b1
-    double b2
-    double b3
+    GPSTimeSec t_nmct; /** Navigation Message Correction Table Valitidy Time */
+    double a0;
+    double a1;
+    double a2;
+    double a3;
+    double b0;
+    double b1;
+    double b2;
+    double b3;
   };
 
   
@@ -1010,33 +1010,33 @@ satellite being tracked.
 
   
   struct SBP_ATTR_PACKED MsgSvConfigurationGpsDep {
-    GPSTimeSec t_nmct /** Navigation Message Correction Table Valitidy Time */
-    u32 l2c_mask /** L2C capability mask, SV32 bit being MSB, SV1 bit being LSB */
+    GPSTimeSec t_nmct; /** Navigation Message Correction Table Valitidy Time */
+    u32 l2c_mask; /** L2C capability mask, SV32 bit being MSB, SV1 bit being LSB */
   };
 
   
 
   
   struct SBP_ATTR_PACKED GnssCapb {
-    u64 gps_active /** GPS SV active mask */
-    u64 gps_l2c /** GPS L2C active mask */
-    u64 gps_l5 /** GPS L5 active mask */
-    u32 glo_active /** GLO active mask */
-    u32 glo_l2of /** GLO L2OF active mask */
-    u32 glo_l3 /** GLO L3 active mask */
-    u64 sbas_active /** SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
+    u64 gps_active; /** GPS SV active mask */
+    u64 gps_l2c; /** GPS L2C active mask */
+    u64 gps_l5; /** GPS L5 active mask */
+    u32 glo_active; /** GLO active mask */
+    u32 glo_l2of; /** GLO L2OF active mask */
+    u32 glo_l3; /** GLO L3 active mask */
+    u64 sbas_active; /** SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
 https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
  */
-    u64 sbas_l5 /** SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
+    u64 sbas_l5; /** SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
 https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
  */
-    u64 bds_active /** BDS active mask */
-    u64 bds_d2nav /** BDS D2NAV active mask */
-    u64 bds_b2 /** BDS B2 active mask */
-    u64 bds_b2a /** BDS B2A active mask */
-    u32 qzss_active /** QZSS active mask */
-    u64 gal_active /** GAL active mask */
-    u64 gal_e5 /** GAL E5 active mask */
+    u64 bds_active; /** BDS active mask */
+    u64 bds_d2nav; /** BDS D2NAV active mask */
+    u64 bds_b2; /** BDS B2 active mask */
+    u64 bds_b2a; /** BDS B2A active mask */
+    u32 qzss_active; /** QZSS active mask */
+    u64 gal_active; /** GAL active mask */
+    u64 gal_e5; /** GAL E5 active mask */
   };
 
   
@@ -1044,8 +1044,8 @@ https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
 
   
   struct SBP_ATTR_PACKED MsgGnssCapb {
-    GPSTimeSec t_nmct /** Navigation Message Correction Table Validity Time */
-    GnssCapb gc /** GNSS capabilities masks */
+    GPSTimeSec t_nmct; /** Navigation Message Correction Table Validity Time */
+    GnssCapb gc; /** GNSS capabilities masks */
   };
 
   
@@ -1058,15 +1058,15 @@ https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
 
   
   struct SBP_ATTR_PACKED MsgGroupDelayDepA {
-    GPSTimeDep t_op /** Data Predict Time of Week */
-    u8 prn /** Satellite number */
-    u8 valid /** bit-field indicating validity of the values,
+    GPSTimeDep t_op; /** Data Predict Time of Week */
+    u8 prn; /** Satellite number */
+    u8 valid; /** bit-field indicating validity of the values,
 LSB indicating tgd validity etc.
 1 = value is valid, 0 = value is not valid.
  */
-    s16 tgd
-    s16 isc_l1ca
-    s16 isc_l2c
+    s16 tgd;
+    s16 isc_l1ca;
+    s16 isc_l2c;
   };
 
   
@@ -1079,15 +1079,15 @@ LSB indicating tgd validity etc.
 
   
   struct SBP_ATTR_PACKED MsgGroupDelayDepB {
-    GPSTimeSec t_op /** Data Predict Time of Week */
-    GnssSignalDep sid /** GNSS signal identifier */
-    u8 valid /** bit-field indicating validity of the values,
+    GPSTimeSec t_op; /** Data Predict Time of Week */
+    GnssSignalDep sid; /** GNSS signal identifier */
+    u8 valid; /** bit-field indicating validity of the values,
 LSB indicating tgd validity etc.
 1 = value is valid, 0 = value is not valid.
  */
-    s16 tgd
-    s16 isc_l1ca
-    s16 isc_l2c
+    s16 tgd;
+    s16 isc_l1ca;
+    s16 isc_l2c;
   };
 
   
@@ -1100,27 +1100,27 @@ LSB indicating tgd validity etc.
 
   
   struct SBP_ATTR_PACKED MsgGroupDelay {
-    GPSTimeSec t_op /** Data Predict Time of Week */
-    GnssSignal sid /** GNSS signal identifier */
-    u8 valid /** bit-field indicating validity of the values,
+    GPSTimeSec t_op; /** Data Predict Time of Week */
+    GnssSignal sid; /** GNSS signal identifier */
+    u8 valid; /** bit-field indicating validity of the values,
 LSB indicating tgd validity etc.
 1 = value is valid, 0 = value is not valid.
  */
-    s16 tgd
-    s16 isc_l1ca
-    s16 isc_l2c
+    s16 tgd;
+    s16 isc_l1ca;
+    s16 isc_l2c;
   };
 
   
 
   
   struct SBP_ATTR_PACKED AlmanacCommonContent {
-    GnssSignal sid /** GNSS signal identifier */
-    GPSTimeSec toa /** Reference time of almanac */
-    double ura /** User Range Accuracy [m] */
-    u32 fit_interval /** Curve fit interval [s] */
-    u8 valid /** Status of almanac, 1 = valid, 0 = invalid */
-    u8 health_bits /** Satellite health status for GPS:
+    GnssSignal sid; /** GNSS signal identifier */
+    GPSTimeSec toa; /** Reference time of almanac */
+    double ura; /** User Range Accuracy [m] */
+    u32 fit_interval; /** Curve fit interval [s] */
+    u8 valid; /** Status of almanac, 1 = valid, 0 = invalid */
+    u8 health_bits; /** Satellite health status for GPS:
   - bits 5-7: NAV data health status. See IS-GPS-200H
     Table 20-VII: NAV Data Health Indications.
   - bits 0-4: Signal health status. See IS-GPS-200H
@@ -1142,12 +1142,12 @@ Satellite health status for GLO:
 
   
   struct SBP_ATTR_PACKED AlmanacCommonContentDep {
-    GnssSignalDep sid /** GNSS signal identifier */
-    GPSTimeSec toa /** Reference time of almanac */
-    double ura /** User Range Accuracy [m] */
-    u32 fit_interval /** Curve fit interval [s] */
-    u8 valid /** Status of almanac, 1 = valid, 0 = invalid */
-    u8 health_bits /** Satellite health status for GPS:
+    GnssSignalDep sid; /** GNSS signal identifier */
+    GPSTimeSec toa; /** Reference time of almanac */
+    double ura; /** User Range Accuracy [m] */
+    u32 fit_interval; /** Curve fit interval [s] */
+    u8 valid; /** Status of almanac, 1 = valid, 0 = invalid */
+    u8 health_bits; /** Satellite health status for GPS:
   - bits 5-7: NAV data health status. See IS-GPS-200H
     Table 20-VII: NAV Data Health Indications.
   - bits 0-4: Signal health status. See IS-GPS-200H
@@ -1178,16 +1178,16 @@ Satellite health status for GLO:
 
   
   struct SBP_ATTR_PACKED MsgAlmanacGpsDep {
-    AlmanacCommonContentDep common /** Values common for all almanac types */
-    double m0 /** Mean anomaly at reference time [rad] */
-    double ecc /** Eccentricity of satellite orbit */
-    double sqrta /** Square root of the semi-major axis of orbit [m^(1/2)] */
-    double omega0 /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
-    double omegadot /** Rate of right ascension [rad/s] */
-    double w /** Argument of perigee [rad] */
-    double inc /** Inclination [rad] */
-    double af0 /** Polynomial clock correction coefficient (clock bias) [s] */
-    double af1 /** Polynomial clock correction coefficient (clock drift) [s/s] */
+    AlmanacCommonContentDep common; /** Values common for all almanac types */
+    double m0; /** Mean anomaly at reference time [rad] */
+    double ecc; /** Eccentricity of satellite orbit */
+    double sqrta; /** Square root of the semi-major axis of orbit [m^(1/2)] */
+    double omega0; /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
+    double omegadot; /** Rate of right ascension [rad/s] */
+    double w; /** Argument of perigee [rad] */
+    double inc; /** Inclination [rad] */
+    double af0; /** Polynomial clock correction coefficient (clock bias) [s] */
+    double af1; /** Polynomial clock correction coefficient (clock drift) [s/s] */
   };
 
   
@@ -1203,16 +1203,16 @@ Satellite health status for GLO:
 
   
   struct SBP_ATTR_PACKED MsgAlmanacGps {
-    AlmanacCommonContent common /** Values common for all almanac types */
-    double m0 /** Mean anomaly at reference time [rad] */
-    double ecc /** Eccentricity of satellite orbit */
-    double sqrta /** Square root of the semi-major axis of orbit [m^(1/2)] */
-    double omega0 /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
-    double omegadot /** Rate of right ascension [rad/s] */
-    double w /** Argument of perigee [rad] */
-    double inc /** Inclination [rad] */
-    double af0 /** Polynomial clock correction coefficient (clock bias) [s] */
-    double af1 /** Polynomial clock correction coefficient (clock drift) [s/s] */
+    AlmanacCommonContent common; /** Values common for all almanac types */
+    double m0; /** Mean anomaly at reference time [rad] */
+    double ecc; /** Eccentricity of satellite orbit */
+    double sqrta; /** Square root of the semi-major axis of orbit [m^(1/2)] */
+    double omega0; /** Longitude of ascending node of orbit plane at weekly epoch [rad] */
+    double omegadot; /** Rate of right ascension [rad/s] */
+    double w; /** Argument of perigee [rad] */
+    double inc; /** Inclination [rad] */
+    double af0; /** Polynomial clock correction coefficient (clock bias) [s] */
+    double af1; /** Polynomial clock correction coefficient (clock drift) [s/s] */
   };
 
   
@@ -1228,16 +1228,16 @@ Satellite health status for GLO:
 
   
   struct SBP_ATTR_PACKED MsgAlmanacGloDep {
-    AlmanacCommonContentDep common /** Values common for all almanac types */
-    double lambda_na /** Longitude of the first ascending node of the orbit in PZ-90.02
+    AlmanacCommonContentDep common; /** Values common for all almanac types */
+    double lambda_na; /** Longitude of the first ascending node of the orbit in PZ-90.02
 coordinate system
  [rad] */
-    double t_lambda_na /** Time of the first ascending node passage [s] */
-    double i /** Value of inclination at instant of t_lambda [rad] */
-    double t /** Value of Draconian period at instant of t_lambda [s/orbital period] */
-    double t_dot /** Rate of change of the Draconian period [s/(orbital period^2)] */
-    double epsilon /** Eccentricity at instant of t_lambda */
-    double omega /** Argument of perigee at instant of t_lambda [rad] */
+    double t_lambda_na; /** Time of the first ascending node passage [s] */
+    double i; /** Value of inclination at instant of t_lambda [rad] */
+    double t; /** Value of Draconian period at instant of t_lambda [s/orbital period] */
+    double t_dot; /** Rate of change of the Draconian period [s/(orbital period^2)] */
+    double epsilon; /** Eccentricity at instant of t_lambda */
+    double omega; /** Argument of perigee at instant of t_lambda [rad] */
   };
 
   
@@ -1253,16 +1253,16 @@ coordinate system
 
   
   struct SBP_ATTR_PACKED MsgAlmanacGlo {
-    AlmanacCommonContent common /** Values common for all almanac types */
-    double lambda_na /** Longitude of the first ascending node of the orbit in PZ-90.02
+    AlmanacCommonContent common; /** Values common for all almanac types */
+    double lambda_na; /** Longitude of the first ascending node of the orbit in PZ-90.02
 coordinate system
  [rad] */
-    double t_lambda_na /** Time of the first ascending node passage [s] */
-    double i /** Value of inclination at instant of t_lambda [rad] */
-    double t /** Value of Draconian period at instant of t_lambda [s/orbital period] */
-    double t_dot /** Rate of change of the Draconian period [s/(orbital period^2)] */
-    double epsilon /** Eccentricity at instant of t_lambda */
-    double omega /** Argument of perigee at instant of t_lambda [rad] */
+    double t_lambda_na; /** Time of the first ascending node passage [s] */
+    double i; /** Value of inclination at instant of t_lambda [rad] */
+    double t; /** Value of Draconian period at instant of t_lambda [s/orbital period] */
+    double t_dot; /** Rate of change of the Draconian period [s/(orbital period^2)] */
+    double epsilon; /** Eccentricity at instant of t_lambda */
+    double omega; /** Argument of perigee at instant of t_lambda [rad] */
   };
 
   
@@ -1278,11 +1278,11 @@ coordinate system
 
   
   struct SBP_ATTR_PACKED MsgGloBiases {
-    u8 mask /** GLONASS FDMA signals mask [boolean] */
-    s16 l1ca_bias /** GLONASS L1 C/A Code-Phase Bias [m * 0.02] */
-    s16 l1p_bias /** GLONASS L1 P Code-Phase Bias [m * 0.02] */
-    s16 l2ca_bias /** GLONASS L2 C/A Code-Phase Bias [m * 0.02] */
-    s16 l2p_bias /** GLONASS L2 P Code-Phase Bias [m * 0.02] */
+    u8 mask; /** GLONASS FDMA signals mask [boolean] */
+    s16 l1ca_bias; /** GLONASS L1 C/A Code-Phase Bias [m * 0.02] */
+    s16 l1p_bias; /** GLONASS L1 P Code-Phase Bias [m * 0.02] */
+    s16 l2ca_bias; /** GLONASS L2 C/A Code-Phase Bias [m * 0.02] */
+    s16 l2p_bias; /** GLONASS L2 P Code-Phase Bias [m * 0.02] */
   };
 
   
@@ -1294,9 +1294,9 @@ coordinate system
 
   
   struct SBP_ATTR_PACKED SvAzEl {
-    GnssSignal sid /** GNSS signal identifier */
-    u8 az /** Azimuth angle (range 0..179) [deg * 2] */
-    s8 el /** Elevation angle (range -90..90) [deg] */
+    GnssSignal sid; /** GNSS signal identifier */
+    u8 az; /** Azimuth angle (range 0..179) [deg * 2] */
+    s8 el; /** Elevation angle (range -90..90) [deg] */
   };
 
   
@@ -1323,7 +1323,7 @@ coordinate system
 
   template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(ObservationHeader) + 0) / sizeof(PackedOsrContent)>
   struct SBP_ATTR_PACKED MsgOsr {
-    ObservationHeader header /** Header of a GPS observation message */
+    ObservationHeader header; /** Header of a GPS observation message */
     PackedOsrContent obs[OBS_COUNT]; /** Network correction for a
 satellite signal.
  */

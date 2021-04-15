@@ -35,42 +35,42 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgTrackingStateDetailedDepA {
-    u64 recv_time /** Receiver clock time. [ns] */
-    GPSTime tot /** Time of transmission of signal from satellite. TOW only valid when
+    u64 recv_time; /** Receiver clock time. [ns] */
+    GPSTime tot; /** Time of transmission of signal from satellite. TOW only valid when
 TOW status is decoded or propagated. WN only valid when week
 number valid flag is set.
  */
-    u32 P /** Pseudorange observation. Valid only when pseudorange valid flag is
+    u32 P; /** Pseudorange observation. Valid only when pseudorange valid flag is
 set.
  [2 cm] */
-    u16 P_std /** Pseudorange observation standard deviation. Valid only when
+    u16 P_std; /** Pseudorange observation standard deviation. Valid only when
 pseudorange valid flag is set.
  [2 cm] */
-    CarrierPhase L /** Carrier phase observation with typical sign convention. Valid only
+    CarrierPhase L; /** Carrier phase observation with typical sign convention. Valid only
 when PLL pessimistic lock is achieved.
  [cycles] */
-    u8 cn0 /** Carrier-to-Noise density [dB Hz / 4] */
-    u16 lock /** Lock time. It is encoded according to DF402 from the RTCM 10403.2
+    u8 cn0; /** Carrier-to-Noise density [dB Hz / 4] */
+    u16 lock; /** Lock time. It is encoded according to DF402 from the RTCM 10403.2
 Amendment 2 specification. Valid values range from 0 to 15.
  */
-    GnssSignal sid /** GNSS signal identifier. */
-    s32 doppler /** Carrier Doppler frequency. [Hz / 16] */
-    u16 doppler_std /** Carrier Doppler frequency standard deviation. [Hz / 16] */
-    u32 uptime /** Number of seconds of continuous tracking. Specifies how much time
+    GnssSignal sid; /** GNSS signal identifier. */
+    s32 doppler; /** Carrier Doppler frequency. [Hz / 16] */
+    u16 doppler_std; /** Carrier Doppler frequency standard deviation. [Hz / 16] */
+    u32 uptime; /** Number of seconds of continuous tracking. Specifies how much time
 signal is in continuous track.
  [s] */
-    s16 clock_offset /** TCXO clock offset. Valid only when valid clock valid flag is set.
+    s16 clock_offset; /** TCXO clock offset. Valid only when valid clock valid flag is set.
  [s / (2 ^ 20)] */
-    s16 clock_drift /** TCXO clock drift. Valid only when valid clock valid flag is set.
+    s16 clock_drift; /** TCXO clock drift. Valid only when valid clock valid flag is set.
  [(s / s) / (2 ^ 31)] */
-    u16 corr_spacing /** Early-Prompt (EP) and Prompt-Late (PL) correlators spacing. [ns] */
-    s8 acceleration /** Acceleration. Valid only when acceleration valid flag is set. [g / 8] */
-    u8 sync_flags /** Synchronization status flags. */
-    u8 tow_flags /** TOW status flags. */
-    u8 track_flags /** Tracking loop status flags. */
-    u8 nav_flags /** Navigation data status flags. */
-    u8 pset_flags /** Parameters sets flags. */
-    u8 misc_flags /** Miscellaneous flags. */
+    u16 corr_spacing; /** Early-Prompt (EP) and Prompt-Late (PL) correlators spacing. [ns] */
+    s8 acceleration; /** Acceleration. Valid only when acceleration valid flag is set. [g / 8] */
+    u8 sync_flags; /** Synchronization status flags. */
+    u8 tow_flags; /** TOW status flags. */
+    u8 track_flags; /** Tracking loop status flags. */
+    u8 nav_flags; /** Navigation data status flags. */
+    u8 pset_flags; /** Parameters sets flags. */
+    u8 misc_flags; /** Miscellaneous flags. */
   };
 
   
@@ -83,42 +83,42 @@ signal is in continuous track.
 
   
   struct SBP_ATTR_PACKED MsgTrackingStateDetailedDep {
-    u64 recv_time /** Receiver clock time. [ns] */
-    GPSTimeDep tot /** Time of transmission of signal from satellite. TOW only valid when
+    u64 recv_time; /** Receiver clock time. [ns] */
+    GPSTimeDep tot; /** Time of transmission of signal from satellite. TOW only valid when
 TOW status is decoded or propagated. WN only valid when week
 number valid flag is set.
  */
-    u32 P /** Pseudorange observation. Valid only when pseudorange valid flag is
+    u32 P; /** Pseudorange observation. Valid only when pseudorange valid flag is
 set.
  [2 cm] */
-    u16 P_std /** Pseudorange observation standard deviation. Valid only when
+    u16 P_std; /** Pseudorange observation standard deviation. Valid only when
 pseudorange valid flag is set.
  [2 cm] */
-    CarrierPhase L /** Carrier phase observation with typical sign convention. Valid only
+    CarrierPhase L; /** Carrier phase observation with typical sign convention. Valid only
 when PLL pessimistic lock is achieved.
  [cycles] */
-    u8 cn0 /** Carrier-to-Noise density [dB Hz / 4] */
-    u16 lock /** Lock time. It is encoded according to DF402 from the RTCM 10403.2
+    u8 cn0; /** Carrier-to-Noise density [dB Hz / 4] */
+    u16 lock; /** Lock time. It is encoded according to DF402 from the RTCM 10403.2
 Amendment 2 specification. Valid values range from 0 to 15.
  */
-    GnssSignalDep sid /** GNSS signal identifier. */
-    s32 doppler /** Carrier Doppler frequency. [Hz / 16] */
-    u16 doppler_std /** Carrier Doppler frequency standard deviation. [Hz / 16] */
-    u32 uptime /** Number of seconds of continuous tracking. Specifies how much time
+    GnssSignalDep sid; /** GNSS signal identifier. */
+    s32 doppler; /** Carrier Doppler frequency. [Hz / 16] */
+    u16 doppler_std; /** Carrier Doppler frequency standard deviation. [Hz / 16] */
+    u32 uptime; /** Number of seconds of continuous tracking. Specifies how much time
 signal is in continuous track.
  [s] */
-    s16 clock_offset /** TCXO clock offset. Valid only when valid clock valid flag is set.
+    s16 clock_offset; /** TCXO clock offset. Valid only when valid clock valid flag is set.
  [s / (2 ^ 20)] */
-    s16 clock_drift /** TCXO clock drift. Valid only when valid clock valid flag is set.
+    s16 clock_drift; /** TCXO clock drift. Valid only when valid clock valid flag is set.
  [(s / s) / (2 ^ 31)] */
-    u16 corr_spacing /** Early-Prompt (EP) and Prompt-Late (PL) correlators spacing. [ns] */
-    s8 acceleration /** Acceleration. Valid only when acceleration valid flag is set. [g / 8] */
-    u8 sync_flags /** Synchronization status flags. */
-    u8 tow_flags /** TOW status flags. */
-    u8 track_flags /** Tracking loop status flags. */
-    u8 nav_flags /** Navigation data status flags. */
-    u8 pset_flags /** Parameters sets flags. */
-    u8 misc_flags /** Miscellaneous flags. */
+    u16 corr_spacing; /** Early-Prompt (EP) and Prompt-Late (PL) correlators spacing. [ns] */
+    s8 acceleration; /** Acceleration. Valid only when acceleration valid flag is set. [g / 8] */
+    u8 sync_flags; /** Synchronization status flags. */
+    u8 tow_flags; /** TOW status flags. */
+    u8 track_flags; /** Tracking loop status flags. */
+    u8 nav_flags; /** Navigation data status flags. */
+    u8 pset_flags; /** Parameters sets flags. */
+    u8 misc_flags; /** Miscellaneous flags. */
   };
 
   
@@ -131,9 +131,9 @@ signal is in continuous track.
 
   
   struct SBP_ATTR_PACKED TrackingChannelState {
-    GnssSignal sid /** GNSS signal being tracked */
-    u8 fcn /** Frequency channel number (GLONASS only) */
-    u8 cn0 /** Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4] */
+    GnssSignal sid; /** GNSS signal being tracked */
+    u8 fcn; /** Frequency channel number (GLONASS only) */
+    u8 cn0; /** Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4] */
   };
 
   
@@ -164,8 +164,8 @@ signal is in continuous track.
 
   
   struct SBP_ATTR_PACKED MeasurementState {
-    GnssSignal mesid /** Measurement Engine GNSS signal being tracked (carries either Glonass FCN or SLOT) */
-    u8 cn0 /** Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4] */
+    GnssSignal mesid; /** Measurement Engine GNSS signal being tracked (carries either Glonass FCN or SLOT) */
+    u8 cn0; /** Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4] */
   };
 
   
@@ -192,8 +192,8 @@ signal is in continuous track.
 
   
   struct SBP_ATTR_PACKED TrackingChannelCorrelation {
-    s16 I /** In-phase correlation */
-    s16 Q /** Quadrature correlation */
+    s16 I; /** In-phase correlation */
+    s16 Q; /** Quadrature correlation */
   };
 
   
@@ -207,8 +207,8 @@ signal is in continuous track.
 
   
   struct SBP_ATTR_PACKED MsgTrackingIq {
-    u8 channel /** Tracking channel of origin */
-    GnssSignal sid /** GNSS signal identifier */
+    u8 channel; /** Tracking channel of origin */
+    GnssSignal sid; /** GNSS signal identifier */
     TrackingChannelCorrelation corrs[3]; /** Early, Prompt and Late correlations */
   };
 
@@ -221,8 +221,8 @@ signal is in continuous track.
 
   
   struct SBP_ATTR_PACKED TrackingChannelCorrelationDep {
-    s32 I /** In-phase correlation */
-    s32 Q /** Quadrature correlation */
+    s32 I; /** In-phase correlation */
+    s32 Q; /** Quadrature correlation */
   };
 
   
@@ -236,8 +236,8 @@ signal is in continuous track.
 
   
   struct SBP_ATTR_PACKED MsgTrackingIqDepB {
-    u8 channel /** Tracking channel of origin */
-    GnssSignal sid /** GNSS signal identifier */
+    u8 channel; /** Tracking channel of origin */
+    GnssSignal sid; /** GNSS signal identifier */
     TrackingChannelCorrelationDep corrs[3]; /** Early, Prompt and Late correlations */
   };
 
@@ -251,8 +251,8 @@ signal is in continuous track.
 
   
   struct SBP_ATTR_PACKED MsgTrackingIqDepA {
-    u8 channel /** Tracking channel of origin */
-    GnssSignalDep sid /** GNSS signal identifier */
+    u8 channel; /** Tracking channel of origin */
+    GnssSignalDep sid; /** GNSS signal identifier */
     TrackingChannelCorrelationDep corrs[3]; /** Early, Prompt and Late correlations */
   };
 
@@ -265,9 +265,9 @@ signal is in continuous track.
 
   
   struct SBP_ATTR_PACKED TrackingChannelStateDepA {
-    u8 state /** Status of tracking channel */
-    u8 prn /** PRN-1 being tracked */
-    float cn0 /** Carrier-to-noise density [dB Hz] */
+    u8 state; /** Status of tracking channel */
+    u8 prn; /** PRN-1 being tracked */
+    float cn0; /** Carrier-to-noise density [dB Hz] */
   };
 
   
@@ -292,9 +292,9 @@ signal is in continuous track.
 
   
   struct SBP_ATTR_PACKED TrackingChannelStateDepB {
-    u8 state /** Status of tracking channel */
-    GnssSignalDep sid /** GNSS signal being tracked */
-    float cn0 /** Carrier-to-noise density [dB Hz] */
+    u8 state; /** Status of tracking channel */
+    GnssSignalDep sid; /** GNSS signal being tracked */
+    float cn0; /** Carrier-to-noise density [dB Hz] */
   };
 
   

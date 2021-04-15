@@ -47,7 +47,7 @@ namespace sbp {
 
   template<size_t VERSION_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u32) + 0) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgBootloaderHandshakeResp {
-    u32 flags /** Bootloader flags */
+    u32 flags; /** Bootloader flags */
     char version[VERSION_COUNT]; /** Bootloader version number */
   };
 
@@ -61,7 +61,7 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgBootloaderJumpToApp {
-    u8 jump /** Ignored by the device */
+    u8 jump; /** Ignored by the device */
   };
 
   

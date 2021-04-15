@@ -69,7 +69,7 @@ namespace sbp {
 
   template<size_t SETTING_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + 0) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgSettingsWriteResp {
-    u8 status /** Write status */
+    u8 status; /** Write status */
     char setting[SETTING_COUNT]; /** A NULL-terminated and delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE\0" 
  */
@@ -131,7 +131,7 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgSettingsReadByIndexReq {
-    u16 index /** An index into the device settings, with values ranging from
+    u16 index; /** An index into the device settings, with values ranging from
 0 to length(settings)
  */
   };
@@ -155,7 +155,7 @@ namespace sbp {
 
   template<size_t SETTING_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u16) + 0) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgSettingsReadByIndexResp {
-    u16 index /** An index into the device settings, with values ranging from
+    u16 index; /** An index into the device settings, with values ranging from
 0 to length(settings)
  */
     char setting[SETTING_COUNT]; /** A NULL-terminated and delimited string with contents
@@ -201,7 +201,7 @@ namespace sbp {
 
   template<size_t SETTING_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + 0) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgSettingsRegisterResp {
-    u8 status /** Register status */
+    u8 status; /** Register status */
     char setting[SETTING_COUNT]; /** A NULL-terminated and delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined
 according to the status field.

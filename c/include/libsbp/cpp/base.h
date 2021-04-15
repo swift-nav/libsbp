@@ -38,18 +38,18 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED Sbp {
-    u8 preamble /** Denotes the start of frame transmission. For v1.0, always 0x55 */
-    u16 msg_type /** Uniquely identifies the type of the payload contents */
-    u16 sender /** A unique identifier of the sending hardware. For v1.0,
+    u8 preamble; /** Denotes the start of frame transmission. For v1.0, always 0x55 */
+    u16 msg_type; /** Uniquely identifies the type of the payload contents */
+    u16 sender; /** A unique identifier of the sending hardware. For v1.0,
 set to the 2 least significant bytes of the device serial
 number
  */
-    u8 length /** Byte-length of the payload field [bytes] */
-    bytes payload /** Binary data of the message, as identified by Message Type and
+    u8 length; /** Byte-length of the payload field [bytes] */
+    bytes payload; /** Binary data of the message, as identified by Message Type and
 Length. Usually contains the in-memory binary representation of
 a C struct (see documentation on individual message types)
  */
-    u16 crc /** Cyclic Redundancy Check (CRC) of the packet's binary data from
+    u16 crc; /** Cyclic Redundancy Check (CRC) of the packet's binary data from
 the Message Type up to the end of Payload (does not include the
 Preamble)
  */

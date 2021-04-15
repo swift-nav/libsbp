@@ -53,7 +53,7 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgReset {
-    u32 flags /** Reset flags */
+    u32 flags; /** Reset flags */
   };
 
   
@@ -96,7 +96,7 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgResetFilters {
-    u8 filter /** Filter flags */
+    u8 filter; /** Filter flags */
   };
 
   
@@ -120,10 +120,10 @@ namespace sbp {
   
   struct SBP_ATTR_PACKED MsgThreadState {
     char name[20]; /** Thread name (NULL terminated) */
-    u16 cpu /** Percentage cpu use for this thread. Values range from 0
+    u16 cpu; /** Percentage cpu use for this thread. Values range from 0
 - 1000 and needs to be renormalized to 100
  */
-    u32 stack_free /** Free stack space for this thread [bytes] */
+    u32 stack_free; /** Free stack space for this thread [bytes] */
   };
 
   
@@ -137,14 +137,14 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED UARTChannel {
-    float tx_throughput /** UART transmit throughput [kB/s] */
-    float rx_throughput /** UART receive throughput [kB/s] */
-    u16 crc_error_count /** UART CRC error count */
-    u16 io_error_count /** UART IO error count */
-    u8 tx_buffer_level /** UART transmit buffer percentage utilization (ranges from
+    float tx_throughput; /** UART transmit throughput [kB/s] */
+    float rx_throughput; /** UART receive throughput [kB/s] */
+    u16 crc_error_count; /** UART CRC error count */
+    u16 io_error_count; /** UART IO error count */
+    u8 tx_buffer_level; /** UART transmit buffer percentage utilization (ranges from
 0 to 255)
  */
-    u8 rx_buffer_level /** UART receive buffer percentage utilization (ranges from
+    u8 rx_buffer_level; /** UART receive buffer percentage utilization (ranges from
 0 to 255)
  */
   };
@@ -163,10 +163,10 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED Period {
-    s32 avg /** Average period [ms] */
-    s32 pmin /** Minimum period [ms] */
-    s32 pmax /** Maximum period [ms] */
-    s32 current /** Smoothed estimate of the current period [ms] */
+    s32 avg; /** Average period [ms] */
+    s32 pmin; /** Minimum period [ms] */
+    s32 pmax; /** Maximum period [ms] */
+    s32 current; /** Smoothed estimate of the current period [ms] */
   };
 
   
@@ -182,10 +182,10 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED Latency {
-    s32 avg /** Average latency [ms] */
-    s32 lmin /** Minimum latency [ms] */
-    s32 lmax /** Maximum latency [ms] */
-    s32 current /** Smoothed estimate of the current latency [ms] */
+    s32 avg; /** Average latency [ms] */
+    s32 lmin; /** Minimum latency [ms] */
+    s32 lmax; /** Maximum latency [ms] */
+    s32 current; /** Smoothed estimate of the current latency [ms] */
   };
 
   
@@ -206,11 +206,11 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgUartState {
-    UARTChannel uart_a /** State of UART A */
-    UARTChannel uart_b /** State of UART B */
-    UARTChannel uart_ftdi /** State of UART FTDI (USB logger) */
-    Latency latency /** UART communication latency */
-    Period obs_period /** Observation receipt period */
+    UARTChannel uart_a; /** State of UART A */
+    UARTChannel uart_b; /** State of UART B */
+    UARTChannel uart_ftdi; /** State of UART FTDI (USB logger) */
+    Latency latency; /** UART communication latency */
+    Period obs_period; /** Observation receipt period */
   };
 
   
@@ -223,10 +223,10 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgUartStateDepa {
-    UARTChannel uart_a /** State of UART A */
-    UARTChannel uart_b /** State of UART B */
-    UARTChannel uart_ftdi /** State of UART FTDI (USB logger) */
-    Latency latency /** UART communication latency */
+    UARTChannel uart_a; /** State of UART A */
+    UARTChannel uart_b; /** State of UART B */
+    UARTChannel uart_ftdi; /** State of UART FTDI (USB logger) */
+    Latency latency; /** UART communication latency */
   };
 
   
@@ -242,7 +242,7 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgIarState {
-    u32 num_hyps /** Number of integer ambiguity hypotheses remaining */
+    u32 num_hyps; /** Number of integer ambiguity hypotheses remaining */
   };
 
   
@@ -256,8 +256,8 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgMaskSatellite {
-    u8 mask /** Mask of systems that should ignore this satellite. */
-    GnssSignal sid /** GNSS signal for which the mask is applied */
+    u8 mask; /** Mask of systems that should ignore this satellite. */
+    GnssSignal sid; /** GNSS signal for which the mask is applied */
   };
 
   
@@ -270,8 +270,8 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgMaskSatelliteDep {
-    u8 mask /** Mask of systems that should ignore this satellite. */
-    GnssSignalDep sid /** GNSS signal for which the mask is applied */
+    u8 mask; /** Mask of systems that should ignore this satellite. */
+    GnssSignalDep sid; /** GNSS signal for which the mask is applied */
   };
 
   
@@ -286,11 +286,11 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgDeviceMonitor {
-    s16 dev_vin /** Device V_in [V / 1000] */
-    s16 cpu_vint /** Processor V_int [V / 1000] */
-    s16 cpu_vaux /** Processor V_aux [V / 1000] */
-    s16 cpu_temperature /** Processor temperature [degrees C / 100] */
-    s16 fe_temperature /** Frontend temperature (if available) [degrees C / 100] */
+    s16 dev_vin; /** Device V_in [V / 1000] */
+    s16 cpu_vint; /** Processor V_int [V / 1000] */
+    s16 cpu_vaux; /** Processor V_aux [V / 1000] */
+    s16 cpu_temperature; /** Processor temperature [degrees C / 100] */
+    s16 fe_temperature; /** Frontend temperature (if available) [degrees C / 100] */
   };
 
   
@@ -305,7 +305,7 @@ namespace sbp {
 
   template<size_t COMMAND_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u32) + 0) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgCommandReq {
-    u32 sequence /** Sequence number */
+    u32 sequence; /** Sequence number */
     char command[COMMAND_COUNT]; /** Command line to execute */
   };
 
@@ -320,8 +320,8 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgCommandResp {
-    u32 sequence /** Sequence number */
-    s32 code /** Exit code */
+    u32 sequence; /** Sequence number */
+    s32 code; /** Exit code */
   };
 
   
@@ -337,7 +337,7 @@ namespace sbp {
 
   template<size_t LINE_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u32) + 0) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgCommandOutput {
-    u32 sequence /** Sequence number */
+    u32 sequence; /** Sequence number */
     char line[LINE_COUNT]; /** Line of standard output or standard error */
   };
 
@@ -363,13 +363,13 @@ namespace sbp {
   
   struct SBP_ATTR_PACKED MsgNetworkStateResp {
     u8 ipv4_address[4]; /** IPv4 address (all zero when unavailable) */
-    u8 ipv4_mask_size /** IPv4 netmask CIDR notation */
+    u8 ipv4_mask_size; /** IPv4 netmask CIDR notation */
     u8 ipv6_address[16]; /** IPv6 address (all zero when unavailable) */
-    u8 ipv6_mask_size /** IPv6 netmask CIDR notation */
-    u32 rx_bytes /** Number of Rx bytes */
-    u32 tx_bytes /** Number of Tx bytes */
+    u8 ipv6_mask_size; /** IPv6 netmask CIDR notation */
+    u32 rx_bytes; /** Number of Rx bytes */
+    u32 tx_bytes; /** Number of Tx bytes */
     char interface_name[16]; /** Interface Name */
-    u32 flags /** Interface flags from SIOCGIFFLAGS */
+    u32 flags; /** Interface flags from SIOCGIFFLAGS */
   };
 
   
@@ -386,10 +386,10 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED NetworkUsage {
-    u64 duration /** Duration over which the measurement was collected [ms] */
-    u64 total_bytes /** Number of bytes handled in total within period */
-    u32 rx_bytes /** Number of bytes transmitted within period */
-    u32 tx_bytes /** Number of bytes received within period */
+    u64 duration; /** Duration over which the measurement was collected [ms] */
+    u64 total_bytes; /** Number of bytes handled in total within period */
+    u32 rx_bytes; /** Number of bytes transmitted within period */
+    u32 tx_bytes; /** Number of bytes received within period */
     char interface_name[16]; /** Interface Name */
   };
 
@@ -418,8 +418,8 @@ namespace sbp {
 
   template<size_t RESERVED_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(s8) + sizeof(float) + 0) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgCellModemStatus {
-    s8 signal_strength /** Received cell signal strength in dBm, zero translates to unknown [dBm] */
-    float signal_error_rate /** BER as reported by the modem, zero translates to unknown */
+    s8 signal_strength; /** Received cell signal strength in dBm, zero translates to unknown [dBm] */
+    float signal_error_rate; /** BER as reported by the modem, zero translates to unknown */
     u8 reserved[RESERVED_COUNT]; /** Unspecified data TBD for this schema */
   };
 
@@ -433,15 +433,15 @@ namespace sbp {
 
   template<size_t AMPLITUDE_VALUE_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u16) + sizeof(GPSTimeDep) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + 0) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgSpecanDep {
-    u16 channel_tag /** Channel ID */
-    GPSTimeDep t /** Receiver time of this observation */
-    float freq_ref /** Reference frequency of this packet
+    u16 channel_tag; /** Channel ID */
+    GPSTimeDep t; /** Receiver time of this observation */
+    float freq_ref; /** Reference frequency of this packet
  [MHz] */
-    float freq_step /** Frequency step of points in this packet
+    float freq_step; /** Frequency step of points in this packet
  [MHz] */
-    float amplitude_ref /** Reference amplitude of this packet
+    float amplitude_ref; /** Reference amplitude of this packet
  [dB] */
-    float amplitude_unit /** Amplitude unit value of points in this packet
+    float amplitude_unit; /** Amplitude unit value of points in this packet
  [dB] */
     u8 amplitude_value[AMPLITUDE_VALUE_COUNT]; /** Amplitude values (in the above units) of points in this packet
  */
@@ -457,15 +457,15 @@ namespace sbp {
 
   template<size_t AMPLITUDE_VALUE_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u16) + sizeof(GPSTime) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + 0) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgSpecan {
-    u16 channel_tag /** Channel ID */
-    GPSTime t /** Receiver time of this observation */
-    float freq_ref /** Reference frequency of this packet
+    u16 channel_tag; /** Channel ID */
+    GPSTime t; /** Receiver time of this observation */
+    float freq_ref; /** Reference frequency of this packet
  [MHz] */
-    float freq_step /** Frequency step of points in this packet
+    float freq_step; /** Frequency step of points in this packet
  [MHz] */
-    float amplitude_ref /** Reference amplitude of this packet
+    float amplitude_ref; /** Reference amplitude of this packet
  [dB] */
-    float amplitude_unit /** Amplitude unit value of points in this packet
+    float amplitude_unit; /** Amplitude unit value of points in this packet
  [dB] */
     u8 amplitude_value[AMPLITUDE_VALUE_COUNT]; /** Amplitude values (in the above units) of points in this packet
  */

@@ -191,9 +191,16 @@ gen-cpp:
 	$(call announce-begin,"Generating C++ headers")
 	cd $(SWIFTNAV_ROOT)/generator; \
 	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
-		       -o $(SWIFTNAV_ROOT)/c/include/libsbp \
-		       -r $(SBP_VERSION) \
+	           -o $(SWIFTNAV_ROOT)/c/include/libsbp \
+	           -r $(SBP_VERSION) \
 	           --cpp
+
+	$(call announce-begin,"Generating C++ tests")
+	cd $(SWIFTNAV_ROOT)/generator; \
+	$(SBP_GEN_BIN) -i $(SBP_SPEC_DIR) \
+	           -o $(SWIFTNAV_ROOT)/c/test/cpp \
+	           -r $(SBP_VERSION) \
+	           --test-cpp
 
 	$(call announce-end,"Finished generating C++. Please check $(SWIFTNAV_ROOT)/c/include/libsbp.")
 

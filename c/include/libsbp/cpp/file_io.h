@@ -40,9 +40,9 @@ namespace sbp {
 
   template<size_t FILENAME_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u32) + sizeof(u32) + sizeof(u8) + 0) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgFileioReadReq {
-    u32 sequence /** Read sequence number */
-    u32 offset /** File offset [bytes] */
-    u8 chunk_size /** Chunk size to read [bytes] */
+    u32 sequence; /** Read sequence number */
+    u32 offset; /** File offset [bytes] */
+    u8 chunk_size; /** Chunk size to read [bytes] */
     char filename[FILENAME_COUNT]; /** Name of the file to read from */
   };
 
@@ -60,7 +60,7 @@ namespace sbp {
 
   template<size_t CONTENTS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u32) + 0) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgFileioReadResp {
-    u32 sequence /** Read sequence number */
+    u32 sequence; /** Read sequence number */
     u8 contents[CONTENTS_COUNT]; /** Contents of read file */
   };
 
@@ -83,8 +83,8 @@ namespace sbp {
 
   template<size_t DIRNAME_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u32) + sizeof(u32) + 0) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgFileioReadDirReq {
-    u32 sequence /** Read sequence number */
-    u32 offset /** The offset to skip the first n elements of the file list
+    u32 sequence; /** Read sequence number */
+    u32 offset; /** The offset to skip the first n elements of the file list
  */
     char dirname[DIRNAME_COUNT]; /** Name of the directory to list */
   };
@@ -104,7 +104,7 @@ namespace sbp {
 
   template<size_t CONTENTS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u32) + 0) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgFileioReadDirResp {
-    u32 sequence /** Read sequence number */
+    u32 sequence; /** Read sequence number */
     u8 contents[CONTENTS_COUNT]; /** Contents of read directory */
   };
 
@@ -138,7 +138,7 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgFileioWriteResp {
-    u32 sequence /** Write sequence number */
+    u32 sequence; /** Write sequence number */
   };
 
   
@@ -154,7 +154,7 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgFileioConfigReq {
-    u32 sequence /** Advice sequence number */
+    u32 sequence; /** Advice sequence number */
   };
 
   
@@ -171,10 +171,10 @@ namespace sbp {
 
   
   struct SBP_ATTR_PACKED MsgFileioConfigResp {
-    u32 sequence /** Advice sequence number */
-    u32 window_size /** The number of SBP packets in the data in-flight window */
-    u32 batch_size /** The number of SBP packets sent in one PDU */
-    u32 fileio_version /** The version of FileIO that is supported */
+    u32 sequence; /** Advice sequence number */
+    u32 window_size; /** The number of SBP packets in the data in-flight window */
+    u32 batch_size; /** The number of SBP packets sent in one PDU */
+    u32 fileio_version; /** The version of FileIO that is supported */
   };
 
   
