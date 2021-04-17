@@ -41,8 +41,6 @@ namespace sbp {
    * (but lacking the ns field) and indicates a more precise time of
    * these messages.
    */
-  constexpr u16 MSG_GPS_TIME = 0x0102;
-
   
   struct SBP_ATTR_PACKED MsgGpsTime {
     u16 wn; /** GPS week number [weeks] */
@@ -52,7 +50,6 @@ from -500000 to 500000)
  [ns] */
     u8 flags; /** Status flags (reserved) */
   };
-
   
   /**
    * GPS Time
@@ -71,8 +68,6 @@ from -500000 to 500000)
    * (but lacking the ns field) and indicates a more precise time of
    * these messages.
    */
-  constexpr u16 MSG_GPS_TIME_GNSS = 0x0104;
-
   
   struct SBP_ATTR_PACKED MsgGpsTimeGnss {
     u16 wn; /** GPS week number [weeks] */
@@ -82,7 +77,6 @@ from -500000 to 500000)
  [ns] */
     u8 flags; /** Status flags (reserved) */
   };
-
   
   /**
    * UTC Time
@@ -90,8 +84,6 @@ from -500000 to 500000)
    * This message reports the Universal Coordinated Time (UTC).  Note the flags
    * which indicate the source of the UTC offset value and source of the time fix.
    */
-  constexpr u16 MSG_UTC_TIME = 0x0103;
-
   
   struct SBP_ATTR_PACKED MsgUtcTime {
     u8 flags; /** Indicates source and time validity */
@@ -104,7 +96,6 @@ from -500000 to 500000)
     u8 seconds; /** seconds of minute (range 0-60) rounded down [seconds] */
     u32 ns; /** nanoseconds of second (range 0-999999999) [nanoseconds] */
   };
-
   
   /**
    * UTC Time
@@ -112,8 +103,6 @@ from -500000 to 500000)
    * This message reports the Universal Coordinated Time (UTC).  Note the flags
    * which indicate the source of the UTC offset value and source of the time fix.
    */
-  constexpr u16 MSG_UTC_TIME_GNSS = 0x0105;
-
   
   struct SBP_ATTR_PACKED MsgUtcTimeGnss {
     u8 flags; /** Indicates source and time validity */
@@ -126,7 +115,6 @@ from -500000 to 500000)
     u8 seconds; /** seconds of minute (range 0-60) rounded down [seconds] */
     u32 ns; /** nanoseconds of second (range 0-999999999) [nanoseconds] */
   };
-
   
   /**
    * Dilution of Precision
@@ -136,8 +124,6 @@ from -500000 to 500000)
    * precision.  The flags field indicated whether the DOP reported
    * corresponds to differential or SPP solution.
    */
-  constexpr u16 MSG_DOPS = 0x0208;
-
   
   struct SBP_ATTR_PACKED MsgDops {
     u32 tow; /** GPS Time of Week [ms] */
@@ -148,7 +134,6 @@ from -500000 to 500000)
     u16 vdop; /** Vertical Dilution of Precision [0.01] */
     u8 flags; /** Indicates the position solution with which the DOPS message corresponds */
   };
-
   
   /**
    * Single-point position in ECEF
@@ -162,8 +147,6 @@ from -500000 to 500000)
    * baseline vector. The full GPS time is given by the preceding
    * MSG_GPS_TIME with the matching time-of-week (tow).
    */
-  constexpr u16 MSG_POS_ECEF = 0x0209;
-
   
   struct SBP_ATTR_PACKED MsgPosEcef {
     u32 tow; /** GPS Time of Week [ms] */
@@ -174,7 +157,6 @@ from -500000 to 500000)
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Single-point position in ECEF
@@ -189,8 +171,6 @@ from -500000 to 500000)
    * baseline vector. The full GPS time is given by the preceding
    * MSG_GPS_TIME with the matching time-of-week (tow).
    */
-  constexpr u16 MSG_POS_ECEF_COV = 0x0214;
-
   
   struct SBP_ATTR_PACKED MsgPosEcefCov {
     u32 tow; /** GPS Time of Week [ms] */
@@ -206,7 +186,6 @@ from -500000 to 500000)
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Geodetic Position
@@ -220,8 +199,6 @@ from -500000 to 500000)
    * GPS time is given by the preceding MSG_GPS_TIME with the
    * matching time-of-week (tow).
    */
-  constexpr u16 MSG_POS_LLH = 0x020A;
-
   
   struct SBP_ATTR_PACKED MsgPosLlh {
     u32 tow; /** GPS Time of Week [ms] */
@@ -233,7 +210,6 @@ from -500000 to 500000)
     u8 n_sats; /** Number of satellites used in solution. */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Geodetic Position
@@ -247,8 +223,6 @@ from -500000 to 500000)
    * with that convention. Thus, covariances are reported against the "downward"
    * measurement and care should be taken with the sign convention.
    */
-  constexpr u16 MSG_POS_LLH_COV = 0x0211;
-
   
   struct SBP_ATTR_PACKED MsgPosLlhCov {
     u32 tow; /** GPS Time of Week [ms] */
@@ -264,7 +238,6 @@ from -500000 to 500000)
     u8 n_sats; /** Number of satellites used in solution. */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Baseline Position in ECEF
@@ -275,8 +248,6 @@ from -500000 to 500000)
    * full GPS time is given by the preceding MSG_GPS_TIME with the
    * matching time-of-week (tow).
    */
-  constexpr u16 MSG_BASELINE_ECEF = 0x020B;
-
   
   struct SBP_ATTR_PACKED MsgBaselineEcef {
     u32 tow; /** GPS Time of Week [ms] */
@@ -287,7 +258,6 @@ from -500000 to 500000)
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Baseline in NED
@@ -299,8 +269,6 @@ from -500000 to 500000)
    * base station position.  The full GPS time is given by the
    * preceding MSG_GPS_TIME with the matching time-of-week (tow).
    */
-  constexpr u16 MSG_BASELINE_NED = 0x020C;
-
   
   struct SBP_ATTR_PACKED MsgBaselineNed {
     u32 tow; /** GPS Time of Week [ms] */
@@ -312,7 +280,6 @@ from -500000 to 500000)
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Velocity in ECEF
@@ -321,8 +288,6 @@ from -500000 to 500000)
    * (ECEF) coordinates. The full GPS time is given by the preceding
    * MSG_GPS_TIME with the matching time-of-week (tow).
    */
-  constexpr u16 MSG_VEL_ECEF = 0x020D;
-
   
   struct SBP_ATTR_PACKED MsgVelEcef {
     u32 tow; /** GPS Time of Week [ms] */
@@ -334,7 +299,6 @@ from -500000 to 500000)
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Velocity in ECEF
@@ -343,8 +307,6 @@ from -500000 to 500000)
    * (ECEF) coordinates. The full GPS time is given by the preceding
    * MSG_GPS_TIME with the matching time-of-week (tow).
    */
-  constexpr u16 MSG_VEL_ECEF_COV = 0x0215;
-
   
   struct SBP_ATTR_PACKED MsgVelEcefCov {
     u32 tow; /** GPS Time of Week [ms] */
@@ -360,7 +322,6 @@ from -500000 to 500000)
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Velocity in NED
@@ -370,8 +331,6 @@ from -500000 to 500000)
    * tangent plane centered at the current position. The full GPS time is
    * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
    */
-  constexpr u16 MSG_VEL_NED = 0x020E;
-
   
   struct SBP_ATTR_PACKED MsgVelNed {
     u32 tow; /** GPS Time of Week [ms] */
@@ -385,7 +344,6 @@ from -500000 to 500000)
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Velocity in NED
@@ -397,8 +355,6 @@ from -500000 to 500000)
    * This message is similar to the MSG_VEL_NED, but it includes the upper triangular
    * portion of the 3x3 covariance matrix.
    */
-  constexpr u16 MSG_VEL_NED_COV = 0x0212;
-
   
   struct SBP_ATTR_PACKED MsgVelNedCov {
     u32 tow; /** GPS Time of Week [ms] */
@@ -414,7 +370,6 @@ from -500000 to 500000)
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * GNSS-only Position in ECEF
@@ -428,8 +383,6 @@ from -500000 to 500000)
    * baseline vector. The full GPS time is given by the preceding
    * MSG_GPS_TIME with the matching time-of-week (tow).
    */
-  constexpr u16 MSG_POS_ECEF_GNSS = 0x0229;
-
   
   struct SBP_ATTR_PACKED MsgPosEcefGnss {
     u32 tow; /** GPS Time of Week [ms] */
@@ -440,7 +393,6 @@ from -500000 to 500000)
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * GNSS-only Position in ECEF
@@ -455,8 +407,6 @@ from -500000 to 500000)
    * baseline vector. The full GPS time is given by the preceding
    * MSG_GPS_TIME with the matching time-of-week (tow).
    */
-  constexpr u16 MSG_POS_ECEF_COV_GNSS = 0x0234;
-
   
   struct SBP_ATTR_PACKED MsgPosEcefCovGnss {
     u32 tow; /** GPS Time of Week [ms] */
@@ -472,7 +422,6 @@ from -500000 to 500000)
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * GNSS-only Geodetic Position
@@ -486,8 +435,6 @@ from -500000 to 500000)
    * GPS time is given by the preceding MSG_GPS_TIME with the
    * matching time-of-week (tow).
    */
-  constexpr u16 MSG_POS_LLH_GNSS = 0x022A;
-
   
   struct SBP_ATTR_PACKED MsgPosLlhGnss {
     u32 tow; /** GPS Time of Week [ms] */
@@ -499,7 +446,6 @@ from -500000 to 500000)
     u8 n_sats; /** Number of satellites used in solution. */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * GNSS-only Geodetic Position
@@ -513,8 +459,6 @@ from -500000 to 500000)
    * with that convention. Thus, covariances are reported against the "downward"
    * measurement and care should be taken with the sign convention.
    */
-  constexpr u16 MSG_POS_LLH_COV_GNSS = 0x0231;
-
   
   struct SBP_ATTR_PACKED MsgPosLlhCovGnss {
     u32 tow; /** GPS Time of Week [ms] */
@@ -530,7 +474,6 @@ from -500000 to 500000)
     u8 n_sats; /** Number of satellites used in solution. */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * GNSS-only Velocity in ECEF
@@ -539,8 +482,6 @@ from -500000 to 500000)
    * (ECEF) coordinates. The full GPS time is given by the preceding
    * MSG_GPS_TIME with the matching time-of-week (tow).
    */
-  constexpr u16 MSG_VEL_ECEF_GNSS = 0x022D;
-
   
   struct SBP_ATTR_PACKED MsgVelEcefGnss {
     u32 tow; /** GPS Time of Week [ms] */
@@ -552,7 +493,6 @@ from -500000 to 500000)
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * GNSS-only Velocity in ECEF
@@ -561,8 +501,6 @@ from -500000 to 500000)
    * (ECEF) coordinates. The full GPS time is given by the preceding
    * MSG_GPS_TIME with the matching time-of-week (tow).
    */
-  constexpr u16 MSG_VEL_ECEF_COV_GNSS = 0x0235;
-
   
   struct SBP_ATTR_PACKED MsgVelEcefCovGnss {
     u32 tow; /** GPS Time of Week [ms] */
@@ -578,7 +516,6 @@ from -500000 to 500000)
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * GNSS-only Velocity in NED
@@ -588,8 +525,6 @@ from -500000 to 500000)
    * tangent plane centered at the current position. The full GPS time is
    * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
    */
-  constexpr u16 MSG_VEL_NED_GNSS = 0x022E;
-
   
   struct SBP_ATTR_PACKED MsgVelNedGnss {
     u32 tow; /** GPS Time of Week [ms] */
@@ -603,7 +538,6 @@ from -500000 to 500000)
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * GNSS-only Velocity in NED
@@ -615,8 +549,6 @@ from -500000 to 500000)
    * This message is similar to the MSG_VEL_NED, but it includes the upper triangular
    * portion of the 3x3 covariance matrix.
    */
-  constexpr u16 MSG_VEL_NED_COV_GNSS = 0x0232;
-
   
   struct SBP_ATTR_PACKED MsgVelNedCovGnss {
     u32 tow; /** GPS Time of Week [ms] */
@@ -632,7 +564,6 @@ from -500000 to 500000)
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Velocity in User Frame
@@ -646,8 +577,6 @@ from -500000 to 500000)
    * matching time-of-week (tow). This message is only produced by inertial versions of Swift
    * products and is not available from Piksi Multi or Duro.
    */
-  constexpr u16 MSG_VEL_BODY = 0x0213;
-
   
   struct SBP_ATTR_PACKED MsgVelBody {
     u32 tow; /** GPS Time of Week [ms] */
@@ -663,7 +592,6 @@ from -500000 to 500000)
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Age of corrections
@@ -671,14 +599,11 @@ from -500000 to 500000)
    * This message reports the Age of the corrections used for the current
    * Differential solution
    */
-  constexpr u16 MSG_AGE_CORRECTIONS = 0x0210;
-
   
   struct SBP_ATTR_PACKED MsgAgeCorrections {
     u32 tow; /** GPS Time of Week [ms] */
     u16 age; /** Age of the corrections (0xFFFF indicates invalid) [deciseconds] */
   };
-
   
   /**
    * GPS Time (v1.0)
@@ -697,8 +622,6 @@ from -500000 to 500000)
    * (but lacking the ns field) and indicates a more precise time of
    * these messages.
    */
-  constexpr u16 MSG_GPS_TIME_DEP_A = 0x0100;
-
   
   struct SBP_ATTR_PACKED MsgGpsTimeDepA {
     u16 wn; /** GPS week number [weeks] */
@@ -708,7 +631,6 @@ from -500000 to 500000)
  [ns] */
     u8 flags; /** Status flags (reserved) */
   };
-
   
   /**
    * Dilution of Precision
@@ -717,8 +639,6 @@ from -500000 to 500000)
    * navigation satellite geometry on positional measurement
    * precision.
    */
-  constexpr u16 MSG_DOPS_DEP_A = 0x0206;
-
   
   struct SBP_ATTR_PACKED MsgDopsDepA {
     u32 tow; /** GPS Time of Week [ms] */
@@ -728,7 +648,6 @@ from -500000 to 500000)
     u16 hdop; /** Horizontal Dilution of Precision [0.01] */
     u16 vdop; /** Vertical Dilution of Precision [0.01] */
   };
-
   
   /**
    * Single-point position in ECEF
@@ -742,8 +661,6 @@ from -500000 to 500000)
    * baseline vector. The full GPS time is given by the preceding
    * MSG_GPS_TIME with the matching time-of-week (tow).
    */
-  constexpr u16 MSG_POS_ECEF_DEP_A = 0x0200;
-
   
   struct SBP_ATTR_PACKED MsgPosEcefDepA {
     u32 tow; /** GPS Time of Week [ms] */
@@ -756,7 +673,6 @@ to 0.
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Geodetic Position
@@ -770,8 +686,6 @@ to 0.
    * GPS time is given by the preceding MSG_GPS_TIME with the
    * matching time-of-week (tow).
    */
-  constexpr u16 MSG_POS_LLH_DEP_A = 0x0201;
-
   
   struct SBP_ATTR_PACKED MsgPosLlhDepA {
     u32 tow; /** GPS Time of Week [ms] */
@@ -787,7 +701,6 @@ implemented). Defaults to 0.
     u8 n_sats; /** Number of satellites used in solution. */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Baseline Position in ECEF
@@ -798,8 +711,6 @@ implemented). Defaults to 0.
    * full GPS time is given by the preceding MSG_GPS_TIME with the
    * matching time-of-week (tow).
    */
-  constexpr u16 MSG_BASELINE_ECEF_DEP_A = 0x0202;
-
   
   struct SBP_ATTR_PACKED MsgBaselineEcefDepA {
     u32 tow; /** GPS Time of Week [ms] */
@@ -811,7 +722,6 @@ implemented). Defaults to 0.
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Baseline in NED
@@ -823,8 +733,6 @@ implemented). Defaults to 0.
    * base station position.  The full GPS time is given by the
    * preceding MSG_GPS_TIME with the matching time-of-week (tow).
    */
-  constexpr u16 MSG_BASELINE_NED_DEP_A = 0x0203;
-
   
   struct SBP_ATTR_PACKED MsgBaselineNedDepA {
     u32 tow; /** GPS Time of Week [ms] */
@@ -840,7 +748,6 @@ implemented). Defaults to 0.
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Velocity in ECEF
@@ -849,8 +756,6 @@ implemented). Defaults to 0.
    * (ECEF) coordinates. The full GPS time is given by the preceding
    * MSG_GPS_TIME with the matching time-of-week (tow).
    */
-  constexpr u16 MSG_VEL_ECEF_DEP_A = 0x0204;
-
   
   struct SBP_ATTR_PACKED MsgVelEcefDepA {
     u32 tow; /** GPS Time of Week [ms] */
@@ -863,7 +768,6 @@ to 0.
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags (reserved) */
   };
-
   
   /**
    * Velocity in NED
@@ -873,8 +777,6 @@ to 0.
    * tangent plane centered at the current position. The full GPS time is
    * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
    */
-  constexpr u16 MSG_VEL_NED_DEP_A = 0x0205;
-
   
   struct SBP_ATTR_PACKED MsgVelNedDepA {
     u32 tow; /** GPS Time of Week [ms] */
@@ -890,7 +792,6 @@ implemented). Defaults to 0.
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags (reserved) */
   };
-
   
   /**
    * Heading relative to True North
@@ -899,8 +800,6 @@ implemented). Defaults to 0.
    * to the rover relative to True North. The full GPS time is given by the
    * preceding MSG_GPS_TIME with the matching time-of-week (tow).
    */
-  constexpr u16 MSG_BASELINE_HEADING_DEP_A = 0x0207;
-
   
   struct SBP_ATTR_PACKED MsgBaselineHeadingDepA {
     u32 tow; /** GPS Time of Week [ms] */
@@ -908,7 +807,6 @@ implemented). Defaults to 0.
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Computed Position and Protection Level
@@ -917,8 +815,6 @@ implemented). Defaults to 0.
    * associated with a given LLH position solution. The full GPS time is given
    * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
    */
-  constexpr u16 MSG_PROTECTION_LEVEL = 0x0216;
-
   
   struct SBP_ATTR_PACKED MsgProtectionLevel {
     u32 tow; /** GPS Time of Week [ms] */
@@ -929,7 +825,6 @@ implemented). Defaults to 0.
     double height; /** Height [m] */
     u8 flags; /** Status flags */
   };
-
   
 
 }  // namespace sbp

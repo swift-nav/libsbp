@@ -37,8 +37,6 @@ namespace sbp {
    * 
    * The time-tagging mode should not change throughout a run.
    */
-  constexpr u16 MSG_IMU_RAW = 0x0900;
-
   
   struct SBP_ATTR_PACKED MsgImuRaw {
     u32 tow; /** Milliseconds since reference epoch and time status.
@@ -52,7 +50,6 @@ namespace sbp {
     s16 gyr_y; /** Angular rate around IMU frame Y axis */
     s16 gyr_z; /** Angular rate around IMU frame Z axis */
   };
-
   
   /**
    * Auxiliary IMU data
@@ -61,15 +58,12 @@ namespace sbp {
    * always be consistent but the rest of the payload is device specific and
    * depends on the value of `imu_type`.
    */
-  constexpr u16 MSG_IMU_AUX = 0x0901;
-
   
   struct SBP_ATTR_PACKED MsgImuAux {
     u8 imu_type; /** IMU type */
     s16 temp; /** Raw IMU temperature */
     u8 imu_conf; /** IMU configuration */
   };
-
   
 
 }  // namespace sbp

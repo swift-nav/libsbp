@@ -34,8 +34,6 @@ namespace sbp {
    * acquisition search space with the best carrier-to-noise (CN/0)
    * ratio.
    */
-  constexpr u16 MSG_ACQ_RESULT = 0x002F;
-
   
   struct SBP_ATTR_PACKED MsgAcqResult {
     float cn0; /** CN/0 of best point [dB Hz] */
@@ -43,15 +41,12 @@ namespace sbp {
     float cf; /** Carrier frequency of best point [hz] */
     GnssSignal sid; /** GNSS signal for which acquisition was attempted */
   };
-
   
   /**
    * Deprecated
    *
    * Deprecated.
    */
-  constexpr u16 MSG_ACQ_RESULT_DEP_C = 0x001F;
-
   
   struct SBP_ATTR_PACKED MsgAcqResultDepC {
     float cn0; /** CN/0 of best point [dB Hz] */
@@ -59,15 +54,12 @@ namespace sbp {
     float cf; /** Carrier frequency of best point [hz] */
     GnssSignalDep sid; /** GNSS signal for which acquisition was attempted */
   };
-
   
   /**
    * Deprecated
    *
    * Deprecated.
    */
-  constexpr u16 MSG_ACQ_RESULT_DEP_B = 0x0014;
-
   
   struct SBP_ATTR_PACKED MsgAcqResultDepB {
     float snr; /** SNR of best point. Currently in arbitrary SNR points, but will
@@ -77,15 +69,12 @@ be in units of dB Hz in a later revision of this message.
     float cf; /** Carrier frequency of best point [hz] */
     GnssSignalDep sid; /** GNSS signal for which acquisition was attempted */
   };
-
   
   /**
    * Deprecated
    *
    * Deprecated.
    */
-  constexpr u16 MSG_ACQ_RESULT_DEP_A = 0x0015;
-
   
   struct SBP_ATTR_PACKED MsgAcqResultDepA {
     float snr; /** SNR of best point. Currently dimensonless, but will have
@@ -97,7 +86,6 @@ units of dB Hz in the revision of this message.
 acquisition was attempted
  */
   };
-
   
   /**
    * Acq perfomance measurement and debug
@@ -106,7 +94,6 @@ acquisition was attempted
    * The message describes SV profile during acquisition time.
    * The message is used to debug and measure the performance.
    */
-
   
   struct SBP_ATTR_PACKED AcqSvProfile {
     u8 job_type; /** SV search job type (deep, fallback, etc) */
@@ -122,14 +109,12 @@ acquisition was attempted
     s32 cf; /** Doppler value of detected peak. Only valid if status is '1' [Hz] */
     u32 cp; /** Codephase of detected peak. Only valid if status is '1' [chips*10] */
   };
-
   
   /**
    * Deprecated
    *
    * Deprecated.
    */
-
   
   struct SBP_ATTR_PACKED AcqSvProfileDep {
     u8 job_type; /** SV search job type (deep, fallback, etc) */
@@ -145,7 +130,6 @@ acquisition was attempted
     s32 cf; /** Doppler value of detected peak. Only valid if status is '1' [Hz] */
     u32 cp; /** Codephase of detected peak. Only valid if status is '1' [chips*10] */
   };
-
   
   /**
    * Acquisition perfomance measurement and debug
@@ -153,26 +137,20 @@ acquisition was attempted
    * The message describes all SV profiles during acquisition time.
    * The message is used to debug and measure the performance.
    */
-  constexpr u16 MSG_ACQ_SV_PROFILE = 0x002E;
-
-  template<size_t ACQ_SV_PROFILE_COUNT = (SBP_MAX_PAYLOAD_LEN - 0) / sizeof(AcqSvProfile)>
+  template<size_t ACQ_SV_PROFILE_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(AcqSvProfile)>
   struct SBP_ATTR_PACKED MsgAcqSvProfile {
     AcqSvProfile acq_sv_profile[ACQ_SV_PROFILE_COUNT]; /** SV profiles during acquisition time */
   };
-
   
   /**
    * Deprecated.
    *
    * Deprecated.
    */
-  constexpr u16 MSG_ACQ_SV_PROFILE_DEP = 0x001E;
-
-  template<size_t ACQ_SV_PROFILE_COUNT = (SBP_MAX_PAYLOAD_LEN - 0) / sizeof(AcqSvProfileDep)>
+  template<size_t ACQ_SV_PROFILE_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(AcqSvProfileDep)>
   struct SBP_ATTR_PACKED MsgAcqSvProfileDep {
     AcqSvProfileDep acq_sv_profile[ACQ_SV_PROFILE_COUNT]; /** SV profiles during acquisition time */
   };
-
   
 
 }  // namespace sbp

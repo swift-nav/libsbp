@@ -35,7 +35,6 @@ namespace sbp {
    * messages, as well as receive messages from the host operating
    * system.
    */
-
   
   struct SBP_ATTR_PACKED Sbp {
     u8 preamble; /** Denotes the start of frame transmission. For v1.0, always 0x55 */
@@ -54,7 +53,6 @@ the Message Type up to the end of Payload (does not include the
 Preamble)
  */
   };
-
   
 
 }  // namespace sbp

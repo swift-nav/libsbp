@@ -32,8 +32,6 @@ namespace sbp {
    * preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended
    * that time-matched RTK mode is used when the base station is moving.
    */
-  constexpr u16 MSG_BASELINE_HEADING = 0x020F;
-
   
   struct SBP_ATTR_PACKED MsgBaselineHeading {
     u32 tow; /** GPS Time of Week [ms] */
@@ -41,7 +39,6 @@ namespace sbp {
     u8 n_sats; /** Number of satellites used in solution */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Quaternion 4 component vector
@@ -52,8 +49,6 @@ namespace sbp {
    * be available in future INS versions of Swift Products and is not produced by Piksi Multi 
    * or Duro.
    */
-  constexpr u16 MSG_ORIENT_QUAT = 0x0220;
-
   
   struct SBP_ATTR_PACKED MsgOrientQuat {
     u32 tow; /** GPS Time of Week [ms] */
@@ -67,7 +62,6 @@ namespace sbp {
     float z_accuracy; /** Estimated standard deviation of z [N/A] */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Euler angles
@@ -78,8 +72,6 @@ namespace sbp {
    * to the vehicle body frame.  This message will only be available in future 
    * INS versions of Swift Products and is not produced by Piksi Multi or Duro.
    */
-  constexpr u16 MSG_ORIENT_EULER = 0x0221;
-
   
   struct SBP_ATTR_PACKED MsgOrientEuler {
     u32 tow; /** GPS Time of Week [ms] */
@@ -91,7 +83,6 @@ namespace sbp {
     float yaw_accuracy; /** Estimated standard deviation of yaw [degrees] */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Vehicle Body Frame instantaneous angular rates
@@ -106,8 +97,6 @@ namespace sbp {
    * This message will only be available in future INS versions of Swift Products 
    * and is not produced by Piksi Multi or Duro.
    */
-  constexpr u16 MSG_ANGULAR_RATE = 0x0222;
-
   
   struct SBP_ATTR_PACKED MsgAngularRate {
     u32 tow; /** GPS Time of Week [ms] */
@@ -116,7 +105,6 @@ namespace sbp {
     s32 z; /** angular rate about z axis [microdegrees/s] */
     u8 flags; /** Status flags */
   };
-
   
 
 }  // namespace sbp

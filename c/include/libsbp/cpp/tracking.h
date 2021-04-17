@@ -31,8 +31,6 @@ namespace sbp {
    * The tracking message returns a set tracking channel parameters for a
    * single tracking channel useful for debugging issues.
    */
-  constexpr u16 MSG_TRACKING_STATE_DETAILED_DEP_A = 0x0021;
-
   
   struct SBP_ATTR_PACKED MsgTrackingStateDetailedDepA {
     u64 recv_time; /** Receiver clock time. [ns] */
@@ -72,15 +70,12 @@ signal is in continuous track.
     u8 pset_flags; /** Parameters sets flags. */
     u8 misc_flags; /** Miscellaneous flags. */
   };
-
   
   /**
    * Deprecated
    *
    * Deprecated.
    */
-  constexpr u16 MSG_TRACKING_STATE_DETAILED_DEP = 0x0011;
-
   
   struct SBP_ATTR_PACKED MsgTrackingStateDetailedDep {
     u64 recv_time; /** Receiver clock time. [ns] */
@@ -120,7 +115,6 @@ signal is in continuous track.
     u8 pset_flags; /** Parameters sets flags. */
     u8 misc_flags; /** Miscellaneous flags. */
   };
-
   
   /**
    * Signal tracking channel state
@@ -128,14 +122,12 @@ signal is in continuous track.
    * Tracking channel state for a specific satellite signal and
    * measured signal power.
    */
-
   
   struct SBP_ATTR_PACKED TrackingChannelState {
     GnssSignal sid; /** GNSS signal being tracked */
     u8 fcn; /** Frequency channel number (GLONASS only) */
     u8 cn0; /** Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4] */
   };
-
   
   /**
    * Signal tracking channel states
@@ -144,13 +136,10 @@ signal is in continuous track.
    * channel states. It reports status and carrier-to-noise density
    * measurements for all tracked satellites.
    */
-  constexpr u16 MSG_TRACKING_STATE = 0x0041;
-
-  template<size_t STATES_COUNT = (SBP_MAX_PAYLOAD_LEN - 0) / sizeof(TrackingChannelState)>
+  template<size_t STATES_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(TrackingChannelState)>
   struct SBP_ATTR_PACKED MsgTrackingState {
     TrackingChannelState states[STATES_COUNT]; /** Signal tracking channel state */
   };
-
   
   /**
    * Measurement Engine signal tracking channel state
@@ -161,13 +150,11 @@ signal is in continuous track.
    * carry the FCN as 100 + FCN where FCN is in [-7, +6] or
    * the Slot ID (from 1 to 28)
    */
-
   
   struct SBP_ATTR_PACKED MeasurementState {
     GnssSignal mesid; /** Measurement Engine GNSS signal being tracked (carries either Glonass FCN or SLOT) */
     u8 cn0; /** Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4] */
   };
-
   
   /**
    * Measurement Engine signal tracking channel states
@@ -176,26 +163,21 @@ signal is in continuous track.
    * channel states. It reports status and carrier-to-noise density
    * measurements for all tracked satellites.
    */
-  constexpr u16 MSG_MEASUREMENT_STATE = 0x0061;
-
-  template<size_t STATES_COUNT = (SBP_MAX_PAYLOAD_LEN - 0) / sizeof(MeasurementState)>
+  template<size_t STATES_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(MeasurementState)>
   struct SBP_ATTR_PACKED MsgMeasurementState {
     MeasurementState states[STATES_COUNT]; /** ME signal tracking channel state */
   };
-
   
   /**
    * Complex correlation structure
    *
    * Structure containing in-phase and quadrature correlation components.
    */
-
   
   struct SBP_ATTR_PACKED TrackingChannelCorrelation {
     s16 I; /** In-phase correlation */
     s16 Q; /** Quadrature correlation */
   };
-
   
   /**
    * Tracking channel correlations
@@ -203,28 +185,23 @@ signal is in continuous track.
    * When enabled, a tracking channel can output the correlations at each
    * update interval.
    */
-  constexpr u16 MSG_TRACKING_IQ = 0x002D;
-
   
   struct SBP_ATTR_PACKED MsgTrackingIq {
     u8 channel; /** Tracking channel of origin */
     GnssSignal sid; /** GNSS signal identifier */
     TrackingChannelCorrelation corrs[3]; /** Early, Prompt and Late correlations */
   };
-
   
   /**
    * Complex correlation structure
    *
    * Structure containing in-phase and quadrature correlation components.
    */
-
   
   struct SBP_ATTR_PACKED TrackingChannelCorrelationDep {
     s32 I; /** In-phase correlation */
     s32 Q; /** Quadrature correlation */
   };
-
   
   /**
    * Tracking channel correlations
@@ -232,84 +209,68 @@ signal is in continuous track.
    * When enabled, a tracking channel can output the correlations at each
    * update interval.
    */
-  constexpr u16 MSG_TRACKING_IQ_DEP_B = 0x002C;
-
   
   struct SBP_ATTR_PACKED MsgTrackingIqDepB {
     u8 channel; /** Tracking channel of origin */
     GnssSignal sid; /** GNSS signal identifier */
     TrackingChannelCorrelationDep corrs[3]; /** Early, Prompt and Late correlations */
   };
-
   
   /**
    * Deprecated
    *
    * Deprecated.
    */
-  constexpr u16 MSG_TRACKING_IQ_DEP_A = 0x001C;
-
   
   struct SBP_ATTR_PACKED MsgTrackingIqDepA {
     u8 channel; /** Tracking channel of origin */
     GnssSignalDep sid; /** GNSS signal identifier */
     TrackingChannelCorrelationDep corrs[3]; /** Early, Prompt and Late correlations */
   };
-
   
   /**
    * Deprecated
    *
    * Deprecated.
    */
-
   
   struct SBP_ATTR_PACKED TrackingChannelStateDepA {
     u8 state; /** Status of tracking channel */
     u8 prn; /** PRN-1 being tracked */
     float cn0; /** Carrier-to-noise density [dB Hz] */
   };
-
   
   /**
    * Deprecated
    *
    * Deprecated.
    */
-  constexpr u16 MSG_TRACKING_STATE_DEP_A = 0x0016;
-
-  template<size_t STATES_COUNT = (SBP_MAX_PAYLOAD_LEN - 0) / sizeof(TrackingChannelStateDepA)>
+  template<size_t STATES_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(TrackingChannelStateDepA)>
   struct SBP_ATTR_PACKED MsgTrackingStateDepA {
     TrackingChannelStateDepA states[STATES_COUNT]; /** Satellite tracking channel state */
   };
-
   
   /**
    * Deprecated.
    *
    * Deprecated.
    */
-
   
   struct SBP_ATTR_PACKED TrackingChannelStateDepB {
     u8 state; /** Status of tracking channel */
     GnssSignalDep sid; /** GNSS signal being tracked */
     float cn0; /** Carrier-to-noise density [dB Hz] */
   };
-
   
   /**
    * Deprecated.
    *
    * Deprecated.
    */
-  constexpr u16 MSG_TRACKING_STATE_DEP_B = 0x0013;
-
-  template<size_t STATES_COUNT = (SBP_MAX_PAYLOAD_LEN - 0) / sizeof(TrackingChannelStateDepB)>
+  template<size_t STATES_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(TrackingChannelStateDepB)>
   struct SBP_ATTR_PACKED MsgTrackingStateDepB {
     TrackingChannelStateDepB states[STATES_COUNT]; /** Signal tracking channel state */
   };
-
   
 
 }  // namespace sbp

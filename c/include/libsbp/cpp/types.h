@@ -29,84 +29,72 @@ namespace sbp {
    *
    * Signed 8-bit integer
    */
-
   
   /**
    * None
    *
    * Signed 16-bit integer
    */
-
   
   /**
    * None
    *
    * Signed 32-bit integer
    */
-
   
   /**
    * None
    *
    * Signed 64-bit integer
    */
-
   
   /**
    * None
    *
    * Unsigned 8-bit integer
    */
-
   
   /**
    * None
    *
    * Unsigned 16-bit integer
    */
-
   
   /**
    * None
    *
    * Unsigned 32-bit integer
    */
-
   
   /**
    * None
    *
    * Unsigned 64-bit integer
    */
-
   
   /**
    * None
    *
    * Single-precision float (IEEE-754)
    */
-
   
   /**
    * None
    *
    * Double-precision float (IEEE-754)
    */
-
   
   /**
    * None
    *
    * Fixed or variable length array of any fill type
    */
-
   
   /**
    * None
    *
    * Fixed or variable length string (NULL padded/terminated)
    */
-
   
   /**
    * None
@@ -114,7 +102,6 @@ namespace sbp {
    * A primitive type, typically a u8, can encode boolean and
    * enumerated status flags.
    */
-
   
 
 }  // namespace sbp

@@ -31,14 +31,11 @@ namespace sbp {
    * device containing errors, warnings and informational messages at
    * ERROR, WARNING, DEBUG, INFO logging levels.
    */
-  constexpr u16 MSG_LOG = 0x0401;
-
-  template<size_t TEXT_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + 0) / sizeof(char)>
+  template<size_t TEXT_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgLog {
     u8 level; /** Logging level */
     char text[TEXT_COUNT]; /** Human-readable string */
   };
-
   
   /**
    * Wrapper for FWD a separate stream of information over SBP
@@ -51,28 +48,22 @@ namespace sbp {
    * The protocol identifier identifies what the expected protocol the forwarded msg contains.
    * Protocol 0 represents SBP and the remaining values are implementation defined.
    */
-  constexpr u16 MSG_FWD = 0x0402;
-
-  template<size_t FWD_PAYLOAD_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + sizeof(u8) + 0) / sizeof(char)>
+  template<size_t FWD_PAYLOAD_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u8) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgFwd {
     u8 source; /** source identifier */
     u8 protocol; /** protocol identifier */
     char fwd_payload[FWD_PAYLOAD_COUNT]; /** variable length wrapped binary message */
   };
-
   
   /**
    * Deprecated
    *
    * Deprecated.
    */
-  constexpr u16 MSG_PRINT_DEP = 0x0010;
-
-  template<size_t TEXT_COUNT = (SBP_MAX_PAYLOAD_LEN - 0) / sizeof(char)>
+  template<size_t TEXT_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgPrintDep {
     char text[TEXT_COUNT]; /** Human-readable string */
   };
-
   
 
 }  // namespace sbp

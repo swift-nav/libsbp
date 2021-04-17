@@ -31,8 +31,6 @@ namespace sbp {
    * handshake between the device bootloader and the host. The
    * response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
    */
-  constexpr u16 MSG_BOOTLOADER_HANDSHAKE_REQ = 0x00B3;
-
   
   /**
    * Bootloading handshake response (host <= device)
@@ -43,27 +41,21 @@ namespace sbp {
    * payload contains the bootloader version number and the SBP
    * protocol version number.
    */
-  constexpr u16 MSG_BOOTLOADER_HANDSHAKE_RESP = 0x00B4;
-
-  template<size_t VERSION_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u32) + 0) / sizeof(char)>
+  template<size_t VERSION_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u32) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgBootloaderHandshakeResp {
     u32 flags; /** Bootloader flags */
     char version[VERSION_COUNT]; /** Bootloader version number */
   };
-
   
   /**
    * Bootloader jump to application (host => device)
    *
    * The host initiates the bootloader to jump to the application.
    */
-  constexpr u16 MSG_BOOTLOADER_JUMP_TO_APP = 0x00B1;
-
   
   struct SBP_ATTR_PACKED MsgBootloaderJumpToApp {
     u8 jump; /** Ignored by the device */
   };
-
   
   /**
    * Read FPGA device ID over UART request (host => device)
@@ -75,8 +67,6 @@ namespace sbp {
    * device ID in the payload. Note that this ID is tied to the FPGA,
    * and not related to the Piksi's serial number.
    */
-  constexpr u16 MSG_NAP_DEVICE_DNA_REQ = 0x00DE;
-
   
   /**
    * Read FPGA device ID over UART response (host <= device)
@@ -88,28 +78,22 @@ namespace sbp {
    * device ID in the payload. Note that this ID is tied to the FPGA,
    * and not related to the Piksi's serial number.
    */
-  constexpr u16 MSG_NAP_DEVICE_DNA_RESP = 0x00DD;
-
   
   struct SBP_ATTR_PACKED MsgNapDeviceDnaResp {
     u8 dna[8]; /** 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded
 on the right.
  */
   };
-
   
   /**
    * Deprecated
    *
    * Deprecated.
    */
-  constexpr u16 MSG_BOOTLOADER_HANDSHAKE_DEP_A = 0x00B0;
-
-  template<size_t HANDSHAKE_COUNT = (SBP_MAX_PAYLOAD_LEN - 0) / sizeof(u8)>
+  template<size_t HANDSHAKE_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgBootloaderHandshakeDepA {
     u8 handshake[HANDSHAKE_COUNT]; /** Version number string (not NULL terminated) */
   };
-
   
 
 }  // namespace sbp

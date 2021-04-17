@@ -34,13 +34,11 @@ namespace sbp {
    * The flags field, always a u8, contains the sensor-specific data.
    * The content of flags, for each sensor type, is described in the relevant structures in this section.
    */
-
   
   struct SBP_ATTR_PACKED SolutionInputType {
     u8 sensor_type; /** The type of sensor */
     u8 flags; /** Refer to each InputType description [(XX)InputType] */
   };
-
   
   /**
    * Deprecated
@@ -48,9 +46,7 @@ namespace sbp {
    * This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
    * It focuses primarly, but not only, on GNSS metadata.
    */
-  constexpr u16 MSG_SOLN_META_DEP_A = 0xFF0F;
-
-  template<size_t SOL_IN_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32) + sizeof(u32) + 0) / sizeof(SolutionInputType)>
+  template<size_t SOL_IN_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32) + sizeof(u32) + 0)) / sizeof(SolutionInputType)>
   struct SBP_ATTR_PACKED MsgSolnMetaDepA {
     u16 pdop; /** Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) [0.01] */
     u16 hdop; /** Horizontal Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) [0.01] */
@@ -62,7 +58,6 @@ namespace sbp {
     u32 last_used_gnss_vel_tow; /** Tow of last-used GNSS velocity measurement [ms] */
     SolutionInputType sol_in[SOL_IN_COUNT]; /** Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc. */
   };
-
   
   /**
    * Solution Sensors Metadata
@@ -74,9 +69,7 @@ namespace sbp {
    * If it can, substract 'age gnss' from 'tow' in navigation messages to get TOM. Can be used before alignment is
    * complete in the Fusion Engine, when output solution is the last received valid GNSS solution and its tow is not a TOM.
    */
-  constexpr u16 MSG_SOLN_META = 0xFF0E;
-
-  template<size_t SOL_IN_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u32) + 0) / sizeof(SolutionInputType)>
+  template<size_t SOL_IN_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u32) + 0)) / sizeof(SolutionInputType)>
   struct SBP_ATTR_PACKED MsgSolnMeta {
     u32 tow; /** GPS time of week rounded to the nearest millisecond [ms] */
     u16 pdop; /** Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) [0.01] */
@@ -86,7 +79,6 @@ namespace sbp {
     u32 age_gnss; /** Age and Time Status of the last received valid GNSS solution. [ms] */
     SolutionInputType sol_in[SOL_IN_COUNT]; /** Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc. */
   };
-
   
   /**
    * Instruments the physical type of GNSS sensor input to the fuzed solution.
@@ -94,12 +86,10 @@ namespace sbp {
    * Metadata around the GNSS sensors involved in the fuzed solution.
    * Accessible through sol_in[N].flags in a MSG_SOLN_META.
    */
-
   
   struct SBP_ATTR_PACKED GNSSInputType {
     u8 flags; /** flags that store all relevant info specific to this sensor type. */
   };
-
   
   /**
    * Provides detail about the IMU sensor, its timestamping mode, and its quality for input to the fuzed solution.
@@ -107,12 +97,10 @@ namespace sbp {
    * Metadata around the IMU sensors involved in the fuzed solution.
    * Accessible through sol_in[N].flags in a MSG_SOLN_META.
    */
-
   
   struct SBP_ATTR_PACKED IMUInputType {
     u8 flags; /** Instrument time, grade, and architecture for a sensor. */
   };
-
   
   /**
    * Provides detail about the Odometry sensor, its timestamping mode, and its quality for input to the fuzed solution.
@@ -120,12 +108,10 @@ namespace sbp {
    * Metadata around the Odometry sensors involved in the fuzed solution.
    * Accessible through sol_in[N].flags in a MSG_SOLN_META.
    */
-
   
   struct SBP_ATTR_PACKED OdoInputType {
     u8 flags; /** Instrument ODO rate, grade, and quality. */
   };
-
   
 
 }  // namespace sbp

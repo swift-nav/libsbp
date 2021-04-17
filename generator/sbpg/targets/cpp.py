@@ -26,23 +26,6 @@ VERSION_TEMPLATE_NAME = 'sbp_version_template.hpp'
 CONSTRUCT_CODE = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
                       's64', 'float', 'double'])
 
-SKIP_MESSAGE_IDS = ['MSG_FILEIO_WRITE_REQ']
-
-def commentify(value, indent=0):
-  value = markdown_links(value)
-  if value is None:
-    return
-  if len(value.split('\n')) == 1:
-    return value
-  else:
-    return ('\n' + (' ' * indent) + ' * ').join([l for l in value.split('\n')[:-1]])
-
-def extensions(includes):
-  return [''.join([i.split('.')[0], '.h']) for i in includes if i.split(".")[0] != 'types']
-
-def skip_message(message):
-  return message.identifier in SKIP_MESSAGE_IDS
-
 def pascal_case(value):
   if value.isupper():
     # assuming SCREAMING_SNAKE_CASE
@@ -60,6 +43,55 @@ def snake_case(value):
 
 def screaming_snake_case(value):
   return stringcase.snakecase(value).upper()
+
+def mk_template(message, all_messages):
+  template_fields = extract_template_fields(message, all_messages)
+
+  if template_fields:
+    field_sizeof = []
+    for field in message.fields:
+      if field.identifier == template_fields[0].identifier:
+        continue
+
+      if field.type_id == 'string' and field.options.get('size', None):
+        name = '{}[{}]'.format(mk_id(field), field.options.get('size').value)
+      elif field.type_id == 'array' and field.options.get('size', None):
+        name = '{}[{}]'.format(mk_id(field), field.options.get('size').value)
+      else:
+        name = mk_id(field)
+
+      field_sizeof.append('sizeof({})'.format(name))
+
+    template_entries = ['size_t {} = (SBP_MAX_PAYLOAD_LEN - ({})) / sizeof({})'.format(
+      '{}_COUNT'.format(screaming_snake_case(template_fields[0].identifier)),
+      ' + '.join(field_sizeof + ['0']),
+      mk_id(template_fields[0])
+    )]
+
+    return 'template<{}>'.format(', '.join(template_entries))
+  else:
+    return ''
+
+def is_zero_array(field):
+  return (field.type_id == 'array' or field.type_id == 'string') and not field.options.get('size', None)
+
+def is_templated_field(field, all_messages):
+  field_id = mk_id(field)
+  if field_id not in CONSTRUCT_CODE:
+    field_message = list([message for message in all_messages if pascal_case(message.identifier) == field_id])
+    return field_message and extract_template_fields(field_message[0], all_messages)
+  else:
+    return False;
+
+def extract_template_fields(message, all_messages):
+  template_fields = []
+  for field in message.fields:
+    if is_zero_array(field):
+      template_fields.append(field)
+    elif is_templated_field(field, all_messages):
+      template_fields.append(field)
+
+  return template_fields
 
 def mk_field(field):
   return '{} {}'.format(mk_id(field), mk_size(field))
@@ -92,67 +124,24 @@ def mk_size(field):
   else:
     return '%s;' % field.identifier
 
-def mk_template(message, all_messages):
-  normal_field_types = []
-  zero_array_field = None
-
-  for field in message.fields:
-    field_type = mk_id(field)
-    field_name = field.identifier
-
-    if (field.type_id == 'array' or field.type_id == 'string') and not field.options.get('size', None):
-      zero_array_field = (field_type, field_name)
-    else:
-      normal_field_types.append(field_type)
-
-  if zero_array_field:
-    normal_field_sizeof = ' + '.join(list(['sizeof({})'.format(field_type) for field_type in normal_field_types]) + ['0'])
-    return 'template<size_t {} = (SBP_MAX_PAYLOAD_LEN - {}) / sizeof({})>'.format('{}_COUNT'.format(screaming_snake_case(zero_array_field[1])), normal_field_sizeof, zero_array_field[0])
+def commentify(value, indent=0):
+  value = markdown_links(value)
+  if value is None:
+    return
+  if len(value.split('\n')) == 1:
+    return value
   else:
-    return ''
+    return ('\n' + (' ' * indent) + ' * ').join([l for l in value.split('\n')[:-1]])
 
-def get_bitfield_basename(msg, item):
-    bitfield_name = item.get('desc', '').replace(' ', '_').upper()
-    base_string = 'SBP_{}_{}'.format(msg.upper().replace('MSG_', ''), bitfield_name)
-    base_string = re.sub('[^A-Za-z0-9_]+', '', base_string)
-    return base_string
+def extensions(includes):
+  return [''.join([i.split('.')[0], '.h']) for i in includes if i.split(".")[0] != 'types']
 
-def create_bitfield_macros(field, msg):
-  ret_list = []
-  for item in field.options['fields'].value:
-    base_string = get_bitfield_basename(msg, item)
-    if not base_string.endswith('RESERVED'):
-      nbits = item.get('len')
-      bitrange = (item.get('range')).split(':')
-      start_bit = int(bitrange[0])
-      ret_list.append('#define {}_MASK ({})'.format(base_string, hex((1 << nbits) - 1)))
-      ret_list.append('#define {}_SHIFT ({}u)'.format(base_string, start_bit))
-      ret_list.append("""#define {}_GET(flags) \\
-                             (((flags) >> {}_SHIFT) \\
-                             & {}_MASK)""".format(base_string, base_string, base_string))
-      ret_list.append("""#define {}_SET(flags, val) \\
-                             do {{((flags) |= \\
-                             (((val) & ({}_MASK)) \\
-                             << ({}_SHIFT)));}} while(0)
-                             """.format(base_string, base_string, base_string))
-      ret_list.append('')
-      for value_obj in item.get('vals', []):
-        value_numerical = int(value_obj.get('value'))
-        value_description = value_obj.get('desc', None).upper()
-        value_description = re.sub(r'\([^)]*\)', '', value_description)
-        value_description = re.sub('[ \-]+', '_', value_description.strip())
-        value_description = re.sub('[^A-Za-z0-9_]+', '', value_description)
-        if value_description and value_description.upper() != 'RESERVED':
-          ret_list.append('#define {}_{} ({})'.format(base_string, value_description,
-                                                      value_numerical))
-  return '\n'.join(ret_list)
-
-JENV.filters['commentify'] = commentify
-JENV.filters['mk_field'] = mk_field
 JENV.filters['pascal_case'] = pascal_case
 JENV.filters['snake_case'] = snake_case
-JENV.filters['create_bitfield_macros'] = create_bitfield_macros
+JENV.filters['screaming_snake_case'] = screaming_snake_case
 JENV.filters['mk_template'] = mk_template
+JENV.filters['mk_field'] = mk_field
+JENV.filters['commentify'] = commentify
 
 def render_source(output_dir, package_spec, all_specs):
   path, name = package_spec.filepath
@@ -161,7 +150,7 @@ def render_source(output_dir, package_spec, all_specs):
 
   all_messages = []
   for spec in all_specs:
-    all_messages.extend(package_spec.definitions)
+    all_messages.extend(spec.definitions)
 
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(all_messages=all_messages,
@@ -171,7 +160,7 @@ def render_source(output_dir, package_spec, all_specs):
                                max_msgid_len=package_spec.max_msgid_len,
                                description=package_spec.description,
                                timestamp=package_spec.creation_timestamp,
-                               skip_message=skip_message,
+                               extract_template_fields=extract_template_fields,
                                include=extensions(package_spec.includes)))
 
 def render_version(output_dir, release: ReleaseVersion):

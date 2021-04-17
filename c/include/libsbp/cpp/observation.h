@@ -30,7 +30,6 @@ namespace sbp {
    *
    * Header of a GNSS observation message.
    */
-
   
   struct SBP_ATTR_PACKED ObservationHeader {
     GPSTime t; /** GNSS time of this observation */
@@ -39,7 +38,6 @@ of the sequence (n), second nibble is the zero-indexed
 counter (ith packet of n)
  */
   };
-
   
   /**
    * GNSS doppler measurement.
@@ -49,13 +47,11 @@ counter (ith packet of n)
    * doppler and 8-bits of fractional doppler. This doppler is defined
    * as positive for approaching satellites.
    */
-
   
   struct SBP_ATTR_PACKED Doppler {
     s16 i; /** Doppler whole Hz [Hz] */
     u8 f; /** Doppler fractional part [Hz / 256] */
   };
-
   
   /**
    * GNSS observations for a particular satellite signal.
@@ -68,7 +64,6 @@ counter (ith packet of n)
    * or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
    * peformed.
    */
-
   
   struct SBP_ATTR_PACKED PackedObsContent {
     u32 P; /** Pseudorange observation [2 cm] */
@@ -88,14 +83,12 @@ estimate for the signal is valid.
  */
     GnssSignal sid; /** GNSS signal identifier (16 bit) */
   };
-
   
   /**
    * Network correction for a particular satellite signal.
    *
    * Pseudorange and carrier phase network corrections for a satellite signal.
    */
-
   
   struct SBP_ATTR_PACKED PackedOsrContent {
     u32 P; /** Pseudorange observation [2 cm] */
@@ -114,7 +107,6 @@ from 0 to 15 and the most significant nibble is reserved for future use.
     u16 tropo_std; /** Slant tropospheric correction standard deviation [5 mm] */
     u16 range_std; /** Orbit/clock/bias correction projected on range standard deviation [5 mm] */
   };
-
   
   /**
    * GPS satellite observations
@@ -127,16 +119,13 @@ from 0 to 15 and the most significant nibble is reserved for future use.
    * are be interoperable with 3rd party receivers and conform
    * with typical RTCMv3 GNSS observations.
    */
-  constexpr u16 MSG_OBS = 0x004A;
-
-  template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(ObservationHeader) + 0) / sizeof(PackedObsContent)>
+  template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(ObservationHeader) + 0)) / sizeof(PackedObsContent)>
   struct SBP_ATTR_PACKED MsgObs {
     ObservationHeader header; /** Header of a GPS observation message */
     PackedObsContent obs[OBS_COUNT]; /** Pseudorange and carrier phase observation for a
 satellite being tracked.
  */
   };
-
   
   /**
    * Base station position
@@ -147,15 +136,12 @@ satellite being tracked.
    * location of the base station. Any error here will result in an
    * error in the pseudo-absolute position output.
    */
-  constexpr u16 MSG_BASE_POS_LLH = 0x0044;
-
   
   struct SBP_ATTR_PACKED MsgBasePosLlh {
     double lat; /** Latitude [deg] */
     double lon; /** Longitude [deg] */
     double height; /** Height [m] */
   };
-
   
   /**
    * Base station position in ECEF
@@ -167,17 +153,13 @@ satellite being tracked.
    * station. Any error here will result in an error in the
    * pseudo-absolute position output.
    */
-  constexpr u16 MSG_BASE_POS_ECEF = 0x0048;
-
   
   struct SBP_ATTR_PACKED MsgBasePosEcef {
     double x; /** ECEF X coodinate [m] */
     double y; /** ECEF Y coordinate [m] */
     double z; /** ECEF Z coordinate [m] */
   };
-
   
-
   
   struct SBP_ATTR_PACKED EphemerisCommonContent {
     GnssSignal sid; /** GNSS signal identifier (16 bit) */
@@ -191,9 +173,7 @@ SBAS: 0 = valid, non-zero = invalid
 GLO: 0 = valid, non-zero = invalid
  */
   };
-
   
-
   
   struct SBP_ATTR_PACKED EphemerisCommonContentDepB {
     GnssSignal sid; /** GNSS signal identifier (16 bit) */
@@ -206,9 +186,7 @@ GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
 Others: 0 = valid, non-zero = invalid
  */
   };
-
   
-
   
   struct SBP_ATTR_PACKED EphemerisCommonContentDepA {
     GnssSignalDep sid; /** GNSS signal identifier */
@@ -222,7 +200,6 @@ SBAS: 0 = valid, non-zero = invalid
 GLO: 0 = valid, non-zero = invalid
  */
   };
-
   
   /**
    * Satellite broadcast ephemeris for GPS
@@ -233,8 +210,6 @@ GLO: 0 = valid, non-zero = invalid
    * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
    * 20-III) for more details.
    */
-  constexpr u16 MSG_EPHEMERIS_GPS_DEP_E = 0x0081;
-
   
   struct SBP_ATTR_PACKED MsgEphemerisGpsDepE {
     EphemerisCommonContentDepA common; /** Values common for all ephemeris types */
@@ -261,7 +236,6 @@ GLO: 0 = valid, non-zero = invalid
     u8 iode; /** Issue of ephemeris data */
     u16 iodc; /** Issue of clock data */
   };
-
   
   /**
    * Deprecated
@@ -269,8 +243,6 @@ GLO: 0 = valid, non-zero = invalid
    * This observation message has been deprecated in favor of
    * ephemeris message using floats for size reduction.
    */
-  constexpr u16 MSG_EPHEMERIS_GPS_DEP_F = 0x0086;
-
   
   struct SBP_ATTR_PACKED MsgEphemerisGpsDepF {
     EphemerisCommonContentDepB common; /** Values common for all ephemeris types */
@@ -297,7 +269,6 @@ GLO: 0 = valid, non-zero = invalid
     u8 iode; /** Issue of ephemeris data */
     u16 iodc; /** Issue of clock data */
   };
-
   
   /**
    * Satellite broadcast ephemeris for GPS
@@ -308,8 +279,6 @@ GLO: 0 = valid, non-zero = invalid
    * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
    * 20-III) for more details.
    */
-  constexpr u16 MSG_EPHEMERIS_GPS = 0x008A;
-
   
   struct SBP_ATTR_PACKED MsgEphemerisGps {
     EphemerisCommonContent common; /** Values common for all ephemeris types */
@@ -336,7 +305,6 @@ GLO: 0 = valid, non-zero = invalid
     u8 iode; /** Issue of ephemeris data */
     u16 iodc; /** Issue of clock data */
   };
-
   
   /**
    * Satellite broadcast ephemeris for QZSS
@@ -345,8 +313,6 @@ GLO: 0 = valid, non-zero = invalid
    * parameters that is used to calculate QZSS satellite position,
    * velocity, and clock offset.
    */
-  constexpr u16 MSG_EPHEMERIS_QZSS = 0x008E;
-
   
   struct SBP_ATTR_PACKED MsgEphemerisQzss {
     EphemerisCommonContent common; /** Values common for all ephemeris types */
@@ -373,7 +339,6 @@ GLO: 0 = valid, non-zero = invalid
     u8 iode; /** Issue of ephemeris data */
     u16 iodc; /** Issue of clock data */
   };
-
   
   /**
    * Satellite broadcast ephemeris for BDS
@@ -383,8 +348,6 @@ GLO: 0 = valid, non-zero = invalid
    * velocity, and clock offset. Please see the BeiDou Navigation
    * Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
    */
-  constexpr u16 MSG_EPHEMERIS_BDS = 0x0089;
-
   
   struct SBP_ATTR_PACKED MsgEphemerisBds {
     EphemerisCommonContent common; /** Values common for all ephemeris types */
@@ -420,7 +383,6 @@ Calculated from the navigation data parameter t_oe per RTCM/CSNO recommendation:
 IODE = mod (t_oc / 720, 240)
  */
   };
-
   
   /**
    * Deprecated
@@ -428,8 +390,6 @@ IODE = mod (t_oc / 720, 240)
    * This observation message has been deprecated in favor of
    * an ephemeris message with explicit source of NAV data.
    */
-  constexpr u16 MSG_EPHEMERIS_GAL_DEP_A = 0x0095;
-
   
   struct SBP_ATTR_PACKED MsgEphemerisGalDepA {
     EphemerisCommonContent common; /** Values common for all ephemeris types */
@@ -457,7 +417,6 @@ IODE = mod (t_oc / 720, 240)
     u16 iode; /** Issue of data (IODnav) */
     u16 iodc; /** Issue of data (IODnav). Always equal to iode */
   };
-
   
   /**
    * Satellite broadcast ephemeris for Galileo
@@ -467,8 +426,6 @@ IODE = mod (t_oc / 720, 240)
    * velocity, and clock offset. Please see the Signal In Space ICD
    * OS SIS ICD, Issue 1.3, December 2016 for more details.
    */
-  constexpr u16 MSG_EPHEMERIS_GAL = 0x008D;
-
   
   struct SBP_ATTR_PACKED MsgEphemerisGal {
     EphemerisCommonContent common; /** Values common for all ephemeris types */
@@ -497,10 +454,7 @@ IODE = mod (t_oc / 720, 240)
     u16 iodc; /** Issue of data (IODnav). Always equal to iode */
     u8 source; /** 0=I/NAV, 1=F/NAV */
   };
-
   
-  constexpr u16 MSG_EPHEMERIS_SBAS_DEP_A = 0x0082;
-
   
   struct SBP_ATTR_PACKED MsgEphemerisSbasDepA {
     EphemerisCommonContentDepA common; /** Values common for all ephemeris types */
@@ -510,7 +464,6 @@ IODE = mod (t_oc / 720, 240)
     double a_gf0; /** Time offset of the GEO clock w.r.t. SBAS Network Time [s] */
     double a_gf1; /** Drift of the GEO clock w.r.t. SBAS Network Time [s/s] */
   };
-
   
   /**
    * Satellite broadcast ephemeris for GLO
@@ -521,8 +474,6 @@ IODE = mod (t_oc / 720, 240)
    * Characteristics of words of immediate information (ephemeris parameters)"
    * for more details.
    */
-  constexpr u16 MSG_EPHEMERIS_GLO_DEP_A = 0x0083;
-
   
   struct SBP_ATTR_PACKED MsgEphemerisGloDepA {
     EphemerisCommonContentDepA common; /** Values common for all ephemeris types */
@@ -532,7 +483,6 @@ IODE = mod (t_oc / 720, 240)
     double vel[3]; /** Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s] */
     double acc[3]; /** Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2] */
   };
-
   
   /**
    * Deprecated
@@ -540,8 +490,6 @@ IODE = mod (t_oc / 720, 240)
    * This observation message has been deprecated in favor of
    * ephemeris message using floats for size reduction.
    */
-  constexpr u16 MSG_EPHEMERIS_SBAS_DEP_B = 0x0084;
-
   
   struct SBP_ATTR_PACKED MsgEphemerisSbasDepB {
     EphemerisCommonContentDepB common; /** Values common for all ephemeris types */
@@ -551,10 +499,7 @@ IODE = mod (t_oc / 720, 240)
     double a_gf0; /** Time offset of the GEO clock w.r.t. SBAS Network Time [s] */
     double a_gf1; /** Drift of the GEO clock w.r.t. SBAS Network Time [s/s] */
   };
-
   
-  constexpr u16 MSG_EPHEMERIS_SBAS = 0x008C;
-
   
   struct SBP_ATTR_PACKED MsgEphemerisSbas {
     EphemerisCommonContent common; /** Values common for all ephemeris types */
@@ -564,7 +509,6 @@ IODE = mod (t_oc / 720, 240)
     float a_gf0; /** Time offset of the GEO clock w.r.t. SBAS Network Time [s] */
     float a_gf1; /** Drift of the GEO clock w.r.t. SBAS Network Time [s/s] */
   };
-
   
   /**
    * Satellite broadcast ephemeris for GLO
@@ -575,8 +519,6 @@ IODE = mod (t_oc / 720, 240)
    * Characteristics of words of immediate information (ephemeris parameters)"
    * for more details.
    */
-  constexpr u16 MSG_EPHEMERIS_GLO_DEP_B = 0x0085;
-
   
   struct SBP_ATTR_PACKED MsgEphemerisGloDepB {
     EphemerisCommonContentDepB common; /** Values common for all ephemeris types */
@@ -586,7 +528,6 @@ IODE = mod (t_oc / 720, 240)
     double vel[3]; /** Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s] */
     double acc[3]; /** Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2] */
   };
-
   
   /**
    * Satellite broadcast ephemeris for GLO
@@ -597,8 +538,6 @@ IODE = mod (t_oc / 720, 240)
    * Characteristics of words of immediate information (ephemeris parameters)"
    * for more details.
    */
-  constexpr u16 MSG_EPHEMERIS_GLO_DEP_C = 0x0087;
-
   
   struct SBP_ATTR_PACKED MsgEphemerisGloDepC {
     EphemerisCommonContentDepB common; /** Values common for all ephemeris types */
@@ -610,7 +549,6 @@ IODE = mod (t_oc / 720, 240)
     double acc[3]; /** Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2] */
     u8 fcn; /** Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
   };
-
   
   /**
    * Deprecated
@@ -618,8 +556,6 @@ IODE = mod (t_oc / 720, 240)
    * This observation message has been deprecated in favor of
    * ephemeris message using floats for size reduction.
    */
-  constexpr u16 MSG_EPHEMERIS_GLO_DEP_D = 0x0088;
-
   
   struct SBP_ATTR_PACKED MsgEphemerisGloDepD {
     EphemerisCommonContentDepB common; /** Values common for all ephemeris types */
@@ -632,7 +568,6 @@ IODE = mod (t_oc / 720, 240)
     u8 fcn; /** Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
     u8 iod; /** Issue of data. Equal to the 7 bits of the immediate data word t_b */
   };
-
   
   /**
    * Satellite broadcast ephemeris for GLO
@@ -643,8 +578,6 @@ IODE = mod (t_oc / 720, 240)
    * Characteristics of words of immediate information (ephemeris parameters)"
    * for more details.
    */
-  constexpr u16 MSG_EPHEMERIS_GLO = 0x008B;
-
   
   struct SBP_ATTR_PACKED MsgEphemerisGlo {
     EphemerisCommonContent common; /** Values common for all ephemeris types */
@@ -657,7 +590,6 @@ IODE = mod (t_oc / 720, 240)
     u8 fcn; /** Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid */
     u8 iod; /** Issue of data. Equal to the 7 bits of the immediate data word t_b */
   };
-
   
   /**
    * Satellite broadcast ephemeris
@@ -668,8 +600,6 @@ IODE = mod (t_oc / 720, 240)
    * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
    * 20-III) for more details.
    */
-  constexpr u16 MSG_EPHEMERIS_DEP_D = 0x0080;
-
   
   struct SBP_ATTR_PACKED MsgEphemerisDepD {
     double tgd; /** Group delay differential between L1 and L2 [s] */
@@ -702,15 +632,12 @@ IODE = mod (t_oc / 720, 240)
     u16 iodc; /** Issue of clock data */
     u32 reserved; /** Reserved field */
   };
-
   
   /**
    * Deprecated
    *
    * Deprecated.
    */
-  constexpr u16 MSG_EPHEMERIS_DEP_A = 0x001A;
-
   
   struct SBP_ATTR_PACKED MsgEphemerisDepA {
     double tgd; /** Group delay differential between L1 and L2 [s] */
@@ -740,15 +667,12 @@ IODE = mod (t_oc / 720, 240)
     u8 healthy; /** Satellite is healthy? */
     u8 prn; /** PRN being tracked */
   };
-
   
   /**
    * Deprecated
    *
    * Deprecated.
    */
-  constexpr u16 MSG_EPHEMERIS_DEP_B = 0x0046;
-
   
   struct SBP_ATTR_PACKED MsgEphemerisDepB {
     double tgd; /** Group delay differential between L1 and L2 [s] */
@@ -779,7 +703,6 @@ IODE = mod (t_oc / 720, 240)
     u8 prn; /** PRN being tracked */
     u8 iode; /** Issue of ephemeris data */
   };
-
   
   /**
    * Satellite broadcast ephemeris
@@ -790,8 +713,6 @@ IODE = mod (t_oc / 720, 240)
    * Space Segment/Navigation user interfaces (ICD-GPS-200, Table
    * 20-III) for more details.
    */
-  constexpr u16 MSG_EPHEMERIS_DEP_C = 0x0047;
-
   
   struct SBP_ATTR_PACKED MsgEphemerisDepC {
     double tgd; /** Group delay differential between L1 and L2 [s] */
@@ -824,14 +745,12 @@ IODE = mod (t_oc / 720, 240)
     u16 iodc; /** Issue of clock data */
     u32 reserved; /** Reserved field */
   };
-
   
   /**
    * Header for observation message.
    *
    * Header of a GPS observation message.
    */
-
   
   struct SBP_ATTR_PACKED ObservationHeaderDep {
     GPSTimeDep t; /** GPS time of this observation */
@@ -840,7 +759,6 @@ of the sequence (n), second nibble is the zero-indexed
 counter (ith packet of n)
  */
   };
-
   
   /**
    * GPS carrier phase measurement.
@@ -851,20 +769,17 @@ counter (ith packet of n)
    * sign convention than a typical GPS receiver and the phase has
    * the opposite sign as the pseudorange.
    */
-
   
   struct SBP_ATTR_PACKED CarrierPhaseDepA {
     s32 i; /** Carrier phase whole cycles [cycles] */
     u8 f; /** Carrier phase fractional part [cycles / 256] */
   };
-
   
   /**
    * Deprecated
    *
    * Deprecated.
    */
-
   
   struct SBP_ATTR_PACKED PackedObsContentDepA {
     u32 P; /** Pseudorange observation [cm] */
@@ -876,7 +791,6 @@ carrier phase ambiguity may have changed.
  */
     u8 prn; /** PRN-1 identifier of the satellite signal */
   };
-
   
   /**
    * GPS observations for a particular satellite signal.
@@ -884,7 +798,6 @@ carrier phase ambiguity may have changed.
    * Pseudorange and carrier phase observation for a satellite being
    * tracked.  Pseudoranges are referenced to a nominal pseudorange.
    */
-
   
   struct SBP_ATTR_PACKED PackedObsContentDepB {
     u32 P; /** Pseudorange observation [cm] */
@@ -896,7 +809,6 @@ carrier phase ambiguity may have changed.
  */
     GnssSignalDep sid; /** GNSS signal identifier */
   };
-
   
   /**
    * GPS observations for a particular satellite signal.
@@ -905,7 +817,6 @@ carrier phase ambiguity may have changed.
    * tracked. The observations are be interoperable with 3rd party
    * receivers and conform with typical RTCMv3 GNSS observations.
    */
-
   
   struct SBP_ATTR_PACKED PackedObsContentDepC {
     u32 P; /** Pseudorange observation [2 cm] */
@@ -917,23 +828,19 @@ carrier phase ambiguity may have changed.
  */
     GnssSignalDep sid; /** GNSS signal identifier */
   };
-
   
   /**
    * Deprecated
    *
    * Deprecated.
    */
-  constexpr u16 MSG_OBS_DEP_A = 0x0045;
-
-  template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(ObservationHeaderDep) + 0) / sizeof(PackedObsContentDepA)>
+  template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(ObservationHeaderDep) + 0)) / sizeof(PackedObsContentDepA)>
   struct SBP_ATTR_PACKED MsgObsDepA {
     ObservationHeaderDep header; /** Header of a GPS observation message */
     PackedObsContentDepA obs[OBS_COUNT]; /** Pseudorange and carrier phase observation for a
 satellite being tracked.
  */
   };
-
   
   /**
    * Deprecated
@@ -945,16 +852,13 @@ satellite being tracked.
    * most 3rd party GNSS receievers or typical RTCMv3
    * observations.
    */
-  constexpr u16 MSG_OBS_DEP_B = 0x0043;
-
-  template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(ObservationHeaderDep) + 0) / sizeof(PackedObsContentDepB)>
+  template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(ObservationHeaderDep) + 0)) / sizeof(PackedObsContentDepB)>
   struct SBP_ATTR_PACKED MsgObsDepB {
     ObservationHeaderDep header; /** Header of a GPS observation message */
     PackedObsContentDepB obs[OBS_COUNT]; /** Pseudorange and carrier phase observation for a
 satellite being tracked.
  */
   };
-
   
   /**
    * Deprecated
@@ -967,16 +871,13 @@ satellite being tracked.
    * are interoperable with 3rd party receivers and conform
    * with typical RTCMv3 GNSS observations.
    */
-  constexpr u16 MSG_OBS_DEP_C = 0x0049;
-
-  template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(ObservationHeaderDep) + 0) / sizeof(PackedObsContentDepC)>
+  template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(ObservationHeaderDep) + 0)) / sizeof(PackedObsContentDepC)>
   struct SBP_ATTR_PACKED MsgObsDepC {
     ObservationHeaderDep header; /** Header of a GPS observation message */
     PackedObsContentDepC obs[OBS_COUNT]; /** Pseudorange and carrier phase observation for a
 satellite being tracked.
  */
   };
-
   
   /**
    * Iono corrections
@@ -985,8 +886,6 @@ satellite being tracked.
    * utilize the ionospheric model for computation of the ionospheric delay.
    * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
    */
-  constexpr u16 MSG_IONO = 0x0090;
-
   
   struct SBP_ATTR_PACKED MsgIono {
     GPSTimeSec t_nmct; /** Navigation Message Correction Table Valitidy Time */
@@ -999,23 +898,18 @@ satellite being tracked.
     double b2;
     double b3;
   };
-
   
   /**
    * L2C capability mask
    *
    * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
    */
-  constexpr u16 MSG_SV_CONFIGURATION_GPS_DEP = 0x0091;
-
   
   struct SBP_ATTR_PACKED MsgSvConfigurationGpsDep {
     GPSTimeSec t_nmct; /** Navigation Message Correction Table Valitidy Time */
     u32 l2c_mask; /** L2C capability mask, SV32 bit being MSB, SV1 bit being LSB */
   };
-
   
-
   
   struct SBP_ATTR_PACKED GnssCapb {
     u64 gps_active; /** GPS SV active mask */
@@ -1038,24 +932,18 @@ https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
     u64 gal_active; /** GAL active mask */
     u64 gal_e5; /** GAL E5 active mask */
   };
-
   
-  constexpr u16 MSG_GNSS_CAPB = 0x0096;
-
   
   struct SBP_ATTR_PACKED MsgGnssCapb {
     GPSTimeSec t_nmct; /** Navigation Message Correction Table Validity Time */
     GnssCapb gc; /** GNSS capabilities masks */
   };
-
   
   /**
    * Group Delay
    *
    * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
    */
-  constexpr u16 MSG_GROUP_DELAY_DEP_A = 0x0092;
-
   
   struct SBP_ATTR_PACKED MsgGroupDelayDepA {
     GPSTimeDep t_op; /** Data Predict Time of Week */
@@ -1068,15 +956,12 @@ LSB indicating tgd validity etc.
     s16 isc_l1ca;
     s16 isc_l2c;
   };
-
   
   /**
    * Group Delay
    *
    * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
    */
-  constexpr u16 MSG_GROUP_DELAY_DEP_B = 0x0093;
-
   
   struct SBP_ATTR_PACKED MsgGroupDelayDepB {
     GPSTimeSec t_op; /** Data Predict Time of Week */
@@ -1089,15 +974,12 @@ LSB indicating tgd validity etc.
     s16 isc_l1ca;
     s16 isc_l2c;
   };
-
   
   /**
    * Group Delay
    *
    * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
    */
-  constexpr u16 MSG_GROUP_DELAY = 0x0094;
-
   
   struct SBP_ATTR_PACKED MsgGroupDelay {
     GPSTimeSec t_op; /** Data Predict Time of Week */
@@ -1110,9 +992,7 @@ LSB indicating tgd validity etc.
     s16 isc_l1ca;
     s16 isc_l2c;
   };
-
   
-
   
   struct SBP_ATTR_PACKED AlmanacCommonContent {
     GnssSignal sid; /** GNSS signal identifier */
@@ -1137,9 +1017,7 @@ Satellite health status for GLO:
     and suitable for navigation.
  */
   };
-
   
-
   
   struct SBP_ATTR_PACKED AlmanacCommonContentDep {
     GnssSignalDep sid; /** GNSS signal identifier */
@@ -1164,7 +1042,6 @@ Satellite health status for GLO:
     and suitable for navigation.
  */
   };
-
   
   /**
    * Satellite broadcast ephemeris for GPS
@@ -1174,8 +1051,6 @@ Satellite health status for GLO:
    * Please see the Navstar GPS Space Segment/Navigation user interfaces
    * (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
    */
-  constexpr u16 MSG_ALMANAC_GPS_DEP = 0x0070;
-
   
   struct SBP_ATTR_PACKED MsgAlmanacGpsDep {
     AlmanacCommonContentDep common; /** Values common for all almanac types */
@@ -1189,7 +1064,6 @@ Satellite health status for GLO:
     double af0; /** Polynomial clock correction coefficient (clock bias) [s] */
     double af1; /** Polynomial clock correction coefficient (clock drift) [s/s] */
   };
-
   
   /**
    * Satellite broadcast ephemeris for GPS
@@ -1199,8 +1073,6 @@ Satellite health status for GLO:
    * Please see the Navstar GPS Space Segment/Navigation user interfaces
    * (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
    */
-  constexpr u16 MSG_ALMANAC_GPS = 0x0072;
-
   
   struct SBP_ATTR_PACKED MsgAlmanacGps {
     AlmanacCommonContent common; /** Values common for all almanac types */
@@ -1214,7 +1086,6 @@ Satellite health status for GLO:
     double af0; /** Polynomial clock correction coefficient (clock bias) [s] */
     double af1; /** Polynomial clock correction coefficient (clock drift) [s/s] */
   };
-
   
   /**
    * Satellite broadcast ephemeris for GLO
@@ -1224,8 +1095,6 @@ Satellite health status for GLO:
    * Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
    * almanac" for details.
    */
-  constexpr u16 MSG_ALMANAC_GLO_DEP = 0x0071;
-
   
   struct SBP_ATTR_PACKED MsgAlmanacGloDep {
     AlmanacCommonContentDep common; /** Values common for all almanac types */
@@ -1239,7 +1108,6 @@ coordinate system
     double epsilon; /** Eccentricity at instant of t_lambda */
     double omega; /** Argument of perigee at instant of t_lambda [rad] */
   };
-
   
   /**
    * Satellite broadcast ephemeris for GLO
@@ -1249,8 +1117,6 @@ coordinate system
    * Please see the GLO ICD 5.1 "Chapter 4.5 Non-immediate information and
    * almanac" for details.
    */
-  constexpr u16 MSG_ALMANAC_GLO = 0x0073;
-
   
   struct SBP_ATTR_PACKED MsgAlmanacGlo {
     AlmanacCommonContent common; /** Values common for all almanac types */
@@ -1264,7 +1130,6 @@ coordinate system
     double epsilon; /** Eccentricity at instant of t_lambda */
     double omega; /** Argument of perigee at instant of t_lambda [rad] */
   };
-
   
   /**
    * GLONASS L1/L2 Code-Phase biases
@@ -1274,8 +1139,6 @@ coordinate system
    * with mixed receiver types (e.g. receiver of different
    * manufacturers)
    */
-  constexpr u16 MSG_GLO_BIASES = 0x0075;
-
   
   struct SBP_ATTR_PACKED MsgGloBiases {
     u8 mask; /** GLONASS FDMA signals mask [boolean] */
@@ -1284,21 +1147,18 @@ coordinate system
     s16 l2ca_bias; /** GLONASS L2 C/A Code-Phase Bias [m * 0.02] */
     s16 l2p_bias; /** GLONASS L2 P Code-Phase Bias [m * 0.02] */
   };
-
   
   /**
    * Satellite azimuth and elevation.
    *
    * Satellite azimuth and elevation.
    */
-
   
   struct SBP_ATTR_PACKED SvAzEl {
     GnssSignal sid; /** GNSS signal identifier */
     u8 az; /** Azimuth angle (range 0..179) [deg * 2] */
     s8 el; /** Elevation angle (range -90..90) [deg] */
   };
-
   
   /**
    * Satellite azimuths and elevations
@@ -1306,29 +1166,23 @@ coordinate system
    * Azimuth and elevation angles of all the visible satellites
    * that the device does have ephemeris or almanac for.
    */
-  constexpr u16 MSG_SV_AZ_EL = 0x0097;
-
-  template<size_t AZEL_COUNT = (SBP_MAX_PAYLOAD_LEN - 0) / sizeof(SvAzEl)>
+  template<size_t AZEL_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(SvAzEl)>
   struct SBP_ATTR_PACKED MsgSvAzEl {
     SvAzEl azel[AZEL_COUNT]; /** Azimuth and elevation per satellite */
   };
-
   
   /**
    * OSR corrections
    *
    * The OSR message contains network corrections in an observation-like format
    */
-  constexpr u16 MSG_OSR = 0x0640;
-
-  template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(ObservationHeader) + 0) / sizeof(PackedOsrContent)>
+  template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(ObservationHeader) + 0)) / sizeof(PackedOsrContent)>
   struct SBP_ATTR_PACKED MsgOsr {
     ObservationHeader header; /** Header of a GPS observation message */
     PackedOsrContent obs[OBS_COUNT]; /** Network correction for a
 satellite signal.
  */
   };
-
   
 
 }  // namespace sbp

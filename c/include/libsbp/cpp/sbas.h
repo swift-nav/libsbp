@@ -31,8 +31,6 @@ namespace sbp {
    * This message is sent once per second per SBAS satellite. ME checks the
    * parity of the data block and sends only blocks that pass the check.
    */
-  constexpr u16 MSG_SBAS_RAW = 0x7777;
-
   
   struct SBP_ATTR_PACKED MsgSbasRaw {
     GnssSignal sid; /** GNSS signal identifier. */
@@ -40,7 +38,6 @@ namespace sbp {
     u8 message_type; /** SBAS message type (0-63) */
     u8 data[27]; /** Raw SBAS data field of 212 bits (last byte padded with zeros). */
   };
-
   
 
 }  // namespace sbp

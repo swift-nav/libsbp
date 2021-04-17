@@ -30,9 +30,7 @@ namespace sbp {
    * This message indicates the process state of the top 10 heaviest
    * consumers of CPU on the system.
    */
-  constexpr u16 MSG_LINUX_CPU_STATE_DEP_A = 0x7F00;
-
-  template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(char) + 0) / sizeof(char)>
+  template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(char[15]) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgLinuxCpuStateDepA {
     u8 index; /** sequence of this status message, values from 0-9 */
     u16 pid; /** the PID of the process */
@@ -40,7 +38,6 @@ namespace sbp {
     char tname[15]; /** fixed length string representing the thread name */
     char cmdline[CMDLINE_COUNT]; /** the command line (as much as it fits in the remaining packet) */
   };
-
   
   /**
    * List memory state on the system. DEPRECATED.
@@ -48,9 +45,7 @@ namespace sbp {
    * This message indicates the process state of the top 10 heaviest
    * consumers of memory on the system.
    */
-  constexpr u16 MSG_LINUX_MEM_STATE_DEP_A = 0x7F01;
-
-  template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(char) + 0) / sizeof(char)>
+  template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(char[15]) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgLinuxMemStateDepA {
     u8 index; /** sequence of this status message, values from 0-9 */
     u16 pid; /** the PID of the process */
@@ -58,15 +53,12 @@ namespace sbp {
     char tname[15]; /** fixed length string representing the thread name */
     char cmdline[CMDLINE_COUNT]; /** the command line (as much as it fits in the remaining packet) */
   };
-
   
   /**
    * CPU, Memory and Process Starts/Stops. DEPRECATED.
    *
    * This presents a summary of CPU and memory utilization.
    */
-  constexpr u16 MSG_LINUX_SYS_STATE_DEP_A = 0x7F02;
-
   
   struct SBP_ATTR_PACKED MsgLinuxSysStateDepA {
     u16 mem_total; /** total system memory */
@@ -76,16 +68,13 @@ namespace sbp {
     u16 procs_stopping; /** number of processes that stopped during collection phase */
     u16 pid_count; /** the count of processes on the system */
   };
-
   
   /**
    * A list of processes with high socket counts
    *
    * Top 10 list of processes with high socket counts.
    */
-  constexpr u16 MSG_LINUX_PROCESS_SOCKET_COUNTS = 0x7F03;
-
-  template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + 0) / sizeof(char)>
+  template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgLinuxProcessSocketCounts {
     u8 index; /** sequence of this status message, values from 0-9 */
     u16 pid; /** the PID of the process in question */
@@ -102,16 +91,13 @@ namespace sbp {
  */
     char cmdline[CMDLINE_COUNT]; /** the command line of the process in question */
   };
-
   
   /**
    * A list of processes with deep socket queues
    *
    * Top 10 list of sockets with deep queues.
    */
-  constexpr u16 MSG_LINUX_PROCESS_SOCKET_QUEUES = 0x7F04;
-
-  template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(char) + 0) / sizeof(char)>
+  template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(char[64]) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgLinuxProcessSocketQueues {
     u8 index; /** sequence of this status message, values from 0-9 */
     u16 pid; /** the PID of the process in question */
@@ -132,15 +118,12 @@ of the connection.
  */
     char cmdline[CMDLINE_COUNT]; /** the command line of the process in question */
   };
-
   
   /**
    * Summary of socket usage across the system
    *
    * Summaries the socket usage across the system.
    */
-  constexpr u16 MSG_LINUX_SOCKET_USAGE = 0x7F05;
-
   
   struct SBP_ATTR_PACKED MsgLinuxSocketUsage {
     u32 avg_queue_depth; /** average socket queue depths across all sockets on the system */
@@ -152,32 +135,26 @@ the first entry corresponds to the first enabled bit in `types_reported`.
 the first entry corresponds to the first enabled bit in `types_reported`.
  */
   };
-
   
   /**
    * Summary of processes with large amounts of open file descriptors
    *
    * Top 10 list of processes with a large number of open file descriptors.
    */
-  constexpr u16 MSG_LINUX_PROCESS_FD_COUNT = 0x7F06;
-
-  template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + sizeof(u16) + sizeof(u16) + 0) / sizeof(char)>
+  template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u16) + sizeof(u16) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgLinuxProcessFdCount {
     u8 index; /** sequence of this status message, values from 0-9 */
     u16 pid; /** the PID of the process in question */
     u16 fd_count; /** a count of the number of file descriptors opened by the process */
     char cmdline[CMDLINE_COUNT]; /** the command line of the process in question */
   };
-
   
   /**
    * Summary of open file descriptors on the system
    *
    * Summary of open file descriptors on the system.
    */
-  constexpr u16 MSG_LINUX_PROCESS_FD_SUMMARY = 0x7F07;
-
-  template<size_t MOST_OPENED_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u32) + 0) / sizeof(char)>
+  template<size_t MOST_OPENED_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u32) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgLinuxProcessFdSummary {
     u32 sys_fd_count; /** count of total FDs open on the system */
     char most_opened[MOST_OPENED_COUNT]; /** A null delimited list of strings which alternates between
@@ -187,7 +164,6 @@ syntax "32\0/var/log/syslog\012\0/tmp/foo\0" with the end
 of the list being 2 NULL terminators in a row.
  */
   };
-
   
   /**
    * List CPU state on the system
@@ -195,9 +171,7 @@ of the list being 2 NULL terminators in a row.
    * This message indicates the process state of the top 10 heaviest
    * consumers of CPU on the system, including a timestamp.
    */
-  constexpr u16 MSG_LINUX_CPU_STATE = 0x7F08;
-
-  template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32) + sizeof(u8) + sizeof(char) + 0) / sizeof(char)>
+  template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32) + sizeof(u8) + sizeof(char[15]) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgLinuxCpuState {
     u8 index; /** sequence of this status message, values from 0-9 */
     u16 pid; /** the PID of the process */
@@ -207,7 +181,6 @@ of the list being 2 NULL terminators in a row.
     char tname[15]; /** fixed length string representing the thread name */
     char cmdline[CMDLINE_COUNT]; /** the command line (as much as it fits in the remaining packet) */
   };
-
   
   /**
    * List memory state on the system
@@ -215,9 +188,7 @@ of the list being 2 NULL terminators in a row.
    * This message indicates the process state of the top 10 heaviest
    * consumers of memory on the system, including a timestamp.
    */
-  constexpr u16 MSG_LINUX_MEM_STATE = 0x7F09;
-
-  template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32) + sizeof(u8) + sizeof(char) + 0) / sizeof(char)>
+  template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32) + sizeof(u8) + sizeof(char[15]) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgLinuxMemState {
     u8 index; /** sequence of this status message, values from 0-9 */
     u16 pid; /** the PID of the process */
@@ -227,15 +198,12 @@ of the list being 2 NULL terminators in a row.
     char tname[15]; /** fixed length string representing the thread name */
     char cmdline[CMDLINE_COUNT]; /** the command line (as much as it fits in the remaining packet) */
   };
-
   
   /**
    * CPU, Memory and Process Starts/Stops.
    *
    * This presents a summary of CPU and memory utilization, including a timestamp.
    */
-  constexpr u16 MSG_LINUX_SYS_STATE = 0x7F0A;
-
   
   struct SBP_ATTR_PACKED MsgLinuxSysState {
     u16 mem_total; /** total system memory, in MiB */
@@ -247,7 +215,6 @@ of the list being 2 NULL terminators in a row.
     u32 time; /** timestamp of message, refer to flags field for how to interpret */
     u8 flags; /** flags */
   };
-
   
 
 }  // namespace sbp

@@ -31,8 +31,6 @@ namespace sbp {
    * This message is sent out when an object is stored into NDB. If needed
    * message could also be sent out when fetching an object from NDB.
    */
-  constexpr u16 MSG_NDB_EVENT = 0x0400;
-
   
   struct SBP_ATTR_PACKED MsgNdbEvent {
     u64 recv_time; /** HW time in milliseconds. [ms] */
@@ -55,7 +53,6 @@ number, valid only if data_source is NDB_DS_SBP. Reserved in case
 of other data_source.
  */
   };
-
   
 
 }  // namespace sbp

@@ -29,7 +29,6 @@ namespace sbp {
    *
    * Signal identifier containing constellation, band, and satellite identifier
    */
-
   
   struct SBP_ATTR_PACKED GnssSignal {
     u8 sat; /** Constellation-specific satellite identifier. This field for Glonass can  
@@ -38,7 +37,6 @@ the Slot ID in [1,28]
  */
     u8 code; /** Signal constellation, band and code */
   };
-
   
   /**
    * Space vehicle identifier
@@ -46,20 +44,17 @@ the Slot ID in [1,28]
    * A (Constellation ID, satellite ID) tuple that uniquely identifies
    * a space vehicle
    */
-
   
   struct SBP_ATTR_PACKED SvId {
     u8 satId; /** ID of the space vehicle within its constellation */
     u8 constellation; /** Constellation ID to which the SV belongs */
   };
-
   
   /**
    * Deprecated
    *
    * Deprecated.
    */
-
   
   struct SBP_ATTR_PACKED GnssSignalDep {
     u16 sat; /** Constellation-specific satellite identifier.
@@ -70,7 +65,6 @@ Note: unlike GnssSignal, GPS satellites are encoded as
     u8 code; /** Signal constellation, band and code */
     u8 reserved; /** Reserved */
   };
-
   
   /**
    * Millisecond-accurate GPS time
@@ -79,13 +73,11 @@ Note: unlike GnssSignal, GPS satellites are encoded as
    * milliseconds since beginning of the week on the Saturday/Sunday
    * transition.
    */
-
   
   struct SBP_ATTR_PACKED GPSTimeDep {
     u32 tow; /** Milliseconds since start of GPS week [ms] */
     u16 wn; /** GPS week number [week] */
   };
-
   
   /**
    * Whole second accurate GPS time
@@ -94,13 +86,11 @@ Note: unlike GnssSignal, GPS satellites are encoded as
    * seconds since beginning of the week on the Saturday/Sunday
    * transition.
    */
-
   
   struct SBP_ATTR_PACKED GPSTimeSec {
     u32 tow; /** Seconds since start of GPS week [s] */
     u16 wn; /** GPS week number [week] */
   };
-
   
   /**
    * Nanosecond-accurate receiver clock time
@@ -110,7 +100,6 @@ Note: unlike GnssSignal, GPS satellites are encoded as
    * transition. In most cases, observations are epoch aligned
    * so ns field will be 0.
    */
-
   
   struct SBP_ATTR_PACKED GPSTime {
     u32 tow; /** Milliseconds since start of GPS week [ms] */
@@ -119,7 +108,6 @@ from -500000 to 500000)
  [ns] */
     u16 wn; /** GPS week number [week] */
   };
-
   
   /**
    * GNSS carrier phase measurement.
@@ -129,13 +117,11 @@ from -500000 to 500000)
    * cycles and 8-bits of fractional cycles. This phase has the
    * same sign as the pseudorange.
    */
-
   
   struct SBP_ATTR_PACKED CarrierPhase {
     s32 i; /** Carrier phase whole cycles [cycles] */
     u8 f; /** Carrier phase fractional part [cycles / 256] */
   };
-
   
 
 }  // namespace sbp

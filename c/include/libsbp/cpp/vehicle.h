@@ -36,8 +36,6 @@ namespace sbp {
    * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry measurements
    * with GNSS. Processor time shall roll over to zero after one week.
    */
-  constexpr u16 MSG_ODOMETRY = 0x0903;
-
   
   struct SBP_ATTR_PACKED MsgOdometry {
     u32 tow; /** Time field representing either milliseconds in the GPS Week or local CPU
@@ -48,7 +46,6 @@ for the exact source of this timestamp.
  [mm/s] */
     u8 flags; /** Status flags */
   };
-
   
   /**
    * Accumulated wheeltick count message
@@ -64,8 +61,6 @@ for the exact source of this timestamp.
    * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise wheeltick measurements
    * with GNSS. Local CPU time shall roll over to zero after one week.
    */
-  constexpr u16 MSG_WHEELTICK = 0x0904;
-
   
   struct SBP_ATTR_PACKED MsgWheeltick {
     u64 time; /** Time field representing either microseconds since the last PPS, microseconds in the GPS
@@ -81,7 +76,6 @@ incrementing if travelling into one direction and decrementing when travelling i
 opposite direction.
  [arbitrary distance units] */
   };
-
   
 
 }  // namespace sbp

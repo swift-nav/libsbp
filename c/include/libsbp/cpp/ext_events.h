@@ -30,8 +30,6 @@ namespace sbp {
    * Reports detection of an external event, the GPS time it occurred,
    * which pin it was and whether it was rising or falling.
    */
-  constexpr u16 MSG_EXT_EVENT = 0x0101;
-
   
   struct SBP_ATTR_PACKED MsgExtEvent {
     u16 wn; /** GPS week number [weeks] */
@@ -42,7 +40,6 @@ from -500000 to 500000)
     u8 flags; /** Flags */
     u8 pin; /** Pin number.  0..9 = DEBUG0..9. */
   };
-
   
 
 }  // namespace sbp

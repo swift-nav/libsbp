@@ -29,8 +29,6 @@ namespace sbp {
    *
    * Raw data from the magnetometer.
    */
-  constexpr u16 MSG_MAG_RAW = 0x0902;
-
   
   struct SBP_ATTR_PACKED MsgMagRaw {
     u32 tow; /** Milliseconds since start of GPS week. If the high bit is set, the
@@ -42,7 +40,6 @@ time is unknown or invalid.
     s16 mag_y; /** Magnetic field in the body frame Y axis [microteslas] */
     s16 mag_z; /** Magnetic field in the body frame Z axis [microteslas] */
   };
-
   
 
 }  // namespace sbp

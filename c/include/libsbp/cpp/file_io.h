@@ -36,16 +36,13 @@ namespace sbp {
    * print "Invalid fileio read message". A device will only respond
    * to this message when it is received from sender ID 0x42.
    */
-  constexpr u16 MSG_FILEIO_READ_REQ = 0x00A8;
-
-  template<size_t FILENAME_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u32) + sizeof(u32) + sizeof(u8) + 0) / sizeof(char)>
+  template<size_t FILENAME_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u32) + sizeof(u32) + sizeof(u8) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgFileioReadReq {
     u32 sequence; /** Read sequence number */
     u32 offset; /** File offset [bytes] */
     u8 chunk_size; /** Chunk size to read [bytes] */
     char filename[FILENAME_COUNT]; /** Name of the file to read from */
   };
-
   
   /**
    * File read from the file system (host <= device)
@@ -56,14 +53,11 @@ namespace sbp {
    * were succesfully read. The sequence number in the response is
    * preserved from the request.
    */
-  constexpr u16 MSG_FILEIO_READ_RESP = 0x00A3;
-
-  template<size_t CONTENTS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u32) + 0) / sizeof(u8)>
+  template<size_t CONTENTS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u32) + 0)) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgFileioReadResp {
     u32 sequence; /** Read sequence number */
     u8 contents[CONTENTS_COUNT]; /** Contents of read file */
   };
-
   
   /**
    * List files in a directory (host => device)
@@ -79,16 +73,13 @@ namespace sbp {
    * A device will only respond to this message when it is received
    * from sender ID 0x42.
    */
-  constexpr u16 MSG_FILEIO_READ_DIR_REQ = 0x00A9;
-
-  template<size_t DIRNAME_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u32) + sizeof(u32) + 0) / sizeof(char)>
+  template<size_t DIRNAME_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u32) + sizeof(u32) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgFileioReadDirReq {
     u32 sequence; /** Read sequence number */
     u32 offset; /** The offset to skip the first n elements of the file list
  */
     char dirname[DIRNAME_COUNT]; /** Name of the directory to list */
   };
-
   
   /**
    * Files listed in a directory (host <= device)
@@ -100,14 +91,11 @@ namespace sbp {
    * entry containing just the character 0xFF. The sequence number in
    * the response is preserved from the request.
    */
-  constexpr u16 MSG_FILEIO_READ_DIR_RESP = 0x00AA;
-
-  template<size_t CONTENTS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u32) + 0) / sizeof(u8)>
+  template<size_t CONTENTS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u32) + 0)) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgFileioReadDirResp {
     u32 sequence; /** Read sequence number */
     u8 contents[CONTENTS_COUNT]; /** Contents of read directory */
   };
-
   
   /**
    * Delete a file from the file system (host => device)
@@ -117,13 +105,10 @@ namespace sbp {
    * print "Invalid fileio remove message". A device will only
    * process this message when it is received from sender ID 0x42.
    */
-  constexpr u16 MSG_FILEIO_REMOVE = 0x00AC;
-
-  template<size_t FILENAME_COUNT = (SBP_MAX_PAYLOAD_LEN - 0) / sizeof(char)>
+  template<size_t FILENAME_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgFileioRemove {
     char filename[FILENAME_COUNT]; /** Name of the file to delete */
   };
-
   
   /**
    * File written to (host <= device)
@@ -134,13 +119,10 @@ namespace sbp {
    * write. The sequence number in the response is preserved from the
    * request.
    */
-  constexpr u16 MSG_FILEIO_WRITE_RESP = 0x00AB;
-
   
   struct SBP_ATTR_PACKED MsgFileioWriteResp {
     u32 sequence; /** Write sequence number */
   };
-
   
   /**
    * Request advice on the optimal configuration for FileIO.
@@ -150,13 +132,10 @@ namespace sbp {
    * throughput by supporting a large window of FileIO data
    * that can be in-flight during read or write operations.
    */
-  constexpr u16 MSG_FILEIO_CONFIG_REQ = 0x1001;
-
   
   struct SBP_ATTR_PACKED MsgFileioConfigReq {
     u32 sequence; /** Advice sequence number */
   };
-
   
   /**
    * Response with advice on the optimal configuration for FileIO.
@@ -167,8 +146,6 @@ namespace sbp {
    * throughput by supporting a large window of FileIO data
    * that can be in-flight during read or write operations.
    */
-  constexpr u16 MSG_FILEIO_CONFIG_RESP = 0x1002;
-
   
   struct SBP_ATTR_PACKED MsgFileioConfigResp {
     u32 sequence; /** Advice sequence number */
@@ -176,7 +153,6 @@ namespace sbp {
     u32 batch_size; /** The number of SBP packets sent in one PDU */
     u32 fileio_version; /** The version of FileIO that is supported */
   };
-
   
 
 }  // namespace sbp

@@ -31,13 +31,11 @@ namespace sbp {
    * Code biases are to be added to pseudorange.
    * The corrections conform with typical RTCMv3 MT1059 and 1065.
    */
-
   
   struct SBP_ATTR_PACKED CodeBiasesContent {
     u8 code; /** Signal constellation, band and code */
     s16 value; /** Code bias value [0.01 m] */
   };
-
   
   /**
    * SSR phase biases corrections for a particular satellite.
@@ -45,7 +43,6 @@ namespace sbp {
    * Phase biases are to be added to carrier phase measurements.
    * The corrections conform with typical RTCMv3 MT1059 and 1065.
    */
-
   
   struct SBP_ATTR_PACKED PhaseBiasesContent {
     u8 code; /** Signal constellation, band and code */
@@ -56,7 +53,6 @@ Increased for every discontinuity in phase.
  */
     s32 bias; /** Phase bias for specified signal [0.1 mm] */
   };
-
   
   /**
    * Header for the MSG_SSR_STEC_CORRECTION message.
@@ -65,7 +61,6 @@ Increased for every discontinuity in phase.
    * messages, since SBP message a limited to 255 bytes.  The header
    * is used to tie multiple SBP messages into a sequence.
    */
-
   
   struct SBP_ATTR_PACKED STECHeader {
     u16 tile_set_id; /** Unique identifier of the tile set this tile belongs to. */
@@ -79,7 +74,6 @@ following RTCM DF391 specification.
     u8 iod_atmo; /** IOD of the SSR atmospheric correction
  */
   };
-
   
   /**
    * Header for the MSG_SSR_GRIDDED_CORRECTION message.
@@ -88,7 +82,6 @@ following RTCM DF391 specification.
    * which are not suppported in SBP, so each grid point will
    * be identified by the index.
    */
-
   
   struct SBP_ATTR_PACKED GriddedCorrectionHeader {
     u16 tile_set_id; /** Unique identifier of the tile set this tile belongs to. */
@@ -105,14 +98,12 @@ following RTCM DF391 specification.
 specifcation in units of m.
  */
   };
-
   
   /**
    * None
    *
    * STEC polynomial for the given satellite.
    */
-
   
   struct SBP_ATTR_PACKED STECSatElement {
     SvId sv_id; /** Unique space vehicle identifier */
@@ -122,20 +113,17 @@ but in units of TECU instead of m.
     s16 stec_coeff[4]; /** Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
  [C00 = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2] */
   };
-
   
   /**
    * None
    *
    * Troposphere vertical delays at the grid point.
    */
-
   
   struct SBP_ATTR_PACKED TroposphericDelayCorrectionNoStd {
     s16 hydro; /** Hydrostatic vertical delay [4 mm (add 2.3 m to get actual vertical hydro delay)] */
     s8 wet; /** Wet vertical delay [4 mm (add 0.252 m to get actual vertical wet delay)] */
   };
-
   
   /**
    * None
@@ -143,7 +131,6 @@ but in units of TECU instead of m.
    * Troposphere vertical delays (mean and standard deviation) at the grid
    * point.
    */
-
   
   struct SBP_ATTR_PACKED TroposphericDelayCorrection {
     s16 hydro; /** Hydrostatic vertical delay [4 mm (add 2.3 m to get actual vertical hydro delay)] */
@@ -152,20 +139,17 @@ but in units of TECU instead of m.
 stddev <= (3^class * (1 + value/16) - 1) mm
 ] */
   };
-
   
   /**
    * None
    *
    * STEC residual for the given satellite at the grid point.
    */
-
   
   struct SBP_ATTR_PACKED STECResidualNoStd {
     SvId sv_id; /** space vehicle identifier */
     s16 residual; /** STEC residual [0.04 TECU] */
   };
-
   
   /**
    * None
@@ -173,7 +157,6 @@ stddev <= (3^class * (1 + value/16) - 1) mm
    * STEC residual (mean and standard deviation) for the given satellite
    * at the grid point,
    */
-
   
   struct SBP_ATTR_PACKED STECResidual {
     SvId sv_id; /** space vehicle identifier */
@@ -182,7 +165,6 @@ stddev <= (3^class * (1 + value/16) - 1) mm
 stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
 ] */
   };
-
   
   /**
    * Correction data for a single grid point.
@@ -190,14 +172,12 @@ stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
    * Contains one tropo delay, plus STEC residuals for each satellite at the
    * grid point.
    */
-
-  template<size_t STEC_RESIDUALS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u16) + sizeof(TroposphericDelayCorrectionNoStd) + 0) / sizeof(STECResidualNoStd)>
+  template<size_t STEC_RESIDUALS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u16) + sizeof(TroposphericDelayCorrectionNoStd) + 0)) / sizeof(STECResidualNoStd)>
   struct SBP_ATTR_PACKED GridElementNoStd {
     u16 index; /** Index of the grid point */
     TroposphericDelayCorrectionNoStd tropo_delay_correction; /** Wet and hydrostatic vertical delays */
     STECResidualNoStd stec_residuals[STEC_RESIDUALS_COUNT]; /** STEC residuals for each satellite */
   };
-
   
   /**
    * Correction data for a single grid point.
@@ -205,14 +185,12 @@ stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
    * Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
    * stddev) for each satellite at the grid point.
    */
-
-  template<size_t STEC_RESIDUALS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u16) + sizeof(TroposphericDelayCorrection) + 0) / sizeof(STECResidual)>
+  template<size_t STEC_RESIDUALS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u16) + sizeof(TroposphericDelayCorrection) + 0)) / sizeof(STECResidual)>
   struct SBP_ATTR_PACKED GridElement {
     u16 index; /** Index of the grid point */
     TroposphericDelayCorrection tropo_delay_correction; /** Wet and hydrostatic vertical delays (mean, stddev) */
     STECResidual stec_residuals[STEC_RESIDUALS_COUNT]; /** STEC residuals for each satellite (mean, stddev) */
   };
-
   
   /**
    * Precise orbit and clock correction
@@ -222,8 +200,6 @@ stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
    * ephemeris and is typically an equivalent to the 1060
    * and 1066 RTCM message types
    */
-  constexpr u16 MSG_SSR_ORBIT_CLOCK = 0x05DD;
-
   
   struct SBP_ATTR_PACKED MsgSsrOrbitClock {
     GPSTimeSec time; /** GNSS reference time of the correction */
@@ -246,7 +222,6 @@ generating configuration
     s32 c1; /** C1 polynomial coefficient for correction of broadcast satellite clock [0.001 mm/s] */
     s32 c2; /** C2 polynomial coefficient for correction of broadcast satellite clock [0.00002 mm/s^-2] */
   };
-
   
   /**
    * Precise code biases correction
@@ -256,9 +231,7 @@ generating configuration
    * to get corrected pseudorange. It is typically
    * an equivalent to the 1059 and 1065 RTCM message types
    */
-  constexpr u16 MSG_SSR_CODE_BIASES = 0x05E1;
-
-  template<size_t BIASES_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(GPSTimeSec) + sizeof(GnssSignal) + sizeof(u8) + sizeof(u8) + 0) / sizeof(CodeBiasesContent)>
+  template<size_t BIASES_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(GPSTimeSec) + sizeof(GnssSignal) + sizeof(u8) + sizeof(u8) + 0)) / sizeof(CodeBiasesContent)>
   struct SBP_ATTR_PACKED MsgSsrCodeBiases {
     GPSTimeSec time; /** GNSS reference time of the correction */
     GnssSignal sid; /** GNSS signal identifier (16 bit) */
@@ -271,7 +244,6 @@ generating configuration
  */
     CodeBiasesContent biases[BIASES_COUNT]; /** Code biases for the different satellite signals */
   };
-
   
   /**
    * Precise phase biases correction
@@ -283,9 +255,7 @@ generating configuration
    * the phase wind-up correction.
    * It is typically an equivalent to the 1265 RTCM message types
    */
-  constexpr u16 MSG_SSR_PHASE_BIASES = 0x05E6;
-
-  template<size_t BIASES_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(GPSTimeSec) + sizeof(GnssSignal) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(s8) + 0) / sizeof(PhaseBiasesContent)>
+  template<size_t BIASES_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(GPSTimeSec) + sizeof(GnssSignal) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(s8) + 0)) / sizeof(PhaseBiasesContent)>
   struct SBP_ATTR_PACKED MsgSsrPhaseBiases {
     GPSTimeSec time; /** GNSS reference time of the correction */
     GnssSignal sid; /** GNSS signal identifier (16 bit) */
@@ -306,7 +276,6 @@ generating configuration
 satellite being tracked.
  */
   };
-
   
   /**
    * STEC correction polynomial coeffcients.
@@ -318,14 +287,11 @@ satellite being tracked.
    * 
    * It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
    */
-  constexpr u16 MSG_SSR_STEC_CORRECTION = 0x05FB;
-
-  template<size_t STEC_SAT_LIST_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(STECHeader) + 0) / sizeof(STECSatElement)>
+  template<size_t STEC_SAT_LIST_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(STECHeader) + 0)) / sizeof(STECSatElement)>
   struct SBP_ATTR_PACKED MsgSsrStecCorrection {
     STECHeader header; /** Header of a STEC polynomial coeffcient message. */
     STECSatElement stec_sat_list[STEC_SAT_LIST_COUNT]; /** Array of STEC polynomial coeffcients for each space vehicle. */
   };
-
   
   /**
    * Gridded troposphere and STEC correction residuals.
@@ -334,15 +300,12 @@ satellite being tracked.
    * 
    * It is typically equivalent to the QZSS CLAS Sub Type 9 messages
    */
-  constexpr u16 MSG_SSR_GRIDDED_CORRECTION = 0x05FC;
-
-  
+  template<size_t ELEMENT_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(GriddedCorrectionHeader) + 0)) / sizeof(GridElement)>
   struct SBP_ATTR_PACKED MsgSsrGriddedCorrection {
     GriddedCorrectionHeader header; /** Header of a gridded correction message */
     GridElement element; /** Tropo and STEC residuals for the given grid point.
  */
   };
-
   
   /**
    * Definition of a SSR atmospheric correction tile.
@@ -356,8 +319,6 @@ satellite being tracked.
    * element GNSS-SSR-CorrectionPoints. SBP only supports gridded arrays of
    * correction points, not lists of points.
    */
-  constexpr u16 MSG_SSR_TILE_DEFINITION = 0x05F6;
-
   
   struct SBP_ATTR_PACKED MsgSsrTileDefinition {
     u16 tile_set_id; /** Unique identifier of the tile set this tile belongs to. */
@@ -417,10 +378,7 @@ See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but
 note the definition of the bits is inverted.
  */
   };
-
   
-  constexpr u16 MSG_SSR_ORBIT_CLOCK_DEP_A = 0x05DC;
-
   
   struct SBP_ATTR_PACKED MsgSsrOrbitClockDepA {
     GPSTimeSec time; /** GNSS reference time of the correction */
@@ -443,7 +401,6 @@ generating configuration
     s32 c1; /** C1 polynomial coefficient for correction of broadcast satellite clock [0.001 mm/s] */
     s32 c2; /** C2 polynomial coefficient for correction of broadcast satellite clock [0.00002 mm/s^-2] */
   };
-
   
   /**
    * Header for MSG_SSR_STEC_CORRECTION_DEP message
@@ -452,7 +409,6 @@ generating configuration
    * messages, since SBP message a limited to 255 bytes.  The header
    * is used to tie multiple SBP messages into a sequence.
    */
-
   
   struct SBP_ATTR_PACKED STECHeaderDepA {
     GPSTimeSec time; /** GNSS reference time of the correction */
@@ -464,7 +420,6 @@ following RTCM DF391 specification.
     u8 iod_atmo; /** IOD of the SSR atmospheric correction
  */
   };
-
   
   /**
    * Header for MSG_SSR_GRIDDED_CORRECTION_DEP
@@ -473,7 +428,6 @@ following RTCM DF391 specification.
    * which are not suppported in SBP, so each grid point will
    * be identified by the index.
    */
-
   
   struct SBP_ATTR_PACKED GriddedCorrectionHeaderDepA {
     GPSTimeSec time; /** GNSS reference time of the correction */
@@ -488,7 +442,6 @@ following RTCM DF391 specification.
 specifcation in units of m.
  */
   };
-
   
   /**
    * Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
@@ -496,7 +449,6 @@ specifcation in units of m.
    * Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
    * Also includes an RLE encoded validity list.
    */
-
   
   struct SBP_ATTR_PACKED GridDefinitionHeaderDepA {
     u8 region_size_inverse; /** region_size (deg) = 10 / region_size_inverse
@@ -510,40 +462,28 @@ specifcation in units of m.
     u8 num_msgs; /** Number of messages in the dataset */
     u8 seq_num; /** Postion of this message in the dataset */
   };
-
   
-  constexpr u16 MSG_SSR_STEC_CORRECTION_DEP_A = 0x05EB;
-
-  template<size_t STEC_SAT_LIST_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(STECHeaderDepA) + 0) / sizeof(STECSatElement)>
+  template<size_t STEC_SAT_LIST_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(STECHeaderDepA) + 0)) / sizeof(STECSatElement)>
   struct SBP_ATTR_PACKED MsgSsrStecCorrectionDepA {
     STECHeaderDepA header; /** Header of a STEC message */
     STECSatElement stec_sat_list[STEC_SAT_LIST_COUNT]; /** Array of STEC information for each space vehicle */
   };
-
   
-  constexpr u16 MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A = 0x05F0;
-
-  
+  template<size_t ELEMENT_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(GriddedCorrectionHeaderDepA) + 0)) / sizeof(GridElementNoStd)>
   struct SBP_ATTR_PACKED MsgSsrGriddedCorrectionNoStdDepA {
     GriddedCorrectionHeaderDepA header; /** Header of a Gridded Correction message */
     GridElementNoStd element; /** Tropo and STEC residuals for the given grid point */
   };
-
   
-  constexpr u16 MSG_SSR_GRIDDED_CORRECTION_DEP_A = 0x05FA;
-
-  
+  template<size_t ELEMENT_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(GriddedCorrectionHeaderDepA) + 0)) / sizeof(GridElement)>
   struct SBP_ATTR_PACKED MsgSsrGriddedCorrectionDepA {
     GriddedCorrectionHeaderDepA header; /** Header of a Gridded Correction message */
     GridElement element; /** Tropo and STEC residuals for the given grid point (mean
 and standard deviation)
  */
   };
-
   
-  constexpr u16 MSG_SSR_GRID_DEFINITION_DEP_A = 0x05F5;
-
-  template<size_t RLE_LIST_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(GridDefinitionHeaderDepA) + 0) / sizeof(u8)>
+  template<size_t RLE_LIST_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(GridDefinitionHeaderDepA) + 0)) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgSsrGridDefinitionDepA {
     GridDefinitionHeaderDepA header; /** Header of a Gridded Correction message */
     u8 rle_list[RLE_LIST_COUNT]; /** Run Length Encode list of quadrants that contain valid data.
@@ -552,7 +492,6 @@ essentially the index of the quadrants that contain transitions between
 valid and invalid (and vice versa) are encoded as u8 integers.
  */
   };
-
   
 
 }  // namespace sbp

@@ -30,13 +30,10 @@ namespace sbp {
    * This message can contain any application specific user data up to a
    * maximum length of 255 bytes per message.
    */
-  constexpr u16 MSG_USER_DATA = 0x0800;
-
-  template<size_t CONTENTS_COUNT = (SBP_MAX_PAYLOAD_LEN - 0) / sizeof(u8)>
+  template<size_t CONTENTS_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgUserData {
     u8 contents[CONTENTS_COUNT]; /** User data payload */
   };
-
   
 
 }  // namespace sbp

@@ -34,9 +34,7 @@ namespace sbp {
    * is exceeded. Note that the sector-containing addresses must be
    * erased before addresses can be programmed.
    */
-  constexpr u16 MSG_FLASH_PROGRAM = 0x00E6;
-
-  template<size_t DATA_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + sizeof(u8) + sizeof(u8) + 0) / sizeof(u8)>
+  template<size_t DATA_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u8[3]) + sizeof(u8) + 0)) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgFlashProgram {
     u8 target; /** Target flags */
     u8 addr_start[3]; /** Starting address offset to program [bytes] */
@@ -45,7 +43,6 @@ starting address
  [bytes] */
     u8 data[DATA_COUNT]; /** Data to program addresses with, with length N=addr_len */
   };
-
   
   /**
    * Flash response message (host <= device).
@@ -55,13 +52,10 @@ starting address
    * and write messages, such as MSG_FLASH_READ_REQ, or
    * MSG_FLASH_PROGRAM, may return this message on failure.
    */
-  constexpr u16 MSG_FLASH_DONE = 0x00E0;
-
   
   struct SBP_ATTR_PACKED MsgFlashDone {
     u8 response; /** Response flags */
   };
-
   
   /**
    * Read STM or M25 flash address request (host => device).
@@ -74,8 +68,6 @@ starting address
    * FLASH_INVALID_ADDR (3) if the address is outside of the allowed
    * range.
    */
-  constexpr u16 MSG_FLASH_READ_REQ = 0x00E7;
-
   
   struct SBP_ATTR_PACKED MsgFlashReadReq {
     u8 target; /** Target flags */
@@ -84,7 +76,6 @@ starting address
 starting address
  [bytes] */
   };
-
   
   /**
    * Read STM or M25 flash address response (host <= device).
@@ -97,8 +88,6 @@ starting address
    * FLASH_INVALID_ADDR (3) if the address is outside of the allowed
    * range.
    */
-  constexpr u16 MSG_FLASH_READ_RESP = 0x00E1;
-
   
   struct SBP_ATTR_PACKED MsgFlashReadResp {
     u8 target; /** Target flags */
@@ -107,7 +96,6 @@ starting address
 starting address
  [bytes] */
   };
-
   
   /**
    * Erase sector of device flash memory (host => device).
@@ -118,8 +106,6 @@ starting address
    * on success or FLASH_INVALID_FLASH (1) if the flash specified is
    * invalid.
    */
-  constexpr u16 MSG_FLASH_ERASE = 0x00E2;
-
   
   struct SBP_ATTR_PACKED MsgFlashErase {
     u8 target; /** Target flags */
@@ -127,7 +113,6 @@ starting address
 the M25)
  */
   };
-
   
   /**
    * Lock sector of STM flash memory (host => device)
@@ -135,13 +120,10 @@ the M25)
    * The flash lock message locks a sector of the STM flash
    * memory. The device replies with a MSG_FLASH_DONE message.
    */
-  constexpr u16 MSG_STM_FLASH_LOCK_SECTOR = 0x00E3;
-
   
   struct SBP_ATTR_PACKED MsgStmFlashLockSector {
     u32 sector; /** Flash sector number to lock */
   };
-
   
   /**
    * Unlock sector of STM flash memory (host => device)
@@ -149,13 +131,10 @@ the M25)
    * The flash unlock message unlocks a sector of the STM flash
    * memory. The device replies with a MSG_FLASH_DONE message.
    */
-  constexpr u16 MSG_STM_FLASH_UNLOCK_SECTOR = 0x00E4;
-
   
   struct SBP_ATTR_PACKED MsgStmFlashUnlockSector {
     u32 sector; /** Flash sector number to unlock */
   };
-
   
   /**
    * Read device's hardcoded unique ID request (host => device)
@@ -166,8 +145,6 @@ the M25)
    * responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
    * ID in the payload.
    */
-  constexpr u16 MSG_STM_UNIQUE_ID_REQ = 0x00E8;
-
   
   /**
    * Read device's hardcoded unique ID response (host <= device)
@@ -178,13 +155,10 @@ the M25)
    * responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
    * ID in the payload..
    */
-  constexpr u16 MSG_STM_UNIQUE_ID_RESP = 0x00E5;
-
   
   struct SBP_ATTR_PACKED MsgStmUniqueIdResp {
     u8 stm_id[12]; /** Device unique ID */
   };
-
   
   /**
    * Write M25 flash status register (host => device)
@@ -192,13 +166,10 @@ the M25)
    * The flash status message writes to the 8-bit M25 flash status
    * register. The device replies with a MSG_FLASH_DONE message.
    */
-  constexpr u16 MSG_M25_FLASH_WRITE_STATUS = 0x00F3;
-
   
   struct SBP_ATTR_PACKED MsgM25FlashWriteStatus {
     u8 status[1]; /** Byte to write to the M25 flash status register */
   };
-
   
 
 }  // namespace sbp

@@ -27,7 +27,7 @@
 ((*- endfor *))
 
 namespace sbp {
-  ((* for message in package_messages if not skip_message(message) *))
+  ((* for message in package_messages if extract_template_fields(message, all_messages) | length < 2 *))
   ((*- if message.desc *))
   /**
    * (((message.short_desc)))
@@ -35,11 +35,7 @@ namespace sbp {
    * (((message.desc|commentify(2))))
    */
   ((*- endif *))
-  ((*- if message.is_real_message *))
-  constexpr u16 (((message.identifier))) = ((('0x%04X'|format(message.sbp_id))));
-  ((*- endif *))
   ((*- if message.fields *))
-
   (((message|mk_template(all_messages))))
   struct SBP_ATTR_PACKED (((message.identifier|pascal_case))) {
     ((*- for field in message.fields *))
@@ -51,7 +47,6 @@ namespace sbp {
     ((*- endfor *))
   };
   ((*- endif *))
-
   ((* endfor *))
 
 }  // namespace sbp

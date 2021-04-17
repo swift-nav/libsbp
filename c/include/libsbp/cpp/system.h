@@ -32,15 +32,12 @@ namespace sbp {
    * the system has started and is now ready to respond to commands
    * or configuration requests.
    */
-  constexpr u16 MSG_STARTUP = 0xFF00;
-
   
   struct SBP_ATTR_PACKED MsgStartup {
     u8 cause; /** Cause of startup */
     u8 startup_type; /** Startup type */
     u16 reserved; /** Reserved */
   };
-
   
   /**
    * Status of received corrections
@@ -49,16 +46,13 @@ namespace sbp {
    * corrections.  It is expected to be sent with each receipt of a complete
    * corrections packet.
    */
-  constexpr u16 MSG_DGNSS_STATUS = 0xFF02;
-
-  template<size_t SOURCE_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + sizeof(u16) + sizeof(u8) + 0) / sizeof(char)>
+  template<size_t SOURCE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u16) + sizeof(u8) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgDgnssStatus {
     u8 flags; /** Status flags */
     u16 latency; /** Latency of observation receipt [deci-seconds] */
     u8 num_signals; /** Number of signals from base station */
     char source[SOURCE_COUNT]; /** Corrections source string */
   };
-
   
   /**
    * System heartbeat message
@@ -74,13 +68,10 @@ namespace sbp {
    * occurred in the system. To determine the source of the error,
    * the remaining error flags should be inspected.
    */
-  constexpr u16 MSG_HEARTBEAT = 0xFFFF;
-
   
   struct SBP_ATTR_PACKED MsgHeartbeat {
     u32 flags; /** Status flags */
   };
-
   
   /**
    * Sub-system Status report
@@ -88,14 +79,12 @@ namespace sbp {
    * Report the general and specific state of a sub-system.  If the generic
    * state is reported as initializing, the specific state should be ignored.
    */
-
   
   struct SBP_ATTR_PACKED SubSystemReport {
     u16 component; /** Identity of reporting subsystem */
     u8 generic; /** Generic form status report */
     u8 specific; /** Subsystem specific status code */
   };
-
   
   /**
    * Status report message
@@ -110,9 +99,7 @@ namespace sbp {
    * dependent, but if the generic status code is initializing, it should
    * be ignored.  Refer to product documentation for details.
    */
-  constexpr u16 MSG_STATUS_REPORT = 0xFFFE;
-
-  template<size_t STATUS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u16) + sizeof(u16) + sizeof(u32) + sizeof(u32) + 0) / sizeof(SubSystemReport)>
+  template<size_t STATUS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u16) + sizeof(u16) + sizeof(u32) + sizeof(u32) + 0)) / sizeof(SubSystemReport)>
   struct SBP_ATTR_PACKED MsgStatusReport {
     u16 reporting_system; /** Identity of reporting system */
     u16 sbp_version; /** SBP protocol version */
@@ -120,7 +107,6 @@ namespace sbp {
     u32 uptime; /** Number of seconds since system start-up */
     SubSystemReport status[STATUS_COUNT]; /** Reported status of individual subsystems */
   };
-
   
   /**
    * Inertial Navigation System status message
@@ -128,13 +114,10 @@ namespace sbp {
    * The INS status message describes the state of the operation
    * and initialization of the inertial navigation system. 
    */
-  constexpr u16 MSG_INS_STATUS = 0xFF03;
-
   
   struct SBP_ATTR_PACKED MsgInsStatus {
     u32 flags; /** Status flags */
   };
-
   
   /**
    * Experimental telemetry message
@@ -143,14 +126,11 @@ namespace sbp {
    * from a device. It is not produced or available on general Swift Products.
    * It is intended to be a low rate message for status purposes.
    */
-  constexpr u16 MSG_CSAC_TELEMETRY = 0xFF04;
-
-  template<size_t TELEMETRY_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + 0) / sizeof(char)>
+  template<size_t TELEMETRY_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgCsacTelemetry {
     u8 id; /** Index representing the type of telemetry in use.  It is implemention defined. */
     char telemetry[TELEMETRY_COUNT]; /** Comma separated list of values as defined by the index */
   };
-
   
   /**
    * Experimental telemetry message labels
@@ -159,14 +139,11 @@ namespace sbp {
    * produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
    * rate than the MSG_CSAC_TELEMETRY.
    */
-  constexpr u16 MSG_CSAC_TELEMETRY_LABELS = 0xFF05;
-
-  template<size_t TELEMETRY_LABELS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + 0) / sizeof(char)>
+  template<size_t TELEMETRY_LABELS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgCsacTelemetryLabels {
     u8 id; /** Index representing the type of telemetry in use.  It is implemention defined. */
     char telemetry_labels[TELEMETRY_LABELS_COUNT]; /** Comma separated list of telemetry field values */
   };
-
   
   /**
    * Inertial Navigation System update status message
@@ -174,8 +151,6 @@ namespace sbp {
    * The INS update status message contains informations about executed and rejected INS updates.
    * This message is expected to be extended in the future as new types of measurements are being added.
    */
-  constexpr u16 MSG_INS_UPDATES = 0xFF06;
-
   
   struct SBP_ATTR_PACKED MsgInsUpdates {
     u32 tow; /** GPS Time of Week [ms] */
@@ -186,7 +161,6 @@ namespace sbp {
     u8 nhc; /** NHC update status flags */
     u8 zerovel; /** Zero velocity update status flags */
   };
-
   
   /**
    * Offset of the local time with respect to GNSS time
@@ -195,8 +169,6 @@ namespace sbp {
    * tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the sender
    * producing this message.
    */
-  constexpr u16 MSG_GNSS_TIME_OFFSET = 0xFF07;
-
   
   struct SBP_ATTR_PACKED MsgGnssTimeOffset {
     s16 weeks; /** Weeks portion of the time offset [weeks] */
@@ -204,7 +176,6 @@ namespace sbp {
     s16 microseconds; /** Microseconds portion of the time offset [microseconds] */
     u8 flags; /** Status flags (reserved) */
   };
-
   
   /**
    * Solution Group Metadata
@@ -212,9 +183,7 @@ namespace sbp {
    * This leading message lists the time metadata of the Solution Group.
    * It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
    */
-  constexpr u16 MSG_GROUP_META = 0xFF0A;
-
-  template<size_t GROUP_MSGS_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u8) + sizeof(u8) + sizeof(u8) + 0) / sizeof(u16)>
+  template<size_t GROUP_MSGS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u8) + sizeof(u8) + 0)) / sizeof(u16)>
   struct SBP_ATTR_PACKED MsgGroupMeta {
     u8 group_id; /** Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss */
     u8 flags; /** Status flags (reserved) */
@@ -223,7 +192,6 @@ namespace sbp {
 including GROUP_META itself
  */
   };
-
   
 
 }  // namespace sbp

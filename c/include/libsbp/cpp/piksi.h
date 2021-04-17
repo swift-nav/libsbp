@@ -31,8 +31,6 @@ namespace sbp {
    * This is a legacy message for sending and loading a satellite
    * alamanac onto the Piksi's flash memory from the host.
    */
-  constexpr u16 MSG_ALMANAC = 0x0069;
-
   
   /**
    * Send GPS time from host (host => Piksi)
@@ -40,8 +38,6 @@ namespace sbp {
    * This message sets up timing functionality using a coarse GPS
    * time estimate sent by the host.
    */
-  constexpr u16 MSG_SET_TIME = 0x0068;
-
   
   /**
    * Reset the device (host => Piksi)
@@ -49,13 +45,10 @@ namespace sbp {
    * This message from the host resets the Piksi back into the
    * bootloader.
    */
-  constexpr u16 MSG_RESET = 0x00B6;
-
   
   struct SBP_ATTR_PACKED MsgReset {
     u32 flags; /** Reset flags */
   };
-
   
   /**
    * Reset the device (host => Piksi)
@@ -63,8 +56,6 @@ namespace sbp {
    * This message from the host resets the Piksi back into the
    * bootloader.
    */
-  constexpr u16 MSG_RESET_DEP = 0x00B2;
-
   
   /**
    * Legacy message for CW interference channel (Piksi => host)
@@ -73,8 +64,6 @@ namespace sbp {
    * CW interference channel on the SwiftNAP. This message will be
    * removed in a future release.
    */
-  constexpr u16 MSG_CW_RESULTS = 0x00C0;
-
   
   /**
    * Legacy message for CW interference channel (host => Piksi)
@@ -83,8 +72,6 @@ namespace sbp {
    * the CW interference channel on the SwiftNAP. This message will
    * be removed in a future release.
    */
-  constexpr u16 MSG_CW_START = 0x00C1;
-
   
   /**
    * Reset IAR filters (host => Piksi)
@@ -92,21 +79,16 @@ namespace sbp {
    * This message resets either the DGNSS Kalman filters or Integer
    * Ambiguity Resolution (IAR) process.
    */
-  constexpr u16 MSG_RESET_FILTERS = 0x0022;
-
   
   struct SBP_ATTR_PACKED MsgResetFilters {
     u8 filter; /** Filter flags */
   };
-
   
   /**
    * Deprecated
    *
    * Deprecated
    */
-  constexpr u16 MSG_INIT_BASE_DEP = 0x0023;
-
   
   /**
    * State of an RTOS thread
@@ -115,8 +97,6 @@ namespace sbp {
    * operating system (RTOS) thread usage statistics for the named
    * thread. The reported percentage values must be normalized.
    */
-  constexpr u16 MSG_THREAD_STATE = 0x0017;
-
   
   struct SBP_ATTR_PACKED MsgThreadState {
     char name[20]; /** Thread name (NULL terminated) */
@@ -125,7 +105,6 @@ namespace sbp {
  */
     u32 stack_free; /** Free stack space for this thread [bytes] */
   };
-
   
   /**
    * State of the UART channel
@@ -134,7 +113,6 @@ namespace sbp {
    * of this UART channel. The reported percentage values must
    * be normalized.
    */
-
   
   struct SBP_ATTR_PACKED UARTChannel {
     float tx_throughput; /** UART transmit throughput [kB/s] */
@@ -148,7 +126,6 @@ namespace sbp {
 0 to 255)
  */
   };
-
   
   /**
    * base station observation message receipt period
@@ -160,7 +137,6 @@ namespace sbp {
    * or missing sets will increase the period.  Long periods
    * can cause momentary RTK solution outages.
    */
-
   
   struct SBP_ATTR_PACKED Period {
     s32 avg; /** Average period [ms] */
@@ -168,7 +144,6 @@ namespace sbp {
     s32 pmax; /** Maximum period [ms] */
     s32 current; /** Smoothed estimate of the current period [ms] */
   };
-
   
   /**
    * Receiver-to-base station latency
@@ -179,7 +154,6 @@ namespace sbp {
    * receiver to give a precise measurement of the end-to-end
    * communication latency in the system.
    */
-
   
   struct SBP_ATTR_PACKED Latency {
     s32 avg; /** Average latency [ms] */
@@ -187,7 +161,6 @@ namespace sbp {
     s32 lmax; /** Maximum latency [ms] */
     s32 current; /** Smoothed estimate of the current latency [ms] */
   };
-
   
   /**
    * State of the UART channels
@@ -202,8 +175,6 @@ namespace sbp {
    * the timeliness of received base observations while the
    * period indicates their likelihood of transmission.
    */
-  constexpr u16 MSG_UART_STATE = 0x001D;
-
   
   struct SBP_ATTR_PACKED MsgUartState {
     UARTChannel uart_a; /** State of UART A */
@@ -212,15 +183,12 @@ namespace sbp {
     Latency latency; /** UART communication latency */
     Period obs_period; /** Observation receipt period */
   };
-
   
   /**
    * Deprecated
    *
    * Deprecated
    */
-  constexpr u16 MSG_UART_STATE_DEPA = 0x0018;
-
   
   struct SBP_ATTR_PACKED MsgUartStateDepa {
     UARTChannel uart_a; /** State of UART A */
@@ -228,7 +196,6 @@ namespace sbp {
     UARTChannel uart_ftdi; /** State of UART FTDI (USB logger) */
     Latency latency; /** UART communication latency */
   };
-
   
   /**
    * State of the Integer Ambiguity Resolution (IAR) process
@@ -238,13 +205,10 @@ namespace sbp {
    * ambiguities from double-differenced carrier-phase measurements
    * from satellite observations.
    */
-  constexpr u16 MSG_IAR_STATE = 0x0019;
-
   
   struct SBP_ATTR_PACKED MsgIarState {
     u32 num_hyps; /** Number of integer ambiguity hypotheses remaining */
   };
-
   
   /**
    * Mask a satellite from use in Piksi subsystems
@@ -252,28 +216,22 @@ namespace sbp {
    * This message allows setting a mask to prevent a particular satellite
    * from being used in various Piksi subsystems.
    */
-  constexpr u16 MSG_MASK_SATELLITE = 0x002B;
-
   
   struct SBP_ATTR_PACKED MsgMaskSatellite {
     u8 mask; /** Mask of systems that should ignore this satellite. */
     GnssSignal sid; /** GNSS signal for which the mask is applied */
   };
-
   
   /**
    * Deprecated
    *
    * Deprecated.
    */
-  constexpr u16 MSG_MASK_SATELLITE_DEP = 0x001B;
-
   
   struct SBP_ATTR_PACKED MsgMaskSatelliteDep {
     u8 mask; /** Mask of systems that should ignore this satellite. */
     GnssSignalDep sid; /** GNSS signal for which the mask is applied */
   };
-
   
   /**
    * Device temperature and voltage levels
@@ -282,8 +240,6 @@ namespace sbp {
    * processor's monitoring system and the RF frontend die temperature if
    * available.
    */
-  constexpr u16 MSG_DEVICE_MONITOR = 0x00B5;
-
   
   struct SBP_ATTR_PACKED MsgDeviceMonitor {
     s16 dev_vin; /** Device V_in [V / 1000] */
@@ -292,7 +248,6 @@ namespace sbp {
     s16 cpu_temperature; /** Processor temperature [degrees C / 100] */
     s16 fe_temperature; /** Frontend temperature (if available) [degrees C / 100] */
   };
-
   
   /**
    * Execute a command (host => device)
@@ -301,14 +256,11 @@ namespace sbp {
    * Output will be sent in MSG_LOG messages, and the exit
    * code will be returned with MSG_COMMAND_RESP.
    */
-  constexpr u16 MSG_COMMAND_REQ = 0x00B8;
-
-  template<size_t COMMAND_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u32) + 0) / sizeof(char)>
+  template<size_t COMMAND_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u32) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgCommandReq {
     u32 sequence; /** Sequence number */
     char command[COMMAND_COUNT]; /** Command line to execute */
   };
-
   
   /**
    * Exit code from executed command (device => host)
@@ -316,14 +268,11 @@ namespace sbp {
    * The response to MSG_COMMAND_REQ with the return code of
    * the command.  A return code of zero indicates success.
    */
-  constexpr u16 MSG_COMMAND_RESP = 0x00B9;
-
   
   struct SBP_ATTR_PACKED MsgCommandResp {
     u32 sequence; /** Sequence number */
     s32 code; /** Exit code */
   };
-
   
   /**
    * Command output
@@ -333,14 +282,11 @@ namespace sbp {
    * The sequence number can be used to filter for filtering
    * the correct command.
    */
-  constexpr u16 MSG_COMMAND_OUTPUT = 0x00BC;
-
-  template<size_t LINE_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u32) + 0) / sizeof(char)>
+  template<size_t LINE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u32) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgCommandOutput {
     u32 sequence; /** Sequence number */
     char line[LINE_COUNT]; /** Line of standard output or standard error */
   };
-
   
   /**
    * Request state of Piksi network interfaces
@@ -348,8 +294,6 @@ namespace sbp {
    * Request state of Piksi network interfaces.
    * Output will be sent in MSG_NETWORK_STATE_RESP messages
    */
-  constexpr u16 MSG_NETWORK_STATE_REQ = 0x00BA;
-
   
   /**
    * State of network interface
@@ -358,8 +302,6 @@ namespace sbp {
    * Data is made to reflect output of ifaddrs struct returned by getifaddrs
    * in c.
    */
-  constexpr u16 MSG_NETWORK_STATE_RESP = 0x00BB;
-
   
   struct SBP_ATTR_PACKED MsgNetworkStateResp {
     u8 ipv4_address[4]; /** IPv4 address (all zero when unavailable) */
@@ -371,7 +313,6 @@ namespace sbp {
     char interface_name[16]; /** Interface Name */
     u32 flags; /** Interface flags from SIOCGIFFLAGS */
   };
-
   
   /**
    * Bandwidth usage measurement for a single interface.
@@ -383,7 +324,6 @@ namespace sbp {
    * may vary, both a timestamp and period field is provided,
    * though may not necessarily be populated with a value. 
    */
-
   
   struct SBP_ATTR_PACKED NetworkUsage {
     u64 duration; /** Duration over which the measurement was collected [ms] */
@@ -392,20 +332,16 @@ namespace sbp {
     u32 tx_bytes; /** Number of bytes received within period */
     char interface_name[16]; /** Interface Name */
   };
-
   
   /**
    * Bandwidth usage reporting message
    *
    * The bandwidth usage, a list of usage by interface. 
    */
-  constexpr u16 MSG_NETWORK_BANDWIDTH_USAGE = 0x00BD;
-
-  template<size_t INTERFACES_COUNT = (SBP_MAX_PAYLOAD_LEN - 0) / sizeof(NetworkUsage)>
+  template<size_t INTERFACES_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(NetworkUsage)>
   struct SBP_ATTR_PACKED MsgNetworkBandwidthUsage {
     NetworkUsage interfaces[INTERFACES_COUNT]; /** Usage measurement array */
   };
-
   
   /**
    * Cell modem information update message
@@ -414,24 +350,19 @@ namespace sbp {
    * will be send periodically to update the host on the status
    * of the modem and its various parameters.
    */
-  constexpr u16 MSG_CELL_MODEM_STATUS = 0x00BE;
-
-  template<size_t RESERVED_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(s8) + sizeof(float) + 0) / sizeof(u8)>
+  template<size_t RESERVED_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(s8) + sizeof(float) + 0)) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgCellModemStatus {
     s8 signal_strength; /** Received cell signal strength in dBm, zero translates to unknown [dBm] */
     float signal_error_rate; /** BER as reported by the modem, zero translates to unknown */
     u8 reserved[RESERVED_COUNT]; /** Unspecified data TBD for this schema */
   };
-
   
   /**
    * Deprecated
    *
    * Deprecated.
    */
-  constexpr u16 MSG_SPECAN_DEP = 0x0050;
-
-  template<size_t AMPLITUDE_VALUE_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u16) + sizeof(GPSTimeDep) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + 0) / sizeof(u8)>
+  template<size_t AMPLITUDE_VALUE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u16) + sizeof(GPSTimeDep) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + 0)) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgSpecanDep {
     u16 channel_tag; /** Channel ID */
     GPSTimeDep t; /** Receiver time of this observation */
@@ -446,16 +377,13 @@ namespace sbp {
     u8 amplitude_value[AMPLITUDE_VALUE_COUNT]; /** Amplitude values (in the above units) of points in this packet
  */
   };
-
   
   /**
    * Spectrum analyzer
    *
    * Spectrum analyzer packet.
    */
-  constexpr u16 MSG_SPECAN = 0x0051;
-
-  template<size_t AMPLITUDE_VALUE_COUNT = (SBP_MAX_PAYLOAD_LEN - sizeof(u16) + sizeof(GPSTime) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + 0) / sizeof(u8)>
+  template<size_t AMPLITUDE_VALUE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u16) + sizeof(GPSTime) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + 0)) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgSpecan {
     u16 channel_tag; /** Channel ID */
     GPSTime t; /** Receiver time of this observation */
@@ -470,7 +398,6 @@ namespace sbp {
     u8 amplitude_value[AMPLITUDE_VALUE_COUNT]; /** Amplitude values (in the above units) of points in this packet
  */
   };
-
   
   /**
    * RF AGC status
@@ -482,14 +409,11 @@ namespace sbp {
    * in the frontend. A gain of 127 percent encodes that rf channel is not present in the hardware.
    * A negative value implies an error for the particular gain stage as reported by the frontend.
    */
-  constexpr u16 MSG_FRONT_END_GAIN = 0x00BF;
-
   
   struct SBP_ATTR_PACKED MsgFrontEndGain {
     s8 rf_gain[8]; /** RF gain for each frontend channel [percent] */
     s8 if_gain[8]; /** Intermediate frequency gain for each frontend channel [percent] */
   };
-
   
 
 }  // namespace sbp
