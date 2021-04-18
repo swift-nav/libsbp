@@ -29,6 +29,8 @@
 #include <libsbp/cpp/file_io.h>
 #include <libsbp/file_io.h>
 #include <libsbp/cpp/file_io.h>
+#include <libsbp/file_io.h>
+#include <libsbp/cpp/file_io.h>
 
 
 TEST(test_msg_fileio_read_req, default_construction) {

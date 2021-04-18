@@ -27,6 +27,15 @@
 #include <libsbp/cpp/bootload.h>
 
 
+TEST(test_msg_bootloader_handshake_req, default_construction) {
+  sbp::MsgBootloaderHandshakeReq variable;
+  (void) variable;
+}
+
+TEST(test_msg_bootloader_handshake_req, reinterpret_from_c) {
+
+}
+
 TEST(test_msg_bootloader_handshake_resp, default_construction) {
   sbp::MsgBootloaderHandshakeResp<> variable;
   (void) variable;
@@ -42,6 +51,15 @@ TEST(test_msg_bootloader_jump_to_app, default_construction) {
 }
 
 TEST(test_msg_bootloader_jump_to_app, reinterpret_from_c) {
+
+}
+
+TEST(test_msg_nap_device_dna_req, default_construction) {
+  sbp::MsgNapDeviceDnaReq variable;
+  (void) variable;
+}
+
+TEST(test_msg_nap_device_dna_req, reinterpret_from_c) {
 
 }
 

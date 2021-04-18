@@ -73,6 +73,24 @@
 #include <libsbp/cpp/piksi.h>
 
 
+TEST(test_msg_almanac, default_construction) {
+  sbp::MsgAlmanac variable;
+  (void) variable;
+}
+
+TEST(test_msg_almanac, reinterpret_from_c) {
+
+}
+
+TEST(test_msg_set_time, default_construction) {
+  sbp::MsgSetTime variable;
+  (void) variable;
+}
+
+TEST(test_msg_set_time, reinterpret_from_c) {
+
+}
+
 TEST(test_msg_reset, default_construction) {
   sbp::MsgReset variable;
   (void) variable;
@@ -82,12 +100,48 @@ TEST(test_msg_reset, reinterpret_from_c) {
 
 }
 
+TEST(test_msg_reset_dep, default_construction) {
+  sbp::MsgResetDep variable;
+  (void) variable;
+}
+
+TEST(test_msg_reset_dep, reinterpret_from_c) {
+
+}
+
+TEST(test_msg_cw_results, default_construction) {
+  sbp::MsgCwResults variable;
+  (void) variable;
+}
+
+TEST(test_msg_cw_results, reinterpret_from_c) {
+
+}
+
+TEST(test_msg_cw_start, default_construction) {
+  sbp::MsgCwStart variable;
+  (void) variable;
+}
+
+TEST(test_msg_cw_start, reinterpret_from_c) {
+
+}
+
 TEST(test_msg_reset_filters, default_construction) {
   sbp::MsgResetFilters variable;
   (void) variable;
 }
 
 TEST(test_msg_reset_filters, reinterpret_from_c) {
+
+}
+
+TEST(test_msg_init_base_dep, default_construction) {
+  sbp::MsgInitBaseDep variable;
+  (void) variable;
+}
+
+TEST(test_msg_init_base_dep, reinterpret_from_c) {
 
 }
 
@@ -205,6 +259,15 @@ TEST(test_msg_command_output, default_construction) {
 }
 
 TEST(test_msg_command_output, reinterpret_from_c) {
+
+}
+
+TEST(test_msg_network_state_req, default_construction) {
+  sbp::MsgNetworkStateReq variable;
+  (void) variable;
+}
+
+TEST(test_msg_network_state_req, reinterpret_from_c) {
 
 }
 

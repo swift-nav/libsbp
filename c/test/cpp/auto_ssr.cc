@@ -201,7 +201,7 @@ TEST(test_msg_ssr_stec_correction, reinterpret_from_c) {
 }
 
 TEST(test_msg_ssr_gridded_correction, default_construction) {
-  sbp::MsgSsrGriddedCorrection variable;
+  sbp::MsgSsrGriddedCorrection<1> variable;
   (void) variable;
 }
 
@@ -264,7 +264,7 @@ TEST(test_msg_ssr_stec_correction_dep_a, reinterpret_from_c) {
 }
 
 TEST(test_msg_ssr_gridded_correction_no_std_dep_a, default_construction) {
-  sbp::MsgSsrGriddedCorrectionNoStdDepA variable;
+  sbp::MsgSsrGriddedCorrectionNoStdDepA<1> variable;
   (void) variable;
 }
 
@@ -273,7 +273,7 @@ TEST(test_msg_ssr_gridded_correction_no_std_dep_a, reinterpret_from_c) {
 }
 
 TEST(test_msg_ssr_gridded_correction_dep_a, default_construction) {
-  sbp::MsgSsrGriddedCorrectionDepA variable;
+  sbp::MsgSsrGriddedCorrectionDepA<1> variable;
   (void) variable;
 }
 

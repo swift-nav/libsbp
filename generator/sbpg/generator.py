@@ -160,9 +160,6 @@ def main():
         elif args.test_c:
           import sbpg.targets.test_c as test_c
           test_c.render_source(output_dir, parsed)
-        elif args.test_cpp:
-          import sbpg.targets.test_cpp as test_cpp
-          test_cpp.render_source(output_dir, parsed)
         elif args.haskell:
           import sbpg.targets.haskell as hs
           hs.render_source(output_dir, parsed)
@@ -190,6 +187,10 @@ def main():
         for package_spec in all_specs:
           cpp.render_source(output_dir, package_spec, all_specs)
         cpp.render_version(output_dir, release)
+      elif args.test_cpp:
+        import sbpg.targets.test_cpp as test_cpp
+        for package_spec in all_specs:
+          test_cpp.render_source(output_dir, package_spec, all_specs)
       elif args.python:
         py.render_version(output_dir, release)
       elif args.haskell:

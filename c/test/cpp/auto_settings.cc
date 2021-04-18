@@ -35,6 +35,15 @@
 #include <libsbp/cpp/settings.h>
 
 
+TEST(test_msg_settings_save, default_construction) {
+  sbp::MsgSettingsSave variable;
+  (void) variable;
+}
+
+TEST(test_msg_settings_save, reinterpret_from_c) {
+
+}
+
 TEST(test_msg_settings_write, default_construction) {
   sbp::MsgSettingsWrite<> variable;
   (void) variable;
@@ -86,6 +95,15 @@ TEST(test_msg_settings_read_by_index_resp, default_construction) {
 }
 
 TEST(test_msg_settings_read_by_index_resp, reinterpret_from_c) {
+
+}
+
+TEST(test_msg_settings_read_by_index_done, default_construction) {
+  sbp::MsgSettingsReadByIndexDone variable;
+  (void) variable;
+}
+
+TEST(test_msg_settings_read_by_index_done, reinterpret_from_c) {
 
 }
 

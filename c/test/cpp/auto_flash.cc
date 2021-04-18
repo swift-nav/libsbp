@@ -98,6 +98,15 @@ TEST(test_msg_stm_flash_unlock_sector, reinterpret_from_c) {
 
 }
 
+TEST(test_msg_stm_unique_id_req, default_construction) {
+  sbp::MsgStmUniqueIdReq variable;
+  (void) variable;
+}
+
+TEST(test_msg_stm_unique_id_req, reinterpret_from_c) {
+
+}
+
 TEST(test_msg_stm_unique_id_resp, default_construction) {
   sbp::MsgStmUniqueIdResp variable;
   (void) variable;

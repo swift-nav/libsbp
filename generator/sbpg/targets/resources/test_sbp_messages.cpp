@@ -13,15 +13,17 @@
 // This file was auto-generated. Do not modify by hand!
 
 #include <gtest/gtest.h>
-((*- for message in package_messages if not skip_message(message) *))
+((*- for message in package_messages *))
 #include <libsbp/(((pkg_name))).h>
 #include <libsbp/cpp/(((pkg_name))).h>
 ((*- endfor *))
 
-((* for message in package_messages if not skip_message(message) and message.fields *))
+((* for message in package_messages if extract_template_fields(message, all_messages) | length < 2 *))
 TEST(test_(((message.identifier|snake_case))), default_construction) {
-  ((*- if is_template(message) *))
+  ((*- if is_zero_array_message(message) *))
   sbp::(((message.identifier|pascal_case)))<> variable;
+  ((*- elif is_templated_field_message(message, all_messages) *))
+  sbp::(((message.identifier|pascal_case)))<1> variable;
   ((*- else *))
   sbp::(((message.identifier|pascal_case))) variable;
   ((*- endif *))

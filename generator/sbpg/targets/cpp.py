@@ -80,7 +80,7 @@ def is_templated_field(field, all_messages):
     field_message = list([message for message in all_messages if pascal_case(message.identifier) == field_id])
     return field_message and extract_template_fields(field_message[0], all_messages)
   else:
-    return False;
+    return False
 
 def extract_template_fields(message, all_messages):
   template_fields = []
