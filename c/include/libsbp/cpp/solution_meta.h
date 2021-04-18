@@ -48,6 +48,7 @@ namespace sbp {
    */
   template<size_t SOL_IN_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32) + sizeof(u32) + 0)) / sizeof(SolutionInputType)>
   struct SBP_ATTR_PACKED MsgSolnMetaDepA {
+    static constexpr size_t kSolInCount = SOL_IN_COUNT;
     u16 pdop; /** Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) [0.01] */
     u16 hdop; /** Horizontal Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) [0.01] */
     u16 vdop; /** Vertical Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) [0.01] */
@@ -71,6 +72,7 @@ namespace sbp {
    */
   template<size_t SOL_IN_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u32) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u32) + 0)) / sizeof(SolutionInputType)>
   struct SBP_ATTR_PACKED MsgSolnMeta {
+    static constexpr size_t kSolInCount = SOL_IN_COUNT;
     u32 tow; /** GPS time of week rounded to the nearest millisecond [ms] */
     u16 pdop; /** Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) [0.01] */
     u16 hdop; /** Horizontal Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) [0.01] */

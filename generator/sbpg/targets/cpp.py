@@ -31,8 +31,7 @@ def pascal_case(value):
     # assuming SCREAMING_SNAKE_CASE
     return stringcase.pascalcase(value.lower())
   else:
-    # assuming already in pascal case
-    return value
+    return stringcase.pascalcase(value)
 
 def snake_case(value):
   if value.isupper():

@@ -139,6 +139,7 @@ acquisition was attempted
    */
   template<size_t ACQ_SV_PROFILE_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(AcqSvProfile)>
   struct SBP_ATTR_PACKED MsgAcqSvProfile {
+    static constexpr size_t kAcqSvProfileCount = ACQ_SV_PROFILE_COUNT;
     AcqSvProfile acq_sv_profile[ACQ_SV_PROFILE_COUNT]; /** SV profiles during acquisition time */
   };
   
@@ -149,6 +150,7 @@ acquisition was attempted
    */
   template<size_t ACQ_SV_PROFILE_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(AcqSvProfileDep)>
   struct SBP_ATTR_PACKED MsgAcqSvProfileDep {
+    static constexpr size_t kAcqSvProfileCount = ACQ_SV_PROFILE_COUNT;
     AcqSvProfileDep acq_sv_profile[ACQ_SV_PROFILE_COUNT]; /** SV profiles during acquisition time */
   };
   

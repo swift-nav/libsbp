@@ -33,6 +33,7 @@ namespace sbp {
    */
   template<size_t TEXT_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgLog {
+    static constexpr size_t kTextCount = TEXT_COUNT;
     u8 level; /** Logging level */
     char text[TEXT_COUNT]; /** Human-readable string */
   };
@@ -50,6 +51,7 @@ namespace sbp {
    */
   template<size_t FWD_PAYLOAD_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u8) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgFwd {
+    static constexpr size_t kFwdPayloadCount = FWD_PAYLOAD_COUNT;
     u8 source; /** source identifier */
     u8 protocol; /** protocol identifier */
     char fwd_payload[FWD_PAYLOAD_COUNT]; /** variable length wrapped binary message */
@@ -62,6 +64,7 @@ namespace sbp {
    */
   template<size_t TEXT_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgPrintDep {
+    static constexpr size_t kTextCount = TEXT_COUNT;
     char text[TEXT_COUNT]; /** Human-readable string */
   };
   

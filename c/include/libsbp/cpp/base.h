@@ -44,7 +44,7 @@ set to the 2 least significant bytes of the device serial
 number
  */
     u8 length; /** Byte-length of the payload field [bytes] */
-    bytes payload; /** Binary data of the message, as identified by Message Type and
+    Bytes payload; /** Binary data of the message, as identified by Message Type and
 Length. Usually contains the in-memory binary representation of
 a C struct (see documentation on individual message types)
  */

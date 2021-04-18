@@ -258,6 +258,7 @@ namespace sbp {
    */
   template<size_t COMMAND_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u32) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgCommandReq {
+    static constexpr size_t kCommandCount = COMMAND_COUNT;
     u32 sequence; /** Sequence number */
     char command[COMMAND_COUNT]; /** Command line to execute */
   };
@@ -284,6 +285,7 @@ namespace sbp {
    */
   template<size_t LINE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u32) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgCommandOutput {
+    static constexpr size_t kLineCount = LINE_COUNT;
     u32 sequence; /** Sequence number */
     char line[LINE_COUNT]; /** Line of standard output or standard error */
   };
@@ -340,6 +342,7 @@ namespace sbp {
    */
   template<size_t INTERFACES_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(NetworkUsage)>
   struct SBP_ATTR_PACKED MsgNetworkBandwidthUsage {
+    static constexpr size_t kInterfacesCount = INTERFACES_COUNT;
     NetworkUsage interfaces[INTERFACES_COUNT]; /** Usage measurement array */
   };
   
@@ -352,6 +355,7 @@ namespace sbp {
    */
   template<size_t RESERVED_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(s8) + sizeof(float) + 0)) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgCellModemStatus {
+    static constexpr size_t kReservedCount = RESERVED_COUNT;
     s8 signal_strength; /** Received cell signal strength in dBm, zero translates to unknown [dBm] */
     float signal_error_rate; /** BER as reported by the modem, zero translates to unknown */
     u8 reserved[RESERVED_COUNT]; /** Unspecified data TBD for this schema */
@@ -364,6 +368,7 @@ namespace sbp {
    */
   template<size_t AMPLITUDE_VALUE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u16) + sizeof(GPSTimeDep) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + 0)) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgSpecanDep {
+    static constexpr size_t kAmplitudeValueCount = AMPLITUDE_VALUE_COUNT;
     u16 channel_tag; /** Channel ID */
     GPSTimeDep t; /** Receiver time of this observation */
     float freq_ref; /** Reference frequency of this packet
@@ -385,6 +390,7 @@ namespace sbp {
    */
   template<size_t AMPLITUDE_VALUE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u16) + sizeof(GPSTime) + sizeof(float) + sizeof(float) + sizeof(float) + sizeof(float) + 0)) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgSpecan {
+    static constexpr size_t kAmplitudeValueCount = AMPLITUDE_VALUE_COUNT;
     u16 channel_tag; /** Channel ID */
     GPSTime t; /** Receiver time of this observation */
     float freq_ref; /** Reference frequency of this packet

@@ -44,6 +44,7 @@ namespace sbp {
    */
   template<size_t SETTING_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgSettingsWrite {
+    static constexpr size_t kSettingCount = SETTING_COUNT;
     char setting[SETTING_COUNT]; /** A NULL-terminated and NULL-delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE\0"
  */
@@ -62,6 +63,7 @@ namespace sbp {
    */
   template<size_t SETTING_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgSettingsWriteResp {
+    static constexpr size_t kSettingCount = SETTING_COUNT;
     u8 status; /** Write status */
     char setting[SETTING_COUNT]; /** A NULL-terminated and delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE\0" 
@@ -82,6 +84,7 @@ namespace sbp {
    */
   template<size_t SETTING_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgSettingsReadReq {
+    static constexpr size_t kSettingCount = SETTING_COUNT;
     char setting[SETTING_COUNT]; /** A NULL-terminated and NULL-delimited string with contents
 "SECTION_SETTING\0SETTING\0"
  */
@@ -100,6 +103,7 @@ namespace sbp {
    */
   template<size_t SETTING_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgSettingsReadResp {
+    static constexpr size_t kSettingCount = SETTING_COUNT;
     char setting[SETTING_COUNT]; /** A NULL-terminated and NULL-delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE\0"
  
@@ -136,6 +140,7 @@ namespace sbp {
    */
   template<size_t SETTING_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u16) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgSettingsReadByIndexResp {
+    static constexpr size_t kSettingCount = SETTING_COUNT;
     u16 index; /** An index into the device settings, with values ranging from
 0 to length(settings)
  */
@@ -159,6 +164,7 @@ namespace sbp {
    */
   template<size_t SETTING_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgSettingsRegister {
+    static constexpr size_t kSettingCount = SETTING_COUNT;
     char setting[SETTING_COUNT]; /** A NULL-terminated and delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE".
  */
@@ -174,6 +180,7 @@ namespace sbp {
    */
   template<size_t SETTING_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgSettingsRegisterResp {
+    static constexpr size_t kSettingCount = SETTING_COUNT;
     u8 status; /** Register status */
     char setting[SETTING_COUNT]; /** A NULL-terminated and delimited string with contents
 "SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined

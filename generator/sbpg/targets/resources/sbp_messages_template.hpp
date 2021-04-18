@@ -39,6 +39,12 @@ namespace sbp {
   (((message|mk_template(all_messages))))
   struct SBP_ATTR_PACKED (((message.identifier|pascal_case))) {
     ((*- for field in message.fields *))
+    ((*- if field | is_zero_array or field | is_templated_field(all_messages) *))
+    static constexpr size_t k(((field.identifier | pascal_case )))Count = (((field.identifier | screaming_snake_case)))_COUNT;
+    ((*- endif *))
+    ((*- endfor *))
+
+    ((*- for field in message.fields *))
     ((*- if field.desc *))
     (((field|mk_field(all_messages)))) /** (((field.desc))) ((* if field.units *))[(((field.units)))] ((* endif *))*/
     ((*- else *))

@@ -12,6 +12,9 @@
 
 // This file was auto-generated. Do not modify by hand!
 
+#include <cstddef>
+#include <cstdlib>
+#include <ctime>
 #include <gtest/gtest.h>
 #include <libsbp/base.h>
 #include <libsbp/cpp/base.h>
@@ -23,5 +26,28 @@ TEST(test_sbp, default_construction) {
 }
 
 TEST(test_sbp, reinterpret_from_c) {
+  srand(static_cast<unsigned int>(time(nullptr)));
+  constexpr size_t kBufferSize = sizeof(sbp::Sbp);
 
+  alignas(alignof(std::max_align_t)) uint8_t buffer[kBufferSize];
+  for(size_t i = 0; i < kBufferSize; ++i) {
+    buffer[i] = static_cast<uint8_t>(rand() % 256);
+  }
+
+  const sbp_t *c_struct = reinterpret_cast<const sbp_t*>(buffer);
+  const sbp::Sbp *cpp_struct = reinterpret_cast<const sbp::Sbp*>(buffer);
+
+//
+//  EXPECT_EQ(c_struct->preamble, cpp_struct->preamble);
+//
+//  EXPECT_EQ(c_struct->msg_type, cpp_struct->msg_type);
+//
+//  EXPECT_EQ(c_struct->sender, cpp_struct->sender);
+//
+//  EXPECT_EQ(c_struct->length, cpp_struct->length);
+//
+//  EXPECT_EQ(c_struct->payload, cpp_struct->payload);
+//
+//  EXPECT_EQ(c_struct->crc, cpp_struct->crc);
+//
 }

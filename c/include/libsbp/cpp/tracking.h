@@ -138,6 +138,7 @@ signal is in continuous track.
    */
   template<size_t STATES_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(TrackingChannelState)>
   struct SBP_ATTR_PACKED MsgTrackingState {
+    static constexpr size_t kStatesCount = STATES_COUNT;
     TrackingChannelState states[STATES_COUNT]; /** Signal tracking channel state */
   };
   
@@ -165,6 +166,7 @@ signal is in continuous track.
    */
   template<size_t STATES_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(MeasurementState)>
   struct SBP_ATTR_PACKED MsgMeasurementState {
+    static constexpr size_t kStatesCount = STATES_COUNT;
     MeasurementState states[STATES_COUNT]; /** ME signal tracking channel state */
   };
   
@@ -247,6 +249,7 @@ signal is in continuous track.
    */
   template<size_t STATES_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(TrackingChannelStateDepA)>
   struct SBP_ATTR_PACKED MsgTrackingStateDepA {
+    static constexpr size_t kStatesCount = STATES_COUNT;
     TrackingChannelStateDepA states[STATES_COUNT]; /** Satellite tracking channel state */
   };
   
@@ -269,6 +272,7 @@ signal is in continuous track.
    */
   template<size_t STATES_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(TrackingChannelStateDepB)>
   struct SBP_ATTR_PACKED MsgTrackingStateDepB {
+    static constexpr size_t kStatesCount = STATES_COUNT;
     TrackingChannelStateDepB states[STATES_COUNT]; /** Signal tracking channel state */
   };
   

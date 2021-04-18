@@ -43,6 +43,7 @@ namespace sbp {
    */
   template<size_t VERSION_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u32) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgBootloaderHandshakeResp {
+    static constexpr size_t kVersionCount = VERSION_COUNT;
     u32 flags; /** Bootloader flags */
     char version[VERSION_COUNT]; /** Bootloader version number */
   };
@@ -92,6 +93,7 @@ on the right.
    */
   template<size_t HANDSHAKE_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgBootloaderHandshakeDepA {
+    static constexpr size_t kHandshakeCount = HANDSHAKE_COUNT;
     u8 handshake[HANDSHAKE_COUNT]; /** Version number string (not NULL terminated) */
   };
   

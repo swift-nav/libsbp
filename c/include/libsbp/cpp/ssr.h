@@ -174,6 +174,7 @@ stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
    */
   template<size_t STEC_RESIDUALS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u16) + sizeof(TroposphericDelayCorrectionNoStd) + 0)) / sizeof(STECResidualNoStd)>
   struct SBP_ATTR_PACKED GridElementNoStd {
+    static constexpr size_t kStecResidualsCount = STEC_RESIDUALS_COUNT;
     u16 index; /** Index of the grid point */
     TroposphericDelayCorrectionNoStd tropo_delay_correction; /** Wet and hydrostatic vertical delays */
     STECResidualNoStd stec_residuals[STEC_RESIDUALS_COUNT]; /** STEC residuals for each satellite */
@@ -187,6 +188,7 @@ stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
    */
   template<size_t STEC_RESIDUALS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u16) + sizeof(TroposphericDelayCorrection) + 0)) / sizeof(STECResidual)>
   struct SBP_ATTR_PACKED GridElement {
+    static constexpr size_t kStecResidualsCount = STEC_RESIDUALS_COUNT;
     u16 index; /** Index of the grid point */
     TroposphericDelayCorrection tropo_delay_correction; /** Wet and hydrostatic vertical delays (mean, stddev) */
     STECResidual stec_residuals[STEC_RESIDUALS_COUNT]; /** STEC residuals for each satellite (mean, stddev) */
@@ -233,6 +235,7 @@ generating configuration
    */
   template<size_t BIASES_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(GPSTimeSec) + sizeof(GnssSignal) + sizeof(u8) + sizeof(u8) + 0)) / sizeof(CodeBiasesContent)>
   struct SBP_ATTR_PACKED MsgSsrCodeBiases {
+    static constexpr size_t kBiasesCount = BIASES_COUNT;
     GPSTimeSec time; /** GNSS reference time of the correction */
     GnssSignal sid; /** GNSS signal identifier (16 bit) */
     u8 update_interval; /** Update interval between consecutive corrections. Encoded
@@ -257,6 +260,7 @@ generating configuration
    */
   template<size_t BIASES_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(GPSTimeSec) + sizeof(GnssSignal) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u8) + sizeof(u16) + sizeof(s8) + 0)) / sizeof(PhaseBiasesContent)>
   struct SBP_ATTR_PACKED MsgSsrPhaseBiases {
+    static constexpr size_t kBiasesCount = BIASES_COUNT;
     GPSTimeSec time; /** GNSS reference time of the correction */
     GnssSignal sid; /** GNSS signal identifier (16 bit) */
     u8 update_interval; /** Update interval between consecutive corrections. Encoded
@@ -289,6 +293,7 @@ satellite being tracked.
    */
   template<size_t STEC_SAT_LIST_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(STECHeader) + 0)) / sizeof(STECSatElement)>
   struct SBP_ATTR_PACKED MsgSsrStecCorrection {
+    static constexpr size_t kStecSatListCount = STEC_SAT_LIST_COUNT;
     STECHeader header; /** Header of a STEC polynomial coeffcient message. */
     STECSatElement stec_sat_list[STEC_SAT_LIST_COUNT]; /** Array of STEC polynomial coeffcients for each space vehicle. */
   };
@@ -302,6 +307,7 @@ satellite being tracked.
    */
   template<size_t ELEMENT_COUNT>
   struct SBP_ATTR_PACKED MsgSsrGriddedCorrection {
+    static constexpr size_t kElementCount = ELEMENT_COUNT;
     GriddedCorrectionHeader header; /** Header of a gridded correction message */
     GridElement<ELEMENT_COUNT> element; /** Tropo and STEC residuals for the given grid point.
  */
@@ -465,18 +471,21 @@ specifcation in units of m.
   
   template<size_t STEC_SAT_LIST_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(STECHeaderDepA) + 0)) / sizeof(STECSatElement)>
   struct SBP_ATTR_PACKED MsgSsrStecCorrectionDepA {
+    static constexpr size_t kStecSatListCount = STEC_SAT_LIST_COUNT;
     STECHeaderDepA header; /** Header of a STEC message */
     STECSatElement stec_sat_list[STEC_SAT_LIST_COUNT]; /** Array of STEC information for each space vehicle */
   };
   
   template<size_t ELEMENT_COUNT>
   struct SBP_ATTR_PACKED MsgSsrGriddedCorrectionNoStdDepA {
+    static constexpr size_t kElementCount = ELEMENT_COUNT;
     GriddedCorrectionHeaderDepA header; /** Header of a Gridded Correction message */
     GridElementNoStd<ELEMENT_COUNT> element; /** Tropo and STEC residuals for the given grid point */
   };
   
   template<size_t ELEMENT_COUNT>
   struct SBP_ATTR_PACKED MsgSsrGriddedCorrectionDepA {
+    static constexpr size_t kElementCount = ELEMENT_COUNT;
     GriddedCorrectionHeaderDepA header; /** Header of a Gridded Correction message */
     GridElement<ELEMENT_COUNT> element; /** Tropo and STEC residuals for the given grid point (mean
 and standard deviation)
@@ -485,6 +494,7 @@ and standard deviation)
   
   template<size_t RLE_LIST_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(GridDefinitionHeaderDepA) + 0)) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgSsrGridDefinitionDepA {
+    static constexpr size_t kRleListCount = RLE_LIST_COUNT;
     GridDefinitionHeaderDepA header; /** Header of a Gridded Correction message */
     u8 rle_list[RLE_LIST_COUNT]; /** Run Length Encode list of quadrants that contain valid data.
 The spec describes the encoding scheme in detail, but

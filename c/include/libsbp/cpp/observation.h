@@ -121,6 +121,7 @@ from 0 to 15 and the most significant nibble is reserved for future use.
    */
   template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(ObservationHeader) + 0)) / sizeof(PackedObsContent)>
   struct SBP_ATTR_PACKED MsgObs {
+    static constexpr size_t kObsCount = OBS_COUNT;
     ObservationHeader header; /** Header of a GPS observation message */
     PackedObsContent obs[OBS_COUNT]; /** Pseudorange and carrier phase observation for a
 satellite being tracked.
@@ -836,6 +837,7 @@ carrier phase ambiguity may have changed.
    */
   template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(ObservationHeaderDep) + 0)) / sizeof(PackedObsContentDepA)>
   struct SBP_ATTR_PACKED MsgObsDepA {
+    static constexpr size_t kObsCount = OBS_COUNT;
     ObservationHeaderDep header; /** Header of a GPS observation message */
     PackedObsContentDepA obs[OBS_COUNT]; /** Pseudorange and carrier phase observation for a
 satellite being tracked.
@@ -854,6 +856,7 @@ satellite being tracked.
    */
   template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(ObservationHeaderDep) + 0)) / sizeof(PackedObsContentDepB)>
   struct SBP_ATTR_PACKED MsgObsDepB {
+    static constexpr size_t kObsCount = OBS_COUNT;
     ObservationHeaderDep header; /** Header of a GPS observation message */
     PackedObsContentDepB obs[OBS_COUNT]; /** Pseudorange and carrier phase observation for a
 satellite being tracked.
@@ -873,6 +876,7 @@ satellite being tracked.
    */
   template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(ObservationHeaderDep) + 0)) / sizeof(PackedObsContentDepC)>
   struct SBP_ATTR_PACKED MsgObsDepC {
+    static constexpr size_t kObsCount = OBS_COUNT;
     ObservationHeaderDep header; /** Header of a GPS observation message */
     PackedObsContentDepC obs[OBS_COUNT]; /** Pseudorange and carrier phase observation for a
 satellite being tracked.
@@ -1168,6 +1172,7 @@ coordinate system
    */
   template<size_t AZEL_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(SvAzEl)>
   struct SBP_ATTR_PACKED MsgSvAzEl {
+    static constexpr size_t kAzelCount = AZEL_COUNT;
     SvAzEl azel[AZEL_COUNT]; /** Azimuth and elevation per satellite */
   };
   
@@ -1178,6 +1183,7 @@ coordinate system
    */
   template<size_t OBS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(ObservationHeader) + 0)) / sizeof(PackedOsrContent)>
   struct SBP_ATTR_PACKED MsgOsr {
+    static constexpr size_t kObsCount = OBS_COUNT;
     ObservationHeader header; /** Header of a GPS observation message */
     PackedOsrContent obs[OBS_COUNT]; /** Network correction for a
 satellite signal.

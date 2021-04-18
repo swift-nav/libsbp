@@ -36,6 +36,7 @@ namespace sbp {
    */
   template<size_t DATA_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u8[3]) + sizeof(u8) + 0)) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgFlashProgram {
+    static constexpr size_t kDataCount = DATA_COUNT;
     u8 target; /** Target flags */
     u8 addr_start[3]; /** Starting address offset to program [bytes] */
     u8 addr_len; /** Length of set of addresses to program, counting up from

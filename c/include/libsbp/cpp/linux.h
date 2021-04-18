@@ -32,6 +32,7 @@ namespace sbp {
    */
   template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(char[15]) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgLinuxCpuStateDepA {
+    static constexpr size_t kCmdlineCount = CMDLINE_COUNT;
     u8 index; /** sequence of this status message, values from 0-9 */
     u16 pid; /** the PID of the process */
     u8 pcpu; /** percent of cpu used, expressed as a fraction of 256 */
@@ -47,6 +48,7 @@ namespace sbp {
    */
   template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(char[15]) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgLinuxMemStateDepA {
+    static constexpr size_t kCmdlineCount = CMDLINE_COUNT;
     u8 index; /** sequence of this status message, values from 0-9 */
     u16 pid; /** the PID of the process */
     u8 pmem; /** percent of memory used, expressed as a fraction of 256 */
@@ -76,6 +78,7 @@ namespace sbp {
    */
   template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgLinuxProcessSocketCounts {
+    static constexpr size_t kCmdlineCount = CMDLINE_COUNT;
     u8 index; /** sequence of this status message, values from 0-9 */
     u16 pid; /** the PID of the process in question */
     u16 socket_count; /** the number of sockets the process is using */
@@ -99,6 +102,7 @@ namespace sbp {
    */
   template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(u16) + sizeof(char[64]) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgLinuxProcessSocketQueues {
+    static constexpr size_t kCmdlineCount = CMDLINE_COUNT;
     u8 index; /** sequence of this status message, values from 0-9 */
     u16 pid; /** the PID of the process in question */
     u16 recv_queued; /** the total amount of receive data queued for this process */
@@ -143,6 +147,7 @@ the first entry corresponds to the first enabled bit in `types_reported`.
    */
   template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u16) + sizeof(u16) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgLinuxProcessFdCount {
+    static constexpr size_t kCmdlineCount = CMDLINE_COUNT;
     u8 index; /** sequence of this status message, values from 0-9 */
     u16 pid; /** the PID of the process in question */
     u16 fd_count; /** a count of the number of file descriptors opened by the process */
@@ -156,6 +161,7 @@ the first entry corresponds to the first enabled bit in `types_reported`.
    */
   template<size_t MOST_OPENED_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u32) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgLinuxProcessFdSummary {
+    static constexpr size_t kMostOpenedCount = MOST_OPENED_COUNT;
     u32 sys_fd_count; /** count of total FDs open on the system */
     char most_opened[MOST_OPENED_COUNT]; /** A null delimited list of strings which alternates between
 a string representation of the process count and the file
@@ -173,6 +179,7 @@ of the list being 2 NULL terminators in a row.
    */
   template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32) + sizeof(u8) + sizeof(char[15]) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgLinuxCpuState {
+    static constexpr size_t kCmdlineCount = CMDLINE_COUNT;
     u8 index; /** sequence of this status message, values from 0-9 */
     u16 pid; /** the PID of the process */
     u8 pcpu; /** percent of cpu used, expressed as a fraction of 256 */
@@ -190,6 +197,7 @@ of the list being 2 NULL terminators in a row.
    */
   template<size_t CMDLINE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u16) + sizeof(u8) + sizeof(u32) + sizeof(u8) + sizeof(char[15]) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgLinuxMemState {
+    static constexpr size_t kCmdlineCount = CMDLINE_COUNT;
     u8 index; /** sequence of this status message, values from 0-9 */
     u16 pid; /** the PID of the process */
     u8 pmem; /** percent of memory used, expressed as a fraction of 256 */

@@ -48,6 +48,7 @@ namespace sbp {
    */
   template<size_t SOURCE_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u16) + sizeof(u8) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgDgnssStatus {
+    static constexpr size_t kSourceCount = SOURCE_COUNT;
     u8 flags; /** Status flags */
     u16 latency; /** Latency of observation receipt [deci-seconds] */
     u8 num_signals; /** Number of signals from base station */
@@ -101,6 +102,7 @@ namespace sbp {
    */
   template<size_t STATUS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u16) + sizeof(u16) + sizeof(u32) + sizeof(u32) + 0)) / sizeof(SubSystemReport)>
   struct SBP_ATTR_PACKED MsgStatusReport {
+    static constexpr size_t kStatusCount = STATUS_COUNT;
     u16 reporting_system; /** Identity of reporting system */
     u16 sbp_version; /** SBP protocol version */
     u32 sequence; /** Increments on each status report sent */
@@ -128,6 +130,7 @@ namespace sbp {
    */
   template<size_t TELEMETRY_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgCsacTelemetry {
+    static constexpr size_t kTelemetryCount = TELEMETRY_COUNT;
     u8 id; /** Index representing the type of telemetry in use.  It is implemention defined. */
     char telemetry[TELEMETRY_COUNT]; /** Comma separated list of values as defined by the index */
   };
@@ -141,6 +144,7 @@ namespace sbp {
    */
   template<size_t TELEMETRY_LABELS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgCsacTelemetryLabels {
+    static constexpr size_t kTelemetryLabelsCount = TELEMETRY_LABELS_COUNT;
     u8 id; /** Index representing the type of telemetry in use.  It is implemention defined. */
     char telemetry_labels[TELEMETRY_LABELS_COUNT]; /** Comma separated list of telemetry field values */
   };
@@ -185,6 +189,7 @@ namespace sbp {
    */
   template<size_t GROUP_MSGS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u8) + sizeof(u8) + sizeof(u8) + 0)) / sizeof(u16)>
   struct SBP_ATTR_PACKED MsgGroupMeta {
+    static constexpr size_t kGroupMsgsCount = GROUP_MSGS_COUNT;
     u8 group_id; /** Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss */
     u8 flags; /** Status flags (reserved) */
     u8 n_group_msgs; /** Size of list group_msgs */

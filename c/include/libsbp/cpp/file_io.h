@@ -38,6 +38,7 @@ namespace sbp {
    */
   template<size_t FILENAME_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u32) + sizeof(u32) + sizeof(u8) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgFileioReadReq {
+    static constexpr size_t kFilenameCount = FILENAME_COUNT;
     u32 sequence; /** Read sequence number */
     u32 offset; /** File offset [bytes] */
     u8 chunk_size; /** Chunk size to read [bytes] */
@@ -55,6 +56,7 @@ namespace sbp {
    */
   template<size_t CONTENTS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u32) + 0)) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgFileioReadResp {
+    static constexpr size_t kContentsCount = CONTENTS_COUNT;
     u32 sequence; /** Read sequence number */
     u8 contents[CONTENTS_COUNT]; /** Contents of read file */
   };
@@ -75,6 +77,7 @@ namespace sbp {
    */
   template<size_t DIRNAME_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u32) + sizeof(u32) + 0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgFileioReadDirReq {
+    static constexpr size_t kDirnameCount = DIRNAME_COUNT;
     u32 sequence; /** Read sequence number */
     u32 offset; /** The offset to skip the first n elements of the file list
  */
@@ -93,6 +96,7 @@ namespace sbp {
    */
   template<size_t CONTENTS_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(u32) + 0)) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgFileioReadDirResp {
+    static constexpr size_t kContentsCount = CONTENTS_COUNT;
     u32 sequence; /** Read sequence number */
     u8 contents[CONTENTS_COUNT]; /** Contents of read directory */
   };
@@ -107,6 +111,7 @@ namespace sbp {
    */
   template<size_t FILENAME_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(char)>
   struct SBP_ATTR_PACKED MsgFileioRemove {
+    static constexpr size_t kFilenameCount = FILENAME_COUNT;
     char filename[FILENAME_COUNT]; /** Name of the file to delete */
   };
   

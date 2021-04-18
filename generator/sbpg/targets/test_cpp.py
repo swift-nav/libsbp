@@ -24,13 +24,14 @@ SKIP_MESSAGE_IDS = ['MSG_FILEIO_WRITE_REQ']
 CONSTRUCT_CODE = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
                       's64', 'float', 'double'])
 
+COLLISIONS = set(['GnssSignal', 'GPSTime'])
+
 def pascal_case(value):
   if value.isupper():
     # assuming SCREAMING_SNAKE_CASE
     return stringcase.pascalcase(value.lower())
   else:
-    # assuming already in pascal case
-    return value
+    return stringcase.pascalcase(value)
 
 def snake_case(value):
   if value.isupper():
@@ -90,8 +91,15 @@ def is_templated_field_message(message, all_messages):
       return True
   return False
 
-JENV.filters['snake_case'] = snake_case
+def c_struct_name(value):
+  s0 = "Sbp" + value if value in COLLISIONS else value
+  s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', s0)
+  return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower() + "_t"
+
 JENV.filters['pascal_case'] = pascal_case
+JENV.filters['snake_case'] = snake_case
+JENV.filters['screaming_snake_case'] = screaming_snake_case
+JENV.filters['c_struct_name'] = c_struct_name
 
 def render_source(output_dir, package_spec, all_specs):
   """

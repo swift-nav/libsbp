@@ -32,6 +32,7 @@ namespace sbp {
    */
   template<size_t CONTENTS_COUNT = (SBP_MAX_PAYLOAD_LEN - (0)) / sizeof(u8)>
   struct SBP_ATTR_PACKED MsgUserData {
+    static constexpr size_t kContentsCount = CONTENTS_COUNT;
     u8 contents[CONTENTS_COUNT]; /** User data payload */
   };
   
