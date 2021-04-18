@@ -300,10 +300,10 @@ satellite being tracked.
    * 
    * It is typically equivalent to the QZSS CLAS Sub Type 9 messages
    */
-  template<size_t ELEMENT_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(GriddedCorrectionHeader) + 0)) / sizeof(GridElement)>
+  template<size_t ELEMENT_COUNT>
   struct SBP_ATTR_PACKED MsgSsrGriddedCorrection {
     GriddedCorrectionHeader header; /** Header of a gridded correction message */
-    GridElement element; /** Tropo and STEC residuals for the given grid point.
+    GridElement<ELEMENT_COUNT> element; /** Tropo and STEC residuals for the given grid point.
  */
   };
   
@@ -469,16 +469,16 @@ specifcation in units of m.
     STECSatElement stec_sat_list[STEC_SAT_LIST_COUNT]; /** Array of STEC information for each space vehicle */
   };
   
-  template<size_t ELEMENT_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(GriddedCorrectionHeaderDepA) + 0)) / sizeof(GridElementNoStd)>
+  template<size_t ELEMENT_COUNT>
   struct SBP_ATTR_PACKED MsgSsrGriddedCorrectionNoStdDepA {
     GriddedCorrectionHeaderDepA header; /** Header of a Gridded Correction message */
-    GridElementNoStd element; /** Tropo and STEC residuals for the given grid point */
+    GridElementNoStd<ELEMENT_COUNT> element; /** Tropo and STEC residuals for the given grid point */
   };
   
-  template<size_t ELEMENT_COUNT = (SBP_MAX_PAYLOAD_LEN - (sizeof(GriddedCorrectionHeaderDepA) + 0)) / sizeof(GridElement)>
+  template<size_t ELEMENT_COUNT>
   struct SBP_ATTR_PACKED MsgSsrGriddedCorrectionDepA {
     GriddedCorrectionHeaderDepA header; /** Header of a Gridded Correction message */
-    GridElement element; /** Tropo and STEC residuals for the given grid point (mean
+    GridElement<ELEMENT_COUNT> element; /** Tropo and STEC residuals for the given grid point (mean
 and standard deviation)
  */
   };

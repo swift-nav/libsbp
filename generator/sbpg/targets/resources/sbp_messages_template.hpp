@@ -40,9 +40,9 @@ namespace sbp {
   struct SBP_ATTR_PACKED (((message.identifier|pascal_case))) {
     ((*- for field in message.fields *))
     ((*- if field.desc *))
-    (((field|mk_field))) /** (((field.desc))) ((* if field.units *))[(((field.units)))] ((* endif *))*/
+    (((field|mk_field(all_messages)))) /** (((field.desc))) ((* if field.units *))[(((field.units)))] ((* endif *))*/
     ((*- else *))
-    (((field|mk_field)))
+    (((field|mk_field(all_messages))))
     ((*- endif *))
     ((*- endfor *))
   };

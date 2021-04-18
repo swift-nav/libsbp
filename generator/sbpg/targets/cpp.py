@@ -45,30 +45,29 @@ def screaming_snake_case(value):
   return stringcase.snakecase(value).upper()
 
 def mk_template(message, all_messages):
-  template_fields = extract_template_fields(message, all_messages)
-
-  if template_fields:
-    field_sizeof = []
-    for field in message.fields:
-      if field.identifier == template_fields[0].identifier:
-        continue
-
-      if field.type_id == 'string' and field.options.get('size', None):
-        name = '{}[{}]'.format(mk_id(field), field.options.get('size').value)
-      elif field.type_id == 'array' and field.options.get('size', None):
+  field_sizeof = []
+  for field in message.fields:
+    if not is_zero_array(field) and not is_templated_field(field, all_messages):
+      if field.type_id == 'string' or field.type_id == 'array':
         name = '{}[{}]'.format(mk_id(field), field.options.get('size').value)
       else:
         name = mk_id(field)
-
       field_sizeof.append('sizeof({})'.format(name))
 
-    template_entries = ['size_t {} = (SBP_MAX_PAYLOAD_LEN - ({})) / sizeof({})'.format(
-      '{}_COUNT'.format(screaming_snake_case(template_fields[0].identifier)),
-      ' + '.join(field_sizeof + ['0']),
-      mk_id(template_fields[0])
-    )]
+  template_content = None
 
-    return 'template<{}>'.format(', '.join(template_entries))
+  for field in message.fields:
+    if is_zero_array(field):
+      template_content = 'size_t {} = (SBP_MAX_PAYLOAD_LEN - ({})) / sizeof({})'.format(
+        '{}_COUNT'.format(screaming_snake_case(field.identifier)),
+        ' + '.join(field_sizeof + ['0']),
+        mk_id(field)
+      )
+    elif is_templated_field(field, all_messages):
+      template_content = 'size_t {}_COUNT'.format(screaming_snake_case(field.identifier))
+
+  if template_content:
+    return 'template<{}>'.format(template_content)
   else:
     return ''
 
@@ -93,8 +92,14 @@ def extract_template_fields(message, all_messages):
 
   return template_fields
 
-def mk_field(field):
-  return '{} {}'.format(mk_id(field), mk_size(field))
+def mk_field(field, all_messages):
+  field_id = mk_id(field)
+  field_size = mk_size(field)
+
+  if is_templated_field(field, all_messages):
+    return '{}<{}_COUNT> {}'.format(field_id, screaming_snake_case(field.identifier), field_size)
+  else:
+    return '{} {}'.format(field_id, field_size)
 
 def mk_id(field):
   name = field.type_id
@@ -142,6 +147,9 @@ JENV.filters['screaming_snake_case'] = screaming_snake_case
 JENV.filters['mk_template'] = mk_template
 JENV.filters['mk_field'] = mk_field
 JENV.filters['commentify'] = commentify
+JENV.filters['is_zero_array'] = is_zero_array
+JENV.filters['is_templated_field'] = is_templated_field
+
 
 def render_source(output_dir, package_spec, all_specs):
   path, name = package_spec.filepath
