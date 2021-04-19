@@ -37,9 +37,9 @@ class State {
   IReader *reader_;
   IWriter *writer_;
 
-  State(const State&) = delete;
-  
-  State& operator=(const State&) = delete;
+  State(const State &) = delete;
+
+  State &operator=(const State &) = delete;
 
   static s32 read_func(u8 *buff, u32 n, void *ctx) {
     State *instance = static_cast<State *>(ctx);
@@ -70,21 +70,22 @@ class State {
 
   void set_writer(IWriter *writer) { writer_ = writer; }
 
-  s8 process() {
-    return sbp_process(&state_, &read_func);
-  }
+  s8 process() { return sbp_process(&state_, &read_func); }
 
   s8 send_message(u16 msg_type, u16 sender_id, u8 length, const u8 payload[]) {
     // NOLINTNEXTLINE
-    return sbp_send_message(&state_, msg_type, sender_id, length, const_cast<u8 *>(payload), &write_func);
+    return sbp_send_message(&state_, msg_type, sender_id, length,
+                            const_cast<u8 *>(payload), &write_func);
   }
 
-  s8 process_payload(u16 sender_id, u16 msg_type, u8 msg_length, const u8 payload[]) {
+  s8 process_payload(u16 sender_id, u16 msg_type, u8 msg_length,
+                     const u8 payload[]) {
     // NOLINTNEXTLINE
-    return sbp_process_payload(&state_, sender_id, msg_type, msg_length, const_cast<u8 *>(payload));
+    return sbp_process_payload(&state_, sender_id, msg_type, msg_length,
+                               const_cast<u8 *>(payload));
   }
 };
 
-} // namespace sbp
+}  // namespace sbp
 
-#endif //SBP_CPP_STATE_H
+#endif  // SBP_CPP_STATE_H

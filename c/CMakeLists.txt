@@ -9,6 +9,7 @@ include(SwiftCmakeOptions)
 include(CompileOptions)
 include(LanguageStandards)
 include(ClangTidy)
+include(ClangFormat)
 swift_create_project_options(
     HAS_TESTS
     HAS_DOCS
@@ -18,6 +19,7 @@ include(CodeCoverage)
 include(TestTargets)
 add_code_coverage_all_targets()
 swift_setup_clang_tidy(PATTERNS 'src/*.c')
+swift_setup_clang_format()
 
 if(libsbp_BUILD_TESTS)
   find_package(Googletest)
