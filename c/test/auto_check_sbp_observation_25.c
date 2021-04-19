@@ -127,7 +127,7 @@ START_TEST(test_auto_check_sbp_observation_25) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_obs_dep_c_t *msg = (msg_obs_dep_c_t *)((void *)last_msg + 6);
+    sbp_msg_obs_dep_c_t *msg = (sbp_msg_obs_dep_c_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->header.n_obs == 32,
@@ -302,7 +302,7 @@ START_TEST(test_auto_check_sbp_observation_25) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_obs_dep_c_t *msg = (msg_obs_dep_c_t *)((void *)last_msg + 6);
+    sbp_msg_obs_dep_c_t *msg = (sbp_msg_obs_dep_c_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->header.n_obs == 33,
@@ -432,7 +432,7 @@ START_TEST(test_auto_check_sbp_observation_25) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_obs_dep_c_t *msg = (msg_obs_dep_c_t *)((void *)last_msg + 6);
+    sbp_msg_obs_dep_c_t *msg = (sbp_msg_obs_dep_c_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->header.n_obs == 32,
@@ -607,7 +607,7 @@ START_TEST(test_auto_check_sbp_observation_25) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_obs_dep_c_t *msg = (msg_obs_dep_c_t *)((void *)last_msg + 6);
+    sbp_msg_obs_dep_c_t *msg = (sbp_msg_obs_dep_c_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->header.n_obs == 33,
@@ -737,7 +737,7 @@ START_TEST(test_auto_check_sbp_observation_25) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_obs_dep_c_t *msg = (msg_obs_dep_c_t *)((void *)last_msg + 6);
+    sbp_msg_obs_dep_c_t *msg = (sbp_msg_obs_dep_c_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->header.n_obs == 32,

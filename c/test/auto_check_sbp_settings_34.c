@@ -127,8 +127,8 @@ START_TEST(test_auto_check_sbp_settings_34) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_settings_read_by_index_resp_t *msg =
-        (msg_settings_read_by_index_resp_t *)((void *)last_msg + 6);
+    sbp_msg_settings_read_by_index_resp_t *msg =
+        (sbp_msg_settings_read_by_index_resp_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->index == 0,
@@ -209,8 +209,8 @@ START_TEST(test_auto_check_sbp_settings_34) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_settings_read_by_index_resp_t *msg =
-        (msg_settings_read_by_index_resp_t *)((void *)last_msg + 6);
+    sbp_msg_settings_read_by_index_resp_t *msg =
+        (sbp_msg_settings_read_by_index_resp_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->index == 1,
@@ -276,8 +276,8 @@ START_TEST(test_auto_check_sbp_settings_34) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_settings_read_by_index_resp_t *msg =
-        (msg_settings_read_by_index_resp_t *)((void *)last_msg + 6);
+    sbp_msg_settings_read_by_index_resp_t *msg =
+        (sbp_msg_settings_read_by_index_resp_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->index == 2,
@@ -342,8 +342,8 @@ START_TEST(test_auto_check_sbp_settings_34) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_settings_read_by_index_resp_t *msg =
-        (msg_settings_read_by_index_resp_t *)((void *)last_msg + 6);
+    sbp_msg_settings_read_by_index_resp_t *msg =
+        (sbp_msg_settings_read_by_index_resp_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->index == 3,
@@ -406,8 +406,8 @@ START_TEST(test_auto_check_sbp_settings_34) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_settings_read_by_index_resp_t *msg =
-        (msg_settings_read_by_index_resp_t *)((void *)last_msg + 6);
+    sbp_msg_settings_read_by_index_resp_t *msg =
+        (sbp_msg_settings_read_by_index_resp_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->index == 4,

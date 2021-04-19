@@ -122,7 +122,7 @@ START_TEST(test_auto_check_sbp_navigation_22) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_vel_ned_t *msg = (msg_vel_ned_t *)((void *)last_msg + 6);
+    sbp_msg_vel_ned_t *msg = (sbp_msg_vel_ned_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->d == -13, "incorrect value for d, expected -13, is %d",
@@ -187,7 +187,7 @@ START_TEST(test_auto_check_sbp_navigation_22) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_vel_ned_t *msg = (msg_vel_ned_t *)((void *)last_msg + 6);
+    sbp_msg_vel_ned_t *msg = (sbp_msg_vel_ned_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->d == -24, "incorrect value for d, expected -24, is %d",
@@ -251,7 +251,7 @@ START_TEST(test_auto_check_sbp_navigation_22) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_vel_ned_t *msg = (msg_vel_ned_t *)((void *)last_msg + 6);
+    sbp_msg_vel_ned_t *msg = (sbp_msg_vel_ned_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->d == -12, "incorrect value for d, expected -12, is %d",
@@ -315,7 +315,7 @@ START_TEST(test_auto_check_sbp_navigation_22) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_vel_ned_t *msg = (msg_vel_ned_t *)((void *)last_msg + 6);
+    sbp_msg_vel_ned_t *msg = (sbp_msg_vel_ned_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->d == -24, "incorrect value for d, expected -24, is %d",
@@ -379,7 +379,7 @@ START_TEST(test_auto_check_sbp_navigation_22) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_vel_ned_t *msg = (msg_vel_ned_t *)((void *)last_msg + 6);
+    sbp_msg_vel_ned_t *msg = (sbp_msg_vel_ned_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->d == -21, "incorrect value for d, expected -21, is %d",

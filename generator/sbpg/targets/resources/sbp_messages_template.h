@@ -1,25 +1,3 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
- * Contact: https://support.swiftnav.com
- *
- * This source is subject to the license found in the file 'LICENSE' which must
- * be be distributed together with this source. All other rights reserved.
- *
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
- */
-
-/*****************************************************************************
- * Automatically generated from yaml/(((filepath)))
- * with generate.py. Please do not hand edit!
- *****************************************************************************/
-
-/** \defgroup (((pkg_name))) (((pkg_name|capitalize)))
- *
- * (((description|commentify)))
- * \{ */
-
 #ifndef LIBSBP_(((pkg_name|upper)))_MESSAGES_H
 #define LIBSBP_(((pkg_name|upper)))_MESSAGES_H
 
@@ -31,39 +9,53 @@
 
 SBP_PACK_START
 
-((* for m in msgs *))
-((*- if m.desc *))
-/** (((m.short_desc)))
- *
-(((m.desc|commentify)))
- */
-((*- endif *))
-((*- if m.is_real_message *))
-#define SBP_(((m.identifier.ljust(max_msgid_len)))) ((('0x%04X'|format(m.sbp_id))))
-((*- endif *))
-((*- if m.fields *))
-((*- if m.sbp_id or m.embedded_type *))
-((*- for f in m.fields *))
-((*- if f.options.fields *))
-(((f|create_bitfield_macros(m.identifier))))
-((*- endif *))
-((*- endfor *))
-((*- endif *))
-
-typedef struct SBP_ATTR_PACKED {
-  ((*- for f in m.fields *))
+((*- macro gen_substruct(substruct) *))
+ ((*- for f in substruct.fields *))
   ((*- if f.desc *))
-  (((f|mk_id))) ((((f|mk_size).ljust(m.max_fid_len+4)))) /**< (((f.desc))) ((* if f.units *))[(((f.units)))] ((* endif *))*/
-  ((*- else *))
-  (((f|mk_id))) ((((f|mk_size).ljust(m.max_fid_len+4))))
+  /**
+(((f.desc|commentify))) ((*- if f.units *))[(((f.units)))] ((*- endif *))
+   */
   ((*- endif *))
-  ((*- endfor *))
-} (((m.identifier|convert)));
+  ((*- if f.basetype.is_primitive *))
+    (((f.basetype.name)))
+  ((*- else *))
+  struct SBP_ATTR_PACKED {
+    (((gen_substruct(f.basetype) )))
+  }
+  ((*- endif *))
+  (((f.name)))
+  ((*- if f.order != "single" *))
+    [(((f.max_items)))]
+  ((*- endif *))
+  ;
+ 
+ ((*- endfor *))
+((*- endmacro *))
+
+((*- macro gen_bitfield_macros(substruct, path) *))
+	((*- for f in substruct.fields *))
+	((*- if not f.basetype.is_primitive *))
+	(((gen_bitfield_macros(f.basetype, path + "_" + f.name))))
+	((*- elif f.options.fields *))
+	(((f|create_bitfield_macros(path + "_" + f.name))))
+	((*- endif *))
+	((*- endfor *))
+((*- endmacro *))
+
+((*- for m in msgs *))
+((*- if m.desc *))
+  /** (((m.short_desc)))
+   *
+(((m.desc|commentify)))
+   */
 ((*- endif *))
-
-((* endfor *))
-/** \} */
-
+#define SBP_(((m.name.ljust(max_msgid_len)))) ((('0x%04X'|format(m.sbp_id))))
+(((gen_bitfield_macros(m, m.name))))
+typedef struct SBP_ATTR_PACKED {
+  ((( gen_substruct(m) )))
+} (((m.name|convert)));
+((*- endfor *))
+                                                                                                              
 SBP_PACK_END
 
 #endif /* LIBSBP_(((pkg_name|upper)))_MESSAGES_H */

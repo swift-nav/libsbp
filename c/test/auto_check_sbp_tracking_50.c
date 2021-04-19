@@ -124,8 +124,8 @@ START_TEST(test_auto_check_sbp_tracking_50) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_tracking_state_detailed_dep_t *msg =
-        (msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
+    sbp_msg_tracking_state_detailed_dep_t *msg =
+        (sbp_msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->L.f == 169,
@@ -238,8 +238,8 @@ START_TEST(test_auto_check_sbp_tracking_50) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_tracking_state_detailed_dep_t *msg =
-        (msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
+    sbp_msg_tracking_state_detailed_dep_t *msg =
+        (sbp_msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->L.f == 14, "incorrect value for L.f, expected 14, is %d",
@@ -352,8 +352,8 @@ START_TEST(test_auto_check_sbp_tracking_50) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_tracking_state_detailed_dep_t *msg =
-        (msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
+    sbp_msg_tracking_state_detailed_dep_t *msg =
+        (sbp_msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->L.f == 8, "incorrect value for L.f, expected 8, is %d",
@@ -466,8 +466,8 @@ START_TEST(test_auto_check_sbp_tracking_50) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_tracking_state_detailed_dep_t *msg =
-        (msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
+    sbp_msg_tracking_state_detailed_dep_t *msg =
+        (sbp_msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->L.f == 125,
@@ -580,8 +580,8 @@ START_TEST(test_auto_check_sbp_tracking_50) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_tracking_state_detailed_dep_t *msg =
-        (msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
+    sbp_msg_tracking_state_detailed_dep_t *msg =
+        (sbp_msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->L.f == 64, "incorrect value for L.f, expected 64, is %d",

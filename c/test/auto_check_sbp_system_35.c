@@ -122,7 +122,8 @@ START_TEST(test_auto_check_sbp_system_35) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_dgnss_status_t *msg = (msg_dgnss_status_t *)((void *)last_msg + 6);
+    sbp_msg_dgnss_status_t *msg =
+        (sbp_msg_dgnss_status_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->flags == 0,

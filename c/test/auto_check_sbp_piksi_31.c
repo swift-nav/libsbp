@@ -122,7 +122,8 @@ START_TEST(test_auto_check_sbp_piksi_31) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_thread_state_t *msg = (msg_thread_state_t *)((void *)last_msg + 6);
+    sbp_msg_thread_state_t *msg =
+        (sbp_msg_thread_state_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->cpu == 0, "incorrect value for cpu, expected 0, is %d",
@@ -184,7 +185,8 @@ START_TEST(test_auto_check_sbp_piksi_31) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_thread_state_t *msg = (msg_thread_state_t *)((void *)last_msg + 6);
+    sbp_msg_thread_state_t *msg =
+        (sbp_msg_thread_state_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->cpu == 595,
@@ -246,7 +248,8 @@ START_TEST(test_auto_check_sbp_piksi_31) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_thread_state_t *msg = (msg_thread_state_t *)((void *)last_msg + 6);
+    sbp_msg_thread_state_t *msg =
+        (sbp_msg_thread_state_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->cpu == 14, "incorrect value for cpu, expected 14, is %d",
@@ -308,7 +311,8 @@ START_TEST(test_auto_check_sbp_piksi_31) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_thread_state_t *msg = (msg_thread_state_t *)((void *)last_msg + 6);
+    sbp_msg_thread_state_t *msg =
+        (sbp_msg_thread_state_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->cpu == 1, "incorrect value for cpu, expected 1, is %d",
@@ -371,7 +375,8 @@ START_TEST(test_auto_check_sbp_piksi_31) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_thread_state_t *msg = (msg_thread_state_t *)((void *)last_msg + 6);
+    sbp_msg_thread_state_t *msg =
+        (sbp_msg_thread_state_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->cpu == 7, "incorrect value for cpu, expected 7, is %d",

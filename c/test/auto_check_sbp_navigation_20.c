@@ -123,7 +123,8 @@ START_TEST(test_auto_check_sbp_navigation_20) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_vel_ecef_cov_t *msg = (msg_vel_ecef_cov_t *)((void *)last_msg + 6);
+    sbp_msg_vel_ecef_cov_t *msg =
+        (sbp_msg_vel_ecef_cov_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg((msg->cov_x_x * 100 - 2.0 * 100) < 0.05,

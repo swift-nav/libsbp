@@ -148,13 +148,12 @@ definitions:
           type: u32
           units: bytes
           desc: Offset into the file at which to start writing in bytes
-      - filename:
-          type: string
-          desc: Name of the file to write to
       - data:
           type: array
           fill: u8
-          desc: Variable-length array of data to write
+          desc: |
+            NULL terminated filename to write to followed by 
+            variable-length array of data to write
 
  - MSG_FILEIO_WRITE_RESP:
     id: 0x00AB

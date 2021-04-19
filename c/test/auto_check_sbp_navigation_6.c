@@ -122,7 +122,8 @@ START_TEST(test_auto_check_sbp_navigation_6) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_baseline_ned_t *msg = (msg_baseline_ned_t *)((void *)last_msg + 6);
+    sbp_msg_baseline_ned_t *msg =
+        (sbp_msg_baseline_ned_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->d == 32153,
@@ -186,7 +187,8 @@ START_TEST(test_auto_check_sbp_navigation_6) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_baseline_ned_t *msg = (msg_baseline_ned_t *)((void *)last_msg + 6);
+    sbp_msg_baseline_ned_t *msg =
+        (sbp_msg_baseline_ned_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->d == 32622,
@@ -250,7 +252,8 @@ START_TEST(test_auto_check_sbp_navigation_6) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_baseline_ned_t *msg = (msg_baseline_ned_t *)((void *)last_msg + 6);
+    sbp_msg_baseline_ned_t *msg =
+        (sbp_msg_baseline_ned_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->d == 32750,
@@ -314,7 +317,8 @@ START_TEST(test_auto_check_sbp_navigation_6) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_baseline_ned_t *msg = (msg_baseline_ned_t *)((void *)last_msg + 6);
+    sbp_msg_baseline_ned_t *msg =
+        (sbp_msg_baseline_ned_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->d == 32559,
@@ -378,7 +382,8 @@ START_TEST(test_auto_check_sbp_navigation_6) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_baseline_ned_t *msg = (msg_baseline_ned_t *)((void *)last_msg + 6);
+    sbp_msg_baseline_ned_t *msg =
+        (sbp_msg_baseline_ned_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->d == 32421,

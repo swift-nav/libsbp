@@ -1,59 +1,9 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
- * Contact: https://support.swiftnav.com
- *
- * This source is subject to the license found in the file 'LICENSE' which must
- * be be distributed together with this source. All other rights reserved.
- *
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
- */
-
-/*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/settings.yaml
- * with generate.py. Please do not hand edit!
- *****************************************************************************/
-
-/** \defgroup settings Settings
- *
- *  *
- * Messages for reading, writing, and discovering device settings. Settings
- * with a "string" field have multiple values in this field delimited with a
- * null character (the c style null terminator).  For instance, when querying
- * the 'firmware_version' setting in the 'system_info' section, the following
- * array of characters needs to be sent for the string field in
- * MSG_SETTINGS_READ: "system_info\0firmware_version\0", where the delimiting
- * null characters are specified with the escape sequence '\0' and all
- * quotation marks should be omitted.
- *
- *
- * In the message descriptions below, the generic strings SECTION_SETTING and
- * SETTING are used to refer to the two strings that comprise the identifier
- * of an individual setting.In firmware_version example above, SECTION_SETTING
- * is the 'system_info', and the SETTING portion is 'firmware_version'.
- *
- * See the "Software Settings Manual" on support.swiftnav.com for detailed
- * documentation about all settings and sections available for each Swift
- * firmware version. Settings manuals are available for each firmware version
- * at the following link: [Piksi Multi
- * Specifications](https://support.swiftnav.com/customer/en/portal/articles/2628580-piksi-multi-specifications#settings).
- * The latest settings document is also available at the following link:
- * [Latest settings document](http://swiftnav.com/latest/piksi-multi-settings) .
- * See lastly
- * [settings.py](https://github.com/swift-nav/piksi_tools/blob/master/piksi_tools/settings.py)
- * , the open source python command line utility for reading, writing, and
- * saving settings in the piksi_tools repository on github as a helpful
- * reference and example.
- * \{ */
-
 #ifndef LIBSBP_SETTINGS_MESSAGES_H
 #define LIBSBP_SETTINGS_MESSAGES_H
 
 #include "common.h"
 
 SBP_PACK_START
-
 /** Save settings to flash (host => device)
  *
  * The save settings message persists the device's current settings
@@ -61,6 +11,8 @@ SBP_PACK_START
  */
 #define SBP_MSG_SETTINGS_SAVE 0x00A1
 
+typedef struct SBP_ATTR_PACKED {
+} sbp_msg_settings_save_t;
 /** Write device configuration settings (host => device)
  *
  * The setting message writes the device configuration for a particular
@@ -74,11 +26,12 @@ SBP_PACK_START
 #define SBP_MSG_SETTINGS_WRITE 0x00A0
 
 typedef struct SBP_ATTR_PACKED {
-  char setting[0]; /**< A NULL-terminated and NULL-delimited string with
-contents "SECTION_SETTING\0SETTING\0VALUE\0"
- */
-} msg_settings_write_t;
-
+  /**
+   * A NULL-terminated and NULL-delimited string with contents
+   * "SECTION_SETTING\0SETTING\0VALUE\0"
+   */
+  char setting[255];
+} sbp_msg_settings_write_t;
 /** Acknowledgement with status of MSG_SETTINGS_WRITE
  *
  * Return the status of a write request with the new value of the
@@ -90,36 +43,42 @@ contents "SECTION_SETTING\0SETTING\0VALUE\0"
  * "solution\0soln_freq\010\0".
  */
 #define SBP_MSG_SETTINGS_WRITE_RESP 0x00AF
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK (0x3)
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT (0u)
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_GET(flags)      \
-  (((flags) >> SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT) & \
-   SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK)
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SET(flags, val)           \
-  do {                                                                 \
-    ((flags) |= (((val) & (SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK)) \
-                 << (SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT)));    \
+
+#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_MASK (0x3)
+#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_SHIFT (0u)
+#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_GET(flags)      \
+  (((flags) >> SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_SHIFT) & \
+   SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_MASK)
+#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_SET(flags, val)           \
+  do {                                                                        \
+    ((flags) |= (((val) & (SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_MASK)) \
+                 << (SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_SHIFT)));    \
   } while (0)
 
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_ACCEPTED_VALUE_UPDATED (0)
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_VALUE_UNPARSABLE_OR_OUT_OF_RANGE \
+#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_ACCEPTED_VALUE_UPDATED (0)
+#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_REJECTED_VALUE_UNPARSABLE_OR_OUT_OF_RANGE \
   (1)
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_REQUESTED_SETTING_DOES_NOT_EXIST \
+#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_REJECTED_REQUESTED_SETTING_DOES_NOT_EXIST \
   (2)
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_SETTING_NAME_COULD_NOT_BE_PARSED \
+#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_REJECTED_SETTING_NAME_COULD_NOT_BE_PARSED \
   (3)
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_SETTING_IS_READ_ONLY (4)
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_MODIFICATION_IS_TEMPORARILY_DISABLED \
+#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_REJECTED_SETTING_IS_READ_ONLY \
+  (4)
+#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_REJECTED_MODIFICATION_IS_TEMPORARILY_DISABLED \
   (5)
-#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_UNSPECIFIED_ERROR (6)
-
+#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_REJECTED_UNSPECIFIED_ERROR \
+  (6)
 typedef struct SBP_ATTR_PACKED {
-  u8 status;       /**< Write status */
-  char setting[0]; /**< A NULL-terminated and delimited string with contents
-"SECTION_SETTING\0SETTING\0VALUE\0"
- */
-} msg_settings_write_resp_t;
-
+  /**
+   * Write status
+   */
+  u8 status;
+  /**
+   * A NULL-terminated and delimited string with contents
+   * "SECTION_SETTING\0SETTING\0VALUE\0"
+   */
+  char setting[254];
+} sbp_msg_settings_write_resp_t;
 /** Read device configuration settings (host => device)
  *
  * The setting message that reads the device configuration. The string
@@ -134,11 +93,12 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_SETTINGS_READ_REQ 0x00A4
 
 typedef struct SBP_ATTR_PACKED {
-  char setting[0]; /**< A NULL-terminated and NULL-delimited string with
-contents "SECTION_SETTING\0SETTING\0"
- */
-} msg_settings_read_req_t;
-
+  /**
+   * A NULL-terminated and NULL-delimited string with contents
+   * "SECTION_SETTING\0SETTING\0"
+   */
+  char setting[255];
+} sbp_msg_settings_read_req_t;
 /** Read device configuration settings (host <= device)
  *
  * The setting message wich which the device responds after a
@@ -152,12 +112,13 @@ contents "SECTION_SETTING\0SETTING\0"
 #define SBP_MSG_SETTINGS_READ_RESP 0x00A5
 
 typedef struct SBP_ATTR_PACKED {
-  char setting[0]; /**< A NULL-terminated and NULL-delimited string with
-contents "SECTION_SETTING\0SETTING\0VALUE\0"
-
- */
-} msg_settings_read_resp_t;
-
+  /**
+   * A NULL-terminated and NULL-delimited string with contents
+   * "SECTION_SETTING\0SETTING\0VALUE\0"
+   *
+   */
+  char setting[255];
+} sbp_msg_settings_read_resp_t;
 /** Read setting by direct index (host => device)
  *
  * The settings message for iterating through the settings
@@ -167,11 +128,12 @@ contents "SECTION_SETTING\0SETTING\0VALUE\0"
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_REQ 0x00A2
 
 typedef struct SBP_ATTR_PACKED {
-  u16 index; /**< An index into the device settings, with values ranging from
-0 to length(settings)
-*/
-} msg_settings_read_by_index_req_t;
-
+  /**
+   * An index into the device settings, with values ranging from
+   * 0 to length(settings)
+   */
+  u16 index;
+} sbp_msg_settings_read_by_index_req_t;
 /** Read setting by direct index (host <= device)
  *
  * The settings message that reports the value of a setting at an index.
@@ -188,20 +150,25 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_RESP 0x00A7
 
 typedef struct SBP_ATTR_PACKED {
-  u16 index; /**< An index into the device settings, with values ranging from
-0 to length(settings)
-*/
-  char setting[0]; /**< A NULL-terminated and delimited string with contents
-"SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
- */
-} msg_settings_read_by_index_resp_t;
-
+  /**
+   * An index into the device settings, with values ranging from
+   * 0 to length(settings)
+   */
+  u16 index;
+  /**
+   * A NULL-terminated and delimited string with contents
+   * "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
+   */
+  char setting[253];
+} sbp_msg_settings_read_by_index_resp_t;
 /** Finished reading settings (host <= device)
  *
  * The settings message for indicating end of the settings values.
  */
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_DONE 0x00A6
 
+typedef struct SBP_ATTR_PACKED {
+} sbp_msg_settings_read_by_index_done_t;
 /** Register setting and default value (device => host)
  *
  * This message registers the presence and default value of a setting
@@ -211,11 +178,12 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_SETTINGS_REGISTER 0x00AE
 
 typedef struct SBP_ATTR_PACKED {
-  char setting[0]; /**< A NULL-terminated and delimited string with contents
-"SECTION_SETTING\0SETTING\0VALUE".
- */
-} msg_settings_register_t;
-
+  /**
+   * A NULL-terminated and delimited string with contents
+   * "SECTION_SETTING\0SETTING\0VALUE".
+   */
+  char setting[255];
+} sbp_msg_settings_register_t;
 /** Register setting and default value (device <= host)
  *
  * This message responds to setting registration with the effective value.
@@ -224,35 +192,39 @@ typedef struct SBP_ATTR_PACKED {
  * and had a different value.
  */
 #define SBP_MSG_SETTINGS_REGISTER_RESP 0x01AF
-#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK (0x3)
-#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT (0u)
-#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_GET(flags)      \
-  (((flags) >> SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT) & \
-   SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK)
-#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SET(flags, val)           \
-  do {                                                                       \
-    ((flags) |= (((val) & (SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK)) \
-                 << (SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT)));    \
+
+#define SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_MASK (0x3)
+#define SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_SHIFT (0u)
+#define SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_GET(flags)      \
+  (((flags) >> SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_SHIFT) & \
+   SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_MASK)
+#define SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_SET(flags, val) \
+  do {                                                                    \
+    ((flags) |=                                                           \
+     (((val) & (SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_MASK))  \
+      << (SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_SHIFT)));     \
   } while (0)
 
-#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_ACCEPTED_REQUESTED_DEFAULT_VALUE_RETURNED \
+#define SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_ACCEPTED_REQUESTED_DEFAULT_VALUE_RETURNED \
   (0)
-#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_ACCEPTED_SETTING_FOUND_IN_PERMANENT_STORAGE_VALUE_FROM_STORAGE_RETURNED \
+#define SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_ACCEPTED_SETTING_FOUND_IN_PERMANENT_STORAGE_VALUE_FROM_STORAGE_RETURNED \
   (1)
-#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_REJECTED_SETTING_ALREADY_REGISTERED_VALUE_FROM_MEMORY_RETURNED \
+#define SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_REJECTED_SETTING_ALREADY_REGISTERED_VALUE_FROM_MEMORY_RETURNED \
   (2)
-#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_REJECTED_MALFORMED_MESSAGE \
+#define SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_REJECTED_MALFORMED_MESSAGE \
   (3)
-
 typedef struct SBP_ATTR_PACKED {
-  u8 status;       /**< Register status */
-  char setting[0]; /**< A NULL-terminated and delimited string with contents
-"SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined
-according to the status field.
- */
-} msg_settings_register_resp_t;
-
-/** \} */
+  /**
+   * Register status
+   */
+  u8 status;
+  /**
+   * A NULL-terminated and delimited string with contents
+   * "SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined
+   * according to the status field.
+   */
+  char setting[254];
+} sbp_msg_settings_register_resp_t;
 
 SBP_PACK_END
 

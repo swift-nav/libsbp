@@ -125,8 +125,8 @@ START_TEST(test_auto_check_sbp_piksi_32) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_uart_state_depa_t *msg =
-        (msg_uart_state_depa_t *)((void *)last_msg + 6);
+    sbp_msg_uart_state_depa_t *msg =
+        (sbp_msg_uart_state_depa_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->latency.avg == -1,
@@ -260,8 +260,8 @@ START_TEST(test_auto_check_sbp_piksi_32) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_uart_state_depa_t *msg =
-        (msg_uart_state_depa_t *)((void *)last_msg + 6);
+    sbp_msg_uart_state_depa_t *msg =
+        (sbp_msg_uart_state_depa_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->latency.avg == -1,

@@ -124,7 +124,7 @@ START_TEST(test_auto_check_sbp_logging_42) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_print_dep_t *msg = (msg_print_dep_t *)((void *)last_msg + 6);
+    sbp_msg_print_dep_t *msg = (sbp_msg_print_dep_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(
@@ -192,7 +192,7 @@ START_TEST(test_auto_check_sbp_logging_42) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_print_dep_t *msg = (msg_print_dep_t *)((void *)last_msg + 6);
+    sbp_msg_print_dep_t *msg = (sbp_msg_print_dep_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(
@@ -259,7 +259,7 @@ START_TEST(test_auto_check_sbp_logging_42) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_print_dep_t *msg = (msg_print_dep_t *)((void *)last_msg + 6);
+    sbp_msg_print_dep_t *msg = (sbp_msg_print_dep_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(
@@ -324,7 +324,7 @@ START_TEST(test_auto_check_sbp_logging_42) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_print_dep_t *msg = (msg_print_dep_t *)((void *)last_msg + 6);
+    sbp_msg_print_dep_t *msg = (sbp_msg_print_dep_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(
@@ -391,7 +391,7 @@ START_TEST(test_auto_check_sbp_logging_42) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_print_dep_t *msg = (msg_print_dep_t *)((void *)last_msg + 6);
+    sbp_msg_print_dep_t *msg = (sbp_msg_print_dep_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(
@@ -458,7 +458,7 @@ START_TEST(test_auto_check_sbp_logging_42) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_print_dep_t *msg = (msg_print_dep_t *)((void *)last_msg + 6);
+    sbp_msg_print_dep_t *msg = (sbp_msg_print_dep_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(

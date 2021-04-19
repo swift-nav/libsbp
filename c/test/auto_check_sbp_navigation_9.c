@@ -122,7 +122,7 @@ START_TEST(test_auto_check_sbp_navigation_9) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_dops_dep_a_t *msg = (msg_dops_dep_a_t *)((void *)last_msg + 6);
+    sbp_msg_dops_dep_a_t *msg = (sbp_msg_dops_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->gdop == 180,
@@ -178,7 +178,7 @@ START_TEST(test_auto_check_sbp_navigation_9) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_dops_dep_a_t *msg = (msg_dops_dep_a_t *)((void *)last_msg + 6);
+    sbp_msg_dops_dep_a_t *msg = (sbp_msg_dops_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->gdop == 180,
@@ -234,7 +234,7 @@ START_TEST(test_auto_check_sbp_navigation_9) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_dops_dep_a_t *msg = (msg_dops_dep_a_t *)((void *)last_msg + 6);
+    sbp_msg_dops_dep_a_t *msg = (sbp_msg_dops_dep_a_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->gdop == 180,

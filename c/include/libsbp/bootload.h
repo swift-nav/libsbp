@@ -1,36 +1,9 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
- * Contact: https://support.swiftnav.com
- *
- * This source is subject to the license found in the file 'LICENSE' which must
- * be be distributed together with this source. All other rights reserved.
- *
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
- */
-
-/*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/bootload.yaml
- * with generate.py. Please do not hand edit!
- *****************************************************************************/
-
-/** \defgroup bootload Bootload
- *
- *  * Messages for the bootloading configuration of a Piksi 2.3.1.  This message
- * group does not apply to Piksi Multi.
- *
- * Note that some of these messages share the same message type ID for both the
- * host request and the device response.
- * \{ */
-
 #ifndef LIBSBP_BOOTLOAD_MESSAGES_H
 #define LIBSBP_BOOTLOAD_MESSAGES_H
 
 #include "common.h"
 
 SBP_PACK_START
-
 /** Bootloading handshake request (host => device)
  *
  * The handshake message request from the host establishes a
@@ -39,6 +12,8 @@ SBP_PACK_START
  */
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_REQ 0x00B3
 
+typedef struct SBP_ATTR_PACKED {
+} sbp_msg_bootloader_handshake_req_t;
 /** Bootloading handshake response (host <= device)
  *
  * The handshake message response from the device establishes a
@@ -48,47 +23,53 @@ SBP_PACK_START
  * protocol version number.
  */
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_RESP 0x00B4
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK \
+
+#define SBP_BOOTLOADER_HANDSHAKE_RESP_FLAGS_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK \
   (0xff)
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT \
+#define SBP_BOOTLOADER_HANDSHAKE_RESP_FLAGS_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT \
   (8u)
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_GET( \
-    flags)                                                                   \
-  (((flags) >>                                                               \
-    SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT) & \
-   SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK)
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SET(        \
-    flags, val)                                                                     \
-  do {                                                                              \
-    ((flags) |=                                                                     \
-     (((val) &                                                                      \
-       (SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK))      \
-      << (SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT))); \
+#define SBP_BOOTLOADER_HANDSHAKE_RESP_FLAGS_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_GET( \
+    flags)                                                                         \
+  (((flags) >>                                                                     \
+    SBP_BOOTLOADER_HANDSHAKE_RESP_FLAGS_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT) & \
+   SBP_BOOTLOADER_HANDSHAKE_RESP_FLAGS_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK)
+#define SBP_BOOTLOADER_HANDSHAKE_RESP_FLAGS_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SET(        \
+    flags, val)                                                                           \
+  do {                                                                                    \
+    ((flags) |=                                                                           \
+     (((val) &                                                                            \
+       (SBP_BOOTLOADER_HANDSHAKE_RESP_FLAGS_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK))      \
+      << (SBP_BOOTLOADER_HANDSHAKE_RESP_FLAGS_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT))); \
   } while (0)
 
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK \
+#define SBP_BOOTLOADER_HANDSHAKE_RESP_FLAGS_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK \
   (0xff)
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT \
+#define SBP_BOOTLOADER_HANDSHAKE_RESP_FLAGS_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT \
   (0u)
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_GET( \
-    flags)                                                                   \
-  (((flags) >>                                                               \
-    SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT) & \
-   SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK)
-#define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SET(        \
-    flags, val)                                                                     \
-  do {                                                                              \
-    ((flags) |=                                                                     \
-     (((val) &                                                                      \
-       (SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK))      \
-      << (SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT))); \
+#define SBP_BOOTLOADER_HANDSHAKE_RESP_FLAGS_SBP_MINOR_PROTOCOL_VERSION_NUMBER_GET( \
+    flags)                                                                         \
+  (((flags) >>                                                                     \
+    SBP_BOOTLOADER_HANDSHAKE_RESP_FLAGS_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT) & \
+   SBP_BOOTLOADER_HANDSHAKE_RESP_FLAGS_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK)
+#define SBP_BOOTLOADER_HANDSHAKE_RESP_FLAGS_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SET(        \
+    flags, val)                                                                           \
+  do {                                                                                    \
+    ((flags) |=                                                                           \
+     (((val) &                                                                            \
+       (SBP_BOOTLOADER_HANDSHAKE_RESP_FLAGS_SBP_MINOR_PROTOCOL_VERSION_NUMBER_MASK))      \
+      << (SBP_BOOTLOADER_HANDSHAKE_RESP_FLAGS_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT))); \
   } while (0)
 
 typedef struct SBP_ATTR_PACKED {
-  u32 flags;       /**< Bootloader flags */
-  char version[0]; /**< Bootloader version number */
-} msg_bootloader_handshake_resp_t;
-
+  /**
+   * Bootloader flags
+   */
+  u32 flags;
+  /**
+   * Bootloader version number
+   */
+  char version[251];
+} sbp_msg_bootloader_handshake_resp_t;
 /** Bootloader jump to application (host => device)
  *
  * The host initiates the bootloader to jump to the application.
@@ -96,9 +77,11 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_BOOTLOADER_JUMP_TO_APP 0x00B1
 
 typedef struct SBP_ATTR_PACKED {
-  u8 jump; /**< Ignored by the device */
-} msg_bootloader_jump_to_app_t;
-
+  /**
+   * Ignored by the device
+   */
+  u8 jump;
+} sbp_msg_bootloader_jump_to_app_t;
 /** Read FPGA device ID over UART request (host => device)
  *
  * The device message from the host reads a unique device
@@ -110,6 +93,8 @@ typedef struct SBP_ATTR_PACKED {
  */
 #define SBP_MSG_NAP_DEVICE_DNA_REQ 0x00DE
 
+typedef struct SBP_ATTR_PACKED {
+} sbp_msg_nap_device_dna_req_t;
 /** Read FPGA device ID over UART response (host <= device)
  *
  * The device message from the host reads a unique device
@@ -122,11 +107,12 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_NAP_DEVICE_DNA_RESP 0x00DD
 
 typedef struct SBP_ATTR_PACKED {
-  u8 dna[8]; /**< 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded
-on the right.
- */
-} msg_nap_device_dna_resp_t;
-
+  /**
+   * 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded
+   * on the right.
+   */
+  u8 dna[8];
+} sbp_msg_nap_device_dna_resp_t;
 /** Deprecated
  *
  * Deprecated.
@@ -134,10 +120,11 @@ on the right.
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A 0x00B0
 
 typedef struct SBP_ATTR_PACKED {
-  u8 handshake[0]; /**< Version number string (not NULL terminated) */
-} msg_bootloader_handshake_dep_a_t;
-
-/** \} */
+  /**
+   * Version number string (not NULL terminated)
+   */
+  u8 handshake[255];
+} sbp_msg_bootloader_handshake_dep_a_t;
 
 SBP_PACK_END
 

@@ -122,7 +122,7 @@ START_TEST(test_auto_check_sbp_logging_43) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_fwd_t *msg = (msg_fwd_t *)((void *)last_msg + 6);
+    sbp_msg_fwd_t *msg = (sbp_msg_fwd_t *)((void *)last_msg + 6);
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(
