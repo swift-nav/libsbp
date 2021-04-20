@@ -5,8 +5,8 @@ repositories {
 }
 
 dependencies {
-    compile 'org.scream3r:jssc:2.8.0'
-    compile 'org.json:json:20131018'
+    implementation 'org.scream3r:jssc:2.8.0'
+    implementation 'org.json:json:20131018'
 }
 
 sourceSets {
