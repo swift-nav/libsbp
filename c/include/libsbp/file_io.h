@@ -38,6 +38,10 @@ typedef struct {
    * Name of the file to read from
    */
   char filename[246];
+  /**
+   * Unused
+   */
+  u8 n_filename;
 } sbp_msg_fileio_read_req_t;
 
 static inline size_t sbp_packed_size_sbp_msg_fileio_read_req_t(
@@ -144,7 +148,8 @@ typedef struct {
 static inline size_t sbp_packed_size_sbp_msg_fileio_read_resp_t(
     const sbp_msg_fileio_read_resp_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->sequence) + (msg->n_contents * sizeof(msg->contents));
+  return 0 + sizeof(msg->sequence) +
+         (msg->n_contents * sizeof(msg->contents[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_fileio_read_resp_t(
@@ -231,6 +236,10 @@ typedef struct {
    * Name of the directory to list
    */
   char dirname[247];
+  /**
+   * Unused
+   */
+  u8 n_dirname;
 } sbp_msg_fileio_read_dir_req_t;
 
 static inline size_t sbp_packed_size_sbp_msg_fileio_read_dir_req_t(
@@ -325,7 +334,8 @@ typedef struct {
 static inline size_t sbp_packed_size_sbp_msg_fileio_read_dir_resp_t(
     const sbp_msg_fileio_read_dir_resp_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->sequence) + (msg->n_contents * sizeof(msg->contents));
+  return 0 + sizeof(msg->sequence) +
+         (msg->n_contents * sizeof(msg->contents[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_fileio_read_dir_resp_t(
@@ -398,6 +408,10 @@ typedef struct {
    * Name of the file to delete
    */
   char filename[255];
+  /**
+   * Unused
+   */
+  u8 n_filename;
 } sbp_msg_fileio_remove_t;
 
 static inline size_t sbp_packed_size_sbp_msg_fileio_remove_t(
@@ -461,6 +475,10 @@ typedef struct {
    */
   char filename[247];
   /**
+   * Unused
+   */
+  u8 n_filename;
+  /**
    * Variable-length array of data to write
    */
   u8 data[246];
@@ -474,7 +492,7 @@ static inline size_t sbp_packed_size_sbp_msg_fileio_write_req_t(
     const sbp_msg_fileio_write_req_t *msg) {
   (void)msg;
   return 0 + sizeof(msg->sequence) + sizeof(msg->offset) +
-         (strlen(msg->filename) + 1) + (msg->n_data * sizeof(msg->data));
+         (strlen(msg->filename) + 1) + (msg->n_data * sizeof(msg->data[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_fileio_write_req_t(

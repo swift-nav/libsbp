@@ -2118,6 +2118,10 @@ typedef struct {
      */
     s16 Q;
   } corrs[3];
+  /**
+   * Unused
+   */
+  u8 n_corrs;
 } sbp_msg_tracking_iq_t;
 
 static inline size_t sbp_packed_size_sbp_msg_tracking_iq_t(
@@ -2285,6 +2289,10 @@ typedef struct {
      */
     s32 Q;
   } corrs[3];
+  /**
+   * Unused
+   */
+  u8 n_corrs;
 } sbp_msg_tracking_iq_dep_b_t;
 
 static inline size_t sbp_packed_size_sbp_msg_tracking_iq_dep_b_t(
@@ -2451,6 +2459,10 @@ typedef struct {
      */
     s32 Q;
   } corrs[3];
+  /**
+   * Unused
+   */
+  u8 n_corrs;
 } sbp_msg_tracking_iq_dep_a_t;
 
 static inline size_t sbp_packed_size_sbp_msg_tracking_iq_dep_a_t(

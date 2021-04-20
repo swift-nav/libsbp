@@ -20,11 +20,32 @@
 #include <stdlib.h>  // for malloc
 #include <tracking.h>
 
-static u32 n_callbacks_logged;
-static u16 last_sender_id;
-static u8 last_len;
-static u8 last_msg[256];
-static void *last_context;
+static struct {
+  u32 n_callbacks_logged;
+  u16 sender_id;
+  u8 len;
+  u8 payload[SBP_MAX_PAYLOAD_LEN];
+  void *context;
+} last_payload;
+
+static struct {
+  u32 n_callbacks_logged;
+  u16 sender_id;
+  u16 msg_type;
+  u8 payload_len;
+  u8 payload[SBP_MAX_PAYLOAD_LEN];
+  u16 frame_len;
+  u8 frame[SBP_MAX_FRAME_LEN];
+  void *context;
+} last_frame;
+
+static struct {
+  u32 n_callbacks_logged;
+  u16 sender_id;
+  u16 msg_type;
+  sbp_msg_t msg;
+  void *context;
+} last_unpacked;
 
 static u32 dummy_wr = 0;
 static u32 dummy_rd = 0;
@@ -56,24 +77,47 @@ static s32 dummy_read(u8 *buff, u32 n, void *context) {
 }
 
 static void logging_reset() {
-  n_callbacks_logged = 0;
-  last_context = 0;
-  memset(last_msg, 0, sizeof(last_msg));
+  memset(&last_payload, 0, sizeof(last_payload));
+  memset(&last_frame, 0, sizeof(last_frame));
+  memset(&last_unpacked, 0, sizeof(last_unpacked));
 }
 
-static void logging_callback(u16 sender_id, u8 len, u8 msg[], void *context) {
-  n_callbacks_logged++;
-  last_sender_id = sender_id;
-  last_len = len;
-  last_context = context;
-  memcpy(last_msg, msg, len);
+static void payload_callback(u16 sender_id, u8 len, u8 msg[], void *context) {
+  last_payload.n_callbacks_logged++;
+  last_payload.sender_id = sender_id;
+  last_payload.len = len;
+  last_payload.context = context;
+  memcpy(last_payload.payload, msg, len);
 
   /*printy_callback(sender_id, len, msg);*/
 }
 
+static void frame_callback(u16 sender_id, u16 msg_type, u8 payload_len,
+                           u8 payload[], u16 frame_len, u8 frame[],
+                           void *context) {
+  last_frame.n_callbacks_logged++;
+  last_frame.sender_id = sender_id;
+  last_frame.msg_type = msg_type;
+  last_frame.payload_len = payload_len;
+  memcpy(last_frame.payload, payload, payload_len);
+  last_frame.frame_len = frame_len;
+  memcpy(last_frame.frame, frame, frame_len);
+  last_frame.context = context;
+}
+
+static void unpacked_callback(u16 sender_id, u16 msg_type, const sbp_msg_t *msg,
+                              void *context) {
+  last_unpacked.n_callbacks_logged++;
+  last_unpacked.sender_id = sender_id;
+  last_unpacked.msg_type = msg_type;
+  memcpy(&last_unpacked.msg, msg, sizeof(*msg));
+  last_unpacked.context = context;
+}
+
 START_TEST(test_auto_check_sbp_tracking_49) {
   static sbp_msg_callbacks_node_t n;
-  // static sbp_msg_callbacks_node_t n2;
+  static sbp_msg_callbacks_node_t n2;
+  static sbp_msg_callbacks_node_t n3;
 
   // State of the SBP message parser.
   // Must be statically allocated.
@@ -94,10 +138,14 @@ START_TEST(test_auto_check_sbp_tracking_49) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x13, &logging_callback,
+    sbp_register_callback(&sbp_state, 0x13, &payload_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x13, &frame_callback,
+                                &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_unpacked_callback(&sbp_state, 0x13, &unpacked_callback,
+                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n3);
 
-    u8 test_data[] = {
+    u8 test_encoded_frame_data[] = {
         85,  19,  0,   246, 215, 99,  1,   202, 0,  0,   0,   197, 253, 28,
         66,  1,   203, 0,   0,   0,   231, 99,  16, 66,  1,   208, 0,   0,
         0,   212, 129, 22,  66,  1,   212, 0,   0,  0,   58,  21,  28,  66,
@@ -107,7 +155,19 @@ START_TEST(test_auto_check_sbp_tracking_49) {
         125, 42,  66,  0,   0,   0,   0,   0,   0,  0,   128, 191, 0,   0,
         0,   0,   0,   0,   0,   128, 191, 222, 97,
     };
+    u8 test_encoded_payload_data[] = {
+        1,   202, 0,   0,   0,   197, 253, 28,  66,  1,  203, 0,   0,
+        0,   231, 99,  16,  66,  1,   208, 0,   0,   0,  212, 129, 22,
+        66,  1,   212, 0,   0,   0,   58,  21,  28,  66, 1,   217, 0,
+        0,   0,   178, 33,  40,  66,  1,   218, 0,   0,  0,   235, 189,
+        21,  66,  1,   220, 0,   0,   0,   29,  177, 25, 66,  1,   222,
+        0,   0,   0,   43,  169, 27,  66,  1,   225, 0,  0,   0,   137,
+        125, 42,  66,  0,   0,   0,   0,   0,   0,   0,  128, 191, 0,
+        0,   0,   0,   0,   0,   0,   128, 191,
+    };
+
     sbp_msg_t test_msg_storage;
+    memset(&test_msg_storage, 0, sizeof(test_msg_storage));
     sbp_msg_tracking_state_dep_b_t *test_msg =
         (sbp_msg_tracking_state_dep_b_t *)&test_msg_storage;
     test_msg->n_states = 0;
@@ -179,9 +239,13 @@ START_TEST(test_auto_check_sbp_tracking_49) {
     test_msg->states[10].state = 0;
 
     dummy_reset();
+    logging_reset();
+
+    // Test sending an unpacked message
     sbp_send_message(&sbp_state, 0x13, 55286, &test_msg_storage, &dummy_write);
 
-    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+    ck_assert_msg(memcmp(dummy_buff, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
                   "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
@@ -189,206 +253,451 @@ START_TEST(test_auto_check_sbp_tracking_49) {
                     "sbp_process threw an error!");
     }
 
-    ck_assert_msg(n_callbacks_logged == 1,
-                  "one callback should have been logged");
-    ck_assert_msg(last_sender_id == 55286, "sender_id decoded incorrectly");
-    ck_assert_msg(last_len == sizeof(test_data), "len decoded incorrectly");
-    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data)) == 0,
+    ck_assert_msg(last_payload.n_callbacks_logged == 1,
+                  "one payload callback should have been logged");
+    ck_assert_msg(last_payload.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_payload.len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_payload.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
                   "test data decoded incorrectly");
-    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_payload.context == &DUMMY_MEMORY_FOR_CALLBACKS,
                   "context pointer incorrectly passed");
 
-    // Cast to expected message type - the +6 byte offset is where the payload
-    // starts
-    sbp_msg_tracking_state_dep_b_t *msg =
-        (sbp_msg_tracking_state_dep_b_t *)&last_msg;
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "one frame callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.payload_len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
+                  "test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(test_encoded_frame_data),
+                  "frame len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.frame, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
+                  "frame data decoded incorrectly");
+    sbp_msg_tracking_state_dep_b_t *check_msg =
+        (sbp_msg_tracking_state_dep_b_t *)&last_unpacked.msg;
     // Run tests against fields
-    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(
-        (msg->states[0].cn0 * 100 - 39.2478218079 * 100) < 0.05,
+        (check_msg->states[0].cn0 * 100 - 39.2478218079 * 100) < 0.05,
         "incorrect value for states[0].cn0, expected 39.2478218079, is %f",
-        msg->states[0].cn0);
-    ck_assert_msg(msg->states[0].sid.code == 0,
+        check_msg->states[0].cn0);
+    ck_assert_msg(check_msg->states[0].sid.code == 0,
                   "incorrect value for states[0].sid.code, expected 0, is %d",
-                  msg->states[0].sid.code);
+                  check_msg->states[0].sid.code);
     ck_assert_msg(
-        msg->states[0].sid.reserved == 0,
+        check_msg->states[0].sid.reserved == 0,
         "incorrect value for states[0].sid.reserved, expected 0, is %d",
-        msg->states[0].sid.reserved);
-    ck_assert_msg(msg->states[0].sid.sat == 202,
+        check_msg->states[0].sid.reserved);
+    ck_assert_msg(check_msg->states[0].sid.sat == 202,
                   "incorrect value for states[0].sid.sat, expected 202, is %d",
-                  msg->states[0].sid.sat);
-    ck_assert_msg(msg->states[0].state == 1,
+                  check_msg->states[0].sid.sat);
+    ck_assert_msg(check_msg->states[0].state == 1,
                   "incorrect value for states[0].state, expected 1, is %d",
-                  msg->states[0].state);
+                  check_msg->states[0].state);
     ck_assert_msg(
-        (msg->states[1].cn0 * 100 - 36.0975608826 * 100) < 0.05,
+        (check_msg->states[1].cn0 * 100 - 36.0975608826 * 100) < 0.05,
         "incorrect value for states[1].cn0, expected 36.0975608826, is %f",
-        msg->states[1].cn0);
-    ck_assert_msg(msg->states[1].sid.code == 0,
+        check_msg->states[1].cn0);
+    ck_assert_msg(check_msg->states[1].sid.code == 0,
                   "incorrect value for states[1].sid.code, expected 0, is %d",
-                  msg->states[1].sid.code);
+                  check_msg->states[1].sid.code);
     ck_assert_msg(
-        msg->states[1].sid.reserved == 0,
+        check_msg->states[1].sid.reserved == 0,
         "incorrect value for states[1].sid.reserved, expected 0, is %d",
-        msg->states[1].sid.reserved);
-    ck_assert_msg(msg->states[1].sid.sat == 203,
+        check_msg->states[1].sid.reserved);
+    ck_assert_msg(check_msg->states[1].sid.sat == 203,
                   "incorrect value for states[1].sid.sat, expected 203, is %d",
-                  msg->states[1].sid.sat);
-    ck_assert_msg(msg->states[1].state == 1,
+                  check_msg->states[1].sid.sat);
+    ck_assert_msg(check_msg->states[1].state == 1,
                   "incorrect value for states[1].state, expected 1, is %d",
-                  msg->states[1].state);
+                  check_msg->states[1].state);
     ck_assert_msg(
-        (msg->states[2].cn0 * 100 - 37.6267852783 * 100) < 0.05,
+        (check_msg->states[2].cn0 * 100 - 37.6267852783 * 100) < 0.05,
         "incorrect value for states[2].cn0, expected 37.6267852783, is %f",
-        msg->states[2].cn0);
-    ck_assert_msg(msg->states[2].sid.code == 0,
+        check_msg->states[2].cn0);
+    ck_assert_msg(check_msg->states[2].sid.code == 0,
                   "incorrect value for states[2].sid.code, expected 0, is %d",
-                  msg->states[2].sid.code);
+                  check_msg->states[2].sid.code);
     ck_assert_msg(
-        msg->states[2].sid.reserved == 0,
+        check_msg->states[2].sid.reserved == 0,
         "incorrect value for states[2].sid.reserved, expected 0, is %d",
-        msg->states[2].sid.reserved);
-    ck_assert_msg(msg->states[2].sid.sat == 208,
+        check_msg->states[2].sid.reserved);
+    ck_assert_msg(check_msg->states[2].sid.sat == 208,
                   "incorrect value for states[2].sid.sat, expected 208, is %d",
-                  msg->states[2].sid.sat);
-    ck_assert_msg(msg->states[2].state == 1,
+                  check_msg->states[2].sid.sat);
+    ck_assert_msg(check_msg->states[2].state == 1,
                   "incorrect value for states[2].state, expected 1, is %d",
-                  msg->states[2].state);
+                  check_msg->states[2].state);
     ck_assert_msg(
-        (msg->states[3].cn0 * 100 - 39.0207290649 * 100) < 0.05,
+        (check_msg->states[3].cn0 * 100 - 39.0207290649 * 100) < 0.05,
         "incorrect value for states[3].cn0, expected 39.0207290649, is %f",
-        msg->states[3].cn0);
-    ck_assert_msg(msg->states[3].sid.code == 0,
+        check_msg->states[3].cn0);
+    ck_assert_msg(check_msg->states[3].sid.code == 0,
                   "incorrect value for states[3].sid.code, expected 0, is %d",
-                  msg->states[3].sid.code);
+                  check_msg->states[3].sid.code);
     ck_assert_msg(
-        msg->states[3].sid.reserved == 0,
+        check_msg->states[3].sid.reserved == 0,
         "incorrect value for states[3].sid.reserved, expected 0, is %d",
-        msg->states[3].sid.reserved);
-    ck_assert_msg(msg->states[3].sid.sat == 212,
+        check_msg->states[3].sid.reserved);
+    ck_assert_msg(check_msg->states[3].sid.sat == 212,
                   "incorrect value for states[3].sid.sat, expected 212, is %d",
-                  msg->states[3].sid.sat);
-    ck_assert_msg(msg->states[3].state == 1,
+                  check_msg->states[3].sid.sat);
+    ck_assert_msg(check_msg->states[3].state == 1,
                   "incorrect value for states[3].state, expected 1, is %d",
-                  msg->states[3].state);
+                  check_msg->states[3].state);
     ck_assert_msg(
-        (msg->states[4].cn0 * 100 - 42.0329055786 * 100) < 0.05,
+        (check_msg->states[4].cn0 * 100 - 42.0329055786 * 100) < 0.05,
         "incorrect value for states[4].cn0, expected 42.0329055786, is %f",
-        msg->states[4].cn0);
-    ck_assert_msg(msg->states[4].sid.code == 0,
+        check_msg->states[4].cn0);
+    ck_assert_msg(check_msg->states[4].sid.code == 0,
                   "incorrect value for states[4].sid.code, expected 0, is %d",
-                  msg->states[4].sid.code);
+                  check_msg->states[4].sid.code);
     ck_assert_msg(
-        msg->states[4].sid.reserved == 0,
+        check_msg->states[4].sid.reserved == 0,
         "incorrect value for states[4].sid.reserved, expected 0, is %d",
-        msg->states[4].sid.reserved);
-    ck_assert_msg(msg->states[4].sid.sat == 217,
+        check_msg->states[4].sid.reserved);
+    ck_assert_msg(check_msg->states[4].sid.sat == 217,
                   "incorrect value for states[4].sid.sat, expected 217, is %d",
-                  msg->states[4].sid.sat);
-    ck_assert_msg(msg->states[4].state == 1,
+                  check_msg->states[4].sid.sat);
+    ck_assert_msg(check_msg->states[4].state == 1,
                   "incorrect value for states[4].state, expected 1, is %d",
-                  msg->states[4].state);
+                  check_msg->states[4].state);
     ck_assert_msg(
-        (msg->states[5].cn0 * 100 - 37.4354667664 * 100) < 0.05,
+        (check_msg->states[5].cn0 * 100 - 37.4354667664 * 100) < 0.05,
         "incorrect value for states[5].cn0, expected 37.4354667664, is %f",
-        msg->states[5].cn0);
-    ck_assert_msg(msg->states[5].sid.code == 0,
+        check_msg->states[5].cn0);
+    ck_assert_msg(check_msg->states[5].sid.code == 0,
                   "incorrect value for states[5].sid.code, expected 0, is %d",
-                  msg->states[5].sid.code);
+                  check_msg->states[5].sid.code);
     ck_assert_msg(
-        msg->states[5].sid.reserved == 0,
+        check_msg->states[5].sid.reserved == 0,
         "incorrect value for states[5].sid.reserved, expected 0, is %d",
-        msg->states[5].sid.reserved);
-    ck_assert_msg(msg->states[5].sid.sat == 218,
+        check_msg->states[5].sid.reserved);
+    ck_assert_msg(check_msg->states[5].sid.sat == 218,
                   "incorrect value for states[5].sid.sat, expected 218, is %d",
-                  msg->states[5].sid.sat);
-    ck_assert_msg(msg->states[5].state == 1,
+                  check_msg->states[5].sid.sat);
+    ck_assert_msg(check_msg->states[5].state == 1,
                   "incorrect value for states[5].state, expected 1, is %d",
-                  msg->states[5].state);
+                  check_msg->states[5].state);
     ck_assert_msg(
-        (msg->states[6].cn0 * 100 - 38.4229621887 * 100) < 0.05,
+        (check_msg->states[6].cn0 * 100 - 38.4229621887 * 100) < 0.05,
         "incorrect value for states[6].cn0, expected 38.4229621887, is %f",
-        msg->states[6].cn0);
-    ck_assert_msg(msg->states[6].sid.code == 0,
+        check_msg->states[6].cn0);
+    ck_assert_msg(check_msg->states[6].sid.code == 0,
                   "incorrect value for states[6].sid.code, expected 0, is %d",
-                  msg->states[6].sid.code);
+                  check_msg->states[6].sid.code);
     ck_assert_msg(
-        msg->states[6].sid.reserved == 0,
+        check_msg->states[6].sid.reserved == 0,
         "incorrect value for states[6].sid.reserved, expected 0, is %d",
-        msg->states[6].sid.reserved);
-    ck_assert_msg(msg->states[6].sid.sat == 220,
+        check_msg->states[6].sid.reserved);
+    ck_assert_msg(check_msg->states[6].sid.sat == 220,
                   "incorrect value for states[6].sid.sat, expected 220, is %d",
-                  msg->states[6].sid.sat);
-    ck_assert_msg(msg->states[6].state == 1,
+                  check_msg->states[6].sid.sat);
+    ck_assert_msg(check_msg->states[6].state == 1,
                   "incorrect value for states[6].state, expected 1, is %d",
-                  msg->states[6].state);
+                  check_msg->states[6].state);
     ck_assert_msg(
-        (msg->states[7].cn0 * 100 - 38.9152030945 * 100) < 0.05,
+        (check_msg->states[7].cn0 * 100 - 38.9152030945 * 100) < 0.05,
         "incorrect value for states[7].cn0, expected 38.9152030945, is %f",
-        msg->states[7].cn0);
-    ck_assert_msg(msg->states[7].sid.code == 0,
+        check_msg->states[7].cn0);
+    ck_assert_msg(check_msg->states[7].sid.code == 0,
                   "incorrect value for states[7].sid.code, expected 0, is %d",
-                  msg->states[7].sid.code);
+                  check_msg->states[7].sid.code);
     ck_assert_msg(
-        msg->states[7].sid.reserved == 0,
+        check_msg->states[7].sid.reserved == 0,
         "incorrect value for states[7].sid.reserved, expected 0, is %d",
-        msg->states[7].sid.reserved);
-    ck_assert_msg(msg->states[7].sid.sat == 222,
+        check_msg->states[7].sid.reserved);
+    ck_assert_msg(check_msg->states[7].sid.sat == 222,
                   "incorrect value for states[7].sid.sat, expected 222, is %d",
-                  msg->states[7].sid.sat);
-    ck_assert_msg(msg->states[7].state == 1,
+                  check_msg->states[7].sid.sat);
+    ck_assert_msg(check_msg->states[7].state == 1,
                   "incorrect value for states[7].state, expected 1, is %d",
-                  msg->states[7].state);
+                  check_msg->states[7].state);
     ck_assert_msg(
-        (msg->states[8].cn0 * 100 - 42.622592926 * 100) < 0.05,
+        (check_msg->states[8].cn0 * 100 - 42.622592926 * 100) < 0.05,
         "incorrect value for states[8].cn0, expected 42.622592926, is %f",
-        msg->states[8].cn0);
-    ck_assert_msg(msg->states[8].sid.code == 0,
+        check_msg->states[8].cn0);
+    ck_assert_msg(check_msg->states[8].sid.code == 0,
                   "incorrect value for states[8].sid.code, expected 0, is %d",
-                  msg->states[8].sid.code);
+                  check_msg->states[8].sid.code);
     ck_assert_msg(
-        msg->states[8].sid.reserved == 0,
+        check_msg->states[8].sid.reserved == 0,
         "incorrect value for states[8].sid.reserved, expected 0, is %d",
-        msg->states[8].sid.reserved);
-    ck_assert_msg(msg->states[8].sid.sat == 225,
+        check_msg->states[8].sid.reserved);
+    ck_assert_msg(check_msg->states[8].sid.sat == 225,
                   "incorrect value for states[8].sid.sat, expected 225, is %d",
-                  msg->states[8].sid.sat);
-    ck_assert_msg(msg->states[8].state == 1,
+                  check_msg->states[8].sid.sat);
+    ck_assert_msg(check_msg->states[8].state == 1,
                   "incorrect value for states[8].state, expected 1, is %d",
-                  msg->states[8].state);
-    ck_assert_msg((msg->states[9].cn0 * 100 - -1.0 * 100) < 0.05,
+                  check_msg->states[8].state);
+    ck_assert_msg((check_msg->states[9].cn0 * 100 - -1.0 * 100) < 0.05,
                   "incorrect value for states[9].cn0, expected -1.0, is %f",
-                  msg->states[9].cn0);
-    ck_assert_msg(msg->states[9].sid.code == 0,
+                  check_msg->states[9].cn0);
+    ck_assert_msg(check_msg->states[9].sid.code == 0,
                   "incorrect value for states[9].sid.code, expected 0, is %d",
-                  msg->states[9].sid.code);
+                  check_msg->states[9].sid.code);
     ck_assert_msg(
-        msg->states[9].sid.reserved == 0,
+        check_msg->states[9].sid.reserved == 0,
         "incorrect value for states[9].sid.reserved, expected 0, is %d",
-        msg->states[9].sid.reserved);
-    ck_assert_msg(msg->states[9].sid.sat == 0,
+        check_msg->states[9].sid.reserved);
+    ck_assert_msg(check_msg->states[9].sid.sat == 0,
                   "incorrect value for states[9].sid.sat, expected 0, is %d",
-                  msg->states[9].sid.sat);
-    ck_assert_msg(msg->states[9].state == 0,
+                  check_msg->states[9].sid.sat);
+    ck_assert_msg(check_msg->states[9].state == 0,
                   "incorrect value for states[9].state, expected 0, is %d",
-                  msg->states[9].state);
-    ck_assert_msg((msg->states[10].cn0 * 100 - -1.0 * 100) < 0.05,
+                  check_msg->states[9].state);
+    ck_assert_msg((check_msg->states[10].cn0 * 100 - -1.0 * 100) < 0.05,
                   "incorrect value for states[10].cn0, expected -1.0, is %f",
-                  msg->states[10].cn0);
-    ck_assert_msg(msg->states[10].sid.code == 0,
+                  check_msg->states[10].cn0);
+    ck_assert_msg(check_msg->states[10].sid.code == 0,
                   "incorrect value for states[10].sid.code, expected 0, is %d",
-                  msg->states[10].sid.code);
+                  check_msg->states[10].sid.code);
     ck_assert_msg(
-        msg->states[10].sid.reserved == 0,
+        check_msg->states[10].sid.reserved == 0,
         "incorrect value for states[10].sid.reserved, expected 0, is %d",
-        msg->states[10].sid.reserved);
-    ck_assert_msg(msg->states[10].sid.sat == 0,
+        check_msg->states[10].sid.reserved);
+    ck_assert_msg(check_msg->states[10].sid.sat == 0,
                   "incorrect value for states[10].sid.sat, expected 0, is %d",
-                  msg->states[10].sid.sat);
-    ck_assert_msg(msg->states[10].state == 0,
+                  check_msg->states[10].sid.sat);
+    ck_assert_msg(check_msg->states[10].state == 0,
                   "incorrect value for states[10].state, expected 0, is %d",
-                  msg->states[10].state);
+                  check_msg->states[10].state);
+
+    // Test again by sending an already encoded payload
+
+    dummy_reset();
+    logging_reset();
+
+    sbp_send_packed_message(&sbp_state, 0x13, 55286,
+                            sizeof(test_encoded_payload_data),
+                            test_encoded_payload_data, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
+                  "message not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+                    "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_payload.n_callbacks_logged == 1,
+                  "one payload callback should have been logged");
+    ck_assert_msg(last_payload.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_payload.len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_payload.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
+                  "test data decoded incorrectly");
+    ck_assert_msg(last_payload.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "one frame callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.payload_len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
+                  "test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(test_encoded_frame_data),
+                  "frame len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.frame, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
+                  "frame data decoded incorrectly");
+    // Run tests against fields
+    ck_assert_msg(
+        (check_msg->states[0].cn0 * 100 - 39.2478218079 * 100) < 0.05,
+        "incorrect value for states[0].cn0, expected 39.2478218079, is %f",
+        check_msg->states[0].cn0);
+    ck_assert_msg(check_msg->states[0].sid.code == 0,
+                  "incorrect value for states[0].sid.code, expected 0, is %d",
+                  check_msg->states[0].sid.code);
+    ck_assert_msg(
+        check_msg->states[0].sid.reserved == 0,
+        "incorrect value for states[0].sid.reserved, expected 0, is %d",
+        check_msg->states[0].sid.reserved);
+    ck_assert_msg(check_msg->states[0].sid.sat == 202,
+                  "incorrect value for states[0].sid.sat, expected 202, is %d",
+                  check_msg->states[0].sid.sat);
+    ck_assert_msg(check_msg->states[0].state == 1,
+                  "incorrect value for states[0].state, expected 1, is %d",
+                  check_msg->states[0].state);
+    ck_assert_msg(
+        (check_msg->states[1].cn0 * 100 - 36.0975608826 * 100) < 0.05,
+        "incorrect value for states[1].cn0, expected 36.0975608826, is %f",
+        check_msg->states[1].cn0);
+    ck_assert_msg(check_msg->states[1].sid.code == 0,
+                  "incorrect value for states[1].sid.code, expected 0, is %d",
+                  check_msg->states[1].sid.code);
+    ck_assert_msg(
+        check_msg->states[1].sid.reserved == 0,
+        "incorrect value for states[1].sid.reserved, expected 0, is %d",
+        check_msg->states[1].sid.reserved);
+    ck_assert_msg(check_msg->states[1].sid.sat == 203,
+                  "incorrect value for states[1].sid.sat, expected 203, is %d",
+                  check_msg->states[1].sid.sat);
+    ck_assert_msg(check_msg->states[1].state == 1,
+                  "incorrect value for states[1].state, expected 1, is %d",
+                  check_msg->states[1].state);
+    ck_assert_msg(
+        (check_msg->states[2].cn0 * 100 - 37.6267852783 * 100) < 0.05,
+        "incorrect value for states[2].cn0, expected 37.6267852783, is %f",
+        check_msg->states[2].cn0);
+    ck_assert_msg(check_msg->states[2].sid.code == 0,
+                  "incorrect value for states[2].sid.code, expected 0, is %d",
+                  check_msg->states[2].sid.code);
+    ck_assert_msg(
+        check_msg->states[2].sid.reserved == 0,
+        "incorrect value for states[2].sid.reserved, expected 0, is %d",
+        check_msg->states[2].sid.reserved);
+    ck_assert_msg(check_msg->states[2].sid.sat == 208,
+                  "incorrect value for states[2].sid.sat, expected 208, is %d",
+                  check_msg->states[2].sid.sat);
+    ck_assert_msg(check_msg->states[2].state == 1,
+                  "incorrect value for states[2].state, expected 1, is %d",
+                  check_msg->states[2].state);
+    ck_assert_msg(
+        (check_msg->states[3].cn0 * 100 - 39.0207290649 * 100) < 0.05,
+        "incorrect value for states[3].cn0, expected 39.0207290649, is %f",
+        check_msg->states[3].cn0);
+    ck_assert_msg(check_msg->states[3].sid.code == 0,
+                  "incorrect value for states[3].sid.code, expected 0, is %d",
+                  check_msg->states[3].sid.code);
+    ck_assert_msg(
+        check_msg->states[3].sid.reserved == 0,
+        "incorrect value for states[3].sid.reserved, expected 0, is %d",
+        check_msg->states[3].sid.reserved);
+    ck_assert_msg(check_msg->states[3].sid.sat == 212,
+                  "incorrect value for states[3].sid.sat, expected 212, is %d",
+                  check_msg->states[3].sid.sat);
+    ck_assert_msg(check_msg->states[3].state == 1,
+                  "incorrect value for states[3].state, expected 1, is %d",
+                  check_msg->states[3].state);
+    ck_assert_msg(
+        (check_msg->states[4].cn0 * 100 - 42.0329055786 * 100) < 0.05,
+        "incorrect value for states[4].cn0, expected 42.0329055786, is %f",
+        check_msg->states[4].cn0);
+    ck_assert_msg(check_msg->states[4].sid.code == 0,
+                  "incorrect value for states[4].sid.code, expected 0, is %d",
+                  check_msg->states[4].sid.code);
+    ck_assert_msg(
+        check_msg->states[4].sid.reserved == 0,
+        "incorrect value for states[4].sid.reserved, expected 0, is %d",
+        check_msg->states[4].sid.reserved);
+    ck_assert_msg(check_msg->states[4].sid.sat == 217,
+                  "incorrect value for states[4].sid.sat, expected 217, is %d",
+                  check_msg->states[4].sid.sat);
+    ck_assert_msg(check_msg->states[4].state == 1,
+                  "incorrect value for states[4].state, expected 1, is %d",
+                  check_msg->states[4].state);
+    ck_assert_msg(
+        (check_msg->states[5].cn0 * 100 - 37.4354667664 * 100) < 0.05,
+        "incorrect value for states[5].cn0, expected 37.4354667664, is %f",
+        check_msg->states[5].cn0);
+    ck_assert_msg(check_msg->states[5].sid.code == 0,
+                  "incorrect value for states[5].sid.code, expected 0, is %d",
+                  check_msg->states[5].sid.code);
+    ck_assert_msg(
+        check_msg->states[5].sid.reserved == 0,
+        "incorrect value for states[5].sid.reserved, expected 0, is %d",
+        check_msg->states[5].sid.reserved);
+    ck_assert_msg(check_msg->states[5].sid.sat == 218,
+                  "incorrect value for states[5].sid.sat, expected 218, is %d",
+                  check_msg->states[5].sid.sat);
+    ck_assert_msg(check_msg->states[5].state == 1,
+                  "incorrect value for states[5].state, expected 1, is %d",
+                  check_msg->states[5].state);
+    ck_assert_msg(
+        (check_msg->states[6].cn0 * 100 - 38.4229621887 * 100) < 0.05,
+        "incorrect value for states[6].cn0, expected 38.4229621887, is %f",
+        check_msg->states[6].cn0);
+    ck_assert_msg(check_msg->states[6].sid.code == 0,
+                  "incorrect value for states[6].sid.code, expected 0, is %d",
+                  check_msg->states[6].sid.code);
+    ck_assert_msg(
+        check_msg->states[6].sid.reserved == 0,
+        "incorrect value for states[6].sid.reserved, expected 0, is %d",
+        check_msg->states[6].sid.reserved);
+    ck_assert_msg(check_msg->states[6].sid.sat == 220,
+                  "incorrect value for states[6].sid.sat, expected 220, is %d",
+                  check_msg->states[6].sid.sat);
+    ck_assert_msg(check_msg->states[6].state == 1,
+                  "incorrect value for states[6].state, expected 1, is %d",
+                  check_msg->states[6].state);
+    ck_assert_msg(
+        (check_msg->states[7].cn0 * 100 - 38.9152030945 * 100) < 0.05,
+        "incorrect value for states[7].cn0, expected 38.9152030945, is %f",
+        check_msg->states[7].cn0);
+    ck_assert_msg(check_msg->states[7].sid.code == 0,
+                  "incorrect value for states[7].sid.code, expected 0, is %d",
+                  check_msg->states[7].sid.code);
+    ck_assert_msg(
+        check_msg->states[7].sid.reserved == 0,
+        "incorrect value for states[7].sid.reserved, expected 0, is %d",
+        check_msg->states[7].sid.reserved);
+    ck_assert_msg(check_msg->states[7].sid.sat == 222,
+                  "incorrect value for states[7].sid.sat, expected 222, is %d",
+                  check_msg->states[7].sid.sat);
+    ck_assert_msg(check_msg->states[7].state == 1,
+                  "incorrect value for states[7].state, expected 1, is %d",
+                  check_msg->states[7].state);
+    ck_assert_msg(
+        (check_msg->states[8].cn0 * 100 - 42.622592926 * 100) < 0.05,
+        "incorrect value for states[8].cn0, expected 42.622592926, is %f",
+        check_msg->states[8].cn0);
+    ck_assert_msg(check_msg->states[8].sid.code == 0,
+                  "incorrect value for states[8].sid.code, expected 0, is %d",
+                  check_msg->states[8].sid.code);
+    ck_assert_msg(
+        check_msg->states[8].sid.reserved == 0,
+        "incorrect value for states[8].sid.reserved, expected 0, is %d",
+        check_msg->states[8].sid.reserved);
+    ck_assert_msg(check_msg->states[8].sid.sat == 225,
+                  "incorrect value for states[8].sid.sat, expected 225, is %d",
+                  check_msg->states[8].sid.sat);
+    ck_assert_msg(check_msg->states[8].state == 1,
+                  "incorrect value for states[8].state, expected 1, is %d",
+                  check_msg->states[8].state);
+    ck_assert_msg((check_msg->states[9].cn0 * 100 - -1.0 * 100) < 0.05,
+                  "incorrect value for states[9].cn0, expected -1.0, is %f",
+                  check_msg->states[9].cn0);
+    ck_assert_msg(check_msg->states[9].sid.code == 0,
+                  "incorrect value for states[9].sid.code, expected 0, is %d",
+                  check_msg->states[9].sid.code);
+    ck_assert_msg(
+        check_msg->states[9].sid.reserved == 0,
+        "incorrect value for states[9].sid.reserved, expected 0, is %d",
+        check_msg->states[9].sid.reserved);
+    ck_assert_msg(check_msg->states[9].sid.sat == 0,
+                  "incorrect value for states[9].sid.sat, expected 0, is %d",
+                  check_msg->states[9].sid.sat);
+    ck_assert_msg(check_msg->states[9].state == 0,
+                  "incorrect value for states[9].state, expected 0, is %d",
+                  check_msg->states[9].state);
+    ck_assert_msg((check_msg->states[10].cn0 * 100 - -1.0 * 100) < 0.05,
+                  "incorrect value for states[10].cn0, expected -1.0, is %f",
+                  check_msg->states[10].cn0);
+    ck_assert_msg(check_msg->states[10].sid.code == 0,
+                  "incorrect value for states[10].sid.code, expected 0, is %d",
+                  check_msg->states[10].sid.code);
+    ck_assert_msg(
+        check_msg->states[10].sid.reserved == 0,
+        "incorrect value for states[10].sid.reserved, expected 0, is %d",
+        check_msg->states[10].sid.reserved);
+    ck_assert_msg(check_msg->states[10].sid.sat == 0,
+                  "incorrect value for states[10].sid.sat, expected 0, is %d",
+                  check_msg->states[10].sid.sat);
+    ck_assert_msg(check_msg->states[10].state == 0,
+                  "incorrect value for states[10].state, expected 0, is %d",
+                  check_msg->states[10].state);
   }
   // Test successful parsing of a message
   {
@@ -402,10 +711,14 @@ START_TEST(test_auto_check_sbp_tracking_49) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x13, &logging_callback,
+    sbp_register_callback(&sbp_state, 0x13, &payload_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x13, &frame_callback,
+                                &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_unpacked_callback(&sbp_state, 0x13, &unpacked_callback,
+                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n3);
 
-    u8 test_data[] = {
+    u8 test_encoded_frame_data[] = {
         85,  19,  0,   246, 215, 99,  1,   202, 0,  0,   0,   250, 249, 27,
         66,  1,   203, 0,   0,   0,   40,  143, 11, 66,  1,   208, 0,   0,
         0,   190, 200, 21,  66,  1,   212, 0,   0,  0,   251, 233, 26,  66,
@@ -415,7 +728,19 @@ START_TEST(test_auto_check_sbp_tracking_49) {
         153, 43,  66,  0,   0,   0,   0,   0,   0,  0,   128, 191, 0,   0,
         0,   0,   0,   0,   0,   128, 191, 20,  31,
     };
+    u8 test_encoded_payload_data[] = {
+        1,   202, 0,   0,   0,  250, 249, 27,  66,  1,  203, 0,   0,
+        0,   40,  143, 11,  66, 1,   208, 0,   0,   0,  190, 200, 21,
+        66,  1,   212, 0,   0,  0,   251, 233, 26,  66, 1,   217, 0,
+        0,   0,   209, 238, 39, 66,  1,   218, 0,   0,  0,   162, 219,
+        21,  66,  1,   220, 0,  0,   0,   162, 197, 25, 66,  1,   222,
+        0,   0,   0,   14,  35, 28,  66,  1,   225, 0,  0,   0,   9,
+        153, 43,  66,  0,   0,  0,   0,   0,   0,   0,  128, 191, 0,
+        0,   0,   0,   0,   0,  0,   128, 191,
+    };
+
     sbp_msg_t test_msg_storage;
+    memset(&test_msg_storage, 0, sizeof(test_msg_storage));
     sbp_msg_tracking_state_dep_b_t *test_msg =
         (sbp_msg_tracking_state_dep_b_t *)&test_msg_storage;
     test_msg->n_states = 0;
@@ -487,9 +812,13 @@ START_TEST(test_auto_check_sbp_tracking_49) {
     test_msg->states[10].state = 0;
 
     dummy_reset();
+    logging_reset();
+
+    // Test sending an unpacked message
     sbp_send_message(&sbp_state, 0x13, 55286, &test_msg_storage, &dummy_write);
 
-    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+    ck_assert_msg(memcmp(dummy_buff, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
                   "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
@@ -497,206 +826,451 @@ START_TEST(test_auto_check_sbp_tracking_49) {
                     "sbp_process threw an error!");
     }
 
-    ck_assert_msg(n_callbacks_logged == 1,
-                  "one callback should have been logged");
-    ck_assert_msg(last_sender_id == 55286, "sender_id decoded incorrectly");
-    ck_assert_msg(last_len == sizeof(test_data), "len decoded incorrectly");
-    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data)) == 0,
+    ck_assert_msg(last_payload.n_callbacks_logged == 1,
+                  "one payload callback should have been logged");
+    ck_assert_msg(last_payload.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_payload.len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_payload.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
                   "test data decoded incorrectly");
-    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_payload.context == &DUMMY_MEMORY_FOR_CALLBACKS,
                   "context pointer incorrectly passed");
 
-    // Cast to expected message type - the +6 byte offset is where the payload
-    // starts
-    sbp_msg_tracking_state_dep_b_t *msg =
-        (sbp_msg_tracking_state_dep_b_t *)&last_msg;
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "one frame callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.payload_len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
+                  "test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(test_encoded_frame_data),
+                  "frame len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.frame, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
+                  "frame data decoded incorrectly");
+    sbp_msg_tracking_state_dep_b_t *check_msg =
+        (sbp_msg_tracking_state_dep_b_t *)&last_unpacked.msg;
     // Run tests against fields
-    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(
-        (msg->states[0].cn0 * 100 - 38.9941177368 * 100) < 0.05,
+        (check_msg->states[0].cn0 * 100 - 38.9941177368 * 100) < 0.05,
         "incorrect value for states[0].cn0, expected 38.9941177368, is %f",
-        msg->states[0].cn0);
-    ck_assert_msg(msg->states[0].sid.code == 0,
+        check_msg->states[0].cn0);
+    ck_assert_msg(check_msg->states[0].sid.code == 0,
                   "incorrect value for states[0].sid.code, expected 0, is %d",
-                  msg->states[0].sid.code);
+                  check_msg->states[0].sid.code);
     ck_assert_msg(
-        msg->states[0].sid.reserved == 0,
+        check_msg->states[0].sid.reserved == 0,
         "incorrect value for states[0].sid.reserved, expected 0, is %d",
-        msg->states[0].sid.reserved);
-    ck_assert_msg(msg->states[0].sid.sat == 202,
+        check_msg->states[0].sid.reserved);
+    ck_assert_msg(check_msg->states[0].sid.sat == 202,
                   "incorrect value for states[0].sid.sat, expected 202, is %d",
-                  msg->states[0].sid.sat);
-    ck_assert_msg(msg->states[0].state == 1,
+                  check_msg->states[0].sid.sat);
+    ck_assert_msg(check_msg->states[0].state == 1,
                   "incorrect value for states[0].state, expected 1, is %d",
-                  msg->states[0].state);
+                  check_msg->states[0].state);
     ck_assert_msg(
-        (msg->states[1].cn0 * 100 - 34.8898010254 * 100) < 0.05,
+        (check_msg->states[1].cn0 * 100 - 34.8898010254 * 100) < 0.05,
         "incorrect value for states[1].cn0, expected 34.8898010254, is %f",
-        msg->states[1].cn0);
-    ck_assert_msg(msg->states[1].sid.code == 0,
+        check_msg->states[1].cn0);
+    ck_assert_msg(check_msg->states[1].sid.code == 0,
                   "incorrect value for states[1].sid.code, expected 0, is %d",
-                  msg->states[1].sid.code);
+                  check_msg->states[1].sid.code);
     ck_assert_msg(
-        msg->states[1].sid.reserved == 0,
+        check_msg->states[1].sid.reserved == 0,
         "incorrect value for states[1].sid.reserved, expected 0, is %d",
-        msg->states[1].sid.reserved);
-    ck_assert_msg(msg->states[1].sid.sat == 203,
+        check_msg->states[1].sid.reserved);
+    ck_assert_msg(check_msg->states[1].sid.sat == 203,
                   "incorrect value for states[1].sid.sat, expected 203, is %d",
-                  msg->states[1].sid.sat);
-    ck_assert_msg(msg->states[1].state == 1,
+                  check_msg->states[1].sid.sat);
+    ck_assert_msg(check_msg->states[1].state == 1,
                   "incorrect value for states[1].state, expected 1, is %d",
-                  msg->states[1].state);
+                  check_msg->states[1].state);
     ck_assert_msg(
-        (msg->states[2].cn0 * 100 - 37.4460372925 * 100) < 0.05,
+        (check_msg->states[2].cn0 * 100 - 37.4460372925 * 100) < 0.05,
         "incorrect value for states[2].cn0, expected 37.4460372925, is %f",
-        msg->states[2].cn0);
-    ck_assert_msg(msg->states[2].sid.code == 0,
+        check_msg->states[2].cn0);
+    ck_assert_msg(check_msg->states[2].sid.code == 0,
                   "incorrect value for states[2].sid.code, expected 0, is %d",
-                  msg->states[2].sid.code);
+                  check_msg->states[2].sid.code);
     ck_assert_msg(
-        msg->states[2].sid.reserved == 0,
+        check_msg->states[2].sid.reserved == 0,
         "incorrect value for states[2].sid.reserved, expected 0, is %d",
-        msg->states[2].sid.reserved);
-    ck_assert_msg(msg->states[2].sid.sat == 208,
+        check_msg->states[2].sid.reserved);
+    ck_assert_msg(check_msg->states[2].sid.sat == 208,
                   "incorrect value for states[2].sid.sat, expected 208, is %d",
-                  msg->states[2].sid.sat);
-    ck_assert_msg(msg->states[2].state == 1,
+                  check_msg->states[2].sid.sat);
+    ck_assert_msg(check_msg->states[2].state == 1,
                   "incorrect value for states[2].state, expected 1, is %d",
-                  msg->states[2].state);
+                  check_msg->states[2].state);
     ck_assert_msg(
-        (msg->states[3].cn0 * 100 - 38.7284965515 * 100) < 0.05,
+        (check_msg->states[3].cn0 * 100 - 38.7284965515 * 100) < 0.05,
         "incorrect value for states[3].cn0, expected 38.7284965515, is %f",
-        msg->states[3].cn0);
-    ck_assert_msg(msg->states[3].sid.code == 0,
+        check_msg->states[3].cn0);
+    ck_assert_msg(check_msg->states[3].sid.code == 0,
                   "incorrect value for states[3].sid.code, expected 0, is %d",
-                  msg->states[3].sid.code);
+                  check_msg->states[3].sid.code);
     ck_assert_msg(
-        msg->states[3].sid.reserved == 0,
+        check_msg->states[3].sid.reserved == 0,
         "incorrect value for states[3].sid.reserved, expected 0, is %d",
-        msg->states[3].sid.reserved);
-    ck_assert_msg(msg->states[3].sid.sat == 212,
+        check_msg->states[3].sid.reserved);
+    ck_assert_msg(check_msg->states[3].sid.sat == 212,
                   "incorrect value for states[3].sid.sat, expected 212, is %d",
-                  msg->states[3].sid.sat);
-    ck_assert_msg(msg->states[3].state == 1,
+                  check_msg->states[3].sid.sat);
+    ck_assert_msg(check_msg->states[3].state == 1,
                   "incorrect value for states[3].state, expected 1, is %d",
-                  msg->states[3].state);
+                  check_msg->states[3].state);
     ck_assert_msg(
-        (msg->states[4].cn0 * 100 - 41.9832191467 * 100) < 0.05,
+        (check_msg->states[4].cn0 * 100 - 41.9832191467 * 100) < 0.05,
         "incorrect value for states[4].cn0, expected 41.9832191467, is %f",
-        msg->states[4].cn0);
-    ck_assert_msg(msg->states[4].sid.code == 0,
+        check_msg->states[4].cn0);
+    ck_assert_msg(check_msg->states[4].sid.code == 0,
                   "incorrect value for states[4].sid.code, expected 0, is %d",
-                  msg->states[4].sid.code);
+                  check_msg->states[4].sid.code);
     ck_assert_msg(
-        msg->states[4].sid.reserved == 0,
+        check_msg->states[4].sid.reserved == 0,
         "incorrect value for states[4].sid.reserved, expected 0, is %d",
-        msg->states[4].sid.reserved);
-    ck_assert_msg(msg->states[4].sid.sat == 217,
+        check_msg->states[4].sid.reserved);
+    ck_assert_msg(check_msg->states[4].sid.sat == 217,
                   "incorrect value for states[4].sid.sat, expected 217, is %d",
-                  msg->states[4].sid.sat);
-    ck_assert_msg(msg->states[4].state == 1,
+                  check_msg->states[4].sid.sat);
+    ck_assert_msg(check_msg->states[4].state == 1,
                   "incorrect value for states[4].state, expected 1, is %d",
-                  msg->states[4].state);
+                  check_msg->states[4].state);
     ck_assert_msg(
-        (msg->states[5].cn0 * 100 - 37.4644851685 * 100) < 0.05,
+        (check_msg->states[5].cn0 * 100 - 37.4644851685 * 100) < 0.05,
         "incorrect value for states[5].cn0, expected 37.4644851685, is %f",
-        msg->states[5].cn0);
-    ck_assert_msg(msg->states[5].sid.code == 0,
+        check_msg->states[5].cn0);
+    ck_assert_msg(check_msg->states[5].sid.code == 0,
                   "incorrect value for states[5].sid.code, expected 0, is %d",
-                  msg->states[5].sid.code);
+                  check_msg->states[5].sid.code);
     ck_assert_msg(
-        msg->states[5].sid.reserved == 0,
+        check_msg->states[5].sid.reserved == 0,
         "incorrect value for states[5].sid.reserved, expected 0, is %d",
-        msg->states[5].sid.reserved);
-    ck_assert_msg(msg->states[5].sid.sat == 218,
+        check_msg->states[5].sid.reserved);
+    ck_assert_msg(check_msg->states[5].sid.sat == 218,
                   "incorrect value for states[5].sid.sat, expected 218, is %d",
-                  msg->states[5].sid.sat);
-    ck_assert_msg(msg->states[5].state == 1,
+                  check_msg->states[5].sid.sat);
+    ck_assert_msg(check_msg->states[5].state == 1,
                   "incorrect value for states[5].state, expected 1, is %d",
-                  msg->states[5].state);
+                  check_msg->states[5].state);
     ck_assert_msg(
-        (msg->states[6].cn0 * 100 - 38.4430007935 * 100) < 0.05,
+        (check_msg->states[6].cn0 * 100 - 38.4430007935 * 100) < 0.05,
         "incorrect value for states[6].cn0, expected 38.4430007935, is %f",
-        msg->states[6].cn0);
-    ck_assert_msg(msg->states[6].sid.code == 0,
+        check_msg->states[6].cn0);
+    ck_assert_msg(check_msg->states[6].sid.code == 0,
                   "incorrect value for states[6].sid.code, expected 0, is %d",
-                  msg->states[6].sid.code);
+                  check_msg->states[6].sid.code);
     ck_assert_msg(
-        msg->states[6].sid.reserved == 0,
+        check_msg->states[6].sid.reserved == 0,
         "incorrect value for states[6].sid.reserved, expected 0, is %d",
-        msg->states[6].sid.reserved);
-    ck_assert_msg(msg->states[6].sid.sat == 220,
+        check_msg->states[6].sid.reserved);
+    ck_assert_msg(check_msg->states[6].sid.sat == 220,
                   "incorrect value for states[6].sid.sat, expected 220, is %d",
-                  msg->states[6].sid.sat);
-    ck_assert_msg(msg->states[6].state == 1,
+                  check_msg->states[6].sid.sat);
+    ck_assert_msg(check_msg->states[6].state == 1,
                   "incorrect value for states[6].state, expected 1, is %d",
-                  msg->states[6].state);
+                  check_msg->states[6].state);
     ck_assert_msg(
-        (msg->states[7].cn0 * 100 - 39.0342330933 * 100) < 0.05,
+        (check_msg->states[7].cn0 * 100 - 39.0342330933 * 100) < 0.05,
         "incorrect value for states[7].cn0, expected 39.0342330933, is %f",
-        msg->states[7].cn0);
-    ck_assert_msg(msg->states[7].sid.code == 0,
+        check_msg->states[7].cn0);
+    ck_assert_msg(check_msg->states[7].sid.code == 0,
                   "incorrect value for states[7].sid.code, expected 0, is %d",
-                  msg->states[7].sid.code);
+                  check_msg->states[7].sid.code);
     ck_assert_msg(
-        msg->states[7].sid.reserved == 0,
+        check_msg->states[7].sid.reserved == 0,
         "incorrect value for states[7].sid.reserved, expected 0, is %d",
-        msg->states[7].sid.reserved);
-    ck_assert_msg(msg->states[7].sid.sat == 222,
+        check_msg->states[7].sid.reserved);
+    ck_assert_msg(check_msg->states[7].sid.sat == 222,
                   "incorrect value for states[7].sid.sat, expected 222, is %d",
-                  msg->states[7].sid.sat);
-    ck_assert_msg(msg->states[7].state == 1,
+                  check_msg->states[7].sid.sat);
+    ck_assert_msg(check_msg->states[7].state == 1,
                   "incorrect value for states[7].state, expected 1, is %d",
-                  msg->states[7].state);
+                  check_msg->states[7].state);
     ck_assert_msg(
-        (msg->states[8].cn0 * 100 - 42.8994483948 * 100) < 0.05,
+        (check_msg->states[8].cn0 * 100 - 42.8994483948 * 100) < 0.05,
         "incorrect value for states[8].cn0, expected 42.8994483948, is %f",
-        msg->states[8].cn0);
-    ck_assert_msg(msg->states[8].sid.code == 0,
+        check_msg->states[8].cn0);
+    ck_assert_msg(check_msg->states[8].sid.code == 0,
                   "incorrect value for states[8].sid.code, expected 0, is %d",
-                  msg->states[8].sid.code);
+                  check_msg->states[8].sid.code);
     ck_assert_msg(
-        msg->states[8].sid.reserved == 0,
+        check_msg->states[8].sid.reserved == 0,
         "incorrect value for states[8].sid.reserved, expected 0, is %d",
-        msg->states[8].sid.reserved);
-    ck_assert_msg(msg->states[8].sid.sat == 225,
+        check_msg->states[8].sid.reserved);
+    ck_assert_msg(check_msg->states[8].sid.sat == 225,
                   "incorrect value for states[8].sid.sat, expected 225, is %d",
-                  msg->states[8].sid.sat);
-    ck_assert_msg(msg->states[8].state == 1,
+                  check_msg->states[8].sid.sat);
+    ck_assert_msg(check_msg->states[8].state == 1,
                   "incorrect value for states[8].state, expected 1, is %d",
-                  msg->states[8].state);
-    ck_assert_msg((msg->states[9].cn0 * 100 - -1.0 * 100) < 0.05,
+                  check_msg->states[8].state);
+    ck_assert_msg((check_msg->states[9].cn0 * 100 - -1.0 * 100) < 0.05,
                   "incorrect value for states[9].cn0, expected -1.0, is %f",
-                  msg->states[9].cn0);
-    ck_assert_msg(msg->states[9].sid.code == 0,
+                  check_msg->states[9].cn0);
+    ck_assert_msg(check_msg->states[9].sid.code == 0,
                   "incorrect value for states[9].sid.code, expected 0, is %d",
-                  msg->states[9].sid.code);
+                  check_msg->states[9].sid.code);
     ck_assert_msg(
-        msg->states[9].sid.reserved == 0,
+        check_msg->states[9].sid.reserved == 0,
         "incorrect value for states[9].sid.reserved, expected 0, is %d",
-        msg->states[9].sid.reserved);
-    ck_assert_msg(msg->states[9].sid.sat == 0,
+        check_msg->states[9].sid.reserved);
+    ck_assert_msg(check_msg->states[9].sid.sat == 0,
                   "incorrect value for states[9].sid.sat, expected 0, is %d",
-                  msg->states[9].sid.sat);
-    ck_assert_msg(msg->states[9].state == 0,
+                  check_msg->states[9].sid.sat);
+    ck_assert_msg(check_msg->states[9].state == 0,
                   "incorrect value for states[9].state, expected 0, is %d",
-                  msg->states[9].state);
-    ck_assert_msg((msg->states[10].cn0 * 100 - -1.0 * 100) < 0.05,
+                  check_msg->states[9].state);
+    ck_assert_msg((check_msg->states[10].cn0 * 100 - -1.0 * 100) < 0.05,
                   "incorrect value for states[10].cn0, expected -1.0, is %f",
-                  msg->states[10].cn0);
-    ck_assert_msg(msg->states[10].sid.code == 0,
+                  check_msg->states[10].cn0);
+    ck_assert_msg(check_msg->states[10].sid.code == 0,
                   "incorrect value for states[10].sid.code, expected 0, is %d",
-                  msg->states[10].sid.code);
+                  check_msg->states[10].sid.code);
     ck_assert_msg(
-        msg->states[10].sid.reserved == 0,
+        check_msg->states[10].sid.reserved == 0,
         "incorrect value for states[10].sid.reserved, expected 0, is %d",
-        msg->states[10].sid.reserved);
-    ck_assert_msg(msg->states[10].sid.sat == 0,
+        check_msg->states[10].sid.reserved);
+    ck_assert_msg(check_msg->states[10].sid.sat == 0,
                   "incorrect value for states[10].sid.sat, expected 0, is %d",
-                  msg->states[10].sid.sat);
-    ck_assert_msg(msg->states[10].state == 0,
+                  check_msg->states[10].sid.sat);
+    ck_assert_msg(check_msg->states[10].state == 0,
                   "incorrect value for states[10].state, expected 0, is %d",
-                  msg->states[10].state);
+                  check_msg->states[10].state);
+
+    // Test again by sending an already encoded payload
+
+    dummy_reset();
+    logging_reset();
+
+    sbp_send_packed_message(&sbp_state, 0x13, 55286,
+                            sizeof(test_encoded_payload_data),
+                            test_encoded_payload_data, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
+                  "message not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+                    "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_payload.n_callbacks_logged == 1,
+                  "one payload callback should have been logged");
+    ck_assert_msg(last_payload.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_payload.len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_payload.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
+                  "test data decoded incorrectly");
+    ck_assert_msg(last_payload.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "one frame callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.payload_len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
+                  "test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(test_encoded_frame_data),
+                  "frame len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.frame, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
+                  "frame data decoded incorrectly");
+    // Run tests against fields
+    ck_assert_msg(
+        (check_msg->states[0].cn0 * 100 - 38.9941177368 * 100) < 0.05,
+        "incorrect value for states[0].cn0, expected 38.9941177368, is %f",
+        check_msg->states[0].cn0);
+    ck_assert_msg(check_msg->states[0].sid.code == 0,
+                  "incorrect value for states[0].sid.code, expected 0, is %d",
+                  check_msg->states[0].sid.code);
+    ck_assert_msg(
+        check_msg->states[0].sid.reserved == 0,
+        "incorrect value for states[0].sid.reserved, expected 0, is %d",
+        check_msg->states[0].sid.reserved);
+    ck_assert_msg(check_msg->states[0].sid.sat == 202,
+                  "incorrect value for states[0].sid.sat, expected 202, is %d",
+                  check_msg->states[0].sid.sat);
+    ck_assert_msg(check_msg->states[0].state == 1,
+                  "incorrect value for states[0].state, expected 1, is %d",
+                  check_msg->states[0].state);
+    ck_assert_msg(
+        (check_msg->states[1].cn0 * 100 - 34.8898010254 * 100) < 0.05,
+        "incorrect value for states[1].cn0, expected 34.8898010254, is %f",
+        check_msg->states[1].cn0);
+    ck_assert_msg(check_msg->states[1].sid.code == 0,
+                  "incorrect value for states[1].sid.code, expected 0, is %d",
+                  check_msg->states[1].sid.code);
+    ck_assert_msg(
+        check_msg->states[1].sid.reserved == 0,
+        "incorrect value for states[1].sid.reserved, expected 0, is %d",
+        check_msg->states[1].sid.reserved);
+    ck_assert_msg(check_msg->states[1].sid.sat == 203,
+                  "incorrect value for states[1].sid.sat, expected 203, is %d",
+                  check_msg->states[1].sid.sat);
+    ck_assert_msg(check_msg->states[1].state == 1,
+                  "incorrect value for states[1].state, expected 1, is %d",
+                  check_msg->states[1].state);
+    ck_assert_msg(
+        (check_msg->states[2].cn0 * 100 - 37.4460372925 * 100) < 0.05,
+        "incorrect value for states[2].cn0, expected 37.4460372925, is %f",
+        check_msg->states[2].cn0);
+    ck_assert_msg(check_msg->states[2].sid.code == 0,
+                  "incorrect value for states[2].sid.code, expected 0, is %d",
+                  check_msg->states[2].sid.code);
+    ck_assert_msg(
+        check_msg->states[2].sid.reserved == 0,
+        "incorrect value for states[2].sid.reserved, expected 0, is %d",
+        check_msg->states[2].sid.reserved);
+    ck_assert_msg(check_msg->states[2].sid.sat == 208,
+                  "incorrect value for states[2].sid.sat, expected 208, is %d",
+                  check_msg->states[2].sid.sat);
+    ck_assert_msg(check_msg->states[2].state == 1,
+                  "incorrect value for states[2].state, expected 1, is %d",
+                  check_msg->states[2].state);
+    ck_assert_msg(
+        (check_msg->states[3].cn0 * 100 - 38.7284965515 * 100) < 0.05,
+        "incorrect value for states[3].cn0, expected 38.7284965515, is %f",
+        check_msg->states[3].cn0);
+    ck_assert_msg(check_msg->states[3].sid.code == 0,
+                  "incorrect value for states[3].sid.code, expected 0, is %d",
+                  check_msg->states[3].sid.code);
+    ck_assert_msg(
+        check_msg->states[3].sid.reserved == 0,
+        "incorrect value for states[3].sid.reserved, expected 0, is %d",
+        check_msg->states[3].sid.reserved);
+    ck_assert_msg(check_msg->states[3].sid.sat == 212,
+                  "incorrect value for states[3].sid.sat, expected 212, is %d",
+                  check_msg->states[3].sid.sat);
+    ck_assert_msg(check_msg->states[3].state == 1,
+                  "incorrect value for states[3].state, expected 1, is %d",
+                  check_msg->states[3].state);
+    ck_assert_msg(
+        (check_msg->states[4].cn0 * 100 - 41.9832191467 * 100) < 0.05,
+        "incorrect value for states[4].cn0, expected 41.9832191467, is %f",
+        check_msg->states[4].cn0);
+    ck_assert_msg(check_msg->states[4].sid.code == 0,
+                  "incorrect value for states[4].sid.code, expected 0, is %d",
+                  check_msg->states[4].sid.code);
+    ck_assert_msg(
+        check_msg->states[4].sid.reserved == 0,
+        "incorrect value for states[4].sid.reserved, expected 0, is %d",
+        check_msg->states[4].sid.reserved);
+    ck_assert_msg(check_msg->states[4].sid.sat == 217,
+                  "incorrect value for states[4].sid.sat, expected 217, is %d",
+                  check_msg->states[4].sid.sat);
+    ck_assert_msg(check_msg->states[4].state == 1,
+                  "incorrect value for states[4].state, expected 1, is %d",
+                  check_msg->states[4].state);
+    ck_assert_msg(
+        (check_msg->states[5].cn0 * 100 - 37.4644851685 * 100) < 0.05,
+        "incorrect value for states[5].cn0, expected 37.4644851685, is %f",
+        check_msg->states[5].cn0);
+    ck_assert_msg(check_msg->states[5].sid.code == 0,
+                  "incorrect value for states[5].sid.code, expected 0, is %d",
+                  check_msg->states[5].sid.code);
+    ck_assert_msg(
+        check_msg->states[5].sid.reserved == 0,
+        "incorrect value for states[5].sid.reserved, expected 0, is %d",
+        check_msg->states[5].sid.reserved);
+    ck_assert_msg(check_msg->states[5].sid.sat == 218,
+                  "incorrect value for states[5].sid.sat, expected 218, is %d",
+                  check_msg->states[5].sid.sat);
+    ck_assert_msg(check_msg->states[5].state == 1,
+                  "incorrect value for states[5].state, expected 1, is %d",
+                  check_msg->states[5].state);
+    ck_assert_msg(
+        (check_msg->states[6].cn0 * 100 - 38.4430007935 * 100) < 0.05,
+        "incorrect value for states[6].cn0, expected 38.4430007935, is %f",
+        check_msg->states[6].cn0);
+    ck_assert_msg(check_msg->states[6].sid.code == 0,
+                  "incorrect value for states[6].sid.code, expected 0, is %d",
+                  check_msg->states[6].sid.code);
+    ck_assert_msg(
+        check_msg->states[6].sid.reserved == 0,
+        "incorrect value for states[6].sid.reserved, expected 0, is %d",
+        check_msg->states[6].sid.reserved);
+    ck_assert_msg(check_msg->states[6].sid.sat == 220,
+                  "incorrect value for states[6].sid.sat, expected 220, is %d",
+                  check_msg->states[6].sid.sat);
+    ck_assert_msg(check_msg->states[6].state == 1,
+                  "incorrect value for states[6].state, expected 1, is %d",
+                  check_msg->states[6].state);
+    ck_assert_msg(
+        (check_msg->states[7].cn0 * 100 - 39.0342330933 * 100) < 0.05,
+        "incorrect value for states[7].cn0, expected 39.0342330933, is %f",
+        check_msg->states[7].cn0);
+    ck_assert_msg(check_msg->states[7].sid.code == 0,
+                  "incorrect value for states[7].sid.code, expected 0, is %d",
+                  check_msg->states[7].sid.code);
+    ck_assert_msg(
+        check_msg->states[7].sid.reserved == 0,
+        "incorrect value for states[7].sid.reserved, expected 0, is %d",
+        check_msg->states[7].sid.reserved);
+    ck_assert_msg(check_msg->states[7].sid.sat == 222,
+                  "incorrect value for states[7].sid.sat, expected 222, is %d",
+                  check_msg->states[7].sid.sat);
+    ck_assert_msg(check_msg->states[7].state == 1,
+                  "incorrect value for states[7].state, expected 1, is %d",
+                  check_msg->states[7].state);
+    ck_assert_msg(
+        (check_msg->states[8].cn0 * 100 - 42.8994483948 * 100) < 0.05,
+        "incorrect value for states[8].cn0, expected 42.8994483948, is %f",
+        check_msg->states[8].cn0);
+    ck_assert_msg(check_msg->states[8].sid.code == 0,
+                  "incorrect value for states[8].sid.code, expected 0, is %d",
+                  check_msg->states[8].sid.code);
+    ck_assert_msg(
+        check_msg->states[8].sid.reserved == 0,
+        "incorrect value for states[8].sid.reserved, expected 0, is %d",
+        check_msg->states[8].sid.reserved);
+    ck_assert_msg(check_msg->states[8].sid.sat == 225,
+                  "incorrect value for states[8].sid.sat, expected 225, is %d",
+                  check_msg->states[8].sid.sat);
+    ck_assert_msg(check_msg->states[8].state == 1,
+                  "incorrect value for states[8].state, expected 1, is %d",
+                  check_msg->states[8].state);
+    ck_assert_msg((check_msg->states[9].cn0 * 100 - -1.0 * 100) < 0.05,
+                  "incorrect value for states[9].cn0, expected -1.0, is %f",
+                  check_msg->states[9].cn0);
+    ck_assert_msg(check_msg->states[9].sid.code == 0,
+                  "incorrect value for states[9].sid.code, expected 0, is %d",
+                  check_msg->states[9].sid.code);
+    ck_assert_msg(
+        check_msg->states[9].sid.reserved == 0,
+        "incorrect value for states[9].sid.reserved, expected 0, is %d",
+        check_msg->states[9].sid.reserved);
+    ck_assert_msg(check_msg->states[9].sid.sat == 0,
+                  "incorrect value for states[9].sid.sat, expected 0, is %d",
+                  check_msg->states[9].sid.sat);
+    ck_assert_msg(check_msg->states[9].state == 0,
+                  "incorrect value for states[9].state, expected 0, is %d",
+                  check_msg->states[9].state);
+    ck_assert_msg((check_msg->states[10].cn0 * 100 - -1.0 * 100) < 0.05,
+                  "incorrect value for states[10].cn0, expected -1.0, is %f",
+                  check_msg->states[10].cn0);
+    ck_assert_msg(check_msg->states[10].sid.code == 0,
+                  "incorrect value for states[10].sid.code, expected 0, is %d",
+                  check_msg->states[10].sid.code);
+    ck_assert_msg(
+        check_msg->states[10].sid.reserved == 0,
+        "incorrect value for states[10].sid.reserved, expected 0, is %d",
+        check_msg->states[10].sid.reserved);
+    ck_assert_msg(check_msg->states[10].sid.sat == 0,
+                  "incorrect value for states[10].sid.sat, expected 0, is %d",
+                  check_msg->states[10].sid.sat);
+    ck_assert_msg(check_msg->states[10].state == 0,
+                  "incorrect value for states[10].state, expected 0, is %d",
+                  check_msg->states[10].state);
   }
   // Test successful parsing of a message
   {
@@ -710,10 +1284,14 @@ START_TEST(test_auto_check_sbp_tracking_49) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x13, &logging_callback,
+    sbp_register_callback(&sbp_state, 0x13, &payload_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x13, &frame_callback,
+                                &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_unpacked_callback(&sbp_state, 0x13, &unpacked_callback,
+                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n3);
 
-    u8 test_data[] = {
+    u8 test_encoded_frame_data[] = {
         85,  19,  0,   246, 215, 99,  1,   202, 0,  0,   0,   123, 209, 27,
         66,  1,   203, 0,   0,   0,   214, 64,  15, 66,  1,   208, 0,   0,
         0,   56,  55,  22,  66,  1,   212, 0,   0,  0,   91,  142, 27,  66,
@@ -723,7 +1301,19 @@ START_TEST(test_auto_check_sbp_tracking_49) {
         100, 42,  66,  0,   0,   0,   0,   0,   0,  0,   128, 191, 0,   0,
         0,   0,   0,   0,   0,   128, 191, 233, 71,
     };
+    u8 test_encoded_payload_data[] = {
+        1,   202, 0,   0,   0,  123, 209, 27,  66,  1,  203, 0,   0,
+        0,   214, 64,  15,  66, 1,   208, 0,   0,   0,  56,  55,  22,
+        66,  1,   212, 0,   0,  0,   91,  142, 27,  66, 1,   217, 0,
+        0,   0,   253, 154, 41, 66,  1,   218, 0,   0,  0,   128, 142,
+        22,  66,  1,   220, 0,  0,   0,   17,  174, 23, 66,  1,   222,
+        0,   0,   0,   155, 2,  29,  66,  1,   225, 0,  0,   0,   162,
+        100, 42,  66,  0,   0,  0,   0,   0,   0,   0,  128, 191, 0,
+        0,   0,   0,   0,   0,  0,   128, 191,
+    };
+
     sbp_msg_t test_msg_storage;
+    memset(&test_msg_storage, 0, sizeof(test_msg_storage));
     sbp_msg_tracking_state_dep_b_t *test_msg =
         (sbp_msg_tracking_state_dep_b_t *)&test_msg_storage;
     test_msg->n_states = 0;
@@ -795,9 +1385,13 @@ START_TEST(test_auto_check_sbp_tracking_49) {
     test_msg->states[10].state = 0;
 
     dummy_reset();
+    logging_reset();
+
+    // Test sending an unpacked message
     sbp_send_message(&sbp_state, 0x13, 55286, &test_msg_storage, &dummy_write);
 
-    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+    ck_assert_msg(memcmp(dummy_buff, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
                   "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
@@ -805,206 +1399,451 @@ START_TEST(test_auto_check_sbp_tracking_49) {
                     "sbp_process threw an error!");
     }
 
-    ck_assert_msg(n_callbacks_logged == 1,
-                  "one callback should have been logged");
-    ck_assert_msg(last_sender_id == 55286, "sender_id decoded incorrectly");
-    ck_assert_msg(last_len == sizeof(test_data), "len decoded incorrectly");
-    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data)) == 0,
+    ck_assert_msg(last_payload.n_callbacks_logged == 1,
+                  "one payload callback should have been logged");
+    ck_assert_msg(last_payload.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_payload.len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_payload.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
                   "test data decoded incorrectly");
-    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_payload.context == &DUMMY_MEMORY_FOR_CALLBACKS,
                   "context pointer incorrectly passed");
 
-    // Cast to expected message type - the +6 byte offset is where the payload
-    // starts
-    sbp_msg_tracking_state_dep_b_t *msg =
-        (sbp_msg_tracking_state_dep_b_t *)&last_msg;
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "one frame callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.payload_len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
+                  "test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(test_encoded_frame_data),
+                  "frame len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.frame, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
+                  "frame data decoded incorrectly");
+    sbp_msg_tracking_state_dep_b_t *check_msg =
+        (sbp_msg_tracking_state_dep_b_t *)&last_unpacked.msg;
     // Run tests against fields
-    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(
-        (msg->states[0].cn0 * 100 - 38.9545707703 * 100) < 0.05,
+        (check_msg->states[0].cn0 * 100 - 38.9545707703 * 100) < 0.05,
         "incorrect value for states[0].cn0, expected 38.9545707703, is %f",
-        msg->states[0].cn0);
-    ck_assert_msg(msg->states[0].sid.code == 0,
+        check_msg->states[0].cn0);
+    ck_assert_msg(check_msg->states[0].sid.code == 0,
                   "incorrect value for states[0].sid.code, expected 0, is %d",
-                  msg->states[0].sid.code);
+                  check_msg->states[0].sid.code);
     ck_assert_msg(
-        msg->states[0].sid.reserved == 0,
+        check_msg->states[0].sid.reserved == 0,
         "incorrect value for states[0].sid.reserved, expected 0, is %d",
-        msg->states[0].sid.reserved);
-    ck_assert_msg(msg->states[0].sid.sat == 202,
+        check_msg->states[0].sid.reserved);
+    ck_assert_msg(check_msg->states[0].sid.sat == 202,
                   "incorrect value for states[0].sid.sat, expected 202, is %d",
-                  msg->states[0].sid.sat);
-    ck_assert_msg(msg->states[0].state == 1,
+                  check_msg->states[0].sid.sat);
+    ck_assert_msg(check_msg->states[0].state == 1,
                   "incorrect value for states[0].state, expected 1, is %d",
-                  msg->states[0].state);
+                  check_msg->states[0].state);
     ck_assert_msg(
-        (msg->states[1].cn0 * 100 - 35.8133163452 * 100) < 0.05,
+        (check_msg->states[1].cn0 * 100 - 35.8133163452 * 100) < 0.05,
         "incorrect value for states[1].cn0, expected 35.8133163452, is %f",
-        msg->states[1].cn0);
-    ck_assert_msg(msg->states[1].sid.code == 0,
+        check_msg->states[1].cn0);
+    ck_assert_msg(check_msg->states[1].sid.code == 0,
                   "incorrect value for states[1].sid.code, expected 0, is %d",
-                  msg->states[1].sid.code);
+                  check_msg->states[1].sid.code);
     ck_assert_msg(
-        msg->states[1].sid.reserved == 0,
+        check_msg->states[1].sid.reserved == 0,
         "incorrect value for states[1].sid.reserved, expected 0, is %d",
-        msg->states[1].sid.reserved);
-    ck_assert_msg(msg->states[1].sid.sat == 203,
+        check_msg->states[1].sid.reserved);
+    ck_assert_msg(check_msg->states[1].sid.sat == 203,
                   "incorrect value for states[1].sid.sat, expected 203, is %d",
-                  msg->states[1].sid.sat);
-    ck_assert_msg(msg->states[1].state == 1,
+                  check_msg->states[1].sid.sat);
+    ck_assert_msg(check_msg->states[1].state == 1,
                   "incorrect value for states[1].state, expected 1, is %d",
-                  msg->states[1].state);
+                  check_msg->states[1].state);
     ck_assert_msg(
-        (msg->states[2].cn0 * 100 - 37.5539245605 * 100) < 0.05,
+        (check_msg->states[2].cn0 * 100 - 37.5539245605 * 100) < 0.05,
         "incorrect value for states[2].cn0, expected 37.5539245605, is %f",
-        msg->states[2].cn0);
-    ck_assert_msg(msg->states[2].sid.code == 0,
+        check_msg->states[2].cn0);
+    ck_assert_msg(check_msg->states[2].sid.code == 0,
                   "incorrect value for states[2].sid.code, expected 0, is %d",
-                  msg->states[2].sid.code);
+                  check_msg->states[2].sid.code);
     ck_assert_msg(
-        msg->states[2].sid.reserved == 0,
+        check_msg->states[2].sid.reserved == 0,
         "incorrect value for states[2].sid.reserved, expected 0, is %d",
-        msg->states[2].sid.reserved);
-    ck_assert_msg(msg->states[2].sid.sat == 208,
+        check_msg->states[2].sid.reserved);
+    ck_assert_msg(check_msg->states[2].sid.sat == 208,
                   "incorrect value for states[2].sid.sat, expected 208, is %d",
-                  msg->states[2].sid.sat);
-    ck_assert_msg(msg->states[2].state == 1,
+                  check_msg->states[2].sid.sat);
+    ck_assert_msg(check_msg->states[2].state == 1,
                   "incorrect value for states[2].state, expected 1, is %d",
-                  msg->states[2].state);
+                  check_msg->states[2].state);
     ck_assert_msg(
-        (msg->states[3].cn0 * 100 - 38.8890190125 * 100) < 0.05,
+        (check_msg->states[3].cn0 * 100 - 38.8890190125 * 100) < 0.05,
         "incorrect value for states[3].cn0, expected 38.8890190125, is %f",
-        msg->states[3].cn0);
-    ck_assert_msg(msg->states[3].sid.code == 0,
+        check_msg->states[3].cn0);
+    ck_assert_msg(check_msg->states[3].sid.code == 0,
                   "incorrect value for states[3].sid.code, expected 0, is %d",
-                  msg->states[3].sid.code);
+                  check_msg->states[3].sid.code);
     ck_assert_msg(
-        msg->states[3].sid.reserved == 0,
+        check_msg->states[3].sid.reserved == 0,
         "incorrect value for states[3].sid.reserved, expected 0, is %d",
-        msg->states[3].sid.reserved);
-    ck_assert_msg(msg->states[3].sid.sat == 212,
+        check_msg->states[3].sid.reserved);
+    ck_assert_msg(check_msg->states[3].sid.sat == 212,
                   "incorrect value for states[3].sid.sat, expected 212, is %d",
-                  msg->states[3].sid.sat);
-    ck_assert_msg(msg->states[3].state == 1,
+                  check_msg->states[3].sid.sat);
+    ck_assert_msg(check_msg->states[3].state == 1,
                   "incorrect value for states[3].state, expected 1, is %d",
-                  msg->states[3].state);
+                  check_msg->states[3].state);
     ck_assert_msg(
-        (msg->states[4].cn0 * 100 - 42.4013557434 * 100) < 0.05,
+        (check_msg->states[4].cn0 * 100 - 42.4013557434 * 100) < 0.05,
         "incorrect value for states[4].cn0, expected 42.4013557434, is %f",
-        msg->states[4].cn0);
-    ck_assert_msg(msg->states[4].sid.code == 0,
+        check_msg->states[4].cn0);
+    ck_assert_msg(check_msg->states[4].sid.code == 0,
                   "incorrect value for states[4].sid.code, expected 0, is %d",
-                  msg->states[4].sid.code);
+                  check_msg->states[4].sid.code);
     ck_assert_msg(
-        msg->states[4].sid.reserved == 0,
+        check_msg->states[4].sid.reserved == 0,
         "incorrect value for states[4].sid.reserved, expected 0, is %d",
-        msg->states[4].sid.reserved);
-    ck_assert_msg(msg->states[4].sid.sat == 217,
+        check_msg->states[4].sid.reserved);
+    ck_assert_msg(check_msg->states[4].sid.sat == 217,
                   "incorrect value for states[4].sid.sat, expected 217, is %d",
-                  msg->states[4].sid.sat);
-    ck_assert_msg(msg->states[4].state == 1,
+                  check_msg->states[4].sid.sat);
+    ck_assert_msg(check_msg->states[4].state == 1,
                   "incorrect value for states[4].state, expected 1, is %d",
-                  msg->states[4].state);
+                  check_msg->states[4].state);
     ck_assert_msg(
-        (msg->states[5].cn0 * 100 - 37.6391601562 * 100) < 0.05,
+        (check_msg->states[5].cn0 * 100 - 37.6391601562 * 100) < 0.05,
         "incorrect value for states[5].cn0, expected 37.6391601562, is %f",
-        msg->states[5].cn0);
-    ck_assert_msg(msg->states[5].sid.code == 0,
+        check_msg->states[5].cn0);
+    ck_assert_msg(check_msg->states[5].sid.code == 0,
                   "incorrect value for states[5].sid.code, expected 0, is %d",
-                  msg->states[5].sid.code);
+                  check_msg->states[5].sid.code);
     ck_assert_msg(
-        msg->states[5].sid.reserved == 0,
+        check_msg->states[5].sid.reserved == 0,
         "incorrect value for states[5].sid.reserved, expected 0, is %d",
-        msg->states[5].sid.reserved);
-    ck_assert_msg(msg->states[5].sid.sat == 218,
+        check_msg->states[5].sid.reserved);
+    ck_assert_msg(check_msg->states[5].sid.sat == 218,
                   "incorrect value for states[5].sid.sat, expected 218, is %d",
-                  msg->states[5].sid.sat);
-    ck_assert_msg(msg->states[5].state == 1,
+                  check_msg->states[5].sid.sat);
+    ck_assert_msg(check_msg->states[5].state == 1,
                   "incorrect value for states[5].state, expected 1, is %d",
-                  msg->states[5].state);
+                  check_msg->states[5].state);
     ck_assert_msg(
-        (msg->states[6].cn0 * 100 - 37.9199867249 * 100) < 0.05,
+        (check_msg->states[6].cn0 * 100 - 37.9199867249 * 100) < 0.05,
         "incorrect value for states[6].cn0, expected 37.9199867249, is %f",
-        msg->states[6].cn0);
-    ck_assert_msg(msg->states[6].sid.code == 0,
+        check_msg->states[6].cn0);
+    ck_assert_msg(check_msg->states[6].sid.code == 0,
                   "incorrect value for states[6].sid.code, expected 0, is %d",
-                  msg->states[6].sid.code);
+                  check_msg->states[6].sid.code);
     ck_assert_msg(
-        msg->states[6].sid.reserved == 0,
+        check_msg->states[6].sid.reserved == 0,
         "incorrect value for states[6].sid.reserved, expected 0, is %d",
-        msg->states[6].sid.reserved);
-    ck_assert_msg(msg->states[6].sid.sat == 220,
+        check_msg->states[6].sid.reserved);
+    ck_assert_msg(check_msg->states[6].sid.sat == 220,
                   "incorrect value for states[6].sid.sat, expected 220, is %d",
-                  msg->states[6].sid.sat);
-    ck_assert_msg(msg->states[6].state == 1,
+                  check_msg->states[6].sid.sat);
+    ck_assert_msg(check_msg->states[6].state == 1,
                   "incorrect value for states[6].state, expected 1, is %d",
-                  msg->states[6].state);
+                  check_msg->states[6].state);
     ck_assert_msg(
-        (msg->states[7].cn0 * 100 - 39.2525444031 * 100) < 0.05,
+        (check_msg->states[7].cn0 * 100 - 39.2525444031 * 100) < 0.05,
         "incorrect value for states[7].cn0, expected 39.2525444031, is %f",
-        msg->states[7].cn0);
-    ck_assert_msg(msg->states[7].sid.code == 0,
+        check_msg->states[7].cn0);
+    ck_assert_msg(check_msg->states[7].sid.code == 0,
                   "incorrect value for states[7].sid.code, expected 0, is %d",
-                  msg->states[7].sid.code);
+                  check_msg->states[7].sid.code);
     ck_assert_msg(
-        msg->states[7].sid.reserved == 0,
+        check_msg->states[7].sid.reserved == 0,
         "incorrect value for states[7].sid.reserved, expected 0, is %d",
-        msg->states[7].sid.reserved);
-    ck_assert_msg(msg->states[7].sid.sat == 222,
+        check_msg->states[7].sid.reserved);
+    ck_assert_msg(check_msg->states[7].sid.sat == 222,
                   "incorrect value for states[7].sid.sat, expected 222, is %d",
-                  msg->states[7].sid.sat);
-    ck_assert_msg(msg->states[7].state == 1,
+                  check_msg->states[7].sid.sat);
+    ck_assert_msg(check_msg->states[7].state == 1,
                   "incorrect value for states[7].state, expected 1, is %d",
-                  msg->states[7].state);
+                  check_msg->states[7].state);
     ck_assert_msg(
-        (msg->states[8].cn0 * 100 - 42.598274231 * 100) < 0.05,
+        (check_msg->states[8].cn0 * 100 - 42.598274231 * 100) < 0.05,
         "incorrect value for states[8].cn0, expected 42.598274231, is %f",
-        msg->states[8].cn0);
-    ck_assert_msg(msg->states[8].sid.code == 0,
+        check_msg->states[8].cn0);
+    ck_assert_msg(check_msg->states[8].sid.code == 0,
                   "incorrect value for states[8].sid.code, expected 0, is %d",
-                  msg->states[8].sid.code);
+                  check_msg->states[8].sid.code);
     ck_assert_msg(
-        msg->states[8].sid.reserved == 0,
+        check_msg->states[8].sid.reserved == 0,
         "incorrect value for states[8].sid.reserved, expected 0, is %d",
-        msg->states[8].sid.reserved);
-    ck_assert_msg(msg->states[8].sid.sat == 225,
+        check_msg->states[8].sid.reserved);
+    ck_assert_msg(check_msg->states[8].sid.sat == 225,
                   "incorrect value for states[8].sid.sat, expected 225, is %d",
-                  msg->states[8].sid.sat);
-    ck_assert_msg(msg->states[8].state == 1,
+                  check_msg->states[8].sid.sat);
+    ck_assert_msg(check_msg->states[8].state == 1,
                   "incorrect value for states[8].state, expected 1, is %d",
-                  msg->states[8].state);
-    ck_assert_msg((msg->states[9].cn0 * 100 - -1.0 * 100) < 0.05,
+                  check_msg->states[8].state);
+    ck_assert_msg((check_msg->states[9].cn0 * 100 - -1.0 * 100) < 0.05,
                   "incorrect value for states[9].cn0, expected -1.0, is %f",
-                  msg->states[9].cn0);
-    ck_assert_msg(msg->states[9].sid.code == 0,
+                  check_msg->states[9].cn0);
+    ck_assert_msg(check_msg->states[9].sid.code == 0,
                   "incorrect value for states[9].sid.code, expected 0, is %d",
-                  msg->states[9].sid.code);
+                  check_msg->states[9].sid.code);
     ck_assert_msg(
-        msg->states[9].sid.reserved == 0,
+        check_msg->states[9].sid.reserved == 0,
         "incorrect value for states[9].sid.reserved, expected 0, is %d",
-        msg->states[9].sid.reserved);
-    ck_assert_msg(msg->states[9].sid.sat == 0,
+        check_msg->states[9].sid.reserved);
+    ck_assert_msg(check_msg->states[9].sid.sat == 0,
                   "incorrect value for states[9].sid.sat, expected 0, is %d",
-                  msg->states[9].sid.sat);
-    ck_assert_msg(msg->states[9].state == 0,
+                  check_msg->states[9].sid.sat);
+    ck_assert_msg(check_msg->states[9].state == 0,
                   "incorrect value for states[9].state, expected 0, is %d",
-                  msg->states[9].state);
-    ck_assert_msg((msg->states[10].cn0 * 100 - -1.0 * 100) < 0.05,
+                  check_msg->states[9].state);
+    ck_assert_msg((check_msg->states[10].cn0 * 100 - -1.0 * 100) < 0.05,
                   "incorrect value for states[10].cn0, expected -1.0, is %f",
-                  msg->states[10].cn0);
-    ck_assert_msg(msg->states[10].sid.code == 0,
+                  check_msg->states[10].cn0);
+    ck_assert_msg(check_msg->states[10].sid.code == 0,
                   "incorrect value for states[10].sid.code, expected 0, is %d",
-                  msg->states[10].sid.code);
+                  check_msg->states[10].sid.code);
     ck_assert_msg(
-        msg->states[10].sid.reserved == 0,
+        check_msg->states[10].sid.reserved == 0,
         "incorrect value for states[10].sid.reserved, expected 0, is %d",
-        msg->states[10].sid.reserved);
-    ck_assert_msg(msg->states[10].sid.sat == 0,
+        check_msg->states[10].sid.reserved);
+    ck_assert_msg(check_msg->states[10].sid.sat == 0,
                   "incorrect value for states[10].sid.sat, expected 0, is %d",
-                  msg->states[10].sid.sat);
-    ck_assert_msg(msg->states[10].state == 0,
+                  check_msg->states[10].sid.sat);
+    ck_assert_msg(check_msg->states[10].state == 0,
                   "incorrect value for states[10].state, expected 0, is %d",
-                  msg->states[10].state);
+                  check_msg->states[10].state);
+
+    // Test again by sending an already encoded payload
+
+    dummy_reset();
+    logging_reset();
+
+    sbp_send_packed_message(&sbp_state, 0x13, 55286,
+                            sizeof(test_encoded_payload_data),
+                            test_encoded_payload_data, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
+                  "message not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+                    "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_payload.n_callbacks_logged == 1,
+                  "one payload callback should have been logged");
+    ck_assert_msg(last_payload.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_payload.len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_payload.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
+                  "test data decoded incorrectly");
+    ck_assert_msg(last_payload.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "one frame callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.payload_len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
+                  "test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(test_encoded_frame_data),
+                  "frame len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.frame, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
+                  "frame data decoded incorrectly");
+    // Run tests against fields
+    ck_assert_msg(
+        (check_msg->states[0].cn0 * 100 - 38.9545707703 * 100) < 0.05,
+        "incorrect value for states[0].cn0, expected 38.9545707703, is %f",
+        check_msg->states[0].cn0);
+    ck_assert_msg(check_msg->states[0].sid.code == 0,
+                  "incorrect value for states[0].sid.code, expected 0, is %d",
+                  check_msg->states[0].sid.code);
+    ck_assert_msg(
+        check_msg->states[0].sid.reserved == 0,
+        "incorrect value for states[0].sid.reserved, expected 0, is %d",
+        check_msg->states[0].sid.reserved);
+    ck_assert_msg(check_msg->states[0].sid.sat == 202,
+                  "incorrect value for states[0].sid.sat, expected 202, is %d",
+                  check_msg->states[0].sid.sat);
+    ck_assert_msg(check_msg->states[0].state == 1,
+                  "incorrect value for states[0].state, expected 1, is %d",
+                  check_msg->states[0].state);
+    ck_assert_msg(
+        (check_msg->states[1].cn0 * 100 - 35.8133163452 * 100) < 0.05,
+        "incorrect value for states[1].cn0, expected 35.8133163452, is %f",
+        check_msg->states[1].cn0);
+    ck_assert_msg(check_msg->states[1].sid.code == 0,
+                  "incorrect value for states[1].sid.code, expected 0, is %d",
+                  check_msg->states[1].sid.code);
+    ck_assert_msg(
+        check_msg->states[1].sid.reserved == 0,
+        "incorrect value for states[1].sid.reserved, expected 0, is %d",
+        check_msg->states[1].sid.reserved);
+    ck_assert_msg(check_msg->states[1].sid.sat == 203,
+                  "incorrect value for states[1].sid.sat, expected 203, is %d",
+                  check_msg->states[1].sid.sat);
+    ck_assert_msg(check_msg->states[1].state == 1,
+                  "incorrect value for states[1].state, expected 1, is %d",
+                  check_msg->states[1].state);
+    ck_assert_msg(
+        (check_msg->states[2].cn0 * 100 - 37.5539245605 * 100) < 0.05,
+        "incorrect value for states[2].cn0, expected 37.5539245605, is %f",
+        check_msg->states[2].cn0);
+    ck_assert_msg(check_msg->states[2].sid.code == 0,
+                  "incorrect value for states[2].sid.code, expected 0, is %d",
+                  check_msg->states[2].sid.code);
+    ck_assert_msg(
+        check_msg->states[2].sid.reserved == 0,
+        "incorrect value for states[2].sid.reserved, expected 0, is %d",
+        check_msg->states[2].sid.reserved);
+    ck_assert_msg(check_msg->states[2].sid.sat == 208,
+                  "incorrect value for states[2].sid.sat, expected 208, is %d",
+                  check_msg->states[2].sid.sat);
+    ck_assert_msg(check_msg->states[2].state == 1,
+                  "incorrect value for states[2].state, expected 1, is %d",
+                  check_msg->states[2].state);
+    ck_assert_msg(
+        (check_msg->states[3].cn0 * 100 - 38.8890190125 * 100) < 0.05,
+        "incorrect value for states[3].cn0, expected 38.8890190125, is %f",
+        check_msg->states[3].cn0);
+    ck_assert_msg(check_msg->states[3].sid.code == 0,
+                  "incorrect value for states[3].sid.code, expected 0, is %d",
+                  check_msg->states[3].sid.code);
+    ck_assert_msg(
+        check_msg->states[3].sid.reserved == 0,
+        "incorrect value for states[3].sid.reserved, expected 0, is %d",
+        check_msg->states[3].sid.reserved);
+    ck_assert_msg(check_msg->states[3].sid.sat == 212,
+                  "incorrect value for states[3].sid.sat, expected 212, is %d",
+                  check_msg->states[3].sid.sat);
+    ck_assert_msg(check_msg->states[3].state == 1,
+                  "incorrect value for states[3].state, expected 1, is %d",
+                  check_msg->states[3].state);
+    ck_assert_msg(
+        (check_msg->states[4].cn0 * 100 - 42.4013557434 * 100) < 0.05,
+        "incorrect value for states[4].cn0, expected 42.4013557434, is %f",
+        check_msg->states[4].cn0);
+    ck_assert_msg(check_msg->states[4].sid.code == 0,
+                  "incorrect value for states[4].sid.code, expected 0, is %d",
+                  check_msg->states[4].sid.code);
+    ck_assert_msg(
+        check_msg->states[4].sid.reserved == 0,
+        "incorrect value for states[4].sid.reserved, expected 0, is %d",
+        check_msg->states[4].sid.reserved);
+    ck_assert_msg(check_msg->states[4].sid.sat == 217,
+                  "incorrect value for states[4].sid.sat, expected 217, is %d",
+                  check_msg->states[4].sid.sat);
+    ck_assert_msg(check_msg->states[4].state == 1,
+                  "incorrect value for states[4].state, expected 1, is %d",
+                  check_msg->states[4].state);
+    ck_assert_msg(
+        (check_msg->states[5].cn0 * 100 - 37.6391601562 * 100) < 0.05,
+        "incorrect value for states[5].cn0, expected 37.6391601562, is %f",
+        check_msg->states[5].cn0);
+    ck_assert_msg(check_msg->states[5].sid.code == 0,
+                  "incorrect value for states[5].sid.code, expected 0, is %d",
+                  check_msg->states[5].sid.code);
+    ck_assert_msg(
+        check_msg->states[5].sid.reserved == 0,
+        "incorrect value for states[5].sid.reserved, expected 0, is %d",
+        check_msg->states[5].sid.reserved);
+    ck_assert_msg(check_msg->states[5].sid.sat == 218,
+                  "incorrect value for states[5].sid.sat, expected 218, is %d",
+                  check_msg->states[5].sid.sat);
+    ck_assert_msg(check_msg->states[5].state == 1,
+                  "incorrect value for states[5].state, expected 1, is %d",
+                  check_msg->states[5].state);
+    ck_assert_msg(
+        (check_msg->states[6].cn0 * 100 - 37.9199867249 * 100) < 0.05,
+        "incorrect value for states[6].cn0, expected 37.9199867249, is %f",
+        check_msg->states[6].cn0);
+    ck_assert_msg(check_msg->states[6].sid.code == 0,
+                  "incorrect value for states[6].sid.code, expected 0, is %d",
+                  check_msg->states[6].sid.code);
+    ck_assert_msg(
+        check_msg->states[6].sid.reserved == 0,
+        "incorrect value for states[6].sid.reserved, expected 0, is %d",
+        check_msg->states[6].sid.reserved);
+    ck_assert_msg(check_msg->states[6].sid.sat == 220,
+                  "incorrect value for states[6].sid.sat, expected 220, is %d",
+                  check_msg->states[6].sid.sat);
+    ck_assert_msg(check_msg->states[6].state == 1,
+                  "incorrect value for states[6].state, expected 1, is %d",
+                  check_msg->states[6].state);
+    ck_assert_msg(
+        (check_msg->states[7].cn0 * 100 - 39.2525444031 * 100) < 0.05,
+        "incorrect value for states[7].cn0, expected 39.2525444031, is %f",
+        check_msg->states[7].cn0);
+    ck_assert_msg(check_msg->states[7].sid.code == 0,
+                  "incorrect value for states[7].sid.code, expected 0, is %d",
+                  check_msg->states[7].sid.code);
+    ck_assert_msg(
+        check_msg->states[7].sid.reserved == 0,
+        "incorrect value for states[7].sid.reserved, expected 0, is %d",
+        check_msg->states[7].sid.reserved);
+    ck_assert_msg(check_msg->states[7].sid.sat == 222,
+                  "incorrect value for states[7].sid.sat, expected 222, is %d",
+                  check_msg->states[7].sid.sat);
+    ck_assert_msg(check_msg->states[7].state == 1,
+                  "incorrect value for states[7].state, expected 1, is %d",
+                  check_msg->states[7].state);
+    ck_assert_msg(
+        (check_msg->states[8].cn0 * 100 - 42.598274231 * 100) < 0.05,
+        "incorrect value for states[8].cn0, expected 42.598274231, is %f",
+        check_msg->states[8].cn0);
+    ck_assert_msg(check_msg->states[8].sid.code == 0,
+                  "incorrect value for states[8].sid.code, expected 0, is %d",
+                  check_msg->states[8].sid.code);
+    ck_assert_msg(
+        check_msg->states[8].sid.reserved == 0,
+        "incorrect value for states[8].sid.reserved, expected 0, is %d",
+        check_msg->states[8].sid.reserved);
+    ck_assert_msg(check_msg->states[8].sid.sat == 225,
+                  "incorrect value for states[8].sid.sat, expected 225, is %d",
+                  check_msg->states[8].sid.sat);
+    ck_assert_msg(check_msg->states[8].state == 1,
+                  "incorrect value for states[8].state, expected 1, is %d",
+                  check_msg->states[8].state);
+    ck_assert_msg((check_msg->states[9].cn0 * 100 - -1.0 * 100) < 0.05,
+                  "incorrect value for states[9].cn0, expected -1.0, is %f",
+                  check_msg->states[9].cn0);
+    ck_assert_msg(check_msg->states[9].sid.code == 0,
+                  "incorrect value for states[9].sid.code, expected 0, is %d",
+                  check_msg->states[9].sid.code);
+    ck_assert_msg(
+        check_msg->states[9].sid.reserved == 0,
+        "incorrect value for states[9].sid.reserved, expected 0, is %d",
+        check_msg->states[9].sid.reserved);
+    ck_assert_msg(check_msg->states[9].sid.sat == 0,
+                  "incorrect value for states[9].sid.sat, expected 0, is %d",
+                  check_msg->states[9].sid.sat);
+    ck_assert_msg(check_msg->states[9].state == 0,
+                  "incorrect value for states[9].state, expected 0, is %d",
+                  check_msg->states[9].state);
+    ck_assert_msg((check_msg->states[10].cn0 * 100 - -1.0 * 100) < 0.05,
+                  "incorrect value for states[10].cn0, expected -1.0, is %f",
+                  check_msg->states[10].cn0);
+    ck_assert_msg(check_msg->states[10].sid.code == 0,
+                  "incorrect value for states[10].sid.code, expected 0, is %d",
+                  check_msg->states[10].sid.code);
+    ck_assert_msg(
+        check_msg->states[10].sid.reserved == 0,
+        "incorrect value for states[10].sid.reserved, expected 0, is %d",
+        check_msg->states[10].sid.reserved);
+    ck_assert_msg(check_msg->states[10].sid.sat == 0,
+                  "incorrect value for states[10].sid.sat, expected 0, is %d",
+                  check_msg->states[10].sid.sat);
+    ck_assert_msg(check_msg->states[10].state == 0,
+                  "incorrect value for states[10].state, expected 0, is %d",
+                  check_msg->states[10].state);
   }
   // Test successful parsing of a message
   {
@@ -1018,10 +1857,14 @@ START_TEST(test_auto_check_sbp_tracking_49) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x13, &logging_callback,
+    sbp_register_callback(&sbp_state, 0x13, &payload_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x13, &frame_callback,
+                                &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_unpacked_callback(&sbp_state, 0x13, &unpacked_callback,
+                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n3);
 
-    u8 test_data[] = {
+    u8 test_encoded_frame_data[] = {
         85,  19,  0,   246, 215, 99,  1,   202, 0,   0,   0,   120, 122, 29,
         66,  1,   203, 0,   0,   0,   66,  22,  18,  66,  1,   208, 0,   0,
         0,   153, 163, 24,  66,  1,   212, 0,   0,   0,   178, 204, 28,  66,
@@ -1031,7 +1874,19 @@ START_TEST(test_auto_check_sbp_tracking_49) {
         130, 41,  66,  0,   0,   0,   0,   0,   0,   0,   128, 191, 0,   0,
         0,   0,   0,   0,   0,   128, 191, 73,  193,
     };
+    u8 test_encoded_payload_data[] = {
+        1,   202, 0,   0,   0,  120, 122, 29,  66,  1,  203, 0,   0,
+        0,   66,  22,  18,  66, 1,   208, 0,   0,   0,  153, 163, 24,
+        66,  1,   212, 0,   0,  0,   178, 204, 28,  66, 1,   217, 0,
+        0,   0,   220, 59,  38, 66,  1,   218, 0,   0,  0,   161, 27,
+        20,  66,  1,   220, 0,  0,   0,   125, 107, 24, 66,  1,   222,
+        0,   0,   0,   242, 46, 28,  66,  1,   225, 0,  0,   0,   231,
+        130, 41,  66,  0,   0,  0,   0,   0,   0,   0,  128, 191, 0,
+        0,   0,   0,   0,   0,  0,   128, 191,
+    };
+
     sbp_msg_t test_msg_storage;
+    memset(&test_msg_storage, 0, sizeof(test_msg_storage));
     sbp_msg_tracking_state_dep_b_t *test_msg =
         (sbp_msg_tracking_state_dep_b_t *)&test_msg_storage;
     test_msg->n_states = 0;
@@ -1103,9 +1958,13 @@ START_TEST(test_auto_check_sbp_tracking_49) {
     test_msg->states[10].state = 0;
 
     dummy_reset();
+    logging_reset();
+
+    // Test sending an unpacked message
     sbp_send_message(&sbp_state, 0x13, 55286, &test_msg_storage, &dummy_write);
 
-    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+    ck_assert_msg(memcmp(dummy_buff, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
                   "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
@@ -1113,206 +1972,451 @@ START_TEST(test_auto_check_sbp_tracking_49) {
                     "sbp_process threw an error!");
     }
 
-    ck_assert_msg(n_callbacks_logged == 1,
-                  "one callback should have been logged");
-    ck_assert_msg(last_sender_id == 55286, "sender_id decoded incorrectly");
-    ck_assert_msg(last_len == sizeof(test_data), "len decoded incorrectly");
-    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data)) == 0,
+    ck_assert_msg(last_payload.n_callbacks_logged == 1,
+                  "one payload callback should have been logged");
+    ck_assert_msg(last_payload.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_payload.len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_payload.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
                   "test data decoded incorrectly");
-    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_payload.context == &DUMMY_MEMORY_FOR_CALLBACKS,
                   "context pointer incorrectly passed");
 
-    // Cast to expected message type - the +6 byte offset is where the payload
-    // starts
-    sbp_msg_tracking_state_dep_b_t *msg =
-        (sbp_msg_tracking_state_dep_b_t *)&last_msg;
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "one frame callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.payload_len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
+                  "test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(test_encoded_frame_data),
+                  "frame len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.frame, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
+                  "frame data decoded incorrectly");
+    sbp_msg_tracking_state_dep_b_t *check_msg =
+        (sbp_msg_tracking_state_dep_b_t *)&last_unpacked.msg;
     // Run tests against fields
-    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(
-        (msg->states[0].cn0 * 100 - 39.3695983887 * 100) < 0.05,
+        (check_msg->states[0].cn0 * 100 - 39.3695983887 * 100) < 0.05,
         "incorrect value for states[0].cn0, expected 39.3695983887, is %f",
-        msg->states[0].cn0);
-    ck_assert_msg(msg->states[0].sid.code == 0,
+        check_msg->states[0].cn0);
+    ck_assert_msg(check_msg->states[0].sid.code == 0,
                   "incorrect value for states[0].sid.code, expected 0, is %d",
-                  msg->states[0].sid.code);
+                  check_msg->states[0].sid.code);
     ck_assert_msg(
-        msg->states[0].sid.reserved == 0,
+        check_msg->states[0].sid.reserved == 0,
         "incorrect value for states[0].sid.reserved, expected 0, is %d",
-        msg->states[0].sid.reserved);
-    ck_assert_msg(msg->states[0].sid.sat == 202,
+        check_msg->states[0].sid.reserved);
+    ck_assert_msg(check_msg->states[0].sid.sat == 202,
                   "incorrect value for states[0].sid.sat, expected 202, is %d",
-                  msg->states[0].sid.sat);
-    ck_assert_msg(msg->states[0].state == 1,
+                  check_msg->states[0].sid.sat);
+    ck_assert_msg(check_msg->states[0].state == 1,
                   "incorrect value for states[0].state, expected 1, is %d",
-                  msg->states[0].state);
+                  check_msg->states[0].state);
     ck_assert_msg(
-        (msg->states[1].cn0 * 100 - 36.521736145 * 100) < 0.05,
+        (check_msg->states[1].cn0 * 100 - 36.521736145 * 100) < 0.05,
         "incorrect value for states[1].cn0, expected 36.521736145, is %f",
-        msg->states[1].cn0);
-    ck_assert_msg(msg->states[1].sid.code == 0,
+        check_msg->states[1].cn0);
+    ck_assert_msg(check_msg->states[1].sid.code == 0,
                   "incorrect value for states[1].sid.code, expected 0, is %d",
-                  msg->states[1].sid.code);
+                  check_msg->states[1].sid.code);
     ck_assert_msg(
-        msg->states[1].sid.reserved == 0,
+        check_msg->states[1].sid.reserved == 0,
         "incorrect value for states[1].sid.reserved, expected 0, is %d",
-        msg->states[1].sid.reserved);
-    ck_assert_msg(msg->states[1].sid.sat == 203,
+        check_msg->states[1].sid.reserved);
+    ck_assert_msg(check_msg->states[1].sid.sat == 203,
                   "incorrect value for states[1].sid.sat, expected 203, is %d",
-                  msg->states[1].sid.sat);
-    ck_assert_msg(msg->states[1].state == 1,
+                  check_msg->states[1].sid.sat);
+    ck_assert_msg(check_msg->states[1].state == 1,
                   "incorrect value for states[1].state, expected 1, is %d",
-                  msg->states[1].state);
+                  check_msg->states[1].state);
     ck_assert_msg(
-        (msg->states[2].cn0 * 100 - 38.1597633362 * 100) < 0.05,
+        (check_msg->states[2].cn0 * 100 - 38.1597633362 * 100) < 0.05,
         "incorrect value for states[2].cn0, expected 38.1597633362, is %f",
-        msg->states[2].cn0);
-    ck_assert_msg(msg->states[2].sid.code == 0,
+        check_msg->states[2].cn0);
+    ck_assert_msg(check_msg->states[2].sid.code == 0,
                   "incorrect value for states[2].sid.code, expected 0, is %d",
-                  msg->states[2].sid.code);
+                  check_msg->states[2].sid.code);
     ck_assert_msg(
-        msg->states[2].sid.reserved == 0,
+        check_msg->states[2].sid.reserved == 0,
         "incorrect value for states[2].sid.reserved, expected 0, is %d",
-        msg->states[2].sid.reserved);
-    ck_assert_msg(msg->states[2].sid.sat == 208,
+        check_msg->states[2].sid.reserved);
+    ck_assert_msg(check_msg->states[2].sid.sat == 208,
                   "incorrect value for states[2].sid.sat, expected 208, is %d",
-                  msg->states[2].sid.sat);
-    ck_assert_msg(msg->states[2].state == 1,
+                  check_msg->states[2].sid.sat);
+    ck_assert_msg(check_msg->states[2].state == 1,
                   "incorrect value for states[2].state, expected 1, is %d",
-                  msg->states[2].state);
+                  check_msg->states[2].state);
     ck_assert_msg(
-        (msg->states[3].cn0 * 100 - 39.1998977661 * 100) < 0.05,
+        (check_msg->states[3].cn0 * 100 - 39.1998977661 * 100) < 0.05,
         "incorrect value for states[3].cn0, expected 39.1998977661, is %f",
-        msg->states[3].cn0);
-    ck_assert_msg(msg->states[3].sid.code == 0,
+        check_msg->states[3].cn0);
+    ck_assert_msg(check_msg->states[3].sid.code == 0,
                   "incorrect value for states[3].sid.code, expected 0, is %d",
-                  msg->states[3].sid.code);
+                  check_msg->states[3].sid.code);
     ck_assert_msg(
-        msg->states[3].sid.reserved == 0,
+        check_msg->states[3].sid.reserved == 0,
         "incorrect value for states[3].sid.reserved, expected 0, is %d",
-        msg->states[3].sid.reserved);
-    ck_assert_msg(msg->states[3].sid.sat == 212,
+        check_msg->states[3].sid.reserved);
+    ck_assert_msg(check_msg->states[3].sid.sat == 212,
                   "incorrect value for states[3].sid.sat, expected 212, is %d",
-                  msg->states[3].sid.sat);
-    ck_assert_msg(msg->states[3].state == 1,
+                  check_msg->states[3].sid.sat);
+    ck_assert_msg(check_msg->states[3].state == 1,
                   "incorrect value for states[3].state, expected 1, is %d",
-                  msg->states[3].state);
+                  check_msg->states[3].state);
     ck_assert_msg(
-        (msg->states[4].cn0 * 100 - 41.5584564209 * 100) < 0.05,
+        (check_msg->states[4].cn0 * 100 - 41.5584564209 * 100) < 0.05,
         "incorrect value for states[4].cn0, expected 41.5584564209, is %f",
-        msg->states[4].cn0);
-    ck_assert_msg(msg->states[4].sid.code == 0,
+        check_msg->states[4].cn0);
+    ck_assert_msg(check_msg->states[4].sid.code == 0,
                   "incorrect value for states[4].sid.code, expected 0, is %d",
-                  msg->states[4].sid.code);
+                  check_msg->states[4].sid.code);
     ck_assert_msg(
-        msg->states[4].sid.reserved == 0,
+        check_msg->states[4].sid.reserved == 0,
         "incorrect value for states[4].sid.reserved, expected 0, is %d",
-        msg->states[4].sid.reserved);
-    ck_assert_msg(msg->states[4].sid.sat == 217,
+        check_msg->states[4].sid.reserved);
+    ck_assert_msg(check_msg->states[4].sid.sat == 217,
                   "incorrect value for states[4].sid.sat, expected 217, is %d",
-                  msg->states[4].sid.sat);
-    ck_assert_msg(msg->states[4].state == 1,
+                  check_msg->states[4].sid.sat);
+    ck_assert_msg(check_msg->states[4].state == 1,
                   "incorrect value for states[4].state, expected 1, is %d",
-                  msg->states[4].state);
+                  check_msg->states[4].state);
     ck_assert_msg(
-        (msg->states[5].cn0 * 100 - 37.0269813538 * 100) < 0.05,
+        (check_msg->states[5].cn0 * 100 - 37.0269813538 * 100) < 0.05,
         "incorrect value for states[5].cn0, expected 37.0269813538, is %f",
-        msg->states[5].cn0);
-    ck_assert_msg(msg->states[5].sid.code == 0,
+        check_msg->states[5].cn0);
+    ck_assert_msg(check_msg->states[5].sid.code == 0,
                   "incorrect value for states[5].sid.code, expected 0, is %d",
-                  msg->states[5].sid.code);
+                  check_msg->states[5].sid.code);
     ck_assert_msg(
-        msg->states[5].sid.reserved == 0,
+        check_msg->states[5].sid.reserved == 0,
         "incorrect value for states[5].sid.reserved, expected 0, is %d",
-        msg->states[5].sid.reserved);
-    ck_assert_msg(msg->states[5].sid.sat == 218,
+        check_msg->states[5].sid.reserved);
+    ck_assert_msg(check_msg->states[5].sid.sat == 218,
                   "incorrect value for states[5].sid.sat, expected 218, is %d",
-                  msg->states[5].sid.sat);
-    ck_assert_msg(msg->states[5].state == 1,
+                  check_msg->states[5].sid.sat);
+    ck_assert_msg(check_msg->states[5].state == 1,
                   "incorrect value for states[5].state, expected 1, is %d",
-                  msg->states[5].state);
+                  check_msg->states[5].state);
     ck_assert_msg(
-        (msg->states[6].cn0 * 100 - 38.1049690247 * 100) < 0.05,
+        (check_msg->states[6].cn0 * 100 - 38.1049690247 * 100) < 0.05,
         "incorrect value for states[6].cn0, expected 38.1049690247, is %f",
-        msg->states[6].cn0);
-    ck_assert_msg(msg->states[6].sid.code == 0,
+        check_msg->states[6].cn0);
+    ck_assert_msg(check_msg->states[6].sid.code == 0,
                   "incorrect value for states[6].sid.code, expected 0, is %d",
-                  msg->states[6].sid.code);
+                  check_msg->states[6].sid.code);
     ck_assert_msg(
-        msg->states[6].sid.reserved == 0,
+        check_msg->states[6].sid.reserved == 0,
         "incorrect value for states[6].sid.reserved, expected 0, is %d",
-        msg->states[6].sid.reserved);
-    ck_assert_msg(msg->states[6].sid.sat == 220,
+        check_msg->states[6].sid.reserved);
+    ck_assert_msg(check_msg->states[6].sid.sat == 220,
                   "incorrect value for states[6].sid.sat, expected 220, is %d",
-                  msg->states[6].sid.sat);
-    ck_assert_msg(msg->states[6].state == 1,
+                  check_msg->states[6].sid.sat);
+    ck_assert_msg(check_msg->states[6].state == 1,
                   "incorrect value for states[6].state, expected 1, is %d",
-                  msg->states[6].state);
+                  check_msg->states[6].state);
     ck_assert_msg(
-        (msg->states[7].cn0 * 100 - 39.0458450317 * 100) < 0.05,
+        (check_msg->states[7].cn0 * 100 - 39.0458450317 * 100) < 0.05,
         "incorrect value for states[7].cn0, expected 39.0458450317, is %f",
-        msg->states[7].cn0);
-    ck_assert_msg(msg->states[7].sid.code == 0,
+        check_msg->states[7].cn0);
+    ck_assert_msg(check_msg->states[7].sid.code == 0,
                   "incorrect value for states[7].sid.code, expected 0, is %d",
-                  msg->states[7].sid.code);
+                  check_msg->states[7].sid.code);
     ck_assert_msg(
-        msg->states[7].sid.reserved == 0,
+        check_msg->states[7].sid.reserved == 0,
         "incorrect value for states[7].sid.reserved, expected 0, is %d",
-        msg->states[7].sid.reserved);
-    ck_assert_msg(msg->states[7].sid.sat == 222,
+        check_msg->states[7].sid.reserved);
+    ck_assert_msg(check_msg->states[7].sid.sat == 222,
                   "incorrect value for states[7].sid.sat, expected 222, is %d",
-                  msg->states[7].sid.sat);
-    ck_assert_msg(msg->states[7].state == 1,
+                  check_msg->states[7].sid.sat);
+    ck_assert_msg(check_msg->states[7].state == 1,
                   "incorrect value for states[7].state, expected 1, is %d",
-                  msg->states[7].state);
+                  check_msg->states[7].state);
     ck_assert_msg(
-        (msg->states[8].cn0 * 100 - 42.3778343201 * 100) < 0.05,
+        (check_msg->states[8].cn0 * 100 - 42.3778343201 * 100) < 0.05,
         "incorrect value for states[8].cn0, expected 42.3778343201, is %f",
-        msg->states[8].cn0);
-    ck_assert_msg(msg->states[8].sid.code == 0,
+        check_msg->states[8].cn0);
+    ck_assert_msg(check_msg->states[8].sid.code == 0,
                   "incorrect value for states[8].sid.code, expected 0, is %d",
-                  msg->states[8].sid.code);
+                  check_msg->states[8].sid.code);
     ck_assert_msg(
-        msg->states[8].sid.reserved == 0,
+        check_msg->states[8].sid.reserved == 0,
         "incorrect value for states[8].sid.reserved, expected 0, is %d",
-        msg->states[8].sid.reserved);
-    ck_assert_msg(msg->states[8].sid.sat == 225,
+        check_msg->states[8].sid.reserved);
+    ck_assert_msg(check_msg->states[8].sid.sat == 225,
                   "incorrect value for states[8].sid.sat, expected 225, is %d",
-                  msg->states[8].sid.sat);
-    ck_assert_msg(msg->states[8].state == 1,
+                  check_msg->states[8].sid.sat);
+    ck_assert_msg(check_msg->states[8].state == 1,
                   "incorrect value for states[8].state, expected 1, is %d",
-                  msg->states[8].state);
-    ck_assert_msg((msg->states[9].cn0 * 100 - -1.0 * 100) < 0.05,
+                  check_msg->states[8].state);
+    ck_assert_msg((check_msg->states[9].cn0 * 100 - -1.0 * 100) < 0.05,
                   "incorrect value for states[9].cn0, expected -1.0, is %f",
-                  msg->states[9].cn0);
-    ck_assert_msg(msg->states[9].sid.code == 0,
+                  check_msg->states[9].cn0);
+    ck_assert_msg(check_msg->states[9].sid.code == 0,
                   "incorrect value for states[9].sid.code, expected 0, is %d",
-                  msg->states[9].sid.code);
+                  check_msg->states[9].sid.code);
     ck_assert_msg(
-        msg->states[9].sid.reserved == 0,
+        check_msg->states[9].sid.reserved == 0,
         "incorrect value for states[9].sid.reserved, expected 0, is %d",
-        msg->states[9].sid.reserved);
-    ck_assert_msg(msg->states[9].sid.sat == 0,
+        check_msg->states[9].sid.reserved);
+    ck_assert_msg(check_msg->states[9].sid.sat == 0,
                   "incorrect value for states[9].sid.sat, expected 0, is %d",
-                  msg->states[9].sid.sat);
-    ck_assert_msg(msg->states[9].state == 0,
+                  check_msg->states[9].sid.sat);
+    ck_assert_msg(check_msg->states[9].state == 0,
                   "incorrect value for states[9].state, expected 0, is %d",
-                  msg->states[9].state);
-    ck_assert_msg((msg->states[10].cn0 * 100 - -1.0 * 100) < 0.05,
+                  check_msg->states[9].state);
+    ck_assert_msg((check_msg->states[10].cn0 * 100 - -1.0 * 100) < 0.05,
                   "incorrect value for states[10].cn0, expected -1.0, is %f",
-                  msg->states[10].cn0);
-    ck_assert_msg(msg->states[10].sid.code == 0,
+                  check_msg->states[10].cn0);
+    ck_assert_msg(check_msg->states[10].sid.code == 0,
                   "incorrect value for states[10].sid.code, expected 0, is %d",
-                  msg->states[10].sid.code);
+                  check_msg->states[10].sid.code);
     ck_assert_msg(
-        msg->states[10].sid.reserved == 0,
+        check_msg->states[10].sid.reserved == 0,
         "incorrect value for states[10].sid.reserved, expected 0, is %d",
-        msg->states[10].sid.reserved);
-    ck_assert_msg(msg->states[10].sid.sat == 0,
+        check_msg->states[10].sid.reserved);
+    ck_assert_msg(check_msg->states[10].sid.sat == 0,
                   "incorrect value for states[10].sid.sat, expected 0, is %d",
-                  msg->states[10].sid.sat);
-    ck_assert_msg(msg->states[10].state == 0,
+                  check_msg->states[10].sid.sat);
+    ck_assert_msg(check_msg->states[10].state == 0,
                   "incorrect value for states[10].state, expected 0, is %d",
-                  msg->states[10].state);
+                  check_msg->states[10].state);
+
+    // Test again by sending an already encoded payload
+
+    dummy_reset();
+    logging_reset();
+
+    sbp_send_packed_message(&sbp_state, 0x13, 55286,
+                            sizeof(test_encoded_payload_data),
+                            test_encoded_payload_data, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
+                  "message not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+                    "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_payload.n_callbacks_logged == 1,
+                  "one payload callback should have been logged");
+    ck_assert_msg(last_payload.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_payload.len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_payload.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
+                  "test data decoded incorrectly");
+    ck_assert_msg(last_payload.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "one frame callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.payload_len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
+                  "test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(test_encoded_frame_data),
+                  "frame len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.frame, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
+                  "frame data decoded incorrectly");
+    // Run tests against fields
+    ck_assert_msg(
+        (check_msg->states[0].cn0 * 100 - 39.3695983887 * 100) < 0.05,
+        "incorrect value for states[0].cn0, expected 39.3695983887, is %f",
+        check_msg->states[0].cn0);
+    ck_assert_msg(check_msg->states[0].sid.code == 0,
+                  "incorrect value for states[0].sid.code, expected 0, is %d",
+                  check_msg->states[0].sid.code);
+    ck_assert_msg(
+        check_msg->states[0].sid.reserved == 0,
+        "incorrect value for states[0].sid.reserved, expected 0, is %d",
+        check_msg->states[0].sid.reserved);
+    ck_assert_msg(check_msg->states[0].sid.sat == 202,
+                  "incorrect value for states[0].sid.sat, expected 202, is %d",
+                  check_msg->states[0].sid.sat);
+    ck_assert_msg(check_msg->states[0].state == 1,
+                  "incorrect value for states[0].state, expected 1, is %d",
+                  check_msg->states[0].state);
+    ck_assert_msg(
+        (check_msg->states[1].cn0 * 100 - 36.521736145 * 100) < 0.05,
+        "incorrect value for states[1].cn0, expected 36.521736145, is %f",
+        check_msg->states[1].cn0);
+    ck_assert_msg(check_msg->states[1].sid.code == 0,
+                  "incorrect value for states[1].sid.code, expected 0, is %d",
+                  check_msg->states[1].sid.code);
+    ck_assert_msg(
+        check_msg->states[1].sid.reserved == 0,
+        "incorrect value for states[1].sid.reserved, expected 0, is %d",
+        check_msg->states[1].sid.reserved);
+    ck_assert_msg(check_msg->states[1].sid.sat == 203,
+                  "incorrect value for states[1].sid.sat, expected 203, is %d",
+                  check_msg->states[1].sid.sat);
+    ck_assert_msg(check_msg->states[1].state == 1,
+                  "incorrect value for states[1].state, expected 1, is %d",
+                  check_msg->states[1].state);
+    ck_assert_msg(
+        (check_msg->states[2].cn0 * 100 - 38.1597633362 * 100) < 0.05,
+        "incorrect value for states[2].cn0, expected 38.1597633362, is %f",
+        check_msg->states[2].cn0);
+    ck_assert_msg(check_msg->states[2].sid.code == 0,
+                  "incorrect value for states[2].sid.code, expected 0, is %d",
+                  check_msg->states[2].sid.code);
+    ck_assert_msg(
+        check_msg->states[2].sid.reserved == 0,
+        "incorrect value for states[2].sid.reserved, expected 0, is %d",
+        check_msg->states[2].sid.reserved);
+    ck_assert_msg(check_msg->states[2].sid.sat == 208,
+                  "incorrect value for states[2].sid.sat, expected 208, is %d",
+                  check_msg->states[2].sid.sat);
+    ck_assert_msg(check_msg->states[2].state == 1,
+                  "incorrect value for states[2].state, expected 1, is %d",
+                  check_msg->states[2].state);
+    ck_assert_msg(
+        (check_msg->states[3].cn0 * 100 - 39.1998977661 * 100) < 0.05,
+        "incorrect value for states[3].cn0, expected 39.1998977661, is %f",
+        check_msg->states[3].cn0);
+    ck_assert_msg(check_msg->states[3].sid.code == 0,
+                  "incorrect value for states[3].sid.code, expected 0, is %d",
+                  check_msg->states[3].sid.code);
+    ck_assert_msg(
+        check_msg->states[3].sid.reserved == 0,
+        "incorrect value for states[3].sid.reserved, expected 0, is %d",
+        check_msg->states[3].sid.reserved);
+    ck_assert_msg(check_msg->states[3].sid.sat == 212,
+                  "incorrect value for states[3].sid.sat, expected 212, is %d",
+                  check_msg->states[3].sid.sat);
+    ck_assert_msg(check_msg->states[3].state == 1,
+                  "incorrect value for states[3].state, expected 1, is %d",
+                  check_msg->states[3].state);
+    ck_assert_msg(
+        (check_msg->states[4].cn0 * 100 - 41.5584564209 * 100) < 0.05,
+        "incorrect value for states[4].cn0, expected 41.5584564209, is %f",
+        check_msg->states[4].cn0);
+    ck_assert_msg(check_msg->states[4].sid.code == 0,
+                  "incorrect value for states[4].sid.code, expected 0, is %d",
+                  check_msg->states[4].sid.code);
+    ck_assert_msg(
+        check_msg->states[4].sid.reserved == 0,
+        "incorrect value for states[4].sid.reserved, expected 0, is %d",
+        check_msg->states[4].sid.reserved);
+    ck_assert_msg(check_msg->states[4].sid.sat == 217,
+                  "incorrect value for states[4].sid.sat, expected 217, is %d",
+                  check_msg->states[4].sid.sat);
+    ck_assert_msg(check_msg->states[4].state == 1,
+                  "incorrect value for states[4].state, expected 1, is %d",
+                  check_msg->states[4].state);
+    ck_assert_msg(
+        (check_msg->states[5].cn0 * 100 - 37.0269813538 * 100) < 0.05,
+        "incorrect value for states[5].cn0, expected 37.0269813538, is %f",
+        check_msg->states[5].cn0);
+    ck_assert_msg(check_msg->states[5].sid.code == 0,
+                  "incorrect value for states[5].sid.code, expected 0, is %d",
+                  check_msg->states[5].sid.code);
+    ck_assert_msg(
+        check_msg->states[5].sid.reserved == 0,
+        "incorrect value for states[5].sid.reserved, expected 0, is %d",
+        check_msg->states[5].sid.reserved);
+    ck_assert_msg(check_msg->states[5].sid.sat == 218,
+                  "incorrect value for states[5].sid.sat, expected 218, is %d",
+                  check_msg->states[5].sid.sat);
+    ck_assert_msg(check_msg->states[5].state == 1,
+                  "incorrect value for states[5].state, expected 1, is %d",
+                  check_msg->states[5].state);
+    ck_assert_msg(
+        (check_msg->states[6].cn0 * 100 - 38.1049690247 * 100) < 0.05,
+        "incorrect value for states[6].cn0, expected 38.1049690247, is %f",
+        check_msg->states[6].cn0);
+    ck_assert_msg(check_msg->states[6].sid.code == 0,
+                  "incorrect value for states[6].sid.code, expected 0, is %d",
+                  check_msg->states[6].sid.code);
+    ck_assert_msg(
+        check_msg->states[6].sid.reserved == 0,
+        "incorrect value for states[6].sid.reserved, expected 0, is %d",
+        check_msg->states[6].sid.reserved);
+    ck_assert_msg(check_msg->states[6].sid.sat == 220,
+                  "incorrect value for states[6].sid.sat, expected 220, is %d",
+                  check_msg->states[6].sid.sat);
+    ck_assert_msg(check_msg->states[6].state == 1,
+                  "incorrect value for states[6].state, expected 1, is %d",
+                  check_msg->states[6].state);
+    ck_assert_msg(
+        (check_msg->states[7].cn0 * 100 - 39.0458450317 * 100) < 0.05,
+        "incorrect value for states[7].cn0, expected 39.0458450317, is %f",
+        check_msg->states[7].cn0);
+    ck_assert_msg(check_msg->states[7].sid.code == 0,
+                  "incorrect value for states[7].sid.code, expected 0, is %d",
+                  check_msg->states[7].sid.code);
+    ck_assert_msg(
+        check_msg->states[7].sid.reserved == 0,
+        "incorrect value for states[7].sid.reserved, expected 0, is %d",
+        check_msg->states[7].sid.reserved);
+    ck_assert_msg(check_msg->states[7].sid.sat == 222,
+                  "incorrect value for states[7].sid.sat, expected 222, is %d",
+                  check_msg->states[7].sid.sat);
+    ck_assert_msg(check_msg->states[7].state == 1,
+                  "incorrect value for states[7].state, expected 1, is %d",
+                  check_msg->states[7].state);
+    ck_assert_msg(
+        (check_msg->states[8].cn0 * 100 - 42.3778343201 * 100) < 0.05,
+        "incorrect value for states[8].cn0, expected 42.3778343201, is %f",
+        check_msg->states[8].cn0);
+    ck_assert_msg(check_msg->states[8].sid.code == 0,
+                  "incorrect value for states[8].sid.code, expected 0, is %d",
+                  check_msg->states[8].sid.code);
+    ck_assert_msg(
+        check_msg->states[8].sid.reserved == 0,
+        "incorrect value for states[8].sid.reserved, expected 0, is %d",
+        check_msg->states[8].sid.reserved);
+    ck_assert_msg(check_msg->states[8].sid.sat == 225,
+                  "incorrect value for states[8].sid.sat, expected 225, is %d",
+                  check_msg->states[8].sid.sat);
+    ck_assert_msg(check_msg->states[8].state == 1,
+                  "incorrect value for states[8].state, expected 1, is %d",
+                  check_msg->states[8].state);
+    ck_assert_msg((check_msg->states[9].cn0 * 100 - -1.0 * 100) < 0.05,
+                  "incorrect value for states[9].cn0, expected -1.0, is %f",
+                  check_msg->states[9].cn0);
+    ck_assert_msg(check_msg->states[9].sid.code == 0,
+                  "incorrect value for states[9].sid.code, expected 0, is %d",
+                  check_msg->states[9].sid.code);
+    ck_assert_msg(
+        check_msg->states[9].sid.reserved == 0,
+        "incorrect value for states[9].sid.reserved, expected 0, is %d",
+        check_msg->states[9].sid.reserved);
+    ck_assert_msg(check_msg->states[9].sid.sat == 0,
+                  "incorrect value for states[9].sid.sat, expected 0, is %d",
+                  check_msg->states[9].sid.sat);
+    ck_assert_msg(check_msg->states[9].state == 0,
+                  "incorrect value for states[9].state, expected 0, is %d",
+                  check_msg->states[9].state);
+    ck_assert_msg((check_msg->states[10].cn0 * 100 - -1.0 * 100) < 0.05,
+                  "incorrect value for states[10].cn0, expected -1.0, is %f",
+                  check_msg->states[10].cn0);
+    ck_assert_msg(check_msg->states[10].sid.code == 0,
+                  "incorrect value for states[10].sid.code, expected 0, is %d",
+                  check_msg->states[10].sid.code);
+    ck_assert_msg(
+        check_msg->states[10].sid.reserved == 0,
+        "incorrect value for states[10].sid.reserved, expected 0, is %d",
+        check_msg->states[10].sid.reserved);
+    ck_assert_msg(check_msg->states[10].sid.sat == 0,
+                  "incorrect value for states[10].sid.sat, expected 0, is %d",
+                  check_msg->states[10].sid.sat);
+    ck_assert_msg(check_msg->states[10].state == 0,
+                  "incorrect value for states[10].state, expected 0, is %d",
+                  check_msg->states[10].state);
   }
   // Test successful parsing of a message
   {
@@ -1326,10 +2430,14 @@ START_TEST(test_auto_check_sbp_tracking_49) {
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x13, &logging_callback,
+    sbp_register_callback(&sbp_state, 0x13, &payload_callback,
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x13, &frame_callback,
+                                &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_unpacked_callback(&sbp_state, 0x13, &unpacked_callback,
+                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n3);
 
-    u8 test_data[] = {
+    u8 test_encoded_frame_data[] = {
         85,  19,  0,   246, 215, 99,  1,   202, 0,  0,   0,   103, 208, 30,
         66,  1,   203, 0,   0,   0,   117, 24,  18, 66,  1,   208, 0,   0,
         0,   200, 173, 20,  66,  1,   212, 0,   0,  0,   137, 68,  27,  66,
@@ -1339,7 +2447,17 @@ START_TEST(test_auto_check_sbp_tracking_49) {
         21,  41,  66,  0,   0,   0,   0,   0,   0,  0,   128, 191, 0,   0,
         0,   0,   0,   0,   0,   128, 191, 126, 47,
     };
+    u8 test_encoded_payload_data[] = {
+        1, 202, 0, 0, 0, 103, 208, 30,  66,  1, 203, 0, 0, 0, 117, 24, 18,  66,
+        1, 208, 0, 0, 0, 200, 173, 20,  66,  1, 212, 0, 0, 0, 137, 68, 27,  66,
+        1, 217, 0, 0, 0, 243, 51,  40,  66,  1, 218, 0, 0, 0, 225, 58, 23,  66,
+        1, 220, 0, 0, 0, 132, 221, 22,  66,  1, 222, 0, 0, 0, 157, 29, 26,  66,
+        1, 225, 0, 0, 0, 133, 21,  41,  66,  0, 0,   0, 0, 0, 0,   0,  128, 191,
+        0, 0,   0, 0, 0, 0,   0,   128, 191,
+    };
+
     sbp_msg_t test_msg_storage;
+    memset(&test_msg_storage, 0, sizeof(test_msg_storage));
     sbp_msg_tracking_state_dep_b_t *test_msg =
         (sbp_msg_tracking_state_dep_b_t *)&test_msg_storage;
     test_msg->n_states = 0;
@@ -1411,9 +2529,13 @@ START_TEST(test_auto_check_sbp_tracking_49) {
     test_msg->states[10].state = 0;
 
     dummy_reset();
+    logging_reset();
+
+    // Test sending an unpacked message
     sbp_send_message(&sbp_state, 0x13, 55286, &test_msg_storage, &dummy_write);
 
-    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+    ck_assert_msg(memcmp(dummy_buff, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
                   "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
@@ -1421,206 +2543,451 @@ START_TEST(test_auto_check_sbp_tracking_49) {
                     "sbp_process threw an error!");
     }
 
-    ck_assert_msg(n_callbacks_logged == 1,
-                  "one callback should have been logged");
-    ck_assert_msg(last_sender_id == 55286, "sender_id decoded incorrectly");
-    ck_assert_msg(last_len == sizeof(test_data), "len decoded incorrectly");
-    ck_assert_msg(memcmp(last_msg, test_data, sizeof(test_data)) == 0,
+    ck_assert_msg(last_payload.n_callbacks_logged == 1,
+                  "one payload callback should have been logged");
+    ck_assert_msg(last_payload.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_payload.len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_payload.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
                   "test data decoded incorrectly");
-    ck_assert_msg(last_context == &DUMMY_MEMORY_FOR_CALLBACKS,
+    ck_assert_msg(last_payload.context == &DUMMY_MEMORY_FOR_CALLBACKS,
                   "context pointer incorrectly passed");
 
-    // Cast to expected message type - the +6 byte offset is where the payload
-    // starts
-    sbp_msg_tracking_state_dep_b_t *msg =
-        (sbp_msg_tracking_state_dep_b_t *)&last_msg;
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "one frame callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.payload_len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
+                  "test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(test_encoded_frame_data),
+                  "frame len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.frame, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
+                  "frame data decoded incorrectly");
+    sbp_msg_tracking_state_dep_b_t *check_msg =
+        (sbp_msg_tracking_state_dep_b_t *)&last_unpacked.msg;
     // Run tests against fields
-    ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(
-        (msg->states[0].cn0 * 100 - 39.7035179138 * 100) < 0.05,
+        (check_msg->states[0].cn0 * 100 - 39.7035179138 * 100) < 0.05,
         "incorrect value for states[0].cn0, expected 39.7035179138, is %f",
-        msg->states[0].cn0);
-    ck_assert_msg(msg->states[0].sid.code == 0,
+        check_msg->states[0].cn0);
+    ck_assert_msg(check_msg->states[0].sid.code == 0,
                   "incorrect value for states[0].sid.code, expected 0, is %d",
-                  msg->states[0].sid.code);
+                  check_msg->states[0].sid.code);
     ck_assert_msg(
-        msg->states[0].sid.reserved == 0,
+        check_msg->states[0].sid.reserved == 0,
         "incorrect value for states[0].sid.reserved, expected 0, is %d",
-        msg->states[0].sid.reserved);
-    ck_assert_msg(msg->states[0].sid.sat == 202,
+        check_msg->states[0].sid.reserved);
+    ck_assert_msg(check_msg->states[0].sid.sat == 202,
                   "incorrect value for states[0].sid.sat, expected 202, is %d",
-                  msg->states[0].sid.sat);
-    ck_assert_msg(msg->states[0].state == 1,
+                  check_msg->states[0].sid.sat);
+    ck_assert_msg(check_msg->states[0].state == 1,
                   "incorrect value for states[0].state, expected 1, is %d",
-                  msg->states[0].state);
+                  check_msg->states[0].state);
     ck_assert_msg(
-        (msg->states[1].cn0 * 100 - 36.5238838196 * 100) < 0.05,
+        (check_msg->states[1].cn0 * 100 - 36.5238838196 * 100) < 0.05,
         "incorrect value for states[1].cn0, expected 36.5238838196, is %f",
-        msg->states[1].cn0);
-    ck_assert_msg(msg->states[1].sid.code == 0,
+        check_msg->states[1].cn0);
+    ck_assert_msg(check_msg->states[1].sid.code == 0,
                   "incorrect value for states[1].sid.code, expected 0, is %d",
-                  msg->states[1].sid.code);
+                  check_msg->states[1].sid.code);
     ck_assert_msg(
-        msg->states[1].sid.reserved == 0,
+        check_msg->states[1].sid.reserved == 0,
         "incorrect value for states[1].sid.reserved, expected 0, is %d",
-        msg->states[1].sid.reserved);
-    ck_assert_msg(msg->states[1].sid.sat == 203,
+        check_msg->states[1].sid.reserved);
+    ck_assert_msg(check_msg->states[1].sid.sat == 203,
                   "incorrect value for states[1].sid.sat, expected 203, is %d",
-                  msg->states[1].sid.sat);
-    ck_assert_msg(msg->states[1].state == 1,
+                  check_msg->states[1].sid.sat);
+    ck_assert_msg(check_msg->states[1].state == 1,
                   "incorrect value for states[1].state, expected 1, is %d",
-                  msg->states[1].state);
+                  check_msg->states[1].state);
     ck_assert_msg(
-        (msg->states[2].cn0 * 100 - 37.169708252 * 100) < 0.05,
+        (check_msg->states[2].cn0 * 100 - 37.169708252 * 100) < 0.05,
         "incorrect value for states[2].cn0, expected 37.169708252, is %f",
-        msg->states[2].cn0);
-    ck_assert_msg(msg->states[2].sid.code == 0,
+        check_msg->states[2].cn0);
+    ck_assert_msg(check_msg->states[2].sid.code == 0,
                   "incorrect value for states[2].sid.code, expected 0, is %d",
-                  msg->states[2].sid.code);
+                  check_msg->states[2].sid.code);
     ck_assert_msg(
-        msg->states[2].sid.reserved == 0,
+        check_msg->states[2].sid.reserved == 0,
         "incorrect value for states[2].sid.reserved, expected 0, is %d",
-        msg->states[2].sid.reserved);
-    ck_assert_msg(msg->states[2].sid.sat == 208,
+        check_msg->states[2].sid.reserved);
+    ck_assert_msg(check_msg->states[2].sid.sat == 208,
                   "incorrect value for states[2].sid.sat, expected 208, is %d",
-                  msg->states[2].sid.sat);
-    ck_assert_msg(msg->states[2].state == 1,
+                  check_msg->states[2].sid.sat);
+    ck_assert_msg(check_msg->states[2].state == 1,
                   "incorrect value for states[2].state, expected 1, is %d",
-                  msg->states[2].state);
+                  check_msg->states[2].state);
     ck_assert_msg(
-        (msg->states[3].cn0 * 100 - 38.8169288635 * 100) < 0.05,
+        (check_msg->states[3].cn0 * 100 - 38.8169288635 * 100) < 0.05,
         "incorrect value for states[3].cn0, expected 38.8169288635, is %f",
-        msg->states[3].cn0);
-    ck_assert_msg(msg->states[3].sid.code == 0,
+        check_msg->states[3].cn0);
+    ck_assert_msg(check_msg->states[3].sid.code == 0,
                   "incorrect value for states[3].sid.code, expected 0, is %d",
-                  msg->states[3].sid.code);
+                  check_msg->states[3].sid.code);
     ck_assert_msg(
-        msg->states[3].sid.reserved == 0,
+        check_msg->states[3].sid.reserved == 0,
         "incorrect value for states[3].sid.reserved, expected 0, is %d",
-        msg->states[3].sid.reserved);
-    ck_assert_msg(msg->states[3].sid.sat == 212,
+        check_msg->states[3].sid.reserved);
+    ck_assert_msg(check_msg->states[3].sid.sat == 212,
                   "incorrect value for states[3].sid.sat, expected 212, is %d",
-                  msg->states[3].sid.sat);
-    ck_assert_msg(msg->states[3].state == 1,
+                  check_msg->states[3].sid.sat);
+    ck_assert_msg(check_msg->states[3].state == 1,
                   "incorrect value for states[3].state, expected 1, is %d",
-                  msg->states[3].state);
+                  check_msg->states[3].state);
     ck_assert_msg(
-        (msg->states[4].cn0 * 100 - 42.0507316589 * 100) < 0.05,
+        (check_msg->states[4].cn0 * 100 - 42.0507316589 * 100) < 0.05,
         "incorrect value for states[4].cn0, expected 42.0507316589, is %f",
-        msg->states[4].cn0);
-    ck_assert_msg(msg->states[4].sid.code == 0,
+        check_msg->states[4].cn0);
+    ck_assert_msg(check_msg->states[4].sid.code == 0,
                   "incorrect value for states[4].sid.code, expected 0, is %d",
-                  msg->states[4].sid.code);
+                  check_msg->states[4].sid.code);
     ck_assert_msg(
-        msg->states[4].sid.reserved == 0,
+        check_msg->states[4].sid.reserved == 0,
         "incorrect value for states[4].sid.reserved, expected 0, is %d",
-        msg->states[4].sid.reserved);
-    ck_assert_msg(msg->states[4].sid.sat == 217,
+        check_msg->states[4].sid.reserved);
+    ck_assert_msg(check_msg->states[4].sid.sat == 217,
                   "incorrect value for states[4].sid.sat, expected 217, is %d",
-                  msg->states[4].sid.sat);
-    ck_assert_msg(msg->states[4].state == 1,
+                  check_msg->states[4].sid.sat);
+    ck_assert_msg(check_msg->states[4].state == 1,
                   "incorrect value for states[4].state, expected 1, is %d",
-                  msg->states[4].state);
+                  check_msg->states[4].state);
     ck_assert_msg(
-        (msg->states[5].cn0 * 100 - 37.8074989319 * 100) < 0.05,
+        (check_msg->states[5].cn0 * 100 - 37.8074989319 * 100) < 0.05,
         "incorrect value for states[5].cn0, expected 37.8074989319, is %f",
-        msg->states[5].cn0);
-    ck_assert_msg(msg->states[5].sid.code == 0,
+        check_msg->states[5].cn0);
+    ck_assert_msg(check_msg->states[5].sid.code == 0,
                   "incorrect value for states[5].sid.code, expected 0, is %d",
-                  msg->states[5].sid.code);
+                  check_msg->states[5].sid.code);
     ck_assert_msg(
-        msg->states[5].sid.reserved == 0,
+        check_msg->states[5].sid.reserved == 0,
         "incorrect value for states[5].sid.reserved, expected 0, is %d",
-        msg->states[5].sid.reserved);
-    ck_assert_msg(msg->states[5].sid.sat == 218,
+        check_msg->states[5].sid.reserved);
+    ck_assert_msg(check_msg->states[5].sid.sat == 218,
                   "incorrect value for states[5].sid.sat, expected 218, is %d",
-                  msg->states[5].sid.sat);
-    ck_assert_msg(msg->states[5].state == 1,
+                  check_msg->states[5].sid.sat);
+    ck_assert_msg(check_msg->states[5].state == 1,
                   "incorrect value for states[5].state, expected 1, is %d",
-                  msg->states[5].state);
+                  check_msg->states[5].state);
     ck_assert_msg(
-        (msg->states[6].cn0 * 100 - 37.7163238525 * 100) < 0.05,
+        (check_msg->states[6].cn0 * 100 - 37.7163238525 * 100) < 0.05,
         "incorrect value for states[6].cn0, expected 37.7163238525, is %f",
-        msg->states[6].cn0);
-    ck_assert_msg(msg->states[6].sid.code == 0,
+        check_msg->states[6].cn0);
+    ck_assert_msg(check_msg->states[6].sid.code == 0,
                   "incorrect value for states[6].sid.code, expected 0, is %d",
-                  msg->states[6].sid.code);
+                  check_msg->states[6].sid.code);
     ck_assert_msg(
-        msg->states[6].sid.reserved == 0,
+        check_msg->states[6].sid.reserved == 0,
         "incorrect value for states[6].sid.reserved, expected 0, is %d",
-        msg->states[6].sid.reserved);
-    ck_assert_msg(msg->states[6].sid.sat == 220,
+        check_msg->states[6].sid.reserved);
+    ck_assert_msg(check_msg->states[6].sid.sat == 220,
                   "incorrect value for states[6].sid.sat, expected 220, is %d",
-                  msg->states[6].sid.sat);
-    ck_assert_msg(msg->states[6].state == 1,
+                  check_msg->states[6].sid.sat);
+    ck_assert_msg(check_msg->states[6].state == 1,
                   "incorrect value for states[6].state, expected 1, is %d",
-                  msg->states[6].state);
+                  check_msg->states[6].state);
     ck_assert_msg(
-        (msg->states[7].cn0 * 100 - 38.52891922 * 100) < 0.05,
+        (check_msg->states[7].cn0 * 100 - 38.52891922 * 100) < 0.05,
         "incorrect value for states[7].cn0, expected 38.52891922, is %f",
-        msg->states[7].cn0);
-    ck_assert_msg(msg->states[7].sid.code == 0,
+        check_msg->states[7].cn0);
+    ck_assert_msg(check_msg->states[7].sid.code == 0,
                   "incorrect value for states[7].sid.code, expected 0, is %d",
-                  msg->states[7].sid.code);
+                  check_msg->states[7].sid.code);
     ck_assert_msg(
-        msg->states[7].sid.reserved == 0,
+        check_msg->states[7].sid.reserved == 0,
         "incorrect value for states[7].sid.reserved, expected 0, is %d",
-        msg->states[7].sid.reserved);
-    ck_assert_msg(msg->states[7].sid.sat == 222,
+        check_msg->states[7].sid.reserved);
+    ck_assert_msg(check_msg->states[7].sid.sat == 222,
                   "incorrect value for states[7].sid.sat, expected 222, is %d",
-                  msg->states[7].sid.sat);
-    ck_assert_msg(msg->states[7].state == 1,
+                  check_msg->states[7].sid.sat);
+    ck_assert_msg(check_msg->states[7].state == 1,
                   "incorrect value for states[7].state, expected 1, is %d",
-                  msg->states[7].state);
+                  check_msg->states[7].state);
     ck_assert_msg(
-        (msg->states[8].cn0 * 100 - 42.2710151672 * 100) < 0.05,
+        (check_msg->states[8].cn0 * 100 - 42.2710151672 * 100) < 0.05,
         "incorrect value for states[8].cn0, expected 42.2710151672, is %f",
-        msg->states[8].cn0);
-    ck_assert_msg(msg->states[8].sid.code == 0,
+        check_msg->states[8].cn0);
+    ck_assert_msg(check_msg->states[8].sid.code == 0,
                   "incorrect value for states[8].sid.code, expected 0, is %d",
-                  msg->states[8].sid.code);
+                  check_msg->states[8].sid.code);
     ck_assert_msg(
-        msg->states[8].sid.reserved == 0,
+        check_msg->states[8].sid.reserved == 0,
         "incorrect value for states[8].sid.reserved, expected 0, is %d",
-        msg->states[8].sid.reserved);
-    ck_assert_msg(msg->states[8].sid.sat == 225,
+        check_msg->states[8].sid.reserved);
+    ck_assert_msg(check_msg->states[8].sid.sat == 225,
                   "incorrect value for states[8].sid.sat, expected 225, is %d",
-                  msg->states[8].sid.sat);
-    ck_assert_msg(msg->states[8].state == 1,
+                  check_msg->states[8].sid.sat);
+    ck_assert_msg(check_msg->states[8].state == 1,
                   "incorrect value for states[8].state, expected 1, is %d",
-                  msg->states[8].state);
-    ck_assert_msg((msg->states[9].cn0 * 100 - -1.0 * 100) < 0.05,
+                  check_msg->states[8].state);
+    ck_assert_msg((check_msg->states[9].cn0 * 100 - -1.0 * 100) < 0.05,
                   "incorrect value for states[9].cn0, expected -1.0, is %f",
-                  msg->states[9].cn0);
-    ck_assert_msg(msg->states[9].sid.code == 0,
+                  check_msg->states[9].cn0);
+    ck_assert_msg(check_msg->states[9].sid.code == 0,
                   "incorrect value for states[9].sid.code, expected 0, is %d",
-                  msg->states[9].sid.code);
+                  check_msg->states[9].sid.code);
     ck_assert_msg(
-        msg->states[9].sid.reserved == 0,
+        check_msg->states[9].sid.reserved == 0,
         "incorrect value for states[9].sid.reserved, expected 0, is %d",
-        msg->states[9].sid.reserved);
-    ck_assert_msg(msg->states[9].sid.sat == 0,
+        check_msg->states[9].sid.reserved);
+    ck_assert_msg(check_msg->states[9].sid.sat == 0,
                   "incorrect value for states[9].sid.sat, expected 0, is %d",
-                  msg->states[9].sid.sat);
-    ck_assert_msg(msg->states[9].state == 0,
+                  check_msg->states[9].sid.sat);
+    ck_assert_msg(check_msg->states[9].state == 0,
                   "incorrect value for states[9].state, expected 0, is %d",
-                  msg->states[9].state);
-    ck_assert_msg((msg->states[10].cn0 * 100 - -1.0 * 100) < 0.05,
+                  check_msg->states[9].state);
+    ck_assert_msg((check_msg->states[10].cn0 * 100 - -1.0 * 100) < 0.05,
                   "incorrect value for states[10].cn0, expected -1.0, is %f",
-                  msg->states[10].cn0);
-    ck_assert_msg(msg->states[10].sid.code == 0,
+                  check_msg->states[10].cn0);
+    ck_assert_msg(check_msg->states[10].sid.code == 0,
                   "incorrect value for states[10].sid.code, expected 0, is %d",
-                  msg->states[10].sid.code);
+                  check_msg->states[10].sid.code);
     ck_assert_msg(
-        msg->states[10].sid.reserved == 0,
+        check_msg->states[10].sid.reserved == 0,
         "incorrect value for states[10].sid.reserved, expected 0, is %d",
-        msg->states[10].sid.reserved);
-    ck_assert_msg(msg->states[10].sid.sat == 0,
+        check_msg->states[10].sid.reserved);
+    ck_assert_msg(check_msg->states[10].sid.sat == 0,
                   "incorrect value for states[10].sid.sat, expected 0, is %d",
-                  msg->states[10].sid.sat);
-    ck_assert_msg(msg->states[10].state == 0,
+                  check_msg->states[10].sid.sat);
+    ck_assert_msg(check_msg->states[10].state == 0,
                   "incorrect value for states[10].state, expected 0, is %d",
-                  msg->states[10].state);
+                  check_msg->states[10].state);
+
+    // Test again by sending an already encoded payload
+
+    dummy_reset();
+    logging_reset();
+
+    sbp_send_packed_message(&sbp_state, 0x13, 55286,
+                            sizeof(test_encoded_payload_data),
+                            test_encoded_payload_data, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
+                  "message not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+                    "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_payload.n_callbacks_logged == 1,
+                  "one payload callback should have been logged");
+    ck_assert_msg(last_payload.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_payload.len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_payload.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
+                  "test data decoded incorrectly");
+    ck_assert_msg(last_payload.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "one frame callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 55286,
+                  "sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.payload_len == sizeof(test_encoded_payload_data),
+                  "len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.payload, test_encoded_payload_data,
+                         sizeof(test_encoded_payload_data)) == 0,
+                  "test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(test_encoded_frame_data),
+                  "frame len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.frame, test_encoded_frame_data,
+                         sizeof(test_encoded_frame_data)) == 0,
+                  "frame data decoded incorrectly");
+    // Run tests against fields
+    ck_assert_msg(
+        (check_msg->states[0].cn0 * 100 - 39.7035179138 * 100) < 0.05,
+        "incorrect value for states[0].cn0, expected 39.7035179138, is %f",
+        check_msg->states[0].cn0);
+    ck_assert_msg(check_msg->states[0].sid.code == 0,
+                  "incorrect value for states[0].sid.code, expected 0, is %d",
+                  check_msg->states[0].sid.code);
+    ck_assert_msg(
+        check_msg->states[0].sid.reserved == 0,
+        "incorrect value for states[0].sid.reserved, expected 0, is %d",
+        check_msg->states[0].sid.reserved);
+    ck_assert_msg(check_msg->states[0].sid.sat == 202,
+                  "incorrect value for states[0].sid.sat, expected 202, is %d",
+                  check_msg->states[0].sid.sat);
+    ck_assert_msg(check_msg->states[0].state == 1,
+                  "incorrect value for states[0].state, expected 1, is %d",
+                  check_msg->states[0].state);
+    ck_assert_msg(
+        (check_msg->states[1].cn0 * 100 - 36.5238838196 * 100) < 0.05,
+        "incorrect value for states[1].cn0, expected 36.5238838196, is %f",
+        check_msg->states[1].cn0);
+    ck_assert_msg(check_msg->states[1].sid.code == 0,
+                  "incorrect value for states[1].sid.code, expected 0, is %d",
+                  check_msg->states[1].sid.code);
+    ck_assert_msg(
+        check_msg->states[1].sid.reserved == 0,
+        "incorrect value for states[1].sid.reserved, expected 0, is %d",
+        check_msg->states[1].sid.reserved);
+    ck_assert_msg(check_msg->states[1].sid.sat == 203,
+                  "incorrect value for states[1].sid.sat, expected 203, is %d",
+                  check_msg->states[1].sid.sat);
+    ck_assert_msg(check_msg->states[1].state == 1,
+                  "incorrect value for states[1].state, expected 1, is %d",
+                  check_msg->states[1].state);
+    ck_assert_msg(
+        (check_msg->states[2].cn0 * 100 - 37.169708252 * 100) < 0.05,
+        "incorrect value for states[2].cn0, expected 37.169708252, is %f",
+        check_msg->states[2].cn0);
+    ck_assert_msg(check_msg->states[2].sid.code == 0,
+                  "incorrect value for states[2].sid.code, expected 0, is %d",
+                  check_msg->states[2].sid.code);
+    ck_assert_msg(
+        check_msg->states[2].sid.reserved == 0,
+        "incorrect value for states[2].sid.reserved, expected 0, is %d",
+        check_msg->states[2].sid.reserved);
+    ck_assert_msg(check_msg->states[2].sid.sat == 208,
+                  "incorrect value for states[2].sid.sat, expected 208, is %d",
+                  check_msg->states[2].sid.sat);
+    ck_assert_msg(check_msg->states[2].state == 1,
+                  "incorrect value for states[2].state, expected 1, is %d",
+                  check_msg->states[2].state);
+    ck_assert_msg(
+        (check_msg->states[3].cn0 * 100 - 38.8169288635 * 100) < 0.05,
+        "incorrect value for states[3].cn0, expected 38.8169288635, is %f",
+        check_msg->states[3].cn0);
+    ck_assert_msg(check_msg->states[3].sid.code == 0,
+                  "incorrect value for states[3].sid.code, expected 0, is %d",
+                  check_msg->states[3].sid.code);
+    ck_assert_msg(
+        check_msg->states[3].sid.reserved == 0,
+        "incorrect value for states[3].sid.reserved, expected 0, is %d",
+        check_msg->states[3].sid.reserved);
+    ck_assert_msg(check_msg->states[3].sid.sat == 212,
+                  "incorrect value for states[3].sid.sat, expected 212, is %d",
+                  check_msg->states[3].sid.sat);
+    ck_assert_msg(check_msg->states[3].state == 1,
+                  "incorrect value for states[3].state, expected 1, is %d",
+                  check_msg->states[3].state);
+    ck_assert_msg(
+        (check_msg->states[4].cn0 * 100 - 42.0507316589 * 100) < 0.05,
+        "incorrect value for states[4].cn0, expected 42.0507316589, is %f",
+        check_msg->states[4].cn0);
+    ck_assert_msg(check_msg->states[4].sid.code == 0,
+                  "incorrect value for states[4].sid.code, expected 0, is %d",
+                  check_msg->states[4].sid.code);
+    ck_assert_msg(
+        check_msg->states[4].sid.reserved == 0,
+        "incorrect value for states[4].sid.reserved, expected 0, is %d",
+        check_msg->states[4].sid.reserved);
+    ck_assert_msg(check_msg->states[4].sid.sat == 217,
+                  "incorrect value for states[4].sid.sat, expected 217, is %d",
+                  check_msg->states[4].sid.sat);
+    ck_assert_msg(check_msg->states[4].state == 1,
+                  "incorrect value for states[4].state, expected 1, is %d",
+                  check_msg->states[4].state);
+    ck_assert_msg(
+        (check_msg->states[5].cn0 * 100 - 37.8074989319 * 100) < 0.05,
+        "incorrect value for states[5].cn0, expected 37.8074989319, is %f",
+        check_msg->states[5].cn0);
+    ck_assert_msg(check_msg->states[5].sid.code == 0,
+                  "incorrect value for states[5].sid.code, expected 0, is %d",
+                  check_msg->states[5].sid.code);
+    ck_assert_msg(
+        check_msg->states[5].sid.reserved == 0,
+        "incorrect value for states[5].sid.reserved, expected 0, is %d",
+        check_msg->states[5].sid.reserved);
+    ck_assert_msg(check_msg->states[5].sid.sat == 218,
+                  "incorrect value for states[5].sid.sat, expected 218, is %d",
+                  check_msg->states[5].sid.sat);
+    ck_assert_msg(check_msg->states[5].state == 1,
+                  "incorrect value for states[5].state, expected 1, is %d",
+                  check_msg->states[5].state);
+    ck_assert_msg(
+        (check_msg->states[6].cn0 * 100 - 37.7163238525 * 100) < 0.05,
+        "incorrect value for states[6].cn0, expected 37.7163238525, is %f",
+        check_msg->states[6].cn0);
+    ck_assert_msg(check_msg->states[6].sid.code == 0,
+                  "incorrect value for states[6].sid.code, expected 0, is %d",
+                  check_msg->states[6].sid.code);
+    ck_assert_msg(
+        check_msg->states[6].sid.reserved == 0,
+        "incorrect value for states[6].sid.reserved, expected 0, is %d",
+        check_msg->states[6].sid.reserved);
+    ck_assert_msg(check_msg->states[6].sid.sat == 220,
+                  "incorrect value for states[6].sid.sat, expected 220, is %d",
+                  check_msg->states[6].sid.sat);
+    ck_assert_msg(check_msg->states[6].state == 1,
+                  "incorrect value for states[6].state, expected 1, is %d",
+                  check_msg->states[6].state);
+    ck_assert_msg(
+        (check_msg->states[7].cn0 * 100 - 38.52891922 * 100) < 0.05,
+        "incorrect value for states[7].cn0, expected 38.52891922, is %f",
+        check_msg->states[7].cn0);
+    ck_assert_msg(check_msg->states[7].sid.code == 0,
+                  "incorrect value for states[7].sid.code, expected 0, is %d",
+                  check_msg->states[7].sid.code);
+    ck_assert_msg(
+        check_msg->states[7].sid.reserved == 0,
+        "incorrect value for states[7].sid.reserved, expected 0, is %d",
+        check_msg->states[7].sid.reserved);
+    ck_assert_msg(check_msg->states[7].sid.sat == 222,
+                  "incorrect value for states[7].sid.sat, expected 222, is %d",
+                  check_msg->states[7].sid.sat);
+    ck_assert_msg(check_msg->states[7].state == 1,
+                  "incorrect value for states[7].state, expected 1, is %d",
+                  check_msg->states[7].state);
+    ck_assert_msg(
+        (check_msg->states[8].cn0 * 100 - 42.2710151672 * 100) < 0.05,
+        "incorrect value for states[8].cn0, expected 42.2710151672, is %f",
+        check_msg->states[8].cn0);
+    ck_assert_msg(check_msg->states[8].sid.code == 0,
+                  "incorrect value for states[8].sid.code, expected 0, is %d",
+                  check_msg->states[8].sid.code);
+    ck_assert_msg(
+        check_msg->states[8].sid.reserved == 0,
+        "incorrect value for states[8].sid.reserved, expected 0, is %d",
+        check_msg->states[8].sid.reserved);
+    ck_assert_msg(check_msg->states[8].sid.sat == 225,
+                  "incorrect value for states[8].sid.sat, expected 225, is %d",
+                  check_msg->states[8].sid.sat);
+    ck_assert_msg(check_msg->states[8].state == 1,
+                  "incorrect value for states[8].state, expected 1, is %d",
+                  check_msg->states[8].state);
+    ck_assert_msg((check_msg->states[9].cn0 * 100 - -1.0 * 100) < 0.05,
+                  "incorrect value for states[9].cn0, expected -1.0, is %f",
+                  check_msg->states[9].cn0);
+    ck_assert_msg(check_msg->states[9].sid.code == 0,
+                  "incorrect value for states[9].sid.code, expected 0, is %d",
+                  check_msg->states[9].sid.code);
+    ck_assert_msg(
+        check_msg->states[9].sid.reserved == 0,
+        "incorrect value for states[9].sid.reserved, expected 0, is %d",
+        check_msg->states[9].sid.reserved);
+    ck_assert_msg(check_msg->states[9].sid.sat == 0,
+                  "incorrect value for states[9].sid.sat, expected 0, is %d",
+                  check_msg->states[9].sid.sat);
+    ck_assert_msg(check_msg->states[9].state == 0,
+                  "incorrect value for states[9].state, expected 0, is %d",
+                  check_msg->states[9].state);
+    ck_assert_msg((check_msg->states[10].cn0 * 100 - -1.0 * 100) < 0.05,
+                  "incorrect value for states[10].cn0, expected -1.0, is %f",
+                  check_msg->states[10].cn0);
+    ck_assert_msg(check_msg->states[10].sid.code == 0,
+                  "incorrect value for states[10].sid.code, expected 0, is %d",
+                  check_msg->states[10].sid.code);
+    ck_assert_msg(
+        check_msg->states[10].sid.reserved == 0,
+        "incorrect value for states[10].sid.reserved, expected 0, is %d",
+        check_msg->states[10].sid.reserved);
+    ck_assert_msg(check_msg->states[10].sid.sat == 0,
+                  "incorrect value for states[10].sid.sat, expected 0, is %d",
+                  check_msg->states[10].sid.sat);
+    ck_assert_msg(check_msg->states[10].state == 0,
+                  "incorrect value for states[10].state, expected 0, is %d",
+                  check_msg->states[10].state);
   }
 }
 END_TEST

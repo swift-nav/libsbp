@@ -75,7 +75,7 @@ typedef struct {
 static inline size_t sbp_packed_size_sbp_msg_settings_write_t(
     const sbp_msg_settings_write_t *msg) {
   (void)msg;
-  return 0 + (msg->n_setting * sizeof(msg->setting));
+  return 0 + (msg->n_setting * sizeof(msg->setting[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_settings_write_t(
@@ -176,7 +176,7 @@ typedef struct {
 static inline size_t sbp_packed_size_sbp_msg_settings_write_resp_t(
     const sbp_msg_settings_write_resp_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->status) + (msg->n_setting * sizeof(msg->setting));
+  return 0 + sizeof(msg->status) + (msg->n_setting * sizeof(msg->setting[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_settings_write_resp_t(
@@ -261,7 +261,7 @@ typedef struct {
 static inline size_t sbp_packed_size_sbp_msg_settings_read_req_t(
     const sbp_msg_settings_read_req_t *msg) {
   (void)msg;
-  return 0 + (msg->n_setting * sizeof(msg->setting));
+  return 0 + (msg->n_setting * sizeof(msg->setting[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_settings_read_req_t(
@@ -335,7 +335,7 @@ typedef struct {
 static inline size_t sbp_packed_size_sbp_msg_settings_read_resp_t(
     const sbp_msg_settings_read_resp_t *msg) {
   (void)msg;
-  return 0 + (msg->n_setting * sizeof(msg->setting));
+  return 0 + (msg->n_setting * sizeof(msg->setting[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_settings_read_resp_t(
@@ -475,7 +475,7 @@ typedef struct {
 static inline size_t sbp_packed_size_sbp_msg_settings_read_by_index_resp_t(
     const sbp_msg_settings_read_by_index_resp_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->index) + (msg->n_setting * sizeof(msg->setting));
+  return 0 + sizeof(msg->index) + (msg->n_setting * sizeof(msg->setting[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_settings_read_by_index_resp_t(
@@ -596,7 +596,7 @@ typedef struct {
 static inline size_t sbp_packed_size_sbp_msg_settings_register_t(
     const sbp_msg_settings_register_t *msg) {
   (void)msg;
-  return 0 + (msg->n_setting * sizeof(msg->setting));
+  return 0 + (msg->n_setting * sizeof(msg->setting[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_settings_register_t(
@@ -691,7 +691,7 @@ typedef struct {
 static inline size_t sbp_packed_size_sbp_msg_settings_register_resp_t(
     const sbp_msg_settings_register_resp_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->status) + (msg->n_setting * sizeof(msg->setting));
+  return 0 + sizeof(msg->status) + (msg->n_setting * sizeof(msg->setting[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_settings_register_resp_t(

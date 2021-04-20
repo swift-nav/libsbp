@@ -1089,6 +1089,10 @@ typedef struct {
      * = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2]
      */
     s16 stec_coeff[4];
+    /**
+     * Unused
+     */
+    u8 n_stec_coeff;
   } stec_sat_list[21];
   /**
    * Number of items in stec_sat_list
@@ -2467,6 +2471,10 @@ typedef struct {
      * = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2]
      */
     s16 stec_coeff[4];
+    /**
+     * Unused
+     */
+    u8 n_stec_coeff;
   } stec_sat_list[22];
   /**
    * Number of items in stec_sat_list
@@ -3479,7 +3487,7 @@ static inline size_t sbp_packed_size_sbp_msg_ssr_grid_definition_dep_a_t(
           sizeof(msg->header.lat_nw_corner_enc) +
           sizeof(msg->header.lon_nw_corner_enc) + sizeof(msg->header.num_msgs) +
           sizeof(msg->header.seq_num)) +
-         (msg->n_rle_list * sizeof(msg->rle_list));
+         (msg->n_rle_list * sizeof(msg->rle_list[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_ssr_grid_definition_dep_a_t(

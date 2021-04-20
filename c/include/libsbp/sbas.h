@@ -66,6 +66,10 @@ typedef struct {
    * Raw SBAS data field of 212 bits (last byte padded with zeros).
    */
   u8 data[27];
+  /**
+   * Unused
+   */
+  u8 n_data;
 } sbp_msg_sbas_raw_t;
 
 static inline size_t sbp_packed_size_sbp_msg_sbas_raw_t(

@@ -29,7 +29,7 @@ typedef struct {
 static inline size_t sbp_packed_size_sbp_msg_user_data_t(
     const sbp_msg_user_data_t *msg) {
   (void)msg;
-  return 0 + (msg->n_contents * sizeof(msg->contents));
+  return 0 + (msg->n_contents * sizeof(msg->contents[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_user_data_t(

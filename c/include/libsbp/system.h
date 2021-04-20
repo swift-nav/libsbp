@@ -169,6 +169,10 @@ typedef struct {
    * Corrections source string
    */
   char source[251];
+  /**
+   * Unused
+   */
+  u8 n_source;
 } sbp_msg_dgnss_status_t;
 
 static inline size_t sbp_packed_size_sbp_msg_dgnss_status_t(
@@ -857,6 +861,10 @@ typedef struct {
    * Comma separated list of values as defined by the index
    */
   char telemetry[254];
+  /**
+   * Unused
+   */
+  u8 n_telemetry;
 } sbp_msg_csac_telemetry_t;
 
 static inline size_t sbp_packed_size_sbp_msg_csac_telemetry_t(
@@ -922,6 +930,10 @@ typedef struct {
    * Comma separated list of telemetry field values
    */
   char telemetry_labels[254];
+  /**
+   * Unused
+   */
+  u8 n_telemetry_labels;
 } sbp_msg_csac_telemetry_labels_t;
 
 static inline size_t sbp_packed_size_sbp_msg_csac_telemetry_labels_t(
@@ -1508,7 +1520,7 @@ static inline size_t sbp_packed_size_sbp_msg_group_meta_t(
   (void)msg;
   return 0 + sizeof(msg->group_id) + sizeof(msg->flags) +
          sizeof(msg->n_group_msgs) +
-         (msg->n_group_msgs * sizeof(msg->group_msgs));
+         (msg->n_group_msgs * sizeof(msg->group_msgs[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_group_meta_t(

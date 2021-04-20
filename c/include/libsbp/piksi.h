@@ -404,6 +404,10 @@ typedef struct {
    */
   char name[20];
   /**
+   * Unused
+   */
+  u8 n_name;
+  /**
    * Percentage cpu use for this thread. Values range from 0
    * - 1000 and needs to be renormalized to 100
    */
@@ -2050,6 +2054,10 @@ typedef struct {
    * Command line to execute
    */
   char command[251];
+  /**
+   * Unused
+   */
+  u8 n_command;
 } sbp_msg_command_req_t;
 
 static inline size_t sbp_packed_size_sbp_msg_command_req_t(
@@ -2193,6 +2201,10 @@ typedef struct {
    * Line of standard output or standard error
    */
   char line[251];
+  /**
+   * Unused
+   */
+  u8 n_line;
 } sbp_msg_command_output_t;
 
 static inline size_t sbp_packed_size_sbp_msg_command_output_t(
@@ -2572,6 +2584,10 @@ typedef struct {
    */
   u8 ipv4_address[4];
   /**
+   * Unused
+   */
+  u8 n_ipv4_address;
+  /**
    * IPv4 netmask CIDR notation
    */
   u8 ipv4_mask_size;
@@ -2579,6 +2595,10 @@ typedef struct {
    * IPv6 address (all zero when unavailable)
    */
   u8 ipv6_address[16];
+  /**
+   * Unused
+   */
+  u8 n_ipv6_address;
   /**
    * IPv6 netmask CIDR notation
    */
@@ -2595,6 +2615,10 @@ typedef struct {
    * Interface Name
    */
   char interface_name[16];
+  /**
+   * Unused
+   */
+  u8 n_interface_name;
   /**
    * Interface flags from SIOCGIFFLAGS
    */
@@ -2776,6 +2800,10 @@ typedef struct {
      * Interface Name
      */
     char interface_name[16];
+    /**
+     * Unused
+     */
+    u8 n_interface_name;
   } interfaces[6];
   /**
    * Number of items in interfaces
@@ -2931,7 +2959,7 @@ static inline size_t sbp_packed_size_sbp_msg_cell_modem_status_t(
     const sbp_msg_cell_modem_status_t *msg) {
   (void)msg;
   return 0 + sizeof(msg->signal_strength) + sizeof(msg->signal_error_rate) +
-         (msg->n_reserved * sizeof(msg->reserved));
+         (msg->n_reserved * sizeof(msg->reserved[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_cell_modem_status_t(
@@ -3058,7 +3086,7 @@ static inline size_t sbp_packed_size_sbp_msg_specan_dep_t(
          (0 + sizeof(msg->t.tow) + sizeof(msg->t.wn)) + sizeof(msg->freq_ref) +
          sizeof(msg->freq_step) + sizeof(msg->amplitude_ref) +
          sizeof(msg->amplitude_unit) +
-         (msg->n_amplitude_value * sizeof(msg->amplitude_value));
+         (msg->n_amplitude_value * sizeof(msg->amplitude_value[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_specan_dep_t(
@@ -3265,7 +3293,7 @@ static inline size_t sbp_packed_size_sbp_msg_specan_t(
           sizeof(msg->t.wn)) +
          sizeof(msg->freq_ref) + sizeof(msg->freq_step) +
          sizeof(msg->amplitude_ref) + sizeof(msg->amplitude_unit) +
-         (msg->n_amplitude_value * sizeof(msg->amplitude_value));
+         (msg->n_amplitude_value * sizeof(msg->amplitude_value[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_specan_t(u8 *buf, size_t len,
@@ -3442,9 +3470,17 @@ typedef struct {
    */
   s8 rf_gain[8];
   /**
+   * Unused
+   */
+  u8 n_rf_gain;
+  /**
    * Intermediate frequency gain for each frontend channel[percent]
    */
   s8 if_gain[8];
+  /**
+   * Unused
+   */
+  u8 n_if_gain;
 } sbp_msg_front_end_gain_t;
 
 static inline size_t sbp_packed_size_sbp_msg_front_end_gain_t(

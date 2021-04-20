@@ -104,6 +104,10 @@ typedef struct {
    * Bootloader version number
    */
   char version[251];
+  /**
+   * Unused
+   */
+  u8 n_version;
 } sbp_msg_bootloader_handshake_resp_t;
 
 static inline size_t sbp_packed_size_sbp_msg_bootloader_handshake_resp_t(
@@ -268,6 +272,10 @@ typedef struct {
    * on the right.
    */
   u8 dna[8];
+  /**
+   * Unused
+   */
+  u8 n_dna;
 } sbp_msg_nap_device_dna_resp_t;
 
 static inline size_t sbp_packed_size_sbp_msg_nap_device_dna_resp_t(
@@ -335,7 +343,7 @@ typedef struct {
 static inline size_t sbp_packed_size_sbp_msg_bootloader_handshake_dep_a_t(
     const sbp_msg_bootloader_handshake_dep_a_t *msg) {
   (void)msg;
-  return 0 + (msg->n_handshake * sizeof(msg->handshake));
+  return 0 + (msg->n_handshake * sizeof(msg->handshake[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_bootloader_handshake_dep_a_t(

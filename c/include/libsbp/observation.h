@@ -5328,13 +5328,25 @@ typedef struct {
    */
   double pos[3];
   /**
+   * Unused
+   */
+  u8 n_pos;
+  /**
    * Velocity of the GEO at time toe[m/s]
    */
   double vel[3];
   /**
+   * Unused
+   */
+  u8 n_vel;
+  /**
    * Acceleration of the GEO at time toe[m/s^2]
    */
   double acc[3];
+  /**
+   * Unused
+   */
+  u8 n_acc;
   /**
    * Time offset of the GEO clock w.r.t. SBAS Network Time[s]
    */
@@ -5677,13 +5689,25 @@ typedef struct {
    */
   double pos[3];
   /**
+   * Unused
+   */
+  u8 n_pos;
+  /**
    * Velocity vector of the SV at tb in PZ-90.02 coordinates system[m/s]
    */
   double vel[3];
   /**
+   * Unused
+   */
+  u8 n_vel;
+  /**
    * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys[m/s^2]
    */
   double acc[3];
+  /**
+   * Unused
+   */
+  u8 n_acc;
 } sbp_msg_ephemeris_glo_dep_a_t;
 
 static inline size_t sbp_packed_size_sbp_msg_ephemeris_glo_dep_a_t(
@@ -6006,13 +6030,25 @@ typedef struct {
    */
   double pos[3];
   /**
+   * Unused
+   */
+  u8 n_pos;
+  /**
    * Velocity of the GEO at time toe[m/s]
    */
   double vel[3];
   /**
+   * Unused
+   */
+  u8 n_vel;
+  /**
    * Acceleration of the GEO at time toe[m/s^2]
    */
   double acc[3];
+  /**
+   * Unused
+   */
+  u8 n_acc;
   /**
    * Time offset of the GEO clock w.r.t. SBAS Network Time[s]
    */
@@ -6322,13 +6358,25 @@ typedef struct {
    */
   double pos[3];
   /**
+   * Unused
+   */
+  u8 n_pos;
+  /**
    * Velocity of the GEO at time toe[m/s]
    */
   float vel[3];
   /**
+   * Unused
+   */
+  u8 n_vel;
+  /**
    * Acceleration of the GEO at time toe[m/s^2]
    */
   float acc[3];
+  /**
+   * Unused
+   */
+  u8 n_acc;
   /**
    * Time offset of the GEO clock w.r.t. SBAS Network Time[s]
    */
@@ -6653,13 +6701,25 @@ typedef struct {
    */
   double pos[3];
   /**
+   * Unused
+   */
+  u8 n_pos;
+  /**
    * Velocity vector of the SV at tb in PZ-90.02 coordinates system[m/s]
    */
   double vel[3];
   /**
+   * Unused
+   */
+  u8 n_vel;
+  /**
    * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys[m/s^2]
    */
   double acc[3];
+  /**
+   * Unused
+   */
+  u8 n_acc;
 } sbp_msg_ephemeris_glo_dep_b_t;
 
 static inline size_t sbp_packed_size_sbp_msg_ephemeris_glo_dep_b_t(
@@ -6980,13 +7040,25 @@ typedef struct {
    */
   double pos[3];
   /**
+   * Unused
+   */
+  u8 n_pos;
+  /**
    * Velocity vector of the SV at tb in PZ-90.02 coordinates system[m/s]
    */
   double vel[3];
   /**
+   * Unused
+   */
+  u8 n_vel;
+  /**
    * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys[m/s^2]
    */
   double acc[3];
+  /**
+   * Unused
+   */
+  u8 n_acc;
   /**
    * Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
    */
@@ -7335,13 +7407,25 @@ typedef struct {
    */
   double pos[3];
   /**
+   * Unused
+   */
+  u8 n_pos;
+  /**
    * Velocity vector of the SV at tb in PZ-90.02 coordinates system[m/s]
    */
   double vel[3];
   /**
+   * Unused
+   */
+  u8 n_vel;
+  /**
    * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys[m/s^2]
    */
   double acc[3];
+  /**
+   * Unused
+   */
+  u8 n_acc;
   /**
    * Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
    */
@@ -7711,13 +7795,25 @@ typedef struct {
    */
   double pos[3];
   /**
+   * Unused
+   */
+  u8 n_pos;
+  /**
    * Velocity vector of the SV at tb in PZ-90.02 coordinates system[m/s]
    */
   double vel[3];
   /**
+   * Unused
+   */
+  u8 n_vel;
+  /**
    * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys[m/s^2]
    */
   float acc[3];
+  /**
+   * Unused
+   */
+  u8 n_acc;
   /**
    * Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
    */

@@ -33,9 +33,17 @@ typedef struct {
    */
   char tname[15];
   /**
+   * Unused
+   */
+  u8 n_tname;
+  /**
    * the command line (as much as it fits in the remaining packet)
    */
   char cmdline[236];
+  /**
+   * Unused
+   */
+  u8 n_cmdline;
 } sbp_msg_linux_cpu_state_dep_a_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_cpu_state_dep_a_t(
@@ -141,9 +149,17 @@ typedef struct {
    */
   char tname[15];
   /**
+   * Unused
+   */
+  u8 n_tname;
+  /**
    * the command line (as much as it fits in the remaining packet)
    */
   char cmdline[236];
+  /**
+   * Unused
+   */
+  u8 n_cmdline;
 } sbp_msg_linux_mem_state_dep_a_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_mem_state_dep_a_t(
@@ -410,6 +426,10 @@ typedef struct {
    * the command line of the process in question
    */
   char cmdline[246];
+  /**
+   * Unused
+   */
+  u8 n_cmdline;
 } sbp_msg_linux_process_socket_counts_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_process_socket_counts_t(
@@ -562,9 +582,17 @@ typedef struct {
    */
   char address_of_largest[64];
   /**
+   * Unused
+   */
+  u8 n_address_of_largest;
+  /**
    * the command line of the process in question
    */
   char cmdline[180];
+  /**
+   * Unused
+   */
+  u8 n_cmdline;
 } sbp_msg_linux_process_socket_queues_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_process_socket_queues_t(
@@ -716,10 +744,18 @@ typedef struct {
    */
   u16 socket_state_counts[16];
   /**
+   * Unused
+   */
+  u8 n_socket_state_counts;
+  /**
    * A count for each socket type reported in the `socket_types_reported` field,
    * the first entry corresponds to the first enabled bit in `types_reported`.
    */
   u16 socket_type_counts[16];
+  /**
+   * Unused
+   */
+  u8 n_socket_type_counts;
 } sbp_msg_linux_socket_usage_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_socket_usage_t(
@@ -851,6 +887,10 @@ typedef struct {
    * the command line of the process in question
    */
   char cmdline[250];
+  /**
+   * Unused
+   */
+  u8 n_cmdline;
 } sbp_msg_linux_process_fd_count_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_process_fd_count_t(
@@ -948,6 +988,10 @@ typedef struct {
    * of the list being 2 NULL terminators in a row.
    */
   char most_opened[251];
+  /**
+   * Unused
+   */
+  u8 n_most_opened;
 } sbp_msg_linux_process_fd_summary_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_process_fd_summary_t(
@@ -1043,9 +1087,17 @@ typedef struct {
    */
   char tname[15];
   /**
+   * Unused
+   */
+  u8 n_tname;
+  /**
    * the command line (as much as it fits in the remaining packet)
    */
   char cmdline[231];
+  /**
+   * Unused
+   */
+  u8 n_cmdline;
 } sbp_msg_linux_cpu_state_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_cpu_state_t(
@@ -1201,9 +1253,17 @@ typedef struct {
    */
   char tname[15];
   /**
+   * Unused
+   */
+  u8 n_tname;
+  /**
    * the command line (as much as it fits in the remaining packet)
    */
   char cmdline[231];
+  /**
+   * Unused
+   */
+  u8 n_cmdline;
 } sbp_msg_linux_mem_state_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_mem_state_t(
