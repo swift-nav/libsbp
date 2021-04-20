@@ -101,10 +101,20 @@ START_TEST(test_auto_check_sbp_navigation_9) {
         85, 6,   2, 246, 215, 14,  8, 48,  39, 0,   180,
         0,  190, 0, 170, 0,   160, 0, 150, 0,  121, 170,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_dops_dep_a_t *test_msg = (sbp_msg_dops_dep_a_t *)&test_msg_storage;
+    test_msg->gdop = 180;
+    test_msg->hdop = 160;
+    test_msg->pdop = 190;
+    test_msg->tdop = 170;
+    test_msg->tow = 2568200;
+    test_msg->vdop = 150;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x206, 55286, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x206, 55286, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -122,7 +132,7 @@ START_TEST(test_auto_check_sbp_navigation_9) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_dops_dep_a_t *msg = (msg_dops_dep_a_t *)((void *)last_msg + 6);
+    sbp_msg_dops_dep_a_t *msg = (sbp_msg_dops_dep_a_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->gdop == 180,
@@ -157,10 +167,20 @@ START_TEST(test_auto_check_sbp_navigation_9) {
         85, 6,   2, 246, 215, 14,  240, 51,  39, 0,  180,
         0,  190, 0, 170, 0,   160, 0,   150, 0,  78, 169,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_dops_dep_a_t *test_msg = (sbp_msg_dops_dep_a_t *)&test_msg_storage;
+    test_msg->gdop = 180;
+    test_msg->hdop = 160;
+    test_msg->pdop = 190;
+    test_msg->tdop = 170;
+    test_msg->tow = 2569200;
+    test_msg->vdop = 150;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x206, 55286, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x206, 55286, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -178,7 +198,7 @@ START_TEST(test_auto_check_sbp_navigation_9) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_dops_dep_a_t *msg = (msg_dops_dep_a_t *)((void *)last_msg + 6);
+    sbp_msg_dops_dep_a_t *msg = (sbp_msg_dops_dep_a_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->gdop == 180,
@@ -213,10 +233,20 @@ START_TEST(test_auto_check_sbp_navigation_9) {
         85, 6,   2, 246, 215, 14,  216, 55,  39, 0,  180,
         0,  190, 0, 170, 0,   160, 0,   150, 0,  71, 218,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_dops_dep_a_t *test_msg = (sbp_msg_dops_dep_a_t *)&test_msg_storage;
+    test_msg->gdop = 180;
+    test_msg->hdop = 160;
+    test_msg->pdop = 190;
+    test_msg->tdop = 170;
+    test_msg->tow = 2570200;
+    test_msg->vdop = 150;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x206, 55286, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x206, 55286, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -234,7 +264,7 @@ START_TEST(test_auto_check_sbp_navigation_9) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_dops_dep_a_t *msg = (msg_dops_dep_a_t *)((void *)last_msg + 6);
+    sbp_msg_dops_dep_a_t *msg = (sbp_msg_dops_dep_a_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->gdop == 180,

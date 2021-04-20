@@ -1,35 +1,14 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
- * Contact: https://support.swiftnav.com
- *
- * This source is subject to the license found in the file 'LICENSE' which must
- * be be distributed together with this source. All other rights reserved.
- *
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
- */
-
-/*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/piksi.yaml
- * with generate.py. Please do not hand edit!
- *****************************************************************************/
-
-/** \defgroup piksi Piksi
- *
- *  * System health, configuration, and diagnostic messages specific to
- * the Piksi L1 receiver, including a variety of legacy messages that
- * may no longer be used.
- * \{ */
-
 #ifndef LIBSBP_PIKSI_MESSAGES_H
 #define LIBSBP_PIKSI_MESSAGES_H
 
-#include "common.h"
-#include "gnss.h"
+#include <endian.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <string.h>
 
-SBP_PACK_START
-
+#include <libsbp/common.h>
+#include <libsbp/gnss.h>
 /** Legacy message to load satellite almanac (host => Piksi)
  *
  * This is a legacy message for sending and loading a satellite
@@ -37,6 +16,39 @@ SBP_PACK_START
  */
 #define SBP_MSG_ALMANAC 0x0069
 
+typedef struct {
+} sbp_msg_almanac_t;
+
+static inline size_t sbp_packed_size_sbp_msg_almanac_t(
+    const sbp_msg_almanac_t *msg) {
+  (void)msg;
+  return 0;
+}
+
+static inline bool sbp_pack_sbp_msg_almanac_t(u8 *buf, size_t len,
+                                              const sbp_msg_almanac_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_almanac_t(msg) > len) {
+    return false;
+  }
+
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_almanac_t(const u8 *buf, size_t len,
+                                                sbp_msg_almanac_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  return true;
+}
 /** Send GPS time from host (host => Piksi)
  *
  * This message sets up timing functionality using a coarse GPS
@@ -44,30 +56,109 @@ SBP_PACK_START
  */
 #define SBP_MSG_SET_TIME 0x0068
 
+typedef struct {
+} sbp_msg_set_time_t;
+
+static inline size_t sbp_packed_size_sbp_msg_set_time_t(
+    const sbp_msg_set_time_t *msg) {
+  (void)msg;
+  return 0;
+}
+
+static inline bool sbp_pack_sbp_msg_set_time_t(u8 *buf, size_t len,
+                                               const sbp_msg_set_time_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_set_time_t(msg) > len) {
+    return false;
+  }
+
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_set_time_t(const u8 *buf, size_t len,
+                                                 sbp_msg_set_time_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  return true;
+}
 /** Reset the device (host => Piksi)
  *
  * This message from the host resets the Piksi back into the
  * bootloader.
  */
 #define SBP_MSG_RESET 0x00B6
-#define SBP_RESET_DEFAULT_SETTINGS_MASK (0x1)
-#define SBP_RESET_DEFAULT_SETTINGS_SHIFT (0u)
-#define SBP_RESET_DEFAULT_SETTINGS_GET(flags)      \
-  (((flags) >> SBP_RESET_DEFAULT_SETTINGS_SHIFT) & \
-   SBP_RESET_DEFAULT_SETTINGS_MASK)
-#define SBP_RESET_DEFAULT_SETTINGS_SET(flags, val)           \
-  do {                                                       \
-    ((flags) |= (((val) & (SBP_RESET_DEFAULT_SETTINGS_MASK)) \
-                 << (SBP_RESET_DEFAULT_SETTINGS_SHIFT)));    \
+
+#define SBP_RESET_FLAGS_DEFAULT_SETTINGS_MASK (0x1)
+#define SBP_RESET_FLAGS_DEFAULT_SETTINGS_SHIFT (0u)
+#define SBP_RESET_FLAGS_DEFAULT_SETTINGS_GET(flags)      \
+  (((flags) >> SBP_RESET_FLAGS_DEFAULT_SETTINGS_SHIFT) & \
+   SBP_RESET_FLAGS_DEFAULT_SETTINGS_MASK)
+#define SBP_RESET_FLAGS_DEFAULT_SETTINGS_SET(flags, val)           \
+  do {                                                             \
+    ((flags) |= (((val) & (SBP_RESET_FLAGS_DEFAULT_SETTINGS_MASK)) \
+                 << (SBP_RESET_FLAGS_DEFAULT_SETTINGS_SHIFT)));    \
   } while (0)
 
-#define SBP_RESET_DEFAULT_SETTINGS_PRESERVE_EXISTING_SETTINGS (0)
-#define SBP_RESET_DEFAULT_SETTINGS_RESORE_DEFAULT_SETTINGS (1)
+#define SBP_RESET_FLAGS_DEFAULT_SETTINGS_PRESERVE_EXISTING_SETTINGS (0)
+#define SBP_RESET_FLAGS_DEFAULT_SETTINGS_RESORE_DEFAULT_SETTINGS (1)
+typedef struct {
+  /**
+   * Reset flags
+   */
+  u32 flags;
+} sbp_msg_reset_t;
 
-typedef struct SBP_ATTR_PACKED {
-  u32 flags; /**< Reset flags */
-} msg_reset_t;
+static inline size_t sbp_packed_size_sbp_msg_reset_t(
+    const sbp_msg_reset_t *msg) {
+  (void)msg;
+  return 0 + sizeof(msg->flags);
+}
 
+static inline bool sbp_pack_sbp_msg_reset_t(u8 *buf, size_t len,
+                                            const sbp_msg_reset_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_reset_t(msg) > len) {
+    return false;
+  }
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  u32 msgflags = msg->flags;
+  msgflags = htole32(msgflags);
+  memcpy(buf + offset, &msgflags, 4);
+  offset += 4;
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_reset_t(const u8 *buf, size_t len,
+                                              sbp_msg_reset_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->flags, buf + offset, 4);
+  msg->flags = le32toh(msg->flags);
+  offset += 4;
+  return true;
+}
 /** Reset the device (host => Piksi)
  *
  * This message from the host resets the Piksi back into the
@@ -75,6 +166,39 @@ typedef struct SBP_ATTR_PACKED {
  */
 #define SBP_MSG_RESET_DEP 0x00B2
 
+typedef struct {
+} sbp_msg_reset_dep_t;
+
+static inline size_t sbp_packed_size_sbp_msg_reset_dep_t(
+    const sbp_msg_reset_dep_t *msg) {
+  (void)msg;
+  return 0;
+}
+
+static inline bool sbp_pack_sbp_msg_reset_dep_t(
+    u8 *buf, size_t len, const sbp_msg_reset_dep_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_reset_dep_t(msg) > len) {
+    return false;
+  }
+
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_reset_dep_t(const u8 *buf, size_t len,
+                                                  sbp_msg_reset_dep_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  return true;
+}
 /** Legacy message for CW interference channel (Piksi => host)
  *
  * This is an unused legacy message for result reporting from the
@@ -83,6 +207,39 @@ typedef struct SBP_ATTR_PACKED {
  */
 #define SBP_MSG_CW_RESULTS 0x00C0
 
+typedef struct {
+} sbp_msg_cw_results_t;
+
+static inline size_t sbp_packed_size_sbp_msg_cw_results_t(
+    const sbp_msg_cw_results_t *msg) {
+  (void)msg;
+  return 0;
+}
+
+static inline bool sbp_pack_sbp_msg_cw_results_t(
+    u8 *buf, size_t len, const sbp_msg_cw_results_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_cw_results_t(msg) > len) {
+    return false;
+  }
+
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_cw_results_t(const u8 *buf, size_t len,
+                                                   sbp_msg_cw_results_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  return true;
+}
 /** Legacy message for CW interference channel (host => Piksi)
  *
  * This is an unused legacy message from the host for starting
@@ -91,37 +248,148 @@ typedef struct SBP_ATTR_PACKED {
  */
 #define SBP_MSG_CW_START 0x00C1
 
+typedef struct {
+} sbp_msg_cw_start_t;
+
+static inline size_t sbp_packed_size_sbp_msg_cw_start_t(
+    const sbp_msg_cw_start_t *msg) {
+  (void)msg;
+  return 0;
+}
+
+static inline bool sbp_pack_sbp_msg_cw_start_t(u8 *buf, size_t len,
+                                               const sbp_msg_cw_start_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_cw_start_t(msg) > len) {
+    return false;
+  }
+
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_cw_start_t(const u8 *buf, size_t len,
+                                                 sbp_msg_cw_start_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  return true;
+}
 /** Reset IAR filters (host => Piksi)
  *
  * This message resets either the DGNSS Kalman filters or Integer
  * Ambiguity Resolution (IAR) process.
  */
 #define SBP_MSG_RESET_FILTERS 0x0022
-#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_MASK (0x3)
-#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_SHIFT (0u)
-#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_GET(flags)      \
-  (((flags) >> SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_SHIFT) & \
-   SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_MASK)
-#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_SET(flags, val)           \
-  do {                                                                         \
-    ((flags) |= (((val) & (SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_MASK)) \
-                 << (SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_SHIFT)));    \
+
+#define SBP_RESET_FILTERS_FILTER_FILTER_OR_PROCESS_TO_RESET_MASK (0x3)
+#define SBP_RESET_FILTERS_FILTER_FILTER_OR_PROCESS_TO_RESET_SHIFT (0u)
+#define SBP_RESET_FILTERS_FILTER_FILTER_OR_PROCESS_TO_RESET_GET(flags)      \
+  (((flags) >> SBP_RESET_FILTERS_FILTER_FILTER_OR_PROCESS_TO_RESET_SHIFT) & \
+   SBP_RESET_FILTERS_FILTER_FILTER_OR_PROCESS_TO_RESET_MASK)
+#define SBP_RESET_FILTERS_FILTER_FILTER_OR_PROCESS_TO_RESET_SET(flags, val) \
+  do {                                                                      \
+    ((flags) |=                                                             \
+     (((val) & (SBP_RESET_FILTERS_FILTER_FILTER_OR_PROCESS_TO_RESET_MASK))  \
+      << (SBP_RESET_FILTERS_FILTER_FILTER_OR_PROCESS_TO_RESET_SHIFT)));     \
   } while (0)
 
-#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_DGNSS_FILTER (0)
-#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_IAR_PROCESS (1)
-#define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_INERTIAL_FILTER (2)
+#define SBP_RESET_FILTERS_FILTER_FILTER_OR_PROCESS_TO_RESET_DGNSS_FILTER (0)
+#define SBP_RESET_FILTERS_FILTER_FILTER_OR_PROCESS_TO_RESET_IAR_PROCESS (1)
+#define SBP_RESET_FILTERS_FILTER_FILTER_OR_PROCESS_TO_RESET_INERTIAL_FILTER (2)
+typedef struct {
+  /**
+   * Filter flags
+   */
+  u8 filter;
+} sbp_msg_reset_filters_t;
 
-typedef struct SBP_ATTR_PACKED {
-  u8 filter; /**< Filter flags */
-} msg_reset_filters_t;
+static inline size_t sbp_packed_size_sbp_msg_reset_filters_t(
+    const sbp_msg_reset_filters_t *msg) {
+  (void)msg;
+  return 0 + sizeof(msg->filter);
+}
 
+static inline bool sbp_pack_sbp_msg_reset_filters_t(
+    u8 *buf, size_t len, const sbp_msg_reset_filters_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_reset_filters_t(msg) > len) {
+    return false;
+  }
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msgfilter = msg->filter;
+  memcpy(buf + offset, &msgfilter, 1);
+  offset += 1;
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_reset_filters_t(
+    const u8 *buf, size_t len, sbp_msg_reset_filters_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->filter, buf + offset, 1);
+  offset += 1;
+  return true;
+}
 /** Deprecated
  *
  * Deprecated
  */
 #define SBP_MSG_INIT_BASE_DEP 0x0023
 
+typedef struct {
+} sbp_msg_init_base_dep_t;
+
+static inline size_t sbp_packed_size_sbp_msg_init_base_dep_t(
+    const sbp_msg_init_base_dep_t *msg) {
+  (void)msg;
+  return 0;
+}
+
+static inline bool sbp_pack_sbp_msg_init_base_dep_t(
+    u8 *buf, size_t len, const sbp_msg_init_base_dep_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_init_base_dep_t(msg) > len) {
+    return false;
+  }
+
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_init_base_dep_t(
+    const u8 *buf, size_t len, sbp_msg_init_base_dep_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  return true;
+}
 /** State of an RTOS thread
  *
  * The thread usage message from the device reports real-time
@@ -130,67 +398,86 @@ typedef struct SBP_ATTR_PACKED {
  */
 #define SBP_MSG_THREAD_STATE 0x0017
 
-typedef struct SBP_ATTR_PACKED {
-  char name[20];  /**< Thread name (NULL terminated) */
-  u16 cpu;        /**< Percentage cpu use for this thread. Values range from 0
-- 1000 and needs to be renormalized to 100
-*/
-  u32 stack_free; /**< Free stack space for this thread [bytes] */
-} msg_thread_state_t;
+typedef struct {
+  /**
+   * Thread name (NULL terminated)
+   */
+  char name[20];
+  /**
+   * Percentage cpu use for this thread. Values range from 0
+   * - 1000 and needs to be renormalized to 100
+   */
+  u16 cpu;
+  /**
+   * Free stack space for this thread[bytes]
+   */
+  u32 stack_free;
+} sbp_msg_thread_state_t;
 
-/** State of the UART channel
- *
- * Throughput, utilization, and error counts on the RX/TX buffers
- * of this UART channel. The reported percentage values must
- * be normalized.
- */
+static inline size_t sbp_packed_size_sbp_msg_thread_state_t(
+    const sbp_msg_thread_state_t *msg) {
+  (void)msg;
+  return 0 + 20 + sizeof(msg->cpu) + sizeof(msg->stack_free);
+}
 
-typedef struct SBP_ATTR_PACKED {
-  float tx_throughput; /**< UART transmit throughput [kB/s] */
-  float rx_throughput; /**< UART receive throughput [kB/s] */
-  u16 crc_error_count; /**< UART CRC error count */
-  u16 io_error_count;  /**< UART IO error count */
-  u8 tx_buffer_level;  /**< UART transmit buffer percentage utilization (ranges
- from  0 to 255)
-*/
-  u8 rx_buffer_level;  /**< UART receive buffer percentage utilization (ranges
- from  0 to 255)
-*/
-} uart_channel_t;
+static inline bool sbp_pack_sbp_msg_thread_state_t(
+    u8 *buf, size_t len, const sbp_msg_thread_state_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_thread_state_t(msg) > len) {
+    return false;
+  }
 
-/** base station observation message receipt period
- *
- * Statistics on the period of observations received from the base
- * station. As complete observation sets are received, their time
- * of reception is compared with the prior set''s time of reception.
- * This measurement provides a proxy for link quality as incomplete
- * or missing sets will increase the period.  Long periods
- * can cause momentary RTK solution outages.
- */
+  memcpy(buf + offset, msg->name, sizeof(msg->name));
+  offset += sizeof(msg->name);
 
-typedef struct SBP_ATTR_PACKED {
-  s32 avg;     /**< Average period [ms] */
-  s32 pmin;    /**< Minimum period [ms] */
-  s32 pmax;    /**< Maximum period [ms] */
-  s32 current; /**< Smoothed estimate of the current period [ms] */
-} period_t;
+  if (offset + 2 > len) {
+    return false;
+  }
+  u16 msgcpu = msg->cpu;
+  msgcpu = htole16(msgcpu);
+  memcpy(buf + offset, &msgcpu, 2);
+  offset += 2;
 
-/** Receiver-to-base station latency
- *
- * Statistics on the latency of observations received from the base
- * station. As observation packets are received their GPS time is
- * compared to the current GPS time calculated locally by the
- * receiver to give a precise measurement of the end-to-end
- * communication latency in the system.
- */
+  if (offset + 4 > len) {
+    return false;
+  }
+  u32 msgstack_free = msg->stack_free;
+  msgstack_free = htole32(msgstack_free);
+  memcpy(buf + offset, &msgstack_free, 4);
+  offset += 4;
+  return true;
+}
 
-typedef struct SBP_ATTR_PACKED {
-  s32 avg;     /**< Average latency [ms] */
-  s32 lmin;    /**< Minimum latency [ms] */
-  s32 lmax;    /**< Maximum latency [ms] */
-  s32 current; /**< Smoothed estimate of the current latency [ms] */
-} latency_t;
+static inline bool sbp_unpack_sbp_msg_thread_state_t(
+    const u8 *buf, size_t len, sbp_msg_thread_state_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
 
+  memcpy(msg->name, buf + offset, sizeof(msg->name));
+  offset += sizeof(msg->name);
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->cpu, buf + offset, 2);
+  msg->cpu = le16toh(msg->cpu);
+  offset += 2;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->stack_free, buf + offset, 4);
+  msg->stack_free = le32toh(msg->stack_free);
+  offset += 4;
+  return true;
+}
 /** State of the UART channels
  *
  * The UART message reports data latency and throughput of the UART
@@ -205,27 +492,1037 @@ typedef struct SBP_ATTR_PACKED {
  */
 #define SBP_MSG_UART_STATE 0x001D
 
-typedef struct SBP_ATTR_PACKED {
-  uart_channel_t uart_a;    /**< State of UART A */
-  uart_channel_t uart_b;    /**< State of UART B */
-  uart_channel_t uart_ftdi; /**< State of UART FTDI (USB logger) */
-  latency_t latency;        /**< UART communication latency */
-  period_t obs_period;      /**< Observation receipt period */
-} msg_uart_state_t;
+typedef struct {
+  /**
+   * State of UART A
+   */
+  struct {
+    /**
+     * UART transmit throughput[kB/s]
+     */
+    float tx_throughput;
+    /**
+     * UART receive throughput[kB/s]
+     */
+    float rx_throughput;
+    /**
+     * UART CRC error count
+     */
+    u16 crc_error_count;
+    /**
+     * UART IO error count
+     */
+    u16 io_error_count;
+    /**
+     * UART transmit buffer percentage utilization (ranges from
+     * 0 to 255)
+     */
+    u8 tx_buffer_level;
+    /**
+     * UART receive buffer percentage utilization (ranges from
+     * 0 to 255)
+     */
+    u8 rx_buffer_level;
+  } uart_a;
+  /**
+   * State of UART B
+   */
+  struct {
+    /**
+     * UART transmit throughput[kB/s]
+     */
+    float tx_throughput;
+    /**
+     * UART receive throughput[kB/s]
+     */
+    float rx_throughput;
+    /**
+     * UART CRC error count
+     */
+    u16 crc_error_count;
+    /**
+     * UART IO error count
+     */
+    u16 io_error_count;
+    /**
+     * UART transmit buffer percentage utilization (ranges from
+     * 0 to 255)
+     */
+    u8 tx_buffer_level;
+    /**
+     * UART receive buffer percentage utilization (ranges from
+     * 0 to 255)
+     */
+    u8 rx_buffer_level;
+  } uart_b;
+  /**
+   * State of UART FTDI (USB logger)
+   */
+  struct {
+    /**
+     * UART transmit throughput[kB/s]
+     */
+    float tx_throughput;
+    /**
+     * UART receive throughput[kB/s]
+     */
+    float rx_throughput;
+    /**
+     * UART CRC error count
+     */
+    u16 crc_error_count;
+    /**
+     * UART IO error count
+     */
+    u16 io_error_count;
+    /**
+     * UART transmit buffer percentage utilization (ranges from
+     * 0 to 255)
+     */
+    u8 tx_buffer_level;
+    /**
+     * UART receive buffer percentage utilization (ranges from
+     * 0 to 255)
+     */
+    u8 rx_buffer_level;
+  } uart_ftdi;
+  /**
+   * UART communication latency
+   */
+  struct {
+    /**
+     * Average latency[ms]
+     */
+    s32 avg;
+    /**
+     * Minimum latency[ms]
+     */
+    s32 lmin;
+    /**
+     * Maximum latency[ms]
+     */
+    s32 lmax;
+    /**
+     * Smoothed estimate of the current latency[ms]
+     */
+    s32 current;
+  } latency;
+  /**
+   * Observation receipt period
+   */
+  struct {
+    /**
+     * Average period[ms]
+     */
+    s32 avg;
+    /**
+     * Minimum period[ms]
+     */
+    s32 pmin;
+    /**
+     * Maximum period[ms]
+     */
+    s32 pmax;
+    /**
+     * Smoothed estimate of the current period[ms]
+     */
+    s32 current;
+  } obs_period;
+} sbp_msg_uart_state_t;
 
+static inline size_t sbp_packed_size_sbp_msg_uart_state_t(
+    const sbp_msg_uart_state_t *msg) {
+  (void)msg;
+  return 0 +
+         (0 + sizeof(msg->uart_a.tx_throughput) +
+          sizeof(msg->uart_a.rx_throughput) +
+          sizeof(msg->uart_a.crc_error_count) +
+          sizeof(msg->uart_a.io_error_count) +
+          sizeof(msg->uart_a.tx_buffer_level) +
+          sizeof(msg->uart_a.rx_buffer_level)) +
+         (0 + sizeof(msg->uart_b.tx_throughput) +
+          sizeof(msg->uart_b.rx_throughput) +
+          sizeof(msg->uart_b.crc_error_count) +
+          sizeof(msg->uart_b.io_error_count) +
+          sizeof(msg->uart_b.tx_buffer_level) +
+          sizeof(msg->uart_b.rx_buffer_level)) +
+         (0 + sizeof(msg->uart_ftdi.tx_throughput) +
+          sizeof(msg->uart_ftdi.rx_throughput) +
+          sizeof(msg->uart_ftdi.crc_error_count) +
+          sizeof(msg->uart_ftdi.io_error_count) +
+          sizeof(msg->uart_ftdi.tx_buffer_level) +
+          sizeof(msg->uart_ftdi.rx_buffer_level)) +
+         (0 + sizeof(msg->latency.avg) + sizeof(msg->latency.lmin) +
+          sizeof(msg->latency.lmax) + sizeof(msg->latency.current)) +
+         (0 + sizeof(msg->obs_period.avg) + sizeof(msg->obs_period.pmin) +
+          sizeof(msg->obs_period.pmax) + sizeof(msg->obs_period.current));
+}
+
+static inline bool sbp_pack_sbp_msg_uart_state_t(
+    u8 *buf, size_t len, const sbp_msg_uart_state_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_uart_state_t(msg) > len) {
+    return false;
+  }
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msguart_atx_throughput = msg->uart_a.tx_throughput;
+  memcpy(buf + offset, &msguart_atx_throughput, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msguart_arx_throughput = msg->uart_a.rx_throughput;
+  memcpy(buf + offset, &msguart_arx_throughput, 4);
+  offset += 4;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  u16 msguart_acrc_error_count = msg->uart_a.crc_error_count;
+  msguart_acrc_error_count = htole16(msguart_acrc_error_count);
+  memcpy(buf + offset, &msguart_acrc_error_count, 2);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  u16 msguart_aio_error_count = msg->uart_a.io_error_count;
+  msguart_aio_error_count = htole16(msguart_aio_error_count);
+  memcpy(buf + offset, &msguart_aio_error_count, 2);
+  offset += 2;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msguart_atx_buffer_level = msg->uart_a.tx_buffer_level;
+  memcpy(buf + offset, &msguart_atx_buffer_level, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msguart_arx_buffer_level = msg->uart_a.rx_buffer_level;
+  memcpy(buf + offset, &msguart_arx_buffer_level, 1);
+  offset += 1;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msguart_btx_throughput = msg->uart_b.tx_throughput;
+  memcpy(buf + offset, &msguart_btx_throughput, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msguart_brx_throughput = msg->uart_b.rx_throughput;
+  memcpy(buf + offset, &msguart_brx_throughput, 4);
+  offset += 4;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  u16 msguart_bcrc_error_count = msg->uart_b.crc_error_count;
+  msguart_bcrc_error_count = htole16(msguart_bcrc_error_count);
+  memcpy(buf + offset, &msguart_bcrc_error_count, 2);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  u16 msguart_bio_error_count = msg->uart_b.io_error_count;
+  msguart_bio_error_count = htole16(msguart_bio_error_count);
+  memcpy(buf + offset, &msguart_bio_error_count, 2);
+  offset += 2;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msguart_btx_buffer_level = msg->uart_b.tx_buffer_level;
+  memcpy(buf + offset, &msguart_btx_buffer_level, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msguart_brx_buffer_level = msg->uart_b.rx_buffer_level;
+  memcpy(buf + offset, &msguart_brx_buffer_level, 1);
+  offset += 1;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msguart_ftditx_throughput = msg->uart_ftdi.tx_throughput;
+  memcpy(buf + offset, &msguart_ftditx_throughput, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msguart_ftdirx_throughput = msg->uart_ftdi.rx_throughput;
+  memcpy(buf + offset, &msguart_ftdirx_throughput, 4);
+  offset += 4;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  u16 msguart_ftdicrc_error_count = msg->uart_ftdi.crc_error_count;
+  msguart_ftdicrc_error_count = htole16(msguart_ftdicrc_error_count);
+  memcpy(buf + offset, &msguart_ftdicrc_error_count, 2);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  u16 msguart_ftdiio_error_count = msg->uart_ftdi.io_error_count;
+  msguart_ftdiio_error_count = htole16(msguart_ftdiio_error_count);
+  memcpy(buf + offset, &msguart_ftdiio_error_count, 2);
+  offset += 2;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msguart_ftditx_buffer_level = msg->uart_ftdi.tx_buffer_level;
+  memcpy(buf + offset, &msguart_ftditx_buffer_level, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msguart_ftdirx_buffer_level = msg->uart_ftdi.rx_buffer_level;
+  memcpy(buf + offset, &msguart_ftdirx_buffer_level, 1);
+  offset += 1;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msglatencyavg = msg->latency.avg;
+  msglatencyavg = htole32(msglatencyavg);
+  memcpy(buf + offset, &msglatencyavg, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msglatencylmin = msg->latency.lmin;
+  msglatencylmin = htole32(msglatencylmin);
+  memcpy(buf + offset, &msglatencylmin, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msglatencylmax = msg->latency.lmax;
+  msglatencylmax = htole32(msglatencylmax);
+  memcpy(buf + offset, &msglatencylmax, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msglatencycurrent = msg->latency.current;
+  msglatencycurrent = htole32(msglatencycurrent);
+  memcpy(buf + offset, &msglatencycurrent, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msgobs_periodavg = msg->obs_period.avg;
+  msgobs_periodavg = htole32(msgobs_periodavg);
+  memcpy(buf + offset, &msgobs_periodavg, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msgobs_periodpmin = msg->obs_period.pmin;
+  msgobs_periodpmin = htole32(msgobs_periodpmin);
+  memcpy(buf + offset, &msgobs_periodpmin, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msgobs_periodpmax = msg->obs_period.pmax;
+  msgobs_periodpmax = htole32(msgobs_periodpmax);
+  memcpy(buf + offset, &msgobs_periodpmax, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msgobs_periodcurrent = msg->obs_period.current;
+  msgobs_periodcurrent = htole32(msgobs_periodcurrent);
+  memcpy(buf + offset, &msgobs_periodcurrent, 4);
+  offset += 4;
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_uart_state_t(const u8 *buf, size_t len,
+                                                   sbp_msg_uart_state_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_a.tx_throughput, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_a.rx_throughput, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_a.crc_error_count, buf + offset, 2);
+  msg->uart_a.crc_error_count = le16toh(msg->uart_a.crc_error_count);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_a.io_error_count, buf + offset, 2);
+  msg->uart_a.io_error_count = le16toh(msg->uart_a.io_error_count);
+  offset += 2;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_a.tx_buffer_level, buf + offset, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_a.rx_buffer_level, buf + offset, 1);
+  offset += 1;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_b.tx_throughput, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_b.rx_throughput, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_b.crc_error_count, buf + offset, 2);
+  msg->uart_b.crc_error_count = le16toh(msg->uart_b.crc_error_count);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_b.io_error_count, buf + offset, 2);
+  msg->uart_b.io_error_count = le16toh(msg->uart_b.io_error_count);
+  offset += 2;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_b.tx_buffer_level, buf + offset, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_b.rx_buffer_level, buf + offset, 1);
+  offset += 1;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_ftdi.tx_throughput, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_ftdi.rx_throughput, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_ftdi.crc_error_count, buf + offset, 2);
+  msg->uart_ftdi.crc_error_count = le16toh(msg->uart_ftdi.crc_error_count);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_ftdi.io_error_count, buf + offset, 2);
+  msg->uart_ftdi.io_error_count = le16toh(msg->uart_ftdi.io_error_count);
+  offset += 2;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_ftdi.tx_buffer_level, buf + offset, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_ftdi.rx_buffer_level, buf + offset, 1);
+  offset += 1;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->latency.avg, buf + offset, 4);
+  msg->latency.avg = le32toh(msg->latency.avg);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->latency.lmin, buf + offset, 4);
+  msg->latency.lmin = le32toh(msg->latency.lmin);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->latency.lmax, buf + offset, 4);
+  msg->latency.lmax = le32toh(msg->latency.lmax);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->latency.current, buf + offset, 4);
+  msg->latency.current = le32toh(msg->latency.current);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->obs_period.avg, buf + offset, 4);
+  msg->obs_period.avg = le32toh(msg->obs_period.avg);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->obs_period.pmin, buf + offset, 4);
+  msg->obs_period.pmin = le32toh(msg->obs_period.pmin);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->obs_period.pmax, buf + offset, 4);
+  msg->obs_period.pmax = le32toh(msg->obs_period.pmax);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->obs_period.current, buf + offset, 4);
+  msg->obs_period.current = le32toh(msg->obs_period.current);
+  offset += 4;
+  return true;
+}
 /** Deprecated
  *
  * Deprecated
  */
 #define SBP_MSG_UART_STATE_DEPA 0x0018
 
-typedef struct SBP_ATTR_PACKED {
-  uart_channel_t uart_a;    /**< State of UART A */
-  uart_channel_t uart_b;    /**< State of UART B */
-  uart_channel_t uart_ftdi; /**< State of UART FTDI (USB logger) */
-  latency_t latency;        /**< UART communication latency */
-} msg_uart_state_depa_t;
+typedef struct {
+  /**
+   * State of UART A
+   */
+  struct {
+    /**
+     * UART transmit throughput[kB/s]
+     */
+    float tx_throughput;
+    /**
+     * UART receive throughput[kB/s]
+     */
+    float rx_throughput;
+    /**
+     * UART CRC error count
+     */
+    u16 crc_error_count;
+    /**
+     * UART IO error count
+     */
+    u16 io_error_count;
+    /**
+     * UART transmit buffer percentage utilization (ranges from
+     * 0 to 255)
+     */
+    u8 tx_buffer_level;
+    /**
+     * UART receive buffer percentage utilization (ranges from
+     * 0 to 255)
+     */
+    u8 rx_buffer_level;
+  } uart_a;
+  /**
+   * State of UART B
+   */
+  struct {
+    /**
+     * UART transmit throughput[kB/s]
+     */
+    float tx_throughput;
+    /**
+     * UART receive throughput[kB/s]
+     */
+    float rx_throughput;
+    /**
+     * UART CRC error count
+     */
+    u16 crc_error_count;
+    /**
+     * UART IO error count
+     */
+    u16 io_error_count;
+    /**
+     * UART transmit buffer percentage utilization (ranges from
+     * 0 to 255)
+     */
+    u8 tx_buffer_level;
+    /**
+     * UART receive buffer percentage utilization (ranges from
+     * 0 to 255)
+     */
+    u8 rx_buffer_level;
+  } uart_b;
+  /**
+   * State of UART FTDI (USB logger)
+   */
+  struct {
+    /**
+     * UART transmit throughput[kB/s]
+     */
+    float tx_throughput;
+    /**
+     * UART receive throughput[kB/s]
+     */
+    float rx_throughput;
+    /**
+     * UART CRC error count
+     */
+    u16 crc_error_count;
+    /**
+     * UART IO error count
+     */
+    u16 io_error_count;
+    /**
+     * UART transmit buffer percentage utilization (ranges from
+     * 0 to 255)
+     */
+    u8 tx_buffer_level;
+    /**
+     * UART receive buffer percentage utilization (ranges from
+     * 0 to 255)
+     */
+    u8 rx_buffer_level;
+  } uart_ftdi;
+  /**
+   * UART communication latency
+   */
+  struct {
+    /**
+     * Average latency[ms]
+     */
+    s32 avg;
+    /**
+     * Minimum latency[ms]
+     */
+    s32 lmin;
+    /**
+     * Maximum latency[ms]
+     */
+    s32 lmax;
+    /**
+     * Smoothed estimate of the current latency[ms]
+     */
+    s32 current;
+  } latency;
+} sbp_msg_uart_state_depa_t;
 
+static inline size_t sbp_packed_size_sbp_msg_uart_state_depa_t(
+    const sbp_msg_uart_state_depa_t *msg) {
+  (void)msg;
+  return 0 +
+         (0 + sizeof(msg->uart_a.tx_throughput) +
+          sizeof(msg->uart_a.rx_throughput) +
+          sizeof(msg->uart_a.crc_error_count) +
+          sizeof(msg->uart_a.io_error_count) +
+          sizeof(msg->uart_a.tx_buffer_level) +
+          sizeof(msg->uart_a.rx_buffer_level)) +
+         (0 + sizeof(msg->uart_b.tx_throughput) +
+          sizeof(msg->uart_b.rx_throughput) +
+          sizeof(msg->uart_b.crc_error_count) +
+          sizeof(msg->uart_b.io_error_count) +
+          sizeof(msg->uart_b.tx_buffer_level) +
+          sizeof(msg->uart_b.rx_buffer_level)) +
+         (0 + sizeof(msg->uart_ftdi.tx_throughput) +
+          sizeof(msg->uart_ftdi.rx_throughput) +
+          sizeof(msg->uart_ftdi.crc_error_count) +
+          sizeof(msg->uart_ftdi.io_error_count) +
+          sizeof(msg->uart_ftdi.tx_buffer_level) +
+          sizeof(msg->uart_ftdi.rx_buffer_level)) +
+         (0 + sizeof(msg->latency.avg) + sizeof(msg->latency.lmin) +
+          sizeof(msg->latency.lmax) + sizeof(msg->latency.current));
+}
+
+static inline bool sbp_pack_sbp_msg_uart_state_depa_t(
+    u8 *buf, size_t len, const sbp_msg_uart_state_depa_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_uart_state_depa_t(msg) > len) {
+    return false;
+  }
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msguart_atx_throughput = msg->uart_a.tx_throughput;
+  memcpy(buf + offset, &msguart_atx_throughput, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msguart_arx_throughput = msg->uart_a.rx_throughput;
+  memcpy(buf + offset, &msguart_arx_throughput, 4);
+  offset += 4;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  u16 msguart_acrc_error_count = msg->uart_a.crc_error_count;
+  msguart_acrc_error_count = htole16(msguart_acrc_error_count);
+  memcpy(buf + offset, &msguart_acrc_error_count, 2);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  u16 msguart_aio_error_count = msg->uart_a.io_error_count;
+  msguart_aio_error_count = htole16(msguart_aio_error_count);
+  memcpy(buf + offset, &msguart_aio_error_count, 2);
+  offset += 2;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msguart_atx_buffer_level = msg->uart_a.tx_buffer_level;
+  memcpy(buf + offset, &msguart_atx_buffer_level, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msguart_arx_buffer_level = msg->uart_a.rx_buffer_level;
+  memcpy(buf + offset, &msguart_arx_buffer_level, 1);
+  offset += 1;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msguart_btx_throughput = msg->uart_b.tx_throughput;
+  memcpy(buf + offset, &msguart_btx_throughput, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msguart_brx_throughput = msg->uart_b.rx_throughput;
+  memcpy(buf + offset, &msguart_brx_throughput, 4);
+  offset += 4;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  u16 msguart_bcrc_error_count = msg->uart_b.crc_error_count;
+  msguart_bcrc_error_count = htole16(msguart_bcrc_error_count);
+  memcpy(buf + offset, &msguart_bcrc_error_count, 2);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  u16 msguart_bio_error_count = msg->uart_b.io_error_count;
+  msguart_bio_error_count = htole16(msguart_bio_error_count);
+  memcpy(buf + offset, &msguart_bio_error_count, 2);
+  offset += 2;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msguart_btx_buffer_level = msg->uart_b.tx_buffer_level;
+  memcpy(buf + offset, &msguart_btx_buffer_level, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msguart_brx_buffer_level = msg->uart_b.rx_buffer_level;
+  memcpy(buf + offset, &msguart_brx_buffer_level, 1);
+  offset += 1;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msguart_ftditx_throughput = msg->uart_ftdi.tx_throughput;
+  memcpy(buf + offset, &msguart_ftditx_throughput, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msguart_ftdirx_throughput = msg->uart_ftdi.rx_throughput;
+  memcpy(buf + offset, &msguart_ftdirx_throughput, 4);
+  offset += 4;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  u16 msguart_ftdicrc_error_count = msg->uart_ftdi.crc_error_count;
+  msguart_ftdicrc_error_count = htole16(msguart_ftdicrc_error_count);
+  memcpy(buf + offset, &msguart_ftdicrc_error_count, 2);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  u16 msguart_ftdiio_error_count = msg->uart_ftdi.io_error_count;
+  msguart_ftdiio_error_count = htole16(msguart_ftdiio_error_count);
+  memcpy(buf + offset, &msguart_ftdiio_error_count, 2);
+  offset += 2;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msguart_ftditx_buffer_level = msg->uart_ftdi.tx_buffer_level;
+  memcpy(buf + offset, &msguart_ftditx_buffer_level, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msguart_ftdirx_buffer_level = msg->uart_ftdi.rx_buffer_level;
+  memcpy(buf + offset, &msguart_ftdirx_buffer_level, 1);
+  offset += 1;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msglatencyavg = msg->latency.avg;
+  msglatencyavg = htole32(msglatencyavg);
+  memcpy(buf + offset, &msglatencyavg, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msglatencylmin = msg->latency.lmin;
+  msglatencylmin = htole32(msglatencylmin);
+  memcpy(buf + offset, &msglatencylmin, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msglatencylmax = msg->latency.lmax;
+  msglatencylmax = htole32(msglatencylmax);
+  memcpy(buf + offset, &msglatencylmax, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msglatencycurrent = msg->latency.current;
+  msglatencycurrent = htole32(msglatencycurrent);
+  memcpy(buf + offset, &msglatencycurrent, 4);
+  offset += 4;
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_uart_state_depa_t(
+    const u8 *buf, size_t len, sbp_msg_uart_state_depa_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_a.tx_throughput, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_a.rx_throughput, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_a.crc_error_count, buf + offset, 2);
+  msg->uart_a.crc_error_count = le16toh(msg->uart_a.crc_error_count);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_a.io_error_count, buf + offset, 2);
+  msg->uart_a.io_error_count = le16toh(msg->uart_a.io_error_count);
+  offset += 2;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_a.tx_buffer_level, buf + offset, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_a.rx_buffer_level, buf + offset, 1);
+  offset += 1;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_b.tx_throughput, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_b.rx_throughput, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_b.crc_error_count, buf + offset, 2);
+  msg->uart_b.crc_error_count = le16toh(msg->uart_b.crc_error_count);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_b.io_error_count, buf + offset, 2);
+  msg->uart_b.io_error_count = le16toh(msg->uart_b.io_error_count);
+  offset += 2;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_b.tx_buffer_level, buf + offset, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_b.rx_buffer_level, buf + offset, 1);
+  offset += 1;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_ftdi.tx_throughput, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_ftdi.rx_throughput, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_ftdi.crc_error_count, buf + offset, 2);
+  msg->uart_ftdi.crc_error_count = le16toh(msg->uart_ftdi.crc_error_count);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_ftdi.io_error_count, buf + offset, 2);
+  msg->uart_ftdi.io_error_count = le16toh(msg->uart_ftdi.io_error_count);
+  offset += 2;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_ftdi.tx_buffer_level, buf + offset, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->uart_ftdi.rx_buffer_level, buf + offset, 1);
+  offset += 1;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->latency.avg, buf + offset, 4);
+  msg->latency.avg = le32toh(msg->latency.avg);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->latency.lmin, buf + offset, 4);
+  msg->latency.lmin = le32toh(msg->latency.lmin);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->latency.lmax, buf + offset, 4);
+  msg->latency.lmax = le32toh(msg->latency.lmax);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->latency.current, buf + offset, 4);
+  msg->latency.current = le32toh(msg->latency.current);
+  offset += 4;
+  return true;
+}
 /** State of the Integer Ambiguity Resolution (IAR) process
  *
  * This message reports the state of the Integer Ambiguity
@@ -235,89 +1532,371 @@ typedef struct SBP_ATTR_PACKED {
  */
 #define SBP_MSG_IAR_STATE 0x0019
 
-typedef struct SBP_ATTR_PACKED {
-  u32 num_hyps; /**< Number of integer ambiguity hypotheses remaining */
-} msg_iar_state_t;
+typedef struct {
+  /**
+   * Number of integer ambiguity hypotheses remaining
+   */
+  u32 num_hyps;
+} sbp_msg_iar_state_t;
 
+static inline size_t sbp_packed_size_sbp_msg_iar_state_t(
+    const sbp_msg_iar_state_t *msg) {
+  (void)msg;
+  return 0 + sizeof(msg->num_hyps);
+}
+
+static inline bool sbp_pack_sbp_msg_iar_state_t(
+    u8 *buf, size_t len, const sbp_msg_iar_state_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_iar_state_t(msg) > len) {
+    return false;
+  }
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  u32 msgnum_hyps = msg->num_hyps;
+  msgnum_hyps = htole32(msgnum_hyps);
+  memcpy(buf + offset, &msgnum_hyps, 4);
+  offset += 4;
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_iar_state_t(const u8 *buf, size_t len,
+                                                  sbp_msg_iar_state_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->num_hyps, buf + offset, 4);
+  msg->num_hyps = le32toh(msg->num_hyps);
+  offset += 4;
+  return true;
+}
 /** Mask a satellite from use in Piksi subsystems
  *
  * This message allows setting a mask to prevent a particular satellite
  * from being used in various Piksi subsystems.
  */
 #define SBP_MSG_MASK_SATELLITE 0x002B
-#define SBP_MASK_SATELLITE_TRACKING_CHANNELS_MASK (0x1)
-#define SBP_MASK_SATELLITE_TRACKING_CHANNELS_SHIFT (1u)
-#define SBP_MASK_SATELLITE_TRACKING_CHANNELS_GET(flags)      \
-  (((flags) >> SBP_MASK_SATELLITE_TRACKING_CHANNELS_SHIFT) & \
-   SBP_MASK_SATELLITE_TRACKING_CHANNELS_MASK)
-#define SBP_MASK_SATELLITE_TRACKING_CHANNELS_SET(flags, val)           \
-  do {                                                                 \
-    ((flags) |= (((val) & (SBP_MASK_SATELLITE_TRACKING_CHANNELS_MASK)) \
-                 << (SBP_MASK_SATELLITE_TRACKING_CHANNELS_SHIFT)));    \
+
+#define SBP_MASK_SATELLITE_MASK_TRACKING_CHANNELS_MASK (0x1)
+#define SBP_MASK_SATELLITE_MASK_TRACKING_CHANNELS_SHIFT (1u)
+#define SBP_MASK_SATELLITE_MASK_TRACKING_CHANNELS_GET(flags)      \
+  (((flags) >> SBP_MASK_SATELLITE_MASK_TRACKING_CHANNELS_SHIFT) & \
+   SBP_MASK_SATELLITE_MASK_TRACKING_CHANNELS_MASK)
+#define SBP_MASK_SATELLITE_MASK_TRACKING_CHANNELS_SET(flags, val)           \
+  do {                                                                      \
+    ((flags) |= (((val) & (SBP_MASK_SATELLITE_MASK_TRACKING_CHANNELS_MASK)) \
+                 << (SBP_MASK_SATELLITE_MASK_TRACKING_CHANNELS_SHIFT)));    \
   } while (0)
 
-#define SBP_MASK_SATELLITE_TRACKING_CHANNELS_ENABLED (0)
-#define SBP_MASK_SATELLITE_TRACKING_CHANNELS_DROP_THIS_PRN_IF_CURRENTLY_TRACKING \
+#define SBP_MASK_SATELLITE_MASK_TRACKING_CHANNELS_ENABLED (0)
+#define SBP_MASK_SATELLITE_MASK_TRACKING_CHANNELS_DROP_THIS_PRN_IF_CURRENTLY_TRACKING \
   (1)
-#define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_MASK (0x1)
-#define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_SHIFT (0u)
-#define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_GET(flags)      \
-  (((flags) >> SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_SHIFT) & \
-   SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_MASK)
-#define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_SET(flags, val)           \
-  do {                                                                   \
-    ((flags) |= (((val) & (SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_MASK)) \
-                 << (SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_SHIFT)));    \
+#define SBP_MASK_SATELLITE_MASK_ACQUISITION_CHANNEL_MASK (0x1)
+#define SBP_MASK_SATELLITE_MASK_ACQUISITION_CHANNEL_SHIFT (0u)
+#define SBP_MASK_SATELLITE_MASK_ACQUISITION_CHANNEL_GET(flags)      \
+  (((flags) >> SBP_MASK_SATELLITE_MASK_ACQUISITION_CHANNEL_SHIFT) & \
+   SBP_MASK_SATELLITE_MASK_ACQUISITION_CHANNEL_MASK)
+#define SBP_MASK_SATELLITE_MASK_ACQUISITION_CHANNEL_SET(flags, val)           \
+  do {                                                                        \
+    ((flags) |= (((val) & (SBP_MASK_SATELLITE_MASK_ACQUISITION_CHANNEL_MASK)) \
+                 << (SBP_MASK_SATELLITE_MASK_ACQUISITION_CHANNEL_SHIFT)));    \
   } while (0)
 
-#define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_ENABLED (0)
-#define SBP_MASK_SATELLITE_ACQUISITION_CHANNEL_SKIP_THIS_SATELLITE_ON_FUTURE_ACQUISITIONS \
+#define SBP_MASK_SATELLITE_MASK_ACQUISITION_CHANNEL_ENABLED (0)
+#define SBP_MASK_SATELLITE_MASK_ACQUISITION_CHANNEL_SKIP_THIS_SATELLITE_ON_FUTURE_ACQUISITIONS \
   (1)
 
-typedef struct SBP_ATTR_PACKED {
-  u8 mask; /**< Mask of systems that should ignore this satellite. */
-  sbp_gnss_signal_t sid; /**< GNSS signal for which the mask is applied */
-} msg_mask_satellite_t;
+#define SBP_MASK_SATELLITE_SID_CODE__MASK (0xff)
+#define SBP_MASK_SATELLITE_SID_CODE__SHIFT (0u)
+#define SBP_MASK_SATELLITE_SID_CODE__GET(flags)      \
+  (((flags) >> SBP_MASK_SATELLITE_SID_CODE__SHIFT) & \
+   SBP_MASK_SATELLITE_SID_CODE__MASK)
+#define SBP_MASK_SATELLITE_SID_CODE__SET(flags, val)           \
+  do {                                                         \
+    ((flags) |= (((val) & (SBP_MASK_SATELLITE_SID_CODE__MASK)) \
+                 << (SBP_MASK_SATELLITE_SID_CODE__SHIFT)));    \
+  } while (0)
 
+#define SBP_MASK_SATELLITE_SID_CODE__GPS_L1CA (0)
+#define SBP_MASK_SATELLITE_SID_CODE__GPS_L2CM (1)
+#define SBP_MASK_SATELLITE_SID_CODE__SBAS_L1CA (2)
+#define SBP_MASK_SATELLITE_SID_CODE__GLO_L1CA (3)
+#define SBP_MASK_SATELLITE_SID_CODE__GLO_L2CA (4)
+#define SBP_MASK_SATELLITE_SID_CODE__GPS_L1P (5)
+#define SBP_MASK_SATELLITE_SID_CODE__GPS_L2P (6)
+#define SBP_MASK_SATELLITE_SID_CODE__BDS2_B1 (12)
+#define SBP_MASK_SATELLITE_SID_CODE__BDS2_B2 (13)
+#define SBP_MASK_SATELLITE_SID_CODE__GAL_E1B (14)
+#define SBP_MASK_SATELLITE_SID_CODE__GAL_E7I (20)
+#define SBP_MASK_SATELLITE_SID_CODE__BDS3_B2A (47)
+typedef struct {
+  /**
+   * Mask of systems that should ignore this satellite.
+   */
+  u8 mask;
+  /**
+   * GNSS signal for which the mask is applied
+   */
+  struct {
+    /**
+     * Constellation-specific satellite identifier. This field for Glonass can
+     * either be (100+FCN) where FCN is in [-7,+6] or
+     * the Slot ID in [1,28]
+     */
+    u8 sat;
+    /**
+     * Signal constellation, band and code
+     */
+    u8 code;
+  } sid;
+} sbp_msg_mask_satellite_t;
+
+static inline size_t sbp_packed_size_sbp_msg_mask_satellite_t(
+    const sbp_msg_mask_satellite_t *msg) {
+  (void)msg;
+  return 0 + sizeof(msg->mask) +
+         (0 + sizeof(msg->sid.sat) + sizeof(msg->sid.code));
+}
+
+static inline bool sbp_pack_sbp_msg_mask_satellite_t(
+    u8 *buf, size_t len, const sbp_msg_mask_satellite_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_mask_satellite_t(msg) > len) {
+    return false;
+  }
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msgmask = msg->mask;
+  memcpy(buf + offset, &msgmask, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msgsidsat = msg->sid.sat;
+  memcpy(buf + offset, &msgsidsat, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msgsidcode = msg->sid.code;
+  memcpy(buf + offset, &msgsidcode, 1);
+  offset += 1;
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_mask_satellite_t(
+    const u8 *buf, size_t len, sbp_msg_mask_satellite_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->mask, buf + offset, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->sid.sat, buf + offset, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->sid.code, buf + offset, 1);
+  offset += 1;
+  return true;
+}
 /** Deprecated
  *
  * Deprecated.
  */
 #define SBP_MSG_MASK_SATELLITE_DEP 0x001B
-#define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_MASK (0x1)
-#define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_SHIFT (1u)
-#define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_GET(flags)      \
-  (((flags) >> SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_SHIFT) & \
-   SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_MASK)
-#define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_SET(flags, val)           \
-  do {                                                                     \
-    ((flags) |= (((val) & (SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_MASK)) \
-                 << (SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_SHIFT)));    \
+
+#define SBP_MASK_SATELLITE_DEP_MASK_TRACKING_CHANNELS_MASK (0x1)
+#define SBP_MASK_SATELLITE_DEP_MASK_TRACKING_CHANNELS_SHIFT (1u)
+#define SBP_MASK_SATELLITE_DEP_MASK_TRACKING_CHANNELS_GET(flags)      \
+  (((flags) >> SBP_MASK_SATELLITE_DEP_MASK_TRACKING_CHANNELS_SHIFT) & \
+   SBP_MASK_SATELLITE_DEP_MASK_TRACKING_CHANNELS_MASK)
+#define SBP_MASK_SATELLITE_DEP_MASK_TRACKING_CHANNELS_SET(flags, val) \
+  do {                                                                \
+    ((flags) |=                                                       \
+     (((val) & (SBP_MASK_SATELLITE_DEP_MASK_TRACKING_CHANNELS_MASK))  \
+      << (SBP_MASK_SATELLITE_DEP_MASK_TRACKING_CHANNELS_SHIFT)));     \
   } while (0)
 
-#define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_ENABLED (0)
-#define SBP_MASK_SATELLITE_DEP_TRACKING_CHANNELS_DROP_THIS_PRN_IF_CURRENTLY_TRACKING \
+#define SBP_MASK_SATELLITE_DEP_MASK_TRACKING_CHANNELS_ENABLED (0)
+#define SBP_MASK_SATELLITE_DEP_MASK_TRACKING_CHANNELS_DROP_THIS_PRN_IF_CURRENTLY_TRACKING \
   (1)
-#define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_MASK (0x1)
-#define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_SHIFT (0u)
-#define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_GET(flags)      \
-  (((flags) >> SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_SHIFT) & \
-   SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_MASK)
-#define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_SET(flags, val)           \
-  do {                                                                       \
-    ((flags) |= (((val) & (SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_MASK)) \
-                 << (SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_SHIFT)));    \
+#define SBP_MASK_SATELLITE_DEP_MASK_ACQUISITION_CHANNEL_MASK (0x1)
+#define SBP_MASK_SATELLITE_DEP_MASK_ACQUISITION_CHANNEL_SHIFT (0u)
+#define SBP_MASK_SATELLITE_DEP_MASK_ACQUISITION_CHANNEL_GET(flags)      \
+  (((flags) >> SBP_MASK_SATELLITE_DEP_MASK_ACQUISITION_CHANNEL_SHIFT) & \
+   SBP_MASK_SATELLITE_DEP_MASK_ACQUISITION_CHANNEL_MASK)
+#define SBP_MASK_SATELLITE_DEP_MASK_ACQUISITION_CHANNEL_SET(flags, val) \
+  do {                                                                  \
+    ((flags) |=                                                         \
+     (((val) & (SBP_MASK_SATELLITE_DEP_MASK_ACQUISITION_CHANNEL_MASK))  \
+      << (SBP_MASK_SATELLITE_DEP_MASK_ACQUISITION_CHANNEL_SHIFT)));     \
   } while (0)
 
-#define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_ENABLED (0)
-#define SBP_MASK_SATELLITE_DEP_ACQUISITION_CHANNEL_SKIP_THIS_SATELLITE_ON_FUTURE_ACQUISITIONS \
+#define SBP_MASK_SATELLITE_DEP_MASK_ACQUISITION_CHANNEL_ENABLED (0)
+#define SBP_MASK_SATELLITE_DEP_MASK_ACQUISITION_CHANNEL_SKIP_THIS_SATELLITE_ON_FUTURE_ACQUISITIONS \
   (1)
 
-typedef struct SBP_ATTR_PACKED {
-  u8 mask; /**< Mask of systems that should ignore this satellite. */
-  gnss_signal_dep_t sid; /**< GNSS signal for which the mask is applied */
-} msg_mask_satellite_dep_t;
+#define SBP_MASK_SATELLITE_DEP_SID_CODE__MASK (0xff)
+#define SBP_MASK_SATELLITE_DEP_SID_CODE__SHIFT (0u)
+#define SBP_MASK_SATELLITE_DEP_SID_CODE__GET(flags)      \
+  (((flags) >> SBP_MASK_SATELLITE_DEP_SID_CODE__SHIFT) & \
+   SBP_MASK_SATELLITE_DEP_SID_CODE__MASK)
+#define SBP_MASK_SATELLITE_DEP_SID_CODE__SET(flags, val)           \
+  do {                                                             \
+    ((flags) |= (((val) & (SBP_MASK_SATELLITE_DEP_SID_CODE__MASK)) \
+                 << (SBP_MASK_SATELLITE_DEP_SID_CODE__SHIFT)));    \
+  } while (0)
 
+#define SBP_MASK_SATELLITE_DEP_SID_CODE__GPS_L1CA (0)
+#define SBP_MASK_SATELLITE_DEP_SID_CODE__GPS_L2CM (1)
+#define SBP_MASK_SATELLITE_DEP_SID_CODE__SBAS_L1CA (2)
+#define SBP_MASK_SATELLITE_DEP_SID_CODE__GLO_L1CA (3)
+#define SBP_MASK_SATELLITE_DEP_SID_CODE__GLO_L2CA (4)
+#define SBP_MASK_SATELLITE_DEP_SID_CODE__GPS_L1P (5)
+#define SBP_MASK_SATELLITE_DEP_SID_CODE__GPS_L2P (6)
+typedef struct {
+  /**
+   * Mask of systems that should ignore this satellite.
+   */
+  u8 mask;
+  /**
+   * GNSS signal for which the mask is applied
+   */
+  struct {
+    /**
+     * Constellation-specific satellite identifier.
+     *
+     * Note: unlike GnssSignal, GPS satellites are encoded as
+     * (PRN - 1). Other constellations do not have this offset.
+     */
+    u16 sat;
+    /**
+     * Signal constellation, band and code
+     */
+    u8 code;
+    /**
+     * Reserved
+     */
+    u8 reserved;
+  } sid;
+} sbp_msg_mask_satellite_dep_t;
+
+static inline size_t sbp_packed_size_sbp_msg_mask_satellite_dep_t(
+    const sbp_msg_mask_satellite_dep_t *msg) {
+  (void)msg;
+  return 0 + sizeof(msg->mask) +
+         (0 + sizeof(msg->sid.sat) + sizeof(msg->sid.code) +
+          sizeof(msg->sid.reserved));
+}
+
+static inline bool sbp_pack_sbp_msg_mask_satellite_dep_t(
+    u8 *buf, size_t len, const sbp_msg_mask_satellite_dep_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_mask_satellite_dep_t(msg) > len) {
+    return false;
+  }
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msgmask = msg->mask;
+  memcpy(buf + offset, &msgmask, 1);
+  offset += 1;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  u16 msgsidsat = msg->sid.sat;
+  msgsidsat = htole16(msgsidsat);
+  memcpy(buf + offset, &msgsidsat, 2);
+  offset += 2;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msgsidcode = msg->sid.code;
+  memcpy(buf + offset, &msgsidcode, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msgsidreserved = msg->sid.reserved;
+  memcpy(buf + offset, &msgsidreserved, 1);
+  offset += 1;
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_mask_satellite_dep_t(
+    const u8 *buf, size_t len, sbp_msg_mask_satellite_dep_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->mask, buf + offset, 1);
+  offset += 1;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->sid.sat, buf + offset, 2);
+  msg->sid.sat = le16toh(msg->sid.sat);
+  offset += 2;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->sid.code, buf + offset, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->sid.reserved, buf + offset, 1);
+  offset += 1;
+  return true;
+}
 /** Device temperature and voltage levels
  *
  * This message contains temperature and voltage level measurements from the
@@ -326,15 +1905,134 @@ typedef struct SBP_ATTR_PACKED {
  */
 #define SBP_MSG_DEVICE_MONITOR 0x00B5
 
-typedef struct SBP_ATTR_PACKED {
-  s16 dev_vin;         /**< Device V_in [V / 1000] */
-  s16 cpu_vint;        /**< Processor V_int [V / 1000] */
-  s16 cpu_vaux;        /**< Processor V_aux [V / 1000] */
-  s16 cpu_temperature; /**< Processor temperature [degrees C / 100] */
-  s16 fe_temperature; /**< Frontend temperature (if available) [degrees C / 100]
-                       */
-} msg_device_monitor_t;
+typedef struct {
+  /**
+   * Device V_in[V / 1000]
+   */
+  s16 dev_vin;
+  /**
+   * Processor V_int[V / 1000]
+   */
+  s16 cpu_vint;
+  /**
+   * Processor V_aux[V / 1000]
+   */
+  s16 cpu_vaux;
+  /**
+   * Processor temperature[degrees C / 100]
+   */
+  s16 cpu_temperature;
+  /**
+   * Frontend temperature (if available)[degrees C / 100]
+   */
+  s16 fe_temperature;
+} sbp_msg_device_monitor_t;
 
+static inline size_t sbp_packed_size_sbp_msg_device_monitor_t(
+    const sbp_msg_device_monitor_t *msg) {
+  (void)msg;
+  return 0 + sizeof(msg->dev_vin) + sizeof(msg->cpu_vint) +
+         sizeof(msg->cpu_vaux) + sizeof(msg->cpu_temperature) +
+         sizeof(msg->fe_temperature);
+}
+
+static inline bool sbp_pack_sbp_msg_device_monitor_t(
+    u8 *buf, size_t len, const sbp_msg_device_monitor_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_device_monitor_t(msg) > len) {
+    return false;
+  }
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  s16 msgdev_vin = msg->dev_vin;
+  msgdev_vin = htole16(msgdev_vin);
+  memcpy(buf + offset, &msgdev_vin, 2);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  s16 msgcpu_vint = msg->cpu_vint;
+  msgcpu_vint = htole16(msgcpu_vint);
+  memcpy(buf + offset, &msgcpu_vint, 2);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  s16 msgcpu_vaux = msg->cpu_vaux;
+  msgcpu_vaux = htole16(msgcpu_vaux);
+  memcpy(buf + offset, &msgcpu_vaux, 2);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  s16 msgcpu_temperature = msg->cpu_temperature;
+  msgcpu_temperature = htole16(msgcpu_temperature);
+  memcpy(buf + offset, &msgcpu_temperature, 2);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  s16 msgfe_temperature = msg->fe_temperature;
+  msgfe_temperature = htole16(msgfe_temperature);
+  memcpy(buf + offset, &msgfe_temperature, 2);
+  offset += 2;
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_device_monitor_t(
+    const u8 *buf, size_t len, sbp_msg_device_monitor_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->dev_vin, buf + offset, 2);
+  msg->dev_vin = le16toh(msg->dev_vin);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->cpu_vint, buf + offset, 2);
+  msg->cpu_vint = le16toh(msg->cpu_vint);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->cpu_vaux, buf + offset, 2);
+  msg->cpu_vaux = le16toh(msg->cpu_vaux);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->cpu_temperature, buf + offset, 2);
+  msg->cpu_temperature = le16toh(msg->cpu_temperature);
+  offset += 2;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->fe_temperature, buf + offset, 2);
+  msg->fe_temperature = le16toh(msg->fe_temperature);
+  offset += 2;
+  return true;
+}
 /** Execute a command (host => device)
  *
  * Request the recipient to execute an command.
@@ -343,11 +2041,64 @@ typedef struct SBP_ATTR_PACKED {
  */
 #define SBP_MSG_COMMAND_REQ 0x00B8
 
-typedef struct SBP_ATTR_PACKED {
-  u32 sequence;    /**< Sequence number */
-  char command[0]; /**< Command line to execute */
-} msg_command_req_t;
+typedef struct {
+  /**
+   * Sequence number
+   */
+  u32 sequence;
+  /**
+   * Command line to execute
+   */
+  char command[251];
+} sbp_msg_command_req_t;
 
+static inline size_t sbp_packed_size_sbp_msg_command_req_t(
+    const sbp_msg_command_req_t *msg) {
+  (void)msg;
+  return 0 + sizeof(msg->sequence) + (strlen(msg->command) + 1);
+}
+
+static inline bool sbp_pack_sbp_msg_command_req_t(
+    u8 *buf, size_t len, const sbp_msg_command_req_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_command_req_t(msg) > len) {
+    return false;
+  }
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  u32 msgsequence = msg->sequence;
+  msgsequence = htole32(msgsequence);
+  memcpy(buf + offset, &msgsequence, 4);
+  offset += 4;
+  strcpy((char *)(buf + offset), msg->command);
+  offset += strlen(msg->command) + 1;
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_command_req_t(
+    const u8 *buf, size_t len, sbp_msg_command_req_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->sequence, buf + offset, 4);
+  msg->sequence = le32toh(msg->sequence);
+  offset += 4;
+  strcpy(msg->command, (const char *)buf + offset);
+  offset += strlen(msg->command) + 1;
+  return true;
+}
 /** Exit code from executed command (device => host)
  *
  * The response to MSG_COMMAND_REQ with the return code of
@@ -355,11 +2106,75 @@ typedef struct SBP_ATTR_PACKED {
  */
 #define SBP_MSG_COMMAND_RESP 0x00B9
 
-typedef struct SBP_ATTR_PACKED {
-  u32 sequence; /**< Sequence number */
-  s32 code;     /**< Exit code */
-} msg_command_resp_t;
+typedef struct {
+  /**
+   * Sequence number
+   */
+  u32 sequence;
+  /**
+   * Exit code
+   */
+  s32 code;
+} sbp_msg_command_resp_t;
 
+static inline size_t sbp_packed_size_sbp_msg_command_resp_t(
+    const sbp_msg_command_resp_t *msg) {
+  (void)msg;
+  return 0 + sizeof(msg->sequence) + sizeof(msg->code);
+}
+
+static inline bool sbp_pack_sbp_msg_command_resp_t(
+    u8 *buf, size_t len, const sbp_msg_command_resp_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_command_resp_t(msg) > len) {
+    return false;
+  }
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  u32 msgsequence = msg->sequence;
+  msgsequence = htole32(msgsequence);
+  memcpy(buf + offset, &msgsequence, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msgcode = msg->code;
+  msgcode = htole32(msgcode);
+  memcpy(buf + offset, &msgcode, 4);
+  offset += 4;
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_command_resp_t(
+    const u8 *buf, size_t len, sbp_msg_command_resp_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->sequence, buf + offset, 4);
+  msg->sequence = le32toh(msg->sequence);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->code, buf + offset, 4);
+  msg->code = le32toh(msg->code);
+  offset += 4;
+  return true;
+}
 /** Command output
  *
  * Returns the standard output and standard error of the
@@ -369,11 +2184,64 @@ typedef struct SBP_ATTR_PACKED {
  */
 #define SBP_MSG_COMMAND_OUTPUT 0x00BC
 
-typedef struct SBP_ATTR_PACKED {
-  u32 sequence; /**< Sequence number */
-  char line[0]; /**< Line of standard output or standard error */
-} msg_command_output_t;
+typedef struct {
+  /**
+   * Sequence number
+   */
+  u32 sequence;
+  /**
+   * Line of standard output or standard error
+   */
+  char line[251];
+} sbp_msg_command_output_t;
 
+static inline size_t sbp_packed_size_sbp_msg_command_output_t(
+    const sbp_msg_command_output_t *msg) {
+  (void)msg;
+  return 0 + sizeof(msg->sequence) + (strlen(msg->line) + 1);
+}
+
+static inline bool sbp_pack_sbp_msg_command_output_t(
+    u8 *buf, size_t len, const sbp_msg_command_output_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_command_output_t(msg) > len) {
+    return false;
+  }
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  u32 msgsequence = msg->sequence;
+  msgsequence = htole32(msgsequence);
+  memcpy(buf + offset, &msgsequence, 4);
+  offset += 4;
+  strcpy((char *)(buf + offset), msg->line);
+  offset += strlen(msg->line) + 1;
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_command_output_t(
+    const u8 *buf, size_t len, sbp_msg_command_output_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->sequence, buf + offset, 4);
+  msg->sequence = le32toh(msg->sequence);
+  offset += 4;
+  strcpy(msg->line, (const char *)buf + offset);
+  offset += strlen(msg->line) + 1;
+  return true;
+}
 /** Request state of Piksi network interfaces
  *
  * Request state of Piksi network interfaces.
@@ -381,6 +2249,39 @@ typedef struct SBP_ATTR_PACKED {
  */
 #define SBP_MSG_NETWORK_STATE_REQ 0x00BA
 
+typedef struct {
+} sbp_msg_network_state_req_t;
+
+static inline size_t sbp_packed_size_sbp_msg_network_state_req_t(
+    const sbp_msg_network_state_req_t *msg) {
+  (void)msg;
+  return 0;
+}
+
+static inline bool sbp_pack_sbp_msg_network_state_req_t(
+    u8 *buf, size_t len, const sbp_msg_network_state_req_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_network_state_req_t(msg) > len) {
+    return false;
+  }
+
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_network_state_req_t(
+    const u8 *buf, size_t len, sbp_msg_network_state_req_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  return true;
+}
 /** State of network interface
  *
  * The state of a network interface on the Piksi.
@@ -388,295 +2289,617 @@ typedef struct SBP_ATTR_PACKED {
  * in c.
  */
 #define SBP_MSG_NETWORK_STATE_RESP 0x00BB
-#define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_SHIFT (15u)
-#define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_GET(flags) \
+
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_MULTICAST__SUPPORTS_MULTICAST_MASK \
+  (0x1)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_MULTICAST__SUPPORTS_MULTICAST_SHIFT \
+  (15u)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_MULTICAST__SUPPORTS_MULTICAST_GET( \
+    flags)                                                                  \
   (((flags) >>                                                              \
-    SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_SHIFT) &       \
-   SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_SET(flags,  \
-                                                                     val)    \
-  do {                                                                       \
-    ((flags) |=                                                              \
-     (((val) &                                                               \
-       (SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_SHIFT))); \
+    SBP_NETWORK_STATE_RESP_FLAGS_IFF_MULTICAST__SUPPORTS_MULTICAST_SHIFT) & \
+   SBP_NETWORK_STATE_RESP_FLAGS_IFF_MULTICAST__SUPPORTS_MULTICAST_MASK)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_MULTICAST__SUPPORTS_MULTICAST_SET(        \
+    flags, val)                                                                    \
+  do {                                                                             \
+    ((flags) |=                                                                    \
+     (((val) &                                                                     \
+       (SBP_NETWORK_STATE_RESP_FLAGS_IFF_MULTICAST__SUPPORTS_MULTICAST_MASK))      \
+      << (SBP_NETWORK_STATE_RESP_FLAGS_IFF_MULTICAST__SUPPORTS_MULTICAST_SHIFT))); \
   } while (0)
 
-#define SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_SHIFT (14u)
-#define SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_GET( \
-    flags)                                                                \
-  (((flags) >>                                                            \
-    SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_SET(        \
-    flags, val)                                                                  \
-  do {                                                                           \
-    ((flags) |=                                                                  \
-     (((val) &                                                                   \
-       (SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_SHIFT))); \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_SHIFT (13u)
-#define SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_GET( \
-    flags)                                                                \
-  (((flags) >>                                                            \
-    SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_SET(        \
-    flags, val)                                                                  \
-  do {                                                                           \
-    ((flags) |=                                                                  \
-     (((val) &                                                                   \
-       (SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_SHIFT))); \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_SHIFT (12u)
-#define SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_GET( \
-    flags)                                                                \
-  (((flags) >>                                                            \
-    SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_SET(        \
-    flags, val)                                                                  \
-  do {                                                                           \
-    ((flags) |=                                                                  \
-     (((val) &                                                                   \
-       (SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_SHIFT))); \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_MASK \
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_MASK \
   (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_SHIFT \
-  (11u)
-#define SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_GET( \
-    flags)                                                                   \
-  (((flags) >>                                                               \
-    SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_SET(        \
-    flags, val)                                                                     \
-  do {                                                                              \
-    ((flags) |=                                                                     \
-     (((val) &                                                                      \
-       (SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_SHIFT))); \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_SHIFT (10u)
-#define SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_GET( \
-    flags)                                                                \
-  (((flags) >>                                                            \
-    SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_SET(        \
-    flags, val)                                                                  \
-  do {                                                                           \
-    ((flags) |=                                                                  \
-     (((val) &                                                                   \
-       (SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_SHIFT))); \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_MASK \
-  (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_SHIFT \
-  (9u)
-#define SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_GET( \
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_SHIFT \
+  (14u)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_GET( \
     flags)                                                                      \
   (((flags) >>                                                                  \
-    SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_SET(        \
+    SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_SHIFT) & \
+   SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_MASK)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_SET(        \
     flags, val)                                                                        \
   do {                                                                                 \
     ((flags) |=                                                                        \
      (((val) &                                                                         \
-       (SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_SHIFT))); \
+       (SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_MASK))      \
+      << (SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK2__PER_LINK_LAYER_DEFINED_BIT_SHIFT))); \
   } while (0)
 
-#define SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_SHIFT (8u)
-#define SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_GET(flags) \
-  (((flags) >>                                                             \
-    SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_SHIFT) &       \
-   SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_SET(flags,     \
-                                                                    val)       \
-  do {                                                                         \
-    ((flags) |=                                                                \
-     (((val) & (SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_MASK)) \
-      << (SBP_NETWORK_STATE_RESP_IFF_PROMISC__RECEIVE_ALL_PACKETS_SHIFT)));    \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_MASK \
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_MASK \
   (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_SHIFT \
-  (7u)
-#define SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_GET( \
-    flags)                                                                    \
-  (((flags) >>                                                                \
-    SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_SET(        \
-    flags, val)                                                                      \
-  do {                                                                               \
-    ((flags) |=                                                                      \
-     (((val) &                                                                       \
-       (SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_SHIFT))); \
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_SHIFT \
+  (13u)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_GET( \
+    flags)                                                                      \
+  (((flags) >>                                                                  \
+    SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_SHIFT) & \
+   SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_MASK)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_SET(        \
+    flags, val)                                                                        \
+  do {                                                                                 \
+    ((flags) |=                                                                        \
+     (((val) &                                                                         \
+       (SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_MASK))      \
+      << (SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK1__PER_LINK_LAYER_DEFINED_BIT_SHIFT))); \
   } while (0)
 
-#define SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_SHIFT (6u)
-#define SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_GET(flags) \
-  (((flags) >>                                                             \
-    SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_SHIFT) &       \
-   SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_SET(flags,     \
-                                                                    val)       \
-  do {                                                                         \
-    ((flags) |=                                                                \
-     (((val) & (SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_MASK)) \
-      << (SBP_NETWORK_STATE_RESP_IFF_RUNNING__RESOURCES_ALLOCATED_SHIFT)));    \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_SHIFT (5u)
-#define SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_GET( \
-    flags)                                                                \
-  (((flags) >>                                                            \
-    SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_SET(        \
-    flags, val)                                                                  \
-  do {                                                                           \
-    ((flags) |=                                                                  \
-     (((val) &                                                                   \
-       (SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_SHIFT))); \
-  } while (0)
-
-#define SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_MASK \
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_MASK \
   (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_SHIFT \
-  (4u)
-#define SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_GET( \
-    flags)                                                                          \
-  (((flags) >>                                                                      \
-    SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_SET(        \
-    flags, val)                                                                            \
-  do {                                                                                     \
-    ((flags) |=                                                                            \
-     (((val) &                                                                             \
-       (SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_SHIFT))); \
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_SHIFT \
+  (12u)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_GET( \
+    flags)                                                                      \
+  (((flags) >>                                                                  \
+    SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_SHIFT) & \
+   SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_MASK)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_SET(        \
+    flags, val)                                                                        \
+  do {                                                                                 \
+    ((flags) |=                                                                        \
+     (((val) &                                                                         \
+       (SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_MASK))      \
+      << (SBP_NETWORK_STATE_RESP_FLAGS_IFF_LINK0__PER_LINK_LAYER_DEFINED_BIT_SHIFT))); \
   } while (0)
 
-#define SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_SHIFT (3u)
-#define SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_GET(flags)      \
-  (((flags) >> SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_SET(flags, val) \
-  do {                                                                         \
-    ((flags) |=                                                                \
-     (((val) & (SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_MASK))  \
-      << (SBP_NETWORK_STATE_RESP_IFF_LOOPBACK__IS_A_LOOPBACK_NET_SHIFT)));     \
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_MASK \
+  (0x1)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_SHIFT \
+  (11u)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_GET( \
+    flags)                                                                         \
+  (((flags) >>                                                                     \
+    SBP_NETWORK_STATE_RESP_FLAGS_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_SHIFT) & \
+   SBP_NETWORK_STATE_RESP_FLAGS_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_MASK)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_SET(        \
+    flags, val)                                                                           \
+  do {                                                                                    \
+    ((flags) |=                                                                           \
+     (((val) &                                                                            \
+       (SBP_NETWORK_STATE_RESP_FLAGS_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_MASK))      \
+      << (SBP_NETWORK_STATE_RESP_FLAGS_IFF_SIMPLEX__CANT_HEAR_OWN_TRANSMISSIONS_SHIFT))); \
   } while (0)
 
-#define SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_SHIFT (2u)
-#define SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_GET(flags) \
-  (((flags) >>                                                               \
-    SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_SHIFT) &       \
-   SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_SET(flags,  \
-                                                                      val)    \
-  do {                                                                        \
-    ((flags) |=                                                               \
-     (((val) &                                                                \
-       (SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_DEBUG__BROADCAST_ADDRESS_VALID_SHIFT))); \
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_MASK \
+  (0x1)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_SHIFT \
+  (10u)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_GET( \
+    flags)                                                                      \
+  (((flags) >>                                                                  \
+    SBP_NETWORK_STATE_RESP_FLAGS_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_SHIFT) & \
+   SBP_NETWORK_STATE_RESP_FLAGS_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_MASK)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_SET(        \
+    flags, val)                                                                        \
+  do {                                                                                 \
+    ((flags) |=                                                                        \
+     (((val) &                                                                         \
+       (SBP_NETWORK_STATE_RESP_FLAGS_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_MASK))      \
+      << (SBP_NETWORK_STATE_RESP_FLAGS_IFF_OACTIVE__TRANSMISSION_IN_PROGRESS_SHIFT))); \
   } while (0)
 
-#define SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_SHIFT (1u)
-#define SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_GET( \
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_MASK \
+  (0x1)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_SHIFT \
+  (9u)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_GET( \
+    flags)                                                                            \
+  (((flags) >>                                                                        \
+    SBP_NETWORK_STATE_RESP_FLAGS_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_SHIFT) & \
+   SBP_NETWORK_STATE_RESP_FLAGS_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_MASK)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_SET(        \
+    flags, val)                                                                              \
+  do {                                                                                       \
+    ((flags) |=                                                                              \
+     (((val) &                                                                               \
+       (SBP_NETWORK_STATE_RESP_FLAGS_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_MASK))      \
+      << (SBP_NETWORK_STATE_RESP_FLAGS_IFF_ALLMULTI__RECEIVE_ALL_MULTICAST_PACKETS_SHIFT))); \
+  } while (0)
+
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_PROMISC__RECEIVE_ALL_PACKETS_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_PROMISC__RECEIVE_ALL_PACKETS_SHIFT (8u)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_PROMISC__RECEIVE_ALL_PACKETS_GET( \
     flags)                                                                 \
   (((flags) >>                                                             \
-    SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_SET(        \
+    SBP_NETWORK_STATE_RESP_FLAGS_IFF_PROMISC__RECEIVE_ALL_PACKETS_SHIFT) & \
+   SBP_NETWORK_STATE_RESP_FLAGS_IFF_PROMISC__RECEIVE_ALL_PACKETS_MASK)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_PROMISC__RECEIVE_ALL_PACKETS_SET(        \
     flags, val)                                                                   \
   do {                                                                            \
     ((flags) |=                                                                   \
      (((val) &                                                                    \
-       (SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_MASK))      \
-      << (SBP_NETWORK_STATE_RESP_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_SHIFT))); \
+       (SBP_NETWORK_STATE_RESP_FLAGS_IFF_PROMISC__RECEIVE_ALL_PACKETS_MASK))      \
+      << (SBP_NETWORK_STATE_RESP_FLAGS_IFF_PROMISC__RECEIVE_ALL_PACKETS_SHIFT))); \
   } while (0)
 
-#define SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_MASK (0x1)
-#define SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_SHIFT (0u)
-#define SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_GET(flags)      \
-  (((flags) >> SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_SHIFT) & \
-   SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_MASK)
-#define SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_SET(flags, val) \
-  do {                                                                 \
-    ((flags) |=                                                        \
-     (((val) & (SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_MASK))  \
-      << (SBP_NETWORK_STATE_RESP_IFF_UP__INTERFACE_IS_UP_SHIFT)));     \
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_MASK \
+  (0x1)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_SHIFT \
+  (7u)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_GET( \
+    flags)                                                                          \
+  (((flags) >>                                                                      \
+    SBP_NETWORK_STATE_RESP_FLAGS_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_SHIFT) & \
+   SBP_NETWORK_STATE_RESP_FLAGS_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_MASK)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_SET(        \
+    flags, val)                                                                            \
+  do {                                                                                     \
+    ((flags) |=                                                                            \
+     (((val) &                                                                             \
+       (SBP_NETWORK_STATE_RESP_FLAGS_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_MASK))      \
+      << (SBP_NETWORK_STATE_RESP_FLAGS_IFF_NOARP__NO_ADDRESS_RESOLUTION_PROTOCOL_SHIFT))); \
   } while (0)
 
-typedef struct SBP_ATTR_PACKED {
-  u8 ipv4_address[4];      /**< IPv4 address (all zero when unavailable) */
-  u8 ipv4_mask_size;       /**< IPv4 netmask CIDR notation */
-  u8 ipv6_address[16];     /**< IPv6 address (all zero when unavailable) */
-  u8 ipv6_mask_size;       /**< IPv6 netmask CIDR notation */
-  u32 rx_bytes;            /**< Number of Rx bytes */
-  u32 tx_bytes;            /**< Number of Tx bytes */
-  char interface_name[16]; /**< Interface Name */
-  u32 flags;               /**< Interface flags from SIOCGIFFLAGS */
-} msg_network_state_resp_t;
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_RUNNING__RESOURCES_ALLOCATED_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_RUNNING__RESOURCES_ALLOCATED_SHIFT (6u)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_RUNNING__RESOURCES_ALLOCATED_GET( \
+    flags)                                                                 \
+  (((flags) >>                                                             \
+    SBP_NETWORK_STATE_RESP_FLAGS_IFF_RUNNING__RESOURCES_ALLOCATED_SHIFT) & \
+   SBP_NETWORK_STATE_RESP_FLAGS_IFF_RUNNING__RESOURCES_ALLOCATED_MASK)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_RUNNING__RESOURCES_ALLOCATED_SET(        \
+    flags, val)                                                                   \
+  do {                                                                            \
+    ((flags) |=                                                                   \
+     (((val) &                                                                    \
+       (SBP_NETWORK_STATE_RESP_FLAGS_IFF_RUNNING__RESOURCES_ALLOCATED_MASK))      \
+      << (SBP_NETWORK_STATE_RESP_FLAGS_IFF_RUNNING__RESOURCES_ALLOCATED_SHIFT))); \
+  } while (0)
 
-/** Bandwidth usage measurement for a single interface.
- *
- * The bandwidth usage for each interface can be reported
- * within this struct and utilize multiple fields to fully
- * specify the type of traffic that is being tracked. As
- * either the interval of collection or the collection time
- * may vary, both a timestamp and period field is provided,
- * though may not necessarily be populated with a value.
- */
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_MASK \
+  (0x1)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_SHIFT \
+  (5u)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_GET( \
+    flags)                                                                      \
+  (((flags) >>                                                                  \
+    SBP_NETWORK_STATE_RESP_FLAGS_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_SHIFT) & \
+   SBP_NETWORK_STATE_RESP_FLAGS_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_MASK)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_SET(        \
+    flags, val)                                                                        \
+  do {                                                                                 \
+    ((flags) |=                                                                        \
+     (((val) &                                                                         \
+       (SBP_NETWORK_STATE_RESP_FLAGS_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_MASK))      \
+      << (SBP_NETWORK_STATE_RESP_FLAGS_IFF_NOTRAILERS__AVOID_USE_OF_TRAILERS_SHIFT))); \
+  } while (0)
 
-typedef struct SBP_ATTR_PACKED {
-  u64 duration; /**< Duration over which the measurement was collected [ms] */
-  u64 total_bytes; /**< Number of bytes handled in total within period */
-  u32 rx_bytes;    /**< Number of bytes transmitted within period */
-  u32 tx_bytes;    /**< Number of bytes received within period */
-  char interface_name[16]; /**< Interface Name */
-} network_usage_t;
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_MASK \
+  (0x1)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_SHIFT \
+  (4u)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_GET( \
+    flags)                                                                                \
+  (((flags) >>                                                                            \
+    SBP_NETWORK_STATE_RESP_FLAGS_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_SHIFT) & \
+   SBP_NETWORK_STATE_RESP_FLAGS_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_MASK)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_SET(        \
+    flags, val)                                                                                  \
+  do {                                                                                           \
+    ((flags) |=                                                                                  \
+     (((val) &                                                                                   \
+       (SBP_NETWORK_STATE_RESP_FLAGS_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_MASK))      \
+      << (SBP_NETWORK_STATE_RESP_FLAGS_IFF_POINTOPOINT__INTERFACE_IS_POINTTOPOINT_LINK_SHIFT))); \
+  } while (0)
 
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_LOOPBACK__IS_A_LOOPBACK_NET_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_LOOPBACK__IS_A_LOOPBACK_NET_SHIFT (3u)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_LOOPBACK__IS_A_LOOPBACK_NET_GET( \
+    flags)                                                                \
+  (((flags) >>                                                            \
+    SBP_NETWORK_STATE_RESP_FLAGS_IFF_LOOPBACK__IS_A_LOOPBACK_NET_SHIFT) & \
+   SBP_NETWORK_STATE_RESP_FLAGS_IFF_LOOPBACK__IS_A_LOOPBACK_NET_MASK)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_LOOPBACK__IS_A_LOOPBACK_NET_SET(        \
+    flags, val)                                                                  \
+  do {                                                                           \
+    ((flags) |=                                                                  \
+     (((val) &                                                                   \
+       (SBP_NETWORK_STATE_RESP_FLAGS_IFF_LOOPBACK__IS_A_LOOPBACK_NET_MASK))      \
+      << (SBP_NETWORK_STATE_RESP_FLAGS_IFF_LOOPBACK__IS_A_LOOPBACK_NET_SHIFT))); \
+  } while (0)
+
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_DEBUG__BROADCAST_ADDRESS_VALID_MASK \
+  (0x1)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_DEBUG__BROADCAST_ADDRESS_VALID_SHIFT \
+  (2u)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_DEBUG__BROADCAST_ADDRESS_VALID_GET( \
+    flags)                                                                   \
+  (((flags) >>                                                               \
+    SBP_NETWORK_STATE_RESP_FLAGS_IFF_DEBUG__BROADCAST_ADDRESS_VALID_SHIFT) & \
+   SBP_NETWORK_STATE_RESP_FLAGS_IFF_DEBUG__BROADCAST_ADDRESS_VALID_MASK)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_DEBUG__BROADCAST_ADDRESS_VALID_SET(        \
+    flags, val)                                                                     \
+  do {                                                                              \
+    ((flags) |=                                                                     \
+     (((val) &                                                                      \
+       (SBP_NETWORK_STATE_RESP_FLAGS_IFF_DEBUG__BROADCAST_ADDRESS_VALID_MASK))      \
+      << (SBP_NETWORK_STATE_RESP_FLAGS_IFF_DEBUG__BROADCAST_ADDRESS_VALID_SHIFT))); \
+  } while (0)
+
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_MASK \
+  (0x1)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_SHIFT \
+  (1u)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_GET( \
+    flags)                                                                       \
+  (((flags) >>                                                                   \
+    SBP_NETWORK_STATE_RESP_FLAGS_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_SHIFT) & \
+   SBP_NETWORK_STATE_RESP_FLAGS_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_MASK)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_SET(        \
+    flags, val)                                                                         \
+  do {                                                                                  \
+    ((flags) |=                                                                         \
+     (((val) &                                                                          \
+       (SBP_NETWORK_STATE_RESP_FLAGS_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_MASK))      \
+      << (SBP_NETWORK_STATE_RESP_FLAGS_IFF_BROADCAST__BROADCAST_ADDRESS_VALID_SHIFT))); \
+  } while (0)
+
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_UP__INTERFACE_IS_UP_MASK (0x1)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_UP__INTERFACE_IS_UP_SHIFT (0u)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_UP__INTERFACE_IS_UP_GET(flags)      \
+  (((flags) >> SBP_NETWORK_STATE_RESP_FLAGS_IFF_UP__INTERFACE_IS_UP_SHIFT) & \
+   SBP_NETWORK_STATE_RESP_FLAGS_IFF_UP__INTERFACE_IS_UP_MASK)
+#define SBP_NETWORK_STATE_RESP_FLAGS_IFF_UP__INTERFACE_IS_UP_SET(flags, val) \
+  do {                                                                       \
+    ((flags) |=                                                              \
+     (((val) & (SBP_NETWORK_STATE_RESP_FLAGS_IFF_UP__INTERFACE_IS_UP_MASK))  \
+      << (SBP_NETWORK_STATE_RESP_FLAGS_IFF_UP__INTERFACE_IS_UP_SHIFT)));     \
+  } while (0)
+
+typedef struct {
+  /**
+   * IPv4 address (all zero when unavailable)
+   */
+  u8 ipv4_address[4];
+  /**
+   * IPv4 netmask CIDR notation
+   */
+  u8 ipv4_mask_size;
+  /**
+   * IPv6 address (all zero when unavailable)
+   */
+  u8 ipv6_address[16];
+  /**
+   * IPv6 netmask CIDR notation
+   */
+  u8 ipv6_mask_size;
+  /**
+   * Number of Rx bytes
+   */
+  u32 rx_bytes;
+  /**
+   * Number of Tx bytes
+   */
+  u32 tx_bytes;
+  /**
+   * Interface Name
+   */
+  char interface_name[16];
+  /**
+   * Interface flags from SIOCGIFFLAGS
+   */
+  u32 flags;
+} sbp_msg_network_state_resp_t;
+
+static inline size_t sbp_packed_size_sbp_msg_network_state_resp_t(
+    const sbp_msg_network_state_resp_t *msg) {
+  (void)msg;
+  return 0 + (4 * sizeof(msg->ipv4_address)) + sizeof(msg->ipv4_mask_size) +
+         (16 * sizeof(msg->ipv6_address)) + sizeof(msg->ipv6_mask_size) +
+         sizeof(msg->rx_bytes) + sizeof(msg->tx_bytes) + 16 +
+         sizeof(msg->flags);
+}
+
+static inline bool sbp_pack_sbp_msg_network_state_resp_t(
+    u8 *buf, size_t len, const sbp_msg_network_state_resp_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_network_state_resp_t(msg) > len) {
+    return false;
+  }
+
+  for (size_t msgipv4_address_idx = 0; msgipv4_address_idx < 4;
+       msgipv4_address_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    u8 msgipv4_addressmsgipv4_address_idx =
+        msg->ipv4_address[msgipv4_address_idx];
+    memcpy(buf + offset, &msgipv4_addressmsgipv4_address_idx, 1);
+    offset += 1;
+  }
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msgipv4_mask_size = msg->ipv4_mask_size;
+  memcpy(buf + offset, &msgipv4_mask_size, 1);
+  offset += 1;
+  for (size_t msgipv6_address_idx = 0; msgipv6_address_idx < 16;
+       msgipv6_address_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    u8 msgipv6_addressmsgipv6_address_idx =
+        msg->ipv6_address[msgipv6_address_idx];
+    memcpy(buf + offset, &msgipv6_addressmsgipv6_address_idx, 1);
+    offset += 1;
+  }
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msgipv6_mask_size = msg->ipv6_mask_size;
+  memcpy(buf + offset, &msgipv6_mask_size, 1);
+  offset += 1;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  u32 msgrx_bytes = msg->rx_bytes;
+  msgrx_bytes = htole32(msgrx_bytes);
+  memcpy(buf + offset, &msgrx_bytes, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  u32 msgtx_bytes = msg->tx_bytes;
+  msgtx_bytes = htole32(msgtx_bytes);
+  memcpy(buf + offset, &msgtx_bytes, 4);
+  offset += 4;
+  memcpy(buf + offset, msg->interface_name, sizeof(msg->interface_name));
+  offset += sizeof(msg->interface_name);
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  u32 msgflags = msg->flags;
+  msgflags = htole32(msgflags);
+  memcpy(buf + offset, &msgflags, 4);
+  offset += 4;
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_network_state_resp_t(
+    const u8 *buf, size_t len, sbp_msg_network_state_resp_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  for (size_t msgipv4_address_idx = 0; msgipv4_address_idx < 4;
+       msgipv4_address_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    memcpy(&msg->ipv4_address[msgipv4_address_idx], buf + offset, 1);
+    offset += 1;
+  }
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->ipv4_mask_size, buf + offset, 1);
+  offset += 1;
+  for (size_t msgipv6_address_idx = 0; msgipv6_address_idx < 16;
+       msgipv6_address_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    memcpy(&msg->ipv6_address[msgipv6_address_idx], buf + offset, 1);
+    offset += 1;
+  }
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->ipv6_mask_size, buf + offset, 1);
+  offset += 1;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->rx_bytes, buf + offset, 4);
+  msg->rx_bytes = le32toh(msg->rx_bytes);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->tx_bytes, buf + offset, 4);
+  msg->tx_bytes = le32toh(msg->tx_bytes);
+  offset += 4;
+  memcpy(msg->interface_name, buf + offset, sizeof(msg->interface_name));
+  offset += sizeof(msg->interface_name);
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->flags, buf + offset, 4);
+  msg->flags = le32toh(msg->flags);
+  offset += 4;
+  return true;
+}
 /** Bandwidth usage reporting message
  *
  * The bandwidth usage, a list of usage by interface.
  */
 #define SBP_MSG_NETWORK_BANDWIDTH_USAGE 0x00BD
 
-typedef struct SBP_ATTR_PACKED {
-  network_usage_t interfaces[0]; /**< Usage measurement array */
-} msg_network_bandwidth_usage_t;
+typedef struct {
+  /**
+   * Usage measurement array
+   */
+  struct {
+    /**
+     * Duration over which the measurement was collected[ms]
+     */
+    u64 duration;
+    /**
+     * Number of bytes handled in total within period
+     */
+    u64 total_bytes;
+    /**
+     * Number of bytes transmitted within period
+     */
+    u32 rx_bytes;
+    /**
+     * Number of bytes received within period
+     */
+    u32 tx_bytes;
+    /**
+     * Interface Name
+     */
+    char interface_name[16];
+  } interfaces[6];
+  /**
+   * Number of items in interfaces
+   */
+  u8 n_interfaces;
+} sbp_msg_network_bandwidth_usage_t;
 
+static inline size_t sbp_packed_size_sbp_msg_network_bandwidth_usage_t(
+    const sbp_msg_network_bandwidth_usage_t *msg) {
+  (void)msg;
+  return 0 + (msg->n_interfaces * (0 + sizeof(msg->interfaces[0].duration) +
+                                   sizeof(msg->interfaces[0].total_bytes) +
+                                   sizeof(msg->interfaces[0].rx_bytes) +
+                                   sizeof(msg->interfaces[0].tx_bytes) + 16));
+}
+
+static inline bool sbp_pack_sbp_msg_network_bandwidth_usage_t(
+    u8 *buf, size_t len, const sbp_msg_network_bandwidth_usage_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_network_bandwidth_usage_t(msg) > len) {
+    return false;
+  }
+
+  for (size_t msginterfaces_idx = 0;
+       msginterfaces_idx < (size_t)msg->n_interfaces; msginterfaces_idx++) {
+    if (offset + 8 > len) {
+      return false;
+    }
+    u64 msginterfacesmsginterfaces_idxduration =
+        msg->interfaces[msginterfaces_idx].duration;
+    msginterfacesmsginterfaces_idxduration =
+        htole64(msginterfacesmsginterfaces_idxduration);
+    memcpy(buf + offset, &msginterfacesmsginterfaces_idxduration, 8);
+    offset += 8;
+
+    if (offset + 8 > len) {
+      return false;
+    }
+    u64 msginterfacesmsginterfaces_idxtotal_bytes =
+        msg->interfaces[msginterfaces_idx].total_bytes;
+    msginterfacesmsginterfaces_idxtotal_bytes =
+        htole64(msginterfacesmsginterfaces_idxtotal_bytes);
+    memcpy(buf + offset, &msginterfacesmsginterfaces_idxtotal_bytes, 8);
+    offset += 8;
+
+    if (offset + 4 > len) {
+      return false;
+    }
+    u32 msginterfacesmsginterfaces_idxrx_bytes =
+        msg->interfaces[msginterfaces_idx].rx_bytes;
+    msginterfacesmsginterfaces_idxrx_bytes =
+        htole32(msginterfacesmsginterfaces_idxrx_bytes);
+    memcpy(buf + offset, &msginterfacesmsginterfaces_idxrx_bytes, 4);
+    offset += 4;
+
+    if (offset + 4 > len) {
+      return false;
+    }
+    u32 msginterfacesmsginterfaces_idxtx_bytes =
+        msg->interfaces[msginterfaces_idx].tx_bytes;
+    msginterfacesmsginterfaces_idxtx_bytes =
+        htole32(msginterfacesmsginterfaces_idxtx_bytes);
+    memcpy(buf + offset, &msginterfacesmsginterfaces_idxtx_bytes, 4);
+    offset += 4;
+    memcpy(buf + offset, msg->interfaces[msginterfaces_idx].interface_name,
+           sizeof(msg->interfaces[msginterfaces_idx].interface_name));
+    offset += sizeof(msg->interfaces[msginterfaces_idx].interface_name);
+  }
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_network_bandwidth_usage_t(
+    const u8 *buf, size_t len, sbp_msg_network_bandwidth_usage_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  msg->n_interfaces = (u8)((len - offset) / 40);
+
+  for (size_t msginterfaces_idx = 0; msginterfaces_idx < msg->n_interfaces;
+       msginterfaces_idx++) {
+    if (offset + 8 > len) {
+      return false;
+    }
+    memcpy(&msg->interfaces[msginterfaces_idx].duration, buf + offset, 8);
+    msg->interfaces[msginterfaces_idx].duration =
+        le64toh(msg->interfaces[msginterfaces_idx].duration);
+    offset += 8;
+
+    if (offset + 8 > len) {
+      return false;
+    }
+    memcpy(&msg->interfaces[msginterfaces_idx].total_bytes, buf + offset, 8);
+    msg->interfaces[msginterfaces_idx].total_bytes =
+        le64toh(msg->interfaces[msginterfaces_idx].total_bytes);
+    offset += 8;
+
+    if (offset + 4 > len) {
+      return false;
+    }
+    memcpy(&msg->interfaces[msginterfaces_idx].rx_bytes, buf + offset, 4);
+    msg->interfaces[msginterfaces_idx].rx_bytes =
+        le32toh(msg->interfaces[msginterfaces_idx].rx_bytes);
+    offset += 4;
+
+    if (offset + 4 > len) {
+      return false;
+    }
+    memcpy(&msg->interfaces[msginterfaces_idx].tx_bytes, buf + offset, 4);
+    msg->interfaces[msginterfaces_idx].tx_bytes =
+        le32toh(msg->interfaces[msginterfaces_idx].tx_bytes);
+    offset += 4;
+    memcpy(msg->interfaces[msginterfaces_idx].interface_name, buf + offset,
+           sizeof(msg->interfaces[msginterfaces_idx].interface_name));
+    offset += sizeof(msg->interfaces[msginterfaces_idx].interface_name);
+  }
+  return true;
+}
 /** Cell modem information update message
  *
  * If a cell modem is present on a piksi device, this message
@@ -685,58 +2908,522 @@ typedef struct SBP_ATTR_PACKED {
  */
 #define SBP_MSG_CELL_MODEM_STATUS 0x00BE
 
-typedef struct SBP_ATTR_PACKED {
-  s8 signal_strength; /**< Received cell signal strength in dBm, zero translates
-                         to unknown [dBm] */
-  float signal_error_rate; /**< BER as reported by the modem, zero translates to
-                              unknown */
-  u8 reserved[0];          /**< Unspecified data TBD for this schema */
-} msg_cell_modem_status_t;
+typedef struct {
+  /**
+   * Received cell signal strength in dBm, zero translates to unknown[dBm]
+   */
+  s8 signal_strength;
+  /**
+   * BER as reported by the modem, zero translates to unknown
+   */
+  float signal_error_rate;
+  /**
+   * Unspecified data TBD for this schema
+   */
+  u8 reserved[250];
+  /**
+   * Number of items in reserved
+   */
+  u8 n_reserved;
+} sbp_msg_cell_modem_status_t;
 
+static inline size_t sbp_packed_size_sbp_msg_cell_modem_status_t(
+    const sbp_msg_cell_modem_status_t *msg) {
+  (void)msg;
+  return 0 + sizeof(msg->signal_strength) + sizeof(msg->signal_error_rate) +
+         (msg->n_reserved * sizeof(msg->reserved));
+}
+
+static inline bool sbp_pack_sbp_msg_cell_modem_status_t(
+    u8 *buf, size_t len, const sbp_msg_cell_modem_status_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_cell_modem_status_t(msg) > len) {
+    return false;
+  }
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  s8 msgsignal_strength = msg->signal_strength;
+  memcpy(buf + offset, &msgsignal_strength, 1);
+  offset += 1;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msgsignal_error_rate = msg->signal_error_rate;
+  memcpy(buf + offset, &msgsignal_error_rate, 4);
+  offset += 4;
+  for (size_t msgreserved_idx = 0; msgreserved_idx < (size_t)msg->n_reserved;
+       msgreserved_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    u8 msgreservedmsgreserved_idx = msg->reserved[msgreserved_idx];
+    memcpy(buf + offset, &msgreservedmsgreserved_idx, 1);
+    offset += 1;
+  }
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_cell_modem_status_t(
+    const u8 *buf, size_t len, sbp_msg_cell_modem_status_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->signal_strength, buf + offset, 1);
+  offset += 1;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->signal_error_rate, buf + offset, 4);
+  offset += 4;
+  msg->n_reserved = (u8)((len - offset) / 1);
+
+  for (size_t msgreserved_idx = 0; msgreserved_idx < msg->n_reserved;
+       msgreserved_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    memcpy(&msg->reserved[msgreserved_idx], buf + offset, 1);
+    offset += 1;
+  }
+  return true;
+}
 /** Deprecated
  *
  * Deprecated.
  */
 #define SBP_MSG_SPECAN_DEP 0x0050
 
-typedef struct SBP_ATTR_PACKED {
-  u16 channel_tag;       /**< Channel ID */
-  gps_time_dep_t t;      /**< Receiver time of this observation */
-  float freq_ref;        /**< Reference frequency of this packet
-[MHz] */
-  float freq_step;       /**< Frequency step of points in this packet
-[MHz] */
-  float amplitude_ref;   /**< Reference amplitude of this packet
-[dB] */
-  float amplitude_unit;  /**< Amplitude unit value of points in this packet
-[dB] */
-  u8 amplitude_value[0]; /**< Amplitude values (in the above units) of points in
-                          * this packet
-                          */
-} msg_specan_dep_t;
+typedef struct {
+  /**
+   * Channel ID
+   */
+  u16 channel_tag;
+  /**
+   * Receiver time of this observation
+   */
+  struct {
+    /**
+     * Milliseconds since start of GPS week[ms]
+     */
+    u32 tow;
+    /**
+     * GPS week number[week]
+     */
+    u16 wn;
+  } t;
+  /**
+   * Reference frequency of this packet[MHz]
+   */
+  float freq_ref;
+  /**
+   * Frequency step of points in this packet[MHz]
+   */
+  float freq_step;
+  /**
+   * Reference amplitude of this packet[dB]
+   */
+  float amplitude_ref;
+  /**
+   * Amplitude unit value of points in this packet[dB]
+   */
+  float amplitude_unit;
+  /**
+   * Amplitude values (in the above units) of points in this packet
+   */
+  u8 amplitude_value[231];
+  /**
+   * Number of items in amplitude_value
+   */
+  u8 n_amplitude_value;
+} sbp_msg_specan_dep_t;
 
+static inline size_t sbp_packed_size_sbp_msg_specan_dep_t(
+    const sbp_msg_specan_dep_t *msg) {
+  (void)msg;
+  return 0 + sizeof(msg->channel_tag) +
+         (0 + sizeof(msg->t.tow) + sizeof(msg->t.wn)) + sizeof(msg->freq_ref) +
+         sizeof(msg->freq_step) + sizeof(msg->amplitude_ref) +
+         sizeof(msg->amplitude_unit) +
+         (msg->n_amplitude_value * sizeof(msg->amplitude_value));
+}
+
+static inline bool sbp_pack_sbp_msg_specan_dep_t(
+    u8 *buf, size_t len, const sbp_msg_specan_dep_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_specan_dep_t(msg) > len) {
+    return false;
+  }
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  u16 msgchannel_tag = msg->channel_tag;
+  msgchannel_tag = htole16(msgchannel_tag);
+  memcpy(buf + offset, &msgchannel_tag, 2);
+  offset += 2;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  u32 msgttow = msg->t.tow;
+  msgttow = htole32(msgttow);
+  memcpy(buf + offset, &msgttow, 4);
+  offset += 4;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  u16 msgtwn = msg->t.wn;
+  msgtwn = htole16(msgtwn);
+  memcpy(buf + offset, &msgtwn, 2);
+  offset += 2;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msgfreq_ref = msg->freq_ref;
+  memcpy(buf + offset, &msgfreq_ref, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msgfreq_step = msg->freq_step;
+  memcpy(buf + offset, &msgfreq_step, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msgamplitude_ref = msg->amplitude_ref;
+  memcpy(buf + offset, &msgamplitude_ref, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msgamplitude_unit = msg->amplitude_unit;
+  memcpy(buf + offset, &msgamplitude_unit, 4);
+  offset += 4;
+  for (size_t msgamplitude_value_idx = 0;
+       msgamplitude_value_idx < (size_t)msg->n_amplitude_value;
+       msgamplitude_value_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    u8 msgamplitude_valuemsgamplitude_value_idx =
+        msg->amplitude_value[msgamplitude_value_idx];
+    memcpy(buf + offset, &msgamplitude_valuemsgamplitude_value_idx, 1);
+    offset += 1;
+  }
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_specan_dep_t(const u8 *buf, size_t len,
+                                                   sbp_msg_specan_dep_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->channel_tag, buf + offset, 2);
+  msg->channel_tag = le16toh(msg->channel_tag);
+  offset += 2;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->t.tow, buf + offset, 4);
+  msg->t.tow = le32toh(msg->t.tow);
+  offset += 4;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->t.wn, buf + offset, 2);
+  msg->t.wn = le16toh(msg->t.wn);
+  offset += 2;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->freq_ref, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->freq_step, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->amplitude_ref, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->amplitude_unit, buf + offset, 4);
+  offset += 4;
+  msg->n_amplitude_value = (u8)((len - offset) / 1);
+
+  for (size_t msgamplitude_value_idx = 0;
+       msgamplitude_value_idx < msg->n_amplitude_value;
+       msgamplitude_value_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    memcpy(&msg->amplitude_value[msgamplitude_value_idx], buf + offset, 1);
+    offset += 1;
+  }
+  return true;
+}
 /** Spectrum analyzer
  *
  * Spectrum analyzer packet.
  */
 #define SBP_MSG_SPECAN 0x0051
 
-typedef struct SBP_ATTR_PACKED {
-  u16 channel_tag;       /**< Channel ID */
-  sbp_gps_time_t t;      /**< Receiver time of this observation */
-  float freq_ref;        /**< Reference frequency of this packet
-[MHz] */
-  float freq_step;       /**< Frequency step of points in this packet
-[MHz] */
-  float amplitude_ref;   /**< Reference amplitude of this packet
-[dB] */
-  float amplitude_unit;  /**< Amplitude unit value of points in this packet
-[dB] */
-  u8 amplitude_value[0]; /**< Amplitude values (in the above units) of points in
-                          * this packet
-                          */
-} msg_specan_t;
+typedef struct {
+  /**
+   * Channel ID
+   */
+  u16 channel_tag;
+  /**
+   * Receiver time of this observation
+   */
+  struct {
+    /**
+     * Milliseconds since start of GPS week[ms]
+     */
+    u32 tow;
+    /**
+     * Nanosecond residual of millisecond-rounded TOW (ranges
+     * from -500000 to 500000)[ns]
+     */
+    s32 ns_residual;
+    /**
+     * GPS week number[week]
+     */
+    u16 wn;
+  } t;
+  /**
+   * Reference frequency of this packet[MHz]
+   */
+  float freq_ref;
+  /**
+   * Frequency step of points in this packet[MHz]
+   */
+  float freq_step;
+  /**
+   * Reference amplitude of this packet[dB]
+   */
+  float amplitude_ref;
+  /**
+   * Amplitude unit value of points in this packet[dB]
+   */
+  float amplitude_unit;
+  /**
+   * Amplitude values (in the above units) of points in this packet
+   */
+  u8 amplitude_value[227];
+  /**
+   * Number of items in amplitude_value
+   */
+  u8 n_amplitude_value;
+} sbp_msg_specan_t;
 
+static inline size_t sbp_packed_size_sbp_msg_specan_t(
+    const sbp_msg_specan_t *msg) {
+  (void)msg;
+  return 0 + sizeof(msg->channel_tag) +
+         (0 + sizeof(msg->t.tow) + sizeof(msg->t.ns_residual) +
+          sizeof(msg->t.wn)) +
+         sizeof(msg->freq_ref) + sizeof(msg->freq_step) +
+         sizeof(msg->amplitude_ref) + sizeof(msg->amplitude_unit) +
+         (msg->n_amplitude_value * sizeof(msg->amplitude_value));
+}
+
+static inline bool sbp_pack_sbp_msg_specan_t(u8 *buf, size_t len,
+                                             const sbp_msg_specan_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_specan_t(msg) > len) {
+    return false;
+  }
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  u16 msgchannel_tag = msg->channel_tag;
+  msgchannel_tag = htole16(msgchannel_tag);
+  memcpy(buf + offset, &msgchannel_tag, 2);
+  offset += 2;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  u32 msgttow = msg->t.tow;
+  msgttow = htole32(msgttow);
+  memcpy(buf + offset, &msgttow, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msgtns_residual = msg->t.ns_residual;
+  msgtns_residual = htole32(msgtns_residual);
+  memcpy(buf + offset, &msgtns_residual, 4);
+  offset += 4;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  u16 msgtwn = msg->t.wn;
+  msgtwn = htole16(msgtwn);
+  memcpy(buf + offset, &msgtwn, 2);
+  offset += 2;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msgfreq_ref = msg->freq_ref;
+  memcpy(buf + offset, &msgfreq_ref, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msgfreq_step = msg->freq_step;
+  memcpy(buf + offset, &msgfreq_step, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msgamplitude_ref = msg->amplitude_ref;
+  memcpy(buf + offset, &msgamplitude_ref, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msgamplitude_unit = msg->amplitude_unit;
+  memcpy(buf + offset, &msgamplitude_unit, 4);
+  offset += 4;
+  for (size_t msgamplitude_value_idx = 0;
+       msgamplitude_value_idx < (size_t)msg->n_amplitude_value;
+       msgamplitude_value_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    u8 msgamplitude_valuemsgamplitude_value_idx =
+        msg->amplitude_value[msgamplitude_value_idx];
+    memcpy(buf + offset, &msgamplitude_valuemsgamplitude_value_idx, 1);
+    offset += 1;
+  }
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_specan_t(const u8 *buf, size_t len,
+                                               sbp_msg_specan_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->channel_tag, buf + offset, 2);
+  msg->channel_tag = le16toh(msg->channel_tag);
+  offset += 2;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->t.tow, buf + offset, 4);
+  msg->t.tow = le32toh(msg->t.tow);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->t.ns_residual, buf + offset, 4);
+  msg->t.ns_residual = le32toh(msg->t.ns_residual);
+  offset += 4;
+
+  if (offset + 2 > len) {
+    return false;
+  }
+  memcpy(&msg->t.wn, buf + offset, 2);
+  msg->t.wn = le16toh(msg->t.wn);
+  offset += 2;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->freq_ref, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->freq_step, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->amplitude_ref, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->amplitude_unit, buf + offset, 4);
+  offset += 4;
+  msg->n_amplitude_value = (u8)((len - offset) / 1);
+
+  for (size_t msgamplitude_value_idx = 0;
+       msgamplitude_value_idx < msg->n_amplitude_value;
+       msgamplitude_value_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    memcpy(&msg->amplitude_value[msgamplitude_value_idx], buf + offset, 1);
+    offset += 1;
+  }
+  return true;
+}
 /** RF AGC status
  *
  * This message describes the gain of each channel in the receiver frontend.
@@ -749,14 +3436,76 @@ typedef struct SBP_ATTR_PACKED {
  */
 #define SBP_MSG_FRONT_END_GAIN 0x00BF
 
-typedef struct SBP_ATTR_PACKED {
-  s8 rf_gain[8]; /**< RF gain for each frontend channel [percent] */
-  s8 if_gain[8]; /**< Intermediate frequency gain for each frontend channel
-                    [percent] */
-} msg_front_end_gain_t;
+typedef struct {
+  /**
+   * RF gain for each frontend channel[percent]
+   */
+  s8 rf_gain[8];
+  /**
+   * Intermediate frequency gain for each frontend channel[percent]
+   */
+  s8 if_gain[8];
+} sbp_msg_front_end_gain_t;
 
-/** \} */
+static inline size_t sbp_packed_size_sbp_msg_front_end_gain_t(
+    const sbp_msg_front_end_gain_t *msg) {
+  (void)msg;
+  return 0 + (8 * sizeof(msg->rf_gain)) + (8 * sizeof(msg->if_gain));
+}
 
-SBP_PACK_END
+static inline bool sbp_pack_sbp_msg_front_end_gain_t(
+    u8 *buf, size_t len, const sbp_msg_front_end_gain_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_front_end_gain_t(msg) > len) {
+    return false;
+  }
+
+  for (size_t msgrf_gain_idx = 0; msgrf_gain_idx < 8; msgrf_gain_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    s8 msgrf_gainmsgrf_gain_idx = msg->rf_gain[msgrf_gain_idx];
+    memcpy(buf + offset, &msgrf_gainmsgrf_gain_idx, 1);
+    offset += 1;
+  }
+  for (size_t msgif_gain_idx = 0; msgif_gain_idx < 8; msgif_gain_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    s8 msgif_gainmsgif_gain_idx = msg->if_gain[msgif_gain_idx];
+    memcpy(buf + offset, &msgif_gainmsgif_gain_idx, 1);
+    offset += 1;
+  }
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_front_end_gain_t(
+    const u8 *buf, size_t len, sbp_msg_front_end_gain_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  for (size_t msgrf_gain_idx = 0; msgrf_gain_idx < 8; msgrf_gain_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    memcpy(&msg->rf_gain[msgrf_gain_idx], buf + offset, 1);
+    offset += 1;
+  }
+  for (size_t msgif_gain_idx = 0; msgif_gain_idx < 8; msgif_gain_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    memcpy(&msg->if_gain[msgif_gain_idx], buf + offset, 1);
+    offset += 1;
+  }
+  return true;
+}
 
 #endif /* LIBSBP_PIKSI_MESSAGES_H */

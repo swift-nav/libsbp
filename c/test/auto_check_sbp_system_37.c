@@ -100,10 +100,16 @@ START_TEST(test_auto_check_sbp_system_37) {
     u8 test_data[] = {
         85, 255, 255, 246, 215, 4, 0, 50, 0, 0, 249, 216,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_heartbeat_t *test_msg = (sbp_msg_heartbeat_t *)&test_msg_storage;
+    test_msg->flags = 12800;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0xffff, 55286, sizeof(test_data), test_data,
+    sbp_send_message(&sbp_state, 0xffff, 55286, &test_msg_storage,
                      &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -121,7 +127,7 @@ START_TEST(test_auto_check_sbp_system_37) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_heartbeat_t *msg = (msg_heartbeat_t *)((void *)last_msg + 6);
+    sbp_msg_heartbeat_t *msg = (sbp_msg_heartbeat_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->flags == 12800,

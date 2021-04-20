@@ -100,10 +100,15 @@ START_TEST(test_auto_check_sbp_system_47) {
     u8 test_data[] = {
         85, 0, 255, 195, 4, 4, 0, 0, 0, 0, 127, 181,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_startup_t *test_msg = (sbp_msg_startup_t *)&test_msg_storage;
+    test_msg->reserved = 0;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0xff00, 1219, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0xff00, 1219, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -121,7 +126,7 @@ START_TEST(test_auto_check_sbp_system_47) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_startup_t *msg = (msg_startup_t *)((void *)last_msg + 6);
+    sbp_msg_startup_t *msg = (sbp_msg_startup_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->reserved == 0,
@@ -146,10 +151,15 @@ START_TEST(test_auto_check_sbp_system_47) {
     u8 test_data[] = {
         85, 255, 255, 195, 4, 4, 0, 0, 0, 0, 66, 57,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_heartbeat_t *test_msg = (sbp_msg_heartbeat_t *)&test_msg_storage;
+    test_msg->flags = 0;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0xffff, 1219, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0xffff, 1219, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -167,7 +177,7 @@ START_TEST(test_auto_check_sbp_system_47) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_heartbeat_t *msg = (msg_heartbeat_t *)((void *)last_msg + 6);
+    sbp_msg_heartbeat_t *msg = (sbp_msg_heartbeat_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->flags == 0,

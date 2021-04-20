@@ -197,8 +197,8 @@ START_TEST(test_sbp_process) {
   u8 test_data[] = {0x01, 0x02, 0x03, 0x04};
 
   dummy_reset();
-  sbp_send_message(&s, 0x2269, 0x42, sizeof(test_data), test_data,
-                   &dummy_write);
+  sbp_send_packed_message(&s, 0x2269, 0x42, sizeof(test_data), test_data,
+                          &dummy_write);
 
   while (dummy_rd < dummy_wr) {
     ck_assert_msg(sbp_process(&s, &dummy_read) >= SBP_OK,
@@ -223,7 +223,7 @@ START_TEST(test_sbp_process) {
   ck_assert_msg(sbp_find_callback(&s, 0x2270) == 0, "callback not removed");
 
   logging_reset();
-  sbp_send_message(&s, 0x2269, 0x4243, 0, 0, &dummy_write);
+  sbp_send_packed_message(&s, 0x2269, 0x4243, 0, 0, &dummy_write);
 
   ck_assert_msg(last_io_context == &DUMMY_MEMORY_FOR_IO,
                 "io context pointer incorrectly passed");
@@ -244,7 +244,7 @@ START_TEST(test_sbp_process) {
   ck_assert_msg(last_len == 0, "len decoded incorrectly (2)");
 
   logging_reset();
-  sbp_send_message(&s, 0x22, 0x4243, 0, 0, &dummy_write);
+  sbp_send_packed_message(&s, 0x22, 0x4243, 0, 0, &dummy_write);
 
   s8 ret = 0;
   while (dummy_rd < dummy_wr) {
@@ -373,8 +373,8 @@ START_TEST(test_sbp_frame) {
                      0x01, 0x02, 0x03, 0x04, 0x3D, 0xF7};
 
   dummy_reset();
-  sbp_send_message(&s, 0x2269, 0x42, sizeof(test_data), test_data,
-                   &dummy_write);
+  sbp_send_packed_message(&s, 0x2269, 0x42, sizeof(test_data), test_data,
+                          &dummy_write);
 
   while (dummy_rd < dummy_wr) {
     ck_assert_msg(sbp_process(&s, &dummy_read) >= SBP_OK,
@@ -419,8 +419,8 @@ START_TEST(test_sbp_frame) {
   sbp_register_callback(&s, 0x2269, &logging_callback, 0, &n3);
   sbp_register_frame_callback(&s, 0x2269, &frame_logging_callback,
                               &DUMMY_MEMORY_FOR_CALLBACKS, &n4);
-  sbp_send_message(&s, 0x2269, 0x42, sizeof(test_data), test_data,
-                   &dummy_write);
+  sbp_send_packed_message(&s, 0x2269, 0x42, sizeof(test_data), test_data,
+                          &dummy_write);
 
   while (dummy_rd < dummy_wr) {
     ck_assert_msg(sbp_process(&s, &dummy_read_single_byte) >= SBP_OK,
@@ -436,8 +436,8 @@ START_TEST(test_sbp_frame) {
    * there */
   sbp_remove_callback(&s, &n4);
   dummy_reset();
-  sbp_send_message(&s, 0x2269, 0x42, sizeof(test_data), test_data,
-                   &dummy_write);
+  sbp_send_packed_message(&s, 0x2269, 0x42, sizeof(test_data), test_data,
+                          &dummy_write);
   while (dummy_rd < dummy_wr) {
     ck_assert_msg(sbp_process(&s, &dummy_read_single_byte) >= SBP_OK,
                   "sbp_process threw an error! (3)");
@@ -504,16 +504,16 @@ START_TEST(test_sbp_all_msg) {
 
   static sbp_msg_callbacks_node_t n;
 
-  sbp_register_all_msg_callback(&s, &frame_logging_callback,
-                                &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+  sbp_register_all_frame_callback(&s, &frame_logging_callback,
+                                  &DUMMY_MEMORY_FOR_CALLBACKS, &n);
 
   u8 msg_1[] = {0x01, 0x02, 0x03, 0x04};
   u8 msg_2[] = {0x05, 0x06, 0x07};
 
   dummy_reset();
   logging_reset();
-  sbp_send_message(&s, 0x2269, 0x42, sizeof(msg_1), msg_1, &dummy_write);
-  sbp_send_message(&s, 0x2270, 0x43, sizeof(msg_2), msg_2, &dummy_write);
+  sbp_send_packed_message(&s, 0x2269, 0x42, sizeof(msg_1), msg_1, &dummy_write);
+  sbp_send_packed_message(&s, 0x2270, 0x43, sizeof(msg_2), msg_2, &dummy_write);
 
   while (dummy_rd < dummy_wr) {
     ck_assert_msg(sbp_process(&s, &dummy_read) >= SBP_OK,
@@ -553,7 +553,8 @@ START_TEST(test_sbp_big_msg) {
 
   dummy_reset();
   logging_reset();
-  sbp_send_message(&s, 0x2269, 0x42, sizeof(big_msg), big_msg, &dummy_write);
+  sbp_send_packed_message(&s, 0x2269, 0x42, sizeof(big_msg), big_msg,
+                          &dummy_write);
 
   s8 ret = SBP_OK;
   while (dummy_rd < dummy_wr) {
@@ -583,7 +584,7 @@ START_TEST(test_sbp_big_msg) {
 }
 END_TEST
 
-START_TEST(test_sbp_send_message) {
+START_TEST(test_sbp_send_packed_message) {
   /* TODO: Tests with different write function behaviour. */
 
   sbp_state_t s;
@@ -592,35 +593,37 @@ START_TEST(test_sbp_send_message) {
   u8 smsg[] = {0x22, 0x33};
 
   ck_assert_msg(
-      sbp_send_message(&s, 0x2233, 0x4455, 0, smsg, 0) == SBP_NULL_ERROR,
-      "sbp_send_message should return an error if write is NULL");
-
-  dummy_reset();
-  ck_assert_msg(sbp_send_message(&s, 0x2233, 0x4455, 1, 0, &dummy_write) ==
-                    SBP_NULL_ERROR,
-                "sbp_send_message should return an error if payload is NULL "
-                "and len != 0");
+      sbp_send_packed_message(&s, 0x2233, 0x4455, 0, smsg, 0) == SBP_NULL_ERROR,
+      "sbp_send_packed_message should return an error if write is NULL");
 
   dummy_reset();
   ck_assert_msg(
-      sbp_send_message(&s, 0x2233, 0x4455, 0, 0, &dummy_write) == SBP_OK,
-      "sbp_send_message should return OK if payload is NULL and len == 0");
+      sbp_send_packed_message(&s, 0x2233, 0x4455, 1, 0, &dummy_write) ==
+          SBP_NULL_ERROR,
+      "sbp_send_packed_message should return an error if payload is NULL "
+      "and len != 0");
+
+  dummy_reset();
+  ck_assert_msg(
+      sbp_send_packed_message(&s, 0x2233, 0x4455, 0, 0, &dummy_write) == SBP_OK,
+      "sbp_send_packed_message should return OK if payload is NULL and len == "
+      "0");
 
   u8 zero_len_message[] = {0x55, 0x33, 0x22, 0x55, 0x44, 0x00, 0x2C, 0x4C};
 
   ck_assert_msg(
       memcmp(dummy_buff, zero_len_message, sizeof(zero_len_message)) == 0,
-      "sbp_send_message encode error for len = 0");
+      "sbp_send_packed_message encode error for len = 0");
 
   dummy_reset();
-  sbp_send_message(&s, 0x2233, 0x6677, sizeof(smsg), smsg, &dummy_write);
+  sbp_send_packed_message(&s, 0x2233, 0x6677, sizeof(smsg), smsg, &dummy_write);
 
   u8 awesome_message[] = {0x55, 0x33, 0x22, 0x77, 0x66,
                           0x02, 0x22, 0x33, 0x8A, 0x33};
 
   ck_assert_msg(
       memcmp(dummy_buff, awesome_message, sizeof(awesome_message)) == 0,
-      "sbp_send_message encode error for test message");
+      "sbp_send_packed_message encode error for test message");
 }
 END_TEST
 
@@ -831,8 +834,8 @@ START_TEST(test_msg_buff_backwards_compatibility) {
   u8 test_data[] = {0x01, 0x02, 0x03, 0x04};
 
   dummy_reset();
-  sbp_send_message(&s, 0x2269, 0x42, sizeof(test_data), test_data,
-                   &dummy_write);
+  sbp_send_packed_message(&s, 0x2269, 0x42, sizeof(test_data), test_data,
+                          &dummy_write);
 
   while (dummy_rd < dummy_wr) {
     ck_assert_msg(sbp_process(&s, &dummy_read) >= SBP_OK,
@@ -856,7 +859,7 @@ Suite *sbp_suite(void) {
 
   tcase_add_test(tc_core, test_msg_buff_backwards_compatibility);
   tcase_add_test(tc_core, test_callbacks);
-  tcase_add_test(tc_core, test_sbp_send_message);
+  tcase_add_test(tc_core, test_sbp_send_packed_message);
   tcase_add_test(tc_core, test_sbp_process);
   tcase_add_test(tc_core, test_sbp_frame);
   tcase_add_test(tc_core, test_frame_callbacks);

@@ -17,6 +17,7 @@
 extern "C" {
 #endif
 
+#include <libsbp/sbp_msg.h>
 #include "common.h"
 
 /** \addtogroup sbp
@@ -81,6 +82,8 @@ typedef void (*sbp_msg_callback_t)(u16 sender_id, u8 len, u8 msg[],
 typedef void (*sbp_frame_callback_t)(u16 sender_id, u16 msg_type,
                                      u8 payload_len, u8 payload[],
                                      u16 frame_len, u8 frame[], void *context);
+typedef void (*sbp_unpacked_callback_t)(u16 sender_id, u16 msg_type,
+                                        const sbp_msg_t *msg, void *context);
 
 /** SBP callback type enum:
  * SBP_PAYLOAD_CALLBACK are the original callbacks in libsbp without framing
@@ -91,7 +94,8 @@ typedef void (*sbp_frame_callback_t)(u16 sender_id, u16 msg_type,
 enum sbp_cb_type {
   SBP_PAYLOAD_CALLBACK = 0,
   SBP_FRAME_CALLBACK = 1,
-  SBP_CALLBACK_TYPE_COUNT = 2,
+  SBP_UNPACKED_CALLBACK = 2,
+  SBP_CALLBACK_TYPE_COUNT = 3,
 };
 
 #define SBP_CALLBACK_FLAG(cb_type) (1u << (cb_type))
@@ -133,8 +137,15 @@ s8 sbp_register_callback(sbp_state_t *s, u16 msg_type, sbp_msg_callback_t cb,
 s8 sbp_register_frame_callback(sbp_state_t *s, u16 msg_type,
                                sbp_frame_callback_t cb, void *context,
                                sbp_msg_callbacks_node_t *node);
-s8 sbp_register_all_msg_callback(sbp_state_t *s, sbp_frame_callback_t cb,
-                                 void *context, sbp_msg_callbacks_node_t *node);
+s8 sbp_register_all_frame_callback(sbp_state_t *s, sbp_frame_callback_t cb,
+                                   void *context,
+                                   sbp_msg_callbacks_node_t *node);
+s8 sbp_register_unpacked_callback(sbp_state_t *s, u16 msg_type,
+                                  sbp_unpacked_callback_t cb, void *context,
+                                  sbp_msg_callbacks_node_t *node);
+s8 sbp_register_all_unpacked_callback(sbp_state_t *s,
+                                      sbp_unpacked_callback_t cb, void *context,
+                                      sbp_msg_callbacks_node_t *node);
 s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node);
 void sbp_clear_callbacks(sbp_state_t *s);
 void sbp_state_init(sbp_state_t *s);
@@ -145,8 +156,12 @@ s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len,
 s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
                      u8 payload_len, u8 payload[], u16 frame_len, u8 frame[],
                      u8 cb_mask);
-s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len,
-                    u8 *payload, s32 (*write)(u8 *buff, u32 n, void *context));
+s8 sbp_send_packed_message(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len,
+                           u8 *payload,
+                           s32 (*write)(u8 *buff, u32 n, void *context));
+s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id,
+                    const sbp_msg_t *msg,
+                    s32 (*write)(u8 *buff, u32 n, void *context));
 
 #ifdef __cplusplus
 }

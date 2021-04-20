@@ -102,10 +102,25 @@ START_TEST(test_auto_check_sbp_orientation_29) {
         0,  0,  0,   8,  0, 0,  0, 4,  0, 0, 0,  0,  0, 64,  64,
         0,  0,  128, 64, 0, 0,  0, 65, 0, 0, 64, 64, 1, 186, 6,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_orient_quat_t *test_msg =
+        (sbp_msg_orient_quat_t *)&test_msg_storage;
+    test_msg->flags = 1;
+    test_msg->tow = 0;
+    test_msg->w = 3;
+    test_msg->w_accuracy = 3.0;
+    test_msg->x = 7;
+    test_msg->x_accuracy = 4.0;
+    test_msg->y = 8;
+    test_msg->y_accuracy = 8.0;
+    test_msg->z = 4;
+    test_msg->z_accuracy = 3.0;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x220, 66, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x220, 66, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -123,7 +138,7 @@ START_TEST(test_auto_check_sbp_orientation_29) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_orient_quat_t *msg = (msg_orient_quat_t *)((void *)last_msg + 6);
+    sbp_msg_orient_quat_t *msg = (sbp_msg_orient_quat_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->flags == 1,

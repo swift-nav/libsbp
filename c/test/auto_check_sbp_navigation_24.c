@@ -101,10 +101,23 @@ START_TEST(test_auto_check_sbp_navigation_24) {
         85, 5, 2, 246, 215, 22, 20, 46, 39, 0, 198, 251, 255, 255, 156,
         15, 0, 0, 0,   0,   0,  0,  0,  0,  0, 0,   9,   0,   161, 92,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_vel_ned_dep_a_t *test_msg =
+        (sbp_msg_vel_ned_dep_a_t *)&test_msg_storage;
+    test_msg->d = 0;
+    test_msg->e = 3996;
+    test_msg->flags = 0;
+    test_msg->h_accuracy = 0;
+    test_msg->n = -1082;
+    test_msg->n_sats = 9;
+    test_msg->tow = 2567700;
+    test_msg->v_accuracy = 0;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x205, 55286, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x205, 55286, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -122,7 +135,7 @@ START_TEST(test_auto_check_sbp_navigation_24) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_vel_ned_dep_a_t *msg = (msg_vel_ned_dep_a_t *)((void *)last_msg + 6);
+    sbp_msg_vel_ned_dep_a_t *msg = (sbp_msg_vel_ned_dep_a_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->d == 0, "incorrect value for d, expected 0, is %d",
@@ -163,10 +176,23 @@ START_TEST(test_auto_check_sbp_navigation_24) {
         85, 5, 2, 246, 215, 22, 120, 46, 39, 0, 14, 252, 255, 255, 207,
         14, 0, 0, 0,   0,   0,  0,   0,  0,  0, 0,  9,   0,   125, 160,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_vel_ned_dep_a_t *test_msg =
+        (sbp_msg_vel_ned_dep_a_t *)&test_msg_storage;
+    test_msg->d = 0;
+    test_msg->e = 3791;
+    test_msg->flags = 0;
+    test_msg->h_accuracy = 0;
+    test_msg->n = -1010;
+    test_msg->n_sats = 9;
+    test_msg->tow = 2567800;
+    test_msg->v_accuracy = 0;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x205, 55286, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x205, 55286, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -184,7 +210,7 @@ START_TEST(test_auto_check_sbp_navigation_24) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_vel_ned_dep_a_t *msg = (msg_vel_ned_dep_a_t *)((void *)last_msg + 6);
+    sbp_msg_vel_ned_dep_a_t *msg = (sbp_msg_vel_ned_dep_a_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->d == 0, "incorrect value for d, expected 0, is %d",
@@ -225,10 +251,23 @@ START_TEST(test_auto_check_sbp_navigation_24) {
         85, 5, 2, 246, 215, 22, 220, 46, 39, 0, 48, 252, 255, 255, 140,
         14, 0, 0, 0,   0,   0,  0,   0,  0,  0, 0,  9,   0,   179, 135,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_vel_ned_dep_a_t *test_msg =
+        (sbp_msg_vel_ned_dep_a_t *)&test_msg_storage;
+    test_msg->d = 0;
+    test_msg->e = 3724;
+    test_msg->flags = 0;
+    test_msg->h_accuracy = 0;
+    test_msg->n = -976;
+    test_msg->n_sats = 9;
+    test_msg->tow = 2567900;
+    test_msg->v_accuracy = 0;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x205, 55286, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x205, 55286, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -246,7 +285,7 @@ START_TEST(test_auto_check_sbp_navigation_24) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_vel_ned_dep_a_t *msg = (msg_vel_ned_dep_a_t *)((void *)last_msg + 6);
+    sbp_msg_vel_ned_dep_a_t *msg = (sbp_msg_vel_ned_dep_a_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->d == 0, "incorrect value for d, expected 0, is %d",
@@ -287,10 +326,23 @@ START_TEST(test_auto_check_sbp_navigation_24) {
         85, 5, 2, 246, 215, 22, 64, 47, 39, 0, 32, 252, 255, 255, 8,
         15, 0, 0, 0,   0,   0,  0,  0,  0,  0, 0,  9,   0,   51,  177,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_vel_ned_dep_a_t *test_msg =
+        (sbp_msg_vel_ned_dep_a_t *)&test_msg_storage;
+    test_msg->d = 0;
+    test_msg->e = 3848;
+    test_msg->flags = 0;
+    test_msg->h_accuracy = 0;
+    test_msg->n = -992;
+    test_msg->n_sats = 9;
+    test_msg->tow = 2568000;
+    test_msg->v_accuracy = 0;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x205, 55286, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x205, 55286, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -308,7 +360,7 @@ START_TEST(test_auto_check_sbp_navigation_24) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_vel_ned_dep_a_t *msg = (msg_vel_ned_dep_a_t *)((void *)last_msg + 6);
+    sbp_msg_vel_ned_dep_a_t *msg = (sbp_msg_vel_ned_dep_a_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->d == 0, "incorrect value for d, expected 0, is %d",
@@ -349,10 +401,23 @@ START_TEST(test_auto_check_sbp_navigation_24) {
         85, 5, 2, 246, 215, 22, 164, 47, 39, 0, 80, 252, 255, 255, 140,
         14, 0, 0, 0,   0,   0,  0,   0,  0,  0, 0,  9,   0,   23,  0,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_vel_ned_dep_a_t *test_msg =
+        (sbp_msg_vel_ned_dep_a_t *)&test_msg_storage;
+    test_msg->d = 0;
+    test_msg->e = 3724;
+    test_msg->flags = 0;
+    test_msg->h_accuracy = 0;
+    test_msg->n = -944;
+    test_msg->n_sats = 9;
+    test_msg->tow = 2568100;
+    test_msg->v_accuracy = 0;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x205, 55286, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x205, 55286, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -370,7 +435,7 @@ START_TEST(test_auto_check_sbp_navigation_24) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_vel_ned_dep_a_t *msg = (msg_vel_ned_dep_a_t *)((void *)last_msg + 6);
+    sbp_msg_vel_ned_dep_a_t *msg = (sbp_msg_vel_ned_dep_a_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->d == 0, "incorrect value for d, expected 0, is %d",

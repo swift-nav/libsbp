@@ -101,10 +101,18 @@ START_TEST(test_auto_check_sbp_navigation_10) {
         85,  2,  1,   211, 136, 11, 128, 7,  40,  244,
         122, 19, 244, 139, 2,   0,  0,   34, 152,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_gps_time_t *test_msg = (sbp_msg_gps_time_t *)&test_msg_storage;
+    test_msg->flags = 0;
+    test_msg->ns_residual = 166900;
+    test_msg->tow = 326825000;
+    test_msg->wn = 1920;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x102, 35027, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x102, 35027, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -122,7 +130,7 @@ START_TEST(test_auto_check_sbp_navigation_10) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_gps_time_t *msg = (msg_gps_time_t *)((void *)last_msg + 6);
+    sbp_msg_gps_time_t *msg = (sbp_msg_gps_time_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->flags == 0,
@@ -155,10 +163,18 @@ START_TEST(test_auto_check_sbp_navigation_10) {
         85,  2,  1,   211, 136, 11, 128, 7,  28, 246,
         122, 19, 126, 234, 3,   0,  0,   65, 3,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_gps_time_t *test_msg = (sbp_msg_gps_time_t *)&test_msg_storage;
+    test_msg->flags = 0;
+    test_msg->ns_residual = 256638;
+    test_msg->tow = 326825500;
+    test_msg->wn = 1920;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x102, 35027, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x102, 35027, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -176,7 +192,7 @@ START_TEST(test_auto_check_sbp_navigation_10) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_gps_time_t *msg = (msg_gps_time_t *)((void *)last_msg + 6);
+    sbp_msg_gps_time_t *msg = (sbp_msg_gps_time_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->flags == 0,
@@ -209,10 +225,18 @@ START_TEST(test_auto_check_sbp_navigation_10) {
         85,  2,  1,   211, 136, 11, 128, 7,  16, 248,
         122, 19, 129, 12,  4,   0,  0,   12, 84,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_gps_time_t *test_msg = (sbp_msg_gps_time_t *)&test_msg_storage;
+    test_msg->flags = 0;
+    test_msg->ns_residual = 265345;
+    test_msg->tow = 326826000;
+    test_msg->wn = 1920;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x102, 35027, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x102, 35027, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -230,7 +254,7 @@ START_TEST(test_auto_check_sbp_navigation_10) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_gps_time_t *msg = (msg_gps_time_t *)((void *)last_msg + 6);
+    sbp_msg_gps_time_t *msg = (sbp_msg_gps_time_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->flags == 0,
@@ -263,10 +287,18 @@ START_TEST(test_auto_check_sbp_navigation_10) {
         85,  2,  1,   211, 136, 11, 128, 7,  4,   250,
         122, 19, 137, 204, 4,   0,  0,   50, 165,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_gps_time_t *test_msg = (sbp_msg_gps_time_t *)&test_msg_storage;
+    test_msg->flags = 0;
+    test_msg->ns_residual = 314505;
+    test_msg->tow = 326826500;
+    test_msg->wn = 1920;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x102, 35027, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x102, 35027, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -284,7 +316,7 @@ START_TEST(test_auto_check_sbp_navigation_10) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_gps_time_t *msg = (msg_gps_time_t *)((void *)last_msg + 6);
+    sbp_msg_gps_time_t *msg = (sbp_msg_gps_time_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->flags == 0,
@@ -317,10 +349,18 @@ START_TEST(test_auto_check_sbp_navigation_10) {
         85,  2,  1,   211, 136, 11, 128, 7,   248, 251,
         122, 19, 181, 137, 5,   0,  0,   180, 33,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_gps_time_t *test_msg = (sbp_msg_gps_time_t *)&test_msg_storage;
+    test_msg->flags = 0;
+    test_msg->ns_residual = 362933;
+    test_msg->tow = 326827000;
+    test_msg->wn = 1920;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x102, 35027, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x102, 35027, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -338,7 +378,7 @@ START_TEST(test_auto_check_sbp_navigation_10) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_gps_time_t *msg = (msg_gps_time_t *)((void *)last_msg + 6);
+    sbp_msg_gps_time_t *msg = (sbp_msg_gps_time_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->flags == 0,

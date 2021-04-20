@@ -148,9 +148,6 @@ def main():
           with open(os.path.join(output_dir, "RELEASE-VERSION"), 'w') as ver_file:
               ver_file.write(release.full_version)
           js.render_source(output_dir, parsed)
-        elif args.c:
-          import sbpg.targets.c as c
-          c.render_source(output_dir, parsed)
         elif args.test_c:
           import sbpg.targets.test_c as test_c
           test_c.render_source(output_dir, parsed)
@@ -173,9 +170,11 @@ def main():
           import sbpg.targets.jsonschema as jsonschema
           jsonschema.render_source(output_dir, parsed)
       if args.c:
+        import sbpg.targets.c as c
         c.render_version(output_dir, release)
         parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
         c.render_traits(output_dir, parsed)
+        c.render_source(output_dir, parsed)
       elif args.python:
         py.render_version(output_dir, release)
       elif args.haskell:

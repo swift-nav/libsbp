@@ -100,10 +100,13 @@ START_TEST(test_auto_check_sbp_settings_33) {
     u8 test_data[] = {
         85, 166, 0, 246, 215, 0, 163, 58,
     };
+    sbp_msg_t test_msg_storage;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0xa6, 55286, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0xa6, 55286, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,

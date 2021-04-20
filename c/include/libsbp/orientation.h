@@ -1,32 +1,13 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
- * Contact: https://support.swiftnav.com
- *
- * This source is subject to the license found in the file 'LICENSE' which must
- * be be distributed together with this source. All other rights reserved.
- *
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
- */
-
-/*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/orientation.yaml
- * with generate.py. Please do not hand edit!
- *****************************************************************************/
-
-/** \defgroup orientation Orientation
- *
- * * Orientation Messages
- * \{ */
-
 #ifndef LIBSBP_ORIENTATION_MESSAGES_H
 #define LIBSBP_ORIENTATION_MESSAGES_H
 
-#include "common.h"
+#include <endian.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <string.h>
 
-SBP_PACK_START
-
+#include <libsbp/common.h>
 /** Heading relative to True North
  *
  * This message reports the baseline heading pointing from the base station
@@ -35,29 +16,126 @@ SBP_PACK_START
  * that time-matched RTK mode is used when the base station is moving.
  */
 #define SBP_MSG_BASELINE_HEADING 0x020F
-#define SBP_BASELINE_HEADING_FIX_MODE_MASK (0x7)
-#define SBP_BASELINE_HEADING_FIX_MODE_SHIFT (0u)
-#define SBP_BASELINE_HEADING_FIX_MODE_GET(flags)      \
-  (((flags) >> SBP_BASELINE_HEADING_FIX_MODE_SHIFT) & \
-   SBP_BASELINE_HEADING_FIX_MODE_MASK)
-#define SBP_BASELINE_HEADING_FIX_MODE_SET(flags, val)           \
-  do {                                                          \
-    ((flags) |= (((val) & (SBP_BASELINE_HEADING_FIX_MODE_MASK)) \
-                 << (SBP_BASELINE_HEADING_FIX_MODE_SHIFT)));    \
+
+#define SBP_BASELINE_HEADING_FLAGS_FIX_MODE_MASK (0x7)
+#define SBP_BASELINE_HEADING_FLAGS_FIX_MODE_SHIFT (0u)
+#define SBP_BASELINE_HEADING_FLAGS_FIX_MODE_GET(flags)      \
+  (((flags) >> SBP_BASELINE_HEADING_FLAGS_FIX_MODE_SHIFT) & \
+   SBP_BASELINE_HEADING_FLAGS_FIX_MODE_MASK)
+#define SBP_BASELINE_HEADING_FLAGS_FIX_MODE_SET(flags, val)           \
+  do {                                                                \
+    ((flags) |= (((val) & (SBP_BASELINE_HEADING_FLAGS_FIX_MODE_MASK)) \
+                 << (SBP_BASELINE_HEADING_FLAGS_FIX_MODE_SHIFT)));    \
   } while (0)
 
-#define SBP_BASELINE_HEADING_FIX_MODE_INVALID (0)
-#define SBP_BASELINE_HEADING_FIX_MODE_DIFFERENTIAL_GNSS (2)
-#define SBP_BASELINE_HEADING_FIX_MODE_FLOAT_RTK (3)
-#define SBP_BASELINE_HEADING_FIX_MODE_FIXED_RTK (4)
+#define SBP_BASELINE_HEADING_FLAGS_FIX_MODE_INVALID (0)
+#define SBP_BASELINE_HEADING_FLAGS_FIX_MODE_DIFFERENTIAL_GNSS (2)
+#define SBP_BASELINE_HEADING_FLAGS_FIX_MODE_FLOAT_RTK (3)
+#define SBP_BASELINE_HEADING_FLAGS_FIX_MODE_FIXED_RTK (4)
+typedef struct {
+  /**
+   * GPS Time of Week[ms]
+   */
+  u32 tow;
+  /**
+   * Heading[mdeg]
+   */
+  u32 heading;
+  /**
+   * Number of satellites used in solution
+   */
+  u8 n_sats;
+  /**
+   * Status flags
+   */
+  u8 flags;
+} sbp_msg_baseline_heading_t;
 
-typedef struct SBP_ATTR_PACKED {
-  u32 tow;     /**< GPS Time of Week [ms] */
-  u32 heading; /**< Heading [mdeg] */
-  u8 n_sats;   /**< Number of satellites used in solution */
-  u8 flags;    /**< Status flags */
-} msg_baseline_heading_t;
+static inline size_t sbp_packed_size_sbp_msg_baseline_heading_t(
+    const sbp_msg_baseline_heading_t *msg) {
+  (void)msg;
+  return 0 + sizeof(msg->tow) + sizeof(msg->heading) + sizeof(msg->n_sats) +
+         sizeof(msg->flags);
+}
 
+static inline bool sbp_pack_sbp_msg_baseline_heading_t(
+    u8 *buf, size_t len, const sbp_msg_baseline_heading_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_baseline_heading_t(msg) > len) {
+    return false;
+  }
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  u32 msgtow = msg->tow;
+  msgtow = htole32(msgtow);
+  memcpy(buf + offset, &msgtow, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  u32 msgheading = msg->heading;
+  msgheading = htole32(msgheading);
+  memcpy(buf + offset, &msgheading, 4);
+  offset += 4;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msgn_sats = msg->n_sats;
+  memcpy(buf + offset, &msgn_sats, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msgflags = msg->flags;
+  memcpy(buf + offset, &msgflags, 1);
+  offset += 1;
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_baseline_heading_t(
+    const u8 *buf, size_t len, sbp_msg_baseline_heading_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->tow, buf + offset, 4);
+  msg->tow = le32toh(msg->tow);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->heading, buf + offset, 4);
+  msg->heading = le32toh(msg->heading);
+  offset += 4;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->n_sats, buf + offset, 1);
+  offset += 1;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->flags, buf + offset, 1);
+  offset += 1;
+  return true;
+}
 /** Quaternion 4 component vector
  *
  * This message reports the quaternion vector describing the vehicle body
@@ -67,33 +145,234 @@ typedef struct SBP_ATTR_PACKED {
  * INS versions of Swift Products and is not produced by Piksi Multi or Duro.
  */
 #define SBP_MSG_ORIENT_QUAT 0x0220
-#define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_MASK (0x7)
-#define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_SHIFT (0u)
-#define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_GET(flags)      \
-  (((flags) >> SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_SHIFT) & \
-   SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_MASK)
-#define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_SET(flags, val)           \
-  do {                                                                \
-    ((flags) |= (((val) & (SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_MASK)) \
-                 << (SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_SHIFT)));    \
+
+#define SBP_ORIENT_QUAT_FLAGS_INS_NAVIGATION_MODE_MASK (0x7)
+#define SBP_ORIENT_QUAT_FLAGS_INS_NAVIGATION_MODE_SHIFT (0u)
+#define SBP_ORIENT_QUAT_FLAGS_INS_NAVIGATION_MODE_GET(flags)      \
+  (((flags) >> SBP_ORIENT_QUAT_FLAGS_INS_NAVIGATION_MODE_SHIFT) & \
+   SBP_ORIENT_QUAT_FLAGS_INS_NAVIGATION_MODE_MASK)
+#define SBP_ORIENT_QUAT_FLAGS_INS_NAVIGATION_MODE_SET(flags, val)           \
+  do {                                                                      \
+    ((flags) |= (((val) & (SBP_ORIENT_QUAT_FLAGS_INS_NAVIGATION_MODE_MASK)) \
+                 << (SBP_ORIENT_QUAT_FLAGS_INS_NAVIGATION_MODE_SHIFT)));    \
   } while (0)
 
-#define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_INVALID (0)
-#define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_VALID (1)
+#define SBP_ORIENT_QUAT_FLAGS_INS_NAVIGATION_MODE_INVALID (0)
+#define SBP_ORIENT_QUAT_FLAGS_INS_NAVIGATION_MODE_VALID (1)
+typedef struct {
+  /**
+   * GPS Time of Week[ms]
+   */
+  u32 tow;
+  /**
+   * Real component[2^-31]
+   */
+  s32 w;
+  /**
+   * 1st imaginary component[2^-31]
+   */
+  s32 x;
+  /**
+   * 2nd imaginary component[2^-31]
+   */
+  s32 y;
+  /**
+   * 3rd imaginary component[2^-31]
+   */
+  s32 z;
+  /**
+   * Estimated standard deviation of w[N/A]
+   */
+  float w_accuracy;
+  /**
+   * Estimated standard deviation of x[N/A]
+   */
+  float x_accuracy;
+  /**
+   * Estimated standard deviation of y[N/A]
+   */
+  float y_accuracy;
+  /**
+   * Estimated standard deviation of z[N/A]
+   */
+  float z_accuracy;
+  /**
+   * Status flags
+   */
+  u8 flags;
+} sbp_msg_orient_quat_t;
 
-typedef struct SBP_ATTR_PACKED {
-  u32 tow;          /**< GPS Time of Week [ms] */
-  s32 w;            /**< Real component [2^-31] */
-  s32 x;            /**< 1st imaginary component [2^-31] */
-  s32 y;            /**< 2nd imaginary component [2^-31] */
-  s32 z;            /**< 3rd imaginary component [2^-31] */
-  float w_accuracy; /**< Estimated standard deviation of w [N/A] */
-  float x_accuracy; /**< Estimated standard deviation of x [N/A] */
-  float y_accuracy; /**< Estimated standard deviation of y [N/A] */
-  float z_accuracy; /**< Estimated standard deviation of z [N/A] */
-  u8 flags;         /**< Status flags */
-} msg_orient_quat_t;
+static inline size_t sbp_packed_size_sbp_msg_orient_quat_t(
+    const sbp_msg_orient_quat_t *msg) {
+  (void)msg;
+  return 0 + sizeof(msg->tow) + sizeof(msg->w) + sizeof(msg->x) +
+         sizeof(msg->y) + sizeof(msg->z) + sizeof(msg->w_accuracy) +
+         sizeof(msg->x_accuracy) + sizeof(msg->y_accuracy) +
+         sizeof(msg->z_accuracy) + sizeof(msg->flags);
+}
 
+static inline bool sbp_pack_sbp_msg_orient_quat_t(
+    u8 *buf, size_t len, const sbp_msg_orient_quat_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_orient_quat_t(msg) > len) {
+    return false;
+  }
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  u32 msgtow = msg->tow;
+  msgtow = htole32(msgtow);
+  memcpy(buf + offset, &msgtow, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msgw = msg->w;
+  msgw = htole32(msgw);
+  memcpy(buf + offset, &msgw, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msgx = msg->x;
+  msgx = htole32(msgx);
+  memcpy(buf + offset, &msgx, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msgy = msg->y;
+  msgy = htole32(msgy);
+  memcpy(buf + offset, &msgy, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msgz = msg->z;
+  msgz = htole32(msgz);
+  memcpy(buf + offset, &msgz, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msgw_accuracy = msg->w_accuracy;
+  memcpy(buf + offset, &msgw_accuracy, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msgx_accuracy = msg->x_accuracy;
+  memcpy(buf + offset, &msgx_accuracy, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msgy_accuracy = msg->y_accuracy;
+  memcpy(buf + offset, &msgy_accuracy, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msgz_accuracy = msg->z_accuracy;
+  memcpy(buf + offset, &msgz_accuracy, 4);
+  offset += 4;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msgflags = msg->flags;
+  memcpy(buf + offset, &msgflags, 1);
+  offset += 1;
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_orient_quat_t(
+    const u8 *buf, size_t len, sbp_msg_orient_quat_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->tow, buf + offset, 4);
+  msg->tow = le32toh(msg->tow);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->w, buf + offset, 4);
+  msg->w = le32toh(msg->w);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->x, buf + offset, 4);
+  msg->x = le32toh(msg->x);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->y, buf + offset, 4);
+  msg->y = le32toh(msg->y);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->z, buf + offset, 4);
+  msg->z = le32toh(msg->z);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->w_accuracy, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->x_accuracy, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->y_accuracy, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->z_accuracy, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->flags, buf + offset, 1);
+  offset += 1;
+  return true;
+}
 /** Euler angles
  *
  * This message reports the yaw, pitch, and roll angles of the vehicle body
@@ -104,34 +383,198 @@ typedef struct SBP_ATTR_PACKED {
  * Duro.
  */
 #define SBP_MSG_ORIENT_EULER 0x0221
-#define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_MASK (0x7)
-#define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_SHIFT (0u)
-#define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_GET(flags)      \
-  (((flags) >> SBP_ORIENT_EULER_INS_NAVIGATION_MODE_SHIFT) & \
-   SBP_ORIENT_EULER_INS_NAVIGATION_MODE_MASK)
-#define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_SET(flags, val)           \
-  do {                                                                 \
-    ((flags) |= (((val) & (SBP_ORIENT_EULER_INS_NAVIGATION_MODE_MASK)) \
-                 << (SBP_ORIENT_EULER_INS_NAVIGATION_MODE_SHIFT)));    \
+
+#define SBP_ORIENT_EULER_FLAGS_INS_NAVIGATION_MODE_MASK (0x7)
+#define SBP_ORIENT_EULER_FLAGS_INS_NAVIGATION_MODE_SHIFT (0u)
+#define SBP_ORIENT_EULER_FLAGS_INS_NAVIGATION_MODE_GET(flags)      \
+  (((flags) >> SBP_ORIENT_EULER_FLAGS_INS_NAVIGATION_MODE_SHIFT) & \
+   SBP_ORIENT_EULER_FLAGS_INS_NAVIGATION_MODE_MASK)
+#define SBP_ORIENT_EULER_FLAGS_INS_NAVIGATION_MODE_SET(flags, val)           \
+  do {                                                                       \
+    ((flags) |= (((val) & (SBP_ORIENT_EULER_FLAGS_INS_NAVIGATION_MODE_MASK)) \
+                 << (SBP_ORIENT_EULER_FLAGS_INS_NAVIGATION_MODE_SHIFT)));    \
   } while (0)
 
-#define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_INVALID (0)
-#define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_VALID (1)
+#define SBP_ORIENT_EULER_FLAGS_INS_NAVIGATION_MODE_INVALID (0)
+#define SBP_ORIENT_EULER_FLAGS_INS_NAVIGATION_MODE_VALID (1)
+typedef struct {
+  /**
+   * GPS Time of Week[ms]
+   */
+  u32 tow;
+  /**
+   * rotation about the forward axis of the vehicle[microdegrees]
+   */
+  s32 roll;
+  /**
+   * rotation about the rightward axis of the vehicle[microdegrees]
+   */
+  s32 pitch;
+  /**
+   * rotation about the downward axis of the vehicle[microdegrees]
+   */
+  s32 yaw;
+  /**
+   * Estimated standard deviation of roll[degrees]
+   */
+  float roll_accuracy;
+  /**
+   * Estimated standard deviation of pitch[degrees]
+   */
+  float pitch_accuracy;
+  /**
+   * Estimated standard deviation of yaw[degrees]
+   */
+  float yaw_accuracy;
+  /**
+   * Status flags
+   */
+  u8 flags;
+} sbp_msg_orient_euler_t;
 
-typedef struct SBP_ATTR_PACKED {
-  u32 tow;   /**< GPS Time of Week [ms] */
-  s32 roll;  /**< rotation about the forward axis of the vehicle [microdegrees]
-              */
-  s32 pitch; /**< rotation about the rightward axis of the vehicle
-                [microdegrees] */
-  s32 yaw;   /**< rotation about the downward axis of the vehicle [microdegrees]
-              */
-  float roll_accuracy;  /**< Estimated standard deviation of roll [degrees] */
-  float pitch_accuracy; /**< Estimated standard deviation of pitch [degrees] */
-  float yaw_accuracy;   /**< Estimated standard deviation of yaw [degrees] */
-  u8 flags;             /**< Status flags */
-} msg_orient_euler_t;
+static inline size_t sbp_packed_size_sbp_msg_orient_euler_t(
+    const sbp_msg_orient_euler_t *msg) {
+  (void)msg;
+  return 0 + sizeof(msg->tow) + sizeof(msg->roll) + sizeof(msg->pitch) +
+         sizeof(msg->yaw) + sizeof(msg->roll_accuracy) +
+         sizeof(msg->pitch_accuracy) + sizeof(msg->yaw_accuracy) +
+         sizeof(msg->flags);
+}
 
+static inline bool sbp_pack_sbp_msg_orient_euler_t(
+    u8 *buf, size_t len, const sbp_msg_orient_euler_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_orient_euler_t(msg) > len) {
+    return false;
+  }
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  u32 msgtow = msg->tow;
+  msgtow = htole32(msgtow);
+  memcpy(buf + offset, &msgtow, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msgroll = msg->roll;
+  msgroll = htole32(msgroll);
+  memcpy(buf + offset, &msgroll, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msgpitch = msg->pitch;
+  msgpitch = htole32(msgpitch);
+  memcpy(buf + offset, &msgpitch, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msgyaw = msg->yaw;
+  msgyaw = htole32(msgyaw);
+  memcpy(buf + offset, &msgyaw, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msgroll_accuracy = msg->roll_accuracy;
+  memcpy(buf + offset, &msgroll_accuracy, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msgpitch_accuracy = msg->pitch_accuracy;
+  memcpy(buf + offset, &msgpitch_accuracy, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  float msgyaw_accuracy = msg->yaw_accuracy;
+  memcpy(buf + offset, &msgyaw_accuracy, 4);
+  offset += 4;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msgflags = msg->flags;
+  memcpy(buf + offset, &msgflags, 1);
+  offset += 1;
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_orient_euler_t(
+    const u8 *buf, size_t len, sbp_msg_orient_euler_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->tow, buf + offset, 4);
+  msg->tow = le32toh(msg->tow);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->roll, buf + offset, 4);
+  msg->roll = le32toh(msg->roll);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->pitch, buf + offset, 4);
+  msg->pitch = le32toh(msg->pitch);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->yaw, buf + offset, 4);
+  msg->yaw = le32toh(msg->yaw);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->roll_accuracy, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->pitch_accuracy, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->yaw_accuracy, buf + offset, 4);
+  offset += 4;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->flags, buf + offset, 1);
+  offset += 1;
+  return true;
+}
 /** Vehicle Body Frame instantaneous angular rates
  *
  * This message reports the orientation rates in the vehicle body frame.
@@ -145,30 +588,144 @@ typedef struct SBP_ATTR_PACKED {
  * Swift Products and is not produced by Piksi Multi or Duro.
  */
 #define SBP_MSG_ANGULAR_RATE 0x0222
-#define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_MASK (0x7)
-#define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_SHIFT (0u)
-#define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_GET(flags)      \
-  (((flags) >> SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_SHIFT) & \
-   SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_MASK)
-#define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_SET(flags, val)           \
-  do {                                                                 \
-    ((flags) |= (((val) & (SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_MASK)) \
-                 << (SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_SHIFT)));    \
+
+#define SBP_ANGULAR_RATE_FLAGS_INS_NAVIGATION_MODE_MASK (0x7)
+#define SBP_ANGULAR_RATE_FLAGS_INS_NAVIGATION_MODE_SHIFT (0u)
+#define SBP_ANGULAR_RATE_FLAGS_INS_NAVIGATION_MODE_GET(flags)      \
+  (((flags) >> SBP_ANGULAR_RATE_FLAGS_INS_NAVIGATION_MODE_SHIFT) & \
+   SBP_ANGULAR_RATE_FLAGS_INS_NAVIGATION_MODE_MASK)
+#define SBP_ANGULAR_RATE_FLAGS_INS_NAVIGATION_MODE_SET(flags, val)           \
+  do {                                                                       \
+    ((flags) |= (((val) & (SBP_ANGULAR_RATE_FLAGS_INS_NAVIGATION_MODE_MASK)) \
+                 << (SBP_ANGULAR_RATE_FLAGS_INS_NAVIGATION_MODE_SHIFT)));    \
   } while (0)
 
-#define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_INVALID (0)
-#define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_VALID (1)
+#define SBP_ANGULAR_RATE_FLAGS_INS_NAVIGATION_MODE_INVALID (0)
+#define SBP_ANGULAR_RATE_FLAGS_INS_NAVIGATION_MODE_VALID (1)
+typedef struct {
+  /**
+   * GPS Time of Week[ms]
+   */
+  u32 tow;
+  /**
+   * angular rate about x axis[microdegrees/s]
+   */
+  s32 x;
+  /**
+   * angular rate about y axis[microdegrees/s]
+   */
+  s32 y;
+  /**
+   * angular rate about z axis[microdegrees/s]
+   */
+  s32 z;
+  /**
+   * Status flags
+   */
+  u8 flags;
+} sbp_msg_angular_rate_t;
 
-typedef struct SBP_ATTR_PACKED {
-  u32 tow;  /**< GPS Time of Week [ms] */
-  s32 x;    /**< angular rate about x axis [microdegrees/s] */
-  s32 y;    /**< angular rate about y axis [microdegrees/s] */
-  s32 z;    /**< angular rate about z axis [microdegrees/s] */
-  u8 flags; /**< Status flags */
-} msg_angular_rate_t;
+static inline size_t sbp_packed_size_sbp_msg_angular_rate_t(
+    const sbp_msg_angular_rate_t *msg) {
+  (void)msg;
+  return 0 + sizeof(msg->tow) + sizeof(msg->x) + sizeof(msg->y) +
+         sizeof(msg->z) + sizeof(msg->flags);
+}
 
-/** \} */
+static inline bool sbp_pack_sbp_msg_angular_rate_t(
+    u8 *buf, size_t len, const sbp_msg_angular_rate_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_angular_rate_t(msg) > len) {
+    return false;
+  }
 
-SBP_PACK_END
+  if (offset + 4 > len) {
+    return false;
+  }
+  u32 msgtow = msg->tow;
+  msgtow = htole32(msgtow);
+  memcpy(buf + offset, &msgtow, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msgx = msg->x;
+  msgx = htole32(msgx);
+  memcpy(buf + offset, &msgx, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msgy = msg->y;
+  msgy = htole32(msgy);
+  memcpy(buf + offset, &msgy, 4);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  s32 msgz = msg->z;
+  msgz = htole32(msgz);
+  memcpy(buf + offset, &msgz, 4);
+  offset += 4;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  u8 msgflags = msg->flags;
+  memcpy(buf + offset, &msgflags, 1);
+  offset += 1;
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_angular_rate_t(
+    const u8 *buf, size_t len, sbp_msg_angular_rate_t *msg) {
+  size_t offset = 0;
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->tow, buf + offset, 4);
+  msg->tow = le32toh(msg->tow);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->x, buf + offset, 4);
+  msg->x = le32toh(msg->x);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->y, buf + offset, 4);
+  msg->y = le32toh(msg->y);
+  offset += 4;
+
+  if (offset + 4 > len) {
+    return false;
+  }
+  memcpy(&msg->z, buf + offset, 4);
+  msg->z = le32toh(msg->z);
+  offset += 4;
+
+  if (offset + 1 > len) {
+    return false;
+  }
+  memcpy(&msg->flags, buf + offset, 1);
+  offset += 1;
+  return true;
+}
 
 #endif /* LIBSBP_ORIENTATION_MESSAGES_H */

@@ -103,10 +103,40 @@ START_TEST(test_auto_check_sbp_tracking_50) {
         208, 54, 15, 0,  0,   0,  85,  61,  0,   0,   39, 0, 1, 0,   0,   0,
         0,   0,  0,  0,  40,  0,  108, 1,   0,   11,  0,  0, 9, 166, 214,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_tracking_state_detailed_dep_t *test_msg =
+        (sbp_msg_tracking_state_detailed_dep_t *)&test_msg_storage;
+    test_msg->L.f = 169;
+    test_msg->L.i = 1319;
+    test_msg->P = 0;
+    test_msg->P_std = 0;
+    test_msg->acceleration = 108;
+    test_msg->clock_drift = 0;
+    test_msg->clock_offset = 0;
+    test_msg->cn0 = 177;
+    test_msg->corr_spacing = 40;
+    test_msg->doppler = 15701;
+    test_msg->doppler_std = 39;
+    test_msg->lock = 14032;
+    test_msg->misc_flags = 9;
+    test_msg->nav_flags = 0;
+    test_msg->pset_flags = 0;
+    test_msg->recv_time = 7909447587;
+    test_msg->sid.code = 0;
+    test_msg->sid.reserved = 0;
+    test_msg->sid.sat = 15;
+    test_msg->sync_flags = 1;
+    test_msg->tot.tow = 0;
+    test_msg->tot.wn = 0;
+    test_msg->tow_flags = 0;
+    test_msg->track_flags = 11;
+    test_msg->uptime = 1;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x11, 26427, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x11, 26427, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -124,8 +154,8 @@ START_TEST(test_auto_check_sbp_tracking_50) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_tracking_state_detailed_dep_t *msg =
-        (msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
+    sbp_msg_tracking_state_detailed_dep_t *msg =
+        (sbp_msg_tracking_state_detailed_dep_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->L.f == 169,
@@ -217,10 +247,40 @@ START_TEST(test_auto_check_sbp_tracking_50) {
         208, 54, 15, 0,  0,   0,  51,  61,  0,  0,   30, 0, 1, 0,   0,   0,
         0,   0,  0,  0,  40,  0,  224, 1,   0,  11,  0,  0, 9, 136, 179,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_tracking_state_detailed_dep_t *test_msg =
+        (sbp_msg_tracking_state_detailed_dep_t *)&test_msg_storage;
+    test_msg->L.f = 14;
+    test_msg->L.i = 1810;
+    test_msg->P = 0;
+    test_msg->P_std = 0;
+    test_msg->acceleration = -32;
+    test_msg->clock_drift = 0;
+    test_msg->clock_offset = 0;
+    test_msg->cn0 = 175;
+    test_msg->corr_spacing = 40;
+    test_msg->doppler = 15667;
+    test_msg->doppler_std = 30;
+    test_msg->lock = 14032;
+    test_msg->misc_flags = 9;
+    test_msg->nav_flags = 0;
+    test_msg->pset_flags = 0;
+    test_msg->recv_time = 8409447265;
+    test_msg->sid.code = 0;
+    test_msg->sid.reserved = 0;
+    test_msg->sid.sat = 15;
+    test_msg->sync_flags = 1;
+    test_msg->tot.tow = 0;
+    test_msg->tot.wn = 0;
+    test_msg->tow_flags = 0;
+    test_msg->track_flags = 11;
+    test_msg->uptime = 1;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x11, 26427, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x11, 26427, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -238,8 +298,8 @@ START_TEST(test_auto_check_sbp_tracking_50) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_tracking_state_detailed_dep_t *msg =
-        (msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
+    sbp_msg_tracking_state_detailed_dep_t *msg =
+        (sbp_msg_tracking_state_detailed_dep_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->L.f == 14, "incorrect value for L.f, expected 14, is %d",
@@ -331,10 +391,40 @@ START_TEST(test_auto_check_sbp_tracking_50) {
         208, 54, 15, 0,  0,   0,  67,  61,  0,   0,  22,  0, 2, 0,   0,   0,
         0,   0,  0,  0,  40,  0,  27,  1,   0,   11, 0,   2, 9, 217, 159,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_tracking_state_detailed_dep_t *test_msg =
+        (sbp_msg_tracking_state_detailed_dep_t *)&test_msg_storage;
+    test_msg->L.f = 8;
+    test_msg->L.i = 2298;
+    test_msg->P = 0;
+    test_msg->P_std = 0;
+    test_msg->acceleration = 27;
+    test_msg->clock_drift = 0;
+    test_msg->clock_offset = 0;
+    test_msg->cn0 = 179;
+    test_msg->corr_spacing = 40;
+    test_msg->doppler = 15683;
+    test_msg->doppler_std = 22;
+    test_msg->lock = 14032;
+    test_msg->misc_flags = 9;
+    test_msg->nav_flags = 0;
+    test_msg->pset_flags = 2;
+    test_msg->recv_time = 8907446923;
+    test_msg->sid.code = 0;
+    test_msg->sid.reserved = 0;
+    test_msg->sid.sat = 15;
+    test_msg->sync_flags = 1;
+    test_msg->tot.tow = 0;
+    test_msg->tot.wn = 0;
+    test_msg->tow_flags = 0;
+    test_msg->track_flags = 11;
+    test_msg->uptime = 2;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x11, 26427, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x11, 26427, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -352,8 +442,8 @@ START_TEST(test_auto_check_sbp_tracking_50) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_tracking_state_detailed_dep_t *msg =
-        (msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
+    sbp_msg_tracking_state_detailed_dep_t *msg =
+        (sbp_msg_tracking_state_detailed_dep_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->L.f == 8, "incorrect value for L.f, expected 8, is %d",
@@ -445,10 +535,40 @@ START_TEST(test_auto_check_sbp_tracking_50) {
         208, 54, 15, 0,  0,   0,  29,  61,  0,   0,  10,  0,  2, 0,  0,   0,
         0,   0,  0,  0,  40,  0,  220, 1,   0,   11, 0,   3,  9, 66, 95,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_tracking_state_detailed_dep_t *test_msg =
+        (sbp_msg_tracking_state_detailed_dep_t *)&test_msg_storage;
+    test_msg->L.f = 125;
+    test_msg->L.i = 2786;
+    test_msg->P = 0;
+    test_msg->P_std = 0;
+    test_msg->acceleration = -36;
+    test_msg->clock_drift = 0;
+    test_msg->clock_offset = 0;
+    test_msg->cn0 = 181;
+    test_msg->corr_spacing = 40;
+    test_msg->doppler = 15645;
+    test_msg->doppler_std = 10;
+    test_msg->lock = 14032;
+    test_msg->misc_flags = 9;
+    test_msg->nav_flags = 0;
+    test_msg->pset_flags = 3;
+    test_msg->recv_time = 9406446591;
+    test_msg->sid.code = 0;
+    test_msg->sid.reserved = 0;
+    test_msg->sid.sat = 15;
+    test_msg->sync_flags = 1;
+    test_msg->tot.tow = 0;
+    test_msg->tot.wn = 0;
+    test_msg->tow_flags = 0;
+    test_msg->track_flags = 11;
+    test_msg->uptime = 2;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x11, 26427, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x11, 26427, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -466,8 +586,8 @@ START_TEST(test_auto_check_sbp_tracking_50) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_tracking_state_detailed_dep_t *msg =
-        (msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
+    sbp_msg_tracking_state_detailed_dep_t *msg =
+        (sbp_msg_tracking_state_detailed_dep_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->L.f == 125,
@@ -559,10 +679,40 @@ START_TEST(test_auto_check_sbp_tracking_50) {
         208, 54, 15, 0,  0,   0,  24,  61, 0,   0,  4,   0,  3, 0,   0,   0,
         0,   0,  0,  0,  40,  0,  2,   1,  0,   11, 0,   3,  9, 194, 206,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_tracking_state_detailed_dep_t *test_msg =
+        (sbp_msg_tracking_state_detailed_dep_t *)&test_msg_storage;
+    test_msg->L.f = 64;
+    test_msg->L.i = 3275;
+    test_msg->P = 0;
+    test_msg->P_std = 0;
+    test_msg->acceleration = 2;
+    test_msg->clock_drift = 0;
+    test_msg->clock_offset = 0;
+    test_msg->cn0 = 184;
+    test_msg->corr_spacing = 40;
+    test_msg->doppler = 15640;
+    test_msg->doppler_std = 4;
+    test_msg->lock = 14032;
+    test_msg->misc_flags = 9;
+    test_msg->nav_flags = 0;
+    test_msg->pset_flags = 3;
+    test_msg->recv_time = 9906446269;
+    test_msg->sid.code = 0;
+    test_msg->sid.reserved = 0;
+    test_msg->sid.sat = 15;
+    test_msg->sync_flags = 1;
+    test_msg->tot.tow = 0;
+    test_msg->tot.wn = 0;
+    test_msg->tow_flags = 0;
+    test_msg->track_flags = 11;
+    test_msg->uptime = 3;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x11, 26427, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x11, 26427, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -580,8 +730,8 @@ START_TEST(test_auto_check_sbp_tracking_50) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_tracking_state_detailed_dep_t *msg =
-        (msg_tracking_state_detailed_dep_t *)((void *)last_msg + 6);
+    sbp_msg_tracking_state_detailed_dep_t *msg =
+        (sbp_msg_tracking_state_detailed_dep_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->L.f == 64, "incorrect value for L.f, expected 64, is %d",

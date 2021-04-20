@@ -72,10 +72,9 @@ class State {
 
   s8 process() { return sbp_process(&state_, &read_func); }
 
-  s8 send_message(u16 msg_type, u16 sender_id, u8 length, const u8 payload[]) {
+  s8 send_message(u16 msg_type, u16 sender_id, const sbp_msg_t &msg) {
     // NOLINTNEXTLINE
-    return sbp_send_message(&state_, msg_type, sender_id, length,
-                            const_cast<u8 *>(payload), &write_func);
+    return sbp_send_message(&state_, msg_type, sender_id, &msg, &write_func);
   }
 
   s8 process_payload(u16 sender_id, u16 msg_type, u8 msg_length,

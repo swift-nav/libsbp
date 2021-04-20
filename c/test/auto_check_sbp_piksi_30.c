@@ -100,10 +100,15 @@ START_TEST(test_auto_check_sbp_piksi_30) {
     u8 test_data[] = {
         85, 25, 0, 246, 215, 4, 1, 0, 0, 0, 216, 140,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_iar_state_t *test_msg = (sbp_msg_iar_state_t *)&test_msg_storage;
+    test_msg->num_hyps = 1;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x19, 55286, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x19, 55286, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -121,7 +126,7 @@ START_TEST(test_auto_check_sbp_piksi_30) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_iar_state_t *msg = (msg_iar_state_t *)((void *)last_msg + 6);
+    sbp_msg_iar_state_t *msg = (sbp_msg_iar_state_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->num_hyps == 1,

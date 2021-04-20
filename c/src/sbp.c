@@ -281,10 +281,24 @@ s8 sbp_register_frame_callback(sbp_state_t *s, u16 msg_type,
  *         `SBP_CALLBACK_ERROR` if the node already exists
  */
 
-s8 sbp_register_all_msg_callback(sbp_state_t *s, sbp_frame_callback_t cb,
-                                 void *context,
-                                 sbp_msg_callbacks_node_t *node) {
+s8 sbp_register_all_frame_callback(sbp_state_t *s, sbp_frame_callback_t cb,
+                                   void *context,
+                                   sbp_msg_callbacks_node_t *node) {
   return sbp_register_frame_callback(s, SBP_MSG_ALL, cb, context, node);
+}
+
+s8 sbp_register_unpacked_callback(sbp_state_t *s, u16 msg_type,
+                                  sbp_unpacked_callback_t cb, void *context,
+                                  sbp_msg_callbacks_node_t *node) {
+  return sbp_register_callback_generic(s, msg_type, cb, SBP_UNPACKED_CALLBACK,
+                                       context, node);
+}
+
+s8 sbp_register_all_unpacked_callback(sbp_state_t *s,
+                                      sbp_unpacked_callback_t cb, void *context,
+                                      sbp_msg_callbacks_node_t *node) {
+  return sbp_register_callback_generic(s, SBP_MSG_ALL, cb,
+                                       SBP_UNPACKED_CALLBACK, context, node);
 }
 
 /** Register a payload callback for a message type.
@@ -586,6 +600,9 @@ s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
                      u8 cb_mask) {
   s8 ret = SBP_OK_CALLBACK_UNDEFINED;
   sbp_msg_callbacks_node_t *node;
+  sbp_msg_t unpacked_msg;
+  bool unpacking_error = false;
+  bool need_unpacking = true;
   for (node = s->sbp_msg_callbacks_head; node; node = node->next) {
     if ((SBP_CALLBACK_FLAG(node->cb_type) & cb_mask) &&
         ((node->msg_type == msg_type) || (node->msg_type == SBP_MSG_ALL))) {
@@ -600,6 +617,21 @@ s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
           ((sbp_msg_callback_t)(node->cb))(sender_id, payload_len, payload,
                                            node->context);
           ret = SBP_OK_CALLBACK_EXECUTED;
+        } break;
+        case SBP_UNPACKED_CALLBACK: {
+          if (need_unpacking) {
+            need_unpacking = false;
+            if (!sbp_unpack_msg(payload, payload_len, msg_type,
+                                &unpacked_msg)) {
+              ret = SBP_READ_ERROR;
+              unpacking_error = true;
+            }
+          }
+          if (!unpacking_error) {
+            ((sbp_unpacked_callback_t)(node->cb))(sender_id, msg_type,
+                                                  &unpacked_msg, node->context);
+            ret = SBP_OK_CALLBACK_EXECUTED;
+          }
         } break;
         case SBP_CALLBACK_TYPE_COUNT:
         default: {
@@ -640,8 +672,9 @@ s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
  * \return `SBP_OK` (0) if successful, `SBP_WRITE_ERROR` if the message could
  *         not be sent or was only partially sent.
  */
-s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len,
-                    u8 *payload, s32 (*write)(u8 *buff, u32 n, void *context)) {
+s8 sbp_send_packed_message(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len,
+                           u8 *payload,
+                           s32 (*write)(u8 *buff, u32 n, void *context)) {
   /* Check our payload data pointer isn't NULL unless len = 0. */
   if (len != 0 && payload == 0) {
     return SBP_NULL_ERROR;
@@ -712,6 +745,17 @@ s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len,
   }
 
   return SBP_OK;
+}
+
+s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id,
+                    const sbp_msg_t *msg,
+                    s32 (*write)(u8 *buff, u32 n, void *context)) {
+  uint8_t payload[SBP_MAX_PAYLOAD_LEN];
+  if (!sbp_pack_msg(payload, sizeof(payload), msg_type, msg)) {
+    return SBP_WRITE_ERROR;
+  }
+  return sbp_send_packed_message(
+      s, msg_type, sender_id, sbp_packed_size(msg_type, msg), payload, write);
 }
 
 /** \} */

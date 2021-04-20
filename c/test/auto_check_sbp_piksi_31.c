@@ -101,10 +101,23 @@ START_TEST(test_auto_check_sbp_piksi_31) {
         85, 23, 0, 246, 215, 26, 109, 97, 105, 110, 0, 0,   0, 0, 0, 0,  0,
         0,  0,  0, 0,   0,   0,  0,   0,  0,   0,   0, 156, 9, 0, 0, 73, 138,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_thread_state_t *test_msg =
+        (sbp_msg_thread_state_t *)&test_msg_storage;
+    test_msg->cpu = 0;
+    strcpy(
+        test_msg->name,
+        ((char[]){(char)109, (char)97, (char)105, (char)110, (char)0, (char)0,
+                  (char)0,   (char)0,  (char)0,   (char)0,   (char)0, (char)0,
+                  (char)0,   (char)0,  (char)0,   (char)0,   (char)0, (char)0,
+                  (char)0,   (char)0,  0}));
+    test_msg->stack_free = 2460;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x17, 55286, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x17, 55286, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -122,7 +135,7 @@ START_TEST(test_auto_check_sbp_piksi_31) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_thread_state_t *msg = (msg_thread_state_t *)((void *)last_msg + 6);
+    sbp_msg_thread_state_t *msg = (sbp_msg_thread_state_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->cpu == 0, "incorrect value for cpu, expected 0, is %d",
@@ -163,10 +176,23 @@ START_TEST(test_auto_check_sbp_piksi_31) {
         85, 23, 0, 246, 215, 26, 105, 100, 108, 101, 0, 0,  0, 0, 0, 0,   0,
         0,  0,  0, 0,   0,   0,  0,   0,   0,   83,  2, 36, 0, 0, 0, 151, 20,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_thread_state_t *test_msg =
+        (sbp_msg_thread_state_t *)&test_msg_storage;
+    test_msg->cpu = 595;
+    strcpy(
+        test_msg->name,
+        ((char[]){(char)105, (char)100, (char)108, (char)101, (char)0, (char)0,
+                  (char)0,   (char)0,   (char)0,   (char)0,   (char)0, (char)0,
+                  (char)0,   (char)0,   (char)0,   (char)0,   (char)0, (char)0,
+                  (char)0,   (char)0,   0}));
+    test_msg->stack_free = 36;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x17, 55286, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x17, 55286, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -184,7 +210,7 @@ START_TEST(test_auto_check_sbp_piksi_31) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_thread_state_t *msg = (msg_thread_state_t *)((void *)last_msg + 6);
+    sbp_msg_thread_state_t *msg = (sbp_msg_thread_state_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->cpu == 595,
@@ -225,10 +251,22 @@ START_TEST(test_auto_check_sbp_piksi_31) {
         85, 23, 0, 246, 215, 26, 78, 65, 80, 32, 73, 83,  82, 0, 0, 0,   0,
         0,  0,  0, 0,   0,   0,  0,  0,  0,  14, 0,  116, 4,  0, 0, 226, 60,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_thread_state_t *test_msg =
+        (sbp_msg_thread_state_t *)&test_msg_storage;
+    test_msg->cpu = 14;
+    strcpy(test_msg->name,
+           ((char[]){(char)78, (char)65, (char)80, (char)32, (char)73, (char)83,
+                     (char)82, (char)0,  (char)0,  (char)0,  (char)0,  (char)0,
+                     (char)0,  (char)0,  (char)0,  (char)0,  (char)0,  (char)0,
+                     (char)0,  (char)0,  0}));
+    test_msg->stack_free = 1140;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x17, 55286, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x17, 55286, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -246,7 +284,7 @@ START_TEST(test_auto_check_sbp_piksi_31) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_thread_state_t *msg = (msg_thread_state_t *)((void *)last_msg + 6);
+    sbp_msg_thread_state_t *msg = (sbp_msg_thread_state_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->cpu == 14, "incorrect value for cpu, expected 14, is %d",
@@ -287,10 +325,22 @@ START_TEST(test_auto_check_sbp_piksi_31) {
         85, 23, 0, 246, 215, 26, 83, 66, 80, 0, 0, 0,   0,  0, 0, 0,  0,
         0,  0,  0, 0,   0,   0,  0,  0,  0,  1, 0, 196, 19, 0, 0, 90, 169,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_thread_state_t *test_msg =
+        (sbp_msg_thread_state_t *)&test_msg_storage;
+    test_msg->cpu = 1;
+    strcpy(test_msg->name,
+           ((char[]){(char)83, (char)66, (char)80, (char)0, (char)0, (char)0,
+                     (char)0,  (char)0,  (char)0,  (char)0, (char)0, (char)0,
+                     (char)0,  (char)0,  (char)0,  (char)0, (char)0, (char)0,
+                     (char)0,  (char)0,  0}));
+    test_msg->stack_free = 5060;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x17, 55286, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x17, 55286, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -308,7 +358,7 @@ START_TEST(test_auto_check_sbp_piksi_31) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_thread_state_t *msg = (msg_thread_state_t *)((void *)last_msg + 6);
+    sbp_msg_thread_state_t *msg = (sbp_msg_thread_state_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->cpu == 1, "incorrect value for cpu, expected 1, is %d",
@@ -350,10 +400,23 @@ START_TEST(test_auto_check_sbp_piksi_31) {
         32, 97, 99, 113, 0,   0,  0,   0,  0,   0,  0,   0,
         0,  0,  7,  0,   20,  9,  0,   0,  47,  75,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_thread_state_t *test_msg =
+        (sbp_msg_thread_state_t *)&test_msg_storage;
+    test_msg->cpu = 7;
+    strcpy(test_msg->name,
+           ((char[]){(char)109, (char)97, (char)110, (char)97, (char)103,
+                     (char)101, (char)32, (char)97,  (char)99, (char)113,
+                     (char)0,   (char)0,  (char)0,   (char)0,  (char)0,
+                     (char)0,   (char)0,  (char)0,   (char)0,  (char)0,
+                     0}));
+    test_msg->stack_free = 2324;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x17, 55286, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x17, 55286, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -371,7 +434,7 @@ START_TEST(test_auto_check_sbp_piksi_31) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_thread_state_t *msg = (msg_thread_state_t *)((void *)last_msg + 6);
+    sbp_msg_thread_state_t *msg = (sbp_msg_thread_state_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->cpu == 7, "incorrect value for cpu, expected 7, is %d",

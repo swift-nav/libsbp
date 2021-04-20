@@ -101,10 +101,19 @@ START_TEST(test_auto_check_sbp_ext_events_41) {
         85, 1,  1,   245, 6,  12, 48, 7, 199, 216,
         49, 15, 202, 65,  15, 0,  3,  0, 62,  204,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_ext_event_t *test_msg = (sbp_msg_ext_event_t *)&test_msg_storage;
+    test_msg->flags = 3;
+    test_msg->ns_residual = 999882;
+    test_msg->pin = 0;
+    test_msg->tow = 254924999;
+    test_msg->wn = 1840;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x101, 1781, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x101, 1781, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -122,7 +131,7 @@ START_TEST(test_auto_check_sbp_ext_events_41) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_ext_event_t *msg = (msg_ext_event_t *)((void *)last_msg + 6);
+    sbp_msg_ext_event_t *msg = (sbp_msg_ext_event_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->flags == 3,

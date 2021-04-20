@@ -63,7 +63,8 @@ definitions:
       "solution\0soln_freq\010\0".
     fields:
       - setting:
-          type: string
+          type: array
+          fill: char
           desc: |
             A NULL-terminated and NULL-delimited string with contents
             "SECTION_SETTING\0SETTING\0VALUE\0"
@@ -95,7 +96,8 @@ definitions:
                     - 5: Rejected; modification is temporarily disabled
                     - 6: Rejected; unspecified error
       - setting:
-          type: string
+          type: array
+          fill: char
           desc: |
             A NULL-terminated and delimited string with contents
             "SECTION_SETTING\0SETTING\0VALUE\0" 
@@ -114,7 +116,8 @@ definitions:
        message (msg_id 0x00A5).
     fields:
       - setting:
-          type: string
+          type: array
+          fill: char
           desc: |
             A NULL-terminated and NULL-delimited string with contents
             "SECTION_SETTING\0SETTING\0"
@@ -132,7 +135,8 @@ definitions:
       "solution\0soln_freq\010\0".
     fields:
       - setting:
-          type: string
+          type: array
+          fill: char
           desc: |
             A NULL-terminated and NULL-delimited string with contents
             "SECTION_SETTING\0SETTING\0VALUE\0"
@@ -173,7 +177,8 @@ definitions:
             An index into the device settings, with values ranging from
             0 to length(settings)
       - setting:
-          type: string
+          type: array
+          fill: char
           desc: |
             A NULL-terminated and delimited string with contents
             "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
@@ -194,7 +199,8 @@ definitions:
       for this setting to set the initial value.
     fields:
       - setting:
-          type: string
+          type: array
+          fill: char
           desc: |
             A NULL-terminated and delimited string with contents
             "SECTION_SETTING\0SETTING\0VALUE".
@@ -221,7 +227,8 @@ definitions:
                     - 2: Rejected; setting already registered, value from memory returned
                     - 3: Rejected; malformed message
       - setting:
-          type: string
+          type: array
+          fill: char
           desc: |
             A NULL-terminated and delimited string with contents
             "SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined

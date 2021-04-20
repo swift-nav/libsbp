@@ -100,10 +100,18 @@ START_TEST(test_auto_check_sbp_bootload_40) {
     u8 test_data[] = {
         85, 180, 0, 0, 0, 9, 0, 0, 0, 0, 118, 49, 46, 50, 10, 201, 1,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_bootloader_handshake_resp_t *test_msg =
+        (sbp_msg_bootloader_handshake_resp_t *)&test_msg_storage;
+    test_msg->flags = 0;
+    strcpy(test_msg->version,
+           ((char[]){(char)118, (char)49, (char)46, (char)50, (char)10, 0}));
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0xb4, 0, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0xb4, 0, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -121,8 +129,8 @@ START_TEST(test_auto_check_sbp_bootload_40) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_bootloader_handshake_resp_t *msg =
-        (msg_bootloader_handshake_resp_t *)((void *)last_msg + 6);
+    sbp_msg_bootloader_handshake_resp_t *msg =
+        (sbp_msg_bootloader_handshake_resp_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->flags == 0,
@@ -152,10 +160,24 @@ START_TEST(test_auto_check_sbp_bootload_40) {
     u8 test_data[] = {
         85, 176, 0, 195, 4, 4, 118, 49, 46, 50, 1, 206,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_bootloader_handshake_dep_a_t *test_msg =
+        (sbp_msg_bootloader_handshake_dep_a_t *)&test_msg_storage;
+    test_msg->n_handshake = 0;
+    test_msg->n_handshake++;
+    test_msg->handshake[0] = 118;
+    test_msg->n_handshake++;
+    test_msg->handshake[1] = 49;
+    test_msg->n_handshake++;
+    test_msg->handshake[2] = 46;
+    test_msg->n_handshake++;
+    test_msg->handshake[3] = 50;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0xb0, 1219, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0xb0, 1219, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -173,8 +195,8 @@ START_TEST(test_auto_check_sbp_bootload_40) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_bootloader_handshake_dep_a_t *msg =
-        (msg_bootloader_handshake_dep_a_t *)((void *)last_msg + 6);
+    sbp_msg_bootloader_handshake_dep_a_t *msg =
+        (sbp_msg_bootloader_handshake_dep_a_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->handshake[0] == 118,

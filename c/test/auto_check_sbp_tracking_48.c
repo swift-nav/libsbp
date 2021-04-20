@@ -105,10 +105,60 @@ START_TEST(test_auto_check_sbp_tracking_48) {
         75,  65,  1,   31,  16, 74,  126, 65,  1,   25,  132, 196, 135,
         64,  1,   6,   100, 59, 223, 64,  17,  225,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_tracking_state_dep_a_t *test_msg =
+        (sbp_msg_tracking_state_dep_a_t *)&test_msg_storage;
+    test_msg->n_states = 0;
+    test_msg->n_states++;
+    test_msg->states[0].cn0 = 11.230907440185547;
+    test_msg->states[0].prn = 0;
+    test_msg->states[0].state = 1;
+    test_msg->n_states++;
+    test_msg->states[1].cn0 = 10.438665390014648;
+    test_msg->states[1].prn = 2;
+    test_msg->states[1].state = 1;
+    test_msg->n_states++;
+    test_msg->states[2].cn0 = 9.732142448425293;
+    test_msg->states[2].prn = 3;
+    test_msg->states[2].state = 1;
+    test_msg->n_states++;
+    test_msg->states[3].cn0 = 14.341922760009766;
+    test_msg->states[3].prn = 7;
+    test_msg->states[3].state = 1;
+    test_msg->n_states++;
+    test_msg->states[4].cn0 = 7.8549017906188965;
+    test_msg->states[4].prn = 10;
+    test_msg->states[4].state = 1;
+    test_msg->n_states++;
+    test_msg->states[5].cn0 = 5.0982866287231445;
+    test_msg->states[5].prn = 13;
+    test_msg->states[5].state = 1;
+    test_msg->n_states++;
+    test_msg->states[6].cn0 = 6.741272926330566;
+    test_msg->states[6].prn = 22;
+    test_msg->states[6].state = 1;
+    test_msg->n_states++;
+    test_msg->states[7].cn0 = 12.700549125671387;
+    test_msg->states[7].prn = 30;
+    test_msg->states[7].state = 1;
+    test_msg->n_states++;
+    test_msg->states[8].cn0 = 15.893081665039062;
+    test_msg->states[8].prn = 31;
+    test_msg->states[8].state = 1;
+    test_msg->n_states++;
+    test_msg->states[9].cn0 = 4.242738723754883;
+    test_msg->states[9].prn = 25;
+    test_msg->states[9].state = 1;
+    test_msg->n_states++;
+    test_msg->states[10].cn0 = 6.97599983215332;
+    test_msg->states[10].prn = 6;
+    test_msg->states[10].state = 1;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x16, 1219, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x16, 1219, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -126,8 +176,8 @@ START_TEST(test_auto_check_sbp_tracking_48) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_tracking_state_dep_a_t *msg =
-        (msg_tracking_state_dep_a_t *)((void *)last_msg + 6);
+    sbp_msg_tracking_state_dep_a_t *msg =
+        (sbp_msg_tracking_state_dep_a_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(
@@ -263,10 +313,60 @@ START_TEST(test_auto_check_sbp_tracking_48) {
         19, 215, 64, 1,   30,  138, 138, 79, 65,  1,   31,  214, 179, 119, 65,
         1,  25,  53, 138, 120, 64,  1,   6,  183, 247, 129, 64,  168, 173,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_tracking_state_dep_a_t *test_msg =
+        (sbp_msg_tracking_state_dep_a_t *)&test_msg_storage;
+    test_msg->n_states = 0;
+    test_msg->n_states++;
+    test_msg->states[0].cn0 = 11.014122009277344;
+    test_msg->states[0].prn = 0;
+    test_msg->states[0].state = 1;
+    test_msg->n_states++;
+    test_msg->states[1].cn0 = 10.885148048400879;
+    test_msg->states[1].prn = 2;
+    test_msg->states[1].state = 1;
+    test_msg->n_states++;
+    test_msg->states[2].cn0 = 10.131351470947266;
+    test_msg->states[2].prn = 3;
+    test_msg->states[2].state = 1;
+    test_msg->n_states++;
+    test_msg->states[3].cn0 = 14.829026222229004;
+    test_msg->states[3].prn = 7;
+    test_msg->states[3].state = 1;
+    test_msg->n_states++;
+    test_msg->states[4].cn0 = 7.79104471206665;
+    test_msg->states[4].prn = 10;
+    test_msg->states[4].state = 1;
+    test_msg->n_states++;
+    test_msg->states[5].cn0 = 4.868161201477051;
+    test_msg->states[5].prn = 13;
+    test_msg->states[5].state = 1;
+    test_msg->n_states++;
+    test_msg->states[6].cn0 = 6.721095561981201;
+    test_msg->states[6].prn = 22;
+    test_msg->states[6].state = 1;
+    test_msg->n_states++;
+    test_msg->states[7].cn0 = 12.971323013305664;
+    test_msg->states[7].prn = 30;
+    test_msg->states[7].state = 1;
+    test_msg->n_states++;
+    test_msg->states[8].cn0 = 15.481405258178711;
+    test_msg->states[8].prn = 31;
+    test_msg->states[8].state = 1;
+    test_msg->n_states++;
+    test_msg->states[9].cn0 = 3.8834354877471924;
+    test_msg->states[9].prn = 25;
+    test_msg->states[9].state = 1;
+    test_msg->n_states++;
+    test_msg->states[10].cn0 = 4.061488628387451;
+    test_msg->states[10].prn = 6;
+    test_msg->states[10].state = 1;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x16, 1219, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x16, 1219, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -284,8 +384,8 @@ START_TEST(test_auto_check_sbp_tracking_48) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_tracking_state_dep_a_t *msg =
-        (msg_tracking_state_dep_a_t *)((void *)last_msg + 6);
+    sbp_msg_tracking_state_dep_a_t *msg =
+        (sbp_msg_tracking_state_dep_a_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(
@@ -421,10 +521,60 @@ START_TEST(test_auto_check_sbp_tracking_48) {
         101, 201, 64,  1,   30,  172, 183, 83, 65,  1,   31,  238, 193, 120, 65,
         1,   25,  220, 48,  132, 64,  1,   6,  49,  214, 54,  64,  110, 179,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_tracking_state_dep_a_t *test_msg =
+        (sbp_msg_tracking_state_dep_a_t *)&test_msg_storage;
+    test_msg->n_states = 0;
+    test_msg->n_states++;
+    test_msg->states[0].cn0 = 11.768689155578613;
+    test_msg->states[0].prn = 0;
+    test_msg->states[0].state = 1;
+    test_msg->n_states++;
+    test_msg->states[1].cn0 = 10.909001350402832;
+    test_msg->states[1].prn = 2;
+    test_msg->states[1].state = 1;
+    test_msg->n_states++;
+    test_msg->states[2].cn0 = 9.881731033325195;
+    test_msg->states[2].prn = 3;
+    test_msg->states[2].state = 1;
+    test_msg->n_states++;
+    test_msg->states[3].cn0 = 14.076395988464355;
+    test_msg->states[3].prn = 7;
+    test_msg->states[3].state = 1;
+    test_msg->n_states++;
+    test_msg->states[4].cn0 = 7.619818210601807;
+    test_msg->states[4].prn = 10;
+    test_msg->states[4].state = 1;
+    test_msg->n_states++;
+    test_msg->states[5].cn0 = 5.208371162414551;
+    test_msg->states[5].prn = 13;
+    test_msg->states[5].state = 1;
+    test_msg->n_states++;
+    test_msg->states[6].cn0 = 6.2935872077941895;
+    test_msg->states[6].prn = 22;
+    test_msg->states[6].state = 1;
+    test_msg->n_states++;
+    test_msg->states[7].cn0 = 13.232341766357422;
+    test_msg->states[7].prn = 30;
+    test_msg->states[7].state = 1;
+    test_msg->n_states++;
+    test_msg->states[8].cn0 = 15.547346115112305;
+    test_msg->states[8].prn = 31;
+    test_msg->states[8].state = 1;
+    test_msg->n_states++;
+    test_msg->states[9].cn0 = 4.130964279174805;
+    test_msg->states[9].prn = 25;
+    test_msg->states[9].state = 1;
+    test_msg->n_states++;
+    test_msg->states[10].cn0 = 2.856823205947876;
+    test_msg->states[10].prn = 6;
+    test_msg->states[10].state = 1;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x16, 1219, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x16, 1219, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -442,8 +592,8 @@ START_TEST(test_auto_check_sbp_tracking_48) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_tracking_state_dep_a_t *msg =
-        (msg_tracking_state_dep_a_t *)((void *)last_msg + 6);
+    sbp_msg_tracking_state_dep_a_t *msg =
+        (sbp_msg_tracking_state_dep_a_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(
@@ -579,10 +729,60 @@ START_TEST(test_auto_check_sbp_tracking_48) {
         0,  128, 191, 0,   0,   0,   0, 128, 191, 0,   0,   0,   0,   128, 191,
         0,  0,   0,   0,   128, 191, 0, 0,   0,   0,   128, 191, 248, 89,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_tracking_state_dep_a_t *test_msg =
+        (sbp_msg_tracking_state_dep_a_t *)&test_msg_storage;
+    test_msg->n_states = 0;
+    test_msg->n_states++;
+    test_msg->states[0].cn0 = 62.13985824584961;
+    test_msg->states[0].prn = 0;
+    test_msg->states[0].state = 1;
+    test_msg->n_states++;
+    test_msg->states[1].cn0 = -1.0;
+    test_msg->states[1].prn = 0;
+    test_msg->states[1].state = 0;
+    test_msg->n_states++;
+    test_msg->states[2].cn0 = -1.0;
+    test_msg->states[2].prn = 0;
+    test_msg->states[2].state = 0;
+    test_msg->n_states++;
+    test_msg->states[3].cn0 = -1.0;
+    test_msg->states[3].prn = 0;
+    test_msg->states[3].state = 0;
+    test_msg->n_states++;
+    test_msg->states[4].cn0 = -1.0;
+    test_msg->states[4].prn = 0;
+    test_msg->states[4].state = 0;
+    test_msg->n_states++;
+    test_msg->states[5].cn0 = -1.0;
+    test_msg->states[5].prn = 0;
+    test_msg->states[5].state = 0;
+    test_msg->n_states++;
+    test_msg->states[6].cn0 = -1.0;
+    test_msg->states[6].prn = 0;
+    test_msg->states[6].state = 0;
+    test_msg->n_states++;
+    test_msg->states[7].cn0 = -1.0;
+    test_msg->states[7].prn = 0;
+    test_msg->states[7].state = 0;
+    test_msg->n_states++;
+    test_msg->states[8].cn0 = -1.0;
+    test_msg->states[8].prn = 0;
+    test_msg->states[8].state = 0;
+    test_msg->n_states++;
+    test_msg->states[9].cn0 = -1.0;
+    test_msg->states[9].prn = 0;
+    test_msg->states[9].state = 0;
+    test_msg->n_states++;
+    test_msg->states[10].cn0 = -1.0;
+    test_msg->states[10].prn = 0;
+    test_msg->states[10].state = 0;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x16, 1219, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x16, 1219, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -600,8 +800,8 @@ START_TEST(test_auto_check_sbp_tracking_48) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_tracking_state_dep_a_t *msg =
-        (msg_tracking_state_dep_a_t *)((void *)last_msg + 6);
+    sbp_msg_tracking_state_dep_a_t *msg =
+        (sbp_msg_tracking_state_dep_a_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(
@@ -727,10 +927,60 @@ START_TEST(test_auto_check_sbp_tracking_48) {
         0,  128, 191, 0,   0,   0,   0,   128, 191, 0,  0,   0,   0,  128, 191,
         0,  0,   0,   0,   128, 191, 0,   0,   0,   0,  128, 191, 84, 101,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_tracking_state_dep_a_t *test_msg =
+        (sbp_msg_tracking_state_dep_a_t *)&test_msg_storage;
+    test_msg->n_states = 0;
+    test_msg->n_states++;
+    test_msg->states[0].cn0 = 36.764503479003906;
+    test_msg->states[0].prn = 0;
+    test_msg->states[0].state = 1;
+    test_msg->n_states++;
+    test_msg->states[1].cn0 = 9.313432693481445;
+    test_msg->states[1].prn = 2;
+    test_msg->states[1].state = 1;
+    test_msg->n_states++;
+    test_msg->states[2].cn0 = 16.854938507080078;
+    test_msg->states[2].prn = 3;
+    test_msg->states[2].state = 1;
+    test_msg->n_states++;
+    test_msg->states[3].cn0 = -1.0;
+    test_msg->states[3].prn = 0;
+    test_msg->states[3].state = 0;
+    test_msg->n_states++;
+    test_msg->states[4].cn0 = -1.0;
+    test_msg->states[4].prn = 0;
+    test_msg->states[4].state = 0;
+    test_msg->n_states++;
+    test_msg->states[5].cn0 = -1.0;
+    test_msg->states[5].prn = 0;
+    test_msg->states[5].state = 0;
+    test_msg->n_states++;
+    test_msg->states[6].cn0 = -1.0;
+    test_msg->states[6].prn = 0;
+    test_msg->states[6].state = 0;
+    test_msg->n_states++;
+    test_msg->states[7].cn0 = -1.0;
+    test_msg->states[7].prn = 0;
+    test_msg->states[7].state = 0;
+    test_msg->n_states++;
+    test_msg->states[8].cn0 = -1.0;
+    test_msg->states[8].prn = 0;
+    test_msg->states[8].state = 0;
+    test_msg->n_states++;
+    test_msg->states[9].cn0 = -1.0;
+    test_msg->states[9].prn = 0;
+    test_msg->states[9].state = 0;
+    test_msg->n_states++;
+    test_msg->states[10].cn0 = -1.0;
+    test_msg->states[10].prn = 0;
+    test_msg->states[10].state = 0;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x16, 1219, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x16, 1219, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -748,8 +998,8 @@ START_TEST(test_auto_check_sbp_tracking_48) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_tracking_state_dep_a_t *msg =
-        (msg_tracking_state_dep_a_t *)((void *)last_msg + 6);
+    sbp_msg_tracking_state_dep_a_t *msg =
+        (sbp_msg_tracking_state_dep_a_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(
@@ -877,10 +1127,60 @@ START_TEST(test_auto_check_sbp_tracking_48) {
         0,  128, 191, 0,   0,   0,   0,   128, 191, 0,  0,   0,   0,  128, 191,
         0,  0,   0,   0,   128, 191, 0,   0,   0,   0,  128, 191, 37, 123,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_tracking_state_dep_a_t *test_msg =
+        (sbp_msg_tracking_state_dep_a_t *)&test_msg_storage;
+    test_msg->n_states = 0;
+    test_msg->n_states++;
+    test_msg->states[0].cn0 = 27.394229888916016;
+    test_msg->states[0].prn = 0;
+    test_msg->states[0].state = 1;
+    test_msg->n_states++;
+    test_msg->states[1].cn0 = 2.875;
+    test_msg->states[1].prn = 2;
+    test_msg->states[1].state = 1;
+    test_msg->n_states++;
+    test_msg->states[2].cn0 = 8.467644691467285;
+    test_msg->states[2].prn = 3;
+    test_msg->states[2].state = 1;
+    test_msg->n_states++;
+    test_msg->states[3].cn0 = -1.0;
+    test_msg->states[3].prn = 0;
+    test_msg->states[3].state = 0;
+    test_msg->n_states++;
+    test_msg->states[4].cn0 = -1.0;
+    test_msg->states[4].prn = 0;
+    test_msg->states[4].state = 0;
+    test_msg->n_states++;
+    test_msg->states[5].cn0 = -1.0;
+    test_msg->states[5].prn = 0;
+    test_msg->states[5].state = 0;
+    test_msg->n_states++;
+    test_msg->states[6].cn0 = -1.0;
+    test_msg->states[6].prn = 0;
+    test_msg->states[6].state = 0;
+    test_msg->n_states++;
+    test_msg->states[7].cn0 = -1.0;
+    test_msg->states[7].prn = 0;
+    test_msg->states[7].state = 0;
+    test_msg->n_states++;
+    test_msg->states[8].cn0 = -1.0;
+    test_msg->states[8].prn = 0;
+    test_msg->states[8].state = 0;
+    test_msg->n_states++;
+    test_msg->states[9].cn0 = -1.0;
+    test_msg->states[9].prn = 0;
+    test_msg->states[9].state = 0;
+    test_msg->n_states++;
+    test_msg->states[10].cn0 = -1.0;
+    test_msg->states[10].prn = 0;
+    test_msg->states[10].state = 0;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x16, 1219, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x16, 1219, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -898,8 +1198,8 @@ START_TEST(test_auto_check_sbp_tracking_48) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_tracking_state_dep_a_t *msg =
-        (msg_tracking_state_dep_a_t *)((void *)last_msg + 6);
+    sbp_msg_tracking_state_dep_a_t *msg =
+        (sbp_msg_tracking_state_dep_a_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(

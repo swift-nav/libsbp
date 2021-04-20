@@ -104,10 +104,37 @@ START_TEST(test_auto_check_sbp_piksi_32) {
         0,  0,  0, 0,   81,  1,   255, 255, 255, 255, 0,   0,  0,  0,
         0,  0,  0, 0,   255, 255, 255, 255, 71,  124,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_uart_state_depa_t *test_msg =
+        (sbp_msg_uart_state_depa_t *)&test_msg_storage;
+    test_msg->latency.avg = -1;
+    test_msg->latency.current = -1;
+    test_msg->latency.lmax = 0;
+    test_msg->latency.lmin = 0;
+    test_msg->uart_a.crc_error_count = 0;
+    test_msg->uart_a.io_error_count = 0;
+    test_msg->uart_a.rx_buffer_level = 0;
+    test_msg->uart_a.rx_throughput = 0.0;
+    test_msg->uart_a.tx_buffer_level = 24;
+    test_msg->uart_a.tx_throughput = 0.8661972284317017;
+    test_msg->uart_b.crc_error_count = 0;
+    test_msg->uart_b.io_error_count = 0;
+    test_msg->uart_b.rx_buffer_level = 0;
+    test_msg->uart_b.rx_throughput = 0.0;
+    test_msg->uart_b.tx_buffer_level = 40;
+    test_msg->uart_b.tx_throughput = 2.9718310832977295;
+    test_msg->uart_ftdi.crc_error_count = 0;
+    test_msg->uart_ftdi.io_error_count = 0;
+    test_msg->uart_ftdi.rx_buffer_level = 1;
+    test_msg->uart_ftdi.rx_throughput = 0.035211268812417984;
+    test_msg->uart_ftdi.tx_buffer_level = 81;
+    test_msg->uart_ftdi.tx_throughput = 5.063380241394043;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x18, 55286, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x18, 55286, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -125,8 +152,7 @@ START_TEST(test_auto_check_sbp_piksi_32) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_uart_state_depa_t *msg =
-        (msg_uart_state_depa_t *)((void *)last_msg + 6);
+    sbp_msg_uart_state_depa_t *msg = (sbp_msg_uart_state_depa_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->latency.avg == -1,
@@ -239,10 +265,37 @@ START_TEST(test_auto_check_sbp_piksi_32) {
         0,  0,  0, 0,   85,  1,   255, 255, 255, 255, 0,  0,  0,   0,
         0,  0,  0, 0,   255, 255, 255, 255, 153, 248,
     };
+    sbp_msg_t test_msg_storage;
+    sbp_msg_uart_state_depa_t *test_msg =
+        (sbp_msg_uart_state_depa_t *)&test_msg_storage;
+    test_msg->latency.avg = -1;
+    test_msg->latency.current = -1;
+    test_msg->latency.lmax = 0;
+    test_msg->latency.lmin = 0;
+    test_msg->uart_a.crc_error_count = 0;
+    test_msg->uart_a.io_error_count = 0;
+    test_msg->uart_a.rx_buffer_level = 0;
+    test_msg->uart_a.rx_throughput = 0.0;
+    test_msg->uart_a.tx_buffer_level = 24;
+    test_msg->uart_a.tx_throughput = 0.8746479153633118;
+    test_msg->uart_b.crc_error_count = 0;
+    test_msg->uart_b.io_error_count = 0;
+    test_msg->uart_b.rx_buffer_level = 0;
+    test_msg->uart_b.rx_throughput = 0.0;
+    test_msg->uart_b.tx_buffer_level = 40;
+    test_msg->uart_b.tx_throughput = 2.995774745941162;
+    test_msg->uart_ftdi.crc_error_count = 0;
+    test_msg->uart_ftdi.io_error_count = 0;
+    test_msg->uart_ftdi.rx_buffer_level = 1;
+    test_msg->uart_ftdi.rx_throughput = 0.35211268067359924;
+    test_msg->uart_ftdi.tx_buffer_level = 85;
+    test_msg->uart_ftdi.tx_throughput = 6.7901411056518555;
 
     dummy_reset();
-    sbp_send_message(&sbp_state, 0x18, 55286, sizeof(test_data), test_data,
-                     &dummy_write);
+    sbp_send_message(&sbp_state, 0x18, 55286, &test_msg_storage, &dummy_write);
+
+    ck_assert_msg(memcmp(dummy_buff, test_data, sizeof(test_data)) == 0,
+                  "message not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
@@ -260,8 +313,7 @@ START_TEST(test_auto_check_sbp_piksi_32) {
 
     // Cast to expected message type - the +6 byte offset is where the payload
     // starts
-    msg_uart_state_depa_t *msg =
-        (msg_uart_state_depa_t *)((void *)last_msg + 6);
+    sbp_msg_uart_state_depa_t *msg = (sbp_msg_uart_state_depa_t *)&last_msg;
     // Run tests against fields
     ck_assert_msg(msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(msg->latency.avg == -1,
