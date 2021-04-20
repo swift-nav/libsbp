@@ -33,24 +33,16 @@ typedef struct {
    */
   char tname[15];
   /**
-   * Unused
-   */
-  u8 n_tname;
-  /**
    * the command line (as much as it fits in the remaining packet)
    */
   char cmdline[236];
-  /**
-   * Unused
-   */
-  u8 n_cmdline;
 } sbp_msg_linux_cpu_state_dep_a_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_cpu_state_dep_a_t(
     const sbp_msg_linux_cpu_state_dep_a_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->pcpu) + 15 +
-         (strlen(msg->cmdline) + 1);
+  return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->pcpu) +
+         (15 * sizeof(msg->tname[0])) + sbp_strlen(msg->cmdline, "none");
 }
 
 static inline bool sbp_pack_sbp_msg_linux_cpu_state_dep_a_t(
@@ -85,10 +77,18 @@ static inline bool sbp_pack_sbp_msg_linux_cpu_state_dep_a_t(
   u8 msgpcpu = msg->pcpu;
   memcpy(buf + offset, &msgpcpu, 1);
   offset += 1;
-  memcpy(buf + offset, msg->tname, sizeof(msg->tname));
-  offset += sizeof(msg->tname);
-  strcpy((char *)(buf + offset), msg->cmdline);
-  offset += strlen(msg->cmdline) + 1;
+  for (size_t msgtname_idx = 0; msgtname_idx < 15; msgtname_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    char msgtnamemsgtname_idx = msg->tname[msgtname_idx];
+    memcpy(buf + offset, &msgtnamemsgtname_idx, 1);
+    offset += 1;
+  }
+  if (offset + sbp_strlen(msg->cmdline, "none") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->cmdline, "none");
   return true;
 }
 
@@ -118,10 +118,15 @@ static inline bool sbp_unpack_sbp_msg_linux_cpu_state_dep_a_t(
   }
   memcpy(&msg->pcpu, buf + offset, 1);
   offset += 1;
-  memcpy(msg->tname, buf + offset, sizeof(msg->tname));
-  offset += sizeof(msg->tname);
-  strcpy(msg->cmdline, (const char *)buf + offset);
-  offset += strlen(msg->cmdline) + 1;
+  for (size_t msgtname_idx = 0; msgtname_idx < 15; msgtname_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    memcpy(&msg->tname[msgtname_idx], buf + offset, 1);
+    offset += 1;
+  }
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->cmdline, "none");
   return true;
 }
 /** List memory state on the system. DEPRECATED.
@@ -149,24 +154,16 @@ typedef struct {
    */
   char tname[15];
   /**
-   * Unused
-   */
-  u8 n_tname;
-  /**
    * the command line (as much as it fits in the remaining packet)
    */
   char cmdline[236];
-  /**
-   * Unused
-   */
-  u8 n_cmdline;
 } sbp_msg_linux_mem_state_dep_a_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_mem_state_dep_a_t(
     const sbp_msg_linux_mem_state_dep_a_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->pmem) + 15 +
-         (strlen(msg->cmdline) + 1);
+  return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->pmem) +
+         (15 * sizeof(msg->tname[0])) + sbp_strlen(msg->cmdline, "none");
 }
 
 static inline bool sbp_pack_sbp_msg_linux_mem_state_dep_a_t(
@@ -201,10 +198,18 @@ static inline bool sbp_pack_sbp_msg_linux_mem_state_dep_a_t(
   u8 msgpmem = msg->pmem;
   memcpy(buf + offset, &msgpmem, 1);
   offset += 1;
-  memcpy(buf + offset, msg->tname, sizeof(msg->tname));
-  offset += sizeof(msg->tname);
-  strcpy((char *)(buf + offset), msg->cmdline);
-  offset += strlen(msg->cmdline) + 1;
+  for (size_t msgtname_idx = 0; msgtname_idx < 15; msgtname_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    char msgtnamemsgtname_idx = msg->tname[msgtname_idx];
+    memcpy(buf + offset, &msgtnamemsgtname_idx, 1);
+    offset += 1;
+  }
+  if (offset + sbp_strlen(msg->cmdline, "none") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->cmdline, "none");
   return true;
 }
 
@@ -234,10 +239,15 @@ static inline bool sbp_unpack_sbp_msg_linux_mem_state_dep_a_t(
   }
   memcpy(&msg->pmem, buf + offset, 1);
   offset += 1;
-  memcpy(msg->tname, buf + offset, sizeof(msg->tname));
-  offset += sizeof(msg->tname);
-  strcpy(msg->cmdline, (const char *)buf + offset);
-  offset += strlen(msg->cmdline) + 1;
+  for (size_t msgtname_idx = 0; msgtname_idx < 15; msgtname_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    memcpy(&msg->tname[msgtname_idx], buf + offset, 1);
+    offset += 1;
+  }
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->cmdline, "none");
   return true;
 }
 /** CPU, Memory and Process Starts/Stops. DEPRECATED.
@@ -426,10 +436,6 @@ typedef struct {
    * the command line of the process in question
    */
   char cmdline[246];
-  /**
-   * Unused
-   */
-  u8 n_cmdline;
 } sbp_msg_linux_process_socket_counts_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_process_socket_counts_t(
@@ -437,7 +443,7 @@ static inline size_t sbp_packed_size_sbp_msg_linux_process_socket_counts_t(
   (void)msg;
   return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->socket_count) +
          sizeof(msg->socket_types) + sizeof(msg->socket_states) +
-         (strlen(msg->cmdline) + 1);
+         sbp_strlen(msg->cmdline, "none");
 }
 
 static inline bool sbp_pack_sbp_msg_linux_process_socket_counts_t(
@@ -489,8 +495,10 @@ static inline bool sbp_pack_sbp_msg_linux_process_socket_counts_t(
   msgsocket_states = htole16(msgsocket_states);
   memcpy(buf + offset, &msgsocket_states, 2);
   offset += 2;
-  strcpy((char *)(buf + offset), msg->cmdline);
-  offset += strlen(msg->cmdline) + 1;
+  if (offset + sbp_strlen(msg->cmdline, "none") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->cmdline, "none");
   return true;
 }
 
@@ -535,8 +543,8 @@ static inline bool sbp_unpack_sbp_msg_linux_process_socket_counts_t(
   memcpy(&msg->socket_states, buf + offset, 2);
   msg->socket_states = le16toh(msg->socket_states);
   offset += 2;
-  strcpy(msg->cmdline, (const char *)buf + offset);
-  offset += strlen(msg->cmdline) + 1;
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->cmdline, "none");
   return true;
 }
 /** A list of processes with deep socket queues
@@ -582,17 +590,9 @@ typedef struct {
    */
   char address_of_largest[64];
   /**
-   * Unused
-   */
-  u8 n_address_of_largest;
-  /**
    * the command line of the process in question
    */
   char cmdline[180];
-  /**
-   * Unused
-   */
-  u8 n_cmdline;
 } sbp_msg_linux_process_socket_queues_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_process_socket_queues_t(
@@ -600,7 +600,9 @@ static inline size_t sbp_packed_size_sbp_msg_linux_process_socket_queues_t(
   (void)msg;
   return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->recv_queued) +
          sizeof(msg->send_queued) + sizeof(msg->socket_types) +
-         sizeof(msg->socket_states) + 64 + (strlen(msg->cmdline) + 1);
+         sizeof(msg->socket_states) +
+         (64 * sizeof(msg->address_of_largest[0])) +
+         sbp_strlen(msg->cmdline, "none");
 }
 
 static inline bool sbp_pack_sbp_msg_linux_process_socket_queues_t(
@@ -660,11 +662,20 @@ static inline bool sbp_pack_sbp_msg_linux_process_socket_queues_t(
   msgsocket_states = htole16(msgsocket_states);
   memcpy(buf + offset, &msgsocket_states, 2);
   offset += 2;
-  memcpy(buf + offset, msg->address_of_largest,
-         sizeof(msg->address_of_largest));
-  offset += sizeof(msg->address_of_largest);
-  strcpy((char *)(buf + offset), msg->cmdline);
-  offset += strlen(msg->cmdline) + 1;
+  for (size_t msgaddress_of_largest_idx = 0; msgaddress_of_largest_idx < 64;
+       msgaddress_of_largest_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    char msgaddress_of_largestmsgaddress_of_largest_idx =
+        msg->address_of_largest[msgaddress_of_largest_idx];
+    memcpy(buf + offset, &msgaddress_of_largestmsgaddress_of_largest_idx, 1);
+    offset += 1;
+  }
+  if (offset + sbp_strlen(msg->cmdline, "none") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->cmdline, "none");
   return true;
 }
 
@@ -716,11 +727,17 @@ static inline bool sbp_unpack_sbp_msg_linux_process_socket_queues_t(
   memcpy(&msg->socket_states, buf + offset, 2);
   msg->socket_states = le16toh(msg->socket_states);
   offset += 2;
-  memcpy(msg->address_of_largest, buf + offset,
-         sizeof(msg->address_of_largest));
-  offset += sizeof(msg->address_of_largest);
-  strcpy(msg->cmdline, (const char *)buf + offset);
-  offset += strlen(msg->cmdline) + 1;
+  for (size_t msgaddress_of_largest_idx = 0; msgaddress_of_largest_idx < 64;
+       msgaddress_of_largest_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    memcpy(&msg->address_of_largest[msgaddress_of_largest_idx], buf + offset,
+           1);
+    offset += 1;
+  }
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->cmdline, "none");
   return true;
 }
 /** Summary of socket usage across the system
@@ -744,26 +761,18 @@ typedef struct {
    */
   u16 socket_state_counts[16];
   /**
-   * Unused
-   */
-  u8 n_socket_state_counts;
-  /**
    * A count for each socket type reported in the `socket_types_reported` field,
    * the first entry corresponds to the first enabled bit in `types_reported`.
    */
   u16 socket_type_counts[16];
-  /**
-   * Unused
-   */
-  u8 n_socket_type_counts;
 } sbp_msg_linux_socket_usage_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_socket_usage_t(
     const sbp_msg_linux_socket_usage_t *msg) {
   (void)msg;
   return 0 + sizeof(msg->avg_queue_depth) + sizeof(msg->max_queue_depth) +
-         (16 * sizeof(msg->socket_state_counts)) +
-         (16 * sizeof(msg->socket_type_counts));
+         (16 * sizeof(msg->socket_state_counts[0])) +
+         (16 * sizeof(msg->socket_type_counts[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_linux_socket_usage_t(
@@ -887,17 +896,13 @@ typedef struct {
    * the command line of the process in question
    */
   char cmdline[250];
-  /**
-   * Unused
-   */
-  u8 n_cmdline;
 } sbp_msg_linux_process_fd_count_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_process_fd_count_t(
     const sbp_msg_linux_process_fd_count_t *msg) {
   (void)msg;
   return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->fd_count) +
-         (strlen(msg->cmdline) + 1);
+         sbp_strlen(msg->cmdline, "none");
 }
 
 static inline bool sbp_pack_sbp_msg_linux_process_fd_count_t(
@@ -933,8 +938,10 @@ static inline bool sbp_pack_sbp_msg_linux_process_fd_count_t(
   msgfd_count = htole16(msgfd_count);
   memcpy(buf + offset, &msgfd_count, 2);
   offset += 2;
-  strcpy((char *)(buf + offset), msg->cmdline);
-  offset += strlen(msg->cmdline) + 1;
+  if (offset + sbp_strlen(msg->cmdline, "none") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->cmdline, "none");
   return true;
 }
 
@@ -965,8 +972,8 @@ static inline bool sbp_unpack_sbp_msg_linux_process_fd_count_t(
   memcpy(&msg->fd_count, buf + offset, 2);
   msg->fd_count = le16toh(msg->fd_count);
   offset += 2;
-  strcpy(msg->cmdline, (const char *)buf + offset);
-  offset += strlen(msg->cmdline) + 1;
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->cmdline, "none");
   return true;
 }
 /** Summary of open file descriptors on the system
@@ -988,16 +995,12 @@ typedef struct {
    * of the list being 2 NULL terminators in a row.
    */
   char most_opened[251];
-  /**
-   * Unused
-   */
-  u8 n_most_opened;
 } sbp_msg_linux_process_fd_summary_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_process_fd_summary_t(
     const sbp_msg_linux_process_fd_summary_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->sys_fd_count) + (strlen(msg->most_opened) + 1);
+  return 0 + sizeof(msg->sys_fd_count) + sbp_strlen(msg->most_opened, "2-nul");
 }
 
 static inline bool sbp_pack_sbp_msg_linux_process_fd_summary_t(
@@ -1018,8 +1021,10 @@ static inline bool sbp_pack_sbp_msg_linux_process_fd_summary_t(
   msgsys_fd_count = htole32(msgsys_fd_count);
   memcpy(buf + offset, &msgsys_fd_count, 4);
   offset += 4;
-  strcpy((char *)(buf + offset), msg->most_opened);
-  offset += strlen(msg->most_opened) + 1;
+  if (offset + sbp_strlen(msg->most_opened, "2-nul") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->most_opened, "2-nul");
   return true;
 }
 
@@ -1037,8 +1042,8 @@ static inline bool sbp_unpack_sbp_msg_linux_process_fd_summary_t(
   memcpy(&msg->sys_fd_count, buf + offset, 4);
   msg->sys_fd_count = le32toh(msg->sys_fd_count);
   offset += 4;
-  strcpy(msg->most_opened, (const char *)buf + offset);
-  offset += strlen(msg->most_opened) + 1;
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->most_opened, "2-nul");
   return true;
 }
 /** List CPU state on the system
@@ -1087,25 +1092,17 @@ typedef struct {
    */
   char tname[15];
   /**
-   * Unused
-   */
-  u8 n_tname;
-  /**
    * the command line (as much as it fits in the remaining packet)
    */
   char cmdline[231];
-  /**
-   * Unused
-   */
-  u8 n_cmdline;
 } sbp_msg_linux_cpu_state_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_cpu_state_t(
     const sbp_msg_linux_cpu_state_t *msg) {
   (void)msg;
   return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->pcpu) +
-         sizeof(msg->time) + sizeof(msg->flags) + 15 +
-         (strlen(msg->cmdline) + 1);
+         sizeof(msg->time) + sizeof(msg->flags) + (15 * sizeof(msg->tname[0])) +
+         sbp_strlen(msg->cmdline, "none");
 }
 
 static inline bool sbp_pack_sbp_msg_linux_cpu_state_t(
@@ -1155,10 +1152,18 @@ static inline bool sbp_pack_sbp_msg_linux_cpu_state_t(
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
   offset += 1;
-  memcpy(buf + offset, msg->tname, sizeof(msg->tname));
-  offset += sizeof(msg->tname);
-  strcpy((char *)(buf + offset), msg->cmdline);
-  offset += strlen(msg->cmdline) + 1;
+  for (size_t msgtname_idx = 0; msgtname_idx < 15; msgtname_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    char msgtnamemsgtname_idx = msg->tname[msgtname_idx];
+    memcpy(buf + offset, &msgtnamemsgtname_idx, 1);
+    offset += 1;
+  }
+  if (offset + sbp_strlen(msg->cmdline, "none") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->cmdline, "none");
   return true;
 }
 
@@ -1201,10 +1206,15 @@ static inline bool sbp_unpack_sbp_msg_linux_cpu_state_t(
   }
   memcpy(&msg->flags, buf + offset, 1);
   offset += 1;
-  memcpy(msg->tname, buf + offset, sizeof(msg->tname));
-  offset += sizeof(msg->tname);
-  strcpy(msg->cmdline, (const char *)buf + offset);
-  offset += strlen(msg->cmdline) + 1;
+  for (size_t msgtname_idx = 0; msgtname_idx < 15; msgtname_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    memcpy(&msg->tname[msgtname_idx], buf + offset, 1);
+    offset += 1;
+  }
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->cmdline, "none");
   return true;
 }
 /** List memory state on the system
@@ -1253,25 +1263,17 @@ typedef struct {
    */
   char tname[15];
   /**
-   * Unused
-   */
-  u8 n_tname;
-  /**
    * the command line (as much as it fits in the remaining packet)
    */
   char cmdline[231];
-  /**
-   * Unused
-   */
-  u8 n_cmdline;
 } sbp_msg_linux_mem_state_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_mem_state_t(
     const sbp_msg_linux_mem_state_t *msg) {
   (void)msg;
   return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->pmem) +
-         sizeof(msg->time) + sizeof(msg->flags) + 15 +
-         (strlen(msg->cmdline) + 1);
+         sizeof(msg->time) + sizeof(msg->flags) + (15 * sizeof(msg->tname[0])) +
+         sbp_strlen(msg->cmdline, "none");
 }
 
 static inline bool sbp_pack_sbp_msg_linux_mem_state_t(
@@ -1321,10 +1323,18 @@ static inline bool sbp_pack_sbp_msg_linux_mem_state_t(
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
   offset += 1;
-  memcpy(buf + offset, msg->tname, sizeof(msg->tname));
-  offset += sizeof(msg->tname);
-  strcpy((char *)(buf + offset), msg->cmdline);
-  offset += strlen(msg->cmdline) + 1;
+  for (size_t msgtname_idx = 0; msgtname_idx < 15; msgtname_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    char msgtnamemsgtname_idx = msg->tname[msgtname_idx];
+    memcpy(buf + offset, &msgtnamemsgtname_idx, 1);
+    offset += 1;
+  }
+  if (offset + sbp_strlen(msg->cmdline, "none") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->cmdline, "none");
   return true;
 }
 
@@ -1367,10 +1377,15 @@ static inline bool sbp_unpack_sbp_msg_linux_mem_state_t(
   }
   memcpy(&msg->flags, buf + offset, 1);
   offset += 1;
-  memcpy(msg->tname, buf + offset, sizeof(msg->tname));
-  offset += sizeof(msg->tname);
-  strcpy(msg->cmdline, (const char *)buf + offset);
-  offset += strlen(msg->cmdline) + 1;
+  for (size_t msgtname_idx = 0; msgtname_idx < 15; msgtname_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    memcpy(&msg->tname[msgtname_idx], buf + offset, 1);
+    offset += 1;
+  }
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->cmdline, "none");
   return true;
 }
 /** CPU, Memory and Process Starts/Stops.

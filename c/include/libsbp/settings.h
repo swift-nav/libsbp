@@ -66,16 +66,12 @@ typedef struct {
    * "SECTION_SETTING\0SETTING\0VALUE\0"
    */
   char setting[255];
-  /**
-   * Number of items in setting
-   */
-  u8 n_setting;
 } sbp_msg_settings_write_t;
 
 static inline size_t sbp_packed_size_sbp_msg_settings_write_t(
     const sbp_msg_settings_write_t *msg) {
   (void)msg;
-  return 0 + (msg->n_setting * sizeof(msg->setting[0]));
+  return 0 + sbp_strlen(msg->setting, "3-section");
 }
 
 static inline bool sbp_pack_sbp_msg_settings_write_t(
@@ -89,15 +85,10 @@ static inline bool sbp_pack_sbp_msg_settings_write_t(
     return false;
   }
 
-  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->n_setting;
-       msgsetting_idx++) {
-    if (offset + 1 > len) {
-      return false;
-    }
-    char msgsettingmsgsetting_idx = msg->setting[msgsetting_idx];
-    memcpy(buf + offset, &msgsettingmsgsetting_idx, 1);
-    offset += 1;
+  if (offset + sbp_strlen(msg->setting, "3-section") > len) {
+    return false;
   }
+  offset += sbp_pack_string(buf + offset, msg->setting, "3-section");
   return true;
 }
 
@@ -109,16 +100,8 @@ static inline bool sbp_unpack_sbp_msg_settings_write_t(
   (void)len;
   (void)msg;
 
-  msg->n_setting = (u8)((len - offset) / 1);
-
-  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->n_setting;
-       msgsetting_idx++) {
-    if (offset + 1 > len) {
-      return false;
-    }
-    memcpy(&msg->setting[msgsetting_idx], buf + offset, 1);
-    offset += 1;
-  }
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->setting, "3-section");
   return true;
 }
 /** Acknowledgement with status of MSG_SETTINGS_WRITE
@@ -167,16 +150,12 @@ typedef struct {
    * "SECTION_SETTING\0SETTING\0VALUE\0"
    */
   char setting[254];
-  /**
-   * Number of items in setting
-   */
-  u8 n_setting;
 } sbp_msg_settings_write_resp_t;
 
 static inline size_t sbp_packed_size_sbp_msg_settings_write_resp_t(
     const sbp_msg_settings_write_resp_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->status) + (msg->n_setting * sizeof(msg->setting[0]));
+  return 0 + sizeof(msg->status) + sbp_strlen(msg->setting, "3-section");
 }
 
 static inline bool sbp_pack_sbp_msg_settings_write_resp_t(
@@ -196,15 +175,10 @@ static inline bool sbp_pack_sbp_msg_settings_write_resp_t(
   u8 msgstatus = msg->status;
   memcpy(buf + offset, &msgstatus, 1);
   offset += 1;
-  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->n_setting;
-       msgsetting_idx++) {
-    if (offset + 1 > len) {
-      return false;
-    }
-    char msgsettingmsgsetting_idx = msg->setting[msgsetting_idx];
-    memcpy(buf + offset, &msgsettingmsgsetting_idx, 1);
-    offset += 1;
+  if (offset + sbp_strlen(msg->setting, "3-section") > len) {
+    return false;
   }
+  offset += sbp_pack_string(buf + offset, msg->setting, "3-section");
   return true;
 }
 
@@ -221,16 +195,8 @@ static inline bool sbp_unpack_sbp_msg_settings_write_resp_t(
   }
   memcpy(&msg->status, buf + offset, 1);
   offset += 1;
-  msg->n_setting = (u8)((len - offset) / 1);
-
-  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->n_setting;
-       msgsetting_idx++) {
-    if (offset + 1 > len) {
-      return false;
-    }
-    memcpy(&msg->setting[msgsetting_idx], buf + offset, 1);
-    offset += 1;
-  }
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->setting, "3-section");
   return true;
 }
 /** Read device configuration settings (host => device)
@@ -252,16 +218,12 @@ typedef struct {
    * "SECTION_SETTING\0SETTING\0"
    */
   char setting[255];
-  /**
-   * Number of items in setting
-   */
-  u8 n_setting;
 } sbp_msg_settings_read_req_t;
 
 static inline size_t sbp_packed_size_sbp_msg_settings_read_req_t(
     const sbp_msg_settings_read_req_t *msg) {
   (void)msg;
-  return 0 + (msg->n_setting * sizeof(msg->setting[0]));
+  return 0 + sbp_strlen(msg->setting, "2-section");
 }
 
 static inline bool sbp_pack_sbp_msg_settings_read_req_t(
@@ -275,15 +237,10 @@ static inline bool sbp_pack_sbp_msg_settings_read_req_t(
     return false;
   }
 
-  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->n_setting;
-       msgsetting_idx++) {
-    if (offset + 1 > len) {
-      return false;
-    }
-    char msgsettingmsgsetting_idx = msg->setting[msgsetting_idx];
-    memcpy(buf + offset, &msgsettingmsgsetting_idx, 1);
-    offset += 1;
+  if (offset + sbp_strlen(msg->setting, "2-section") > len) {
+    return false;
   }
+  offset += sbp_pack_string(buf + offset, msg->setting, "2-section");
   return true;
 }
 
@@ -295,16 +252,8 @@ static inline bool sbp_unpack_sbp_msg_settings_read_req_t(
   (void)len;
   (void)msg;
 
-  msg->n_setting = (u8)((len - offset) / 1);
-
-  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->n_setting;
-       msgsetting_idx++) {
-    if (offset + 1 > len) {
-      return false;
-    }
-    memcpy(&msg->setting[msgsetting_idx], buf + offset, 1);
-    offset += 1;
-  }
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->setting, "2-section");
   return true;
 }
 /** Read device configuration settings (host <= device)
@@ -326,16 +275,12 @@ typedef struct {
    *
    */
   char setting[255];
-  /**
-   * Number of items in setting
-   */
-  u8 n_setting;
 } sbp_msg_settings_read_resp_t;
 
 static inline size_t sbp_packed_size_sbp_msg_settings_read_resp_t(
     const sbp_msg_settings_read_resp_t *msg) {
   (void)msg;
-  return 0 + (msg->n_setting * sizeof(msg->setting[0]));
+  return 0 + sbp_strlen(msg->setting, "3-section");
 }
 
 static inline bool sbp_pack_sbp_msg_settings_read_resp_t(
@@ -349,15 +294,10 @@ static inline bool sbp_pack_sbp_msg_settings_read_resp_t(
     return false;
   }
 
-  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->n_setting;
-       msgsetting_idx++) {
-    if (offset + 1 > len) {
-      return false;
-    }
-    char msgsettingmsgsetting_idx = msg->setting[msgsetting_idx];
-    memcpy(buf + offset, &msgsettingmsgsetting_idx, 1);
-    offset += 1;
+  if (offset + sbp_strlen(msg->setting, "3-section") > len) {
+    return false;
   }
+  offset += sbp_pack_string(buf + offset, msg->setting, "3-section");
   return true;
 }
 
@@ -369,16 +309,8 @@ static inline bool sbp_unpack_sbp_msg_settings_read_resp_t(
   (void)len;
   (void)msg;
 
-  msg->n_setting = (u8)((len - offset) / 1);
-
-  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->n_setting;
-       msgsetting_idx++) {
-    if (offset + 1 > len) {
-      return false;
-    }
-    memcpy(&msg->setting[msgsetting_idx], buf + offset, 1);
-    offset += 1;
-  }
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->setting, "3-section");
   return true;
 }
 /** Read setting by direct index (host => device)
@@ -466,16 +398,12 @@ typedef struct {
    * "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
    */
   char setting[253];
-  /**
-   * Number of items in setting
-   */
-  u8 n_setting;
 } sbp_msg_settings_read_by_index_resp_t;
 
 static inline size_t sbp_packed_size_sbp_msg_settings_read_by_index_resp_t(
     const sbp_msg_settings_read_by_index_resp_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->index) + (msg->n_setting * sizeof(msg->setting[0]));
+  return 0 + sizeof(msg->index) + sbp_strlen(msg->setting, "3-4-section");
 }
 
 static inline bool sbp_pack_sbp_msg_settings_read_by_index_resp_t(
@@ -496,15 +424,10 @@ static inline bool sbp_pack_sbp_msg_settings_read_by_index_resp_t(
   msgindex = htole16(msgindex);
   memcpy(buf + offset, &msgindex, 2);
   offset += 2;
-  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->n_setting;
-       msgsetting_idx++) {
-    if (offset + 1 > len) {
-      return false;
-    }
-    char msgsettingmsgsetting_idx = msg->setting[msgsetting_idx];
-    memcpy(buf + offset, &msgsettingmsgsetting_idx, 1);
-    offset += 1;
+  if (offset + sbp_strlen(msg->setting, "3-4-section") > len) {
+    return false;
   }
+  offset += sbp_pack_string(buf + offset, msg->setting, "3-4-section");
   return true;
 }
 
@@ -522,16 +445,8 @@ static inline bool sbp_unpack_sbp_msg_settings_read_by_index_resp_t(
   memcpy(&msg->index, buf + offset, 2);
   msg->index = le16toh(msg->index);
   offset += 2;
-  msg->n_setting = (u8)((len - offset) / 1);
-
-  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->n_setting;
-       msgsetting_idx++) {
-    if (offset + 1 > len) {
-      return false;
-    }
-    memcpy(&msg->setting[msgsetting_idx], buf + offset, 1);
-    offset += 1;
-  }
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->setting, "3-4-section");
   return true;
 }
 /** Finished reading settings (host <= device)
@@ -587,16 +502,12 @@ typedef struct {
    * "SECTION_SETTING\0SETTING\0VALUE".
    */
   char setting[255];
-  /**
-   * Number of items in setting
-   */
-  u8 n_setting;
 } sbp_msg_settings_register_t;
 
 static inline size_t sbp_packed_size_sbp_msg_settings_register_t(
     const sbp_msg_settings_register_t *msg) {
   (void)msg;
-  return 0 + (msg->n_setting * sizeof(msg->setting[0]));
+  return 0 + sbp_strlen(msg->setting, "3-section");
 }
 
 static inline bool sbp_pack_sbp_msg_settings_register_t(
@@ -610,15 +521,10 @@ static inline bool sbp_pack_sbp_msg_settings_register_t(
     return false;
   }
 
-  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->n_setting;
-       msgsetting_idx++) {
-    if (offset + 1 > len) {
-      return false;
-    }
-    char msgsettingmsgsetting_idx = msg->setting[msgsetting_idx];
-    memcpy(buf + offset, &msgsettingmsgsetting_idx, 1);
-    offset += 1;
+  if (offset + sbp_strlen(msg->setting, "3-section") > len) {
+    return false;
   }
+  offset += sbp_pack_string(buf + offset, msg->setting, "3-section");
   return true;
 }
 
@@ -630,16 +536,8 @@ static inline bool sbp_unpack_sbp_msg_settings_register_t(
   (void)len;
   (void)msg;
 
-  msg->n_setting = (u8)((len - offset) / 1);
-
-  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->n_setting;
-       msgsetting_idx++) {
-    if (offset + 1 > len) {
-      return false;
-    }
-    memcpy(&msg->setting[msgsetting_idx], buf + offset, 1);
-    offset += 1;
-  }
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->setting, "3-section");
   return true;
 }
 /** Register setting and default value (device <= host)
@@ -682,16 +580,12 @@ typedef struct {
    * according to the status field.
    */
   char setting[254];
-  /**
-   * Number of items in setting
-   */
-  u8 n_setting;
 } sbp_msg_settings_register_resp_t;
 
 static inline size_t sbp_packed_size_sbp_msg_settings_register_resp_t(
     const sbp_msg_settings_register_resp_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->status) + (msg->n_setting * sizeof(msg->setting[0]));
+  return 0 + sizeof(msg->status) + sbp_strlen(msg->setting, "3-section");
 }
 
 static inline bool sbp_pack_sbp_msg_settings_register_resp_t(
@@ -711,15 +605,10 @@ static inline bool sbp_pack_sbp_msg_settings_register_resp_t(
   u8 msgstatus = msg->status;
   memcpy(buf + offset, &msgstatus, 1);
   offset += 1;
-  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->n_setting;
-       msgsetting_idx++) {
-    if (offset + 1 > len) {
-      return false;
-    }
-    char msgsettingmsgsetting_idx = msg->setting[msgsetting_idx];
-    memcpy(buf + offset, &msgsettingmsgsetting_idx, 1);
-    offset += 1;
+  if (offset + sbp_strlen(msg->setting, "3-section") > len) {
+    return false;
   }
+  offset += sbp_pack_string(buf + offset, msg->setting, "3-section");
   return true;
 }
 
@@ -736,16 +625,8 @@ static inline bool sbp_unpack_sbp_msg_settings_register_resp_t(
   }
   memcpy(&msg->status, buf + offset, 1);
   offset += 1;
-  msg->n_setting = (u8)((len - offset) / 1);
-
-  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->n_setting;
-       msgsetting_idx++) {
-    if (offset + 1 > len) {
-      return false;
-    }
-    memcpy(&msg->setting[msgsetting_idx], buf + offset, 1);
-    offset += 1;
-  }
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->setting, "3-section");
   return true;
 }
 

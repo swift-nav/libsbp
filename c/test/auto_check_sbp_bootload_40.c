@@ -160,7 +160,6 @@ START_TEST(test_auto_check_sbp_bootload_40) {
     {
       char test_string[] = {(char)118, (char)49, (char)46, (char)50, (char)10};
       memcpy(test_msg->version, test_string, sizeof(test_string));
-      test_msg->n_version = sizeof(test_string);
     }
 
     dummy_reset();

@@ -38,17 +38,13 @@ typedef struct {
    * Name of the file to read from
    */
   char filename[246];
-  /**
-   * Unused
-   */
-  u8 n_filename;
 } sbp_msg_fileio_read_req_t;
 
 static inline size_t sbp_packed_size_sbp_msg_fileio_read_req_t(
     const sbp_msg_fileio_read_req_t *msg) {
   (void)msg;
   return 0 + sizeof(msg->sequence) + sizeof(msg->offset) +
-         sizeof(msg->chunk_size) + (strlen(msg->filename) + 1);
+         sizeof(msg->chunk_size) + sbp_strlen(msg->filename, "nul");
 }
 
 static inline bool sbp_pack_sbp_msg_fileio_read_req_t(
@@ -84,8 +80,10 @@ static inline bool sbp_pack_sbp_msg_fileio_read_req_t(
   u8 msgchunk_size = msg->chunk_size;
   memcpy(buf + offset, &msgchunk_size, 1);
   offset += 1;
-  strcpy((char *)(buf + offset), msg->filename);
-  offset += strlen(msg->filename) + 1;
+  if (offset + sbp_strlen(msg->filename, "nul") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->filename, "nul");
   return true;
 }
 
@@ -116,8 +114,8 @@ static inline bool sbp_unpack_sbp_msg_fileio_read_req_t(
   }
   memcpy(&msg->chunk_size, buf + offset, 1);
   offset += 1;
-  strcpy(msg->filename, (const char *)buf + offset);
-  offset += strlen(msg->filename) + 1;
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->filename, "nul");
   return true;
 }
 /** File read from the file system (host <= device)
@@ -236,17 +234,13 @@ typedef struct {
    * Name of the directory to list
    */
   char dirname[247];
-  /**
-   * Unused
-   */
-  u8 n_dirname;
 } sbp_msg_fileio_read_dir_req_t;
 
 static inline size_t sbp_packed_size_sbp_msg_fileio_read_dir_req_t(
     const sbp_msg_fileio_read_dir_req_t *msg) {
   (void)msg;
   return 0 + sizeof(msg->sequence) + sizeof(msg->offset) +
-         (strlen(msg->dirname) + 1);
+         sbp_strlen(msg->dirname, "nul");
 }
 
 static inline bool sbp_pack_sbp_msg_fileio_read_dir_req_t(
@@ -275,8 +269,10 @@ static inline bool sbp_pack_sbp_msg_fileio_read_dir_req_t(
   msgoffset = htole32(msgoffset);
   memcpy(buf + offset, &msgoffset, 4);
   offset += 4;
-  strcpy((char *)(buf + offset), msg->dirname);
-  offset += strlen(msg->dirname) + 1;
+  if (offset + sbp_strlen(msg->dirname, "nul") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->dirname, "nul");
   return true;
 }
 
@@ -301,8 +297,8 @@ static inline bool sbp_unpack_sbp_msg_fileio_read_dir_req_t(
   memcpy(&msg->offset, buf + offset, 4);
   msg->offset = le32toh(msg->offset);
   offset += 4;
-  strcpy(msg->dirname, (const char *)buf + offset);
-  offset += strlen(msg->dirname) + 1;
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->dirname, "nul");
   return true;
 }
 /** Files listed in a directory (host <= device)
@@ -408,16 +404,12 @@ typedef struct {
    * Name of the file to delete
    */
   char filename[255];
-  /**
-   * Unused
-   */
-  u8 n_filename;
 } sbp_msg_fileio_remove_t;
 
 static inline size_t sbp_packed_size_sbp_msg_fileio_remove_t(
     const sbp_msg_fileio_remove_t *msg) {
   (void)msg;
-  return 0 + (strlen(msg->filename) + 1);
+  return 0 + sbp_strlen(msg->filename, "nul");
 }
 
 static inline bool sbp_pack_sbp_msg_fileio_remove_t(
@@ -431,8 +423,10 @@ static inline bool sbp_pack_sbp_msg_fileio_remove_t(
     return false;
   }
 
-  strcpy((char *)(buf + offset), msg->filename);
-  offset += strlen(msg->filename) + 1;
+  if (offset + sbp_strlen(msg->filename, "nul") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->filename, "nul");
   return true;
 }
 
@@ -444,8 +438,8 @@ static inline bool sbp_unpack_sbp_msg_fileio_remove_t(
   (void)len;
   (void)msg;
 
-  strcpy(msg->filename, (const char *)buf + offset);
-  offset += strlen(msg->filename) + 1;
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->filename, "nul");
   return true;
 }
 /** Write to file (host => device)
@@ -475,10 +469,6 @@ typedef struct {
    */
   char filename[247];
   /**
-   * Unused
-   */
-  u8 n_filename;
-  /**
    * Variable-length array of data to write
    */
   u8 data[246];
@@ -492,7 +482,8 @@ static inline size_t sbp_packed_size_sbp_msg_fileio_write_req_t(
     const sbp_msg_fileio_write_req_t *msg) {
   (void)msg;
   return 0 + sizeof(msg->sequence) + sizeof(msg->offset) +
-         (strlen(msg->filename) + 1) + (msg->n_data * sizeof(msg->data[0]));
+         sbp_strlen(msg->filename, "nul") +
+         (msg->n_data * sizeof(msg->data[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_fileio_write_req_t(
@@ -521,8 +512,10 @@ static inline bool sbp_pack_sbp_msg_fileio_write_req_t(
   msgoffset = htole32(msgoffset);
   memcpy(buf + offset, &msgoffset, 4);
   offset += 4;
-  strcpy((char *)(buf + offset), msg->filename);
-  offset += strlen(msg->filename) + 1;
+  if (offset + sbp_strlen(msg->filename, "nul") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->filename, "nul");
   for (size_t msgdata_idx = 0; msgdata_idx < (size_t)msg->n_data;
        msgdata_idx++) {
     if (offset + 1 > len) {
@@ -556,8 +549,8 @@ static inline bool sbp_unpack_sbp_msg_fileio_write_req_t(
   memcpy(&msg->offset, buf + offset, 4);
   msg->offset = le32toh(msg->offset);
   offset += 4;
-  strcpy(msg->filename, (const char *)buf + offset);
-  offset += strlen(msg->filename) + 1;
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->filename, "nul");
   msg->n_data = (u8)((len - offset) / 1);
 
   for (size_t msgdata_idx = 0; msgdata_idx < msg->n_data; msgdata_idx++) {

@@ -26,7 +26,12 @@ def b64_decode(field):
     return base64.standard_b64decode(field)
 
 def strEscape(value):
-    return "((char []){" + ",".join(["(char)" + str(ord(ch)) for ch in value]) + ",0})"
+    return ",".join(["(char)" + str(ord(ch)) for ch in value]) 
+
+def insert_n_(value):
+    tokens = value.split(".")
+    tokens[-1] = "n_" + tokens[-1]
+    return ".".join(tokens)
 
 JENV.filters['commentify'] = commentify
 JENV.filters['mk_id'] = mk_id
@@ -36,6 +41,7 @@ JENV.filters['type'] = type
 JENV.filters['str_escape'] = strEscape
 JENV.filters['to_str'] = to_str
 JENV.filters['sorted'] = sorted
+JENV.filters['insert_n_'] = insert_n_
 
 JENV.tests['string_type'] = string_type
 JENV.tests['array_type'] = array_type

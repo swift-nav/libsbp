@@ -74,7 +74,7 @@ typedef struct {
     ((*- if f.order == "fixed-string" *))                                                                     
       (((f.max_items)))                                                                                       
 		((*- elif f.order == "variable-string" *))
-		  (strlen( (((path)))(((f.name))) ) + 1)
+      sbp_strlen( (((path)))(((f.name))), "(((f.termination)))" )
 	  ((*- elif f.order == "single" *))
 		  ((*- if f.basetype.is_primitive *))
 				sizeof( ((( path + f.name ))) )
@@ -84,7 +84,7 @@ typedef struct {
 		((*- elif f.order == "fixed-array" *))
 		  ( (((f.max_items))) * 
 		  ((*- if f.basetype.is_primitive *))
-        sizeof( ((( path + f.name ))) )
+        sizeof( ((( path + f.name )))[0] )
 			((*- else *))
 				( ((( substruct_packed_size(f.basetype, path + f.name + "[0].") ))) )
 			((*- endif *))
@@ -98,7 +98,7 @@ typedef struct {
 			((*- endif *))
 			*
 		  ((*- if f.basetype.is_primitive *))
-        sizeof( (((path + f.name))) )
+        sizeof( (((path + f.name)))[0] )
 			((*- else *))
 				( ((( substruct_packed_size(f.basetype, path + f.name + "[0].") ))) )
 			((*- endif *))
@@ -139,11 +139,12 @@ static inline size_t sbp_packed_size_(((m.name|convert)))(const (((m.name|conver
 				(((pack_substruct(f.basetype, path + f.name + "."))))
 			((*- endif *))
 		((*- elif f.order == "fixed-string" *))
+      if(offset + sizeof( (((path + f.name))) ) > len) { return false; }
 			memcpy(buf + offset, (((path + f.name))), sizeof( (((path + f.name)))));
 			offset += sizeof( (((path + f.name))));
 		((*- elif f.order == "variable-string" *))
-			strcpy((char*)(buf + offset), (((path + f.name))));
-			offset += strlen( (((path + f.name)))) + 1;
+      if (offset + sbp_strlen( (((path + f.name))), "(((f.termination)))") > len) { return false; }
+      offset += sbp_pack_string( buf + offset, (((path + f.name))), "(((f.termination)))");
 		((*- elif f.order == "fixed-array" *))
 		  for(size_t (((loop_idx))) = 0; (((loop_idx))) < (((f.max_items))); (((loop_idx)))++)
 			{
@@ -202,11 +203,11 @@ static inline bool sbp_pack_(((m.name|convert)))(u8 *buf, size_t len, const (((m
 			(((unpack_substruct(f.basetype, path + f.name + "."))))
 		((*- endif *))
 	((*- elif f.order == "fixed-string" *))
+    if (offset + sizeof( (((path + f.name))) ) > len) { return false; }
 		memcpy( (((path + f.name))), buf + offset, sizeof( (((path + f.name))) ) );
 		offset += sizeof( (((path + f.name))) );
 	((*- elif f.order == "variable-string" *))
-		strcpy( (((path + f.name))), (const char *)buf + offset);
-		offset += strlen( (((path + f.name)))) + 1;
+    offset += sbp_unpack_string((const char *)buf + offset, len - offset, (((path + f.name))), "(((f.termination)))");
 	((*- elif f.order == "fixed-array" *))
 		for (size_t (((loop_idx))) = 0; (((loop_idx))) < (((f.max_items))); (((loop_idx)))++)
 		{

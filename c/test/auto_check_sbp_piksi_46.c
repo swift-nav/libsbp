@@ -165,7 +165,6 @@ START_TEST(test_auto_check_sbp_piksi_46) {
                             (char)0,   (char)0,  (char)0,   (char)0,   (char)0,
                             (char)0,   (char)0,  (char)0,   (char)0,   (char)0};
       memcpy(test_msg->name, test_string, sizeof(test_string));
-      test_msg->n_name = sizeof(test_string);
     }
     test_msg->stack_free = 2452;
 
@@ -335,7 +334,6 @@ START_TEST(test_auto_check_sbp_piksi_46) {
           (char)0,   (char)0,   (char)0,   (char)0,   (char)0, (char)0, (char)0,
           (char)0,   (char)0,   (char)0,   (char)0,   (char)0, (char)0};
       memcpy(test_msg->name, test_string, sizeof(test_string));
-      test_msg->n_name = sizeof(test_string);
     }
     test_msg->stack_free = 36;
 
@@ -507,7 +505,6 @@ START_TEST(test_auto_check_sbp_piksi_46) {
                             (char)0,  (char)0,  (char)0,  (char)0,  (char)0,
                             (char)0,  (char)0,  (char)0,  (char)0,  (char)0};
       memcpy(test_msg->name, test_string, sizeof(test_string));
-      test_msg->n_name = sizeof(test_string);
     }
     test_msg->stack_free = 1884;
 
@@ -679,7 +676,6 @@ START_TEST(test_auto_check_sbp_piksi_46) {
                             (char)0,  (char)0,  (char)0,  (char)0, (char)0,
                             (char)0,  (char)0,  (char)0,  (char)0, (char)0};
       memcpy(test_msg->name, test_string, sizeof(test_string));
-      test_msg->n_name = sizeof(test_string);
     }
     test_msg->stack_free = 3076;
 
@@ -849,7 +845,6 @@ START_TEST(test_auto_check_sbp_piksi_46) {
                             (char)0,   (char)0,  (char)0,   (char)0,  (char)0,
                             (char)0,   (char)0,  (char)0,   (char)0,  (char)0};
       memcpy(test_msg->name, test_string, sizeof(test_string));
-      test_msg->n_name = sizeof(test_string);
     }
     test_msg->stack_free = 2428;
 
@@ -1025,7 +1020,6 @@ START_TEST(test_auto_check_sbp_piksi_46) {
                             (char)0,   (char)0,   (char)0,   (char)0,
                             (char)0,   (char)0,   (char)0,   (char)0};
       memcpy(test_msg->name, test_string, sizeof(test_string));
-      test_msg->n_name = sizeof(test_string);
     }
     test_msg->stack_free = 2332;
 

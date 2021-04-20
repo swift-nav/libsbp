@@ -53,6 +53,7 @@ definitions:
                 desc: SBP minor protocol version number
       - version:
           type: string
+          termination: none
           desc: Bootloader version number
 
  - MSG_BOOTLOADER_JUMP_TO_APP:

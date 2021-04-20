@@ -32,6 +32,7 @@ units = Coerce(str)
 bitmask = Coerce(str)
 size = Schema(int)
 count = Schema(str)
+termination = Schema(str)
 
 bitfield = Schema([{Optional(bitmask):
                            {Optional('units'): units,
@@ -45,6 +46,7 @@ field = Schema({identifier:
                  Optional('fill'): identifier,
                  Optional('size'): size,
                  Optional('count'): count,
+                 Optional('termination'): termination,
                  Optional('size_fn'): identifier,
                  Optional('fields'): bitfield}})
 definition = Schema({identifier:

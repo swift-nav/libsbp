@@ -44,15 +44,11 @@ typedef struct {
    * Human-readable string
    */
   char text[254];
-  /**
-   * Unused
-   */
-  u8 n_text;
 } sbp_msg_log_t;
 
 static inline size_t sbp_packed_size_sbp_msg_log_t(const sbp_msg_log_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->level) + (strlen(msg->text) + 1);
+  return 0 + sizeof(msg->level) + sbp_strlen(msg->text, "none");
 }
 
 static inline bool sbp_pack_sbp_msg_log_t(u8 *buf, size_t len,
@@ -72,8 +68,10 @@ static inline bool sbp_pack_sbp_msg_log_t(u8 *buf, size_t len,
   u8 msglevel = msg->level;
   memcpy(buf + offset, &msglevel, 1);
   offset += 1;
-  strcpy((char *)(buf + offset), msg->text);
-  offset += strlen(msg->text) + 1;
+  if (offset + sbp_strlen(msg->text, "none") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->text, "none");
   return true;
 }
 
@@ -90,8 +88,8 @@ static inline bool sbp_unpack_sbp_msg_log_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->level, buf + offset, 1);
   offset += 1;
-  strcpy(msg->text, (const char *)buf + offset);
-  offset += strlen(msg->text) + 1;
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->text, "none");
   return true;
 }
 /** Wrapper for FWD a separate stream of information over SBP
@@ -120,16 +118,12 @@ typedef struct {
    * variable length wrapped binary message
    */
   char fwd_payload[253];
-  /**
-   * Unused
-   */
-  u8 n_fwd_payload;
 } sbp_msg_fwd_t;
 
 static inline size_t sbp_packed_size_sbp_msg_fwd_t(const sbp_msg_fwd_t *msg) {
   (void)msg;
   return 0 + sizeof(msg->source) + sizeof(msg->protocol) +
-         (strlen(msg->fwd_payload) + 1);
+         sbp_strlen(msg->fwd_payload, "none");
 }
 
 static inline bool sbp_pack_sbp_msg_fwd_t(u8 *buf, size_t len,
@@ -156,8 +150,10 @@ static inline bool sbp_pack_sbp_msg_fwd_t(u8 *buf, size_t len,
   u8 msgprotocol = msg->protocol;
   memcpy(buf + offset, &msgprotocol, 1);
   offset += 1;
-  strcpy((char *)(buf + offset), msg->fwd_payload);
-  offset += strlen(msg->fwd_payload) + 1;
+  if (offset + sbp_strlen(msg->fwd_payload, "none") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->fwd_payload, "none");
   return true;
 }
 
@@ -180,8 +176,8 @@ static inline bool sbp_unpack_sbp_msg_fwd_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->protocol, buf + offset, 1);
   offset += 1;
-  strcpy(msg->fwd_payload, (const char *)buf + offset);
-  offset += strlen(msg->fwd_payload) + 1;
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->fwd_payload, "none");
   return true;
 }
 /** Deprecated
@@ -195,16 +191,12 @@ typedef struct {
    * Human-readable string
    */
   char text[255];
-  /**
-   * Unused
-   */
-  u8 n_text;
 } sbp_msg_print_dep_t;
 
 static inline size_t sbp_packed_size_sbp_msg_print_dep_t(
     const sbp_msg_print_dep_t *msg) {
   (void)msg;
-  return 0 + (strlen(msg->text) + 1);
+  return 0 + sbp_strlen(msg->text, "none");
 }
 
 static inline bool sbp_pack_sbp_msg_print_dep_t(
@@ -218,8 +210,10 @@ static inline bool sbp_pack_sbp_msg_print_dep_t(
     return false;
   }
 
-  strcpy((char *)(buf + offset), msg->text);
-  offset += strlen(msg->text) + 1;
+  if (offset + sbp_strlen(msg->text, "none") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->text, "none");
   return true;
 }
 
@@ -231,8 +225,8 @@ static inline bool sbp_unpack_sbp_msg_print_dep_t(const u8 *buf, size_t len,
   (void)len;
   (void)msg;
 
-  strcpy(msg->text, (const char *)buf + offset);
-  offset += strlen(msg->text) + 1;
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->text, "none");
   return true;
 }
 

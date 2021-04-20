@@ -43,10 +43,6 @@ typedef struct {
    */
   u8 addr_start[3];
   /**
-   * Unused
-   */
-  u8 n_addr_start;
-  /**
    * Length of set of addresses to program, counting up from
    * starting address[bytes]
    */
@@ -64,7 +60,7 @@ typedef struct {
 static inline size_t sbp_packed_size_sbp_msg_flash_program_t(
     const sbp_msg_flash_program_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->target) + (3 * sizeof(msg->addr_start)) +
+  return 0 + sizeof(msg->target) + (3 * sizeof(msg->addr_start[0])) +
          sizeof(msg->addr_len) + (msg->n_data * sizeof(msg->data[0]));
 }
 
@@ -261,10 +257,6 @@ typedef struct {
    */
   u8 addr_start[3];
   /**
-   * Unused
-   */
-  u8 n_addr_start;
-  /**
    * Length of set of addresses to read, counting up from
    * starting address[bytes]
    */
@@ -274,7 +266,7 @@ typedef struct {
 static inline size_t sbp_packed_size_sbp_msg_flash_read_req_t(
     const sbp_msg_flash_read_req_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->target) + (3 * sizeof(msg->addr_start)) +
+  return 0 + sizeof(msg->target) + (3 * sizeof(msg->addr_start[0])) +
          sizeof(msg->addr_len);
 }
 
@@ -379,10 +371,6 @@ typedef struct {
    */
   u8 addr_start[3];
   /**
-   * Unused
-   */
-  u8 n_addr_start;
-  /**
    * Length of set of addresses to read, counting up from
    * starting address[bytes]
    */
@@ -392,7 +380,7 @@ typedef struct {
 static inline size_t sbp_packed_size_sbp_msg_flash_read_resp_t(
     const sbp_msg_flash_read_resp_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->target) + (3 * sizeof(msg->addr_start)) +
+  return 0 + sizeof(msg->target) + (3 * sizeof(msg->addr_start[0])) +
          sizeof(msg->addr_len);
 }
 
@@ -724,16 +712,12 @@ typedef struct {
    * Device unique ID
    */
   u8 stm_id[12];
-  /**
-   * Unused
-   */
-  u8 n_stm_id;
 } sbp_msg_stm_unique_id_resp_t;
 
 static inline size_t sbp_packed_size_sbp_msg_stm_unique_id_resp_t(
     const sbp_msg_stm_unique_id_resp_t *msg) {
   (void)msg;
-  return 0 + (12 * sizeof(msg->stm_id));
+  return 0 + (12 * sizeof(msg->stm_id[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_stm_unique_id_resp_t(
@@ -787,16 +771,12 @@ typedef struct {
    * Byte to write to the M25 flash status register
    */
   u8 status[1];
-  /**
-   * Unused
-   */
-  u8 n_status;
 } sbp_msg_m25_flash_write_status_t;
 
 static inline size_t sbp_packed_size_sbp_msg_m25_flash_write_status_t(
     const sbp_msg_m25_flash_write_status_t *msg) {
   (void)msg;
-  return 0 + (1 * sizeof(msg->status));
+  return 0 + (1 * sizeof(msg->status[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_m25_flash_write_status_t(

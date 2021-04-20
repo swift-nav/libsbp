@@ -171,7 +171,6 @@ START_TEST(test_auto_check_sbp_logging_42) {
           (char)50,  (char)48,  (char)32,  (char)83,  (char)78,  (char)82,
           (char)10};
       memcpy(test_msg->text, test_string, sizeof(test_string));
-      test_msg->n_text = sizeof(test_string);
     }
 
     dummy_reset();
@@ -350,7 +349,6 @@ START_TEST(test_auto_check_sbp_logging_42) {
           (char)32,  (char)72,  (char)122, (char)44,  (char)32,  (char)50,
           (char)49,  (char)32,  (char)83,  (char)78,  (char)82,  (char)10};
       memcpy(test_msg->text, test_string, sizeof(test_string));
-      test_msg->n_text = sizeof(test_string);
     }
 
     dummy_reset();
@@ -525,7 +523,6 @@ START_TEST(test_auto_check_sbp_logging_42) {
           (char)48,  (char)32,  (char)40,  (char)80,  (char)82,  (char)78,
           (char)32,  (char)49,  (char)49,  (char)41,  (char)10};
       memcpy(test_msg->text, test_string, sizeof(test_string));
-      test_msg->n_text = sizeof(test_string);
     }
 
     dummy_reset();
@@ -698,7 +695,6 @@ START_TEST(test_auto_check_sbp_logging_42) {
           (char)72,  (char)122, (char)44,  (char)32,  (char)50, (char)48,
           (char)32,  (char)83,  (char)78,  (char)82,  (char)10};
       memcpy(test_msg->text, test_string, sizeof(test_string));
-      test_msg->n_text = sizeof(test_string);
     }
 
     dummy_reset();
@@ -875,7 +871,6 @@ START_TEST(test_auto_check_sbp_logging_42) {
           (char)32,  (char)72,  (char)122, (char)44,  (char)32, (char)50,
           (char)48,  (char)32,  (char)83,  (char)78,  (char)82, (char)10};
       memcpy(test_msg->text, test_string, sizeof(test_string));
-      test_msg->n_text = sizeof(test_string);
     }
 
     dummy_reset();
@@ -1050,7 +1045,6 @@ START_TEST(test_auto_check_sbp_logging_42) {
           (char)49,  (char)32,  (char)40,  (char)80,  (char)82,  (char)78,
           (char)32,  (char)49,  (char)53,  (char)41,  (char)10};
       memcpy(test_msg->text, test_string, sizeof(test_string));
-      test_msg->n_text = sizeof(test_string);
     }
 
     dummy_reset();

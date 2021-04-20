@@ -1089,10 +1089,6 @@ typedef struct {
      * = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2]
      */
     s16 stec_coeff[4];
-    /**
-     * Unused
-     */
-    u8 n_stec_coeff;
   } stec_sat_list[21];
   /**
    * Number of items in stec_sat_list
@@ -1113,7 +1109,7 @@ static inline size_t sbp_packed_size_sbp_msg_ssr_stec_correction_t(
            (0 + sizeof(msg->stec_sat_list[0].sv_id.satId) +
             sizeof(msg->stec_sat_list[0].sv_id.constellation)) +
            sizeof(msg->stec_sat_list[0].stec_quality_indicator) +
-           (4 * sizeof(msg->stec_sat_list[0].stec_coeff))));
+           (4 * sizeof(msg->stec_sat_list[0].stec_coeff[0]))));
 }
 
 static inline bool sbp_pack_sbp_msg_ssr_stec_correction_t(
@@ -2471,10 +2467,6 @@ typedef struct {
      * = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2]
      */
     s16 stec_coeff[4];
-    /**
-     * Unused
-     */
-    u8 n_stec_coeff;
   } stec_sat_list[22];
   /**
    * Number of items in stec_sat_list
@@ -2494,7 +2486,7 @@ static inline size_t sbp_packed_size_sbp_msg_ssr_stec_correction_dep_a_t(
            (0 + sizeof(msg->stec_sat_list[0].sv_id.satId) +
             sizeof(msg->stec_sat_list[0].sv_id.constellation)) +
            sizeof(msg->stec_sat_list[0].stec_quality_indicator) +
-           (4 * sizeof(msg->stec_sat_list[0].stec_coeff))));
+           (4 * sizeof(msg->stec_sat_list[0].stec_coeff[0]))));
 }
 
 static inline bool sbp_pack_sbp_msg_ssr_stec_correction_dep_a_t(

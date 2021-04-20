@@ -104,16 +104,12 @@ typedef struct {
    * Bootloader version number
    */
   char version[251];
-  /**
-   * Unused
-   */
-  u8 n_version;
 } sbp_msg_bootloader_handshake_resp_t;
 
 static inline size_t sbp_packed_size_sbp_msg_bootloader_handshake_resp_t(
     const sbp_msg_bootloader_handshake_resp_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->flags) + (strlen(msg->version) + 1);
+  return 0 + sizeof(msg->flags) + sbp_strlen(msg->version, "none");
 }
 
 static inline bool sbp_pack_sbp_msg_bootloader_handshake_resp_t(
@@ -134,8 +130,10 @@ static inline bool sbp_pack_sbp_msg_bootloader_handshake_resp_t(
   msgflags = htole32(msgflags);
   memcpy(buf + offset, &msgflags, 4);
   offset += 4;
-  strcpy((char *)(buf + offset), msg->version);
-  offset += strlen(msg->version) + 1;
+  if (offset + sbp_strlen(msg->version, "none") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->version, "none");
   return true;
 }
 
@@ -153,8 +151,8 @@ static inline bool sbp_unpack_sbp_msg_bootloader_handshake_resp_t(
   memcpy(&msg->flags, buf + offset, 4);
   msg->flags = le32toh(msg->flags);
   offset += 4;
-  strcpy(msg->version, (const char *)buf + offset);
-  offset += strlen(msg->version) + 1;
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->version, "none");
   return true;
 }
 /** Bootloader jump to application (host => device)
@@ -272,16 +270,12 @@ typedef struct {
    * on the right.
    */
   u8 dna[8];
-  /**
-   * Unused
-   */
-  u8 n_dna;
 } sbp_msg_nap_device_dna_resp_t;
 
 static inline size_t sbp_packed_size_sbp_msg_nap_device_dna_resp_t(
     const sbp_msg_nap_device_dna_resp_t *msg) {
   (void)msg;
-  return 0 + (8 * sizeof(msg->dna));
+  return 0 + (8 * sizeof(msg->dna[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_nap_device_dna_resp_t(

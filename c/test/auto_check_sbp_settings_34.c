@@ -184,7 +184,6 @@ START_TEST(test_auto_check_sbp_settings_34) {
           (char)44,  (char)65,  (char)84,  (char)38,  (char)87,  (char)44,
           (char)65,  (char)84,  (char)90,  (char)0};
       memcpy(test_msg->setting, test_string, sizeof(test_string));
-      test_msg->n_setting = sizeof(test_string);
     }
 
     dummy_reset();
@@ -392,7 +391,6 @@ START_TEST(test_auto_check_sbp_settings_34) {
           (char)83,  (char)66,  (char)80,  (char)44,  (char)78,  (char)77,
           (char)69,  (char)65,  (char)0};
       memcpy(test_msg->setting, test_string, sizeof(test_string));
-      test_msg->n_setting = sizeof(test_string);
     }
 
     dummy_reset();
@@ -575,7 +573,6 @@ START_TEST(test_auto_check_sbp_settings_34) {
           (char)115, (char)107, (char)0,   (char)54,  (char)53,  (char)53,
           (char)51,  (char)53,  (char)0};
       memcpy(test_msg->setting, test_string, sizeof(test_string));
-      test_msg->n_setting = sizeof(test_string);
     }
 
     dummy_reset();
@@ -755,7 +752,6 @@ START_TEST(test_auto_check_sbp_settings_34) {
           (char)0,   (char)49,  (char)48,  (char)48,  (char)48,  (char)48,
           (char)48,  (char)48,  (char)0};
       memcpy(test_msg->setting, test_string, sizeof(test_string));
-      test_msg->n_setting = sizeof(test_string);
     }
 
     dummy_reset();
@@ -933,7 +929,6 @@ START_TEST(test_auto_check_sbp_settings_34) {
           (char)58,  (char)83,  (char)66,  (char)80,  (char)44,  (char)78,
           (char)77,  (char)69,  (char)65,  (char)0};
       memcpy(test_msg->setting, test_string, sizeof(test_string));
-      test_msg->n_setting = sizeof(test_string);
     }
 
     dummy_reset();

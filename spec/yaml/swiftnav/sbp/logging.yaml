@@ -44,6 +44,7 @@ definitions:
                         - 7: DEBUG
       - text:
           type: string
+          termination: none
           desc: Human-readable string
 
  - MSG_FWD:
@@ -66,6 +67,7 @@ definitions:
           desc: protocol identifier
       - fwd_payload:
           type: string
+          termination: none
           desc: variable length wrapped binary message     
 
  - MSG_PRINT_DEP:
@@ -78,5 +80,6 @@ definitions:
     fields:
       - text:
           type: string
+          termination: none
           desc: Human-readable string
 

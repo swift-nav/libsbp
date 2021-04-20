@@ -404,10 +404,6 @@ typedef struct {
    */
   char name[20];
   /**
-   * Unused
-   */
-  u8 n_name;
-  /**
    * Percentage cpu use for this thread. Values range from 0
    * - 1000 and needs to be renormalized to 100
    */
@@ -421,7 +417,8 @@ typedef struct {
 static inline size_t sbp_packed_size_sbp_msg_thread_state_t(
     const sbp_msg_thread_state_t *msg) {
   (void)msg;
-  return 0 + 20 + sizeof(msg->cpu) + sizeof(msg->stack_free);
+  return 0 + (20 * sizeof(msg->name[0])) + sizeof(msg->cpu) +
+         sizeof(msg->stack_free);
 }
 
 static inline bool sbp_pack_sbp_msg_thread_state_t(
@@ -435,8 +432,14 @@ static inline bool sbp_pack_sbp_msg_thread_state_t(
     return false;
   }
 
-  memcpy(buf + offset, msg->name, sizeof(msg->name));
-  offset += sizeof(msg->name);
+  for (size_t msgname_idx = 0; msgname_idx < 20; msgname_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    char msgnamemsgname_idx = msg->name[msgname_idx];
+    memcpy(buf + offset, &msgnamemsgname_idx, 1);
+    offset += 1;
+  }
 
   if (offset + 2 > len) {
     return false;
@@ -464,8 +467,13 @@ static inline bool sbp_unpack_sbp_msg_thread_state_t(
   (void)len;
   (void)msg;
 
-  memcpy(msg->name, buf + offset, sizeof(msg->name));
-  offset += sizeof(msg->name);
+  for (size_t msgname_idx = 0; msgname_idx < 20; msgname_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    memcpy(&msg->name[msgname_idx], buf + offset, 1);
+    offset += 1;
+  }
 
   if (offset + 2 > len) {
     return false;
@@ -2054,16 +2062,12 @@ typedef struct {
    * Command line to execute
    */
   char command[251];
-  /**
-   * Unused
-   */
-  u8 n_command;
 } sbp_msg_command_req_t;
 
 static inline size_t sbp_packed_size_sbp_msg_command_req_t(
     const sbp_msg_command_req_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->sequence) + (strlen(msg->command) + 1);
+  return 0 + sizeof(msg->sequence) + sbp_strlen(msg->command, "nul");
 }
 
 static inline bool sbp_pack_sbp_msg_command_req_t(
@@ -2084,8 +2088,10 @@ static inline bool sbp_pack_sbp_msg_command_req_t(
   msgsequence = htole32(msgsequence);
   memcpy(buf + offset, &msgsequence, 4);
   offset += 4;
-  strcpy((char *)(buf + offset), msg->command);
-  offset += strlen(msg->command) + 1;
+  if (offset + sbp_strlen(msg->command, "nul") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->command, "nul");
   return true;
 }
 
@@ -2103,8 +2109,8 @@ static inline bool sbp_unpack_sbp_msg_command_req_t(
   memcpy(&msg->sequence, buf + offset, 4);
   msg->sequence = le32toh(msg->sequence);
   offset += 4;
-  strcpy(msg->command, (const char *)buf + offset);
-  offset += strlen(msg->command) + 1;
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->command, "nul");
   return true;
 }
 /** Exit code from executed command (device => host)
@@ -2201,16 +2207,12 @@ typedef struct {
    * Line of standard output or standard error
    */
   char line[251];
-  /**
-   * Unused
-   */
-  u8 n_line;
 } sbp_msg_command_output_t;
 
 static inline size_t sbp_packed_size_sbp_msg_command_output_t(
     const sbp_msg_command_output_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->sequence) + (strlen(msg->line) + 1);
+  return 0 + sizeof(msg->sequence) + sbp_strlen(msg->line, "none");
 }
 
 static inline bool sbp_pack_sbp_msg_command_output_t(
@@ -2231,8 +2233,10 @@ static inline bool sbp_pack_sbp_msg_command_output_t(
   msgsequence = htole32(msgsequence);
   memcpy(buf + offset, &msgsequence, 4);
   offset += 4;
-  strcpy((char *)(buf + offset), msg->line);
-  offset += strlen(msg->line) + 1;
+  if (offset + sbp_strlen(msg->line, "none") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->line, "none");
   return true;
 }
 
@@ -2250,8 +2254,8 @@ static inline bool sbp_unpack_sbp_msg_command_output_t(
   memcpy(&msg->sequence, buf + offset, 4);
   msg->sequence = le32toh(msg->sequence);
   offset += 4;
-  strcpy(msg->line, (const char *)buf + offset);
-  offset += strlen(msg->line) + 1;
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->line, "none");
   return true;
 }
 /** Request state of Piksi network interfaces
@@ -2584,10 +2588,6 @@ typedef struct {
    */
   u8 ipv4_address[4];
   /**
-   * Unused
-   */
-  u8 n_ipv4_address;
-  /**
    * IPv4 netmask CIDR notation
    */
   u8 ipv4_mask_size;
@@ -2595,10 +2595,6 @@ typedef struct {
    * IPv6 address (all zero when unavailable)
    */
   u8 ipv6_address[16];
-  /**
-   * Unused
-   */
-  u8 n_ipv6_address;
   /**
    * IPv6 netmask CIDR notation
    */
@@ -2616,10 +2612,6 @@ typedef struct {
    */
   char interface_name[16];
   /**
-   * Unused
-   */
-  u8 n_interface_name;
-  /**
    * Interface flags from SIOCGIFFLAGS
    */
   u32 flags;
@@ -2628,10 +2620,10 @@ typedef struct {
 static inline size_t sbp_packed_size_sbp_msg_network_state_resp_t(
     const sbp_msg_network_state_resp_t *msg) {
   (void)msg;
-  return 0 + (4 * sizeof(msg->ipv4_address)) + sizeof(msg->ipv4_mask_size) +
-         (16 * sizeof(msg->ipv6_address)) + sizeof(msg->ipv6_mask_size) +
-         sizeof(msg->rx_bytes) + sizeof(msg->tx_bytes) + 16 +
-         sizeof(msg->flags);
+  return 0 + (4 * sizeof(msg->ipv4_address[0])) + sizeof(msg->ipv4_mask_size) +
+         (16 * sizeof(msg->ipv6_address[0])) + sizeof(msg->ipv6_mask_size) +
+         sizeof(msg->rx_bytes) + sizeof(msg->tx_bytes) +
+         (16 * sizeof(msg->interface_name[0])) + sizeof(msg->flags);
 }
 
 static inline bool sbp_pack_sbp_msg_network_state_resp_t(
@@ -2695,8 +2687,16 @@ static inline bool sbp_pack_sbp_msg_network_state_resp_t(
   msgtx_bytes = htole32(msgtx_bytes);
   memcpy(buf + offset, &msgtx_bytes, 4);
   offset += 4;
-  memcpy(buf + offset, msg->interface_name, sizeof(msg->interface_name));
-  offset += sizeof(msg->interface_name);
+  for (size_t msginterface_name_idx = 0; msginterface_name_idx < 16;
+       msginterface_name_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    char msginterface_namemsginterface_name_idx =
+        msg->interface_name[msginterface_name_idx];
+    memcpy(buf + offset, &msginterface_namemsginterface_name_idx, 1);
+    offset += 1;
+  }
 
   if (offset + 4 > len) {
     return false;
@@ -2758,8 +2758,14 @@ static inline bool sbp_unpack_sbp_msg_network_state_resp_t(
   memcpy(&msg->tx_bytes, buf + offset, 4);
   msg->tx_bytes = le32toh(msg->tx_bytes);
   offset += 4;
-  memcpy(msg->interface_name, buf + offset, sizeof(msg->interface_name));
-  offset += sizeof(msg->interface_name);
+  for (size_t msginterface_name_idx = 0; msginterface_name_idx < 16;
+       msginterface_name_idx++) {
+    if (offset + 1 > len) {
+      return false;
+    }
+    memcpy(&msg->interface_name[msginterface_name_idx], buf + offset, 1);
+    offset += 1;
+  }
 
   if (offset + 4 > len) {
     return false;
@@ -2800,10 +2806,6 @@ typedef struct {
      * Interface Name
      */
     char interface_name[16];
-    /**
-     * Unused
-     */
-    u8 n_interface_name;
   } interfaces[6];
   /**
    * Number of items in interfaces
@@ -2814,10 +2816,12 @@ typedef struct {
 static inline size_t sbp_packed_size_sbp_msg_network_bandwidth_usage_t(
     const sbp_msg_network_bandwidth_usage_t *msg) {
   (void)msg;
-  return 0 + (msg->n_interfaces * (0 + sizeof(msg->interfaces[0].duration) +
-                                   sizeof(msg->interfaces[0].total_bytes) +
-                                   sizeof(msg->interfaces[0].rx_bytes) +
-                                   sizeof(msg->interfaces[0].tx_bytes) + 16));
+  return 0 + (msg->n_interfaces *
+              (0 + sizeof(msg->interfaces[0].duration) +
+               sizeof(msg->interfaces[0].total_bytes) +
+               sizeof(msg->interfaces[0].rx_bytes) +
+               sizeof(msg->interfaces[0].tx_bytes) +
+               (16 * sizeof(msg->interfaces[0].interface_name[0]))));
 }
 
 static inline bool sbp_pack_sbp_msg_network_bandwidth_usage_t(
@@ -2872,9 +2876,22 @@ static inline bool sbp_pack_sbp_msg_network_bandwidth_usage_t(
         htole32(msginterfacesmsginterfaces_idxtx_bytes);
     memcpy(buf + offset, &msginterfacesmsginterfaces_idxtx_bytes, 4);
     offset += 4;
-    memcpy(buf + offset, msg->interfaces[msginterfaces_idx].interface_name,
-           sizeof(msg->interfaces[msginterfaces_idx].interface_name));
-    offset += sizeof(msg->interfaces[msginterfaces_idx].interface_name);
+    for (size_t msginterfacesmsginterfaces_idxinterface_name_idx = 0;
+         msginterfacesmsginterfaces_idxinterface_name_idx < 16;
+         msginterfacesmsginterfaces_idxinterface_name_idx++) {
+      if (offset + 1 > len) {
+        return false;
+      }
+      char
+          msginterfacesmsginterfaces_idxinterface_namemsginterfacesmsginterfaces_idxinterface_name_idx =
+              msg->interfaces[msginterfaces_idx].interface_name
+                  [msginterfacesmsginterfaces_idxinterface_name_idx];
+      memcpy(
+          buf + offset,
+          &msginterfacesmsginterfaces_idxinterface_namemsginterfacesmsginterfaces_idxinterface_name_idx,
+          1);
+      offset += 1;
+    }
   }
   return true;
 }
@@ -2922,9 +2939,17 @@ static inline bool sbp_unpack_sbp_msg_network_bandwidth_usage_t(
     msg->interfaces[msginterfaces_idx].tx_bytes =
         le32toh(msg->interfaces[msginterfaces_idx].tx_bytes);
     offset += 4;
-    memcpy(msg->interfaces[msginterfaces_idx].interface_name, buf + offset,
-           sizeof(msg->interfaces[msginterfaces_idx].interface_name));
-    offset += sizeof(msg->interfaces[msginterfaces_idx].interface_name);
+    for (size_t msginterfacesmsginterfaces_idxinterface_name_idx = 0;
+         msginterfacesmsginterfaces_idxinterface_name_idx < 16;
+         msginterfacesmsginterfaces_idxinterface_name_idx++) {
+      if (offset + 1 > len) {
+        return false;
+      }
+      memcpy(&msg->interfaces[msginterfaces_idx].interface_name
+                  [msginterfacesmsginterfaces_idxinterface_name_idx],
+             buf + offset, 1);
+      offset += 1;
+    }
   }
   return true;
 }
@@ -3470,23 +3495,15 @@ typedef struct {
    */
   s8 rf_gain[8];
   /**
-   * Unused
-   */
-  u8 n_rf_gain;
-  /**
    * Intermediate frequency gain for each frontend channel[percent]
    */
   s8 if_gain[8];
-  /**
-   * Unused
-   */
-  u8 n_if_gain;
 } sbp_msg_front_end_gain_t;
 
 static inline size_t sbp_packed_size_sbp_msg_front_end_gain_t(
     const sbp_msg_front_end_gain_t *msg) {
   (void)msg;
-  return 0 + (8 * sizeof(msg->rf_gain)) + (8 * sizeof(msg->if_gain));
+  return 0 + (8 * sizeof(msg->rf_gain[0])) + (8 * sizeof(msg->if_gain[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_front_end_gain_t(

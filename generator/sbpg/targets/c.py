@@ -165,13 +165,14 @@ class FieldItem(object):
         self.units = field.units
         self.desc = field.desc
         if type_id == "string" and 'size' in field.options:
-            self.order = "fixed-string"
+            self.order = "fixed-array"
             self.basetype = BasetypeItem(msg, package_specs, 'char', packed_offset)
             self.max_items = field.options['size'].value
             self.packed_size = field.options['size'].value
             self.options = field.options
         elif type_id == "string":
             self.order = "variable-string"
+            self.termination = field.options['termination'].value
             self.basetype = BasetypeItem(msg, package_specs, 'char', packed_offset)
             self.max_items = 255 - packed_offset
             self.packed_size = 1

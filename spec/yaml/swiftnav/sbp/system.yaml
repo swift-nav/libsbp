@@ -78,6 +78,7 @@ definitions:
             desc: Number of signals from base station
         - source:
             type: string
+            termination: none
             desc: Corrections source string
 
 
@@ -285,6 +286,7 @@ definitions:
             desc: Index representing the type of telemetry in use.  It is implemention defined.
         - telemetry:
             type: string
+            termination: none
             desc: Comma separated list of values as defined by the index
 
  - MSG_CSAC_TELEMETRY_LABELS:
@@ -301,6 +303,7 @@ definitions:
             desc: Index representing the type of telemetry in use.  It is implemention defined.
         - telemetry_labels:
             type: string
+            termination: none
             desc: Comma separated list of telemetry field values
 
  - MSG_INS_UPDATES:

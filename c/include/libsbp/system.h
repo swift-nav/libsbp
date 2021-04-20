@@ -169,17 +169,13 @@ typedef struct {
    * Corrections source string
    */
   char source[251];
-  /**
-   * Unused
-   */
-  u8 n_source;
 } sbp_msg_dgnss_status_t;
 
 static inline size_t sbp_packed_size_sbp_msg_dgnss_status_t(
     const sbp_msg_dgnss_status_t *msg) {
   (void)msg;
   return 0 + sizeof(msg->flags) + sizeof(msg->latency) +
-         sizeof(msg->num_signals) + (strlen(msg->source) + 1);
+         sizeof(msg->num_signals) + sbp_strlen(msg->source, "none");
 }
 
 static inline bool sbp_pack_sbp_msg_dgnss_status_t(
@@ -214,8 +210,10 @@ static inline bool sbp_pack_sbp_msg_dgnss_status_t(
   u8 msgnum_signals = msg->num_signals;
   memcpy(buf + offset, &msgnum_signals, 1);
   offset += 1;
-  strcpy((char *)(buf + offset), msg->source);
-  offset += strlen(msg->source) + 1;
+  if (offset + sbp_strlen(msg->source, "none") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->source, "none");
   return true;
 }
 
@@ -245,8 +243,8 @@ static inline bool sbp_unpack_sbp_msg_dgnss_status_t(
   }
   memcpy(&msg->num_signals, buf + offset, 1);
   offset += 1;
-  strcpy(msg->source, (const char *)buf + offset);
-  offset += strlen(msg->source) + 1;
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->source, "none");
   return true;
 }
 /** System heartbeat message
@@ -861,16 +859,12 @@ typedef struct {
    * Comma separated list of values as defined by the index
    */
   char telemetry[254];
-  /**
-   * Unused
-   */
-  u8 n_telemetry;
 } sbp_msg_csac_telemetry_t;
 
 static inline size_t sbp_packed_size_sbp_msg_csac_telemetry_t(
     const sbp_msg_csac_telemetry_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->id) + (strlen(msg->telemetry) + 1);
+  return 0 + sizeof(msg->id) + sbp_strlen(msg->telemetry, "none");
 }
 
 static inline bool sbp_pack_sbp_msg_csac_telemetry_t(
@@ -890,8 +884,10 @@ static inline bool sbp_pack_sbp_msg_csac_telemetry_t(
   u8 msgid = msg->id;
   memcpy(buf + offset, &msgid, 1);
   offset += 1;
-  strcpy((char *)(buf + offset), msg->telemetry);
-  offset += strlen(msg->telemetry) + 1;
+  if (offset + sbp_strlen(msg->telemetry, "none") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->telemetry, "none");
   return true;
 }
 
@@ -908,8 +904,8 @@ static inline bool sbp_unpack_sbp_msg_csac_telemetry_t(
   }
   memcpy(&msg->id, buf + offset, 1);
   offset += 1;
-  strcpy(msg->telemetry, (const char *)buf + offset);
-  offset += strlen(msg->telemetry) + 1;
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->telemetry, "none");
   return true;
 }
 /** Experimental telemetry message labels
@@ -930,16 +926,12 @@ typedef struct {
    * Comma separated list of telemetry field values
    */
   char telemetry_labels[254];
-  /**
-   * Unused
-   */
-  u8 n_telemetry_labels;
 } sbp_msg_csac_telemetry_labels_t;
 
 static inline size_t sbp_packed_size_sbp_msg_csac_telemetry_labels_t(
     const sbp_msg_csac_telemetry_labels_t *msg) {
   (void)msg;
-  return 0 + sizeof(msg->id) + (strlen(msg->telemetry_labels) + 1);
+  return 0 + sizeof(msg->id) + sbp_strlen(msg->telemetry_labels, "none");
 }
 
 static inline bool sbp_pack_sbp_msg_csac_telemetry_labels_t(
@@ -959,8 +951,10 @@ static inline bool sbp_pack_sbp_msg_csac_telemetry_labels_t(
   u8 msgid = msg->id;
   memcpy(buf + offset, &msgid, 1);
   offset += 1;
-  strcpy((char *)(buf + offset), msg->telemetry_labels);
-  offset += strlen(msg->telemetry_labels) + 1;
+  if (offset + sbp_strlen(msg->telemetry_labels, "none") > len) {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->telemetry_labels, "none");
   return true;
 }
 
@@ -977,8 +971,8 @@ static inline bool sbp_unpack_sbp_msg_csac_telemetry_labels_t(
   }
   memcpy(&msg->id, buf + offset, 1);
   offset += 1;
-  strcpy(msg->telemetry_labels, (const char *)buf + offset);
-  offset += strlen(msg->telemetry_labels) + 1;
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset,
+                              msg->telemetry_labels, "none");
   return true;
 }
 /** Inertial Navigation System update status message

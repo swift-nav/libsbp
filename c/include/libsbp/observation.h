@@ -5328,25 +5328,13 @@ typedef struct {
    */
   double pos[3];
   /**
-   * Unused
-   */
-  u8 n_pos;
-  /**
    * Velocity of the GEO at time toe[m/s]
    */
   double vel[3];
   /**
-   * Unused
-   */
-  u8 n_vel;
-  /**
    * Acceleration of the GEO at time toe[m/s^2]
    */
   double acc[3];
-  /**
-   * Unused
-   */
-  u8 n_acc;
   /**
    * Time offset of the GEO clock w.r.t. SBAS Network Time[s]
    */
@@ -5367,8 +5355,8 @@ static inline size_t sbp_packed_size_sbp_msg_ephemeris_sbas_dep_a_t(
           (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) +
           sizeof(msg->common.ura) + sizeof(msg->common.fit_interval) +
           sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         (3 * sizeof(msg->pos)) + (3 * sizeof(msg->vel)) +
-         (3 * sizeof(msg->acc)) + sizeof(msg->a_gf0) + sizeof(msg->a_gf1);
+         (3 * sizeof(msg->pos[0])) + (3 * sizeof(msg->vel[0])) +
+         (3 * sizeof(msg->acc[0])) + sizeof(msg->a_gf0) + sizeof(msg->a_gf1);
 }
 
 static inline bool sbp_pack_sbp_msg_ephemeris_sbas_dep_a_t(
@@ -5689,25 +5677,13 @@ typedef struct {
    */
   double pos[3];
   /**
-   * Unused
-   */
-  u8 n_pos;
-  /**
    * Velocity vector of the SV at tb in PZ-90.02 coordinates system[m/s]
    */
   double vel[3];
   /**
-   * Unused
-   */
-  u8 n_vel;
-  /**
    * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys[m/s^2]
    */
   double acc[3];
-  /**
-   * Unused
-   */
-  u8 n_acc;
 } sbp_msg_ephemeris_glo_dep_a_t;
 
 static inline size_t sbp_packed_size_sbp_msg_ephemeris_glo_dep_a_t(
@@ -5720,8 +5696,8 @@ static inline size_t sbp_packed_size_sbp_msg_ephemeris_glo_dep_a_t(
           (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) +
           sizeof(msg->common.ura) + sizeof(msg->common.fit_interval) +
           sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         sizeof(msg->gamma) + sizeof(msg->tau) + (3 * sizeof(msg->pos)) +
-         (3 * sizeof(msg->vel)) + (3 * sizeof(msg->acc));
+         sizeof(msg->gamma) + sizeof(msg->tau) + (3 * sizeof(msg->pos[0])) +
+         (3 * sizeof(msg->vel[0])) + (3 * sizeof(msg->acc[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_ephemeris_glo_dep_a_t(
@@ -6030,25 +6006,13 @@ typedef struct {
    */
   double pos[3];
   /**
-   * Unused
-   */
-  u8 n_pos;
-  /**
    * Velocity of the GEO at time toe[m/s]
    */
   double vel[3];
   /**
-   * Unused
-   */
-  u8 n_vel;
-  /**
    * Acceleration of the GEO at time toe[m/s^2]
    */
   double acc[3];
-  /**
-   * Unused
-   */
-  u8 n_acc;
   /**
    * Time offset of the GEO clock w.r.t. SBAS Network Time[s]
    */
@@ -6067,8 +6031,8 @@ static inline size_t sbp_packed_size_sbp_msg_ephemeris_sbas_dep_b_t(
           (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) +
           sizeof(msg->common.ura) + sizeof(msg->common.fit_interval) +
           sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         (3 * sizeof(msg->pos)) + (3 * sizeof(msg->vel)) +
-         (3 * sizeof(msg->acc)) + sizeof(msg->a_gf0) + sizeof(msg->a_gf1);
+         (3 * sizeof(msg->pos[0])) + (3 * sizeof(msg->vel[0])) +
+         (3 * sizeof(msg->acc[0])) + sizeof(msg->a_gf0) + sizeof(msg->a_gf1);
 }
 
 static inline bool sbp_pack_sbp_msg_ephemeris_sbas_dep_b_t(
@@ -6358,25 +6322,13 @@ typedef struct {
    */
   double pos[3];
   /**
-   * Unused
-   */
-  u8 n_pos;
-  /**
    * Velocity of the GEO at time toe[m/s]
    */
   float vel[3];
   /**
-   * Unused
-   */
-  u8 n_vel;
-  /**
    * Acceleration of the GEO at time toe[m/s^2]
    */
   float acc[3];
-  /**
-   * Unused
-   */
-  u8 n_acc;
   /**
    * Time offset of the GEO clock w.r.t. SBAS Network Time[s]
    */
@@ -6395,8 +6347,8 @@ static inline size_t sbp_packed_size_sbp_msg_ephemeris_sbas_t(
           (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) +
           sizeof(msg->common.ura) + sizeof(msg->common.fit_interval) +
           sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         (3 * sizeof(msg->pos)) + (3 * sizeof(msg->vel)) +
-         (3 * sizeof(msg->acc)) + sizeof(msg->a_gf0) + sizeof(msg->a_gf1);
+         (3 * sizeof(msg->pos[0])) + (3 * sizeof(msg->vel[0])) +
+         (3 * sizeof(msg->acc[0])) + sizeof(msg->a_gf0) + sizeof(msg->a_gf1);
 }
 
 static inline bool sbp_pack_sbp_msg_ephemeris_sbas_t(
@@ -6701,25 +6653,13 @@ typedef struct {
    */
   double pos[3];
   /**
-   * Unused
-   */
-  u8 n_pos;
-  /**
    * Velocity vector of the SV at tb in PZ-90.02 coordinates system[m/s]
    */
   double vel[3];
   /**
-   * Unused
-   */
-  u8 n_vel;
-  /**
    * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys[m/s^2]
    */
   double acc[3];
-  /**
-   * Unused
-   */
-  u8 n_acc;
 } sbp_msg_ephemeris_glo_dep_b_t;
 
 static inline size_t sbp_packed_size_sbp_msg_ephemeris_glo_dep_b_t(
@@ -6730,8 +6670,8 @@ static inline size_t sbp_packed_size_sbp_msg_ephemeris_glo_dep_b_t(
           (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) +
           sizeof(msg->common.ura) + sizeof(msg->common.fit_interval) +
           sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         sizeof(msg->gamma) + sizeof(msg->tau) + (3 * sizeof(msg->pos)) +
-         (3 * sizeof(msg->vel)) + (3 * sizeof(msg->acc));
+         sizeof(msg->gamma) + sizeof(msg->tau) + (3 * sizeof(msg->pos[0])) +
+         (3 * sizeof(msg->vel[0])) + (3 * sizeof(msg->acc[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_ephemeris_glo_dep_b_t(
@@ -7040,25 +6980,13 @@ typedef struct {
    */
   double pos[3];
   /**
-   * Unused
-   */
-  u8 n_pos;
-  /**
    * Velocity vector of the SV at tb in PZ-90.02 coordinates system[m/s]
    */
   double vel[3];
   /**
-   * Unused
-   */
-  u8 n_vel;
-  /**
    * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys[m/s^2]
    */
   double acc[3];
-  /**
-   * Unused
-   */
-  u8 n_acc;
   /**
    * Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
    */
@@ -7074,8 +7002,8 @@ static inline size_t sbp_packed_size_sbp_msg_ephemeris_glo_dep_c_t(
           sizeof(msg->common.ura) + sizeof(msg->common.fit_interval) +
           sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
          sizeof(msg->gamma) + sizeof(msg->tau) + sizeof(msg->d_tau) +
-         (3 * sizeof(msg->pos)) + (3 * sizeof(msg->vel)) +
-         (3 * sizeof(msg->acc)) + sizeof(msg->fcn);
+         (3 * sizeof(msg->pos[0])) + (3 * sizeof(msg->vel[0])) +
+         (3 * sizeof(msg->acc[0])) + sizeof(msg->fcn);
 }
 
 static inline bool sbp_pack_sbp_msg_ephemeris_glo_dep_c_t(
@@ -7407,25 +7335,13 @@ typedef struct {
    */
   double pos[3];
   /**
-   * Unused
-   */
-  u8 n_pos;
-  /**
    * Velocity vector of the SV at tb in PZ-90.02 coordinates system[m/s]
    */
   double vel[3];
   /**
-   * Unused
-   */
-  u8 n_vel;
-  /**
    * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys[m/s^2]
    */
   double acc[3];
-  /**
-   * Unused
-   */
-  u8 n_acc;
   /**
    * Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
    */
@@ -7445,8 +7361,8 @@ static inline size_t sbp_packed_size_sbp_msg_ephemeris_glo_dep_d_t(
           sizeof(msg->common.ura) + sizeof(msg->common.fit_interval) +
           sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
          sizeof(msg->gamma) + sizeof(msg->tau) + sizeof(msg->d_tau) +
-         (3 * sizeof(msg->pos)) + (3 * sizeof(msg->vel)) +
-         (3 * sizeof(msg->acc)) + sizeof(msg->fcn) + sizeof(msg->iod);
+         (3 * sizeof(msg->pos[0])) + (3 * sizeof(msg->vel[0])) +
+         (3 * sizeof(msg->acc[0])) + sizeof(msg->fcn) + sizeof(msg->iod);
 }
 
 static inline bool sbp_pack_sbp_msg_ephemeris_glo_dep_d_t(
@@ -7795,25 +7711,13 @@ typedef struct {
    */
   double pos[3];
   /**
-   * Unused
-   */
-  u8 n_pos;
-  /**
    * Velocity vector of the SV at tb in PZ-90.02 coordinates system[m/s]
    */
   double vel[3];
   /**
-   * Unused
-   */
-  u8 n_vel;
-  /**
    * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys[m/s^2]
    */
   float acc[3];
-  /**
-   * Unused
-   */
-  u8 n_acc;
   /**
    * Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
    */
@@ -7833,8 +7737,8 @@ static inline size_t sbp_packed_size_sbp_msg_ephemeris_glo_t(
           sizeof(msg->common.ura) + sizeof(msg->common.fit_interval) +
           sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
          sizeof(msg->gamma) + sizeof(msg->tau) + sizeof(msg->d_tau) +
-         (3 * sizeof(msg->pos)) + (3 * sizeof(msg->vel)) +
-         (3 * sizeof(msg->acc)) + sizeof(msg->fcn) + sizeof(msg->iod);
+         (3 * sizeof(msg->pos[0])) + (3 * sizeof(msg->vel[0])) +
+         (3 * sizeof(msg->acc[0])) + sizeof(msg->fcn) + sizeof(msg->iod);
 }
 
 static inline bool sbp_pack_sbp_msg_ephemeris_glo_t(

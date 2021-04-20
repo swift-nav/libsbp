@@ -164,7 +164,6 @@ START_TEST(test_auto_check_sbp_system_35) {
       char test_string[] = {(char)83, (char)107, (char)121, (char)108,
                             (char)97, (char)114, (char)107, (char)0};
       memcpy(test_msg->source, test_string, sizeof(test_string));
-      test_msg->n_source = sizeof(test_string);
     }
 
     dummy_reset();

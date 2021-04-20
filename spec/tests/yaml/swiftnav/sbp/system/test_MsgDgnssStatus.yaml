@@ -9,7 +9,7 @@ tests:
       flags: 0
       latency: 50
       num_signals: 12
-      source: Skylark
+      source: "Skylark\0"
     module: sbp.system
     name: MsgDgnssStatus
   msg_type: '0xff02'

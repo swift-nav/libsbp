@@ -162,7 +162,6 @@ START_TEST(test_auto_check_sbp_logging_43) {
                             (char)65, (char)65,  (char)65, (char)65,
                             (char)65, (char)69,  (char)97, (char)103};
       memcpy(test_msg->fwd_payload, test_string, sizeof(test_string));
-      test_msg->n_fwd_payload = sizeof(test_string);
     }
     test_msg->protocol = 0;
     test_msg->source = 0;
