@@ -60,8 +60,6 @@ SBP_PACK_START
  * The save settings message persists the device's current settings
  * configuration to its onboard flash memory file system.
  */
-typedef struct SBP_ATTR_PACKED {
-} msg_settings_save_t;
 
 #define SBP_MSG_SETTINGS_WRITE 0x00A0
 /** Write device configuration settings (host => device)
@@ -222,8 +220,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * The settings message for indicating end of the settings values.
  */
-typedef struct SBP_ATTR_PACKED {
-} msg_settings_read_by_index_done_t;
 
 #define SBP_MSG_SETTINGS_REGISTER 0x00AE
 /** Register setting and default value (device => host)

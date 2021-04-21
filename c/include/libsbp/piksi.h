@@ -36,8 +36,6 @@ SBP_PACK_START
  * This is a legacy message for sending and loading a satellite
  * alamanac onto the Piksi's flash memory from the host.
  */
-typedef struct SBP_ATTR_PACKED {
-} msg_almanac_t;
 
 #define SBP_MSG_SET_TIME 0x0068
 /** Send GPS time from host (host => Piksi)
@@ -45,8 +43,6 @@ typedef struct SBP_ATTR_PACKED {
  * This message sets up timing functionality using a coarse GPS
  * time estimate sent by the host.
  */
-typedef struct SBP_ATTR_PACKED {
-} msg_set_time_t;
 
 #define SBP_MSG_RESET 0x00B6
 #define SBP_RESET_DEFAULT_SETTINGS_MASK (0x1)
@@ -81,8 +77,6 @@ typedef struct SBP_ATTR_PACKED {
  * This message from the host resets the Piksi back into the
  * bootloader.
  */
-typedef struct SBP_ATTR_PACKED {
-} msg_reset_dep_t;
 
 #define SBP_MSG_CW_RESULTS 0x00C0
 /** Legacy message for CW interference channel (Piksi => host)
@@ -91,8 +85,6 @@ typedef struct SBP_ATTR_PACKED {
  * CW interference channel on the SwiftNAP. This message will be
  * removed in a future release.
  */
-typedef struct SBP_ATTR_PACKED {
-} msg_cw_results_t;
 
 #define SBP_MSG_CW_START 0x00C1
 /** Legacy message for CW interference channel (host => Piksi)
@@ -101,8 +93,6 @@ typedef struct SBP_ATTR_PACKED {
  * the CW interference channel on the SwiftNAP. This message will
  * be removed in a future release.
  */
-typedef struct SBP_ATTR_PACKED {
-} msg_cw_start_t;
 
 #define SBP_MSG_RESET_FILTERS 0x0022
 #define SBP_RESET_FILTERS_FILTER_OR_PROCESS_TO_RESET_MASK (0x3)
@@ -137,8 +127,6 @@ typedef struct SBP_ATTR_PACKED {
  *
  * Deprecated
  */
-typedef struct SBP_ATTR_PACKED {
-} msg_init_base_dep_t;
 
 #define SBP_MSG_THREAD_STATE 0x0017
 /** State of an RTOS thread
@@ -549,8 +537,6 @@ typedef struct SBP_ATTR_PACKED {
  * Request state of Piksi network interfaces.
  * Output will be sent in MSG_NETWORK_STATE_RESP messages
  */
-typedef struct SBP_ATTR_PACKED {
-} msg_network_state_req_t;
 
 #define SBP_MSG_NETWORK_STATE_RESP 0x00BB
 #define SBP_NETWORK_STATE_RESP_IFF_MULTICAST__SUPPORTS_MULTICAST_MASK (0x1)

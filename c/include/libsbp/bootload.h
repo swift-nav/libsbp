@@ -38,8 +38,6 @@ SBP_PACK_START
  * handshake between the device bootloader and the host. The
  * response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
  */
-typedef struct SBP_ATTR_PACKED {
-} msg_bootloader_handshake_req_t;
 
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_RESP 0x00B4
 #define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK \
@@ -122,8 +120,6 @@ typedef struct SBP_ATTR_PACKED {
  * device ID in the payload. Note that this ID is tied to the FPGA,
  * and not related to the Piksi's serial number.
  */
-typedef struct SBP_ATTR_PACKED {
-} msg_nap_device_dna_req_t;
 
 #define SBP_MSG_NAP_DEVICE_DNA_RESP 0x00DD
 /** Read FPGA device ID over UART response (host <= device)

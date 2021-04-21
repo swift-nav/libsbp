@@ -48,6 +48,7 @@ SBP_PACK_START
 (((m.desc|commentify)))
  */
 ((*- endif *))
+((*- if m.fields *))
 typedef struct SBP_ATTR_PACKED {
   ((* for f in m.fields *))
 
@@ -59,6 +60,7 @@ typedef struct SBP_ATTR_PACKED {
   (((f|mk_id))) ((((f|mk_size).ljust(m.max_fid_len+4))))
   ((* endfor *))
 } (((m.identifier|convert)));
+((*- endif *))
 
 ((* endfor *))
 /** \} */

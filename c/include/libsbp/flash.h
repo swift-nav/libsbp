@@ -270,8 +270,6 @@ typedef struct SBP_ATTR_PACKED {
  * responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
  * ID in the payload.
  */
-typedef struct SBP_ATTR_PACKED {
-} msg_stm_unique_id_req_t;
 
 #define SBP_MSG_STM_UNIQUE_ID_RESP 0x00E5
 /** Read device's hardcoded unique ID response (host <= device)
