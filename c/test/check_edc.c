@@ -13,30 +13,30 @@
 #include <check.h>
 #include <edc.h>
 
-const u8 *test_data = (const u8*)"123456789";
+const u8 *test_data = (const u8 *)"123456789";
 
-START_TEST(test_crc16_ccitt)
-{
+START_TEST(test_crc16_ccitt) {
   u16 crc;
 
   crc = crc16_ccitt(test_data, 0, 0);
   ck_assert_msg(crc == 0,
-    "CRC of empty buffer with starting value 0 should be 0, not %d", crc);
+                "CRC of empty buffer with starting value 0 should be 0, not %d",
+                crc);
 
   crc = crc16_ccitt(test_data, 0, 22);
-  ck_assert_msg(crc == 22,
-    "CRC of empty buffer with starting value 22 should be 22, not %d", crc);
+  ck_assert_msg(
+      crc == 22,
+      "CRC of empty buffer with starting value 22 should be 22, not %d", crc);
 
   /* Test value taken from python crcmod package tests, see:
    * http://crcmod.sourceforge.net/crcmod.predefined.html */
   crc = crc16_ccitt(test_data, 9, 0);
   ck_assert_msg(crc == 0x31C3,
-    "CRC of \"123456789\" should be 0x31C3, not 0x%04X", crc);
+                "CRC of \"123456789\" should be 0x31C3, not 0x%04X", crc);
 }
 END_TEST
 
-Suite* edc_suite(void)
-{
+Suite *edc_suite(void) {
   Suite *s = suite_create("Error Detection and Correction");
 
   TCase *tc_crc = tcase_create("CRC");
