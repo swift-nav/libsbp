@@ -47,7 +47,8 @@ RUN \
       libudev-dev \
       uuid-dev \
       libgmp-dev \
-      zlib1g-dev
+      zlib1g-dev \
+      clang-format-6.0
 
 RUN add-apt-repository ppa:deadsnakes/ppa \
   && apt-get update \
