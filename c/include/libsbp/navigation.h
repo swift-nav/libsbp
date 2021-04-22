@@ -1721,7 +1721,41 @@ typedef struct SBP_ATTR_PACKED {
  * associated with a given LLH position solution. The full GPS time is given
  * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
-#define SBP_MSG_PROTECTION_LEVEL       0x0216
+#define SBP_MSG_PROTECTION_LEVEL_DEP_A 0x0216
+#define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK (0x7)
+#define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT (0u)
+#define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_GET(flags) \
+                             (((flags) >> SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT) \
+                             & SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK)
+#define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK)) \
+                             << (SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT)));} while(0)
+                             
+
+#define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_SAFE_STATE_PROTECTION_LEVEL_SHALL_NOT_BE_USED_FOR_SAFETY_CRITICAL_APPLICATION (0)
+#define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_TIR_LEVEL_1 (1)
+#define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_TIR_LEVEL_2 (2)
+#define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_TIR_LEVEL_3 (3)
+
+typedef struct SBP_ATTR_PACKED {
+  u32 tow;       /**< GPS Time of Week [ms] */
+  u16 vpl;       /**< Vertical protection level [cm] */
+  u16 hpl;       /**< Horizontal protection level [cm] */
+  double lat;       /**< Latitude [deg] */
+  double lon;       /**< Longitude [deg] */
+  double height;    /**< Height [m] */
+  u8 flags;     /**< Status flags */
+} msg_protection_level_dep_a_t;
+
+
+/** Computed state and Protection Levels
+ *
+ * This message reports the protection levels associated to the given 
+ * state estimate. The full GPS time is given by the preceding MSG_GPS_TIME 
+ * with the matching time-of-week (tow).
+ */
+#define SBP_MSG_PROTECTION_LEVEL       0x0217
 #define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK (0x7)
 #define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT (0u)
 #define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_GET(flags) \
@@ -1739,13 +1773,30 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_TIR_LEVEL_3 (3)
 
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;       /**< GPS Time of Week [ms] */
-  u16 vpl;       /**< Vertical protection level [cm] */
-  u16 hpl;       /**< Horizontal protection level [cm] */
-  double lat;       /**< Latitude [deg] */
-  double lon;       /**< Longitude [deg] */
-  double height;    /**< Height [m] */
-  u8 flags;     /**< Status flags */
+  u32 tow;        /**< GPS Time of Week [ms] */
+  u16 vpl;        /**< Vertical protection level [cm] */
+  u16 hpl;        /**< Horizontal protection level [cm] */
+  u16 atpl;       /**< Along-track position error protection level [cm] */
+  u16 ctpl;       /**< Cross-track position error protection level [cm] */
+  u16 hvpl;       /**< Protection level for the error vector between estimated and 
+true along/cross track velocity vector
+ [mm/s] */
+  u16 vvpl;       /**< Protection level for the velocity in vehicle upright direction 
+(different from vertical direction if on a slope)
+ [mm/s] */
+  u16 hopl;       /**< Heading orientation protection level [mdeg] */
+  u16 popl;       /**< Pitch orientation protection level [mdeg] */
+  u16 ropl;       /**< Roll orientation protection level [mdeg] */
+  double lat;        /**< Latitude [deg] */
+  double lon;        /**< Longitude [deg] */
+  double height;     /**< Height [m] */
+  s32 v_x;        /**< Velocity in vehicle x direction [mm/s] */
+  s32 v_y;        /**< Velocity in vehicle y direction [mm/s] */
+  s32 v_z;        /**< Velocity in vehicle z direction [mm/s] */
+  s32 roll;       /**< Roll angle [udeg] */
+  s32 pitch;      /**< Pitch angle [udeg] */
+  s32 heading;    /**< Heading angle [udeg] */
+  u32 flags;      /**< Status flags */
 } msg_protection_level_t;
 
 

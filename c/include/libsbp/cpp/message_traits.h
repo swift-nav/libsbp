@@ -823,8 +823,14 @@ struct MessageTraits<msg_vel_ecef_cov_t> {
 
 
 template<>
-struct MessageTraits<msg_protection_level_t> {
+struct MessageTraits<msg_protection_level_dep_a_t> {
   static constexpr u16 id = 534;
+};
+
+
+template<>
+struct MessageTraits<msg_protection_level_t> {
+  static constexpr u16 id = 535;
 };
 
 

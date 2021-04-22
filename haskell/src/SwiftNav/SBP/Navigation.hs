@@ -1962,28 +1962,105 @@ $(makeSBP 'msgBaselineHeadingDepA ''MsgBaselineHeadingDepA)
 $(makeJSON "_msgBaselineHeadingDepA_" ''MsgBaselineHeadingDepA)
 $(makeLenses ''MsgBaselineHeadingDepA)
 
-msgProtectionLevel :: Word16
-msgProtectionLevel = 0x0216
+msgProtectionLevelDepA :: Word16
+msgProtectionLevelDepA = 0x0216
 
--- | SBP class for message MSG_PROTECTION_LEVEL (0x0216).
+-- | SBP class for message MSG_PROTECTION_LEVEL_DEP_A (0x0216).
 --
 -- This message reports the local vertical and horizontal protection levels
 -- associated with a given LLH position solution. The full GPS time is given by
 -- the preceding MSG_GPS_TIME with the matching time-of-week (tow).
-data MsgProtectionLevel = MsgProtectionLevel
-  { _msgProtectionLevel_tow  :: !Word32
+data MsgProtectionLevelDepA = MsgProtectionLevelDepA
+  { _msgProtectionLevelDepA_tow  :: !Word32
     -- ^ GPS Time of Week
-  , _msgProtectionLevel_vpl  :: !Word16
+  , _msgProtectionLevelDepA_vpl  :: !Word16
     -- ^ Vertical protection level
-  , _msgProtectionLevel_hpl  :: !Word16
+  , _msgProtectionLevelDepA_hpl  :: !Word16
     -- ^ Horizontal protection level
-  , _msgProtectionLevel_lat  :: !Double
+  , _msgProtectionLevelDepA_lat  :: !Double
     -- ^ Latitude
-  , _msgProtectionLevel_lon  :: !Double
+  , _msgProtectionLevelDepA_lon  :: !Double
+    -- ^ Longitude
+  , _msgProtectionLevelDepA_height :: !Double
+    -- ^ Height
+  , _msgProtectionLevelDepA_flags :: !Word8
+    -- ^ Status flags
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgProtectionLevelDepA where
+  get = do
+    _msgProtectionLevelDepA_tow <- getWord32le
+    _msgProtectionLevelDepA_vpl <- getWord16le
+    _msgProtectionLevelDepA_hpl <- getWord16le
+    _msgProtectionLevelDepA_lat <- getFloat64le
+    _msgProtectionLevelDepA_lon <- getFloat64le
+    _msgProtectionLevelDepA_height <- getFloat64le
+    _msgProtectionLevelDepA_flags <- getWord8
+    pure MsgProtectionLevelDepA {..}
+
+  put MsgProtectionLevelDepA {..} = do
+    putWord32le _msgProtectionLevelDepA_tow
+    putWord16le _msgProtectionLevelDepA_vpl
+    putWord16le _msgProtectionLevelDepA_hpl
+    putFloat64le _msgProtectionLevelDepA_lat
+    putFloat64le _msgProtectionLevelDepA_lon
+    putFloat64le _msgProtectionLevelDepA_height
+    putWord8 _msgProtectionLevelDepA_flags
+
+$(makeSBP 'msgProtectionLevelDepA ''MsgProtectionLevelDepA)
+$(makeJSON "_msgProtectionLevelDepA_" ''MsgProtectionLevelDepA)
+$(makeLenses ''MsgProtectionLevelDepA)
+
+msgProtectionLevel :: Word16
+msgProtectionLevel = 0x0217
+
+-- | SBP class for message MSG_PROTECTION_LEVEL (0x0217).
+--
+-- This message reports the protection levels associated to the given  state
+-- estimate. The full GPS time is given by the preceding MSG_GPS_TIME  with the
+-- matching time-of-week (tow).
+data MsgProtectionLevel = MsgProtectionLevel
+  { _msgProtectionLevel_tow   :: !Word32
+    -- ^ GPS Time of Week
+  , _msgProtectionLevel_vpl   :: !Word16
+    -- ^ Vertical protection level
+  , _msgProtectionLevel_hpl   :: !Word16
+    -- ^ Horizontal protection level
+  , _msgProtectionLevel_atpl  :: !Word16
+    -- ^ Along-track position error protection level
+  , _msgProtectionLevel_ctpl  :: !Word16
+    -- ^ Cross-track position error protection level
+  , _msgProtectionLevel_hvpl  :: !Word16
+    -- ^ Protection level for the error vector between estimated and  true
+    -- along/cross track velocity vector
+  , _msgProtectionLevel_vvpl  :: !Word16
+    -- ^ Protection level for the velocity in vehicle upright direction
+    -- (different from vertical direction if on a slope)
+  , _msgProtectionLevel_hopl  :: !Word16
+    -- ^ Heading orientation protection level
+  , _msgProtectionLevel_popl  :: !Word16
+    -- ^ Pitch orientation protection level
+  , _msgProtectionLevel_ropl  :: !Word16
+    -- ^ Roll orientation protection level
+  , _msgProtectionLevel_lat   :: !Double
+    -- ^ Latitude
+  , _msgProtectionLevel_lon   :: !Double
     -- ^ Longitude
   , _msgProtectionLevel_height :: !Double
     -- ^ Height
-  , _msgProtectionLevel_flags :: !Word8
+  , _msgProtectionLevel_v_x   :: !Int32
+    -- ^ Velocity in vehicle x direction
+  , _msgProtectionLevel_v_y   :: !Int32
+    -- ^ Velocity in vehicle y direction
+  , _msgProtectionLevel_v_z   :: !Int32
+    -- ^ Velocity in vehicle z direction
+  , _msgProtectionLevel_roll  :: !Int32
+    -- ^ Roll angle
+  , _msgProtectionLevel_pitch :: !Int32
+    -- ^ Pitch angle
+  , _msgProtectionLevel_heading :: !Int32
+    -- ^ Heading angle
+  , _msgProtectionLevel_flags :: !Word32
     -- ^ Status flags
   } deriving ( Show, Read, Eq )
 
@@ -1992,20 +2069,46 @@ instance Binary MsgProtectionLevel where
     _msgProtectionLevel_tow <- getWord32le
     _msgProtectionLevel_vpl <- getWord16le
     _msgProtectionLevel_hpl <- getWord16le
+    _msgProtectionLevel_atpl <- getWord16le
+    _msgProtectionLevel_ctpl <- getWord16le
+    _msgProtectionLevel_hvpl <- getWord16le
+    _msgProtectionLevel_vvpl <- getWord16le
+    _msgProtectionLevel_hopl <- getWord16le
+    _msgProtectionLevel_popl <- getWord16le
+    _msgProtectionLevel_ropl <- getWord16le
     _msgProtectionLevel_lat <- getFloat64le
     _msgProtectionLevel_lon <- getFloat64le
     _msgProtectionLevel_height <- getFloat64le
-    _msgProtectionLevel_flags <- getWord8
+    _msgProtectionLevel_v_x <- (fromIntegral <$> getWord32le)
+    _msgProtectionLevel_v_y <- (fromIntegral <$> getWord32le)
+    _msgProtectionLevel_v_z <- (fromIntegral <$> getWord32le)
+    _msgProtectionLevel_roll <- (fromIntegral <$> getWord32le)
+    _msgProtectionLevel_pitch <- (fromIntegral <$> getWord32le)
+    _msgProtectionLevel_heading <- (fromIntegral <$> getWord32le)
+    _msgProtectionLevel_flags <- getWord32le
     pure MsgProtectionLevel {..}
 
   put MsgProtectionLevel {..} = do
     putWord32le _msgProtectionLevel_tow
     putWord16le _msgProtectionLevel_vpl
     putWord16le _msgProtectionLevel_hpl
+    putWord16le _msgProtectionLevel_atpl
+    putWord16le _msgProtectionLevel_ctpl
+    putWord16le _msgProtectionLevel_hvpl
+    putWord16le _msgProtectionLevel_vvpl
+    putWord16le _msgProtectionLevel_hopl
+    putWord16le _msgProtectionLevel_popl
+    putWord16le _msgProtectionLevel_ropl
     putFloat64le _msgProtectionLevel_lat
     putFloat64le _msgProtectionLevel_lon
     putFloat64le _msgProtectionLevel_height
-    putWord8 _msgProtectionLevel_flags
+    (putWord32le . fromIntegral) _msgProtectionLevel_v_x
+    (putWord32le . fromIntegral) _msgProtectionLevel_v_y
+    (putWord32le . fromIntegral) _msgProtectionLevel_v_z
+    (putWord32le . fromIntegral) _msgProtectionLevel_roll
+    (putWord32le . fromIntegral) _msgProtectionLevel_pitch
+    (putWord32le . fromIntegral) _msgProtectionLevel_heading
+    putWord32le _msgProtectionLevel_flags
 
 $(makeSBP 'msgProtectionLevel ''MsgProtectionLevel)
 $(makeJSON "_msgProtectionLevel_" ''MsgProtectionLevel)

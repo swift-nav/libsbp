@@ -37,10 +37,10 @@ public class MsgLinuxSysState extends SBPMessage {
     /** total system memory, in MiB */
     public int mem_total;
     
-    /** percent of total cpu currently utilized */
+    /** percent of CPU used, expressed as a fraction of 256 */
     public int pcpu;
     
-    /** percent of total memory currently utilized */
+    /** percent of memory used, expressed as a fraction of 256 */
     public int pmem;
     
     /** number of processes that started during collection phase */

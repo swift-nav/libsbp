@@ -1827,7 +1827,7 @@ MsgBaselineHeadingDepA.prototype.fieldSpec.push(['n_sats', 'writeUInt8', 1]);
 MsgBaselineHeadingDepA.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
 
 /**
- * SBP class for message MSG_PROTECTION_LEVEL (0x0216).
+ * SBP class for message MSG_PROTECTION_LEVEL_DEP_A (0x0216).
  *
  * This message reports the local vertical and horizontal protection levels
  * associated with a given LLH position solution. The full GPS time is given by the
@@ -1844,6 +1844,68 @@ MsgBaselineHeadingDepA.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * @param sbp An SBP object with a payload to be decoded.
  */
+var MsgProtectionLevelDepA = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_PROTECTION_LEVEL_DEP_A";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgProtectionLevelDepA.prototype = Object.create(SBP.prototype);
+MsgProtectionLevelDepA.prototype.messageType = "MSG_PROTECTION_LEVEL_DEP_A";
+MsgProtectionLevelDepA.prototype.msg_type = 0x0216;
+MsgProtectionLevelDepA.prototype.constructor = MsgProtectionLevelDepA;
+MsgProtectionLevelDepA.prototype.parser = new Parser()
+  .endianess('little')
+  .uint32('tow')
+  .uint16('vpl')
+  .uint16('hpl')
+  .doublele('lat')
+  .doublele('lon')
+  .doublele('height')
+  .uint8('flags');
+MsgProtectionLevelDepA.prototype.fieldSpec = [];
+MsgProtectionLevelDepA.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgProtectionLevelDepA.prototype.fieldSpec.push(['vpl', 'writeUInt16LE', 2]);
+MsgProtectionLevelDepA.prototype.fieldSpec.push(['hpl', 'writeUInt16LE', 2]);
+MsgProtectionLevelDepA.prototype.fieldSpec.push(['lat', 'writeDoubleLE', 8]);
+MsgProtectionLevelDepA.prototype.fieldSpec.push(['lon', 'writeDoubleLE', 8]);
+MsgProtectionLevelDepA.prototype.fieldSpec.push(['height', 'writeDoubleLE', 8]);
+MsgProtectionLevelDepA.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+
+/**
+ * SBP class for message MSG_PROTECTION_LEVEL (0x0217).
+ *
+ * This message reports the protection levels associated to the given  state
+ * estimate. The full GPS time is given by the preceding MSG_GPS_TIME  with the
+ * matching time-of-week (tow).
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field vpl number (unsigned 16-bit int, 2 bytes) Vertical protection level
+ * @field hpl number (unsigned 16-bit int, 2 bytes) Horizontal protection level
+ * @field atpl number (unsigned 16-bit int, 2 bytes) Along-track position error protection level
+ * @field ctpl number (unsigned 16-bit int, 2 bytes) Cross-track position error protection level
+ * @field hvpl number (unsigned 16-bit int, 2 bytes) Protection level for the error vector between estimated and  true along/cross
+ *   track velocity vector
+ * @field vvpl number (unsigned 16-bit int, 2 bytes) Protection level for the velocity in vehicle upright direction  (different from
+ *   vertical direction if on a slope)
+ * @field hopl number (unsigned 16-bit int, 2 bytes) Heading orientation protection level
+ * @field popl number (unsigned 16-bit int, 2 bytes) Pitch orientation protection level
+ * @field ropl number (unsigned 16-bit int, 2 bytes) Roll orientation protection level
+ * @field lat number (float, 8 bytes) Latitude
+ * @field lon number (float, 8 bytes) Longitude
+ * @field height number (float, 8 bytes) Height
+ * @field v_x number (signed 32-bit int, 4 bytes) Velocity in vehicle x direction
+ * @field v_y number (signed 32-bit int, 4 bytes) Velocity in vehicle y direction
+ * @field v_z number (signed 32-bit int, 4 bytes) Velocity in vehicle z direction
+ * @field roll number (signed 32-bit int, 4 bytes) Roll angle
+ * @field pitch number (signed 32-bit int, 4 bytes) Pitch angle
+ * @field heading number (signed 32-bit int, 4 bytes) Heading angle
+ * @field flags number (unsigned 32-bit int, 4 bytes) Status flags
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
 var MsgProtectionLevel = function (sbp, fields) {
   SBP.call(this, sbp);
   this.messageType = "MSG_PROTECTION_LEVEL";
@@ -1853,25 +1915,51 @@ var MsgProtectionLevel = function (sbp, fields) {
 };
 MsgProtectionLevel.prototype = Object.create(SBP.prototype);
 MsgProtectionLevel.prototype.messageType = "MSG_PROTECTION_LEVEL";
-MsgProtectionLevel.prototype.msg_type = 0x0216;
+MsgProtectionLevel.prototype.msg_type = 0x0217;
 MsgProtectionLevel.prototype.constructor = MsgProtectionLevel;
 MsgProtectionLevel.prototype.parser = new Parser()
   .endianess('little')
   .uint32('tow')
   .uint16('vpl')
   .uint16('hpl')
+  .uint16('atpl')
+  .uint16('ctpl')
+  .uint16('hvpl')
+  .uint16('vvpl')
+  .uint16('hopl')
+  .uint16('popl')
+  .uint16('ropl')
   .doublele('lat')
   .doublele('lon')
   .doublele('height')
-  .uint8('flags');
+  .int32('v_x')
+  .int32('v_y')
+  .int32('v_z')
+  .int32('roll')
+  .int32('pitch')
+  .int32('heading')
+  .uint32('flags');
 MsgProtectionLevel.prototype.fieldSpec = [];
 MsgProtectionLevel.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
 MsgProtectionLevel.prototype.fieldSpec.push(['vpl', 'writeUInt16LE', 2]);
 MsgProtectionLevel.prototype.fieldSpec.push(['hpl', 'writeUInt16LE', 2]);
+MsgProtectionLevel.prototype.fieldSpec.push(['atpl', 'writeUInt16LE', 2]);
+MsgProtectionLevel.prototype.fieldSpec.push(['ctpl', 'writeUInt16LE', 2]);
+MsgProtectionLevel.prototype.fieldSpec.push(['hvpl', 'writeUInt16LE', 2]);
+MsgProtectionLevel.prototype.fieldSpec.push(['vvpl', 'writeUInt16LE', 2]);
+MsgProtectionLevel.prototype.fieldSpec.push(['hopl', 'writeUInt16LE', 2]);
+MsgProtectionLevel.prototype.fieldSpec.push(['popl', 'writeUInt16LE', 2]);
+MsgProtectionLevel.prototype.fieldSpec.push(['ropl', 'writeUInt16LE', 2]);
 MsgProtectionLevel.prototype.fieldSpec.push(['lat', 'writeDoubleLE', 8]);
 MsgProtectionLevel.prototype.fieldSpec.push(['lon', 'writeDoubleLE', 8]);
 MsgProtectionLevel.prototype.fieldSpec.push(['height', 'writeDoubleLE', 8]);
-MsgProtectionLevel.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
+MsgProtectionLevel.prototype.fieldSpec.push(['v_x', 'writeInt32LE', 4]);
+MsgProtectionLevel.prototype.fieldSpec.push(['v_y', 'writeInt32LE', 4]);
+MsgProtectionLevel.prototype.fieldSpec.push(['v_z', 'writeInt32LE', 4]);
+MsgProtectionLevel.prototype.fieldSpec.push(['roll', 'writeInt32LE', 4]);
+MsgProtectionLevel.prototype.fieldSpec.push(['pitch', 'writeInt32LE', 4]);
+MsgProtectionLevel.prototype.fieldSpec.push(['heading', 'writeInt32LE', 4]);
+MsgProtectionLevel.prototype.fieldSpec.push(['flags', 'writeUInt32LE', 4]);
 
 module.exports = {
   0x0102: MsgGpsTime,
@@ -1942,6 +2030,8 @@ module.exports = {
   MsgVelNedDepA: MsgVelNedDepA,
   0x0207: MsgBaselineHeadingDepA,
   MsgBaselineHeadingDepA: MsgBaselineHeadingDepA,
-  0x0216: MsgProtectionLevel,
+  0x0216: MsgProtectionLevelDepA,
+  MsgProtectionLevelDepA: MsgProtectionLevelDepA,
+  0x0217: MsgProtectionLevel,
   MsgProtectionLevel: MsgProtectionLevel,
 }

@@ -360,7 +360,7 @@ MsgLinuxProcessFdSummary.prototype.fieldSpec.push(['most_opened', 'string', null
  * Fields in the SBP payload (`sbp.payload`):
  * @field index number (unsigned 8-bit int, 1 byte) sequence of this status message, values from 0-9
  * @field pid number (unsigned 16-bit int, 2 bytes) the PID of the process
- * @field pcpu number (unsigned 8-bit int, 1 byte) percent of cpu used, expressed as a fraction of 256
+ * @field pcpu number (unsigned 8-bit int, 1 byte) percent of CPU used, expressed as a fraction of 256
  * @field time number (unsigned 32-bit int, 4 bytes) timestamp of message, refer to flags field for how to interpret
  * @field flags number (unsigned 8-bit int, 1 byte) flags
  * @field tname string fixed length string representing the thread name
@@ -450,8 +450,8 @@ MsgLinuxMemState.prototype.fieldSpec.push(['cmdline', 'string', null]);
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field mem_total number (unsigned 16-bit int, 2 bytes) total system memory, in MiB
- * @field pcpu number (unsigned 8-bit int, 1 byte) percent of total cpu currently utilized
- * @field pmem number (unsigned 8-bit int, 1 byte) percent of total memory currently utilized
+ * @field pcpu number (unsigned 8-bit int, 1 byte) percent of CPU used, expressed as a fraction of 256
+ * @field pmem number (unsigned 8-bit int, 1 byte) percent of memory used, expressed as a fraction of 256
  * @field procs_starting number (unsigned 16-bit int, 2 bytes) number of processes that started during collection phase
  * @field procs_stopping number (unsigned 16-bit int, 2 bytes) number of processes that stopped during collection phase
  * @field pid_count number (unsigned 16-bit int, 2 bytes) the count of processes on the system
