@@ -41,7 +41,7 @@ public class MsgLinuxCpuState extends SBPMessage {
     /** the PID of the process */
     public int pid;
     
-    /** percent of cpu used, expressed as a fraction of 256 */
+    /** percent of CPU used, expressed as a fraction of 256 */
     public int pcpu;
     
     /** timestamp of message, refer to flags field for how to interpret */

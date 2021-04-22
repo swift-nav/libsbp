@@ -727,6 +727,74 @@ MsgSsrTileDefinition.prototype.fieldSpec.push(['cols', 'writeUInt16LE', 2]);
 MsgSsrTileDefinition.prototype.fieldSpec.push(['bitmask', 'writeUInt64LE', 8]);
 
 /**
+ * SBP class for message fragment SatelliteAPC
+ *
+ * Contains phase center offset and elevation variation corrections for one signal
+ * on a satellite.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sid GnssSignal GNSS signal identifier (16 bit)
+ * @field sat_info number (unsigned 8-bit int, 1 byte) Additional satellite information
+ * @field svn number (unsigned 16-bit int, 2 bytes) Satellite Code, as defined by IGS. Typically the space vehicle number.
+ * @field pco array Mean phase center offset, X Y and Z axises. See IGS ANTEX file format
+ *   description for coordinate system definition.
+ * @field pcv array Elevation dependent phase center variations. First element is 0 degrees
+ *   separation from the Z axis, subsequent elements represent elevation variations
+ *   in 1 degree increments.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var SatelliteAPC = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "SatelliteAPC";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+SatelliteAPC.prototype = Object.create(SBP.prototype);
+SatelliteAPC.prototype.messageType = "SatelliteAPC";
+SatelliteAPC.prototype.constructor = SatelliteAPC;
+SatelliteAPC.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('sid', { type: GnssSignal.prototype.parser })
+  .uint8('sat_info')
+  .uint16('svn')
+  .array('pco', { length: 3, type: 'int16le' })
+  .array('pcv', { length: 21, type: 'int8' });
+SatelliteAPC.prototype.fieldSpec = [];
+SatelliteAPC.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+SatelliteAPC.prototype.fieldSpec.push(['sat_info', 'writeUInt8', 1]);
+SatelliteAPC.prototype.fieldSpec.push(['svn', 'writeUInt16LE', 2]);
+SatelliteAPC.prototype.fieldSpec.push(['pco', 'array', 'writeInt16LE', function () { return 2; }, 3]);
+SatelliteAPC.prototype.fieldSpec.push(['pcv', 'array', 'writeInt8', function () { return 1; }, 21]);
+
+/**
+ * SBP class for message MSG_SSR_SATELLITE_APC (0x0604).
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field apc array Satellite antenna phase center corrections
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSsrSatelliteApc = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_SATELLITE_APC";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrSatelliteApc.prototype = Object.create(SBP.prototype);
+MsgSsrSatelliteApc.prototype.messageType = "MSG_SSR_SATELLITE_APC";
+MsgSsrSatelliteApc.prototype.msg_type = 0x0604;
+MsgSsrSatelliteApc.prototype.constructor = MsgSsrSatelliteApc;
+MsgSsrSatelliteApc.prototype.parser = new Parser()
+  .endianess('little')
+  .array('apc', { type: SatelliteAPC.prototype.parser, readUntil: 'eof' });
+MsgSsrSatelliteApc.prototype.fieldSpec = [];
+MsgSsrSatelliteApc.prototype.fieldSpec.push(['apc', 'array', SatelliteAPC.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
+
+/**
  * SBP class for message MSG_SSR_ORBIT_CLOCK_DEP_A (0x05DC).
  *
  
@@ -1064,6 +1132,9 @@ module.exports = {
   MsgSsrGriddedCorrection: MsgSsrGriddedCorrection,
   0x05F6: MsgSsrTileDefinition,
   MsgSsrTileDefinition: MsgSsrTileDefinition,
+  SatelliteAPC: SatelliteAPC,
+  0x0604: MsgSsrSatelliteApc,
+  MsgSsrSatelliteApc: MsgSsrSatelliteApc,
   0x05DC: MsgSsrOrbitClockDepA,
   MsgSsrOrbitClockDepA: MsgSsrOrbitClockDepA,
   STECHeaderDepA: STECHeaderDepA,

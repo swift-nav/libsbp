@@ -11,7 +11,9 @@
 -- Stability:   experimental
 -- Portability: portable
 --
--- \<Satellite observation messages from the device.\>
+-- \<Satellite observation messages from the device. The SBP sender ID of 0
+-- indicates remote observations from a GNSS base station, correction network,
+-- or Skylark, Swift's cloud GNSS correction product.\>
 
 module SwiftNav.SBP.Observation
   ( module SwiftNav.SBP.Observation

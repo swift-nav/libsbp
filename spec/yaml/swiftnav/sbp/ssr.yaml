@@ -517,6 +517,74 @@ definitions:
               See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but
               note the definition of the bits is inverted.
 
+ - SatelliteAPC:
+     short_desc: Antenna phase center correction.
+     desc: |
+       Contains phase center offset and elevation variation corrections for one
+       signal on a satellite.
+     fields:
+       - sid:
+           type: GnssSignal
+           desc: GNSS signal identifier (16 bit)
+       - sat_info:
+           type: u8
+           desc: Additional satellite information
+           fields:
+             - 3-7:
+                 desc: Reserved
+             - 0-4:
+                 desc: Satellite Type
+                 values:
+                   - 0: Unknown Type
+                   - 1: GPS I
+                   - 2: GPS II
+                   - 3: GPS IIA
+                   - 4: GPS IIR
+                   - 5: GPS IIF
+                   - 6: GPS III
+                   - 7: GLONASS
+                   - 8: GLONASS M
+                   - 9: GLONASS K1
+                   - 10: GALILEO
+                   - 11: BEIDOU 2G
+                   - 12: BEIDOU 2I
+                   - 13: BEIDOU 2M
+                   - 14: BEIDOU 3M, SECM
+                   - 15: BEIDOU 3G, SECM
+                   - 16: BEIDOU 3M, CAST
+                   - 17: BEIDOU 3G, CAST
+                   - 18: BEIDOU 3I, CAST
+                   - 19: QZSS
+       - svn:
+           type: u16
+           desc: Satellite Code, as defined by IGS. Typically the space vehicle number.
+       - pco:
+           type: array
+           size: 3
+           fill: s16
+           units: 1 mm
+           desc: |
+             Mean phase center offset, X Y and Z axises. See IGS ANTEX file
+             format description for coordinate system definition.
+       - pcv:
+           type: array
+           size: 21
+           fill: s8
+           units: 1 mm
+           desc: |
+             Elevation dependent phase center variations. First element is 0
+             degrees separation from the Z axis, subsequent elements represent
+             elevation variations in 1 degree increments.
+
+ - MSG_SSR_SATELLITE_APC:
+     id: 0x0604
+     short_desc: Satellite antenna phase center corrections
+     fields:
+       - apc:
+           type: array
+           fill: SatelliteAPC
+           desc: Satellite antenna phase center corrections
+
  - MSG_SSR_ORBIT_CLOCK_DEP_A:
     id: 0x05DC
     short_desc: Deprecated
