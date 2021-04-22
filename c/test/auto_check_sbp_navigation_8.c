@@ -125,17 +125,20 @@ START_TEST( test_auto_check_sbp_navigation_8 )
     u8 encoded_frame[] = {85,8,2,66,0,15,100,0,0,0,2,0,6,0,5,0,5,0,5,0,0,244,4, };
 
     dummy_reset();
-    msg_dops_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.flags = 0;
-    test_msg.gdop = 2;
-    test_msg.hdop = 5;
-    test_msg.pdop = 6;
-    test_msg.tdop = 5;
-    test_msg.tow = 100;
-    test_msg.vdop = 5;
-    sbp_send_message(&sbp_state, 0x208, 66, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_dops_t* test_msg = ( msg_dops_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->flags = 0;
+    test_msg->gdop = 2;
+    test_msg->hdop = 5;
+    test_msg->pdop = 6;
+    test_msg->tdop = 5;
+    test_msg->tow = 100;
+    test_msg->vdop = 5;
+    sbp_send_message(&sbp_state, 0x208, 66, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");

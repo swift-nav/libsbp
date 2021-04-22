@@ -125,98 +125,101 @@ START_TEST( test_auto_check_sbp_tracking_48 )
     u8 encoded_frame[] = {85,22,0,195,4,66,1,0,204,177,51,65,1,2,198,4,39,65,1,3,219,182,27,65,1,7,132,120,101,65,1,10,91,91,251,64,1,13,42,37,163,64,1,22,130,184,215,64,1,30,115,53,75,65,1,31,16,74,126,65,1,25,132,196,135,64,1,6,100,59,223,64,17,225, };
 
     dummy_reset();
-    msg_tracking_state_dep_a_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    if (sizeof(test_msg.states) == 0) {
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_tracking_state_dep_a_t* test_msg = ( msg_tracking_state_dep_a_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[0].cn0 = 11.230907440185547;
-    test_msg.states[0].prn = 0;
-    test_msg.states[0].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[0].cn0 = 11.230907440185547;
+    test_msg->states[0].prn = 0;
+    test_msg->states[0].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[1].cn0 = 10.438665390014648;
-    test_msg.states[1].prn = 2;
-    test_msg.states[1].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[1].cn0 = 10.438665390014648;
+    test_msg->states[1].prn = 2;
+    test_msg->states[1].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[2].cn0 = 9.732142448425293;
-    test_msg.states[2].prn = 3;
-    test_msg.states[2].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[2].cn0 = 9.732142448425293;
+    test_msg->states[2].prn = 3;
+    test_msg->states[2].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[3].cn0 = 14.341922760009766;
-    test_msg.states[3].prn = 7;
-    test_msg.states[3].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[3].cn0 = 14.341922760009766;
+    test_msg->states[3].prn = 7;
+    test_msg->states[3].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[4].cn0 = 7.8549017906188965;
-    test_msg.states[4].prn = 10;
-    test_msg.states[4].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[4].cn0 = 7.8549017906188965;
+    test_msg->states[4].prn = 10;
+    test_msg->states[4].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[5].cn0 = 5.0982866287231445;
-    test_msg.states[5].prn = 13;
-    test_msg.states[5].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[5].cn0 = 5.0982866287231445;
+    test_msg->states[5].prn = 13;
+    test_msg->states[5].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[6].cn0 = 6.741272926330566;
-    test_msg.states[6].prn = 22;
-    test_msg.states[6].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[6].cn0 = 6.741272926330566;
+    test_msg->states[6].prn = 22;
+    test_msg->states[6].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[7].cn0 = 12.700549125671387;
-    test_msg.states[7].prn = 30;
-    test_msg.states[7].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[7].cn0 = 12.700549125671387;
+    test_msg->states[7].prn = 30;
+    test_msg->states[7].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[8].cn0 = 15.893081665039062;
-    test_msg.states[8].prn = 31;
-    test_msg.states[8].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[8].cn0 = 15.893081665039062;
+    test_msg->states[8].prn = 31;
+    test_msg->states[8].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[9].cn0 = 4.242738723754883;
-    test_msg.states[9].prn = 25;
-    test_msg.states[9].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[9].cn0 = 4.242738723754883;
+    test_msg->states[9].prn = 25;
+    test_msg->states[9].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[10].cn0 = 6.97599983215332;
-    test_msg.states[10].prn = 6;
-    test_msg.states[10].state = 1;
-    sbp_send_message(&sbp_state, 0x16, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->states[10].cn0 = 6.97599983215332;
+    test_msg->states[10].prn = 6;
+    test_msg->states[10].state = 1;
+    sbp_send_message(&sbp_state, 0x16, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -315,98 +318,101 @@ START_TEST( test_auto_check_sbp_tracking_48 )
     u8 encoded_frame[] = {85,22,0,195,4,66,1,0,216,57,48,65,1,2,145,41,46,65,1,3,4,26,34,65,1,7,177,67,109,65,1,10,61,80,249,64,1,13,250,199,155,64,1,22,55,19,215,64,1,30,138,138,79,65,1,31,214,179,119,65,1,25,53,138,120,64,1,6,183,247,129,64,168,173, };
 
     dummy_reset();
-    msg_tracking_state_dep_a_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    if (sizeof(test_msg.states) == 0) {
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_tracking_state_dep_a_t* test_msg = ( msg_tracking_state_dep_a_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[0].cn0 = 11.014122009277344;
-    test_msg.states[0].prn = 0;
-    test_msg.states[0].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[0].cn0 = 11.014122009277344;
+    test_msg->states[0].prn = 0;
+    test_msg->states[0].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[1].cn0 = 10.885148048400879;
-    test_msg.states[1].prn = 2;
-    test_msg.states[1].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[1].cn0 = 10.885148048400879;
+    test_msg->states[1].prn = 2;
+    test_msg->states[1].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[2].cn0 = 10.131351470947266;
-    test_msg.states[2].prn = 3;
-    test_msg.states[2].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[2].cn0 = 10.131351470947266;
+    test_msg->states[2].prn = 3;
+    test_msg->states[2].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[3].cn0 = 14.829026222229004;
-    test_msg.states[3].prn = 7;
-    test_msg.states[3].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[3].cn0 = 14.829026222229004;
+    test_msg->states[3].prn = 7;
+    test_msg->states[3].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[4].cn0 = 7.79104471206665;
-    test_msg.states[4].prn = 10;
-    test_msg.states[4].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[4].cn0 = 7.79104471206665;
+    test_msg->states[4].prn = 10;
+    test_msg->states[4].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[5].cn0 = 4.868161201477051;
-    test_msg.states[5].prn = 13;
-    test_msg.states[5].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[5].cn0 = 4.868161201477051;
+    test_msg->states[5].prn = 13;
+    test_msg->states[5].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[6].cn0 = 6.721095561981201;
-    test_msg.states[6].prn = 22;
-    test_msg.states[6].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[6].cn0 = 6.721095561981201;
+    test_msg->states[6].prn = 22;
+    test_msg->states[6].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[7].cn0 = 12.971323013305664;
-    test_msg.states[7].prn = 30;
-    test_msg.states[7].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[7].cn0 = 12.971323013305664;
+    test_msg->states[7].prn = 30;
+    test_msg->states[7].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[8].cn0 = 15.481405258178711;
-    test_msg.states[8].prn = 31;
-    test_msg.states[8].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[8].cn0 = 15.481405258178711;
+    test_msg->states[8].prn = 31;
+    test_msg->states[8].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[9].cn0 = 3.8834354877471924;
-    test_msg.states[9].prn = 25;
-    test_msg.states[9].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[9].cn0 = 3.8834354877471924;
+    test_msg->states[9].prn = 25;
+    test_msg->states[9].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[10].cn0 = 4.061488628387451;
-    test_msg.states[10].prn = 6;
-    test_msg.states[10].state = 1;
-    sbp_send_message(&sbp_state, 0x16, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->states[10].cn0 = 4.061488628387451;
+    test_msg->states[10].prn = 6;
+    test_msg->states[10].state = 1;
+    sbp_send_message(&sbp_state, 0x16, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -505,98 +511,101 @@ START_TEST( test_auto_check_sbp_tracking_48 )
     u8 encoded_frame[] = {85,22,0,195,4,66,1,0,141,76,60,65,1,2,69,139,46,65,1,3,146,27,30,65,1,7,235,56,97,65,1,10,141,213,243,64,1,13,250,170,166,64,1,22,17,101,201,64,1,30,172,183,83,65,1,31,238,193,120,65,1,25,220,48,132,64,1,6,49,214,54,64,110,179, };
 
     dummy_reset();
-    msg_tracking_state_dep_a_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    if (sizeof(test_msg.states) == 0) {
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_tracking_state_dep_a_t* test_msg = ( msg_tracking_state_dep_a_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[0].cn0 = 11.768689155578613;
-    test_msg.states[0].prn = 0;
-    test_msg.states[0].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[0].cn0 = 11.768689155578613;
+    test_msg->states[0].prn = 0;
+    test_msg->states[0].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[1].cn0 = 10.909001350402832;
-    test_msg.states[1].prn = 2;
-    test_msg.states[1].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[1].cn0 = 10.909001350402832;
+    test_msg->states[1].prn = 2;
+    test_msg->states[1].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[2].cn0 = 9.881731033325195;
-    test_msg.states[2].prn = 3;
-    test_msg.states[2].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[2].cn0 = 9.881731033325195;
+    test_msg->states[2].prn = 3;
+    test_msg->states[2].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[3].cn0 = 14.076395988464355;
-    test_msg.states[3].prn = 7;
-    test_msg.states[3].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[3].cn0 = 14.076395988464355;
+    test_msg->states[3].prn = 7;
+    test_msg->states[3].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[4].cn0 = 7.619818210601807;
-    test_msg.states[4].prn = 10;
-    test_msg.states[4].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[4].cn0 = 7.619818210601807;
+    test_msg->states[4].prn = 10;
+    test_msg->states[4].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[5].cn0 = 5.208371162414551;
-    test_msg.states[5].prn = 13;
-    test_msg.states[5].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[5].cn0 = 5.208371162414551;
+    test_msg->states[5].prn = 13;
+    test_msg->states[5].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[6].cn0 = 6.2935872077941895;
-    test_msg.states[6].prn = 22;
-    test_msg.states[6].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[6].cn0 = 6.2935872077941895;
+    test_msg->states[6].prn = 22;
+    test_msg->states[6].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[7].cn0 = 13.232341766357422;
-    test_msg.states[7].prn = 30;
-    test_msg.states[7].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[7].cn0 = 13.232341766357422;
+    test_msg->states[7].prn = 30;
+    test_msg->states[7].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[8].cn0 = 15.547346115112305;
-    test_msg.states[8].prn = 31;
-    test_msg.states[8].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[8].cn0 = 15.547346115112305;
+    test_msg->states[8].prn = 31;
+    test_msg->states[8].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[9].cn0 = 4.130964279174805;
-    test_msg.states[9].prn = 25;
-    test_msg.states[9].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[9].cn0 = 4.130964279174805;
+    test_msg->states[9].prn = 25;
+    test_msg->states[9].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[10].cn0 = 2.856823205947876;
-    test_msg.states[10].prn = 6;
-    test_msg.states[10].state = 1;
-    sbp_send_message(&sbp_state, 0x16, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->states[10].cn0 = 2.856823205947876;
+    test_msg->states[10].prn = 6;
+    test_msg->states[10].state = 1;
+    sbp_send_message(&sbp_state, 0x16, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -695,98 +704,101 @@ START_TEST( test_auto_check_sbp_tracking_48 )
     u8 encoded_frame[] = {85,22,0,195,4,66,1,0,55,143,120,66,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,248,89, };
 
     dummy_reset();
-    msg_tracking_state_dep_a_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    if (sizeof(test_msg.states) == 0) {
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_tracking_state_dep_a_t* test_msg = ( msg_tracking_state_dep_a_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[0].cn0 = 62.13985824584961;
-    test_msg.states[0].prn = 0;
-    test_msg.states[0].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[0].cn0 = 62.13985824584961;
+    test_msg->states[0].prn = 0;
+    test_msg->states[0].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[1].cn0 = -1.0;
-    test_msg.states[1].prn = 0;
-    test_msg.states[1].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[1].cn0 = -1.0;
+    test_msg->states[1].prn = 0;
+    test_msg->states[1].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[2].cn0 = -1.0;
-    test_msg.states[2].prn = 0;
-    test_msg.states[2].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[2].cn0 = -1.0;
+    test_msg->states[2].prn = 0;
+    test_msg->states[2].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[3].cn0 = -1.0;
-    test_msg.states[3].prn = 0;
-    test_msg.states[3].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[3].cn0 = -1.0;
+    test_msg->states[3].prn = 0;
+    test_msg->states[3].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[4].cn0 = -1.0;
-    test_msg.states[4].prn = 0;
-    test_msg.states[4].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[4].cn0 = -1.0;
+    test_msg->states[4].prn = 0;
+    test_msg->states[4].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[5].cn0 = -1.0;
-    test_msg.states[5].prn = 0;
-    test_msg.states[5].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[5].cn0 = -1.0;
+    test_msg->states[5].prn = 0;
+    test_msg->states[5].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[6].cn0 = -1.0;
-    test_msg.states[6].prn = 0;
-    test_msg.states[6].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[6].cn0 = -1.0;
+    test_msg->states[6].prn = 0;
+    test_msg->states[6].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[7].cn0 = -1.0;
-    test_msg.states[7].prn = 0;
-    test_msg.states[7].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[7].cn0 = -1.0;
+    test_msg->states[7].prn = 0;
+    test_msg->states[7].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[8].cn0 = -1.0;
-    test_msg.states[8].prn = 0;
-    test_msg.states[8].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[8].cn0 = -1.0;
+    test_msg->states[8].prn = 0;
+    test_msg->states[8].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[9].cn0 = -1.0;
-    test_msg.states[9].prn = 0;
-    test_msg.states[9].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[9].cn0 = -1.0;
+    test_msg->states[9].prn = 0;
+    test_msg->states[9].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[10].cn0 = -1.0;
-    test_msg.states[10].prn = 0;
-    test_msg.states[10].state = 0;
-    sbp_send_message(&sbp_state, 0x16, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->states[10].cn0 = -1.0;
+    test_msg->states[10].prn = 0;
+    test_msg->states[10].state = 0;
+    sbp_send_message(&sbp_state, 0x16, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -885,98 +897,101 @@ START_TEST( test_auto_check_sbp_tracking_48 )
     u8 encoded_frame[] = {85,22,0,195,4,66,1,0,218,14,19,66,1,2,210,3,21,65,1,3,234,214,134,65,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,84,101, };
 
     dummy_reset();
-    msg_tracking_state_dep_a_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    if (sizeof(test_msg.states) == 0) {
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_tracking_state_dep_a_t* test_msg = ( msg_tracking_state_dep_a_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[0].cn0 = 36.764503479003906;
-    test_msg.states[0].prn = 0;
-    test_msg.states[0].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[0].cn0 = 36.764503479003906;
+    test_msg->states[0].prn = 0;
+    test_msg->states[0].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[1].cn0 = 9.313432693481445;
-    test_msg.states[1].prn = 2;
-    test_msg.states[1].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[1].cn0 = 9.313432693481445;
+    test_msg->states[1].prn = 2;
+    test_msg->states[1].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[2].cn0 = 16.854938507080078;
-    test_msg.states[2].prn = 3;
-    test_msg.states[2].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[2].cn0 = 16.854938507080078;
+    test_msg->states[2].prn = 3;
+    test_msg->states[2].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[3].cn0 = -1.0;
-    test_msg.states[3].prn = 0;
-    test_msg.states[3].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[3].cn0 = -1.0;
+    test_msg->states[3].prn = 0;
+    test_msg->states[3].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[4].cn0 = -1.0;
-    test_msg.states[4].prn = 0;
-    test_msg.states[4].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[4].cn0 = -1.0;
+    test_msg->states[4].prn = 0;
+    test_msg->states[4].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[5].cn0 = -1.0;
-    test_msg.states[5].prn = 0;
-    test_msg.states[5].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[5].cn0 = -1.0;
+    test_msg->states[5].prn = 0;
+    test_msg->states[5].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[6].cn0 = -1.0;
-    test_msg.states[6].prn = 0;
-    test_msg.states[6].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[6].cn0 = -1.0;
+    test_msg->states[6].prn = 0;
+    test_msg->states[6].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[7].cn0 = -1.0;
-    test_msg.states[7].prn = 0;
-    test_msg.states[7].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[7].cn0 = -1.0;
+    test_msg->states[7].prn = 0;
+    test_msg->states[7].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[8].cn0 = -1.0;
-    test_msg.states[8].prn = 0;
-    test_msg.states[8].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[8].cn0 = -1.0;
+    test_msg->states[8].prn = 0;
+    test_msg->states[8].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[9].cn0 = -1.0;
-    test_msg.states[9].prn = 0;
-    test_msg.states[9].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[9].cn0 = -1.0;
+    test_msg->states[9].prn = 0;
+    test_msg->states[9].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[10].cn0 = -1.0;
-    test_msg.states[10].prn = 0;
-    test_msg.states[10].state = 0;
-    sbp_send_message(&sbp_state, 0x16, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->states[10].cn0 = -1.0;
+    test_msg->states[10].prn = 0;
+    test_msg->states[10].state = 0;
+    sbp_send_message(&sbp_state, 0x16, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -1075,98 +1090,101 @@ START_TEST( test_auto_check_sbp_tracking_48 )
     u8 encoded_frame[] = {85,22,0,195,4,66,1,0,98,39,219,65,1,2,0,0,56,64,1,3,121,123,7,65,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,0,0,0,0,128,191,37,123, };
 
     dummy_reset();
-    msg_tracking_state_dep_a_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    if (sizeof(test_msg.states) == 0) {
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_tracking_state_dep_a_t* test_msg = ( msg_tracking_state_dep_a_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[0].cn0 = 27.394229888916016;
-    test_msg.states[0].prn = 0;
-    test_msg.states[0].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[0].cn0 = 27.394229888916016;
+    test_msg->states[0].prn = 0;
+    test_msg->states[0].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[1].cn0 = 2.875;
-    test_msg.states[1].prn = 2;
-    test_msg.states[1].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[1].cn0 = 2.875;
+    test_msg->states[1].prn = 2;
+    test_msg->states[1].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[2].cn0 = 8.467644691467285;
-    test_msg.states[2].prn = 3;
-    test_msg.states[2].state = 1;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[2].cn0 = 8.467644691467285;
+    test_msg->states[2].prn = 3;
+    test_msg->states[2].state = 1;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[3].cn0 = -1.0;
-    test_msg.states[3].prn = 0;
-    test_msg.states[3].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[3].cn0 = -1.0;
+    test_msg->states[3].prn = 0;
+    test_msg->states[3].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[4].cn0 = -1.0;
-    test_msg.states[4].prn = 0;
-    test_msg.states[4].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[4].cn0 = -1.0;
+    test_msg->states[4].prn = 0;
+    test_msg->states[4].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[5].cn0 = -1.0;
-    test_msg.states[5].prn = 0;
-    test_msg.states[5].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[5].cn0 = -1.0;
+    test_msg->states[5].prn = 0;
+    test_msg->states[5].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[6].cn0 = -1.0;
-    test_msg.states[6].prn = 0;
-    test_msg.states[6].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[6].cn0 = -1.0;
+    test_msg->states[6].prn = 0;
+    test_msg->states[6].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[7].cn0 = -1.0;
-    test_msg.states[7].prn = 0;
-    test_msg.states[7].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[7].cn0 = -1.0;
+    test_msg->states[7].prn = 0;
+    test_msg->states[7].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[8].cn0 = -1.0;
-    test_msg.states[8].prn = 0;
-    test_msg.states[8].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[8].cn0 = -1.0;
+    test_msg->states[8].prn = 0;
+    test_msg->states[8].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[9].cn0 = -1.0;
-    test_msg.states[9].prn = 0;
-    test_msg.states[9].state = 0;
-    if (sizeof(test_msg.states) == 0) {
+    test_msg->states[9].cn0 = -1.0;
+    test_msg->states[9].prn = 0;
+    test_msg->states[9].state = 0;
+    if (sizeof(test_msg->states) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.states[0]);
+      test_msg_len += sizeof(test_msg->states[0]);
     }
     
-    test_msg.states[10].cn0 = -1.0;
-    test_msg.states[10].prn = 0;
-    test_msg.states[10].state = 0;
-    sbp_send_message(&sbp_state, 0x16, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->states[10].cn0 = -1.0;
+    test_msg->states[10].prn = 0;
+    test_msg->states[10].state = 0;
+    sbp_send_message(&sbp_state, 0x16, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");

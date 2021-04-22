@@ -125,12 +125,15 @@ START_TEST( test_auto_check_sbp_navigation_3 )
     u8 encoded_frame[] = {85,16,2,66,0,6,100,0,0,0,30,0,233,202, };
 
     dummy_reset();
-    msg_age_corrections_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.age = 30;
-    test_msg.tow = 100;
-    sbp_send_message(&sbp_state, 0x210, 66, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_age_corrections_t* test_msg = ( msg_age_corrections_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->age = 30;
+    test_msg->tow = 100;
+    sbp_send_message(&sbp_state, 0x210, 66, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");

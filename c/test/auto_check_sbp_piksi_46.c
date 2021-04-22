@@ -125,19 +125,22 @@ START_TEST( test_auto_check_sbp_piksi_46 )
     u8 encoded_frame[] = {85,23,0,195,4,26,109,97,105,110,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,148,9,0,0,195,212, };
 
     dummy_reset();
-    msg_thread_state_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.cpu = 0;
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_thread_state_t* test_msg = ( msg_thread_state_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->cpu = 0;
     {
       const char assign_string[] = { (char)109,(char)97,(char)105,(char)110,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_msg.name, assign_string, sizeof(assign_string));
-      if (sizeof(test_msg.name) == 0) {
+      memcpy(test_msg->name, assign_string, sizeof(assign_string));
+      if (sizeof(test_msg->name) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    test_msg.stack_free = 2452;
-    sbp_send_message(&sbp_state, 0x17, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->stack_free = 2452;
+    sbp_send_message(&sbp_state, 0x17, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -209,19 +212,22 @@ START_TEST( test_auto_check_sbp_piksi_46 )
     u8 encoded_frame[] = {85,23,0,195,4,26,105,100,108,101,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,228,1,36,0,0,0,225,18, };
 
     dummy_reset();
-    msg_thread_state_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.cpu = 484;
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_thread_state_t* test_msg = ( msg_thread_state_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->cpu = 484;
     {
       const char assign_string[] = { (char)105,(char)100,(char)108,(char)101,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_msg.name, assign_string, sizeof(assign_string));
-      if (sizeof(test_msg.name) == 0) {
+      memcpy(test_msg->name, assign_string, sizeof(assign_string));
+      if (sizeof(test_msg->name) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    test_msg.stack_free = 36;
-    sbp_send_message(&sbp_state, 0x17, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->stack_free = 36;
+    sbp_send_message(&sbp_state, 0x17, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -293,19 +299,22 @@ START_TEST( test_auto_check_sbp_piksi_46 )
     u8 encoded_frame[] = {85,23,0,195,4,26,78,65,80,32,73,83,82,0,0,0,0,0,0,0,0,0,0,0,0,0,138,1,92,7,0,0,166,116, };
 
     dummy_reset();
-    msg_thread_state_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.cpu = 394;
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_thread_state_t* test_msg = ( msg_thread_state_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->cpu = 394;
     {
       const char assign_string[] = { (char)78,(char)65,(char)80,(char)32,(char)73,(char)83,(char)82,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_msg.name, assign_string, sizeof(assign_string));
-      if (sizeof(test_msg.name) == 0) {
+      memcpy(test_msg->name, assign_string, sizeof(assign_string));
+      if (sizeof(test_msg->name) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    test_msg.stack_free = 1884;
-    sbp_send_message(&sbp_state, 0x17, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->stack_free = 1884;
+    sbp_send_message(&sbp_state, 0x17, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -377,19 +386,22 @@ START_TEST( test_auto_check_sbp_piksi_46 )
     u8 encoded_frame[] = {85,23,0,195,4,26,83,66,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,4,12,0,0,229,174, };
 
     dummy_reset();
-    msg_thread_state_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.cpu = 1;
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_thread_state_t* test_msg = ( msg_thread_state_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->cpu = 1;
     {
       const char assign_string[] = { (char)83,(char)66,(char)80,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_msg.name, assign_string, sizeof(assign_string));
-      if (sizeof(test_msg.name) == 0) {
+      memcpy(test_msg->name, assign_string, sizeof(assign_string));
+      if (sizeof(test_msg->name) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    test_msg.stack_free = 3076;
-    sbp_send_message(&sbp_state, 0x17, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->stack_free = 3076;
+    sbp_send_message(&sbp_state, 0x17, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -461,19 +473,22 @@ START_TEST( test_auto_check_sbp_piksi_46 )
     u8 encoded_frame[] = {85,23,0,195,4,26,109,97,110,97,103,101,32,97,99,113,0,0,0,0,0,0,0,0,0,0,10,0,124,9,0,0,52,2, };
 
     dummy_reset();
-    msg_thread_state_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.cpu = 10;
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_thread_state_t* test_msg = ( msg_thread_state_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->cpu = 10;
     {
       const char assign_string[] = { (char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)97,(char)99,(char)113,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_msg.name, assign_string, sizeof(assign_string));
-      if (sizeof(test_msg.name) == 0) {
+      memcpy(test_msg->name, assign_string, sizeof(assign_string));
+      if (sizeof(test_msg->name) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    test_msg.stack_free = 2428;
-    sbp_send_message(&sbp_state, 0x17, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->stack_free = 2428;
+    sbp_send_message(&sbp_state, 0x17, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -545,19 +560,22 @@ START_TEST( test_auto_check_sbp_piksi_46 )
     u8 encoded_frame[] = {85,23,0,195,4,26,109,97,110,97,103,101,32,116,114,97,99,107,0,0,0,0,0,0,0,0,0,0,28,9,0,0,122,54, };
 
     dummy_reset();
-    msg_thread_state_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.cpu = 0;
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_thread_state_t* test_msg = ( msg_thread_state_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->cpu = 0;
     {
       const char assign_string[] = { (char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)116,(char)114,(char)97,(char)99,(char)107,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_msg.name, assign_string, sizeof(assign_string));
-      if (sizeof(test_msg.name) == 0) {
+      memcpy(test_msg->name, assign_string, sizeof(assign_string));
+      if (sizeof(test_msg->name) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    test_msg.stack_free = 2332;
-    sbp_send_message(&sbp_state, 0x17, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->stack_free = 2332;
+    sbp_send_message(&sbp_state, 0x17, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -629,32 +647,35 @@ START_TEST( test_auto_check_sbp_piksi_46 )
     u8 encoded_frame[] = {85,24,0,195,4,58,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,154,153,57,65,0,0,0,0,0,0,0,0,15,0,255,255,255,255,0,0,0,0,0,0,0,0,255,255,255,255,247,5, };
 
     dummy_reset();
-    msg_uart_state_depa_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.latency.avg = -1;
-    test_msg.latency.current = -1;
-    test_msg.latency.lmax = 0;
-    test_msg.latency.lmin = 0;
-    test_msg.uart_a.crc_error_count = 0;
-    test_msg.uart_a.io_error_count = 0;
-    test_msg.uart_a.rx_buffer_level = 0;
-    test_msg.uart_a.rx_throughput = 0.0;
-    test_msg.uart_a.tx_buffer_level = 0;
-    test_msg.uart_a.tx_throughput = 0.0;
-    test_msg.uart_b.crc_error_count = 0;
-    test_msg.uart_b.io_error_count = 0;
-    test_msg.uart_b.rx_buffer_level = 0;
-    test_msg.uart_b.rx_throughput = 0.0;
-    test_msg.uart_b.tx_buffer_level = 0;
-    test_msg.uart_b.tx_throughput = 0.0;
-    test_msg.uart_ftdi.crc_error_count = 0;
-    test_msg.uart_ftdi.io_error_count = 0;
-    test_msg.uart_ftdi.rx_buffer_level = 0;
-    test_msg.uart_ftdi.rx_throughput = 0.0;
-    test_msg.uart_ftdi.tx_buffer_level = 15;
-    test_msg.uart_ftdi.tx_throughput = 11.600000381469727;
-    sbp_send_message(&sbp_state, 0x18, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_uart_state_depa_t* test_msg = ( msg_uart_state_depa_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->latency.avg = -1;
+    test_msg->latency.current = -1;
+    test_msg->latency.lmax = 0;
+    test_msg->latency.lmin = 0;
+    test_msg->uart_a.crc_error_count = 0;
+    test_msg->uart_a.io_error_count = 0;
+    test_msg->uart_a.rx_buffer_level = 0;
+    test_msg->uart_a.rx_throughput = 0.0;
+    test_msg->uart_a.tx_buffer_level = 0;
+    test_msg->uart_a.tx_throughput = 0.0;
+    test_msg->uart_b.crc_error_count = 0;
+    test_msg->uart_b.io_error_count = 0;
+    test_msg->uart_b.rx_buffer_level = 0;
+    test_msg->uart_b.rx_throughput = 0.0;
+    test_msg->uart_b.tx_buffer_level = 0;
+    test_msg->uart_b.tx_throughput = 0.0;
+    test_msg->uart_ftdi.crc_error_count = 0;
+    test_msg->uart_ftdi.io_error_count = 0;
+    test_msg->uart_ftdi.rx_buffer_level = 0;
+    test_msg->uart_ftdi.rx_throughput = 0.0;
+    test_msg->uart_ftdi.tx_buffer_level = 15;
+    test_msg->uart_ftdi.tx_throughput = 11.600000381469727;
+    sbp_send_message(&sbp_state, 0x18, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -742,32 +763,35 @@ START_TEST( test_auto_check_sbp_piksi_46 )
     u8 encoded_frame[] = {85,24,0,195,4,58,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,43,135,61,0,0,0,0,0,0,0,0,0,0,255,255,255,255,0,0,0,0,0,0,0,0,255,255,255,255,65,110, };
 
     dummy_reset();
-    msg_uart_state_depa_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.latency.avg = -1;
-    test_msg.latency.current = -1;
-    test_msg.latency.lmax = 0;
-    test_msg.latency.lmin = 0;
-    test_msg.uart_a.crc_error_count = 0;
-    test_msg.uart_a.io_error_count = 0;
-    test_msg.uart_a.rx_buffer_level = 0;
-    test_msg.uart_a.rx_throughput = 0.0;
-    test_msg.uart_a.tx_buffer_level = 0;
-    test_msg.uart_a.tx_throughput = 0.0;
-    test_msg.uart_b.crc_error_count = 0;
-    test_msg.uart_b.io_error_count = 0;
-    test_msg.uart_b.rx_buffer_level = 0;
-    test_msg.uart_b.rx_throughput = 0.0;
-    test_msg.uart_b.tx_buffer_level = 0;
-    test_msg.uart_b.tx_throughput = 0.0;
-    test_msg.uart_ftdi.crc_error_count = 0;
-    test_msg.uart_ftdi.io_error_count = 0;
-    test_msg.uart_ftdi.rx_buffer_level = 0;
-    test_msg.uart_ftdi.rx_throughput = 0.0;
-    test_msg.uart_ftdi.tx_buffer_level = 0;
-    test_msg.uart_ftdi.tx_throughput = 0.06599999964237213;
-    sbp_send_message(&sbp_state, 0x18, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_uart_state_depa_t* test_msg = ( msg_uart_state_depa_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->latency.avg = -1;
+    test_msg->latency.current = -1;
+    test_msg->latency.lmax = 0;
+    test_msg->latency.lmin = 0;
+    test_msg->uart_a.crc_error_count = 0;
+    test_msg->uart_a.io_error_count = 0;
+    test_msg->uart_a.rx_buffer_level = 0;
+    test_msg->uart_a.rx_throughput = 0.0;
+    test_msg->uart_a.tx_buffer_level = 0;
+    test_msg->uart_a.tx_throughput = 0.0;
+    test_msg->uart_b.crc_error_count = 0;
+    test_msg->uart_b.io_error_count = 0;
+    test_msg->uart_b.rx_buffer_level = 0;
+    test_msg->uart_b.rx_throughput = 0.0;
+    test_msg->uart_b.tx_buffer_level = 0;
+    test_msg->uart_b.tx_throughput = 0.0;
+    test_msg->uart_ftdi.crc_error_count = 0;
+    test_msg->uart_ftdi.io_error_count = 0;
+    test_msg->uart_ftdi.rx_buffer_level = 0;
+    test_msg->uart_ftdi.rx_throughput = 0.0;
+    test_msg->uart_ftdi.tx_buffer_level = 0;
+    test_msg->uart_ftdi.tx_throughput = 0.06599999964237213;
+    sbp_send_message(&sbp_state, 0x18, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -855,32 +879,35 @@ START_TEST( test_auto_check_sbp_piksi_46 )
     u8 encoded_frame[] = {85,24,0,195,4,58,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,86,14,62,0,0,0,0,0,0,0,0,10,0,255,255,255,255,0,0,0,0,0,0,0,0,255,255,255,255,198,36, };
 
     dummy_reset();
-    msg_uart_state_depa_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.latency.avg = -1;
-    test_msg.latency.current = -1;
-    test_msg.latency.lmax = 0;
-    test_msg.latency.lmin = 0;
-    test_msg.uart_a.crc_error_count = 0;
-    test_msg.uart_a.io_error_count = 0;
-    test_msg.uart_a.rx_buffer_level = 0;
-    test_msg.uart_a.rx_throughput = 0.0;
-    test_msg.uart_a.tx_buffer_level = 0;
-    test_msg.uart_a.tx_throughput = 0.0;
-    test_msg.uart_b.crc_error_count = 0;
-    test_msg.uart_b.io_error_count = 0;
-    test_msg.uart_b.rx_buffer_level = 0;
-    test_msg.uart_b.rx_throughput = 0.0;
-    test_msg.uart_b.tx_buffer_level = 0;
-    test_msg.uart_b.tx_throughput = 0.0;
-    test_msg.uart_ftdi.crc_error_count = 0;
-    test_msg.uart_ftdi.io_error_count = 0;
-    test_msg.uart_ftdi.rx_buffer_level = 0;
-    test_msg.uart_ftdi.rx_throughput = 0.0;
-    test_msg.uart_ftdi.tx_buffer_level = 10;
-    test_msg.uart_ftdi.tx_throughput = 0.13899999856948853;
-    sbp_send_message(&sbp_state, 0x18, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_uart_state_depa_t* test_msg = ( msg_uart_state_depa_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->latency.avg = -1;
+    test_msg->latency.current = -1;
+    test_msg->latency.lmax = 0;
+    test_msg->latency.lmin = 0;
+    test_msg->uart_a.crc_error_count = 0;
+    test_msg->uart_a.io_error_count = 0;
+    test_msg->uart_a.rx_buffer_level = 0;
+    test_msg->uart_a.rx_throughput = 0.0;
+    test_msg->uart_a.tx_buffer_level = 0;
+    test_msg->uart_a.tx_throughput = 0.0;
+    test_msg->uart_b.crc_error_count = 0;
+    test_msg->uart_b.io_error_count = 0;
+    test_msg->uart_b.rx_buffer_level = 0;
+    test_msg->uart_b.rx_throughput = 0.0;
+    test_msg->uart_b.tx_buffer_level = 0;
+    test_msg->uart_b.tx_throughput = 0.0;
+    test_msg->uart_ftdi.crc_error_count = 0;
+    test_msg->uart_ftdi.io_error_count = 0;
+    test_msg->uart_ftdi.rx_buffer_level = 0;
+    test_msg->uart_ftdi.rx_throughput = 0.0;
+    test_msg->uart_ftdi.tx_buffer_level = 10;
+    test_msg->uart_ftdi.tx_throughput = 0.13899999856948853;
+    sbp_send_message(&sbp_state, 0x18, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -968,32 +995,35 @@ START_TEST( test_auto_check_sbp_piksi_46 )
     u8 encoded_frame[] = {85,24,0,195,4,58,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,43,135,61,0,0,0,0,0,0,0,0,0,0,255,255,255,255,0,0,0,0,0,0,0,0,255,255,255,255,65,110, };
 
     dummy_reset();
-    msg_uart_state_depa_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.latency.avg = -1;
-    test_msg.latency.current = -1;
-    test_msg.latency.lmax = 0;
-    test_msg.latency.lmin = 0;
-    test_msg.uart_a.crc_error_count = 0;
-    test_msg.uart_a.io_error_count = 0;
-    test_msg.uart_a.rx_buffer_level = 0;
-    test_msg.uart_a.rx_throughput = 0.0;
-    test_msg.uart_a.tx_buffer_level = 0;
-    test_msg.uart_a.tx_throughput = 0.0;
-    test_msg.uart_b.crc_error_count = 0;
-    test_msg.uart_b.io_error_count = 0;
-    test_msg.uart_b.rx_buffer_level = 0;
-    test_msg.uart_b.rx_throughput = 0.0;
-    test_msg.uart_b.tx_buffer_level = 0;
-    test_msg.uart_b.tx_throughput = 0.0;
-    test_msg.uart_ftdi.crc_error_count = 0;
-    test_msg.uart_ftdi.io_error_count = 0;
-    test_msg.uart_ftdi.rx_buffer_level = 0;
-    test_msg.uart_ftdi.rx_throughput = 0.0;
-    test_msg.uart_ftdi.tx_buffer_level = 0;
-    test_msg.uart_ftdi.tx_throughput = 0.06599999964237213;
-    sbp_send_message(&sbp_state, 0x18, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_uart_state_depa_t* test_msg = ( msg_uart_state_depa_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->latency.avg = -1;
+    test_msg->latency.current = -1;
+    test_msg->latency.lmax = 0;
+    test_msg->latency.lmin = 0;
+    test_msg->uart_a.crc_error_count = 0;
+    test_msg->uart_a.io_error_count = 0;
+    test_msg->uart_a.rx_buffer_level = 0;
+    test_msg->uart_a.rx_throughput = 0.0;
+    test_msg->uart_a.tx_buffer_level = 0;
+    test_msg->uart_a.tx_throughput = 0.0;
+    test_msg->uart_b.crc_error_count = 0;
+    test_msg->uart_b.io_error_count = 0;
+    test_msg->uart_b.rx_buffer_level = 0;
+    test_msg->uart_b.rx_throughput = 0.0;
+    test_msg->uart_b.tx_buffer_level = 0;
+    test_msg->uart_b.tx_throughput = 0.0;
+    test_msg->uart_ftdi.crc_error_count = 0;
+    test_msg->uart_ftdi.io_error_count = 0;
+    test_msg->uart_ftdi.rx_buffer_level = 0;
+    test_msg->uart_ftdi.rx_throughput = 0.0;
+    test_msg->uart_ftdi.tx_buffer_level = 0;
+    test_msg->uart_ftdi.tx_throughput = 0.06599999964237213;
+    sbp_send_message(&sbp_state, 0x18, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -1081,32 +1111,35 @@ START_TEST( test_auto_check_sbp_piksi_46 )
     u8 encoded_frame[] = {85,24,0,195,4,58,0,0,0,0,138,75,6,60,0,0,0,0,0,0,80,113,201,61,0,0,0,0,0,0,0,0,2,0,145,237,252,62,0,0,0,0,0,0,0,0,38,0,255,255,255,255,0,0,0,0,0,0,0,0,255,255,255,255,112,111, };
 
     dummy_reset();
-    msg_uart_state_depa_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.latency.avg = -1;
-    test_msg.latency.current = -1;
-    test_msg.latency.lmax = 0;
-    test_msg.latency.lmin = 0;
-    test_msg.uart_a.crc_error_count = 0;
-    test_msg.uart_a.io_error_count = 0;
-    test_msg.uart_a.rx_buffer_level = 0;
-    test_msg.uart_a.rx_throughput = 0.008196720853447914;
-    test_msg.uart_a.tx_buffer_level = 0;
-    test_msg.uart_a.tx_throughput = 0.0;
-    test_msg.uart_b.crc_error_count = 0;
-    test_msg.uart_b.io_error_count = 0;
-    test_msg.uart_b.rx_buffer_level = 0;
-    test_msg.uart_b.rx_throughput = 0.0;
-    test_msg.uart_b.tx_buffer_level = 2;
-    test_msg.uart_b.tx_throughput = 0.09836065769195557;
-    test_msg.uart_ftdi.crc_error_count = 0;
-    test_msg.uart_ftdi.io_error_count = 0;
-    test_msg.uart_ftdi.rx_buffer_level = 0;
-    test_msg.uart_ftdi.rx_throughput = 0.0;
-    test_msg.uart_ftdi.tx_buffer_level = 38;
-    test_msg.uart_ftdi.tx_throughput = 0.49399998784065247;
-    sbp_send_message(&sbp_state, 0x18, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_uart_state_depa_t* test_msg = ( msg_uart_state_depa_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->latency.avg = -1;
+    test_msg->latency.current = -1;
+    test_msg->latency.lmax = 0;
+    test_msg->latency.lmin = 0;
+    test_msg->uart_a.crc_error_count = 0;
+    test_msg->uart_a.io_error_count = 0;
+    test_msg->uart_a.rx_buffer_level = 0;
+    test_msg->uart_a.rx_throughput = 0.008196720853447914;
+    test_msg->uart_a.tx_buffer_level = 0;
+    test_msg->uart_a.tx_throughput = 0.0;
+    test_msg->uart_b.crc_error_count = 0;
+    test_msg->uart_b.io_error_count = 0;
+    test_msg->uart_b.rx_buffer_level = 0;
+    test_msg->uart_b.rx_throughput = 0.0;
+    test_msg->uart_b.tx_buffer_level = 2;
+    test_msg->uart_b.tx_throughput = 0.09836065769195557;
+    test_msg->uart_ftdi.crc_error_count = 0;
+    test_msg->uart_ftdi.io_error_count = 0;
+    test_msg->uart_ftdi.rx_buffer_level = 0;
+    test_msg->uart_ftdi.rx_throughput = 0.0;
+    test_msg->uart_ftdi.tx_buffer_level = 38;
+    test_msg->uart_ftdi.tx_throughput = 0.49399998784065247;
+    sbp_send_message(&sbp_state, 0x18, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -1194,32 +1227,35 @@ START_TEST( test_auto_check_sbp_piksi_46 )
     u8 encoded_frame[] = {85,24,0,195,4,58,166,155,68,60,0,0,0,0,0,0,0,0,2,0,166,155,68,60,0,0,0,0,0,0,0,0,2,0,236,81,168,63,0,0,0,0,0,0,0,0,50,0,255,255,255,255,0,0,0,0,0,0,0,0,255,255,255,255,22,72, };
 
     dummy_reset();
-    msg_uart_state_depa_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.latency.avg = -1;
-    test_msg.latency.current = -1;
-    test_msg.latency.lmax = 0;
-    test_msg.latency.lmin = 0;
-    test_msg.uart_a.crc_error_count = 0;
-    test_msg.uart_a.io_error_count = 0;
-    test_msg.uart_a.rx_buffer_level = 0;
-    test_msg.uart_a.rx_throughput = 0.0;
-    test_msg.uart_a.tx_buffer_level = 2;
-    test_msg.uart_a.tx_throughput = 0.012000000104308128;
-    test_msg.uart_b.crc_error_count = 0;
-    test_msg.uart_b.io_error_count = 0;
-    test_msg.uart_b.rx_buffer_level = 0;
-    test_msg.uart_b.rx_throughput = 0.0;
-    test_msg.uart_b.tx_buffer_level = 2;
-    test_msg.uart_b.tx_throughput = 0.012000000104308128;
-    test_msg.uart_ftdi.crc_error_count = 0;
-    test_msg.uart_ftdi.io_error_count = 0;
-    test_msg.uart_ftdi.rx_buffer_level = 0;
-    test_msg.uart_ftdi.rx_throughput = 0.0;
-    test_msg.uart_ftdi.tx_buffer_level = 50;
-    test_msg.uart_ftdi.tx_throughput = 1.315000057220459;
-    sbp_send_message(&sbp_state, 0x18, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_uart_state_depa_t* test_msg = ( msg_uart_state_depa_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->latency.avg = -1;
+    test_msg->latency.current = -1;
+    test_msg->latency.lmax = 0;
+    test_msg->latency.lmin = 0;
+    test_msg->uart_a.crc_error_count = 0;
+    test_msg->uart_a.io_error_count = 0;
+    test_msg->uart_a.rx_buffer_level = 0;
+    test_msg->uart_a.rx_throughput = 0.0;
+    test_msg->uart_a.tx_buffer_level = 2;
+    test_msg->uart_a.tx_throughput = 0.012000000104308128;
+    test_msg->uart_b.crc_error_count = 0;
+    test_msg->uart_b.io_error_count = 0;
+    test_msg->uart_b.rx_buffer_level = 0;
+    test_msg->uart_b.rx_throughput = 0.0;
+    test_msg->uart_b.tx_buffer_level = 2;
+    test_msg->uart_b.tx_throughput = 0.012000000104308128;
+    test_msg->uart_ftdi.crc_error_count = 0;
+    test_msg->uart_ftdi.io_error_count = 0;
+    test_msg->uart_ftdi.rx_buffer_level = 0;
+    test_msg->uart_ftdi.rx_throughput = 0.0;
+    test_msg->uart_ftdi.tx_buffer_level = 50;
+    test_msg->uart_ftdi.tx_throughput = 1.315000057220459;
+    sbp_send_message(&sbp_state, 0x18, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -1307,11 +1343,14 @@ START_TEST( test_auto_check_sbp_piksi_46 )
     u8 encoded_frame[] = {85,25,0,195,4,4,0,0,0,0,18,176, };
 
     dummy_reset();
-    msg_iar_state_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.num_hyps = 0;
-    sbp_send_message(&sbp_state, 0x19, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_iar_state_t* test_msg = ( msg_iar_state_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->num_hyps = 0;
+    sbp_send_message(&sbp_state, 0x19, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -1378,11 +1417,14 @@ START_TEST( test_auto_check_sbp_piksi_46 )
     u8 encoded_frame[] = {85,25,0,195,4,4,1,0,0,0,166,198, };
 
     dummy_reset();
-    msg_iar_state_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.num_hyps = 1;
-    sbp_send_message(&sbp_state, 0x19, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_iar_state_t* test_msg = ( msg_iar_state_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->num_hyps = 1;
+    sbp_send_message(&sbp_state, 0x19, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -1449,11 +1491,14 @@ START_TEST( test_auto_check_sbp_piksi_46 )
     u8 encoded_frame[] = {85,25,0,195,4,4,217,2,0,0,6,133, };
 
     dummy_reset();
-    msg_iar_state_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.num_hyps = 729;
-    sbp_send_message(&sbp_state, 0x19, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_iar_state_t* test_msg = ( msg_iar_state_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->num_hyps = 729;
+    sbp_send_message(&sbp_state, 0x19, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -1520,11 +1565,14 @@ START_TEST( test_auto_check_sbp_piksi_46 )
     u8 encoded_frame[] = {85,25,0,195,4,4,216,2,0,0,178,243, };
 
     dummy_reset();
-    msg_iar_state_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.num_hyps = 728;
-    sbp_send_message(&sbp_state, 0x19, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_iar_state_t* test_msg = ( msg_iar_state_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->num_hyps = 728;
+    sbp_send_message(&sbp_state, 0x19, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -1591,11 +1639,14 @@ START_TEST( test_auto_check_sbp_piksi_46 )
     u8 encoded_frame[] = {85,25,0,195,4,4,215,2,0,0,92,39, };
 
     dummy_reset();
-    msg_iar_state_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.num_hyps = 727;
-    sbp_send_message(&sbp_state, 0x19, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_iar_state_t* test_msg = ( msg_iar_state_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->num_hyps = 727;
+    sbp_send_message(&sbp_state, 0x19, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -1662,11 +1713,14 @@ START_TEST( test_auto_check_sbp_piksi_46 )
     u8 encoded_frame[] = {85,25,0,195,4,4,211,2,0,0,173,237, };
 
     dummy_reset();
-    msg_iar_state_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.num_hyps = 723;
-    sbp_send_message(&sbp_state, 0x19, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_iar_state_t* test_msg = ( msg_iar_state_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->num_hyps = 723;
+    sbp_send_message(&sbp_state, 0x19, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");

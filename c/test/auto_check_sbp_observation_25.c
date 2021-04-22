@@ -125,78 +125,81 @@ START_TEST( test_auto_check_sbp_observation_25 )
     u8 encoded_frame[] = {85,73,0,70,152,87,8,95,183,24,106,7,32,126,250,73,80,113,94,247,255,231,163,229,229,4,0,0,0,60,220,96,70,81,147,250,255,196,208,20,28,6,0,0,0,248,61,62,77,28,60,242,255,110,171,180,178,7,0,0,0,237,84,190,77,172,37,13,0,41,170,233,164,10,0,0,0,36,85,9,75,240,188,21,0,19,182,196,209,12,0,0,0,190,175, };
 
     dummy_reset();
-    msg_obs_dep_c_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.header.n_obs = 32;
-    test_msg.header.t.tow = 414670600;
-    test_msg.header.t.wn = 1898;
-    if (sizeof(test_msg.obs) == 0) {
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_obs_dep_c_t* test_msg = ( msg_obs_dep_c_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->header.n_obs = 32;
+    test_msg->header.t.tow = 414670600;
+    test_msg->header.t.wn = 1898;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[0].L.f = 231;
-    test_msg.obs[0].L.i = -565647;
-    test_msg.obs[0].P = 1347025534;
-    test_msg.obs[0].cn0 = 163;
-    test_msg.obs[0].lock = 58853;
-    test_msg.obs[0].sid.code = 0;
-    test_msg.obs[0].sid.reserved = 0;
-    test_msg.obs[0].sid.sat = 4;
-    if (sizeof(test_msg.obs) == 0) {
+    test_msg->obs[0].L.f = 231;
+    test_msg->obs[0].L.i = -565647;
+    test_msg->obs[0].P = 1347025534;
+    test_msg->obs[0].cn0 = 163;
+    test_msg->obs[0].lock = 58853;
+    test_msg->obs[0].sid.code = 0;
+    test_msg->obs[0].sid.reserved = 0;
+    test_msg->obs[0].sid.sat = 4;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[1].L.f = 196;
-    test_msg.obs[1].L.i = -355503;
-    test_msg.obs[1].P = 1180752956;
-    test_msg.obs[1].cn0 = 208;
-    test_msg.obs[1].lock = 7188;
-    test_msg.obs[1].sid.code = 0;
-    test_msg.obs[1].sid.reserved = 0;
-    test_msg.obs[1].sid.sat = 6;
-    if (sizeof(test_msg.obs) == 0) {
+    test_msg->obs[1].L.f = 196;
+    test_msg->obs[1].L.i = -355503;
+    test_msg->obs[1].P = 1180752956;
+    test_msg->obs[1].cn0 = 208;
+    test_msg->obs[1].lock = 7188;
+    test_msg->obs[1].sid.code = 0;
+    test_msg->obs[1].sid.reserved = 0;
+    test_msg->obs[1].sid.sat = 6;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[2].L.f = 110;
-    test_msg.obs[2].L.i = -902116;
-    test_msg.obs[2].P = 1295924728;
-    test_msg.obs[2].cn0 = 171;
-    test_msg.obs[2].lock = 45748;
-    test_msg.obs[2].sid.code = 0;
-    test_msg.obs[2].sid.reserved = 0;
-    test_msg.obs[2].sid.sat = 7;
-    if (sizeof(test_msg.obs) == 0) {
+    test_msg->obs[2].L.f = 110;
+    test_msg->obs[2].L.i = -902116;
+    test_msg->obs[2].P = 1295924728;
+    test_msg->obs[2].cn0 = 171;
+    test_msg->obs[2].lock = 45748;
+    test_msg->obs[2].sid.code = 0;
+    test_msg->obs[2].sid.reserved = 0;
+    test_msg->obs[2].sid.sat = 7;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[3].L.f = 41;
-    test_msg.obs[3].L.i = 861612;
-    test_msg.obs[3].P = 1304319213;
-    test_msg.obs[3].cn0 = 170;
-    test_msg.obs[3].lock = 42217;
-    test_msg.obs[3].sid.code = 0;
-    test_msg.obs[3].sid.reserved = 0;
-    test_msg.obs[3].sid.sat = 10;
-    if (sizeof(test_msg.obs) == 0) {
+    test_msg->obs[3].L.f = 41;
+    test_msg->obs[3].L.i = 861612;
+    test_msg->obs[3].P = 1304319213;
+    test_msg->obs[3].cn0 = 170;
+    test_msg->obs[3].lock = 42217;
+    test_msg->obs[3].sid.code = 0;
+    test_msg->obs[3].sid.reserved = 0;
+    test_msg->obs[3].sid.sat = 10;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[4].L.f = 19;
-    test_msg.obs[4].L.i = 1424624;
-    test_msg.obs[4].P = 1258902820;
-    test_msg.obs[4].cn0 = 182;
-    test_msg.obs[4].lock = 53700;
-    test_msg.obs[4].sid.code = 0;
-    test_msg.obs[4].sid.reserved = 0;
-    test_msg.obs[4].sid.sat = 12;
-    sbp_send_message(&sbp_state, 0x49, 38982, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->obs[4].L.f = 19;
+    test_msg->obs[4].L.i = 1424624;
+    test_msg->obs[4].P = 1258902820;
+    test_msg->obs[4].cn0 = 182;
+    test_msg->obs[4].lock = 53700;
+    test_msg->obs[4].sid.code = 0;
+    test_msg->obs[4].sid.reserved = 0;
+    test_msg->obs[4].sid.sat = 12;
+    sbp_send_message(&sbp_state, 0x49, 38982, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -305,52 +308,55 @@ START_TEST( test_auto_check_sbp_observation_25 )
     u8 encoded_frame[] = {85,73,0,70,152,55,8,95,183,24,106,7,33,68,166,75,77,186,230,24,0,101,186,162,102,16,0,0,0,87,255,155,69,74,158,5,0,26,190,206,30,27,0,0,0,64,89,124,68,26,22,3,0,114,217,225,73,29,0,0,0,37,179, };
 
     dummy_reset();
-    msg_obs_dep_c_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.header.n_obs = 33;
-    test_msg.header.t.tow = 414670600;
-    test_msg.header.t.wn = 1898;
-    if (sizeof(test_msg.obs) == 0) {
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_obs_dep_c_t* test_msg = ( msg_obs_dep_c_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->header.n_obs = 33;
+    test_msg->header.t.tow = 414670600;
+    test_msg->header.t.wn = 1898;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[0].L.f = 101;
-    test_msg.obs[0].L.i = 1631930;
-    test_msg.obs[0].P = 1296803396;
-    test_msg.obs[0].cn0 = 186;
-    test_msg.obs[0].lock = 26274;
-    test_msg.obs[0].sid.code = 0;
-    test_msg.obs[0].sid.reserved = 0;
-    test_msg.obs[0].sid.sat = 16;
-    if (sizeof(test_msg.obs) == 0) {
+    test_msg->obs[0].L.f = 101;
+    test_msg->obs[0].L.i = 1631930;
+    test_msg->obs[0].P = 1296803396;
+    test_msg->obs[0].cn0 = 186;
+    test_msg->obs[0].lock = 26274;
+    test_msg->obs[0].sid.code = 0;
+    test_msg->obs[0].sid.reserved = 0;
+    test_msg->obs[0].sid.sat = 16;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[1].L.f = 26;
-    test_msg.obs[1].L.i = 368202;
-    test_msg.obs[1].P = 1167851351;
-    test_msg.obs[1].cn0 = 190;
-    test_msg.obs[1].lock = 7886;
-    test_msg.obs[1].sid.code = 0;
-    test_msg.obs[1].sid.reserved = 0;
-    test_msg.obs[1].sid.sat = 27;
-    if (sizeof(test_msg.obs) == 0) {
+    test_msg->obs[1].L.f = 26;
+    test_msg->obs[1].L.i = 368202;
+    test_msg->obs[1].P = 1167851351;
+    test_msg->obs[1].cn0 = 190;
+    test_msg->obs[1].lock = 7886;
+    test_msg->obs[1].sid.code = 0;
+    test_msg->obs[1].sid.reserved = 0;
+    test_msg->obs[1].sid.sat = 27;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[2].L.f = 114;
-    test_msg.obs[2].L.i = 202266;
-    test_msg.obs[2].P = 1149000000;
-    test_msg.obs[2].cn0 = 217;
-    test_msg.obs[2].lock = 18913;
-    test_msg.obs[2].sid.code = 0;
-    test_msg.obs[2].sid.reserved = 0;
-    test_msg.obs[2].sid.sat = 29;
-    sbp_send_message(&sbp_state, 0x49, 38982, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->obs[2].L.f = 114;
+    test_msg->obs[2].L.i = 202266;
+    test_msg->obs[2].P = 1149000000;
+    test_msg->obs[2].cn0 = 217;
+    test_msg->obs[2].lock = 18913;
+    test_msg->obs[2].sid.code = 0;
+    test_msg->obs[2].sid.reserved = 0;
+    test_msg->obs[2].sid.sat = 29;
+    sbp_send_message(&sbp_state, 0x49, 38982, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -443,78 +449,81 @@ START_TEST( test_auto_check_sbp_observation_25 )
     u8 encoded_frame[] = {85,73,0,0,0,87,8,95,183,24,106,7,32,217,251,73,80,9,72,248,255,30,168,113,81,4,0,0,0,211,220,96,70,198,107,251,255,115,195,53,144,6,0,0,0,77,61,62,77,40,161,243,255,130,176,93,142,7,0,0,0,1,86,190,77,88,77,12,0,116,199,229,213,10,0,0,0,93,85,9,75,64,139,20,0,120,177,196,194,12,0,0,0,141,161, };
 
     dummy_reset();
-    msg_obs_dep_c_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.header.n_obs = 32;
-    test_msg.header.t.tow = 414670600;
-    test_msg.header.t.wn = 1898;
-    if (sizeof(test_msg.obs) == 0) {
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_obs_dep_c_t* test_msg = ( msg_obs_dep_c_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->header.n_obs = 32;
+    test_msg->header.t.tow = 414670600;
+    test_msg->header.t.wn = 1898;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[0].L.f = 30;
-    test_msg.obs[0].L.i = -505847;
-    test_msg.obs[0].P = 1347025881;
-    test_msg.obs[0].cn0 = 168;
-    test_msg.obs[0].lock = 20849;
-    test_msg.obs[0].sid.code = 0;
-    test_msg.obs[0].sid.reserved = 0;
-    test_msg.obs[0].sid.sat = 4;
-    if (sizeof(test_msg.obs) == 0) {
+    test_msg->obs[0].L.f = 30;
+    test_msg->obs[0].L.i = -505847;
+    test_msg->obs[0].P = 1347025881;
+    test_msg->obs[0].cn0 = 168;
+    test_msg->obs[0].lock = 20849;
+    test_msg->obs[0].sid.code = 0;
+    test_msg->obs[0].sid.reserved = 0;
+    test_msg->obs[0].sid.sat = 4;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[1].L.f = 115;
-    test_msg.obs[1].L.i = -300090;
-    test_msg.obs[1].P = 1180753107;
-    test_msg.obs[1].cn0 = 195;
-    test_msg.obs[1].lock = 36917;
-    test_msg.obs[1].sid.code = 0;
-    test_msg.obs[1].sid.reserved = 0;
-    test_msg.obs[1].sid.sat = 6;
-    if (sizeof(test_msg.obs) == 0) {
+    test_msg->obs[1].L.f = 115;
+    test_msg->obs[1].L.i = -300090;
+    test_msg->obs[1].P = 1180753107;
+    test_msg->obs[1].cn0 = 195;
+    test_msg->obs[1].lock = 36917;
+    test_msg->obs[1].sid.code = 0;
+    test_msg->obs[1].sid.reserved = 0;
+    test_msg->obs[1].sid.sat = 6;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[2].L.f = 130;
-    test_msg.obs[2].L.i = -810712;
-    test_msg.obs[2].P = 1295924557;
-    test_msg.obs[2].cn0 = 176;
-    test_msg.obs[2].lock = 36445;
-    test_msg.obs[2].sid.code = 0;
-    test_msg.obs[2].sid.reserved = 0;
-    test_msg.obs[2].sid.sat = 7;
-    if (sizeof(test_msg.obs) == 0) {
+    test_msg->obs[2].L.f = 130;
+    test_msg->obs[2].L.i = -810712;
+    test_msg->obs[2].P = 1295924557;
+    test_msg->obs[2].cn0 = 176;
+    test_msg->obs[2].lock = 36445;
+    test_msg->obs[2].sid.code = 0;
+    test_msg->obs[2].sid.reserved = 0;
+    test_msg->obs[2].sid.sat = 7;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[3].L.f = 116;
-    test_msg.obs[3].L.i = 806232;
-    test_msg.obs[3].P = 1304319489;
-    test_msg.obs[3].cn0 = 199;
-    test_msg.obs[3].lock = 54757;
-    test_msg.obs[3].sid.code = 0;
-    test_msg.obs[3].sid.reserved = 0;
-    test_msg.obs[3].sid.sat = 10;
-    if (sizeof(test_msg.obs) == 0) {
+    test_msg->obs[3].L.f = 116;
+    test_msg->obs[3].L.i = 806232;
+    test_msg->obs[3].P = 1304319489;
+    test_msg->obs[3].cn0 = 199;
+    test_msg->obs[3].lock = 54757;
+    test_msg->obs[3].sid.code = 0;
+    test_msg->obs[3].sid.reserved = 0;
+    test_msg->obs[3].sid.sat = 10;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[4].L.f = 120;
-    test_msg.obs[4].L.i = 1346368;
-    test_msg.obs[4].P = 1258902877;
-    test_msg.obs[4].cn0 = 177;
-    test_msg.obs[4].lock = 49860;
-    test_msg.obs[4].sid.code = 0;
-    test_msg.obs[4].sid.reserved = 0;
-    test_msg.obs[4].sid.sat = 12;
-    sbp_send_message(&sbp_state, 0x49, 0, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->obs[4].L.f = 120;
+    test_msg->obs[4].L.i = 1346368;
+    test_msg->obs[4].P = 1258902877;
+    test_msg->obs[4].cn0 = 177;
+    test_msg->obs[4].lock = 49860;
+    test_msg->obs[4].sid.code = 0;
+    test_msg->obs[4].sid.reserved = 0;
+    test_msg->obs[4].sid.sat = 12;
+    sbp_send_message(&sbp_state, 0x49, 0, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -623,52 +632,55 @@ START_TEST( test_auto_check_sbp_observation_25 )
     u8 encoded_frame[] = {85,73,0,0,0,55,8,95,183,24,106,7,33,70,167,75,77,140,136,23,0,90,187,158,129,16,0,0,0,232,255,155,69,45,175,5,0,17,208,175,56,27,0,0,0,64,89,124,68,45,96,3,0,75,185,73,206,29,0,0,0,220,158, };
 
     dummy_reset();
-    msg_obs_dep_c_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.header.n_obs = 33;
-    test_msg.header.t.tow = 414670600;
-    test_msg.header.t.wn = 1898;
-    if (sizeof(test_msg.obs) == 0) {
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_obs_dep_c_t* test_msg = ( msg_obs_dep_c_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->header.n_obs = 33;
+    test_msg->header.t.tow = 414670600;
+    test_msg->header.t.wn = 1898;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[0].L.f = 90;
-    test_msg.obs[0].L.i = 1542284;
-    test_msg.obs[0].P = 1296803654;
-    test_msg.obs[0].cn0 = 187;
-    test_msg.obs[0].lock = 33182;
-    test_msg.obs[0].sid.code = 0;
-    test_msg.obs[0].sid.reserved = 0;
-    test_msg.obs[0].sid.sat = 16;
-    if (sizeof(test_msg.obs) == 0) {
+    test_msg->obs[0].L.f = 90;
+    test_msg->obs[0].L.i = 1542284;
+    test_msg->obs[0].P = 1296803654;
+    test_msg->obs[0].cn0 = 187;
+    test_msg->obs[0].lock = 33182;
+    test_msg->obs[0].sid.code = 0;
+    test_msg->obs[0].sid.reserved = 0;
+    test_msg->obs[0].sid.sat = 16;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[1].L.f = 17;
-    test_msg.obs[1].L.i = 372525;
-    test_msg.obs[1].P = 1167851496;
-    test_msg.obs[1].cn0 = 208;
-    test_msg.obs[1].lock = 14511;
-    test_msg.obs[1].sid.code = 0;
-    test_msg.obs[1].sid.reserved = 0;
-    test_msg.obs[1].sid.sat = 27;
-    if (sizeof(test_msg.obs) == 0) {
+    test_msg->obs[1].L.f = 17;
+    test_msg->obs[1].L.i = 372525;
+    test_msg->obs[1].P = 1167851496;
+    test_msg->obs[1].cn0 = 208;
+    test_msg->obs[1].lock = 14511;
+    test_msg->obs[1].sid.code = 0;
+    test_msg->obs[1].sid.reserved = 0;
+    test_msg->obs[1].sid.sat = 27;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[2].L.f = 75;
-    test_msg.obs[2].L.i = 221229;
-    test_msg.obs[2].P = 1149000000;
-    test_msg.obs[2].cn0 = 185;
-    test_msg.obs[2].lock = 52809;
-    test_msg.obs[2].sid.code = 0;
-    test_msg.obs[2].sid.reserved = 0;
-    test_msg.obs[2].sid.sat = 29;
-    sbp_send_message(&sbp_state, 0x49, 0, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->obs[2].L.f = 75;
+    test_msg->obs[2].L.i = 221229;
+    test_msg->obs[2].P = 1149000000;
+    test_msg->obs[2].cn0 = 185;
+    test_msg->obs[2].lock = 52809;
+    test_msg->obs[2].sid.code = 0;
+    test_msg->obs[2].sid.reserved = 0;
+    test_msg->obs[2].sid.sat = 29;
+    sbp_send_message(&sbp_state, 0x49, 0, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -761,78 +773,81 @@ START_TEST( test_auto_check_sbp_observation_25 )
     u8 encoded_frame[] = {85,73,0,70,152,87,208,95,183,24,106,7,32,44,8,74,80,86,93,247,255,57,158,229,229,4,0,0,0,224,229,96,70,156,146,250,255,221,200,20,28,6,0,0,0,60,82,62,77,93,58,242,255,39,164,180,178,7,0,0,0,222,73,190,77,46,39,13,0,202,181,233,164,10,0,0,0,149,64,9,75,114,191,21,0,249,182,196,209,12,0,0,0,112,8, };
 
     dummy_reset();
-    msg_obs_dep_c_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.header.n_obs = 32;
-    test_msg.header.t.tow = 414670800;
-    test_msg.header.t.wn = 1898;
-    if (sizeof(test_msg.obs) == 0) {
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_obs_dep_c_t* test_msg = ( msg_obs_dep_c_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->header.n_obs = 32;
+    test_msg->header.t.tow = 414670800;
+    test_msg->header.t.wn = 1898;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[0].L.f = 57;
-    test_msg.obs[0].L.i = -565930;
-    test_msg.obs[0].P = 1347029036;
-    test_msg.obs[0].cn0 = 158;
-    test_msg.obs[0].lock = 58853;
-    test_msg.obs[0].sid.code = 0;
-    test_msg.obs[0].sid.reserved = 0;
-    test_msg.obs[0].sid.sat = 4;
-    if (sizeof(test_msg.obs) == 0) {
+    test_msg->obs[0].L.f = 57;
+    test_msg->obs[0].L.i = -565930;
+    test_msg->obs[0].P = 1347029036;
+    test_msg->obs[0].cn0 = 158;
+    test_msg->obs[0].lock = 58853;
+    test_msg->obs[0].sid.code = 0;
+    test_msg->obs[0].sid.reserved = 0;
+    test_msg->obs[0].sid.sat = 4;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[1].L.f = 221;
-    test_msg.obs[1].L.i = -355684;
-    test_msg.obs[1].P = 1180755424;
-    test_msg.obs[1].cn0 = 200;
-    test_msg.obs[1].lock = 7188;
-    test_msg.obs[1].sid.code = 0;
-    test_msg.obs[1].sid.reserved = 0;
-    test_msg.obs[1].sid.sat = 6;
-    if (sizeof(test_msg.obs) == 0) {
+    test_msg->obs[1].L.f = 221;
+    test_msg->obs[1].L.i = -355684;
+    test_msg->obs[1].P = 1180755424;
+    test_msg->obs[1].cn0 = 200;
+    test_msg->obs[1].lock = 7188;
+    test_msg->obs[1].sid.code = 0;
+    test_msg->obs[1].sid.reserved = 0;
+    test_msg->obs[1].sid.sat = 6;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[2].L.f = 39;
-    test_msg.obs[2].L.i = -902563;
-    test_msg.obs[2].P = 1295929916;
-    test_msg.obs[2].cn0 = 164;
-    test_msg.obs[2].lock = 45748;
-    test_msg.obs[2].sid.code = 0;
-    test_msg.obs[2].sid.reserved = 0;
-    test_msg.obs[2].sid.sat = 7;
-    if (sizeof(test_msg.obs) == 0) {
+    test_msg->obs[2].L.f = 39;
+    test_msg->obs[2].L.i = -902563;
+    test_msg->obs[2].P = 1295929916;
+    test_msg->obs[2].cn0 = 164;
+    test_msg->obs[2].lock = 45748;
+    test_msg->obs[2].sid.code = 0;
+    test_msg->obs[2].sid.reserved = 0;
+    test_msg->obs[2].sid.sat = 7;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[3].L.f = 202;
-    test_msg.obs[3].L.i = 861998;
-    test_msg.obs[3].P = 1304316382;
-    test_msg.obs[3].cn0 = 181;
-    test_msg.obs[3].lock = 42217;
-    test_msg.obs[3].sid.code = 0;
-    test_msg.obs[3].sid.reserved = 0;
-    test_msg.obs[3].sid.sat = 10;
-    if (sizeof(test_msg.obs) == 0) {
+    test_msg->obs[3].L.f = 202;
+    test_msg->obs[3].L.i = 861998;
+    test_msg->obs[3].P = 1304316382;
+    test_msg->obs[3].cn0 = 181;
+    test_msg->obs[3].lock = 42217;
+    test_msg->obs[3].sid.code = 0;
+    test_msg->obs[3].sid.reserved = 0;
+    test_msg->obs[3].sid.sat = 10;
+    if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.obs[0]);
+      test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg.obs[4].L.f = 249;
-    test_msg.obs[4].L.i = 1425266;
-    test_msg.obs[4].P = 1258897557;
-    test_msg.obs[4].cn0 = 182;
-    test_msg.obs[4].lock = 53700;
-    test_msg.obs[4].sid.code = 0;
-    test_msg.obs[4].sid.reserved = 0;
-    test_msg.obs[4].sid.sat = 12;
-    sbp_send_message(&sbp_state, 0x49, 38982, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->obs[4].L.f = 249;
+    test_msg->obs[4].L.i = 1425266;
+    test_msg->obs[4].P = 1258897557;
+    test_msg->obs[4].cn0 = 182;
+    test_msg->obs[4].lock = 53700;
+    test_msg->obs[4].sid.code = 0;
+    test_msg->obs[4].sid.reserved = 0;
+    test_msg->obs[4].sid.sat = 12;
+    sbp_send_message(&sbp_state, 0x49, 38982, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");

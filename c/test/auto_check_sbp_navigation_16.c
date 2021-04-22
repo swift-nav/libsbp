@@ -125,22 +125,25 @@ START_TEST( test_auto_check_sbp_navigation_16 )
     u8 encoded_frame[] = {85,17,2,66,0,54,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,28,64,0,0,0,0,0,0,0,0,0,0,224,64,0,0,160,64,0,0,0,65,0,0,192,64,0,0,128,63,0,0,0,64,5,5,151,98, };
 
     dummy_reset();
-    msg_pos_llh_cov_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.cov_d_d = 2.0;
-    test_msg.cov_e_d = 1.0;
-    test_msg.cov_e_e = 6.0;
-    test_msg.cov_n_d = 8.0;
-    test_msg.cov_n_e = 5.0;
-    test_msg.cov_n_n = 7.0;
-    test_msg.flags = 5;
-    test_msg.height = 0.0;
-    test_msg.lat = 0.0;
-    test_msg.lon = 7.0;
-    test_msg.n_sats = 5;
-    test_msg.tow = 7;
-    sbp_send_message(&sbp_state, 0x211, 66, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_pos_llh_cov_t* test_msg = ( msg_pos_llh_cov_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->cov_d_d = 2.0;
+    test_msg->cov_e_d = 1.0;
+    test_msg->cov_e_e = 6.0;
+    test_msg->cov_n_d = 8.0;
+    test_msg->cov_n_e = 5.0;
+    test_msg->cov_n_n = 7.0;
+    test_msg->flags = 5;
+    test_msg->height = 0.0;
+    test_msg->lat = 0.0;
+    test_msg->lon = 7.0;
+    test_msg->n_sats = 5;
+    test_msg->tow = 7;
+    sbp_send_message(&sbp_state, 0x211, 66, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");

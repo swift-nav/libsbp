@@ -125,18 +125,21 @@ START_TEST( test_auto_check_sbp_bootload_40 )
     u8 encoded_frame[] = {85,180,0,0,0,9,0,0,0,0,118,49,46,50,10,201,1, };
 
     dummy_reset();
-    msg_bootloader_handshake_resp_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.flags = 0;
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_bootloader_handshake_resp_t* test_msg = ( msg_bootloader_handshake_resp_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->flags = 0;
     {
       const char assign_string[] = { (char)118,(char)49,(char)46,(char)50,(char)10 };
-      memcpy(test_msg.version, assign_string, sizeof(assign_string));
-      if (sizeof(test_msg.version) == 0) {
+      memcpy(test_msg->version, assign_string, sizeof(assign_string));
+      if (sizeof(test_msg->version) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    sbp_send_message(&sbp_state, 0xb4, 0, test_msg_len, (u8*)&test_msg, &dummy_write);
+    sbp_send_message(&sbp_state, 0xb4, 0, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -207,34 +210,37 @@ START_TEST( test_auto_check_sbp_bootload_40 )
     u8 encoded_frame[] = {85,176,0,195,4,4,118,49,46,50,1,206, };
 
     dummy_reset();
-    msg_bootloader_handshake_dep_a_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    if (sizeof(test_msg.handshake) == 0) {
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_bootloader_handshake_dep_a_t* test_msg = ( msg_bootloader_handshake_dep_a_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    if (sizeof(test_msg->handshake) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.handshake[0]);
+      test_msg_len += sizeof(test_msg->handshake[0]);
     }
     
-    test_msg.handshake[0] = 118;
-    if (sizeof(test_msg.handshake) == 0) {
+    test_msg->handshake[0] = 118;
+    if (sizeof(test_msg->handshake) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.handshake[0]);
+      test_msg_len += sizeof(test_msg->handshake[0]);
     }
     
-    test_msg.handshake[1] = 49;
-    if (sizeof(test_msg.handshake) == 0) {
+    test_msg->handshake[1] = 49;
+    if (sizeof(test_msg->handshake) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.handshake[0]);
+      test_msg_len += sizeof(test_msg->handshake[0]);
     }
     
-    test_msg.handshake[2] = 46;
-    if (sizeof(test_msg.handshake) == 0) {
+    test_msg->handshake[2] = 46;
+    if (sizeof(test_msg->handshake) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.handshake[0]);
+      test_msg_len += sizeof(test_msg->handshake[0]);
     }
     
-    test_msg.handshake[3] = 50;
-    sbp_send_message(&sbp_state, 0xb0, 1219, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->handshake[3] = 50;
+    sbp_send_message(&sbp_state, 0xb0, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");

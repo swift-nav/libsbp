@@ -132,23 +132,23 @@ START_TEST( test_(((s.suite_name))) )
     ((*- if value is string_type *))
     {
       const char assign_string[] = { (((value|str_escape))) };
-      memcpy(test_msg.(((prefix))), assign_string, sizeof(assign_string));
-      if (sizeof(test_msg.(((prefix)))) == 0) {
+      memcpy(test_msg->(((prefix))), assign_string, sizeof(assign_string));
+      if (sizeof(test_msg->(((prefix)))) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
     ((*- elif value is array_type *))
     ((*- for ff in value *))
-    if (sizeof(test_msg.(((prefix)))) == 0) {
+    if (sizeof(test_msg->(((prefix)))) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.(((prefix)))[0]);
+      test_msg_len += sizeof(test_msg->(((prefix)))[0]);
     }
     ((( assign_value( (((prefix))) + '[' + (((loop.index0|to_str))) + ']', (((ff))) ) )))
     ((*- endfor *))
     ((*- elif value is dict_type *))
     ((*- for k in (((value|sorted))) *))((( assign_value( (((prefix))) + '.' + (((k))), (((value[k]))) ) )))((*- endfor *))
     ((*- else *))
-    test_msg.(((prefix))) = (((value)));
+    test_msg->(((prefix))) = (((value)));
     ((*- endif *))
     ((*- endmacro *))
 
@@ -171,16 +171,15 @@ START_TEST( test_(((s.suite_name))) )
 
     dummy_reset();
 
-    ((*- if t.fields *))
-    (((t.msg_type_name|convert))) test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    ((*- for f in t.fieldskeys *))(((assign_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
-    ((*- else *))
-    u8 test_msg[1];
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
+    ((*- if t.fields *))
+    (((t.msg_type_name|convert)))* test_msg = ( (((t.msg_type_name|convert)))* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    ((*- for f in t.fieldskeys *))(((assign_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
     ((*- endif *))
-    sbp_send_message(&sbp_state, (((t.msg_type))), (((t.raw_json_obj.sender))), test_msg_len, (u8*)&test_msg, &dummy_write);
+    sbp_send_message(&sbp_state, (((t.msg_type))), (((t.raw_json_obj.sender))), test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");

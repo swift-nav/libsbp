@@ -125,19 +125,22 @@ START_TEST( test_auto_check_sbp_logging_43 )
     u8 encoded_frame[] = {85,2,4,66,0,18,0,0,86,81,68,47,81,103,65,69,65,65,65,65,65,69,97,103,125,95, };
 
     dummy_reset();
-    msg_fwd_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_fwd_t* test_msg = ( msg_fwd_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
     {
       const char assign_string[] = { (char)86,(char)81,(char)68,(char)47,(char)81,(char)103,(char)65,(char)69,(char)65,(char)65,(char)65,(char)65,(char)65,(char)69,(char)97,(char)103 };
-      memcpy(test_msg.fwd_payload, assign_string, sizeof(assign_string));
-      if (sizeof(test_msg.fwd_payload) == 0) {
+      memcpy(test_msg->fwd_payload, assign_string, sizeof(assign_string));
+      if (sizeof(test_msg->fwd_payload) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    test_msg.protocol = 0;
-    test_msg.source = 0;
-    sbp_send_message(&sbp_state, 0x402, 66, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->protocol = 0;
+    test_msg->source = 0;
+    sbp_send_message(&sbp_state, 0x402, 66, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");

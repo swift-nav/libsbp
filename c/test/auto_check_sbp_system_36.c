@@ -125,31 +125,34 @@ START_TEST( test_auto_check_sbp_system_36 )
     u8 encoded_frame[] = {85,10,255,238,238,9,1,2,3,10,255,10,2,2,255,2,14, };
 
     dummy_reset();
-    msg_group_meta_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.flags = 2;
-    test_msg.group_id = 1;
-    if (sizeof(test_msg.group_msgs) == 0) {
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_group_meta_t* test_msg = ( msg_group_meta_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->flags = 2;
+    test_msg->group_id = 1;
+    if (sizeof(test_msg->group_msgs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.group_msgs[0]);
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
     
-    test_msg.group_msgs[0] = 65290;
-    if (sizeof(test_msg.group_msgs) == 0) {
+    test_msg->group_msgs[0] = 65290;
+    if (sizeof(test_msg->group_msgs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.group_msgs[0]);
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
     
-    test_msg.group_msgs[1] = 522;
-    if (sizeof(test_msg.group_msgs) == 0) {
+    test_msg->group_msgs[1] = 522;
+    if (sizeof(test_msg->group_msgs) == 0) {
       // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg.group_msgs[0]);
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
     
-    test_msg.group_msgs[2] = 65282;
-    test_msg.n_group_msgs = 3;
-    sbp_send_message(&sbp_state, 0xFF0A, 61166, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->group_msgs[2] = 65282;
+    test_msg->n_group_msgs = 3;
+    sbp_send_message(&sbp_state, 0xFF0A, 61166, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");

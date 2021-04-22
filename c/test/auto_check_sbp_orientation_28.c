@@ -125,18 +125,21 @@ START_TEST( test_auto_check_sbp_orientation_28 )
     u8 encoded_frame[] = {85,33,2,66,0,29,1,0,0,0,1,0,0,0,2,0,0,0,8,0,0,0,0,0,224,64,0,0,64,64,0,0,224,64,3,44,226, };
 
     dummy_reset();
-    msg_orient_euler_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.flags = 3;
-    test_msg.pitch = 2;
-    test_msg.pitch_accuracy = 3.0;
-    test_msg.roll = 1;
-    test_msg.roll_accuracy = 7.0;
-    test_msg.tow = 1;
-    test_msg.yaw = 8;
-    test_msg.yaw_accuracy = 7.0;
-    sbp_send_message(&sbp_state, 0x221, 66, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_orient_euler_t* test_msg = ( msg_orient_euler_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->flags = 3;
+    test_msg->pitch = 2;
+    test_msg->pitch_accuracy = 3.0;
+    test_msg->roll = 1;
+    test_msg->roll_accuracy = 7.0;
+    test_msg->tow = 1;
+    test_msg->yaw = 8;
+    test_msg->yaw_accuracy = 7.0;
+    sbp_send_message(&sbp_state, 0x221, 66, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");

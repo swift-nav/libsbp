@@ -125,20 +125,23 @@ START_TEST( test_auto_check_sbp_orientation_29 )
     u8 encoded_frame[] = {85,32,2,66,0,37,0,0,0,0,3,0,0,0,7,0,0,0,8,0,0,0,4,0,0,0,0,0,64,64,0,0,128,64,0,0,0,65,0,0,64,64,1,186,6, };
 
     dummy_reset();
-    msg_orient_quat_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.flags = 1;
-    test_msg.tow = 0;
-    test_msg.w = 3;
-    test_msg.w_accuracy = 3.0;
-    test_msg.x = 7;
-    test_msg.x_accuracy = 4.0;
-    test_msg.y = 8;
-    test_msg.y_accuracy = 8.0;
-    test_msg.z = 4;
-    test_msg.z_accuracy = 3.0;
-    sbp_send_message(&sbp_state, 0x220, 66, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_orient_quat_t* test_msg = ( msg_orient_quat_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->flags = 1;
+    test_msg->tow = 0;
+    test_msg->w = 3;
+    test_msg->w_accuracy = 3.0;
+    test_msg->x = 7;
+    test_msg->x_accuracy = 4.0;
+    test_msg->y = 8;
+    test_msg->y_accuracy = 8.0;
+    test_msg->z = 4;
+    test_msg->z_accuracy = 3.0;
+    sbp_send_message(&sbp_state, 0x220, 66, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");

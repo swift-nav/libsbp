@@ -125,15 +125,18 @@ START_TEST( test_auto_check_sbp_orientation_27 )
     u8 encoded_frame[] = {85,34,2,66,0,17,2,0,0,0,2,0,0,0,5,0,0,0,2,0,0,0,0,88,70, };
 
     dummy_reset();
-    msg_angular_rate_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.flags = 0;
-    test_msg.tow = 2;
-    test_msg.x = 2;
-    test_msg.y = 5;
-    test_msg.z = 2;
-    sbp_send_message(&sbp_state, 0x222, 66, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_angular_rate_t* test_msg = ( msg_angular_rate_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->flags = 0;
+    test_msg->tow = 2;
+    test_msg->x = 2;
+    test_msg->y = 5;
+    test_msg->z = 2;
+    sbp_send_message(&sbp_state, 0x222, 66, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");

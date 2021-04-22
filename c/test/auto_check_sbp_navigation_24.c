@@ -125,18 +125,21 @@ START_TEST( test_auto_check_sbp_navigation_24 )
     u8 encoded_frame[] = {85,5,2,246,215,22,20,46,39,0,198,251,255,255,156,15,0,0,0,0,0,0,0,0,0,0,9,0,161,92, };
 
     dummy_reset();
-    msg_vel_ned_dep_a_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.d = 0;
-    test_msg.e = 3996;
-    test_msg.flags = 0;
-    test_msg.h_accuracy = 0;
-    test_msg.n = -1082;
-    test_msg.n_sats = 9;
-    test_msg.tow = 2567700;
-    test_msg.v_accuracy = 0;
-    sbp_send_message(&sbp_state, 0x205, 55286, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_vel_ned_dep_a_t* test_msg = ( msg_vel_ned_dep_a_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->d = 0;
+    test_msg->e = 3996;
+    test_msg->flags = 0;
+    test_msg->h_accuracy = 0;
+    test_msg->n = -1082;
+    test_msg->n_sats = 9;
+    test_msg->tow = 2567700;
+    test_msg->v_accuracy = 0;
+    sbp_send_message(&sbp_state, 0x205, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -210,18 +213,21 @@ START_TEST( test_auto_check_sbp_navigation_24 )
     u8 encoded_frame[] = {85,5,2,246,215,22,120,46,39,0,14,252,255,255,207,14,0,0,0,0,0,0,0,0,0,0,9,0,125,160, };
 
     dummy_reset();
-    msg_vel_ned_dep_a_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.d = 0;
-    test_msg.e = 3791;
-    test_msg.flags = 0;
-    test_msg.h_accuracy = 0;
-    test_msg.n = -1010;
-    test_msg.n_sats = 9;
-    test_msg.tow = 2567800;
-    test_msg.v_accuracy = 0;
-    sbp_send_message(&sbp_state, 0x205, 55286, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_vel_ned_dep_a_t* test_msg = ( msg_vel_ned_dep_a_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->d = 0;
+    test_msg->e = 3791;
+    test_msg->flags = 0;
+    test_msg->h_accuracy = 0;
+    test_msg->n = -1010;
+    test_msg->n_sats = 9;
+    test_msg->tow = 2567800;
+    test_msg->v_accuracy = 0;
+    sbp_send_message(&sbp_state, 0x205, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -295,18 +301,21 @@ START_TEST( test_auto_check_sbp_navigation_24 )
     u8 encoded_frame[] = {85,5,2,246,215,22,220,46,39,0,48,252,255,255,140,14,0,0,0,0,0,0,0,0,0,0,9,0,179,135, };
 
     dummy_reset();
-    msg_vel_ned_dep_a_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.d = 0;
-    test_msg.e = 3724;
-    test_msg.flags = 0;
-    test_msg.h_accuracy = 0;
-    test_msg.n = -976;
-    test_msg.n_sats = 9;
-    test_msg.tow = 2567900;
-    test_msg.v_accuracy = 0;
-    sbp_send_message(&sbp_state, 0x205, 55286, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_vel_ned_dep_a_t* test_msg = ( msg_vel_ned_dep_a_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->d = 0;
+    test_msg->e = 3724;
+    test_msg->flags = 0;
+    test_msg->h_accuracy = 0;
+    test_msg->n = -976;
+    test_msg->n_sats = 9;
+    test_msg->tow = 2567900;
+    test_msg->v_accuracy = 0;
+    sbp_send_message(&sbp_state, 0x205, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -380,18 +389,21 @@ START_TEST( test_auto_check_sbp_navigation_24 )
     u8 encoded_frame[] = {85,5,2,246,215,22,64,47,39,0,32,252,255,255,8,15,0,0,0,0,0,0,0,0,0,0,9,0,51,177, };
 
     dummy_reset();
-    msg_vel_ned_dep_a_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.d = 0;
-    test_msg.e = 3848;
-    test_msg.flags = 0;
-    test_msg.h_accuracy = 0;
-    test_msg.n = -992;
-    test_msg.n_sats = 9;
-    test_msg.tow = 2568000;
-    test_msg.v_accuracy = 0;
-    sbp_send_message(&sbp_state, 0x205, 55286, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_vel_ned_dep_a_t* test_msg = ( msg_vel_ned_dep_a_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->d = 0;
+    test_msg->e = 3848;
+    test_msg->flags = 0;
+    test_msg->h_accuracy = 0;
+    test_msg->n = -992;
+    test_msg->n_sats = 9;
+    test_msg->tow = 2568000;
+    test_msg->v_accuracy = 0;
+    sbp_send_message(&sbp_state, 0x205, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -465,18 +477,21 @@ START_TEST( test_auto_check_sbp_navigation_24 )
     u8 encoded_frame[] = {85,5,2,246,215,22,164,47,39,0,80,252,255,255,140,14,0,0,0,0,0,0,0,0,0,0,9,0,23,0, };
 
     dummy_reset();
-    msg_vel_ned_dep_a_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.d = 0;
-    test_msg.e = 3724;
-    test_msg.flags = 0;
-    test_msg.h_accuracy = 0;
-    test_msg.n = -944;
-    test_msg.n_sats = 9;
-    test_msg.tow = 2568100;
-    test_msg.v_accuracy = 0;
-    sbp_send_message(&sbp_state, 0x205, 55286, test_msg_len, (u8*)&test_msg, &dummy_write);
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_vel_ned_dep_a_t* test_msg = ( msg_vel_ned_dep_a_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->d = 0;
+    test_msg->e = 3724;
+    test_msg->flags = 0;
+    test_msg->h_accuracy = 0;
+    test_msg->n = -944;
+    test_msg->n_sats = 9;
+    test_msg->tow = 2568100;
+    test_msg->v_accuracy = 0;
+    sbp_send_message(&sbp_state, 0x205, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");

@@ -125,20 +125,23 @@ START_TEST( test_auto_check_sbp_system_35 )
     u8 encoded_frame[] = {85,2,255,66,0,11,0,50,0,12,83,107,121,108,97,114,107,202,1, };
 
     dummy_reset();
-    msg_dgnss_status_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.flags = 0;
-    test_msg.latency = 50;
-    test_msg.num_signals = 12;
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_dgnss_status_t* test_msg = ( msg_dgnss_status_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->flags = 0;
+    test_msg->latency = 50;
+    test_msg->num_signals = 12;
     {
       const char assign_string[] = { (char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107 };
-      memcpy(test_msg.source, assign_string, sizeof(assign_string));
-      if (sizeof(test_msg.source) == 0) {
+      memcpy(test_msg->source, assign_string, sizeof(assign_string));
+      if (sizeof(test_msg->source) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    sbp_send_message(&sbp_state, 0xff02, 66, test_msg_len, (u8*)&test_msg, &dummy_write);
+    sbp_send_message(&sbp_state, 0xff02, 66, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");

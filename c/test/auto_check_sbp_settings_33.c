@@ -125,9 +125,11 @@ START_TEST( test_auto_check_sbp_settings_33 )
     u8 encoded_frame[] = {85,166,0,246,215,0,163,58, };
 
     dummy_reset();
-    u8 test_msg[1];
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    sbp_send_message(&sbp_state, 0xa6, 55286, test_msg_len, (u8*)&test_msg, &dummy_write);
+    sbp_send_message(&sbp_state, 0xa6, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");

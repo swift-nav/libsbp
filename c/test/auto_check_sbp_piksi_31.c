@@ -125,19 +125,22 @@ START_TEST( test_auto_check_sbp_piksi_31 )
     u8 encoded_frame[] = {85,23,0,246,215,26,109,97,105,110,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,156,9,0,0,73,138, };
 
     dummy_reset();
-    msg_thread_state_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.cpu = 0;
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_thread_state_t* test_msg = ( msg_thread_state_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->cpu = 0;
     {
       const char assign_string[] = { (char)109,(char)97,(char)105,(char)110,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_msg.name, assign_string, sizeof(assign_string));
-      if (sizeof(test_msg.name) == 0) {
+      memcpy(test_msg->name, assign_string, sizeof(assign_string));
+      if (sizeof(test_msg->name) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    test_msg.stack_free = 2460;
-    sbp_send_message(&sbp_state, 0x17, 55286, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->stack_free = 2460;
+    sbp_send_message(&sbp_state, 0x17, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -209,19 +212,22 @@ START_TEST( test_auto_check_sbp_piksi_31 )
     u8 encoded_frame[] = {85,23,0,246,215,26,105,100,108,101,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,83,2,36,0,0,0,151,20, };
 
     dummy_reset();
-    msg_thread_state_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.cpu = 595;
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_thread_state_t* test_msg = ( msg_thread_state_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->cpu = 595;
     {
       const char assign_string[] = { (char)105,(char)100,(char)108,(char)101,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_msg.name, assign_string, sizeof(assign_string));
-      if (sizeof(test_msg.name) == 0) {
+      memcpy(test_msg->name, assign_string, sizeof(assign_string));
+      if (sizeof(test_msg->name) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    test_msg.stack_free = 36;
-    sbp_send_message(&sbp_state, 0x17, 55286, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->stack_free = 36;
+    sbp_send_message(&sbp_state, 0x17, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -293,19 +299,22 @@ START_TEST( test_auto_check_sbp_piksi_31 )
     u8 encoded_frame[] = {85,23,0,246,215,26,78,65,80,32,73,83,82,0,0,0,0,0,0,0,0,0,0,0,0,0,14,0,116,4,0,0,226,60, };
 
     dummy_reset();
-    msg_thread_state_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.cpu = 14;
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_thread_state_t* test_msg = ( msg_thread_state_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->cpu = 14;
     {
       const char assign_string[] = { (char)78,(char)65,(char)80,(char)32,(char)73,(char)83,(char)82,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_msg.name, assign_string, sizeof(assign_string));
-      if (sizeof(test_msg.name) == 0) {
+      memcpy(test_msg->name, assign_string, sizeof(assign_string));
+      if (sizeof(test_msg->name) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    test_msg.stack_free = 1140;
-    sbp_send_message(&sbp_state, 0x17, 55286, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->stack_free = 1140;
+    sbp_send_message(&sbp_state, 0x17, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -377,19 +386,22 @@ START_TEST( test_auto_check_sbp_piksi_31 )
     u8 encoded_frame[] = {85,23,0,246,215,26,83,66,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,196,19,0,0,90,169, };
 
     dummy_reset();
-    msg_thread_state_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.cpu = 1;
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_thread_state_t* test_msg = ( msg_thread_state_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->cpu = 1;
     {
       const char assign_string[] = { (char)83,(char)66,(char)80,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_msg.name, assign_string, sizeof(assign_string));
-      if (sizeof(test_msg.name) == 0) {
+      memcpy(test_msg->name, assign_string, sizeof(assign_string));
+      if (sizeof(test_msg->name) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    test_msg.stack_free = 5060;
-    sbp_send_message(&sbp_state, 0x17, 55286, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->stack_free = 5060;
+    sbp_send_message(&sbp_state, 0x17, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -461,19 +473,22 @@ START_TEST( test_auto_check_sbp_piksi_31 )
     u8 encoded_frame[] = {85,23,0,246,215,26,109,97,110,97,103,101,32,97,99,113,0,0,0,0,0,0,0,0,0,0,7,0,20,9,0,0,47,75, };
 
     dummy_reset();
-    msg_thread_state_t test_msg;
-    memset(&test_msg, 0, sizeof(test_msg));
-    u8 test_msg_len = sizeof(test_msg);
-    test_msg.cpu = 7;
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_thread_state_t* test_msg = ( msg_thread_state_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->cpu = 7;
     {
       const char assign_string[] = { (char)109,(char)97,(char)110,(char)97,(char)103,(char)101,(char)32,(char)97,(char)99,(char)113,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0,(char)0 };
-      memcpy(test_msg.name, assign_string, sizeof(assign_string));
-      if (sizeof(test_msg.name) == 0) {
+      memcpy(test_msg->name, assign_string, sizeof(assign_string));
+      if (sizeof(test_msg->name) == 0) {
         test_msg_len += sizeof(assign_string);
       }
     }
-    test_msg.stack_free = 2324;
-    sbp_send_message(&sbp_state, 0x17, 55286, test_msg_len, (u8*)&test_msg, &dummy_write);
+    test_msg->stack_free = 2324;
+    sbp_send_message(&sbp_state, 0x17, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
