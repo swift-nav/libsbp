@@ -12,7 +12,7 @@
 // Automatically generated from yaml/swiftnav/sbp/observation.yaml
 // with generate.py. Please do not hand edit!
 //****************************************************************************/
-//! Satellite observation messages from the device.
+//! Satellite observation messages from the device. The SBP sender ID of 0 indicates remote observations from a GNSS base station, correction network, or Skylark, Swift's cloud GNSS correction product.
 
 #[allow(unused_imports)]
 use byteorder::{LittleEndian, ReadBytesExt};

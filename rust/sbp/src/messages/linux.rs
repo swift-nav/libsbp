@@ -38,7 +38,7 @@ pub struct MsgLinuxCpuState {
     pub index: u8,
     /// the PID of the process
     pub pid: u16,
-    /// percent of cpu used, expressed as a fraction of 256
+    /// percent of CPU used, expressed as a fraction of 256
     pub pcpu: u8,
     /// timestamp of message, refer to flags field for how to interpret
     pub time: u32,
@@ -827,9 +827,9 @@ pub struct MsgLinuxSysState {
     pub sender_id: Option<u16>,
     /// total system memory, in MiB
     pub mem_total: u16,
-    /// percent of total cpu currently utilized
+    /// percent of CPU used, expressed as a fraction of 256
     pub pcpu: u8,
-    /// percent of total memory currently utilized
+    /// percent of memory used, expressed as a fraction of 256
     pub pmem: u8,
     /// number of processes that started during collection phase
     pub procs_starting: u16,

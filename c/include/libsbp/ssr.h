@@ -389,6 +389,33 @@ note the definition of the bits is inverted.
 } msg_ssr_tile_definition_t;
 
 
+/** Antenna phase center correction.
+ *
+ * Contains phase center offset and elevation variation corrections for one
+ * signal on a satellite.
+ */
+
+typedef struct SBP_ATTR_PACKED {
+  sbp_gnss_signal_t sid;         /**< GNSS signal identifier (16 bit) */
+  u8 sat_info;    /**< Additional satellite information */
+  u16 svn;         /**< Satellite Code, as defined by IGS. Typically the space vehicle number. */
+  s16 pco[3];      /**< Mean phase center offset, X Y and Z axises. See IGS ANTEX file
+format description for coordinate system definition.
+ [1 mm] */
+  s8 pcv[21];     /**< Elevation dependent phase center variations. First element is 0
+degrees separation from the Z axis, subsequent elements represent
+elevation variations in 1 degree increments.
+ [1 mm] */
+} satellite_apc_t;
+
+
+#define SBP_MSG_SSR_SATELLITE_APC                   0x0604
+
+typedef struct SBP_ATTR_PACKED {
+  satellite_apc_t apc[0]; /**< Satellite antenna phase center corrections */
+} msg_ssr_satellite_apc_t;
+
+
 #define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A               0x05DC
 
 typedef struct SBP_ATTR_PACKED {

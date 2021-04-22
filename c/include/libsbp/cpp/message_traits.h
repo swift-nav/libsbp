@@ -979,6 +979,12 @@ struct MessageTraits<msg_ssr_gridded_correction_t> {
 
 
 template<>
+struct MessageTraits<msg_ssr_satellite_apc_t> {
+  static constexpr u16 id = 1540;
+};
+
+
+template<>
 struct MessageTraits<msg_osr_t> {
   static constexpr u16 id = 1600;
 };
