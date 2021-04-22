@@ -26,7 +26,7 @@ def b64_decode(field):
     return base64.standard_b64decode(field)
 
 def strEscape(value):
-    return "((char []){" + ",".join(["(char)" + str(ord(ch)) for ch in value]) + ",0})"
+    return ",".join(["(char)" + str(ord(ch)) for ch in value])
 
 JENV.filters['commentify'] = commentify
 JENV.filters['mk_id'] = mk_id
