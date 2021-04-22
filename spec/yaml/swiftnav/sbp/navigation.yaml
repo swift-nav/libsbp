@@ -2009,7 +2009,7 @@ definitions:
                         - 0: Float RTK
                         - 1: Fixed RTK
 
- - MSG_PROTECTION_LEVEL:
+ - MSG_PROTECTION_LEVEL_DEP_A:
     public: false
     id: 0x0216
     short_desc: Computed Position and Protection Level
@@ -2056,3 +2056,105 @@ definitions:
                 - 3-7:
                     desc: Reserved
 
+ - MSG_PROTECTION_LEVEL:
+    public: false
+    id: 0x0217
+    short_desc: Computed state and Protection Levels
+    desc: |
+      This message reports the protection levels associated to the given 
+      state estimate. The full GPS time is given by the preceding MSG_GPS_TIME 
+      with the matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - vpl:
+              type: u16
+              units: cm
+              desc: Vertical protection level
+          - hpl:
+              type: u16
+              units: cm
+              desc: Horizontal protection level
+          - atpl:
+              type: u16
+              units: cm
+              desc: Along-track position error protection level
+          - ctpl:
+              type: u16
+              units: cm
+              desc: Cross-track position error protection level
+          - hvpl:
+              type: u16
+              units: mm/s
+              desc: | 
+                Protection level for the error vector between estimated and 
+                true along/cross track velocity vector
+          - vvpl:
+              type: u16
+              units: mm/s
+              desc: |
+                Protection level for the velocity in vehicle upright direction 
+                (different from vertical direction if on a slope)
+          - hopl:
+              type: u16
+              units: mdeg
+              desc: Heading orientation protection level
+          - popl:
+              type: u16
+              units: mdeg
+              desc: Pitch orientation protection level
+          - ropl:
+              type: u16
+              units: mdeg
+              desc: Roll orientation protection level
+          - lat:
+              type: double
+              units: deg
+              desc: Latitude
+          - lon:
+              type: double
+              units: deg
+              desc: Longitude
+          - height:
+              type: double
+              units: m
+              desc: Height
+          - v_x:
+              type: s32
+              units: mm/s
+              desc: Velocity in vehicle x direction
+          - v_y:
+              type: s32
+              units: mm/s
+              desc: Velocity in vehicle y direction
+          - v_z:
+              type: s32
+              units: mm/s
+              desc: Velocity in vehicle z direction
+          - roll:
+              type: s32
+              units: udeg
+              desc: Roll angle
+          - pitch:
+              type: s32
+              units: udeg
+              desc: Pitch angle
+          - heading:
+              type: s32
+              units: udeg
+              desc: Heading angle    
+          - flags:
+              type: u32
+              desc: Status flags
+              fields:
+                - 0-2:
+                    desc: Target Integrity Risk (TIR) Level
+                    values:
+                        - 0: Safe state, protection level shall not be used for safety-critical application
+                        - 1: TIR Level 1
+                        - 2: TIR Level 2
+                        - 3: TIR Level 3
+                - 3-31:
+                    desc: Reserved
