@@ -1187,6 +1187,66 @@ impl crate::serialize::SbpSerialize for MsgSsrPhaseBiases {
     }
 }
 
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[derive(Debug, Clone)]
+#[allow(non_snake_case)]
+pub struct MsgSsrSatelliteApc {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    pub sender_id: Option<u16>,
+    /// Satellite antenna phase center corrections
+    pub apc: Vec<SatelliteAPC>,
+}
+
+impl MsgSsrSatelliteApc {
+    #[rustfmt::skip]
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgSsrSatelliteApc, crate::Error> {
+        Ok( MsgSsrSatelliteApc{
+            sender_id: None,
+            apc: SatelliteAPC::parse_array(_buf)?,
+        } )
+    }
+}
+impl super::SBPMessage for MsgSsrSatelliteApc {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_SSR_SATELLITE_APC"
+    }
+
+    fn get_message_type(&self) -> u16 {
+        1540
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgSsrSatelliteApc {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.apc.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.apc.sbp_size();
+        size
+    }
+}
+
 /// STEC correction polynomial coeffcients.
 ///
 /// The Slant Total Electron Content per space vehicle, given as polynomial
@@ -1864,6 +1924,79 @@ impl crate::serialize::SbpSerialize for STECSatElement {
         size += self.sv_id.sbp_size();
         size += self.stec_quality_indicator.sbp_size();
         size += self.stec_coeff.sbp_size();
+        size
+    }
+}
+
+/// Antenna phase center correction.
+///
+/// Contains phase center offset and elevation variation corrections for one
+/// signal on a satellite.
+///
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[derive(Debug, Clone)]
+#[allow(non_snake_case)]
+pub struct SatelliteAPC {
+    /// GNSS signal identifier (16 bit)
+    pub sid: GnssSignal,
+    /// Additional satellite information
+    pub sat_info: u8,
+    /// Satellite Code, as defined by IGS. Typically the space vehicle number.
+    pub svn: u16,
+    /// Mean phase center offset, X Y and Z axises. See IGS ANTEX file format
+    /// description for coordinate system definition.
+    pub pco: Vec<i16>,
+    /// Elevation dependent phase center variations. First element is 0 degrees
+    /// separation from the Z axis, subsequent elements represent elevation
+    /// variations in 1 degree increments.
+    pub pcv: Vec<i8>,
+}
+
+impl SatelliteAPC {
+    #[rustfmt::skip]
+    pub fn parse(_buf: &mut &[u8]) -> Result<SatelliteAPC, crate::Error> {
+        Ok( SatelliteAPC{
+            sid: GnssSignal::parse(_buf)?,
+            sat_info: _buf.read_u8()?,
+            svn: _buf.read_u16::<LittleEndian>()?,
+            pco: crate::parser::read_s16_array_limit(_buf, 3)?,
+            pcv: crate::parser::read_s8_array_limit(_buf, 21)?,
+        } )
+    }
+    pub fn parse_array(buf: &mut &[u8]) -> Result<Vec<SatelliteAPC>, crate::Error> {
+        let mut v = Vec::new();
+        while buf.len() > 0 {
+            v.push(SatelliteAPC::parse(buf)?);
+        }
+        Ok(v)
+    }
+
+    pub fn parse_array_limit(buf: &mut &[u8], n: usize) -> Result<Vec<SatelliteAPC>, crate::Error> {
+        let mut v = Vec::new();
+        for _ in 0..n {
+            v.push(SatelliteAPC::parse(buf)?);
+        }
+        Ok(v)
+    }
+}
+
+impl crate::serialize::SbpSerialize for SatelliteAPC {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.sid.append_to_sbp_buffer(buf);
+        self.sat_info.append_to_sbp_buffer(buf);
+        self.svn.append_to_sbp_buffer(buf);
+        self.pco.append_to_sbp_buffer(buf);
+        self.pcv.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.sid.sbp_size();
+        size += self.sat_info.sbp_size();
+        size += self.svn.sbp_size();
+        size += self.pco.sbp_size();
+        size += self.pcv.sbp_size();
         size
     }
 }

@@ -217,6 +217,7 @@ data SBPMsg =
    | SBPMsgSsrOrbitClock MsgSsrOrbitClock Msg
    | SBPMsgSsrOrbitClockDepA MsgSsrOrbitClockDepA Msg
    | SBPMsgSsrPhaseBiases MsgSsrPhaseBiases Msg
+   | SBPMsgSsrSatelliteApc MsgSsrSatelliteApc Msg
    | SBPMsgSsrStecCorrection MsgSsrStecCorrection Msg
    | SBPMsgSsrStecCorrectionDepA MsgSsrStecCorrectionDepA Msg
    | SBPMsgSsrTileDefinition MsgSsrTileDefinition Msg
@@ -429,6 +430,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgSsrOrbitClock = SBPMsgSsrOrbitClock (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrOrbitClockDepA = SBPMsgSsrOrbitClockDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrPhaseBiases = SBPMsgSsrPhaseBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrSatelliteApc = SBPMsgSsrSatelliteApc (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrStecCorrection = SBPMsgSsrStecCorrection (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrStecCorrectionDepA = SBPMsgSsrStecCorrectionDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrTileDefinition = SBPMsgSsrTileDefinition (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -633,6 +635,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgSsrOrbitClock _ m) = put m
       encoder (SBPMsgSsrOrbitClockDepA _ m) = put m
       encoder (SBPMsgSsrPhaseBiases _ m) = put m
+      encoder (SBPMsgSsrSatelliteApc _ m) = put m
       encoder (SBPMsgSsrStecCorrection _ m) = put m
       encoder (SBPMsgSsrStecCorrectionDepA _ m) = put m
       encoder (SBPMsgSsrTileDefinition _ m) = put m
@@ -841,6 +844,7 @@ instance FromJSON SBPMsg where
         | msgType == msgSsrOrbitClock = SBPMsgSsrOrbitClock <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrOrbitClockDepA = SBPMsgSsrOrbitClockDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrPhaseBiases = SBPMsgSsrPhaseBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrSatelliteApc = SBPMsgSsrSatelliteApc <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrStecCorrection = SBPMsgSsrStecCorrection <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrStecCorrectionDepA = SBPMsgSsrStecCorrectionDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrTileDefinition = SBPMsgSsrTileDefinition <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1050,6 +1054,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgSsrOrbitClock n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrOrbitClockDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrPhaseBiases n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrSatelliteApc n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrStecCorrection n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrStecCorrectionDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrTileDefinition n m) = toJSON n <<>> toJSON m
@@ -1253,6 +1258,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgSsrOrbitClock n m) = SBPMsgSsrOrbitClock n <$> f m
   msg f (SBPMsgSsrOrbitClockDepA n m) = SBPMsgSsrOrbitClockDepA n <$> f m
   msg f (SBPMsgSsrPhaseBiases n m) = SBPMsgSsrPhaseBiases n <$> f m
+  msg f (SBPMsgSsrSatelliteApc n m) = SBPMsgSsrSatelliteApc n <$> f m
   msg f (SBPMsgSsrStecCorrection n m) = SBPMsgSsrStecCorrection n <$> f m
   msg f (SBPMsgSsrStecCorrectionDepA n m) = SBPMsgSsrStecCorrectionDepA n <$> f m
   msg f (SBPMsgSsrTileDefinition n m) = SBPMsgSsrTileDefinition n <$> f m

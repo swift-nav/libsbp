@@ -699,6 +699,65 @@ $(makeSBP 'msgSsrTileDefinition ''MsgSsrTileDefinition)
 $(makeJSON "_msgSsrTileDefinition_" ''MsgSsrTileDefinition)
 $(makeLenses ''MsgSsrTileDefinition)
 
+-- | SatelliteAPC.
+--
+-- Contains phase center offset and elevation variation corrections for one
+-- signal on a satellite.
+data SatelliteAPC = SatelliteAPC
+  { _satelliteAPC_sid    :: !GnssSignal
+    -- ^ GNSS signal identifier (16 bit)
+  , _satelliteAPC_sat_info :: !Word8
+    -- ^ Additional satellite information
+  , _satelliteAPC_svn    :: !Word16
+    -- ^ Satellite Code, as defined by IGS. Typically the space vehicle number.
+  , _satelliteAPC_pco    :: ![Int16]
+    -- ^ Mean phase center offset, X Y and Z axises. See IGS ANTEX file format
+    -- description for coordinate system definition.
+  , _satelliteAPC_pcv    :: ![Int8]
+    -- ^ Elevation dependent phase center variations. First element is 0 degrees
+    -- separation from the Z axis, subsequent elements represent elevation
+    -- variations in 1 degree increments.
+  } deriving ( Show, Read, Eq )
+
+instance Binary SatelliteAPC where
+  get = do
+    _satelliteAPC_sid <- get
+    _satelliteAPC_sat_info <- getWord8
+    _satelliteAPC_svn <- getWord16le
+    _satelliteAPC_pco <- replicateM 3 (fromIntegral <$> getWord16le)
+    _satelliteAPC_pcv <- replicateM 21 (fromIntegral <$> getWord8)
+    pure SatelliteAPC {..}
+
+  put SatelliteAPC {..} = do
+    put _satelliteAPC_sid
+    putWord8 _satelliteAPC_sat_info
+    putWord16le _satelliteAPC_svn
+    mapM_ (putWord16le . fromIntegral) _satelliteAPC_pco
+    mapM_ (putWord8 . fromIntegral) _satelliteAPC_pcv
+
+$(makeJSON "_satelliteAPC_" ''SatelliteAPC)
+$(makeLenses ''SatelliteAPC)
+
+msgSsrSatelliteApc :: Word16
+msgSsrSatelliteApc = 0x0604
+
+data MsgSsrSatelliteApc = MsgSsrSatelliteApc
+  { _msgSsrSatelliteApc_apc :: ![SatelliteAPC]
+    -- ^ Satellite antenna phase center corrections
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrSatelliteApc where
+  get = do
+    _msgSsrSatelliteApc_apc <- whileM (not <$> isEmpty) get
+    pure MsgSsrSatelliteApc {..}
+
+  put MsgSsrSatelliteApc {..} = do
+    mapM_ put _msgSsrSatelliteApc_apc
+
+$(makeSBP 'msgSsrSatelliteApc ''MsgSsrSatelliteApc)
+$(makeJSON "_msgSsrSatelliteApc_" ''MsgSsrSatelliteApc)
+$(makeLenses ''MsgSsrSatelliteApc)
+
 msgSsrOrbitClockDepA :: Word16
 msgSsrOrbitClockDepA = 0x05DC
 

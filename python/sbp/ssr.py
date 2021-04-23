@@ -593,6 +593,68 @@ stddev) for each satellite at the grid point.
     d = dict([(k, getattr(obj, k)) for k in self.__slots__])
     return GridElement.build(d)
     
+class SatelliteAPC(object):
+  """SatelliteAPC.
+  
+  Contains phase center offset and elevation variation corrections for one
+signal on a satellite.
+
+  
+  Parameters
+  ----------
+  sid : GnssSignal
+    GNSS signal identifier (16 bit)
+  sat_info : int
+    Additional satellite information
+  svn : int
+    Satellite Code, as defined by IGS. Typically the space vehicle number.
+  pco : array
+    Mean phase center offset, X Y and Z axises. See IGS ANTEX file
+format description for coordinate system definition.
+
+  pcv : array
+    Elevation dependent phase center variations. First element is 0
+degrees separation from the Z axis, subsequent elements represent
+elevation variations in 1 degree increments.
+
+
+  """
+  _parser = construct.Embedded(construct.Struct(
+                     'sid' / construct.Struct(GnssSignal._parser),
+                     'sat_info' / construct.Int8ul,
+                     'svn' / construct.Int16ul,
+                     'pco' / construct.Array(3, construct.Int16sl),
+                     'pcv' / construct.Array(21, construct.Int8sl),))
+  __slots__ = [
+               'sid',
+               'sat_info',
+               'svn',
+               'pco',
+               'pcv',
+              ]
+
+  def __init__(self, payload=None, **kwargs):
+    if payload:
+      self.from_binary(payload)
+    else:
+      self.sid = kwargs.pop('sid')
+      self.sat_info = kwargs.pop('sat_info')
+      self.svn = kwargs.pop('svn')
+      self.pco = kwargs.pop('pco')
+      self.pcv = kwargs.pop('pcv')
+
+  def __repr__(self):
+    return fmt_repr(self)
+  
+  def from_binary(self, d):
+    p = SatelliteAPC._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
+    return SatelliteAPC.build(d)
+    
 class STECHeaderDepA(object):
   """STECHeaderDepA.
   
@@ -1594,6 +1656,94 @@ note the definition of the bits is inverted.
     d.update(j)
     return d
     
+SBP_MSG_SSR_SATELLITE_APC = 0x0604
+class MsgSsrSatelliteApc(SBP):
+  """SBP class for message MSG_SSR_SATELLITE_APC (0x0604).
+
+  You can have MSG_SSR_SATELLITE_APC inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  apc : array
+    Satellite antenna phase center corrections
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   construct.GreedyRange('apc' / construct.Struct(SatelliteAPC._parser)),)
+  __slots__ = [
+               'apc',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgSsrSatelliteApc,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgSsrSatelliteApc, self).__init__()
+      self.msg_type = SBP_MSG_SSR_SATELLITE_APC
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.apc = kwargs.pop('apc')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgSsrSatelliteApc.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgSsrSatelliteApc(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgSsrSatelliteApc._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgSsrSatelliteApc._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgSsrSatelliteApc._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgSsrSatelliteApc, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_SSR_ORBIT_CLOCK_DEP_A = 0x05DC
 class MsgSsrOrbitClockDepA(SBP):
   """SBP class for message MSG_SSR_ORBIT_CLOCK_DEP_A (0x05DC).
@@ -2138,6 +2288,7 @@ msg_classes = {
   0x05FB: MsgSsrStecCorrection,
   0x05FC: MsgSsrGriddedCorrection,
   0x05F6: MsgSsrTileDefinition,
+  0x0604: MsgSsrSatelliteApc,
   0x05DC: MsgSsrOrbitClockDepA,
   0x05EB: MsgSsrStecCorrectionDepA,
   0x05F0: MsgSsrGriddedCorrectionNoStdDepA,
