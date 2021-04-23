@@ -102,6 +102,7 @@ use self::navigation::MsgPosLLHCovGnss;
 use self::navigation::MsgPosLLHDepA;
 use self::navigation::MsgPosLLHGnss;
 use self::navigation::MsgProtectionLevel;
+use self::navigation::MsgProtectionLevelDepA;
 use self::navigation::MsgUtcTime;
 use self::navigation::MsgUtcTimeGnss;
 use self::navigation::MsgVelBody;
@@ -384,6 +385,7 @@ pub enum SBP {
     MsgVelBody(MsgVelBody),
     MsgPosECEFCov(MsgPosECEFCov),
     MsgVelECEFCov(MsgVelECEFCov),
+    MsgProtectionLevelDepA(MsgProtectionLevelDepA),
     MsgProtectionLevel(MsgProtectionLevel),
     MsgOrientQuat(MsgOrientQuat),
     MsgOrientEuler(MsgOrientEuler),
@@ -1145,6 +1147,11 @@ impl SBP {
                 Ok(SBP::MsgVelECEFCov(msg))
             }
             534 => {
+                let mut msg = MsgProtectionLevelDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgProtectionLevelDepA(msg))
+            }
+            535 => {
                 let mut msg = MsgProtectionLevel::parse(payload)?;
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgProtectionLevel(msg))
@@ -1590,6 +1597,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgVelBody(msg) => msg.get_message_name(),
             SBP::MsgPosECEFCov(msg) => msg.get_message_name(),
             SBP::MsgVelECEFCov(msg) => msg.get_message_name(),
+            SBP::MsgProtectionLevelDepA(msg) => msg.get_message_name(),
             SBP::MsgProtectionLevel(msg) => msg.get_message_name(),
             SBP::MsgOrientQuat(msg) => msg.get_message_name(),
             SBP::MsgOrientEuler(msg) => msg.get_message_name(),
@@ -1794,6 +1802,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgVelBody(msg) => msg.get_message_type(),
             SBP::MsgPosECEFCov(msg) => msg.get_message_type(),
             SBP::MsgVelECEFCov(msg) => msg.get_message_type(),
+            SBP::MsgProtectionLevelDepA(msg) => msg.get_message_type(),
             SBP::MsgProtectionLevel(msg) => msg.get_message_type(),
             SBP::MsgOrientQuat(msg) => msg.get_message_type(),
             SBP::MsgOrientEuler(msg) => msg.get_message_type(),
@@ -1998,6 +2007,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgVelBody(msg) => msg.get_sender_id(),
             SBP::MsgPosECEFCov(msg) => msg.get_sender_id(),
             SBP::MsgVelECEFCov(msg) => msg.get_sender_id(),
+            SBP::MsgProtectionLevelDepA(msg) => msg.get_sender_id(),
             SBP::MsgProtectionLevel(msg) => msg.get_sender_id(),
             SBP::MsgOrientQuat(msg) => msg.get_sender_id(),
             SBP::MsgOrientEuler(msg) => msg.get_sender_id(),
@@ -2202,6 +2212,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgVelBody(msg) => msg.set_sender_id(new_id),
             SBP::MsgPosECEFCov(msg) => msg.set_sender_id(new_id),
             SBP::MsgVelECEFCov(msg) => msg.set_sender_id(new_id),
+            SBP::MsgProtectionLevelDepA(msg) => msg.set_sender_id(new_id),
             SBP::MsgProtectionLevel(msg) => msg.set_sender_id(new_id),
             SBP::MsgOrientQuat(msg) => msg.set_sender_id(new_id),
             SBP::MsgOrientEuler(msg) => msg.set_sender_id(new_id),
@@ -2406,6 +2417,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgVelBody(msg) => msg.to_frame(),
             SBP::MsgPosECEFCov(msg) => msg.to_frame(),
             SBP::MsgVelECEFCov(msg) => msg.to_frame(),
+            SBP::MsgProtectionLevelDepA(msg) => msg.to_frame(),
             SBP::MsgProtectionLevel(msg) => msg.to_frame(),
             SBP::MsgOrientQuat(msg) => msg.to_frame(),
             SBP::MsgOrientEuler(msg) => msg.to_frame(),
@@ -2610,6 +2622,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgVelBody(msg) => msg.write_frame(buf),
             SBP::MsgPosECEFCov(msg) => msg.write_frame(buf),
             SBP::MsgVelECEFCov(msg) => msg.write_frame(buf),
+            SBP::MsgProtectionLevelDepA(msg) => msg.write_frame(buf),
             SBP::MsgProtectionLevel(msg) => msg.write_frame(buf),
             SBP::MsgOrientQuat(msg) => msg.write_frame(buf),
             SBP::MsgOrientEuler(msg) => msg.write_frame(buf),
@@ -2816,6 +2829,7 @@ impl crate::SbpSerialize for SBP {
             SBP::MsgVelBody(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgPosECEFCov(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgVelECEFCov(msg) => msg.append_to_sbp_buffer(buf),
+            SBP::MsgProtectionLevelDepA(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgProtectionLevel(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgOrientQuat(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgOrientEuler(msg) => msg.append_to_sbp_buffer(buf),
@@ -3020,6 +3034,7 @@ impl crate::SbpSerialize for SBP {
             SBP::MsgVelBody(msg) => msg.sbp_size(),
             SBP::MsgPosECEFCov(msg) => msg.sbp_size(),
             SBP::MsgVelECEFCov(msg) => msg.sbp_size(),
+            SBP::MsgProtectionLevelDepA(msg) => msg.sbp_size(),
             SBP::MsgProtectionLevel(msg) => msg.sbp_size(),
             SBP::MsgOrientQuat(msg) => msg.sbp_size(),
             SBP::MsgOrientEuler(msg) => msg.sbp_size(),
@@ -3776,6 +3791,11 @@ impl From<MsgPosECEFCov> for SBP {
 impl From<MsgVelECEFCov> for SBP {
     fn from(msg: MsgVelECEFCov) -> Self {
         SBP::MsgVelECEFCov(msg)
+    }
+}
+impl From<MsgProtectionLevelDepA> for SBP {
+    fn from(msg: MsgProtectionLevelDepA) -> Self {
+        SBP::MsgProtectionLevelDepA(msg)
     }
 }
 impl From<MsgProtectionLevel> for SBP {
