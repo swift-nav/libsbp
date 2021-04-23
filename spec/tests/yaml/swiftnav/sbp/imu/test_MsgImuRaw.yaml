@@ -1,0 +1,28 @@
+---
+description: Unit tests for swiftnav.sbp.imu MsgImuRay
+generated_on: 2020-04-23 00:00:00.00 # manually generated
+package: sbp.imu
+tests:
+
+- msg:
+    fields:
+      tow: 3221225754
+      tow_f: 206
+      acc_x: 96
+      acc_y: -33
+      acc_z: 4140
+      gyr_x: 60
+      gyr_y: -304
+      gyr_z: -18
+    module: sbp.imu
+    name: MsgImuRaw
+  msg_type: '0x900'
+  raw_json: '{"tow":3221225754,"tow_f":206,"acc_x":96,"acc_y":-33,"acc_z":4140,"gyr_x":60,"gyr_y":-304,"gyr_z":-18,"preamble":85,"msg_type":2304,"sender":4660,"payload":"GgEAwM5gAN//LBA8AND+7v8=","crc":34630,"length":17}'
+  raw_packet: VQAJNBIRGgEAwM5gAN//LBA8AND+7v9Ghw==
+  sbp:
+    crc: '0x8746'
+    length: 17
+    msg_type: '0x900'
+    payload: GgEAwM5gAN//LBA8AND+7v8=
+    preamble: '0x55'
+    sender: '0x1234'

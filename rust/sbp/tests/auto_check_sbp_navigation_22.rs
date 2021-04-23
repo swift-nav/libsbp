@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgPosLLHCov.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgPosECEFCov.yaml by generate.py. Do not modify by hand!
 
 use sbp::iter_messages;
 use sbp::messages::SBPMessage;
@@ -24,9 +24,9 @@ use std::io::Cursor;
 fn test_auto_check_sbp_navigation_22() {
     {
         let mut payload = Cursor::new(vec![
-            85, 17, 2, 66, 0, 54, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 28, 64, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 64, 0, 0, 160, 64, 0, 0, 0, 65, 0, 0, 192, 64, 0, 0,
-            128, 63, 0, 0, 0, 64, 5, 5, 151, 98,
+            85, 20, 2, 66, 0, 54, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 64, 0, 0, 0, 0, 0, 0, 240, 63,
+            0, 0, 0, 0, 0, 0, 16, 64, 0, 0, 0, 65, 0, 0, 224, 64, 0, 0, 0, 64, 0, 0, 192, 64, 0, 0,
+            0, 65, 0, 0, 160, 64, 4, 5, 249, 167,
         ]);
 
         // Test the round trip payload parsing
@@ -37,11 +37,11 @@ fn test_auto_check_sbp_navigation_22() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgPosLLHCov(msg) => {
+            sbp::messages::SBP::MsgPosECEFCov(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x211,
-                    "Incorrect message type, expected 0x211, is {}",
+                    0x214,
+                    "Incorrect message type, expected 0x214, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
@@ -51,58 +51,43 @@ fn test_auto_check_sbp_navigation_22() {
                     sender_id
                 );
                 assert!(
-                    msg.cov_d_d.almost_eq(2.00000000000000000e+00),
-                    "incorrect value for cov_d_d, expected 2.00000000000000000e+00, is {:e}",
-                    msg.cov_d_d
+                    msg.cov_x_x.almost_eq(8.00000000000000000e+00),
+                    "incorrect value for cov_x_x, expected 8.00000000000000000e+00, is {:e}",
+                    msg.cov_x_x
                 );
                 assert!(
-                    msg.cov_e_d.almost_eq(1.00000000000000000e+00),
-                    "incorrect value for cov_e_d, expected 1.00000000000000000e+00, is {:e}",
-                    msg.cov_e_d
+                    msg.cov_x_y.almost_eq(7.00000000000000000e+00),
+                    "incorrect value for cov_x_y, expected 7.00000000000000000e+00, is {:e}",
+                    msg.cov_x_y
                 );
                 assert!(
-                    msg.cov_e_e.almost_eq(6.00000000000000000e+00),
-                    "incorrect value for cov_e_e, expected 6.00000000000000000e+00, is {:e}",
-                    msg.cov_e_e
+                    msg.cov_x_z.almost_eq(2.00000000000000000e+00),
+                    "incorrect value for cov_x_z, expected 2.00000000000000000e+00, is {:e}",
+                    msg.cov_x_z
                 );
                 assert!(
-                    msg.cov_n_d.almost_eq(8.00000000000000000e+00),
-                    "incorrect value for cov_n_d, expected 8.00000000000000000e+00, is {:e}",
-                    msg.cov_n_d
+                    msg.cov_y_y.almost_eq(6.00000000000000000e+00),
+                    "incorrect value for cov_y_y, expected 6.00000000000000000e+00, is {:e}",
+                    msg.cov_y_y
                 );
                 assert!(
-                    msg.cov_n_e.almost_eq(5.00000000000000000e+00),
-                    "incorrect value for cov_n_e, expected 5.00000000000000000e+00, is {:e}",
-                    msg.cov_n_e
+                    msg.cov_y_z.almost_eq(8.00000000000000000e+00),
+                    "incorrect value for cov_y_z, expected 8.00000000000000000e+00, is {:e}",
+                    msg.cov_y_z
                 );
                 assert!(
-                    msg.cov_n_n.almost_eq(7.00000000000000000e+00),
-                    "incorrect value for cov_n_n, expected 7.00000000000000000e+00, is {:e}",
-                    msg.cov_n_n
+                    msg.cov_z_z.almost_eq(5.00000000000000000e+00),
+                    "incorrect value for cov_z_z, expected 5.00000000000000000e+00, is {:e}",
+                    msg.cov_z_z
                 );
                 assert_eq!(
                     msg.flags, 5,
                     "incorrect value for flags, expected 5, is {}",
                     msg.flags
                 );
-                assert!(
-                    msg.height.almost_eq(0.00000000000000000e+00),
-                    "incorrect value for height, expected 0.00000000000000000e+00, is {:e}",
-                    msg.height
-                );
-                assert!(
-                    msg.lat.almost_eq(0.00000000000000000e+00),
-                    "incorrect value for lat, expected 0.00000000000000000e+00, is {:e}",
-                    msg.lat
-                );
-                assert!(
-                    msg.lon.almost_eq(7.00000000000000000e+00),
-                    "incorrect value for lon, expected 7.00000000000000000e+00, is {:e}",
-                    msg.lon
-                );
                 assert_eq!(
-                    msg.n_sats, 5,
-                    "incorrect value for n_sats, expected 5, is {}",
+                    msg.n_sats, 4,
+                    "incorrect value for n_sats, expected 4, is {}",
                     msg.n_sats
                 );
                 assert_eq!(
@@ -110,8 +95,23 @@ fn test_auto_check_sbp_navigation_22() {
                     "incorrect value for tow, expected 7, is {}",
                     msg.tow
                 );
+                assert!(
+                    msg.x.almost_eq(6.00000000000000000e+00),
+                    "incorrect value for x, expected 6.00000000000000000e+00, is {:e}",
+                    msg.x
+                );
+                assert!(
+                    msg.y.almost_eq(1.00000000000000000e+00),
+                    "incorrect value for y, expected 1.00000000000000000e+00, is {:e}",
+                    msg.y
+                );
+                assert!(
+                    msg.z.almost_eq(4.00000000000000000e+00),
+                    "incorrect value for z, expected 4.00000000000000000e+00, is {:e}",
+                    msg.z
+                );
             }
-            _ => panic!("Invalid message type! Expected a MsgPosLLHCov"),
+            _ => panic!("Invalid message type! Expected a MsgPosECEFCov"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());

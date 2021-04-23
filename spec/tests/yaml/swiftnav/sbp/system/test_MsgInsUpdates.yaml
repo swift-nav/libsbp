@@ -1,0 +1,27 @@
+---
+description: Unit tests for swiftnav.sbp.system MsgInsUpdates
+generated_on: 2020-04-22 00:00:00.00 # manually generated
+package: sbp.system
+tests:
+
+- msg:
+    fields:
+      tow: 504489300
+      gnsspos: 0
+      gnssvel: 0
+      wheelticks: 0
+      speed: 0
+      nhc: 0
+      zerovel: 0
+    module: sbp.system
+    name: MsgInsUpdates
+  msg_type: '0xff06'
+  raw_json: '{"tow":504489300,"gnsspos":0,"gnssvel":0,"wheelticks":0,"speed":0,"nhc":0,"zerovel":0,"preamble":85,"msg_type":65286,"sender":789,"payload":"VOURHgAAAAAAAA==","crc":16209,"length":10}'
+  raw_packet: VQb/FQMKVOURHgAAAAAAAFE/
+  sbp:
+    crc: '0x3f51'
+    length: 0xa
+    payload: VOURHgAAAAAAAA==
+    msg_type: '0xff06'
+    preamble: '0x55'
+    sender: '0x315'

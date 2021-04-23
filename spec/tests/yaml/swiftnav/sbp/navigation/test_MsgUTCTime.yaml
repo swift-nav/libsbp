@@ -1,0 +1,31 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgUTCTime
+generated_on: 2020-04-23 00:00:00.00 # manually generated
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      flags: 1
+      tow: 501867800
+      year: 2021
+      month: 4
+      day: 9
+      hours: 19
+      minutes: 24
+      seconds: 9
+      ns: 800000000
+    module: sbp.navigation
+    name: MsgUtcTime
+  msg_type: '0x103'
+  raw_json: '{"flags":1,"tow":501867800,"year":2021,"month":4,"day":9,"hours":19,"minutes":24,"seconds":9,"ns":800000000,"preamble":85,"msg_type":259,"sender":789,"payload":"ARjl6R3lBwQJExgJAAivLw==","crc":64967,"length":16}'
+  raw_packet: VQMBFQMQARjl6R3lBwQJExgJAAivL8f9
+  sbp:
+    crc: '0xfdc7'
+    length: 16
+    msg_type: "0x103"
+    payload: ARjl6R3lBwQJExgJAAivLw==
+    preamble: '0x55'
+    sender: '0x315'
+
+
