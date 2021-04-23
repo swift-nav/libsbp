@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/observation/test_MsgObsDepC.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/observation/test_MsgObs.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -119,87 +119,233 @@ START_TEST( test_auto_check_sbp_observation_25 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x49, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x49, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x4a, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x4a, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,73,0,70,152,87,8,95,183,24,106,7,32,126,250,73,80,113,94,247,255,231,163,229,229,4,0,0,0,60,220,96,70,81,147,250,255,196,208,20,28,6,0,0,0,248,61,62,77,28,60,242,255,110,171,180,178,7,0,0,0,237,84,190,77,172,37,13,0,41,170,233,164,10,0,0,0,36,85,9,75,240,188,21,0,19,182,196,209,12,0,0,0,190,175, };
+    u8 encoded_frame[] = {85,74,0,129,240,249,152,202,226,25,0,0,0,0,106,8,32,49,227,254,62,121,242,158,6,146,0,250,172,182,10,15,10,0,30,228,254,62,12,189,40,5,59,83,251,172,178,10,15,10,1,215,205,144,72,106,111,160,7,243,109,243,119,158,10,15,18,0,25,207,144,72,223,96,241,5,12,52,246,27,125,9,11,18,1,34,184,223,74,150,138,222,7,53,13,11,245,114,9,15,22,0,113,80,6,69,162,41,65,7,70,127,246,246,189,9,15,23,0,247,80,6,69,213,35,167,5,221,152,248,231,158,9,11,23,1,8,146,166,64,12,122,203,6,114,51,248,67,93,3,11,27,0,221,172,173,75,217,47,244,7,232,225,11,237,123,5,15,31,0,250,174,173,75,216,163,50,6,40,70,9,62,120,3,11,31,1,135,16,6,66,99,218,11,7,7,138,242,96,176,10,15,2,3,148,130,6,58,217,88,54,6,203,21,252,96,170,10,15,3,3,186,108,197,63,127,54,211,6,80,4,241,219,200,10,15,17,3,167,195,8,57,19,204,22,6,105,51,254,182,152,10,15,18,3,237,248, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_obs_dep_c_t* test_msg = ( msg_obs_dep_c_t* )test_msg_storage;
+    msg_obs_t* test_msg = ( msg_obs_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->header.n_obs = 32;
-    test_msg->header.t.tow = 414670600;
-    test_msg->header.t.wn = 1898;
+    test_msg->header.t.ns_residual = 0;
+    test_msg->header.t.tow = 434293400;
+    test_msg->header.t.wn = 2154;
     if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg->obs[0].L.f = 231;
-    test_msg->obs[0].L.i = -565647;
-    test_msg->obs[0].P = 1347025534;
-    test_msg->obs[0].cn0 = 163;
-    test_msg->obs[0].lock = 58853;
+    test_msg->obs[0].D.f = 172;
+    test_msg->obs[0].D.i = -1536;
+    test_msg->obs[0].L.f = 146;
+    test_msg->obs[0].L.i = 111080057;
+    test_msg->obs[0].P = 1056891697;
+    test_msg->obs[0].cn0 = 182;
+    test_msg->obs[0].flags = 15;
+    test_msg->obs[0].lock = 10;
     test_msg->obs[0].sid.code = 0;
-    test_msg->obs[0].sid.reserved = 0;
-    test_msg->obs[0].sid.sat = 4;
+    test_msg->obs[0].sid.sat = 10;
     if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg->obs[1].L.f = 196;
-    test_msg->obs[1].L.i = -355503;
-    test_msg->obs[1].P = 1180752956;
-    test_msg->obs[1].cn0 = 208;
-    test_msg->obs[1].lock = 7188;
-    test_msg->obs[1].sid.code = 0;
-    test_msg->obs[1].sid.reserved = 0;
-    test_msg->obs[1].sid.sat = 6;
+    test_msg->obs[1].D.f = 172;
+    test_msg->obs[1].D.i = -1197;
+    test_msg->obs[1].L.f = 59;
+    test_msg->obs[1].L.i = 86555916;
+    test_msg->obs[1].P = 1056891934;
+    test_msg->obs[1].cn0 = 178;
+    test_msg->obs[1].flags = 15;
+    test_msg->obs[1].lock = 10;
+    test_msg->obs[1].sid.code = 1;
+    test_msg->obs[1].sid.sat = 10;
     if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg->obs[2].L.f = 110;
-    test_msg->obs[2].L.i = -902116;
-    test_msg->obs[2].P = 1295924728;
-    test_msg->obs[2].cn0 = 171;
-    test_msg->obs[2].lock = 45748;
+    test_msg->obs[2].D.f = 119;
+    test_msg->obs[2].D.i = -3219;
+    test_msg->obs[2].L.f = 243;
+    test_msg->obs[2].L.i = 127954794;
+    test_msg->obs[2].P = 1217449431;
+    test_msg->obs[2].cn0 = 158;
+    test_msg->obs[2].flags = 15;
+    test_msg->obs[2].lock = 10;
     test_msg->obs[2].sid.code = 0;
-    test_msg->obs[2].sid.reserved = 0;
-    test_msg->obs[2].sid.sat = 7;
+    test_msg->obs[2].sid.sat = 18;
     if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg->obs[3].L.f = 41;
-    test_msg->obs[3].L.i = 861612;
-    test_msg->obs[3].P = 1304319213;
-    test_msg->obs[3].cn0 = 170;
-    test_msg->obs[3].lock = 42217;
-    test_msg->obs[3].sid.code = 0;
-    test_msg->obs[3].sid.reserved = 0;
-    test_msg->obs[3].sid.sat = 10;
+    test_msg->obs[3].D.f = 27;
+    test_msg->obs[3].D.i = -2508;
+    test_msg->obs[3].L.f = 12;
+    test_msg->obs[3].L.i = 99705055;
+    test_msg->obs[3].P = 1217449753;
+    test_msg->obs[3].cn0 = 125;
+    test_msg->obs[3].flags = 11;
+    test_msg->obs[3].lock = 9;
+    test_msg->obs[3].sid.code = 1;
+    test_msg->obs[3].sid.sat = 18;
     if (sizeof(test_msg->obs) == 0) {
       // Cope with variable length arrays
       test_msg_len += sizeof(test_msg->obs[0]);
     }
     
-    test_msg->obs[4].L.f = 19;
-    test_msg->obs[4].L.i = 1424624;
-    test_msg->obs[4].P = 1258902820;
-    test_msg->obs[4].cn0 = 182;
-    test_msg->obs[4].lock = 53700;
+    test_msg->obs[4].D.f = 245;
+    test_msg->obs[4].D.i = 2829;
+    test_msg->obs[4].L.f = 53;
+    test_msg->obs[4].L.i = 132024982;
+    test_msg->obs[4].P = 1256175650;
+    test_msg->obs[4].cn0 = 114;
+    test_msg->obs[4].flags = 15;
+    test_msg->obs[4].lock = 9;
     test_msg->obs[4].sid.code = 0;
-    test_msg->obs[4].sid.reserved = 0;
-    test_msg->obs[4].sid.sat = 12;
-    sbp_send_message(&sbp_state, 0x49, 38982, test_msg_len, test_msg_storage, &dummy_write);
+    test_msg->obs[4].sid.sat = 22;
+    if (sizeof(test_msg->obs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->obs[0]);
+    }
+    
+    test_msg->obs[5].D.f = 246;
+    test_msg->obs[5].D.i = -2433;
+    test_msg->obs[5].L.f = 70;
+    test_msg->obs[5].L.i = 121711010;
+    test_msg->obs[5].P = 1158041713;
+    test_msg->obs[5].cn0 = 189;
+    test_msg->obs[5].flags = 15;
+    test_msg->obs[5].lock = 9;
+    test_msg->obs[5].sid.code = 0;
+    test_msg->obs[5].sid.sat = 23;
+    if (sizeof(test_msg->obs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->obs[0]);
+    }
+    
+    test_msg->obs[6].D.f = 231;
+    test_msg->obs[6].D.i = -1896;
+    test_msg->obs[6].L.f = 221;
+    test_msg->obs[6].L.i = 94839765;
+    test_msg->obs[6].P = 1158041847;
+    test_msg->obs[6].cn0 = 158;
+    test_msg->obs[6].flags = 11;
+    test_msg->obs[6].lock = 9;
+    test_msg->obs[6].sid.code = 1;
+    test_msg->obs[6].sid.sat = 23;
+    if (sizeof(test_msg->obs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->obs[0]);
+    }
+    
+    test_msg->obs[7].D.f = 67;
+    test_msg->obs[7].D.i = -1997;
+    test_msg->obs[7].L.f = 114;
+    test_msg->obs[7].L.i = 113998348;
+    test_msg->obs[7].P = 1084658184;
+    test_msg->obs[7].cn0 = 93;
+    test_msg->obs[7].flags = 11;
+    test_msg->obs[7].lock = 3;
+    test_msg->obs[7].sid.code = 0;
+    test_msg->obs[7].sid.sat = 27;
+    if (sizeof(test_msg->obs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->obs[0]);
+    }
+    
+    test_msg->obs[8].D.f = 237;
+    test_msg->obs[8].D.i = 3041;
+    test_msg->obs[8].L.f = 232;
+    test_msg->obs[8].L.i = 133443545;
+    test_msg->obs[8].P = 1269673181;
+    test_msg->obs[8].cn0 = 123;
+    test_msg->obs[8].flags = 15;
+    test_msg->obs[8].lock = 5;
+    test_msg->obs[8].sid.code = 0;
+    test_msg->obs[8].sid.sat = 31;
+    if (sizeof(test_msg->obs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->obs[0]);
+    }
+    
+    test_msg->obs[9].D.f = 62;
+    test_msg->obs[9].D.i = 2374;
+    test_msg->obs[9].L.f = 40;
+    test_msg->obs[9].L.i = 103982040;
+    test_msg->obs[9].P = 1269673722;
+    test_msg->obs[9].cn0 = 120;
+    test_msg->obs[9].flags = 11;
+    test_msg->obs[9].lock = 3;
+    test_msg->obs[9].sid.code = 1;
+    test_msg->obs[9].sid.sat = 31;
+    if (sizeof(test_msg->obs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->obs[0]);
+    }
+    
+    test_msg->obs[10].D.f = 96;
+    test_msg->obs[10].D.i = -3446;
+    test_msg->obs[10].L.f = 7;
+    test_msg->obs[10].L.i = 118217315;
+    test_msg->obs[10].P = 1107693703;
+    test_msg->obs[10].cn0 = 176;
+    test_msg->obs[10].flags = 15;
+    test_msg->obs[10].lock = 10;
+    test_msg->obs[10].sid.code = 3;
+    test_msg->obs[10].sid.sat = 2;
+    if (sizeof(test_msg->obs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->obs[0]);
+    }
+    
+    test_msg->obs[11].D.f = 96;
+    test_msg->obs[11].D.i = -1003;
+    test_msg->obs[11].L.f = 203;
+    test_msg->obs[11].L.i = 104224985;
+    test_msg->obs[11].P = 973505172;
+    test_msg->obs[11].cn0 = 170;
+    test_msg->obs[11].flags = 15;
+    test_msg->obs[11].lock = 10;
+    test_msg->obs[11].sid.code = 3;
+    test_msg->obs[11].sid.sat = 3;
+    if (sizeof(test_msg->obs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->obs[0]);
+    }
+    
+    test_msg->obs[12].D.f = 219;
+    test_msg->obs[12].D.i = -3836;
+    test_msg->obs[12].L.f = 80;
+    test_msg->obs[12].L.i = 114505343;
+    test_msg->obs[12].P = 1069903034;
+    test_msg->obs[12].cn0 = 200;
+    test_msg->obs[12].flags = 15;
+    test_msg->obs[12].lock = 10;
+    test_msg->obs[12].sid.code = 3;
+    test_msg->obs[12].sid.sat = 17;
+    if (sizeof(test_msg->obs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->obs[0]);
+    }
+    
+    test_msg->obs[13].D.f = 182;
+    test_msg->obs[13].D.i = -461;
+    test_msg->obs[13].L.f = 105;
+    test_msg->obs[13].L.i = 102157331;
+    test_msg->obs[13].P = 956875687;
+    test_msg->obs[13].cn0 = 152;
+    test_msg->obs[13].flags = 15;
+    test_msg->obs[13].lock = 10;
+    test_msg->obs[13].sid.code = 3;
+    test_msg->obs[13].sid.sat = 18;
+    sbp_send_message(&sbp_state, 0x4a, 61569, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -216,7 +362,7 @@ START_TEST( test_auto_check_sbp_observation_25 )
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
         "msg_callback: one callback should have been logged");
-    ck_assert_msg(last_msg.sender_id == 38982,
+    ck_assert_msg(last_msg.sender_id == 61569,
         "msg_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
         "msg_callback: len decoded incorrectly");
@@ -228,9 +374,9 @@ START_TEST( test_auto_check_sbp_observation_25 )
 
     ck_assert_msg(last_frame.n_callbacks_logged == 1,
         "frame_callback: one callback should have been logged");
-    ck_assert_msg(last_frame.sender_id == 38982,
+    ck_assert_msg(last_frame.sender_id == 61569,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x49,
+    ck_assert_msg(last_frame.msg_type == 0x4a,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -244,700 +390,153 @@ START_TEST( test_auto_check_sbp_observation_25 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_obs_dep_c_t* check_msg = ( msg_obs_dep_c_t *)((void *)last_msg.msg);
+    msg_obs_t* check_msg = ( msg_obs_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->header.n_obs == 32, "incorrect value for header.n_obs, expected 32, is %d", check_msg->header.n_obs);
-    ck_assert_msg(check_msg->header.t.tow == 414670600, "incorrect value for header.t.tow, expected 414670600, is %d", check_msg->header.t.tow);
-    ck_assert_msg(check_msg->header.t.wn == 1898, "incorrect value for header.t.wn, expected 1898, is %d", check_msg->header.t.wn);
-    ck_assert_msg(check_msg->obs[0].L.f == 231, "incorrect value for obs[0].L.f, expected 231, is %d", check_msg->obs[0].L.f);
-    ck_assert_msg(check_msg->obs[0].L.i == -565647, "incorrect value for obs[0].L.i, expected -565647, is %d", check_msg->obs[0].L.i);
-    ck_assert_msg(check_msg->obs[0].P == 1347025534, "incorrect value for obs[0].P, expected 1347025534, is %d", check_msg->obs[0].P);
-    ck_assert_msg(check_msg->obs[0].cn0 == 163, "incorrect value for obs[0].cn0, expected 163, is %d", check_msg->obs[0].cn0);
-    ck_assert_msg(check_msg->obs[0].lock == 58853, "incorrect value for obs[0].lock, expected 58853, is %d", check_msg->obs[0].lock);
+    ck_assert_msg(check_msg->header.t.ns_residual == 0, "incorrect value for header.t.ns_residual, expected 0, is %d", check_msg->header.t.ns_residual);
+    ck_assert_msg(check_msg->header.t.tow == 434293400, "incorrect value for header.t.tow, expected 434293400, is %d", check_msg->header.t.tow);
+    ck_assert_msg(check_msg->header.t.wn == 2154, "incorrect value for header.t.wn, expected 2154, is %d", check_msg->header.t.wn);
+    ck_assert_msg(check_msg->obs[0].D.f == 172, "incorrect value for obs[0].D.f, expected 172, is %d", check_msg->obs[0].D.f);
+    ck_assert_msg(check_msg->obs[0].D.i == -1536, "incorrect value for obs[0].D.i, expected -1536, is %d", check_msg->obs[0].D.i);
+    ck_assert_msg(check_msg->obs[0].L.f == 146, "incorrect value for obs[0].L.f, expected 146, is %d", check_msg->obs[0].L.f);
+    ck_assert_msg(check_msg->obs[0].L.i == 111080057, "incorrect value for obs[0].L.i, expected 111080057, is %d", check_msg->obs[0].L.i);
+    ck_assert_msg(check_msg->obs[0].P == 1056891697, "incorrect value for obs[0].P, expected 1056891697, is %d", check_msg->obs[0].P);
+    ck_assert_msg(check_msg->obs[0].cn0 == 182, "incorrect value for obs[0].cn0, expected 182, is %d", check_msg->obs[0].cn0);
+    ck_assert_msg(check_msg->obs[0].flags == 15, "incorrect value for obs[0].flags, expected 15, is %d", check_msg->obs[0].flags);
+    ck_assert_msg(check_msg->obs[0].lock == 10, "incorrect value for obs[0].lock, expected 10, is %d", check_msg->obs[0].lock);
     ck_assert_msg(check_msg->obs[0].sid.code == 0, "incorrect value for obs[0].sid.code, expected 0, is %d", check_msg->obs[0].sid.code);
-    ck_assert_msg(check_msg->obs[0].sid.reserved == 0, "incorrect value for obs[0].sid.reserved, expected 0, is %d", check_msg->obs[0].sid.reserved);
-    ck_assert_msg(check_msg->obs[0].sid.sat == 4, "incorrect value for obs[0].sid.sat, expected 4, is %d", check_msg->obs[0].sid.sat);
-    ck_assert_msg(check_msg->obs[1].L.f == 196, "incorrect value for obs[1].L.f, expected 196, is %d", check_msg->obs[1].L.f);
-    ck_assert_msg(check_msg->obs[1].L.i == -355503, "incorrect value for obs[1].L.i, expected -355503, is %d", check_msg->obs[1].L.i);
-    ck_assert_msg(check_msg->obs[1].P == 1180752956, "incorrect value for obs[1].P, expected 1180752956, is %d", check_msg->obs[1].P);
-    ck_assert_msg(check_msg->obs[1].cn0 == 208, "incorrect value for obs[1].cn0, expected 208, is %d", check_msg->obs[1].cn0);
-    ck_assert_msg(check_msg->obs[1].lock == 7188, "incorrect value for obs[1].lock, expected 7188, is %d", check_msg->obs[1].lock);
-    ck_assert_msg(check_msg->obs[1].sid.code == 0, "incorrect value for obs[1].sid.code, expected 0, is %d", check_msg->obs[1].sid.code);
-    ck_assert_msg(check_msg->obs[1].sid.reserved == 0, "incorrect value for obs[1].sid.reserved, expected 0, is %d", check_msg->obs[1].sid.reserved);
-    ck_assert_msg(check_msg->obs[1].sid.sat == 6, "incorrect value for obs[1].sid.sat, expected 6, is %d", check_msg->obs[1].sid.sat);
-    ck_assert_msg(check_msg->obs[2].L.f == 110, "incorrect value for obs[2].L.f, expected 110, is %d", check_msg->obs[2].L.f);
-    ck_assert_msg(check_msg->obs[2].L.i == -902116, "incorrect value for obs[2].L.i, expected -902116, is %d", check_msg->obs[2].L.i);
-    ck_assert_msg(check_msg->obs[2].P == 1295924728, "incorrect value for obs[2].P, expected 1295924728, is %d", check_msg->obs[2].P);
-    ck_assert_msg(check_msg->obs[2].cn0 == 171, "incorrect value for obs[2].cn0, expected 171, is %d", check_msg->obs[2].cn0);
-    ck_assert_msg(check_msg->obs[2].lock == 45748, "incorrect value for obs[2].lock, expected 45748, is %d", check_msg->obs[2].lock);
+    ck_assert_msg(check_msg->obs[0].sid.sat == 10, "incorrect value for obs[0].sid.sat, expected 10, is %d", check_msg->obs[0].sid.sat);
+    ck_assert_msg(check_msg->obs[1].D.f == 172, "incorrect value for obs[1].D.f, expected 172, is %d", check_msg->obs[1].D.f);
+    ck_assert_msg(check_msg->obs[1].D.i == -1197, "incorrect value for obs[1].D.i, expected -1197, is %d", check_msg->obs[1].D.i);
+    ck_assert_msg(check_msg->obs[1].L.f == 59, "incorrect value for obs[1].L.f, expected 59, is %d", check_msg->obs[1].L.f);
+    ck_assert_msg(check_msg->obs[1].L.i == 86555916, "incorrect value for obs[1].L.i, expected 86555916, is %d", check_msg->obs[1].L.i);
+    ck_assert_msg(check_msg->obs[1].P == 1056891934, "incorrect value for obs[1].P, expected 1056891934, is %d", check_msg->obs[1].P);
+    ck_assert_msg(check_msg->obs[1].cn0 == 178, "incorrect value for obs[1].cn0, expected 178, is %d", check_msg->obs[1].cn0);
+    ck_assert_msg(check_msg->obs[1].flags == 15, "incorrect value for obs[1].flags, expected 15, is %d", check_msg->obs[1].flags);
+    ck_assert_msg(check_msg->obs[1].lock == 10, "incorrect value for obs[1].lock, expected 10, is %d", check_msg->obs[1].lock);
+    ck_assert_msg(check_msg->obs[1].sid.code == 1, "incorrect value for obs[1].sid.code, expected 1, is %d", check_msg->obs[1].sid.code);
+    ck_assert_msg(check_msg->obs[1].sid.sat == 10, "incorrect value for obs[1].sid.sat, expected 10, is %d", check_msg->obs[1].sid.sat);
+    ck_assert_msg(check_msg->obs[2].D.f == 119, "incorrect value for obs[2].D.f, expected 119, is %d", check_msg->obs[2].D.f);
+    ck_assert_msg(check_msg->obs[2].D.i == -3219, "incorrect value for obs[2].D.i, expected -3219, is %d", check_msg->obs[2].D.i);
+    ck_assert_msg(check_msg->obs[2].L.f == 243, "incorrect value for obs[2].L.f, expected 243, is %d", check_msg->obs[2].L.f);
+    ck_assert_msg(check_msg->obs[2].L.i == 127954794, "incorrect value for obs[2].L.i, expected 127954794, is %d", check_msg->obs[2].L.i);
+    ck_assert_msg(check_msg->obs[2].P == 1217449431, "incorrect value for obs[2].P, expected 1217449431, is %d", check_msg->obs[2].P);
+    ck_assert_msg(check_msg->obs[2].cn0 == 158, "incorrect value for obs[2].cn0, expected 158, is %d", check_msg->obs[2].cn0);
+    ck_assert_msg(check_msg->obs[2].flags == 15, "incorrect value for obs[2].flags, expected 15, is %d", check_msg->obs[2].flags);
+    ck_assert_msg(check_msg->obs[2].lock == 10, "incorrect value for obs[2].lock, expected 10, is %d", check_msg->obs[2].lock);
     ck_assert_msg(check_msg->obs[2].sid.code == 0, "incorrect value for obs[2].sid.code, expected 0, is %d", check_msg->obs[2].sid.code);
-    ck_assert_msg(check_msg->obs[2].sid.reserved == 0, "incorrect value for obs[2].sid.reserved, expected 0, is %d", check_msg->obs[2].sid.reserved);
-    ck_assert_msg(check_msg->obs[2].sid.sat == 7, "incorrect value for obs[2].sid.sat, expected 7, is %d", check_msg->obs[2].sid.sat);
-    ck_assert_msg(check_msg->obs[3].L.f == 41, "incorrect value for obs[3].L.f, expected 41, is %d", check_msg->obs[3].L.f);
-    ck_assert_msg(check_msg->obs[3].L.i == 861612, "incorrect value for obs[3].L.i, expected 861612, is %d", check_msg->obs[3].L.i);
-    ck_assert_msg(check_msg->obs[3].P == 1304319213, "incorrect value for obs[3].P, expected 1304319213, is %d", check_msg->obs[3].P);
-    ck_assert_msg(check_msg->obs[3].cn0 == 170, "incorrect value for obs[3].cn0, expected 170, is %d", check_msg->obs[3].cn0);
-    ck_assert_msg(check_msg->obs[3].lock == 42217, "incorrect value for obs[3].lock, expected 42217, is %d", check_msg->obs[3].lock);
-    ck_assert_msg(check_msg->obs[3].sid.code == 0, "incorrect value for obs[3].sid.code, expected 0, is %d", check_msg->obs[3].sid.code);
-    ck_assert_msg(check_msg->obs[3].sid.reserved == 0, "incorrect value for obs[3].sid.reserved, expected 0, is %d", check_msg->obs[3].sid.reserved);
-    ck_assert_msg(check_msg->obs[3].sid.sat == 10, "incorrect value for obs[3].sid.sat, expected 10, is %d", check_msg->obs[3].sid.sat);
-    ck_assert_msg(check_msg->obs[4].L.f == 19, "incorrect value for obs[4].L.f, expected 19, is %d", check_msg->obs[4].L.f);
-    ck_assert_msg(check_msg->obs[4].L.i == 1424624, "incorrect value for obs[4].L.i, expected 1424624, is %d", check_msg->obs[4].L.i);
-    ck_assert_msg(check_msg->obs[4].P == 1258902820, "incorrect value for obs[4].P, expected 1258902820, is %d", check_msg->obs[4].P);
-    ck_assert_msg(check_msg->obs[4].cn0 == 182, "incorrect value for obs[4].cn0, expected 182, is %d", check_msg->obs[4].cn0);
-    ck_assert_msg(check_msg->obs[4].lock == 53700, "incorrect value for obs[4].lock, expected 53700, is %d", check_msg->obs[4].lock);
+    ck_assert_msg(check_msg->obs[2].sid.sat == 18, "incorrect value for obs[2].sid.sat, expected 18, is %d", check_msg->obs[2].sid.sat);
+    ck_assert_msg(check_msg->obs[3].D.f == 27, "incorrect value for obs[3].D.f, expected 27, is %d", check_msg->obs[3].D.f);
+    ck_assert_msg(check_msg->obs[3].D.i == -2508, "incorrect value for obs[3].D.i, expected -2508, is %d", check_msg->obs[3].D.i);
+    ck_assert_msg(check_msg->obs[3].L.f == 12, "incorrect value for obs[3].L.f, expected 12, is %d", check_msg->obs[3].L.f);
+    ck_assert_msg(check_msg->obs[3].L.i == 99705055, "incorrect value for obs[3].L.i, expected 99705055, is %d", check_msg->obs[3].L.i);
+    ck_assert_msg(check_msg->obs[3].P == 1217449753, "incorrect value for obs[3].P, expected 1217449753, is %d", check_msg->obs[3].P);
+    ck_assert_msg(check_msg->obs[3].cn0 == 125, "incorrect value for obs[3].cn0, expected 125, is %d", check_msg->obs[3].cn0);
+    ck_assert_msg(check_msg->obs[3].flags == 11, "incorrect value for obs[3].flags, expected 11, is %d", check_msg->obs[3].flags);
+    ck_assert_msg(check_msg->obs[3].lock == 9, "incorrect value for obs[3].lock, expected 9, is %d", check_msg->obs[3].lock);
+    ck_assert_msg(check_msg->obs[3].sid.code == 1, "incorrect value for obs[3].sid.code, expected 1, is %d", check_msg->obs[3].sid.code);
+    ck_assert_msg(check_msg->obs[3].sid.sat == 18, "incorrect value for obs[3].sid.sat, expected 18, is %d", check_msg->obs[3].sid.sat);
+    ck_assert_msg(check_msg->obs[4].D.f == 245, "incorrect value for obs[4].D.f, expected 245, is %d", check_msg->obs[4].D.f);
+    ck_assert_msg(check_msg->obs[4].D.i == 2829, "incorrect value for obs[4].D.i, expected 2829, is %d", check_msg->obs[4].D.i);
+    ck_assert_msg(check_msg->obs[4].L.f == 53, "incorrect value for obs[4].L.f, expected 53, is %d", check_msg->obs[4].L.f);
+    ck_assert_msg(check_msg->obs[4].L.i == 132024982, "incorrect value for obs[4].L.i, expected 132024982, is %d", check_msg->obs[4].L.i);
+    ck_assert_msg(check_msg->obs[4].P == 1256175650, "incorrect value for obs[4].P, expected 1256175650, is %d", check_msg->obs[4].P);
+    ck_assert_msg(check_msg->obs[4].cn0 == 114, "incorrect value for obs[4].cn0, expected 114, is %d", check_msg->obs[4].cn0);
+    ck_assert_msg(check_msg->obs[4].flags == 15, "incorrect value for obs[4].flags, expected 15, is %d", check_msg->obs[4].flags);
+    ck_assert_msg(check_msg->obs[4].lock == 9, "incorrect value for obs[4].lock, expected 9, is %d", check_msg->obs[4].lock);
     ck_assert_msg(check_msg->obs[4].sid.code == 0, "incorrect value for obs[4].sid.code, expected 0, is %d", check_msg->obs[4].sid.code);
-    ck_assert_msg(check_msg->obs[4].sid.reserved == 0, "incorrect value for obs[4].sid.reserved, expected 0, is %d", check_msg->obs[4].sid.reserved);
-    ck_assert_msg(check_msg->obs[4].sid.sat == 12, "incorrect value for obs[4].sid.sat, expected 12, is %d", check_msg->obs[4].sid.sat);
-  }
-  // Test successful parsing of a message
-  {
-    // SBP parser state must be initialized before sbp_process is called.
-    // We re-initialize before every test so that callbacks for the same message types can be
-    //  allocated multiple times across different tests.
-    sbp_state_init(&sbp_state);
-
-    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
-
-    logging_reset();
-
-    sbp_register_callback(&sbp_state, 0x49, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x49, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
-
-    u8 encoded_frame[] = {85,73,0,70,152,55,8,95,183,24,106,7,33,68,166,75,77,186,230,24,0,101,186,162,102,16,0,0,0,87,255,155,69,74,158,5,0,26,190,206,30,27,0,0,0,64,89,124,68,26,22,3,0,114,217,225,73,29,0,0,0,37,179, };
-
-    dummy_reset();
-
-    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
-    memset(test_msg_storage, 0, sizeof(test_msg_storage));
-    u8 test_msg_len = 0;
-    msg_obs_dep_c_t* test_msg = ( msg_obs_dep_c_t* )test_msg_storage;
-    test_msg_len = sizeof(*test_msg);
-    test_msg->header.n_obs = 33;
-    test_msg->header.t.tow = 414670600;
-    test_msg->header.t.wn = 1898;
-    if (sizeof(test_msg->obs) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->obs[0]);
-    }
-    
-    test_msg->obs[0].L.f = 101;
-    test_msg->obs[0].L.i = 1631930;
-    test_msg->obs[0].P = 1296803396;
-    test_msg->obs[0].cn0 = 186;
-    test_msg->obs[0].lock = 26274;
-    test_msg->obs[0].sid.code = 0;
-    test_msg->obs[0].sid.reserved = 0;
-    test_msg->obs[0].sid.sat = 16;
-    if (sizeof(test_msg->obs) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->obs[0]);
-    }
-    
-    test_msg->obs[1].L.f = 26;
-    test_msg->obs[1].L.i = 368202;
-    test_msg->obs[1].P = 1167851351;
-    test_msg->obs[1].cn0 = 190;
-    test_msg->obs[1].lock = 7886;
-    test_msg->obs[1].sid.code = 0;
-    test_msg->obs[1].sid.reserved = 0;
-    test_msg->obs[1].sid.sat = 27;
-    if (sizeof(test_msg->obs) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->obs[0]);
-    }
-    
-    test_msg->obs[2].L.f = 114;
-    test_msg->obs[2].L.i = 202266;
-    test_msg->obs[2].P = 1149000000;
-    test_msg->obs[2].cn0 = 217;
-    test_msg->obs[2].lock = 18913;
-    test_msg->obs[2].sid.code = 0;
-    test_msg->obs[2].sid.reserved = 0;
-    test_msg->obs[2].sid.sat = 29;
-    sbp_send_message(&sbp_state, 0x49, 38982, test_msg_len, test_msg_storage, &dummy_write);
-
-    ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
-        "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
-
-    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
-        "not enough data was written to dummy_buff");
-    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
-        "frame was not encoded properly");
-
-    while (dummy_rd < dummy_wr) {
-      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
-          "sbp_process threw an error!");
-    }
-
-    ck_assert_msg(last_msg.n_callbacks_logged == 1,
-        "msg_callback: one callback should have been logged");
-    ck_assert_msg(last_msg.sender_id == 38982,
-        "msg_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
-        "msg_callback: len decoded incorrectly");
-    ck_assert_msg(memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8)
-          == 0,
-        "msg_callback: test data decoded incorrectly");
-    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "frame_callback: context pointer incorrectly passed");
-
-    ck_assert_msg(last_frame.n_callbacks_logged == 1,
-        "frame_callback: one callback should have been logged");
-    ck_assert_msg(last_frame.sender_id == 38982,
-        "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x49,
-        "frame_callback: msg_type decoded incorrectly");
-    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
-        "frame_callback: msg_len decoded incorrectly");
-    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
-        "frame_callback: test data decoded incorrectly");
-    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
-        "frame_callback: frame_len decoded incorrectly");
-    ck_assert_msg(memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
-        "frame_callback: frame decoded incorrectly");
-    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "frame_callback: context pointer incorrectly passed");
-
-    // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_obs_dep_c_t* check_msg = ( msg_obs_dep_c_t *)((void *)last_msg.msg);
-    // Run tests against fields
-    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->header.n_obs == 33, "incorrect value for header.n_obs, expected 33, is %d", check_msg->header.n_obs);
-    ck_assert_msg(check_msg->header.t.tow == 414670600, "incorrect value for header.t.tow, expected 414670600, is %d", check_msg->header.t.tow);
-    ck_assert_msg(check_msg->header.t.wn == 1898, "incorrect value for header.t.wn, expected 1898, is %d", check_msg->header.t.wn);
-    ck_assert_msg(check_msg->obs[0].L.f == 101, "incorrect value for obs[0].L.f, expected 101, is %d", check_msg->obs[0].L.f);
-    ck_assert_msg(check_msg->obs[0].L.i == 1631930, "incorrect value for obs[0].L.i, expected 1631930, is %d", check_msg->obs[0].L.i);
-    ck_assert_msg(check_msg->obs[0].P == 1296803396, "incorrect value for obs[0].P, expected 1296803396, is %d", check_msg->obs[0].P);
-    ck_assert_msg(check_msg->obs[0].cn0 == 186, "incorrect value for obs[0].cn0, expected 186, is %d", check_msg->obs[0].cn0);
-    ck_assert_msg(check_msg->obs[0].lock == 26274, "incorrect value for obs[0].lock, expected 26274, is %d", check_msg->obs[0].lock);
-    ck_assert_msg(check_msg->obs[0].sid.code == 0, "incorrect value for obs[0].sid.code, expected 0, is %d", check_msg->obs[0].sid.code);
-    ck_assert_msg(check_msg->obs[0].sid.reserved == 0, "incorrect value for obs[0].sid.reserved, expected 0, is %d", check_msg->obs[0].sid.reserved);
-    ck_assert_msg(check_msg->obs[0].sid.sat == 16, "incorrect value for obs[0].sid.sat, expected 16, is %d", check_msg->obs[0].sid.sat);
-    ck_assert_msg(check_msg->obs[1].L.f == 26, "incorrect value for obs[1].L.f, expected 26, is %d", check_msg->obs[1].L.f);
-    ck_assert_msg(check_msg->obs[1].L.i == 368202, "incorrect value for obs[1].L.i, expected 368202, is %d", check_msg->obs[1].L.i);
-    ck_assert_msg(check_msg->obs[1].P == 1167851351, "incorrect value for obs[1].P, expected 1167851351, is %d", check_msg->obs[1].P);
-    ck_assert_msg(check_msg->obs[1].cn0 == 190, "incorrect value for obs[1].cn0, expected 190, is %d", check_msg->obs[1].cn0);
-    ck_assert_msg(check_msg->obs[1].lock == 7886, "incorrect value for obs[1].lock, expected 7886, is %d", check_msg->obs[1].lock);
-    ck_assert_msg(check_msg->obs[1].sid.code == 0, "incorrect value for obs[1].sid.code, expected 0, is %d", check_msg->obs[1].sid.code);
-    ck_assert_msg(check_msg->obs[1].sid.reserved == 0, "incorrect value for obs[1].sid.reserved, expected 0, is %d", check_msg->obs[1].sid.reserved);
-    ck_assert_msg(check_msg->obs[1].sid.sat == 27, "incorrect value for obs[1].sid.sat, expected 27, is %d", check_msg->obs[1].sid.sat);
-    ck_assert_msg(check_msg->obs[2].L.f == 114, "incorrect value for obs[2].L.f, expected 114, is %d", check_msg->obs[2].L.f);
-    ck_assert_msg(check_msg->obs[2].L.i == 202266, "incorrect value for obs[2].L.i, expected 202266, is %d", check_msg->obs[2].L.i);
-    ck_assert_msg(check_msg->obs[2].P == 1149000000, "incorrect value for obs[2].P, expected 1149000000, is %d", check_msg->obs[2].P);
-    ck_assert_msg(check_msg->obs[2].cn0 == 217, "incorrect value for obs[2].cn0, expected 217, is %d", check_msg->obs[2].cn0);
-    ck_assert_msg(check_msg->obs[2].lock == 18913, "incorrect value for obs[2].lock, expected 18913, is %d", check_msg->obs[2].lock);
-    ck_assert_msg(check_msg->obs[2].sid.code == 0, "incorrect value for obs[2].sid.code, expected 0, is %d", check_msg->obs[2].sid.code);
-    ck_assert_msg(check_msg->obs[2].sid.reserved == 0, "incorrect value for obs[2].sid.reserved, expected 0, is %d", check_msg->obs[2].sid.reserved);
-    ck_assert_msg(check_msg->obs[2].sid.sat == 29, "incorrect value for obs[2].sid.sat, expected 29, is %d", check_msg->obs[2].sid.sat);
-  }
-  // Test successful parsing of a message
-  {
-    // SBP parser state must be initialized before sbp_process is called.
-    // We re-initialize before every test so that callbacks for the same message types can be
-    //  allocated multiple times across different tests.
-    sbp_state_init(&sbp_state);
-
-    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
-
-    logging_reset();
-
-    sbp_register_callback(&sbp_state, 0x49, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x49, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
-
-    u8 encoded_frame[] = {85,73,0,0,0,87,8,95,183,24,106,7,32,217,251,73,80,9,72,248,255,30,168,113,81,4,0,0,0,211,220,96,70,198,107,251,255,115,195,53,144,6,0,0,0,77,61,62,77,40,161,243,255,130,176,93,142,7,0,0,0,1,86,190,77,88,77,12,0,116,199,229,213,10,0,0,0,93,85,9,75,64,139,20,0,120,177,196,194,12,0,0,0,141,161, };
-
-    dummy_reset();
-
-    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
-    memset(test_msg_storage, 0, sizeof(test_msg_storage));
-    u8 test_msg_len = 0;
-    msg_obs_dep_c_t* test_msg = ( msg_obs_dep_c_t* )test_msg_storage;
-    test_msg_len = sizeof(*test_msg);
-    test_msg->header.n_obs = 32;
-    test_msg->header.t.tow = 414670600;
-    test_msg->header.t.wn = 1898;
-    if (sizeof(test_msg->obs) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->obs[0]);
-    }
-    
-    test_msg->obs[0].L.f = 30;
-    test_msg->obs[0].L.i = -505847;
-    test_msg->obs[0].P = 1347025881;
-    test_msg->obs[0].cn0 = 168;
-    test_msg->obs[0].lock = 20849;
-    test_msg->obs[0].sid.code = 0;
-    test_msg->obs[0].sid.reserved = 0;
-    test_msg->obs[0].sid.sat = 4;
-    if (sizeof(test_msg->obs) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->obs[0]);
-    }
-    
-    test_msg->obs[1].L.f = 115;
-    test_msg->obs[1].L.i = -300090;
-    test_msg->obs[1].P = 1180753107;
-    test_msg->obs[1].cn0 = 195;
-    test_msg->obs[1].lock = 36917;
-    test_msg->obs[1].sid.code = 0;
-    test_msg->obs[1].sid.reserved = 0;
-    test_msg->obs[1].sid.sat = 6;
-    if (sizeof(test_msg->obs) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->obs[0]);
-    }
-    
-    test_msg->obs[2].L.f = 130;
-    test_msg->obs[2].L.i = -810712;
-    test_msg->obs[2].P = 1295924557;
-    test_msg->obs[2].cn0 = 176;
-    test_msg->obs[2].lock = 36445;
-    test_msg->obs[2].sid.code = 0;
-    test_msg->obs[2].sid.reserved = 0;
-    test_msg->obs[2].sid.sat = 7;
-    if (sizeof(test_msg->obs) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->obs[0]);
-    }
-    
-    test_msg->obs[3].L.f = 116;
-    test_msg->obs[3].L.i = 806232;
-    test_msg->obs[3].P = 1304319489;
-    test_msg->obs[3].cn0 = 199;
-    test_msg->obs[3].lock = 54757;
-    test_msg->obs[3].sid.code = 0;
-    test_msg->obs[3].sid.reserved = 0;
-    test_msg->obs[3].sid.sat = 10;
-    if (sizeof(test_msg->obs) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->obs[0]);
-    }
-    
-    test_msg->obs[4].L.f = 120;
-    test_msg->obs[4].L.i = 1346368;
-    test_msg->obs[4].P = 1258902877;
-    test_msg->obs[4].cn0 = 177;
-    test_msg->obs[4].lock = 49860;
-    test_msg->obs[4].sid.code = 0;
-    test_msg->obs[4].sid.reserved = 0;
-    test_msg->obs[4].sid.sat = 12;
-    sbp_send_message(&sbp_state, 0x49, 0, test_msg_len, test_msg_storage, &dummy_write);
-
-    ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
-        "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
-
-    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
-        "not enough data was written to dummy_buff");
-    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
-        "frame was not encoded properly");
-
-    while (dummy_rd < dummy_wr) {
-      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
-          "sbp_process threw an error!");
-    }
-
-    ck_assert_msg(last_msg.n_callbacks_logged == 1,
-        "msg_callback: one callback should have been logged");
-    ck_assert_msg(last_msg.sender_id == 0,
-        "msg_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
-        "msg_callback: len decoded incorrectly");
-    ck_assert_msg(memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8)
-          == 0,
-        "msg_callback: test data decoded incorrectly");
-    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "frame_callback: context pointer incorrectly passed");
-
-    ck_assert_msg(last_frame.n_callbacks_logged == 1,
-        "frame_callback: one callback should have been logged");
-    ck_assert_msg(last_frame.sender_id == 0,
-        "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x49,
-        "frame_callback: msg_type decoded incorrectly");
-    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
-        "frame_callback: msg_len decoded incorrectly");
-    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
-        "frame_callback: test data decoded incorrectly");
-    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
-        "frame_callback: frame_len decoded incorrectly");
-    ck_assert_msg(memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
-        "frame_callback: frame decoded incorrectly");
-    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "frame_callback: context pointer incorrectly passed");
-
-    // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_obs_dep_c_t* check_msg = ( msg_obs_dep_c_t *)((void *)last_msg.msg);
-    // Run tests against fields
-    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->header.n_obs == 32, "incorrect value for header.n_obs, expected 32, is %d", check_msg->header.n_obs);
-    ck_assert_msg(check_msg->header.t.tow == 414670600, "incorrect value for header.t.tow, expected 414670600, is %d", check_msg->header.t.tow);
-    ck_assert_msg(check_msg->header.t.wn == 1898, "incorrect value for header.t.wn, expected 1898, is %d", check_msg->header.t.wn);
-    ck_assert_msg(check_msg->obs[0].L.f == 30, "incorrect value for obs[0].L.f, expected 30, is %d", check_msg->obs[0].L.f);
-    ck_assert_msg(check_msg->obs[0].L.i == -505847, "incorrect value for obs[0].L.i, expected -505847, is %d", check_msg->obs[0].L.i);
-    ck_assert_msg(check_msg->obs[0].P == 1347025881, "incorrect value for obs[0].P, expected 1347025881, is %d", check_msg->obs[0].P);
-    ck_assert_msg(check_msg->obs[0].cn0 == 168, "incorrect value for obs[0].cn0, expected 168, is %d", check_msg->obs[0].cn0);
-    ck_assert_msg(check_msg->obs[0].lock == 20849, "incorrect value for obs[0].lock, expected 20849, is %d", check_msg->obs[0].lock);
-    ck_assert_msg(check_msg->obs[0].sid.code == 0, "incorrect value for obs[0].sid.code, expected 0, is %d", check_msg->obs[0].sid.code);
-    ck_assert_msg(check_msg->obs[0].sid.reserved == 0, "incorrect value for obs[0].sid.reserved, expected 0, is %d", check_msg->obs[0].sid.reserved);
-    ck_assert_msg(check_msg->obs[0].sid.sat == 4, "incorrect value for obs[0].sid.sat, expected 4, is %d", check_msg->obs[0].sid.sat);
-    ck_assert_msg(check_msg->obs[1].L.f == 115, "incorrect value for obs[1].L.f, expected 115, is %d", check_msg->obs[1].L.f);
-    ck_assert_msg(check_msg->obs[1].L.i == -300090, "incorrect value for obs[1].L.i, expected -300090, is %d", check_msg->obs[1].L.i);
-    ck_assert_msg(check_msg->obs[1].P == 1180753107, "incorrect value for obs[1].P, expected 1180753107, is %d", check_msg->obs[1].P);
-    ck_assert_msg(check_msg->obs[1].cn0 == 195, "incorrect value for obs[1].cn0, expected 195, is %d", check_msg->obs[1].cn0);
-    ck_assert_msg(check_msg->obs[1].lock == 36917, "incorrect value for obs[1].lock, expected 36917, is %d", check_msg->obs[1].lock);
-    ck_assert_msg(check_msg->obs[1].sid.code == 0, "incorrect value for obs[1].sid.code, expected 0, is %d", check_msg->obs[1].sid.code);
-    ck_assert_msg(check_msg->obs[1].sid.reserved == 0, "incorrect value for obs[1].sid.reserved, expected 0, is %d", check_msg->obs[1].sid.reserved);
-    ck_assert_msg(check_msg->obs[1].sid.sat == 6, "incorrect value for obs[1].sid.sat, expected 6, is %d", check_msg->obs[1].sid.sat);
-    ck_assert_msg(check_msg->obs[2].L.f == 130, "incorrect value for obs[2].L.f, expected 130, is %d", check_msg->obs[2].L.f);
-    ck_assert_msg(check_msg->obs[2].L.i == -810712, "incorrect value for obs[2].L.i, expected -810712, is %d", check_msg->obs[2].L.i);
-    ck_assert_msg(check_msg->obs[2].P == 1295924557, "incorrect value for obs[2].P, expected 1295924557, is %d", check_msg->obs[2].P);
-    ck_assert_msg(check_msg->obs[2].cn0 == 176, "incorrect value for obs[2].cn0, expected 176, is %d", check_msg->obs[2].cn0);
-    ck_assert_msg(check_msg->obs[2].lock == 36445, "incorrect value for obs[2].lock, expected 36445, is %d", check_msg->obs[2].lock);
-    ck_assert_msg(check_msg->obs[2].sid.code == 0, "incorrect value for obs[2].sid.code, expected 0, is %d", check_msg->obs[2].sid.code);
-    ck_assert_msg(check_msg->obs[2].sid.reserved == 0, "incorrect value for obs[2].sid.reserved, expected 0, is %d", check_msg->obs[2].sid.reserved);
-    ck_assert_msg(check_msg->obs[2].sid.sat == 7, "incorrect value for obs[2].sid.sat, expected 7, is %d", check_msg->obs[2].sid.sat);
-    ck_assert_msg(check_msg->obs[3].L.f == 116, "incorrect value for obs[3].L.f, expected 116, is %d", check_msg->obs[3].L.f);
-    ck_assert_msg(check_msg->obs[3].L.i == 806232, "incorrect value for obs[3].L.i, expected 806232, is %d", check_msg->obs[3].L.i);
-    ck_assert_msg(check_msg->obs[3].P == 1304319489, "incorrect value for obs[3].P, expected 1304319489, is %d", check_msg->obs[3].P);
-    ck_assert_msg(check_msg->obs[3].cn0 == 199, "incorrect value for obs[3].cn0, expected 199, is %d", check_msg->obs[3].cn0);
-    ck_assert_msg(check_msg->obs[3].lock == 54757, "incorrect value for obs[3].lock, expected 54757, is %d", check_msg->obs[3].lock);
-    ck_assert_msg(check_msg->obs[3].sid.code == 0, "incorrect value for obs[3].sid.code, expected 0, is %d", check_msg->obs[3].sid.code);
-    ck_assert_msg(check_msg->obs[3].sid.reserved == 0, "incorrect value for obs[3].sid.reserved, expected 0, is %d", check_msg->obs[3].sid.reserved);
-    ck_assert_msg(check_msg->obs[3].sid.sat == 10, "incorrect value for obs[3].sid.sat, expected 10, is %d", check_msg->obs[3].sid.sat);
-    ck_assert_msg(check_msg->obs[4].L.f == 120, "incorrect value for obs[4].L.f, expected 120, is %d", check_msg->obs[4].L.f);
-    ck_assert_msg(check_msg->obs[4].L.i == 1346368, "incorrect value for obs[4].L.i, expected 1346368, is %d", check_msg->obs[4].L.i);
-    ck_assert_msg(check_msg->obs[4].P == 1258902877, "incorrect value for obs[4].P, expected 1258902877, is %d", check_msg->obs[4].P);
-    ck_assert_msg(check_msg->obs[4].cn0 == 177, "incorrect value for obs[4].cn0, expected 177, is %d", check_msg->obs[4].cn0);
-    ck_assert_msg(check_msg->obs[4].lock == 49860, "incorrect value for obs[4].lock, expected 49860, is %d", check_msg->obs[4].lock);
-    ck_assert_msg(check_msg->obs[4].sid.code == 0, "incorrect value for obs[4].sid.code, expected 0, is %d", check_msg->obs[4].sid.code);
-    ck_assert_msg(check_msg->obs[4].sid.reserved == 0, "incorrect value for obs[4].sid.reserved, expected 0, is %d", check_msg->obs[4].sid.reserved);
-    ck_assert_msg(check_msg->obs[4].sid.sat == 12, "incorrect value for obs[4].sid.sat, expected 12, is %d", check_msg->obs[4].sid.sat);
-  }
-  // Test successful parsing of a message
-  {
-    // SBP parser state must be initialized before sbp_process is called.
-    // We re-initialize before every test so that callbacks for the same message types can be
-    //  allocated multiple times across different tests.
-    sbp_state_init(&sbp_state);
-
-    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
-
-    logging_reset();
-
-    sbp_register_callback(&sbp_state, 0x49, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x49, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
-
-    u8 encoded_frame[] = {85,73,0,0,0,55,8,95,183,24,106,7,33,70,167,75,77,140,136,23,0,90,187,158,129,16,0,0,0,232,255,155,69,45,175,5,0,17,208,175,56,27,0,0,0,64,89,124,68,45,96,3,0,75,185,73,206,29,0,0,0,220,158, };
-
-    dummy_reset();
-
-    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
-    memset(test_msg_storage, 0, sizeof(test_msg_storage));
-    u8 test_msg_len = 0;
-    msg_obs_dep_c_t* test_msg = ( msg_obs_dep_c_t* )test_msg_storage;
-    test_msg_len = sizeof(*test_msg);
-    test_msg->header.n_obs = 33;
-    test_msg->header.t.tow = 414670600;
-    test_msg->header.t.wn = 1898;
-    if (sizeof(test_msg->obs) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->obs[0]);
-    }
-    
-    test_msg->obs[0].L.f = 90;
-    test_msg->obs[0].L.i = 1542284;
-    test_msg->obs[0].P = 1296803654;
-    test_msg->obs[0].cn0 = 187;
-    test_msg->obs[0].lock = 33182;
-    test_msg->obs[0].sid.code = 0;
-    test_msg->obs[0].sid.reserved = 0;
-    test_msg->obs[0].sid.sat = 16;
-    if (sizeof(test_msg->obs) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->obs[0]);
-    }
-    
-    test_msg->obs[1].L.f = 17;
-    test_msg->obs[1].L.i = 372525;
-    test_msg->obs[1].P = 1167851496;
-    test_msg->obs[1].cn0 = 208;
-    test_msg->obs[1].lock = 14511;
-    test_msg->obs[1].sid.code = 0;
-    test_msg->obs[1].sid.reserved = 0;
-    test_msg->obs[1].sid.sat = 27;
-    if (sizeof(test_msg->obs) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->obs[0]);
-    }
-    
-    test_msg->obs[2].L.f = 75;
-    test_msg->obs[2].L.i = 221229;
-    test_msg->obs[2].P = 1149000000;
-    test_msg->obs[2].cn0 = 185;
-    test_msg->obs[2].lock = 52809;
-    test_msg->obs[2].sid.code = 0;
-    test_msg->obs[2].sid.reserved = 0;
-    test_msg->obs[2].sid.sat = 29;
-    sbp_send_message(&sbp_state, 0x49, 0, test_msg_len, test_msg_storage, &dummy_write);
-
-    ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
-        "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
-
-    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
-        "not enough data was written to dummy_buff");
-    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
-        "frame was not encoded properly");
-
-    while (dummy_rd < dummy_wr) {
-      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
-          "sbp_process threw an error!");
-    }
-
-    ck_assert_msg(last_msg.n_callbacks_logged == 1,
-        "msg_callback: one callback should have been logged");
-    ck_assert_msg(last_msg.sender_id == 0,
-        "msg_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
-        "msg_callback: len decoded incorrectly");
-    ck_assert_msg(memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8)
-          == 0,
-        "msg_callback: test data decoded incorrectly");
-    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "frame_callback: context pointer incorrectly passed");
-
-    ck_assert_msg(last_frame.n_callbacks_logged == 1,
-        "frame_callback: one callback should have been logged");
-    ck_assert_msg(last_frame.sender_id == 0,
-        "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x49,
-        "frame_callback: msg_type decoded incorrectly");
-    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
-        "frame_callback: msg_len decoded incorrectly");
-    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
-        "frame_callback: test data decoded incorrectly");
-    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
-        "frame_callback: frame_len decoded incorrectly");
-    ck_assert_msg(memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
-        "frame_callback: frame decoded incorrectly");
-    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "frame_callback: context pointer incorrectly passed");
-
-    // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_obs_dep_c_t* check_msg = ( msg_obs_dep_c_t *)((void *)last_msg.msg);
-    // Run tests against fields
-    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->header.n_obs == 33, "incorrect value for header.n_obs, expected 33, is %d", check_msg->header.n_obs);
-    ck_assert_msg(check_msg->header.t.tow == 414670600, "incorrect value for header.t.tow, expected 414670600, is %d", check_msg->header.t.tow);
-    ck_assert_msg(check_msg->header.t.wn == 1898, "incorrect value for header.t.wn, expected 1898, is %d", check_msg->header.t.wn);
-    ck_assert_msg(check_msg->obs[0].L.f == 90, "incorrect value for obs[0].L.f, expected 90, is %d", check_msg->obs[0].L.f);
-    ck_assert_msg(check_msg->obs[0].L.i == 1542284, "incorrect value for obs[0].L.i, expected 1542284, is %d", check_msg->obs[0].L.i);
-    ck_assert_msg(check_msg->obs[0].P == 1296803654, "incorrect value for obs[0].P, expected 1296803654, is %d", check_msg->obs[0].P);
-    ck_assert_msg(check_msg->obs[0].cn0 == 187, "incorrect value for obs[0].cn0, expected 187, is %d", check_msg->obs[0].cn0);
-    ck_assert_msg(check_msg->obs[0].lock == 33182, "incorrect value for obs[0].lock, expected 33182, is %d", check_msg->obs[0].lock);
-    ck_assert_msg(check_msg->obs[0].sid.code == 0, "incorrect value for obs[0].sid.code, expected 0, is %d", check_msg->obs[0].sid.code);
-    ck_assert_msg(check_msg->obs[0].sid.reserved == 0, "incorrect value for obs[0].sid.reserved, expected 0, is %d", check_msg->obs[0].sid.reserved);
-    ck_assert_msg(check_msg->obs[0].sid.sat == 16, "incorrect value for obs[0].sid.sat, expected 16, is %d", check_msg->obs[0].sid.sat);
-    ck_assert_msg(check_msg->obs[1].L.f == 17, "incorrect value for obs[1].L.f, expected 17, is %d", check_msg->obs[1].L.f);
-    ck_assert_msg(check_msg->obs[1].L.i == 372525, "incorrect value for obs[1].L.i, expected 372525, is %d", check_msg->obs[1].L.i);
-    ck_assert_msg(check_msg->obs[1].P == 1167851496, "incorrect value for obs[1].P, expected 1167851496, is %d", check_msg->obs[1].P);
-    ck_assert_msg(check_msg->obs[1].cn0 == 208, "incorrect value for obs[1].cn0, expected 208, is %d", check_msg->obs[1].cn0);
-    ck_assert_msg(check_msg->obs[1].lock == 14511, "incorrect value for obs[1].lock, expected 14511, is %d", check_msg->obs[1].lock);
-    ck_assert_msg(check_msg->obs[1].sid.code == 0, "incorrect value for obs[1].sid.code, expected 0, is %d", check_msg->obs[1].sid.code);
-    ck_assert_msg(check_msg->obs[1].sid.reserved == 0, "incorrect value for obs[1].sid.reserved, expected 0, is %d", check_msg->obs[1].sid.reserved);
-    ck_assert_msg(check_msg->obs[1].sid.sat == 27, "incorrect value for obs[1].sid.sat, expected 27, is %d", check_msg->obs[1].sid.sat);
-    ck_assert_msg(check_msg->obs[2].L.f == 75, "incorrect value for obs[2].L.f, expected 75, is %d", check_msg->obs[2].L.f);
-    ck_assert_msg(check_msg->obs[2].L.i == 221229, "incorrect value for obs[2].L.i, expected 221229, is %d", check_msg->obs[2].L.i);
-    ck_assert_msg(check_msg->obs[2].P == 1149000000, "incorrect value for obs[2].P, expected 1149000000, is %d", check_msg->obs[2].P);
-    ck_assert_msg(check_msg->obs[2].cn0 == 185, "incorrect value for obs[2].cn0, expected 185, is %d", check_msg->obs[2].cn0);
-    ck_assert_msg(check_msg->obs[2].lock == 52809, "incorrect value for obs[2].lock, expected 52809, is %d", check_msg->obs[2].lock);
-    ck_assert_msg(check_msg->obs[2].sid.code == 0, "incorrect value for obs[2].sid.code, expected 0, is %d", check_msg->obs[2].sid.code);
-    ck_assert_msg(check_msg->obs[2].sid.reserved == 0, "incorrect value for obs[2].sid.reserved, expected 0, is %d", check_msg->obs[2].sid.reserved);
-    ck_assert_msg(check_msg->obs[2].sid.sat == 29, "incorrect value for obs[2].sid.sat, expected 29, is %d", check_msg->obs[2].sid.sat);
-  }
-  // Test successful parsing of a message
-  {
-    // SBP parser state must be initialized before sbp_process is called.
-    // We re-initialize before every test so that callbacks for the same message types can be
-    //  allocated multiple times across different tests.
-    sbp_state_init(&sbp_state);
-
-    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
-
-    logging_reset();
-
-    sbp_register_callback(&sbp_state, 0x49, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x49, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
-
-    u8 encoded_frame[] = {85,73,0,70,152,87,208,95,183,24,106,7,32,44,8,74,80,86,93,247,255,57,158,229,229,4,0,0,0,224,229,96,70,156,146,250,255,221,200,20,28,6,0,0,0,60,82,62,77,93,58,242,255,39,164,180,178,7,0,0,0,222,73,190,77,46,39,13,0,202,181,233,164,10,0,0,0,149,64,9,75,114,191,21,0,249,182,196,209,12,0,0,0,112,8, };
-
-    dummy_reset();
-
-    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
-    memset(test_msg_storage, 0, sizeof(test_msg_storage));
-    u8 test_msg_len = 0;
-    msg_obs_dep_c_t* test_msg = ( msg_obs_dep_c_t* )test_msg_storage;
-    test_msg_len = sizeof(*test_msg);
-    test_msg->header.n_obs = 32;
-    test_msg->header.t.tow = 414670800;
-    test_msg->header.t.wn = 1898;
-    if (sizeof(test_msg->obs) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->obs[0]);
-    }
-    
-    test_msg->obs[0].L.f = 57;
-    test_msg->obs[0].L.i = -565930;
-    test_msg->obs[0].P = 1347029036;
-    test_msg->obs[0].cn0 = 158;
-    test_msg->obs[0].lock = 58853;
-    test_msg->obs[0].sid.code = 0;
-    test_msg->obs[0].sid.reserved = 0;
-    test_msg->obs[0].sid.sat = 4;
-    if (sizeof(test_msg->obs) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->obs[0]);
-    }
-    
-    test_msg->obs[1].L.f = 221;
-    test_msg->obs[1].L.i = -355684;
-    test_msg->obs[1].P = 1180755424;
-    test_msg->obs[1].cn0 = 200;
-    test_msg->obs[1].lock = 7188;
-    test_msg->obs[1].sid.code = 0;
-    test_msg->obs[1].sid.reserved = 0;
-    test_msg->obs[1].sid.sat = 6;
-    if (sizeof(test_msg->obs) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->obs[0]);
-    }
-    
-    test_msg->obs[2].L.f = 39;
-    test_msg->obs[2].L.i = -902563;
-    test_msg->obs[2].P = 1295929916;
-    test_msg->obs[2].cn0 = 164;
-    test_msg->obs[2].lock = 45748;
-    test_msg->obs[2].sid.code = 0;
-    test_msg->obs[2].sid.reserved = 0;
-    test_msg->obs[2].sid.sat = 7;
-    if (sizeof(test_msg->obs) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->obs[0]);
-    }
-    
-    test_msg->obs[3].L.f = 202;
-    test_msg->obs[3].L.i = 861998;
-    test_msg->obs[3].P = 1304316382;
-    test_msg->obs[3].cn0 = 181;
-    test_msg->obs[3].lock = 42217;
-    test_msg->obs[3].sid.code = 0;
-    test_msg->obs[3].sid.reserved = 0;
-    test_msg->obs[3].sid.sat = 10;
-    if (sizeof(test_msg->obs) == 0) {
-      // Cope with variable length arrays
-      test_msg_len += sizeof(test_msg->obs[0]);
-    }
-    
-    test_msg->obs[4].L.f = 249;
-    test_msg->obs[4].L.i = 1425266;
-    test_msg->obs[4].P = 1258897557;
-    test_msg->obs[4].cn0 = 182;
-    test_msg->obs[4].lock = 53700;
-    test_msg->obs[4].sid.code = 0;
-    test_msg->obs[4].sid.reserved = 0;
-    test_msg->obs[4].sid.sat = 12;
-    sbp_send_message(&sbp_state, 0x49, 38982, test_msg_len, test_msg_storage, &dummy_write);
-
-    ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
-        "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
-
-    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
-        "not enough data was written to dummy_buff");
-    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
-        "frame was not encoded properly");
-
-    while (dummy_rd < dummy_wr) {
-      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
-          "sbp_process threw an error!");
-    }
-
-    ck_assert_msg(last_msg.n_callbacks_logged == 1,
-        "msg_callback: one callback should have been logged");
-    ck_assert_msg(last_msg.sender_id == 38982,
-        "msg_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
-        "msg_callback: len decoded incorrectly");
-    ck_assert_msg(memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8)
-          == 0,
-        "msg_callback: test data decoded incorrectly");
-    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "frame_callback: context pointer incorrectly passed");
-
-    ck_assert_msg(last_frame.n_callbacks_logged == 1,
-        "frame_callback: one callback should have been logged");
-    ck_assert_msg(last_frame.sender_id == 38982,
-        "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x49,
-        "frame_callback: msg_type decoded incorrectly");
-    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
-        "frame_callback: msg_len decoded incorrectly");
-    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
-        "frame_callback: test data decoded incorrectly");
-    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
-        "frame_callback: frame_len decoded incorrectly");
-    ck_assert_msg(memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
-        "frame_callback: frame decoded incorrectly");
-    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "frame_callback: context pointer incorrectly passed");
-
-    // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_obs_dep_c_t* check_msg = ( msg_obs_dep_c_t *)((void *)last_msg.msg);
-    // Run tests against fields
-    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->header.n_obs == 32, "incorrect value for header.n_obs, expected 32, is %d", check_msg->header.n_obs);
-    ck_assert_msg(check_msg->header.t.tow == 414670800, "incorrect value for header.t.tow, expected 414670800, is %d", check_msg->header.t.tow);
-    ck_assert_msg(check_msg->header.t.wn == 1898, "incorrect value for header.t.wn, expected 1898, is %d", check_msg->header.t.wn);
-    ck_assert_msg(check_msg->obs[0].L.f == 57, "incorrect value for obs[0].L.f, expected 57, is %d", check_msg->obs[0].L.f);
-    ck_assert_msg(check_msg->obs[0].L.i == -565930, "incorrect value for obs[0].L.i, expected -565930, is %d", check_msg->obs[0].L.i);
-    ck_assert_msg(check_msg->obs[0].P == 1347029036, "incorrect value for obs[0].P, expected 1347029036, is %d", check_msg->obs[0].P);
-    ck_assert_msg(check_msg->obs[0].cn0 == 158, "incorrect value for obs[0].cn0, expected 158, is %d", check_msg->obs[0].cn0);
-    ck_assert_msg(check_msg->obs[0].lock == 58853, "incorrect value for obs[0].lock, expected 58853, is %d", check_msg->obs[0].lock);
-    ck_assert_msg(check_msg->obs[0].sid.code == 0, "incorrect value for obs[0].sid.code, expected 0, is %d", check_msg->obs[0].sid.code);
-    ck_assert_msg(check_msg->obs[0].sid.reserved == 0, "incorrect value for obs[0].sid.reserved, expected 0, is %d", check_msg->obs[0].sid.reserved);
-    ck_assert_msg(check_msg->obs[0].sid.sat == 4, "incorrect value for obs[0].sid.sat, expected 4, is %d", check_msg->obs[0].sid.sat);
-    ck_assert_msg(check_msg->obs[1].L.f == 221, "incorrect value for obs[1].L.f, expected 221, is %d", check_msg->obs[1].L.f);
-    ck_assert_msg(check_msg->obs[1].L.i == -355684, "incorrect value for obs[1].L.i, expected -355684, is %d", check_msg->obs[1].L.i);
-    ck_assert_msg(check_msg->obs[1].P == 1180755424, "incorrect value for obs[1].P, expected 1180755424, is %d", check_msg->obs[1].P);
-    ck_assert_msg(check_msg->obs[1].cn0 == 200, "incorrect value for obs[1].cn0, expected 200, is %d", check_msg->obs[1].cn0);
-    ck_assert_msg(check_msg->obs[1].lock == 7188, "incorrect value for obs[1].lock, expected 7188, is %d", check_msg->obs[1].lock);
-    ck_assert_msg(check_msg->obs[1].sid.code == 0, "incorrect value for obs[1].sid.code, expected 0, is %d", check_msg->obs[1].sid.code);
-    ck_assert_msg(check_msg->obs[1].sid.reserved == 0, "incorrect value for obs[1].sid.reserved, expected 0, is %d", check_msg->obs[1].sid.reserved);
-    ck_assert_msg(check_msg->obs[1].sid.sat == 6, "incorrect value for obs[1].sid.sat, expected 6, is %d", check_msg->obs[1].sid.sat);
-    ck_assert_msg(check_msg->obs[2].L.f == 39, "incorrect value for obs[2].L.f, expected 39, is %d", check_msg->obs[2].L.f);
-    ck_assert_msg(check_msg->obs[2].L.i == -902563, "incorrect value for obs[2].L.i, expected -902563, is %d", check_msg->obs[2].L.i);
-    ck_assert_msg(check_msg->obs[2].P == 1295929916, "incorrect value for obs[2].P, expected 1295929916, is %d", check_msg->obs[2].P);
-    ck_assert_msg(check_msg->obs[2].cn0 == 164, "incorrect value for obs[2].cn0, expected 164, is %d", check_msg->obs[2].cn0);
-    ck_assert_msg(check_msg->obs[2].lock == 45748, "incorrect value for obs[2].lock, expected 45748, is %d", check_msg->obs[2].lock);
-    ck_assert_msg(check_msg->obs[2].sid.code == 0, "incorrect value for obs[2].sid.code, expected 0, is %d", check_msg->obs[2].sid.code);
-    ck_assert_msg(check_msg->obs[2].sid.reserved == 0, "incorrect value for obs[2].sid.reserved, expected 0, is %d", check_msg->obs[2].sid.reserved);
-    ck_assert_msg(check_msg->obs[2].sid.sat == 7, "incorrect value for obs[2].sid.sat, expected 7, is %d", check_msg->obs[2].sid.sat);
-    ck_assert_msg(check_msg->obs[3].L.f == 202, "incorrect value for obs[3].L.f, expected 202, is %d", check_msg->obs[3].L.f);
-    ck_assert_msg(check_msg->obs[3].L.i == 861998, "incorrect value for obs[3].L.i, expected 861998, is %d", check_msg->obs[3].L.i);
-    ck_assert_msg(check_msg->obs[3].P == 1304316382, "incorrect value for obs[3].P, expected 1304316382, is %d", check_msg->obs[3].P);
-    ck_assert_msg(check_msg->obs[3].cn0 == 181, "incorrect value for obs[3].cn0, expected 181, is %d", check_msg->obs[3].cn0);
-    ck_assert_msg(check_msg->obs[3].lock == 42217, "incorrect value for obs[3].lock, expected 42217, is %d", check_msg->obs[3].lock);
-    ck_assert_msg(check_msg->obs[3].sid.code == 0, "incorrect value for obs[3].sid.code, expected 0, is %d", check_msg->obs[3].sid.code);
-    ck_assert_msg(check_msg->obs[3].sid.reserved == 0, "incorrect value for obs[3].sid.reserved, expected 0, is %d", check_msg->obs[3].sid.reserved);
-    ck_assert_msg(check_msg->obs[3].sid.sat == 10, "incorrect value for obs[3].sid.sat, expected 10, is %d", check_msg->obs[3].sid.sat);
-    ck_assert_msg(check_msg->obs[4].L.f == 249, "incorrect value for obs[4].L.f, expected 249, is %d", check_msg->obs[4].L.f);
-    ck_assert_msg(check_msg->obs[4].L.i == 1425266, "incorrect value for obs[4].L.i, expected 1425266, is %d", check_msg->obs[4].L.i);
-    ck_assert_msg(check_msg->obs[4].P == 1258897557, "incorrect value for obs[4].P, expected 1258897557, is %d", check_msg->obs[4].P);
-    ck_assert_msg(check_msg->obs[4].cn0 == 182, "incorrect value for obs[4].cn0, expected 182, is %d", check_msg->obs[4].cn0);
-    ck_assert_msg(check_msg->obs[4].lock == 53700, "incorrect value for obs[4].lock, expected 53700, is %d", check_msg->obs[4].lock);
-    ck_assert_msg(check_msg->obs[4].sid.code == 0, "incorrect value for obs[4].sid.code, expected 0, is %d", check_msg->obs[4].sid.code);
-    ck_assert_msg(check_msg->obs[4].sid.reserved == 0, "incorrect value for obs[4].sid.reserved, expected 0, is %d", check_msg->obs[4].sid.reserved);
-    ck_assert_msg(check_msg->obs[4].sid.sat == 12, "incorrect value for obs[4].sid.sat, expected 12, is %d", check_msg->obs[4].sid.sat);
+    ck_assert_msg(check_msg->obs[4].sid.sat == 22, "incorrect value for obs[4].sid.sat, expected 22, is %d", check_msg->obs[4].sid.sat);
+    ck_assert_msg(check_msg->obs[5].D.f == 246, "incorrect value for obs[5].D.f, expected 246, is %d", check_msg->obs[5].D.f);
+    ck_assert_msg(check_msg->obs[5].D.i == -2433, "incorrect value for obs[5].D.i, expected -2433, is %d", check_msg->obs[5].D.i);
+    ck_assert_msg(check_msg->obs[5].L.f == 70, "incorrect value for obs[5].L.f, expected 70, is %d", check_msg->obs[5].L.f);
+    ck_assert_msg(check_msg->obs[5].L.i == 121711010, "incorrect value for obs[5].L.i, expected 121711010, is %d", check_msg->obs[5].L.i);
+    ck_assert_msg(check_msg->obs[5].P == 1158041713, "incorrect value for obs[5].P, expected 1158041713, is %d", check_msg->obs[5].P);
+    ck_assert_msg(check_msg->obs[5].cn0 == 189, "incorrect value for obs[5].cn0, expected 189, is %d", check_msg->obs[5].cn0);
+    ck_assert_msg(check_msg->obs[5].flags == 15, "incorrect value for obs[5].flags, expected 15, is %d", check_msg->obs[5].flags);
+    ck_assert_msg(check_msg->obs[5].lock == 9, "incorrect value for obs[5].lock, expected 9, is %d", check_msg->obs[5].lock);
+    ck_assert_msg(check_msg->obs[5].sid.code == 0, "incorrect value for obs[5].sid.code, expected 0, is %d", check_msg->obs[5].sid.code);
+    ck_assert_msg(check_msg->obs[5].sid.sat == 23, "incorrect value for obs[5].sid.sat, expected 23, is %d", check_msg->obs[5].sid.sat);
+    ck_assert_msg(check_msg->obs[6].D.f == 231, "incorrect value for obs[6].D.f, expected 231, is %d", check_msg->obs[6].D.f);
+    ck_assert_msg(check_msg->obs[6].D.i == -1896, "incorrect value for obs[6].D.i, expected -1896, is %d", check_msg->obs[6].D.i);
+    ck_assert_msg(check_msg->obs[6].L.f == 221, "incorrect value for obs[6].L.f, expected 221, is %d", check_msg->obs[6].L.f);
+    ck_assert_msg(check_msg->obs[6].L.i == 94839765, "incorrect value for obs[6].L.i, expected 94839765, is %d", check_msg->obs[6].L.i);
+    ck_assert_msg(check_msg->obs[6].P == 1158041847, "incorrect value for obs[6].P, expected 1158041847, is %d", check_msg->obs[6].P);
+    ck_assert_msg(check_msg->obs[6].cn0 == 158, "incorrect value for obs[6].cn0, expected 158, is %d", check_msg->obs[6].cn0);
+    ck_assert_msg(check_msg->obs[6].flags == 11, "incorrect value for obs[6].flags, expected 11, is %d", check_msg->obs[6].flags);
+    ck_assert_msg(check_msg->obs[6].lock == 9, "incorrect value for obs[6].lock, expected 9, is %d", check_msg->obs[6].lock);
+    ck_assert_msg(check_msg->obs[6].sid.code == 1, "incorrect value for obs[6].sid.code, expected 1, is %d", check_msg->obs[6].sid.code);
+    ck_assert_msg(check_msg->obs[6].sid.sat == 23, "incorrect value for obs[6].sid.sat, expected 23, is %d", check_msg->obs[6].sid.sat);
+    ck_assert_msg(check_msg->obs[7].D.f == 67, "incorrect value for obs[7].D.f, expected 67, is %d", check_msg->obs[7].D.f);
+    ck_assert_msg(check_msg->obs[7].D.i == -1997, "incorrect value for obs[7].D.i, expected -1997, is %d", check_msg->obs[7].D.i);
+    ck_assert_msg(check_msg->obs[7].L.f == 114, "incorrect value for obs[7].L.f, expected 114, is %d", check_msg->obs[7].L.f);
+    ck_assert_msg(check_msg->obs[7].L.i == 113998348, "incorrect value for obs[7].L.i, expected 113998348, is %d", check_msg->obs[7].L.i);
+    ck_assert_msg(check_msg->obs[7].P == 1084658184, "incorrect value for obs[7].P, expected 1084658184, is %d", check_msg->obs[7].P);
+    ck_assert_msg(check_msg->obs[7].cn0 == 93, "incorrect value for obs[7].cn0, expected 93, is %d", check_msg->obs[7].cn0);
+    ck_assert_msg(check_msg->obs[7].flags == 11, "incorrect value for obs[7].flags, expected 11, is %d", check_msg->obs[7].flags);
+    ck_assert_msg(check_msg->obs[7].lock == 3, "incorrect value for obs[7].lock, expected 3, is %d", check_msg->obs[7].lock);
+    ck_assert_msg(check_msg->obs[7].sid.code == 0, "incorrect value for obs[7].sid.code, expected 0, is %d", check_msg->obs[7].sid.code);
+    ck_assert_msg(check_msg->obs[7].sid.sat == 27, "incorrect value for obs[7].sid.sat, expected 27, is %d", check_msg->obs[7].sid.sat);
+    ck_assert_msg(check_msg->obs[8].D.f == 237, "incorrect value for obs[8].D.f, expected 237, is %d", check_msg->obs[8].D.f);
+    ck_assert_msg(check_msg->obs[8].D.i == 3041, "incorrect value for obs[8].D.i, expected 3041, is %d", check_msg->obs[8].D.i);
+    ck_assert_msg(check_msg->obs[8].L.f == 232, "incorrect value for obs[8].L.f, expected 232, is %d", check_msg->obs[8].L.f);
+    ck_assert_msg(check_msg->obs[8].L.i == 133443545, "incorrect value for obs[8].L.i, expected 133443545, is %d", check_msg->obs[8].L.i);
+    ck_assert_msg(check_msg->obs[8].P == 1269673181, "incorrect value for obs[8].P, expected 1269673181, is %d", check_msg->obs[8].P);
+    ck_assert_msg(check_msg->obs[8].cn0 == 123, "incorrect value for obs[8].cn0, expected 123, is %d", check_msg->obs[8].cn0);
+    ck_assert_msg(check_msg->obs[8].flags == 15, "incorrect value for obs[8].flags, expected 15, is %d", check_msg->obs[8].flags);
+    ck_assert_msg(check_msg->obs[8].lock == 5, "incorrect value for obs[8].lock, expected 5, is %d", check_msg->obs[8].lock);
+    ck_assert_msg(check_msg->obs[8].sid.code == 0, "incorrect value for obs[8].sid.code, expected 0, is %d", check_msg->obs[8].sid.code);
+    ck_assert_msg(check_msg->obs[8].sid.sat == 31, "incorrect value for obs[8].sid.sat, expected 31, is %d", check_msg->obs[8].sid.sat);
+    ck_assert_msg(check_msg->obs[9].D.f == 62, "incorrect value for obs[9].D.f, expected 62, is %d", check_msg->obs[9].D.f);
+    ck_assert_msg(check_msg->obs[9].D.i == 2374, "incorrect value for obs[9].D.i, expected 2374, is %d", check_msg->obs[9].D.i);
+    ck_assert_msg(check_msg->obs[9].L.f == 40, "incorrect value for obs[9].L.f, expected 40, is %d", check_msg->obs[9].L.f);
+    ck_assert_msg(check_msg->obs[9].L.i == 103982040, "incorrect value for obs[9].L.i, expected 103982040, is %d", check_msg->obs[9].L.i);
+    ck_assert_msg(check_msg->obs[9].P == 1269673722, "incorrect value for obs[9].P, expected 1269673722, is %d", check_msg->obs[9].P);
+    ck_assert_msg(check_msg->obs[9].cn0 == 120, "incorrect value for obs[9].cn0, expected 120, is %d", check_msg->obs[9].cn0);
+    ck_assert_msg(check_msg->obs[9].flags == 11, "incorrect value for obs[9].flags, expected 11, is %d", check_msg->obs[9].flags);
+    ck_assert_msg(check_msg->obs[9].lock == 3, "incorrect value for obs[9].lock, expected 3, is %d", check_msg->obs[9].lock);
+    ck_assert_msg(check_msg->obs[9].sid.code == 1, "incorrect value for obs[9].sid.code, expected 1, is %d", check_msg->obs[9].sid.code);
+    ck_assert_msg(check_msg->obs[9].sid.sat == 31, "incorrect value for obs[9].sid.sat, expected 31, is %d", check_msg->obs[9].sid.sat);
+    ck_assert_msg(check_msg->obs[10].D.f == 96, "incorrect value for obs[10].D.f, expected 96, is %d", check_msg->obs[10].D.f);
+    ck_assert_msg(check_msg->obs[10].D.i == -3446, "incorrect value for obs[10].D.i, expected -3446, is %d", check_msg->obs[10].D.i);
+    ck_assert_msg(check_msg->obs[10].L.f == 7, "incorrect value for obs[10].L.f, expected 7, is %d", check_msg->obs[10].L.f);
+    ck_assert_msg(check_msg->obs[10].L.i == 118217315, "incorrect value for obs[10].L.i, expected 118217315, is %d", check_msg->obs[10].L.i);
+    ck_assert_msg(check_msg->obs[10].P == 1107693703, "incorrect value for obs[10].P, expected 1107693703, is %d", check_msg->obs[10].P);
+    ck_assert_msg(check_msg->obs[10].cn0 == 176, "incorrect value for obs[10].cn0, expected 176, is %d", check_msg->obs[10].cn0);
+    ck_assert_msg(check_msg->obs[10].flags == 15, "incorrect value for obs[10].flags, expected 15, is %d", check_msg->obs[10].flags);
+    ck_assert_msg(check_msg->obs[10].lock == 10, "incorrect value for obs[10].lock, expected 10, is %d", check_msg->obs[10].lock);
+    ck_assert_msg(check_msg->obs[10].sid.code == 3, "incorrect value for obs[10].sid.code, expected 3, is %d", check_msg->obs[10].sid.code);
+    ck_assert_msg(check_msg->obs[10].sid.sat == 2, "incorrect value for obs[10].sid.sat, expected 2, is %d", check_msg->obs[10].sid.sat);
+    ck_assert_msg(check_msg->obs[11].D.f == 96, "incorrect value for obs[11].D.f, expected 96, is %d", check_msg->obs[11].D.f);
+    ck_assert_msg(check_msg->obs[11].D.i == -1003, "incorrect value for obs[11].D.i, expected -1003, is %d", check_msg->obs[11].D.i);
+    ck_assert_msg(check_msg->obs[11].L.f == 203, "incorrect value for obs[11].L.f, expected 203, is %d", check_msg->obs[11].L.f);
+    ck_assert_msg(check_msg->obs[11].L.i == 104224985, "incorrect value for obs[11].L.i, expected 104224985, is %d", check_msg->obs[11].L.i);
+    ck_assert_msg(check_msg->obs[11].P == 973505172, "incorrect value for obs[11].P, expected 973505172, is %d", check_msg->obs[11].P);
+    ck_assert_msg(check_msg->obs[11].cn0 == 170, "incorrect value for obs[11].cn0, expected 170, is %d", check_msg->obs[11].cn0);
+    ck_assert_msg(check_msg->obs[11].flags == 15, "incorrect value for obs[11].flags, expected 15, is %d", check_msg->obs[11].flags);
+    ck_assert_msg(check_msg->obs[11].lock == 10, "incorrect value for obs[11].lock, expected 10, is %d", check_msg->obs[11].lock);
+    ck_assert_msg(check_msg->obs[11].sid.code == 3, "incorrect value for obs[11].sid.code, expected 3, is %d", check_msg->obs[11].sid.code);
+    ck_assert_msg(check_msg->obs[11].sid.sat == 3, "incorrect value for obs[11].sid.sat, expected 3, is %d", check_msg->obs[11].sid.sat);
+    ck_assert_msg(check_msg->obs[12].D.f == 219, "incorrect value for obs[12].D.f, expected 219, is %d", check_msg->obs[12].D.f);
+    ck_assert_msg(check_msg->obs[12].D.i == -3836, "incorrect value for obs[12].D.i, expected -3836, is %d", check_msg->obs[12].D.i);
+    ck_assert_msg(check_msg->obs[12].L.f == 80, "incorrect value for obs[12].L.f, expected 80, is %d", check_msg->obs[12].L.f);
+    ck_assert_msg(check_msg->obs[12].L.i == 114505343, "incorrect value for obs[12].L.i, expected 114505343, is %d", check_msg->obs[12].L.i);
+    ck_assert_msg(check_msg->obs[12].P == 1069903034, "incorrect value for obs[12].P, expected 1069903034, is %d", check_msg->obs[12].P);
+    ck_assert_msg(check_msg->obs[12].cn0 == 200, "incorrect value for obs[12].cn0, expected 200, is %d", check_msg->obs[12].cn0);
+    ck_assert_msg(check_msg->obs[12].flags == 15, "incorrect value for obs[12].flags, expected 15, is %d", check_msg->obs[12].flags);
+    ck_assert_msg(check_msg->obs[12].lock == 10, "incorrect value for obs[12].lock, expected 10, is %d", check_msg->obs[12].lock);
+    ck_assert_msg(check_msg->obs[12].sid.code == 3, "incorrect value for obs[12].sid.code, expected 3, is %d", check_msg->obs[12].sid.code);
+    ck_assert_msg(check_msg->obs[12].sid.sat == 17, "incorrect value for obs[12].sid.sat, expected 17, is %d", check_msg->obs[12].sid.sat);
+    ck_assert_msg(check_msg->obs[13].D.f == 182, "incorrect value for obs[13].D.f, expected 182, is %d", check_msg->obs[13].D.f);
+    ck_assert_msg(check_msg->obs[13].D.i == -461, "incorrect value for obs[13].D.i, expected -461, is %d", check_msg->obs[13].D.i);
+    ck_assert_msg(check_msg->obs[13].L.f == 105, "incorrect value for obs[13].L.f, expected 105, is %d", check_msg->obs[13].L.f);
+    ck_assert_msg(check_msg->obs[13].L.i == 102157331, "incorrect value for obs[13].L.i, expected 102157331, is %d", check_msg->obs[13].L.i);
+    ck_assert_msg(check_msg->obs[13].P == 956875687, "incorrect value for obs[13].P, expected 956875687, is %d", check_msg->obs[13].P);
+    ck_assert_msg(check_msg->obs[13].cn0 == 152, "incorrect value for obs[13].cn0, expected 152, is %d", check_msg->obs[13].cn0);
+    ck_assert_msg(check_msg->obs[13].flags == 15, "incorrect value for obs[13].flags, expected 15, is %d", check_msg->obs[13].flags);
+    ck_assert_msg(check_msg->obs[13].lock == 10, "incorrect value for obs[13].lock, expected 10, is %d", check_msg->obs[13].lock);
+    ck_assert_msg(check_msg->obs[13].sid.code == 3, "incorrect value for obs[13].sid.code, expected 3, is %d", check_msg->obs[13].sid.code);
+    ck_assert_msg(check_msg->obs[13].sid.sat == 18, "incorrect value for obs[13].sid.sat, expected 18, is %d", check_msg->obs[13].sid.sat);
   }
 }
 END_TEST

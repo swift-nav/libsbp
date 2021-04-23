@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgGPSTimeDepA.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgGPSTime.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -119,23 +119,23 @@ START_TEST( test_auto_check_sbp_navigation_11 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x100, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x102, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x102, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,0,1,246,215,11,251,6,120,46,39,0,0,0,0,0,0,133,36, };
+    u8 encoded_frame[] = {85,2,1,211,136,11,128,7,40,244,122,19,244,139,2,0,0,34,152, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_gps_time_dep_a_t* test_msg = ( msg_gps_time_dep_a_t* )test_msg_storage;
+    msg_gps_time_t* test_msg = ( msg_gps_time_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 0;
-    test_msg->ns_residual = 0;
-    test_msg->tow = 2567800;
-    test_msg->wn = 1787;
-    sbp_send_message(&sbp_state, 0x100, 55286, test_msg_len, test_msg_storage, &dummy_write);
+    test_msg->ns_residual = 166900;
+    test_msg->tow = 326825000;
+    test_msg->wn = 1920;
+    sbp_send_message(&sbp_state, 0x102, 35027, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -152,7 +152,7 @@ START_TEST( test_auto_check_sbp_navigation_11 )
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
         "msg_callback: one callback should have been logged");
-    ck_assert_msg(last_msg.sender_id == 55286,
+    ck_assert_msg(last_msg.sender_id == 35027,
         "msg_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
         "msg_callback: len decoded incorrectly");
@@ -164,9 +164,9 @@ START_TEST( test_auto_check_sbp_navigation_11 )
 
     ck_assert_msg(last_frame.n_callbacks_logged == 1,
         "frame_callback: one callback should have been logged");
-    ck_assert_msg(last_frame.sender_id == 55286,
+    ck_assert_msg(last_frame.sender_id == 35027,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x100,
+    ck_assert_msg(last_frame.msg_type == 0x102,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -180,13 +180,13 @@ START_TEST( test_auto_check_sbp_navigation_11 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_gps_time_dep_a_t* check_msg = ( msg_gps_time_dep_a_t *)((void *)last_msg.msg);
+    msg_gps_time_t* check_msg = ( msg_gps_time_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0, "incorrect value for flags, expected 0, is %d", check_msg->flags);
-    ck_assert_msg(check_msg->ns_residual == 0, "incorrect value for ns_residual, expected 0, is %d", check_msg->ns_residual);
-    ck_assert_msg(check_msg->tow == 2567800, "incorrect value for tow, expected 2567800, is %d", check_msg->tow);
-    ck_assert_msg(check_msg->wn == 1787, "incorrect value for wn, expected 1787, is %d", check_msg->wn);
+    ck_assert_msg(check_msg->ns_residual == 166900, "incorrect value for ns_residual, expected 166900, is %d", check_msg->ns_residual);
+    ck_assert_msg(check_msg->tow == 326825000, "incorrect value for tow, expected 326825000, is %d", check_msg->tow);
+    ck_assert_msg(check_msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", check_msg->wn);
   }
   // Test successful parsing of a message
   {
@@ -199,23 +199,23 @@ START_TEST( test_auto_check_sbp_navigation_11 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x100, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x102, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x102, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,0,1,246,215,11,251,6,220,46,39,0,0,0,0,0,0,36,160, };
+    u8 encoded_frame[] = {85,2,1,211,136,11,128,7,28,246,122,19,126,234,3,0,0,65,3, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_gps_time_dep_a_t* test_msg = ( msg_gps_time_dep_a_t* )test_msg_storage;
+    msg_gps_time_t* test_msg = ( msg_gps_time_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 0;
-    test_msg->ns_residual = 0;
-    test_msg->tow = 2567900;
-    test_msg->wn = 1787;
-    sbp_send_message(&sbp_state, 0x100, 55286, test_msg_len, test_msg_storage, &dummy_write);
+    test_msg->ns_residual = 256638;
+    test_msg->tow = 326825500;
+    test_msg->wn = 1920;
+    sbp_send_message(&sbp_state, 0x102, 35027, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -232,7 +232,7 @@ START_TEST( test_auto_check_sbp_navigation_11 )
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
         "msg_callback: one callback should have been logged");
-    ck_assert_msg(last_msg.sender_id == 55286,
+    ck_assert_msg(last_msg.sender_id == 35027,
         "msg_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
         "msg_callback: len decoded incorrectly");
@@ -244,9 +244,9 @@ START_TEST( test_auto_check_sbp_navigation_11 )
 
     ck_assert_msg(last_frame.n_callbacks_logged == 1,
         "frame_callback: one callback should have been logged");
-    ck_assert_msg(last_frame.sender_id == 55286,
+    ck_assert_msg(last_frame.sender_id == 35027,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x100,
+    ck_assert_msg(last_frame.msg_type == 0x102,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -260,13 +260,13 @@ START_TEST( test_auto_check_sbp_navigation_11 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_gps_time_dep_a_t* check_msg = ( msg_gps_time_dep_a_t *)((void *)last_msg.msg);
+    msg_gps_time_t* check_msg = ( msg_gps_time_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0, "incorrect value for flags, expected 0, is %d", check_msg->flags);
-    ck_assert_msg(check_msg->ns_residual == 0, "incorrect value for ns_residual, expected 0, is %d", check_msg->ns_residual);
-    ck_assert_msg(check_msg->tow == 2567900, "incorrect value for tow, expected 2567900, is %d", check_msg->tow);
-    ck_assert_msg(check_msg->wn == 1787, "incorrect value for wn, expected 1787, is %d", check_msg->wn);
+    ck_assert_msg(check_msg->ns_residual == 256638, "incorrect value for ns_residual, expected 256638, is %d", check_msg->ns_residual);
+    ck_assert_msg(check_msg->tow == 326825500, "incorrect value for tow, expected 326825500, is %d", check_msg->tow);
+    ck_assert_msg(check_msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", check_msg->wn);
   }
   // Test successful parsing of a message
   {
@@ -279,23 +279,23 @@ START_TEST( test_auto_check_sbp_navigation_11 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x100, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x102, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x102, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,0,1,246,215,11,251,6,64,47,39,0,0,0,0,0,0,171,190, };
+    u8 encoded_frame[] = {85,2,1,211,136,11,128,7,16,248,122,19,129,12,4,0,0,12,84, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_gps_time_dep_a_t* test_msg = ( msg_gps_time_dep_a_t* )test_msg_storage;
+    msg_gps_time_t* test_msg = ( msg_gps_time_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 0;
-    test_msg->ns_residual = 0;
-    test_msg->tow = 2568000;
-    test_msg->wn = 1787;
-    sbp_send_message(&sbp_state, 0x100, 55286, test_msg_len, test_msg_storage, &dummy_write);
+    test_msg->ns_residual = 265345;
+    test_msg->tow = 326826000;
+    test_msg->wn = 1920;
+    sbp_send_message(&sbp_state, 0x102, 35027, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -312,7 +312,7 @@ START_TEST( test_auto_check_sbp_navigation_11 )
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
         "msg_callback: one callback should have been logged");
-    ck_assert_msg(last_msg.sender_id == 55286,
+    ck_assert_msg(last_msg.sender_id == 35027,
         "msg_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
         "msg_callback: len decoded incorrectly");
@@ -324,9 +324,9 @@ START_TEST( test_auto_check_sbp_navigation_11 )
 
     ck_assert_msg(last_frame.n_callbacks_logged == 1,
         "frame_callback: one callback should have been logged");
-    ck_assert_msg(last_frame.sender_id == 55286,
+    ck_assert_msg(last_frame.sender_id == 35027,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x100,
+    ck_assert_msg(last_frame.msg_type == 0x102,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -340,13 +340,13 @@ START_TEST( test_auto_check_sbp_navigation_11 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_gps_time_dep_a_t* check_msg = ( msg_gps_time_dep_a_t *)((void *)last_msg.msg);
+    msg_gps_time_t* check_msg = ( msg_gps_time_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0, "incorrect value for flags, expected 0, is %d", check_msg->flags);
-    ck_assert_msg(check_msg->ns_residual == 0, "incorrect value for ns_residual, expected 0, is %d", check_msg->ns_residual);
-    ck_assert_msg(check_msg->tow == 2568000, "incorrect value for tow, expected 2568000, is %d", check_msg->tow);
-    ck_assert_msg(check_msg->wn == 1787, "incorrect value for wn, expected 1787, is %d", check_msg->wn);
+    ck_assert_msg(check_msg->ns_residual == 265345, "incorrect value for ns_residual, expected 265345, is %d", check_msg->ns_residual);
+    ck_assert_msg(check_msg->tow == 326826000, "incorrect value for tow, expected 326826000, is %d", check_msg->tow);
+    ck_assert_msg(check_msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", check_msg->wn);
   }
   // Test successful parsing of a message
   {
@@ -359,23 +359,23 @@ START_TEST( test_auto_check_sbp_navigation_11 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x100, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x102, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x102, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,0,1,246,215,11,251,6,164,47,39,0,0,0,0,0,0,211,101, };
+    u8 encoded_frame[] = {85,2,1,211,136,11,128,7,4,250,122,19,137,204,4,0,0,50,165, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_gps_time_dep_a_t* test_msg = ( msg_gps_time_dep_a_t* )test_msg_storage;
+    msg_gps_time_t* test_msg = ( msg_gps_time_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 0;
-    test_msg->ns_residual = 0;
-    test_msg->tow = 2568100;
-    test_msg->wn = 1787;
-    sbp_send_message(&sbp_state, 0x100, 55286, test_msg_len, test_msg_storage, &dummy_write);
+    test_msg->ns_residual = 314505;
+    test_msg->tow = 326826500;
+    test_msg->wn = 1920;
+    sbp_send_message(&sbp_state, 0x102, 35027, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -392,7 +392,7 @@ START_TEST( test_auto_check_sbp_navigation_11 )
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
         "msg_callback: one callback should have been logged");
-    ck_assert_msg(last_msg.sender_id == 55286,
+    ck_assert_msg(last_msg.sender_id == 35027,
         "msg_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
         "msg_callback: len decoded incorrectly");
@@ -404,9 +404,9 @@ START_TEST( test_auto_check_sbp_navigation_11 )
 
     ck_assert_msg(last_frame.n_callbacks_logged == 1,
         "frame_callback: one callback should have been logged");
-    ck_assert_msg(last_frame.sender_id == 55286,
+    ck_assert_msg(last_frame.sender_id == 35027,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x100,
+    ck_assert_msg(last_frame.msg_type == 0x102,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -420,13 +420,13 @@ START_TEST( test_auto_check_sbp_navigation_11 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_gps_time_dep_a_t* check_msg = ( msg_gps_time_dep_a_t *)((void *)last_msg.msg);
+    msg_gps_time_t* check_msg = ( msg_gps_time_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0, "incorrect value for flags, expected 0, is %d", check_msg->flags);
-    ck_assert_msg(check_msg->ns_residual == 0, "incorrect value for ns_residual, expected 0, is %d", check_msg->ns_residual);
-    ck_assert_msg(check_msg->tow == 2568100, "incorrect value for tow, expected 2568100, is %d", check_msg->tow);
-    ck_assert_msg(check_msg->wn == 1787, "incorrect value for wn, expected 1787, is %d", check_msg->wn);
+    ck_assert_msg(check_msg->ns_residual == 314505, "incorrect value for ns_residual, expected 314505, is %d", check_msg->ns_residual);
+    ck_assert_msg(check_msg->tow == 326826500, "incorrect value for tow, expected 326826500, is %d", check_msg->tow);
+    ck_assert_msg(check_msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", check_msg->wn);
   }
   // Test successful parsing of a message
   {
@@ -439,23 +439,23 @@ START_TEST( test_auto_check_sbp_navigation_11 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x100, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x100, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x102, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x102, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,0,1,246,215,11,251,6,8,48,39,0,0,0,0,0,0,251,44, };
+    u8 encoded_frame[] = {85,2,1,211,136,11,128,7,248,251,122,19,181,137,5,0,0,180,33, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_gps_time_dep_a_t* test_msg = ( msg_gps_time_dep_a_t* )test_msg_storage;
+    msg_gps_time_t* test_msg = ( msg_gps_time_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 0;
-    test_msg->ns_residual = 0;
-    test_msg->tow = 2568200;
-    test_msg->wn = 1787;
-    sbp_send_message(&sbp_state, 0x100, 55286, test_msg_len, test_msg_storage, &dummy_write);
+    test_msg->ns_residual = 362933;
+    test_msg->tow = 326827000;
+    test_msg->wn = 1920;
+    sbp_send_message(&sbp_state, 0x102, 35027, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -472,7 +472,7 @@ START_TEST( test_auto_check_sbp_navigation_11 )
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
         "msg_callback: one callback should have been logged");
-    ck_assert_msg(last_msg.sender_id == 55286,
+    ck_assert_msg(last_msg.sender_id == 35027,
         "msg_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
         "msg_callback: len decoded incorrectly");
@@ -484,9 +484,9 @@ START_TEST( test_auto_check_sbp_navigation_11 )
 
     ck_assert_msg(last_frame.n_callbacks_logged == 1,
         "frame_callback: one callback should have been logged");
-    ck_assert_msg(last_frame.sender_id == 55286,
+    ck_assert_msg(last_frame.sender_id == 35027,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x100,
+    ck_assert_msg(last_frame.msg_type == 0x102,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -500,13 +500,13 @@ START_TEST( test_auto_check_sbp_navigation_11 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_gps_time_dep_a_t* check_msg = ( msg_gps_time_dep_a_t *)((void *)last_msg.msg);
+    msg_gps_time_t* check_msg = ( msg_gps_time_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0, "incorrect value for flags, expected 0, is %d", check_msg->flags);
-    ck_assert_msg(check_msg->ns_residual == 0, "incorrect value for ns_residual, expected 0, is %d", check_msg->ns_residual);
-    ck_assert_msg(check_msg->tow == 2568200, "incorrect value for tow, expected 2568200, is %d", check_msg->tow);
-    ck_assert_msg(check_msg->wn == 1787, "incorrect value for wn, expected 1787, is %d", check_msg->wn);
+    ck_assert_msg(check_msg->ns_residual == 362933, "incorrect value for ns_residual, expected 362933, is %d", check_msg->ns_residual);
+    ck_assert_msg(check_msg->tow == 326827000, "incorrect value for tow, expected 326827000, is %d", check_msg->tow);
+    ck_assert_msg(check_msg->wn == 1920, "incorrect value for wn, expected 1920, is %d", check_msg->wn);
   }
 }
 END_TEST
