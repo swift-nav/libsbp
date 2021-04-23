@@ -1,0 +1,49 @@
+---
+description: Unit tests for swiftnav.sbp.observation MsgEphemerisGlo
+generated_on: 2020-04-23 00:00:00.00 # manually generated
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      common: 
+        sid: 
+          sat: 4
+          code: 3
+        toe: 
+          tow: 443718
+          wn: 2154
+        ura: 5.0
+        fit_interval: 2400
+        valid: 1
+        health_bits: 0
+      gamma: 9.094947017729282e-13
+      tau: -8.36281105875969e-05
+      d_tau: -2.7939677238464355e-09
+      pos: 
+        - -12177330.078125
+        - 599893.06640625
+        - -22373708.49609375
+      vel: 
+        - -1726.506233215332
+        - -2542.6149368286133
+        - 869.8177337646484
+      acc: 
+        - 9.313225746154785e-07
+        - 9.313225746154785e-07
+        - 2.7939677238464355e-06
+      fcn: 14
+      iod: 100
+    module: sbp.observation
+    name: MsgEphemerisGlo
+  msg_type: '0x8b'
+  raw_json: '{"common":{"sid":{"sat":4,"code":3},"toe":{"tow":443718,"wn":2154},"ura":5.0,"fit_interval":2400,"valid":1,"health_bits":0},"gamma":9.094947017729282e-13,"tau":-8.36281105875969e-05,"d_tau":-2.7939677238464355e-09,"pos":[-12177330.078125,599893.06640625,-22373708.49609375],"vel":[-1726.506233215332,-2542.6149368286133,869.8177337646484],"acc":[9.313225746154785e-07,9.313225746154785e-07,2.7939677238464355e-06],"fcn":14,"iod":100,"preamble":85,"msg_type":139,"sender":2314,"payload":"BANGxQYAaggAAKBAYAkAAAEAAACAK4Bhr7gAAECxAACAQvY5Z8EAAAAiqk4iQQAA8MdUVnXBAAAAYgb6msAAAADZOt2jwAAAALiKLotAAAB6NQAAejUAgDs2DmQ=","crc":38233,"length":92}'
+  raw_packet: VYsACglcBANGxQYAaggAAKBAYAkAAAEAAACAK4Bhr7gAAECxAACAQvY5Z8EAAAAiqk4iQQAA8MdUVnXBAAAAYgb6msAAAADZOt2jwAAAALiKLotAAAB6NQAAejUAgDs2DmRZlQ==
+  sbp:
+    crc: '0x9559'
+    length: 0x5c
+    msg_type: '0x8b'
+    payload: BANGxQYAaggAAKBAYAkAAAEAAACAK4Bhr7gAAECxAACAQvY5Z8EAAAAiqk4iQQAA8MdUVnXBAAAAYgb6msAAAADZOt2jwAAAALiKLotAAAB6NQAAejUAgDs2DmQ=
+    preamble: '0x55'
+    sender: '0x90a'
+
