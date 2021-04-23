@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgVelNEDCOV.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgVelBody.yaml by generate.py. Do not modify by hand!
 
 use sbp::iter_messages;
 use sbp::messages::SBPMessage;
@@ -24,9 +24,8 @@ use std::io::Cursor;
 fn test_auto_check_sbp_navigation_24() {
     {
         let mut payload = Cursor::new(vec![
-            85, 18, 2, 66, 0, 42, 100, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 128, 63,
-            0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 10, 0, 88,
-            205,
+            85, 19, 2, 66, 0, 42, 1, 0, 0, 0, 4, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            160, 64, 0, 0, 224, 64, 0, 0, 224, 64, 0, 0, 64, 64, 0, 0, 0, 64, 3, 8, 120, 144,
         ]);
 
         // Test the round trip payload parsing
@@ -37,11 +36,11 @@ fn test_auto_check_sbp_navigation_24() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgVelNEDCov(msg) => {
+            sbp::messages::SBP::MsgVelBody(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x212,
-                    "Incorrect message type, expected 0x212, is {}",
+                    0x213,
+                    "Incorrect message type, expected 0x213, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
@@ -51,55 +50,55 @@ fn test_auto_check_sbp_navigation_24() {
                     sender_id
                 );
                 assert!(
-                    msg.cov_d_d.almost_eq(1.00000000000000000e+00),
-                    "incorrect value for cov_d_d, expected 1.00000000000000000e+00, is {:e}",
-                    msg.cov_d_d
+                    msg.cov_x_x.almost_eq(0.00000000000000000e+00),
+                    "incorrect value for cov_x_x, expected 0.00000000000000000e+00, is {:e}",
+                    msg.cov_x_x
                 );
                 assert!(
-                    msg.cov_e_d.almost_eq(1.00000000000000000e+00),
-                    "incorrect value for cov_e_d, expected 1.00000000000000000e+00, is {:e}",
-                    msg.cov_e_d
+                    msg.cov_x_y.almost_eq(5.00000000000000000e+00),
+                    "incorrect value for cov_x_y, expected 5.00000000000000000e+00, is {:e}",
+                    msg.cov_x_y
                 );
                 assert!(
-                    msg.cov_e_e.almost_eq(1.00000000000000000e+00),
-                    "incorrect value for cov_e_e, expected 1.00000000000000000e+00, is {:e}",
-                    msg.cov_e_e
+                    msg.cov_x_z.almost_eq(7.00000000000000000e+00),
+                    "incorrect value for cov_x_z, expected 7.00000000000000000e+00, is {:e}",
+                    msg.cov_x_z
                 );
                 assert!(
-                    msg.cov_n_d.almost_eq(1.00000000000000000e+00),
-                    "incorrect value for cov_n_d, expected 1.00000000000000000e+00, is {:e}",
-                    msg.cov_n_d
+                    msg.cov_y_y.almost_eq(7.00000000000000000e+00),
+                    "incorrect value for cov_y_y, expected 7.00000000000000000e+00, is {:e}",
+                    msg.cov_y_y
                 );
                 assert!(
-                    msg.cov_n_e.almost_eq(1.00000000000000000e+00),
-                    "incorrect value for cov_n_e, expected 1.00000000000000000e+00, is {:e}",
-                    msg.cov_n_e
+                    msg.cov_y_z.almost_eq(3.00000000000000000e+00),
+                    "incorrect value for cov_y_z, expected 3.00000000000000000e+00, is {:e}",
+                    msg.cov_y_z
                 );
                 assert!(
-                    msg.cov_n_n.almost_eq(1.00000000000000000e+00),
-                    "incorrect value for cov_n_n, expected 1.00000000000000000e+00, is {:e}",
-                    msg.cov_n_n
+                    msg.cov_z_z.almost_eq(2.00000000000000000e+00),
+                    "incorrect value for cov_z_z, expected 2.00000000000000000e+00, is {:e}",
+                    msg.cov_z_z
                 );
-                assert_eq!(msg.d, 1, "incorrect value for d, expected 1, is {}", msg.d);
-                assert_eq!(msg.e, 1, "incorrect value for e, expected 1, is {}", msg.e);
                 assert_eq!(
-                    msg.flags, 0,
-                    "incorrect value for flags, expected 0, is {}",
+                    msg.flags, 8,
+                    "incorrect value for flags, expected 8, is {}",
                     msg.flags
                 );
-                assert_eq!(msg.n, 1, "incorrect value for n, expected 1, is {}", msg.n);
                 assert_eq!(
-                    msg.n_sats, 10,
-                    "incorrect value for n_sats, expected 10, is {}",
+                    msg.n_sats, 3,
+                    "incorrect value for n_sats, expected 3, is {}",
                     msg.n_sats
                 );
                 assert_eq!(
-                    msg.tow, 100,
-                    "incorrect value for tow, expected 100, is {}",
+                    msg.tow, 1,
+                    "incorrect value for tow, expected 1, is {}",
                     msg.tow
                 );
+                assert_eq!(msg.x, 4, "incorrect value for x, expected 4, is {}", msg.x);
+                assert_eq!(msg.y, 2, "incorrect value for y, expected 2, is {}", msg.y);
+                assert_eq!(msg.z, 1, "incorrect value for z, expected 1, is {}", msg.z);
             }
-            _ => panic!("Invalid message type! Expected a MsgVelNEDCov"),
+            _ => panic!("Invalid message type! Expected a MsgVelBody"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());

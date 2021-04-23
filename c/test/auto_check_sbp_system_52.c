@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/test_system.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgHeartbeat.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -119,20 +119,20 @@ START_TEST( test_auto_check_sbp_system_52 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xff00, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0xff00, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0xffff, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0xffff, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,0,255,195,4,4,0,0,0,0,127,181, };
+    u8 encoded_frame[] = {85,255,255,246,215,4,0,50,0,0,249,216, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_startup_t* test_msg = ( msg_startup_t* )test_msg_storage;
+    msg_heartbeat_t* test_msg = ( msg_heartbeat_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    test_msg->reserved = 0;
-    sbp_send_message(&sbp_state, 0xff00, 1219, test_msg_len, test_msg_storage, &dummy_write);
+    test_msg->flags = 12800;
+    sbp_send_message(&sbp_state, 0xffff, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -149,7 +149,7 @@ START_TEST( test_auto_check_sbp_system_52 )
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
         "msg_callback: one callback should have been logged");
-    ck_assert_msg(last_msg.sender_id == 1219,
+    ck_assert_msg(last_msg.sender_id == 55286,
         "msg_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
         "msg_callback: len decoded incorrectly");
@@ -161,9 +161,9 @@ START_TEST( test_auto_check_sbp_system_52 )
 
     ck_assert_msg(last_frame.n_callbacks_logged == 1,
         "frame_callback: one callback should have been logged");
-    ck_assert_msg(last_frame.sender_id == 1219,
+    ck_assert_msg(last_frame.sender_id == 55286,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0xff00,
+    ck_assert_msg(last_frame.msg_type == 0xffff,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -177,10 +177,10 @@ START_TEST( test_auto_check_sbp_system_52 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_startup_t* check_msg = ( msg_startup_t *)((void *)last_msg.msg);
+    msg_heartbeat_t* check_msg = ( msg_heartbeat_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->reserved == 0, "incorrect value for reserved, expected 0, is %d", check_msg->reserved);
+    ck_assert_msg(check_msg->flags == 12800, "incorrect value for flags, expected 12800, is %d", check_msg->flags);
   }
   // Test successful parsing of a message
   {

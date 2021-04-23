@@ -221,10 +221,10 @@ tests:
     name: MsgObs
   msg_type: '0x4a'
   raw_packet: VUoAgfALmMriGQAAAABqCBDJZQ==
-  raw_json: '{"header":{"t":{"tow":434293400,"ns_residual":0,"wn":2154},"n_obs":32},"preamble":85,"msg_type":74,"sender":61569,"payload":"mMriGQAAAABqCBA=","crc":63725,"length":249}'
+  raw_json: '{"header":{"t":{"tow":434293400,"ns_residual":0,"wn":2154},"n_obs":16},"obs":[],"preamble":85,"msg_type":74,"sender":61569,"payload":"mMriGQAAAABqCBA=","crc":26057,"length":11}'
   sbp:
-    crc: '0xf50f'
-    length: 8
+    crc: '0x65c9'
+    length: 11
     payload: mMriGQAAAABqCBA=
     msg_type: '0x4a'
     preamble: '0x55'

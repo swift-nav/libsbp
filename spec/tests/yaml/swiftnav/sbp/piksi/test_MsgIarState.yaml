@@ -20,5 +20,108 @@ tests:
     payload: AQAAAA==
     preamble: '0x55'
     sender: '0xd7f6'
+
+- msg:
+    fields:
+      num_hyps: 0
+    module: sbp.piksi
+    name: MsgIarState
+  msg_type: '0x19'
+  raw_json: '{"sender": 1219, "msg_type": 25, "num_hyps": 0, "crc": 45074, "length":
+    4, "preamble": 85, "payload": "AAAAAA=="}'
+  raw_packet: VRkAwwQEAAAAABKw
+  sbp:
+    crc: '0xb012'
+    length: 4
+    msg_type: '0x19'
+    payload: AAAAAA==
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      num_hyps: 1
+    module: sbp.piksi
+    name: MsgIarState
+  msg_type: '0x19'
+  raw_json: '{"sender": 1219, "msg_type": 25, "num_hyps": 1, "crc": 50854, "length":
+    4, "preamble": 85, "payload": "AQAAAA=="}'
+  raw_packet: VRkAwwQEAQAAAKbG
+  sbp:
+    crc: '0xc6a6'
+    length: 4
+    msg_type: '0x19'
+    payload: AQAAAA==
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      num_hyps: 729
+    module: sbp.piksi
+    name: MsgIarState
+  msg_type: '0x19'
+  raw_json: '{"sender": 1219, "msg_type": 25, "num_hyps": 729, "crc": 34054, "length":
+    4, "preamble": 85, "payload": "2QIAAA=="}'
+  raw_packet: VRkAwwQE2QIAAAaF
+  sbp:
+    crc: '0x8506'
+    length: 4
+    msg_type: '0x19'
+    payload: 2QIAAA==
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      num_hyps: 728
+    module: sbp.piksi
+    name: MsgIarState
+  msg_type: '0x19'
+  raw_json: '{"sender": 1219, "msg_type": 25, "num_hyps": 728, "crc": 62386, "length":
+    4, "preamble": 85, "payload": "2AIAAA=="}'
+  raw_packet: VRkAwwQE2AIAALLz
+  sbp:
+    crc: '0xf3b2'
+    length: 4
+    msg_type: '0x19'
+    payload: 2AIAAA==
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      num_hyps: 727
+    module: sbp.piksi
+    name: MsgIarState
+  msg_type: '0x19'
+  raw_json: '{"sender": 1219, "msg_type": 25, "num_hyps": 727, "crc": 10076, "length":
+    4, "preamble": 85, "payload": "1wIAAA=="}'
+  raw_packet: VRkAwwQE1wIAAFwn
+  sbp:
+    crc: '0x275c'
+    length: 4
+    msg_type: '0x19'
+    payload: 1wIAAA==
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      num_hyps: 723
+    module: sbp.piksi
+    name: MsgIarState
+  msg_type: '0x19'
+  raw_json: '{"sender": 1219, "msg_type": 25, "num_hyps": 723, "crc": 60845, "length":
+    4, "preamble": 85, "payload": "0wIAAA=="}'
+  raw_packet: VRkAwwQE0wIAAK3t
+  sbp:
+    crc: '0xedad'
+    length: 4
+    msg_type: '0x19'
+    payload: 0wIAAA==
+    preamble: '0x55'
+    sender: '0x4c3'
+
 version: '0.51'
 ...

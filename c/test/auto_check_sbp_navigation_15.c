@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgPosECEFDepA.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgDopsDepA.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -119,26 +119,25 @@ START_TEST( test_auto_check_sbp_navigation_15 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x200, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x200, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x206, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x206, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,0,2,246,215,32,20,46,39,0,195,122,175,75,33,154,68,193,164,14,230,176,231,95,80,193,78,220,22,253,254,105,77,65,0,0,9,0,13,86, };
+    u8 encoded_frame[] = {85,6,2,246,215,14,8,48,39,0,180,0,190,0,170,0,160,0,150,0,121,170, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_pos_ecef_dep_a_t* test_msg = ( msg_pos_ecef_dep_a_t* )test_msg_storage;
+    msg_dops_dep_a_t* test_msg = ( msg_dops_dep_a_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    test_msg->accuracy = 0;
-    test_msg->flags = 0;
-    test_msg->n_sats = 9;
-    test_msg->tow = 2567700;
-    test_msg->x = -2700354.5912927105;
-    test_msg->y = -4292510.764041577;
-    test_msg->z = 3855357.977260149;
-    sbp_send_message(&sbp_state, 0x200, 55286, test_msg_len, test_msg_storage, &dummy_write);
+    test_msg->gdop = 180;
+    test_msg->hdop = 160;
+    test_msg->pdop = 190;
+    test_msg->tdop = 170;
+    test_msg->tow = 2568200;
+    test_msg->vdop = 150;
+    sbp_send_message(&sbp_state, 0x206, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -169,7 +168,7 @@ START_TEST( test_auto_check_sbp_navigation_15 )
         "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 55286,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x200,
+    ck_assert_msg(last_frame.msg_type == 0x206,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -183,16 +182,15 @@ START_TEST( test_auto_check_sbp_navigation_15 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_pos_ecef_dep_a_t* check_msg = ( msg_pos_ecef_dep_a_t *)((void *)last_msg.msg);
+    msg_dops_dep_a_t* check_msg = ( msg_dops_dep_a_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", check_msg->accuracy);
-    ck_assert_msg(check_msg->flags == 0, "incorrect value for flags, expected 0, is %d", check_msg->flags);
-    ck_assert_msg(check_msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", check_msg->n_sats);
-    ck_assert_msg(check_msg->tow == 2567700, "incorrect value for tow, expected 2567700, is %d", check_msg->tow);
-    ck_assert_msg((check_msg->x*100 - -2700354.59129*100) < 0.05, "incorrect value for x, expected -2700354.59129, is %f", check_msg->x);
-    ck_assert_msg((check_msg->y*100 - -4292510.76404*100) < 0.05, "incorrect value for y, expected -4292510.76404, is %f", check_msg->y);
-    ck_assert_msg((check_msg->z*100 - 3855357.97726*100) < 0.05, "incorrect value for z, expected 3855357.97726, is %f", check_msg->z);
+    ck_assert_msg(check_msg->gdop == 180, "incorrect value for gdop, expected 180, is %d", check_msg->gdop);
+    ck_assert_msg(check_msg->hdop == 160, "incorrect value for hdop, expected 160, is %d", check_msg->hdop);
+    ck_assert_msg(check_msg->pdop == 190, "incorrect value for pdop, expected 190, is %d", check_msg->pdop);
+    ck_assert_msg(check_msg->tdop == 170, "incorrect value for tdop, expected 170, is %d", check_msg->tdop);
+    ck_assert_msg(check_msg->tow == 2568200, "incorrect value for tow, expected 2568200, is %d", check_msg->tow);
+    ck_assert_msg(check_msg->vdop == 150, "incorrect value for vdop, expected 150, is %d", check_msg->vdop);
   }
   // Test successful parsing of a message
   {
@@ -205,26 +203,25 @@ START_TEST( test_auto_check_sbp_navigation_15 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x200, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x200, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x206, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x206, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,0,2,246,215,32,20,46,39,0,212,196,12,42,34,154,68,193,9,113,112,123,231,95,80,193,54,97,38,192,254,105,77,65,0,0,9,1,75,143, };
+    u8 encoded_frame[] = {85,6,2,246,215,14,240,51,39,0,180,0,190,0,170,0,160,0,150,0,78,169, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_pos_ecef_dep_a_t* test_msg = ( msg_pos_ecef_dep_a_t* )test_msg_storage;
+    msg_dops_dep_a_t* test_msg = ( msg_dops_dep_a_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    test_msg->accuracy = 0;
-    test_msg->flags = 1;
-    test_msg->n_sats = 9;
-    test_msg->tow = 2567700;
-    test_msg->x = -2700356.3285146747;
-    test_msg->y = -4292509.928737887;
-    test_msg->z = 3855357.5011712564;
-    sbp_send_message(&sbp_state, 0x200, 55286, test_msg_len, test_msg_storage, &dummy_write);
+    test_msg->gdop = 180;
+    test_msg->hdop = 160;
+    test_msg->pdop = 190;
+    test_msg->tdop = 170;
+    test_msg->tow = 2569200;
+    test_msg->vdop = 150;
+    sbp_send_message(&sbp_state, 0x206, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -255,7 +252,7 @@ START_TEST( test_auto_check_sbp_navigation_15 )
         "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 55286,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x200,
+    ck_assert_msg(last_frame.msg_type == 0x206,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -269,16 +266,15 @@ START_TEST( test_auto_check_sbp_navigation_15 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_pos_ecef_dep_a_t* check_msg = ( msg_pos_ecef_dep_a_t *)((void *)last_msg.msg);
+    msg_dops_dep_a_t* check_msg = ( msg_dops_dep_a_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", check_msg->accuracy);
-    ck_assert_msg(check_msg->flags == 1, "incorrect value for flags, expected 1, is %d", check_msg->flags);
-    ck_assert_msg(check_msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", check_msg->n_sats);
-    ck_assert_msg(check_msg->tow == 2567700, "incorrect value for tow, expected 2567700, is %d", check_msg->tow);
-    ck_assert_msg((check_msg->x*100 - -2700356.32851*100) < 0.05, "incorrect value for x, expected -2700356.32851, is %f", check_msg->x);
-    ck_assert_msg((check_msg->y*100 - -4292509.92874*100) < 0.05, "incorrect value for y, expected -4292509.92874, is %f", check_msg->y);
-    ck_assert_msg((check_msg->z*100 - 3855357.50117*100) < 0.05, "incorrect value for z, expected 3855357.50117, is %f", check_msg->z);
+    ck_assert_msg(check_msg->gdop == 180, "incorrect value for gdop, expected 180, is %d", check_msg->gdop);
+    ck_assert_msg(check_msg->hdop == 160, "incorrect value for hdop, expected 160, is %d", check_msg->hdop);
+    ck_assert_msg(check_msg->pdop == 190, "incorrect value for pdop, expected 190, is %d", check_msg->pdop);
+    ck_assert_msg(check_msg->tdop == 170, "incorrect value for tdop, expected 170, is %d", check_msg->tdop);
+    ck_assert_msg(check_msg->tow == 2569200, "incorrect value for tow, expected 2569200, is %d", check_msg->tow);
+    ck_assert_msg(check_msg->vdop == 150, "incorrect value for vdop, expected 150, is %d", check_msg->vdop);
   }
   // Test successful parsing of a message
   {
@@ -291,26 +287,25 @@ START_TEST( test_auto_check_sbp_navigation_15 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x200, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x200, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x206, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x206, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,0,2,246,215,32,120,46,39,0,112,97,39,190,34,154,68,193,230,43,119,115,231,95,80,193,50,199,76,66,254,105,77,65,0,0,9,0,204,113, };
+    u8 encoded_frame[] = {85,6,2,246,215,14,216,55,39,0,180,0,190,0,170,0,160,0,150,0,71,218, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_pos_ecef_dep_a_t* test_msg = ( msg_pos_ecef_dep_a_t* )test_msg_storage;
+    msg_dops_dep_a_t* test_msg = ( msg_dops_dep_a_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    test_msg->accuracy = 0;
-    test_msg->flags = 0;
-    test_msg->n_sats = 9;
-    test_msg->tow = 2567800;
-    test_msg->x = -2700357.485576801;
-    test_msg->y = -4292509.80414865;
-    test_msg->z = 3855356.517968082;
-    sbp_send_message(&sbp_state, 0x200, 55286, test_msg_len, test_msg_storage, &dummy_write);
+    test_msg->gdop = 180;
+    test_msg->hdop = 160;
+    test_msg->pdop = 190;
+    test_msg->tdop = 170;
+    test_msg->tow = 2570200;
+    test_msg->vdop = 150;
+    sbp_send_message(&sbp_state, 0x206, 55286, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -341,7 +336,7 @@ START_TEST( test_auto_check_sbp_navigation_15 )
         "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 55286,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x200,
+    ck_assert_msg(last_frame.msg_type == 0x206,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -355,16 +350,15 @@ START_TEST( test_auto_check_sbp_navigation_15 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_pos_ecef_dep_a_t* check_msg = ( msg_pos_ecef_dep_a_t *)((void *)last_msg.msg);
+    msg_dops_dep_a_t* check_msg = ( msg_dops_dep_a_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", check_msg->accuracy);
-    ck_assert_msg(check_msg->flags == 0, "incorrect value for flags, expected 0, is %d", check_msg->flags);
-    ck_assert_msg(check_msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", check_msg->n_sats);
-    ck_assert_msg(check_msg->tow == 2567800, "incorrect value for tow, expected 2567800, is %d", check_msg->tow);
-    ck_assert_msg((check_msg->x*100 - -2700357.48558*100) < 0.05, "incorrect value for x, expected -2700357.48558, is %f", check_msg->x);
-    ck_assert_msg((check_msg->y*100 - -4292509.80415*100) < 0.05, "incorrect value for y, expected -4292509.80415, is %f", check_msg->y);
-    ck_assert_msg((check_msg->z*100 - 3855356.51797*100) < 0.05, "incorrect value for z, expected 3855356.51797, is %f", check_msg->z);
+    ck_assert_msg(check_msg->gdop == 180, "incorrect value for gdop, expected 180, is %d", check_msg->gdop);
+    ck_assert_msg(check_msg->hdop == 160, "incorrect value for hdop, expected 160, is %d", check_msg->hdop);
+    ck_assert_msg(check_msg->pdop == 190, "incorrect value for pdop, expected 190, is %d", check_msg->pdop);
+    ck_assert_msg(check_msg->tdop == 170, "incorrect value for tdop, expected 170, is %d", check_msg->tdop);
+    ck_assert_msg(check_msg->tow == 2570200, "incorrect value for tow, expected 2570200, is %d", check_msg->tow);
+    ck_assert_msg(check_msg->vdop == 150, "incorrect value for vdop, expected 150, is %d", check_msg->vdop);
   }
   // Test successful parsing of a message
   {
@@ -377,26 +371,25 @@ START_TEST( test_auto_check_sbp_navigation_15 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x200, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x200, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x206, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x206, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,0,2,246,215,32,120,46,39,0,194,82,121,4,34,154,68,193,223,186,1,140,231,95,80,193,176,152,147,181,254,105,77,65,0,0,9,1,97,71, };
+    u8 encoded_frame[] = {85,6,2,195,4,14,212,157,67,24,247,0,215,0,123,0,17,1,44,0,206,21, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_pos_ecef_dep_a_t* test_msg = ( msg_pos_ecef_dep_a_t* )test_msg_storage;
+    msg_dops_dep_a_t* test_msg = ( msg_dops_dep_a_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    test_msg->accuracy = 0;
-    test_msg->flags = 1;
-    test_msg->n_sats = 9;
-    test_msg->tow = 2567800;
-    test_msg->x = -2700356.0349524925;
-    test_msg->y = -4292510.187605589;
-    test_msg->z = 3855357.4185667858;
-    sbp_send_message(&sbp_state, 0x200, 55286, test_msg_len, test_msg_storage, &dummy_write);
+    test_msg->gdop = 247;
+    test_msg->hdop = 273;
+    test_msg->pdop = 215;
+    test_msg->tdop = 123;
+    test_msg->tow = 407084500;
+    test_msg->vdop = 44;
+    sbp_send_message(&sbp_state, 0x206, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -413,7 +406,7 @@ START_TEST( test_auto_check_sbp_navigation_15 )
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
         "msg_callback: one callback should have been logged");
-    ck_assert_msg(last_msg.sender_id == 55286,
+    ck_assert_msg(last_msg.sender_id == 1219,
         "msg_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
         "msg_callback: len decoded incorrectly");
@@ -425,9 +418,9 @@ START_TEST( test_auto_check_sbp_navigation_15 )
 
     ck_assert_msg(last_frame.n_callbacks_logged == 1,
         "frame_callback: one callback should have been logged");
-    ck_assert_msg(last_frame.sender_id == 55286,
+    ck_assert_msg(last_frame.sender_id == 1219,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x200,
+    ck_assert_msg(last_frame.msg_type == 0x206,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -441,16 +434,15 @@ START_TEST( test_auto_check_sbp_navigation_15 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_pos_ecef_dep_a_t* check_msg = ( msg_pos_ecef_dep_a_t *)((void *)last_msg.msg);
+    msg_dops_dep_a_t* check_msg = ( msg_dops_dep_a_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", check_msg->accuracy);
-    ck_assert_msg(check_msg->flags == 1, "incorrect value for flags, expected 1, is %d", check_msg->flags);
-    ck_assert_msg(check_msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", check_msg->n_sats);
-    ck_assert_msg(check_msg->tow == 2567800, "incorrect value for tow, expected 2567800, is %d", check_msg->tow);
-    ck_assert_msg((check_msg->x*100 - -2700356.03495*100) < 0.05, "incorrect value for x, expected -2700356.03495, is %f", check_msg->x);
-    ck_assert_msg((check_msg->y*100 - -4292510.18761*100) < 0.05, "incorrect value for y, expected -4292510.18761, is %f", check_msg->y);
-    ck_assert_msg((check_msg->z*100 - 3855357.41857*100) < 0.05, "incorrect value for z, expected 3855357.41857, is %f", check_msg->z);
+    ck_assert_msg(check_msg->gdop == 247, "incorrect value for gdop, expected 247, is %d", check_msg->gdop);
+    ck_assert_msg(check_msg->hdop == 273, "incorrect value for hdop, expected 273, is %d", check_msg->hdop);
+    ck_assert_msg(check_msg->pdop == 215, "incorrect value for pdop, expected 215, is %d", check_msg->pdop);
+    ck_assert_msg(check_msg->tdop == 123, "incorrect value for tdop, expected 123, is %d", check_msg->tdop);
+    ck_assert_msg(check_msg->tow == 407084500, "incorrect value for tow, expected 407084500, is %d", check_msg->tow);
+    ck_assert_msg(check_msg->vdop == 44, "incorrect value for vdop, expected 44, is %d", check_msg->vdop);
   }
   // Test successful parsing of a message
   {
@@ -463,26 +455,25 @@ START_TEST( test_auto_check_sbp_navigation_15 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x200, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x200, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x206, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x206, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,0,2,246,215,32,220,46,39,0,216,41,227,254,33,154,68,193,9,151,154,124,231,95,80,193,1,183,214,139,255,105,77,65,0,0,9,0,7,98, };
+    u8 encoded_frame[] = {85,6,2,195,4,14,0,0,0,0,255,255,255,255,0,0,0,0,0,0,146,12, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_pos_ecef_dep_a_t* test_msg = ( msg_pos_ecef_dep_a_t* )test_msg_storage;
+    msg_dops_dep_a_t* test_msg = ( msg_dops_dep_a_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    test_msg->accuracy = 0;
-    test_msg->flags = 0;
-    test_msg->n_sats = 9;
-    test_msg->tow = 2567900;
-    test_msg->x = -2700355.9913074784;
-    test_msg->y = -4292509.946935424;
-    test_msg->z = 3855359.0924900775;
-    sbp_send_message(&sbp_state, 0x200, 55286, test_msg_len, test_msg_storage, &dummy_write);
+    test_msg->gdop = 65535;
+    test_msg->hdop = 0;
+    test_msg->pdop = 65535;
+    test_msg->tdop = 0;
+    test_msg->tow = 0;
+    test_msg->vdop = 0;
+    sbp_send_message(&sbp_state, 0x206, 1219, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -499,7 +490,7 @@ START_TEST( test_auto_check_sbp_navigation_15 )
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
         "msg_callback: one callback should have been logged");
-    ck_assert_msg(last_msg.sender_id == 55286,
+    ck_assert_msg(last_msg.sender_id == 1219,
         "msg_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
         "msg_callback: len decoded incorrectly");
@@ -511,9 +502,9 @@ START_TEST( test_auto_check_sbp_navigation_15 )
 
     ck_assert_msg(last_frame.n_callbacks_logged == 1,
         "frame_callback: one callback should have been logged");
-    ck_assert_msg(last_frame.sender_id == 55286,
+    ck_assert_msg(last_frame.sender_id == 1219,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0x200,
+    ck_assert_msg(last_frame.msg_type == 0x206,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -527,16 +518,351 @@ START_TEST( test_auto_check_sbp_navigation_15 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_pos_ecef_dep_a_t* check_msg = ( msg_pos_ecef_dep_a_t *)((void *)last_msg.msg);
+    msg_dops_dep_a_t* check_msg = ( msg_dops_dep_a_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", check_msg->accuracy);
-    ck_assert_msg(check_msg->flags == 0, "incorrect value for flags, expected 0, is %d", check_msg->flags);
-    ck_assert_msg(check_msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", check_msg->n_sats);
-    ck_assert_msg(check_msg->tow == 2567900, "incorrect value for tow, expected 2567900, is %d", check_msg->tow);
-    ck_assert_msg((check_msg->x*100 - -2700355.99131*100) < 0.05, "incorrect value for x, expected -2700355.99131, is %f", check_msg->x);
-    ck_assert_msg((check_msg->y*100 - -4292509.94694*100) < 0.05, "incorrect value for y, expected -4292509.94694, is %f", check_msg->y);
-    ck_assert_msg((check_msg->z*100 - 3855359.09249*100) < 0.05, "incorrect value for z, expected 3855359.09249, is %f", check_msg->z);
+    ck_assert_msg(check_msg->gdop == 65535, "incorrect value for gdop, expected 65535, is %d", check_msg->gdop);
+    ck_assert_msg(check_msg->hdop == 0, "incorrect value for hdop, expected 0, is %d", check_msg->hdop);
+    ck_assert_msg(check_msg->pdop == 65535, "incorrect value for pdop, expected 65535, is %d", check_msg->pdop);
+    ck_assert_msg(check_msg->tdop == 0, "incorrect value for tdop, expected 0, is %d", check_msg->tdop);
+    ck_assert_msg(check_msg->tow == 0, "incorrect value for tow, expected 0, is %d", check_msg->tow);
+    ck_assert_msg(check_msg->vdop == 0, "incorrect value for vdop, expected 0, is %d", check_msg->vdop);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_callback(&sbp_state, 0x206, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x206, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+
+    u8 encoded_frame[] = {85,6,2,195,4,14,128,165,68,24,92,1,56,1,155,0,125,2,113,0,129,93, };
+
+    dummy_reset();
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_dops_dep_a_t* test_msg = ( msg_dops_dep_a_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->gdop = 348;
+    test_msg->hdop = 637;
+    test_msg->pdop = 312;
+    test_msg->tdop = 155;
+    test_msg->tow = 407152000;
+    test_msg->vdop = 113;
+    sbp_send_message(&sbp_state, 0x206, 1219, test_msg_len, test_msg_storage, &dummy_write);
+
+    ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_msg.n_callbacks_logged == 1,
+        "msg_callback: one callback should have been logged");
+    ck_assert_msg(last_msg.sender_id == 1219,
+        "msg_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
+        "msg_callback: len decoded incorrectly");
+    ck_assert_msg(memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8)
+          == 0,
+        "msg_callback: test data decoded incorrectly");
+    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+        "frame_callback: context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+        "frame_callback: one callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 1219,
+        "frame_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.msg_type == 0x206,
+        "frame_callback: msg_type decoded incorrectly");
+    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
+        "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
+        "frame_callback: test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
+        "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame_callback: frame decoded incorrectly");
+    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+        "frame_callback: context pointer incorrectly passed");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_dops_dep_a_t* check_msg = ( msg_dops_dep_a_t *)((void *)last_msg.msg);
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->gdop == 348, "incorrect value for gdop, expected 348, is %d", check_msg->gdop);
+    ck_assert_msg(check_msg->hdop == 637, "incorrect value for hdop, expected 637, is %d", check_msg->hdop);
+    ck_assert_msg(check_msg->pdop == 312, "incorrect value for pdop, expected 312, is %d", check_msg->pdop);
+    ck_assert_msg(check_msg->tdop == 155, "incorrect value for tdop, expected 155, is %d", check_msg->tdop);
+    ck_assert_msg(check_msg->tow == 407152000, "incorrect value for tow, expected 407152000, is %d", check_msg->tow);
+    ck_assert_msg(check_msg->vdop == 113, "incorrect value for vdop, expected 113, is %d", check_msg->vdop);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_callback(&sbp_state, 0x206, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x206, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+
+    u8 encoded_frame[] = {85,6,2,195,4,14,104,169,68,24,92,1,55,1,155,0,125,2,113,0,209,128, };
+
+    dummy_reset();
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_dops_dep_a_t* test_msg = ( msg_dops_dep_a_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->gdop = 348;
+    test_msg->hdop = 637;
+    test_msg->pdop = 311;
+    test_msg->tdop = 155;
+    test_msg->tow = 407153000;
+    test_msg->vdop = 113;
+    sbp_send_message(&sbp_state, 0x206, 1219, test_msg_len, test_msg_storage, &dummy_write);
+
+    ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_msg.n_callbacks_logged == 1,
+        "msg_callback: one callback should have been logged");
+    ck_assert_msg(last_msg.sender_id == 1219,
+        "msg_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
+        "msg_callback: len decoded incorrectly");
+    ck_assert_msg(memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8)
+          == 0,
+        "msg_callback: test data decoded incorrectly");
+    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+        "frame_callback: context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+        "frame_callback: one callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 1219,
+        "frame_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.msg_type == 0x206,
+        "frame_callback: msg_type decoded incorrectly");
+    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
+        "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
+        "frame_callback: test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
+        "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame_callback: frame decoded incorrectly");
+    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+        "frame_callback: context pointer incorrectly passed");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_dops_dep_a_t* check_msg = ( msg_dops_dep_a_t *)((void *)last_msg.msg);
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->gdop == 348, "incorrect value for gdop, expected 348, is %d", check_msg->gdop);
+    ck_assert_msg(check_msg->hdop == 637, "incorrect value for hdop, expected 637, is %d", check_msg->hdop);
+    ck_assert_msg(check_msg->pdop == 311, "incorrect value for pdop, expected 311, is %d", check_msg->pdop);
+    ck_assert_msg(check_msg->tdop == 155, "incorrect value for tdop, expected 155, is %d", check_msg->tdop);
+    ck_assert_msg(check_msg->tow == 407153000, "incorrect value for tow, expected 407153000, is %d", check_msg->tow);
+    ck_assert_msg(check_msg->vdop == 113, "incorrect value for vdop, expected 113, is %d", check_msg->vdop);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_callback(&sbp_state, 0x206, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x206, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+
+    u8 encoded_frame[] = {85,6,2,195,4,14,80,173,68,24,92,1,55,1,155,0,125,2,112,0,30,6, };
+
+    dummy_reset();
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_dops_dep_a_t* test_msg = ( msg_dops_dep_a_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->gdop = 348;
+    test_msg->hdop = 637;
+    test_msg->pdop = 311;
+    test_msg->tdop = 155;
+    test_msg->tow = 407154000;
+    test_msg->vdop = 112;
+    sbp_send_message(&sbp_state, 0x206, 1219, test_msg_len, test_msg_storage, &dummy_write);
+
+    ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_msg.n_callbacks_logged == 1,
+        "msg_callback: one callback should have been logged");
+    ck_assert_msg(last_msg.sender_id == 1219,
+        "msg_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
+        "msg_callback: len decoded incorrectly");
+    ck_assert_msg(memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8)
+          == 0,
+        "msg_callback: test data decoded incorrectly");
+    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+        "frame_callback: context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+        "frame_callback: one callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 1219,
+        "frame_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.msg_type == 0x206,
+        "frame_callback: msg_type decoded incorrectly");
+    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
+        "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
+        "frame_callback: test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
+        "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame_callback: frame decoded incorrectly");
+    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+        "frame_callback: context pointer incorrectly passed");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_dops_dep_a_t* check_msg = ( msg_dops_dep_a_t *)((void *)last_msg.msg);
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->gdop == 348, "incorrect value for gdop, expected 348, is %d", check_msg->gdop);
+    ck_assert_msg(check_msg->hdop == 637, "incorrect value for hdop, expected 637, is %d", check_msg->hdop);
+    ck_assert_msg(check_msg->pdop == 311, "incorrect value for pdop, expected 311, is %d", check_msg->pdop);
+    ck_assert_msg(check_msg->tdop == 155, "incorrect value for tdop, expected 155, is %d", check_msg->tdop);
+    ck_assert_msg(check_msg->tow == 407154000, "incorrect value for tow, expected 407154000, is %d", check_msg->tow);
+    ck_assert_msg(check_msg->vdop == 112, "incorrect value for vdop, expected 112, is %d", check_msg->vdop);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_callback(&sbp_state, 0x206, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x206, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+
+    u8 encoded_frame[] = {85,6,2,195,4,14,56,177,68,24,92,1,55,1,155,0,125,2,112,0,70,67, };
+
+    dummy_reset();
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_dops_dep_a_t* test_msg = ( msg_dops_dep_a_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->gdop = 348;
+    test_msg->hdop = 637;
+    test_msg->pdop = 311;
+    test_msg->tdop = 155;
+    test_msg->tow = 407155000;
+    test_msg->vdop = 112;
+    sbp_send_message(&sbp_state, 0x206, 1219, test_msg_len, test_msg_storage, &dummy_write);
+
+    ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_msg.n_callbacks_logged == 1,
+        "msg_callback: one callback should have been logged");
+    ck_assert_msg(last_msg.sender_id == 1219,
+        "msg_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
+        "msg_callback: len decoded incorrectly");
+    ck_assert_msg(memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8)
+          == 0,
+        "msg_callback: test data decoded incorrectly");
+    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+        "frame_callback: context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+        "frame_callback: one callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 1219,
+        "frame_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.msg_type == 0x206,
+        "frame_callback: msg_type decoded incorrectly");
+    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
+        "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
+        "frame_callback: test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
+        "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame_callback: frame decoded incorrectly");
+    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+        "frame_callback: context pointer incorrectly passed");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_dops_dep_a_t* check_msg = ( msg_dops_dep_a_t *)((void *)last_msg.msg);
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->gdop == 348, "incorrect value for gdop, expected 348, is %d", check_msg->gdop);
+    ck_assert_msg(check_msg->hdop == 637, "incorrect value for hdop, expected 637, is %d", check_msg->hdop);
+    ck_assert_msg(check_msg->pdop == 311, "incorrect value for pdop, expected 311, is %d", check_msg->pdop);
+    ck_assert_msg(check_msg->tdop == 155, "incorrect value for tdop, expected 155, is %d", check_msg->tdop);
+    ck_assert_msg(check_msg->tow == 407155000, "incorrect value for tow, expected 407155000, is %d", check_msg->tow);
+    ck_assert_msg(check_msg->vdop == 112, "incorrect value for vdop, expected 112, is %d", check_msg->vdop);
   }
 }
 END_TEST

@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/test_system.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgGroupMeta.yaml by generate.py. Do not modify by hand!
 
 use sbp::iter_messages;
 use sbp::messages::SBPMessage;
@@ -23,7 +23,9 @@ use std::io::Cursor;
 #[test]
 fn test_auto_check_sbp_system_51() {
     {
-        let mut payload = Cursor::new(vec![85, 0, 255, 195, 4, 4, 0, 0, 0, 0, 127, 181]);
+        let mut payload = Cursor::new(vec![
+            85, 10, 255, 238, 238, 9, 1, 2, 3, 10, 255, 10, 2, 2, 255, 2, 14,
+        ]);
 
         // Test the round trip payload parsing
         let sbp_msg = {
@@ -33,61 +35,51 @@ fn test_auto_check_sbp_system_51() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgStartup(msg) => {
+            sbp::messages::SBP::MsgGroupMeta(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0xff00,
-                    "Incorrect message type, expected 0xff00, is {}",
+                    0xFF0A,
+                    "Incorrect message type, expected 0xFF0A, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
+                    sender_id, 0xEEEE,
+                    "incorrect sender id, expected 0xEEEE, is {}",
                     sender_id
                 );
                 assert_eq!(
-                    msg.reserved, 0,
-                    "incorrect value for reserved, expected 0, is {}",
-                    msg.reserved
-                );
-            }
-            _ => panic!("Invalid message type! Expected a MsgStartup"),
-        };
-        let frame = sbp_msg.to_frame().unwrap();
-        assert_eq!(frame, payload.into_inner());
-    }
-    {
-        let mut payload = Cursor::new(vec![85, 255, 255, 195, 4, 4, 0, 0, 0, 0, 66, 57]);
-
-        // Test the round trip payload parsing
-        let sbp_msg = {
-            let mut msgs = iter_messages(&mut payload);
-            msgs.next()
-                .expect("no message found")
-                .expect("failed to parse message")
-        };
-        match &sbp_msg {
-            sbp::messages::SBP::MsgHeartbeat(msg) => {
-                assert_eq!(
-                    msg.get_message_type(),
-                    0xffff,
-                    "Incorrect message type, expected 0xffff, is {}",
-                    msg.get_message_type()
-                );
-                let sender_id = msg.get_sender_id().unwrap();
-                assert_eq!(
-                    sender_id, 0x4c3,
-                    "incorrect sender id, expected 0x4c3, is {}",
-                    sender_id
-                );
-                assert_eq!(
-                    msg.flags, 0,
-                    "incorrect value for flags, expected 0, is {}",
+                    msg.flags, 2,
+                    "incorrect value for flags, expected 2, is {}",
                     msg.flags
                 );
+                assert_eq!(
+                    msg.group_id, 1,
+                    "incorrect value for group_id, expected 1, is {}",
+                    msg.group_id
+                );
+                assert_eq!(
+                    msg.group_msgs[0], 65290,
+                    "incorrect value for group_msgs[0], expected 65290, is {}",
+                    msg.group_msgs[0]
+                );
+                assert_eq!(
+                    msg.group_msgs[1], 522,
+                    "incorrect value for group_msgs[1], expected 522, is {}",
+                    msg.group_msgs[1]
+                );
+                assert_eq!(
+                    msg.group_msgs[2], 65282,
+                    "incorrect value for group_msgs[2], expected 65282, is {}",
+                    msg.group_msgs[2]
+                );
+                assert_eq!(
+                    msg.n_group_msgs, 3,
+                    "incorrect value for n_group_msgs, expected 3, is {}",
+                    msg.n_group_msgs
+                );
             }
-            _ => panic!("Invalid message type! Expected a MsgHeartbeat"),
+            _ => panic!("Invalid message type! Expected a MsgGroupMeta"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());

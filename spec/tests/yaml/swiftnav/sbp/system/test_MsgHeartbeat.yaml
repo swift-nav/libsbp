@@ -20,5 +20,23 @@ tests:
     payload: ADIAAA==
     preamble: '0x55'
     sender: '0xd7f6'
+
+- msg:
+    fields:
+      flags: 0
+    module: sbp.system
+    name: MsgHeartbeat
+  msg_type: '0xffff'
+  raw_json: '{"sender": 1219, "msg_type": 65535, "crc": 14658, "length": 4, "flags":
+    0, "preamble": 85, "payload": "AAAAAA=="}'
+  raw_packet: Vf//wwQEAAAAAEI5
+  sbp:
+    crc: '0x3942'
+    length: 4
+    msg_type: '0xffff'
+    payload: AAAAAA==
+    preamble: '0x55'
+    sender: '0x4c3'
+
 version: '0.51'
 ...

@@ -123,5 +123,150 @@ tests:
     payload: pC8nAB8LAABd9v//EP3//wAACQA=
     preamble: '0x55'
     sender: '0xd7f6'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 8
+      tow: 407084500
+      x: 24
+      y: -11
+      z: -37
+    module: sbp.navigation
+    name: MsgVelECEFDepA
+  msg_type: '0x204'
+  raw_json: '{"n_sats": 8, "sender": 1219, "msg_type": 516, "tow": 407084500, "crc":
+    65348, "length": 20, "flags": 0, "y": -11, "x": 24, "z": -37, "preamble": 85,
+    "payload": "1J1DGBgAAAD1////2////wAACAA=", "accuracy": 0}'
+  raw_packet: VQQCwwQU1J1DGBgAAAD1////2////wAACABE/w==
+  sbp:
+    crc: '0xff44'
+    length: 20
+    msg_type: '0x204'
+    payload: 1J1DGBgAAAD1////2////wAACAA=
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 8
+      tow: 407084600
+      x: 4
+      y: -22
+      z: 18
+    module: sbp.navigation
+    name: MsgVelECEFDepA
+  msg_type: '0x204'
+  raw_json: '{"n_sats": 8, "sender": 1219, "msg_type": 516, "tow": 407084600, "crc":
+    35030, "length": 20, "flags": 0, "y": -22, "x": 4, "z": 18, "preamble": 85, "payload":
+    "OJ5DGAQAAADq////EgAAAAAACAA=", "accuracy": 0}'
+  raw_packet: VQQCwwQUOJ5DGAQAAADq////EgAAAAAACADWiA==
+  sbp:
+    crc: '0x88d6'
+    length: 20
+    msg_type: '0x204'
+    payload: OJ5DGAQAAADq////EgAAAAAACAA=
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 8
+      tow: 407084700
+      x: -26
+      y: 4
+      z: 1
+    module: sbp.navigation
+    name: MsgVelECEFDepA
+  msg_type: '0x204'
+  raw_json: '{"n_sats": 8, "sender": 1219, "msg_type": 516, "tow": 407084700, "crc":
+    40826, "length": 20, "flags": 0, "y": 4, "x": -26, "z": 1, "preamble": 85, "payload":
+    "nJ5DGOb///8EAAAAAQAAAAAACAA=", "accuracy": 0}'
+  raw_packet: VQQCwwQUnJ5DGOb///8EAAAAAQAAAAAACAB6nw==
+  sbp:
+    crc: '0x9f7a'
+    length: 20
+    msg_type: '0x204'
+    payload: nJ5DGOb///8EAAAAAQAAAAAACAA=
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 8
+      tow: 407084800
+      x: -9
+      y: -19
+      z: 28
+    module: sbp.navigation
+    name: MsgVelECEFDepA
+  msg_type: '0x204'
+  raw_json: '{"n_sats": 8, "sender": 1219, "msg_type": 516, "tow": 407084800, "crc":
+    37608, "length": 20, "flags": 0, "y": -19, "x": -9, "z": 28, "preamble": 85, "payload":
+    "AJ9DGPf////t////HAAAAAAACAA=", "accuracy": 0}'
+  raw_packet: VQQCwwQUAJ9DGPf////t////HAAAAAAACADokg==
+  sbp:
+    crc: '0x92e8'
+    length: 20
+    msg_type: '0x204'
+    payload: AJ9DGPf////t////HAAAAAAACAA=
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 8
+      tow: 407084900
+      x: -1
+      y: 2
+      z: -11
+    module: sbp.navigation
+    name: MsgVelECEFDepA
+  msg_type: '0x204'
+  raw_json: '{"n_sats": 8, "sender": 1219, "msg_type": 516, "tow": 407084900, "crc":
+    61099, "length": 20, "flags": 0, "y": 2, "x": -1, "z": -11, "preamble": 85, "payload":
+    "ZJ9DGP////8CAAAA9f///wAACAA=", "accuracy": 0}'
+  raw_packet: VQQCwwQUZJ9DGP////8CAAAA9f///wAACACr7g==
+  sbp:
+    crc: '0xeeab'
+    length: 20
+    msg_type: '0x204'
+    payload: ZJ9DGP////8CAAAA9f///wAACAA=
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 5
+      tow: 407151150
+      x: -49
+      y: -71
+      z: 65
+    module: sbp.navigation
+    name: MsgVelECEFDepA
+  msg_type: '0x204'
+  raw_json: '{"n_sats": 5, "sender": 1219, "msg_type": 516, "tow": 407151150, "crc":
+    39506, "length": 20, "flags": 0, "y": -71, "x": -49, "z": 65, "preamble": 85,
+    "payload": "LqJEGM////+5////QQAAAAAABQA=", "accuracy": 0}'
+  raw_packet: VQQCwwQULqJEGM////+5////QQAAAAAABQBSmg==
+  sbp:
+    crc: '0x9a52'
+    length: 20
+    msg_type: '0x204'
+    payload: LqJEGM////+5////QQAAAAAABQA=
+    preamble: '0x55'
+    sender: '0x4c3'
+
 version: '0.51'
 ...
