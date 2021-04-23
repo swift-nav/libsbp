@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgInsStatus.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgInsUpdates.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -119,20 +119,26 @@ START_TEST( test_auto_check_sbp_system_72 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xff03, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0xff03, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0xff06, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0xff06, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,3,255,21,3,4,9,0,0,32,36,103, };
+    u8 encoded_frame[] = {85,6,255,21,3,10,84,229,17,30,0,0,0,0,0,0,81,63, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_ins_status_t* test_msg = ( msg_ins_status_t* )test_msg_storage;
+    msg_ins_updates_t* test_msg = ( msg_ins_updates_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    test_msg->flags = 536870921;
-    sbp_send_message(&sbp_state, 0xff03, 789, test_msg_len, test_msg_storage, &dummy_write);
+    test_msg->gnsspos = 0;
+    test_msg->gnssvel = 0;
+    test_msg->nhc = 0;
+    test_msg->speed = 0;
+    test_msg->tow = 504489300;
+    test_msg->wheelticks = 0;
+    test_msg->zerovel = 0;
+    sbp_send_message(&sbp_state, 0xff06, 789, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -163,7 +169,7 @@ START_TEST( test_auto_check_sbp_system_72 )
         "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 789,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0xff03,
+    ck_assert_msg(last_frame.msg_type == 0xff06,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -177,10 +183,16 @@ START_TEST( test_auto_check_sbp_system_72 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_ins_status_t* check_msg = ( msg_ins_status_t *)((void *)last_msg.msg);
+    msg_ins_updates_t* check_msg = ( msg_ins_updates_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->flags == 536870921, "incorrect value for flags, expected 536870921, is %d", check_msg->flags);
+    ck_assert_msg(check_msg->gnsspos == 0, "incorrect value for gnsspos, expected 0, is %d", check_msg->gnsspos);
+    ck_assert_msg(check_msg->gnssvel == 0, "incorrect value for gnssvel, expected 0, is %d", check_msg->gnssvel);
+    ck_assert_msg(check_msg->nhc == 0, "incorrect value for nhc, expected 0, is %d", check_msg->nhc);
+    ck_assert_msg(check_msg->speed == 0, "incorrect value for speed, expected 0, is %d", check_msg->speed);
+    ck_assert_msg(check_msg->tow == 504489300, "incorrect value for tow, expected 504489300, is %d", check_msg->tow);
+    ck_assert_msg(check_msg->wheelticks == 0, "incorrect value for wheelticks, expected 0, is %d", check_msg->wheelticks);
+    ck_assert_msg(check_msg->zerovel == 0, "incorrect value for zerovel, expected 0, is %d", check_msg->zerovel);
   }
 }
 END_TEST

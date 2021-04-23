@@ -94,17 +94,16 @@ int main(void)
   srunner_add_suite(sr, auto_check_sbp_sbas_65_suite());
   srunner_add_suite(sr, auto_check_sbp_settings_66_suite());
   srunner_add_suite(sr, auto_check_sbp_settings_67_suite());
-  srunner_add_suite(sr, auto_check_sbp_solution_meta_68_suite());
+  srunner_add_suite(sr, auto_check_sbp_system_68_suite());
   srunner_add_suite(sr, auto_check_sbp_system_69_suite());
   srunner_add_suite(sr, auto_check_sbp_system_70_suite());
   srunner_add_suite(sr, auto_check_sbp_system_71_suite());
   srunner_add_suite(sr, auto_check_sbp_system_72_suite());
   srunner_add_suite(sr, auto_check_sbp_system_73_suite());
-  srunner_add_suite(sr, auto_check_sbp_system_74_suite());
+  srunner_add_suite(sr, auto_check_sbp_tracking_74_suite());
   srunner_add_suite(sr, auto_check_sbp_tracking_75_suite());
   srunner_add_suite(sr, auto_check_sbp_tracking_76_suite());
-  srunner_add_suite(sr, auto_check_sbp_tracking_77_suite());
-  srunner_add_suite(sr, auto_check_sbp_vehicle_78_suite());
+  srunner_add_suite(sr, auto_check_sbp_vehicle_77_suite());
 
   srunner_set_fork_status(sr, CK_NOFORK);
   srunner_run_all(sr, CK_NORMAL);

@@ -10,7 +10,7 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgDgnssStatus.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgGroupMeta.yaml by generate.py. Do not modify by hand!
 
 #include <check.h>
 #include <stdio.h> // for debugging
@@ -119,29 +119,40 @@ START_TEST( test_auto_check_sbp_system_69 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0xff02, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0xff02, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0xFF0A, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0xFF0A, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,2,255,66,0,11,0,50,0,12,83,107,121,108,97,114,107,202,1, };
+    u8 encoded_frame[] = {85,10,255,238,238,9,1,2,3,10,255,10,2,2,255,2,14, };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_dgnss_status_t* test_msg = ( msg_dgnss_status_t* )test_msg_storage;
+    msg_group_meta_t* test_msg = ( msg_group_meta_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
-    test_msg->flags = 0;
-    test_msg->latency = 50;
-    test_msg->num_signals = 12;
-    {
-      const char assign_string[] = { (char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107 };
-      memcpy(test_msg->source, assign_string, sizeof(assign_string));
-      if (sizeof(test_msg->source) == 0) {
-        test_msg_len += sizeof(assign_string);
-      }
+    test_msg->flags = 2;
+    test_msg->group_id = 1;
+    if (sizeof(test_msg->group_msgs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
-    sbp_send_message(&sbp_state, 0xff02, 66, test_msg_len, test_msg_storage, &dummy_write);
+    
+    test_msg->group_msgs[0] = 65290;
+    if (sizeof(test_msg->group_msgs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
+    }
+    
+    test_msg->group_msgs[1] = 522;
+    if (sizeof(test_msg->group_msgs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
+    }
+    
+    test_msg->group_msgs[2] = 65282;
+    test_msg->n_group_msgs = 3;
+    sbp_send_message(&sbp_state, 0xFF0A, 61166, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
@@ -158,7 +169,7 @@ START_TEST( test_auto_check_sbp_system_69 )
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
         "msg_callback: one callback should have been logged");
-    ck_assert_msg(last_msg.sender_id == 66,
+    ck_assert_msg(last_msg.sender_id == 61166,
         "msg_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
         "msg_callback: len decoded incorrectly");
@@ -170,9 +181,9 @@ START_TEST( test_auto_check_sbp_system_69 )
 
     ck_assert_msg(last_frame.n_callbacks_logged == 1,
         "frame_callback: one callback should have been logged");
-    ck_assert_msg(last_frame.sender_id == 66,
+    ck_assert_msg(last_frame.sender_id == 61166,
         "frame_callback: sender_id decoded incorrectly");
-    ck_assert_msg(last_frame.msg_type == 0xff02,
+    ck_assert_msg(last_frame.msg_type == 0xFF0A,
         "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
         "frame_callback: msg_len decoded incorrectly");
@@ -186,16 +197,191 @@ START_TEST( test_auto_check_sbp_system_69 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_dgnss_status_t* check_msg = ( msg_dgnss_status_t *)((void *)last_msg.msg);
+    msg_group_meta_t* check_msg = ( msg_group_meta_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->flags == 0, "incorrect value for flags, expected 0, is %d", check_msg->flags);
-    ck_assert_msg(check_msg->latency == 50, "incorrect value for latency, expected 50, is %d", check_msg->latency);
-    ck_assert_msg(check_msg->num_signals == 12, "incorrect value for num_signals, expected 12, is %d", check_msg->num_signals);
-    {
-      const char check_string[] = { (char)83,(char)107,(char)121,(char)108,(char)97,(char)114,(char)107 };
-      ck_assert_msg(memcmp(check_msg->source, check_string, sizeof(check_string)) == 0, "incorrect value for check_msg->source, expected string '%s', is '%s'", check_string, check_msg->source);
+    ck_assert_msg(check_msg->flags == 2, "incorrect value for flags, expected 2, is %d", check_msg->flags);
+    ck_assert_msg(check_msg->group_id == 1, "incorrect value for group_id, expected 1, is %d", check_msg->group_id);
+    ck_assert_msg(check_msg->group_msgs[0] == 65290, "incorrect value for group_msgs[0], expected 65290, is %d", check_msg->group_msgs[0]);
+    ck_assert_msg(check_msg->group_msgs[1] == 522, "incorrect value for group_msgs[1], expected 522, is %d", check_msg->group_msgs[1]);
+    ck_assert_msg(check_msg->group_msgs[2] == 65282, "incorrect value for group_msgs[2], expected 65282, is %d", check_msg->group_msgs[2]);
+    ck_assert_msg(check_msg->n_group_msgs == 3, "incorrect value for n_group_msgs, expected 3, is %d", check_msg->n_group_msgs);
+  }
+  // Test successful parsing of a message
+  {
+    // SBP parser state must be initialized before sbp_process is called.
+    // We re-initialize before every test so that callbacks for the same message types can be
+    //  allocated multiple times across different tests.
+    sbp_state_init(&sbp_state);
+
+    sbp_state_set_io_context(&sbp_state, &DUMMY_MEMORY_FOR_IO);
+
+    logging_reset();
+
+    sbp_register_callback(&sbp_state, 0xFF0A, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0xFF0A, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+
+    u8 encoded_frame[] = {85,10,255,21,3,31,1,1,14,2,1,3,1,10,2,17,2,9,2,20,2,14,2,18,2,13,2,21,2,33,2,3,255,6,255,14,255,82,154, };
+
+    dummy_reset();
+
+    u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
+    memset(test_msg_storage, 0, sizeof(test_msg_storage));
+    u8 test_msg_len = 0;
+    msg_group_meta_t* test_msg = ( msg_group_meta_t* )test_msg_storage;
+    test_msg_len = sizeof(*test_msg);
+    test_msg->flags = 1;
+    test_msg->group_id = 1;
+    if (sizeof(test_msg->group_msgs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
     }
+    
+    test_msg->group_msgs[0] = 258;
+    if (sizeof(test_msg->group_msgs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
+    }
+    
+    test_msg->group_msgs[1] = 259;
+    if (sizeof(test_msg->group_msgs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
+    }
+    
+    test_msg->group_msgs[2] = 522;
+    if (sizeof(test_msg->group_msgs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
+    }
+    
+    test_msg->group_msgs[3] = 529;
+    if (sizeof(test_msg->group_msgs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
+    }
+    
+    test_msg->group_msgs[4] = 521;
+    if (sizeof(test_msg->group_msgs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
+    }
+    
+    test_msg->group_msgs[5] = 532;
+    if (sizeof(test_msg->group_msgs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
+    }
+    
+    test_msg->group_msgs[6] = 526;
+    if (sizeof(test_msg->group_msgs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
+    }
+    
+    test_msg->group_msgs[7] = 530;
+    if (sizeof(test_msg->group_msgs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
+    }
+    
+    test_msg->group_msgs[8] = 525;
+    if (sizeof(test_msg->group_msgs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
+    }
+    
+    test_msg->group_msgs[9] = 533;
+    if (sizeof(test_msg->group_msgs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
+    }
+    
+    test_msg->group_msgs[10] = 545;
+    if (sizeof(test_msg->group_msgs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
+    }
+    
+    test_msg->group_msgs[11] = 65283;
+    if (sizeof(test_msg->group_msgs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
+    }
+    
+    test_msg->group_msgs[12] = 65286;
+    if (sizeof(test_msg->group_msgs) == 0) {
+      // Cope with variable length arrays
+      test_msg_len += sizeof(test_msg->group_msgs[0]);
+    }
+    
+    test_msg->group_msgs[13] = 65294;
+    test_msg->n_group_msgs = 14;
+    sbp_send_message(&sbp_state, 0xFF0A, 789, test_msg_len, test_msg_storage, &dummy_write);
+
+    ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_msg.n_callbacks_logged == 1,
+        "msg_callback: one callback should have been logged");
+    ck_assert_msg(last_msg.sender_id == 789,
+        "msg_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
+        "msg_callback: len decoded incorrectly");
+    ck_assert_msg(memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8)
+          == 0,
+        "msg_callback: test data decoded incorrectly");
+    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+        "frame_callback: context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+        "frame_callback: one callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 789,
+        "frame_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.msg_type == 0xFF0A,
+        "frame_callback: msg_type decoded incorrectly");
+    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
+        "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
+        "frame_callback: test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
+        "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame_callback: frame decoded incorrectly");
+    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+        "frame_callback: context pointer incorrectly passed");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    msg_group_meta_t* check_msg = ( msg_group_meta_t *)((void *)last_msg.msg);
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->flags == 1, "incorrect value for flags, expected 1, is %d", check_msg->flags);
+    ck_assert_msg(check_msg->group_id == 1, "incorrect value for group_id, expected 1, is %d", check_msg->group_id);
+    ck_assert_msg(check_msg->group_msgs[0] == 258, "incorrect value for group_msgs[0], expected 258, is %d", check_msg->group_msgs[0]);
+    ck_assert_msg(check_msg->group_msgs[1] == 259, "incorrect value for group_msgs[1], expected 259, is %d", check_msg->group_msgs[1]);
+    ck_assert_msg(check_msg->group_msgs[2] == 522, "incorrect value for group_msgs[2], expected 522, is %d", check_msg->group_msgs[2]);
+    ck_assert_msg(check_msg->group_msgs[3] == 529, "incorrect value for group_msgs[3], expected 529, is %d", check_msg->group_msgs[3]);
+    ck_assert_msg(check_msg->group_msgs[4] == 521, "incorrect value for group_msgs[4], expected 521, is %d", check_msg->group_msgs[4]);
+    ck_assert_msg(check_msg->group_msgs[5] == 532, "incorrect value for group_msgs[5], expected 532, is %d", check_msg->group_msgs[5]);
+    ck_assert_msg(check_msg->group_msgs[6] == 526, "incorrect value for group_msgs[6], expected 526, is %d", check_msg->group_msgs[6]);
+    ck_assert_msg(check_msg->group_msgs[7] == 530, "incorrect value for group_msgs[7], expected 530, is %d", check_msg->group_msgs[7]);
+    ck_assert_msg(check_msg->group_msgs[8] == 525, "incorrect value for group_msgs[8], expected 525, is %d", check_msg->group_msgs[8]);
+    ck_assert_msg(check_msg->group_msgs[9] == 533, "incorrect value for group_msgs[9], expected 533, is %d", check_msg->group_msgs[9]);
+    ck_assert_msg(check_msg->group_msgs[10] == 545, "incorrect value for group_msgs[10], expected 545, is %d", check_msg->group_msgs[10]);
+    ck_assert_msg(check_msg->group_msgs[11] == 65283, "incorrect value for group_msgs[11], expected 65283, is %d", check_msg->group_msgs[11]);
+    ck_assert_msg(check_msg->group_msgs[12] == 65286, "incorrect value for group_msgs[12], expected 65286, is %d", check_msg->group_msgs[12]);
+    ck_assert_msg(check_msg->group_msgs[13] == 65294, "incorrect value for group_msgs[13], expected 65294, is %d", check_msg->group_msgs[13]);
+    ck_assert_msg(check_msg->n_group_msgs == 14, "incorrect value for n_group_msgs, expected 14, is %d", check_msg->n_group_msgs);
   }
 }
 END_TEST

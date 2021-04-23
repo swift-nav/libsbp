@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgInsStatus.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/vehicle/test_MsgOdometry.yaml by generate.py. Do not modify by hand!
 
 use sbp::iter_messages;
 use sbp::messages::SBPMessage;
@@ -21,9 +21,9 @@ use common::AlmostEq;
 use std::io::Cursor;
 
 #[test]
-fn test_auto_check_sbp_system_71() {
+fn test_auto_check_sbp_vehicle_77() {
     {
-        let mut payload = Cursor::new(vec![85, 3, 255, 21, 3, 4, 9, 0, 0, 32, 36, 103]);
+        let mut payload = Cursor::new(vec![85, 3, 9, 66, 0, 9, 8, 0, 0, 0, 7, 0, 0, 0, 1, 52, 99]);
 
         // Test the round trip payload parsing
         let sbp_msg = {
@@ -33,26 +33,36 @@ fn test_auto_check_sbp_system_71() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgInsStatus(msg) => {
+            sbp::messages::SBP::MsgOdometry(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0xff03,
-                    "Incorrect message type, expected 0xff03, is {}",
+                    0x903,
+                    "Incorrect message type, expected 0x903, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0x315,
-                    "incorrect sender id, expected 0x315, is {}",
+                    sender_id, 0x42,
+                    "incorrect sender id, expected 0x42, is {}",
                     sender_id
                 );
                 assert_eq!(
-                    msg.flags, 536870921,
-                    "incorrect value for flags, expected 536870921, is {}",
+                    msg.flags, 1,
+                    "incorrect value for flags, expected 1, is {}",
                     msg.flags
                 );
+                assert_eq!(
+                    msg.tow, 8,
+                    "incorrect value for tow, expected 8, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.velocity, 7,
+                    "incorrect value for velocity, expected 7, is {}",
+                    msg.velocity
+                );
             }
-            _ => panic!("Invalid message type! Expected a MsgInsStatus"),
+            _ => panic!("Invalid message type! Expected a MsgOdometry"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());

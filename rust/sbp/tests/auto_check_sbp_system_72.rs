@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgInsStatus.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/system/test_MsgInsUpdates.yaml by generate.py. Do not modify by hand!
 
 use sbp::iter_messages;
 use sbp::messages::SBPMessage;
@@ -23,7 +23,9 @@ use std::io::Cursor;
 #[test]
 fn test_auto_check_sbp_system_72() {
     {
-        let mut payload = Cursor::new(vec![85, 3, 255, 21, 3, 4, 9, 0, 0, 32, 36, 103]);
+        let mut payload = Cursor::new(vec![
+            85, 6, 255, 21, 3, 10, 84, 229, 17, 30, 0, 0, 0, 0, 0, 0, 81, 63,
+        ]);
 
         // Test the round trip payload parsing
         let sbp_msg = {
@@ -33,11 +35,11 @@ fn test_auto_check_sbp_system_72() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgInsStatus(msg) => {
+            sbp::messages::SBP::MsgInsUpdates(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0xff03,
-                    "Incorrect message type, expected 0xff03, is {}",
+                    0xff06,
+                    "Incorrect message type, expected 0xff06, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
@@ -47,12 +49,42 @@ fn test_auto_check_sbp_system_72() {
                     sender_id
                 );
                 assert_eq!(
-                    msg.flags, 536870921,
-                    "incorrect value for flags, expected 536870921, is {}",
-                    msg.flags
+                    msg.gnsspos, 0,
+                    "incorrect value for gnsspos, expected 0, is {}",
+                    msg.gnsspos
+                );
+                assert_eq!(
+                    msg.gnssvel, 0,
+                    "incorrect value for gnssvel, expected 0, is {}",
+                    msg.gnssvel
+                );
+                assert_eq!(
+                    msg.nhc, 0,
+                    "incorrect value for nhc, expected 0, is {}",
+                    msg.nhc
+                );
+                assert_eq!(
+                    msg.speed, 0,
+                    "incorrect value for speed, expected 0, is {}",
+                    msg.speed
+                );
+                assert_eq!(
+                    msg.tow, 504489300,
+                    "incorrect value for tow, expected 504489300, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.wheelticks, 0,
+                    "incorrect value for wheelticks, expected 0, is {}",
+                    msg.wheelticks
+                );
+                assert_eq!(
+                    msg.zerovel, 0,
+                    "incorrect value for zerovel, expected 0, is {}",
+                    msg.zerovel
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgInsStatus"),
+            _ => panic!("Invalid message type! Expected a MsgInsUpdates"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());

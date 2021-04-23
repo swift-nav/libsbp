@@ -48,6 +48,7 @@ def render_source(output_dir, package_spec):
   Render and output to a directory given a package specification.
   """
   path, name = package_spec.filepath
+  print("path, name = %s, %s" % (path, name))
   destination_filename = "%s/%s.c" % (output_dir, name)
   py_template = JENV.get_template(TEST_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:

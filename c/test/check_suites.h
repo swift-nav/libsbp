@@ -85,16 +85,15 @@ Suite* auto_check_sbp_piksi_64_suite(void);
 Suite* auto_check_sbp_sbas_65_suite(void);
 Suite* auto_check_sbp_settings_66_suite(void);
 Suite* auto_check_sbp_settings_67_suite(void);
-Suite* auto_check_sbp_solution_meta_68_suite(void);
+Suite* auto_check_sbp_system_68_suite(void);
 Suite* auto_check_sbp_system_69_suite(void);
 Suite* auto_check_sbp_system_70_suite(void);
 Suite* auto_check_sbp_system_71_suite(void);
 Suite* auto_check_sbp_system_72_suite(void);
 Suite* auto_check_sbp_system_73_suite(void);
-Suite* auto_check_sbp_system_74_suite(void);
+Suite* auto_check_sbp_tracking_74_suite(void);
 Suite* auto_check_sbp_tracking_75_suite(void);
 Suite* auto_check_sbp_tracking_76_suite(void);
-Suite* auto_check_sbp_tracking_77_suite(void);
-Suite* auto_check_sbp_vehicle_78_suite(void);
+Suite* auto_check_sbp_vehicle_77_suite(void);
 
 #endif /* CHECK_SUITES_H */
