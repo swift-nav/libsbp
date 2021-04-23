@@ -80,6 +80,7 @@ fn test_auto_check_sbp_navigation_23() {
                     "incorrect value for cov_n_n, expected 1.00000000000000000e+00, is {:e}",
                     msg.cov_n_n
                 );
+                assert_eq!(msg.d, 1, "incorrect value for d, expected 1, is {}", msg.d);
                 assert_eq!(msg.e, 1, "incorrect value for e, expected 1, is {}", msg.e);
                 assert_eq!(
                     msg.flags, 0,
