@@ -27,7 +27,6 @@
 
 SBP_PACK_START
 
-#define SBP_MSG_ODOMETRY 0x0903
 #define SBP_ODOMETRY_VEHICLE_METADATA_MASK (0x3)
 #define SBP_ODOMETRY_VEHICLE_METADATA_SHIFT (5u)
 #define SBP_ODOMETRY_VEHICLE_METADATA_GET(flags)      \
@@ -84,6 +83,8 @@ SBP_PACK_START
  * one week.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_ODOMETRY 0x0903
+
   /**
    * Time field representing either milliseconds in the GPS Week or local CPU
    * time from the producing system in milliseconds.  See the tow_source flag
@@ -103,7 +104,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_odometry_t;
 
-#define SBP_MSG_WHEELTICK 0x0904
 #define SBP_WHEELTICK_VEHICLE_METADATA_MASK (0x3)
 #define SBP_WHEELTICK_VEHICLE_METADATA_SHIFT (2u)
 #define SBP_WHEELTICK_VEHICLE_METADATA_GET(flags)      \
@@ -149,6 +149,8 @@ typedef struct SBP_ATTR_PACKED {
  * shall roll over to zero after one week.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_WHEELTICK 0x0904
+
   /**
    * Time field representing either microseconds since the last PPS,
    * microseconds in the GPS Week or local CPU time from the producing system in

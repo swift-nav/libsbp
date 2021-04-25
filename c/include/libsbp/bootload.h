@@ -31,15 +31,17 @@
 
 SBP_PACK_START
 
-#define SBP_MSG_BOOTLOADER_HANDSHAKE_REQ 0x00B3
 /** Bootloading handshake request (host => device)
  *
  * The handshake message request from the host establishes a
  * handshake between the device bootloader and the host. The
  * response from the device is MSG_BOOTLOADER_HANDSHAKE_RESP.
  */
+typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_BOOTLOADER_HANDSHAKE_REQ 0x00B3
 
-#define SBP_MSG_BOOTLOADER_HANDSHAKE_RESP 0x00B4
+} msg_bootloader_handshake_req_t;
+
 #define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_MASK \
   (0xff)
 #define SBP_BOOTLOADER_HANDSHAKE_RESP_SBP_MAJOR_PROTOCOL_VERSION_NUMBER_SHIFT \
@@ -85,6 +87,8 @@ SBP_PACK_START
  * protocol version number.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_BOOTLOADER_HANDSHAKE_RESP 0x00B4
+
   /**
    * Bootloader flags
    */
@@ -97,12 +101,13 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_bootloader_handshake_resp_t;
 
-#define SBP_MSG_BOOTLOADER_JUMP_TO_APP 0x00B1
 /** Bootloader jump to application (host => device)
  *
  * The host initiates the bootloader to jump to the application.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_BOOTLOADER_JUMP_TO_APP 0x00B1
+
   /**
    * Ignored by the device
    */
@@ -110,7 +115,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_bootloader_jump_to_app_t;
 
-#define SBP_MSG_NAP_DEVICE_DNA_REQ 0x00DE
 /** Read FPGA device ID over UART request (host => device)
  *
  * The device message from the host reads a unique device
@@ -120,8 +124,11 @@ typedef struct SBP_ATTR_PACKED {
  * device ID in the payload. Note that this ID is tied to the FPGA,
  * and not related to the Piksi's serial number.
  */
+typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_NAP_DEVICE_DNA_REQ 0x00DE
 
-#define SBP_MSG_NAP_DEVICE_DNA_RESP 0x00DD
+} msg_nap_device_dna_req_t;
+
 /** Read FPGA device ID over UART response (host <= device)
  *
  * The device message from the host reads a unique device
@@ -132,6 +139,8 @@ typedef struct SBP_ATTR_PACKED {
  * and not related to the Piksi's serial number.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_NAP_DEVICE_DNA_RESP 0x00DD
+
   /**
    * 57-bit SwiftNAP FPGA Device ID. Remaining bits are padded
    * on the right.
@@ -140,12 +149,13 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_nap_device_dna_resp_t;
 
-#define SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A 0x00B0
 /** Deprecated
  *
  * Deprecated.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_BOOTLOADER_HANDSHAKE_DEP_A 0x00B0
+
   /**
    * Version number string (not NULL terminated)
    */

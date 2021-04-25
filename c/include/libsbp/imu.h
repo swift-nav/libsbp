@@ -27,7 +27,6 @@
 
 SBP_PACK_START
 
-#define SBP_MSG_IMU_RAW 0x0900
 #define SBP_IMU_RAW_TIME_STATUS_MASK (0x3)
 #define SBP_IMU_RAW_TIME_STATUS_SHIFT (30u)
 #define SBP_IMU_RAW_TIME_STATUS_GET(flags) \
@@ -68,6 +67,8 @@ SBP_PACK_START
  * The time-tagging mode should not change throughout a run.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_IMU_RAW 0x0900
+
   /**
    * Milliseconds since reference epoch and time status.
    */
@@ -110,7 +111,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_imu_raw_t;
 
-#define SBP_MSG_IMU_AUX 0x0901
 #define SBP_IMU_AUX_IMU_TYPE_MASK (0xff)
 #define SBP_IMU_AUX_IMU_TYPE_SHIFT (0u)
 #define SBP_IMU_AUX_IMU_TYPE_GET(flags) \
@@ -161,6 +161,8 @@ typedef struct SBP_ATTR_PACKED {
  * depends on the value of `imu_type`.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_IMU_AUX 0x0901
+
   /**
    * IMU type
    */

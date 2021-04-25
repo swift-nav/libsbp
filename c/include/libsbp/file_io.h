@@ -34,7 +34,6 @@
 
 SBP_PACK_START
 
-#define SBP_MSG_FILEIO_READ_REQ 0x00A8
 /** Read file from the file system (host => device)
  *
  * The file read message reads a certain length (up to 255 bytes)
@@ -47,6 +46,8 @@ SBP_PACK_START
  * to this message when it is received from sender ID 0x42.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_FILEIO_READ_REQ 0x00A8
+
   /**
    * Read sequence number
    */
@@ -69,7 +70,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_fileio_read_req_t;
 
-#define SBP_MSG_FILEIO_READ_RESP 0x00A3
 /** File read from the file system (host <= device)
  *
  * The file read message reads a certain length (up to 255 bytes)
@@ -79,6 +79,8 @@ typedef struct SBP_ATTR_PACKED {
  * preserved from the request.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_FILEIO_READ_RESP 0x00A3
+
   /**
    * Read sequence number
    */
@@ -91,7 +93,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_fileio_read_resp_t;
 
-#define SBP_MSG_FILEIO_READ_DIR_REQ 0x00A9
 /** List files in a directory (host => device)
  *
  * The read directory message lists the files in a directory on the
@@ -106,6 +107,8 @@ typedef struct SBP_ATTR_PACKED {
  * from sender ID 0x42.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_FILEIO_READ_DIR_REQ 0x00A9
+
   /**
    * Read sequence number
    */
@@ -123,7 +126,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_fileio_read_dir_req_t;
 
-#define SBP_MSG_FILEIO_READ_DIR_RESP 0x00AA
 /** Files listed in a directory (host <= device)
  *
  * The read directory message lists the files in a directory on the
@@ -134,6 +136,8 @@ typedef struct SBP_ATTR_PACKED {
  * the response is preserved from the request.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_FILEIO_READ_DIR_RESP 0x00AA
+
   /**
    * Read sequence number
    */
@@ -146,7 +150,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_fileio_read_dir_resp_t;
 
-#define SBP_MSG_FILEIO_REMOVE 0x00AC
 /** Delete a file from the file system (host => device)
  *
  * The file remove message deletes a file from the file system.
@@ -155,6 +158,8 @@ typedef struct SBP_ATTR_PACKED {
  * process this message when it is received from sender ID 0x42.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_FILEIO_REMOVE 0x00AC
+
   /**
    * Name of the file to delete
    */
@@ -162,7 +167,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_fileio_remove_t;
 
-#define SBP_MSG_FILEIO_WRITE_REQ 0x00AD
 /** Write to file (host => device)
  *
  * The file write message writes a certain length (up to 255 bytes)
@@ -175,6 +179,8 @@ typedef struct SBP_ATTR_PACKED {
  * 0x42.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_FILEIO_WRITE_REQ 0x00AD
+
   /**
    * Write sequence number
    */
@@ -197,7 +203,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_fileio_write_req_t;
 
-#define SBP_MSG_FILEIO_WRITE_RESP 0x00AB
 /** File written to (host <= device)
  *
  * The file write message writes a certain length (up to 255 bytes)
@@ -207,6 +212,8 @@ typedef struct SBP_ATTR_PACKED {
  * request.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_FILEIO_WRITE_RESP 0x00AB
+
   /**
    * Write sequence number
    */
@@ -214,7 +221,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_fileio_write_resp_t;
 
-#define SBP_MSG_FILEIO_CONFIG_REQ 0x1001
 /** Request advice on the optimal configuration for FileIO.
  *
  * Requests advice on the optimal configuration for a FileIO
@@ -223,6 +229,8 @@ typedef struct SBP_ATTR_PACKED {
  * that can be in-flight during read or write operations.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_FILEIO_CONFIG_REQ 0x1001
+
   /**
    * Advice sequence number
    */
@@ -230,7 +238,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_fileio_config_req_t;
 
-#define SBP_MSG_FILEIO_CONFIG_RESP 0x1002
 /** Response with advice on the optimal configuration for FileIO.
 
  *
@@ -240,6 +247,8 @@ typedef struct SBP_ATTR_PACKED {
  * that can be in-flight during read or write operations.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_FILEIO_CONFIG_RESP 0x1002
+
   /**
    * Advice sequence number
    */

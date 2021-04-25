@@ -32,9 +32,6 @@
 SBP_PACK_START
 
 ((* for m in msgs *))
-((*- if m.is_real_message *))
-#define SBP_(((m.identifier.ljust(max_msgid_len)))) ((('0x%04X'|format(m.sbp_id))))
-((*- endif *))
 ((*- if m.fields *))
 ((*- for f in m.fields *))
 ((*- if f.options.fields *))
@@ -48,8 +45,10 @@ SBP_PACK_START
 (((m.desc|commentify)))
  */
 ((*- endif *))
-((*- if m.fields *))
 typedef struct SBP_ATTR_PACKED {
+((*- if m.is_real_message *))
+#define SBP_(((m.identifier.ljust(max_msgid_len)))) ((('0x%04X'|format(m.sbp_id))))
+((*- endif *))
   ((* for f in m.fields *))
 
   ((*- if f.desc *))
@@ -60,7 +59,6 @@ typedef struct SBP_ATTR_PACKED {
   (((f|mk_id))) ((((f|mk_size).ljust(m.max_fid_len+4))))
   ((* endfor *))
 } (((m.identifier|convert)));
-((*- endif *))
 
 ((* endfor *))
 /** \} */

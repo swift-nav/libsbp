@@ -28,7 +28,6 @@
 
 SBP_PACK_START
 
-#define SBP_MSG_NDB_EVENT 0x0400
 #define SBP_NDB_EVENT_EVENT_TYPE_MASK (0x3)
 #define SBP_NDB_EVENT_EVENT_TYPE_SHIFT (0u)
 #define SBP_NDB_EVENT_EVENT_TYPE_GET(flags) \
@@ -104,6 +103,8 @@ SBP_PACK_START
  * message could also be sent out when fetching an object from NDB.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_NDB_EVENT 0x0400
+
   /**
    * HW time in milliseconds. [ms]
    */

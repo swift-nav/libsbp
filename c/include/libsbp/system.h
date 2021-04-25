@@ -27,7 +27,6 @@
 
 SBP_PACK_START
 
-#define SBP_MSG_STARTUP 0xFF00
 #define SBP_STARTUP_CAUSE_OF_STARTUP_MASK (0x1ff)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_SHIFT (0u)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_GET(flags)      \
@@ -62,6 +61,8 @@ SBP_PACK_START
  * or configuration requests.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_STARTUP 0xFF00
+
   /**
    * Cause of startup
    */
@@ -79,7 +80,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_startup_t;
 
-#define SBP_MSG_DGNSS_STATUS 0xFF02
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_MASK (0xf)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_SHIFT (0u)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_GET(flags)      \
@@ -101,6 +101,8 @@ typedef struct SBP_ATTR_PACKED {
  * corrections packet.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_DGNSS_STATUS 0xFF02
+
   /**
    * Status flags
    */
@@ -123,7 +125,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_dgnss_status_t;
 
-#define SBP_MSG_HEARTBEAT 0xFFFF
 #define SBP_HEARTBEAT_EXTERNAL_ANTENNA_PRESENT_MASK (0x1)
 #define SBP_HEARTBEAT_EXTERNAL_ANTENNA_PRESENT_SHIFT (31u)
 #define SBP_HEARTBEAT_EXTERNAL_ANTENNA_PRESENT_GET(flags)      \
@@ -226,6 +227,8 @@ typedef struct SBP_ATTR_PACKED {
  * the remaining error flags should be inspected.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_HEARTBEAT 0xFFFF
+
   /**
    * Status flags
    */
@@ -290,7 +293,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } sub_system_report_t;
 
-#define SBP_MSG_STATUS_REPORT 0xFFFE
 #define SBP_STATUS_REPORT_SYSTEM_MASK (0xffff)
 #define SBP_STATUS_REPORT_SYSTEM_SHIFT (0u)
 #define SBP_STATUS_REPORT_SYSTEM_GET(flags) \
@@ -340,6 +342,8 @@ typedef struct SBP_ATTR_PACKED {
  * be ignored.  Refer to product documentation for details.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_STATUS_REPORT 0xFFFE
+
   /**
    * Identity of reporting system
    */
@@ -367,7 +371,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_status_report_t;
 
-#define SBP_MSG_INS_STATUS 0xFF03
 #define SBP_INS_STATUS_INS_TYPE_MASK (0x7)
 #define SBP_INS_STATUS_INS_TYPE_SHIFT (29u)
 #define SBP_INS_STATUS_INS_TYPE_GET(flags) \
@@ -471,6 +474,8 @@ typedef struct SBP_ATTR_PACKED {
  * and initialization of the inertial navigation system.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_INS_STATUS 0xFF03
+
   /**
    * Status flags
    */
@@ -478,7 +483,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_ins_status_t;
 
-#define SBP_MSG_CSAC_TELEMETRY 0xFF04
 /** Experimental telemetry message
  *
  * The CSAC telemetry message has an implementation defined telemetry string
@@ -486,6 +490,8 @@ typedef struct SBP_ATTR_PACKED {
  * It is intended to be a low rate message for status purposes.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_CSAC_TELEMETRY 0xFF04
+
   /**
    * Index representing the type of telemetry in use.  It is implemention
    * defined.
@@ -499,7 +505,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_csac_telemetry_t;
 
-#define SBP_MSG_CSAC_TELEMETRY_LABELS 0xFF05
 /** Experimental telemetry message labels
  *
  * The CSAC telemetry message provides labels for each member of the string
@@ -507,6 +512,8 @@ typedef struct SBP_ATTR_PACKED {
  * rate than the MSG_CSAC_TELEMETRY.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_CSAC_TELEMETRY_LABELS 0xFF05
+
   /**
    * Index representing the type of telemetry in use.  It is implemention
    * defined.
@@ -520,7 +527,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_csac_telemetry_labels_t;
 
-#define SBP_MSG_INS_UPDATES 0xFF06
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_POSITION_UPDATES_SINCE_LAST_MESSAGE_MASK \
   (0xf)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_POSITION_UPDATES_SINCE_LAST_MESSAGE_SHIFT \
@@ -744,6 +750,8 @@ typedef struct SBP_ATTR_PACKED {
  * as new types of measurements are being added.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_INS_UPDATES 0xFF06
+
   /**
    * GPS Time of Week [ms]
    */
@@ -781,7 +789,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_ins_updates_t;
 
-#define SBP_MSG_GNSS_TIME_OFFSET 0xFF07
 /** Offset of the local time with respect to GNSS time
  *
  * The GNSS time offset message contains the information that is needed to
@@ -789,6 +796,8 @@ typedef struct SBP_ATTR_PACKED {
  * messages) to GNSS time for the sender producing this message.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_GNSS_TIME_OFFSET 0xFF07
+
   /**
    * Weeks portion of the time offset [weeks]
    */
@@ -811,7 +820,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_gnss_time_offset_t;
 
-#define SBP_MSG_GROUP_META 0xFF0A
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_MASK (0x3)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_SHIFT (0u)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_GET(flags)      \
@@ -833,6 +841,8 @@ typedef struct SBP_ATTR_PACKED {
  * Solution Group.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_GROUP_META 0xFF0A
+
   /**
    * Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss
    */

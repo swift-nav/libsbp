@@ -82,7 +82,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } solution_input_type_t;
 
-#define SBP_MSG_SOLN_META_DEP_A 0xFF0F
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_MASK (0x7)
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SHIFT (0u)
 #define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_GET(flags)      \
@@ -111,6 +110,8 @@ typedef struct SBP_ATTR_PACKED {
  * metadata.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SOLN_META_DEP_A 0xFF0F
+
   /**
    * Position Dilution of Precision as per last available DOPS from PVT engine
    * (0xFFFF indicates invalid) [0.01]
@@ -165,7 +166,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_soln_meta_dep_a_t;
 
-#define SBP_MSG_SOLN_META 0xFF0E
 #define SBP_SOLN_META_TIME_STATUS_MASK (0x3)
 #define SBP_SOLN_META_TIME_STATUS_SHIFT (30u)
 #define SBP_SOLN_META_TIME_STATUS_GET(flags)      \
@@ -208,6 +208,8 @@ typedef struct SBP_ATTR_PACKED {
  * not a TOM.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SOLN_META 0xFF0E
+
   /**
    * GPS time of week rounded to the nearest millisecond [ms]
    */

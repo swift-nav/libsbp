@@ -50,7 +50,6 @@
 
 SBP_PACK_START
 
-#define SBP_MSG_GPS_TIME 0x0102
 #define SBP_GPS_TIME_TIME_SOURCE_MASK (0x7)
 #define SBP_GPS_TIME_TIME_SOURCE_SHIFT (0u)
 #define SBP_GPS_TIME_TIME_SOURCE_GET(flags) \
@@ -81,6 +80,8 @@ SBP_PACK_START
  * these messages.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_GPS_TIME 0x0102
+
   /**
    * GPS week number [weeks]
    */
@@ -104,7 +105,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_gps_time_t;
 
-#define SBP_MSG_GPS_TIME_GNSS 0x0104
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_MASK (0x7)
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_SHIFT (0u)
 #define SBP_GPS_TIME_GNSS_TIME_SOURCE_GET(flags)      \
@@ -136,6 +136,8 @@ typedef struct SBP_ATTR_PACKED {
  * these messages.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_GPS_TIME_GNSS 0x0104
+
   /**
    * GPS week number [weeks]
    */
@@ -159,7 +161,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_gps_time_gnss_t;
 
-#define SBP_MSG_UTC_TIME 0x0103
 #define SBP_UTC_TIME_UTC_OFFSET_SOURCE_MASK (0x3)
 #define SBP_UTC_TIME_UTC_OFFSET_SOURCE_SHIFT (3u)
 #define SBP_UTC_TIME_UTC_OFFSET_SOURCE_GET(flags)      \
@@ -193,6 +194,8 @@ typedef struct SBP_ATTR_PACKED {
  * which indicate the source of the UTC offset value and source of the time fix.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_UTC_TIME 0x0103
+
   /**
    * Indicates source and time validity
    */
@@ -240,7 +243,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_utc_time_t;
 
-#define SBP_MSG_UTC_TIME_GNSS 0x0105
 #define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_MASK (0x3)
 #define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_SHIFT (3u)
 #define SBP_UTC_TIME_GNSS_UTC_OFFSET_SOURCE_GET(flags)      \
@@ -275,6 +277,8 @@ typedef struct SBP_ATTR_PACKED {
  * which indicate the source of the UTC offset value and source of the time fix.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_UTC_TIME_GNSS 0x0105
+
   /**
    * Indicates source and time validity
    */
@@ -322,7 +326,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_utc_time_gnss_t;
 
-#define SBP_MSG_DOPS 0x0208
 #define SBP_DOPS_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_DOPS_RAIM_REPAIR_FLAG_SHIFT (7u)
 #define SBP_DOPS_RAIM_REPAIR_FLAG_GET(flags)      \
@@ -359,6 +362,8 @@ typedef struct SBP_ATTR_PACKED {
  * corresponds to differential or SPP solution.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_DOPS 0x0208
+
   /**
    * GPS Time of Week [ms]
    */
@@ -396,7 +401,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_dops_t;
 
-#define SBP_MSG_POS_ECEF 0x0209
 #define SBP_POS_ECEF_TOW_TYPE_MASK (0x1)
 #define SBP_POS_ECEF_TOW_TYPE_SHIFT (5u)
 #define SBP_POS_ECEF_TOW_TYPE_GET(flags) \
@@ -451,6 +455,8 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_POS_ECEF 0x0209
+
   /**
    * GPS Time of Week [ms]
    */
@@ -488,7 +494,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_pos_ecef_t;
 
-#define SBP_MSG_POS_ECEF_COV 0x0214
 #define SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_POS_ECEF_COV_TYPE_OF_REPORTED_TOW_GET(flags)      \
@@ -546,6 +551,8 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_POS_ECEF_COV 0x0214
+
   /**
    * GPS Time of Week [ms]
    */
@@ -608,7 +615,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_pos_ecef_cov_t;
 
-#define SBP_MSG_POS_LLH 0x020A
 #define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_POS_LLH_TYPE_OF_REPORTED_TOW_GET(flags)      \
@@ -664,6 +670,8 @@ typedef struct SBP_ATTR_PACKED {
  * matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_POS_LLH 0x020A
+
   /**
    * GPS Time of Week [ms]
    */
@@ -706,7 +714,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_pos_llh_t;
 
-#define SBP_MSG_POS_LLH_COV 0x0211
 #define SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_POS_LLH_COV_TYPE_OF_REPORTED_TOW_GET(flags)      \
@@ -762,6 +769,8 @@ typedef struct SBP_ATTR_PACKED {
  * measurement and care should be taken with the sign convention.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_POS_LLH_COV 0x0211
+
   /**
    * GPS Time of Week [ms]
    */
@@ -824,7 +833,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_pos_llh_cov_t;
 
-#define SBP_MSG_BASELINE_ECEF 0x020B
 #define SBP_BASELINE_ECEF_FIX_MODE_MASK (0x7)
 #define SBP_BASELINE_ECEF_FIX_MODE_SHIFT (0u)
 #define SBP_BASELINE_ECEF_FIX_MODE_GET(flags)      \
@@ -849,6 +857,8 @@ typedef struct SBP_ATTR_PACKED {
  * matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_BASELINE_ECEF 0x020B
+
   /**
    * GPS Time of Week [ms]
    */
@@ -886,7 +896,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_baseline_ecef_t;
 
-#define SBP_MSG_BASELINE_NED 0x020C
 #define SBP_BASELINE_NED_FIX_MODE_MASK (0x7)
 #define SBP_BASELINE_NED_FIX_MODE_SHIFT (0u)
 #define SBP_BASELINE_NED_FIX_MODE_GET(flags)      \
@@ -912,6 +921,8 @@ typedef struct SBP_ATTR_PACKED {
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_BASELINE_NED 0x020C
+
   /**
    * GPS Time of Week [ms]
    */
@@ -954,7 +965,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_baseline_ned_t;
 
-#define SBP_MSG_VEL_ECEF 0x020D
 #define SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_VEL_ECEF_TYPE_OF_REPORTED_TOW_GET(flags)      \
@@ -1003,6 +1013,8 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_VEL_ECEF 0x020D
+
   /**
    * GPS Time of Week [ms]
    */
@@ -1040,7 +1052,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_vel_ecef_t;
 
-#define SBP_MSG_VEL_ECEF_COV 0x0215
 #define SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_VEL_ECEF_COV_TYPE_OF_REPORTED_TOW_GET(flags)      \
@@ -1089,6 +1100,8 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_VEL_ECEF_COV 0x0215
+
   /**
    * GPS Time of Week [ms]
    */
@@ -1151,7 +1164,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_vel_ecef_cov_t;
 
-#define SBP_MSG_VEL_NED 0x020E
 #define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_VEL_NED_TYPE_OF_REPORTED_TOW_GET(flags)      \
@@ -1201,6 +1213,8 @@ typedef struct SBP_ATTR_PACKED {
  * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_VEL_NED 0x020E
+
   /**
    * GPS Time of Week [ms]
    */
@@ -1243,7 +1257,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_vel_ned_t;
 
-#define SBP_MSG_VEL_NED_COV 0x0212
 #define SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_MASK (0x1)
 #define SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_SHIFT (5u)
 #define SBP_VEL_NED_COV_TYPE_OF_REPORTED_TOW_GET(flags)      \
@@ -1295,6 +1308,8 @@ typedef struct SBP_ATTR_PACKED {
  * triangular portion of the 3x3 covariance matrix.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_VEL_NED_COV 0x0212
+
   /**
    * GPS Time of Week [ms]
    */
@@ -1357,7 +1372,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_vel_ned_cov_t;
 
-#define SBP_MSG_POS_ECEF_GNSS 0x0229
 #define SBP_POS_ECEF_GNSS_FIX_MODE_MASK (0x7)
 #define SBP_POS_ECEF_GNSS_FIX_MODE_SHIFT (0u)
 #define SBP_POS_ECEF_GNSS_FIX_MODE_GET(flags)      \
@@ -1387,6 +1401,8 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_POS_ECEF_GNSS 0x0229
+
   /**
    * GPS Time of Week [ms]
    */
@@ -1424,7 +1440,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_pos_ecef_gnss_t;
 
-#define SBP_MSG_POS_ECEF_COV_GNSS 0x0234
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_MASK (0x7)
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_SHIFT (0u)
 #define SBP_POS_ECEF_COV_GNSS_FIX_MODE_GET(flags)      \
@@ -1455,6 +1470,8 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_POS_ECEF_COV_GNSS 0x0234
+
   /**
    * GPS Time of Week [ms]
    */
@@ -1517,7 +1534,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_pos_ecef_cov_gnss_t;
 
-#define SBP_MSG_POS_LLH_GNSS 0x022A
 #define SBP_POS_LLH_GNSS_FIX_MODE_MASK (0x7)
 #define SBP_POS_LLH_GNSS_FIX_MODE_SHIFT (0u)
 #define SBP_POS_LLH_GNSS_FIX_MODE_GET(flags)      \
@@ -1547,6 +1563,8 @@ typedef struct SBP_ATTR_PACKED {
  * matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_POS_LLH_GNSS 0x022A
+
   /**
    * GPS Time of Week [ms]
    */
@@ -1589,7 +1607,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_pos_llh_gnss_t;
 
-#define SBP_MSG_POS_LLH_COV_GNSS 0x0231
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_MASK (0x7)
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_SHIFT (0u)
 #define SBP_POS_LLH_COV_GNSS_FIX_MODE_GET(flags)      \
@@ -1620,6 +1637,8 @@ typedef struct SBP_ATTR_PACKED {
  * measurement and care should be taken with the sign convention.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_POS_LLH_COV_GNSS 0x0231
+
   /**
    * GPS Time of Week [ms]
    */
@@ -1682,7 +1701,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_pos_llh_cov_gnss_t;
 
-#define SBP_MSG_VEL_ECEF_GNSS 0x022D
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_MASK (0x7)
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_SHIFT (0u)
 #define SBP_VEL_ECEF_GNSS_VELOCITY_MODE_GET(flags)      \
@@ -1704,6 +1722,8 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_VEL_ECEF_GNSS 0x022D
+
   /**
    * GPS Time of Week [ms]
    */
@@ -1741,7 +1761,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_vel_ecef_gnss_t;
 
-#define SBP_MSG_VEL_ECEF_COV_GNSS 0x0235
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_MASK (0x7)
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_SHIFT (0u)
 #define SBP_VEL_ECEF_COV_GNSS_VELOCITY_MODE_GET(flags)      \
@@ -1763,6 +1782,8 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_VEL_ECEF_COV_GNSS 0x0235
+
   /**
    * GPS Time of Week [ms]
    */
@@ -1825,7 +1846,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_vel_ecef_cov_gnss_t;
 
-#define SBP_MSG_VEL_NED_GNSS 0x022E
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_MASK (0x7)
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_SHIFT (0u)
 #define SBP_VEL_NED_GNSS_VELOCITY_MODE_GET(flags)      \
@@ -1848,6 +1868,8 @@ typedef struct SBP_ATTR_PACKED {
  * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_VEL_NED_GNSS 0x022E
+
   /**
    * GPS Time of Week [ms]
    */
@@ -1890,7 +1912,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_vel_ned_gnss_t;
 
-#define SBP_MSG_VEL_NED_COV_GNSS 0x0232
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_MASK (0x7)
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_SHIFT (0u)
 #define SBP_VEL_NED_COV_GNSS_VELOCITY_MODE_GET(flags)      \
@@ -1915,6 +1936,8 @@ typedef struct SBP_ATTR_PACKED {
  * triangular portion of the 3x3 covariance matrix.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_VEL_NED_COV_GNSS 0x0232
+
   /**
    * GPS Time of Week [ms]
    */
@@ -1977,7 +2000,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_vel_ned_cov_gnss_t;
 
-#define SBP_MSG_VEL_BODY 0x0213
 #define SBP_VEL_BODY_INS_NAVIGATION_MODE_MASK (0x3)
 #define SBP_VEL_BODY_INS_NAVIGATION_MODE_SHIFT (3u)
 #define SBP_VEL_BODY_INS_NAVIGATION_MODE_GET(flags)      \
@@ -2019,6 +2041,8 @@ typedef struct SBP_ATTR_PACKED {
  * from Piksi Multi or Duro.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_VEL_BODY 0x0213
+
   /**
    * GPS Time of Week [ms]
    */
@@ -2081,13 +2105,14 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_vel_body_t;
 
-#define SBP_MSG_AGE_CORRECTIONS 0x0210
 /** Age of corrections
  *
  * This message reports the Age of the corrections used for the current
  * Differential solution
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_AGE_CORRECTIONS 0x0210
+
   /**
    * GPS Time of Week [ms]
    */
@@ -2100,7 +2125,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_age_corrections_t;
 
-#define SBP_MSG_GPS_TIME_DEP_A 0x0100
 /** GPS Time (v1.0)
  *
  * This message reports the GPS time, representing the time since
@@ -2118,6 +2142,8 @@ typedef struct SBP_ATTR_PACKED {
  * these messages.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_GPS_TIME_DEP_A 0x0100
+
   /**
    * GPS week number [weeks]
    */
@@ -2141,7 +2167,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_gps_time_dep_a_t;
 
-#define SBP_MSG_DOPS_DEP_A 0x0206
 /** Dilution of Precision
  *
  * This dilution of precision (DOP) message describes the effect of
@@ -2149,6 +2174,8 @@ typedef struct SBP_ATTR_PACKED {
  * precision.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_DOPS_DEP_A 0x0206
+
   /**
    * GPS Time of Week [ms]
    */
@@ -2181,7 +2208,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_dops_dep_a_t;
 
-#define SBP_MSG_POS_ECEF_DEP_A 0x0200
 #define SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
 #define SBP_POS_ECEF_DEP_A_RAIM_REPAIR_FLAG_GET(flags)      \
@@ -2235,6 +2261,8 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_POS_ECEF_DEP_A 0x0200
+
   /**
    * GPS Time of Week [ms]
    */
@@ -2273,7 +2301,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_pos_ecef_dep_a_t;
 
-#define SBP_MSG_POS_LLH_DEP_A 0x0201
 #define SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_SHIFT (5u)
 #define SBP_POS_LLH_DEP_A_RAIM_REPAIR_FLAG_GET(flags)      \
@@ -2340,6 +2367,8 @@ typedef struct SBP_ATTR_PACKED {
  * matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_POS_LLH_DEP_A 0x0201
+
   /**
    * GPS Time of Week [ms]
    */
@@ -2384,7 +2413,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_pos_llh_dep_a_t;
 
-#define SBP_MSG_BASELINE_ECEF_DEP_A 0x0202
 #define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
 #define SBP_BASELINE_ECEF_DEP_A_RAIM_REPAIR_FLAG_GET(flags)      \
@@ -2437,6 +2465,8 @@ typedef struct SBP_ATTR_PACKED {
  * matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_BASELINE_ECEF_DEP_A 0x0202
+
   /**
    * GPS Time of Week [ms]
    */
@@ -2474,7 +2504,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_baseline_ecef_dep_a_t;
 
-#define SBP_MSG_BASELINE_NED_DEP_A 0x0203
 #define SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
 #define SBP_BASELINE_NED_DEP_A_RAIM_REPAIR_FLAG_GET(flags)      \
@@ -2528,6 +2557,8 @@ typedef struct SBP_ATTR_PACKED {
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_BASELINE_NED_DEP_A 0x0203
+
   /**
    * GPS Time of Week [ms]
    */
@@ -2572,7 +2603,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_baseline_ned_dep_a_t;
 
-#define SBP_MSG_VEL_ECEF_DEP_A 0x0204
 /** Velocity in ECEF
  *
  * This message reports the velocity in Earth Centered Earth Fixed
@@ -2580,6 +2610,8 @@ typedef struct SBP_ATTR_PACKED {
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_VEL_ECEF_DEP_A 0x0204
+
   /**
    * GPS Time of Week [ms]
    */
@@ -2618,7 +2650,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_vel_ecef_dep_a_t;
 
-#define SBP_MSG_VEL_NED_DEP_A 0x0205
 /** Velocity in NED
  *
  * This message reports the velocity in local North East Down (NED)
@@ -2627,6 +2658,8 @@ typedef struct SBP_ATTR_PACKED {
  * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_VEL_NED_DEP_A 0x0205
+
   /**
    * GPS Time of Week [ms]
    */
@@ -2671,7 +2704,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_vel_ned_dep_a_t;
 
-#define SBP_MSG_BASELINE_HEADING_DEP_A 0x0207
 #define SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_MASK (0x1)
 #define SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_SHIFT (4u)
 #define SBP_BASELINE_HEADING_DEP_A_RAIM_REPAIR_FLAG_GET(flags)      \
@@ -2722,6 +2754,8 @@ typedef struct SBP_ATTR_PACKED {
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_BASELINE_HEADING_DEP_A 0x0207
+
   /**
    * GPS Time of Week [ms]
    */
@@ -2744,7 +2778,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_baseline_heading_dep_a_t;
 
-#define SBP_MSG_PROTECTION_LEVEL 0x0216
 #define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK (0x7)
 #define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT (0u)
 #define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_GET(flags)      \
@@ -2769,6 +2802,8 @@ typedef struct SBP_ATTR_PACKED {
  * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_PROTECTION_LEVEL 0x0216
+
   /**
    * GPS Time of Week [ms]
    */

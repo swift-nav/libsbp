@@ -27,7 +27,6 @@
 
 SBP_PACK_START
 
-#define SBP_MSG_LOG 0x0401
 #define SBP_LOG_LOGGING_LEVEL_MASK (0x7)
 #define SBP_LOG_LOGGING_LEVEL_SHIFT (0u)
 #define SBP_LOG_LOGGING_LEVEL_GET(flags) \
@@ -53,6 +52,8 @@ SBP_PACK_START
  * ERROR, WARNING, DEBUG, INFO logging levels.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_LOG 0x0401
+
   /**
    * Logging level
    */
@@ -65,7 +66,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_log_t;
 
-#define SBP_MSG_FWD 0x0402
 /** Wrapper for FWD a separate stream of information over SBP
  *
  * This message provides the ability to forward messages over SBP.  This may
@@ -78,6 +78,8 @@ typedef struct SBP_ATTR_PACKED {
  * are implementation defined.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_FWD 0x0402
+
   /**
    * source identifier
    */
@@ -95,12 +97,13 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_fwd_t;
 
-#define SBP_MSG_PRINT_DEP 0x0010
 /** Deprecated
  *
  * Deprecated.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_PRINT_DEP 0x0010
+
   /**
    * Human-readable string
    */

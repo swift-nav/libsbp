@@ -28,7 +28,6 @@
 
 SBP_PACK_START
 
-#define SBP_MSG_ACQ_RESULT 0x002F
 /** Satellite acquisition result
  *
  * This message describes the results from an attempted GPS signal
@@ -38,6 +37,8 @@ SBP_PACK_START
  * ratio.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_ACQ_RESULT 0x002F
+
   /**
    * CN/0 of best point [dB Hz]
    */
@@ -60,12 +61,13 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_acq_result_t;
 
-#define SBP_MSG_ACQ_RESULT_DEP_C 0x001F
 /** Deprecated
  *
  * Deprecated.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_ACQ_RESULT_DEP_C 0x001F
+
   /**
    * CN/0 of best point [dB Hz]
    */
@@ -88,12 +90,13 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_acq_result_dep_c_t;
 
-#define SBP_MSG_ACQ_RESULT_DEP_B 0x0014
 /** Deprecated
  *
  * Deprecated.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_ACQ_RESULT_DEP_B 0x0014
+
   /**
    * SNR of best point. Currently in arbitrary SNR points, but will
    * be in units of dB Hz in a later revision of this message.
@@ -117,12 +120,13 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_acq_result_dep_b_t;
 
-#define SBP_MSG_ACQ_RESULT_DEP_A 0x0015
 /** Deprecated
  *
  * Deprecated.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_ACQ_RESULT_DEP_A 0x0015
+
   /**
    * SNR of best point. Currently dimensonless, but will have
    * units of dB Hz in the revision of this message.
@@ -283,13 +287,14 @@ typedef struct SBP_ATTR_PACKED {
 
 } acq_sv_profile_dep_t;
 
-#define SBP_MSG_ACQ_SV_PROFILE 0x002E
 /** Acquisition perfomance measurement and debug
  *
  * The message describes all SV profiles during acquisition time.
  * The message is used to debug and measure the performance.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_ACQ_SV_PROFILE 0x002E
+
   /**
    * SV profiles during acquisition time
    */
@@ -297,12 +302,13 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_acq_sv_profile_t;
 
-#define SBP_MSG_ACQ_SV_PROFILE_DEP 0x001E
 /** Deprecated.
  *
  * Deprecated.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_ACQ_SV_PROFILE_DEP 0x001E
+
   /**
    * SV profiles during acquisition time
    */

@@ -332,7 +332,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } grid_element_t;
 
-#define SBP_MSG_SSR_ORBIT_CLOCK 0x05DD
 /** Precise orbit and clock correction
  *
  * The precise orbit and clock correction message is
@@ -341,6 +340,8 @@ typedef struct SBP_ATTR_PACKED {
  * and 1066 RTCM message types
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SSR_ORBIT_CLOCK 0x05DD
+
   /**
    * GNSS reference time of the correction
    */
@@ -419,7 +420,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_ssr_orbit_clock_t;
 
-#define SBP_MSG_SSR_CODE_BIASES 0x05E1
 /** Precise code biases correction
  *
  * The precise code biases message is to be added
@@ -428,6 +428,8 @@ typedef struct SBP_ATTR_PACKED {
  * an equivalent to the 1059 and 1065 RTCM message types
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SSR_CODE_BIASES 0x05E1
+
   /**
    * GNSS reference time of the correction
    */
@@ -458,7 +460,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_ssr_code_biases_t;
 
-#define SBP_MSG_SSR_PHASE_BIASES 0x05E6
 /** Precise phase biases correction
  *
  * The precise phase biases message contains the biases
@@ -469,6 +470,8 @@ typedef struct SBP_ATTR_PACKED {
  * It is typically an equivalent to the 1265 RTCM message types
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SSR_PHASE_BIASES 0x05E6
+
   /**
    * GNSS reference time of the correction
    */
@@ -520,7 +523,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_ssr_phase_biases_t;
 
-#define SBP_MSG_SSR_STEC_CORRECTION 0x05FB
 /** STEC correction polynomial coeffcients.
  *
  * The Slant Total Electron Content per space vehicle, given as polynomial
@@ -531,6 +533,8 @@ typedef struct SBP_ATTR_PACKED {
  * It is typically equivalent to the QZSS CLAS Sub Type 8 messages.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SSR_STEC_CORRECTION 0x05FB
+
   /**
    * Header of a STEC polynomial coeffcient message.
    */
@@ -543,7 +547,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_ssr_stec_correction_t;
 
-#define SBP_MSG_SSR_GRIDDED_CORRECTION 0x05FC
 /** Gridded troposphere and STEC correction residuals.
  *
  * STEC residuals are per space vehicle, troposphere is not.
@@ -551,6 +554,8 @@ typedef struct SBP_ATTR_PACKED {
  * It is typically equivalent to the QZSS CLAS Sub Type 9 messages
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SSR_GRIDDED_CORRECTION 0x05FC
+
   /**
    * Header of a gridded correction message
    */
@@ -563,7 +568,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_ssr_gridded_correction_t;
 
-#define SBP_MSG_SSR_TILE_DEFINITION 0x05F6
 /** Definition of a SSR atmospheric correction tile.
 
  *
@@ -576,6 +580,8 @@ typedef struct SBP_ATTR_PACKED {
  * correction points, not lists of points.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SSR_TILE_DEFINITION 0x05F6
+
   /**
    * Unique identifier of the tile set this tile belongs to.
    */
@@ -731,8 +737,9 @@ typedef struct SBP_ATTR_PACKED {
 
 } satellite_apc_t;
 
-#define SBP_MSG_SSR_SATELLITE_APC 0x0604
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SSR_SATELLITE_APC 0x0604
+
   /**
    * Satellite antenna phase center corrections
    */
@@ -740,8 +747,9 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_ssr_satellite_apc_t;
 
-#define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A 0x05DC
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A 0x05DC
+
   /**
    * GNSS reference time of the correction
    */
@@ -936,8 +944,9 @@ typedef struct SBP_ATTR_PACKED {
 
 } grid_definition_header_dep_a_t;
 
-#define SBP_MSG_SSR_STEC_CORRECTION_DEP_A 0x05EB
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SSR_STEC_CORRECTION_DEP_A 0x05EB
+
   /**
    * Header of a STEC message
    */
@@ -950,8 +959,9 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_ssr_stec_correction_dep_a_t;
 
-#define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A 0x05F0
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A 0x05F0
+
   /**
    * Header of a Gridded Correction message
    */
@@ -964,8 +974,9 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_ssr_gridded_correction_no_std_dep_a_t;
 
-#define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A 0x05FA
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A 0x05FA
+
   /**
    * Header of a Gridded Correction message
    */
@@ -979,8 +990,9 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_ssr_gridded_correction_dep_a_t;
 
-#define SBP_MSG_SSR_GRID_DEFINITION_DEP_A 0x05F5
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SSR_GRID_DEFINITION_DEP_A 0x05F5
+
   /**
    * Header of a Gridded Correction message
    */

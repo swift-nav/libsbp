@@ -27,7 +27,6 @@
 
 SBP_PACK_START
 
-#define SBP_MSG_BASELINE_HEADING 0x020F
 #define SBP_BASELINE_HEADING_FIX_MODE_MASK (0x7)
 #define SBP_BASELINE_HEADING_FIX_MODE_SHIFT (0u)
 #define SBP_BASELINE_HEADING_FIX_MODE_GET(flags)      \
@@ -51,6 +50,8 @@ SBP_PACK_START
  * that time-matched RTK mode is used when the base station is moving.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_BASELINE_HEADING 0x020F
+
   /**
    * GPS Time of Week [ms]
    */
@@ -73,7 +74,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_baseline_heading_t;
 
-#define SBP_MSG_ORIENT_QUAT 0x0220
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_MASK (0x7)
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_SHIFT (0u)
 #define SBP_ORIENT_QUAT_INS_NAVIGATION_MODE_GET(flags)      \
@@ -96,6 +96,8 @@ typedef struct SBP_ATTR_PACKED {
  * INS versions of Swift Products and is not produced by Piksi Multi or Duro.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_ORIENT_QUAT 0x0220
+
   /**
    * GPS Time of Week [ms]
    */
@@ -148,7 +150,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_orient_quat_t;
 
-#define SBP_MSG_ORIENT_EULER 0x0221
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_MASK (0x7)
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_SHIFT (0u)
 #define SBP_ORIENT_EULER_INS_NAVIGATION_MODE_GET(flags)      \
@@ -172,6 +173,8 @@ typedef struct SBP_ATTR_PACKED {
  * Duro.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_ORIENT_EULER 0x0221
+
   /**
    * GPS Time of Week [ms]
    */
@@ -214,7 +217,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_orient_euler_t;
 
-#define SBP_MSG_ANGULAR_RATE 0x0222
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_MASK (0x7)
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_SHIFT (0u)
 #define SBP_ANGULAR_RATE_INS_NAVIGATION_MODE_GET(flags)      \
@@ -241,6 +243,8 @@ typedef struct SBP_ATTR_PACKED {
  * Swift Products and is not produced by Piksi Multi or Duro.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_ANGULAR_RATE 0x0222
+
   /**
    * GPS Time of Week [ms]
    */

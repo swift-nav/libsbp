@@ -54,14 +54,16 @@
 
 SBP_PACK_START
 
-#define SBP_MSG_SETTINGS_SAVE 0x00A1
 /** Save settings to flash (host => device)
  *
  * The save settings message persists the device's current settings
  * configuration to its onboard flash memory file system.
  */
+typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SETTINGS_SAVE 0x00A1
 
-#define SBP_MSG_SETTINGS_WRITE 0x00A0
+} msg_settings_save_t;
+
 /** Write device configuration settings (host => device)
  *
  * The setting message writes the device configuration for a particular
@@ -73,6 +75,8 @@ SBP_PACK_START
  * "solution\0soln_freq\010\0".
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SETTINGS_WRITE 0x00A0
+
   /**
    * A NULL-terminated and NULL-delimited string with contents
    * "SECTION_SETTING\0SETTING\0VALUE\0"
@@ -81,7 +85,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_settings_write_t;
 
-#define SBP_MSG_SETTINGS_WRITE_RESP 0x00AF
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK (0x3)
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT (0u)
 #define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_GET(flags)      \
@@ -115,6 +118,8 @@ typedef struct SBP_ATTR_PACKED {
  * "solution\0soln_freq\010\0".
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SETTINGS_WRITE_RESP 0x00AF
+
   /**
    * Write status
    */
@@ -128,7 +133,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_settings_write_resp_t;
 
-#define SBP_MSG_SETTINGS_READ_REQ 0x00A4
 /** Read device configuration settings (host => device)
  *
  * The setting message that reads the device configuration. The string
@@ -141,6 +145,8 @@ typedef struct SBP_ATTR_PACKED {
  * message (msg_id 0x00A5).
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SETTINGS_READ_REQ 0x00A4
+
   /**
    * A NULL-terminated and NULL-delimited string with contents
    * "SECTION_SETTING\0SETTING\0"
@@ -149,7 +155,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_settings_read_req_t;
 
-#define SBP_MSG_SETTINGS_READ_RESP 0x00A5
 /** Read device configuration settings (host <= device)
  *
  * The setting message wich which the device responds after a
@@ -161,6 +166,8 @@ typedef struct SBP_ATTR_PACKED {
  * "solution\0soln_freq\010\0".
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SETTINGS_READ_RESP 0x00A5
+
   /**
    * A NULL-terminated and NULL-delimited string with contents
    * "SECTION_SETTING\0SETTING\0VALUE\0"
@@ -170,7 +177,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_settings_read_resp_t;
 
-#define SBP_MSG_SETTINGS_READ_BY_INDEX_REQ 0x00A2
 /** Read setting by direct index (host => device)
  *
  * The settings message for iterating through the settings
@@ -178,6 +184,8 @@ typedef struct SBP_ATTR_PACKED {
  * "MSG_SETTINGS_READ_BY_INDEX_RESP".
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SETTINGS_READ_BY_INDEX_REQ 0x00A2
+
   /**
    * An index into the device settings, with values ranging from
    * 0 to length(settings)
@@ -186,7 +194,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_settings_read_by_index_req_t;
 
-#define SBP_MSG_SETTINGS_READ_BY_INDEX_RESP 0x00A7
 /** Read setting by direct index (host <= device)
  *
  * The settings message that reports the value of a setting at an index.
@@ -201,6 +208,8 @@ typedef struct SBP_ATTR_PACKED {
  * the device is "simulator\0enabled\0True\0enum:True,False\0"
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SETTINGS_READ_BY_INDEX_RESP 0x00A7
+
   /**
    * An index into the device settings, with values ranging from
    * 0 to length(settings)
@@ -215,13 +224,15 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_settings_read_by_index_resp_t;
 
-#define SBP_MSG_SETTINGS_READ_BY_INDEX_DONE 0x00A6
 /** Finished reading settings (host <= device)
  *
  * The settings message for indicating end of the settings values.
  */
+typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SETTINGS_READ_BY_INDEX_DONE 0x00A6
 
-#define SBP_MSG_SETTINGS_REGISTER 0x00AE
+} msg_settings_read_by_index_done_t;
+
 /** Register setting and default value (device => host)
  *
  * This message registers the presence and default value of a setting
@@ -229,6 +240,8 @@ typedef struct SBP_ATTR_PACKED {
  * for this setting to set the initial value.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SETTINGS_REGISTER 0x00AE
+
   /**
    * A NULL-terminated and delimited string with contents
    * "SECTION_SETTING\0SETTING\0VALUE".
@@ -237,7 +250,6 @@ typedef struct SBP_ATTR_PACKED {
 
 } msg_settings_register_t;
 
-#define SBP_MSG_SETTINGS_REGISTER_RESP 0x01AF
 #define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK (0x3)
 #define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT (0u)
 #define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_GET(flags)      \
@@ -265,6 +277,8 @@ typedef struct SBP_ATTR_PACKED {
  * and had a different value.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_SETTINGS_REGISTER_RESP 0x01AF
+
   /**
    * Register status
    */

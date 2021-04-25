@@ -27,13 +27,14 @@
 
 SBP_PACK_START
 
-#define SBP_MSG_USER_DATA 0x0800
 /** User data
  *
  * This message can contain any application specific user data up to a
  * maximum length of 255 bytes per message.
  */
 typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_USER_DATA 0x0800
+
   /**
    * User data payload
    */
