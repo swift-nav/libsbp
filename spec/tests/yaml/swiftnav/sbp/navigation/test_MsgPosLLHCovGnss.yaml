@@ -1,0 +1,167 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgPosLLHCovGnss v3.4.1.dev12+g7ff5295c.
+generated_on: 2020-09-18 18:23:44.940673
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      cov_d_d: 1.1896724700927734
+      cov_e_d: -0.001238731318153441
+      cov_e_e: 0.09274973720312119
+      cov_n_d: 0.3753088116645813
+      cov_n_e: -0.008981493301689625
+      cov_n_n: 0.203578919172287
+      flags: 3
+      height: 72.86228782601304
+      lat: 37.20233535830912
+      lon: -121.85073280120506
+      n_sats: 11
+      tow: 500066600
+    module: sbp.navigation
+    name: MsgPosLLHCovGnss
+  msg_type: '0x231'
+  raw_json: '{"preamble": 85, "msg_type": 561, "sender": 4096, "length": 54, "payload":
+    "KGnOHY1hASDmmUJA2rP9Z3J2XsDCHUe5LzdSQP52UD4dJxO8eijAPpPzvT3tXKK6MEeYPwsD", "crc":
+    2001, "tow": 500066600, "lat": 37.20233535830912, "lon": -121.85073280120506,
+    "height": 72.86228782601304, "cov_n_n": 0.203578919172287, "cov_n_e": -0.008981493301689625,
+    "cov_n_d": 0.3753088116645813, "cov_e_e": 0.09274973720312119, "cov_e_d": -0.001238731318153441,
+    "cov_d_d": 1.1896724700927734, "n_sats": 11, "flags": 3}'
+  raw_packet: VTECABA2KGnOHY1hASDmmUJA2rP9Z3J2XsDCHUe5LzdSQP52UD4dJxO8eijAPpPzvT3tXKK6MEeYPwsD0Qc=
+  sbp:
+    crc: '0x7d1'
+    length: 54
+    msg_type: '0x231'
+    payload: KGnOHY1hASDmmUJA2rP9Z3J2XsDCHUe5LzdSQP52UD4dJxO8eijAPpPzvT3tXKK6MEeYPwsD
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      cov_d_d: 1.1851987838745117
+      cov_e_d: -0.0011136713437736034
+      cov_e_e: 0.0924404114484787
+      cov_n_d: 0.3737780749797821
+      cov_n_e: -0.008919186890125275
+      cov_n_n: 0.20283031463623047
+      flags: 3
+      height: 72.85804762706461
+      lat: 37.20233541529999
+      lon: -121.85073279189656
+      n_sats: 11
+      tow: 500066700
+    module: sbp.navigation
+    name: MsgPosLLHCovGnss
+  msg_type: '0x231'
+  raw_json: '{"preamble": 85, "msg_type": 561, "sender": 4096, "length": 54, "payload":
+    "jGnOHZ3EeyDmmUJAJ7XzZ3J2XsDJKZhA6jZSQMCyTz7IIRK811+/PmZRvT2c+JG6mLSXPwsD", "crc":
+    50175, "tow": 500066700, "lat": 37.20233541529999, "lon": -121.85073279189656,
+    "height": 72.85804762706461, "cov_n_n": 0.20283031463623047, "cov_n_e": -0.008919186890125275,
+    "cov_n_d": 0.3737780749797821, "cov_e_e": 0.0924404114484787, "cov_e_d": -0.0011136713437736034,
+    "cov_d_d": 1.1851987838745117, "n_sats": 11, "flags": 3}'
+  raw_packet: VTECABA2jGnOHZ3EeyDmmUJAJ7XzZ3J2XsDJKZhA6jZSQMCyTz7IIRK811+/PmZRvT2c+JG6mLSXPwsD/8M=
+  sbp:
+    crc: '0xc3ff'
+    length: 54
+    msg_type: '0x231'
+    payload: jGnOHZ3EeyDmmUJAJ7XzZ3J2XsDJKZhA6jZSQMCyTz7IIRK811+/PmZRvT2c+JG6mLSXPwsD
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      cov_d_d: 1.1807255744934082
+      cov_e_d: -0.000989166321232915
+      cov_e_e: 0.09213053435087204
+      cov_n_d: 0.3722454011440277
+      cov_n_e: -0.00885747466236353
+      cov_n_n: 0.20208171010017395
+      flags: 3
+      height: 72.85586351953172
+      lat: 37.20233542744708
+      lon: -121.85073277570271
+      n_sats: 11
+      tow: 500066800
+    module: sbp.navigation
+    name: MsgPosLLHCovGnss
+  msg_type: '0x231'
+  raw_json: '{"preamble": 85, "msg_type": 561, "sender": 4096, "length": 54, "payload":
+    "8GnOHYzalSDmmUJA0lHiZ3J2XsCbjsh3xjZSQILuTj7xHhG885a+Pu+uvD3qpoG6BCKXPwsD", "crc":
+    10909, "tow": 500066800, "lat": 37.20233542744708, "lon": -121.85073277570271,
+    "height": 72.85586351953172, "cov_n_n": 0.20208171010017395, "cov_n_e": -0.00885747466236353,
+    "cov_n_d": 0.3722454011440277, "cov_e_e": 0.09213053435087204, "cov_e_d": -0.000989166321232915,
+    "cov_d_d": 1.1807255744934082, "n_sats": 11, "flags": 3}'
+  raw_packet: VTECABA28GnOHYzalSDmmUJA0lHiZ3J2XsCbjsh3xjZSQILuTj7xHhG885a+Pu+uvD3qpoG6BCKXPwsDnSo=
+  sbp:
+    crc: '0x2a9d'
+    length: 54
+    msg_type: '0x231'
+    payload: 8GnOHYzalSDmmUJA0lHiZ3J2XsCbjsh3xjZSQILuTj7xHhG885a+Pu+uvD3qpoG6BCKXPwsD
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      cov_d_d: 1.187187910079956
+      cov_e_d: -0.0008731157868169248
+      cov_e_e: 0.09267372637987137
+      cov_n_d: 0.37415701150894165
+      cov_n_e: -0.008878067135810852
+      cov_n_n: 0.20320473611354828
+      flags: 3
+      height: 72.85056714382918
+      lat: 37.20233548402143
+      lon: -121.85073276533028
+      n_sats: 11
+      tow: 500066900
+    module: sbp.navigation
+    name: MsgPosLLHCovGnss
+  msg_type: '0x231'
+  raw_json: '{"preamble": 85, "msg_type": 561, "sender": 4096, "length": 54, "payload":
+    "VGrOHaBYDyHmmUJAqy7XZ3J2XsAacyyxbzZSQOcUUD5QdRG8gpG/PrnLvT3P4WS6xvWXPwsD", "crc":
+    45286, "tow": 500066900, "lat": 37.20233548402143, "lon": -121.85073276533028,
+    "height": 72.85056714382918, "cov_n_n": 0.20320473611354828, "cov_n_e": -0.008878067135810852,
+    "cov_n_d": 0.37415701150894165, "cov_e_e": 0.09267372637987137, "cov_e_d": -0.0008731157868169248,
+    "cov_d_d": 1.187187910079956, "n_sats": 11, "flags": 3}'
+  raw_packet: VTECABA2VGrOHaBYDyHmmUJAqy7XZ3J2XsAacyyxbzZSQOcUUD5QdRG8gpG/PrnLvT3P4WS6xvWXPwsD5rA=
+  sbp:
+    crc: '0xb0e6'
+    length: 54
+    msg_type: '0x231'
+    payload: VGrOHaBYDyHmmUJAqy7XZ3J2XsAacyyxbzZSQOcUUD5QdRG8gpG/PrnLvT3P4WS6xvWXPwsD
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      cov_d_d: 1.2849302291870117
+      cov_e_d: -0.0008128563640639186
+      cov_e_e: 0.10034556686878204
+      cov_n_d: 0.40482231974601746
+      cov_n_e: -0.009579113684594631
+      cov_n_n: 0.21995319426059723
+      flags: 3
+      height: 72.85084962586637
+      lat: 37.202335528965975
+      lon: -121.85073276386221
+      n_sats: 11
+      tow: 500067000
+    module: sbp.navigation
+    name: MsgPosLLHCovGnss
+  msg_type: '0x231'
+  raw_json: '{"preamble": 85, "msg_type": 561, "sender": 4096, "length": 54, "payload":
+    "uGrOHSbdbyHmmUJAIZvVZ3J2XsA8Ov1RdDZSQGk7YT638Ry830TPPvqBzT3eFVW6mHikPwsD", "crc":
+    31490, "tow": 500067000, "lat": 37.202335528965975, "lon": -121.85073276386221,
+    "height": 72.85084962586637, "cov_n_n": 0.21995319426059723, "cov_n_e": -0.009579113684594631,
+    "cov_n_d": 0.40482231974601746, "cov_e_e": 0.10034556686878204, "cov_e_d": -0.0008128563640639186,
+    "cov_d_d": 1.2849302291870117, "n_sats": 11, "flags": 3}'
+  raw_packet: VTECABA2uGrOHSbdbyHmmUJAIZvVZ3J2XsA8Ov1RdDZSQGk7YT638Ry830TPPvqBzT3eFVW6mHikPwsDAns=
+  sbp:
+    crc: '0x7b02'
+    length: 54
+    msg_type: '0x231'
+    payload: uGrOHSbdbyHmmUJAIZvVZ3J2XsA8Ov1RdDZSQGk7YT638Ry830TPPvqBzT3eFVW6mHikPwsD
+    preamble: '0x55'
+    sender: '0x1000'
+version: 3.4.1.dev12+g7ff5295c
+...

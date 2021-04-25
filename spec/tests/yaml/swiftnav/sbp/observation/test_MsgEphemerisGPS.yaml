@@ -1,0 +1,307 @@
+---
+description: Unit tests for swiftnav.sbp.observation MsgEphemerisGPS v3.4.1.dev12+g7ff5295c.
+generated_on: 2020-09-18 18:23:45.836242
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      af0: -0.0004520649090409279
+      af1: -9.890754881780595e-12
+      af2: 0.0
+      c_ic: -6.705522537231445e-08
+      c_is: -8.568167686462402e-08
+      c_rc: 195.40625
+      c_rs: -61.3125
+      c_uc: -3.1907111406326294e-06
+      c_us: 9.823590517044067e-06
+      common:
+        fit_interval: 14400
+        health_bits: 0
+        sid:
+          code: 0
+          sat: 10
+        toe:
+          tow: 504000
+          wn: 2122
+        ura: 2.0
+        valid: 1
+      dn: 4.338752155014027e-09
+      ecc: 0.0058618332259356976
+      inc: 0.9665848041254436
+      inc_dot: 3.017982853956909e-10
+      iodc: 57
+      iode: 57
+      m0: -2.796409538778957
+      omega0: 2.230825267878158
+      omegadot: -7.757823144473138e-09
+      sqrta: 5153.670713424683
+      tgd: 2.3283064365386963e-09
+      toc:
+        tow: 504000
+        wn: 2122
+      w: -2.6611224911418225
+    module: sbp.observation
+    name: MsgEphemerisGPS
+  msg_type: '0x8a'
+  raw_json: '{"preamble": 85, "msg_type": 138, "sender": 51228, "length": 139, "payload":
+    "CgDAsAcASggAAABAQDgAAAEAAAAgMQBAdcIAaENDACBWtgDQJDcAAJCzAAC4s6/MaimCojI+ejna9gtfBsAAAADgkwJ4PwAA4LOrIbRAXAQF67rYAUAsmWGL6KhAvlvVsJb6SQXAZ/BQQUPu7j82QkmlSr30PSAD7bkAAC6tAAAAAMCwBwBKCDk5AA==",
+    "crc": 38731, "common": {"sid": {"sat": 10, "code": 0}, "toe": {"tow": 504000,
+    "wn": 2122}, "ura": 2.0, "fit_interval": 14400, "valid": 1, "health_bits": 0},
+    "tgd": 2.3283064365386963e-09, "c_rs": -61.3125, "c_rc": 195.40625, "c_uc": -3.1907111406326294e-06,
+    "c_us": 9.823590517044067e-06, "c_ic": -6.705522537231445e-08, "c_is": -8.568167686462402e-08,
+    "dn": 4.338752155014027e-09, "m0": -2.796409538778957, "ecc": 0.0058618332259356976,
+    "sqrta": 5153.670713424683, "omega0": 2.230825267878158, "omegadot": -7.757823144473138e-09,
+    "w": -2.6611224911418225, "inc": 0.9665848041254436, "inc_dot": 3.017982853956909e-10,
+    "af0": -0.0004520649090409279, "af1": -9.890754881780595e-12, "af2": 0.0, "toc":
+    {"tow": 504000, "wn": 2122}, "iode": 57, "iodc": 57}'
+  raw_packet: VYoAHMiLCgDAsAcASggAAABAQDgAAAEAAAAgMQBAdcIAaENDACBWtgDQJDcAAJCzAAC4s6/MaimCojI+ejna9gtfBsAAAADgkwJ4PwAA4LOrIbRAXAQF67rYAUAsmWGL6KhAvlvVsJb6SQXAZ/BQQUPu7j82QkmlSr30PSAD7bkAAC6tAAAAAMCwBwBKCDk5AEuX
+  sbp:
+    crc: '0x974b'
+    length: 139
+    msg_type: '0x8a'
+    payload: CgDAsAcASggAAABAQDgAAAEAAAAgMQBAdcIAaENDACBWtgDQJDcAAJCzAAC4s6/MaimCojI+ejna9gtfBsAAAADgkwJ4PwAA4LOrIbRAXAQF67rYAUAsmWGL6KhAvlvVsJb6SQXAZ/BQQUPu7j82QkmlSr30PSAD7bkAAC6tAAAAAMCwBwBKCDk5AA==
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      af0: -0.00020434334874153137
+      af1: 2.6147972675971687e-12
+      af2: 0.0
+      c_ic: -6.891787052154541e-08
+      c_is: 1.1548399925231934e-07
+      c_rc: 216.09375
+      c_rs: 9.8125
+      c_uc: 8.046627044677734e-07
+      c_us: 7.597729563713074e-06
+      common:
+        fit_interval: 14400
+        health_bits: 0
+        sid:
+          code: 0
+          sat: 15
+        toe:
+          tow: 504000
+          wn: 2122
+        ura: 2.0
+        valid: 1
+      dn: 5.651306828184636e-09
+      ecc: 0.012736670556478202
+      inc: 0.9288395412780257
+      inc_dot: 8.143196339670712e-11
+      iodc: 59
+      iode: 59
+      m0: 0.5057736098552638
+      omega0: -3.1111814218570664
+      omegadot: -8.680004414167427e-09
+      sqrta: 5153.741733551025
+      tgd: -1.0710209608078003e-08
+      toc:
+        tow: 504000
+        wn: 2122
+      w: 0.9155426370543066
+    module: sbp.observation
+    name: MsgEphemerisGPS
+  msg_type: '0x8a'
+  raw_json: '{"preamble": 85, "msg_type": 138, "sender": 51228, "length": 139, "payload":
+    "DwDAsAcASggAAABAQDgAAAEAAAA4sgAAHUEAGFhDAABYNQDw/jYAAJSzAAD4M32HNXWtRTg+WUMwI0wv4D8AAAD8rhWKPwAAQOK9IbRAG2TWFbPjCMBqaCkF4qNCvjG9hxIgTO0/Fqqgsw257T8puAzXQ2LWPQBFVrkAADgsAAAAAMCwBwBKCDs7AA==",
+    "crc": 46257, "common": {"sid": {"sat": 15, "code": 0}, "toe": {"tow": 504000,
+    "wn": 2122}, "ura": 2.0, "fit_interval": 14400, "valid": 1, "health_bits": 0},
+    "tgd": -1.0710209608078003e-08, "c_rs": 9.8125, "c_rc": 216.09375, "c_uc": 8.046627044677734e-07,
+    "c_us": 7.597729563713074e-06, "c_ic": -6.891787052154541e-08, "c_is": 1.1548399925231934e-07,
+    "dn": 5.651306828184636e-09, "m0": 0.5057736098552638, "ecc": 0.012736670556478202,
+    "sqrta": 5153.741733551025, "omega0": -3.1111814218570664, "omegadot": -8.680004414167427e-09,
+    "w": 0.9155426370543066, "inc": 0.9288395412780257, "inc_dot": 8.143196339670712e-11,
+    "af0": -0.00020434334874153137, "af1": 2.6147972675971687e-12, "af2": 0.0, "toc":
+    {"tow": 504000, "wn": 2122}, "iode": 59, "iodc": 59}'
+  raw_packet: VYoAHMiLDwDAsAcASggAAABAQDgAAAEAAAA4sgAAHUEAGFhDAABYNQDw/jYAAJSzAAD4M32HNXWtRTg+WUMwI0wv4D8AAAD8rhWKPwAAQOK9IbRAG2TWFbPjCMBqaCkF4qNCvjG9hxIgTO0/Fqqgsw257T8puAzXQ2LWPQBFVrkAADgsAAAAAMCwBwBKCDs7ALG0
+  sbp:
+    crc: '0xb4b1'
+    length: 139
+    msg_type: '0x8a'
+    payload: DwDAsAcASggAAABAQDgAAAEAAAA4sgAAHUEAGFhDAABYNQDw/jYAAJSzAAD4M32HNXWtRTg+WUMwI0wv4D8AAAD8rhWKPwAAQOK9IbRAG2TWFbPjCMBqaCkF4qNCvjG9hxIgTO0/Fqqgsw257T8puAzXQ2LWPQBFVrkAADgsAAAAAMCwBwBKCDs7AA==
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      af0: 0.00028834957629442215
+      af1: 7.16227077646181e-12
+      af2: 0.0
+      c_ic: -1.862645149230957e-09
+      c_is: 1.6763806343078613e-08
+      c_rc: 281.09375
+      c_rs: -71.03125
+      c_uc: -3.7476420402526855e-06
+      c_us: 5.066394805908203e-06
+      common:
+        fit_interval: 14400
+        health_bits: 0
+        sid:
+          code: 0
+          sat: 18
+        toe:
+          tow: 504000
+          wn: 2122
+        ura: 2.0
+        valid: 1
+      dn: 4.450899683551598e-09
+      ecc: 0.0010028165997937322
+      inc: 0.9648295291826252
+      inc_dot: 5.285934466102042e-11
+      iodc: 452
+      iode: 196
+      m0: -0.3447632982837923
+      omega0: 1.2093173710483045
+      omegadot: -8.164268645988282e-09
+      sqrta: 5153.712779998779
+      tgd: -8.381903171539307e-09
+      toc:
+        tow: 504000
+        wn: 2122
+      w: 2.7279719942290965
+    module: sbp.observation
+    name: MsgEphemerisGPS
+  msg_type: '0x8a'
+  raw_json: '{"preamble": 85, "msg_type": 138, "sender": 51228, "length": 139, "payload":
+    "EgDAsAcASggAAABAQDgAAAEAAAAQsgAQjsIAjIxDAIB7tgAAqjYAAACxAACQMi07gOLQHTM+2Vu/FJoQ1r8AAAAgHm5QPwAAwHi2IbRA1DHyK11Z8z9Nx9qpWohBvmbxHPvi0gVAFL5BLeLf7j8k1G6ZSg/NPaAtlzkAAPwsAAAAAMCwBwBKCMTEAQ==",
+    "crc": 44108, "common": {"sid": {"sat": 18, "code": 0}, "toe": {"tow": 504000,
+    "wn": 2122}, "ura": 2.0, "fit_interval": 14400, "valid": 1, "health_bits": 0},
+    "tgd": -8.381903171539307e-09, "c_rs": -71.03125, "c_rc": 281.09375, "c_uc": -3.7476420402526855e-06,
+    "c_us": 5.066394805908203e-06, "c_ic": -1.862645149230957e-09, "c_is": 1.6763806343078613e-08,
+    "dn": 4.450899683551598e-09, "m0": -0.3447632982837923, "ecc": 0.0010028165997937322,
+    "sqrta": 5153.712779998779, "omega0": 1.2093173710483045, "omegadot": -8.164268645988282e-09,
+    "w": 2.7279719942290965, "inc": 0.9648295291826252, "inc_dot": 5.285934466102042e-11,
+    "af0": 0.00028834957629442215, "af1": 7.16227077646181e-12, "af2": 0.0, "toc":
+    {"tow": 504000, "wn": 2122}, "iode": 196, "iodc": 452}'
+  raw_packet: VYoAHMiLEgDAsAcASggAAABAQDgAAAEAAAAQsgAQjsIAjIxDAIB7tgAAqjYAAACxAACQMi07gOLQHTM+2Vu/FJoQ1r8AAAAgHm5QPwAAwHi2IbRA1DHyK11Z8z9Nx9qpWohBvmbxHPvi0gVAFL5BLeLf7j8k1G6ZSg/NPaAtlzkAAPwsAAAAAMCwBwBKCMTEAUys
+  sbp:
+    crc: '0xac4c'
+    length: 139
+    msg_type: '0x8a'
+    payload: EgDAsAcASggAAABAQDgAAAEAAAAQsgAQjsIAjIxDAIB7tgAAqjYAAACxAACQMi07gOLQHTM+2Vu/FJoQ1r8AAAAgHm5QPwAAwHi2IbRA1DHyK11Z8z9Nx9qpWohBvmbxHPvi0gVAFL5BLeLf7j8k1G6ZSg/NPaAtlzkAAPwsAAAAAMCwBwBKCMTEAQ==
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      af0: 0.0005267667584121227
+      af1: -1.1368683772161603e-13
+      af2: 0.0
+      c_ic: -7.078051567077637e-08
+      c_is: -6.51925802230835e-08
+      c_rc: 187.46875
+      c_rs: -66.34375
+      c_uc: -3.5725533962249756e-06
+      c_us: 9.300187230110168e-06
+      common:
+        fit_interval: 14400
+        health_bits: 0
+        sid:
+          code: 0
+          sat: 20
+        toe:
+          tow: 504000
+          wn: 2122
+        ura: 2.0
+        valid: 1
+      dn: 5.045210153253881e-09
+      ecc: 0.005587180843576789
+      inc: 0.9350518887329473
+      inc_dot: 3.042983895350635e-10
+      iodc: 54
+      iode: 54
+      m0: -1.2937952725205584
+      omega0: 2.0964129457739955
+      omegadot: -8.260344076487028e-09
+      sqrta: 5153.664438247681
+      tgd: -8.847564458847046e-09
+      toc:
+        tow: 504000
+        wn: 2122
+      w: 2.70250264752286
+    module: sbp.observation
+    name: MsgEphemerisGPS
+  msg_type: '0x8a'
+  raw_json: '{"preamble": 85, "msg_type": 138, "sender": 51228, "length": 139, "payload":
+    "FADAsAcASggAAABAQDgAAAEAAAAYsgCwhMIAeDtDAMBvtgAIHDcAAJizAACMs8EnD2lEqzU+kB/zq2Kz9L8AAABwleJ2PwAAoBiqIbRAKRWIJnTFAECU3gkULL1Bvnq2Q7W5ngVAKHlF8PHr7T+FuRwdRun0PbgWCjoAAACqAAAAAMCwBwBKCDY2AA==",
+    "crc": 49375, "common": {"sid": {"sat": 20, "code": 0}, "toe": {"tow": 504000,
+    "wn": 2122}, "ura": 2.0, "fit_interval": 14400, "valid": 1, "health_bits": 0},
+    "tgd": -8.847564458847046e-09, "c_rs": -66.34375, "c_rc": 187.46875, "c_uc": -3.5725533962249756e-06,
+    "c_us": 9.300187230110168e-06, "c_ic": -7.078051567077637e-08, "c_is": -6.51925802230835e-08,
+    "dn": 5.045210153253881e-09, "m0": -1.2937952725205584, "ecc": 0.005587180843576789,
+    "sqrta": 5153.664438247681, "omega0": 2.0964129457739955, "omegadot": -8.260344076487028e-09,
+    "w": 2.70250264752286, "inc": 0.9350518887329473, "inc_dot": 3.042983895350635e-10,
+    "af0": 0.0005267667584121227, "af1": -1.1368683772161603e-13, "af2": 0.0, "toc":
+    {"tow": 504000, "wn": 2122}, "iode": 54, "iodc": 54}'
+  raw_packet: VYoAHMiLFADAsAcASggAAABAQDgAAAEAAAAYsgCwhMIAeDtDAMBvtgAIHDcAAJizAACMs8EnD2lEqzU+kB/zq2Kz9L8AAABwleJ2PwAAoBiqIbRAKRWIJnTFAECU3gkULL1Bvnq2Q7W5ngVAKHlF8PHr7T+FuRwdRun0PbgWCjoAAACqAAAAAMCwBwBKCDY2AN/A
+  sbp:
+    crc: '0xc0df'
+    length: 139
+    msg_type: '0x8a'
+    payload: FADAsAcASggAAABAQDgAAAEAAAAYsgCwhMIAeDtDAMBvtgAIHDcAAJizAACMs8EnD2lEqzU+kB/zq2Kz9L8AAABwleJ2PwAAoBiqIbRAKRWIJnTFAECU3gkULL1Bvnq2Q7W5ngVAKHlF8PHr7T+FuRwdRun0PbgWCjoAAACqAAAAAMCwBwBKCDY2AA==
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      af0: 5.916692316532135e-05
+      af1: 5.5706550483591855e-12
+      af2: 0.0
+      c_ic: -4.6566128730773926e-08
+      c_is: 9.313225746154785e-09
+      c_rc: 195.78125
+      c_rs: -57.96875
+      c_uc: -3.0472874641418457e-06
+      c_us: 9.605661034584045e-06
+      common:
+        fit_interval: 14400
+        health_bits: 1
+        sid:
+          code: 0
+          sat: 23
+        toe:
+          tow: 504000
+          wn: 2122
+        ura: 4096.0
+        valid: 1
+      dn: 4.459828626906499e-09
+      ecc: 0.001012304681353271
+      inc: 0.9614967370098824
+      inc_dot: 2.6286809236831773e-10
+      iodc: 770
+      iode: 2
+      m0: -0.5588799382441478
+      omega0: 2.2087226837653837
+      omegadot: -7.918901282595572e-09
+      sqrta: 5153.641044616699
+      tgd: -8.381903171539307e-09
+      toc:
+        tow: 504000
+        wn: 2122
+      w: 1.828394362112756
+    module: sbp.observation
+    name: MsgEphemerisGPS
+  msg_type: '0x8a'
+  raw_json: '{"preamble": 85, "msg_type": 138, "sender": 51228, "length": 139, "payload":
+    "FwDAsAcASggAAIBFQDgAAAEBAAAQsgDgZ8IAyENDAIBMtgAoITcAAEizAAAgMs4lrSiiJzM+jMUkLlji4b8AAADg6ZVQPwAAgBukIbRAOKVlzHarAUBjgexGdgFBvuxwV3IaQf0/jGEVzpTE7j9pAJGkbBDyPQAqeDgAAMQsAAAAAMCwBwBKCAICAw==",
+    "crc": 5870, "common": {"sid": {"sat": 23, "code": 0}, "toe": {"tow": 504000,
+    "wn": 2122}, "ura": 4096.0, "fit_interval": 14400, "valid": 1, "health_bits":
+    1}, "tgd": -8.381903171539307e-09, "c_rs": -57.96875, "c_rc": 195.78125, "c_uc":
+    -3.0472874641418457e-06, "c_us": 9.605661034584045e-06, "c_ic": -4.6566128730773926e-08,
+    "c_is": 9.313225746154785e-09, "dn": 4.459828626906499e-09, "m0": -0.5588799382441478,
+    "ecc": 0.001012304681353271, "sqrta": 5153.641044616699, "omega0": 2.2087226837653837,
+    "omegadot": -7.918901282595572e-09, "w": 1.828394362112756, "inc": 0.9614967370098824,
+    "inc_dot": 2.6286809236831773e-10, "af0": 5.916692316532135e-05, "af1": 5.5706550483591855e-12,
+    "af2": 0.0, "toc": {"tow": 504000, "wn": 2122}, "iode": 2, "iodc": 770}'
+  raw_packet: VYoAHMiLFwDAsAcASggAAIBFQDgAAAEBAAAQsgDgZ8IAyENDAIBMtgAoITcAAEizAAAgMs4lrSiiJzM+jMUkLlji4b8AAADg6ZVQPwAAgBukIbRAOKVlzHarAUBjgexGdgFBvuxwV3IaQf0/jGEVzpTE7j9pAJGkbBDyPQAqeDgAAMQsAAAAAMCwBwBKCAICA+4W
+  sbp:
+    crc: '0x16ee'
+    length: 139
+    msg_type: '0x8a'
+    payload: FwDAsAcASggAAIBFQDgAAAEBAAAQsgDgZ8IAyENDAIBMtgAoITcAAEizAAAgMs4lrSiiJzM+jMUkLlji4b8AAADg6ZVQPwAAgBukIbRAOKVlzHarAUBjgexGdgFBvuxwV3IaQf0/jGEVzpTE7j9pAJGkbBDyPQAqeDgAAMQsAAAAAMCwBwBKCAICAw==
+    preamble: '0x55'
+    sender: '0xc81c'
+version: 3.4.1.dev12+g7ff5295c
+...

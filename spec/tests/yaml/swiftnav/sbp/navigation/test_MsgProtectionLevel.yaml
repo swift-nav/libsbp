@@ -1,0 +1,127 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgProtectionLevel v3.4.1.dev12+g7ff5295c.
+generated_on: 2020-09-18 18:23:45.020327
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      flags: 0
+      height: 0.0
+      hpl: 0
+      lat: 0.0
+      lon: 0.0
+      tow: 500066600
+      vpl: 0
+    module: sbp.navigation
+    name: MsgProtectionLevel
+  msg_type: '0x216'
+  raw_json: '{"preamble": 85, "msg_type": 534, "sender": 4096, "length": 33, "payload":
+    "KGnOHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "crc": 65372, "tow": 500066600,
+    "vpl": 0, "hpl": 0, "lat": 0.0, "lon": 0.0, "height": 0.0, "flags": 0}'
+  raw_packet: VRYCABAhKGnOHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXP8=
+  sbp:
+    crc: '0xff5c'
+    length: 33
+    msg_type: '0x216'
+    payload: KGnOHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      flags: 0
+      height: 0.0
+      hpl: 0
+      lat: 0.0
+      lon: 0.0
+      tow: 500066700
+      vpl: 0
+    module: sbp.navigation
+    name: MsgProtectionLevel
+  msg_type: '0x216'
+  raw_json: '{"preamble": 85, "msg_type": 534, "sender": 4096, "length": 33, "payload":
+    "jGnOHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "crc": 38908, "tow": 500066700,
+    "vpl": 0, "hpl": 0, "lat": 0.0, "lon": 0.0, "height": 0.0, "flags": 0}'
+  raw_packet: VRYCABAhjGnOHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/Jc=
+  sbp:
+    crc: '0x97fc'
+    length: 33
+    msg_type: '0x216'
+    payload: jGnOHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      flags: 0
+      height: 0.0
+      hpl: 0
+      lat: 0.0
+      lon: 0.0
+      tow: 500066800
+      vpl: 0
+    module: sbp.navigation
+    name: MsgProtectionLevel
+  msg_type: '0x216'
+  raw_json: '{"preamble": 85, "msg_type": 534, "sender": 4096, "length": 33, "payload":
+    "8GnOHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "crc": 10483, "tow": 500066800,
+    "vpl": 0, "hpl": 0, "lat": 0.0, "lon": 0.0, "height": 0.0, "flags": 0}'
+  raw_packet: VRYCABAh8GnOHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8yg=
+  sbp:
+    crc: '0x28f3'
+    length: 33
+    msg_type: '0x216'
+    payload: 8GnOHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      flags: 0
+      height: 0.0
+      hpl: 0
+      lat: 0.0
+      lon: 0.0
+      tow: 500066900
+      vpl: 0
+    module: sbp.navigation
+    name: MsgProtectionLevel
+  msg_type: '0x216'
+  raw_json: '{"preamble": 85, "msg_type": 534, "sender": 4096, "length": 33, "payload":
+    "VGrOHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "crc": 43929, "tow": 500066900,
+    "vpl": 0, "hpl": 0, "lat": 0.0, "lon": 0.0, "height": 0.0, "flags": 0}'
+  raw_packet: VRYCABAhVGrOHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAmas=
+  sbp:
+    crc: '0xab99'
+    length: 33
+    msg_type: '0x216'
+    payload: VGrOHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      flags: 0
+      height: 0.0
+      hpl: 0
+      lat: 0.0
+      lon: 0.0
+      tow: 500067000
+      vpl: 0
+    module: sbp.navigation
+    name: MsgProtectionLevel
+  msg_type: '0x216'
+  raw_json: '{"preamble": 85, "msg_type": 534, "sender": 4096, "length": 33, "payload":
+    "uGrOHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "crc": 36444, "tow": 500067000,
+    "vpl": 0, "hpl": 0, "lat": 0.0, "lon": 0.0, "height": 0.0, "flags": 0}'
+  raw_packet: VRYCABAhuGrOHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXI4=
+  sbp:
+    crc: '0x8e5c'
+    length: 33
+    msg_type: '0x216'
+    payload: uGrOHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    preamble: '0x55'
+    sender: '0x1000'
+version: 3.4.1.dev12+g7ff5295c
+...

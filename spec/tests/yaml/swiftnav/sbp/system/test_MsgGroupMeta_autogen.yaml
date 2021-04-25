@@ -1,0 +1,79 @@
+---
+description: Unit tests for swiftnav.sbp.system MsgGroupMeta v3.4.1.dev12+g7ff5295c.
+generated_on: 2020-09-18 18:23:45.123637
+package: sbp.system
+tests:
+
+- msg:
+    fields:
+      flags: 1
+      group_id: 1
+      group_msgs:
+      - 258
+      - 259
+      - 522
+      - 529
+      - 521
+      - 532
+      - 526
+      - 530
+      - 525
+      - 533
+      - 545
+      - 65283
+      - 65286
+      - 65295
+      n_group_msgs: 14
+    module: sbp.system
+    name: MsgGroupMeta
+  msg_type: '0xff0a'
+  raw_json: '{"preamble": 85, "msg_type": 65290, "sender": 789, "length": 31, "payload":
+    "AQEOAgEDAQoCEQIJAhQCDgISAg0CFQIhAgP/Bv8P/w==", "crc": 43363, "group_id": 1, "flags":
+    1, "n_group_msgs": 14, "group_msgs": [258, 259, 522, 529, 521, 532, 526, 530,
+    525, 533, 545, 65283, 65286, 65295]}'
+  raw_packet: VQr/FQMfAQEOAgEDAQoCEQIJAhQCDgISAg0CFQIhAgP/Bv8P/2Op
+  sbp:
+    crc: '0xa963'
+    length: 31
+    msg_type: '0xff0a'
+    payload: AQEOAgEDAQoCEQIJAhQCDgISAg0CFQIhAgP/Bv8P/w==
+    preamble: '0x55'
+    sender: '0x315'
+
+- msg:
+    fields:
+      flags: 2
+      group_id: 1
+      group_msgs:
+      - 258
+      - 259
+      - 522
+      - 529
+      - 521
+      - 532
+      - 526
+      - 530
+      - 525
+      - 533
+      - 545
+      - 65283
+      - 65286
+      - 65295
+      n_group_msgs: 14
+    module: sbp.system
+    name: MsgGroupMeta
+  msg_type: '0xff0a'
+  raw_json: '{"preamble": 85, "msg_type": 65290, "sender": 789, "length": 31, "payload":
+    "AQIOAgEDAQoCEQIJAhQCDgISAg0CFQIhAgP/Bv8P/w==", "crc": 45634, "group_id": 1, "flags":
+    2, "n_group_msgs": 14, "group_msgs": [258, 259, 522, 529, 521, 532, 526, 530,
+    525, 533, 545, 65283, 65286, 65295]}'
+  raw_packet: VQr/FQMfAQIOAgEDAQoCEQIJAhQCDgISAg0CFQIhAgP/Bv8P/0Ky
+  sbp:
+    crc: '0xb242'
+    length: 31
+    msg_type: '0xff0a'
+    payload: AQIOAgEDAQoCEQIJAhQCDgISAg0CFQIhAgP/Bv8P/w==
+    preamble: '0x55'
+    sender: '0x315'
+version: 3.4.1.dev12+g7ff5295c
+...

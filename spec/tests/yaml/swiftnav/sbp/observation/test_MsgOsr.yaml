@@ -1,0 +1,809 @@
+---
+description: Unit tests for swiftnav.sbp.observation MsgOsr v3.4.1.dev12+g7ff5295c.
+generated_on: 2020-09-18 18:23:45.734948
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      header:
+        n_obs: 48
+        t:
+          ns_residual: 0
+          tow: 500067000
+          wn: 2122
+      obs:
+      - L:
+          f: 50
+          i: 116151947
+        P: 1105149520
+        flags: 3
+        iono_std: 0
+        lock: 15
+        range_std: 4
+        sid:
+          code: 0
+          sat: 10
+        tropo_std: 4
+      - L:
+          f: 127
+          i: 125017303
+        P: 1189500172
+        flags: 3
+        iono_std: 23
+        lock: 15
+        range_std: 8
+        sid:
+          code: 0
+          sat: 13
+        tropo_std: 8
+      - L:
+          f: 201
+          i: 113832765
+        P: 1083082776
+        flags: 3
+        iono_std: 14
+        lock: 15
+        range_std: 4
+        sid:
+          code: 0
+          sat: 15
+        tropo_std: 4
+      - L:
+          f: 187
+          i: 122025164
+        P: 1161030963
+        flags: 3
+        iono_std: 19
+        lock: 15
+        range_std: 5
+        sid:
+          code: 0
+          sat: 16
+        tropo_std: 5
+      - L:
+          f: 235
+          i: 106426926
+        P: 1012618628
+        flags: 3
+        iono_std: 0
+        lock: 15
+        range_std: 3
+        sid:
+          code: 0
+          sat: 20
+        tropo_std: 3
+      - L:
+          f: 109
+          i: 121679544
+        P: 1157743089
+        flags: 3
+        iono_std: 15
+        lock: 15
+        range_std: 6
+        sid:
+          code: 0
+          sat: 26
+        tropo_std: 6
+      - L:
+          f: 54
+          i: 126017004
+        P: 1199012469
+        flags: 3
+        iono_std: 21
+        lock: 15
+        range_std: 8
+        sid:
+          code: 0
+          sat: 27
+        tropo_std: 8
+      - L:
+          f: 51
+          i: 116857049
+        P: 1111857937
+        flags: 3
+        iono_std: 15
+        lock: 15
+        range_std: 4
+        sid:
+          code: 0
+          sat: 29
+        tropo_std: 4
+      - L:
+          f: 142
+          i: 86736835
+        P: 1105149525
+        flags: 3
+        iono_std: 0
+        lock: 15
+        range_std: 4
+        sid:
+          code: 9
+          sat: 10
+        tropo_std: 4
+      - L:
+          f: 99
+          i: 90864581
+        P: 1157743179
+        flags: 3
+        iono_std: 26
+        lock: 15
+        range_std: 6
+        sid:
+          code: 9
+          sat: 26
+        tropo_std: 6
+      - L:
+          f: 199
+          i: 94103597
+        P: 1199012562
+        flags: 3
+        iono_std: 37
+        lock: 15
+        range_std: 8
+        sid:
+          code: 9
+          sat: 27
+        tropo_std: 8
+      - L:
+          f: 46
+          i: 136731388
+        P: 1300956156
+        flags: 3
+        iono_std: 16
+        lock: 15
+        range_std: 5
+        sid:
+          code: 14
+          sat: 7
+        tropo_std: 5
+    module: sbp.observation
+    name: MsgOsr
+  msg_type: '0x640'
+  raw_json: '{"preamble": 85, "msg_type": 1600, "sender": 0, "length": 239, "payload":
+    "uGrOHQAAAABKCDBQPt9Bi1bsBjIPAwoAAAAEAAQADFXmRteccwd/DwMNABcACAAIABiIjkA988gGyQ8DDwAOAAQABAAz7TNFzPRFB7sPAxAAEwAFAAUAhFVbPC7yVwbrDwMUAAAAAwADAPHBAUW4rkAHbQ8DGgAPAAYABgB1endH7N2CBzYPAxsAFQAIAAgAEZtFQtkY9wYzDwMdAA8ABAAEAFU+30HDfysFjg8DCgkAAAQABABLwgFFxXtqBWMPAxoJGgAGAAYA0np3Ry3omwXHDwMbCSUACAAIAPwDi038WiYILg8DBw4QAAUABQA=",
+    "crc": 23746, "header": {"t": {"tow": 500067000, "ns_residual": 0, "wn": 2122},
+    "n_obs": 48}, "obs": [{"P": 1105149520, "L": {"i": 116151947, "f": 50}, "lock":
+    15, "flags": 3, "sid": {"sat": 10, "code": 0}, "iono_std": 0, "tropo_std": 4,
+    "range_std": 4}, {"P": 1189500172, "L": {"i": 125017303, "f": 127}, "lock": 15,
+    "flags": 3, "sid": {"sat": 13, "code": 0}, "iono_std": 23, "tropo_std": 8, "range_std":
+    8}, {"P": 1083082776, "L": {"i": 113832765, "f": 201}, "lock": 15, "flags": 3,
+    "sid": {"sat": 15, "code": 0}, "iono_std": 14, "tropo_std": 4, "range_std": 4},
+    {"P": 1161030963, "L": {"i": 122025164, "f": 187}, "lock": 15, "flags": 3, "sid":
+    {"sat": 16, "code": 0}, "iono_std": 19, "tropo_std": 5, "range_std": 5}, {"P":
+    1012618628, "L": {"i": 106426926, "f": 235}, "lock": 15, "flags": 3, "sid": {"sat":
+    20, "code": 0}, "iono_std": 0, "tropo_std": 3, "range_std": 3}, {"P": 1157743089,
+    "L": {"i": 121679544, "f": 109}, "lock": 15, "flags": 3, "sid": {"sat": 26, "code":
+    0}, "iono_std": 15, "tropo_std": 6, "range_std": 6}, {"P": 1199012469, "L": {"i":
+    126017004, "f": 54}, "lock": 15, "flags": 3, "sid": {"sat": 27, "code": 0}, "iono_std":
+    21, "tropo_std": 8, "range_std": 8}, {"P": 1111857937, "L": {"i": 116857049, "f":
+    51}, "lock": 15, "flags": 3, "sid": {"sat": 29, "code": 0}, "iono_std": 15, "tropo_std":
+    4, "range_std": 4}, {"P": 1105149525, "L": {"i": 86736835, "f": 142}, "lock":
+    15, "flags": 3, "sid": {"sat": 10, "code": 9}, "iono_std": 0, "tropo_std": 4,
+    "range_std": 4}, {"P": 1157743179, "L": {"i": 90864581, "f": 99}, "lock": 15,
+    "flags": 3, "sid": {"sat": 26, "code": 9}, "iono_std": 26, "tropo_std": 6, "range_std":
+    6}, {"P": 1199012562, "L": {"i": 94103597, "f": 199}, "lock": 15, "flags": 3,
+    "sid": {"sat": 27, "code": 9}, "iono_std": 37, "tropo_std": 8, "range_std": 8},
+    {"P": 1300956156, "L": {"i": 136731388, "f": 46}, "lock": 15, "flags": 3, "sid":
+    {"sat": 7, "code": 14}, "iono_std": 16, "tropo_std": 5, "range_std": 5}]}'
+  raw_packet: VUAGAADvuGrOHQAAAABKCDBQPt9Bi1bsBjIPAwoAAAAEAAQADFXmRteccwd/DwMNABcACAAIABiIjkA988gGyQ8DDwAOAAQABAAz7TNFzPRFB7sPAxAAEwAFAAUAhFVbPC7yVwbrDwMUAAAAAwADAPHBAUW4rkAHbQ8DGgAPAAYABgB1endH7N2CBzYPAxsAFQAIAAgAEZtFQtkY9wYzDwMdAA8ABAAEAFU+30HDfysFjg8DCgkAAAQABABLwgFFxXtqBWMPAxoJGgAGAAYA0np3Ry3omwXHDwMbCSUACAAIAPwDi038WiYILg8DBw4QAAUABQDCXA==
+  sbp:
+    crc: '0x5cc2'
+    length: 239
+    msg_type: '0x640'
+    payload: uGrOHQAAAABKCDBQPt9Bi1bsBjIPAwoAAAAEAAQADFXmRteccwd/DwMNABcACAAIABiIjkA988gGyQ8DDwAOAAQABAAz7TNFzPRFB7sPAxAAEwAFAAUAhFVbPC7yVwbrDwMUAAAAAwADAPHBAUW4rkAHbQ8DGgAPAAYABgB1endH7N2CBzYPAxsAFQAIAAgAEZtFQtkY9wYzDwMdAA8ABAAEAFU+30HDfysFjg8DCgkAAAQABABLwgFFxXtqBWMPAxoJGgAGAAYA0np3Ry3omwXHDwMbCSUACAAIAPwDi038WiYILg8DBw4QAAUABQA=
+    preamble: '0x55'
+    sender: '0x0'
+
+- msg:
+    fields:
+      header:
+        n_obs: 49
+        t:
+          ns_residual: 0
+          tow: 500067000
+          wn: 2122
+      obs:
+      - L:
+          f: 155
+          i: 129213369
+        P: 1229424282
+        flags: 3
+        iono_std: 18
+        lock: 15
+        range_std: 6
+        sid:
+          code: 14
+          sat: 12
+        tropo_std: 6
+      - L:
+          f: 1
+          i: 134680566
+        P: 1281443030
+        flags: 3
+        iono_std: 16
+        lock: 15
+        range_std: 5
+        sid:
+          code: 14
+          sat: 19
+        tropo_std: 5
+      - L:
+          f: 132
+          i: 136348058
+        P: 1297310494
+        flags: 3
+        iono_std: 27
+        lock: 15
+        range_std: 10
+        sid:
+          code: 14
+          sat: 24
+        tropo_std: 10
+      - L:
+          f: 117
+          i: 127470589
+        P: 1212842668
+        flags: 3
+        iono_std: 14
+        lock: 15
+        range_std: 4
+        sid:
+          code: 14
+          sat: 26
+        tropo_std: 4
+      - L:
+          f: 239
+          i: 143024215
+        P: 1360830624
+        flags: 3
+        iono_std: 24
+        lock: 15
+        range_std: 8
+        sid:
+          code: 14
+          sat: 31
+        tropo_std: 8
+      - L:
+          f: 124
+          i: 124948083
+        P: 1188841423
+        flags: 3
+        iono_std: 0
+        lock: 15
+        range_std: 3
+        sid:
+          code: 14
+          sat: 33
+        tropo_std: 3
+      - L:
+          f: 20
+          i: 102104602
+        P: 1300956492
+        flags: 3
+        iono_std: 29
+        lock: 15
+        range_std: 5
+        sid:
+          code: 26
+          sat: 7
+        tropo_std: 5
+      - L:
+          f: 121
+          i: 96490498
+        P: 1229424446
+        flags: 3
+        iono_std: 32
+        lock: 15
+        range_std: 6
+        sid:
+          code: 26
+          sat: 12
+        tropo_std: 6
+      - L:
+          f: 30
+          i: 100573145
+        P: 1281443278
+        flags: 3
+        iono_std: 28
+        lock: 15
+        range_std: 5
+        sid:
+          code: 26
+          sat: 19
+        tropo_std: 5
+      - L:
+          f: 15
+          i: 101818322
+        P: 1297311454
+        flags: 3
+        iono_std: 48
+        lock: 15
+        range_std: 10
+        sid:
+          code: 26
+          sat: 24
+        tropo_std: 10
+      - L:
+          f: 82
+          i: 95189069
+        P: 1212843012
+        flags: 3
+        iono_std: 24
+        lock: 15
+        range_std: 4
+        sid:
+          code: 26
+          sat: 26
+        tropo_std: 4
+      - L:
+          f: 32
+          i: 106803785
+        P: 1360831014
+        flags: 3
+        iono_std: 43
+        lock: 15
+        range_std: 8
+        sid:
+          code: 26
+          sat: 31
+        tropo_std: 8
+    module: sbp.observation
+    name: MsgOsr
+  msg_type: '0x640'
+  raw_json: '{"preamble": 85, "msg_type": 1600, "sender": 0, "length": 239, "payload":
+    "uGrOHQAAAABKCDGahkdJuaOzB5sPAwwOEgAGAAYA1kRhTPYPBwgBDwMTDhAABQAFAB5jU02agSAIhA8DGA4bAAoACgCsgkpI/QuZB3UPAxoODgAEAAQAoKAcUVdghgjvDwMfDhgACAAIAM9H3EZzjnIHfA8DIQ4AAAMAAwBMBYtNGv4VBhQPAwcaHQAFAAUAPodHSQJUwAV5DwMMGiAABgAGAM5FYUzZn/4FHg8DExocAAUABQDeZlNN0p8RBg8PAxgaMAAKAAoABIRKSE14rAVSDwMaGhgABAAEACaiHFFJsl0GIA8DHxorAAgACAA=",
+    "crc": 60993, "header": {"t": {"tow": 500067000, "ns_residual": 0, "wn": 2122},
+    "n_obs": 49}, "obs": [{"P": 1229424282, "L": {"i": 129213369, "f": 155}, "lock":
+    15, "flags": 3, "sid": {"sat": 12, "code": 14}, "iono_std": 18, "tropo_std": 6,
+    "range_std": 6}, {"P": 1281443030, "L": {"i": 134680566, "f": 1}, "lock": 15,
+    "flags": 3, "sid": {"sat": 19, "code": 14}, "iono_std": 16, "tropo_std": 5, "range_std":
+    5}, {"P": 1297310494, "L": {"i": 136348058, "f": 132}, "lock": 15, "flags": 3,
+    "sid": {"sat": 24, "code": 14}, "iono_std": 27, "tropo_std": 10, "range_std":
+    10}, {"P": 1212842668, "L": {"i": 127470589, "f": 117}, "lock": 15, "flags": 3,
+    "sid": {"sat": 26, "code": 14}, "iono_std": 14, "tropo_std": 4, "range_std": 4},
+    {"P": 1360830624, "L": {"i": 143024215, "f": 239}, "lock": 15, "flags": 3, "sid":
+    {"sat": 31, "code": 14}, "iono_std": 24, "tropo_std": 8, "range_std": 8}, {"P":
+    1188841423, "L": {"i": 124948083, "f": 124}, "lock": 15, "flags": 3, "sid": {"sat":
+    33, "code": 14}, "iono_std": 0, "tropo_std": 3, "range_std": 3}, {"P": 1300956492,
+    "L": {"i": 102104602, "f": 20}, "lock": 15, "flags": 3, "sid": {"sat": 7, "code":
+    26}, "iono_std": 29, "tropo_std": 5, "range_std": 5}, {"P": 1229424446, "L": {"i":
+    96490498, "f": 121}, "lock": 15, "flags": 3, "sid": {"sat": 12, "code": 26}, "iono_std":
+    32, "tropo_std": 6, "range_std": 6}, {"P": 1281443278, "L": {"i": 100573145, "f":
+    30}, "lock": 15, "flags": 3, "sid": {"sat": 19, "code": 26}, "iono_std": 28, "tropo_std":
+    5, "range_std": 5}, {"P": 1297311454, "L": {"i": 101818322, "f": 15}, "lock":
+    15, "flags": 3, "sid": {"sat": 24, "code": 26}, "iono_std": 48, "tropo_std": 10,
+    "range_std": 10}, {"P": 1212843012, "L": {"i": 95189069, "f": 82}, "lock": 15,
+    "flags": 3, "sid": {"sat": 26, "code": 26}, "iono_std": 24, "tropo_std": 4, "range_std":
+    4}, {"P": 1360831014, "L": {"i": 106803785, "f": 32}, "lock": 15, "flags": 3,
+    "sid": {"sat": 31, "code": 26}, "iono_std": 43, "tropo_std": 8, "range_std": 8}]}'
+  raw_packet: VUAGAADvuGrOHQAAAABKCDGahkdJuaOzB5sPAwwOEgAGAAYA1kRhTPYPBwgBDwMTDhAABQAFAB5jU02agSAIhA8DGA4bAAoACgCsgkpI/QuZB3UPAxoODgAEAAQAoKAcUVdghgjvDwMfDhgACAAIAM9H3EZzjnIHfA8DIQ4AAAMAAwBMBYtNGv4VBhQPAwcaHQAFAAUAPodHSQJUwAV5DwMMGiAABgAGAM5FYUzZn/4FHg8DExocAAUABQDeZlNN0p8RBg8PAxgaMAAKAAoABIRKSE14rAVSDwMaGhgABAAEACaiHFFJsl0GIA8DHxorAAgACABB7g==
+  sbp:
+    crc: '0xee41'
+    length: 239
+    msg_type: '0x640'
+    payload: uGrOHQAAAABKCDGahkdJuaOzB5sPAwwOEgAGAAYA1kRhTPYPBwgBDwMTDhAABQAFAB5jU02agSAIhA8DGA4bAAoACgCsgkpI/QuZB3UPAxoODgAEAAQAoKAcUVdghgjvDwMfDhgACAAIAM9H3EZzjnIHfA8DIQ4AAAMAAwBMBYtNGv4VBhQPAwcaHQAFAAUAPodHSQJUwAV5DwMMGiAABgAGAM5FYUzZn/4FHg8DExocAAUABQDeZlNN0p8RBg8PAxgaMAAKAAoABIRKSE14rAVSDwMaGhgABAAEACaiHFFJsl0GIA8DHxorAAgACAA=
+    preamble: '0x55'
+    sender: '0x0'
+
+- msg:
+    fields:
+      header:
+        n_obs: 50
+        t:
+          ns_residual: 0
+          tow: 500067000
+          wn: 2122
+      obs:
+      - L:
+          f: 167
+          i: 93305386
+        P: 1188841619
+        flags: 3
+        iono_std: 0
+        lock: 15
+        range_std: 3
+        sid:
+          code: 26
+          sat: 33
+        tropo_std: 3
+    module: sbp.observation
+    name: MsgOsr
+  msg_type: '0x640'
+  raw_json: '{"preamble": 85, "msg_type": 1600, "sender": 0, "length": 30, "payload":
+    "uGrOHQAAAABKCDKTSNxGKrqPBacPAyEaAAADAAMA", "crc": 43772, "header": {"t": {"tow":
+    500067000, "ns_residual": 0, "wn": 2122}, "n_obs": 50}, "obs": [{"P": 1188841619,
+    "L": {"i": 93305386, "f": 167}, "lock": 15, "flags": 3, "sid": {"sat": 33, "code":
+    26}, "iono_std": 0, "tropo_std": 3, "range_std": 3}]}'
+  raw_packet: VUAGAAAeuGrOHQAAAABKCDKTSNxGKrqPBacPAyEaAAADAAMA/Ko=
+  sbp:
+    crc: '0xaafc'
+    length: 30
+    msg_type: '0x640'
+    payload: uGrOHQAAAABKCDKTSNxGKrqPBacPAyEaAAADAAMA
+    preamble: '0x55'
+    sender: '0x0'
+
+- msg:
+    fields:
+      header:
+        n_obs: 48
+        t:
+          ns_residual: 0
+          tow: 500068000
+          wn: 2122
+      obs:
+      - L:
+          f: 34
+          i: 116149690
+        P: 1105128044
+        flags: 3
+        iono_std: 0
+        lock: 15
+        range_std: 4
+        sid:
+          code: 0
+          sat: 10
+        tropo_std: 4
+      - L:
+          f: 248
+          i: 125019015
+        P: 1189516465
+        flags: 3
+        iono_std: 23
+        lock: 15
+        range_std: 8
+        sid:
+          code: 0
+          sat: 13
+        tropo_std: 8
+      - L:
+          f: 82
+          i: 113833457
+        P: 1083089356
+        flags: 3
+        iono_std: 14
+        lock: 15
+        range_std: 4
+        sid:
+          code: 0
+          sat: 15
+        tropo_std: 4
+      - L:
+          f: 184
+          i: 122025174
+        P: 1161031058
+        flags: 3
+        iono_std: 19
+        lock: 15
+        range_std: 5
+        sid:
+          code: 0
+          sat: 16
+        tropo_std: 5
+      - L:
+          f: 96
+          i: 106426329
+        P: 1012612942
+        flags: 3
+        iono_std: 0
+        lock: 15
+        range_std: 3
+        sid:
+          code: 0
+          sat: 20
+        tropo_std: 3
+      - L:
+          f: 152
+          i: 121681446
+        P: 1157761187
+        flags: 3
+        iono_std: 15
+        lock: 15
+        range_std: 6
+        sid:
+          code: 0
+          sat: 26
+        tropo_std: 6
+      - L:
+          f: 49
+          i: 126013682
+        P: 1198980861
+        flags: 3
+        iono_std: 21
+        lock: 15
+        range_std: 8
+        sid:
+          code: 0
+          sat: 27
+        tropo_std: 8
+      - L:
+          f: 117
+          i: 116859996
+        P: 1111885979
+        flags: 3
+        iono_std: 15
+        lock: 15
+        range_std: 4
+        sid:
+          code: 0
+          sat: 29
+        tropo_std: 4
+      - L:
+          f: 23
+          i: 86735150
+        P: 1105128049
+        flags: 3
+        iono_std: 0
+        lock: 15
+        range_std: 4
+        sid:
+          code: 9
+          sat: 10
+        tropo_std: 4
+      - L:
+          f: 214
+          i: 90866001
+        P: 1157761278
+        flags: 3
+        iono_std: 26
+        lock: 15
+        range_std: 6
+        sid:
+          code: 9
+          sat: 26
+        tropo_std: 6
+      - L:
+          f: 13
+          i: 94101117
+        P: 1198980954
+        flags: 3
+        iono_std: 38
+        lock: 15
+        range_std: 8
+        sid:
+          code: 9
+          sat: 27
+        tropo_std: 8
+      - L:
+          f: 172
+          i: 136733083
+        P: 1300972289
+        flags: 3
+        iono_std: 16
+        lock: 15
+        range_std: 5
+        sid:
+          code: 14
+          sat: 7
+        tropo_std: 5
+    module: sbp.observation
+    name: MsgOsr
+  msg_type: '0x640'
+  raw_json: '{"preamble": 85, "msg_type": 1600, "sender": 0, "length": 239, "payload":
+    "oG7OHQAAAABKCDBs6t5Buk3sBiIPAwoAAAAEAAQAsZTmRoejcwf4DwMNABcACAAIAMyhjkDx9cgGUg8DDwAOAAQABACS7TNF1vRFB7gPAxAAEwAFAAUATj9bPNnvVwZgDwMUAAAAAwADAKMIAkUmtkAHmA8DGgAPAAYABgD9/nZH8tCCBzEPAxsAFQAIAAgAmwhGQlwk9wZ1DwMdAA8ABAAEAHHq3kEueSsFFw8DCgkAAAQABAD+CAJFUYFqBdYPAxoJGgAGAAYAWv92R33emwUNDwMbCSYACAAIAAFDi02bYSYIrA8DBw4QAAUABQA=",
+    "crc": 17042, "header": {"t": {"tow": 500068000, "ns_residual": 0, "wn": 2122},
+    "n_obs": 48}, "obs": [{"P": 1105128044, "L": {"i": 116149690, "f": 34}, "lock":
+    15, "flags": 3, "sid": {"sat": 10, "code": 0}, "iono_std": 0, "tropo_std": 4,
+    "range_std": 4}, {"P": 1189516465, "L": {"i": 125019015, "f": 248}, "lock": 15,
+    "flags": 3, "sid": {"sat": 13, "code": 0}, "iono_std": 23, "tropo_std": 8, "range_std":
+    8}, {"P": 1083089356, "L": {"i": 113833457, "f": 82}, "lock": 15, "flags": 3,
+    "sid": {"sat": 15, "code": 0}, "iono_std": 14, "tropo_std": 4, "range_std": 4},
+    {"P": 1161031058, "L": {"i": 122025174, "f": 184}, "lock": 15, "flags": 3, "sid":
+    {"sat": 16, "code": 0}, "iono_std": 19, "tropo_std": 5, "range_std": 5}, {"P":
+    1012612942, "L": {"i": 106426329, "f": 96}, "lock": 15, "flags": 3, "sid": {"sat":
+    20, "code": 0}, "iono_std": 0, "tropo_std": 3, "range_std": 3}, {"P": 1157761187,
+    "L": {"i": 121681446, "f": 152}, "lock": 15, "flags": 3, "sid": {"sat": 26, "code":
+    0}, "iono_std": 15, "tropo_std": 6, "range_std": 6}, {"P": 1198980861, "L": {"i":
+    126013682, "f": 49}, "lock": 15, "flags": 3, "sid": {"sat": 27, "code": 0}, "iono_std":
+    21, "tropo_std": 8, "range_std": 8}, {"P": 1111885979, "L": {"i": 116859996, "f":
+    117}, "lock": 15, "flags": 3, "sid": {"sat": 29, "code": 0}, "iono_std": 15, "tropo_std":
+    4, "range_std": 4}, {"P": 1105128049, "L": {"i": 86735150, "f": 23}, "lock": 15,
+    "flags": 3, "sid": {"sat": 10, "code": 9}, "iono_std": 0, "tropo_std": 4, "range_std":
+    4}, {"P": 1157761278, "L": {"i": 90866001, "f": 214}, "lock": 15, "flags": 3,
+    "sid": {"sat": 26, "code": 9}, "iono_std": 26, "tropo_std": 6, "range_std": 6},
+    {"P": 1198980954, "L": {"i": 94101117, "f": 13}, "lock": 15, "flags": 3, "sid":
+    {"sat": 27, "code": 9}, "iono_std": 38, "tropo_std": 8, "range_std": 8}, {"P":
+    1300972289, "L": {"i": 136733083, "f": 172}, "lock": 15, "flags": 3, "sid": {"sat":
+    7, "code": 14}, "iono_std": 16, "tropo_std": 5, "range_std": 5}]}'
+  raw_packet: VUAGAADvoG7OHQAAAABKCDBs6t5Buk3sBiIPAwoAAAAEAAQAsZTmRoejcwf4DwMNABcACAAIAMyhjkDx9cgGUg8DDwAOAAQABACS7TNF1vRFB7gPAxAAEwAFAAUATj9bPNnvVwZgDwMUAAAAAwADAKMIAkUmtkAHmA8DGgAPAAYABgD9/nZH8tCCBzEPAxsAFQAIAAgAmwhGQlwk9wZ1DwMdAA8ABAAEAHHq3kEueSsFFw8DCgkAAAQABAD+CAJFUYFqBdYPAxoJGgAGAAYAWv92R33emwUNDwMbCSYACAAIAAFDi02bYSYIrA8DBw4QAAUABQCSQg==
+  sbp:
+    crc: '0x4292'
+    length: 239
+    msg_type: '0x640'
+    payload: oG7OHQAAAABKCDBs6t5Buk3sBiIPAwoAAAAEAAQAsZTmRoejcwf4DwMNABcACAAIAMyhjkDx9cgGUg8DDwAOAAQABACS7TNF1vRFB7gPAxAAEwAFAAUATj9bPNnvVwZgDwMUAAAAAwADAKMIAkUmtkAHmA8DGgAPAAYABgD9/nZH8tCCBzEPAxsAFQAIAAgAmwhGQlwk9wZ1DwMdAA8ABAAEAHHq3kEueSsFFw8DCgkAAAQABAD+CAJFUYFqBdYPAxoJGgAGAAYAWv92R33emwUNDwMbCSYACAAIAAFDi02bYSYIrA8DBw4QAAUABQA=
+    preamble: '0x55'
+    sender: '0x0'
+
+- msg:
+    fields:
+      header:
+        n_obs: 49
+        t:
+          ns_residual: 0
+          tow: 500068000
+          wn: 2122
+      obs:
+      - L:
+          f: 21
+          i: 129211360
+        P: 1229405162
+        flags: 3
+        iono_std: 18
+        lock: 15
+        range_std: 6
+        sid:
+          code: 14
+          sat: 12
+        tropo_std: 6
+      - L:
+          f: 93
+          i: 134677736
+        P: 1281416107
+        flags: 3
+        iono_std: 16
+        lock: 15
+        range_std: 5
+        sid:
+          code: 14
+          sat: 19
+        tropo_std: 5
+      - L:
+          f: 124
+          i: 136348546
+        P: 1297315137
+        flags: 3
+        iono_std: 27
+        lock: 15
+        range_std: 10
+        sid:
+          code: 14
+          sat: 24
+        tropo_std: 10
+      - L:
+          f: 82
+          i: 127471916
+        P: 1212855293
+        flags: 3
+        iono_std: 14
+        lock: 15
+        range_std: 4
+        sid:
+          code: 14
+          sat: 26
+        tropo_std: 4
+      - L:
+          f: 249
+          i: 143026439
+        P: 1360851786
+        flags: 3
+        iono_std: 24
+        lock: 15
+        range_std: 8
+        sid:
+          code: 14
+          sat: 31
+        tropo_std: 8
+      - L:
+          f: 103
+          i: 124947513
+        P: 1188835998
+        flags: 3
+        iono_std: 0
+        lock: 15
+        range_std: 3
+        sid:
+          code: 14
+          sat: 33
+        tropo_std: 3
+      - L:
+          f: 49
+          i: 102105868
+        P: 1300972624
+        flags: 3
+        iono_std: 29
+        lock: 15
+        range_std: 5
+        sid:
+          code: 26
+          sat: 7
+        tropo_std: 5
+      - L:
+          f: 219
+          i: 96488997
+        P: 1229405326
+        flags: 3
+        iono_std: 32
+        lock: 15
+        range_std: 6
+        sid:
+          code: 26
+          sat: 12
+        tropo_std: 6
+      - L:
+          f: 19
+          i: 100571032
+        P: 1281416355
+        flags: 3
+        iono_std: 28
+        lock: 15
+        range_std: 5
+        sid:
+          code: 26
+          sat: 19
+        tropo_std: 5
+      - L:
+          f: 116
+          i: 101818686
+        P: 1297316097
+        flags: 3
+        iono_std: 48
+        lock: 15
+        range_std: 10
+        sid:
+          code: 26
+          sat: 24
+        tropo_std: 10
+      - L:
+          f: 40
+          i: 95190060
+        P: 1212855637
+        flags: 3
+        iono_std: 24
+        lock: 15
+        range_std: 4
+        sid:
+          code: 26
+          sat: 26
+        tropo_std: 4
+      - L:
+          f: 239
+          i: 106805445
+        P: 1360852176
+        flags: 3
+        iono_std: 43
+        lock: 15
+        range_std: 8
+        sid:
+          code: 26
+          sat: 31
+        tropo_std: 8
+    module: sbp.observation
+    name: MsgOsr
+  msg_type: '0x640'
+  raw_json: '{"preamble": 85, "msg_type": 1600, "sender": 0, "length": 239, "payload":
+    "oG7OHQAAAABKCDHqO0dJ4JuzBxUPAwwOEgAGAAYAq9tgTOgEBwhdDwMTDhAABQAFAEF1U02CgyAIfA8DGA4bAAoACgD9s0pILBGZB1IPAxoODgAEAAQASvMcUQdphgj5DwMfDhgACAAIAJ4y3EY5jHIHZw8DIQ4AAAMAAwBQRItNDAMWBjEPAwcaHQAFAAUAjjxHSSVOwAXbDwMMGiAABgAGAKPcYEyYl/4FEw8DExocAAUABQABeVNNPqERBnQPAxgaMAAKAAoAVbVKSCx8rAUoDwMaGhgABAAEAND0HFHFuF0G7w8DHxorAAgACAA=",
+    "crc": 26582, "header": {"t": {"tow": 500068000, "ns_residual": 0, "wn": 2122},
+    "n_obs": 49}, "obs": [{"P": 1229405162, "L": {"i": 129211360, "f": 21}, "lock":
+    15, "flags": 3, "sid": {"sat": 12, "code": 14}, "iono_std": 18, "tropo_std": 6,
+    "range_std": 6}, {"P": 1281416107, "L": {"i": 134677736, "f": 93}, "lock": 15,
+    "flags": 3, "sid": {"sat": 19, "code": 14}, "iono_std": 16, "tropo_std": 5, "range_std":
+    5}, {"P": 1297315137, "L": {"i": 136348546, "f": 124}, "lock": 15, "flags": 3,
+    "sid": {"sat": 24, "code": 14}, "iono_std": 27, "tropo_std": 10, "range_std":
+    10}, {"P": 1212855293, "L": {"i": 127471916, "f": 82}, "lock": 15, "flags": 3,
+    "sid": {"sat": 26, "code": 14}, "iono_std": 14, "tropo_std": 4, "range_std": 4},
+    {"P": 1360851786, "L": {"i": 143026439, "f": 249}, "lock": 15, "flags": 3, "sid":
+    {"sat": 31, "code": 14}, "iono_std": 24, "tropo_std": 8, "range_std": 8}, {"P":
+    1188835998, "L": {"i": 124947513, "f": 103}, "lock": 15, "flags": 3, "sid": {"sat":
+    33, "code": 14}, "iono_std": 0, "tropo_std": 3, "range_std": 3}, {"P": 1300972624,
+    "L": {"i": 102105868, "f": 49}, "lock": 15, "flags": 3, "sid": {"sat": 7, "code":
+    26}, "iono_std": 29, "tropo_std": 5, "range_std": 5}, {"P": 1229405326, "L": {"i":
+    96488997, "f": 219}, "lock": 15, "flags": 3, "sid": {"sat": 12, "code": 26}, "iono_std":
+    32, "tropo_std": 6, "range_std": 6}, {"P": 1281416355, "L": {"i": 100571032, "f":
+    19}, "lock": 15, "flags": 3, "sid": {"sat": 19, "code": 26}, "iono_std": 28, "tropo_std":
+    5, "range_std": 5}, {"P": 1297316097, "L": {"i": 101818686, "f": 116}, "lock":
+    15, "flags": 3, "sid": {"sat": 24, "code": 26}, "iono_std": 48, "tropo_std": 10,
+    "range_std": 10}, {"P": 1212855637, "L": {"i": 95190060, "f": 40}, "lock": 15,
+    "flags": 3, "sid": {"sat": 26, "code": 26}, "iono_std": 24, "tropo_std": 4, "range_std":
+    4}, {"P": 1360852176, "L": {"i": 106805445, "f": 239}, "lock": 15, "flags": 3,
+    "sid": {"sat": 31, "code": 26}, "iono_std": 43, "tropo_std": 8, "range_std": 8}]}'
+  raw_packet: VUAGAADvoG7OHQAAAABKCDHqO0dJ4JuzBxUPAwwOEgAGAAYAq9tgTOgEBwhdDwMTDhAABQAFAEF1U02CgyAIfA8DGA4bAAoACgD9s0pILBGZB1IPAxoODgAEAAQASvMcUQdphgj5DwMfDhgACAAIAJ4y3EY5jHIHZw8DIQ4AAAMAAwBQRItNDAMWBjEPAwcaHQAFAAUAjjxHSSVOwAXbDwMMGiAABgAGAKPcYEyYl/4FEw8DExocAAUABQABeVNNPqERBnQPAxgaMAAKAAoAVbVKSCx8rAUoDwMaGhgABAAEAND0HFHFuF0G7w8DHxorAAgACADWZw==
+  sbp:
+    crc: '0x67d6'
+    length: 239
+    msg_type: '0x640'
+    payload: oG7OHQAAAABKCDHqO0dJ4JuzBxUPAwwOEgAGAAYAq9tgTOgEBwhdDwMTDhAABQAFAEF1U02CgyAIfA8DGA4bAAoACgD9s0pILBGZB1IPAxoODgAEAAQASvMcUQdphgj5DwMfDhgACAAIAJ4y3EY5jHIHZw8DIQ4AAAMAAwBQRItNDAMWBjEPAwcaHQAFAAUAjjxHSSVOwAXbDwMMGiAABgAGAKPcYEyYl/4FEw8DExocAAUABQABeVNNPqERBnQPAxgaMAAKAAoAVbVKSCx8rAUoDwMaGhgABAAEAND0HFHFuF0G7w8DHxorAAgACAA=
+    preamble: '0x55'
+    sender: '0x0'
+version: 3.4.1.dev12+g7ff5295c
+...

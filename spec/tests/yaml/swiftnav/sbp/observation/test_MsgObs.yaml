@@ -1,0 +1,1137 @@
+---
+description: Unit tests for swiftnav.sbp.observation MsgObs v3.4.1.dev12+g7ff5295c.
+generated_on: 2020-09-18 18:23:44.661785
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      header:
+        n_obs: 32
+        t:
+          ns_residual: 0
+          tow: 500066600
+          wn: 2122
+      obs:
+      - D:
+          f: 174
+          i: 2316
+        L:
+          f: 90
+          i: 116365234
+        P: 1107178409
+        cn0: 194
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 10
+      - D:
+          f: 206
+          i: -622
+        L:
+          f: 59
+          i: 113728883
+        P: 1082094334
+        cn0: 182
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 15
+      - D:
+          f: 247
+          i: -74
+        L:
+          f: 218
+          i: 121849073
+        P: 1159355403
+        cn0: 143
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 16
+      - D:
+          f: 246
+          i: -302
+        L:
+          f: 20
+          i: 107946145
+        P: 1027073434
+        cn0: 196
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 18
+      - D:
+          f: 238
+          i: 658
+        L:
+          f: 21
+          i: 106422425
+        P: 1012575700
+        cn0: 192
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 20
+      - D:
+          f: 73
+          i: 848
+        L:
+          f: 207
+          i: 107166419
+        P: 1019654584
+        cn0: 192
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 23
+      - D:
+          f: 41
+          i: 630
+        L:
+          f: 116
+          i: 80026675
+        P: 1019652097
+        cn0: 94
+        flags: 15
+        lock: 7
+        sid:
+          code: 10
+          sat: 23
+      - D:
+          f: 97
+          i: -1964
+        L:
+          f: 115
+          i: 121829843
+        P: 1159172437
+        cn0: 174
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 26
+      - D:
+          f: 184
+          i: -1467
+        L:
+          f: 144
+          i: 90976501
+        P: 1159167756
+        cn0: 182
+        flags: 15
+        lock: 8
+        sid:
+          code: 10
+          sat: 26
+      - D:
+          f: 159
+          i: 3307
+        L:
+          f: 130
+          i: 125646832
+        P: 1195489872
+        cn0: 156
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 27
+      - D:
+          f: 135
+          i: -3000
+        L:
+          f: 66
+          i: 117189767
+        P: 1115023575
+        cn0: 183
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 29
+      - D:
+          f: 217
+          i: 250
+        L:
+          f: 146
+          i: 93945485
+        P: 893861581
+        cn0: 194
+        flags: 15
+        lock: 8
+        sid:
+          code: 16
+          sat: 18
+      - D:
+          f: 91
+          i: 187
+        L:
+          f: 67
+          i: 70154335
+        P: 893864622
+        cn0: 189
+        flags: 15
+        lock: 8
+        sid:
+          code: 27
+          sat: 18
+      - D:
+          f: 35
+          i: 2861
+        L:
+          f: 219
+          i: 135124040
+        P: 1285662497
+        cn0: 156
+        flags: 15
+        lock: 8
+        sid:
+          code: 16
+          sat: 19
+    module: sbp.observation
+    name: MsgObs
+  msg_type: '0x4a'
+  raw_json: '{"preamble": 85, "msg_type": 74, "sender": 51228, "length": 249, "payload":
+    "KGnOHQAAAABKCCCpM/5BspfvBloMCa7CCA8KAP5yf0BzXccGO5L9zrYIDw8AC1waRfFEQwfatv/3jwgPEACa5Tc9oSBvBhTS/vbECA8SANStWjyZ4FcGFZIC7sAIDxQAuLHGPNM6YwbPUANJwAgPFwABqMY8MxzFBHR2AileBw8XClWRF0XT+UIHc1T4Ya4IDxoADH8XRfUwbAWQRfq4tggPGgpQukFH8Dd9B4LrDJ+cCA8bANfodUKHLPwGQkj0h7cIDx0AzT5HNY1+mQWS+gDZwggPEhCuSkc1X3guBEO7AFu9CA8SGyGnoUxI1A0I2y0LI5wIDxMQ",
+    "crc": 62086, "header": {"t": {"tow": 500066600, "ns_residual": 0, "wn": 2122},
+    "n_obs": 32}, "obs": [{"P": 1107178409, "L": {"i": 116365234, "f": 90}, "D": {"i":
+    2316, "f": 174}, "cn0": 194, "lock": 8, "flags": 15, "sid": {"sat": 10, "code":
+    0}}, {"P": 1082094334, "L": {"i": 113728883, "f": 59}, "D": {"i": -622, "f": 206},
+    "cn0": 182, "lock": 8, "flags": 15, "sid": {"sat": 15, "code": 0}}, {"P": 1159355403,
+    "L": {"i": 121849073, "f": 218}, "D": {"i": -74, "f": 247}, "cn0": 143, "lock":
+    8, "flags": 15, "sid": {"sat": 16, "code": 0}}, {"P": 1027073434, "L": {"i": 107946145,
+    "f": 20}, "D": {"i": -302, "f": 246}, "cn0": 196, "lock": 8, "flags": 15, "sid":
+    {"sat": 18, "code": 0}}, {"P": 1012575700, "L": {"i": 106422425, "f": 21}, "D":
+    {"i": 658, "f": 238}, "cn0": 192, "lock": 8, "flags": 15, "sid": {"sat": 20, "code":
+    0}}, {"P": 1019654584, "L": {"i": 107166419, "f": 207}, "D": {"i": 848, "f": 73},
+    "cn0": 192, "lock": 8, "flags": 15, "sid": {"sat": 23, "code": 0}}, {"P": 1019652097,
+    "L": {"i": 80026675, "f": 116}, "D": {"i": 630, "f": 41}, "cn0": 94, "lock": 7,
+    "flags": 15, "sid": {"sat": 23, "code": 10}}, {"P": 1159172437, "L": {"i": 121829843,
+    "f": 115}, "D": {"i": -1964, "f": 97}, "cn0": 174, "lock": 8, "flags": 15, "sid":
+    {"sat": 26, "code": 0}}, {"P": 1159167756, "L": {"i": 90976501, "f": 144}, "D":
+    {"i": -1467, "f": 184}, "cn0": 182, "lock": 8, "flags": 15, "sid": {"sat": 26,
+    "code": 10}}, {"P": 1195489872, "L": {"i": 125646832, "f": 130}, "D": {"i": 3307,
+    "f": 159}, "cn0": 156, "lock": 8, "flags": 15, "sid": {"sat": 27, "code": 0}},
+    {"P": 1115023575, "L": {"i": 117189767, "f": 66}, "D": {"i": -3000, "f": 135},
+    "cn0": 183, "lock": 8, "flags": 15, "sid": {"sat": 29, "code": 0}}, {"P": 893861581,
+    "L": {"i": 93945485, "f": 146}, "D": {"i": 250, "f": 217}, "cn0": 194, "lock":
+    8, "flags": 15, "sid": {"sat": 18, "code": 16}}, {"P": 893864622, "L": {"i": 70154335,
+    "f": 67}, "D": {"i": 187, "f": 91}, "cn0": 189, "lock": 8, "flags": 15, "sid":
+    {"sat": 18, "code": 27}}, {"P": 1285662497, "L": {"i": 135124040, "f": 219}, "D":
+    {"i": 2861, "f": 35}, "cn0": 156, "lock": 8, "flags": 15, "sid": {"sat": 19, "code":
+    16}}]}'
+  raw_packet: VUoAHMj5KGnOHQAAAABKCCCpM/5BspfvBloMCa7CCA8KAP5yf0BzXccGO5L9zrYIDw8AC1waRfFEQwfatv/3jwgPEACa5Tc9oSBvBhTS/vbECA8SANStWjyZ4FcGFZIC7sAIDxQAuLHGPNM6YwbPUANJwAgPFwABqMY8MxzFBHR2AileBw8XClWRF0XT+UIHc1T4Ya4IDxoADH8XRfUwbAWQRfq4tggPGgpQukFH8Dd9B4LrDJ+cCA8bANfodUKHLPwGQkj0h7cIDx0AzT5HNY1+mQWS+gDZwggPEhCuSkc1X3guBEO7AFu9CA8SGyGnoUxI1A0I2y0LI5wIDxMQhvI=
+  sbp:
+    crc: '0xf286'
+    length: 249
+    msg_type: '0x4a'
+    payload: KGnOHQAAAABKCCCpM/5BspfvBloMCa7CCA8KAP5yf0BzXccGO5L9zrYIDw8AC1waRfFEQwfatv/3jwgPEACa5Tc9oSBvBhTS/vbECA8SANStWjyZ4FcGFZIC7sAIDxQAuLHGPNM6YwbPUANJwAgPFwABqMY8MxzFBHR2AileBw8XClWRF0XT+UIHc1T4Ya4IDxoADH8XRfUwbAWQRfq4tggPGgpQukFH8Dd9B4LrDJ+cCA8bANfodUKHLPwGQkj0h7cIDx0AzT5HNY1+mQWS+gDZwggPEhCuSkc1X3guBEO7AFu9CA8SGyGnoUxI1A0I2y0LI5wIDxMQ
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      header:
+        n_obs: 33
+        t:
+          ns_residual: 0
+          tow: 500066600
+          wn: 2122
+      obs:
+      - D:
+          f: 162
+          i: 2136
+        L:
+          f: 217
+          i: 100904553
+        P: 1285665550
+        cn0: 158
+        flags: 15
+        lock: 8
+        sid:
+          code: 27
+          sat: 19
+      - D:
+          f: 9
+          i: 1014
+        L:
+          f: 227
+          i: 86815905
+        P: 826025903
+        cn0: 162
+        flags: 15
+        lock: 8
+        sid:
+          code: 16
+          sat: 20
+      - D:
+          f: 164
+          i: -1379
+        L:
+          f: 119
+          i: 127472422
+        P: 1212859775
+        cn0: 186
+        flags: 15
+        lock: 8
+        sid:
+          code: 16
+          sat: 26
+      - D:
+          f: 207
+          i: -1030
+        L:
+          f: 254
+          i: 95190687
+        P: 1212862866
+        cn0: 175
+        flags: 15
+        lock: 8
+        sid:
+          code: 27
+          sat: 26
+      - D:
+          f: 161
+          i: -2269
+        L:
+          f: 187
+          i: 143196366
+        P: 1362468169
+        cn0: 157
+        flags: 15
+        lock: 8
+        sid:
+          code: 16
+          sat: 31
+      - D:
+          f: 238
+          i: -1695
+        L:
+          f: 71
+          i: 106932602
+        P: 1362471334
+        cn0: 162
+        flags: 15
+        lock: 8
+        sid:
+          code: 27
+          sat: 31
+      - D:
+          f: 32
+          i: 544
+        L:
+          f: 240
+          i: 124747442
+        P: 1186932469
+        cn0: 193
+        flags: 15
+        lock: 8
+        sid:
+          code: 16
+          sat: 33
+      - D:
+          f: 75
+          i: 406
+        L:
+          f: 229
+          i: 93155794
+        P: 1186935475
+        cn0: 188
+        flags: 15
+        lock: 8
+        sid:
+          code: 27
+          sat: 33
+      - D:
+          f: 95
+          i: 1463
+        L:
+          f: 240
+          i: 115688457
+        P: 1110837559
+        cn0: 203
+        flags: 15
+        lock: 8
+        sid:
+          code: 12
+          sat: 20
+      - D:
+          f: 177
+          i: 1899
+        L:
+          f: 177
+          i: 117071229
+        P: 1124114909
+        cn0: 195
+        flags: 15
+        lock: 8
+        sid:
+          code: 12
+          sat: 29
+      - D:
+          f: 233
+          i: -999
+        L:
+          f: 156
+          i: 113535027
+        P: 1090160413
+        cn0: 202
+        flags: 15
+        lock: 8
+        sid:
+          code: 12
+          sat: 30
+      - D:
+          f: 163
+          i: -1720
+        L:
+          f: 44
+          i: 118900160
+        P: 1141676284
+        cn0: 198
+        flags: 15
+        lock: 8
+        sid:
+          code: 12
+          sat: 32
+      - D:
+          f: 212
+          i: -1296
+        L:
+          f: 187
+          i: 89603441
+        P: 1141673500
+        cn0: 106
+        flags: 15
+        lock: 8
+        sid:
+          code: 48
+          sat: 32
+    module: sbp.observation
+    name: MsgObs
+  msg_type: '0x4a'
+  raw_json: '{"preamble": 85, "msg_type": 74, "sender": 51228, "length": 232, "payload":
+    "KGnOHQAAAABKCCEOs6FMaa4DBtlYCKKeCA8TG68nPDGhtCwF4/YDCaIIDxQQf8VKSCYTmQd3nfqkuggPGhCS0UpIn36sBf76+8+vCA8aG0mdNVHOAIkIuyP3oZ0IDx8Qpqk1UXqpXwZHYfnuoggPHxv1Jr9Gsn5vB/AgAiDBCA8hELMyv0bScY0F5ZYBS7wIDyEbNwk2QglE5QbwtwVfywgPFAzdoQBDfV36BrFrB7HDCA8dDB2H+kAzaMQGnBn86coIDx4M/JgMRMBFFgcsSPmjxggPIAwcjgxEcT1XBbvw+tRqCA8gMA==",
+    "crc": 24820, "header": {"t": {"tow": 500066600, "ns_residual": 0, "wn": 2122},
+    "n_obs": 33}, "obs": [{"P": 1285665550, "L": {"i": 100904553, "f": 217}, "D":
+    {"i": 2136, "f": 162}, "cn0": 158, "lock": 8, "flags": 15, "sid": {"sat": 19,
+    "code": 27}}, {"P": 826025903, "L": {"i": 86815905, "f": 227}, "D": {"i": 1014,
+    "f": 9}, "cn0": 162, "lock": 8, "flags": 15, "sid": {"sat": 20, "code": 16}},
+    {"P": 1212859775, "L": {"i": 127472422, "f": 119}, "D": {"i": -1379, "f": 164},
+    "cn0": 186, "lock": 8, "flags": 15, "sid": {"sat": 26, "code": 16}}, {"P": 1212862866,
+    "L": {"i": 95190687, "f": 254}, "D": {"i": -1030, "f": 207}, "cn0": 175, "lock":
+    8, "flags": 15, "sid": {"sat": 26, "code": 27}}, {"P": 1362468169, "L": {"i":
+    143196366, "f": 187}, "D": {"i": -2269, "f": 161}, "cn0": 157, "lock": 8, "flags":
+    15, "sid": {"sat": 31, "code": 16}}, {"P": 1362471334, "L": {"i": 106932602, "f":
+    71}, "D": {"i": -1695, "f": 238}, "cn0": 162, "lock": 8, "flags": 15, "sid": {"sat":
+    31, "code": 27}}, {"P": 1186932469, "L": {"i": 124747442, "f": 240}, "D": {"i":
+    544, "f": 32}, "cn0": 193, "lock": 8, "flags": 15, "sid": {"sat": 33, "code":
+    16}}, {"P": 1186935475, "L": {"i": 93155794, "f": 229}, "D": {"i": 406, "f": 75},
+    "cn0": 188, "lock": 8, "flags": 15, "sid": {"sat": 33, "code": 27}}, {"P": 1110837559,
+    "L": {"i": 115688457, "f": 240}, "D": {"i": 1463, "f": 95}, "cn0": 203, "lock":
+    8, "flags": 15, "sid": {"sat": 20, "code": 12}}, {"P": 1124114909, "L": {"i":
+    117071229, "f": 177}, "D": {"i": 1899, "f": 177}, "cn0": 195, "lock": 8, "flags":
+    15, "sid": {"sat": 29, "code": 12}}, {"P": 1090160413, "L": {"i": 113535027, "f":
+    156}, "D": {"i": -999, "f": 233}, "cn0": 202, "lock": 8, "flags": 15, "sid": {"sat":
+    30, "code": 12}}, {"P": 1141676284, "L": {"i": 118900160, "f": 44}, "D": {"i":
+    -1720, "f": 163}, "cn0": 198, "lock": 8, "flags": 15, "sid": {"sat": 32, "code":
+    12}}, {"P": 1141673500, "L": {"i": 89603441, "f": 187}, "D": {"i": -1296, "f":
+    212}, "cn0": 106, "lock": 8, "flags": 15, "sid": {"sat": 32, "code": 48}}]}'
+  raw_packet: VUoAHMjoKGnOHQAAAABKCCEOs6FMaa4DBtlYCKKeCA8TG68nPDGhtCwF4/YDCaIIDxQQf8VKSCYTmQd3nfqkuggPGhCS0UpIn36sBf76+8+vCA8aG0mdNVHOAIkIuyP3oZ0IDx8Qpqk1UXqpXwZHYfnuoggPHxv1Jr9Gsn5vB/AgAiDBCA8hELMyv0bScY0F5ZYBS7wIDyEbNwk2QglE5QbwtwVfywgPFAzdoQBDfV36BrFrB7HDCA8dDB2H+kAzaMQGnBn86coIDx4M/JgMRMBFFgcsSPmjxggPIAwcjgxEcT1XBbvw+tRqCA8gMPRg
+  sbp:
+    crc: '0x60f4'
+    length: 232
+    msg_type: '0x4a'
+    payload: KGnOHQAAAABKCCEOs6FMaa4DBtlYCKKeCA8TG68nPDGhtCwF4/YDCaIIDxQQf8VKSCYTmQd3nfqkuggPGhCS0UpIn36sBf76+8+vCA8aG0mdNVHOAIkIuyP3oZ0IDx8Qpqk1UXqpXwZHYfnuoggPHxv1Jr9Gsn5vB/AgAiDBCA8hELMyv0bScY0F5ZYBS7wIDyEbNwk2QglE5QbwtwVfywgPFAzdoQBDfV36BrFrB7HDCA8dDB2H+kAzaMQGnBn86coIDx4M/JgMRMBFFgcsSPmjxggPIAwcjgxEcT1XBbvw+tRqCA8gMA==
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      header:
+        n_obs: 32
+        t:
+          ns_residual: 0
+          tow: 500066700
+          wn: 2122
+      obs:
+      - D:
+          f: 138
+          i: 2316
+        L:
+          f: 180
+          i: 116365002
+        P: 1107176200
+        cn0: 194
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 10
+      - D:
+          f: 141
+          i: -622
+        L:
+          f: 91
+          i: 113728945
+        P: 1082094925
+        cn0: 182
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 15
+      - D:
+          f: 197
+          i: -74
+        L:
+          f: 46
+          i: 121849081
+        P: 1159355472
+        cn0: 143
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 16
+      - D:
+          f: 194
+          i: -302
+        L:
+          f: 48
+          i: 107946175
+        P: 1027073722
+        cn0: 196
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 18
+      - D:
+          f: 182
+          i: 658
+        L:
+          f: 53
+          i: 106422359
+        P: 1012575075
+        cn0: 192
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 20
+      - D:
+          f: 14
+          i: 848
+        L:
+          f: 255
+          i: 107166334
+        P: 1019653778
+        cn0: 192
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 23
+      - D:
+          f: 243
+          i: 629
+        L:
+          f: 54
+          i: 80026612
+        P: 1019651294
+        cn0: 94
+        flags: 15
+        lock: 7
+        sid:
+          code: 10
+          sat: 23
+      - D:
+          f: 47
+          i: -1964
+        L:
+          f: 206
+          i: 121830039
+        P: 1159174306
+        cn0: 174
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 26
+      - D:
+          f: 140
+          i: -1467
+        L:
+          f: 54
+          i: 90976648
+        P: 1159169625
+        cn0: 182
+        flags: 15
+        lock: 8
+        sid:
+          code: 10
+          sat: 26
+      - D:
+          f: 130
+          i: 3307
+        L:
+          f: 195
+          i: 125646501
+        P: 1195486731
+        cn0: 156
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 27
+      - D:
+          f: 79
+          i: -3000
+        L:
+          f: 62
+          i: 117190067
+        P: 1115026428
+        cn0: 183
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 29
+      - D:
+          f: 150
+          i: 250
+        L:
+          f: 129
+          i: 93945460
+        P: 893861341
+        cn0: 195
+        flags: 15
+        lock: 8
+        sid:
+          code: 16
+          sat: 18
+      - D:
+          f: 64
+          i: 187
+        L:
+          f: 137
+          i: 70154316
+        P: 893864384
+        cn0: 189
+        flags: 15
+        lock: 8
+        sid:
+          code: 27
+          sat: 18
+      - D:
+          f: 17
+          i: 2861
+        L:
+          f: 193
+          i: 135123754
+        P: 1285659772
+        cn0: 156
+        flags: 15
+        lock: 8
+        sid:
+          code: 16
+          sat: 19
+    module: sbp.observation
+    name: MsgObs
+  msg_type: '0x4a'
+  raw_json: '{"preamble": 85, "msg_type": 74, "sender": 51228, "length": 249, "payload":
+    "jGnOHQAAAABKCCAIK/5BypbvBrQMCYrCCA8KAE11f0CxXccGW5L9jbYIDw8AUFwaRflEQwcutv/FjwgPEAC65jc9vyBvBjDS/sLECA8SAGOrWjxX4FcGNZICtsAIDxQAkq7GPH46Ywb/UAMOwAgPFwDepMY89BvFBDZ1AvNeBw8XCqKYF0WX+kIHzlT4L64IDxoAWYYXRYgxbAU2RfqMtggPGgoLrkFHpTZ9B8PrDIKcCA8bAPzzdUKzLfwGPkj0T7cIDx0A3T1HNXR+mQWB+gCWwwgPEhDASUc1THguBIm7AEC9CA8SG3ycoUwq0w0IwS0LEZwIDxMQ",
+    "crc": 31710, "header": {"t": {"tow": 500066700, "ns_residual": 0, "wn": 2122},
+    "n_obs": 32}, "obs": [{"P": 1107176200, "L": {"i": 116365002, "f": 180}, "D":
+    {"i": 2316, "f": 138}, "cn0": 194, "lock": 8, "flags": 15, "sid": {"sat": 10,
+    "code": 0}}, {"P": 1082094925, "L": {"i": 113728945, "f": 91}, "D": {"i": -622,
+    "f": 141}, "cn0": 182, "lock": 8, "flags": 15, "sid": {"sat": 15, "code": 0}},
+    {"P": 1159355472, "L": {"i": 121849081, "f": 46}, "D": {"i": -74, "f": 197}, "cn0":
+    143, "lock": 8, "flags": 15, "sid": {"sat": 16, "code": 0}}, {"P": 1027073722,
+    "L": {"i": 107946175, "f": 48}, "D": {"i": -302, "f": 194}, "cn0": 196, "lock":
+    8, "flags": 15, "sid": {"sat": 18, "code": 0}}, {"P": 1012575075, "L": {"i": 106422359,
+    "f": 53}, "D": {"i": 658, "f": 182}, "cn0": 192, "lock": 8, "flags": 15, "sid":
+    {"sat": 20, "code": 0}}, {"P": 1019653778, "L": {"i": 107166334, "f": 255}, "D":
+    {"i": 848, "f": 14}, "cn0": 192, "lock": 8, "flags": 15, "sid": {"sat": 23, "code":
+    0}}, {"P": 1019651294, "L": {"i": 80026612, "f": 54}, "D": {"i": 629, "f": 243},
+    "cn0": 94, "lock": 7, "flags": 15, "sid": {"sat": 23, "code": 10}}, {"P": 1159174306,
+    "L": {"i": 121830039, "f": 206}, "D": {"i": -1964, "f": 47}, "cn0": 174, "lock":
+    8, "flags": 15, "sid": {"sat": 26, "code": 0}}, {"P": 1159169625, "L": {"i": 90976648,
+    "f": 54}, "D": {"i": -1467, "f": 140}, "cn0": 182, "lock": 8, "flags": 15, "sid":
+    {"sat": 26, "code": 10}}, {"P": 1195486731, "L": {"i": 125646501, "f": 195}, "D":
+    {"i": 3307, "f": 130}, "cn0": 156, "lock": 8, "flags": 15, "sid": {"sat": 27,
+    "code": 0}}, {"P": 1115026428, "L": {"i": 117190067, "f": 62}, "D": {"i": -3000,
+    "f": 79}, "cn0": 183, "lock": 8, "flags": 15, "sid": {"sat": 29, "code": 0}},
+    {"P": 893861341, "L": {"i": 93945460, "f": 129}, "D": {"i": 250, "f": 150}, "cn0":
+    195, "lock": 8, "flags": 15, "sid": {"sat": 18, "code": 16}}, {"P": 893864384,
+    "L": {"i": 70154316, "f": 137}, "D": {"i": 187, "f": 64}, "cn0": 189, "lock":
+    8, "flags": 15, "sid": {"sat": 18, "code": 27}}, {"P": 1285659772, "L": {"i":
+    135123754, "f": 193}, "D": {"i": 2861, "f": 17}, "cn0": 156, "lock": 8, "flags":
+    15, "sid": {"sat": 19, "code": 16}}]}'
+  raw_packet: VUoAHMj5jGnOHQAAAABKCCAIK/5BypbvBrQMCYrCCA8KAE11f0CxXccGW5L9jbYIDw8AUFwaRflEQwcutv/FjwgPEAC65jc9vyBvBjDS/sLECA8SAGOrWjxX4FcGNZICtsAIDxQAkq7GPH46Ywb/UAMOwAgPFwDepMY89BvFBDZ1AvNeBw8XCqKYF0WX+kIHzlT4L64IDxoAWYYXRYgxbAU2RfqMtggPGgoLrkFHpTZ9B8PrDIKcCA8bAPzzdUKzLfwGPkj0T7cIDx0A3T1HNXR+mQWB+gCWwwgPEhDASUc1THguBIm7AEC9CA8SG3ycoUwq0w0IwS0LEZwIDxMQ3ns=
+  sbp:
+    crc: '0x7bde'
+    length: 249
+    msg_type: '0x4a'
+    payload: jGnOHQAAAABKCCAIK/5BypbvBrQMCYrCCA8KAE11f0CxXccGW5L9jbYIDw8AUFwaRflEQwcutv/FjwgPEAC65jc9vyBvBjDS/sLECA8SAGOrWjxX4FcGNZICtsAIDxQAkq7GPH46Ywb/UAMOwAgPFwDepMY89BvFBDZ1AvNeBw8XCqKYF0WX+kIHzlT4L64IDxoAWYYXRYgxbAU2RfqMtggPGgoLrkFHpTZ9B8PrDIKcCA8bAPzzdUKzLfwGPkj0T7cIDx0A3T1HNXR+mQWB+gCWwwgPEhDASUc1THguBIm7AEC9CA8SG3ycoUwq0w0IwS0LEZwIDxMQ
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      header:
+        n_obs: 33
+        t:
+          ns_residual: 0
+          tow: 500066700
+          wn: 2122
+      obs:
+      - D:
+          f: 127
+          i: 2136
+        L:
+          f: 52
+          i: 100904340
+        P: 1285662828
+        cn0: 158
+        flags: 15
+        lock: 8
+        sid:
+          code: 27
+          sat: 19
+      - D:
+          f: 54
+          i: 1014
+        L:
+          f: 118
+          i: 86815804
+        P: 826024941
+        cn0: 162
+        flags: 15
+        lock: 8
+        sid:
+          code: 16
+          sat: 20
+      - D:
+          f: 151
+          i: -1379
+        L:
+          f: 77
+          i: 127472560
+        P: 1212861088
+        cn0: 186
+        flags: 15
+        lock: 8
+        sid:
+          code: 16
+          sat: 26
+      - D:
+          f: 174
+          i: -1030
+        L:
+          f: 237
+          i: 95190790
+        P: 1212864175
+        cn0: 175
+        flags: 15
+        lock: 8
+        sid:
+          code: 27
+          sat: 26
+      - D:
+          f: 145
+          i: -2269
+        L:
+          f: 166
+          i: 143196593
+        P: 1362470325
+        cn0: 157
+        flags: 15
+        lock: 8
+        sid:
+          code: 16
+          sat: 31
+      - D:
+          f: 205
+          i: -1695
+        L:
+          f: 181
+          i: 106932771
+        P: 1362473491
+        cn0: 162
+        flags: 15
+        lock: 8
+        sid:
+          code: 27
+          sat: 31
+      - D:
+          f: 253
+          i: 543
+        L:
+          f: 138
+          i: 124747388
+        P: 1186931944
+        cn0: 194
+        flags: 15
+        lock: 8
+        sid:
+          code: 16
+          sat: 33
+      - D:
+          f: 62
+          i: 406
+        L:
+          f: 70
+          i: 93155754
+        P: 1186934959
+        cn0: 188
+        flags: 15
+        lock: 8
+        sid:
+          code: 27
+          sat: 33
+      - D:
+          f: 51
+          i: 1463
+        L:
+          f: 157
+          i: 115688311
+        P: 1110836156
+        cn0: 203
+        flags: 15
+        lock: 8
+        sid:
+          code: 12
+          sat: 20
+      - D:
+          f: 125
+          i: 1899
+        L:
+          f: 189
+          i: 117071039
+        P: 1124113084
+        cn0: 195
+        flags: 15
+        lock: 8
+        sid:
+          code: 12
+          sat: 29
+      - D:
+          f: 178
+          i: -999
+        L:
+          f: 111
+          i: 113535127
+        P: 1090161369
+        cn0: 202
+        flags: 15
+        lock: 8
+        sid:
+          code: 12
+          sat: 30
+      - D:
+          f: 145
+          i: -1720
+        L:
+          f: 29
+          i: 118900332
+        P: 1141677934
+        cn0: 198
+        flags: 15
+        lock: 8
+        sid:
+          code: 12
+          sat: 32
+      - D:
+          f: 172
+          i: -1296
+        L:
+          f: 62
+          i: 89603571
+        P: 1141675150
+        cn0: 106
+        flags: 15
+        lock: 8
+        sid:
+          code: 48
+          sat: 32
+    module: sbp.observation
+    name: MsgObs
+  msg_type: '0x4a'
+  raw_json: '{"preamble": 85, "msg_type": 74, "sender": 51228, "length": 232, "payload":
+    "jGnOHQAAAABKCCFsqKFMlK0DBjRYCH+eCA8TG+0jPDE8tCwFdvYDNqIIDxQQoMpKSLATmQdNnfqXuggPGhCv1kpIBn+sBe36+66vCA8aG7WlNVGxAYkIpiP3kZ0IDx8QE7I1USOqXwa1YfnNoggPHxvoJL9GfH5vB4ofAv3CCA8hEK8wv0aqcY0FRpYBPrwIDyEbvAM2QndD5QadtwUzywgPFAy8mgBDv1z6Br1rB33DCA8dDNmK+kCXaMQGbxn8ssoIDx4Mbp8MRGxGFgcdSPmRxggPIAyOlAxE8z1XBT7w+qxqCA8gMA==",
+    "crc": 52480, "header": {"t": {"tow": 500066700, "ns_residual": 0, "wn": 2122},
+    "n_obs": 33}, "obs": [{"P": 1285662828, "L": {"i": 100904340, "f": 52}, "D": {"i":
+    2136, "f": 127}, "cn0": 158, "lock": 8, "flags": 15, "sid": {"sat": 19, "code":
+    27}}, {"P": 826024941, "L": {"i": 86815804, "f": 118}, "D": {"i": 1014, "f": 54},
+    "cn0": 162, "lock": 8, "flags": 15, "sid": {"sat": 20, "code": 16}}, {"P": 1212861088,
+    "L": {"i": 127472560, "f": 77}, "D": {"i": -1379, "f": 151}, "cn0": 186, "lock":
+    8, "flags": 15, "sid": {"sat": 26, "code": 16}}, {"P": 1212864175, "L": {"i":
+    95190790, "f": 237}, "D": {"i": -1030, "f": 174}, "cn0": 175, "lock": 8, "flags":
+    15, "sid": {"sat": 26, "code": 27}}, {"P": 1362470325, "L": {"i": 143196593, "f":
+    166}, "D": {"i": -2269, "f": 145}, "cn0": 157, "lock": 8, "flags": 15, "sid":
+    {"sat": 31, "code": 16}}, {"P": 1362473491, "L": {"i": 106932771, "f": 181}, "D":
+    {"i": -1695, "f": 205}, "cn0": 162, "lock": 8, "flags": 15, "sid": {"sat": 31,
+    "code": 27}}, {"P": 1186931944, "L": {"i": 124747388, "f": 138}, "D": {"i": 543,
+    "f": 253}, "cn0": 194, "lock": 8, "flags": 15, "sid": {"sat": 33, "code": 16}},
+    {"P": 1186934959, "L": {"i": 93155754, "f": 70}, "D": {"i": 406, "f": 62}, "cn0":
+    188, "lock": 8, "flags": 15, "sid": {"sat": 33, "code": 27}}, {"P": 1110836156,
+    "L": {"i": 115688311, "f": 157}, "D": {"i": 1463, "f": 51}, "cn0": 203, "lock":
+    8, "flags": 15, "sid": {"sat": 20, "code": 12}}, {"P": 1124113084, "L": {"i":
+    117071039, "f": 189}, "D": {"i": 1899, "f": 125}, "cn0": 195, "lock": 8, "flags":
+    15, "sid": {"sat": 29, "code": 12}}, {"P": 1090161369, "L": {"i": 113535127, "f":
+    111}, "D": {"i": -999, "f": 178}, "cn0": 202, "lock": 8, "flags": 15, "sid": {"sat":
+    30, "code": 12}}, {"P": 1141677934, "L": {"i": 118900332, "f": 29}, "D": {"i":
+    -1720, "f": 145}, "cn0": 198, "lock": 8, "flags": 15, "sid": {"sat": 32, "code":
+    12}}, {"P": 1141675150, "L": {"i": 89603571, "f": 62}, "D": {"i": -1296, "f":
+    172}, "cn0": 106, "lock": 8, "flags": 15, "sid": {"sat": 32, "code": 48}}]}'
+  raw_packet: VUoAHMjojGnOHQAAAABKCCFsqKFMlK0DBjRYCH+eCA8TG+0jPDE8tCwFdvYDNqIIDxQQoMpKSLATmQdNnfqXuggPGhCv1kpIBn+sBe36+66vCA8aG7WlNVGxAYkIpiP3kZ0IDx8QE7I1USOqXwa1YfnNoggPHxvoJL9GfH5vB4ofAv3CCA8hEK8wv0aqcY0FRpYBPrwIDyEbvAM2QndD5QadtwUzywgPFAy8mgBDv1z6Br1rB33DCA8dDNmK+kCXaMQGbxn8ssoIDx4Mbp8MRGxGFgcdSPmRxggPIAyOlAxE8z1XBT7w+qxqCA8gMADN
+  sbp:
+    crc: '0xcd00'
+    length: 232
+    msg_type: '0x4a'
+    payload: jGnOHQAAAABKCCFsqKFMlK0DBjRYCH+eCA8TG+0jPDE8tCwFdvYDNqIIDxQQoMpKSLATmQdNnfqXuggPGhCv1kpIBn+sBe36+66vCA8aG7WlNVGxAYkIpiP3kZ0IDx8QE7I1USOqXwa1YfnNoggPHxvoJL9GfH5vB4ofAv3CCA8hEK8wv0aqcY0FRpYBPrwIDyEbvAM2QndD5QadtwUzywgPFAy8mgBDv1z6Br1rB33DCA8dDNmK+kCXaMQGbxn8ssoIDx4Mbp8MRGxGFgcdSPmRxggPIAyOlAxE8z1XBT7w+qxqCA8gMA==
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      header:
+        n_obs: 32
+        t:
+          ns_residual: 0
+          tow: 500066800
+          wn: 2122
+      obs:
+      - D:
+          f: 82
+          i: 2316
+        L:
+          f: 18
+          i: 116364771
+        P: 1107173997
+        cn0: 194
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 10
+      - D:
+          f: 144
+          i: -622
+        L:
+          f: 130
+          i: 113729007
+        P: 1082095516
+        cn0: 182
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 15
+      - D:
+          f: 122
+          i: -74
+        L:
+          f: 138
+          i: 121849088
+        P: 1159355544
+        cn0: 143
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 16
+      - D:
+          f: 183
+          i: -302
+        L:
+          f: 82
+          i: 107946205
+        P: 1027074009
+        cn0: 196
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 18
+      - D:
+          f: 168
+          i: 658
+        L:
+          f: 86
+          i: 106422293
+        P: 1012574444
+        cn0: 192
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 20
+      - D:
+          f: 243
+          i: 847
+        L:
+          f: 50
+          i: 107166250
+        P: 1019652975
+        cn0: 192
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 23
+      - D:
+          f: 3
+          i: 631
+        L:
+          f: 226
+          i: 80026548
+        P: 1019650487
+        cn0: 94
+        flags: 15
+        lock: 7
+        sid:
+          code: 10
+          sat: 23
+      - D:
+          f: 247
+          i: -1965
+        L:
+          f: 55
+          i: 121830236
+        P: 1159176175
+        cn0: 174
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 26
+      - D:
+          f: 124
+          i: -1467
+        L:
+          f: 222
+          i: 90976794
+        P: 1159171491
+        cn0: 182
+        flags: 15
+        lock: 8
+        sid:
+          code: 10
+          sat: 26
+      - D:
+          f: 87
+          i: 3307
+        L:
+          f: 10
+          i: 125646171
+        P: 1195483584
+        cn0: 156
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 27
+      - D:
+          f: 50
+          i: -3000
+        L:
+          f: 50
+          i: 117190367
+        P: 1115029287
+        cn0: 184
+        flags: 15
+        lock: 8
+        sid:
+          code: 0
+          sat: 29
+      - D:
+          f: 99
+          i: 250
+        L:
+          f: 120
+          i: 93945435
+        P: 893861103
+        cn0: 195
+        flags: 15
+        lock: 8
+        sid:
+          code: 16
+          sat: 18
+      - D:
+          f: 3
+          i: 187
+        L:
+          f: 216
+          i: 70154297
+        P: 893864144
+        cn0: 189
+        flags: 15
+        lock: 8
+        sid:
+          code: 27
+          sat: 18
+      - D:
+          f: 223
+          i: 2860
+        L:
+          f: 171
+          i: 135123468
+        P: 1285657053
+        cn0: 156
+        flags: 15
+        lock: 8
+        sid:
+          code: 16
+          sat: 19
+    module: sbp.observation
+    name: MsgObs
+  msg_type: '0x4a'
+  raw_json: '{"preamble": 85, "msg_type": 74, "sender": 51228, "length": 249, "payload":
+    "8GnOHQAAAABKCCBtIv5B45XvBhIMCVLCCA8KAJx3f0DvXccGgpL9kLYIDw8AmFwaRQBFQweKtv96jwgPEADZ5zc93SBvBlLS/rfECA8SAOyoWjwV4FcGVpICqMAIDxQAb6vGPCo6YwYyTwPzwAgPFwC3ocY8tBvFBOJ3AgNeBw8XCu+fF0Vc+0IHN1P4964IDxoAo40XRRoybAXeRfp8tggPGgrAoUFHWzV9BwrrDFecCA8bACf/dULfLvwGMkj0MrgIDx0A7zxHNVt+mQV4+gBjwwgPEhDQSEc1OXguBNi7AAO9CA8SG92RoUwM0g0IqywL35wIDxMQ",
+    "crc": 51241, "header": {"t": {"tow": 500066800, "ns_residual": 0, "wn": 2122},
+    "n_obs": 32}, "obs": [{"P": 1107173997, "L": {"i": 116364771, "f": 18}, "D": {"i":
+    2316, "f": 82}, "cn0": 194, "lock": 8, "flags": 15, "sid": {"sat": 10, "code":
+    0}}, {"P": 1082095516, "L": {"i": 113729007, "f": 130}, "D": {"i": -622, "f":
+    144}, "cn0": 182, "lock": 8, "flags": 15, "sid": {"sat": 15, "code": 0}}, {"P":
+    1159355544, "L": {"i": 121849088, "f": 138}, "D": {"i": -74, "f": 122}, "cn0":
+    143, "lock": 8, "flags": 15, "sid": {"sat": 16, "code": 0}}, {"P": 1027074009,
+    "L": {"i": 107946205, "f": 82}, "D": {"i": -302, "f": 183}, "cn0": 196, "lock":
+    8, "flags": 15, "sid": {"sat": 18, "code": 0}}, {"P": 1012574444, "L": {"i": 106422293,
+    "f": 86}, "D": {"i": 658, "f": 168}, "cn0": 192, "lock": 8, "flags": 15, "sid":
+    {"sat": 20, "code": 0}}, {"P": 1019652975, "L": {"i": 107166250, "f": 50}, "D":
+    {"i": 847, "f": 243}, "cn0": 192, "lock": 8, "flags": 15, "sid": {"sat": 23, "code":
+    0}}, {"P": 1019650487, "L": {"i": 80026548, "f": 226}, "D": {"i": 631, "f": 3},
+    "cn0": 94, "lock": 7, "flags": 15, "sid": {"sat": 23, "code": 10}}, {"P": 1159176175,
+    "L": {"i": 121830236, "f": 55}, "D": {"i": -1965, "f": 247}, "cn0": 174, "lock":
+    8, "flags": 15, "sid": {"sat": 26, "code": 0}}, {"P": 1159171491, "L": {"i": 90976794,
+    "f": 222}, "D": {"i": -1467, "f": 124}, "cn0": 182, "lock": 8, "flags": 15, "sid":
+    {"sat": 26, "code": 10}}, {"P": 1195483584, "L": {"i": 125646171, "f": 10}, "D":
+    {"i": 3307, "f": 87}, "cn0": 156, "lock": 8, "flags": 15, "sid": {"sat": 27, "code":
+    0}}, {"P": 1115029287, "L": {"i": 117190367, "f": 50}, "D": {"i": -3000, "f":
+    50}, "cn0": 184, "lock": 8, "flags": 15, "sid": {"sat": 29, "code": 0}}, {"P":
+    893861103, "L": {"i": 93945435, "f": 120}, "D": {"i": 250, "f": 99}, "cn0": 195,
+    "lock": 8, "flags": 15, "sid": {"sat": 18, "code": 16}}, {"P": 893864144, "L":
+    {"i": 70154297, "f": 216}, "D": {"i": 187, "f": 3}, "cn0": 189, "lock": 8, "flags":
+    15, "sid": {"sat": 18, "code": 27}}, {"P": 1285657053, "L": {"i": 135123468, "f":
+    171}, "D": {"i": 2860, "f": 223}, "cn0": 156, "lock": 8, "flags": 15, "sid": {"sat":
+    19, "code": 16}}]}'
+  raw_packet: VUoAHMj58GnOHQAAAABKCCBtIv5B45XvBhIMCVLCCA8KAJx3f0DvXccGgpL9kLYIDw8AmFwaRQBFQweKtv96jwgPEADZ5zc93SBvBlLS/rfECA8SAOyoWjwV4FcGVpICqMAIDxQAb6vGPCo6YwYyTwPzwAgPFwC3ocY8tBvFBOJ3AgNeBw8XCu+fF0Vc+0IHN1P4964IDxoAo40XRRoybAXeRfp8tggPGgrAoUFHWzV9BwrrDFecCA8bACf/dULfLvwGMkj0MrgIDx0A7zxHNVt+mQV4+gBjwwgPEhDQSEc1OXguBNi7AAO9CA8SG92RoUwM0g0IqywL35wIDxMQKcg=
+  sbp:
+    crc: '0xc829'
+    length: 249
+    msg_type: '0x4a'
+    payload: 8GnOHQAAAABKCCBtIv5B45XvBhIMCVLCCA8KAJx3f0DvXccGgpL9kLYIDw8AmFwaRQBFQweKtv96jwgPEADZ5zc93SBvBlLS/rfECA8SAOyoWjwV4FcGVpICqMAIDxQAb6vGPCo6YwYyTwPzwAgPFwC3ocY8tBvFBOJ3AgNeBw8XCu+fF0Vc+0IHN1P4964IDxoAo40XRRoybAXeRfp8tggPGgrAoUFHWzV9BwrrDFecCA8bACf/dULfLvwGMkj0MrgIDx0A7zxHNVt+mQV4+gBjwwgPEhDQSEc1OXguBNi7AAO9CA8SG92RoUwM0g0IqywL35wIDxMQ
+    preamble: '0x55'
+    sender: '0xc81c'
+version: 3.4.1.dev12+g7ff5295c
+...

@@ -1,0 +1,132 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgPosECEFGnss v3.4.1.dev12+g7ff5295c.
+generated_on: 2020-09-18 18:23:44.824753
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      accuracy: 1147
+      flags: 3
+      n_sats: 11
+      tow: 500066600
+      x: -2684190.415671157
+      y: -4320608.999748357
+      z: 3835346.74454021
+    module: sbp.navigation
+    name: MsgPosECEFGnss
+  msg_type: '0x229'
+  raw_json: '{"preamble": 85, "msg_type": 553, "sender": 4096, "length": 32, "payload":
+    "KGnOHWW2NDWPekTBiOD7P1h7UMH2F01f6UJNQXsECwM=", "crc": 1798, "tow": 500066600,
+    "x": -2684190.415671157, "y": -4320608.999748357, "z": 3835346.74454021, "accuracy":
+    1147, "n_sats": 11, "flags": 3}'
+  raw_packet: VSkCABAgKGnOHWW2NDWPekTBiOD7P1h7UMH2F01f6UJNQXsECwMGBw==
+  sbp:
+    crc: '0x706'
+    length: 32
+    msg_type: '0x229'
+    payload: KGnOHWW2NDWPekTBiOD7P1h7UMH2F01f6UJNQXsECwM=
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      accuracy: 1145
+      flags: 3
+      n_sats: 11
+      tow: 500066700
+      x: -2684190.4111688524
+      y: -4320608.994067186
+      z: 3835346.7470143503
+    module: sbp.navigation
+    name: MsgPosECEFGnss
+  msg_type: '0x229'
+  raw_json: '{"preamble": 85, "msg_type": 553, "sender": 4096, "length": 32, "payload":
+    "jGnOHVMuoTSPekTB+cueP1h7UMGOKp5f6UJNQXkECwM=", "crc": 35708, "tow": 500066700,
+    "x": -2684190.4111688524, "y": -4320608.994067186, "z": 3835346.7470143503, "accuracy":
+    1145, "n_sats": 11, "flags": 3}'
+  raw_packet: VSkCABAgjGnOHVMuoTSPekTB+cueP1h7UMGOKp5f6UJNQXkECwN8iw==
+  sbp:
+    crc: '0x8b7c'
+    length: 32
+    msg_type: '0x229'
+    payload: jGnOHVMuoTSPekTB+cueP1h7UMGOKp5f6UJNQXkECwM=
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      accuracy: 1143
+      flags: 3
+      n_sats: 11
+      tow: 500066800
+      x: -2684190.40859952
+      y: -4320608.9926557485
+      z: 3835346.746767551
+    module: sbp.navigation
+    name: MsgPosECEFGnss
+  msg_type: '0x229'
+  raw_json: '{"preamble": 85, "msg_type": 553, "sender": 4096, "length": 32, "payload":
+    "8GnOHTT9TDSPekTB+quHP1h7UMFBFJZf6UJNQXcECwM=", "crc": 64187, "tow": 500066800,
+    "x": -2684190.40859952, "y": -4320608.9926557485, "z": 3835346.746767551, "accuracy":
+    1143, "n_sats": 11, "flags": 3}'
+  raw_packet: VSkCABAg8GnOHTT9TDSPekTB+quHP1h7UMFBFJZf6UJNQXcECwO7+g==
+  sbp:
+    crc: '0xfabb'
+    length: 32
+    msg_type: '0x229'
+    payload: 8GnOHTT9TDSPekTB+quHP1h7UMFBFJZf6UJNQXcECwM=
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      accuracy: 1146
+      flags: 3
+      n_sats: 11
+      tow: 500066900
+      x: -2684190.403587801
+      y: -4320608.986333581
+      z: 3835346.748566272
+    module: sbp.navigation
+    name: MsgPosECEFGnss
+  msg_type: '0x229'
+  raw_json: '{"preamble": 85, "msg_type": 553, "sender": 4096, "length": 32, "payload":
+    "VGrOHdvDqDOPekTB4hYgP1h7UMEFBdFf6UJNQXoECwM=", "crc": 62405, "tow": 500066900,
+    "x": -2684190.403587801, "y": -4320608.986333581, "z": 3835346.748566272, "accuracy":
+    1146, "n_sats": 11, "flags": 3}'
+  raw_packet: VSkCABAgVGrOHdvDqDOPekTB4hYgP1h7UMEFBdFf6UJNQXoECwPF8w==
+  sbp:
+    crc: '0xf3c5'
+    length: 32
+    msg_type: '0x229'
+    payload: VGrOHdvDqDOPekTB4hYgP1h7UMEFBdFf6UJNQXoECwM=
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      accuracy: 1192
+      flags: 3
+      n_sats: 11
+      tow: 500067000
+      x: -2684190.4020042913
+      y: -4320608.984031659
+      z: 3835346.7527100914
+    module: sbp.navigation
+    name: MsgPosECEFGnss
+  msg_type: '0x229'
+  raw_json: '{"preamble": 85, "msg_type": 553, "sender": 4096, "length": 32, "payload":
+    "uGrOHWrgdDOPekTB7F/6Plh7UMHlzVhg6UJNQagECwM=", "crc": 26878, "tow": 500067000,
+    "x": -2684190.4020042913, "y": -4320608.984031659, "z": 3835346.7527100914, "accuracy":
+    1192, "n_sats": 11, "flags": 3}'
+  raw_packet: VSkCABAguGrOHWrgdDOPekTB7F/6Plh7UMHlzVhg6UJNQagECwP+aA==
+  sbp:
+    crc: '0x68fe'
+    length: 32
+    msg_type: '0x229'
+    payload: uGrOHWrgdDOPekTB7F/6Plh7UMHlzVhg6UJNQagECwM=
+    preamble: '0x55'
+    sender: '0x1000'
+version: 3.4.1.dev12+g7ff5295c
+...

@@ -1,0 +1,137 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgUtcTimeGnss v3.4.1.dev12+g7ff5295c.
+generated_on: 2020-09-18 18:23:44.790494
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      day: 11
+      flags: 1
+      hours: 18
+      minutes: 54
+      month: 9
+      ns: 600000025
+      seconds: 8
+      tow: 500066600
+      year: 2020
+    module: sbp.navigation
+    name: MsgUtcTimeGnss
+  msg_type: '0x105'
+  raw_json: '{"preamble": 85, "msg_type": 261, "sender": 4096, "length": 16, "payload":
+    "AShpzh3kBwkLEjYIGUbDIw==", "crc": 53215, "flags": 1, "tow": 500066600, "year":
+    2020, "month": 9, "day": 11, "hours": 18, "minutes": 54, "seconds": 8, "ns": 600000025}'
+  raw_packet: VQUBABAQAShpzh3kBwkLEjYIGUbDI9/P
+  sbp:
+    crc: '0xcfdf'
+    length: 16
+    msg_type: '0x105'
+    payload: AShpzh3kBwkLEjYIGUbDIw==
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      day: 11
+      flags: 1
+      hours: 18
+      minutes: 54
+      month: 9
+      ns: 700000025
+      seconds: 8
+      tow: 500066700
+      year: 2020
+    module: sbp.navigation
+    name: MsgUtcTimeGnss
+  msg_type: '0x105'
+  raw_json: '{"preamble": 85, "msg_type": 261, "sender": 4096, "length": 16, "payload":
+    "AYxpzh3kBwkLEjYIGSe5KQ==", "crc": 30696, "flags": 1, "tow": 500066700, "year":
+    2020, "month": 9, "day": 11, "hours": 18, "minutes": 54, "seconds": 8, "ns": 700000025}'
+  raw_packet: VQUBABAQAYxpzh3kBwkLEjYIGSe5Keh3
+  sbp:
+    crc: '0x77e8'
+    length: 16
+    msg_type: '0x105'
+    payload: AYxpzh3kBwkLEjYIGSe5KQ==
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      day: 11
+      flags: 1
+      hours: 18
+      minutes: 54
+      month: 9
+      ns: 800000025
+      seconds: 8
+      tow: 500066800
+      year: 2020
+    module: sbp.navigation
+    name: MsgUtcTimeGnss
+  msg_type: '0x105'
+  raw_json: '{"preamble": 85, "msg_type": 261, "sender": 4096, "length": 16, "payload":
+    "AfBpzh3kBwkLEjYIGQivLw==", "crc": 20844, "flags": 1, "tow": 500066800, "year":
+    2020, "month": 9, "day": 11, "hours": 18, "minutes": 54, "seconds": 8, "ns": 800000025}'
+  raw_packet: VQUBABAQAfBpzh3kBwkLEjYIGQivL2xR
+  sbp:
+    crc: '0x516c'
+    length: 16
+    msg_type: '0x105'
+    payload: AfBpzh3kBwkLEjYIGQivLw==
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      day: 11
+      flags: 1
+      hours: 18
+      minutes: 54
+      month: 9
+      ns: 900000025
+      seconds: 8
+      tow: 500066900
+      year: 2020
+    module: sbp.navigation
+    name: MsgUtcTimeGnss
+  msg_type: '0x105'
+  raw_json: '{"preamble": 85, "msg_type": 261, "sender": 4096, "length": 16, "payload":
+    "AVRqzh3kBwkLEjYIGemkNQ==", "crc": 30459, "flags": 1, "tow": 500066900, "year":
+    2020, "month": 9, "day": 11, "hours": 18, "minutes": 54, "seconds": 8, "ns": 900000025}'
+  raw_packet: VQUBABAQAVRqzh3kBwkLEjYIGemkNft2
+  sbp:
+    crc: '0x76fb'
+    length: 16
+    msg_type: '0x105'
+    payload: AVRqzh3kBwkLEjYIGemkNQ==
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      day: 11
+      flags: 1
+      hours: 18
+      minutes: 54
+      month: 9
+      ns: 25
+      seconds: 9
+      tow: 500067000
+      year: 2020
+    module: sbp.navigation
+    name: MsgUtcTimeGnss
+  msg_type: '0x105'
+  raw_json: '{"preamble": 85, "msg_type": 261, "sender": 4096, "length": 16, "payload":
+    "Abhqzh3kBwkLEjYJGQAAAA==", "crc": 2750, "flags": 1, "tow": 500067000, "year":
+    2020, "month": 9, "day": 11, "hours": 18, "minutes": 54, "seconds": 9, "ns": 25}'
+  raw_packet: VQUBABAQAbhqzh3kBwkLEjYJGQAAAL4K
+  sbp:
+    crc: '0xabe'
+    length: 16
+    msg_type: '0x105'
+    payload: Abhqzh3kBwkLEjYJGQAAAA==
+    preamble: '0x55'
+    sender: '0x1000'
+version: 3.4.1.dev12+g7ff5295c
+...

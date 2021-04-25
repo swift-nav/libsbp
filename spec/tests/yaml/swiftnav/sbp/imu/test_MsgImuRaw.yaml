@@ -1,0 +1,132 @@
+---
+description: Unit tests for swiftnav.sbp.imu MsgImuRaw v3.4.1.dev12+g7ff5295c.
+generated_on: 2020-09-18 18:23:44.644708
+package: sbp.imu
+tests:
+
+- msg:
+    fields:
+      acc_x: 39
+      acc_y: 41
+      acc_z: 4206
+      gyr_x: 187
+      gyr_y: -268
+      gyr_z: -120
+      tow: 3221226012
+      tow_f: 0
+    module: sbp.imu
+    name: MsgImuRaw
+  msg_type: '0x900'
+  raw_json: '{"preamble": 85, "msg_type": 2304, "sender": 51228, "length": 17, "payload":
+    "HAIAwAAnACkAbhC7APT+iP8=", "crc": 31424, "tow": 3221226012, "tow_f": 0, "acc_x":
+    39, "acc_y": 41, "acc_z": 4206, "gyr_x": 187, "gyr_y": -268, "gyr_z": -120}'
+  raw_packet: VQAJHMgRHAIAwAAnACkAbhC7APT+iP/Aeg==
+  sbp:
+    crc: '0x7ac0'
+    length: 17
+    msg_type: '0x900'
+    payload: HAIAwAAnACkAbhC7APT+iP8=
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      acc_x: 43
+      acc_y: 42
+      acc_z: 4204
+      gyr_x: 166
+      gyr_y: -281
+      gyr_z: -127
+      tow: 3221226022
+      tow_f: 0
+    module: sbp.imu
+    name: MsgImuRaw
+  msg_type: '0x900'
+  raw_json: '{"preamble": 85, "msg_type": 2304, "sender": 51228, "length": 17, "payload":
+    "JgIAwAArACoAbBCmAOf+gf8=", "crc": 47142, "tow": 3221226022, "tow_f": 0, "acc_x":
+    43, "acc_y": 42, "acc_z": 4204, "gyr_x": 166, "gyr_y": -281, "gyr_z": -127}'
+  raw_packet: VQAJHMgRJgIAwAArACoAbBCmAOf+gf8muA==
+  sbp:
+    crc: '0xb826'
+    length: 17
+    msg_type: '0x900'
+    payload: JgIAwAArACoAbBCmAOf+gf8=
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      acc_x: 39
+      acc_y: 41
+      acc_z: 4204
+      gyr_x: 184
+      gyr_y: -297
+      gyr_z: -109
+      tow: 3221226032
+      tow_f: 0
+    module: sbp.imu
+    name: MsgImuRaw
+  msg_type: '0x900'
+  raw_json: '{"preamble": 85, "msg_type": 2304, "sender": 51228, "length": 17, "payload":
+    "MAIAwAAnACkAbBC4ANf+k/8=", "crc": 45063, "tow": 3221226032, "tow_f": 0, "acc_x":
+    39, "acc_y": 41, "acc_z": 4204, "gyr_x": 184, "gyr_y": -297, "gyr_z": -109}'
+  raw_packet: VQAJHMgRMAIAwAAnACkAbBC4ANf+k/8HsA==
+  sbp:
+    crc: '0xb007'
+    length: 17
+    msg_type: '0x900'
+    payload: MAIAwAAnACkAbBC4ANf+k/8=
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      acc_x: 37
+      acc_y: 41
+      acc_z: 4206
+      gyr_x: 182
+      gyr_y: -280
+      gyr_z: -111
+      tow: 3221226042
+      tow_f: 0
+    module: sbp.imu
+    name: MsgImuRaw
+  msg_type: '0x900'
+  raw_json: '{"preamble": 85, "msg_type": 2304, "sender": 51228, "length": 17, "payload":
+    "OgIAwAAlACkAbhC2AOj+kf8=", "crc": 33113, "tow": 3221226042, "tow_f": 0, "acc_x":
+    37, "acc_y": 41, "acc_z": 4206, "gyr_x": 182, "gyr_y": -280, "gyr_z": -111}'
+  raw_packet: VQAJHMgROgIAwAAlACkAbhC2AOj+kf9ZgQ==
+  sbp:
+    crc: '0x8159'
+    length: 17
+    msg_type: '0x900'
+    payload: OgIAwAAlACkAbhC2AOj+kf8=
+    preamble: '0x55'
+    sender: '0xc81c'
+
+- msg:
+    fields:
+      acc_x: 38
+      acc_y: 45
+      acc_z: 4209
+      gyr_x: 190
+      gyr_y: -277
+      gyr_z: -130
+      tow: 3221226052
+      tow_f: 0
+    module: sbp.imu
+    name: MsgImuRaw
+  msg_type: '0x900'
+  raw_json: '{"preamble": 85, "msg_type": 2304, "sender": 51228, "length": 17, "payload":
+    "RAIAwAAmAC0AcRC+AOv+fv8=", "crc": 58572, "tow": 3221226052, "tow_f": 0, "acc_x":
+    38, "acc_y": 45, "acc_z": 4209, "gyr_x": 190, "gyr_y": -277, "gyr_z": -130}'
+  raw_packet: VQAJHMgRRAIAwAAmAC0AcRC+AOv+fv/M5A==
+  sbp:
+    crc: '0xe4cc'
+    length: 17
+    msg_type: '0x900'
+    payload: RAIAwAAmAC0AcRC+AOv+fv8=
+    preamble: '0x55'
+    sender: '0xc81c'
+version: 3.4.1.dev12+g7ff5295c
+...

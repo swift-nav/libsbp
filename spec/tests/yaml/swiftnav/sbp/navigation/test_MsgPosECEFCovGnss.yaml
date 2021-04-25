@@ -1,0 +1,167 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgPosECEFCovGnss v3.4.1.dev12+g7ff5295c.
+generated_on: 2020-09-18 18:23:44.878670
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      cov_x_x: 0.3960290849208832
+      cov_x_y: 0.49448975920677185
+      cov_x_z: -0.1946154534816742
+      cov_y_y: 0.8988719582557678
+      cov_y_z: -0.30093663930892944
+      cov_z_z: 0.1911001354455948
+      flags: 3
+      n_sats: 11
+      tow: 500066600
+      x: -2684190.415671157
+      y: -4320608.999748357
+      z: 3835346.74454021
+    module: sbp.navigation
+    name: MsgPosECEFCovGnss
+  msg_type: '0x234'
+  raw_json: '{"preamble": 85, "msg_type": 564, "sender": 4096, "length": 54, "payload":
+    "KGnOHWW2NDWPekTBiOD7P1h7UMH2F01f6UJNQVPEyj7DLf0+RklHvnkcZj9eFJq+wa9DPgsD", "crc":
+    58969, "tow": 500066600, "x": -2684190.415671157, "y": -4320608.999748357, "z":
+    3835346.74454021, "cov_x_x": 0.3960290849208832, "cov_x_y": 0.49448975920677185,
+    "cov_x_z": -0.1946154534816742, "cov_y_y": 0.8988719582557678, "cov_y_z": -0.30093663930892944,
+    "cov_z_z": 0.1911001354455948, "n_sats": 11, "flags": 3}'
+  raw_packet: VTQCABA2KGnOHWW2NDWPekTBiOD7P1h7UMH2F01f6UJNQVPEyj7DLf0+RklHvnkcZj9eFJq+wa9DPgsDWeY=
+  sbp:
+    crc: '0xe659'
+    length: 54
+    msg_type: '0x234'
+    payload: KGnOHWW2NDWPekTBiOD7P1h7UMH2F01f6UJNQVPEyj7DLf0+RklHvnkcZj9eFJq+wa9DPgsD
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      cov_x_x: 0.39464035630226135
+      cov_x_y: 0.49261459708213806
+      cov_x_z: -0.1939391791820526
+      cov_y_y: 0.8953226804733276
+      cov_y_z: -0.2998029291629791
+      cov_z_z: 0.19050642848014832
+      flags: 3
+      n_sats: 11
+      tow: 500066700
+      x: -2684190.4111688524
+      y: -4320608.994067186
+      z: 3835346.7470143503
+    module: sbp.navigation
+    name: MsgPosECEFCovGnss
+  msg_type: '0x234'
+  raw_json: '{"preamble": 85, "msg_type": 564, "sender": 4096, "length": 54, "payload":
+    "jGnOHVMuoTSPekTB+cueP1h7UMGOKp5f6UJNQU0Oyj77N/w+/pdGvt4zZT/Ff5m+HhRDPgsD", "crc":
+    30751, "tow": 500066700, "x": -2684190.4111688524, "y": -4320608.994067186, "z":
+    3835346.7470143503, "cov_x_x": 0.39464035630226135, "cov_x_y": 0.49261459708213806,
+    "cov_x_z": -0.1939391791820526, "cov_y_y": 0.8953226804733276, "cov_y_z": -0.2998029291629791,
+    "cov_z_z": 0.19050642848014832, "n_sats": 11, "flags": 3}'
+  raw_packet: VTQCABA2jGnOHVMuoTSPekTB+cueP1h7UMGOKp5f6UJNQU0Oyj77N/w+/pdGvt4zZT/Ff5m+HhRDPgsDH3g=
+  sbp:
+    crc: '0x781f'
+    length: 54
+    msg_type: '0x234'
+    payload: jGnOHVMuoTSPekTB+cueP1h7UMGOKp5f6UJNQU0Oyj77N/w+/pdGvt4zZT/Ff5m+HhRDPgsD
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      cov_x_x: 0.39325010776519775
+      cov_x_y: 0.49073871970176697
+      cov_x_z: -0.19326351583003998
+      cov_y_y: 0.8917729258537292
+      cov_y_z: -0.2986699044704437
+      cov_z_z: 0.18991482257843018
+      flags: 3
+      n_sats: 11
+      tow: 500066800
+      x: -2684190.40859952
+      y: -4320608.9926557485
+      z: 3835346.746767551
+    module: sbp.navigation
+    name: MsgPosECEFCovGnss
+  msg_type: '0x234'
+  raw_json: '{"preamble": 85, "msg_type": 564, "sender": 4096, "length": 54, "payload":
+    "8GnOHTT9TDSPekTB+quHP1h7UMFBFJZf6UJNQRRYyT4bQvs+3+ZFvjtLZD9D65i+CHlCPgsD", "crc":
+    31590, "tow": 500066800, "x": -2684190.40859952, "y": -4320608.9926557485, "z":
+    3835346.746767551, "cov_x_x": 0.39325010776519775, "cov_x_y": 0.49073871970176697,
+    "cov_x_z": -0.19326351583003998, "cov_y_y": 0.8917729258537292, "cov_y_z": -0.2986699044704437,
+    "cov_z_z": 0.18991482257843018, "n_sats": 11, "flags": 3}'
+  raw_packet: VTQCABA28GnOHTT9TDSPekTB+quHP1h7UMFBFJZf6UJNQRRYyT4bQvs+3+ZFvjtLZD9D65i+CHlCPgsDZns=
+  sbp:
+    crc: '0x7b66'
+    length: 54
+    msg_type: '0x234'
+    payload: 8GnOHTT9TDSPekTB+quHP1h7UMFBFJZf6UJNQRRYyT4bQvs+3+ZFvjtLZD9D65i+CHlCPgsD
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      cov_x_x: 0.3955013155937195
+      cov_x_y: 0.4934066832065582
+      cov_x_z: -0.1943788081407547
+      cov_y_y: 0.8964797258377075
+      cov_y_z: -0.30030348896980286
+      cov_z_z: 0.19108527898788452
+      flags: 3
+      n_sats: 11
+      tow: 500066900
+      x: -2684190.403587801
+      y: -4320608.986333581
+      z: 3835346.748566272
+    module: sbp.navigation
+    name: MsgPosECEFCovGnss
+  msg_type: '0x234'
+  raw_json: '{"preamble": 85, "msg_type": 564, "sender": 4096, "length": 54, "payload":
+    "VGrOHdvDqDOPekTB4hYgP1h7UMEFBdFf6UJNQSZ/yj7Nn/w+PQtHvrJ/ZT9hwZm+3KtDPgsD", "crc":
+    65078, "tow": 500066900, "x": -2684190.403587801, "y": -4320608.986333581, "z":
+    3835346.748566272, "cov_x_x": 0.3955013155937195, "cov_x_y": 0.4934066832065582,
+    "cov_x_z": -0.1943788081407547, "cov_y_y": 0.8964797258377075, "cov_y_z": -0.30030348896980286,
+    "cov_z_z": 0.19108527898788452, "n_sats": 11, "flags": 3}'
+  raw_packet: VTQCABA2VGrOHdvDqDOPekTB4hYgP1h7UMEFBdFf6UJNQSZ/yj7Nn/w+PQtHvrJ/ZT9hwZm+3KtDPgsDNv4=
+  sbp:
+    crc: '0xfe36'
+    length: 54
+    msg_type: '0x234'
+    payload: VGrOHdvDqDOPekTB4hYgP1h7UMEFBdFf6UJNQSZ/yj7Nn/w+PQtHvrJ/ZT9hwZm+3KtDPgsD
+    preamble: '0x55'
+    sender: '0x1000'
+
+- msg:
+    fields:
+      cov_x_x: 0.4281696677207947
+      cov_x_y: 0.5340088605880737
+      cov_x_z: -0.2104455530643463
+      cov_y_y: 0.9700968265533447
+      cov_y_z: -0.32502713799476624
+      cov_z_z: 0.20696251094341278
+      flags: 3
+      n_sats: 11
+      tow: 500067000
+      x: -2684190.4020042913
+      y: -4320608.984031659
+      z: 3835346.7527100914
+    module: sbp.navigation
+    name: MsgPosECEFCovGnss
+  msg_type: '0x234'
+  raw_json: '{"preamble": 85, "msg_type": 564, "sender": 4096, "length": 54, "payload":
+    "uGrOHWrgdDOPekTB7F/6Plh7UMHlzVhg6UJNQQ452z7OtAg/Cn9XvkRYeD/1aaa+++1TPgsD", "crc":
+    58964, "tow": 500067000, "x": -2684190.4020042913, "y": -4320608.984031659, "z":
+    3835346.7527100914, "cov_x_x": 0.4281696677207947, "cov_x_y": 0.5340088605880737,
+    "cov_x_z": -0.2104455530643463, "cov_y_y": 0.9700968265533447, "cov_y_z": -0.32502713799476624,
+    "cov_z_z": 0.20696251094341278, "n_sats": 11, "flags": 3}'
+  raw_packet: VTQCABA2uGrOHWrgdDOPekTB7F/6Plh7UMHlzVhg6UJNQQ452z7OtAg/Cn9XvkRYeD/1aaa+++1TPgsDVOY=
+  sbp:
+    crc: '0xe654'
+    length: 54
+    msg_type: '0x234'
+    payload: uGrOHWrgdDOPekTB7F/6Plh7UMHlzVhg6UJNQQ452z7OtAg/Cn9XvkRYeD/1aaa+++1TPgsD
+    preamble: '0x55'
+    sender: '0x1000'
+version: 3.4.1.dev12+g7ff5295c
+...
