@@ -1,68 +1,101 @@
-/*
- * Copyright (C) 2015-2018 Swift Navigation Inc.
- * Contact: https://support.swiftnav.com
- *
- * This source is subject to the license found in the file 'LICENSE' which must
- * be be distributed together with this source. All other rights reserved.
- *
- * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
- * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
- */
-
-/*****************************************************************************
- * Automatically generated from yaml/swiftnav/sbp/logging.yaml
- * with generate.py. Please do not hand edit!
- *****************************************************************************/
-
-/** \defgroup logging Logging
- *
- *  * Logging and debugging messages from the device.
- * \{ */
-
 #ifndef LIBSBP_LOGGING_MESSAGES_H
 #define LIBSBP_LOGGING_MESSAGES_H
 
-#include "common.h"
+#include <stdbool.h>
+#include <stddef.h>
+#include <string.h>
+#include <stdint.h>
+#include <endian.h>
 
-SBP_PACK_START
-
-
-/** Plaintext logging messages with levels
- *
+#include <libsbp/common.h>
+  /** Plaintext logging messages with levels
+   *
  * This message contains a human-readable payload string from the
  * device containing errors, warnings and informational messages at
  * ERROR, WARNING, DEBUG, INFO logging levels.
- */
+   */
 #define SBP_MSG_LOG       0x0401
-#define SBP_LOG_LOGGING_LEVEL_MASK (0x7)
-#define SBP_LOG_LOGGING_LEVEL_SHIFT (0u)
-#define SBP_LOG_LOGGING_LEVEL_GET(flags) \
-                             (((flags) >> SBP_LOG_LOGGING_LEVEL_SHIFT) \
-                             & SBP_LOG_LOGGING_LEVEL_MASK)
-#define SBP_LOG_LOGGING_LEVEL_SET(flags, val) \
+
+	#define SBP_LOG_LEVEL_LOGGING_LEVEL_MASK (0x7)
+#define SBP_LOG_LEVEL_LOGGING_LEVEL_SHIFT (0u)
+#define SBP_LOG_LEVEL_LOGGING_LEVEL_GET(flags) \
+                             (((flags) >> SBP_LOG_LEVEL_LOGGING_LEVEL_SHIFT) \
+                             & SBP_LOG_LEVEL_LOGGING_LEVEL_MASK)
+#define SBP_LOG_LEVEL_LOGGING_LEVEL_SET(flags, val) \
                              do {((flags) |= \
-                             (((val) & (SBP_LOG_LOGGING_LEVEL_MASK)) \
-                             << (SBP_LOG_LOGGING_LEVEL_SHIFT)));} while(0)
+                             (((val) & (SBP_LOG_LEVEL_LOGGING_LEVEL_MASK)) \
+                             << (SBP_LOG_LEVEL_LOGGING_LEVEL_SHIFT)));} while(0)
                              
 
-#define SBP_LOG_LOGGING_LEVEL_EMERG (0)
-#define SBP_LOG_LOGGING_LEVEL_ALERT (1)
-#define SBP_LOG_LOGGING_LEVEL_CRIT (2)
-#define SBP_LOG_LOGGING_LEVEL_ERROR (3)
-#define SBP_LOG_LOGGING_LEVEL_WARN (4)
-#define SBP_LOG_LOGGING_LEVEL_NOTICE (5)
-#define SBP_LOG_LOGGING_LEVEL_INFO (6)
-#define SBP_LOG_LOGGING_LEVEL_DEBUG (7)
+#define SBP_LOG_LEVEL_LOGGING_LEVEL_EMERG (0)
+#define SBP_LOG_LEVEL_LOGGING_LEVEL_ALERT (1)
+#define SBP_LOG_LEVEL_LOGGING_LEVEL_CRIT (2)
+#define SBP_LOG_LEVEL_LOGGING_LEVEL_ERROR (3)
+#define SBP_LOG_LEVEL_LOGGING_LEVEL_WARN (4)
+#define SBP_LOG_LEVEL_LOGGING_LEVEL_NOTICE (5)
+#define SBP_LOG_LEVEL_LOGGING_LEVEL_INFO (6)
+#define SBP_LOG_LEVEL_LOGGING_LEVEL_DEBUG (7)
+typedef struct {
+  
+  /**
+* Logging level
+   */
+    u8
+  level
+  ;
+  /**
+* Human-readable string
+   */
+    char
+  text
+    [254]
+  ;
+} sbp_msg_log_t;
 
-typedef struct SBP_ATTR_PACKED {
-  u8 level;    /**< Logging level */
-  char text[0];  /**< Human-readable string */
-} msg_log_t;
+static inline size_t sbp_packed_size_sbp_msg_log_t(const sbp_msg_log_t *msg) {                                
+	(void)msg;
+  return                                                          
+	0                                                                          
+	  +
+				sizeof( msg->level )                                                                          
+	  +
+      sbp_strlen( msg->text, "none" );
+}
 
+static inline bool sbp_pack_sbp_msg_log_t(u8 *buf, size_t len, const sbp_msg_log_t *msg) {
+  size_t offset = 0;
+	(void)offset;
+	(void)buf;
+	(void)len;
+	(void)msg;
+  if ( sbp_packed_size_sbp_msg_log_t(msg) > len) { return false; }
+  
+        
+  if (offset + 1 > len) { return false; }
+  u8 msglevel = msg->level;
+  memcpy(buf + offset, & msglevel , 1);
+  offset += 1;
+      if (offset + sbp_strlen( msg->text, "none") > len) { return false; }
+      offset += sbp_pack_string( buf + offset, msg->text, "none");
+  return true;
+}
 
-/** Wrapper for FWD a separate stream of information over SBP
- *
+static inline bool sbp_unpack_sbp_msg_log_t(const u8 *buf, size_t len, sbp_msg_log_t *msg) {
+  size_t offset = 0;
+	(void)offset;
+	(void)buf;
+	(void)len;
+	(void)msg;
+  
+      
+  if (offset + 1 > len) { return false; }
+  memcpy(&msg->level, buf + offset, 1);
+  offset += 1;
+    offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->text, "none");
+  return true;
+}
+  /** Wrapper for FWD a separate stream of information over SBP
+   *
  * This message provides the ability to forward messages over SBP.  This may take the form
  * of wrapping up SBP messages received by Piksi for logging purposes or wrapping 
  * another protocol with SBP.
@@ -70,29 +103,133 @@ typedef struct SBP_ATTR_PACKED {
  * The source identifier indicates from what interface a forwarded stream derived.
  * The protocol identifier identifies what the expected protocol the forwarded msg contains.
  * Protocol 0 represents SBP and the remaining values are implementation defined.
- */
+   */
 #define SBP_MSG_FWD       0x0402
 
-typedef struct SBP_ATTR_PACKED {
-  u8 source;         /**< source identifier */
-  u8 protocol;       /**< protocol identifier */
-  char fwd_payload[0]; /**< variable length wrapped binary message */
-} msg_fwd_t;
+typedef struct {
+  
+  /**
+* source identifier
+   */
+    u8
+  source
+  ;
+  /**
+* protocol identifier
+   */
+    u8
+  protocol
+  ;
+  /**
+* variable length wrapped binary message
+   */
+    char
+  fwd_payload
+    [253]
+  ;
+} sbp_msg_fwd_t;
 
+static inline size_t sbp_packed_size_sbp_msg_fwd_t(const sbp_msg_fwd_t *msg) {                                
+	(void)msg;
+  return                                                          
+	0                                                                          
+	  +
+				sizeof( msg->source )                                                                          
+	  +
+				sizeof( msg->protocol )                                                                          
+	  +
+      sbp_strlen( msg->fwd_payload, "none" );
+}
 
-/** Deprecated
- *
+static inline bool sbp_pack_sbp_msg_fwd_t(u8 *buf, size_t len, const sbp_msg_fwd_t *msg) {
+  size_t offset = 0;
+	(void)offset;
+	(void)buf;
+	(void)len;
+	(void)msg;
+  if ( sbp_packed_size_sbp_msg_fwd_t(msg) > len) { return false; }
+  
+        
+  if (offset + 1 > len) { return false; }
+  u8 msgsource = msg->source;
+  memcpy(buf + offset, & msgsource , 1);
+  offset += 1;
+        
+  if (offset + 1 > len) { return false; }
+  u8 msgprotocol = msg->protocol;
+  memcpy(buf + offset, & msgprotocol , 1);
+  offset += 1;
+      if (offset + sbp_strlen( msg->fwd_payload, "none") > len) { return false; }
+      offset += sbp_pack_string( buf + offset, msg->fwd_payload, "none");
+  return true;
+}
+
+static inline bool sbp_unpack_sbp_msg_fwd_t(const u8 *buf, size_t len, sbp_msg_fwd_t *msg) {
+  size_t offset = 0;
+	(void)offset;
+	(void)buf;
+	(void)len;
+	(void)msg;
+  
+      
+  if (offset + 1 > len) { return false; }
+  memcpy(&msg->source, buf + offset, 1);
+  offset += 1;
+      
+  if (offset + 1 > len) { return false; }
+  memcpy(&msg->protocol, buf + offset, 1);
+  offset += 1;
+    offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->fwd_payload, "none");
+  return true;
+}
+  /** Deprecated
+   *
 * Deprecated.
- */
+   */
 #define SBP_MSG_PRINT_DEP 0x0010
 
-typedef struct SBP_ATTR_PACKED {
-  char text[0]; /**< Human-readable string */
-} msg_print_dep_t;
+typedef struct {
+  
+  /**
+* Human-readable string
+   */
+    char
+  text
+    [255]
+  ;
+} sbp_msg_print_dep_t;
 
+static inline size_t sbp_packed_size_sbp_msg_print_dep_t(const sbp_msg_print_dep_t *msg) {                                
+	(void)msg;
+  return                                                          
+	0                                                                          
+	  +
+      sbp_strlen( msg->text, "none" );
+}
 
-/** \} */
+static inline bool sbp_pack_sbp_msg_print_dep_t(u8 *buf, size_t len, const sbp_msg_print_dep_t *msg) {
+  size_t offset = 0;
+	(void)offset;
+	(void)buf;
+	(void)len;
+	(void)msg;
+  if ( sbp_packed_size_sbp_msg_print_dep_t(msg) > len) { return false; }
+  
+      if (offset + sbp_strlen( msg->text, "none") > len) { return false; }
+      offset += sbp_pack_string( buf + offset, msg->text, "none");
+  return true;
+}
 
-SBP_PACK_END
+static inline bool sbp_unpack_sbp_msg_print_dep_t(const u8 *buf, size_t len, sbp_msg_print_dep_t *msg) {
+  size_t offset = 0;
+	(void)offset;
+	(void)buf;
+	(void)len;
+	(void)msg;
+  
+    offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->text, "none");
+  return true;
+}
+
 
 #endif /* LIBSBP_LOGGING_MESSAGES_H */

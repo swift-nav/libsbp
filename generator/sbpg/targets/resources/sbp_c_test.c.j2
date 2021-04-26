@@ -15,8 +15,8 @@
 #include <check.h>
 #include <stdio.h> // for debugging
 #include <stdlib.h> // for malloc
-#include <sbp.h>
-#include <(((include))).h>
+#include <libsbp/sbp.h>
+#include <libsbp/packed/(((include))).h>
 
 static struct {
   u32 n_callbacks_logged;
@@ -175,7 +175,7 @@ START_TEST( test_(((s.suite_name))) )
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
     ((*- if t.fields *))
-    (((t.msg_type_name|convert)))* test_msg = ( (((t.msg_type_name|convert)))* )test_msg_storage;
+    (((t.msg_type_name|convert_packed)))* test_msg = ( (((t.msg_type_name|convert_packed)))* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     ((*- for f in t.fieldskeys *))(((assign_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))
     ((*- endif *))
@@ -225,7 +225,7 @@ START_TEST( test_(((s.suite_name))) )
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     ((*- if t.fields *))
-    (((t.msg_type_name|convert)))* check_msg = ( (((t.msg_type_name|convert))) *)((void *)last_msg.msg);
+    (((t.msg_type_name|convert_packed)))* check_msg = ( (((t.msg_type_name|convert_packed))) *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ((*- for f in t.fieldskeys *))(((compare_value( (((f))), (((t.fields[f]))) ))))((*- endfor *))

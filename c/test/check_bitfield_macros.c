@@ -12,8 +12,10 @@
 
 #include <stdio.h>
 #include <check.h>
-#include <navigation.h>
-#include <imu.h>
+#include <libsbp/packed/imu.h>
+#include <libsbp/packed/navigation.h>
+#include <libsbp/packed/system.h>
+#include <stdio.h>
 #include <system.h>
 
 

@@ -14,6 +14,7 @@
 #define SBP_CPP_STATE_H
 
 #include <libsbp/sbp.h>
+#include <libsbp/sbp_msg.h>
 
 namespace sbp {
 
@@ -74,9 +75,8 @@ class State {
     return sbp_process(&state_, &read_func);
   }
 
-  s8 send_message(u16 msg_type, u16 sender_id, u8 length, const u8 payload[]) {
-    // NOLINTNEXTLINE
-    return sbp_send_message(&state_, msg_type, sender_id, length, const_cast<u8 *>(payload), &write_func);
+  s8 send_message(u16 sender_id, const sbp_msg_t &msg) {
+    return sbp_pack_and_send_message(&state_, sender_id, &msg, &write_func);
   }
 
   s8 process_payload(u16 sender_id, u16 msg_type, u8 msg_length, const u8 payload[]) {
