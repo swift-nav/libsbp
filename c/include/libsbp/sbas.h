@@ -34,13 +34,29 @@ SBP_PACK_START
  * This message is sent once per second per SBAS satellite. ME checks the
  * parity of the data block and sends only blocks that pass the check.
  */
-#define SBP_MSG_SBAS_RAW 0x7777
-
 typedef struct SBP_ATTR_PACKED {
-  sbp_gnss_signal_t sid;             /**< GNSS signal identifier. */
-  u32 tow;             /**< GPS time-of-week at the start of the data block. [ms] */
-  u8 message_type;    /**< SBAS message type (0-63) */
-  u8 data[27];        /**< Raw SBAS data field of 212 bits (last byte padded with zeros). */
+#define SBP_MSG_SBAS_RAW 0x7777
+  
+  /** 
+   * GNSS signal identifier. 
+   */
+  sbp_gnss_signal_t sid;            
+  
+  /** 
+   * GPS time-of-week at the start of the data block. [ms] 
+   */
+  u32 tow;            
+  
+  /** 
+   * SBAS message type (0-63) 
+   */
+  u8 message_type;   
+  
+  /** 
+   * Raw SBAS data field of 212 bits (last byte padded with zeros). 
+   */
+  u8 data[27];       
+  
 } msg_sbas_raw_t;
 
 

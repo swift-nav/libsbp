@@ -28,14 +28,6 @@
 SBP_PACK_START
 
 
-/** System start-up message
- *
- * The system start-up message is sent once on system
- * start-up. It notifies the host or other attached devices that
- * the system has started and is now ready to respond to commands
- * or configuration requests.
- */
-#define SBP_MSG_STARTUP               0xFF00
 #define SBP_STARTUP_CAUSE_OF_STARTUP_MASK (0x1ff)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_SHIFT (0u)
 #define SBP_STARTUP_CAUSE_OF_STARTUP_GET(flags) \
@@ -64,21 +56,34 @@ SBP_PACK_START
 #define SBP_STARTUP__COLD_START (0)
 #define SBP_STARTUP__WARM_START (1)
 #define SBP_STARTUP__HOT_START (2)
-
+/** System start-up message
+ *
+ * The system start-up message is sent once on system
+ * start-up. It notifies the host or other attached devices that
+ * the system has started and is now ready to respond to commands
+ * or configuration requests.
+ */
 typedef struct SBP_ATTR_PACKED {
-  u8 cause;           /**< Cause of startup */
-  u8 startup_type;    /**< Startup type */
-  u16 reserved;        /**< Reserved */
+#define SBP_MSG_STARTUP               0xFF00
+  
+  /** 
+   * Cause of startup 
+   */
+  u8 cause;          
+  
+  /** 
+   * Startup type 
+   */
+  u8 startup_type;   
+  
+  /** 
+   * Reserved 
+   */
+  u16 reserved;       
+  
 } msg_startup_t;
 
 
-/** Status of received corrections
- *
- * This message provides information about the receipt of Differential
- * corrections.  It is expected to be sent with each receipt of a complete
- * corrections packet.
- */
-#define SBP_MSG_DGNSS_STATUS          0xFF02
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_MASK (0xf)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_SHIFT (0u)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_GET(flags) \
@@ -93,29 +98,38 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_INVALID (0)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_CODE_DIFFERENCE (1)
 #define SBP_DGNSS_STATUS_DIFFERENTIAL_TYPE_RTK (2)
-
+/** Status of received corrections
+ *
+ * This message provides information about the receipt of Differential
+ * corrections.  It is expected to be sent with each receipt of a complete
+ * corrections packet.
+ */
 typedef struct SBP_ATTR_PACKED {
-  u8 flags;          /**< Status flags */
-  u16 latency;        /**< Latency of observation receipt [deci-seconds] */
-  u8 num_signals;    /**< Number of signals from base station */
-  char source[0];      /**< Corrections source string */
+#define SBP_MSG_DGNSS_STATUS          0xFF02
+  
+  /** 
+   * Status flags 
+   */
+  u8 flags;         
+  
+  /** 
+   * Latency of observation receipt [deci-seconds] 
+   */
+  u16 latency;       
+  
+  /** 
+   * Number of signals from base station 
+   */
+  u8 num_signals;   
+  
+  /** 
+   * Corrections source string 
+   */
+  char source[0];     
+  
 } msg_dgnss_status_t;
 
 
-/** System heartbeat message
- *
- * The heartbeat message is sent periodically to inform the host
- * or other attached devices that the system is running. It is
- * used to monitor system malfunctions. It also contains status
- * flags that indicate to the host the status of the system and
- * whether it is operating correctly. Currently, the expected
- * heartbeat interval is 1 sec.
- * 
- * The system error flag is used to indicate that an error has
- * occurred in the system. To determine the source of the error,
- * the remaining error flags should be inspected.
- */
-#define SBP_MSG_HEARTBEAT             0xFFFF
 #define SBP_HEARTBEAT_EXTERNAL_ANTENNA_PRESENT_MASK (0x1)
 #define SBP_HEARTBEAT_EXTERNAL_ANTENNA_PRESENT_SHIFT (31u)
 #define SBP_HEARTBEAT_EXTERNAL_ANTENNA_PRESENT_GET(flags) \
@@ -203,17 +217,30 @@ typedef struct SBP_ATTR_PACKED {
 
 #define SBP_HEARTBEAT_SYSTEM_ERROR_FLAG_SYSTEM_HEALTHY (0)
 #define SBP_HEARTBEAT_SYSTEM_ERROR_FLAG_AN_ERROR_HAS_OCCURRED (1)
-
+/** System heartbeat message
+ *
+ * The heartbeat message is sent periodically to inform the host
+ * or other attached devices that the system is running. It is
+ * used to monitor system malfunctions. It also contains status
+ * flags that indicate to the host the status of the system and
+ * whether it is operating correctly. Currently, the expected
+ * heartbeat interval is 1 sec.
+ * 
+ * The system error flag is used to indicate that an error has
+ * occurred in the system. To determine the source of the error,
+ * the remaining error flags should be inspected.
+ */
 typedef struct SBP_ATTR_PACKED {
-  u32 flags;    /**< Status flags */
+#define SBP_MSG_HEARTBEAT             0xFFFF
+  
+  /** 
+   * Status flags 
+   */
+  u32 flags;   
+  
 } msg_heartbeat_t;
 
 
-/** Sub-system Status report
- *
- * Report the general and specific state of a sub-system.  If the generic
- * state is reported as initializing, the specific state should be ignored.
- */
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_MASK (0xffff)
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_SHIFT (0u)
 #define SBP_SUBSYSTEMREPORT_SUBSYSTEM_GET(flags) \
@@ -248,27 +275,31 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_SUBSYSTEMREPORT_GENERIC_UNKNOWN (2)
 #define SBP_SUBSYSTEMREPORT_GENERIC_DEGRADED (3)
 #define SBP_SUBSYSTEMREPORT_GENERIC_UNUSABLE (4)
-
+/** Sub-system Status report
+ *
+ * Report the general and specific state of a sub-system.  If the generic
+ * state is reported as initializing, the specific state should be ignored.
+ */
 typedef struct SBP_ATTR_PACKED {
-  u16 component;    /**< Identity of reporting subsystem */
-  u8 generic;      /**< Generic form status report */
-  u8 specific;     /**< Subsystem specific status code */
+  
+  /** 
+   * Identity of reporting subsystem 
+   */
+  u16 component;   
+  
+  /** 
+   * Generic form status report 
+   */
+  u8 generic;     
+  
+  /** 
+   * Subsystem specific status code 
+   */
+  u8 specific;    
+  
 } sub_system_report_t;
 
 
-/** Status report message
- *
- * The status report is sent periodically to inform the host
- * or other attached devices that the system is running. It is
- * used to monitor system malfunctions. It contains status
- * reports that indicate to the host the status of each sub-system and
- * whether it is operating correctly.
- * 
- * Interpretation of the subsystem specific status code is product
- * dependent, but if the generic status code is initializing, it should
- * be ignored.  Refer to product documentation for details.
- */
-#define SBP_MSG_STATUS_REPORT         0xFFFE
 #define SBP_STATUS_REPORT_SYSTEM_MASK (0xffff)
 #define SBP_STATUS_REPORT_SYSTEM_SHIFT (0u)
 #define SBP_STATUS_REPORT_SYSTEM_GET(flags) \
@@ -304,22 +335,49 @@ typedef struct SBP_ATTR_PACKED {
                              << (SBP_STATUS_REPORT_SBP_MINOR_PROTOCOL_VERSION_NUMBER_SHIFT)));} while(0)
                              
 
-
+/** Status report message
+ *
+ * The status report is sent periodically to inform the host
+ * or other attached devices that the system is running. It is
+ * used to monitor system malfunctions. It contains status
+ * reports that indicate to the host the status of each sub-system and
+ * whether it is operating correctly.
+ * 
+ * Interpretation of the subsystem specific status code is product
+ * dependent, but if the generic status code is initializing, it should
+ * be ignored.  Refer to product documentation for details.
+ */
 typedef struct SBP_ATTR_PACKED {
-  u16 reporting_system;    /**< Identity of reporting system */
-  u16 sbp_version;         /**< SBP protocol version */
-  u32 sequence;            /**< Increments on each status report sent */
-  u32 uptime;              /**< Number of seconds since system start-up */
-  sub_system_report_t status[0];           /**< Reported status of individual subsystems */
+#define SBP_MSG_STATUS_REPORT         0xFFFE
+  
+  /** 
+   * Identity of reporting system 
+   */
+  u16 reporting_system;   
+  
+  /** 
+   * SBP protocol version 
+   */
+  u16 sbp_version;        
+  
+  /** 
+   * Increments on each status report sent 
+   */
+  u32 sequence;           
+  
+  /** 
+   * Number of seconds since system start-up 
+   */
+  u32 uptime;             
+  
+  /** 
+   * Reported status of individual subsystems 
+   */
+  sub_system_report_t status[0];          
+  
 } msg_status_report_t;
 
 
-/** Inertial Navigation System status message
- *
- * The INS status message describes the state of the operation
- * and initialization of the inertial navigation system. 
- */
-#define SBP_MSG_INS_STATUS            0xFF03
 #define SBP_INS_STATUS_INS_TYPE_MASK (0x7)
 #define SBP_INS_STATUS_INS_TYPE_SHIFT (29u)
 #define SBP_INS_STATUS_INS_TYPE_GET(flags) \
@@ -420,9 +478,19 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_INS_STATUS_MODE_FASTSTART_SEEDING (4)
 #define SBP_INS_STATUS_MODE_FASTSTART_VALIDATING (5)
 #define SBP_INS_STATUS_MODE_VALIDATING_UNSAFE_FAST_START_SEED (6)
-
+/** Inertial Navigation System status message
+ *
+ * The INS status message describes the state of the operation
+ * and initialization of the inertial navigation system. 
+ */
 typedef struct SBP_ATTR_PACKED {
-  u32 flags;    /**< Status flags */
+#define SBP_MSG_INS_STATUS            0xFF03
+  
+  /** 
+   * Status flags 
+   */
+  u32 flags;   
+  
 } msg_ins_status_t;
 
 
@@ -432,11 +500,19 @@ typedef struct SBP_ATTR_PACKED {
  * from a device. It is not produced or available on general Swift Products.
  * It is intended to be a low rate message for status purposes.
  */
-#define SBP_MSG_CSAC_TELEMETRY        0xFF04
-
 typedef struct SBP_ATTR_PACKED {
-  u8 id;           /**< Index representing the type of telemetry in use.  It is implemention defined. */
-  char telemetry[0]; /**< Comma separated list of values as defined by the index */
+#define SBP_MSG_CSAC_TELEMETRY        0xFF04
+  
+  /** 
+   * Index representing the type of telemetry in use.  It is implemention defined. 
+   */
+  u8 id;          
+  
+  /** 
+   * Comma separated list of values as defined by the index 
+   */
+  char telemetry[0];
+  
 } msg_csac_telemetry_t;
 
 
@@ -446,20 +522,22 @@ typedef struct SBP_ATTR_PACKED {
  * produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
  * rate than the MSG_CSAC_TELEMETRY.
  */
-#define SBP_MSG_CSAC_TELEMETRY_LABELS 0xFF05
-
 typedef struct SBP_ATTR_PACKED {
-  u8 id;                  /**< Index representing the type of telemetry in use.  It is implemention defined. */
-  char telemetry_labels[0]; /**< Comma separated list of telemetry field values */
+#define SBP_MSG_CSAC_TELEMETRY_LABELS 0xFF05
+  
+  /** 
+   * Index representing the type of telemetry in use.  It is implemention defined. 
+   */
+  u8 id;                 
+  
+  /** 
+   * Comma separated list of telemetry field values 
+   */
+  char telemetry_labels[0];
+  
 } msg_csac_telemetry_labels_t;
 
 
-/** Inertial Navigation System update status message
- *
- * The INS update status message contains informations about executed and rejected INS updates.
- * This message is expected to be extended in the future as new types of measurements are being added.
- */
-#define SBP_MSG_INS_UPDATES           0xFF06
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_POSITION_UPDATES_SINCE_LAST_MESSAGE_MASK (0xf)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_POSITION_UPDATES_SINCE_LAST_MESSAGE_SHIFT (4u)
 #define SBP_INS_UPDATES_NUMBER_OF_ATTEMPTED_GNSS_POSITION_UPDATES_SINCE_LAST_MESSAGE_GET(flags) \
@@ -592,15 +670,49 @@ typedef struct SBP_ATTR_PACKED {
                              << (SBP_INS_UPDATES_NUMBER_OF_REJECTED_ZERO_VELOCITY_UPDATES_SINCE_LAST_MESSAGE_SHIFT)));} while(0)
                              
 
-
+/** Inertial Navigation System update status message
+ *
+ * The INS update status message contains informations about executed and rejected INS updates.
+ * This message is expected to be extended in the future as new types of measurements are being added.
+ */
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;           /**< GPS Time of Week [ms] */
-  u8 gnsspos;       /**< GNSS position update status flags */
-  u8 gnssvel;       /**< GNSS velocity update status flags */
-  u8 wheelticks;    /**< Wheelticks update status flags */
-  u8 speed;         /**< Wheelticks update status flags */
-  u8 nhc;           /**< NHC update status flags */
-  u8 zerovel;       /**< Zero velocity update status flags */
+#define SBP_MSG_INS_UPDATES           0xFF06
+  
+  /** 
+   * GPS Time of Week [ms] 
+   */
+  u32 tow;          
+  
+  /** 
+   * GNSS position update status flags 
+   */
+  u8 gnsspos;      
+  
+  /** 
+   * GNSS velocity update status flags 
+   */
+  u8 gnssvel;      
+  
+  /** 
+   * Wheelticks update status flags 
+   */
+  u8 wheelticks;   
+  
+  /** 
+   * Wheelticks update status flags 
+   */
+  u8 speed;        
+  
+  /** 
+   * NHC update status flags 
+   */
+  u8 nhc;          
+  
+  /** 
+   * Zero velocity update status flags 
+   */
+  u8 zerovel;      
+  
 } msg_ins_updates_t;
 
 
@@ -610,22 +722,32 @@ typedef struct SBP_ATTR_PACKED {
  * tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the sender
  * producing this message.
  */
-#define SBP_MSG_GNSS_TIME_OFFSET      0xFF07
-
 typedef struct SBP_ATTR_PACKED {
-  s16 weeks;           /**< Weeks portion of the time offset [weeks] */
-  s32 milliseconds;    /**< Milliseconds portion of the time offset [ms] */
-  s16 microseconds;    /**< Microseconds portion of the time offset [microseconds] */
-  u8 flags;           /**< Status flags (reserved) */
+#define SBP_MSG_GNSS_TIME_OFFSET      0xFF07
+  
+  /** 
+   * Weeks portion of the time offset [weeks] 
+   */
+  s16 weeks;          
+  
+  /** 
+   * Milliseconds portion of the time offset [ms] 
+   */
+  s32 milliseconds;   
+  
+  /** 
+   * Microseconds portion of the time offset [microseconds] 
+   */
+  s16 microseconds;   
+  
+  /** 
+   * Status flags (reserved) 
+   */
+  u8 flags;          
+  
 } msg_gnss_time_offset_t;
 
 
-/** Solution Group Metadata
- *
- * This leading message lists the time metadata of the Solution Group.
- * It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
- */
-#define SBP_MSG_GROUP_META            0xFF0A
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_MASK (0x3)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_SHIFT (0u)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_GET(flags) \
@@ -640,14 +762,35 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_NONE (0)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_GNSS_ONLY (1)
 #define SBP_GROUP_META_SOLUTION_GROUP_TYPE_GNSSINS (2)
-
-typedef struct SBP_ATTR_PACKED {
-  u8 group_id;        /**< Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss */
-  u8 flags;           /**< Status flags (reserved) */
-  u8 n_group_msgs;    /**< Size of list group_msgs */
-  u16 group_msgs[0];   /**< An inorder list of message types included in the Solution Group,
-including GROUP_META itself
+/** Solution Group Metadata
+ *
+ * This leading message lists the time metadata of the Solution Group.
+ * It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
  */
+typedef struct SBP_ATTR_PACKED {
+#define SBP_MSG_GROUP_META            0xFF0A
+  
+  /** 
+   * Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss 
+   */
+  u8 group_id;       
+  
+  /** 
+   * Status flags (reserved) 
+   */
+  u8 flags;          
+  
+  /** 
+   * Size of list group_msgs 
+   */
+  u8 n_group_msgs;   
+  
+  /** 
+    * An inorder list of message types included in the Solution Group,
+ * including GROUP_META itself 
+   */
+  u16 group_msgs[0];  
+  
 } msg_group_meta_t;
 
 

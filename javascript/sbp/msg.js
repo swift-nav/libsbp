@@ -105,6 +105,7 @@ var sbpImports = {
   sbas: require('./sbas.js'),
   settings: require('./settings.js'),
   signal: require('./signal.js'),
+  solution_meta: require('./solution_meta.js'),
   ssr: require('./ssr.js'),
   system: require('./system.js'),
   tracking: require('./tracking.js'),

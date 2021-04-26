@@ -28,13 +28,6 @@
 SBP_PACK_START
 
 
-/** Plaintext logging messages with levels
- *
- * This message contains a human-readable payload string from the
- * device containing errors, warnings and informational messages at
- * ERROR, WARNING, DEBUG, INFO logging levels.
- */
-#define SBP_MSG_LOG       0x0401
 #define SBP_LOG_LOGGING_LEVEL_MASK (0x7)
 #define SBP_LOG_LOGGING_LEVEL_SHIFT (0u)
 #define SBP_LOG_LOGGING_LEVEL_GET(flags) \
@@ -54,10 +47,25 @@ SBP_PACK_START
 #define SBP_LOG_LOGGING_LEVEL_NOTICE (5)
 #define SBP_LOG_LOGGING_LEVEL_INFO (6)
 #define SBP_LOG_LOGGING_LEVEL_DEBUG (7)
-
+/** Plaintext logging messages with levels
+ *
+ * This message contains a human-readable payload string from the
+ * device containing errors, warnings and informational messages at
+ * ERROR, WARNING, DEBUG, INFO logging levels.
+ */
 typedef struct SBP_ATTR_PACKED {
-  u8 level;    /**< Logging level */
-  char text[0];  /**< Human-readable string */
+#define SBP_MSG_LOG       0x0401
+  
+  /** 
+   * Logging level 
+   */
+  u8 level;   
+  
+  /** 
+   * Human-readable string 
+   */
+  char text[0]; 
+  
 } msg_log_t;
 
 
@@ -71,12 +79,24 @@ typedef struct SBP_ATTR_PACKED {
  * The protocol identifier identifies what the expected protocol the forwarded msg contains.
  * Protocol 0 represents SBP and the remaining values are implementation defined.
  */
-#define SBP_MSG_FWD       0x0402
-
 typedef struct SBP_ATTR_PACKED {
-  u8 source;         /**< source identifier */
-  u8 protocol;       /**< protocol identifier */
-  char fwd_payload[0]; /**< variable length wrapped binary message */
+#define SBP_MSG_FWD       0x0402
+  
+  /** 
+   * source identifier 
+   */
+  u8 source;        
+  
+  /** 
+   * protocol identifier 
+   */
+  u8 protocol;      
+  
+  /** 
+   * variable length wrapped binary message 
+   */
+  char fwd_payload[0];
+  
 } msg_fwd_t;
 
 
@@ -84,10 +104,14 @@ typedef struct SBP_ATTR_PACKED {
  *
 * Deprecated.
  */
-#define SBP_MSG_PRINT_DEP 0x0010
-
 typedef struct SBP_ATTR_PACKED {
-  char text[0]; /**< Human-readable string */
+#define SBP_MSG_PRINT_DEP 0x0010
+  
+  /** 
+   * Human-readable string 
+   */
+  char text[0];
+  
 } msg_print_dep_t;
 
 
