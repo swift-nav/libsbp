@@ -15,6 +15,7 @@
 // generate.py. Do not modify by hand!
 
 #include <check.h>
+#include <libsbp/navigation.h>
 #include <libsbp/packed/navigation.h>
 #include <libsbp/sbp.h>
 #include <stdio.h>   // for debugging
@@ -38,6 +39,13 @@ static struct {
   u8 frame[SBP_MAX_FRAME_LEN];
   void *context;
 } last_frame;
+
+static struct {
+  u32 n_callbacks_logged;
+  u16 sender_id;
+  sbp_msg_t msg;
+  void *context;
+} last_unpacked;
 
 static u32 dummy_wr = 0;
 static u32 dummy_rd = 0;
@@ -71,6 +79,7 @@ static s32 dummy_read(u8 *buff, u32 n, void *context) {
 static void logging_reset() {
   memset(&last_msg, 0, sizeof(last_msg));
   memset(&last_frame, 0, sizeof(last_frame));
+  memset(&last_unpacked, 0, sizeof(last_unpacked));
 }
 
 static void msg_callback(u16 sender_id, u8 len, u8 msg[], void *context) {
@@ -93,9 +102,18 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[],
   last_frame.context = context;
 }
 
+static void unpacked_callback(u16 sender_id, const sbp_msg_t *msg,
+                              void *context) {
+  last_unpacked.n_callbacks_logged++;
+  last_unpacked.sender_id = sender_id;
+  last_unpacked.msg = *msg;
+  last_unpacked.context = context;
+}
+
 START_TEST(test_auto_check_sbp_navigation_28) {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
+  static sbp_msg_callbacks_node_t n3;
 
   // State of the SBP message parser.
   // Must be statically allocated.
@@ -120,6 +138,8 @@ START_TEST(test_auto_check_sbp_navigation_28) {
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x201, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_unpacked_callback(&sbp_state, 0x201, &unpacked_callback,
+                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n3);
 
     u8 encoded_frame[] = {
         85,  1,   2,   246, 215, 34,  20, 46,  39, 0,   250, 29,  226, 186,
@@ -132,16 +152,27 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.type = SBP_MSG_POS_LLH_DEP_A;
     msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 0;
     test_msg->h_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
     test_msg->height = 69.80437675175607;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 69.80437675175607;
     test_msg->lat = 37.42906890908121;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.42906890908121;
     test_msg->lon = -122.17338662202773;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.17338662202773;
     test_msg->n_sats = 9;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 9;
     test_msg->tow = 2567700;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 2567700;
     test_msg->v_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
     sbp_send_message(&sbp_state, 0x201, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -195,32 +226,202 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     // starts
     msg_pos_llh_dep_a_t *check_msg =
         (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0,
                   "incorrect value for flags, expected 0, is %d",
                   check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
     ck_assert_msg(check_msg->h_accuracy == 0,
                   "incorrect value for h_accuracy, expected 0, is %d",
                   check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
     ck_assert_msg((check_msg->height * 100 - 69.8043767518 * 100) < 0.05,
                   "incorrect value for height, expected 69.8043767518, is %f",
                   check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         69.8043767518 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 69.8043767518, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
     ck_assert_msg((check_msg->lat * 100 - 37.4290689091 * 100) < 0.05,
                   "incorrect value for lat, expected 37.4290689091, is %f",
                   check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.4290689091 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.4290689091, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
     ck_assert_msg((check_msg->lon * 100 - -122.173386622 * 100) < 0.05,
                   "incorrect value for lon, expected -122.173386622, is %f",
                   check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.173386622 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.173386622, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
     ck_assert_msg(check_msg->n_sats == 9,
                   "incorrect value for n_sats, expected 9, is %d",
                   check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 9,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 9, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
     ck_assert_msg(check_msg->tow == 2567700,
                   "incorrect value for tow, expected 2567700, is %d",
                   check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 2567700,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 2567700, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
     ck_assert_msg(check_msg->v_accuracy == 0,
                   "incorrect value for v_accuracy, expected 0, is %d",
                   check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+
+    dummy_reset();
+    logging_reset();
+
+    sbp_pack_and_send_message(&sbp_state, 55286, &test_unpacked_msg,
+                              &dummy_write);
+
+    ck_assert_msg(
+        test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame "
+        "from the spec is badly defined. Check your test spec");
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+                  "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+                  "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+                    "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_msg.n_callbacks_logged == 1,
+                  "msg_callback: one callback should have been logged");
+    ck_assert_msg(last_msg.sender_id == 55286,
+                  "msg_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
+                  "msg_callback: len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
+        "msg_callback: test data decoded incorrectly");
+    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "frame_callback: one callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 55286,
+                  "frame_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.msg_type == 0x201,
+                  "frame_callback: msg_type decoded incorrectly");
+    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
+                  "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6,
+                         sizeof(encoded_frame) - 8) == 0,
+                  "frame_callback: test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
+                  "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame_callback: frame decoded incorrectly");
+    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    // Cast to expected message type - the +6 byte offset is where the payload
+    // starts
+    check_msg = (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->flags == 0,
+                  "incorrect value for flags, expected 0, is %d",
+                  check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
+    ck_assert_msg(check_msg->h_accuracy == 0,
+                  "incorrect value for h_accuracy, expected 0, is %d",
+                  check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
+    ck_assert_msg((check_msg->height * 100 - 69.8043767518 * 100) < 0.05,
+                  "incorrect value for height, expected 69.8043767518, is %f",
+                  check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         69.8043767518 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 69.8043767518, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
+    ck_assert_msg((check_msg->lat * 100 - 37.4290689091 * 100) < 0.05,
+                  "incorrect value for lat, expected 37.4290689091, is %f",
+                  check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.4290689091 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.4290689091, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
+    ck_assert_msg((check_msg->lon * 100 - -122.173386622 * 100) < 0.05,
+                  "incorrect value for lon, expected -122.173386622, is %f",
+                  check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.173386622 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.173386622, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
+    ck_assert_msg(check_msg->n_sats == 9,
+                  "incorrect value for n_sats, expected 9, is %d",
+                  check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 9,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 9, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
+    ck_assert_msg(check_msg->tow == 2567700,
+                  "incorrect value for tow, expected 2567700, is %d",
+                  check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 2567700,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 2567700, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
+    ck_assert_msg(check_msg->v_accuracy == 0,
+                  "incorrect value for v_accuracy, expected 0, is %d",
+                  check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -238,6 +439,8 @@ START_TEST(test_auto_check_sbp_navigation_28) {
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x201, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_unpacked_callback(&sbp_state, 0x201, &unpacked_callback,
+                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n3);
 
     u8 encoded_frame[] = {
         85,  1,   2,  246, 215, 34, 20,  46, 39, 0,   161, 51,  75,  148,
@@ -250,16 +453,27 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.type = SBP_MSG_POS_LLH_DEP_A;
     msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 1;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 1;
     test_msg->h_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
     test_msg->height = 69.68814067715354;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 69.68814067715354;
     test_msg->lat = 37.42906430885274;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.42906430885274;
     test_msg->lon = -122.17340826071865;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.17340826071865;
     test_msg->n_sats = 9;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 9;
     test_msg->tow = 2567700;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 2567700;
     test_msg->v_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
     sbp_send_message(&sbp_state, 0x201, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -313,32 +527,202 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     // starts
     msg_pos_llh_dep_a_t *check_msg =
         (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 1,
                   "incorrect value for flags, expected 1, is %d",
                   check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 1,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 1, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
     ck_assert_msg(check_msg->h_accuracy == 0,
                   "incorrect value for h_accuracy, expected 0, is %d",
                   check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
     ck_assert_msg((check_msg->height * 100 - 69.6881406772 * 100) < 0.05,
                   "incorrect value for height, expected 69.6881406772, is %f",
                   check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         69.6881406772 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 69.6881406772, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
     ck_assert_msg((check_msg->lat * 100 - 37.4290643089 * 100) < 0.05,
                   "incorrect value for lat, expected 37.4290643089, is %f",
                   check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.4290643089 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.4290643089, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
     ck_assert_msg((check_msg->lon * 100 - -122.173408261 * 100) < 0.05,
                   "incorrect value for lon, expected -122.173408261, is %f",
                   check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.173408261 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.173408261, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
     ck_assert_msg(check_msg->n_sats == 9,
                   "incorrect value for n_sats, expected 9, is %d",
                   check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 9,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 9, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
     ck_assert_msg(check_msg->tow == 2567700,
                   "incorrect value for tow, expected 2567700, is %d",
                   check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 2567700,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 2567700, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
     ck_assert_msg(check_msg->v_accuracy == 0,
                   "incorrect value for v_accuracy, expected 0, is %d",
                   check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+
+    dummy_reset();
+    logging_reset();
+
+    sbp_pack_and_send_message(&sbp_state, 55286, &test_unpacked_msg,
+                              &dummy_write);
+
+    ck_assert_msg(
+        test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame "
+        "from the spec is badly defined. Check your test spec");
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+                  "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+                  "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+                    "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_msg.n_callbacks_logged == 1,
+                  "msg_callback: one callback should have been logged");
+    ck_assert_msg(last_msg.sender_id == 55286,
+                  "msg_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
+                  "msg_callback: len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
+        "msg_callback: test data decoded incorrectly");
+    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "frame_callback: one callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 55286,
+                  "frame_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.msg_type == 0x201,
+                  "frame_callback: msg_type decoded incorrectly");
+    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
+                  "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6,
+                         sizeof(encoded_frame) - 8) == 0,
+                  "frame_callback: test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
+                  "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame_callback: frame decoded incorrectly");
+    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    // Cast to expected message type - the +6 byte offset is where the payload
+    // starts
+    check_msg = (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->flags == 1,
+                  "incorrect value for flags, expected 1, is %d",
+                  check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 1,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 1, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
+    ck_assert_msg(check_msg->h_accuracy == 0,
+                  "incorrect value for h_accuracy, expected 0, is %d",
+                  check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
+    ck_assert_msg((check_msg->height * 100 - 69.6881406772 * 100) < 0.05,
+                  "incorrect value for height, expected 69.6881406772, is %f",
+                  check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         69.6881406772 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 69.6881406772, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
+    ck_assert_msg((check_msg->lat * 100 - 37.4290643089 * 100) < 0.05,
+                  "incorrect value for lat, expected 37.4290643089, is %f",
+                  check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.4290643089 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.4290643089, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
+    ck_assert_msg((check_msg->lon * 100 - -122.173408261 * 100) < 0.05,
+                  "incorrect value for lon, expected -122.173408261, is %f",
+                  check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.173408261 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.173408261, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
+    ck_assert_msg(check_msg->n_sats == 9,
+                  "incorrect value for n_sats, expected 9, is %d",
+                  check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 9,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 9, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
+    ck_assert_msg(check_msg->tow == 2567700,
+                  "incorrect value for tow, expected 2567700, is %d",
+                  check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 2567700,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 2567700, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
+    ck_assert_msg(check_msg->v_accuracy == 0,
+                  "incorrect value for v_accuracy, expected 0, is %d",
+                  check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -356,6 +740,8 @@ START_TEST(test_auto_check_sbp_navigation_28) {
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x201, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_unpacked_callback(&sbp_state, 0x201, &unpacked_callback,
+                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n3);
 
     u8 encoded_frame[] = {
         85,  1,   2,   246, 215, 34, 120, 46, 39, 0,   56, 214, 210, 65,
@@ -368,16 +754,27 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.type = SBP_MSG_POS_LLH_DEP_A;
     msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 0;
     test_msg->h_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
     test_msg->height = 69.49608854815264;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 69.49608854815264;
     test_msg->lat = 37.42905447764173;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.42905447764173;
     test_msg->lon = -122.17342007549469;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.17342007549469;
     test_msg->n_sats = 9;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 9;
     test_msg->tow = 2567800;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 2567800;
     test_msg->v_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
     sbp_send_message(&sbp_state, 0x201, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -431,32 +828,202 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     // starts
     msg_pos_llh_dep_a_t *check_msg =
         (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0,
                   "incorrect value for flags, expected 0, is %d",
                   check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
     ck_assert_msg(check_msg->h_accuracy == 0,
                   "incorrect value for h_accuracy, expected 0, is %d",
                   check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
     ck_assert_msg((check_msg->height * 100 - 69.4960885482 * 100) < 0.05,
                   "incorrect value for height, expected 69.4960885482, is %f",
                   check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         69.4960885482 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 69.4960885482, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
     ck_assert_msg((check_msg->lat * 100 - 37.4290544776 * 100) < 0.05,
                   "incorrect value for lat, expected 37.4290544776, is %f",
                   check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.4290544776 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.4290544776, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
     ck_assert_msg((check_msg->lon * 100 - -122.173420075 * 100) < 0.05,
                   "incorrect value for lon, expected -122.173420075, is %f",
                   check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.173420075 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.173420075, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
     ck_assert_msg(check_msg->n_sats == 9,
                   "incorrect value for n_sats, expected 9, is %d",
                   check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 9,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 9, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
     ck_assert_msg(check_msg->tow == 2567800,
                   "incorrect value for tow, expected 2567800, is %d",
                   check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 2567800,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 2567800, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
     ck_assert_msg(check_msg->v_accuracy == 0,
                   "incorrect value for v_accuracy, expected 0, is %d",
                   check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+
+    dummy_reset();
+    logging_reset();
+
+    sbp_pack_and_send_message(&sbp_state, 55286, &test_unpacked_msg,
+                              &dummy_write);
+
+    ck_assert_msg(
+        test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame "
+        "from the spec is badly defined. Check your test spec");
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+                  "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+                  "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+                    "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_msg.n_callbacks_logged == 1,
+                  "msg_callback: one callback should have been logged");
+    ck_assert_msg(last_msg.sender_id == 55286,
+                  "msg_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
+                  "msg_callback: len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
+        "msg_callback: test data decoded incorrectly");
+    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "frame_callback: one callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 55286,
+                  "frame_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.msg_type == 0x201,
+                  "frame_callback: msg_type decoded incorrectly");
+    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
+                  "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6,
+                         sizeof(encoded_frame) - 8) == 0,
+                  "frame_callback: test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
+                  "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame_callback: frame decoded incorrectly");
+    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    // Cast to expected message type - the +6 byte offset is where the payload
+    // starts
+    check_msg = (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->flags == 0,
+                  "incorrect value for flags, expected 0, is %d",
+                  check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
+    ck_assert_msg(check_msg->h_accuracy == 0,
+                  "incorrect value for h_accuracy, expected 0, is %d",
+                  check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
+    ck_assert_msg((check_msg->height * 100 - 69.4960885482 * 100) < 0.05,
+                  "incorrect value for height, expected 69.4960885482, is %f",
+                  check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         69.4960885482 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 69.4960885482, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
+    ck_assert_msg((check_msg->lat * 100 - 37.4290544776 * 100) < 0.05,
+                  "incorrect value for lat, expected 37.4290544776, is %f",
+                  check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.4290544776 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.4290544776, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
+    ck_assert_msg((check_msg->lon * 100 - -122.173420075 * 100) < 0.05,
+                  "incorrect value for lon, expected -122.173420075, is %f",
+                  check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.173420075 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.173420075, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
+    ck_assert_msg(check_msg->n_sats == 9,
+                  "incorrect value for n_sats, expected 9, is %d",
+                  check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 9,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 9, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
+    ck_assert_msg(check_msg->tow == 2567800,
+                  "incorrect value for tow, expected 2567800, is %d",
+                  check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 2567800,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 2567800, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
+    ck_assert_msg(check_msg->v_accuracy == 0,
+                  "incorrect value for v_accuracy, expected 0, is %d",
+                  check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -474,6 +1041,8 @@ START_TEST(test_auto_check_sbp_navigation_28) {
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x201, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_unpacked_callback(&sbp_state, 0x201, &unpacked_callback,
+                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n3);
 
     u8 encoded_frame[] = {
         85,  1,   2,  246, 215, 34,  120, 46, 39, 0,   251, 117, 115, 140,
@@ -486,16 +1055,27 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.type = SBP_MSG_POS_LLH_DEP_A;
     msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 1;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 1;
     test_msg->h_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
     test_msg->height = 69.68780458819901;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 69.68780458819901;
     test_msg->lat = 37.429063373925565;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.429063373925565;
     test_msg->lon = -122.17340389594972;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.17340389594972;
     test_msg->n_sats = 9;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 9;
     test_msg->tow = 2567800;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 2567800;
     test_msg->v_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
     sbp_send_message(&sbp_state, 0x201, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -549,32 +1129,202 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     // starts
     msg_pos_llh_dep_a_t *check_msg =
         (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 1,
                   "incorrect value for flags, expected 1, is %d",
                   check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 1,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 1, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
     ck_assert_msg(check_msg->h_accuracy == 0,
                   "incorrect value for h_accuracy, expected 0, is %d",
                   check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
     ck_assert_msg((check_msg->height * 100 - 69.6878045882 * 100) < 0.05,
                   "incorrect value for height, expected 69.6878045882, is %f",
                   check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         69.6878045882 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 69.6878045882, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
     ck_assert_msg((check_msg->lat * 100 - 37.4290633739 * 100) < 0.05,
                   "incorrect value for lat, expected 37.4290633739, is %f",
                   check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.4290633739 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.4290633739, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
     ck_assert_msg((check_msg->lon * 100 - -122.173403896 * 100) < 0.05,
                   "incorrect value for lon, expected -122.173403896, is %f",
                   check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.173403896 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.173403896, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
     ck_assert_msg(check_msg->n_sats == 9,
                   "incorrect value for n_sats, expected 9, is %d",
                   check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 9,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 9, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
     ck_assert_msg(check_msg->tow == 2567800,
                   "incorrect value for tow, expected 2567800, is %d",
                   check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 2567800,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 2567800, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
     ck_assert_msg(check_msg->v_accuracy == 0,
                   "incorrect value for v_accuracy, expected 0, is %d",
                   check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+
+    dummy_reset();
+    logging_reset();
+
+    sbp_pack_and_send_message(&sbp_state, 55286, &test_unpacked_msg,
+                              &dummy_write);
+
+    ck_assert_msg(
+        test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame "
+        "from the spec is badly defined. Check your test spec");
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+                  "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+                  "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+                    "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_msg.n_callbacks_logged == 1,
+                  "msg_callback: one callback should have been logged");
+    ck_assert_msg(last_msg.sender_id == 55286,
+                  "msg_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
+                  "msg_callback: len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
+        "msg_callback: test data decoded incorrectly");
+    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "frame_callback: one callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 55286,
+                  "frame_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.msg_type == 0x201,
+                  "frame_callback: msg_type decoded incorrectly");
+    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
+                  "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6,
+                         sizeof(encoded_frame) - 8) == 0,
+                  "frame_callback: test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
+                  "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame_callback: frame decoded incorrectly");
+    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    // Cast to expected message type - the +6 byte offset is where the payload
+    // starts
+    check_msg = (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->flags == 1,
+                  "incorrect value for flags, expected 1, is %d",
+                  check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 1,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 1, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
+    ck_assert_msg(check_msg->h_accuracy == 0,
+                  "incorrect value for h_accuracy, expected 0, is %d",
+                  check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
+    ck_assert_msg((check_msg->height * 100 - 69.6878045882 * 100) < 0.05,
+                  "incorrect value for height, expected 69.6878045882, is %f",
+                  check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         69.6878045882 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 69.6878045882, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
+    ck_assert_msg((check_msg->lat * 100 - 37.4290633739 * 100) < 0.05,
+                  "incorrect value for lat, expected 37.4290633739, is %f",
+                  check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.4290633739 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.4290633739, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
+    ck_assert_msg((check_msg->lon * 100 - -122.173403896 * 100) < 0.05,
+                  "incorrect value for lon, expected -122.173403896, is %f",
+                  check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.173403896 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.173403896, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
+    ck_assert_msg(check_msg->n_sats == 9,
+                  "incorrect value for n_sats, expected 9, is %d",
+                  check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 9,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 9, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
+    ck_assert_msg(check_msg->tow == 2567800,
+                  "incorrect value for tow, expected 2567800, is %d",
+                  check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 2567800,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 2567800, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
+    ck_assert_msg(check_msg->v_accuracy == 0,
+                  "incorrect value for v_accuracy, expected 0, is %d",
+                  check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -592,6 +1342,8 @@ START_TEST(test_auto_check_sbp_navigation_28) {
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x201, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_unpacked_callback(&sbp_state, 0x201, &unpacked_callback,
+                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n3);
 
     u8 encoded_frame[] = {
         85,  1,   2,   246, 215, 34, 220, 46, 39, 0,   51, 124, 88,  251,
@@ -604,16 +1356,27 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.type = SBP_MSG_POS_LLH_DEP_A;
     msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 0;
     test_msg->h_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
     test_msg->height = 70.5249547317965;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 70.5249547317965;
     test_msg->lat = 37.42907659359516;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.42907659359516;
     test_msg->lon = -122.17340492645452;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.17340492645452;
     test_msg->n_sats = 9;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 9;
     test_msg->tow = 2567900;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 2567900;
     test_msg->v_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
     sbp_send_message(&sbp_state, 0x201, 55286, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -667,32 +1430,202 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     // starts
     msg_pos_llh_dep_a_t *check_msg =
         (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0,
                   "incorrect value for flags, expected 0, is %d",
                   check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
     ck_assert_msg(check_msg->h_accuracy == 0,
                   "incorrect value for h_accuracy, expected 0, is %d",
                   check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
     ck_assert_msg((check_msg->height * 100 - 70.5249547318 * 100) < 0.05,
                   "incorrect value for height, expected 70.5249547318, is %f",
                   check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         70.5249547318 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 70.5249547318, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
     ck_assert_msg((check_msg->lat * 100 - 37.4290765936 * 100) < 0.05,
                   "incorrect value for lat, expected 37.4290765936, is %f",
                   check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.4290765936 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.4290765936, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
     ck_assert_msg((check_msg->lon * 100 - -122.173404926 * 100) < 0.05,
                   "incorrect value for lon, expected -122.173404926, is %f",
                   check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.173404926 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.173404926, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
     ck_assert_msg(check_msg->n_sats == 9,
                   "incorrect value for n_sats, expected 9, is %d",
                   check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 9,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 9, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
     ck_assert_msg(check_msg->tow == 2567900,
                   "incorrect value for tow, expected 2567900, is %d",
                   check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 2567900,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 2567900, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
     ck_assert_msg(check_msg->v_accuracy == 0,
                   "incorrect value for v_accuracy, expected 0, is %d",
                   check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+
+    dummy_reset();
+    logging_reset();
+
+    sbp_pack_and_send_message(&sbp_state, 55286, &test_unpacked_msg,
+                              &dummy_write);
+
+    ck_assert_msg(
+        test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame "
+        "from the spec is badly defined. Check your test spec");
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+                  "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+                  "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+                    "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_msg.n_callbacks_logged == 1,
+                  "msg_callback: one callback should have been logged");
+    ck_assert_msg(last_msg.sender_id == 55286,
+                  "msg_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
+                  "msg_callback: len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
+        "msg_callback: test data decoded incorrectly");
+    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "frame_callback: one callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 55286,
+                  "frame_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.msg_type == 0x201,
+                  "frame_callback: msg_type decoded incorrectly");
+    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
+                  "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6,
+                         sizeof(encoded_frame) - 8) == 0,
+                  "frame_callback: test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
+                  "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame_callback: frame decoded incorrectly");
+    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    // Cast to expected message type - the +6 byte offset is where the payload
+    // starts
+    check_msg = (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->flags == 0,
+                  "incorrect value for flags, expected 0, is %d",
+                  check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
+    ck_assert_msg(check_msg->h_accuracy == 0,
+                  "incorrect value for h_accuracy, expected 0, is %d",
+                  check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
+    ck_assert_msg((check_msg->height * 100 - 70.5249547318 * 100) < 0.05,
+                  "incorrect value for height, expected 70.5249547318, is %f",
+                  check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         70.5249547318 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 70.5249547318, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
+    ck_assert_msg((check_msg->lat * 100 - 37.4290765936 * 100) < 0.05,
+                  "incorrect value for lat, expected 37.4290765936, is %f",
+                  check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.4290765936 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.4290765936, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
+    ck_assert_msg((check_msg->lon * 100 - -122.173404926 * 100) < 0.05,
+                  "incorrect value for lon, expected -122.173404926, is %f",
+                  check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.173404926 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.173404926, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
+    ck_assert_msg(check_msg->n_sats == 9,
+                  "incorrect value for n_sats, expected 9, is %d",
+                  check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 9,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 9, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
+    ck_assert_msg(check_msg->tow == 2567900,
+                  "incorrect value for tow, expected 2567900, is %d",
+                  check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 2567900,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 2567900, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
+    ck_assert_msg(check_msg->v_accuracy == 0,
+                  "incorrect value for v_accuracy, expected 0, is %d",
+                  check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -710,6 +1643,8 @@ START_TEST(test_auto_check_sbp_navigation_28) {
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x201, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_unpacked_callback(&sbp_state, 0x201, &unpacked_callback,
+                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n3);
 
     u8 encoded_frame[] = {
         85,  1,   2,   195, 4,   34,  212, 157, 67,  24,  8,  23,  228, 8,
@@ -722,16 +1657,27 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.type = SBP_MSG_POS_LLH_DEP_A;
     msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 0;
     test_msg->h_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
     test_msg->height = 4.039810885214956;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 4.039810885214956;
     test_msg->lat = 37.76242171418386;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.76242171418386;
     test_msg->lon = -122.38908437889262;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.38908437889262;
     test_msg->n_sats = 8;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 8;
     test_msg->tow = 407084500;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 407084500;
     test_msg->v_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
     sbp_send_message(&sbp_state, 0x201, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -785,32 +1731,202 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     // starts
     msg_pos_llh_dep_a_t *check_msg =
         (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0,
                   "incorrect value for flags, expected 0, is %d",
                   check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
     ck_assert_msg(check_msg->h_accuracy == 0,
                   "incorrect value for h_accuracy, expected 0, is %d",
                   check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
     ck_assert_msg((check_msg->height * 100 - 4.03981088521 * 100) < 0.05,
                   "incorrect value for height, expected 4.03981088521, is %f",
                   check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         4.03981088521 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 4.03981088521, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
     ck_assert_msg((check_msg->lat * 100 - 37.7624217142 * 100) < 0.05,
                   "incorrect value for lat, expected 37.7624217142, is %f",
                   check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.7624217142 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.7624217142, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
     ck_assert_msg((check_msg->lon * 100 - -122.389084379 * 100) < 0.05,
                   "incorrect value for lon, expected -122.389084379, is %f",
                   check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.389084379 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.389084379, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
     ck_assert_msg(check_msg->n_sats == 8,
                   "incorrect value for n_sats, expected 8, is %d",
                   check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 8,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 8, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
     ck_assert_msg(check_msg->tow == 407084500,
                   "incorrect value for tow, expected 407084500, is %d",
                   check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 407084500,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 407084500, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
     ck_assert_msg(check_msg->v_accuracy == 0,
                   "incorrect value for v_accuracy, expected 0, is %d",
                   check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+
+    dummy_reset();
+    logging_reset();
+
+    sbp_pack_and_send_message(&sbp_state, 1219, &test_unpacked_msg,
+                              &dummy_write);
+
+    ck_assert_msg(
+        test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame "
+        "from the spec is badly defined. Check your test spec");
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+                  "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+                  "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+                    "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_msg.n_callbacks_logged == 1,
+                  "msg_callback: one callback should have been logged");
+    ck_assert_msg(last_msg.sender_id == 1219,
+                  "msg_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
+                  "msg_callback: len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
+        "msg_callback: test data decoded incorrectly");
+    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "frame_callback: one callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 1219,
+                  "frame_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.msg_type == 0x201,
+                  "frame_callback: msg_type decoded incorrectly");
+    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
+                  "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6,
+                         sizeof(encoded_frame) - 8) == 0,
+                  "frame_callback: test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
+                  "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame_callback: frame decoded incorrectly");
+    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    // Cast to expected message type - the +6 byte offset is where the payload
+    // starts
+    check_msg = (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->flags == 0,
+                  "incorrect value for flags, expected 0, is %d",
+                  check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
+    ck_assert_msg(check_msg->h_accuracy == 0,
+                  "incorrect value for h_accuracy, expected 0, is %d",
+                  check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
+    ck_assert_msg((check_msg->height * 100 - 4.03981088521 * 100) < 0.05,
+                  "incorrect value for height, expected 4.03981088521, is %f",
+                  check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         4.03981088521 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 4.03981088521, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
+    ck_assert_msg((check_msg->lat * 100 - 37.7624217142 * 100) < 0.05,
+                  "incorrect value for lat, expected 37.7624217142, is %f",
+                  check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.7624217142 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.7624217142, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
+    ck_assert_msg((check_msg->lon * 100 - -122.389084379 * 100) < 0.05,
+                  "incorrect value for lon, expected -122.389084379, is %f",
+                  check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.389084379 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.389084379, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
+    ck_assert_msg(check_msg->n_sats == 8,
+                  "incorrect value for n_sats, expected 8, is %d",
+                  check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 8,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 8, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
+    ck_assert_msg(check_msg->tow == 407084500,
+                  "incorrect value for tow, expected 407084500, is %d",
+                  check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 407084500,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 407084500, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
+    ck_assert_msg(check_msg->v_accuracy == 0,
+                  "incorrect value for v_accuracy, expected 0, is %d",
+                  check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -828,6 +1944,8 @@ START_TEST(test_auto_check_sbp_navigation_28) {
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x201, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_unpacked_callback(&sbp_state, 0x201, &unpacked_callback,
+                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n3);
 
     u8 encoded_frame[] = {
         85,  1,   2,   195, 4,   34,  56,  158, 67,  24,  220, 109, 212, 24,
@@ -840,16 +1958,27 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.type = SBP_MSG_POS_LLH_DEP_A;
     msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 0;
     test_msg->h_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
     test_msg->height = 2.926714087009657;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 2.926714087009657;
     test_msg->lat = 37.76242361423985;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.76242361423985;
     test_msg->lon = -122.38909053700489;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.38909053700489;
     test_msg->n_sats = 8;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 8;
     test_msg->tow = 407084600;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 407084600;
     test_msg->v_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
     sbp_send_message(&sbp_state, 0x201, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -903,32 +2032,202 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     // starts
     msg_pos_llh_dep_a_t *check_msg =
         (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0,
                   "incorrect value for flags, expected 0, is %d",
                   check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
     ck_assert_msg(check_msg->h_accuracy == 0,
                   "incorrect value for h_accuracy, expected 0, is %d",
                   check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
     ck_assert_msg((check_msg->height * 100 - 2.92671408701 * 100) < 0.05,
                   "incorrect value for height, expected 2.92671408701, is %f",
                   check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         2.92671408701 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 2.92671408701, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
     ck_assert_msg((check_msg->lat * 100 - 37.7624236142 * 100) < 0.05,
                   "incorrect value for lat, expected 37.7624236142, is %f",
                   check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.7624236142 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.7624236142, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
     ck_assert_msg((check_msg->lon * 100 - -122.389090537 * 100) < 0.05,
                   "incorrect value for lon, expected -122.389090537, is %f",
                   check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.389090537 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.389090537, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
     ck_assert_msg(check_msg->n_sats == 8,
                   "incorrect value for n_sats, expected 8, is %d",
                   check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 8,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 8, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
     ck_assert_msg(check_msg->tow == 407084600,
                   "incorrect value for tow, expected 407084600, is %d",
                   check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 407084600,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 407084600, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
     ck_assert_msg(check_msg->v_accuracy == 0,
                   "incorrect value for v_accuracy, expected 0, is %d",
                   check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+
+    dummy_reset();
+    logging_reset();
+
+    sbp_pack_and_send_message(&sbp_state, 1219, &test_unpacked_msg,
+                              &dummy_write);
+
+    ck_assert_msg(
+        test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame "
+        "from the spec is badly defined. Check your test spec");
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+                  "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+                  "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+                    "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_msg.n_callbacks_logged == 1,
+                  "msg_callback: one callback should have been logged");
+    ck_assert_msg(last_msg.sender_id == 1219,
+                  "msg_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
+                  "msg_callback: len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
+        "msg_callback: test data decoded incorrectly");
+    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "frame_callback: one callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 1219,
+                  "frame_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.msg_type == 0x201,
+                  "frame_callback: msg_type decoded incorrectly");
+    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
+                  "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6,
+                         sizeof(encoded_frame) - 8) == 0,
+                  "frame_callback: test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
+                  "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame_callback: frame decoded incorrectly");
+    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    // Cast to expected message type - the +6 byte offset is where the payload
+    // starts
+    check_msg = (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->flags == 0,
+                  "incorrect value for flags, expected 0, is %d",
+                  check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
+    ck_assert_msg(check_msg->h_accuracy == 0,
+                  "incorrect value for h_accuracy, expected 0, is %d",
+                  check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
+    ck_assert_msg((check_msg->height * 100 - 2.92671408701 * 100) < 0.05,
+                  "incorrect value for height, expected 2.92671408701, is %f",
+                  check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         2.92671408701 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 2.92671408701, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
+    ck_assert_msg((check_msg->lat * 100 - 37.7624236142 * 100) < 0.05,
+                  "incorrect value for lat, expected 37.7624236142, is %f",
+                  check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.7624236142 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.7624236142, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
+    ck_assert_msg((check_msg->lon * 100 - -122.389090537 * 100) < 0.05,
+                  "incorrect value for lon, expected -122.389090537, is %f",
+                  check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.389090537 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.389090537, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
+    ck_assert_msg(check_msg->n_sats == 8,
+                  "incorrect value for n_sats, expected 8, is %d",
+                  check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 8,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 8, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
+    ck_assert_msg(check_msg->tow == 407084600,
+                  "incorrect value for tow, expected 407084600, is %d",
+                  check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 407084600,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 407084600, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
+    ck_assert_msg(check_msg->v_accuracy == 0,
+                  "incorrect value for v_accuracy, expected 0, is %d",
+                  check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -946,6 +2245,8 @@ START_TEST(test_auto_check_sbp_navigation_28) {
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x201, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_unpacked_callback(&sbp_state, 0x201, &unpacked_callback,
+                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n3);
 
     u8 encoded_frame[] = {
         85,  1,   2,  195, 4,   34,  156, 158, 67,  24,  13, 91,  237, 11,
@@ -958,16 +2259,27 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.type = SBP_MSG_POS_LLH_DEP_A;
     msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 0;
     test_msg->h_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
     test_msg->height = 0.9512146647395566;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 0.9512146647395566;
     test_msg->lat = 37.762422076126406;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.762422076126406;
     test_msg->lon = -122.3890907340148;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.3890907340148;
     test_msg->n_sats = 8;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 8;
     test_msg->tow = 407084700;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 407084700;
     test_msg->v_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
     sbp_send_message(&sbp_state, 0x201, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -1021,32 +2333,202 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     // starts
     msg_pos_llh_dep_a_t *check_msg =
         (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0,
                   "incorrect value for flags, expected 0, is %d",
                   check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
     ck_assert_msg(check_msg->h_accuracy == 0,
                   "incorrect value for h_accuracy, expected 0, is %d",
                   check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
     ck_assert_msg((check_msg->height * 100 - 0.95121466474 * 100) < 0.05,
                   "incorrect value for height, expected 0.95121466474, is %f",
                   check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         0.95121466474 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 0.95121466474, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
     ck_assert_msg((check_msg->lat * 100 - 37.7624220761 * 100) < 0.05,
                   "incorrect value for lat, expected 37.7624220761, is %f",
                   check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.7624220761 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.7624220761, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
     ck_assert_msg((check_msg->lon * 100 - -122.389090734 * 100) < 0.05,
                   "incorrect value for lon, expected -122.389090734, is %f",
                   check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.389090734 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.389090734, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
     ck_assert_msg(check_msg->n_sats == 8,
                   "incorrect value for n_sats, expected 8, is %d",
                   check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 8,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 8, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
     ck_assert_msg(check_msg->tow == 407084700,
                   "incorrect value for tow, expected 407084700, is %d",
                   check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 407084700,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 407084700, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
     ck_assert_msg(check_msg->v_accuracy == 0,
                   "incorrect value for v_accuracy, expected 0, is %d",
                   check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+
+    dummy_reset();
+    logging_reset();
+
+    sbp_pack_and_send_message(&sbp_state, 1219, &test_unpacked_msg,
+                              &dummy_write);
+
+    ck_assert_msg(
+        test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame "
+        "from the spec is badly defined. Check your test spec");
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+                  "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+                  "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+                    "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_msg.n_callbacks_logged == 1,
+                  "msg_callback: one callback should have been logged");
+    ck_assert_msg(last_msg.sender_id == 1219,
+                  "msg_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
+                  "msg_callback: len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
+        "msg_callback: test data decoded incorrectly");
+    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "frame_callback: one callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 1219,
+                  "frame_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.msg_type == 0x201,
+                  "frame_callback: msg_type decoded incorrectly");
+    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
+                  "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6,
+                         sizeof(encoded_frame) - 8) == 0,
+                  "frame_callback: test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
+                  "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame_callback: frame decoded incorrectly");
+    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    // Cast to expected message type - the +6 byte offset is where the payload
+    // starts
+    check_msg = (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->flags == 0,
+                  "incorrect value for flags, expected 0, is %d",
+                  check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
+    ck_assert_msg(check_msg->h_accuracy == 0,
+                  "incorrect value for h_accuracy, expected 0, is %d",
+                  check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
+    ck_assert_msg((check_msg->height * 100 - 0.95121466474 * 100) < 0.05,
+                  "incorrect value for height, expected 0.95121466474, is %f",
+                  check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         0.95121466474 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 0.95121466474, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
+    ck_assert_msg((check_msg->lat * 100 - 37.7624220761 * 100) < 0.05,
+                  "incorrect value for lat, expected 37.7624220761, is %f",
+                  check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.7624220761 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.7624220761, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
+    ck_assert_msg((check_msg->lon * 100 - -122.389090734 * 100) < 0.05,
+                  "incorrect value for lon, expected -122.389090734, is %f",
+                  check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.389090734 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.389090734, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
+    ck_assert_msg(check_msg->n_sats == 8,
+                  "incorrect value for n_sats, expected 8, is %d",
+                  check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 8,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 8, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
+    ck_assert_msg(check_msg->tow == 407084700,
+                  "incorrect value for tow, expected 407084700, is %d",
+                  check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 407084700,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 407084700, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
+    ck_assert_msg(check_msg->v_accuracy == 0,
+                  "incorrect value for v_accuracy, expected 0, is %d",
+                  check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -1064,6 +2546,8 @@ START_TEST(test_auto_check_sbp_navigation_28) {
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x201, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_unpacked_callback(&sbp_state, 0x201, &unpacked_callback,
+                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n3);
 
     u8 encoded_frame[] = {
         85,  1,   2,  195, 4,  34,  0,   159, 67,  24,  51, 183, 5,   8,
@@ -1076,16 +2560,27 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.type = SBP_MSG_POS_LLH_DEP_A;
     msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 0;
     test_msg->h_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
     test_msg->height = 2.354135752047538;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 2.354135752047538;
     test_msg->lat = 37.762421610632735;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.762421610632735;
     test_msg->lon = -122.38909854449612;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.38909854449612;
     test_msg->n_sats = 8;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 8;
     test_msg->tow = 407084800;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 407084800;
     test_msg->v_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
     sbp_send_message(&sbp_state, 0x201, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -1139,32 +2634,202 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     // starts
     msg_pos_llh_dep_a_t *check_msg =
         (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0,
                   "incorrect value for flags, expected 0, is %d",
                   check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
     ck_assert_msg(check_msg->h_accuracy == 0,
                   "incorrect value for h_accuracy, expected 0, is %d",
                   check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
     ck_assert_msg((check_msg->height * 100 - 2.35413575205 * 100) < 0.05,
                   "incorrect value for height, expected 2.35413575205, is %f",
                   check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         2.35413575205 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 2.35413575205, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
     ck_assert_msg((check_msg->lat * 100 - 37.7624216106 * 100) < 0.05,
                   "incorrect value for lat, expected 37.7624216106, is %f",
                   check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.7624216106 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.7624216106, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
     ck_assert_msg((check_msg->lon * 100 - -122.389098544 * 100) < 0.05,
                   "incorrect value for lon, expected -122.389098544, is %f",
                   check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.389098544 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.389098544, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
     ck_assert_msg(check_msg->n_sats == 8,
                   "incorrect value for n_sats, expected 8, is %d",
                   check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 8,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 8, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
     ck_assert_msg(check_msg->tow == 407084800,
                   "incorrect value for tow, expected 407084800, is %d",
                   check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 407084800,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 407084800, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
     ck_assert_msg(check_msg->v_accuracy == 0,
                   "incorrect value for v_accuracy, expected 0, is %d",
                   check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+
+    dummy_reset();
+    logging_reset();
+
+    sbp_pack_and_send_message(&sbp_state, 1219, &test_unpacked_msg,
+                              &dummy_write);
+
+    ck_assert_msg(
+        test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame "
+        "from the spec is badly defined. Check your test spec");
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+                  "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+                  "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+                    "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_msg.n_callbacks_logged == 1,
+                  "msg_callback: one callback should have been logged");
+    ck_assert_msg(last_msg.sender_id == 1219,
+                  "msg_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
+                  "msg_callback: len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
+        "msg_callback: test data decoded incorrectly");
+    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "frame_callback: one callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 1219,
+                  "frame_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.msg_type == 0x201,
+                  "frame_callback: msg_type decoded incorrectly");
+    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
+                  "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6,
+                         sizeof(encoded_frame) - 8) == 0,
+                  "frame_callback: test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
+                  "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame_callback: frame decoded incorrectly");
+    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    // Cast to expected message type - the +6 byte offset is where the payload
+    // starts
+    check_msg = (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->flags == 0,
+                  "incorrect value for flags, expected 0, is %d",
+                  check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
+    ck_assert_msg(check_msg->h_accuracy == 0,
+                  "incorrect value for h_accuracy, expected 0, is %d",
+                  check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
+    ck_assert_msg((check_msg->height * 100 - 2.35413575205 * 100) < 0.05,
+                  "incorrect value for height, expected 2.35413575205, is %f",
+                  check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         2.35413575205 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 2.35413575205, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
+    ck_assert_msg((check_msg->lat * 100 - 37.7624216106 * 100) < 0.05,
+                  "incorrect value for lat, expected 37.7624216106, is %f",
+                  check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.7624216106 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.7624216106, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
+    ck_assert_msg((check_msg->lon * 100 - -122.389098544 * 100) < 0.05,
+                  "incorrect value for lon, expected -122.389098544, is %f",
+                  check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.389098544 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.389098544, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
+    ck_assert_msg(check_msg->n_sats == 8,
+                  "incorrect value for n_sats, expected 8, is %d",
+                  check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 8,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 8, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
+    ck_assert_msg(check_msg->tow == 407084800,
+                  "incorrect value for tow, expected 407084800, is %d",
+                  check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 407084800,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 407084800, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
+    ck_assert_msg(check_msg->v_accuracy == 0,
+                  "incorrect value for v_accuracy, expected 0, is %d",
+                  check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -1182,6 +2847,8 @@ START_TEST(test_auto_check_sbp_navigation_28) {
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x201, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_unpacked_callback(&sbp_state, 0x201, &unpacked_callback,
+                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n3);
 
     u8 encoded_frame[] = {
         85,  1,   2,  195, 4,   34,  100, 159, 67,  24,  22, 77,  146, 22,
@@ -1194,16 +2861,27 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.type = SBP_MSG_POS_LLH_DEP_A;
     msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 0;
     test_msg->h_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
     test_msg->height = 1.0876763181642641;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 1.0876763181642641;
     test_msg->lat = 37.76242334502801;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.76242334502801;
     test_msg->lon = -122.38909230523223;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.38909230523223;
     test_msg->n_sats = 8;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 8;
     test_msg->tow = 407084900;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 407084900;
     test_msg->v_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
     sbp_send_message(&sbp_state, 0x201, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -1257,32 +2935,202 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     // starts
     msg_pos_llh_dep_a_t *check_msg =
         (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0,
                   "incorrect value for flags, expected 0, is %d",
                   check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
     ck_assert_msg(check_msg->h_accuracy == 0,
                   "incorrect value for h_accuracy, expected 0, is %d",
                   check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
     ck_assert_msg((check_msg->height * 100 - 1.08767631816 * 100) < 0.05,
                   "incorrect value for height, expected 1.08767631816, is %f",
                   check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         1.08767631816 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 1.08767631816, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
     ck_assert_msg((check_msg->lat * 100 - 37.762423345 * 100) < 0.05,
                   "incorrect value for lat, expected 37.762423345, is %f",
                   check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 - 37.762423345 * 100) <
+            0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.762423345, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
     ck_assert_msg((check_msg->lon * 100 - -122.389092305 * 100) < 0.05,
                   "incorrect value for lon, expected -122.389092305, is %f",
                   check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.389092305 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.389092305, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
     ck_assert_msg(check_msg->n_sats == 8,
                   "incorrect value for n_sats, expected 8, is %d",
                   check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 8,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 8, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
     ck_assert_msg(check_msg->tow == 407084900,
                   "incorrect value for tow, expected 407084900, is %d",
                   check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 407084900,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 407084900, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
     ck_assert_msg(check_msg->v_accuracy == 0,
                   "incorrect value for v_accuracy, expected 0, is %d",
                   check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+
+    dummy_reset();
+    logging_reset();
+
+    sbp_pack_and_send_message(&sbp_state, 1219, &test_unpacked_msg,
+                              &dummy_write);
+
+    ck_assert_msg(
+        test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame "
+        "from the spec is badly defined. Check your test spec");
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+                  "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+                  "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+                    "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_msg.n_callbacks_logged == 1,
+                  "msg_callback: one callback should have been logged");
+    ck_assert_msg(last_msg.sender_id == 1219,
+                  "msg_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
+                  "msg_callback: len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
+        "msg_callback: test data decoded incorrectly");
+    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "frame_callback: one callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 1219,
+                  "frame_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.msg_type == 0x201,
+                  "frame_callback: msg_type decoded incorrectly");
+    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
+                  "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6,
+                         sizeof(encoded_frame) - 8) == 0,
+                  "frame_callback: test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
+                  "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame_callback: frame decoded incorrectly");
+    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    // Cast to expected message type - the +6 byte offset is where the payload
+    // starts
+    check_msg = (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->flags == 0,
+                  "incorrect value for flags, expected 0, is %d",
+                  check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
+    ck_assert_msg(check_msg->h_accuracy == 0,
+                  "incorrect value for h_accuracy, expected 0, is %d",
+                  check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
+    ck_assert_msg((check_msg->height * 100 - 1.08767631816 * 100) < 0.05,
+                  "incorrect value for height, expected 1.08767631816, is %f",
+                  check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         1.08767631816 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 1.08767631816, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
+    ck_assert_msg((check_msg->lat * 100 - 37.762423345 * 100) < 0.05,
+                  "incorrect value for lat, expected 37.762423345, is %f",
+                  check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 - 37.762423345 * 100) <
+            0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.762423345, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
+    ck_assert_msg((check_msg->lon * 100 - -122.389092305 * 100) < 0.05,
+                  "incorrect value for lon, expected -122.389092305, is %f",
+                  check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.389092305 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.389092305, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
+    ck_assert_msg(check_msg->n_sats == 8,
+                  "incorrect value for n_sats, expected 8, is %d",
+                  check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 8,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 8, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
+    ck_assert_msg(check_msg->tow == 407084900,
+                  "incorrect value for tow, expected 407084900, is %d",
+                  check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 407084900,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 407084900, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
+    ck_assert_msg(check_msg->v_accuracy == 0,
+                  "incorrect value for v_accuracy, expected 0, is %d",
+                  check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
   }
   // Test successful parsing of a message
   {
@@ -1300,6 +3148,8 @@ START_TEST(test_auto_check_sbp_navigation_28) {
                           &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x201, &frame_callback,
                                 &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_unpacked_callback(&sbp_state, 0x201, &unpacked_callback,
+                                   &DUMMY_MEMORY_FOR_CALLBACKS, &n3);
 
     u8 encoded_frame[] = {
         85,  1,   2,   195, 4,   34,  46,  162, 68,  24,  124, 245, 46,  169,
@@ -1312,16 +3162,27 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.type = SBP_MSG_POS_LLH_DEP_A;
     msg_pos_llh_dep_a_t *test_msg = (msg_pos_llh_dep_a_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.flags = 0;
     test_msg->h_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.h_accuracy = 0;
     test_msg->height = 5.171533844654222;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.height = 5.171533844654222;
     test_msg->lat = 37.76244082253376;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lat = 37.76244082253376;
     test_msg->lon = -122.38908288868525;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.lon = -122.38908288868525;
     test_msg->n_sats = 5;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.n_sats = 5;
     test_msg->tow = 407151150;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.tow = 407151150;
     test_msg->v_accuracy = 0;
+    test_unpacked_msg.MSG_POS_LLH_DEP_A.v_accuracy = 0;
     sbp_send_message(&sbp_state, 0x201, 1219, test_msg_len, test_msg_storage,
                      &dummy_write);
 
@@ -1375,32 +3236,202 @@ START_TEST(test_auto_check_sbp_navigation_28) {
     // starts
     msg_pos_llh_dep_a_t *check_msg =
         (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0,
                   "incorrect value for flags, expected 0, is %d",
                   check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
     ck_assert_msg(check_msg->h_accuracy == 0,
                   "incorrect value for h_accuracy, expected 0, is %d",
                   check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
     ck_assert_msg((check_msg->height * 100 - 5.17153384465 * 100) < 0.05,
                   "incorrect value for height, expected 5.17153384465, is %f",
                   check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         5.17153384465 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 5.17153384465, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
     ck_assert_msg((check_msg->lat * 100 - 37.7624408225 * 100) < 0.05,
                   "incorrect value for lat, expected 37.7624408225, is %f",
                   check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.7624408225 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.7624408225, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
     ck_assert_msg((check_msg->lon * 100 - -122.389082889 * 100) < 0.05,
                   "incorrect value for lon, expected -122.389082889, is %f",
                   check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.389082889 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.389082889, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
     ck_assert_msg(check_msg->n_sats == 5,
                   "incorrect value for n_sats, expected 5, is %d",
                   check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 5,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 5, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
     ck_assert_msg(check_msg->tow == 407151150,
                   "incorrect value for tow, expected 407151150, is %d",
                   check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 407151150,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 407151150, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
     ck_assert_msg(check_msg->v_accuracy == 0,
                   "incorrect value for v_accuracy, expected 0, is %d",
                   check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
+
+    dummy_reset();
+    logging_reset();
+
+    sbp_pack_and_send_message(&sbp_state, 1219, &test_unpacked_msg,
+                              &dummy_write);
+
+    ck_assert_msg(
+        test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame "
+        "from the spec is badly defined. Check your test spec");
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+                  "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+                  "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+                    "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_msg.n_callbacks_logged == 1,
+                  "msg_callback: one callback should have been logged");
+    ck_assert_msg(last_msg.sender_id == 1219,
+                  "msg_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
+                  "msg_callback: len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
+        "msg_callback: test data decoded incorrectly");
+    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+                  "frame_callback: one callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 1219,
+                  "frame_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.msg_type == 0x201,
+                  "frame_callback: msg_type decoded incorrectly");
+    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
+                  "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6,
+                         sizeof(encoded_frame) - 8) == 0,
+                  "frame_callback: test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
+                  "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame_callback: frame decoded incorrectly");
+    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+                  "frame_callback: context pointer incorrectly passed");
+
+    // Cast to expected message type - the +6 byte offset is where the payload
+    // starts
+    check_msg = (msg_pos_llh_dep_a_t *)((void *)last_msg.msg);
+    check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->flags == 0,
+                  "incorrect value for flags, expected 0, is %d",
+                  check_msg->flags);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.flags, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.flags);
+    ck_assert_msg(check_msg->h_accuracy == 0,
+                  "incorrect value for h_accuracy, expected 0, is %d",
+                  check_msg->h_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.h_accuracy);
+    ck_assert_msg((check_msg->height * 100 - 5.17153384465 * 100) < 0.05,
+                  "incorrect value for height, expected 5.17153384465, is %f",
+                  check_msg->height);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.height * 100 -
+         5.17153384465 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.height, "
+        "expected 5.17153384465, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.height);
+    ck_assert_msg((check_msg->lat * 100 - 37.7624408225 * 100) < 0.05,
+                  "incorrect value for lat, expected 37.7624408225, is %f",
+                  check_msg->lat);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lat * 100 -
+         37.7624408225 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lat, "
+        "expected 37.7624408225, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lat);
+    ck_assert_msg((check_msg->lon * 100 - -122.389082889 * 100) < 0.05,
+                  "incorrect value for lon, expected -122.389082889, is %f",
+                  check_msg->lon);
+    ck_assert_msg(
+        (check_unpacked_msg->MSG_POS_LLH_DEP_A.lon * 100 -
+         -122.389082889 * 100) < 0.05,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.lon, "
+        "expected -122.389082889, is %s",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.lon);
+    ck_assert_msg(check_msg->n_sats == 5,
+                  "incorrect value for n_sats, expected 5, is %d",
+                  check_msg->n_sats);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats == 5,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats, "
+        "expected 5, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.n_sats);
+    ck_assert_msg(check_msg->tow == 407151150,
+                  "incorrect value for tow, expected 407151150, is %d",
+                  check_msg->tow);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow == 407151150,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.tow, "
+        "expected 407151150, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.tow);
+    ck_assert_msg(check_msg->v_accuracy == 0,
+                  "incorrect value for v_accuracy, expected 0, is %d",
+                  check_msg->v_accuracy);
+    ck_assert_msg(
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy == 0,
+        "incorrect value for check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy, "
+        "expected 0, is %d",
+        check_unpacked_msg->MSG_POS_LLH_DEP_A.v_accuracy);
   }
 }
 END_TEST

@@ -665,6 +665,7 @@ static inline bool sbp_unpack_sbp_msg_stm_flash_unlock_sector_t(
 #define SBP_MSG_STM_UNIQUE_ID_REQ 0x00E8
 
 typedef struct {
+  char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_stm_unique_id_req_t;
 
 static inline size_t sbp_packed_size_sbp_msg_stm_unique_id_req_t(

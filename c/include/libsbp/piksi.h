@@ -17,6 +17,7 @@
 #define SBP_MSG_ALMANAC 0x0069
 
 typedef struct {
+  char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_almanac_t;
 
 static inline size_t sbp_packed_size_sbp_msg_almanac_t(
@@ -57,6 +58,7 @@ static inline bool sbp_unpack_sbp_msg_almanac_t(const u8 *buf, size_t len,
 #define SBP_MSG_SET_TIME 0x0068
 
 typedef struct {
+  char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_set_time_t;
 
 static inline size_t sbp_packed_size_sbp_msg_set_time_t(
@@ -167,6 +169,7 @@ static inline bool sbp_unpack_sbp_msg_reset_t(const u8 *buf, size_t len,
 #define SBP_MSG_RESET_DEP 0x00B2
 
 typedef struct {
+  char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_reset_dep_t;
 
 static inline size_t sbp_packed_size_sbp_msg_reset_dep_t(
@@ -208,6 +211,7 @@ static inline bool sbp_unpack_sbp_msg_reset_dep_t(const u8 *buf, size_t len,
 #define SBP_MSG_CW_RESULTS 0x00C0
 
 typedef struct {
+  char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_cw_results_t;
 
 static inline size_t sbp_packed_size_sbp_msg_cw_results_t(
@@ -249,6 +253,7 @@ static inline bool sbp_unpack_sbp_msg_cw_results_t(const u8 *buf, size_t len,
 #define SBP_MSG_CW_START 0x00C1
 
 typedef struct {
+  char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_cw_start_t;
 
 static inline size_t sbp_packed_size_sbp_msg_cw_start_t(
@@ -358,6 +363,7 @@ static inline bool sbp_unpack_sbp_msg_reset_filters_t(
 #define SBP_MSG_INIT_BASE_DEP 0x0023
 
 typedef struct {
+  char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_init_base_dep_t;
 
 static inline size_t sbp_packed_size_sbp_msg_init_base_dep_t(
@@ -2266,6 +2272,7 @@ static inline bool sbp_unpack_sbp_msg_command_output_t(
 #define SBP_MSG_NETWORK_STATE_REQ 0x00BA
 
 typedef struct {
+  char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_network_state_req_t;
 
 static inline size_t sbp_packed_size_sbp_msg_network_state_req_t(
