@@ -31,8 +31,8 @@ import org.json.JSONArray;
  *
  * The precise orbit and clock correction message is
  * to be applied as a delta correction to broadcast
- * ephemeris and is an equivalent to the 1060 /1066
- * RTCM message types */
+ * ephemeris and is typically an equivalent to the 1060
+ * and 1066 RTCM message types */
 
 public class MsgSsrOrbitClock extends SBPMessage {
     public static final int TYPE = 0x05DD;

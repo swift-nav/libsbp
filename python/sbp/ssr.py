@@ -30,15 +30,13 @@ class CodeBiasesContent(object):
   """CodeBiasesContent.
   
   Code biases are to be added to pseudorange.
-The corrections conform with RTCMv3 MT 1059 / 1065.
+The corrections conform with typical RTCMv3 MT1059 and 1065.
 
   
   Parameters
   ----------
   code : int
-    Signal encoded following RTCM specifications
-(DF380, DF381, DF382 and DF467).
-
+    Signal constellation, band and code
   value : int
     Code bias value
 
@@ -74,14 +72,13 @@ class PhaseBiasesContent(object):
   """PhaseBiasesContent.
   
   Phase biases are to be added to carrier phase measurements.
+The corrections conform with typical RTCMv3 MT1059 and 1065.
 
   
   Parameters
   ----------
   code : int
-    Signal encoded following RTCM specifications
-(DF380, DF381, DF382 and DF467)
-
+    Signal constellation, band and code
   integer_indicator : int
     Indicator for integer property
   widelane_integer_indicator : int
@@ -230,7 +227,7 @@ following RTCM DF391 specification.
 
   tropo_quality_indicator : int
     Quality of the troposphere data. Encoded following RTCM DF389
-specification in units of m.
+specifcation in units of m.
 
 
   """
@@ -289,7 +286,7 @@ class STECSatElement(object):
   sv_id : SvId
     Unique space vehicle identifier
   stec_quality_indicator : int
-    Quality of the STEC data. Encoded following RTCM DF389 specification
+    Quality of the STEC data. Encoded following RTCM DF389 specifcation
 but in units of TECU instead of m.
 
   stec_coeff : array
@@ -864,8 +861,8 @@ class MsgSsrOrbitClock(SBP):
   
   The precise orbit and clock correction message is
 to be applied as a delta correction to broadcast
-ephemeris and is an equivalent to the 1060 /1066
-RTCM message types
+ephemeris and is typically an equivalent to the 1060
+and 1066 RTCM message types
 
 
   Parameters
@@ -1027,8 +1024,8 @@ class MsgSsrCodeBiases(SBP):
   
   The precise code biases message is to be added
 to the pseudorange of the corresponding signal
-to get corrected pseudorange. It is an
-equivalent to the 1059 / 1065 RTCM message types
+to get corrected pseudorange. It is typically
+an equivalent to the 1059 and 1065 RTCM message types
 
 
   Parameters

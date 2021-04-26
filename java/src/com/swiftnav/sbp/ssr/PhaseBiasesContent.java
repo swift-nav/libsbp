@@ -25,9 +25,7 @@ import com.swiftnav.sbp.SBPStruct;
 
 public class PhaseBiasesContent extends SBPStruct {
     
-    /** Signal encoded following RTCM specifications
-(DF380, DF381, DF382 and DF467)
- */
+    /** Signal constellation, band and code */
     public int code;
     
     /** Indicator for integer property */

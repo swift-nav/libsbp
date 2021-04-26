@@ -28,7 +28,7 @@ public class STECSatElement extends SBPStruct {
     /** Unique space vehicle identifier */
     public SvId sv_id;
     
-    /** Quality of the STEC data. Encoded following RTCM DF389 specification
+    /** Quality of the STEC data. Encoded following RTCM DF389 specifcation
 but in units of TECU instead of m.
  */
     public int stec_quality_indicator;

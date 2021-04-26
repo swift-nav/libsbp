@@ -10,13 +10,15 @@
  * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgBaselineECEFDepA.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from
+// spec/tests/yaml/swiftnav/sbp/navigation/test_MsgBaselineECEFDepA.yaml by
+// generate.py. Do not modify by hand!
 
 #include <check.h>
-#include <stdio.h> // for debugging
-#include <stdlib.h> // for malloc
-#include <sbp.h>
 #include <navigation.h>
+#include <sbp.h>
+#include <stdio.h>   // for debugging
+#include <stdlib.h>  // for malloc
 
 static struct {
   u32 n_callbacks_logged;
@@ -40,43 +42,38 @@ static struct {
 static u32 dummy_wr = 0;
 static u32 dummy_rd = 0;
 static u8 dummy_buff[1024];
-static void* last_io_context;
+static void *last_io_context;
 
 static int DUMMY_MEMORY_FOR_CALLBACKS = 0xdeadbeef;
 static int DUMMY_MEMORY_FOR_IO = 0xdead0000;
 
-static void dummy_reset()
-{
+static void dummy_reset() {
   dummy_rd = dummy_wr = 0;
   memset(dummy_buff, 0, sizeof(dummy_buff));
 }
 
-static s32 dummy_write(u8 *buff, u32 n, void* context)
-{
- last_io_context = context;
- u32 real_n = n;//(dummy_n > n) ? n : dummy_n;
- memcpy(dummy_buff + dummy_wr, buff, real_n);
- dummy_wr += real_n;
- return real_n;
+static s32 dummy_write(u8 *buff, u32 n, void *context) {
+  last_io_context = context;
+  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  memcpy(dummy_buff + dummy_wr, buff, real_n);
+  dummy_wr += real_n;
+  return real_n;
 }
 
-static s32 dummy_read(u8 *buff, u32 n, void* context)
-{
- last_io_context = context;
- u32 real_n = n;//(dummy_n > n) ? n : dummy_n;
- memcpy(buff, dummy_buff + dummy_rd, real_n);
- dummy_rd += real_n;
- return real_n;
+static s32 dummy_read(u8 *buff, u32 n, void *context) {
+  last_io_context = context;
+  u32 real_n = n;  //(dummy_n > n) ? n : dummy_n;
+  memcpy(buff, dummy_buff + dummy_rd, real_n);
+  dummy_rd += real_n;
+  return real_n;
 }
 
-static void logging_reset()
-{
+static void logging_reset() {
   memset(&last_msg, 0, sizeof(last_msg));
   memset(&last_frame, 0, sizeof(last_frame));
 }
 
-static void msg_callback(u16 sender_id, u8 len, u8 msg[], void* context)
-{
+static void msg_callback(u16 sender_id, u8 len, u8 msg[], void *context) {
   last_msg.n_callbacks_logged++;
   last_msg.sender_id = sender_id;
   last_msg.len = len;
@@ -84,8 +81,8 @@ static void msg_callback(u16 sender_id, u8 len, u8 msg[], void* context)
   memcpy(last_msg.msg, msg, len);
 }
 
-static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[], u16 frame_len, u8 frame[], void *context)
-{
+static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[],
+                           u16 frame_len, u8 frame[], void *context) {
   last_frame.n_callbacks_logged++;
   last_frame.sender_id = sender_id;
   last_frame.msg_type = msg_type;
@@ -96,8 +93,7 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[], u1
   last_frame.context = context;
 }
 
-START_TEST( test_auto_check_sbp_navigation_5 )
-{
+START_TEST(test_auto_check_sbp_navigation_5) {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
 
@@ -111,7 +107,8 @@ START_TEST( test_auto_check_sbp_navigation_5 )
   // Test successful parsing of a message
   {
     // SBP parser state must be initialized before sbp_process is called.
-    // We re-initialize before every test so that callbacks for the same message types can be
+    // We re-initialize before every test so that callbacks for the same message
+    // types can be
     //  allocated multiple times across different tests.
     sbp_state_init(&sbp_state);
 
@@ -119,17 +116,23 @@ START_TEST( test_auto_check_sbp_navigation_5 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x202, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x202, &msg_callback,
+                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback,
+                                &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,2,2,246,215,20,20,46,39,0,21,48,255,255,52,117,255,255,216,211,254,255,0,0,9,1,50,137, };
+    u8 encoded_frame[] = {
+        85, 2,   2,   246, 215, 20,  20,  46,  39, 0, 21, 48, 255, 255,
+        52, 117, 255, 255, 216, 211, 254, 255, 0,  0, 9,  1,  50,  137,
+    };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_baseline_ecef_dep_a_t* test_msg = ( msg_baseline_ecef_dep_a_t* )test_msg_storage;
+    msg_baseline_ecef_dep_a_t *test_msg =
+        (msg_baseline_ecef_dep_a_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->accuracy = 0;
     test_msg->flags = 1;
@@ -138,66 +141,88 @@ START_TEST( test_auto_check_sbp_navigation_5 )
     test_msg->x = -53227;
     test_msg->y = -35532;
     test_msg->z = -76840;
-    sbp_send_message(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage, &dummy_write);
+    sbp_send_message(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage,
+                     &dummy_write);
 
-    ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
-        "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
+    ck_assert_msg(
+        test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame "
+        "from the spec is badly defined. Check your test spec");
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
-        "not enough data was written to dummy_buff");
+                  "not enough data was written to dummy_buff");
     ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
-        "frame was not encoded properly");
+                  "frame was not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
-          "sbp_process threw an error!");
+                    "sbp_process threw an error!");
     }
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
-        "msg_callback: one callback should have been logged");
+                  "msg_callback: one callback should have been logged");
     ck_assert_msg(last_msg.sender_id == 55286,
-        "msg_callback: sender_id decoded incorrectly");
+                  "msg_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
-        "msg_callback: len decoded incorrectly");
-    ck_assert_msg(memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8)
-          == 0,
+                  "msg_callback: len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
         "msg_callback: test data decoded incorrectly");
     ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "frame_callback: context pointer incorrectly passed");
+                  "frame_callback: context pointer incorrectly passed");
 
     ck_assert_msg(last_frame.n_callbacks_logged == 1,
-        "frame_callback: one callback should have been logged");
+                  "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 55286,
-        "frame_callback: sender_id decoded incorrectly");
+                  "frame_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_frame.msg_type == 0x202,
-        "frame_callback: msg_type decoded incorrectly");
+                  "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
-        "frame_callback: msg_len decoded incorrectly");
-    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
-        "frame_callback: test data decoded incorrectly");
+                  "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6,
+                         sizeof(encoded_frame) - 8) == 0,
+                  "frame_callback: test data decoded incorrectly");
     ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
-        "frame_callback: frame_len decoded incorrectly");
-    ck_assert_msg(memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+                  "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
         "frame_callback: frame decoded incorrectly");
     ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "frame_callback: context pointer incorrectly passed");
+                  "frame_callback: context pointer incorrectly passed");
 
-    // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_baseline_ecef_dep_a_t* check_msg = ( msg_baseline_ecef_dep_a_t *)((void *)last_msg.msg);
+    // Cast to expected message type - the +6 byte offset is where the payload
+    // starts
+    msg_baseline_ecef_dep_a_t *check_msg =
+        (msg_baseline_ecef_dep_a_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", check_msg->accuracy);
-    ck_assert_msg(check_msg->flags == 1, "incorrect value for flags, expected 1, is %d", check_msg->flags);
-    ck_assert_msg(check_msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", check_msg->n_sats);
-    ck_assert_msg(check_msg->tow == 2567700, "incorrect value for tow, expected 2567700, is %d", check_msg->tow);
-    ck_assert_msg(check_msg->x == -53227, "incorrect value for x, expected -53227, is %d", check_msg->x);
-    ck_assert_msg(check_msg->y == -35532, "incorrect value for y, expected -35532, is %d", check_msg->y);
-    ck_assert_msg(check_msg->z == -76840, "incorrect value for z, expected -76840, is %d", check_msg->z);
+    ck_assert_msg(check_msg->accuracy == 0,
+                  "incorrect value for accuracy, expected 0, is %d",
+                  check_msg->accuracy);
+    ck_assert_msg(check_msg->flags == 1,
+                  "incorrect value for flags, expected 1, is %d",
+                  check_msg->flags);
+    ck_assert_msg(check_msg->n_sats == 9,
+                  "incorrect value for n_sats, expected 9, is %d",
+                  check_msg->n_sats);
+    ck_assert_msg(check_msg->tow == 2567700,
+                  "incorrect value for tow, expected 2567700, is %d",
+                  check_msg->tow);
+    ck_assert_msg(check_msg->x == -53227,
+                  "incorrect value for x, expected -53227, is %d",
+                  check_msg->x);
+    ck_assert_msg(check_msg->y == -35532,
+                  "incorrect value for y, expected -35532, is %d",
+                  check_msg->y);
+    ck_assert_msg(check_msg->z == -76840,
+                  "incorrect value for z, expected -76840, is %d",
+                  check_msg->z);
   }
   // Test successful parsing of a message
   {
     // SBP parser state must be initialized before sbp_process is called.
-    // We re-initialize before every test so that callbacks for the same message types can be
+    // We re-initialize before every test so that callbacks for the same message
+    // types can be
     //  allocated multiple times across different tests.
     sbp_state_init(&sbp_state);
 
@@ -205,17 +230,23 @@ START_TEST( test_auto_check_sbp_navigation_5 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x202, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x202, &msg_callback,
+                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback,
+                                &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,2,2,246,215,20,120,46,39,0,58,49,255,255,49,116,255,255,134,211,254,255,0,0,9,1,227,155, };
+    u8 encoded_frame[] = {
+        85, 2,   2,   246, 215, 20,  120, 46,  39, 0, 58, 49, 255, 255,
+        49, 116, 255, 255, 134, 211, 254, 255, 0,  0, 9,  1,  227, 155,
+    };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_baseline_ecef_dep_a_t* test_msg = ( msg_baseline_ecef_dep_a_t* )test_msg_storage;
+    msg_baseline_ecef_dep_a_t *test_msg =
+        (msg_baseline_ecef_dep_a_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->accuracy = 0;
     test_msg->flags = 1;
@@ -224,66 +255,88 @@ START_TEST( test_auto_check_sbp_navigation_5 )
     test_msg->x = -52934;
     test_msg->y = -35791;
     test_msg->z = -76922;
-    sbp_send_message(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage, &dummy_write);
+    sbp_send_message(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage,
+                     &dummy_write);
 
-    ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
-        "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
+    ck_assert_msg(
+        test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame "
+        "from the spec is badly defined. Check your test spec");
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
-        "not enough data was written to dummy_buff");
+                  "not enough data was written to dummy_buff");
     ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
-        "frame was not encoded properly");
+                  "frame was not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
-          "sbp_process threw an error!");
+                    "sbp_process threw an error!");
     }
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
-        "msg_callback: one callback should have been logged");
+                  "msg_callback: one callback should have been logged");
     ck_assert_msg(last_msg.sender_id == 55286,
-        "msg_callback: sender_id decoded incorrectly");
+                  "msg_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
-        "msg_callback: len decoded incorrectly");
-    ck_assert_msg(memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8)
-          == 0,
+                  "msg_callback: len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
         "msg_callback: test data decoded incorrectly");
     ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "frame_callback: context pointer incorrectly passed");
+                  "frame_callback: context pointer incorrectly passed");
 
     ck_assert_msg(last_frame.n_callbacks_logged == 1,
-        "frame_callback: one callback should have been logged");
+                  "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 55286,
-        "frame_callback: sender_id decoded incorrectly");
+                  "frame_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_frame.msg_type == 0x202,
-        "frame_callback: msg_type decoded incorrectly");
+                  "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
-        "frame_callback: msg_len decoded incorrectly");
-    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
-        "frame_callback: test data decoded incorrectly");
+                  "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6,
+                         sizeof(encoded_frame) - 8) == 0,
+                  "frame_callback: test data decoded incorrectly");
     ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
-        "frame_callback: frame_len decoded incorrectly");
-    ck_assert_msg(memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+                  "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
         "frame_callback: frame decoded incorrectly");
     ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "frame_callback: context pointer incorrectly passed");
+                  "frame_callback: context pointer incorrectly passed");
 
-    // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_baseline_ecef_dep_a_t* check_msg = ( msg_baseline_ecef_dep_a_t *)((void *)last_msg.msg);
+    // Cast to expected message type - the +6 byte offset is where the payload
+    // starts
+    msg_baseline_ecef_dep_a_t *check_msg =
+        (msg_baseline_ecef_dep_a_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", check_msg->accuracy);
-    ck_assert_msg(check_msg->flags == 1, "incorrect value for flags, expected 1, is %d", check_msg->flags);
-    ck_assert_msg(check_msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", check_msg->n_sats);
-    ck_assert_msg(check_msg->tow == 2567800, "incorrect value for tow, expected 2567800, is %d", check_msg->tow);
-    ck_assert_msg(check_msg->x == -52934, "incorrect value for x, expected -52934, is %d", check_msg->x);
-    ck_assert_msg(check_msg->y == -35791, "incorrect value for y, expected -35791, is %d", check_msg->y);
-    ck_assert_msg(check_msg->z == -76922, "incorrect value for z, expected -76922, is %d", check_msg->z);
+    ck_assert_msg(check_msg->accuracy == 0,
+                  "incorrect value for accuracy, expected 0, is %d",
+                  check_msg->accuracy);
+    ck_assert_msg(check_msg->flags == 1,
+                  "incorrect value for flags, expected 1, is %d",
+                  check_msg->flags);
+    ck_assert_msg(check_msg->n_sats == 9,
+                  "incorrect value for n_sats, expected 9, is %d",
+                  check_msg->n_sats);
+    ck_assert_msg(check_msg->tow == 2567800,
+                  "incorrect value for tow, expected 2567800, is %d",
+                  check_msg->tow);
+    ck_assert_msg(check_msg->x == -52934,
+                  "incorrect value for x, expected -52934, is %d",
+                  check_msg->x);
+    ck_assert_msg(check_msg->y == -35791,
+                  "incorrect value for y, expected -35791, is %d",
+                  check_msg->y);
+    ck_assert_msg(check_msg->z == -76922,
+                  "incorrect value for z, expected -76922, is %d",
+                  check_msg->z);
   }
   // Test successful parsing of a message
   {
     // SBP parser state must be initialized before sbp_process is called.
-    // We re-initialize before every test so that callbacks for the same message types can be
+    // We re-initialize before every test so that callbacks for the same message
+    // types can be
     //  allocated multiple times across different tests.
     sbp_state_init(&sbp_state);
 
@@ -291,17 +344,23 @@ START_TEST( test_auto_check_sbp_navigation_5 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x202, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x202, &msg_callback,
+                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback,
+                                &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,2,2,246,215,20,220,46,39,0,97,50,255,255,47,115,255,255,52,211,254,255,0,0,9,1,61,126, };
+    u8 encoded_frame[] = {
+        85, 2,   2,   246, 215, 20,  220, 46,  39, 0, 97, 50, 255, 255,
+        47, 115, 255, 255, 52,  211, 254, 255, 0,  0, 9,  1,  61,  126,
+    };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_baseline_ecef_dep_a_t* test_msg = ( msg_baseline_ecef_dep_a_t* )test_msg_storage;
+    msg_baseline_ecef_dep_a_t *test_msg =
+        (msg_baseline_ecef_dep_a_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->accuracy = 0;
     test_msg->flags = 1;
@@ -310,66 +369,88 @@ START_TEST( test_auto_check_sbp_navigation_5 )
     test_msg->x = -52639;
     test_msg->y = -36049;
     test_msg->z = -77004;
-    sbp_send_message(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage, &dummy_write);
+    sbp_send_message(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage,
+                     &dummy_write);
 
-    ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
-        "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
+    ck_assert_msg(
+        test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame "
+        "from the spec is badly defined. Check your test spec");
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
-        "not enough data was written to dummy_buff");
+                  "not enough data was written to dummy_buff");
     ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
-        "frame was not encoded properly");
+                  "frame was not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
-          "sbp_process threw an error!");
+                    "sbp_process threw an error!");
     }
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
-        "msg_callback: one callback should have been logged");
+                  "msg_callback: one callback should have been logged");
     ck_assert_msg(last_msg.sender_id == 55286,
-        "msg_callback: sender_id decoded incorrectly");
+                  "msg_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
-        "msg_callback: len decoded incorrectly");
-    ck_assert_msg(memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8)
-          == 0,
+                  "msg_callback: len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
         "msg_callback: test data decoded incorrectly");
     ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "frame_callback: context pointer incorrectly passed");
+                  "frame_callback: context pointer incorrectly passed");
 
     ck_assert_msg(last_frame.n_callbacks_logged == 1,
-        "frame_callback: one callback should have been logged");
+                  "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 55286,
-        "frame_callback: sender_id decoded incorrectly");
+                  "frame_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_frame.msg_type == 0x202,
-        "frame_callback: msg_type decoded incorrectly");
+                  "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
-        "frame_callback: msg_len decoded incorrectly");
-    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
-        "frame_callback: test data decoded incorrectly");
+                  "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6,
+                         sizeof(encoded_frame) - 8) == 0,
+                  "frame_callback: test data decoded incorrectly");
     ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
-        "frame_callback: frame_len decoded incorrectly");
-    ck_assert_msg(memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+                  "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
         "frame_callback: frame decoded incorrectly");
     ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "frame_callback: context pointer incorrectly passed");
+                  "frame_callback: context pointer incorrectly passed");
 
-    // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_baseline_ecef_dep_a_t* check_msg = ( msg_baseline_ecef_dep_a_t *)((void *)last_msg.msg);
+    // Cast to expected message type - the +6 byte offset is where the payload
+    // starts
+    msg_baseline_ecef_dep_a_t *check_msg =
+        (msg_baseline_ecef_dep_a_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", check_msg->accuracy);
-    ck_assert_msg(check_msg->flags == 1, "incorrect value for flags, expected 1, is %d", check_msg->flags);
-    ck_assert_msg(check_msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", check_msg->n_sats);
-    ck_assert_msg(check_msg->tow == 2567900, "incorrect value for tow, expected 2567900, is %d", check_msg->tow);
-    ck_assert_msg(check_msg->x == -52639, "incorrect value for x, expected -52639, is %d", check_msg->x);
-    ck_assert_msg(check_msg->y == -36049, "incorrect value for y, expected -36049, is %d", check_msg->y);
-    ck_assert_msg(check_msg->z == -77004, "incorrect value for z, expected -77004, is %d", check_msg->z);
+    ck_assert_msg(check_msg->accuracy == 0,
+                  "incorrect value for accuracy, expected 0, is %d",
+                  check_msg->accuracy);
+    ck_assert_msg(check_msg->flags == 1,
+                  "incorrect value for flags, expected 1, is %d",
+                  check_msg->flags);
+    ck_assert_msg(check_msg->n_sats == 9,
+                  "incorrect value for n_sats, expected 9, is %d",
+                  check_msg->n_sats);
+    ck_assert_msg(check_msg->tow == 2567900,
+                  "incorrect value for tow, expected 2567900, is %d",
+                  check_msg->tow);
+    ck_assert_msg(check_msg->x == -52639,
+                  "incorrect value for x, expected -52639, is %d",
+                  check_msg->x);
+    ck_assert_msg(check_msg->y == -36049,
+                  "incorrect value for y, expected -36049, is %d",
+                  check_msg->y);
+    ck_assert_msg(check_msg->z == -77004,
+                  "incorrect value for z, expected -77004, is %d",
+                  check_msg->z);
   }
   // Test successful parsing of a message
   {
     // SBP parser state must be initialized before sbp_process is called.
-    // We re-initialize before every test so that callbacks for the same message types can be
+    // We re-initialize before every test so that callbacks for the same message
+    // types can be
     //  allocated multiple times across different tests.
     sbp_state_init(&sbp_state);
 
@@ -377,17 +458,23 @@ START_TEST( test_auto_check_sbp_navigation_5 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x202, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x202, &msg_callback,
+                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback,
+                                &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,2,2,246,215,20,64,47,39,0,136,51,255,255,45,114,255,255,228,210,254,255,0,0,9,1,200,79, };
+    u8 encoded_frame[] = {
+        85, 2,   2,   246, 215, 20,  64,  47,  39, 0, 136, 51, 255, 255,
+        45, 114, 255, 255, 228, 210, 254, 255, 0,  0, 9,   1,  200, 79,
+    };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_baseline_ecef_dep_a_t* test_msg = ( msg_baseline_ecef_dep_a_t* )test_msg_storage;
+    msg_baseline_ecef_dep_a_t *test_msg =
+        (msg_baseline_ecef_dep_a_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->accuracy = 0;
     test_msg->flags = 1;
@@ -396,66 +483,88 @@ START_TEST( test_auto_check_sbp_navigation_5 )
     test_msg->x = -52344;
     test_msg->y = -36307;
     test_msg->z = -77084;
-    sbp_send_message(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage, &dummy_write);
+    sbp_send_message(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage,
+                     &dummy_write);
 
-    ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
-        "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
+    ck_assert_msg(
+        test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame "
+        "from the spec is badly defined. Check your test spec");
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
-        "not enough data was written to dummy_buff");
+                  "not enough data was written to dummy_buff");
     ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
-        "frame was not encoded properly");
+                  "frame was not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
-          "sbp_process threw an error!");
+                    "sbp_process threw an error!");
     }
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
-        "msg_callback: one callback should have been logged");
+                  "msg_callback: one callback should have been logged");
     ck_assert_msg(last_msg.sender_id == 55286,
-        "msg_callback: sender_id decoded incorrectly");
+                  "msg_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
-        "msg_callback: len decoded incorrectly");
-    ck_assert_msg(memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8)
-          == 0,
+                  "msg_callback: len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
         "msg_callback: test data decoded incorrectly");
     ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "frame_callback: context pointer incorrectly passed");
+                  "frame_callback: context pointer incorrectly passed");
 
     ck_assert_msg(last_frame.n_callbacks_logged == 1,
-        "frame_callback: one callback should have been logged");
+                  "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 55286,
-        "frame_callback: sender_id decoded incorrectly");
+                  "frame_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_frame.msg_type == 0x202,
-        "frame_callback: msg_type decoded incorrectly");
+                  "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
-        "frame_callback: msg_len decoded incorrectly");
-    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
-        "frame_callback: test data decoded incorrectly");
+                  "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6,
+                         sizeof(encoded_frame) - 8) == 0,
+                  "frame_callback: test data decoded incorrectly");
     ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
-        "frame_callback: frame_len decoded incorrectly");
-    ck_assert_msg(memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+                  "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
         "frame_callback: frame decoded incorrectly");
     ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "frame_callback: context pointer incorrectly passed");
+                  "frame_callback: context pointer incorrectly passed");
 
-    // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_baseline_ecef_dep_a_t* check_msg = ( msg_baseline_ecef_dep_a_t *)((void *)last_msg.msg);
+    // Cast to expected message type - the +6 byte offset is where the payload
+    // starts
+    msg_baseline_ecef_dep_a_t *check_msg =
+        (msg_baseline_ecef_dep_a_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", check_msg->accuracy);
-    ck_assert_msg(check_msg->flags == 1, "incorrect value for flags, expected 1, is %d", check_msg->flags);
-    ck_assert_msg(check_msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", check_msg->n_sats);
-    ck_assert_msg(check_msg->tow == 2568000, "incorrect value for tow, expected 2568000, is %d", check_msg->tow);
-    ck_assert_msg(check_msg->x == -52344, "incorrect value for x, expected -52344, is %d", check_msg->x);
-    ck_assert_msg(check_msg->y == -36307, "incorrect value for y, expected -36307, is %d", check_msg->y);
-    ck_assert_msg(check_msg->z == -77084, "incorrect value for z, expected -77084, is %d", check_msg->z);
+    ck_assert_msg(check_msg->accuracy == 0,
+                  "incorrect value for accuracy, expected 0, is %d",
+                  check_msg->accuracy);
+    ck_assert_msg(check_msg->flags == 1,
+                  "incorrect value for flags, expected 1, is %d",
+                  check_msg->flags);
+    ck_assert_msg(check_msg->n_sats == 9,
+                  "incorrect value for n_sats, expected 9, is %d",
+                  check_msg->n_sats);
+    ck_assert_msg(check_msg->tow == 2568000,
+                  "incorrect value for tow, expected 2568000, is %d",
+                  check_msg->tow);
+    ck_assert_msg(check_msg->x == -52344,
+                  "incorrect value for x, expected -52344, is %d",
+                  check_msg->x);
+    ck_assert_msg(check_msg->y == -36307,
+                  "incorrect value for y, expected -36307, is %d",
+                  check_msg->y);
+    ck_assert_msg(check_msg->z == -77084,
+                  "incorrect value for z, expected -77084, is %d",
+                  check_msg->z);
   }
   // Test successful parsing of a message
   {
     // SBP parser state must be initialized before sbp_process is called.
-    // We re-initialize before every test so that callbacks for the same message types can be
+    // We re-initialize before every test so that callbacks for the same message
+    // types can be
     //  allocated multiple times across different tests.
     sbp_state_init(&sbp_state);
 
@@ -463,17 +572,23 @@ START_TEST( test_auto_check_sbp_navigation_5 )
 
     logging_reset();
 
-    sbp_register_callback(&sbp_state, 0x202, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
-    sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_callback(&sbp_state, 0x202, &msg_callback,
+                          &DUMMY_MEMORY_FOR_CALLBACKS, &n);
+    sbp_register_frame_callback(&sbp_state, 0x202, &frame_callback,
+                                &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
 
-    u8 encoded_frame[] = {85,2,2,246,215,20,164,47,39,0,176,52,255,255,44,113,255,255,149,210,254,255,0,0,9,1,104,24, };
+    u8 encoded_frame[] = {
+        85, 2,   2,   246, 215, 20,  164, 47,  39, 0, 176, 52, 255, 255,
+        44, 113, 255, 255, 149, 210, 254, 255, 0,  0, 9,   1,  104, 24,
+    };
 
     dummy_reset();
 
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_baseline_ecef_dep_a_t* test_msg = ( msg_baseline_ecef_dep_a_t* )test_msg_storage;
+    msg_baseline_ecef_dep_a_t *test_msg =
+        (msg_baseline_ecef_dep_a_t *)test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->accuracy = 0;
     test_msg->flags = 1;
@@ -482,68 +597,89 @@ START_TEST( test_auto_check_sbp_navigation_5 )
     test_msg->x = -52048;
     test_msg->y = -36564;
     test_msg->z = -77163;
-    sbp_send_message(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage, &dummy_write);
+    sbp_send_message(&sbp_state, 0x202, 55286, test_msg_len, test_msg_storage,
+                     &dummy_write);
 
-    ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
-        "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
+    ck_assert_msg(
+        test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame "
+        "from the spec is badly defined. Check your test spec");
 
     ck_assert_msg(dummy_wr == sizeof(encoded_frame),
-        "not enough data was written to dummy_buff");
+                  "not enough data was written to dummy_buff");
     ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
-        "frame was not encoded properly");
+                  "frame was not encoded properly");
 
     while (dummy_rd < dummy_wr) {
       ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
-          "sbp_process threw an error!");
+                    "sbp_process threw an error!");
     }
 
     ck_assert_msg(last_msg.n_callbacks_logged == 1,
-        "msg_callback: one callback should have been logged");
+                  "msg_callback: one callback should have been logged");
     ck_assert_msg(last_msg.sender_id == 55286,
-        "msg_callback: sender_id decoded incorrectly");
+                  "msg_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
-        "msg_callback: len decoded incorrectly");
-    ck_assert_msg(memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8)
-          == 0,
+                  "msg_callback: len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
         "msg_callback: test data decoded incorrectly");
     ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "frame_callback: context pointer incorrectly passed");
+                  "frame_callback: context pointer incorrectly passed");
 
     ck_assert_msg(last_frame.n_callbacks_logged == 1,
-        "frame_callback: one callback should have been logged");
+                  "frame_callback: one callback should have been logged");
     ck_assert_msg(last_frame.sender_id == 55286,
-        "frame_callback: sender_id decoded incorrectly");
+                  "frame_callback: sender_id decoded incorrectly");
     ck_assert_msg(last_frame.msg_type == 0x202,
-        "frame_callback: msg_type decoded incorrectly");
+                  "frame_callback: msg_type decoded incorrectly");
     ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
-        "frame_callback: msg_len decoded incorrectly");
-    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
-        "frame_callback: test data decoded incorrectly");
+                  "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6,
+                         sizeof(encoded_frame) - 8) == 0,
+                  "frame_callback: test data decoded incorrectly");
     ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
-        "frame_callback: frame_len decoded incorrectly");
-    ck_assert_msg(memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+                  "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(
+        memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
         "frame_callback: frame decoded incorrectly");
     ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
-        "frame_callback: context pointer incorrectly passed");
+                  "frame_callback: context pointer incorrectly passed");
 
-    // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_baseline_ecef_dep_a_t* check_msg = ( msg_baseline_ecef_dep_a_t *)((void *)last_msg.msg);
+    // Cast to expected message type - the +6 byte offset is where the payload
+    // starts
+    msg_baseline_ecef_dep_a_t *check_msg =
+        (msg_baseline_ecef_dep_a_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
-    ck_assert_msg(check_msg->accuracy == 0, "incorrect value for accuracy, expected 0, is %d", check_msg->accuracy);
-    ck_assert_msg(check_msg->flags == 1, "incorrect value for flags, expected 1, is %d", check_msg->flags);
-    ck_assert_msg(check_msg->n_sats == 9, "incorrect value for n_sats, expected 9, is %d", check_msg->n_sats);
-    ck_assert_msg(check_msg->tow == 2568100, "incorrect value for tow, expected 2568100, is %d", check_msg->tow);
-    ck_assert_msg(check_msg->x == -52048, "incorrect value for x, expected -52048, is %d", check_msg->x);
-    ck_assert_msg(check_msg->y == -36564, "incorrect value for y, expected -36564, is %d", check_msg->y);
-    ck_assert_msg(check_msg->z == -77163, "incorrect value for z, expected -77163, is %d", check_msg->z);
+    ck_assert_msg(check_msg->accuracy == 0,
+                  "incorrect value for accuracy, expected 0, is %d",
+                  check_msg->accuracy);
+    ck_assert_msg(check_msg->flags == 1,
+                  "incorrect value for flags, expected 1, is %d",
+                  check_msg->flags);
+    ck_assert_msg(check_msg->n_sats == 9,
+                  "incorrect value for n_sats, expected 9, is %d",
+                  check_msg->n_sats);
+    ck_assert_msg(check_msg->tow == 2568100,
+                  "incorrect value for tow, expected 2568100, is %d",
+                  check_msg->tow);
+    ck_assert_msg(check_msg->x == -52048,
+                  "incorrect value for x, expected -52048, is %d",
+                  check_msg->x);
+    ck_assert_msg(check_msg->y == -36564,
+                  "incorrect value for y, expected -36564, is %d",
+                  check_msg->y);
+    ck_assert_msg(check_msg->z == -77163,
+                  "incorrect value for z, expected -77163, is %d",
+                  check_msg->z);
   }
 }
 END_TEST
 
-Suite* auto_check_sbp_navigation_5_suite(void)
-{
-  Suite *s = suite_create("SBP generated test suite: auto_check_sbp_navigation_5");
+Suite *auto_check_sbp_navigation_5_suite(void) {
+  Suite *s =
+      suite_create("SBP generated test suite: auto_check_sbp_navigation_5");
   TCase *tc_acq = tcase_create("Automated_Suite_auto_check_sbp_navigation_5");
   tcase_add_test(tc_acq, test_auto_check_sbp_navigation_5);
   suite_add_tcase(s, tc_acq);

@@ -31,8 +31,8 @@ import org.json.JSONArray;
  *
  * The precise code biases message is to be added
  * to the pseudorange of the corresponding signal
- * to get corrected pseudorange. It is an
- * equivalent to the 1059 / 1065 RTCM message types */
+ * to get corrected pseudorange. It is typically
+ * an equivalent to the 1059 and 1065 RTCM message types */
 
 public class MsgSsrCodeBiases extends SBPMessage {
     public static final int TYPE = 0x05E1;
