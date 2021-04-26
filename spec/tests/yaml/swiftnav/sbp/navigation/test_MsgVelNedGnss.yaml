@@ -1,0 +1,29 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgVelNedGnss
+generated_on: 2020-04-23 00:00:00.00 # manually generated
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      tow: 501868200
+      n: -5
+      e: 0
+      d: -10
+      h_accuracy: 40
+      v_accuracy: 89
+      n_sats: 21
+      flags: 2
+    module: sbp.navigation
+    name: MsgVelNEDGnss
+  msg_type: '0x22e'
+  raw_json: '{"tow":501868200,"n":-5,"e":0,"d":-10,"h_accuracy":40,"v_accuracy":89,"n_sats":21,"flags":2,"preamble":85,"msg_type":558,"sender":4096,"payload":"qObpHfv///8AAAAA9v///ygAWQAVAg==","crc":43875,"length":22}'
+  raw_packet: VS4CABAWqObpHfv///8AAAAA9v///ygAWQAVAmOr
+  sbp:
+    crc: '0xab63'
+    length: 0x16
+    msg_type: '0x22e'
+    payload: qObpHfv///8AAAAA9v///ygAWQAVAg==
+    preamble: '0x55'
+    sender: '0x1000'
+

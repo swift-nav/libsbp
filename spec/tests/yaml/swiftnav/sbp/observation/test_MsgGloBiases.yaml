@@ -1,0 +1,25 @@
+---
+description: Unit tests for swiftnav.sbp.observation MsgGloBiases
+generated_on: 2020-04-22 00:00:00.00 # manually generated
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      mask: 0
+      l1ca_bias: 0
+      l1p_bias: 0
+      l2ca_bias: 0
+      l2p_bias: 0
+    module: sbp.observation
+    name: MsgGloBiases
+  msg_type: '0x75'
+  raw_json: '{"mask":0,"l1ca_bias":0,"l1p_bias":0,"l2ca_bias":0,"l2p_bias":0,"preamble":85,"msg_type":117,"sender":0,"payload":"AAAAAAAAAAAA","crc":54093,"length":9}'
+  raw_packet: VXUAAAAJAAAAAAAAAAAATdM=
+  sbp:
+    crc: '0xd34d'
+    length: 9
+    payload: AAAAAAAAAAAA
+    msg_type: '0x75'
+    preamble: '0x55'
+    sender: '0'

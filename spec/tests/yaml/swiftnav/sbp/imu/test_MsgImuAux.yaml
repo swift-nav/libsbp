@@ -1,0 +1,24 @@
+---
+description: Unit tests for swiftnav.sbp.imu MsgImuAux
+generated_on: 2020-04-23 00:00:00.00 # manually generated
+package: sbp.imu
+tests:
+
+- msg:
+    fields:
+      imu_type: 1
+      temp: 2804
+      imu_conf: 66
+    module: sbp.imu
+    name: MsgImuAux
+  msg_type: '0x901'
+  raw_json: '{"imu_type":1,"temp":2804,"imu_conf":66,"preamble":85,"msg_type":2305,"sender":4660,"payload":"AfQKQg==","crc":64712,"length":4}'
+  raw_packet: VQEJNBIEAfQKQsj8
+  sbp:
+    crc: '0xfcc8'
+    length: 4
+    msg_type: '0x901'
+    payload: AfQKQg==
+    preamble: '0x55'
+    sender: '0x1234'
+

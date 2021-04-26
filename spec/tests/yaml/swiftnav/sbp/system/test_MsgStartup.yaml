@@ -22,5 +22,23 @@ tests:
     payload: AAAAAA==
     preamble: '0x55'
     sender: '0x42'
+
+- msg:
+    fields:
+      reserved: 0
+    module: sbp.system
+    name: MsgStartup
+  msg_type: '0xff00'
+  raw_json: '{"reserved": 0, "cause":0, "startup_type":0, "sender": 1219, "msg_type": 65280, "crc": 46463, "length":
+    4, "preamble": 85, "payload": "AAAAAA=="}'
+  raw_packet: VQD/wwQEAAAAAH+1
+  sbp:
+    crc: '0xb57f'
+    length: 4
+    msg_type: '0xff00'
+    payload: AAAAAA==
+    preamble: '0x55'
+    sender: '0x4c3'
+
 version: 2.0
 ...

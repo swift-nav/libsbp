@@ -1,0 +1,53 @@
+---
+description: Unit tests for swiftnav.sbp.sbas MsgSbasRaw
+generated_on: 2020-04-22 00:00:00.00 # manually generated
+package: sbp.sbas
+tests:
+
+- msg:
+    fields:
+      sid: 
+        sat: 131
+        code: 2
+      tow: 501867721
+      message_type: 4
+      data: 
+        - 23
+        - 255
+        - 0
+        - 23
+        - 255
+        - 0
+        - 23
+        - 255
+        - 127
+        - 240
+        - 2
+        - 255
+        - 192
+        - 3
+        - 127
+        - 247
+        - 255
+        - 127
+        - 247
+        - 255
+        - 229
+        - 229
+        - 238
+        - 170
+        - 175
+        - 255
+        - 240
+    module: sbp.sbas
+    name: MsgSbasRaw
+  msg_type: '0x7777'
+  raw_json: '{"sid":{"sat":131,"code":2},"tow":501867721,"message_type":4,"data":[23,255,0,23,255,0,23,255,127,240,2,255,192,3,127,247,255,127,247,255,229,229,238,170,175,255,240],"preamble":85,"msg_type":30583,"sender":51228,"payload":"gwLJ5OkdBBf/ABf/ABf/f/AC/8ADf/f/f/f/5eXuqq//8A==","crc":3751,"length":34}'
+  raw_packet: VXd3HMgigwLJ5OkdBBf/ABf/ABf/f/AC/8ADf/f/f/f/5eXuqq//8KcO
+  sbp:
+    crc: '0xea7'
+    length: 0x22
+    payload: gwLJ5OkdBBf/ABf/ABf/f/AC/8ADf/f/f/f/5eXuqq//8A==
+    msg_type: '0x7777'
+    preamble: '0x55'
+    sender: '0xc81c'
