@@ -2069,6 +2069,10 @@ definitions:
               type: u32
               units: ms
               desc: GPS Time of Week
+          - wn:
+              type: s16
+              units: weeks
+              desc: GPS week number
           - vpl:
               type: u16
               units: cm
