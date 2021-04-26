@@ -32,33 +32,34 @@
 SBP_PACK_START
 
 ((* for m in msgs *))
-((*- if m.fields *))
-((*- for f in m.fields *))
-((*- if f.options.fields *))
-(((f|create_bitfield_macros(m.identifier))))
-((*- endif *))
-((*- endfor *))
-((*- endif *))
 ((*- if m.desc *))
 /** (((m.short_desc)))
  *
 (((m.desc|commentify)))
  */
 ((*- endif *))
-typedef struct SBP_ATTR_PACKED {
 ((*- if m.is_real_message *))
 #define SBP_(((m.identifier.ljust(max_msgid_len)))) ((('0x%04X'|format(m.sbp_id))))
 ((*- endif *))
-  ((* for f in m.fields *))
+((*- if m.fields *))
+((*- if m.sbp_id or m.embedded_type *))
+((*- for f in m.fields *))
+((*- if f.options.fields *))
+(((f|create_bitfield_macros(m.identifier))))
+((*- endif *))
+((*- endfor *))
+((*- endif *))
 
+typedef struct SBP_ATTR_PACKED {
+  ((*- for f in m.fields *))
   ((*- if f.desc *))
-  /** 
-   (((f.desc|commentify))) ((* if f.units *))[(((f.units)))] ((* endif *))
-   */
-  ((*- endif *))
+  (((f|mk_id))) ((((f|mk_size).ljust(m.max_fid_len+4)))) /**< (((f.desc))) ((* if f.units *))[(((f.units)))] ((* endif *))*/
+  ((*- else *))
   (((f|mk_id))) ((((f|mk_size).ljust(m.max_fid_len+4))))
-  ((* endfor *))
+  ((*- endif *))
+  ((*- endfor *))
 } (((m.identifier|convert)));
+((*- endif *))
 
 ((* endfor *))
 /** \} */
