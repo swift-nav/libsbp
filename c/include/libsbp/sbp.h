@@ -81,6 +81,10 @@ typedef void (*sbp_msg_callback_t)(u16 sender_id, u8 len, u8 msg[],
 typedef void (*sbp_frame_callback_t)(u16 sender_id, u16 msg_type,
                                      u8 payload_len, u8 payload[],
                                      u16 frame_len, u8 frame[], void *context);
+typedef union {
+  sbp_msg_callback_t msg;
+  sbp_frame_callback_t frame;
+} sbp_callback_t;
 
 /** SBP callback type enum:
  * SBP_PAYLOAD_CALLBACK are the original callbacks in libsbp without framing
@@ -104,9 +108,9 @@ typedef enum sbp_cb_type sbp_cb_type;
  *       and sbp_register_frame_callback().
  */
 typedef struct sbp_msg_callbacks_node {
-  u16 msg_type;  /**< Message ID associated with callback. */
-  void *cb;      /**< Pointer to callback function. */
-  void *context; /**< Pointer to a context */
+  u16 msg_type;      /**< Message ID associated with callback. */
+  sbp_callback_t cb; /**< Pointer to callback function. */
+  void *context;     /**< Pointer to a context */
   struct sbp_msg_callbacks_node *next; /**< Pointer to next node in list. */
   sbp_cb_type cb_type; /**< Enum that holds the type of callback. */
 } sbp_msg_callbacks_node_t;

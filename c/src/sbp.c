@@ -178,11 +178,13 @@
  *         `SBP_CALLBACK_ERROR` if the if callback was already
  *         registered for that message type.
  */
-static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type, void *cb,
-                                        sbp_cb_type cb_type, void *context,
+static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type,
+                                        sbp_callback_t cb, sbp_cb_type cb_type,
+                                        void *context,
                                         sbp_msg_callbacks_node_t *node) {
   /* Check our callback function pointer isn't NULL. */
-  if (cb == 0) {
+  if ((cb_type == SBP_PAYLOAD_CALLBACK && cb.msg == 0) ||
+      (cb_type == SBP_FRAME_CALLBACK && cb.frame == 0)) {
     return SBP_NULL_ERROR;
   }
 
@@ -193,17 +195,29 @@ static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type, void *cb,
 
   for (sbp_msg_callbacks_node_t *n = s->sbp_msg_callbacks_head; n;
        n = n->next) {
-    if ((n == node) || ((n->cb == cb) && (n->msg_type == msg_type) &&
-                        (n->context == context) && n->cb_type == cb_type)) {
+    if (n == node) {
       return SBP_CALLBACK_ERROR;
+    }
+    if ((n->msg_type == msg_type) && (n->context == context) &&
+        (n->cb_type == cb_type)) {
+      if ((cb_type == SBP_PAYLOAD_CALLBACK) && (n->cb.msg == cb.msg)) {
+        return SBP_CALLBACK_ERROR;
+      }
+      if ((cb_type == SBP_FRAME_CALLBACK) && (n->cb.frame == cb.frame)) {
+        return SBP_CALLBACK_ERROR;
+      }
     }
   }
 
   /* Fill in our new sbp_msg_callback_node_t. */
   node->msg_type = msg_type;
-  node->cb = cb;
   node->context = context;
   node->cb_type = cb_type;
+  if (cb_type == SBP_PAYLOAD_CALLBACK) {
+    node->cb.msg = cb.msg;
+  } else if (cb_type == SBP_FRAME_CALLBACK) {
+    node->cb.frame = cb.frame;
+  }
   /* The next pointer is set to NULL, i.e. this
    * will be the new end of the linked list.
    */
@@ -267,8 +281,10 @@ s8 sbp_remove_callback(sbp_state_t *s, sbp_msg_callbacks_node_t *node) {
 s8 sbp_register_frame_callback(sbp_state_t *s, u16 msg_type,
                                sbp_frame_callback_t cb, void *context,
                                sbp_msg_callbacks_node_t *node) {
-  return sbp_register_callback_generic(s, msg_type, cb, SBP_FRAME_CALLBACK,
-                                       context, node);
+  sbp_callback_t callback;
+  callback.frame = cb;
+  return sbp_register_callback_generic(s, msg_type, callback,
+                                       SBP_FRAME_CALLBACK, context, node);
 }
 
 /** Register a frame callback for ANY message.
@@ -305,8 +321,10 @@ s8 sbp_register_all_msg_callback(sbp_state_t *s, sbp_frame_callback_t cb,
  */
 s8 sbp_register_callback(sbp_state_t *s, u16 msg_type, sbp_msg_callback_t cb,
                          void *context, sbp_msg_callbacks_node_t *node) {
-  return sbp_register_callback_generic(s, msg_type, cb, SBP_PAYLOAD_CALLBACK,
-                                       context, node);
+  sbp_callback_t callback;
+  callback.msg = cb;
+  return sbp_register_callback_generic(s, msg_type, callback,
+                                       SBP_PAYLOAD_CALLBACK, context, node);
 }
 
 /** Clear all registered callbacks.
@@ -591,14 +609,12 @@ s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
         ((node->msg_type == msg_type) || (node->msg_type == SBP_MSG_ALL))) {
       switch (node->cb_type) {
         case SBP_FRAME_CALLBACK: {
-          ((sbp_frame_callback_t)(node->cb))(sender_id, msg_type, payload_len,
-                                             payload, frame_len, frame,
-                                             node->context);
+          node->cb.frame(sender_id, msg_type, payload_len, payload, frame_len,
+                         frame, node->context);
           ret = SBP_OK_CALLBACK_EXECUTED;
         } break;
         case SBP_PAYLOAD_CALLBACK: {
-          ((sbp_msg_callback_t)(node->cb))(sender_id, payload_len, payload,
-                                           node->context);
+          node->cb.msg(sender_id, payload_len, payload, node->context);
           ret = SBP_OK_CALLBACK_EXECUTED;
         } break;
         case SBP_CALLBACK_TYPE_COUNT:
