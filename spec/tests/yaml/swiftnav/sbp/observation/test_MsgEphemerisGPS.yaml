@@ -1,0 +1,56 @@
+---
+description: Unit tests for swiftnav.sbp.observation MsgEphemerisGPS
+generated_on: 2020-04-23 00:00:00.00 # manually generated
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      common: 
+        sid:
+          sat: 22
+          code: 0
+        toe:
+          tow: 446384
+          wn: 2154
+        ura: 2.0
+        fit_interval: 14400
+        valid: 1
+        health_bits: 0
+      tgd: -1.7695128917694092e-08
+      c_rs: -52.3125
+      c_rc: 308.625
+      c_uc: -2.7436763048171997e-06
+      c_us: 3.1366944313049316e-06
+      c_ic: 7.450580596923828e-09
+      c_is: -1.1548399925231934e-07
+      dn: 5.694522914022375e-09
+      m0: -0.02200078842114688
+      ecc: 0.007072207052260637
+      sqrta: 5153.550029754639
+      omega0: -1.8731818448797617
+      omegadot: -8.903585155774196e-09
+      w: -0.9893036629599647
+      inc: 0.9341514480259797
+      inc_dot: -4.035882396415757e-11
+      af0: -0.0006315018981695175
+      af1: 8.981260180007666e-12
+      af2: 0.0
+      toc: 
+        tow: 446384
+        wn: 2154
+      iode: 45
+      iodc: 45
+    module: sbp.observation
+    name: MsgEphemerisGPS
+  msg_type: '0x8a'
+  raw_json: '{"common":{"sid":{"sat":22,"code":0},"toe":{"tow":446384,"wn":2154},"ura":2.0,"fit_interval":14400,"valid":1,"health_bits":0},"tgd":-1.7695128917694092e-08,"c_rs":-52.3125,"c_rc":308.625,"c_uc":-2.7436763048171997e-06,"c_us":3.1366944313049316e-06,"c_ic":7.450580596923828e-09,"c_is":-1.1548399925231934e-07,"dn":5.694522914022375e-09,"m0":-0.02200078842114688,"ecc":0.007072207052260637,"sqrta":5153.550029754639,"omega0":-1.8731818448797617,"omegadot":-8.903585155774196e-09,"w":-0.9893036629599647,"inc":0.9341514480259797,"inc_dot":-4.035882396415757e-11,"af0":-0.0006315018981695175,"af1":8.981260180007666e-12,"af2":0.0,"toc":{"tow":446384,"wn":2154},"iode":45,"iodc":45,"preamble":85,"msg_type":138,"sender":2314,"payload":"FgCwzwYAaggAAABAQDgAAAEAAACYsgBAUcIAUJpDACA4tgCAUjYAAAAyAAD4s3LYYLQxdTg+jikF61+Hlr8AAAAgv/d8PwAAwM6MIbRAKYOzho34/b/jhVE2zB5Dvtg7xydgqO+/RwvZk5Hk7T/dL2Tg/y/GvWCLJboAAB4tAAAAALDPBgBqCC0tAA==","crc":1194,"length":139}'
+  raw_packet: VYoACgmLFgCwzwYAaggAAABAQDgAAAEAAACYsgBAUcIAUJpDACA4tgCAUjYAAAAyAAD4s3LYYLQxdTg+jikF61+Hlr8AAAAgv/d8PwAAwM6MIbRAKYOzho34/b/jhVE2zB5Dvtg7xydgqO+/RwvZk5Hk7T/dL2Tg/y/GvWCLJboAAB4tAAAAALDPBgBqCC0tAKoE
+  sbp:
+    crc: '0x4aa'
+    length: 139
+    msg_type: '0x8a'
+    payload: FgCwzwYAaggAAABAQDgAAAEAAACYsgBAUcIAUJpDACA4tgCAUjYAAAAyAAD4s3LYYLQxdTg+jikF61+Hlr8AAAAgv/d8PwAAwM6MIbRAKYOzho34/b/jhVE2zB5Dvtg7xydgqO+/RwvZk5Hk7T/dL2Tg/y/GvWCLJboAAB4tAAAAALDPBgBqCC0tAA==
+    preamble: '0x55'
+    sender: '0x90a'
+

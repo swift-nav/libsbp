@@ -133,5 +133,161 @@ tests:
     payload: 3C4nADN8WPvrtkJAmQX6EBmLXsCSPLvbmKFRQAAAAAAJAA==
     preamble: '0x55'
     sender: '0xd7f6'
+
+- msg:
+    fields:
+      flags: 0
+      h_accuracy: 0
+      height: 4.039810885214956
+      lat: 37.76242171418386
+      lon: -122.38908437889262
+      n_sats: 8
+      tow: 407084500
+      v_accuracy: 0
+    module: sbp.navigation
+    name: MsgPosLLHDepA
+  msg_type: '0x201'
+  raw_json: '{"v_accuracy": 0, "n_sats": 8, "sender": 1219, "msg_type": 513, "lon":
+    -122.38908437889262, "tow": 407084500, "height": 4.039810885214956, "crc": 43501,
+    "length": 34, "flags": 0, "h_accuracy": 0, "lat": 37.76242171418386, "preamble":
+    85, "payload": "1J1DGAgX5AiX4UJAnK4qwuaYXsCZF0gvxCgQQAAAAAAIAA=="}'
+  raw_packet: VQECwwQi1J1DGAgX5AiX4UJAnK4qwuaYXsCZF0gvxCgQQAAAAAAIAO2p
+  sbp:
+    crc: '0xa9ed'
+    length: 34
+    msg_type: '0x201'
+    payload: 1J1DGAgX5AiX4UJAnK4qwuaYXsCZF0gvxCgQQAAAAAAIAA==
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      flags: 0
+      h_accuracy: 0
+      height: 2.926714087009657
+      lat: 37.76242361423985
+      lon: -122.38909053700489
+      n_sats: 8
+      tow: 407084600
+      v_accuracy: 0
+    module: sbp.navigation
+    name: MsgPosLLHDepA
+  msg_type: '0x201'
+  raw_json: '{"v_accuracy": 0, "n_sats": 8, "sender": 1219, "msg_type": 513, "lon":
+    -122.38909053700489, "tow": 407084600, "height": 2.926714087009657, "crc": 2968,
+    "length": 34, "flags": 0, "h_accuracy": 0, "lat": 37.76242361423985, "preamble":
+    85, "payload": "OJ5DGNxt1BiX4UJAn+f+2+aYXsCAl0MT6WkHQAAAAAAIAA=="}'
+  raw_packet: VQECwwQiOJ5DGNxt1BiX4UJAn+f+2+aYXsCAl0MT6WkHQAAAAAAIAJgL
+  sbp:
+    crc: '0xb98'
+    length: 34
+    msg_type: '0x201'
+    payload: OJ5DGNxt1BiX4UJAn+f+2+aYXsCAl0MT6WkHQAAAAAAIAA==
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      flags: 0
+      h_accuracy: 0
+      height: 0.9512146647395566
+      lat: 37.762422076126406
+      lon: -122.3890907340148
+      n_sats: 8
+      tow: 407084700
+      v_accuracy: 0
+    module: sbp.navigation
+    name: MsgPosLLHDepA
+  msg_type: '0x201'
+  raw_json: '{"v_accuracy": 0, "n_sats": 8, "sender": 1219, "msg_type": 513, "lon":
+    -122.3890907340148, "tow": 407084700, "height": 0.9512146647395566, "crc": 39901,
+    "length": 34, "flags": 0, "h_accuracy": 0, "lat": 37.762422076126406, "preamble":
+    85, "payload": "nJ5DGA1b7QuX4UJAS3HS3OaYXsAlBpG8WXDuPwAAAAAIAA=="}'
+  raw_packet: VQECwwQinJ5DGA1b7QuX4UJAS3HS3OaYXsAlBpG8WXDuPwAAAAAIAN2b
+  sbp:
+    crc: '0x9bdd'
+    length: 34
+    msg_type: '0x201'
+    payload: nJ5DGA1b7QuX4UJAS3HS3OaYXsAlBpG8WXDuPwAAAAAIAA==
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      flags: 0
+      h_accuracy: 0
+      height: 2.354135752047538
+      lat: 37.762421610632735
+      lon: -122.38909854449612
+      n_sats: 8
+      tow: 407084800
+      v_accuracy: 0
+    module: sbp.navigation
+    name: MsgPosLLHDepA
+  msg_type: '0x201'
+  raw_json: '{"v_accuracy": 0, "n_sats": 8, "sender": 1219, "msg_type": 513, "lon":
+    -122.38909854449612, "tow": 407084800, "height": 2.354135752047538, "crc": 24146,
+    "length": 34, "flags": 0, "h_accuracy": 0, "lat": 37.762421610632735, "preamble":
+    85, "payload": "AJ9DGDO3BQiX4UJADeKU/eaYXsC7GwsgRdUCQAAAAAAIAA=="}'
+  raw_packet: VQECwwQiAJ9DGDO3BQiX4UJADeKU/eaYXsC7GwsgRdUCQAAAAAAIAFJe
+  sbp:
+    crc: '0x5e52'
+    length: 34
+    msg_type: '0x201'
+    payload: AJ9DGDO3BQiX4UJADeKU/eaYXsC7GwsgRdUCQAAAAAAIAA==
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      flags: 0
+      h_accuracy: 0
+      height: 1.0876763181642641
+      lat: 37.76242334502801
+      lon: -122.38909230523223
+      n_sats: 8
+      tow: 407084900
+      v_accuracy: 0
+    module: sbp.navigation
+    name: MsgPosLLHDepA
+  msg_type: '0x201'
+  raw_json: '{"v_accuracy": 0, "n_sats": 8, "sender": 1219, "msg_type": 513, "lon":
+    -122.38909230523223, "tow": 407084900, "height": 1.0876763181642641, "crc": 15430,
+    "length": 34, "flags": 0, "h_accuracy": 0, "lat": 37.76242334502801, "preamble":
+    85, "payload": "ZJ9DGBZNkhaX4UJAQIZp4+aYXsAlY3JIH2fxPwAAAAAIAA=="}'
+  raw_packet: VQECwwQiZJ9DGBZNkhaX4UJAQIZp4+aYXsAlY3JIH2fxPwAAAAAIAEY8
+  sbp:
+    crc: '0x3c46'
+    length: 34
+    msg_type: '0x201'
+    payload: ZJ9DGBZNkhaX4UJAQIZp4+aYXsAlY3JIH2fxPwAAAAAIAA==
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      flags: 0
+      h_accuracy: 0
+      height: 5.171533844654222
+      lat: 37.76244082253376
+      lon: -122.38908288868525
+      n_sats: 5
+      tow: 407151150
+      v_accuracy: 0
+    module: sbp.navigation
+    name: MsgPosLLHDepA
+  msg_type: '0x201'
+  raw_json: '{"v_accuracy": 0, "n_sats": 5, "sender": 1219, "msg_type": 513, "lon":
+    -122.38908288868525, "tow": 407151150, "height": 5.171533844654222, "crc": 31188,
+    "length": 34, "flags": 0, "h_accuracy": 0, "lat": 37.76244082253376, "preamble":
+    85, "payload": "LqJEGHz1LqmX4UJAh5Xqu+aYXsDCyXORpq8UQAAAAAAFAA=="}'
+  raw_packet: VQECwwQiLqJEGHz1LqmX4UJAh5Xqu+aYXsDCyXORpq8UQAAAAAAFANR5
+  sbp:
+    crc: '0x79d4'
+    length: 34
+    msg_type: '0x201'
+    payload: LqJEGHz1LqmX4UJAh5Xqu+aYXsDCyXORpq8UQAAAAAAFAA==
+    preamble: '0x55'
+    sender: '0x4c3'
 version: '0.51'
 ...
