@@ -15,10 +15,10 @@
 // not modify by hand!
 
 #include <check.h>
-#include <sbp.h>
+#include <libsbp/packed/system.h>
+#include <libsbp/sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
-#include <system.h>
 
 static struct {
   u32 n_callbacks_logged;

@@ -15,8 +15,8 @@
 // Do not modify by hand!
 
 #include <check.h>
-#include <piksi.h>
-#include <sbp.h>
+#include <libsbp/packed/piksi.h>
+#include <libsbp/sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
 

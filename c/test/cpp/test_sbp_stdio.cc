@@ -19,30 +19,24 @@ namespace {
 
 struct SbpHeaderParams {
   uint16_t sender_id;
-  uint16_t msg_type;
-  uint8_t payload_len;
-  msg_obs_t payload;
+  sbp_msg_obs_t msg;
 };
 
-class MsgObsHandler : private sbp::MessageHandler<msg_obs_t> {
+class MsgObsHandler : private sbp::MessageHandler<sbp_msg_obs_t> {
  public:
   explicit MsgObsHandler(sbp::State *state)
-      : sbp::MessageHandler<msg_obs_t>(state), state_(state) {}
+      : sbp::MessageHandler<sbp_msg_obs_t>(state), state_(state) {}
 
-  void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                      const msg_obs_t &msg) override {
+  void handle_sbp_msg(uint16_t sender_id, const sbp_msg_obs_t &msg) override {
     header_params_.sender_id = sender_id;
-    header_params_.msg_type = SBP_MSG_OBS;
-    header_params_.payload_len = message_length;
-    header_params_.payload = msg;
+    header_params_.msg = msg;
   }
 
   void write_message() const {
-    state_->send_message(
-        header_params_.msg_type, header_params_.sender_id,
-        header_params_.payload_len,
-        // NOLINTNEXTLINE
-        reinterpret_cast<const uint8_t *>(&header_params_.payload));
+    sbp_msg_t msg;
+    msg.type = SBP_MSG_OBS;
+    msg.MSG_OBS = header_params_.msg;
+    state_->send_message(header_params_.sender_id, msg);
   }
 
   SbpHeaderParams get_header_params() { return header_params_; }

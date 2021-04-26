@@ -184,7 +184,8 @@ static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type,
                                         sbp_msg_callbacks_node_t *node) {
   /* Check our callback function pointer isn't NULL. */
   if ((cb_type == SBP_PAYLOAD_CALLBACK && cb.msg == 0) ||
-      (cb_type == SBP_FRAME_CALLBACK && cb.frame == 0)) {
+      (cb_type == SBP_FRAME_CALLBACK && cb.frame == 0) ||
+      (cb_type == SBP_UNPACKED_CALLBACK && cb.unpacked == 0)) {
     return SBP_NULL_ERROR;
   }
 
@@ -206,6 +207,10 @@ static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type,
       if ((cb_type == SBP_FRAME_CALLBACK) && (n->cb.frame == cb.frame)) {
         return SBP_CALLBACK_ERROR;
       }
+      if ((cb_type == SBP_UNPACKED_CALLBACK) &&
+          (n->cb.unpacked == cb.unpacked)) {
+        return SBP_CALLBACK_ERROR;
+      }
     }
   }
 
@@ -217,6 +222,8 @@ static s8 sbp_register_callback_generic(sbp_state_t *s, u16 msg_type,
     node->cb.msg = cb.msg;
   } else if (cb_type == SBP_FRAME_CALLBACK) {
     node->cb.frame = cb.frame;
+  } else if (cb_type == SBP_UNPACKED_CALLBACK) {
+    node->cb.unpacked = cb.unpacked;
   }
   /* The next pointer is set to NULL, i.e. this
    * will be the new end of the linked list.
@@ -325,6 +332,24 @@ s8 sbp_register_callback(sbp_state_t *s, u16 msg_type, sbp_msg_callback_t cb,
   callback.msg = cb;
   return sbp_register_callback_generic(s, msg_type, callback,
                                        SBP_PAYLOAD_CALLBACK, context, node);
+}
+
+s8 sbp_register_unpacked_callback(sbp_state_t *s, u16 msg_type,
+                                  sbp_unpacked_callback_t cb, void *context,
+                                  sbp_msg_callbacks_node_t *node) {
+  sbp_callback_t callback;
+  callback.unpacked = cb;
+  return sbp_register_callback_generic(s, msg_type, callback,
+                                       SBP_UNPACKED_CALLBACK, context, node);
+}
+
+s8 sbp_register_all_unpacked_callback(sbp_state_t *s,
+                                      sbp_unpacked_callback_t cb, void *context,
+                                      sbp_msg_callbacks_node_t *node) {
+  sbp_callback_t callback;
+  callback.unpacked = cb;
+  return sbp_register_callback_generic(s, SBP_MSG_ALL, callback,
+                                       SBP_UNPACKED_CALLBACK, context, node);
 }
 
 /** Clear all registered callbacks.
@@ -617,6 +642,13 @@ s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
           node->cb.msg(sender_id, payload_len, payload, node->context);
           ret = SBP_OK_CALLBACK_EXECUTED;
         } break;
+        case SBP_UNPACKED_CALLBACK: {
+          sbp_msg_t msg;
+          msg.type = msg_type;
+          sbp_unpack_msg(payload, payload_len, &msg);
+          node->cb.unpacked(sender_id, &msg, node->context);
+          ret = SBP_OK_CALLBACK_EXECUTED;
+        } break;
         case SBP_CALLBACK_TYPE_COUNT:
         default: {
           // NOP
@@ -728,6 +760,17 @@ s8 sbp_send_message(sbp_state_t *s, u16 msg_type, u16 sender_id, u8 len,
   }
 
   return SBP_OK;
+}
+
+s8 sbp_pack_and_send_message(sbp_state_t *s, u16 sender_id,
+                             const sbp_msg_t *msg,
+                             s32 (*write)(u8 *buff, u32 n, void *context)) {
+  uint8_t send_buf[SBP_MAX_PAYLOAD_LEN];
+  if (!sbp_pack_msg(send_buf, sizeof(send_buf), msg)) {
+    return SBP_NULL_ERROR;
+  }
+  return sbp_send_message(s, msg->type, sender_id, sbp_packed_size(msg),
+                          send_buf, write);
 }
 
 /** \} */

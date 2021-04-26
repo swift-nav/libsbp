@@ -14,9 +14,9 @@
 // spec/tests/yaml/swiftnav/sbp/acquisition/test_MsgAcqResultDepB.yaml by
 // generate.py. Do not modify by hand!
 
-#include <acquisition.h>
 #include <check.h>
-#include <sbp.h>
+#include <libsbp/packed/acquisition.h>
+#include <libsbp/sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
 

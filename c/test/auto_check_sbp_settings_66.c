@@ -15,8 +15,8 @@
 // generate.py. Do not modify by hand!
 
 #include <check.h>
-#include <sbp.h>
-#include <settings.h>
+#include <libsbp/packed/settings.h>
+#include <libsbp/sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
 

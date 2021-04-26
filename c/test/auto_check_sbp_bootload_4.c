@@ -14,9 +14,9 @@
 // spec/tests/yaml/swiftnav/sbp/bootload/test_MsgBootloaderHandshakeResp.yaml by
 // generate.py. Do not modify by hand!
 
-#include <bootload.h>
 #include <check.h>
-#include <sbp.h>
+#include <libsbp/packed/bootload.h>
+#include <libsbp/sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
 

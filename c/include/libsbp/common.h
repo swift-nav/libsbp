@@ -14,10 +14,151 @@
 #define LIBSBP_COMMON_H
 
 #ifndef _RUSTC_BINDGEN_
+#include <assert.h>
 #include <inttypes.h>
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdint.h>
+#include <string.h>
 #endif
+
+static inline size_t sbp_strlen_sections(const char *str, size_t n,
+                                         bool optional_final_section) {
+  size_t sections = 0;
+  for (size_t i = 0; i < 256; i++) {
+    if (str[i] == 0) {
+      sections++;
+      if (sections == n) {
+        return i + 1;
+      }
+      if (optional_final_section && sections == n - 1 && str[i + 1] == 0) {
+        return i + 1;
+      }
+    }
+  }
+  assert(0 && "Invalid string");
+}
+
+static inline size_t sbp_strlen(const char *str, const char *termination) {
+  if (0 == strcmp(termination, "none")) {
+    return strlen(str);
+  }
+  if (0 == strcmp(termination, "nul")) {
+    return strlen(str) + 1;
+  }
+  if (0 == strcmp(termination, "2-nul")) {
+    for (size_t i = 0; i < 256; i++) {
+      if (str[i] == 0 && str[i + 1] == 0) {
+        return i + 2;
+      }
+    }
+    assert(0 && "Invalid string");
+  }
+  if (0 == strcmp(termination, "2-section")) {
+    return sbp_strlen_sections(str, 2, false);
+  }
+  if (0 == strcmp(termination, "3-section")) {
+    return sbp_strlen_sections(str, 3, false);
+  }
+  if (0 == strcmp(termination, "4-section")) {
+    return sbp_strlen_sections(str, 4, false);
+  }
+  if (0 == strcmp(termination, "3-4-section")) {
+    return sbp_strlen_sections(str, 4, true);
+  }
+  assert(0 && "Unknown termination");
+}
+
+static inline size_t sbp_pack_string_sections(char *out, const char *str,
+                                              size_t n,
+                                              bool optional_final_section) {
+  size_t sections = 0;
+  for (size_t i = 0; i < 256; i++) {
+    out[i] = str[i];
+    if (str[i] == 0) {
+      sections++;
+      if (sections == n) {
+        return i + 1;
+      }
+      if (optional_final_section && sections == n - 1 && str[i + 1] == 0) {
+        return i + 1;
+      }
+    }
+  }
+  assert(0 && "Invalid string");
+}
+
+static inline size_t sbp_pack_string(uint8_t *buf, const char *str,
+                                     const char *termination) {
+  char *out = (char *)buf;
+  if (0 == strcmp(termination, "none")) {
+    strncpy(out, str, strlen(str));
+    return strlen(str);
+  }
+  if (0 == strcmp(termination, "nul")) {
+    strcpy(out, str);
+    return strlen(str + 1);
+  }
+  if (0 == strcmp(termination, "2-nul")) {
+    for (size_t i = 0; i < 256; i++) {
+      out[i] = str[i];
+      if (str[i] == 0 && str[i + 1] == 0) {
+        out[i + 1] = 0;
+        return i + 2;
+      }
+    }
+    assert(0 && "Invalid string");
+  }
+  if (0 == strcmp(termination, "2-section")) {
+    return sbp_pack_string_sections(out, str, 2, false);
+  }
+  if (0 == strcmp(termination, "3-section")) {
+    return sbp_pack_string_sections(out, str, 3, false);
+  }
+  if (0 == strcmp(termination, "4-section")) {
+    return sbp_pack_string_sections(out, str, 4, false);
+  }
+  if (0 == strcmp(termination, "3-4-section")) {
+    return sbp_pack_string_sections(out, str, 4, true);
+  }
+  assert(0 && "Unknown termination");
+}
+
+static inline size_t sbp_unpack_string(const char *buf, size_t len, char *out,
+                                       const char *termination) {
+  if (0 == strcmp(termination, "none")) {
+    strncpy(out, buf, len);
+    out[len] = 0;
+    return len;
+  }
+  if (0 == strcmp(termination, "nul")) {
+    strcpy(out, buf);
+    return strlen(out) + 1;
+  }
+  if (0 == strcmp(termination, "2-nul")) {
+    for (size_t i = 0; i < 256; i++) {
+      out[i] = buf[i];
+      if (buf[i] == 0 && buf[i + 1] == 0) {
+        out[i + 1] = 0;
+        return i + 2;
+      }
+    }
+    assert(0 && "Invalid string");
+  }
+  if (0 == strcmp(termination, "2-section")) {
+    return sbp_pack_string_sections(out, buf, 2, false);
+  }
+  if (0 == strcmp(termination, "3-section")) {
+    return sbp_pack_string_sections(out, buf, 3, false);
+  }
+  if (0 == strcmp(termination, "4-section")) {
+    return sbp_pack_string_sections(out, buf, 4, false);
+  }
+  if (0 == strcmp(termination, "3-4-section")) {
+    return sbp_pack_string_sections(out, buf, 4, true);
+  }
+  assert(0 && "Unknown termination");
+}
 
 /* Should match guard in libswiftnav/common.h */
 #ifndef COMMON_INT_TYPES

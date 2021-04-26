@@ -15,8 +15,8 @@
 // generate.py. Do not modify by hand!
 
 #include <check.h>
-#include <orientation.h>
-#include <sbp.h>
+#include <libsbp/packed/orientation.h>
+#include <libsbp/sbp.h>
 #include <stdio.h>   // for debugging
 #include <stdlib.h>  // for malloc
 
