@@ -32,11 +32,13 @@ SBP_PACK_START
 /** SSR code biases corrections for a particular satellite.
  *
  * Code biases are to be added to pseudorange.
- * The corrections conform with typical RTCMv3 MT1059 and 1065.
+ * The corrections conform with RTCMv3 MT 1059 / 1065.
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 code;     /**< Signal constellation, band and code */
+  u8 code;     /**< Signal encoded following RTCM specifications
+(DF380, DF381, DF382 and DF467).
+ */
   s16 value;    /**< Code bias value [0.01 m] */
 } code_biases_content_t;
 
@@ -44,11 +46,12 @@ typedef struct SBP_ATTR_PACKED {
 /** SSR phase biases corrections for a particular satellite.
  *
  * Phase biases are to be added to carrier phase measurements.
- * The corrections conform with typical RTCMv3 MT1059 and 1065.
  */
 
 typedef struct SBP_ATTR_PACKED {
-  u8 code;                          /**< Signal constellation, band and code */
+  u8 code;                          /**< Signal encoded following RTCM specifications
+(DF380, DF381, DF382 and DF467)
+ */
   u8 integer_indicator;             /**< Indicator for integer property */
   u8 widelane_integer_indicator;    /**< Indicator for two groups of Wide-Lane(s) integer property */
   u8 discontinuity_counter;         /**< Signal phase discontinuity counter.
@@ -98,7 +101,7 @@ following RTCM DF391 specification.
   u8 iod_atmo;                   /**< IOD of the SSR atmospheric correction
  */
   u8 tropo_quality_indicator;    /**< Quality of the troposphere data. Encoded following RTCM DF389
-specifcation in units of m.
+specification in units of m.
  */
 } gridded_correction_header_t;
 
@@ -110,7 +113,7 @@ specifcation in units of m.
 
 typedef struct SBP_ATTR_PACKED {
   sv_id_t sv_id;                     /**< Unique space vehicle identifier */
-  u8 stec_quality_indicator;    /**< Quality of the STEC data. Encoded following RTCM DF389 specifcation
+  u8 stec_quality_indicator;    /**< Quality of the STEC data. Encoded following RTCM DF389 specification
 but in units of TECU instead of m.
  */
   s16 stec_coeff[4];             /**< Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
@@ -200,8 +203,8 @@ typedef struct SBP_ATTR_PACKED {
  *
  * The precise orbit and clock correction message is
  * to be applied as a delta correction to broadcast
- * ephemeris and is typically an equivalent to the 1060
- * and 1066 RTCM message types
+ * ephemeris and is an equivalent to the 1060 /1066
+ * RTCM message types
  */
 #define SBP_MSG_SSR_ORBIT_CLOCK                     0x05DD
 
@@ -232,8 +235,8 @@ generating configuration
  *
  * The precise code biases message is to be added
  * to the pseudorange of the corresponding signal
- * to get corrected pseudorange. It is typically
- * an equivalent to the 1059 and 1065 RTCM message types
+ * to get corrected pseudorange. It is an
+ * equivalent to the 1059 / 1065 RTCM message types
  */
 #define SBP_MSG_SSR_CODE_BIASES                     0x05E1
 

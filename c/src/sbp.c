@@ -611,11 +611,13 @@ s8 sbp_process_frame(sbp_state_t *s, u16 sender_id, u16 msg_type,
         ((node->msg_type == msg_type) || (node->msg_type == SBP_MSG_ALL))) {
         switch (node->cb_type) {
         case SBP_FRAME_CALLBACK:
+        {
           node->cb.frame(sender_id, msg_type, payload_len, payload, frame_len,
                          frame, node->context);
             ret = SBP_OK_CALLBACK_EXECUTED;
         } break;
         case SBP_PAYLOAD_CALLBACK:
+        {
           node->cb.msg(sender_id, payload_len, payload, node->context);
             ret = SBP_OK_CALLBACK_EXECUTED;
         } break;
