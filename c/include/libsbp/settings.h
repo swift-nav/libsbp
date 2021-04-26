@@ -16,7 +16,7 @@
 #define SBP_MSG_SETTINGS_SAVE               0x00A1
 
 typedef struct {
-  
+  char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_settings_save_t;
 
 static inline size_t sbp_packed_size_sbp_msg_settings_save_t(const sbp_msg_settings_save_t *msg) {                                
@@ -445,7 +445,7 @@ static inline bool sbp_unpack_sbp_msg_settings_read_by_index_resp_t(const u8 *bu
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_DONE 0x00A6
 
 typedef struct {
-  
+  char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_settings_read_by_index_done_t;
 
 static inline size_t sbp_packed_size_sbp_msg_settings_read_by_index_done_t(const sbp_msg_settings_read_by_index_done_t *msg) {                                

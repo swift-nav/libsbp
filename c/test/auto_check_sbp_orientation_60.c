@@ -17,6 +17,7 @@
 #include <stdlib.h> // for malloc
 #include <libsbp/sbp.h>
 #include <libsbp/packed/orientation.h>
+#include <libsbp/orientation.h>
 
 static struct {
   u32 n_callbacks_logged;
@@ -36,6 +37,13 @@ static struct {
   u8 frame[SBP_MAX_FRAME_LEN];
   void *context;
 } last_frame;
+
+static struct {
+  u32 n_callbacks_logged;
+  u16 sender_id;
+  sbp_msg_t msg;
+  void *context;
+} last_unpacked;
 
 static u32 dummy_wr = 0;
 static u32 dummy_rd = 0;
@@ -73,6 +81,7 @@ static void logging_reset()
 {
   memset(&last_msg, 0, sizeof(last_msg));
   memset(&last_frame, 0, sizeof(last_frame));
+  memset(&last_unpacked, 0, sizeof(last_unpacked));
 }
 
 static void msg_callback(u16 sender_id, u8 len, u8 msg[], void* context)
@@ -96,10 +105,19 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[], u1
   last_frame.context = context;
 }
 
+static void unpacked_callback(u16 sender_id, const sbp_msg_t *msg, void *context)
+{
+  last_unpacked.n_callbacks_logged++;
+  last_unpacked.sender_id = sender_id;
+  last_unpacked.msg = *msg;
+  last_unpacked.context = context;
+}
+
 START_TEST( test_auto_check_sbp_orientation_60 )
 {
   static sbp_msg_callbacks_node_t n;
   static sbp_msg_callbacks_node_t n2;
+  static sbp_msg_callbacks_node_t n3;
 
   // State of the SBP message parser.
   // Must be statically allocated.
@@ -121,6 +139,7 @@ START_TEST( test_auto_check_sbp_orientation_60 )
 
     sbp_register_callback(&sbp_state, 0x220, &msg_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n);
     sbp_register_frame_callback(&sbp_state, 0x220, &frame_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n2);
+    sbp_register_unpacked_callback(&sbp_state, 0x220, &unpacked_callback, &DUMMY_MEMORY_FOR_CALLBACKS, &n3);
 
     u8 encoded_frame[] = {85,32,2,66,0,37,0,0,0,0,3,0,0,0,7,0,0,0,8,0,0,0,4,0,0,0,0,0,64,64,0,0,128,64,0,0,0,65,0,0,64,64,1,186,6, };
 
@@ -129,18 +148,31 @@ START_TEST( test_auto_check_sbp_orientation_60 )
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
+    sbp_msg_t test_unpacked_msg;
+    memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
+    test_unpacked_msg.type = SBP_MSG_ORIENT_QUAT;
     msg_orient_quat_t* test_msg = ( msg_orient_quat_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 1;
+    test_unpacked_msg.MSG_ORIENT_QUAT.flags = 1;
     test_msg->tow = 0;
+    test_unpacked_msg.MSG_ORIENT_QUAT.tow = 0;
     test_msg->w = 3;
+    test_unpacked_msg.MSG_ORIENT_QUAT.w = 3;
     test_msg->w_accuracy = 3.0;
+    test_unpacked_msg.MSG_ORIENT_QUAT.w_accuracy = 3.0;
     test_msg->x = 7;
+    test_unpacked_msg.MSG_ORIENT_QUAT.x = 7;
     test_msg->x_accuracy = 4.0;
+    test_unpacked_msg.MSG_ORIENT_QUAT.x_accuracy = 4.0;
     test_msg->y = 8;
+    test_unpacked_msg.MSG_ORIENT_QUAT.y = 8;
     test_msg->y_accuracy = 8.0;
+    test_unpacked_msg.MSG_ORIENT_QUAT.y_accuracy = 8.0;
     test_msg->z = 4;
+    test_unpacked_msg.MSG_ORIENT_QUAT.z = 4;
     test_msg->z_accuracy = 3.0;
+    test_unpacked_msg.MSG_ORIENT_QUAT.z_accuracy = 3.0;
     sbp_send_message(&sbp_state, 0x220, 66, test_msg_len, test_msg_storage, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
@@ -187,18 +219,102 @@ START_TEST( test_auto_check_sbp_orientation_60 )
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
     msg_orient_quat_t* check_msg = ( msg_orient_quat_t *)((void *)last_msg.msg);
+    sbp_msg_t *check_unpacked_msg = &last_unpacked.msg;
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 1, "incorrect value for flags, expected 1, is %d", check_msg->flags);
+    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_QUAT.flags == 1, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.flags, expected 1, is %d", check_unpacked_msg->MSG_ORIENT_QUAT.flags);
     ck_assert_msg(check_msg->tow == 0, "incorrect value for tow, expected 0, is %d", check_msg->tow);
+    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_QUAT.tow == 0, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.tow, expected 0, is %d", check_unpacked_msg->MSG_ORIENT_QUAT.tow);
     ck_assert_msg(check_msg->w == 3, "incorrect value for w, expected 3, is %d", check_msg->w);
+    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_QUAT.w == 3, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.w, expected 3, is %d", check_unpacked_msg->MSG_ORIENT_QUAT.w);
     ck_assert_msg((check_msg->w_accuracy*100 - 3.0*100) < 0.05, "incorrect value for w_accuracy, expected 3.0, is %f", check_msg->w_accuracy);
+    ck_assert_msg((check_unpacked_msg->MSG_ORIENT_QUAT.w_accuracy*100 - 3.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.w_accuracy, expected 3.0, is %s", check_unpacked_msg->MSG_ORIENT_QUAT.w_accuracy);
     ck_assert_msg(check_msg->x == 7, "incorrect value for x, expected 7, is %d", check_msg->x);
+    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_QUAT.x == 7, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.x, expected 7, is %d", check_unpacked_msg->MSG_ORIENT_QUAT.x);
     ck_assert_msg((check_msg->x_accuracy*100 - 4.0*100) < 0.05, "incorrect value for x_accuracy, expected 4.0, is %f", check_msg->x_accuracy);
+    ck_assert_msg((check_unpacked_msg->MSG_ORIENT_QUAT.x_accuracy*100 - 4.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.x_accuracy, expected 4.0, is %s", check_unpacked_msg->MSG_ORIENT_QUAT.x_accuracy);
     ck_assert_msg(check_msg->y == 8, "incorrect value for y, expected 8, is %d", check_msg->y);
+    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_QUAT.y == 8, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.y, expected 8, is %d", check_unpacked_msg->MSG_ORIENT_QUAT.y);
     ck_assert_msg((check_msg->y_accuracy*100 - 8.0*100) < 0.05, "incorrect value for y_accuracy, expected 8.0, is %f", check_msg->y_accuracy);
+    ck_assert_msg((check_unpacked_msg->MSG_ORIENT_QUAT.y_accuracy*100 - 8.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.y_accuracy, expected 8.0, is %s", check_unpacked_msg->MSG_ORIENT_QUAT.y_accuracy);
     ck_assert_msg(check_msg->z == 4, "incorrect value for z, expected 4, is %d", check_msg->z);
+    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_QUAT.z == 4, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.z, expected 4, is %d", check_unpacked_msg->MSG_ORIENT_QUAT.z);
     ck_assert_msg((check_msg->z_accuracy*100 - 3.0*100) < 0.05, "incorrect value for z_accuracy, expected 3.0, is %f", check_msg->z_accuracy);
+    ck_assert_msg((check_unpacked_msg->MSG_ORIENT_QUAT.z_accuracy*100 - 3.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.z_accuracy, expected 3.0, is %s", check_unpacked_msg->MSG_ORIENT_QUAT.z_accuracy);
+
+    dummy_reset();
+    logging_reset();
+
+    sbp_pack_and_send_message(&sbp_state, 66, &test_unpacked_msg, &dummy_write);
+
+    ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
+        "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
+
+    ck_assert_msg(dummy_wr == sizeof(encoded_frame),
+        "not enough data was written to dummy_buff");
+    ck_assert_msg(memcmp(dummy_buff, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame was not encoded properly");
+
+    while (dummy_rd < dummy_wr) {
+      ck_assert_msg(sbp_process(&sbp_state, &dummy_read) >= SBP_OK,
+          "sbp_process threw an error!");
+    }
+
+    ck_assert_msg(last_msg.n_callbacks_logged == 1,
+        "msg_callback: one callback should have been logged");
+    ck_assert_msg(last_msg.sender_id == 66,
+        "msg_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_msg.len == sizeof(encoded_frame) - 8,
+        "msg_callback: len decoded incorrectly");
+    ck_assert_msg(memcmp(last_msg.msg, encoded_frame + 6, sizeof(encoded_frame) - 8)
+          == 0,
+        "msg_callback: test data decoded incorrectly");
+    ck_assert_msg(last_msg.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+        "frame_callback: context pointer incorrectly passed");
+
+    ck_assert_msg(last_frame.n_callbacks_logged == 1,
+        "frame_callback: one callback should have been logged");
+    ck_assert_msg(last_frame.sender_id == 66,
+        "frame_callback: sender_id decoded incorrectly");
+    ck_assert_msg(last_frame.msg_type == 0x220,
+        "frame_callback: msg_type decoded incorrectly");
+    ck_assert_msg(last_frame.msg_len == sizeof(encoded_frame) - 8,
+        "frame_callback: msg_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.msg, encoded_frame + 6, sizeof(encoded_frame) - 8) == 0,
+        "frame_callback: test data decoded incorrectly");
+    ck_assert_msg(last_frame.frame_len == sizeof(encoded_frame),
+        "frame_callback: frame_len decoded incorrectly");
+    ck_assert_msg(memcmp(last_frame.frame, encoded_frame, sizeof(encoded_frame)) == 0,
+        "frame_callback: frame decoded incorrectly");
+    ck_assert_msg(last_frame.context == &DUMMY_MEMORY_FOR_CALLBACKS,
+        "frame_callback: context pointer incorrectly passed");
+
+    // Cast to expected message type - the +6 byte offset is where the payload starts
+    check_msg = ( msg_orient_quat_t *)((void *)last_msg.msg);
+    check_unpacked_msg = &last_unpacked.msg;
+    // Run tests against fields
+    ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
+    ck_assert_msg(check_msg->flags == 1, "incorrect value for flags, expected 1, is %d", check_msg->flags);
+    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_QUAT.flags == 1, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.flags, expected 1, is %d", check_unpacked_msg->MSG_ORIENT_QUAT.flags);
+    ck_assert_msg(check_msg->tow == 0, "incorrect value for tow, expected 0, is %d", check_msg->tow);
+    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_QUAT.tow == 0, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.tow, expected 0, is %d", check_unpacked_msg->MSG_ORIENT_QUAT.tow);
+    ck_assert_msg(check_msg->w == 3, "incorrect value for w, expected 3, is %d", check_msg->w);
+    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_QUAT.w == 3, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.w, expected 3, is %d", check_unpacked_msg->MSG_ORIENT_QUAT.w);
+    ck_assert_msg((check_msg->w_accuracy*100 - 3.0*100) < 0.05, "incorrect value for w_accuracy, expected 3.0, is %f", check_msg->w_accuracy);
+    ck_assert_msg((check_unpacked_msg->MSG_ORIENT_QUAT.w_accuracy*100 - 3.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.w_accuracy, expected 3.0, is %s", check_unpacked_msg->MSG_ORIENT_QUAT.w_accuracy);
+    ck_assert_msg(check_msg->x == 7, "incorrect value for x, expected 7, is %d", check_msg->x);
+    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_QUAT.x == 7, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.x, expected 7, is %d", check_unpacked_msg->MSG_ORIENT_QUAT.x);
+    ck_assert_msg((check_msg->x_accuracy*100 - 4.0*100) < 0.05, "incorrect value for x_accuracy, expected 4.0, is %f", check_msg->x_accuracy);
+    ck_assert_msg((check_unpacked_msg->MSG_ORIENT_QUAT.x_accuracy*100 - 4.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.x_accuracy, expected 4.0, is %s", check_unpacked_msg->MSG_ORIENT_QUAT.x_accuracy);
+    ck_assert_msg(check_msg->y == 8, "incorrect value for y, expected 8, is %d", check_msg->y);
+    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_QUAT.y == 8, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.y, expected 8, is %d", check_unpacked_msg->MSG_ORIENT_QUAT.y);
+    ck_assert_msg((check_msg->y_accuracy*100 - 8.0*100) < 0.05, "incorrect value for y_accuracy, expected 8.0, is %f", check_msg->y_accuracy);
+    ck_assert_msg((check_unpacked_msg->MSG_ORIENT_QUAT.y_accuracy*100 - 8.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.y_accuracy, expected 8.0, is %s", check_unpacked_msg->MSG_ORIENT_QUAT.y_accuracy);
+    ck_assert_msg(check_msg->z == 4, "incorrect value for z, expected 4, is %d", check_msg->z);
+    ck_assert_msg(check_unpacked_msg->MSG_ORIENT_QUAT.z == 4, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.z, expected 4, is %d", check_unpacked_msg->MSG_ORIENT_QUAT.z);
+    ck_assert_msg((check_msg->z_accuracy*100 - 3.0*100) < 0.05, "incorrect value for z_accuracy, expected 3.0, is %f", check_msg->z_accuracy);
+    ck_assert_msg((check_unpacked_msg->MSG_ORIENT_QUAT.z_accuracy*100 - 3.0*100) < 0.05, "incorrect value for check_unpacked_msg->MSG_ORIENT_QUAT.z_accuracy, expected 3.0, is %s", check_unpacked_msg->MSG_ORIENT_QUAT.z_accuracy);
   }
 }
 END_TEST

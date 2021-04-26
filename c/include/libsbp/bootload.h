@@ -17,7 +17,7 @@
 #define SBP_MSG_BOOTLOADER_HANDSHAKE_REQ   0x00B3
 
 typedef struct {
-  
+  char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_bootloader_handshake_req_t;
 
 static inline size_t sbp_packed_size_sbp_msg_bootloader_handshake_req_t(const sbp_msg_bootloader_handshake_req_t *msg) {                                
@@ -204,7 +204,7 @@ static inline bool sbp_unpack_sbp_msg_bootloader_jump_to_app_t(const u8 *buf, si
 #define SBP_MSG_NAP_DEVICE_DNA_REQ         0x00DE
 
 typedef struct {
-  
+  char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_nap_device_dna_req_t;
 
 static inline size_t sbp_packed_size_sbp_msg_nap_device_dna_req_t(const sbp_msg_nap_device_dna_req_t *msg) {                                

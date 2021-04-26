@@ -63,7 +63,11 @@
 #define SBP_(((m.name.ljust(max_msgid_len)))) ((('0x%04X'|format(m.sbp_id))))
 (((gen_bitfield_macros(m, m.name))))
 typedef struct {
+  ((*- if not m.fields *))
+  char dummy_to_avoid_empty_struct___do_not_use;
+  ((*- else *))
   ((( gen_substruct(m) )))
+  ((*- endif *))
 } (((m.name|convert_unpacked)));
                                                                                                               
 ((*- macro substruct_packed_size(substruct, path) *))                                                         
