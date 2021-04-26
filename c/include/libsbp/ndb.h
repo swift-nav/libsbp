@@ -28,23 +28,15 @@
 
 SBP_PACK_START
 
-
-/** Navigation DataBase Event
- *
- * This message is sent out when an object is stored into NDB. If needed
- * message could also be sent out when fetching an object from NDB.
- */
-#define SBP_MSG_NDB_EVENT 0x0400
 #define SBP_NDB_EVENT_EVENT_TYPE_MASK (0x3)
 #define SBP_NDB_EVENT_EVENT_TYPE_SHIFT (0u)
 #define SBP_NDB_EVENT_EVENT_TYPE_GET(flags) \
-                             (((flags) >> SBP_NDB_EVENT_EVENT_TYPE_SHIFT) \
-                             & SBP_NDB_EVENT_EVENT_TYPE_MASK)
-#define SBP_NDB_EVENT_EVENT_TYPE_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_NDB_EVENT_EVENT_TYPE_MASK)) \
-                             << (SBP_NDB_EVENT_EVENT_TYPE_SHIFT)));} while(0)
-                             
+  (((flags) >> SBP_NDB_EVENT_EVENT_TYPE_SHIFT) & SBP_NDB_EVENT_EVENT_TYPE_MASK)
+#define SBP_NDB_EVENT_EVENT_TYPE_SET(flags, val)           \
+  do {                                                     \
+    ((flags) |= (((val) & (SBP_NDB_EVENT_EVENT_TYPE_MASK)) \
+                 << (SBP_NDB_EVENT_EVENT_TYPE_SHIFT)));    \
+  } while (0)
 
 #define SBP_NDB_EVENT_EVENT_TYPE_UNKNOWN (0)
 #define SBP_NDB_EVENT_EVENT_TYPE_STORE (1)
@@ -52,14 +44,14 @@ SBP_PACK_START
 #define SBP_NDB_EVENT_EVENT_TYPE_ERASE (3)
 #define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_MASK (0x7)
 #define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_SHIFT (0u)
-#define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_GET(flags) \
-                             (((flags) >> SBP_NDB_EVENT_EVENT_OBJECT_TYPE_SHIFT) \
-                             & SBP_NDB_EVENT_EVENT_OBJECT_TYPE_MASK)
-#define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_NDB_EVENT_EVENT_OBJECT_TYPE_MASK)) \
-                             << (SBP_NDB_EVENT_EVENT_OBJECT_TYPE_SHIFT)));} while(0)
-                             
+#define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_GET(flags)      \
+  (((flags) >> SBP_NDB_EVENT_EVENT_OBJECT_TYPE_SHIFT) & \
+   SBP_NDB_EVENT_EVENT_OBJECT_TYPE_MASK)
+#define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_SET(flags, val)           \
+  do {                                                            \
+    ((flags) |= (((val) & (SBP_NDB_EVENT_EVENT_OBJECT_TYPE_MASK)) \
+                 << (SBP_NDB_EVENT_EVENT_OBJECT_TYPE_SHIFT)));    \
+  } while (0)
 
 #define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_UNKNOWN (0)
 #define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_EPHEMERIS (1)
@@ -70,14 +62,14 @@ SBP_PACK_START
 #define SBP_NDB_EVENT_EVENT_OBJECT_TYPE_LGF (6)
 #define SBP_NDB_EVENT_EVENT_RESULT_MASK (0xf)
 #define SBP_NDB_EVENT_EVENT_RESULT_SHIFT (0u)
-#define SBP_NDB_EVENT_EVENT_RESULT_GET(flags) \
-                             (((flags) >> SBP_NDB_EVENT_EVENT_RESULT_SHIFT) \
-                             & SBP_NDB_EVENT_EVENT_RESULT_MASK)
-#define SBP_NDB_EVENT_EVENT_RESULT_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_NDB_EVENT_EVENT_RESULT_MASK)) \
-                             << (SBP_NDB_EVENT_EVENT_RESULT_SHIFT)));} while(0)
-                             
+#define SBP_NDB_EVENT_EVENT_RESULT_GET(flags)      \
+  (((flags) >> SBP_NDB_EVENT_EVENT_RESULT_SHIFT) & \
+   SBP_NDB_EVENT_EVENT_RESULT_MASK)
+#define SBP_NDB_EVENT_EVENT_RESULT_SET(flags, val)           \
+  do {                                                       \
+    ((flags) |= (((val) & (SBP_NDB_EVENT_EVENT_RESULT_MASK)) \
+                 << (SBP_NDB_EVENT_EVENT_RESULT_SHIFT)));    \
+  } while (0)
 
 #define SBP_NDB_EVENT_EVENT_RESULT_NDB_ERR_NONE (0)
 #define SBP_NDB_EVENT_EVENT_RESULT_NDB_ERR_MISSING_IE (1)
@@ -92,42 +84,76 @@ SBP_PACK_START
 #define SBP_NDB_EVENT_EVENT_RESULT_NDB_ERR_OLDER_DATA (10)
 #define SBP_NDB_EVENT_DATA_SOURCE_MASK (0x3)
 #define SBP_NDB_EVENT_DATA_SOURCE_SHIFT (0u)
-#define SBP_NDB_EVENT_DATA_SOURCE_GET(flags) \
-                             (((flags) >> SBP_NDB_EVENT_DATA_SOURCE_SHIFT) \
-                             & SBP_NDB_EVENT_DATA_SOURCE_MASK)
-#define SBP_NDB_EVENT_DATA_SOURCE_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_NDB_EVENT_DATA_SOURCE_MASK)) \
-                             << (SBP_NDB_EVENT_DATA_SOURCE_SHIFT)));} while(0)
-                             
+#define SBP_NDB_EVENT_DATA_SOURCE_GET(flags)      \
+  (((flags) >> SBP_NDB_EVENT_DATA_SOURCE_SHIFT) & \
+   SBP_NDB_EVENT_DATA_SOURCE_MASK)
+#define SBP_NDB_EVENT_DATA_SOURCE_SET(flags, val)           \
+  do {                                                      \
+    ((flags) |= (((val) & (SBP_NDB_EVENT_DATA_SOURCE_MASK)) \
+                 << (SBP_NDB_EVENT_DATA_SOURCE_SHIFT)));    \
+  } while (0)
 
 #define SBP_NDB_EVENT_DATA_SOURCE_NDB_DS_UNDEFINED (0)
 #define SBP_NDB_EVENT_DATA_SOURCE_NDB_DS_INIT (1)
 #define SBP_NDB_EVENT_DATA_SOURCE_NDB_DS_RECEIVER (2)
 #define SBP_NDB_EVENT_DATA_SOURCE_NDB_DS_SBP (3)
-
+/** Navigation DataBase Event
+ *
+ * This message is sent out when an object is stored into NDB. If needed
+ * message could also be sent out when fetching an object from NDB.
+ */
 typedef struct SBP_ATTR_PACKED {
-  u64 recv_time;          /**< HW time in milliseconds. [ms] */
-  u8 event;              /**< Event type. */
-  u8 object_type;        /**< Event object type. */
-  u8 result;             /**< Event result. */
-  u8 data_source;        /**< Data source for STORE event, reserved for other events. */
-  sbp_gnss_signal_t object_sid;         /**< GNSS signal identifier,
-If object_type is Ephemeris OR Almanac, sid indicates for which
-signal the object belongs to. Reserved in other cases.
- */
-  sbp_gnss_signal_t src_sid;            /**< GNSS signal identifier,
-If object_type is Almanac, Almanac WN, Iono OR L2C capabilities
-AND data_source is NDB_DS_RECEIVER sid indicates from which SV
-data was decoded. Reserved in other cases.
- */
-  u16 original_sender;    /**< A unique identifier of the sending hardware. For v1.0,
-set to the 2 least significant bytes of the device serial
-number, valid only if data_source is NDB_DS_SBP. Reserved in case
-of other data_source.
- */
-} msg_ndb_event_t;
+#define SBP_MSG_NDB_EVENT 0x0400
 
+  /**
+   * HW time in milliseconds. [ms]
+   */
+  u64 recv_time;
+
+  /**
+   * Event type.
+   */
+  u8 event;
+
+  /**
+   * Event object type.
+   */
+  u8 object_type;
+
+  /**
+   * Event result.
+   */
+  u8 result;
+
+  /**
+   * Data source for STORE event, reserved for other events.
+   */
+  u8 data_source;
+
+  /**
+   * GNSS signal identifier,
+   * If object_type is Ephemeris OR Almanac, sid indicates for which
+   * signal the object belongs to. Reserved in other cases.
+   */
+  sbp_gnss_signal_t object_sid;
+
+  /**
+   * GNSS signal identifier,
+   * If object_type is Almanac, Almanac WN, Iono OR L2C capabilities
+   * AND data_source is NDB_DS_RECEIVER sid indicates from which SV
+   * data was decoded. Reserved in other cases.
+   */
+  sbp_gnss_signal_t src_sid;
+
+  /**
+   * A unique identifier of the sending hardware. For v1.0,
+   * set to the 2 least significant bytes of the device serial
+   * number, valid only if data_source is NDB_DS_SBP. Reserved in case
+   * of other data_source.
+   */
+  u16 original_sender;
+
+} msg_ndb_event_t;
 
 /** \} */
 

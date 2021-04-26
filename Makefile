@@ -297,7 +297,9 @@ test-c:
 	cd $(SWIFTNAV_ROOT)/c; \
 	mkdir -p build/ && cd build/; \
 	cmake $(CMAKEFLAGS) ../; \
-	$(MAKE)
+	$(MAKE) clang-format-all; \
+	$(MAKE); \
+	$(MAKE) do-all-tests
 	$(call announce-end,"Finished running C tests")
 
 test-python:
