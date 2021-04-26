@@ -22,7 +22,7 @@
  * device's program flash with wear-levelling using a simple filesystem
  * interface. The file system interface (CFS) defines an abstract API
  * for reading directories and for reading and writing files.
- *
+ * 
  * Note that some of these messages share the same message type ID for both the
  * host request and the device response.
  * \{ */
@@ -33,6 +33,7 @@
 #include "common.h"
 
 SBP_PACK_START
+
 
 /** Read file from the file system (host => device)
  *
@@ -46,29 +47,30 @@ SBP_PACK_START
  * to this message when it is received from sender ID 0x42.
  */
 typedef struct SBP_ATTR_PACKED {
-#define SBP_MSG_FILEIO_READ_REQ 0x00A8
-
-  /**
-   * Read sequence number
+#define SBP_MSG_FILEIO_READ_REQ      0x00A8
+  
+  /** 
+   * Read sequence number 
    */
-  u32 sequence;
-
-  /**
-   * File offset [bytes]
+  u32 sequence;     
+  
+  /** 
+   * File offset [bytes] 
    */
-  u32 offset;
-
-  /**
-   * Chunk size to read [bytes]
+  u32 offset;       
+  
+  /** 
+   * Chunk size to read [bytes] 
    */
-  u8 chunk_size;
-
-  /**
-   * Name of the file to read from
+  u8 chunk_size;   
+  
+  /** 
+   * Name of the file to read from 
    */
-  char filename[0];
-
+  char filename[0];  
+  
 } msg_fileio_read_req_t;
+
 
 /** File read from the file system (host <= device)
  *
@@ -79,19 +81,20 @@ typedef struct SBP_ATTR_PACKED {
  * preserved from the request.
  */
 typedef struct SBP_ATTR_PACKED {
-#define SBP_MSG_FILEIO_READ_RESP 0x00A3
-
-  /**
-   * Read sequence number
+#define SBP_MSG_FILEIO_READ_RESP     0x00A3
+  
+  /** 
+   * Read sequence number 
    */
-  u32 sequence;
-
-  /**
-   * Contents of read file
+  u32 sequence;   
+  
+  /** 
+   * Contents of read file 
    */
   u8 contents[0];
-
+  
 } msg_fileio_read_resp_t;
+
 
 /** List files in a directory (host => device)
  *
@@ -107,24 +110,25 @@ typedef struct SBP_ATTR_PACKED {
  * from sender ID 0x42.
  */
 typedef struct SBP_ATTR_PACKED {
-#define SBP_MSG_FILEIO_READ_DIR_REQ 0x00A9
-
-  /**
-   * Read sequence number
+#define SBP_MSG_FILEIO_READ_DIR_REQ  0x00A9
+  
+  /** 
+   * Read sequence number 
    */
-  u32 sequence;
-
-  /**
-   * The offset to skip the first n elements of the file list
+  u32 sequence;   
+  
+  /** 
+    * The offset to skip the first n elements of the file list 
    */
-  u32 offset;
-
-  /**
-   * Name of the directory to list
+  u32 offset;     
+  
+  /** 
+   * Name of the directory to list 
    */
-  char dirname[0];
-
+  char dirname[0]; 
+  
 } msg_fileio_read_dir_req_t;
+
 
 /** Files listed in a directory (host <= device)
  *
@@ -137,18 +141,19 @@ typedef struct SBP_ATTR_PACKED {
  */
 typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_FILEIO_READ_DIR_RESP 0x00AA
-
-  /**
-   * Read sequence number
+  
+  /** 
+   * Read sequence number 
    */
-  u32 sequence;
-
-  /**
-   * Contents of read directory
+  u32 sequence;   
+  
+  /** 
+   * Contents of read directory 
    */
   u8 contents[0];
-
+  
 } msg_fileio_read_dir_resp_t;
+
 
 /** Delete a file from the file system (host => device)
  *
@@ -158,14 +163,15 @@ typedef struct SBP_ATTR_PACKED {
  * process this message when it is received from sender ID 0x42.
  */
 typedef struct SBP_ATTR_PACKED {
-#define SBP_MSG_FILEIO_REMOVE 0x00AC
-
-  /**
-   * Name of the file to delete
+#define SBP_MSG_FILEIO_REMOVE        0x00AC
+  
+  /** 
+   * Name of the file to delete 
    */
   char filename[0];
-
+  
 } msg_fileio_remove_t;
+
 
 /** Write to file (host => device)
  *
@@ -179,29 +185,30 @@ typedef struct SBP_ATTR_PACKED {
  * 0x42.
  */
 typedef struct SBP_ATTR_PACKED {
-#define SBP_MSG_FILEIO_WRITE_REQ 0x00AD
-
-  /**
-   * Write sequence number
+#define SBP_MSG_FILEIO_WRITE_REQ     0x00AD
+  
+  /** 
+   * Write sequence number 
    */
-  u32 sequence;
-
-  /**
-   * Offset into the file at which to start writing in bytes [bytes]
+  u32 sequence;   
+  
+  /** 
+   * Offset into the file at which to start writing in bytes [bytes] 
    */
-  u32 offset;
-
-  /**
-   * Name of the file to write to
+  u32 offset;     
+  
+  /** 
+   * Name of the file to write to 
    */
   char filename[0];
-
-  /**
-   * Variable-length array of data to write
+  
+  /** 
+   * Variable-length array of data to write 
    */
-  u8 data[0];
-
+  u8 data[0];    
+  
 } msg_fileio_write_req_t;
+
 
 /** File written to (host <= device)
  *
@@ -212,31 +219,33 @@ typedef struct SBP_ATTR_PACKED {
  * request.
  */
 typedef struct SBP_ATTR_PACKED {
-#define SBP_MSG_FILEIO_WRITE_RESP 0x00AB
-
-  /**
-   * Write sequence number
+#define SBP_MSG_FILEIO_WRITE_RESP    0x00AB
+  
+  /** 
+   * Write sequence number 
    */
-  u32 sequence;
-
+  u32 sequence;   
+  
 } msg_fileio_write_resp_t;
+
 
 /** Request advice on the optimal configuration for FileIO.
  *
- * Requests advice on the optimal configuration for a FileIO
+ * Requests advice on the optimal configuration for a FileIO 
  * transfer.  Newer version of FileIO can support greater
  * throughput by supporting a large window of FileIO data
  * that can be in-flight during read or write operations.
  */
 typedef struct SBP_ATTR_PACKED {
-#define SBP_MSG_FILEIO_CONFIG_REQ 0x1001
-
-  /**
-   * Advice sequence number
+#define SBP_MSG_FILEIO_CONFIG_REQ    0x1001
+  
+  /** 
+   * Advice sequence number 
    */
-  u32 sequence;
-
+  u32 sequence;   
+  
 } msg_fileio_config_req_t;
+
 
 /** Response with advice on the optimal configuration for FileIO.
 
@@ -247,29 +256,30 @@ typedef struct SBP_ATTR_PACKED {
  * that can be in-flight during read or write operations.
  */
 typedef struct SBP_ATTR_PACKED {
-#define SBP_MSG_FILEIO_CONFIG_RESP 0x1002
-
-  /**
-   * Advice sequence number
+#define SBP_MSG_FILEIO_CONFIG_RESP   0x1002
+  
+  /** 
+   * Advice sequence number 
    */
-  u32 sequence;
-
-  /**
-   * The number of SBP packets in the data in-flight window
+  u32 sequence;         
+  
+  /** 
+   * The number of SBP packets in the data in-flight window 
    */
-  u32 window_size;
-
-  /**
-   * The number of SBP packets sent in one PDU
+  u32 window_size;      
+  
+  /** 
+   * The number of SBP packets sent in one PDU 
    */
-  u32 batch_size;
-
-  /**
-   * The version of FileIO that is supported
+  u32 batch_size;       
+  
+  /** 
+   * The version of FileIO that is supported 
    */
-  u32 fileio_version;
-
+  u32 fileio_version;   
+  
 } msg_fileio_config_resp_t;
+
 
 /** \} */
 
