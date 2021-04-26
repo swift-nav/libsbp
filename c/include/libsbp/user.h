@@ -27,6 +27,7 @@
 
 SBP_PACK_START
 
+
 /** User data
  *
  * This message can contain any application specific user data up to a
@@ -34,13 +35,14 @@ SBP_PACK_START
  */
 typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_USER_DATA 0x0800
-
-  /**
-   * User data payload
+  
+  /** 
+   * User data payload 
    */
   u8 contents[0];
-
+  
 } msg_user_data_t;
+
 
 /** \} */
 
