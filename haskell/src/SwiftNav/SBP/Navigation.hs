@@ -2022,6 +2022,8 @@ msgProtectionLevel = 0x0217
 data MsgProtectionLevel = MsgProtectionLevel
   { _msgProtectionLevel_tow   :: !Word32
     -- ^ GPS Time of Week
+  , _msgProtectionLevel_wn    :: !Int16
+    -- ^ GPS week number
   , _msgProtectionLevel_vpl   :: !Word16
     -- ^ Vertical protection level
   , _msgProtectionLevel_hpl   :: !Word16
@@ -2067,6 +2069,7 @@ data MsgProtectionLevel = MsgProtectionLevel
 instance Binary MsgProtectionLevel where
   get = do
     _msgProtectionLevel_tow <- getWord32le
+    _msgProtectionLevel_wn <- (fromIntegral <$> getWord16le)
     _msgProtectionLevel_vpl <- getWord16le
     _msgProtectionLevel_hpl <- getWord16le
     _msgProtectionLevel_atpl <- getWord16le
@@ -2090,6 +2093,7 @@ instance Binary MsgProtectionLevel where
 
   put MsgProtectionLevel {..} = do
     putWord32le _msgProtectionLevel_tow
+    (putWord16le . fromIntegral) _msgProtectionLevel_wn
     putWord16le _msgProtectionLevel_vpl
     putWord16le _msgProtectionLevel_hpl
     putWord16le _msgProtectionLevel_atpl
