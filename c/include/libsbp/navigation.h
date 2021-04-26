@@ -1774,6 +1774,7 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   u32 tow;        /**< GPS Time of Week [ms] */
+  s16 wn;         /**< GPS week number [weeks] */
   u16 vpl;        /**< Vertical protection level [cm] */
   u16 hpl;        /**< Horizontal protection level [cm] */
   u16 atpl;       /**< Along-track position error protection level [cm] */

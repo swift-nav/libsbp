@@ -4667,6 +4667,8 @@ with the matching time-of-week (tow).
     SBP parent object to inherit from.
   tow : int
     GPS Time of Week
+  wn : int
+    GPS week number
   vpl : int
     Vertical protection level
   hpl : int
@@ -4715,6 +4717,7 @@ true along/cross track velocity vector
   """
   _parser = construct.Struct(
                    'tow' / construct.Int32ul,
+                   'wn' / construct.Int16sl,
                    'vpl' / construct.Int16ul,
                    'hpl' / construct.Int16ul,
                    'atpl' / construct.Int16ul,
@@ -4736,6 +4739,7 @@ true along/cross track velocity vector
                    'flags' / construct.Int32ul,)
   __slots__ = [
                'tow',
+               'wn',
                'vpl',
                'hpl',
                'atpl',
@@ -4768,6 +4772,7 @@ true along/cross track velocity vector
       self.msg_type = SBP_MSG_PROTECTION_LEVEL
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.tow = kwargs.pop('tow')
+      self.wn = kwargs.pop('wn')
       self.vpl = kwargs.pop('vpl')
       self.hpl = kwargs.pop('hpl')
       self.atpl = kwargs.pop('atpl')

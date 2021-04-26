@@ -39,6 +39,9 @@ public class MsgProtectionLevel extends SBPMessage {
     /** GPS Time of Week */
     public long tow;
     
+    /** GPS week number */
+    public int wn;
+    
     /** Vertical protection level */
     public int vpl;
     
@@ -112,6 +115,7 @@ true along/cross track velocity vector
     protected void parse(Parser parser) throws SBPBinaryException {
         /* Parse fields from binary */
         tow = parser.getU32();
+        wn = parser.getS16();
         vpl = parser.getU16();
         hpl = parser.getU16();
         atpl = parser.getU16();
@@ -136,6 +140,7 @@ true along/cross track velocity vector
     @Override
     protected void build(Builder builder) {
         builder.putU32(tow);
+        builder.putS16(wn);
         builder.putU16(vpl);
         builder.putU16(hpl);
         builder.putU16(atpl);
@@ -161,6 +166,7 @@ true along/cross track velocity vector
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON();
         obj.put("tow", tow);
+        obj.put("wn", wn);
         obj.put("vpl", vpl);
         obj.put("hpl", hpl);
         obj.put("atpl", atpl);

@@ -2206,6 +2206,8 @@ pub struct MsgProtectionLevel {
     pub sender_id: Option<u16>,
     /// GPS Time of Week
     pub tow: u32,
+    /// GPS week number
+    pub wn: i16,
     /// Vertical protection level
     pub vpl: u16,
     /// Horizontal protection level
@@ -2254,6 +2256,7 @@ impl MsgProtectionLevel {
         Ok( MsgProtectionLevel{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
+            wn: _buf.read_i16::<LittleEndian>()?,
             vpl: _buf.read_u16::<LittleEndian>()?,
             hpl: _buf.read_u16::<LittleEndian>()?,
             atpl: _buf.read_u16::<LittleEndian>()?,
@@ -2308,6 +2311,7 @@ impl crate::serialize::SbpSerialize for MsgProtectionLevel {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
+        self.wn.append_to_sbp_buffer(buf);
         self.vpl.append_to_sbp_buffer(buf);
         self.hpl.append_to_sbp_buffer(buf);
         self.atpl.append_to_sbp_buffer(buf);
@@ -2332,6 +2336,7 @@ impl crate::serialize::SbpSerialize for MsgProtectionLevel {
     fn sbp_size(&self) -> usize {
         let mut size = 0;
         size += self.tow.sbp_size();
+        size += self.wn.sbp_size();
         size += self.vpl.sbp_size();
         size += self.hpl.sbp_size();
         size += self.atpl.sbp_size();

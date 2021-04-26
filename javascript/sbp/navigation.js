@@ -1882,6 +1882,7 @@ MsgProtectionLevelDepA.prototype.fieldSpec.push(['flags', 'writeUInt8', 1]);
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field tow number (unsigned 32-bit int, 4 bytes) GPS Time of Week
+ * @field wn number (signed 16-bit int, 2 bytes) GPS week number
  * @field vpl number (unsigned 16-bit int, 2 bytes) Vertical protection level
  * @field hpl number (unsigned 16-bit int, 2 bytes) Horizontal protection level
  * @field atpl number (unsigned 16-bit int, 2 bytes) Along-track position error protection level
@@ -1920,6 +1921,7 @@ MsgProtectionLevel.prototype.constructor = MsgProtectionLevel;
 MsgProtectionLevel.prototype.parser = new Parser()
   .endianess('little')
   .uint32('tow')
+  .int16('wn')
   .uint16('vpl')
   .uint16('hpl')
   .uint16('atpl')
@@ -1941,6 +1943,7 @@ MsgProtectionLevel.prototype.parser = new Parser()
   .uint32('flags');
 MsgProtectionLevel.prototype.fieldSpec = [];
 MsgProtectionLevel.prototype.fieldSpec.push(['tow', 'writeUInt32LE', 4]);
+MsgProtectionLevel.prototype.fieldSpec.push(['wn', 'writeInt16LE', 2]);
 MsgProtectionLevel.prototype.fieldSpec.push(['vpl', 'writeUInt16LE', 2]);
 MsgProtectionLevel.prototype.fieldSpec.push(['hpl', 'writeUInt16LE', 2]);
 MsgProtectionLevel.prototype.fieldSpec.push(['atpl', 'writeUInt16LE', 2]);
