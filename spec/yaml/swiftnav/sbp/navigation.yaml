@@ -2160,5 +2160,11 @@ definitions:
                         - 1: TIR Level 1
                         - 2: TIR Level 2
                         - 3: TIR Level 3
-                - 3-31:
+                - 3-28:
                     desc: Reserved
+                - 29:
+                    desc: Attitude valid
+                - 30:
+                    desc: Velocity valid
+                - 31:
+                    desc: Position valid
