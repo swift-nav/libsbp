@@ -123,5 +123,150 @@ tests:
     payload: pC8nALA0//8scf//ldL+/wAACQE=
     preamble: '0x55'
     sender: '0xd7f6'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 6
+      tow: 407180700
+      x: -6231
+      y: -12186
+      z: 7419
+    module: sbp.navigation
+    name: MsgBaselineECEFDepA
+  msg_type: '0x202'
+  raw_json: '{"n_sats": 6, "sender": 1219, "msg_type": 514, "tow": 407180700, "crc":
+    43154, "length": 20, "flags": 0, "y": -12186, "x": -6231, "z": 7419, "preamble":
+    85, "payload": "nBVFGKnn//9m0P//+xwAAAAABgA=", "accuracy": 0}'
+  raw_packet: VQICwwQUnBVFGKnn//9m0P//+xwAAAAABgCSqA==
+  sbp:
+    crc: '0xa892'
+    length: 20
+    msg_type: '0x202'
+    payload: nBVFGKnn//9m0P//+xwAAAAABgA=
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 6
+      tow: 407180800
+      x: -6231
+      y: -12185
+      z: 7420
+    module: sbp.navigation
+    name: MsgBaselineECEFDepA
+  msg_type: '0x202'
+  raw_json: '{"n_sats": 6, "sender": 1219, "msg_type": 514, "tow": 407180800, "crc":
+    29730, "length": 20, "flags": 0, "y": -12185, "x": -6231, "z": 7420, "preamble":
+    85, "payload": "ABZFGKnn//9n0P///BwAAAAABgA=", "accuracy": 0}'
+  raw_packet: VQICwwQUABZFGKnn//9n0P///BwAAAAABgAidA==
+  sbp:
+    crc: '0x7422'
+    length: 20
+    msg_type: '0x202'
+    payload: ABZFGKnn//9n0P///BwAAAAABgA=
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 6
+      tow: 407180900
+      x: -8162
+      y: -18496
+      z: 13807
+    module: sbp.navigation
+    name: MsgBaselineECEFDepA
+  msg_type: '0x202'
+  raw_json: '{"n_sats": 6, "sender": 1219, "msg_type": 514, "tow": 407180900, "crc":
+    4065, "length": 20, "flags": 0, "y": -18496, "x": -8162, "z": 13807, "preamble":
+    85, "payload": "ZBZFGB7g///At///7zUAAAAABgA=", "accuracy": 0}'
+  raw_packet: VQICwwQUZBZFGB7g///At///7zUAAAAABgDhDw==
+  sbp:
+    crc: '0xfe1'
+    length: 20
+    msg_type: '0x202'
+    payload: ZBZFGB7g///At///7zUAAAAABgA=
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 6
+      tow: 407181000
+      x: -8164
+      y: -18497
+      z: 13810
+    module: sbp.navigation
+    name: MsgBaselineECEFDepA
+  msg_type: '0x202'
+  raw_json: '{"n_sats": 6, "sender": 1219, "msg_type": 514, "tow": 407181000, "crc":
+    25635, "length": 20, "flags": 0, "y": -18497, "x": -8164, "z": 13810, "preamble":
+    85, "payload": "yBZFGBzg//+/t///8jUAAAAABgA=", "accuracy": 0}'
+  raw_packet: VQICwwQUyBZFGBzg//+/t///8jUAAAAABgAjZA==
+  sbp:
+    crc: '0x6423'
+    length: 20
+    msg_type: '0x202'
+    payload: yBZFGBzg//+/t///8jUAAAAABgA=
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 6
+      tow: 407181100
+      x: -7400
+      y: -15591
+      z: 15257
+    module: sbp.navigation
+    name: MsgBaselineECEFDepA
+  msg_type: '0x202'
+  raw_json: '{"n_sats": 6, "sender": 1219, "msg_type": 514, "tow": 407181100, "crc":
+    16962, "length": 20, "flags": 0, "y": -15591, "x": -7400, "z": 15257, "preamble":
+    85, "payload": "LBdFGBjj//8Zw///mTsAAAAABgA=", "accuracy": 0}'
+  raw_packet: VQICwwQULBdFGBjj//8Zw///mTsAAAAABgBCQg==
+  sbp:
+    crc: '0x4242'
+    length: 20
+    msg_type: '0x202'
+    payload: LBdFGBjj//8Zw///mTsAAAAABgA=
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      accuracy: 0
+      flags: 0
+      n_sats: 6
+      tow: 407181200
+      x: -7401
+      y: -15591
+      z: 15257
+    module: sbp.navigation
+    name: MsgBaselineECEFDepA
+  msg_type: '0x202'
+  raw_json: '{"n_sats": 6, "sender": 1219, "msg_type": 514, "tow": 407181200, "crc":
+    34595, "length": 20, "flags": 0, "y": -15591, "x": -7401, "z": 15257, "preamble":
+    85, "payload": "kBdFGBfj//8Zw///mTsAAAAABgA=", "accuracy": 0}'
+  raw_packet: VQICwwQUkBdFGBfj//8Zw///mTsAAAAABgAjhw==
+  sbp:
+    crc: '0x8723'
+    length: 20
+    msg_type: '0x202'
+    payload: kBdFGBfj//8Zw///mTsAAAAABgA=
+    preamble: '0x55'
+    sender: '0x4c3'
+
 version: '0.51'
 ...

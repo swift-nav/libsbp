@@ -26,5 +26,39 @@ tests:
     payload: AQIDCv8KAgL/
     preamble: '0x55'
     sender: '0xEEEE'
+
+- msg:
+    fields:
+      group_id: 1
+      flags: 1
+      n_group_msgs: 14
+      group_msgs: 
+        - 258
+        - 259
+        - 522
+        - 529
+        - 521
+        - 532
+        - 526
+        - 530
+        - 525
+        - 533
+        - 545
+        - 65283
+        - 65286
+        - 65294
+    module: sbp.system
+    name: MsgGroupMeta
+  msg_type: '0xFF0A'
+  raw_json: '{"group_id":1,"flags":1,"n_group_msgs":14,"group_msgs":[258,259,522,529,521,532,526,530,525,533,545,65283,65286,65294],"preamble":85,"msg_type":65290,"sender":789,"payload":"AQEOAgEDAQoCEQIJAhQCDgISAg0CFQIhAgP/Bv8O/w==","crc":39506,"length":31}'
+  raw_packet: VQr/FQMfAQEOAgEDAQoCEQIJAhQCDgISAg0CFQIhAgP/Bv8O/1Ka
+  sbp:
+    crc: '0x9a52'
+    length: 0x1f
+    payload: AQEOAgEDAQoCEQIJAhQCDgISAg0CFQIhAgP/Bv8O/w==
+    msg_type: '0xFF0A'
+    preamble: '0x55'
+    sender: '0x315'
+
 version: 3.1
 ...

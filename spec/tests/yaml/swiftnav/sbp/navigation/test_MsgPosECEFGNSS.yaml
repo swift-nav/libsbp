@@ -1,0 +1,27 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgPosECEFGNSS
+generated_on: 2020-04-23 00:00:00.00 # manually generated
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      tow: 501867800
+      x: -2694229.7079770807
+      y: -4264073.427345817
+      z: 3890655.013186158
+      accuracy: 182
+      n_sats: 18
+      flags: 4
+    module: sbp.navigation
+    name: MsgPosECEFGnss
+  msg_type: '0x229'
+  raw_json: '{"tow":501867800,"x":-2694229.7079770807,"y":-4264073.427345817,"z":3890655.013186158,"accuracy":182,"n_sats":18,"flags":4,"preamble":85,"msg_type":553,"sender":4096,"payload":"GOXpHTT+ntoqjkTBRaJZWyJEUMGDFbCB765NQbYAEgQ=","crc":647,"length":32}'
+  raw_packet: VSkCABAgGOXpHTT+ntoqjkTBRaJZWyJEUMGDFbCB765NQbYAEgSHAg==
+  sbp:
+    crc: '0x287'
+    length: 32
+    msg_type: '0x229'
+    payload: GOXpHTT+ntoqjkTBRaJZWyJEUMGDFbCB765NQbYAEgQ=
+    preamble: '0x55'
+    sender: '0x1000'
