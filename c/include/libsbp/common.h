@@ -14,9 +14,9 @@
 #define LIBSBP_COMMON_H
 
 #ifndef _RUSTC_BINDGEN_
-#include <inttypes.h>
-#include <stdbool.h>
 #include <stdint.h>
+#include <stdbool.h>
+#include <inttypes.h>
 #endif
 
 /* Should match guard in libswiftnav/common.h */
@@ -54,7 +54,7 @@ typedef uint64_t u64;
 #if defined(__GNUC__) || defined(__clang__)
 
 #define SBP_PACK_START /* Intentionally empty */
-#define SBP_PACK_END   /* Intentionally empty */
+#define SBP_PACK_END /* Intentionally empty */
 #define SBP_ATTR_PACKED __attribute__((packed))
 
 #elif defined(_MSC_VER)
@@ -65,13 +65,13 @@ typedef uint64_t u64;
 
 #else
 
-#if !defined(SBP_PACK_START) || !defined(SBP_PACK_END) || \
-    !defined(SBP_ATTR_PACKED)
+#if !defined(SBP_PACK_START) || !defined(SBP_PACK_END) || !defined(SBP_ATTR_PACKED)
 #error Unknown compiler, please override SBP_PACK_START, SBP_PACK_END, and SBP_ATTR_PACKED
-#endif
+#endif 
 
 #endif /* toolchaing packing macros */
 
 /** \} */
 
 #endif /* LIBSBP_COMMON_H */
+

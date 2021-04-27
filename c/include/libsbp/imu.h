@@ -28,6 +28,19 @@
 SBP_PACK_START
 
 
+/** Raw IMU data
+ *
+ * Raw data from the Inertial Measurement Unit, containing accelerometer and
+ * gyroscope readings. The sense of the measurements are to be aligned with 
+ * the indications on the device itself. Measurement units, which are specific to the
+ * device hardware and settings, are communicated via the MSG_IMU_AUX message.
+ * If using "time since startup" time tags, the receiving end will expect a
+ * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise IMU measurements
+ * with GNSS. The timestamp must wrap around to zero when reaching one week (604800 seconds).
+ * 
+ * The time-tagging mode should not change throughout a run.
+ */
+#define SBP_MSG_IMU_RAW 0x0900
 #define SBP_IMU_RAW_TIME_STATUS_MASK (0x3)
 #define SBP_IMU_RAW_TIME_STATUS_SHIFT (30u)
 #define SBP_IMU_RAW_TIME_STATUS_GET(flags) \
@@ -54,64 +67,28 @@ SBP_PACK_START
                              << (SBP_IMU_RAW_TIME_SINCE_REFERENCE_EPOCH_IN_MILLISECONDS_SHIFT)));} while(0)
                              
 
-/** Raw IMU data
- *
- * Raw data from the Inertial Measurement Unit, containing accelerometer and
- * gyroscope readings. The sense of the measurements are to be aligned with 
- * the indications on the device itself. Measurement units, which are specific to the
- * device hardware and settings, are communicated via the MSG_IMU_AUX message.
- * If using "time since startup" time tags, the receiving end will expect a
- * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise IMU measurements
- * with GNSS. The timestamp must wrap around to zero when reaching one week (604800 seconds).
- * 
- * The time-tagging mode should not change throughout a run.
- */
+
 typedef struct SBP_ATTR_PACKED {
-#define SBP_MSG_IMU_RAW 0x0900
-  
-  /** 
-    * Milliseconds since reference epoch and time status. 
-   */
-  u32 tow;     
-  
-  /** 
-    * Milliseconds since reference epoch, fractional part [ms / 256] 
-   */
-  u8 tow_f;   
-  
-  /** 
-   * Acceleration in the IMU frame X axis 
-   */
-  s16 acc_x;   
-  
-  /** 
-   * Acceleration in the IMU frame Y axis 
-   */
-  s16 acc_y;   
-  
-  /** 
-   * Acceleration in the IMU frame Z axis 
-   */
-  s16 acc_z;   
-  
-  /** 
-   * Angular rate around IMU frame X axis 
-   */
-  s16 gyr_x;   
-  
-  /** 
-   * Angular rate around IMU frame Y axis 
-   */
-  s16 gyr_y;   
-  
-  /** 
-   * Angular rate around IMU frame Z axis 
-   */
-  s16 gyr_z;   
-  
+  u32 tow;      /**< Milliseconds since reference epoch and time status.
+ */
+  u8 tow_f;    /**< Milliseconds since reference epoch, fractional part
+ [ms / 256] */
+  s16 acc_x;    /**< Acceleration in the IMU frame X axis */
+  s16 acc_y;    /**< Acceleration in the IMU frame Y axis */
+  s16 acc_z;    /**< Acceleration in the IMU frame Z axis */
+  s16 gyr_x;    /**< Angular rate around IMU frame X axis */
+  s16 gyr_y;    /**< Angular rate around IMU frame Y axis */
+  s16 gyr_z;    /**< Angular rate around IMU frame Z axis */
 } msg_imu_raw_t;
 
 
+/** Auxiliary IMU data
+ *
+ * Auxiliary data specific to a particular IMU. The `imu_type` field will
+ * always be consistent but the rest of the payload is device specific and
+ * depends on the value of `imu_type`.
+ */
+#define SBP_MSG_IMU_AUX 0x0901
 #define SBP_IMU_AUX_IMU_TYPE_MASK (0xff)
 #define SBP_IMU_AUX_IMU_TYPE_SHIFT (0u)
 #define SBP_IMU_AUX_IMU_TYPE_GET(flags) \
@@ -156,30 +133,11 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_IMU_AUX_ACCELEROMETER_RANGE__4G (1)
 #define SBP_IMU_AUX_ACCELEROMETER_RANGE__8G (2)
 #define SBP_IMU_AUX_ACCELEROMETER_RANGE__16G (3)
-/** Auxiliary IMU data
- *
- * Auxiliary data specific to a particular IMU. The `imu_type` field will
- * always be consistent but the rest of the payload is device specific and
- * depends on the value of `imu_type`.
- */
+
 typedef struct SBP_ATTR_PACKED {
-#define SBP_MSG_IMU_AUX 0x0901
-  
-  /** 
-   * IMU type 
-   */
-  u8 imu_type;   
-  
-  /** 
-   * Raw IMU temperature 
-   */
-  s16 temp;       
-  
-  /** 
-   * IMU configuration 
-   */
-  u8 imu_conf;   
-  
+  u8 imu_type;    /**< IMU type */
+  s16 temp;        /**< Raw IMU temperature */
+  u8 imu_conf;    /**< IMU configuration */
 } msg_imu_aux_t;
 
 

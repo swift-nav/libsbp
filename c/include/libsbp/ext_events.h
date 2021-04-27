@@ -29,6 +29,12 @@
 SBP_PACK_START
 
 
+/** Reports timestamped external pin event
+ *
+ * Reports detection of an external event, the GPS time it occurred,
+ * which pin it was and whether it was rising or falling.
+ */
+#define SBP_MSG_EXT_EVENT 0x0101
 #define SBP_EXT_EVENT_TIME_QUALITY_MASK (0x1)
 #define SBP_EXT_EVENT_TIME_QUALITY_SHIFT (1u)
 #define SBP_EXT_EVENT_TIME_QUALITY_GET(flags) \
@@ -55,40 +61,15 @@ SBP_PACK_START
 
 #define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_LOW (0)
 #define SBP_EXT_EVENT_NEW_LEVEL_OF_PIN_HIGH (1)
-/** Reports timestamped external pin event
- *
- * Reports detection of an external event, the GPS time it occurred,
- * which pin it was and whether it was rising or falling.
- */
+
 typedef struct SBP_ATTR_PACKED {
-#define SBP_MSG_EXT_EVENT 0x0101
-  
-  /** 
-   * GPS week number [weeks] 
-   */
-  u16 wn;            
-  
-  /** 
-   * GPS time of week rounded to the nearest millisecond [ms] 
-   */
-  u32 tow;           
-  
-  /** 
-    * Nanosecond residual of millisecond-rounded TOW (ranges
- * from -500000 to 500000) [ns] 
-   */
-  s32 ns_residual;   
-  
-  /** 
-   * Flags 
-   */
-  u8 flags;         
-  
-  /** 
-   * Pin number.  0..9 = DEBUG0..9. 
-   */
-  u8 pin;           
-  
+  u16 wn;             /**< GPS week number [weeks] */
+  u32 tow;            /**< GPS time of week rounded to the nearest millisecond [ms] */
+  s32 ns_residual;    /**< Nanosecond residual of millisecond-rounded TOW (ranges
+from -500000 to 500000)
+ [ns] */
+  u8 flags;          /**< Flags */
+  u8 pin;            /**< Pin number.  0..9 = DEBUG0..9. */
 } msg_ext_event_t;
 
 
