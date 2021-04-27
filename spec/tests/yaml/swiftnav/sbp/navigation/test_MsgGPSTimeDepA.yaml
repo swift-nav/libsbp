@@ -103,5 +103,126 @@ tests:
     payload: +wYIMCcAAAAAAAA=
     preamble: '0x55'
     sender: '0xd7f6'
+
+- msg:
+    fields:
+      flags: 0
+      ns_residual: -224401
+      tow: 407084500
+      wn: 1838
+    module: sbp.navigation
+    name: MsgGPSTimeDepA
+  msg_type: '0x100'
+  raw_json: '{"sender": 1219, "msg_type": 256, "wn": 1838, "tow": 407084500, "crc":
+    48855, "length": 11, "flags": 0, "ns_residual": -224401, "preamble": 85, "payload": "LgfUnUMYb5P8/wA="}'
+  raw_packet: VQABwwQLLgfUnUMYb5P8/wDXvg==
+  sbp:
+    crc: '0xbed7'
+    length: 11
+    msg_type: '0x100'
+    payload: LgfUnUMYb5P8/wA=
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      flags: 0
+      ns_residual: 223085
+      tow: 407084600
+      wn: 1838
+    module: sbp.navigation
+    name: MsgGPSTimeDepA
+  msg_type: '0x100'
+  raw_json: '{"sender": 1219, "msg_type": 256, "wn": 1838, "tow": 407084600, "crc":
+    22918, "length": 11, "flags": 0, "ns_residual": 223085, "preamble": 85, "payload": "Lgc4nkMYbWcDAAA="}'
+  raw_packet: VQABwwQLLgc4nkMYbWcDAACGWQ==
+  sbp:
+    crc: '0x5986'
+    length: 11
+    msg_type: '0x100'
+    payload: Lgc4nkMYbWcDAAA=
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      flags: 0
+      ns_residual: -222999
+      tow: 407084700
+      wn: 1838
+    module: sbp.navigation
+    name: MsgGPSTimeDepA
+  msg_type: '0x100'
+  raw_json: '{"sender": 1219, "msg_type": 256, "wn": 1838, "tow": 407084700, "crc":
+    61902, "length": 11, "flags": 0, "ns_residual": -222999, "preamble": 85, "payload": "LgecnkMY6Zj8/wA="}'
+  raw_packet: VQABwwQLLgecnkMY6Zj8/wDO8Q==
+  sbp:
+    crc: '0xf1ce'
+    length: 11
+    msg_type: '0x100'
+    payload: LgecnkMY6Zj8/wA=
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      flags: 0
+      ns_residual: 236272
+      tow: 407084800
+      wn: 1838
+    module: sbp.navigation
+    name: MsgGPSTimeDepA
+  msg_type: '0x100'
+  raw_json: '{"sender": 1219, "msg_type": 256, "wn": 1838, "tow": 407084800, "crc":
+    25235, "length": 11, "flags": 0, "ns_residual": 236272, "preamble": 85, "payload": "LgcAn0MY8JoDAAA="}'
+  raw_packet: VQABwwQLLgcAn0MY8JoDAACTYg==
+  sbp:
+    crc: '0x6293'
+    length: 11
+    msg_type: '0x100'
+    payload: LgcAn0MY8JoDAAA=
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      flags: 0
+      ns_residual: -236144
+      tow: 407084900
+      wn: 1838
+    module: sbp.navigation
+    name: MsgGPSTimeDepA
+  msg_type: '0x100'
+  raw_json: '{"sender": 1219, "msg_type": 256, "wn": 1838, "tow": 407084900, "crc":
+    39098, "length": 11, "flags": 0, "ns_residual": -236144, "preamble": 85, "payload": "Lgdkn0MYkGX8/wA="}'
+  raw_packet: VQABwwQLLgdkn0MYkGX8/wC6mA==
+  sbp:
+    crc: '0x98ba'
+    length: 11
+    msg_type: '0x100'
+    payload: Lgdkn0MYkGX8/wA=
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      flags: 0
+      ns_residual: -334131
+      tow: 407151150
+      wn: 1838
+    module: sbp.navigation
+    name: MsgGPSTimeDepA
+  msg_type: '0x100'
+  raw_json: '{"sender": 1219, "msg_type": 256, "wn": 1838, "tow": 407151150, "crc":
+    57611, "length": 11, "flags": 0, "ns_residual": -334131, "preamble": 85, "payload": "LgcuokQYzeb6/wA="}'
+  raw_packet: VQABwwQLLgcuokQYzeb6/wAL4Q==
+  sbp:
+    crc: '0xe10b'
+    length: 11
+    msg_type: '0x100'
+    payload: LgcuokQYzeb6/wA=
+    preamble: '0x55'
+    sender: '0x4c3'
+
 version: '0.51'
 ...

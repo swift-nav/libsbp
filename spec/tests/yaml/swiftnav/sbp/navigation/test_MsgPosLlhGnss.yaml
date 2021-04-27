@@ -1,0 +1,29 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgPosLLHGNSS
+generated_on: 2020-04-23 00:00:00.00 # manually generated
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      tow: 501867800
+      lat: 37.83123196497633
+      lon: -122.28650381011681
+      height: -17.39382124780135
+      h_accuracy: 87
+      v_accuracy: 181
+      n_sats: 18
+      flags: 4
+    module: sbp.navigation
+    name: MsgPosLLHGnss
+  msg_type: '0x22a'
+  raw_json: '{"tow":501867800,"lat":37.83123196497633,"lon":-122.28650381011681,"height":-17.39382124780135,"h_accuracy":87,"v_accuracy":181,"n_sats":18,"flags":4,"preamble":85,"msg_type":554,"sender":4096,"payload":"GOXpHUl7HM9l6kJAZKgTFFaSXsDWxiN40WQxwFcAtQASBA==","crc":14185,"length":34}'
+  raw_packet: VSoCABAiGOXpHUl7HM9l6kJAZKgTFFaSXsDWxiN40WQxwFcAtQASBGk3
+  sbp:
+    crc: '0x3769'
+    length: 0x22
+    msg_type: '0x22a'
+    payload: GOXpHUl7HM9l6kJAZKgTFFaSXsDWxiN40WQxwFcAtQASBA==
+    preamble: '0x55'
+    sender: '0x1000'
+

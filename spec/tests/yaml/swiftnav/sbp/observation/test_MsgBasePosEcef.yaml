@@ -1,0 +1,23 @@
+---
+description: Unit tests for swiftnav.sbp.observation MsgBasePosEcef
+generated_on: 2020-04-22 00:00:00.00 # manually generated
+package: sbp.observation
+tests:
+
+- msg:
+    fields:
+      x: -2726575.9189
+      y: -4315267.2798
+      z: 3811455.9642
+    module: sbp.observation
+    name: MsgBasePosECEF
+  msg_type: '0x48'
+  raw_json: '{"x":-2726575.9189,"y":-4315267.2798,"z":3811455.9642,"preamble":85,"msg_type":72,"sender":0,"payload":"5IOe9VfNRMFCPujRIHZQwdXnavs/FE1B","crc":32194,"length":24}'
+  raw_packet: VUgAAAAY5IOe9VfNRMFCPujRIHZQwdXnavs/FE1Bwn0=
+  sbp:
+    crc: '0x7dc2'
+    length: 0x18
+    payload: 5IOe9VfNRMFCPujRIHZQwdXnavs/FE1B
+    msg_type: '0x48'
+    preamble: '0x55'
+    sender: '0'

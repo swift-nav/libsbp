@@ -26,13 +26,14 @@ use crate::SbpString;
 /// SSR code biases corrections for a particular satellite.
 ///
 /// Code biases are to be added to pseudorange.
-/// The corrections conform with typical RTCMv3 MT1059 and 1065.
+/// The corrections conform with RTCMv3 MT 1059 / 1065.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct CodeBiasesContent {
-    /// Signal constellation, band and code
+    /// Signal encoded following RTCM specifications (DF380, DF381, DF382 and
+    /// DF467).
     pub code: u8,
     /// Code bias value
     pub value: i16,
@@ -310,7 +311,7 @@ pub struct GriddedCorrectionHeader {
     /// IOD of the SSR atmospheric correction
     pub iod_atmo: u8,
     /// Quality of the troposphere data. Encoded following RTCM DF389
-    /// specifcation in units of m.
+    /// specification in units of m.
     pub tropo_quality_indicator: u8,
 }
 
@@ -460,8 +461,8 @@ impl crate::serialize::SbpSerialize for GriddedCorrectionHeaderDepA {
 ///
 /// The precise code biases message is to be added
 /// to the pseudorange of the corresponding signal
-/// to get corrected pseudorange. It is typically
-/// an equivalent to the 1059 and 1065 RTCM message types
+/// to get corrected pseudorange. It is an
+/// equivalent to the 1059 / 1065 RTCM message types
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -819,8 +820,8 @@ impl crate::serialize::SbpSerialize for MsgSsrGridDefinitionDepA {
 ///
 /// The precise orbit and clock correction message is
 /// to be applied as a delta correction to broadcast
-/// ephemeris and is typically an equivalent to the 1060
-/// and 1066 RTCM message types
+/// ephemeris and is an equivalent to the 1060 /1066
+/// RTCM message types
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
@@ -1520,13 +1521,13 @@ impl crate::serialize::SbpSerialize for MsgSsrTileDefinition {
 /// SSR phase biases corrections for a particular satellite.
 ///
 /// Phase biases are to be added to carrier phase measurements.
-/// The corrections conform with typical RTCMv3 MT1059 and 1065.
 ///
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
 pub struct PhaseBiasesContent {
-    /// Signal constellation, band and code
+    /// Signal encoded following RTCM specifications (DF380, DF381, DF382 and
+    /// DF467)
     pub code: u8,
     /// Indicator for integer property
     pub integer_indicator: u8,
@@ -1875,7 +1876,7 @@ impl crate::serialize::SbpSerialize for STECResidualNoStd {
 pub struct STECSatElement {
     /// Unique space vehicle identifier
     pub sv_id: SvId,
-    /// Quality of the STEC data. Encoded following RTCM DF389 specifcation but
+    /// Quality of the STEC data. Encoded following RTCM DF389 specification but
     /// in units of TECU instead of m.
     pub stec_quality_indicator: u8,
     /// Coefficents of the STEC polynomial in the order of C00, C01, C10, C11

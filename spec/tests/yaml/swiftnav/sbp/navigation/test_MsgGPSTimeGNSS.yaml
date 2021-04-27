@@ -1,0 +1,108 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgGPSTimeGnss vNone.
+generated_on: 2016-11-04 01:08:51.025329
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      flags: 0
+      ns_residual: 166900
+      tow: 326825000
+      wn: 1920
+    module: sbp.navigation
+    name: MsgGPSTimeGnss
+  msg_type: '0x104'
+  raw_json: '{"sender": 35027, "msg_type": 260, "wn": 1920, "tow": 326825000, "crc":
+    22681, "length": 11, "flags": 0, "ns_residual": 166900, "preamble": 85, "payload": "gAco9HoT9IsCAAA="}'
+  raw_packet: VQQB04gLgAco9HoT9IsCAACZWA==
+  sbp:
+    crc: '0x5899'
+    length: 11
+    msg_type: '0x104'
+    payload: gAco9HoT9IsCAAA=
+    preamble: '0x55'
+    sender: '0x88d3'
+
+- msg:
+    fields:
+      flags: 0
+      ns_residual: 256638
+      tow: 326825500
+      wn: 1920
+    module: sbp.navigation
+    name: MsgGPSTimeGnss
+  msg_type: '0x104'
+  raw_json: '{"sender": 35027, "msg_type": 260, "wn": 1920, "tow": 326825500, "crc":
+    50170, "length": 11, "flags": 0, "ns_residual": 256638, "preamble": 85, "payload": "gAcc9noTfuoDAAA="}'
+  raw_packet: VQQB04gLgAcc9noTfuoDAAD6ww==
+  sbp:
+    crc: '0xc3fa'
+    length: 11
+    msg_type: '0x104'
+    payload: gAcc9noTfuoDAAA=
+    preamble: '0x55'
+    sender: '0x88d3'
+
+- msg:
+    fields:
+      flags: 0
+      ns_residual: 265345
+      tow: 326826000
+      wn: 1920
+    module: sbp.navigation
+    name: MsgGPSTimeGnss
+  msg_type: '0x104'
+  raw_json: '{"sender": 35027, "msg_type": 260, "wn": 1920, "tow": 326826000, "crc":
+    38071, "length": 11, "flags": 0, "ns_residual": 265345, "preamble": 85, "payload": "gAcQ+HoTgQwEAAA="}'
+  raw_packet: VQQB04gLgAcQ+HoTgQwEAAC3lA==
+  sbp:
+    crc: '0x94b7'
+    length: 11
+    msg_type: '0x104'
+    payload: gAcQ+HoTgQwEAAA=
+    preamble: '0x55'
+    sender: '0x88d3'
+
+- msg:
+    fields:
+      flags: 0
+      ns_residual: 314505
+      tow: 326826500
+      wn: 1920
+    module: sbp.navigation
+    name: MsgGPSTimeGnss
+  msg_type: '0x104'
+  raw_json: '{"sender": 35027, "msg_type": 260, "wn": 1920, "tow": 326826500, "crc":
+    25993, "length": 11, "flags": 0, "ns_residual": 314505, "preamble": 85, "payload": "gAcE+noTicwEAAA="}'
+  raw_packet: VQQB04gLgAcE+noTicwEAACJZQ==
+  sbp:
+    crc: '0x6589'
+    length: 11
+    msg_type: '0x104'
+    payload: gAcE+noTicwEAAA=
+    preamble: '0x55'
+    sender: '0x88d3'
+
+- msg:
+    fields:
+      flags: 0
+      ns_residual: 362933
+      tow: 326827000
+      wn: 1920
+    module: sbp.navigation
+    name: MsgGPSTimeGnss
+  msg_type: '0x104'
+  raw_json: '{"sender": 35027, "msg_type": 260, "wn": 1920, "tow": 326827000, "crc":
+    57615, "length": 11, "flags": 0, "ns_residual": 362933, "preamble": 85, "payload": "gAf4+3oTtYkFAAA="}'
+  raw_packet: VQQB04gLgAf4+3oTtYkFAAAP4Q==
+  sbp:
+    crc: '0xe10f'
+    length: 11
+    msg_type: '0x104'
+    payload: gAf4+3oTtYkFAAA=
+    preamble: '0x55'
+    sender: '0x88d3'
+version: null
+...
+

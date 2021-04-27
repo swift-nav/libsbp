@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/acquisition/test_MsgAcqResultDepC.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/acquisition/test_MsgAcqResultDepB.yaml by generate.py. Do not modify by hand!
 
 use sbp::iter_messages;
 use sbp::messages::SBPMessage;
@@ -24,8 +24,8 @@ use std::io::Cursor;
 fn test_auto_check_sbp_acquisition_2() {
     {
         let mut payload = Cursor::new(vec![
-            85, 31, 0, 40, 12, 16, 72, 9, 34, 66, 155, 152, 228, 67, 28, 34, 221, 68, 10, 0, 0, 0,
-            9, 189,
+            85, 20, 0, 246, 215, 16, 137, 167, 18, 66, 0, 0, 161, 67, 240, 24, 156, 69, 9, 0, 0, 0,
+            80, 195,
         ]);
 
         // Test the round trip payload parsing
@@ -36,32 +36,27 @@ fn test_auto_check_sbp_acquisition_2() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgAcqResultDepC(msg) => {
+            sbp::messages::SBP::MsgAcqResultDepB(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x1f,
-                    "Incorrect message type, expected 0x1f, is {}",
+                    0x14,
+                    "Incorrect message type, expected 0x14, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0xc28,
-                    "incorrect sender id, expected 0xc28, is {}",
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
                     sender_id
                 );
                 assert!(
-                    msg.cf.almost_eq(1.76906591796875000e+03),
-                    "incorrect value for cf, expected 1.76906591796875000e+03, is {:e}",
+                    msg.cf.almost_eq(4.99511718750000000e+03),
+                    "incorrect value for cf, expected 4.99511718750000000e+03, is {:e}",
                     msg.cf
                 );
                 assert!(
-                    msg.cn0.almost_eq(4.05090637207031250e+01),
-                    "incorrect value for cn0, expected 4.05090637207031250e+01, is {:e}",
-                    msg.cn0
-                );
-                assert!(
-                    msg.cp.almost_eq(4.57192230224609375e+02),
-                    "incorrect value for cp, expected 4.57192230224609375e+02, is {:e}",
+                    msg.cp.almost_eq(3.22000000000000000e+02),
+                    "incorrect value for cp, expected 3.22000000000000000e+02, is {:e}",
                     msg.cp
                 );
                 assert_eq!(
@@ -75,20 +70,25 @@ fn test_auto_check_sbp_acquisition_2() {
                     msg.sid.reserved
                 );
                 assert_eq!(
-                    msg.sid.sat, 10,
-                    "incorrect value for sid.sat, expected 10, is {}",
+                    msg.sid.sat, 9,
+                    "incorrect value for sid.sat, expected 9, is {}",
                     msg.sid.sat
                 );
+                assert!(
+                    msg.snr.almost_eq(3.66636085510253906e+01),
+                    "incorrect value for snr, expected 3.66636085510253906e+01, is {:e}",
+                    msg.snr
+                );
             }
-            _ => panic!("Invalid message type! Expected a MsgAcqResultDepC"),
+            _ => panic!("Invalid message type! Expected a MsgAcqResultDepB"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());
     }
     {
         let mut payload = Cursor::new(vec![
-            85, 31, 0, 40, 12, 16, 132, 250, 45, 66, 207, 93, 88, 68, 68, 185, 252, 195, 6, 0, 0,
-            0, 136, 185,
+            85, 20, 0, 246, 215, 16, 206, 172, 16, 66, 0, 192, 82, 68, 198, 199, 0, 198, 3, 0, 0,
+            0, 149, 143,
         ]);
 
         // Test the round trip payload parsing
@@ -99,32 +99,27 @@ fn test_auto_check_sbp_acquisition_2() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgAcqResultDepC(msg) => {
+            sbp::messages::SBP::MsgAcqResultDepB(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x1f,
-                    "Incorrect message type, expected 0x1f, is {}",
+                    0x14,
+                    "Incorrect message type, expected 0x14, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0xc28,
-                    "incorrect sender id, expected 0xc28, is {}",
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
                     sender_id
                 );
                 assert!(
-                    msg.cf.almost_eq(-5.05447387695312500e+02),
-                    "incorrect value for cf, expected -5.05447387695312500e+02, is {:e}",
+                    msg.cf.almost_eq(-8.24194335937500000e+03),
+                    "incorrect value for cf, expected -8.24194335937500000e+03, is {:e}",
                     msg.cf
                 );
                 assert!(
-                    msg.cn0.almost_eq(4.34946441650390625e+01),
-                    "incorrect value for cn0, expected 4.34946441650390625e+01, is {:e}",
-                    msg.cn0
-                );
-                assert!(
-                    msg.cp.almost_eq(8.65465759277343750e+02),
-                    "incorrect value for cp, expected 8.65465759277343750e+02, is {:e}",
+                    msg.cp.almost_eq(8.43000000000000000e+02),
+                    "incorrect value for cp, expected 8.43000000000000000e+02, is {:e}",
                     msg.cp
                 );
                 assert_eq!(
@@ -138,20 +133,25 @@ fn test_auto_check_sbp_acquisition_2() {
                     msg.sid.reserved
                 );
                 assert_eq!(
-                    msg.sid.sat, 6,
-                    "incorrect value for sid.sat, expected 6, is {}",
+                    msg.sid.sat, 3,
+                    "incorrect value for sid.sat, expected 3, is {}",
                     msg.sid.sat
                 );
+                assert!(
+                    msg.snr.almost_eq(3.61687545776367188e+01),
+                    "incorrect value for snr, expected 3.61687545776367188e+01, is {:e}",
+                    msg.snr
+                );
             }
-            _ => panic!("Invalid message type! Expected a MsgAcqResultDepC"),
+            _ => panic!("Invalid message type! Expected a MsgAcqResultDepB"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());
     }
     {
         let mut payload = Cursor::new(vec![
-            85, 31, 0, 40, 12, 16, 163, 223, 24, 66, 64, 91, 102, 67, 202, 243, 157, 196, 13, 0, 0,
-            0, 150, 161,
+            85, 20, 0, 246, 215, 16, 228, 27, 15, 66, 0, 128, 70, 68, 228, 74, 148, 69, 18, 0, 0,
+            0, 179, 155,
         ]);
 
         // Test the round trip payload parsing
@@ -162,32 +162,27 @@ fn test_auto_check_sbp_acquisition_2() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgAcqResultDepC(msg) => {
+            sbp::messages::SBP::MsgAcqResultDepB(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x1f,
-                    "Incorrect message type, expected 0x1f, is {}",
+                    0x14,
+                    "Incorrect message type, expected 0x14, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0xc28,
-                    "incorrect sender id, expected 0xc28, is {}",
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
                     sender_id
                 );
                 assert!(
-                    msg.cf.almost_eq(-1.26361840820312500e+03),
-                    "incorrect value for cf, expected -1.26361840820312500e+03, is {:e}",
+                    msg.cf.almost_eq(4.74536132812500000e+03),
+                    "incorrect value for cf, expected 4.74536132812500000e+03, is {:e}",
                     msg.cf
                 );
                 assert!(
-                    msg.cn0.almost_eq(3.82183952331542969e+01),
-                    "incorrect value for cn0, expected 3.82183952331542969e+01, is {:e}",
-                    msg.cn0
-                );
-                assert!(
-                    msg.cp.almost_eq(2.30356445312500000e+02),
-                    "incorrect value for cp, expected 2.30356445312500000e+02, is {:e}",
+                    msg.cp.almost_eq(7.94000000000000000e+02),
+                    "incorrect value for cp, expected 7.94000000000000000e+02, is {:e}",
                     msg.cp
                 );
                 assert_eq!(
@@ -201,20 +196,25 @@ fn test_auto_check_sbp_acquisition_2() {
                     msg.sid.reserved
                 );
                 assert_eq!(
-                    msg.sid.sat, 13,
-                    "incorrect value for sid.sat, expected 13, is {}",
+                    msg.sid.sat, 18,
+                    "incorrect value for sid.sat, expected 18, is {}",
                     msg.sid.sat
                 );
+                assert!(
+                    msg.snr.almost_eq(3.57772369384765625e+01),
+                    "incorrect value for snr, expected 3.57772369384765625e+01, is {:e}",
+                    msg.snr
+                );
             }
-            _ => panic!("Invalid message type! Expected a MsgAcqResultDepC"),
+            _ => panic!("Invalid message type! Expected a MsgAcqResultDepB"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());
     }
     {
         let mut payload = Cursor::new(vec![
-            85, 31, 0, 40, 12, 16, 129, 65, 21, 66, 224, 214, 124, 67, 243, 138, 61, 69, 1, 0, 0,
-            0, 109, 209,
+            85, 20, 0, 246, 215, 16, 46, 199, 14, 66, 0, 64, 129, 67, 240, 24, 28, 69, 17, 0, 0, 0,
+            18, 181,
         ]);
 
         // Test the round trip payload parsing
@@ -225,32 +225,27 @@ fn test_auto_check_sbp_acquisition_2() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgAcqResultDepC(msg) => {
+            sbp::messages::SBP::MsgAcqResultDepB(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x1f,
-                    "Incorrect message type, expected 0x1f, is {}",
+                    0x14,
+                    "Incorrect message type, expected 0x14, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0xc28,
-                    "incorrect sender id, expected 0xc28, is {}",
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
                     sender_id
                 );
                 assert!(
-                    msg.cf.almost_eq(3.03268432617187500e+03),
-                    "incorrect value for cf, expected 3.03268432617187500e+03, is {:e}",
+                    msg.cf.almost_eq(2.49755859375000000e+03),
+                    "incorrect value for cf, expected 2.49755859375000000e+03, is {:e}",
                     msg.cf
                 );
                 assert!(
-                    msg.cn0.almost_eq(3.73139686584472656e+01),
-                    "incorrect value for cn0, expected 3.73139686584472656e+01, is {:e}",
-                    msg.cn0
-                );
-                assert!(
-                    msg.cp.almost_eq(2.52839355468750000e+02),
-                    "incorrect value for cp, expected 2.52839355468750000e+02, is {:e}",
+                    msg.cp.almost_eq(2.58500000000000000e+02),
+                    "incorrect value for cp, expected 2.58500000000000000e+02, is {:e}",
                     msg.cp
                 );
                 assert_eq!(
@@ -264,20 +259,25 @@ fn test_auto_check_sbp_acquisition_2() {
                     msg.sid.reserved
                 );
                 assert_eq!(
-                    msg.sid.sat, 1,
-                    "incorrect value for sid.sat, expected 1, is {}",
+                    msg.sid.sat, 17,
+                    "incorrect value for sid.sat, expected 17, is {}",
                     msg.sid.sat
                 );
+                assert!(
+                    msg.snr.almost_eq(3.56945114135742188e+01),
+                    "incorrect value for snr, expected 3.56945114135742188e+01, is {:e}",
+                    msg.snr
+                );
             }
-            _ => panic!("Invalid message type! Expected a MsgAcqResultDepC"),
+            _ => panic!("Invalid message type! Expected a MsgAcqResultDepB"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());
     }
     {
         let mut payload = Cursor::new(vec![
-            85, 31, 0, 40, 12, 16, 126, 35, 62, 66, 226, 37, 102, 68, 202, 243, 29, 69, 27, 0, 0,
-            0, 91, 67,
+            85, 20, 0, 246, 215, 16, 194, 24, 14, 66, 0, 128, 2, 68, 129, 193, 249, 195, 5, 0, 0,
+            0, 35, 203,
         ]);
 
         // Test the round trip payload parsing
@@ -288,32 +288,27 @@ fn test_auto_check_sbp_acquisition_2() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgAcqResultDepC(msg) => {
+            sbp::messages::SBP::MsgAcqResultDepB(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x1f,
-                    "Incorrect message type, expected 0x1f, is {}",
+                    0x14,
+                    "Incorrect message type, expected 0x14, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0xc28,
-                    "incorrect sender id, expected 0xc28, is {}",
+                    sender_id, 0xd7f6,
+                    "incorrect sender id, expected 0xd7f6, is {}",
                     sender_id
                 );
                 assert!(
-                    msg.cf.almost_eq(2.52723681640625000e+03),
-                    "incorrect value for cf, expected 2.52723681640625000e+03, is {:e}",
+                    msg.cf.almost_eq(-4.99511749267578125e+02),
+                    "incorrect value for cf, expected -4.99511749267578125e+02, is {:e}",
                     msg.cf
                 );
                 assert!(
-                    msg.cn0.almost_eq(4.75346603393554688e+01),
-                    "incorrect value for cn0, expected 4.75346603393554688e+01, is {:e}",
-                    msg.cn0
-                );
-                assert!(
-                    msg.cp.almost_eq(9.20591918945312500e+02),
-                    "incorrect value for cp, expected 9.20591918945312500e+02, is {:e}",
+                    msg.cp.almost_eq(5.22000000000000000e+02),
+                    "incorrect value for cp, expected 5.22000000000000000e+02, is {:e}",
                     msg.cp
                 );
                 assert_eq!(
@@ -327,12 +322,17 @@ fn test_auto_check_sbp_acquisition_2() {
                     msg.sid.reserved
                 );
                 assert_eq!(
-                    msg.sid.sat, 27,
-                    "incorrect value for sid.sat, expected 27, is {}",
+                    msg.sid.sat, 5,
+                    "incorrect value for sid.sat, expected 5, is {}",
                     msg.sid.sat
                 );
+                assert!(
+                    msg.snr.almost_eq(3.55241775512695312e+01),
+                    "incorrect value for snr, expected 3.55241775512695312e+01, is {:e}",
+                    msg.snr
+                );
             }
-            _ => panic!("Invalid message type! Expected a MsgAcqResultDepC"),
+            _ => panic!("Invalid message type! Expected a MsgAcqResultDepB"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());

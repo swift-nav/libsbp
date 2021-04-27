@@ -130,5 +130,156 @@ tests:
     payload: pC8nAFD8//+MDgAAAAAAAAAAAAAJAA==
     preamble: '0x55'
     sender: '0xd7f6'
+
+- msg:
+    fields:
+      d: 25
+      e: 26
+      flags: 0
+      h_accuracy: 0
+      n: -27
+      n_sats: 8
+      tow: 407084500
+      v_accuracy: 0
+    module: sbp.navigation
+    name: MsgVelNEDDepA
+  msg_type: '0x205'
+  raw_json: '{"v_accuracy": 0, "e": 26, "sender": 1219, "msg_type": 517, "tow": 407084500,
+    "n": -27, "crc": 6532, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 8,
+    "preamble": 85, "payload": "1J1DGOX///8aAAAAGQAAAAAAAAAIAA==", "d": 25}'
+  raw_packet: VQUCwwQW1J1DGOX///8aAAAAGQAAAAAAAAAIAIQZ
+  sbp:
+    crc: '0x1984'
+    length: 22
+    msg_type: '0x205'
+    payload: 1J1DGOX///8aAAAAGQAAAAAAAAAIAA==
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      d: -24
+      e: 15
+      flags: 0
+      h_accuracy: 0
+      n: 4
+      n_sats: 8
+      tow: 407084600
+      v_accuracy: 0
+    module: sbp.navigation
+    name: MsgVelNEDDepA
+  msg_type: '0x205'
+  raw_json: '{"v_accuracy": 0, "e": 15, "sender": 1219, "msg_type": 517, "tow": 407084600,
+    "n": 4, "crc": 3626, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 8, "preamble":
+    85, "payload": "OJ5DGAQAAAAPAAAA6P///wAAAAAIAA==", "d": -24}'
+  raw_packet: VQUCwwQWOJ5DGAQAAAAPAAAA6P///wAAAAAIACoO
+  sbp:
+    crc: '0xe2a'
+    length: 22
+    msg_type: '0x205'
+    payload: OJ5DGAQAAAAPAAAA6P///wAAAAAIAA==
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      d: -9
+      e: -24
+      flags: 0
+      h_accuracy: 0
+      n: -5
+      n_sats: 8
+      tow: 407084700
+      v_accuracy: 0
+    module: sbp.navigation
+    name: MsgVelNEDDepA
+  msg_type: '0x205'
+  raw_json: '{"v_accuracy": 0, "e": -24, "sender": 1219, "msg_type": 517, "tow": 407084700,
+    "n": -5, "crc": 38106, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 8,
+    "preamble": 85, "payload": "nJ5DGPv////o////9////wAAAAAIAA==", "d": -9}'
+  raw_packet: VQUCwwQWnJ5DGPv////o////9////wAAAAAIANqU
+  sbp:
+    crc: '0x94da'
+    length: 22
+    msg_type: '0x205'
+    payload: nJ5DGPv////o////9////wAAAAAIAA==
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      d: -34
+      e: 2
+      flags: 0
+      h_accuracy: 0
+      n: 10
+      n_sats: 8
+      tow: 407084800
+      v_accuracy: 0
+    module: sbp.navigation
+    name: MsgVelNEDDepA
+  msg_type: '0x205'
+  raw_json: '{"v_accuracy": 0, "e": 2, "sender": 1219, "msg_type": 517, "tow": 407084800,
+    "n": 10, "crc": 4244, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 8,
+    "preamble": 85, "payload": "AJ9DGAoAAAACAAAA3v///wAAAAAIAA==", "d": -34}'
+  raw_packet: VQUCwwQWAJ9DGAoAAAACAAAA3v///wAAAAAIAJQQ
+  sbp:
+    crc: '0x1094'
+    length: 22
+    msg_type: '0x205'
+    payload: AJ9DGAoAAAACAAAA3v///wAAAAAIAA==
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      d: 7
+      e: -2
+      flags: 0
+      h_accuracy: 0
+      n: -8
+      n_sats: 8
+      tow: 407084900
+      v_accuracy: 0
+    module: sbp.navigation
+    name: MsgVelNEDDepA
+  msg_type: '0x205'
+  raw_json: '{"v_accuracy": 0, "e": -2, "sender": 1219, "msg_type": 517, "tow": 407084900,
+    "n": -8, "crc": 60671, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 8,
+    "preamble": 85, "payload": "ZJ9DGPj////+////BwAAAAAAAAAIAA==", "d": 7}'
+  raw_packet: VQUCwwQWZJ9DGPj////+////BwAAAAAAAAAIAP/s
+  sbp:
+    crc: '0xecff'
+    length: 22
+    msg_type: '0x205'
+    payload: ZJ9DGPj////+////BwAAAAAAAAAIAA==
+    preamble: '0x55'
+    sender: '0x4c3'
+
+- msg:
+    fields:
+      d: -108
+      e: -3
+      flags: 0
+      h_accuracy: 0
+      n: -1
+      n_sats: 5
+      tow: 407151150
+      v_accuracy: 0
+    module: sbp.navigation
+    name: MsgVelNEDDepA
+  msg_type: '0x205'
+  raw_json: '{"v_accuracy": 0, "e": -3, "sender": 1219, "msg_type": 517, "tow": 407151150,
+    "n": -1, "crc": 48550, "length": 22, "flags": 0, "h_accuracy": 0, "n_sats": 5,
+    "preamble": 85, "payload": "LqJEGP/////9////lP///wAAAAAFAA==", "d": -108}'
+  raw_packet: VQUCwwQWLqJEGP/////9////lP///wAAAAAFAKa9
+  sbp:
+    crc: '0xbda6'
+    length: 22
+    msg_type: '0x205'
+    payload: LqJEGP/////9////lP///wAAAAAFAA==
+    preamble: '0x55'
+    sender: '0x4c3'
+
 version: '0.51'
 ...

@@ -1,0 +1,32 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgVelNedCovGnss
+generated_on: 2020-04-23 00:00:00.00 # manually generated
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      tow: 501868200
+      n: -5
+      e: 0
+      d: -10
+      cov_n_n: 0.0015810149488970637
+      cov_n_e: 1.457612233934924e-05
+      cov_n_d: 0.00017716512957122177
+      cov_e_e: 0.0009897587588056922
+      cov_e_d: 0.00016467059322167188
+      cov_d_d: 0.007882959209382534
+      n_sats: 21
+      flags: 2
+    module: sbp.navigation
+    name: MsgVelNEDCovGnss
+  msg_type: '0x232'
+  raw_json: '{"tow":501868200,"n":-5,"e":0,"d":-10,"cov_n_n":0.0015810149488970637,"cov_n_e":1.457612233934924e-05,"cov_n_d":0.00017716512957122177,"cov_e_e":0.0009897587588056922,"cov_e_d":0.00016467059322167188,"cov_d_d":0.007882959209382534,"n_sats":21,"flags":2,"preamble":85,"msg_type":562,"sender":4096,"payload":"qObpHfv///8AAAAA9v///w86zzr4i3Q3Z8U5Ocu6gTptqyw5hycBPBUC","crc":923,"length":42}'
+  raw_packet: VTICABAqqObpHfv///8AAAAA9v///w86zzr4i3Q3Z8U5Ocu6gTptqyw5hycBPBUCmwM=
+  sbp:
+    crc: '0x39b'
+    length: 0x2a
+    msg_type: '0x232'
+    payload: qObpHfv///8AAAAA9v///w86zzr4i3Q3Z8U5Ocu6gTptqyw5hycBPBUC
+    preamble: '0x55'
+    sender: '0x1000'

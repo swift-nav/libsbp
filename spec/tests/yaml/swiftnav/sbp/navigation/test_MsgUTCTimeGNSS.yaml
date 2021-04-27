@@ -1,0 +1,31 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgUTCTimeGNSS
+generated_on: 2020-04-23 00:00:00.00 # manually generated
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      flags: 1
+      tow: 501867800
+      year: 2021
+      month: 4
+      day: 9
+      hours: 19
+      minutes: 24
+      seconds: 9
+      ns: 800000000
+    module: sbp.navigation
+    name: MsgUtcTimeGnss
+  msg_type: '0x105'
+  raw_json: '{"flags":1,"tow":501867800,"year":2021,"month":4,"day":9,"hours":19,"minutes":24,"seconds":9,"ns":800000000,"preamble":85,"msg_type":261,"sender":789,"payload":"ARjl6R3lBwQJExgJAAivLw==","crc":8625,"length":16}'
+  raw_packet: VQUBFQMQARjl6R3lBwQJExgJAAivL7Eh
+  sbp:
+    crc: '0x21b1'
+    length: 16
+    msg_type: "0x105"
+    payload: ARjl6R3lBwQJExgJAAivLw==
+    preamble: '0x55'
+    sender: '0x315'
+
+

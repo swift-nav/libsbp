@@ -1,0 +1,22 @@
+---
+description: Unit tests for swiftnav.sbp.logging MsgLog
+generated_on: 2020-04-23 00:00:00.00 # manually generated
+package: sbp.logging
+tests:
+
+- msg:
+    fields:
+      level: 6
+      text: "Filtered all obs from 2314 at tow 83.539019"
+    module: sbp.logging
+    name: MsgLog
+  msg_type: '0x0401'
+  raw_json: '{"level":6,"text":"Filtered all obs from 2314 at tow 83.539019","preamble":85,"msg_type":1025,"sender":2314,"payload":"BkZpbHRlcmVkIGFsbCBvYnMgZnJvbSAyMzE0IGF0IHRvdyA4My41MzkwMTk=","crc":41905,"length":44}'
+  raw_packet: VQEECgksBkZpbHRlcmVkIGFsbCBvYnMgZnJvbSAyMzE0IGF0IHRvdyA4My41MzkwMTmxow==
+  sbp:
+    crc: '0xa3b1'
+    length: 44
+    msg_type: '0x0401'
+    payload: BkZpbHRlcmVkIGFsbCBvYnMgZnJvbSAyMzE0IGF0IHRvdyA4My41MzkwMTk=
+    preamble: '0x55'
+    sender: '0x90a'

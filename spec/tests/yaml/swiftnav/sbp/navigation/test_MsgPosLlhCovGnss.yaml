@@ -1,0 +1,33 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgPosLLHCovGnss
+generated_on: 2020-04-23 00:00:00.00 # manually generated
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      tow: 501867800
+      lat: 37.83123196497633
+      lon: -122.28650381011681
+      height: -17.39382124780135
+      cov_n_n: 0.007488971576094627
+      cov_n_e: -0.00036755966721102595
+      cov_n_d: 0.0018563168123364449
+      cov_e_e: 0.004523798823356628
+      cov_e_d: -0.0008439270895905793
+      cov_d_d: 0.03288137540221214
+      n_sats: 18
+      flags: 4
+    module: sbp.navigation
+    name: MsgPosLLHCovGnss
+  msg_type: '0x231'
+  raw_json: '{"tow":501867800,"lat":37.83123196497633,"lon":-122.28650381011681,"height":-17.39382124780135,"cov_n_n":0.007488971576094627,"cov_n_e":-0.00036755966721102595,"cov_n_d":0.0018563168123364449,"cov_e_e":0.004523798823356628,"cov_e_d":-0.0008439270895905793,"cov_d_d":0.03288137540221214,"n_sats":18,"flags":4,"preamble":85,"msg_type":561,"sender":4096,"payload":"GOXpHUl7HM9l6kJAZKgTFFaSXsDWxiN40WQxwAxm9TsGtcC5qE/zOmA8lDv9Ol26n64GPRIE","crc":50186,"length":54}'
+  raw_packet: VTECABA2GOXpHUl7HM9l6kJAZKgTFFaSXsDWxiN40WQxwAxm9TsGtcC5qE/zOmA8lDv9Ol26n64GPRIECsQ=
+  sbp:
+    crc: '0xc40a'
+    length: 0x36
+    msg_type: '0x231'
+    payload: GOXpHUl7HM9l6kJAZKgTFFaSXsDWxiN40WQxwAxm9TsGtcC5qE/zOmA8lDv9Ol26n64GPRIE
+    preamble: '0x55'
+    sender: '0x1000'
+

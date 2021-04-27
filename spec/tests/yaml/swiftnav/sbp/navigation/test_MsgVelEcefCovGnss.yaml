@@ -1,0 +1,32 @@
+---
+description: Unit tests for swiftnav.sbp.navigation MsgVelEcefCovGnss
+generated_on: 2020-04-23 00:00:00.00 # manually generated
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      tow: 501868000
+      x: -3
+      y: 1
+      z: 4
+      cov_x_x: 0.0024547684006392956
+      cov_x_y: 0.0021795108914375305
+      cov_x_z: -0.0016828652005642653
+      cov_y_y: 0.004218944814056158
+      cov_y_z: -0.0024961293675005436
+      cov_z_z: 0.0037804271560162306
+      n_sats: 21
+      flags: 2
+    module: sbp.navigation
+    name: MsgVelECEFCovGnss
+  msg_type: '0x235'
+  raw_json: '{"tow":501868000,"x":-3,"y":1,"z":4,"cov_x_x":0.0024547684006392956,"cov_x_y":0.0021795108914375305,"cov_x_z":-0.0016828652005642653,"cov_y_y":0.004218944814056158,"cov_y_z":-0.0024961293675005436,"cov_z_z":0.0037804271560162306,"n_sats":21,"flags":2,"preamble":85,"msg_type":565,"sender":4096,"payload":"4OXpHf3///8BAAAABAAAAC7gIDsg1g47lpPcuhM/ijsaliO7C8F3OxUC","crc":58902,"length":42}'
+  raw_packet: VTUCABAq4OXpHf3///8BAAAABAAAAC7gIDsg1g47lpPcuhM/ijsaliO7C8F3OxUCFuY=
+  sbp:
+    crc: '0xe616'
+    length: 0x2a
+    msg_type: '0x235'
+    payload: 4OXpHf3///8BAAAABAAAAC7gIDsg1g47lpPcuhM/ijsaliO7C8F3OxUC
+    preamble: '0x55'
+    sender: '0x1000'

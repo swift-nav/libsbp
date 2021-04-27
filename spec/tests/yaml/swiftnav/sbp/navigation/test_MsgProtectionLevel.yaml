@@ -1,0 +1,29 @@
+---
+description: Unit tests for swiftnav.sbp.system MsgProtectionLevel
+generated_on: 2020-04-22 00:00:00.00 # manually generated
+package: sbp.navigation
+tests:
+
+- msg:
+    fields:
+      tow: 501867400
+      vpl: 0
+      hpl: 0
+      lat: 0.0
+      lon: 0.0
+      height: 0.0
+      flags: 0
+    module: sbp.navigation
+    name: MsgProtectionLevelDepA
+  msg_type: '0x216'
+  raw_json: '{"tow":501867400,"vpl":0,"hpl":0,"lat":0.0,"lon":0.0,"height":0.0,"flags":0,"preamble":85,"msg_type":534,"sender":4096,"payload":"iOPpHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","crc":50002,"length":33}'
+  raw_packet: VRYCABAhiOPpHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUsM=
+  sbp:
+    crc: '0xc352'
+    length: 0x21
+    payload: iOPpHQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    msg_type: '0x216'
+    preamble: '0x55'
+    sender: '0x1000'
+
+

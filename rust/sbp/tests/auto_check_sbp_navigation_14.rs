@@ -9,7 +9,7 @@
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgPosECEFDepA.yaml by generate.py. Do not modify by hand!
+// This file was auto-generated from spec/tests/yaml/swiftnav/sbp/navigation/test_MsgBaselineNED.yaml by generate.py. Do not modify by hand!
 
 use sbp::iter_messages;
 use sbp::messages::SBPMessage;
@@ -24,8 +24,8 @@ use std::io::Cursor;
 fn test_auto_check_sbp_navigation_14() {
     {
         let mut payload = Cursor::new(vec![
-            85, 0, 2, 246, 215, 32, 20, 46, 39, 0, 195, 122, 175, 75, 33, 154, 68, 193, 164, 14,
-            230, 176, 231, 95, 80, 193, 78, 220, 22, 253, 254, 105, 77, 65, 0, 0, 9, 0, 13, 86,
+            85, 12, 2, 211, 136, 22, 40, 244, 122, 19, 201, 115, 12, 0, 179, 88, 230, 255, 153,
+            125, 0, 0, 0, 0, 0, 0, 14, 0, 226, 70,
         ]);
 
         // Test the round trip payload parsing
@@ -36,23 +36,28 @@ fn test_auto_check_sbp_navigation_14() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgPosECEFDepA(msg) => {
+            sbp::messages::SBP::MsgBaselineNED(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x200,
-                    "Incorrect message type, expected 0x200, is {}",
+                    0x20c,
+                    "Incorrect message type, expected 0x20c, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
+                    sender_id, 0x88d3,
+                    "incorrect sender id, expected 0x88d3, is {}",
                     sender_id
                 );
                 assert_eq!(
-                    msg.accuracy, 0,
-                    "incorrect value for accuracy, expected 0, is {}",
-                    msg.accuracy
+                    msg.d, 32153,
+                    "incorrect value for d, expected 32153, is {}",
+                    msg.d
+                );
+                assert_eq!(
+                    msg.e, -1681229,
+                    "incorrect value for e, expected -1681229, is {}",
+                    msg.e
                 );
                 assert_eq!(
                     msg.flags, 0,
@@ -60,40 +65,40 @@ fn test_auto_check_sbp_navigation_14() {
                     msg.flags
                 );
                 assert_eq!(
-                    msg.n_sats, 9,
-                    "incorrect value for n_sats, expected 9, is {}",
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert_eq!(
+                    msg.n, 816073,
+                    "incorrect value for n, expected 816073, is {}",
+                    msg.n
+                );
+                assert_eq!(
+                    msg.n_sats, 14,
+                    "incorrect value for n_sats, expected 14, is {}",
                     msg.n_sats
                 );
                 assert_eq!(
-                    msg.tow, 2567700,
-                    "incorrect value for tow, expected 2567700, is {}",
+                    msg.tow, 326825000,
+                    "incorrect value for tow, expected 326825000, is {}",
                     msg.tow
                 );
-                assert!(
-                    msg.x.almost_eq(-2.70035459129271051e+06),
-                    "incorrect value for x, expected -2.70035459129271051e+06, is {:e}",
-                    msg.x
-                );
-                assert!(
-                    msg.y.almost_eq(-4.29251076404157653e+06),
-                    "incorrect value for y, expected -4.29251076404157653e+06, is {:e}",
-                    msg.y
-                );
-                assert!(
-                    msg.z.almost_eq(3.85535797726014908e+06),
-                    "incorrect value for z, expected 3.85535797726014908e+06, is {:e}",
-                    msg.z
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgPosECEFDepA"),
+            _ => panic!("Invalid message type! Expected a MsgBaselineNED"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());
     }
     {
         let mut payload = Cursor::new(vec![
-            85, 0, 2, 246, 215, 32, 20, 46, 39, 0, 212, 196, 12, 42, 34, 154, 68, 193, 9, 113, 112,
-            123, 231, 95, 80, 193, 54, 97, 38, 192, 254, 105, 77, 65, 0, 0, 9, 1, 75, 143,
+            85, 12, 2, 211, 136, 22, 16, 248, 122, 19, 98, 115, 12, 0, 194, 88, 230, 255, 110, 127,
+            0, 0, 0, 0, 0, 0, 15, 0, 69, 93,
         ]);
 
         // Test the round trip payload parsing
@@ -104,91 +109,28 @@ fn test_auto_check_sbp_navigation_14() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgPosECEFDepA(msg) => {
+            sbp::messages::SBP::MsgBaselineNED(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x200,
-                    "Incorrect message type, expected 0x200, is {}",
+                    0x20c,
+                    "Incorrect message type, expected 0x20c, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
+                    sender_id, 0x88d3,
+                    "incorrect sender id, expected 0x88d3, is {}",
                     sender_id
                 );
                 assert_eq!(
-                    msg.accuracy, 0,
-                    "incorrect value for accuracy, expected 0, is {}",
-                    msg.accuracy
+                    msg.d, 32622,
+                    "incorrect value for d, expected 32622, is {}",
+                    msg.d
                 );
                 assert_eq!(
-                    msg.flags, 1,
-                    "incorrect value for flags, expected 1, is {}",
-                    msg.flags
-                );
-                assert_eq!(
-                    msg.n_sats, 9,
-                    "incorrect value for n_sats, expected 9, is {}",
-                    msg.n_sats
-                );
-                assert_eq!(
-                    msg.tow, 2567700,
-                    "incorrect value for tow, expected 2567700, is {}",
-                    msg.tow
-                );
-                assert!(
-                    msg.x.almost_eq(-2.70035632851467468e+06),
-                    "incorrect value for x, expected -2.70035632851467468e+06, is {:e}",
-                    msg.x
-                );
-                assert!(
-                    msg.y.almost_eq(-4.29250992873788718e+06),
-                    "incorrect value for y, expected -4.29250992873788718e+06, is {:e}",
-                    msg.y
-                );
-                assert!(
-                    msg.z.almost_eq(3.85535750117125642e+06),
-                    "incorrect value for z, expected 3.85535750117125642e+06, is {:e}",
-                    msg.z
-                );
-            }
-            _ => panic!("Invalid message type! Expected a MsgPosECEFDepA"),
-        };
-        let frame = sbp_msg.to_frame().unwrap();
-        assert_eq!(frame, payload.into_inner());
-    }
-    {
-        let mut payload = Cursor::new(vec![
-            85, 0, 2, 246, 215, 32, 120, 46, 39, 0, 112, 97, 39, 190, 34, 154, 68, 193, 230, 43,
-            119, 115, 231, 95, 80, 193, 50, 199, 76, 66, 254, 105, 77, 65, 0, 0, 9, 0, 204, 113,
-        ]);
-
-        // Test the round trip payload parsing
-        let sbp_msg = {
-            let mut msgs = iter_messages(&mut payload);
-            msgs.next()
-                .expect("no message found")
-                .expect("failed to parse message")
-        };
-        match &sbp_msg {
-            sbp::messages::SBP::MsgPosECEFDepA(msg) => {
-                assert_eq!(
-                    msg.get_message_type(),
-                    0x200,
-                    "Incorrect message type, expected 0x200, is {}",
-                    msg.get_message_type()
-                );
-                let sender_id = msg.get_sender_id().unwrap();
-                assert_eq!(
-                    sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
-                );
-                assert_eq!(
-                    msg.accuracy, 0,
-                    "incorrect value for accuracy, expected 0, is {}",
-                    msg.accuracy
+                    msg.e, -1681214,
+                    "incorrect value for e, expected -1681214, is {}",
+                    msg.e
                 );
                 assert_eq!(
                     msg.flags, 0,
@@ -196,40 +138,40 @@ fn test_auto_check_sbp_navigation_14() {
                     msg.flags
                 );
                 assert_eq!(
-                    msg.n_sats, 9,
-                    "incorrect value for n_sats, expected 9, is {}",
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert_eq!(
+                    msg.n, 815970,
+                    "incorrect value for n, expected 815970, is {}",
+                    msg.n
+                );
+                assert_eq!(
+                    msg.n_sats, 15,
+                    "incorrect value for n_sats, expected 15, is {}",
                     msg.n_sats
                 );
                 assert_eq!(
-                    msg.tow, 2567800,
-                    "incorrect value for tow, expected 2567800, is {}",
+                    msg.tow, 326826000,
+                    "incorrect value for tow, expected 326826000, is {}",
                     msg.tow
                 );
-                assert!(
-                    msg.x.almost_eq(-2.70035748557680100e+06),
-                    "incorrect value for x, expected -2.70035748557680100e+06, is {:e}",
-                    msg.x
-                );
-                assert!(
-                    msg.y.almost_eq(-4.29250980414864980e+06),
-                    "incorrect value for y, expected -4.29250980414864980e+06, is {:e}",
-                    msg.y
-                );
-                assert!(
-                    msg.z.almost_eq(3.85535651796808187e+06),
-                    "incorrect value for z, expected 3.85535651796808187e+06, is {:e}",
-                    msg.z
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgPosECEFDepA"),
+            _ => panic!("Invalid message type! Expected a MsgBaselineNED"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());
     }
     {
         let mut payload = Cursor::new(vec![
-            85, 0, 2, 246, 215, 32, 120, 46, 39, 0, 194, 82, 121, 4, 34, 154, 68, 193, 223, 186, 1,
-            140, 231, 95, 80, 193, 176, 152, 147, 181, 254, 105, 77, 65, 0, 0, 9, 1, 97, 71,
+            85, 12, 2, 211, 136, 22, 248, 251, 122, 19, 143, 114, 12, 0, 173, 88, 230, 255, 238,
+            127, 0, 0, 0, 0, 0, 0, 15, 0, 210, 169,
         ]);
 
         // Test the round trip payload parsing
@@ -240,91 +182,28 @@ fn test_auto_check_sbp_navigation_14() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgPosECEFDepA(msg) => {
+            sbp::messages::SBP::MsgBaselineNED(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
-                    0x200,
-                    "Incorrect message type, expected 0x200, is {}",
+                    0x20c,
+                    "Incorrect message type, expected 0x20c, is {}",
                     msg.get_message_type()
                 );
                 let sender_id = msg.get_sender_id().unwrap();
                 assert_eq!(
-                    sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
+                    sender_id, 0x88d3,
+                    "incorrect sender id, expected 0x88d3, is {}",
                     sender_id
                 );
                 assert_eq!(
-                    msg.accuracy, 0,
-                    "incorrect value for accuracy, expected 0, is {}",
-                    msg.accuracy
+                    msg.d, 32750,
+                    "incorrect value for d, expected 32750, is {}",
+                    msg.d
                 );
                 assert_eq!(
-                    msg.flags, 1,
-                    "incorrect value for flags, expected 1, is {}",
-                    msg.flags
-                );
-                assert_eq!(
-                    msg.n_sats, 9,
-                    "incorrect value for n_sats, expected 9, is {}",
-                    msg.n_sats
-                );
-                assert_eq!(
-                    msg.tow, 2567800,
-                    "incorrect value for tow, expected 2567800, is {}",
-                    msg.tow
-                );
-                assert!(
-                    msg.x.almost_eq(-2.70035603495249245e+06),
-                    "incorrect value for x, expected -2.70035603495249245e+06, is {:e}",
-                    msg.x
-                );
-                assert!(
-                    msg.y.almost_eq(-4.29251018760558870e+06),
-                    "incorrect value for y, expected -4.29251018760558870e+06, is {:e}",
-                    msg.y
-                );
-                assert!(
-                    msg.z.almost_eq(3.85535741856678575e+06),
-                    "incorrect value for z, expected 3.85535741856678575e+06, is {:e}",
-                    msg.z
-                );
-            }
-            _ => panic!("Invalid message type! Expected a MsgPosECEFDepA"),
-        };
-        let frame = sbp_msg.to_frame().unwrap();
-        assert_eq!(frame, payload.into_inner());
-    }
-    {
-        let mut payload = Cursor::new(vec![
-            85, 0, 2, 246, 215, 32, 220, 46, 39, 0, 216, 41, 227, 254, 33, 154, 68, 193, 9, 151,
-            154, 124, 231, 95, 80, 193, 1, 183, 214, 139, 255, 105, 77, 65, 0, 0, 9, 0, 7, 98,
-        ]);
-
-        // Test the round trip payload parsing
-        let sbp_msg = {
-            let mut msgs = iter_messages(&mut payload);
-            msgs.next()
-                .expect("no message found")
-                .expect("failed to parse message")
-        };
-        match &sbp_msg {
-            sbp::messages::SBP::MsgPosECEFDepA(msg) => {
-                assert_eq!(
-                    msg.get_message_type(),
-                    0x200,
-                    "Incorrect message type, expected 0x200, is {}",
-                    msg.get_message_type()
-                );
-                let sender_id = msg.get_sender_id().unwrap();
-                assert_eq!(
-                    sender_id, 0xd7f6,
-                    "incorrect sender id, expected 0xd7f6, is {}",
-                    sender_id
-                );
-                assert_eq!(
-                    msg.accuracy, 0,
-                    "incorrect value for accuracy, expected 0, is {}",
-                    msg.accuracy
+                    msg.e, -1681235,
+                    "incorrect value for e, expected -1681235, is {}",
+                    msg.e
                 );
                 assert_eq!(
                     msg.flags, 0,
@@ -332,32 +211,178 @@ fn test_auto_check_sbp_navigation_14() {
                     msg.flags
                 );
                 assert_eq!(
-                    msg.n_sats, 9,
-                    "incorrect value for n_sats, expected 9, is {}",
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert_eq!(
+                    msg.n, 815759,
+                    "incorrect value for n, expected 815759, is {}",
+                    msg.n
+                );
+                assert_eq!(
+                    msg.n_sats, 15,
+                    "incorrect value for n_sats, expected 15, is {}",
                     msg.n_sats
                 );
                 assert_eq!(
-                    msg.tow, 2567900,
-                    "incorrect value for tow, expected 2567900, is {}",
+                    msg.tow, 326827000,
+                    "incorrect value for tow, expected 326827000, is {}",
                     msg.tow
                 );
-                assert!(
-                    msg.x.almost_eq(-2.70035599130747840e+06),
-                    "incorrect value for x, expected -2.70035599130747840e+06, is {:e}",
-                    msg.x
-                );
-                assert!(
-                    msg.y.almost_eq(-4.29250994693542365e+06),
-                    "incorrect value for y, expected -4.29250994693542365e+06, is {:e}",
-                    msg.y
-                );
-                assert!(
-                    msg.z.almost_eq(3.85535909249007748e+06),
-                    "incorrect value for z, expected 3.85535909249007748e+06, is {:e}",
-                    msg.z
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgPosECEFDepA"),
+            _ => panic!("Invalid message type! Expected a MsgBaselineNED"),
+        };
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
+    }
+    {
+        let mut payload = Cursor::new(vec![
+            85, 12, 2, 211, 136, 22, 224, 255, 122, 19, 86, 112, 12, 0, 51, 88, 230, 255, 47, 127,
+            0, 0, 0, 0, 0, 0, 15, 0, 135, 107,
+        ]);
+
+        // Test the round trip payload parsing
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
+        match &sbp_msg {
+            sbp::messages::SBP::MsgBaselineNED(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x20c,
+                    "Incorrect message type, expected 0x20c, is {}",
+                    msg.get_message_type()
+                );
+                let sender_id = msg.get_sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x88d3,
+                    "incorrect sender id, expected 0x88d3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.d, 32559,
+                    "incorrect value for d, expected 32559, is {}",
+                    msg.d
+                );
+                assert_eq!(
+                    msg.e, -1681357,
+                    "incorrect value for e, expected -1681357, is {}",
+                    msg.e
+                );
+                assert_eq!(
+                    msg.flags, 0,
+                    "incorrect value for flags, expected 0, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert_eq!(
+                    msg.n, 815190,
+                    "incorrect value for n, expected 815190, is {}",
+                    msg.n
+                );
+                assert_eq!(
+                    msg.n_sats, 15,
+                    "incorrect value for n_sats, expected 15, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 326828000,
+                    "incorrect value for tow, expected 326828000, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgBaselineNED"),
+        };
+        let frame = sbp_msg.to_frame().unwrap();
+        assert_eq!(frame, payload.into_inner());
+    }
+    {
+        let mut payload = Cursor::new(vec![
+            85, 12, 2, 211, 136, 22, 200, 3, 123, 19, 214, 110, 12, 0, 220, 87, 230, 255, 165, 126,
+            0, 0, 0, 0, 0, 0, 15, 0, 190, 80,
+        ]);
+
+        // Test the round trip payload parsing
+        let sbp_msg = {
+            let mut msgs = iter_messages(&mut payload);
+            msgs.next()
+                .expect("no message found")
+                .expect("failed to parse message")
+        };
+        match &sbp_msg {
+            sbp::messages::SBP::MsgBaselineNED(msg) => {
+                assert_eq!(
+                    msg.get_message_type(),
+                    0x20c,
+                    "Incorrect message type, expected 0x20c, is {}",
+                    msg.get_message_type()
+                );
+                let sender_id = msg.get_sender_id().unwrap();
+                assert_eq!(
+                    sender_id, 0x88d3,
+                    "incorrect sender id, expected 0x88d3, is {}",
+                    sender_id
+                );
+                assert_eq!(
+                    msg.d, 32421,
+                    "incorrect value for d, expected 32421, is {}",
+                    msg.d
+                );
+                assert_eq!(
+                    msg.e, -1681444,
+                    "incorrect value for e, expected -1681444, is {}",
+                    msg.e
+                );
+                assert_eq!(
+                    msg.flags, 0,
+                    "incorrect value for flags, expected 0, is {}",
+                    msg.flags
+                );
+                assert_eq!(
+                    msg.h_accuracy, 0,
+                    "incorrect value for h_accuracy, expected 0, is {}",
+                    msg.h_accuracy
+                );
+                assert_eq!(
+                    msg.n, 814806,
+                    "incorrect value for n, expected 814806, is {}",
+                    msg.n
+                );
+                assert_eq!(
+                    msg.n_sats, 15,
+                    "incorrect value for n_sats, expected 15, is {}",
+                    msg.n_sats
+                );
+                assert_eq!(
+                    msg.tow, 326829000,
+                    "incorrect value for tow, expected 326829000, is {}",
+                    msg.tow
+                );
+                assert_eq!(
+                    msg.v_accuracy, 0,
+                    "incorrect value for v_accuracy, expected 0, is {}",
+                    msg.v_accuracy
+                );
+            }
+            _ => panic!("Invalid message type! Expected a MsgBaselineNED"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());
