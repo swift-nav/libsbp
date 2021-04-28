@@ -2073,14 +2073,14 @@ definitions:
               type: s16
               units: weeks
               desc: GPS week number
-          - vpl:
-              type: u16
-              units: cm
-              desc: Vertical protection level
           - hpl:
               type: u16
               units: cm
               desc: Horizontal protection level
+          - vpl:
+              type: u16
+              units: cm
+              desc: Vertical protection level
           - atpl:
               type: u16
               units: cm
@@ -2155,16 +2155,47 @@ definitions:
               fields:
                 - 0-2:
                     desc: Target Integrity Risk (TIR) Level
-                    values:
-                        - 0: Safe state, protection level shall not be used for safety-critical application
-                        - 1: TIR Level 1
-                        - 2: TIR Level 2
-                        - 3: TIR Level 3
-                - 3-28:
+                - 3-14:
                     desc: Reserved
-                - 29:
-                    desc: Attitude valid
-                - 30:
+                - 15-17:
+                    desc: Fix mode
+                    values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+                      - 5: Dead Reckoning
+                      - 6: SBAS Position
+                - 18-19:
+                    desc: Inertial Navigation Mode
+                    values:
+                      - 0: None
+                      - 1: INS used
+                - 20:
+                    desc: Time status
+                    values:
+                      - 0: GNSS time of validity
+                      - 1: Other
+                - 21:
                     desc: Velocity valid
+                - 22:
+                    desc: Attitude valid
+                - 23:
+                    desc: Safe state HPL
+                - 24:
+                    desc: Safe state VPL
+                - 25:
+                    desc: Safe state ATPL
+                - 26:
+                    desc: Safe state CTPL   
+                - 27:
+                    desc: Safe state HVPL   
+                - 28:
+                    desc: Safe state VVPL   
+                - 29:
+                    desc: Safe state HOPL
+                - 30:
+                    desc: Safe state POPL
                 - 31:
-                    desc: Position valid
+                    desc: Safe state ROPL

@@ -2208,10 +2208,10 @@ pub struct MsgProtectionLevel {
     pub tow: u32,
     /// GPS week number
     pub wn: i16,
-    /// Vertical protection level
-    pub vpl: u16,
     /// Horizontal protection level
     pub hpl: u16,
+    /// Vertical protection level
+    pub vpl: u16,
     /// Along-track position error protection level
     pub atpl: u16,
     /// Cross-track position error protection level
@@ -2257,8 +2257,8 @@ impl MsgProtectionLevel {
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             wn: _buf.read_i16::<LittleEndian>()?,
-            vpl: _buf.read_u16::<LittleEndian>()?,
             hpl: _buf.read_u16::<LittleEndian>()?,
+            vpl: _buf.read_u16::<LittleEndian>()?,
             atpl: _buf.read_u16::<LittleEndian>()?,
             ctpl: _buf.read_u16::<LittleEndian>()?,
             hvpl: _buf.read_u16::<LittleEndian>()?,
@@ -2312,8 +2312,8 @@ impl crate::serialize::SbpSerialize for MsgProtectionLevel {
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
         self.wn.append_to_sbp_buffer(buf);
-        self.vpl.append_to_sbp_buffer(buf);
         self.hpl.append_to_sbp_buffer(buf);
+        self.vpl.append_to_sbp_buffer(buf);
         self.atpl.append_to_sbp_buffer(buf);
         self.ctpl.append_to_sbp_buffer(buf);
         self.hvpl.append_to_sbp_buffer(buf);
@@ -2337,8 +2337,8 @@ impl crate::serialize::SbpSerialize for MsgProtectionLevel {
         let mut size = 0;
         size += self.tow.sbp_size();
         size += self.wn.sbp_size();
-        size += self.vpl.sbp_size();
         size += self.hpl.sbp_size();
+        size += self.vpl.sbp_size();
         size += self.atpl.sbp_size();
         size += self.ctpl.sbp_size();
         size += self.hvpl.sbp_size();

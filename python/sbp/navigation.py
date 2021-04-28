@@ -4669,10 +4669,10 @@ with the matching time-of-week (tow).
     GPS Time of Week
   wn : int
     GPS week number
-  vpl : int
-    Vertical protection level
   hpl : int
     Horizontal protection level
+  vpl : int
+    Vertical protection level
   atpl : int
     Along-track position error protection level
   ctpl : int
@@ -4718,8 +4718,8 @@ true along/cross track velocity vector
   _parser = construct.Struct(
                    'tow' / construct.Int32ul,
                    'wn' / construct.Int16sl,
-                   'vpl' / construct.Int16ul,
                    'hpl' / construct.Int16ul,
+                   'vpl' / construct.Int16ul,
                    'atpl' / construct.Int16ul,
                    'ctpl' / construct.Int16ul,
                    'hvpl' / construct.Int16ul,
@@ -4740,8 +4740,8 @@ true along/cross track velocity vector
   __slots__ = [
                'tow',
                'wn',
-               'vpl',
                'hpl',
+               'vpl',
                'atpl',
                'ctpl',
                'hvpl',
@@ -4773,8 +4773,8 @@ true along/cross track velocity vector
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.tow = kwargs.pop('tow')
       self.wn = kwargs.pop('wn')
-      self.vpl = kwargs.pop('vpl')
       self.hpl = kwargs.pop('hpl')
+      self.vpl = kwargs.pop('vpl')
       self.atpl = kwargs.pop('atpl')
       self.ctpl = kwargs.pop('ctpl')
       self.hvpl = kwargs.pop('hvpl')
