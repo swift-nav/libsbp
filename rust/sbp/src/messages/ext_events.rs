@@ -17,6 +17,9 @@
 //!
 
 #[allow(unused_imports)]
+use std::convert::TryFrom;
+
+#[allow(unused_imports)]
 use byteorder::{LittleEndian, ReadBytesExt};
 
 #[allow(unused_imports)]
@@ -86,6 +89,18 @@ impl super::SBPMessage for MsgExtEvent {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
+        let tow_s = (self.header.t.tow as f64) / 1000.0;
+        let wn = match i16::try_from(self.wn) {
+            Ok(wn) => wn,
+            Err(e) => return Some(Err(e.into())),
+        };
+        Some(swiftnav_rs::time::GpsTime::new(wn, tow_s).map_err(Into::into))
     }
 }
 

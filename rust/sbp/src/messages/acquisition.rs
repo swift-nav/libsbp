@@ -15,6 +15,9 @@
 //! Satellite acquisition messages from the device.
 
 #[allow(unused_imports)]
+use std::convert::TryFrom;
+
+#[allow(unused_imports)]
 use byteorder::{LittleEndian, ReadBytesExt};
 
 use super::gnss::*;
@@ -298,6 +301,13 @@ impl super::SBPMessage for MsgAcqResult {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
+        None
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgAcqResult {
@@ -379,6 +389,13 @@ impl super::SBPMessage for MsgAcqResultDepA {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
+        None
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgAcqResultDepA {
@@ -459,6 +476,13 @@ impl super::SBPMessage for MsgAcqResultDepB {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
+        None
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgAcqResultDepB {
@@ -538,6 +562,13 @@ impl super::SBPMessage for MsgAcqResultDepC {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
+        None
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgAcqResultDepC {
@@ -609,6 +640,13 @@ impl super::SBPMessage for MsgAcqSvProfile {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
+        None
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgAcqSvProfile {
@@ -672,6 +710,13 @@ impl super::SBPMessage for MsgAcqSvProfileDep {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
+        None
     }
 }
 

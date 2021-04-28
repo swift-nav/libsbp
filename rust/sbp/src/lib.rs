@@ -128,6 +128,16 @@ pub enum Error {
     IoError(#[from] std::io::Error),
 }
 
+#[cfg(feature = "swiftnav-rs")]
+#[derive(Debug, thiserror::Error)]
+pub enum GpsTimeError {
+    #[error(transparent)]
+    InvalidGpsTime(#[from] swiftnav_rs::time::InvalidGpsTime),
+
+    #[error("Failed to convert week number to i16")]
+    TryFromIntError(#[from] std::num::TryFromIntError),
+}
+
 pub(crate) fn write_frame<M: SBPMessage>(
     msg: &M,
     frame: &mut Vec<u8>,

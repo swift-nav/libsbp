@@ -15,6 +15,9 @@
 //! Standardized Metadata messages for Fuzed Solution from Swift Navigation devices.
 
 #[allow(unused_imports)]
+use std::convert::TryFrom;
+
+#[allow(unused_imports)]
 use byteorder::{LittleEndian, ReadBytesExt};
 
 #[allow(unused_imports)]
@@ -205,6 +208,14 @@ impl super::SBPMessage for MsgSolnMeta {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
+        let tow_s = (self.tow as f64) / 1000.0;
+        Some(swiftnav_rs::time::GpsTime::new(0, tow_s).map_err(Into::into))
+    }
 }
 
 impl crate::serialize::SbpSerialize for MsgSolnMeta {
@@ -313,6 +324,13 @@ impl super::SBPMessage for MsgSolnMetaDepA {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
+        None
     }
 }
 

@@ -23,6 +23,27 @@ SBP2JSON_CARGO_TEMPLATE = "sbp2json-cargo.toml"
 MESSAGES_TEMPLATE_NAME = "sbp_messages_template.rs"
 MESSAGES_MOD_TEMPLATE_NAME = "sbp_messages_mod.rs"
 
+GPS_TIME = """\
+let tow_s = (self.header.t.tow as f64) / 1000.0;
+let wn = match i16::try_from(self.wn) {
+    Ok(wn) => wn,
+    Err(e) => return Some(Err(e.into())),
+};
+Some(swiftnav_rs::time::GpsTime::new(wn, tow_s).map_err(Into::into))
+"""
+GPS_TIME_HEADER = """\
+let tow_s = (self.header.t.tow as f64) / 1000.0;
+let wn = match i16::try_from(self.header.t.wn) {
+    Ok(wn) => wn,
+    Err(e) => return Some(Err(e.into())),
+};
+Some(swiftnav_rs::time::GpsTime::new(wn, tow_s).map_err(Into::into))
+"""
+GPS_TIME_ONLY_TOW = """\
+let tow_s = (self.tow as f64) / 1000.0;
+Some(swiftnav_rs::time::GpsTime::new(0, tow_s).map_err(Into::into))
+"""
+
 import re
 def camel_case(s):
   """
@@ -101,11 +122,37 @@ def parse_type(field):
     # This is an inner class, call default constructor
     return "%s::parse(_buf)" % field.type_id
 
+def gps_time(msg, all_messages):
+  def time_aware_header(type_id):
+    for m in all_messages:
+      if m.identifier == type_id:
+        return any([f.identifier == "t" for f in m.fields])
+    return False
+
+  has_tow = False
+  has_wn = False
+
+  for f in msg.fields:
+    if f.identifier == "header" and time_aware_header(f.type_id):
+      return GPS_TIME_HEADER
+    elif f.identifier == "tow":
+      has_tow = True
+    elif f.identifier == "wn":
+      has_wn = True
+
+  if has_tow and has_wn:
+    return GPS_TIME
+  elif has_tow:
+    return GPS_TIME_ONLY_TOW
+  else:
+    return 'None'
+
 JENV.filters['camel_case'] = camel_case
 JENV.filters['commentify'] = commentify
 JENV.filters['type_map'] = type_map
 JENV.filters['mod_name'] = mod_name
 JENV.filters['parse_type'] = parse_type
+JENV.filters['gps_time'] = gps_time
 
 def render_source(output_dir, package_spec):
   """

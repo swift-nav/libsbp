@@ -33,6 +33,11 @@ log = "0.4"
 nom = "6.0"
 thiserror = "1.0"
 
+[dependencies.swiftnav-rs]
+git = "https://github.com/swift-nav/swiftnav-rs"
+tag = "v0.4.0"
+optional = true
+
 [dependencies.serde]
 version = "1"
 features = ["derive"]

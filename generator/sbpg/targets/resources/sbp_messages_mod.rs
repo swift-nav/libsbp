@@ -31,6 +31,8 @@ pub trait SBPMessage: SbpSerialize {
     fn set_sender_id(&mut self, new_id: u16);
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError>;
     fn write_frame(&self, buf: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError>;
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(&self) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>>;
 }
 
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize), serde(untagged))]
@@ -132,6 +134,20 @@ impl crate::SBPMessage for SBP {
             ((*- endfor *))
             SBP::Unknown(msg) => {
                 msg.write_frame(buf)
+            },
+        }
+    }
+
+    #[cfg(feature = "swiftnav-rs")]
+    fn gps_time(&self) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
+        match self {
+            ((*- for m in msgs *))
+            SBP::(((m.identifier|camel_case)))(msg) => {
+                msg.gps_time()
+            },
+            ((*- endfor *))
+            SBP::Unknown(_) => {
+                None
             },
         }
     }
