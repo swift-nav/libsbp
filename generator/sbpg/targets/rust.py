@@ -43,6 +43,12 @@ GPS_TIME_ONLY_TOW = """\
 let tow_s = (self.tow as f64) / 1000.0;
 Some(swiftnav_rs::time::GpsTime::new(0, tow_s).map_err(Into::into))
 """
+GPS_TIME_IMPL = """\
+#[cfg(feature = "swiftnav-rs")]
+fn gps_time(&self) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {{
+    {}
+}}
+"""
 
 import re
 def camel_case(s):
@@ -134,18 +140,18 @@ def gps_time(msg, all_messages):
 
   for f in msg.fields:
     if f.identifier == "header" and time_aware_header(f.type_id):
-      return GPS_TIME_HEADER
+      return GPS_TIME_IMPL.format(GPS_TIME_HEADER)
     elif f.identifier == "tow":
       has_tow = True
     elif f.identifier == "wn":
       has_wn = True
 
   if has_tow and has_wn:
-    return GPS_TIME
+    return GPS_TIME_IMPL.format(GPS_TIME)
   elif has_tow:
-    return GPS_TIME_ONLY_TOW
+    return GPS_TIME_IMPL.format(GPS_TIME_ONLY_TOW)
   else:
-    return 'None'
+    return ''
 
 JENV.filters['camel_case'] = camel_case
 JENV.filters['commentify'] = commentify

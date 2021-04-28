@@ -116,10 +116,7 @@ impl super::SBPMessage for (((m.identifier|camel_case))) {
         crate::write_frame(self, frame)
     }
 
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(&self) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        (((m|gps_time(msgs))))
-    }
+    (((m|gps_time(msgs))))
 }
 ((*- endif *))
 

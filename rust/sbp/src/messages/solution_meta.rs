@@ -325,13 +325,6 @@ impl super::SBPMessage for MsgSolnMetaDepA {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
-    }
 }
 
 impl crate::serialize::SbpSerialize for MsgSolnMetaDepA {

@@ -80,13 +80,6 @@ impl super::SBPMessage for MsgCsacTelemetry {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
-    }
 }
 
 impl crate::serialize::SbpSerialize for MsgCsacTelemetry {
@@ -158,13 +151,6 @@ impl super::SBPMessage for MsgCsacTelemetryLabels {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
     }
 }
 
@@ -242,13 +228,6 @@ impl super::SBPMessage for MsgDgnssStatus {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
     }
 }
 
@@ -331,13 +310,6 @@ impl super::SBPMessage for MsgGnssTimeOffset {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
-    }
 }
 
 impl crate::serialize::SbpSerialize for MsgGnssTimeOffset {
@@ -419,13 +391,6 @@ impl super::SBPMessage for MsgGroupMeta {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
-    }
 }
 
 impl crate::serialize::SbpSerialize for MsgGroupMeta {
@@ -505,13 +470,6 @@ impl super::SBPMessage for MsgHeartbeat {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
-    }
 }
 
 impl crate::serialize::SbpSerialize for MsgHeartbeat {
@@ -576,13 +534,6 @@ impl super::SBPMessage for MsgInsStatus {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
     }
 }
 
@@ -760,13 +711,6 @@ impl super::SBPMessage for MsgStartup {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
-    }
 }
 
 impl crate::serialize::SbpSerialize for MsgStartup {
@@ -854,13 +798,6 @@ impl super::SBPMessage for MsgStatusReport {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
     }
 }
 

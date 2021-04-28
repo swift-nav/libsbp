@@ -82,13 +82,6 @@ impl super::SBPMessage for MsgFlashDone {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
-    }
 }
 
 impl crate::serialize::SbpSerialize for MsgFlashDone {
@@ -159,13 +152,6 @@ impl super::SBPMessage for MsgFlashErase {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
     }
 }
 
@@ -246,13 +232,6 @@ impl super::SBPMessage for MsgFlashProgram {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
     }
 }
 
@@ -336,13 +315,6 @@ impl super::SBPMessage for MsgFlashReadReq {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
-    }
 }
 
 impl crate::serialize::SbpSerialize for MsgFlashReadReq {
@@ -423,13 +395,6 @@ impl super::SBPMessage for MsgFlashReadResp {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
-    }
 }
 
 impl crate::serialize::SbpSerialize for MsgFlashReadResp {
@@ -499,13 +464,6 @@ impl super::SBPMessage for MsgM25FlashWriteStatus {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
-    }
 }
 
 impl crate::serialize::SbpSerialize for MsgM25FlashWriteStatus {
@@ -570,13 +528,6 @@ impl super::SBPMessage for MsgStmFlashLockSector {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
     }
 }
 
@@ -643,13 +594,6 @@ impl super::SBPMessage for MsgStmFlashUnlockSector {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
-    }
 }
 
 impl crate::serialize::SbpSerialize for MsgStmFlashUnlockSector {
@@ -715,13 +659,6 @@ impl super::SBPMessage for MsgStmUniqueIdReq {
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
     }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
-    }
 }
 
 impl crate::serialize::SbpSerialize for MsgStmUniqueIdReq {
@@ -785,13 +722,6 @@ impl super::SBPMessage for MsgStmUniqueIdResp {
 
     fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
         crate::write_frame(self, frame)
-    }
-
-    #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(
-        &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        None
     }
 }
 

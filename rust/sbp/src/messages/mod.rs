@@ -245,7 +245,9 @@ pub trait SBPMessage: SbpSerialize {
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError>;
     fn write_frame(&self, buf: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError>;
     #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(&self) -> Option<std::result::Result<GpsTime, crate::GpsTimeError>>;
+    fn gps_time(&self) -> Option<std::result::Result<GpsTime, crate::GpsTimeError>> {
+        None
+    }
 }
 
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize), serde(untagged))]
