@@ -152,12 +152,12 @@ definitions:
     fields:
     - hydro:
         type: s16
-        units: 4 mm (add 2.3 m to get actual vertical hydro delay)
-        desc: Hydrostatic vertical delay
+        units: 4 mm
+        desc: Hydrostatic vertical delay (add 2.3 m to get actual vertical hydro delay)
     - wet:
         type: s8
-        units: 4 mm (add 0.252 m to get actual vertical wet delay)
-        desc: Wet vertical delay
+        units: 4 mm
+        desc: Wet vertical delay (add 0.252 m to get actual vertical wet delay)
 
  - TroposphericDelayCorrection:
     desc: |
@@ -166,18 +166,17 @@ definitions:
     fields:
     - hydro:
         type: s16
-        units: 4 mm (add 2.3 m to get actual vertical hydro delay)
-        desc: Hydrostatic vertical delay
+        units: 4 mm
+        desc: Hydrostatic vertical delay (add 2.3 m to get actual vertical hydro delay)
     - wet:
         type: s8
-        units: 4 mm (add 0.252 m to get actual vertical wet delay)
-        desc: Wet vertical delay
+        units: 4 mm
+        desc: Wet vertical delay (add 0.252 m to get actual vertical wet delay)
     - stddev:
         type: u8
-        units: |
-          modified DF389 scale; class is upper 3 bits, value is lower 5
+        desc: |
+          stddev; modified DF389 scale; class is upper 3 bits, value is lower 5;
           stddev <= (3^class * (1 + value/16) - 1) mm
-        desc: stddev
 
  - STECResidualNoStd:
     desc: STEC residual for the given satellite at the grid point.
@@ -204,10 +203,9 @@ definitions:
         desc: STEC residual
     - stddev:
         type: u8
-        units: |
-          modified DF389 scale; class is upper 3 bits, value is lower 5
+        desc: |
+          stddev; modified DF389 scale; class is upper 3 bits, value is lower 5;
           stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
-        desc: stddev
 
  - GridElementNoStd:
     short_desc: Correction data for a single grid point.
