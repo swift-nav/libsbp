@@ -932,7 +932,7 @@ impl super::SBPMessage for MsgGPSTime {
     fn gps_time(
         &self,
     ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        let tow_s = (self.header.t.tow as f64) / 1000.0;
+        let tow_s = (self.tow as f64) / 1000.0;
         let wn = match i16::try_from(self.wn) {
             Ok(wn) => wn,
             Err(e) => return Some(Err(e.into())),
@@ -1036,7 +1036,7 @@ impl super::SBPMessage for MsgGPSTimeDepA {
     fn gps_time(
         &self,
     ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        let tow_s = (self.header.t.tow as f64) / 1000.0;
+        let tow_s = (self.tow as f64) / 1000.0;
         let wn = match i16::try_from(self.wn) {
             Ok(wn) => wn,
             Err(e) => return Some(Err(e.into())),
@@ -1140,7 +1140,7 @@ impl super::SBPMessage for MsgGPSTimeGnss {
     fn gps_time(
         &self,
     ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
-        let tow_s = (self.header.t.tow as f64) / 1000.0;
+        let tow_s = (self.tow as f64) / 1000.0;
         let wn = match i16::try_from(self.wn) {
             Ok(wn) => wn,
             Err(e) => return Some(Err(e.into())),

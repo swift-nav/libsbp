@@ -24,7 +24,7 @@ MESSAGES_TEMPLATE_NAME = "sbp_messages_template.rs"
 MESSAGES_MOD_TEMPLATE_NAME = "sbp_messages_mod.rs"
 
 GPS_TIME = """\
-let tow_s = (self.header.t.tow as f64) / 1000.0;
+let tow_s = (self.tow as f64) / 1000.0;
 let wn = match i16::try_from(self.wn) {
     Ok(wn) => wn,
     Err(e) => return Some(Err(e.into())),
