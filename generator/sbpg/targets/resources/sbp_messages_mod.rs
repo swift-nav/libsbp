@@ -151,8 +151,8 @@ impl crate::SBPMessage for SBP {
                 msg.gps_time()
             },
             ((*- endfor *))
-            SBP::Unknown(_) => {
-                None
+            SBP::Unknown(msg) => {
+                msg.gps_time()
             },
         }
     }

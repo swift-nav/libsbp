@@ -2895,7 +2895,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgSolnMetaDepA(msg) => msg.gps_time(),
             SBP::MsgStatusReport(msg) => msg.gps_time(),
             SBP::MsgHeartbeat(msg) => msg.gps_time(),
-            SBP::Unknown(_) => None,
+            SBP::Unknown(msg) => msg.gps_time(),
         }
     }
 }
