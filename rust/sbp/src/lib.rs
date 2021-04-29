@@ -329,8 +329,9 @@ mod swiftnav_rs_conversions {
                     .set_measured_doppler(observation.D.i as f64 + (observation.D.f as f64) / 256.);
             }
             if observation.flags & 0x80 != 0 {
-                // measurement.0.flags and swiftnav_rs::navmeas::NAV_MEAS_FLAG_RAIM_EXCLUSION are private
-                // measurement.0.flags |= swiftnav_rs::navmeas::NAV_MEAS_FLAG_RAIM_EXCLUSION;
+                measurement.set_flags(
+                    measurement.get_flags() | swiftnav_rs::navmeas::NAV_MEAS_FLAG_RAIM_EXCLUSION,
+                );
             }
 
             Ok(measurement)
