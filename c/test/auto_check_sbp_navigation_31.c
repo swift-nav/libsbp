@@ -129,7 +129,7 @@ START_TEST( test_auto_check_sbp_navigation_31 )
     u8 test_msg_storage[SBP_MAX_PAYLOAD_LEN];
     memset(test_msg_storage, 0, sizeof(test_msg_storage));
     u8 test_msg_len = 0;
-    msg_protection_level_t* test_msg = ( msg_protection_level_t* )test_msg_storage;
+    msg_protection_level_dep_a_t* test_msg = ( msg_protection_level_dep_a_t* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
     test_msg->flags = 0;
     test_msg->height = 0.0;
@@ -183,7 +183,7 @@ START_TEST( test_auto_check_sbp_navigation_31 )
         "frame_callback: context pointer incorrectly passed");
 
     // Cast to expected message type - the +6 byte offset is where the payload starts
-    msg_protection_level_t* check_msg = ( msg_protection_level_t *)((void *)last_msg.msg);
+    msg_protection_level_dep_a_t* check_msg = ( msg_protection_level_dep_a_t *)((void *)last_msg.msg);
     // Run tests against fields
     ck_assert_msg(check_msg != 0, "stub to prevent warnings if msg isn't used");
     ck_assert_msg(check_msg->flags == 0, "incorrect value for flags, expected 0, is %d", check_msg->flags);

@@ -2192,6 +2192,174 @@ impl crate::serialize::SbpSerialize for MsgPosLLHGnss {
     }
 }
 
+/// Computed state and Protection Levels
+///
+/// This message reports the protection levels associated to the given
+/// state estimate. The full GPS time is given by the preceding MSG_GPS_TIME
+/// with the matching time-of-week (tow).
+///
+#[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
+#[derive(Debug, Clone)]
+#[allow(non_snake_case)]
+pub struct MsgProtectionLevel {
+    #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
+    pub sender_id: Option<u16>,
+    /// GPS Time of Week
+    pub tow: u32,
+    /// GPS week number
+    pub wn: i16,
+    /// Horizontal protection level
+    pub hpl: u16,
+    /// Vertical protection level
+    pub vpl: u16,
+    /// Along-track position error protection level
+    pub atpl: u16,
+    /// Cross-track position error protection level
+    pub ctpl: u16,
+    /// Protection level for the error vector between estimated and  true
+    /// along/cross track velocity vector
+    pub hvpl: u16,
+    /// Protection level for the velocity in vehicle upright direction
+    /// (different from vertical direction if on a slope)
+    pub vvpl: u16,
+    /// Heading orientation protection level
+    pub hopl: u16,
+    /// Pitch orientation protection level
+    pub popl: u16,
+    /// Roll orientation protection level
+    pub ropl: u16,
+    /// Latitude
+    pub lat: f64,
+    /// Longitude
+    pub lon: f64,
+    /// Height
+    pub height: f64,
+    /// Velocity in vehicle x direction
+    pub v_x: i32,
+    /// Velocity in vehicle y direction
+    pub v_y: i32,
+    /// Velocity in vehicle z direction
+    pub v_z: i32,
+    /// Roll angle
+    pub roll: i32,
+    /// Pitch angle
+    pub pitch: i32,
+    /// Heading angle
+    pub heading: i32,
+    /// Status flags
+    pub flags: u32,
+}
+
+impl MsgProtectionLevel {
+    #[rustfmt::skip]
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgProtectionLevel, crate::Error> {
+        Ok( MsgProtectionLevel{
+            sender_id: None,
+            tow: _buf.read_u32::<LittleEndian>()?,
+            wn: _buf.read_i16::<LittleEndian>()?,
+            hpl: _buf.read_u16::<LittleEndian>()?,
+            vpl: _buf.read_u16::<LittleEndian>()?,
+            atpl: _buf.read_u16::<LittleEndian>()?,
+            ctpl: _buf.read_u16::<LittleEndian>()?,
+            hvpl: _buf.read_u16::<LittleEndian>()?,
+            vvpl: _buf.read_u16::<LittleEndian>()?,
+            hopl: _buf.read_u16::<LittleEndian>()?,
+            popl: _buf.read_u16::<LittleEndian>()?,
+            ropl: _buf.read_u16::<LittleEndian>()?,
+            lat: _buf.read_f64::<LittleEndian>()?,
+            lon: _buf.read_f64::<LittleEndian>()?,
+            height: _buf.read_f64::<LittleEndian>()?,
+            v_x: _buf.read_i32::<LittleEndian>()?,
+            v_y: _buf.read_i32::<LittleEndian>()?,
+            v_z: _buf.read_i32::<LittleEndian>()?,
+            roll: _buf.read_i32::<LittleEndian>()?,
+            pitch: _buf.read_i32::<LittleEndian>()?,
+            heading: _buf.read_i32::<LittleEndian>()?,
+            flags: _buf.read_u32::<LittleEndian>()?,
+        } )
+    }
+}
+impl super::SBPMessage for MsgProtectionLevel {
+    fn get_message_name(&self) -> &'static str {
+        "MSG_PROTECTION_LEVEL"
+    }
+
+    fn get_message_type(&self) -> u16 {
+        535
+    }
+
+    fn get_sender_id(&self) -> Option<u16> {
+        self.sender_id
+    }
+
+    fn set_sender_id(&mut self, new_id: u16) {
+        self.sender_id = Some(new_id);
+    }
+
+    fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError> {
+        let mut frame = Vec::new();
+        self.write_frame(&mut frame)?;
+        Ok(frame)
+    }
+
+    fn write_frame(&self, frame: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError> {
+        crate::write_frame(self, frame)
+    }
+}
+
+impl crate::serialize::SbpSerialize for MsgProtectionLevel {
+    #[allow(unused_variables)]
+    fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
+        self.tow.append_to_sbp_buffer(buf);
+        self.wn.append_to_sbp_buffer(buf);
+        self.hpl.append_to_sbp_buffer(buf);
+        self.vpl.append_to_sbp_buffer(buf);
+        self.atpl.append_to_sbp_buffer(buf);
+        self.ctpl.append_to_sbp_buffer(buf);
+        self.hvpl.append_to_sbp_buffer(buf);
+        self.vvpl.append_to_sbp_buffer(buf);
+        self.hopl.append_to_sbp_buffer(buf);
+        self.popl.append_to_sbp_buffer(buf);
+        self.ropl.append_to_sbp_buffer(buf);
+        self.lat.append_to_sbp_buffer(buf);
+        self.lon.append_to_sbp_buffer(buf);
+        self.height.append_to_sbp_buffer(buf);
+        self.v_x.append_to_sbp_buffer(buf);
+        self.v_y.append_to_sbp_buffer(buf);
+        self.v_z.append_to_sbp_buffer(buf);
+        self.roll.append_to_sbp_buffer(buf);
+        self.pitch.append_to_sbp_buffer(buf);
+        self.heading.append_to_sbp_buffer(buf);
+        self.flags.append_to_sbp_buffer(buf);
+    }
+
+    fn sbp_size(&self) -> usize {
+        let mut size = 0;
+        size += self.tow.sbp_size();
+        size += self.wn.sbp_size();
+        size += self.hpl.sbp_size();
+        size += self.vpl.sbp_size();
+        size += self.atpl.sbp_size();
+        size += self.ctpl.sbp_size();
+        size += self.hvpl.sbp_size();
+        size += self.vvpl.sbp_size();
+        size += self.hopl.sbp_size();
+        size += self.popl.sbp_size();
+        size += self.ropl.sbp_size();
+        size += self.lat.sbp_size();
+        size += self.lon.sbp_size();
+        size += self.height.sbp_size();
+        size += self.v_x.sbp_size();
+        size += self.v_y.sbp_size();
+        size += self.v_z.sbp_size();
+        size += self.roll.sbp_size();
+        size += self.pitch.sbp_size();
+        size += self.heading.sbp_size();
+        size += self.flags.sbp_size();
+        size
+    }
+}
+
 /// Computed Position and Protection Level
 ///
 /// This message reports the local vertical and horizontal protection levels
@@ -2201,7 +2369,7 @@ impl crate::serialize::SbpSerialize for MsgPosLLHGnss {
 #[cfg_attr(feature = "sbp_serde", derive(serde::Serialize))]
 #[derive(Debug, Clone)]
 #[allow(non_snake_case)]
-pub struct MsgProtectionLevel {
+pub struct MsgProtectionLevelDepA {
     #[cfg_attr(feature = "sbp_serde", serde(skip_serializing))]
     pub sender_id: Option<u16>,
     /// GPS Time of Week
@@ -2220,10 +2388,10 @@ pub struct MsgProtectionLevel {
     pub flags: u8,
 }
 
-impl MsgProtectionLevel {
+impl MsgProtectionLevelDepA {
     #[rustfmt::skip]
-    pub fn parse(_buf: &mut &[u8]) -> Result<MsgProtectionLevel, crate::Error> {
-        Ok( MsgProtectionLevel{
+    pub fn parse(_buf: &mut &[u8]) -> Result<MsgProtectionLevelDepA, crate::Error> {
+        Ok( MsgProtectionLevelDepA{
             sender_id: None,
             tow: _buf.read_u32::<LittleEndian>()?,
             vpl: _buf.read_u16::<LittleEndian>()?,
@@ -2235,9 +2403,9 @@ impl MsgProtectionLevel {
         } )
     }
 }
-impl super::SBPMessage for MsgProtectionLevel {
+impl super::SBPMessage for MsgProtectionLevelDepA {
     fn get_message_name(&self) -> &'static str {
-        "MSG_PROTECTION_LEVEL"
+        "MSG_PROTECTION_LEVEL_DEP_A"
     }
 
     fn get_message_type(&self) -> u16 {
@@ -2263,7 +2431,7 @@ impl super::SBPMessage for MsgProtectionLevel {
     }
 }
 
-impl crate::serialize::SbpSerialize for MsgProtectionLevel {
+impl crate::serialize::SbpSerialize for MsgProtectionLevelDepA {
     #[allow(unused_variables)]
     fn append_to_sbp_buffer(&self, buf: &mut Vec<u8>) {
         self.tow.append_to_sbp_buffer(buf);
