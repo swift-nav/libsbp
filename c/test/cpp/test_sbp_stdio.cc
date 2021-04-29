@@ -22,10 +22,10 @@ struct SbpHeaderParams {
   sbp_msg_obs_t msg;
 };
 
-class MsgObsHandler : private sbp::MessageHandler<sbp_msg_obs_t> {
+class MsgObsHandler : private sbp::MessageHandler<sbp_msg_obs_t, msg_obs_t> {
  public:
   explicit MsgObsHandler(sbp::State *state)
-      : sbp::MessageHandler<sbp_msg_obs_t>(state), state_(state) {}
+      : sbp::MessageHandler<sbp_msg_obs_t, msg_obs_t>(state), state_(state) {}
 
   void handle_sbp_msg(uint16_t sender_id, const sbp_msg_obs_t &msg) override {
     header_params_.sender_id = sender_id;

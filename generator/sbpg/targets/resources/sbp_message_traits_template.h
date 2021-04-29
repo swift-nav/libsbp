@@ -15,6 +15,7 @@
 
 ((*- for i in includes *))
 #include <libsbp/(((i))).h>
+#include <libsbp/packed/(((i))).h>
 ((*- endfor *))
 
 namespace sbp {
@@ -33,6 +34,13 @@ struct MessageTraits;
 template<>
 struct MessageTraits<(((m.identifier|convert_unpacked)))> {
   static constexpr u16 id = (((m.sbp_id)));
+  static constexpr bool is_unpacked = true;
+};
+
+template<>
+struct MessageTraits<(((m.identifier|convert_packed)))> {
+  static constexpr u16 id = (((m.sbp_id)));
+  static constexpr bool is_unpacked = false;
 };
 ((* endif *))
 ((* endfor *))
