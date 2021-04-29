@@ -36,7 +36,7 @@ fn test_auto_check_sbp_navigation_31() {
                 .expect("failed to parse message")
         };
         match &sbp_msg {
-            sbp::messages::SBP::MsgProtectionLevel(msg) => {
+            sbp::messages::SBP::MsgProtectionLevelDepA(msg) => {
                 assert_eq!(
                     msg.get_message_type(),
                     0x216,
@@ -85,7 +85,7 @@ fn test_auto_check_sbp_navigation_31() {
                     msg.vpl
                 );
             }
-            _ => panic!("Invalid message type! Expected a MsgProtectionLevel"),
+            _ => panic!("Invalid message type! Expected a MsgProtectionLevelDepA"),
         };
         let frame = sbp_msg.to_frame().unwrap();
         assert_eq!(frame, payload.into_inner());
