@@ -7,10 +7,7 @@ pub mod messages;
 pub(crate) mod parser;
 pub mod serialize;
 
-use std::{
-    convert::{From, Into},
-    fmt, result,
-};
+use std::{fmt, result};
 
 #[cfg(feature = "sbp_serde")]
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
@@ -136,6 +133,13 @@ pub enum GpsTimeError {
 
     #[error("Failed to convert week number to i16")]
     TryFromIntError(#[from] std::num::TryFromIntError),
+}
+
+#[cfg(feature = "swiftnav-rs")]
+impl From<std::convert::Infallible> for GpsTimeError {
+    fn from(_: std::convert::Infallible) -> Self {
+        unreachable!()
+    }
 }
 
 pub(crate) fn write_frame<M: SBPMessage>(
