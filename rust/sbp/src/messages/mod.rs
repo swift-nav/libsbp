@@ -2848,6 +2848,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgVelBody(msg) => msg.gps_time(),
             SBP::MsgPosECEFCov(msg) => msg.gps_time(),
             SBP::MsgVelECEFCov(msg) => msg.gps_time(),
+            SBP::MsgProtectionLevelDepA(msg) => msg.gps_time(),
             SBP::MsgProtectionLevel(msg) => msg.gps_time(),
             SBP::MsgOrientQuat(msg) => msg.gps_time(),
             SBP::MsgOrientEuler(msg) => msg.gps_time(),
