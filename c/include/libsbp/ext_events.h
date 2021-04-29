@@ -102,20 +102,17 @@ static inline bool sbp_pack_sbp_msg_ext_event_t(u8 *buf, size_t len, const sbp_m
   
         
   if (offset + 2 > len) { return false; }
-  u16 msgwn = msg->wn;
-  msgwn = htole16( msgwn );
+  u16 msgwn = htole16( msg->wn );
   memcpy(buf + offset, & msgwn , 2);
   offset += 2;
         
   if (offset + 4 > len) { return false; }
-  u32 msgtow = msg->tow;
-  msgtow = htole32( msgtow );
+  u32 msgtow = htole32( msg->tow );
   memcpy(buf + offset, & msgtow , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  s32 msgns_residual = msg->ns_residual;
-  msgns_residual = htole32( msgns_residual );
+  u32 msgns_residual = htole32( *(const u32*)&msg->ns_residual );
   memcpy(buf + offset, & msgns_residual , 4);
   offset += 4;
         
@@ -151,7 +148,9 @@ static inline bool sbp_unpack_sbp_msg_ext_event_t(const u8 *buf, size_t len, sbp
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->ns_residual, buf + offset, 4);
-  msg->ns_residual = le32toh( msg->ns_residual );
+  u32 msgns_residual = *(const u32*)&msg->ns_residual;
+  msgns_residual = le32toh( msgns_residual );
+  msg->ns_residual = *(const s32*)&msgns_residual;
   offset += 4;
       
   if (offset + 1 > len) { return false; }

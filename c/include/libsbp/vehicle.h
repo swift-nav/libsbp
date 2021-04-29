@@ -111,14 +111,12 @@ static inline bool sbp_pack_sbp_msg_odometry_t(u8 *buf, size_t len, const sbp_ms
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgtow = msg->tow;
-  msgtow = htole32( msgtow );
+  u32 msgtow = htole32( msg->tow );
   memcpy(buf + offset, & msgtow , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  s32 msgvelocity = msg->velocity;
-  msgvelocity = htole32( msgvelocity );
+  u32 msgvelocity = htole32( *(const u32*)&msg->velocity );
   memcpy(buf + offset, & msgvelocity , 4);
   offset += 4;
         
@@ -144,7 +142,9 @@ static inline bool sbp_unpack_sbp_msg_odometry_t(const u8 *buf, size_t len, sbp_
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->velocity, buf + offset, 4);
-  msg->velocity = le32toh( msg->velocity );
+  u32 msgvelocity = *(const u32*)&msg->velocity;
+  msgvelocity = le32toh( msgvelocity );
+  msg->velocity = *(const s32*)&msgvelocity;
   offset += 4;
       
   if (offset + 1 > len) { return false; }
@@ -252,8 +252,7 @@ static inline bool sbp_pack_sbp_msg_wheeltick_t(u8 *buf, size_t len, const sbp_m
   
         
   if (offset + 8 > len) { return false; }
-  u64 msgtime = msg->time;
-  msgtime = htole64( msgtime );
+  u64 msgtime = htole64( msg->time );
   memcpy(buf + offset, & msgtime , 8);
   offset += 8;
         
@@ -268,8 +267,7 @@ static inline bool sbp_pack_sbp_msg_wheeltick_t(u8 *buf, size_t len, const sbp_m
   offset += 1;
         
   if (offset + 4 > len) { return false; }
-  s32 msgticks = msg->ticks;
-  msgticks = htole32( msgticks );
+  u32 msgticks = htole32( *(const u32*)&msg->ticks );
   memcpy(buf + offset, & msgticks , 4);
   offset += 4;
   return true;
@@ -298,7 +296,9 @@ static inline bool sbp_unpack_sbp_msg_wheeltick_t(const u8 *buf, size_t len, sbp
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->ticks, buf + offset, 4);
-  msg->ticks = le32toh( msg->ticks );
+  u32 msgticks = *(const u32*)&msg->ticks;
+  msgticks = le32toh( msgticks );
+  msg->ticks = *(const s32*)&msgticks;
   offset += 4;
   return true;
 }

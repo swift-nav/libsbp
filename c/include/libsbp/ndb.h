@@ -268,8 +268,7 @@ static inline bool sbp_pack_sbp_msg_ndb_event_t(u8 *buf, size_t len, const sbp_m
   
         
   if (offset + 8 > len) { return false; }
-  u64 msgrecv_time = msg->recv_time;
-  msgrecv_time = htole64( msgrecv_time );
+  u64 msgrecv_time = htole64( msg->recv_time );
   memcpy(buf + offset, & msgrecv_time , 8);
   offset += 8;
         
@@ -316,8 +315,7 @@ static inline bool sbp_pack_sbp_msg_ndb_event_t(u8 *buf, size_t len, const sbp_m
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgoriginal_sender = msg->original_sender;
-  msgoriginal_sender = htole16( msgoriginal_sender );
+  u16 msgoriginal_sender = htole16( msg->original_sender );
   memcpy(buf + offset, & msgoriginal_sender , 2);
   offset += 2;
   return true;

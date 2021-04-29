@@ -120,13 +120,20 @@ static inline size_t sbp_packed_size_(((m.name|convert_unpacked)))(const (((m.na
 ((*- macro pack_primitive(field, path) *))
   ((*- set tmp_name = (path)|sanitise_path *))
   if (offset + (((field.basetype.packed_size))) > len) { return false; }
+  ((*- if field.basetype.name == "u16" *))
+  u16 (((tmp_name))) = htole16( (((path))) );
+  ((*- elif field.basetype.name == "u32" *))
+  u32 (((tmp_name))) = htole32( (((path))) );
+  ((*- elif field.basetype.name == "u64" *))
+  u64 (((tmp_name))) = htole64( (((path))) );
+  ((*- elif field.basetype.name == "s16" *))
+  u16 (((tmp_name))) = htole16( *(const u16*)&(((path))) );
+  ((*- elif field.basetype.name == "s32" *))
+  u32 (((tmp_name))) = htole32( *(const u32*)&(((path))) );
+  ((*- elif field.basetype.name == "s64" *))
+  u64 (((tmp_name))) = htole64( *(const u64*)&(((path))) );
+  ((*- else *))
   (((field.basetype.name))) (((tmp_name))) = (((path)));
-  ((*- if field.basetype.name == "u16" or field.basetype.name == "s16" *))
-  (((tmp_name))) = htole16( (((tmp_name))) );
-  ((*- elif field.basetype.name == "u32" or field.basetype.name == "s32" *))
-  (((tmp_name))) = htole32( (((tmp_name))) );
-  ((*- elif field.basetype.name == "u64" or field.basetype.name == "s64" *))
-  (((tmp_name))) = htole64( (((tmp_name))) );
   ((*- endif *))
   memcpy(buf + offset, & (((tmp_name))) , (((field.basetype.packed_size))));
   offset += (((field.basetype.packed_size)));
@@ -186,12 +193,25 @@ static inline bool sbp_pack_(((m.name|convert_unpacked)))(u8 *buf, size_t len, c
 ((*- macro unpack_primitive(field, path) *))
   if (offset + (((field.basetype.packed_size))) > len) { return false; }
   memcpy(&(((path))), buf + offset, (((field.basetype.packed_size))));
-  ((*- if field.basetype.name == "u16" or field.basetype.name == "s16" *))
+  ((*- if field.basetype.name == "u16" *))
   (((path))) = le16toh( (((path))) );
-  ((*- elif field.basetype.name == "u32" or field.basetype.name == "s32" *))
+  ((*- elif field.basetype.name == "u32" *))
   (((path))) = le32toh( (((path))) );
-  ((*- elif field.basetype.name == "u64" or field.basetype.name == "s64" *))
+  ((*- elif field.basetype.name == "u64" *))
   (((path))) = le64toh( (((path))) );
+  ((*- elif field.basetype.name == "s16" or field.basetype.name == "s32" or field.basetype.name == "s64" *))
+  ((*- set tmp_name = (path)|sanitise_path *))
+  ((*- if field.basetype.name == "s16" *))
+  u16 (((tmp_name))) = *(const u16*)&(((path)));
+  (((tmp_name))) = le16toh( (((tmp_name))) );
+  ((*- elif field.basetype.name == "s32" *))
+  u32 (((tmp_name))) = *(const u32*)&(((path)));
+  (((tmp_name))) = le32toh( (((tmp_name))) );
+  ((*- elif field.basetype.name == "s64" *))
+  u64 (((tmp_name))) = *(const u64*)&(((path)));
+  (((tmp_name))) = le64toh( (((tmp_name))) );
+  ((*- endif *))
+  (((path))) = *(const (((field.basetype.name)))*)&(((tmp_name)));
   ((*- endif *))
   offset += (((field.basetype.packed_size)));
 ((*- endmacro *))

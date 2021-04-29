@@ -296,8 +296,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_c_t(u8 *buf, size_t len, cons
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgsidsat = msg->sid.sat;
-  msgsidsat = htole16( msgsidsat );
+  u16 msgsidsat = htole16( msg->sid.sat );
   memcpy(buf + offset, & msgsidsat , 2);
   offset += 2;
         
@@ -472,8 +471,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_b_t(u8 *buf, size_t len, cons
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgsidsat = msg->sid.sat;
-  msgsidsat = htole16( msgsidsat );
+  u16 msgsidsat = htole16( msg->sid.sat );
   memcpy(buf + offset, & msgsidsat , 2);
   offset += 2;
         
@@ -832,8 +830,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_t(u8 *buf, size_t len, const 
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgacq_sv_profilemsgacq_sv_profile_idxcn0 = msg->acq_sv_profile[msgacq_sv_profile_idx].cn0;
-  msgacq_sv_profilemsgacq_sv_profile_idxcn0 = htole16( msgacq_sv_profilemsgacq_sv_profile_idxcn0 );
+  u16 msgacq_sv_profilemsgacq_sv_profile_idxcn0 = htole16( msg->acq_sv_profile[msgacq_sv_profile_idx].cn0 );
   memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcn0 , 2);
   offset += 2;
         
@@ -854,44 +851,37 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_t(u8 *buf, size_t len, const 
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgacq_sv_profilemsgacq_sv_profile_idxbin_width = msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width;
-  msgacq_sv_profilemsgacq_sv_profile_idxbin_width = htole16( msgacq_sv_profilemsgacq_sv_profile_idxbin_width );
+  u16 msgacq_sv_profilemsgacq_sv_profile_idxbin_width = htole16( msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width );
   memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxbin_width , 2);
   offset += 2;
         
   if (offset + 4 > len) { return false; }
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxtimestamp = msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp;
-  msgacq_sv_profilemsgacq_sv_profile_idxtimestamp = htole32( msgacq_sv_profilemsgacq_sv_profile_idxtimestamp );
+  u32 msgacq_sv_profilemsgacq_sv_profile_idxtimestamp = htole32( msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp );
   memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxtimestamp , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxtime_spent = msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent;
-  msgacq_sv_profilemsgacq_sv_profile_idxtime_spent = htole32( msgacq_sv_profilemsgacq_sv_profile_idxtime_spent );
+  u32 msgacq_sv_profilemsgacq_sv_profile_idxtime_spent = htole32( msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent );
   memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxtime_spent , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  s32 msgacq_sv_profilemsgacq_sv_profile_idxcf_min = msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min;
-  msgacq_sv_profilemsgacq_sv_profile_idxcf_min = htole32( msgacq_sv_profilemsgacq_sv_profile_idxcf_min );
+  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_min = htole32( *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min );
   memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcf_min , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  s32 msgacq_sv_profilemsgacq_sv_profile_idxcf_max = msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max;
-  msgacq_sv_profilemsgacq_sv_profile_idxcf_max = htole32( msgacq_sv_profilemsgacq_sv_profile_idxcf_max );
+  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_max = htole32( *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max );
   memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcf_max , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  s32 msgacq_sv_profilemsgacq_sv_profile_idxcf = msg->acq_sv_profile[msgacq_sv_profile_idx].cf;
-  msgacq_sv_profilemsgacq_sv_profile_idxcf = htole32( msgacq_sv_profilemsgacq_sv_profile_idxcf );
+  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf = htole32( *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf );
   memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcf , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxcp = msg->acq_sv_profile[msgacq_sv_profile_idx].cp;
-  msgacq_sv_profilemsgacq_sv_profile_idxcp = htole32( msgacq_sv_profilemsgacq_sv_profile_idxcp );
+  u32 msgacq_sv_profilemsgacq_sv_profile_idxcp = htole32( msg->acq_sv_profile[msgacq_sv_profile_idx].cp );
   memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcp , 4);
   offset += 4;
 			}
@@ -956,17 +946,23 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(const u8 *buf, size_t len
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min, buf + offset, 4);
-  msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min = le32toh( msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min );
+  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_min = *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min;
+  msgacq_sv_profilemsgacq_sv_profile_idxcf_min = le32toh( msgacq_sv_profilemsgacq_sv_profile_idxcf_min );
+  msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min = *(const s32*)&msgacq_sv_profilemsgacq_sv_profile_idxcf_min;
   offset += 4;
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max, buf + offset, 4);
-  msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max = le32toh( msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max );
+  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_max = *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max;
+  msgacq_sv_profilemsgacq_sv_profile_idxcf_max = le32toh( msgacq_sv_profilemsgacq_sv_profile_idxcf_max );
+  msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max = *(const s32*)&msgacq_sv_profilemsgacq_sv_profile_idxcf_max;
   offset += 4;
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cf, buf + offset, 4);
-  msg->acq_sv_profile[msgacq_sv_profile_idx].cf = le32toh( msg->acq_sv_profile[msgacq_sv_profile_idx].cf );
+  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf = *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf;
+  msgacq_sv_profilemsgacq_sv_profile_idxcf = le32toh( msgacq_sv_profilemsgacq_sv_profile_idxcf );
+  msg->acq_sv_profile[msgacq_sv_profile_idx].cf = *(const s32*)&msgacq_sv_profilemsgacq_sv_profile_idxcf;
   offset += 4;
       
   if (offset + 4 > len) { return false; }
@@ -1181,8 +1177,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, co
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgacq_sv_profilemsgacq_sv_profile_idxcn0 = msg->acq_sv_profile[msgacq_sv_profile_idx].cn0;
-  msgacq_sv_profilemsgacq_sv_profile_idxcn0 = htole16( msgacq_sv_profilemsgacq_sv_profile_idxcn0 );
+  u16 msgacq_sv_profilemsgacq_sv_profile_idxcn0 = htole16( msg->acq_sv_profile[msgacq_sv_profile_idx].cn0 );
   memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcn0 , 2);
   offset += 2;
         
@@ -1193,8 +1188,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, co
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgacq_sv_profilemsgacq_sv_profile_idxsidsat = msg->acq_sv_profile[msgacq_sv_profile_idx].sid.sat;
-  msgacq_sv_profilemsgacq_sv_profile_idxsidsat = htole16( msgacq_sv_profilemsgacq_sv_profile_idxsidsat );
+  u16 msgacq_sv_profilemsgacq_sv_profile_idxsidsat = htole16( msg->acq_sv_profile[msgacq_sv_profile_idx].sid.sat );
   memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxsidsat , 2);
   offset += 2;
         
@@ -1209,44 +1203,37 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, co
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgacq_sv_profilemsgacq_sv_profile_idxbin_width = msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width;
-  msgacq_sv_profilemsgacq_sv_profile_idxbin_width = htole16( msgacq_sv_profilemsgacq_sv_profile_idxbin_width );
+  u16 msgacq_sv_profilemsgacq_sv_profile_idxbin_width = htole16( msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width );
   memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxbin_width , 2);
   offset += 2;
         
   if (offset + 4 > len) { return false; }
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxtimestamp = msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp;
-  msgacq_sv_profilemsgacq_sv_profile_idxtimestamp = htole32( msgacq_sv_profilemsgacq_sv_profile_idxtimestamp );
+  u32 msgacq_sv_profilemsgacq_sv_profile_idxtimestamp = htole32( msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp );
   memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxtimestamp , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxtime_spent = msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent;
-  msgacq_sv_profilemsgacq_sv_profile_idxtime_spent = htole32( msgacq_sv_profilemsgacq_sv_profile_idxtime_spent );
+  u32 msgacq_sv_profilemsgacq_sv_profile_idxtime_spent = htole32( msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent );
   memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxtime_spent , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  s32 msgacq_sv_profilemsgacq_sv_profile_idxcf_min = msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min;
-  msgacq_sv_profilemsgacq_sv_profile_idxcf_min = htole32( msgacq_sv_profilemsgacq_sv_profile_idxcf_min );
+  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_min = htole32( *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min );
   memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcf_min , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  s32 msgacq_sv_profilemsgacq_sv_profile_idxcf_max = msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max;
-  msgacq_sv_profilemsgacq_sv_profile_idxcf_max = htole32( msgacq_sv_profilemsgacq_sv_profile_idxcf_max );
+  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_max = htole32( *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max );
   memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcf_max , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  s32 msgacq_sv_profilemsgacq_sv_profile_idxcf = msg->acq_sv_profile[msgacq_sv_profile_idx].cf;
-  msgacq_sv_profilemsgacq_sv_profile_idxcf = htole32( msgacq_sv_profilemsgacq_sv_profile_idxcf );
+  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf = htole32( *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf );
   memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcf , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgacq_sv_profilemsgacq_sv_profile_idxcp = msg->acq_sv_profile[msgacq_sv_profile_idx].cp;
-  msgacq_sv_profilemsgacq_sv_profile_idxcp = htole32( msgacq_sv_profilemsgacq_sv_profile_idxcp );
+  u32 msgacq_sv_profilemsgacq_sv_profile_idxcp = htole32( msg->acq_sv_profile[msgacq_sv_profile_idx].cp );
   memcpy(buf + offset, & msgacq_sv_profilemsgacq_sv_profile_idxcp , 4);
   offset += 4;
 			}
@@ -1316,17 +1303,23 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const u8 *buf, size_t
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min, buf + offset, 4);
-  msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min = le32toh( msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min );
+  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_min = *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min;
+  msgacq_sv_profilemsgacq_sv_profile_idxcf_min = le32toh( msgacq_sv_profilemsgacq_sv_profile_idxcf_min );
+  msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min = *(const s32*)&msgacq_sv_profilemsgacq_sv_profile_idxcf_min;
   offset += 4;
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max, buf + offset, 4);
-  msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max = le32toh( msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max );
+  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_max = *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max;
+  msgacq_sv_profilemsgacq_sv_profile_idxcf_max = le32toh( msgacq_sv_profilemsgacq_sv_profile_idxcf_max );
+  msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max = *(const s32*)&msgacq_sv_profilemsgacq_sv_profile_idxcf_max;
   offset += 4;
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cf, buf + offset, 4);
-  msg->acq_sv_profile[msgacq_sv_profile_idx].cf = le32toh( msg->acq_sv_profile[msgacq_sv_profile_idx].cf );
+  u32 msgacq_sv_profilemsgacq_sv_profile_idxcf = *(const u32*)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf;
+  msgacq_sv_profilemsgacq_sv_profile_idxcf = le32toh( msgacq_sv_profilemsgacq_sv_profile_idxcf );
+  msg->acq_sv_profile[msgacq_sv_profile_idx].cf = *(const s32*)&msgacq_sv_profilemsgacq_sv_profile_idxcf;
   offset += 4;
       
   if (offset + 4 > len) { return false; }

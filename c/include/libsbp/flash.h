@@ -529,8 +529,7 @@ static inline bool sbp_pack_sbp_msg_flash_erase_t(u8 *buf, size_t len, const sbp
   offset += 1;
         
   if (offset + 4 > len) { return false; }
-  u32 msgsector_num = msg->sector_num;
-  msgsector_num = htole32( msgsector_num );
+  u32 msgsector_num = htole32( msg->sector_num );
   memcpy(buf + offset, & msgsector_num , 4);
   offset += 4;
   return true;
@@ -589,8 +588,7 @@ static inline bool sbp_pack_sbp_msg_stm_flash_lock_sector_t(u8 *buf, size_t len,
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgsector = msg->sector;
-  msgsector = htole32( msgsector );
+  u32 msgsector = htole32( msg->sector );
   memcpy(buf + offset, & msgsector , 4);
   offset += 4;
   return true;
@@ -645,8 +643,7 @@ static inline bool sbp_pack_sbp_msg_stm_flash_unlock_sector_t(u8 *buf, size_t le
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgsector = msg->sector;
-  msgsector = htole32( msgsector );
+  u32 msgsector = htole32( msg->sector );
   memcpy(buf + offset, & msgsector , 4);
   offset += 4;
   return true;

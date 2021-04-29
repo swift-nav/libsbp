@@ -84,8 +84,7 @@ static inline bool sbp_pack_sbp_msg_linux_cpu_state_dep_a_t(u8 *buf, size_t len,
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgpid = msg->pid;
-  msgpid = htole16( msgpid );
+  u16 msgpid = htole16( msg->pid );
   memcpy(buf + offset, & msgpid , 2);
   offset += 2;
         
@@ -212,8 +211,7 @@ static inline bool sbp_pack_sbp_msg_linux_mem_state_dep_a_t(u8 *buf, size_t len,
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgpid = msg->pid;
-  msgpid = htole16( msgpid );
+  u16 msgpid = htole16( msg->pid );
   memcpy(buf + offset, & msgpid , 2);
   offset += 2;
         
@@ -338,8 +336,7 @@ static inline bool sbp_pack_sbp_msg_linux_sys_state_dep_a_t(u8 *buf, size_t len,
   
         
   if (offset + 2 > len) { return false; }
-  u16 msgmem_total = msg->mem_total;
-  msgmem_total = htole16( msgmem_total );
+  u16 msgmem_total = htole16( msg->mem_total );
   memcpy(buf + offset, & msgmem_total , 2);
   offset += 2;
         
@@ -354,20 +351,17 @@ static inline bool sbp_pack_sbp_msg_linux_sys_state_dep_a_t(u8 *buf, size_t len,
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgprocs_starting = msg->procs_starting;
-  msgprocs_starting = htole16( msgprocs_starting );
+  u16 msgprocs_starting = htole16( msg->procs_starting );
   memcpy(buf + offset, & msgprocs_starting , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgprocs_stopping = msg->procs_stopping;
-  msgprocs_stopping = htole16( msgprocs_stopping );
+  u16 msgprocs_stopping = htole16( msg->procs_stopping );
   memcpy(buf + offset, & msgprocs_stopping , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgpid_count = msg->pid_count;
-  msgpid_count = htole16( msgpid_count );
+  u16 msgpid_count = htole16( msg->pid_count );
   memcpy(buf + offset, & msgpid_count , 2);
   offset += 2;
   return true;
@@ -496,26 +490,22 @@ static inline bool sbp_pack_sbp_msg_linux_process_socket_counts_t(u8 *buf, size_
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgpid = msg->pid;
-  msgpid = htole16( msgpid );
+  u16 msgpid = htole16( msg->pid );
   memcpy(buf + offset, & msgpid , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgsocket_count = msg->socket_count;
-  msgsocket_count = htole16( msgsocket_count );
+  u16 msgsocket_count = htole16( msg->socket_count );
   memcpy(buf + offset, & msgsocket_count , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgsocket_types = msg->socket_types;
-  msgsocket_types = htole16( msgsocket_types );
+  u16 msgsocket_types = htole16( msg->socket_types );
   memcpy(buf + offset, & msgsocket_types , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgsocket_states = msg->socket_states;
-  msgsocket_states = htole16( msgsocket_states );
+  u16 msgsocket_states = htole16( msg->socket_states );
   memcpy(buf + offset, & msgsocket_states , 2);
   offset += 2;
       if (offset + sbp_strlen( msg->cmdline, "none") > len) { return false; }
@@ -663,32 +653,27 @@ static inline bool sbp_pack_sbp_msg_linux_process_socket_queues_t(u8 *buf, size_
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgpid = msg->pid;
-  msgpid = htole16( msgpid );
+  u16 msgpid = htole16( msg->pid );
   memcpy(buf + offset, & msgpid , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgrecv_queued = msg->recv_queued;
-  msgrecv_queued = htole16( msgrecv_queued );
+  u16 msgrecv_queued = htole16( msg->recv_queued );
   memcpy(buf + offset, & msgrecv_queued , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgsend_queued = msg->send_queued;
-  msgsend_queued = htole16( msgsend_queued );
+  u16 msgsend_queued = htole16( msg->send_queued );
   memcpy(buf + offset, & msgsend_queued , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgsocket_types = msg->socket_types;
-  msgsocket_types = htole16( msgsocket_types );
+  u16 msgsocket_types = htole16( msg->socket_types );
   memcpy(buf + offset, & msgsocket_types , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgsocket_states = msg->socket_states;
-  msgsocket_states = htole16( msgsocket_states );
+  u16 msgsocket_states = htole16( msg->socket_states );
   memcpy(buf + offset, & msgsocket_states , 2);
   offset += 2;
 		  for(size_t msgaddress_of_largest_idx = 0; msgaddress_of_largest_idx < 64; msgaddress_of_largest_idx++)
@@ -816,22 +801,19 @@ static inline bool sbp_pack_sbp_msg_linux_socket_usage_t(u8 *buf, size_t len, co
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgavg_queue_depth = msg->avg_queue_depth;
-  msgavg_queue_depth = htole32( msgavg_queue_depth );
+  u32 msgavg_queue_depth = htole32( msg->avg_queue_depth );
   memcpy(buf + offset, & msgavg_queue_depth , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgmax_queue_depth = msg->max_queue_depth;
-  msgmax_queue_depth = htole32( msgmax_queue_depth );
+  u32 msgmax_queue_depth = htole32( msg->max_queue_depth );
   memcpy(buf + offset, & msgmax_queue_depth , 4);
   offset += 4;
 		  for(size_t msgsocket_state_counts_idx = 0; msgsocket_state_counts_idx < 16; msgsocket_state_counts_idx++)
 			{
         
   if (offset + 2 > len) { return false; }
-  u16 msgsocket_state_countsmsgsocket_state_counts_idx = msg->socket_state_counts[msgsocket_state_counts_idx];
-  msgsocket_state_countsmsgsocket_state_counts_idx = htole16( msgsocket_state_countsmsgsocket_state_counts_idx );
+  u16 msgsocket_state_countsmsgsocket_state_counts_idx = htole16( msg->socket_state_counts[msgsocket_state_counts_idx] );
   memcpy(buf + offset, & msgsocket_state_countsmsgsocket_state_counts_idx , 2);
   offset += 2;
 			}
@@ -839,8 +821,7 @@ static inline bool sbp_pack_sbp_msg_linux_socket_usage_t(u8 *buf, size_t len, co
 			{
         
   if (offset + 2 > len) { return false; }
-  u16 msgsocket_type_countsmsgsocket_type_counts_idx = msg->socket_type_counts[msgsocket_type_counts_idx];
-  msgsocket_type_countsmsgsocket_type_counts_idx = htole16( msgsocket_type_countsmsgsocket_type_counts_idx );
+  u16 msgsocket_type_countsmsgsocket_type_counts_idx = htole16( msg->socket_type_counts[msgsocket_type_counts_idx] );
   memcpy(buf + offset, & msgsocket_type_countsmsgsocket_type_counts_idx , 2);
   offset += 2;
 			}
@@ -946,14 +927,12 @@ static inline bool sbp_pack_sbp_msg_linux_process_fd_count_t(u8 *buf, size_t len
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgpid = msg->pid;
-  msgpid = htole16( msgpid );
+  u16 msgpid = htole16( msg->pid );
   memcpy(buf + offset, & msgpid , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgfd_count = msg->fd_count;
-  msgfd_count = htole16( msgfd_count );
+  u16 msgfd_count = htole16( msg->fd_count );
   memcpy(buf + offset, & msgfd_count , 2);
   offset += 2;
       if (offset + sbp_strlen( msg->cmdline, "none") > len) { return false; }
@@ -1032,8 +1011,7 @@ static inline bool sbp_pack_sbp_msg_linux_process_fd_summary_t(u8 *buf, size_t l
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgsys_fd_count = msg->sys_fd_count;
-  msgsys_fd_count = htole32( msgsys_fd_count );
+  u32 msgsys_fd_count = htole32( msg->sys_fd_count );
   memcpy(buf + offset, & msgsys_fd_count , 4);
   offset += 4;
       if (offset + sbp_strlen( msg->most_opened, "2-nul") > len) { return false; }
@@ -1161,8 +1139,7 @@ static inline bool sbp_pack_sbp_msg_linux_cpu_state_t(u8 *buf, size_t len, const
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgpid = msg->pid;
-  msgpid = htole16( msgpid );
+  u16 msgpid = htole16( msg->pid );
   memcpy(buf + offset, & msgpid , 2);
   offset += 2;
         
@@ -1172,8 +1149,7 @@ static inline bool sbp_pack_sbp_msg_linux_cpu_state_t(u8 *buf, size_t len, const
   offset += 1;
         
   if (offset + 4 > len) { return false; }
-  u32 msgtime = msg->time;
-  msgtime = htole32( msgtime );
+  u32 msgtime = htole32( msg->time );
   memcpy(buf + offset, & msgtime , 4);
   offset += 4;
         
@@ -1338,8 +1314,7 @@ static inline bool sbp_pack_sbp_msg_linux_mem_state_t(u8 *buf, size_t len, const
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgpid = msg->pid;
-  msgpid = htole16( msgpid );
+  u16 msgpid = htole16( msg->pid );
   memcpy(buf + offset, & msgpid , 2);
   offset += 2;
         
@@ -1349,8 +1324,7 @@ static inline bool sbp_pack_sbp_msg_linux_mem_state_t(u8 *buf, size_t len, const
   offset += 1;
         
   if (offset + 4 > len) { return false; }
-  u32 msgtime = msg->time;
-  msgtime = htole32( msgtime );
+  u32 msgtime = htole32( msg->time );
   memcpy(buf + offset, & msgtime , 4);
   offset += 4;
         
@@ -1513,8 +1487,7 @@ static inline bool sbp_pack_sbp_msg_linux_sys_state_t(u8 *buf, size_t len, const
   
         
   if (offset + 2 > len) { return false; }
-  u16 msgmem_total = msg->mem_total;
-  msgmem_total = htole16( msgmem_total );
+  u16 msgmem_total = htole16( msg->mem_total );
   memcpy(buf + offset, & msgmem_total , 2);
   offset += 2;
         
@@ -1529,26 +1502,22 @@ static inline bool sbp_pack_sbp_msg_linux_sys_state_t(u8 *buf, size_t len, const
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgprocs_starting = msg->procs_starting;
-  msgprocs_starting = htole16( msgprocs_starting );
+  u16 msgprocs_starting = htole16( msg->procs_starting );
   memcpy(buf + offset, & msgprocs_starting , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgprocs_stopping = msg->procs_stopping;
-  msgprocs_stopping = htole16( msgprocs_stopping );
+  u16 msgprocs_stopping = htole16( msg->procs_stopping );
   memcpy(buf + offset, & msgprocs_stopping , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgpid_count = msg->pid_count;
-  msgpid_count = htole16( msgpid_count );
+  u16 msgpid_count = htole16( msg->pid_count );
   memcpy(buf + offset, & msgpid_count , 2);
   offset += 2;
         
   if (offset + 4 > len) { return false; }
-  u32 msgtime = msg->time;
-  msgtime = htole32( msgtime );
+  u32 msgtime = htole32( msg->time );
   memcpy(buf + offset, & msgtime , 4);
   offset += 4;
         

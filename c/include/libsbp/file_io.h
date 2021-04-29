@@ -74,14 +74,12 @@ static inline bool sbp_pack_sbp_msg_fileio_read_req_t(u8 *buf, size_t len, const
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgsequence = msg->sequence;
-  msgsequence = htole32( msgsequence );
+  u32 msgsequence = htole32( msg->sequence );
   memcpy(buf + offset, & msgsequence , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgoffset = msg->offset;
-  msgoffset = htole32( msgoffset );
+  u32 msgoffset = htole32( msg->offset );
   memcpy(buf + offset, & msgoffset , 4);
   offset += 4;
         
@@ -173,8 +171,7 @@ static inline bool sbp_pack_sbp_msg_fileio_read_resp_t(u8 *buf, size_t len, cons
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgsequence = msg->sequence;
-  msgsequence = htole32( msgsequence );
+  u32 msgsequence = htole32( msg->sequence );
   memcpy(buf + offset, & msgsequence , 4);
   offset += 4;
 			for(size_t msgcontents_idx = 0; msgcontents_idx < (size_t)msg->n_contents; msgcontents_idx++)
@@ -273,14 +270,12 @@ static inline bool sbp_pack_sbp_msg_fileio_read_dir_req_t(u8 *buf, size_t len, c
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgsequence = msg->sequence;
-  msgsequence = htole32( msgsequence );
+  u32 msgsequence = htole32( msg->sequence );
   memcpy(buf + offset, & msgsequence , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgoffset = msg->offset;
-  msgoffset = htole32( msgoffset );
+  u32 msgoffset = htole32( msg->offset );
   memcpy(buf + offset, & msgoffset , 4);
   offset += 4;
       if (offset + sbp_strlen( msg->dirname, "nul") > len) { return false; }
@@ -364,8 +359,7 @@ static inline bool sbp_pack_sbp_msg_fileio_read_dir_resp_t(u8 *buf, size_t len, 
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgsequence = msg->sequence;
-  msgsequence = htole32( msgsequence );
+  u32 msgsequence = htole32( msg->sequence );
   memcpy(buf + offset, & msgsequence , 4);
   offset += 4;
 			for(size_t msgcontents_idx = 0; msgcontents_idx < (size_t)msg->n_contents; msgcontents_idx++)
@@ -530,14 +524,12 @@ static inline bool sbp_pack_sbp_msg_fileio_write_req_t(u8 *buf, size_t len, cons
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgsequence = msg->sequence;
-  msgsequence = htole32( msgsequence );
+  u32 msgsequence = htole32( msg->sequence );
   memcpy(buf + offset, & msgsequence , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgoffset = msg->offset;
-  msgoffset = htole32( msgoffset );
+  u32 msgoffset = htole32( msg->offset );
   memcpy(buf + offset, & msgoffset , 4);
   offset += 4;
       if (offset + sbp_strlen( msg->filename, "nul") > len) { return false; }
@@ -622,8 +614,7 @@ static inline bool sbp_pack_sbp_msg_fileio_write_resp_t(u8 *buf, size_t len, con
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgsequence = msg->sequence;
-  msgsequence = htole32( msgsequence );
+  u32 msgsequence = htole32( msg->sequence );
   memcpy(buf + offset, & msgsequence , 4);
   offset += 4;
   return true;
@@ -680,8 +671,7 @@ static inline bool sbp_pack_sbp_msg_fileio_config_req_t(u8 *buf, size_t len, con
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgsequence = msg->sequence;
-  msgsequence = htole32( msgsequence );
+  u32 msgsequence = htole32( msg->sequence );
   memcpy(buf + offset, & msgsequence , 4);
   offset += 4;
   return true;
@@ -763,26 +753,22 @@ static inline bool sbp_pack_sbp_msg_fileio_config_resp_t(u8 *buf, size_t len, co
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgsequence = msg->sequence;
-  msgsequence = htole32( msgsequence );
+  u32 msgsequence = htole32( msg->sequence );
   memcpy(buf + offset, & msgsequence , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgwindow_size = msg->window_size;
-  msgwindow_size = htole32( msgwindow_size );
+  u32 msgwindow_size = htole32( msg->window_size );
   memcpy(buf + offset, & msgwindow_size , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgbatch_size = msg->batch_size;
-  msgbatch_size = htole32( msgbatch_size );
+  u32 msgbatch_size = htole32( msg->batch_size );
   memcpy(buf + offset, & msgbatch_size , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgfileio_version = msg->fileio_version;
-  msgfileio_version = htole32( msgfileio_version );
+  u32 msgfileio_version = htole32( msg->fileio_version );
   memcpy(buf + offset, & msgfileio_version , 4);
   offset += 4;
   return true;

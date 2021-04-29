@@ -18,7 +18,7 @@ set_target_properties(sbp PROPERTIES
         POSITION_INDEPENDENT_CODE ON)
 target_code_coverage(sbp AUTO ALL)
 swift_set_language_standards(sbp)
-swift_set_compile_options(sbp ADD -pedantic REMOVE -Wconversion)
+swift_set_compile_options(sbp ADD -pedantic)
 
 install(TARGETS sbp
         EXPORT sbp-export

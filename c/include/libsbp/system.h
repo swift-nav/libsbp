@@ -99,8 +99,7 @@ static inline bool sbp_pack_sbp_msg_startup_t(u8 *buf, size_t len, const sbp_msg
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgreserved = msg->reserved;
-  msgreserved = htole16( msgreserved );
+  u16 msgreserved = htole16( msg->reserved );
   memcpy(buf + offset, & msgreserved , 2);
   offset += 2;
   return true;
@@ -208,8 +207,7 @@ static inline bool sbp_pack_sbp_msg_dgnss_status_t(u8 *buf, size_t len, const sb
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msglatency = msg->latency;
-  msglatency = htole16( msglatency );
+  u16 msglatency = htole16( msg->latency );
   memcpy(buf + offset, & msglatency , 2);
   offset += 2;
         
@@ -375,8 +373,7 @@ static inline bool sbp_pack_sbp_msg_heartbeat_t(u8 *buf, size_t len, const sbp_m
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgflags = msg->flags;
-  msgflags = htole32( msgflags );
+  u32 msgflags = htole32( msg->flags );
   memcpy(buf + offset, & msgflags , 4);
   offset += 4;
   return true;
@@ -576,26 +573,22 @@ static inline bool sbp_pack_sbp_msg_status_report_t(u8 *buf, size_t len, const s
   
         
   if (offset + 2 > len) { return false; }
-  u16 msgreporting_system = msg->reporting_system;
-  msgreporting_system = htole16( msgreporting_system );
+  u16 msgreporting_system = htole16( msg->reporting_system );
   memcpy(buf + offset, & msgreporting_system , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgsbp_version = msg->sbp_version;
-  msgsbp_version = htole16( msgsbp_version );
+  u16 msgsbp_version = htole16( msg->sbp_version );
   memcpy(buf + offset, & msgsbp_version , 2);
   offset += 2;
         
   if (offset + 4 > len) { return false; }
-  u32 msgsequence = msg->sequence;
-  msgsequence = htole32( msgsequence );
+  u32 msgsequence = htole32( msg->sequence );
   memcpy(buf + offset, & msgsequence , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msguptime = msg->uptime;
-  msguptime = htole32( msguptime );
+  u32 msguptime = htole32( msg->uptime );
   memcpy(buf + offset, & msguptime , 4);
   offset += 4;
 			for(size_t msgstatus_idx = 0; msgstatus_idx < (size_t)msg->n_status; msgstatus_idx++)
@@ -603,8 +596,7 @@ static inline bool sbp_pack_sbp_msg_status_report_t(u8 *buf, size_t len, const s
 					
         
   if (offset + 2 > len) { return false; }
-  u16 msgstatusmsgstatus_idxcomponent = msg->status[msgstatus_idx].component;
-  msgstatusmsgstatus_idxcomponent = htole16( msgstatusmsgstatus_idxcomponent );
+  u16 msgstatusmsgstatus_idxcomponent = htole16( msg->status[msgstatus_idx].component );
   memcpy(buf + offset, & msgstatusmsgstatus_idxcomponent , 2);
   offset += 2;
         
@@ -806,8 +798,7 @@ static inline bool sbp_pack_sbp_msg_ins_status_t(u8 *buf, size_t len, const sbp_
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgflags = msg->flags;
-  msgflags = htole32( msgflags );
+  u32 msgflags = htole32( msg->flags );
   memcpy(buf + offset, & msgflags , 4);
   offset += 4;
   return true;
@@ -1176,8 +1167,7 @@ static inline bool sbp_pack_sbp_msg_ins_updates_t(u8 *buf, size_t len, const sbp
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgtow = msg->tow;
-  msgtow = htole32( msgtow );
+  u32 msgtow = htole32( msg->tow );
   memcpy(buf + offset, & msgtow , 4);
   offset += 4;
         
@@ -1311,20 +1301,17 @@ static inline bool sbp_pack_sbp_msg_gnss_time_offset_t(u8 *buf, size_t len, cons
   
         
   if (offset + 2 > len) { return false; }
-  s16 msgweeks = msg->weeks;
-  msgweeks = htole16( msgweeks );
+  u16 msgweeks = htole16( *(const u16*)&msg->weeks );
   memcpy(buf + offset, & msgweeks , 2);
   offset += 2;
         
   if (offset + 4 > len) { return false; }
-  s32 msgmilliseconds = msg->milliseconds;
-  msgmilliseconds = htole32( msgmilliseconds );
+  u32 msgmilliseconds = htole32( *(const u32*)&msg->milliseconds );
   memcpy(buf + offset, & msgmilliseconds , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  s16 msgmicroseconds = msg->microseconds;
-  msgmicroseconds = htole16( msgmicroseconds );
+  u16 msgmicroseconds = htole16( *(const u16*)&msg->microseconds );
   memcpy(buf + offset, & msgmicroseconds , 2);
   offset += 2;
         
@@ -1345,17 +1332,23 @@ static inline bool sbp_unpack_sbp_msg_gnss_time_offset_t(const u8 *buf, size_t l
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->weeks, buf + offset, 2);
-  msg->weeks = le16toh( msg->weeks );
+  u16 msgweeks = *(const u16*)&msg->weeks;
+  msgweeks = le16toh( msgweeks );
+  msg->weeks = *(const s16*)&msgweeks;
   offset += 2;
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->milliseconds, buf + offset, 4);
-  msg->milliseconds = le32toh( msg->milliseconds );
+  u32 msgmilliseconds = *(const u32*)&msg->milliseconds;
+  msgmilliseconds = le32toh( msgmilliseconds );
+  msg->milliseconds = *(const s32*)&msgmilliseconds;
   offset += 4;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->microseconds, buf + offset, 2);
-  msg->microseconds = le16toh( msg->microseconds );
+  u16 msgmicroseconds = *(const u16*)&msg->microseconds;
+  msgmicroseconds = le16toh( msgmicroseconds );
+  msg->microseconds = *(const s16*)&msgmicroseconds;
   offset += 2;
       
   if (offset + 1 > len) { return false; }
@@ -1459,8 +1452,7 @@ static inline bool sbp_pack_sbp_msg_group_meta_t(u8 *buf, size_t len, const sbp_
 			{
           
   if (offset + 2 > len) { return false; }
-  u16 msggroup_msgsmsggroup_msgs_idx = msg->group_msgs[msggroup_msgs_idx];
-  msggroup_msgsmsggroup_msgs_idx = htole16( msggroup_msgsmsggroup_msgs_idx );
+  u16 msggroup_msgsmsggroup_msgs_idx = htole16( msg->group_msgs[msggroup_msgs_idx] );
   memcpy(buf + offset, & msggroup_msgsmsggroup_msgs_idx , 2);
   offset += 2;
 			}

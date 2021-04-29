@@ -508,46 +508,39 @@ static inline bool sbp_pack_sbp_msg_tracking_state_detailed_dep_a_t(u8 *buf, siz
   
         
   if (offset + 8 > len) { return false; }
-  u64 msgrecv_time = msg->recv_time;
-  msgrecv_time = htole64( msgrecv_time );
+  u64 msgrecv_time = htole64( msg->recv_time );
   memcpy(buf + offset, & msgrecv_time , 8);
   offset += 8;
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgtottow = msg->tot.tow;
-  msgtottow = htole32( msgtottow );
+  u32 msgtottow = htole32( msg->tot.tow );
   memcpy(buf + offset, & msgtottow , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  s32 msgtotns_residual = msg->tot.ns_residual;
-  msgtotns_residual = htole32( msgtotns_residual );
+  u32 msgtotns_residual = htole32( *(const u32*)&msg->tot.ns_residual );
   memcpy(buf + offset, & msgtotns_residual , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgtotwn = msg->tot.wn;
-  msgtotwn = htole16( msgtotwn );
+  u16 msgtotwn = htole16( msg->tot.wn );
   memcpy(buf + offset, & msgtotwn , 2);
   offset += 2;
         
   if (offset + 4 > len) { return false; }
-  u32 msgP = msg->P;
-  msgP = htole32( msgP );
+  u32 msgP = htole32( msg->P );
   memcpy(buf + offset, & msgP , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgP_std = msg->P_std;
-  msgP_std = htole16( msgP_std );
+  u16 msgP_std = htole16( msg->P_std );
   memcpy(buf + offset, & msgP_std , 2);
   offset += 2;
 				
         
   if (offset + 4 > len) { return false; }
-  s32 msgLi = msg->L.i;
-  msgLi = htole32( msgLi );
+  u32 msgLi = htole32( *(const u32*)&msg->L.i );
   memcpy(buf + offset, & msgLi , 4);
   offset += 4;
         
@@ -562,8 +555,7 @@ static inline bool sbp_pack_sbp_msg_tracking_state_detailed_dep_a_t(u8 *buf, siz
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msglock = msg->lock;
-  msglock = htole16( msglock );
+  u16 msglock = htole16( msg->lock );
   memcpy(buf + offset, & msglock , 2);
   offset += 2;
 				
@@ -579,38 +571,32 @@ static inline bool sbp_pack_sbp_msg_tracking_state_detailed_dep_a_t(u8 *buf, siz
   offset += 1;
         
   if (offset + 4 > len) { return false; }
-  s32 msgdoppler = msg->doppler;
-  msgdoppler = htole32( msgdoppler );
+  u32 msgdoppler = htole32( *(const u32*)&msg->doppler );
   memcpy(buf + offset, & msgdoppler , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgdoppler_std = msg->doppler_std;
-  msgdoppler_std = htole16( msgdoppler_std );
+  u16 msgdoppler_std = htole16( msg->doppler_std );
   memcpy(buf + offset, & msgdoppler_std , 2);
   offset += 2;
         
   if (offset + 4 > len) { return false; }
-  u32 msguptime = msg->uptime;
-  msguptime = htole32( msguptime );
+  u32 msguptime = htole32( msg->uptime );
   memcpy(buf + offset, & msguptime , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  s16 msgclock_offset = msg->clock_offset;
-  msgclock_offset = htole16( msgclock_offset );
+  u16 msgclock_offset = htole16( *(const u16*)&msg->clock_offset );
   memcpy(buf + offset, & msgclock_offset , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  s16 msgclock_drift = msg->clock_drift;
-  msgclock_drift = htole16( msgclock_drift );
+  u16 msgclock_drift = htole16( *(const u16*)&msg->clock_drift );
   memcpy(buf + offset, & msgclock_drift , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcorr_spacing = msg->corr_spacing;
-  msgcorr_spacing = htole16( msgcorr_spacing );
+  u16 msgcorr_spacing = htole16( msg->corr_spacing );
   memcpy(buf + offset, & msgcorr_spacing , 2);
   offset += 2;
         
@@ -672,7 +658,9 @@ static inline bool sbp_unpack_sbp_msg_tracking_state_detailed_dep_a_t(const u8 *
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->tot.ns_residual, buf + offset, 4);
-  msg->tot.ns_residual = le32toh( msg->tot.ns_residual );
+  u32 msgtotns_residual = *(const u32*)&msg->tot.ns_residual;
+  msgtotns_residual = le32toh( msgtotns_residual );
+  msg->tot.ns_residual = *(const s32*)&msgtotns_residual;
   offset += 4;
       
   if (offset + 2 > len) { return false; }
@@ -693,7 +681,9 @@ static inline bool sbp_unpack_sbp_msg_tracking_state_detailed_dep_a_t(const u8 *
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->L.i, buf + offset, 4);
-  msg->L.i = le32toh( msg->L.i );
+  u32 msgLi = *(const u32*)&msg->L.i;
+  msgLi = le32toh( msgLi );
+  msg->L.i = *(const s32*)&msgLi;
   offset += 4;
       
   if (offset + 1 > len) { return false; }
@@ -720,7 +710,9 @@ static inline bool sbp_unpack_sbp_msg_tracking_state_detailed_dep_a_t(const u8 *
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->doppler, buf + offset, 4);
-  msg->doppler = le32toh( msg->doppler );
+  u32 msgdoppler = *(const u32*)&msg->doppler;
+  msgdoppler = le32toh( msgdoppler );
+  msg->doppler = *(const s32*)&msgdoppler;
   offset += 4;
       
   if (offset + 2 > len) { return false; }
@@ -735,12 +727,16 @@ static inline bool sbp_unpack_sbp_msg_tracking_state_detailed_dep_a_t(const u8 *
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->clock_offset, buf + offset, 2);
-  msg->clock_offset = le16toh( msg->clock_offset );
+  u16 msgclock_offset = *(const u16*)&msg->clock_offset;
+  msgclock_offset = le16toh( msgclock_offset );
+  msg->clock_offset = *(const s16*)&msgclock_offset;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->clock_drift, buf + offset, 2);
-  msg->clock_drift = le16toh( msg->clock_drift );
+  u16 msgclock_drift = *(const u16*)&msg->clock_drift;
+  msgclock_drift = le16toh( msgclock_drift );
+  msg->clock_drift = *(const s16*)&msgclock_drift;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
@@ -1270,40 +1266,34 @@ static inline bool sbp_pack_sbp_msg_tracking_state_detailed_dep_t(u8 *buf, size_
   
         
   if (offset + 8 > len) { return false; }
-  u64 msgrecv_time = msg->recv_time;
-  msgrecv_time = htole64( msgrecv_time );
+  u64 msgrecv_time = htole64( msg->recv_time );
   memcpy(buf + offset, & msgrecv_time , 8);
   offset += 8;
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgtottow = msg->tot.tow;
-  msgtottow = htole32( msgtottow );
+  u32 msgtottow = htole32( msg->tot.tow );
   memcpy(buf + offset, & msgtottow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgtotwn = msg->tot.wn;
-  msgtotwn = htole16( msgtotwn );
+  u16 msgtotwn = htole16( msg->tot.wn );
   memcpy(buf + offset, & msgtotwn , 2);
   offset += 2;
         
   if (offset + 4 > len) { return false; }
-  u32 msgP = msg->P;
-  msgP = htole32( msgP );
+  u32 msgP = htole32( msg->P );
   memcpy(buf + offset, & msgP , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgP_std = msg->P_std;
-  msgP_std = htole16( msgP_std );
+  u16 msgP_std = htole16( msg->P_std );
   memcpy(buf + offset, & msgP_std , 2);
   offset += 2;
 				
         
   if (offset + 4 > len) { return false; }
-  s32 msgLi = msg->L.i;
-  msgLi = htole32( msgLi );
+  u32 msgLi = htole32( *(const u32*)&msg->L.i );
   memcpy(buf + offset, & msgLi , 4);
   offset += 4;
         
@@ -1318,15 +1308,13 @@ static inline bool sbp_pack_sbp_msg_tracking_state_detailed_dep_t(u8 *buf, size_
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msglock = msg->lock;
-  msglock = htole16( msglock );
+  u16 msglock = htole16( msg->lock );
   memcpy(buf + offset, & msglock , 2);
   offset += 2;
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgsidsat = msg->sid.sat;
-  msgsidsat = htole16( msgsidsat );
+  u16 msgsidsat = htole16( msg->sid.sat );
   memcpy(buf + offset, & msgsidsat , 2);
   offset += 2;
         
@@ -1341,38 +1329,32 @@ static inline bool sbp_pack_sbp_msg_tracking_state_detailed_dep_t(u8 *buf, size_
   offset += 1;
         
   if (offset + 4 > len) { return false; }
-  s32 msgdoppler = msg->doppler;
-  msgdoppler = htole32( msgdoppler );
+  u32 msgdoppler = htole32( *(const u32*)&msg->doppler );
   memcpy(buf + offset, & msgdoppler , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgdoppler_std = msg->doppler_std;
-  msgdoppler_std = htole16( msgdoppler_std );
+  u16 msgdoppler_std = htole16( msg->doppler_std );
   memcpy(buf + offset, & msgdoppler_std , 2);
   offset += 2;
         
   if (offset + 4 > len) { return false; }
-  u32 msguptime = msg->uptime;
-  msguptime = htole32( msguptime );
+  u32 msguptime = htole32( msg->uptime );
   memcpy(buf + offset, & msguptime , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  s16 msgclock_offset = msg->clock_offset;
-  msgclock_offset = htole16( msgclock_offset );
+  u16 msgclock_offset = htole16( *(const u16*)&msg->clock_offset );
   memcpy(buf + offset, & msgclock_offset , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  s16 msgclock_drift = msg->clock_drift;
-  msgclock_drift = htole16( msgclock_drift );
+  u16 msgclock_drift = htole16( *(const u16*)&msg->clock_drift );
   memcpy(buf + offset, & msgclock_drift , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcorr_spacing = msg->corr_spacing;
-  msgcorr_spacing = htole16( msgcorr_spacing );
+  u16 msgcorr_spacing = htole16( msg->corr_spacing );
   memcpy(buf + offset, & msgcorr_spacing , 2);
   offset += 2;
         
@@ -1450,7 +1432,9 @@ static inline bool sbp_unpack_sbp_msg_tracking_state_detailed_dep_t(const u8 *bu
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->L.i, buf + offset, 4);
-  msg->L.i = le32toh( msg->L.i );
+  u32 msgLi = *(const u32*)&msg->L.i;
+  msgLi = le32toh( msgLi );
+  msg->L.i = *(const s32*)&msgLi;
   offset += 4;
       
   if (offset + 1 > len) { return false; }
@@ -1482,7 +1466,9 @@ static inline bool sbp_unpack_sbp_msg_tracking_state_detailed_dep_t(const u8 *bu
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->doppler, buf + offset, 4);
-  msg->doppler = le32toh( msg->doppler );
+  u32 msgdoppler = *(const u32*)&msg->doppler;
+  msgdoppler = le32toh( msgdoppler );
+  msg->doppler = *(const s32*)&msgdoppler;
   offset += 4;
       
   if (offset + 2 > len) { return false; }
@@ -1497,12 +1483,16 @@ static inline bool sbp_unpack_sbp_msg_tracking_state_detailed_dep_t(const u8 *bu
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->clock_offset, buf + offset, 2);
-  msg->clock_offset = le16toh( msg->clock_offset );
+  u16 msgclock_offset = *(const u16*)&msg->clock_offset;
+  msgclock_offset = le16toh( msgclock_offset );
+  msg->clock_offset = *(const s16*)&msgclock_offset;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->clock_drift, buf + offset, 2);
-  msg->clock_drift = le16toh( msg->clock_drift );
+  u16 msgclock_drift = *(const u16*)&msg->clock_drift;
+  msgclock_drift = le16toh( msgclock_drift );
+  msg->clock_drift = *(const s16*)&msgclock_drift;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
@@ -2016,14 +2006,12 @@ static inline bool sbp_pack_sbp_msg_tracking_iq_t(u8 *buf, size_t len, const sbp
 				
         
   if (offset + 2 > len) { return false; }
-  s16 msgcorrsmsgcorrs_idxI = msg->corrs[msgcorrs_idx].I;
-  msgcorrsmsgcorrs_idxI = htole16( msgcorrsmsgcorrs_idxI );
+  u16 msgcorrsmsgcorrs_idxI = htole16( *(const u16*)&msg->corrs[msgcorrs_idx].I );
   memcpy(buf + offset, & msgcorrsmsgcorrs_idxI , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  s16 msgcorrsmsgcorrs_idxQ = msg->corrs[msgcorrs_idx].Q;
-  msgcorrsmsgcorrs_idxQ = htole16( msgcorrsmsgcorrs_idxQ );
+  u16 msgcorrsmsgcorrs_idxQ = htole16( *(const u16*)&msg->corrs[msgcorrs_idx].Q );
   memcpy(buf + offset, & msgcorrsmsgcorrs_idxQ , 2);
   offset += 2;
 			}
@@ -2056,12 +2044,16 @@ static inline bool sbp_unpack_sbp_msg_tracking_iq_t(const u8 *buf, size_t len, s
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->corrs[msgcorrs_idx].I, buf + offset, 2);
-  msg->corrs[msgcorrs_idx].I = le16toh( msg->corrs[msgcorrs_idx].I );
+  u16 msgcorrsmsgcorrs_idxI = *(const u16*)&msg->corrs[msgcorrs_idx].I;
+  msgcorrsmsgcorrs_idxI = le16toh( msgcorrsmsgcorrs_idxI );
+  msg->corrs[msgcorrs_idx].I = *(const s16*)&msgcorrsmsgcorrs_idxI;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->corrs[msgcorrs_idx].Q, buf + offset, 2);
-  msg->corrs[msgcorrs_idx].Q = le16toh( msg->corrs[msgcorrs_idx].Q );
+  u16 msgcorrsmsgcorrs_idxQ = *(const u16*)&msg->corrs[msgcorrs_idx].Q;
+  msgcorrsmsgcorrs_idxQ = le16toh( msgcorrsmsgcorrs_idxQ );
+  msg->corrs[msgcorrs_idx].Q = *(const s16*)&msgcorrsmsgcorrs_idxQ;
   offset += 2;
 		}
   return true;
@@ -2204,14 +2196,12 @@ static inline bool sbp_pack_sbp_msg_tracking_iq_dep_b_t(u8 *buf, size_t len, con
 				
         
   if (offset + 4 > len) { return false; }
-  s32 msgcorrsmsgcorrs_idxI = msg->corrs[msgcorrs_idx].I;
-  msgcorrsmsgcorrs_idxI = htole32( msgcorrsmsgcorrs_idxI );
+  u32 msgcorrsmsgcorrs_idxI = htole32( *(const u32*)&msg->corrs[msgcorrs_idx].I );
   memcpy(buf + offset, & msgcorrsmsgcorrs_idxI , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  s32 msgcorrsmsgcorrs_idxQ = msg->corrs[msgcorrs_idx].Q;
-  msgcorrsmsgcorrs_idxQ = htole32( msgcorrsmsgcorrs_idxQ );
+  u32 msgcorrsmsgcorrs_idxQ = htole32( *(const u32*)&msg->corrs[msgcorrs_idx].Q );
   memcpy(buf + offset, & msgcorrsmsgcorrs_idxQ , 4);
   offset += 4;
 			}
@@ -2244,12 +2234,16 @@ static inline bool sbp_unpack_sbp_msg_tracking_iq_dep_b_t(const u8 *buf, size_t 
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->corrs[msgcorrs_idx].I, buf + offset, 4);
-  msg->corrs[msgcorrs_idx].I = le32toh( msg->corrs[msgcorrs_idx].I );
+  u32 msgcorrsmsgcorrs_idxI = *(const u32*)&msg->corrs[msgcorrs_idx].I;
+  msgcorrsmsgcorrs_idxI = le32toh( msgcorrsmsgcorrs_idxI );
+  msg->corrs[msgcorrs_idx].I = *(const s32*)&msgcorrsmsgcorrs_idxI;
   offset += 4;
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->corrs[msgcorrs_idx].Q, buf + offset, 4);
-  msg->corrs[msgcorrs_idx].Q = le32toh( msg->corrs[msgcorrs_idx].Q );
+  u32 msgcorrsmsgcorrs_idxQ = *(const u32*)&msg->corrs[msgcorrs_idx].Q;
+  msgcorrsmsgcorrs_idxQ = le32toh( msgcorrsmsgcorrs_idxQ );
+  msg->corrs[msgcorrs_idx].Q = *(const s32*)&msgcorrsmsgcorrs_idxQ;
   offset += 4;
 		}
   return true;
@@ -2382,8 +2376,7 @@ static inline bool sbp_pack_sbp_msg_tracking_iq_dep_a_t(u8 *buf, size_t len, con
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgsidsat = msg->sid.sat;
-  msgsidsat = htole16( msgsidsat );
+  u16 msgsidsat = htole16( msg->sid.sat );
   memcpy(buf + offset, & msgsidsat , 2);
   offset += 2;
         
@@ -2401,14 +2394,12 @@ static inline bool sbp_pack_sbp_msg_tracking_iq_dep_a_t(u8 *buf, size_t len, con
 				
         
   if (offset + 4 > len) { return false; }
-  s32 msgcorrsmsgcorrs_idxI = msg->corrs[msgcorrs_idx].I;
-  msgcorrsmsgcorrs_idxI = htole32( msgcorrsmsgcorrs_idxI );
+  u32 msgcorrsmsgcorrs_idxI = htole32( *(const u32*)&msg->corrs[msgcorrs_idx].I );
   memcpy(buf + offset, & msgcorrsmsgcorrs_idxI , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  s32 msgcorrsmsgcorrs_idxQ = msg->corrs[msgcorrs_idx].Q;
-  msgcorrsmsgcorrs_idxQ = htole32( msgcorrsmsgcorrs_idxQ );
+  u32 msgcorrsmsgcorrs_idxQ = htole32( *(const u32*)&msg->corrs[msgcorrs_idx].Q );
   memcpy(buf + offset, & msgcorrsmsgcorrs_idxQ , 4);
   offset += 4;
 			}
@@ -2446,12 +2437,16 @@ static inline bool sbp_unpack_sbp_msg_tracking_iq_dep_a_t(const u8 *buf, size_t 
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->corrs[msgcorrs_idx].I, buf + offset, 4);
-  msg->corrs[msgcorrs_idx].I = le32toh( msg->corrs[msgcorrs_idx].I );
+  u32 msgcorrsmsgcorrs_idxI = *(const u32*)&msg->corrs[msgcorrs_idx].I;
+  msgcorrsmsgcorrs_idxI = le32toh( msgcorrsmsgcorrs_idxI );
+  msg->corrs[msgcorrs_idx].I = *(const s32*)&msgcorrsmsgcorrs_idxI;
   offset += 4;
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->corrs[msgcorrs_idx].Q, buf + offset, 4);
-  msg->corrs[msgcorrs_idx].Q = le32toh( msg->corrs[msgcorrs_idx].Q );
+  u32 msgcorrsmsgcorrs_idxQ = *(const u32*)&msg->corrs[msgcorrs_idx].Q;
+  msgcorrsmsgcorrs_idxQ = le32toh( msgcorrsmsgcorrs_idxQ );
+  msg->corrs[msgcorrs_idx].Q = *(const s32*)&msgcorrsmsgcorrs_idxQ;
   offset += 4;
 		}
   return true;
@@ -2731,8 +2726,7 @@ static inline bool sbp_pack_sbp_msg_tracking_state_dep_b_t(u8 *buf, size_t len, 
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgstatesmsgstates_idxsidsat = msg->states[msgstates_idx].sid.sat;
-  msgstatesmsgstates_idxsidsat = htole16( msgstatesmsgstates_idxsidsat );
+  u16 msgstatesmsgstates_idxsidsat = htole16( msg->states[msgstates_idx].sid.sat );
   memcpy(buf + offset, & msgstatesmsgstates_idxsidsat , 2);
   offset += 2;
         

@@ -132,8 +132,7 @@ static inline bool sbp_pack_sbp_msg_imu_raw_t(u8 *buf, size_t len, const sbp_msg
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgtow = msg->tow;
-  msgtow = htole32( msgtow );
+  u32 msgtow = htole32( msg->tow );
   memcpy(buf + offset, & msgtow , 4);
   offset += 4;
         
@@ -143,38 +142,32 @@ static inline bool sbp_pack_sbp_msg_imu_raw_t(u8 *buf, size_t len, const sbp_msg
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  s16 msgacc_x = msg->acc_x;
-  msgacc_x = htole16( msgacc_x );
+  u16 msgacc_x = htole16( *(const u16*)&msg->acc_x );
   memcpy(buf + offset, & msgacc_x , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  s16 msgacc_y = msg->acc_y;
-  msgacc_y = htole16( msgacc_y );
+  u16 msgacc_y = htole16( *(const u16*)&msg->acc_y );
   memcpy(buf + offset, & msgacc_y , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  s16 msgacc_z = msg->acc_z;
-  msgacc_z = htole16( msgacc_z );
+  u16 msgacc_z = htole16( *(const u16*)&msg->acc_z );
   memcpy(buf + offset, & msgacc_z , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  s16 msggyr_x = msg->gyr_x;
-  msggyr_x = htole16( msggyr_x );
+  u16 msggyr_x = htole16( *(const u16*)&msg->gyr_x );
   memcpy(buf + offset, & msggyr_x , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  s16 msggyr_y = msg->gyr_y;
-  msggyr_y = htole16( msggyr_y );
+  u16 msggyr_y = htole16( *(const u16*)&msg->gyr_y );
   memcpy(buf + offset, & msggyr_y , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  s16 msggyr_z = msg->gyr_z;
-  msggyr_z = htole16( msggyr_z );
+  u16 msggyr_z = htole16( *(const u16*)&msg->gyr_z );
   memcpy(buf + offset, & msggyr_z , 2);
   offset += 2;
   return true;
@@ -199,32 +192,44 @@ static inline bool sbp_unpack_sbp_msg_imu_raw_t(const u8 *buf, size_t len, sbp_m
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->acc_x, buf + offset, 2);
-  msg->acc_x = le16toh( msg->acc_x );
+  u16 msgacc_x = *(const u16*)&msg->acc_x;
+  msgacc_x = le16toh( msgacc_x );
+  msg->acc_x = *(const s16*)&msgacc_x;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->acc_y, buf + offset, 2);
-  msg->acc_y = le16toh( msg->acc_y );
+  u16 msgacc_y = *(const u16*)&msg->acc_y;
+  msgacc_y = le16toh( msgacc_y );
+  msg->acc_y = *(const s16*)&msgacc_y;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->acc_z, buf + offset, 2);
-  msg->acc_z = le16toh( msg->acc_z );
+  u16 msgacc_z = *(const u16*)&msg->acc_z;
+  msgacc_z = le16toh( msgacc_z );
+  msg->acc_z = *(const s16*)&msgacc_z;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->gyr_x, buf + offset, 2);
-  msg->gyr_x = le16toh( msg->gyr_x );
+  u16 msggyr_x = *(const u16*)&msg->gyr_x;
+  msggyr_x = le16toh( msggyr_x );
+  msg->gyr_x = *(const s16*)&msggyr_x;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->gyr_y, buf + offset, 2);
-  msg->gyr_y = le16toh( msg->gyr_y );
+  u16 msggyr_y = *(const u16*)&msg->gyr_y;
+  msggyr_y = le16toh( msggyr_y );
+  msg->gyr_y = *(const s16*)&msggyr_y;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->gyr_z, buf + offset, 2);
-  msg->gyr_z = le16toh( msg->gyr_z );
+  u16 msggyr_z = *(const u16*)&msg->gyr_z;
+  msggyr_z = le16toh( msggyr_z );
+  msg->gyr_z = *(const s16*)&msggyr_z;
   offset += 2;
   return true;
 }
@@ -329,8 +334,7 @@ static inline bool sbp_pack_sbp_msg_imu_aux_t(u8 *buf, size_t len, const sbp_msg
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  s16 msgtemp = msg->temp;
-  msgtemp = htole16( msgtemp );
+  u16 msgtemp = htole16( *(const u16*)&msg->temp );
   memcpy(buf + offset, & msgtemp , 2);
   offset += 2;
         
@@ -355,7 +359,9 @@ static inline bool sbp_unpack_sbp_msg_imu_aux_t(const u8 *buf, size_t len, sbp_m
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->temp, buf + offset, 2);
-  msg->temp = le16toh( msg->temp );
+  u16 msgtemp = *(const u16*)&msg->temp;
+  msgtemp = le16toh( msgtemp );
+  msg->temp = *(const s16*)&msgtemp;
   offset += 2;
       
   if (offset + 1 > len) { return false; }

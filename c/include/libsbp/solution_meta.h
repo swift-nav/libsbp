@@ -184,20 +184,17 @@ static inline bool sbp_pack_sbp_msg_soln_meta_dep_a_t(u8 *buf, size_t len, const
   
         
   if (offset + 2 > len) { return false; }
-  u16 msgpdop = msg->pdop;
-  msgpdop = htole16( msgpdop );
+  u16 msgpdop = htole16( msg->pdop );
   memcpy(buf + offset, & msgpdop , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msghdop = msg->hdop;
-  msghdop = htole16( msghdop );
+  u16 msghdop = htole16( msg->hdop );
   memcpy(buf + offset, & msghdop , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgvdop = msg->vdop;
-  msgvdop = htole16( msgvdop );
+  u16 msgvdop = htole16( msg->vdop );
   memcpy(buf + offset, & msgvdop , 2);
   offset += 2;
         
@@ -207,8 +204,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_dep_a_t(u8 *buf, size_t len, const
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgage_corrections = msg->age_corrections;
-  msgage_corrections = htole16( msgage_corrections );
+  u16 msgage_corrections = htole16( msg->age_corrections );
   memcpy(buf + offset, & msgage_corrections , 2);
   offset += 2;
         
@@ -218,14 +214,12 @@ static inline bool sbp_pack_sbp_msg_soln_meta_dep_a_t(u8 *buf, size_t len, const
   offset += 1;
         
   if (offset + 4 > len) { return false; }
-  u32 msglast_used_gnss_pos_tow = msg->last_used_gnss_pos_tow;
-  msglast_used_gnss_pos_tow = htole32( msglast_used_gnss_pos_tow );
+  u32 msglast_used_gnss_pos_tow = htole32( msg->last_used_gnss_pos_tow );
   memcpy(buf + offset, & msglast_used_gnss_pos_tow , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msglast_used_gnss_vel_tow = msg->last_used_gnss_vel_tow;
-  msglast_used_gnss_vel_tow = htole32( msglast_used_gnss_vel_tow );
+  u32 msglast_used_gnss_vel_tow = htole32( msg->last_used_gnss_vel_tow );
   memcpy(buf + offset, & msglast_used_gnss_vel_tow , 4);
   offset += 4;
 			for(size_t msgsol_in_idx = 0; msgsol_in_idx < (size_t)msg->n_sol_in; msgsol_in_idx++)
@@ -480,38 +474,32 @@ static inline bool sbp_pack_sbp_msg_soln_meta_t(u8 *buf, size_t len, const sbp_m
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgtow = msg->tow;
-  msgtow = htole32( msgtow );
+  u32 msgtow = htole32( msg->tow );
   memcpy(buf + offset, & msgtow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgpdop = msg->pdop;
-  msgpdop = htole16( msgpdop );
+  u16 msgpdop = htole16( msg->pdop );
   memcpy(buf + offset, & msgpdop , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msghdop = msg->hdop;
-  msghdop = htole16( msghdop );
+  u16 msghdop = htole16( msg->hdop );
   memcpy(buf + offset, & msghdop , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgvdop = msg->vdop;
-  msgvdop = htole16( msgvdop );
+  u16 msgvdop = htole16( msg->vdop );
   memcpy(buf + offset, & msgvdop , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgage_corrections = msg->age_corrections;
-  msgage_corrections = htole16( msgage_corrections );
+  u16 msgage_corrections = htole16( msg->age_corrections );
   memcpy(buf + offset, & msgage_corrections , 2);
   offset += 2;
         
   if (offset + 4 > len) { return false; }
-  u32 msgage_gnss = msg->age_gnss;
-  msgage_gnss = htole32( msgage_gnss );
+  u32 msgage_gnss = htole32( msg->age_gnss );
   memcpy(buf + offset, & msgage_gnss , 4);
   offset += 4;
 			for(size_t msgsol_in_idx = 0; msgsol_in_idx < (size_t)msg->n_sol_in; msgsol_in_idx++)

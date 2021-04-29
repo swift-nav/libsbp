@@ -75,8 +75,7 @@ static inline bool sbp_pack_sbp_msg_mag_raw_t(u8 *buf, size_t len, const sbp_msg
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgtow = msg->tow;
-  msgtow = htole32( msgtow );
+  u32 msgtow = htole32( msg->tow );
   memcpy(buf + offset, & msgtow , 4);
   offset += 4;
         
@@ -86,20 +85,17 @@ static inline bool sbp_pack_sbp_msg_mag_raw_t(u8 *buf, size_t len, const sbp_msg
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  s16 msgmag_x = msg->mag_x;
-  msgmag_x = htole16( msgmag_x );
+  u16 msgmag_x = htole16( *(const u16*)&msg->mag_x );
   memcpy(buf + offset, & msgmag_x , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  s16 msgmag_y = msg->mag_y;
-  msgmag_y = htole16( msgmag_y );
+  u16 msgmag_y = htole16( *(const u16*)&msg->mag_y );
   memcpy(buf + offset, & msgmag_y , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  s16 msgmag_z = msg->mag_z;
-  msgmag_z = htole16( msgmag_z );
+  u16 msgmag_z = htole16( *(const u16*)&msg->mag_z );
   memcpy(buf + offset, & msgmag_z , 2);
   offset += 2;
   return true;
@@ -124,17 +120,23 @@ static inline bool sbp_unpack_sbp_msg_mag_raw_t(const u8 *buf, size_t len, sbp_m
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->mag_x, buf + offset, 2);
-  msg->mag_x = le16toh( msg->mag_x );
+  u16 msgmag_x = *(const u16*)&msg->mag_x;
+  msgmag_x = le16toh( msgmag_x );
+  msg->mag_x = *(const s16*)&msgmag_x;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->mag_y, buf + offset, 2);
-  msg->mag_y = le16toh( msg->mag_y );
+  u16 msgmag_y = *(const u16*)&msg->mag_y;
+  msgmag_y = le16toh( msgmag_y );
+  msg->mag_y = *(const s16*)&msgmag_y;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->mag_z, buf + offset, 2);
-  msg->mag_z = le16toh( msg->mag_z );
+  u16 msgmag_z = *(const u16*)&msg->mag_z;
+  msgmag_z = le16toh( msgmag_z );
+  msg->mag_z = *(const s16*)&msgmag_z;
   offset += 2;
   return true;
 }

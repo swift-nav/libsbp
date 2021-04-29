@@ -337,20 +337,17 @@ static inline bool sbp_pack_sbp_msg_obs_t(u8 *buf, size_t len, const sbp_msg_obs
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgheaderttow = msg->header.t.tow;
-  msgheaderttow = htole32( msgheaderttow );
+  u32 msgheaderttow = htole32( msg->header.t.tow );
   memcpy(buf + offset, & msgheaderttow , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  s32 msgheadertns_residual = msg->header.t.ns_residual;
-  msgheadertns_residual = htole32( msgheadertns_residual );
+  u32 msgheadertns_residual = htole32( *(const u32*)&msg->header.t.ns_residual );
   memcpy(buf + offset, & msgheadertns_residual , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgheadertwn = msg->header.t.wn;
-  msgheadertwn = htole16( msgheadertwn );
+  u16 msgheadertwn = htole16( msg->header.t.wn );
   memcpy(buf + offset, & msgheadertwn , 2);
   offset += 2;
         
@@ -363,15 +360,13 @@ static inline bool sbp_pack_sbp_msg_obs_t(u8 *buf, size_t len, const sbp_msg_obs
 					
         
   if (offset + 4 > len) { return false; }
-  u32 msgobsmsgobs_idxP = msg->obs[msgobs_idx].P;
-  msgobsmsgobs_idxP = htole32( msgobsmsgobs_idxP );
+  u32 msgobsmsgobs_idxP = htole32( msg->obs[msgobs_idx].P );
   memcpy(buf + offset, & msgobsmsgobs_idxP , 4);
   offset += 4;
 				
         
   if (offset + 4 > len) { return false; }
-  s32 msgobsmsgobs_idxLi = msg->obs[msgobs_idx].L.i;
-  msgobsmsgobs_idxLi = htole32( msgobsmsgobs_idxLi );
+  u32 msgobsmsgobs_idxLi = htole32( *(const u32*)&msg->obs[msgobs_idx].L.i );
   memcpy(buf + offset, & msgobsmsgobs_idxLi , 4);
   offset += 4;
         
@@ -382,8 +377,7 @@ static inline bool sbp_pack_sbp_msg_obs_t(u8 *buf, size_t len, const sbp_msg_obs
 				
         
   if (offset + 2 > len) { return false; }
-  s16 msgobsmsgobs_idxDi = msg->obs[msgobs_idx].D.i;
-  msgobsmsgobs_idxDi = htole16( msgobsmsgobs_idxDi );
+  u16 msgobsmsgobs_idxDi = htole16( *(const u16*)&msg->obs[msgobs_idx].D.i );
   memcpy(buf + offset, & msgobsmsgobs_idxDi , 2);
   offset += 2;
         
@@ -438,7 +432,9 @@ static inline bool sbp_unpack_sbp_msg_obs_t(const u8 *buf, size_t len, sbp_msg_o
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->header.t.ns_residual, buf + offset, 4);
-  msg->header.t.ns_residual = le32toh( msg->header.t.ns_residual );
+  u32 msgheadertns_residual = *(const u32*)&msg->header.t.ns_residual;
+  msgheadertns_residual = le32toh( msgheadertns_residual );
+  msg->header.t.ns_residual = *(const s32*)&msgheadertns_residual;
   offset += 4;
       
   if (offset + 2 > len) { return false; }
@@ -465,7 +461,9 @@ static inline bool sbp_unpack_sbp_msg_obs_t(const u8 *buf, size_t len, sbp_msg_o
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->obs[msgobs_idx].L.i, buf + offset, 4);
-  msg->obs[msgobs_idx].L.i = le32toh( msg->obs[msgobs_idx].L.i );
+  u32 msgobsmsgobs_idxLi = *(const u32*)&msg->obs[msgobs_idx].L.i;
+  msgobsmsgobs_idxLi = le32toh( msgobsmsgobs_idxLi );
+  msg->obs[msgobs_idx].L.i = *(const s32*)&msgobsmsgobs_idxLi;
   offset += 4;
       
   if (offset + 1 > len) { return false; }
@@ -475,7 +473,9 @@ static inline bool sbp_unpack_sbp_msg_obs_t(const u8 *buf, size_t len, sbp_msg_o
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->obs[msgobs_idx].D.i, buf + offset, 2);
-  msg->obs[msgobs_idx].D.i = le16toh( msg->obs[msgobs_idx].D.i );
+  u16 msgobsmsgobs_idxDi = *(const u16*)&msg->obs[msgobs_idx].D.i;
+  msgobsmsgobs_idxDi = le16toh( msgobsmsgobs_idxDi );
+  msg->obs[msgobs_idx].D.i = *(const s16*)&msgobsmsgobs_idxDi;
   offset += 2;
       
   if (offset + 1 > len) { return false; }
@@ -1048,8 +1048,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_gps_dep_e_t(u8 *buf, size_t len, c
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommonsidsat = msg->common.sid.sat;
-  msgcommonsidsat = htole16( msgcommonsidsat );
+  u16 msgcommonsidsat = htole16( msg->common.sid.sat );
   memcpy(buf + offset, & msgcommonsidsat , 2);
   offset += 2;
         
@@ -1065,14 +1064,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_gps_dep_e_t(u8 *buf, size_t len, c
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommontoetow = msg->common.toe.tow;
-  msgcommontoetow = htole32( msgcommontoetow );
+  u32 msgcommontoetow = htole32( msg->common.toe.tow );
   memcpy(buf + offset, & msgcommontoetow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommontoewn = msg->common.toe.wn;
-  msgcommontoewn = htole16( msgcommontoewn );
+  u16 msgcommontoewn = htole16( msg->common.toe.wn );
   memcpy(buf + offset, & msgcommontoewn , 2);
   offset += 2;
         
@@ -1082,8 +1079,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_gps_dep_e_t(u8 *buf, size_t len, c
   offset += 8;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommonfit_interval = msg->common.fit_interval;
-  msgcommonfit_interval = htole32( msgcommonfit_interval );
+  u32 msgcommonfit_interval = htole32( msg->common.fit_interval );
   memcpy(buf + offset, & msgcommonfit_interval , 4);
   offset += 4;
         
@@ -1194,14 +1190,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_gps_dep_e_t(u8 *buf, size_t len, c
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgtoctow = msg->toc.tow;
-  msgtoctow = htole32( msgtoctow );
+  u32 msgtoctow = htole32( msg->toc.tow );
   memcpy(buf + offset, & msgtoctow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgtocwn = msg->toc.wn;
-  msgtocwn = htole16( msgtocwn );
+  u16 msgtocwn = htole16( msg->toc.wn );
   memcpy(buf + offset, & msgtocwn , 2);
   offset += 2;
         
@@ -1211,8 +1205,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_gps_dep_e_t(u8 *buf, size_t len, c
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgiodc = msg->iodc;
-  msgiodc = htole16( msgiodc );
+  u16 msgiodc = htole16( msg->iodc );
   memcpy(buf + offset, & msgiodc , 2);
   offset += 2;
   return true;
@@ -1729,14 +1722,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_gps_dep_f_t(u8 *buf, size_t len, c
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommontoetow = msg->common.toe.tow;
-  msgcommontoetow = htole32( msgcommontoetow );
+  u32 msgcommontoetow = htole32( msg->common.toe.tow );
   memcpy(buf + offset, & msgcommontoetow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommontoewn = msg->common.toe.wn;
-  msgcommontoewn = htole16( msgcommontoewn );
+  u16 msgcommontoewn = htole16( msg->common.toe.wn );
   memcpy(buf + offset, & msgcommontoewn , 2);
   offset += 2;
         
@@ -1746,8 +1737,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_gps_dep_f_t(u8 *buf, size_t len, c
   offset += 8;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommonfit_interval = msg->common.fit_interval;
-  msgcommonfit_interval = htole32( msgcommonfit_interval );
+  u32 msgcommonfit_interval = htole32( msg->common.fit_interval );
   memcpy(buf + offset, & msgcommonfit_interval , 4);
   offset += 4;
         
@@ -1858,14 +1848,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_gps_dep_f_t(u8 *buf, size_t len, c
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgtoctow = msg->toc.tow;
-  msgtoctow = htole32( msgtoctow );
+  u32 msgtoctow = htole32( msg->toc.tow );
   memcpy(buf + offset, & msgtoctow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgtocwn = msg->toc.wn;
-  msgtocwn = htole16( msgtocwn );
+  u16 msgtocwn = htole16( msg->toc.wn );
   memcpy(buf + offset, & msgtocwn , 2);
   offset += 2;
         
@@ -1875,8 +1863,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_gps_dep_f_t(u8 *buf, size_t len, c
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgiodc = msg->iodc;
-  msgiodc = htole16( msgiodc );
+  u16 msgiodc = htole16( msg->iodc );
   memcpy(buf + offset, & msgiodc , 2);
   offset += 2;
   return true;
@@ -2392,14 +2379,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_gps_t(u8 *buf, size_t len, const s
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommontoetow = msg->common.toe.tow;
-  msgcommontoetow = htole32( msgcommontoetow );
+  u32 msgcommontoetow = htole32( msg->common.toe.tow );
   memcpy(buf + offset, & msgcommontoetow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommontoewn = msg->common.toe.wn;
-  msgcommontoewn = htole16( msgcommontoewn );
+  u16 msgcommontoewn = htole16( msg->common.toe.wn );
   memcpy(buf + offset, & msgcommontoewn , 2);
   offset += 2;
         
@@ -2409,8 +2394,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_gps_t(u8 *buf, size_t len, const s
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommonfit_interval = msg->common.fit_interval;
-  msgcommonfit_interval = htole32( msgcommonfit_interval );
+  u32 msgcommonfit_interval = htole32( msg->common.fit_interval );
   memcpy(buf + offset, & msgcommonfit_interval , 4);
   offset += 4;
         
@@ -2521,14 +2505,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_gps_t(u8 *buf, size_t len, const s
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgtoctow = msg->toc.tow;
-  msgtoctow = htole32( msgtoctow );
+  u32 msgtoctow = htole32( msg->toc.tow );
   memcpy(buf + offset, & msgtoctow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgtocwn = msg->toc.wn;
-  msgtocwn = htole16( msgtocwn );
+  u16 msgtocwn = htole16( msg->toc.wn );
   memcpy(buf + offset, & msgtocwn , 2);
   offset += 2;
         
@@ -2538,8 +2520,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_gps_t(u8 *buf, size_t len, const s
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgiodc = msg->iodc;
-  msgiodc = htole16( msgiodc );
+  u16 msgiodc = htole16( msg->iodc );
   memcpy(buf + offset, & msgiodc , 2);
   offset += 2;
   return true;
@@ -3053,14 +3034,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_qzss_t(u8 *buf, size_t len, const 
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommontoetow = msg->common.toe.tow;
-  msgcommontoetow = htole32( msgcommontoetow );
+  u32 msgcommontoetow = htole32( msg->common.toe.tow );
   memcpy(buf + offset, & msgcommontoetow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommontoewn = msg->common.toe.wn;
-  msgcommontoewn = htole16( msgcommontoewn );
+  u16 msgcommontoewn = htole16( msg->common.toe.wn );
   memcpy(buf + offset, & msgcommontoewn , 2);
   offset += 2;
         
@@ -3070,8 +3049,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_qzss_t(u8 *buf, size_t len, const 
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommonfit_interval = msg->common.fit_interval;
-  msgcommonfit_interval = htole32( msgcommonfit_interval );
+  u32 msgcommonfit_interval = htole32( msg->common.fit_interval );
   memcpy(buf + offset, & msgcommonfit_interval , 4);
   offset += 4;
         
@@ -3182,14 +3160,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_qzss_t(u8 *buf, size_t len, const 
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgtoctow = msg->toc.tow;
-  msgtoctow = htole32( msgtoctow );
+  u32 msgtoctow = htole32( msg->toc.tow );
   memcpy(buf + offset, & msgtoctow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgtocwn = msg->toc.wn;
-  msgtocwn = htole16( msgtocwn );
+  u16 msgtocwn = htole16( msg->toc.wn );
   memcpy(buf + offset, & msgtocwn , 2);
   offset += 2;
         
@@ -3199,8 +3175,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_qzss_t(u8 *buf, size_t len, const 
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgiodc = msg->iodc;
-  msgiodc = htole16( msgiodc );
+  u16 msgiodc = htole16( msg->iodc );
   memcpy(buf + offset, & msgiodc , 2);
   offset += 2;
   return true;
@@ -3729,14 +3704,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_bds_t(u8 *buf, size_t len, const s
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommontoetow = msg->common.toe.tow;
-  msgcommontoetow = htole32( msgcommontoetow );
+  u32 msgcommontoetow = htole32( msg->common.toe.tow );
   memcpy(buf + offset, & msgcommontoetow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommontoewn = msg->common.toe.wn;
-  msgcommontoewn = htole16( msgcommontoewn );
+  u16 msgcommontoewn = htole16( msg->common.toe.wn );
   memcpy(buf + offset, & msgcommontoewn , 2);
   offset += 2;
         
@@ -3746,8 +3719,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_bds_t(u8 *buf, size_t len, const s
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommonfit_interval = msg->common.fit_interval;
-  msgcommonfit_interval = htole32( msgcommonfit_interval );
+  u32 msgcommonfit_interval = htole32( msg->common.fit_interval );
   memcpy(buf + offset, & msgcommonfit_interval , 4);
   offset += 4;
         
@@ -3863,14 +3835,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_bds_t(u8 *buf, size_t len, const s
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgtoctow = msg->toc.tow;
-  msgtoctow = htole32( msgtoctow );
+  u32 msgtoctow = htole32( msg->toc.tow );
   memcpy(buf + offset, & msgtoctow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgtocwn = msg->toc.wn;
-  msgtocwn = htole16( msgtocwn );
+  u16 msgtocwn = htole16( msg->toc.wn );
   memcpy(buf + offset, & msgtocwn , 2);
   offset += 2;
         
@@ -3880,8 +3850,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_bds_t(u8 *buf, size_t len, const s
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgiodc = msg->iodc;
-  msgiodc = htole16( msgiodc );
+  u16 msgiodc = htole16( msg->iodc );
   memcpy(buf + offset, & msgiodc , 2);
   offset += 2;
   return true;
@@ -4406,14 +4375,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_gal_dep_a_t(u8 *buf, size_t len, c
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommontoetow = msg->common.toe.tow;
-  msgcommontoetow = htole32( msgcommontoetow );
+  u32 msgcommontoetow = htole32( msg->common.toe.tow );
   memcpy(buf + offset, & msgcommontoetow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommontoewn = msg->common.toe.wn;
-  msgcommontoewn = htole16( msgcommontoewn );
+  u16 msgcommontoewn = htole16( msg->common.toe.wn );
   memcpy(buf + offset, & msgcommontoewn , 2);
   offset += 2;
         
@@ -4423,8 +4390,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_gal_dep_a_t(u8 *buf, size_t len, c
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommonfit_interval = msg->common.fit_interval;
-  msgcommonfit_interval = htole32( msgcommonfit_interval );
+  u32 msgcommonfit_interval = htole32( msg->common.fit_interval );
   memcpy(buf + offset, & msgcommonfit_interval , 4);
   offset += 4;
         
@@ -4540,26 +4506,22 @@ static inline bool sbp_pack_sbp_msg_ephemeris_gal_dep_a_t(u8 *buf, size_t len, c
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgtoctow = msg->toc.tow;
-  msgtoctow = htole32( msgtoctow );
+  u32 msgtoctow = htole32( msg->toc.tow );
   memcpy(buf + offset, & msgtoctow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgtocwn = msg->toc.wn;
-  msgtocwn = htole16( msgtocwn );
+  u16 msgtocwn = htole16( msg->toc.wn );
   memcpy(buf + offset, & msgtocwn , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgiode = msg->iode;
-  msgiode = htole16( msgiode );
+  u16 msgiode = htole16( msg->iode );
   memcpy(buf + offset, & msgiode , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgiodc = msg->iodc;
-  msgiodc = htole16( msgiodc );
+  u16 msgiodc = htole16( msg->iodc );
   memcpy(buf + offset, & msgiodc , 2);
   offset += 2;
   return true;
@@ -5095,14 +5057,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_gal_t(u8 *buf, size_t len, const s
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommontoetow = msg->common.toe.tow;
-  msgcommontoetow = htole32( msgcommontoetow );
+  u32 msgcommontoetow = htole32( msg->common.toe.tow );
   memcpy(buf + offset, & msgcommontoetow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommontoewn = msg->common.toe.wn;
-  msgcommontoewn = htole16( msgcommontoewn );
+  u16 msgcommontoewn = htole16( msg->common.toe.wn );
   memcpy(buf + offset, & msgcommontoewn , 2);
   offset += 2;
         
@@ -5112,8 +5072,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_gal_t(u8 *buf, size_t len, const s
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommonfit_interval = msg->common.fit_interval;
-  msgcommonfit_interval = htole32( msgcommonfit_interval );
+  u32 msgcommonfit_interval = htole32( msg->common.fit_interval );
   memcpy(buf + offset, & msgcommonfit_interval , 4);
   offset += 4;
         
@@ -5229,26 +5188,22 @@ static inline bool sbp_pack_sbp_msg_ephemeris_gal_t(u8 *buf, size_t len, const s
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgtoctow = msg->toc.tow;
-  msgtoctow = htole32( msgtoctow );
+  u32 msgtoctow = htole32( msg->toc.tow );
   memcpy(buf + offset, & msgtoctow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgtocwn = msg->toc.wn;
-  msgtocwn = htole16( msgtocwn );
+  u16 msgtocwn = htole16( msg->toc.wn );
   memcpy(buf + offset, & msgtocwn , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgiode = msg->iode;
-  msgiode = htole16( msgiode );
+  u16 msgiode = htole16( msg->iode );
   memcpy(buf + offset, & msgiode , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgiodc = msg->iodc;
-  msgiodc = htole16( msgiodc );
+  u16 msgiodc = htole16( msg->iodc );
   memcpy(buf + offset, & msgiodc , 2);
   offset += 2;
         
@@ -5616,8 +5571,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_sbas_dep_a_t(u8 *buf, size_t len, 
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommonsidsat = msg->common.sid.sat;
-  msgcommonsidsat = htole16( msgcommonsidsat );
+  u16 msgcommonsidsat = htole16( msg->common.sid.sat );
   memcpy(buf + offset, & msgcommonsidsat , 2);
   offset += 2;
         
@@ -5633,14 +5587,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_sbas_dep_a_t(u8 *buf, size_t len, 
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommontoetow = msg->common.toe.tow;
-  msgcommontoetow = htole32( msgcommontoetow );
+  u32 msgcommontoetow = htole32( msg->common.toe.tow );
   memcpy(buf + offset, & msgcommontoetow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommontoewn = msg->common.toe.wn;
-  msgcommontoewn = htole16( msgcommontoewn );
+  u16 msgcommontoewn = htole16( msg->common.toe.wn );
   memcpy(buf + offset, & msgcommontoewn , 2);
   offset += 2;
         
@@ -5650,8 +5602,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_sbas_dep_a_t(u8 *buf, size_t len, 
   offset += 8;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommonfit_interval = msg->common.fit_interval;
-  msgcommonfit_interval = htole32( msgcommonfit_interval );
+  u32 msgcommonfit_interval = htole32( msg->common.fit_interval );
   memcpy(buf + offset, & msgcommonfit_interval , 4);
   offset += 4;
         
@@ -5995,8 +5946,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_glo_dep_a_t(u8 *buf, size_t len, c
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommonsidsat = msg->common.sid.sat;
-  msgcommonsidsat = htole16( msgcommonsidsat );
+  u16 msgcommonsidsat = htole16( msg->common.sid.sat );
   memcpy(buf + offset, & msgcommonsidsat , 2);
   offset += 2;
         
@@ -6012,14 +5962,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_glo_dep_a_t(u8 *buf, size_t len, c
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommontoetow = msg->common.toe.tow;
-  msgcommontoetow = htole32( msgcommontoetow );
+  u32 msgcommontoetow = htole32( msg->common.toe.tow );
   memcpy(buf + offset, & msgcommontoetow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommontoewn = msg->common.toe.wn;
-  msgcommontoewn = htole16( msgcommontoewn );
+  u16 msgcommontoewn = htole16( msg->common.toe.wn );
   memcpy(buf + offset, & msgcommontoewn , 2);
   offset += 2;
         
@@ -6029,8 +5977,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_glo_dep_a_t(u8 *buf, size_t len, c
   offset += 8;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommonfit_interval = msg->common.fit_interval;
-  msgcommonfit_interval = htole32( msgcommonfit_interval );
+  u32 msgcommonfit_interval = htole32( msg->common.fit_interval );
   memcpy(buf + offset, & msgcommonfit_interval , 4);
   offset += 4;
         
@@ -6377,14 +6324,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_sbas_dep_b_t(u8 *buf, size_t len, 
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommontoetow = msg->common.toe.tow;
-  msgcommontoetow = htole32( msgcommontoetow );
+  u32 msgcommontoetow = htole32( msg->common.toe.tow );
   memcpy(buf + offset, & msgcommontoetow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommontoewn = msg->common.toe.wn;
-  msgcommontoewn = htole16( msgcommontoewn );
+  u16 msgcommontoewn = htole16( msg->common.toe.wn );
   memcpy(buf + offset, & msgcommontoewn , 2);
   offset += 2;
         
@@ -6394,8 +6339,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_sbas_dep_b_t(u8 *buf, size_t len, 
   offset += 8;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommonfit_interval = msg->common.fit_interval;
-  msgcommonfit_interval = htole32( msgcommonfit_interval );
+  u32 msgcommonfit_interval = htole32( msg->common.fit_interval );
   memcpy(buf + offset, & msgcommonfit_interval , 4);
   offset += 4;
         
@@ -6733,14 +6677,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_sbas_t(u8 *buf, size_t len, const 
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommontoetow = msg->common.toe.tow;
-  msgcommontoetow = htole32( msgcommontoetow );
+  u32 msgcommontoetow = htole32( msg->common.toe.tow );
   memcpy(buf + offset, & msgcommontoetow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommontoewn = msg->common.toe.wn;
-  msgcommontoewn = htole16( msgcommontoewn );
+  u16 msgcommontoewn = htole16( msg->common.toe.wn );
   memcpy(buf + offset, & msgcommontoewn , 2);
   offset += 2;
         
@@ -6750,8 +6692,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_sbas_t(u8 *buf, size_t len, const 
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommonfit_interval = msg->common.fit_interval;
-  msgcommonfit_interval = htole32( msgcommonfit_interval );
+  u32 msgcommonfit_interval = htole32( msg->common.fit_interval );
   memcpy(buf + offset, & msgcommonfit_interval , 4);
   offset += 4;
         
@@ -7096,14 +7037,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_glo_dep_b_t(u8 *buf, size_t len, c
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommontoetow = msg->common.toe.tow;
-  msgcommontoetow = htole32( msgcommontoetow );
+  u32 msgcommontoetow = htole32( msg->common.toe.tow );
   memcpy(buf + offset, & msgcommontoetow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommontoewn = msg->common.toe.wn;
-  msgcommontoewn = htole16( msgcommontoewn );
+  u16 msgcommontoewn = htole16( msg->common.toe.wn );
   memcpy(buf + offset, & msgcommontoewn , 2);
   offset += 2;
         
@@ -7113,8 +7052,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_glo_dep_b_t(u8 *buf, size_t len, c
   offset += 8;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommonfit_interval = msg->common.fit_interval;
-  msgcommonfit_interval = htole32( msgcommonfit_interval );
+  u32 msgcommonfit_interval = htole32( msg->common.fit_interval );
   memcpy(buf + offset, & msgcommonfit_interval , 4);
   offset += 4;
         
@@ -7475,14 +7413,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_glo_dep_c_t(u8 *buf, size_t len, c
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommontoetow = msg->common.toe.tow;
-  msgcommontoetow = htole32( msgcommontoetow );
+  u32 msgcommontoetow = htole32( msg->common.toe.tow );
   memcpy(buf + offset, & msgcommontoetow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommontoewn = msg->common.toe.wn;
-  msgcommontoewn = htole16( msgcommontoewn );
+  u16 msgcommontoewn = htole16( msg->common.toe.wn );
   memcpy(buf + offset, & msgcommontoewn , 2);
   offset += 2;
         
@@ -7492,8 +7428,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_glo_dep_c_t(u8 *buf, size_t len, c
   offset += 8;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommonfit_interval = msg->common.fit_interval;
-  msgcommonfit_interval = htole32( msgcommonfit_interval );
+  u32 msgcommonfit_interval = htole32( msg->common.fit_interval );
   memcpy(buf + offset, & msgcommonfit_interval , 4);
   offset += 4;
         
@@ -7877,14 +7812,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_glo_dep_d_t(u8 *buf, size_t len, c
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommontoetow = msg->common.toe.tow;
-  msgcommontoetow = htole32( msgcommontoetow );
+  u32 msgcommontoetow = htole32( msg->common.toe.tow );
   memcpy(buf + offset, & msgcommontoetow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommontoewn = msg->common.toe.wn;
-  msgcommontoewn = htole16( msgcommontoewn );
+  u16 msgcommontoewn = htole16( msg->common.toe.wn );
   memcpy(buf + offset, & msgcommontoewn , 2);
   offset += 2;
         
@@ -7894,8 +7827,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_glo_dep_d_t(u8 *buf, size_t len, c
   offset += 8;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommonfit_interval = msg->common.fit_interval;
-  msgcommonfit_interval = htole32( msgcommonfit_interval );
+  u32 msgcommonfit_interval = htole32( msg->common.fit_interval );
   memcpy(buf + offset, & msgcommonfit_interval , 4);
   offset += 4;
         
@@ -8292,14 +8224,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_glo_t(u8 *buf, size_t len, const s
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommontoetow = msg->common.toe.tow;
-  msgcommontoetow = htole32( msgcommontoetow );
+  u32 msgcommontoetow = htole32( msg->common.toe.tow );
   memcpy(buf + offset, & msgcommontoetow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommontoewn = msg->common.toe.wn;
-  msgcommontoewn = htole16( msgcommontoewn );
+  u16 msgcommontoewn = htole16( msg->common.toe.wn );
   memcpy(buf + offset, & msgcommontoewn , 2);
   offset += 2;
         
@@ -8309,8 +8239,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_glo_t(u8 *buf, size_t len, const s
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommonfit_interval = msg->common.fit_interval;
-  msgcommonfit_interval = htole32( msgcommonfit_interval );
+  u32 msgcommonfit_interval = htole32( msg->common.fit_interval );
   memcpy(buf + offset, & msgcommonfit_interval , 4);
   offset += 4;
         
@@ -8874,8 +8803,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_dep_d_t(u8 *buf, size_t len, const
   offset += 8;
         
   if (offset + 2 > len) { return false; }
-  u16 msgtoe_wn = msg->toe_wn;
-  msgtoe_wn = htole16( msgtoe_wn );
+  u16 msgtoe_wn = htole16( msg->toe_wn );
   memcpy(buf + offset, & msgtoe_wn , 2);
   offset += 2;
         
@@ -8885,8 +8813,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_dep_d_t(u8 *buf, size_t len, const
   offset += 8;
         
   if (offset + 2 > len) { return false; }
-  u16 msgtoc_wn = msg->toc_wn;
-  msgtoc_wn = htole16( msgtoc_wn );
+  u16 msgtoc_wn = htole16( msg->toc_wn );
   memcpy(buf + offset, & msgtoc_wn , 2);
   offset += 2;
         
@@ -8902,8 +8829,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_dep_d_t(u8 *buf, size_t len, const
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgsidsat = msg->sid.sat;
-  msgsidsat = htole16( msgsidsat );
+  u16 msgsidsat = htole16( msg->sid.sat );
   memcpy(buf + offset, & msgsidsat , 2);
   offset += 2;
         
@@ -8923,14 +8849,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_dep_d_t(u8 *buf, size_t len, const
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgiodc = msg->iodc;
-  msgiodc = htole16( msgiodc );
+  u16 msgiodc = htole16( msg->iodc );
   memcpy(buf + offset, & msgiodc , 2);
   offset += 2;
         
   if (offset + 4 > len) { return false; }
-  u32 msgreserved = msg->reserved;
-  msgreserved = htole32( msgreserved );
+  u32 msgreserved = htole32( msg->reserved );
   memcpy(buf + offset, & msgreserved , 4);
   offset += 4;
   return true;
@@ -9409,8 +9333,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_dep_a_t(u8 *buf, size_t len, const
   offset += 8;
         
   if (offset + 2 > len) { return false; }
-  u16 msgtoe_wn = msg->toe_wn;
-  msgtoe_wn = htole16( msgtoe_wn );
+  u16 msgtoe_wn = htole16( msg->toe_wn );
   memcpy(buf + offset, & msgtoe_wn , 2);
   offset += 2;
         
@@ -9420,8 +9343,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_dep_a_t(u8 *buf, size_t len, const
   offset += 8;
         
   if (offset + 2 > len) { return false; }
-  u16 msgtoc_wn = msg->toc_wn;
-  msgtoc_wn = htole16( msgtoc_wn );
+  u16 msgtoc_wn = htole16( msg->toc_wn );
   memcpy(buf + offset, & msgtoc_wn , 2);
   offset += 2;
         
@@ -9899,8 +9821,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_dep_b_t(u8 *buf, size_t len, const
   offset += 8;
         
   if (offset + 2 > len) { return false; }
-  u16 msgtoe_wn = msg->toe_wn;
-  msgtoe_wn = htole16( msgtoe_wn );
+  u16 msgtoe_wn = htole16( msg->toe_wn );
   memcpy(buf + offset, & msgtoe_wn , 2);
   offset += 2;
         
@@ -9910,8 +9831,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_dep_b_t(u8 *buf, size_t len, const
   offset += 8;
         
   if (offset + 2 > len) { return false; }
-  u16 msgtoc_wn = msg->toc_wn;
-  msgtoc_wn = htole16( msgtoc_wn );
+  u16 msgtoc_wn = htole16( msg->toc_wn );
   memcpy(buf + offset, & msgtoc_wn , 2);
   offset += 2;
         
@@ -10467,8 +10387,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_dep_c_t(u8 *buf, size_t len, const
   offset += 8;
         
   if (offset + 2 > len) { return false; }
-  u16 msgtoe_wn = msg->toe_wn;
-  msgtoe_wn = htole16( msgtoe_wn );
+  u16 msgtoe_wn = htole16( msg->toe_wn );
   memcpy(buf + offset, & msgtoe_wn , 2);
   offset += 2;
         
@@ -10478,8 +10397,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_dep_c_t(u8 *buf, size_t len, const
   offset += 8;
         
   if (offset + 2 > len) { return false; }
-  u16 msgtoc_wn = msg->toc_wn;
-  msgtoc_wn = htole16( msgtoc_wn );
+  u16 msgtoc_wn = htole16( msg->toc_wn );
   memcpy(buf + offset, & msgtoc_wn , 2);
   offset += 2;
         
@@ -10495,8 +10413,7 @@ static inline bool sbp_pack_sbp_msg_ephemeris_dep_c_t(u8 *buf, size_t len, const
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgsidsat = msg->sid.sat;
-  msgsidsat = htole16( msgsidsat );
+  u16 msgsidsat = htole16( msg->sid.sat );
   memcpy(buf + offset, & msgsidsat , 2);
   offset += 2;
         
@@ -10516,14 +10433,12 @@ static inline bool sbp_pack_sbp_msg_ephemeris_dep_c_t(u8 *buf, size_t len, const
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgiodc = msg->iodc;
-  msgiodc = htole16( msgiodc );
+  u16 msgiodc = htole16( msg->iodc );
   memcpy(buf + offset, & msgiodc , 2);
   offset += 2;
         
   if (offset + 4 > len) { return false; }
-  u32 msgreserved = msg->reserved;
-  msgreserved = htole32( msgreserved );
+  u32 msgreserved = htole32( msg->reserved );
   memcpy(buf + offset, & msgreserved , 4);
   offset += 4;
   return true;
@@ -10830,14 +10745,12 @@ static inline bool sbp_pack_sbp_msg_obs_dep_a_t(u8 *buf, size_t len, const sbp_m
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgheaderttow = msg->header.t.tow;
-  msgheaderttow = htole32( msgheaderttow );
+  u32 msgheaderttow = htole32( msg->header.t.tow );
   memcpy(buf + offset, & msgheaderttow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgheadertwn = msg->header.t.wn;
-  msgheadertwn = htole16( msgheadertwn );
+  u16 msgheadertwn = htole16( msg->header.t.wn );
   memcpy(buf + offset, & msgheadertwn , 2);
   offset += 2;
         
@@ -10850,15 +10763,13 @@ static inline bool sbp_pack_sbp_msg_obs_dep_a_t(u8 *buf, size_t len, const sbp_m
 					
         
   if (offset + 4 > len) { return false; }
-  u32 msgobsmsgobs_idxP = msg->obs[msgobs_idx].P;
-  msgobsmsgobs_idxP = htole32( msgobsmsgobs_idxP );
+  u32 msgobsmsgobs_idxP = htole32( msg->obs[msgobs_idx].P );
   memcpy(buf + offset, & msgobsmsgobs_idxP , 4);
   offset += 4;
 				
         
   if (offset + 4 > len) { return false; }
-  s32 msgobsmsgobs_idxLi = msg->obs[msgobs_idx].L.i;
-  msgobsmsgobs_idxLi = htole32( msgobsmsgobs_idxLi );
+  u32 msgobsmsgobs_idxLi = htole32( *(const u32*)&msg->obs[msgobs_idx].L.i );
   memcpy(buf + offset, & msgobsmsgobs_idxLi , 4);
   offset += 4;
         
@@ -10873,8 +10784,7 @@ static inline bool sbp_pack_sbp_msg_obs_dep_a_t(u8 *buf, size_t len, const sbp_m
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgobsmsgobs_idxlock = msg->obs[msgobs_idx].lock;
-  msgobsmsgobs_idxlock = htole16( msgobsmsgobs_idxlock );
+  u16 msgobsmsgobs_idxlock = htole16( msg->obs[msgobs_idx].lock );
   memcpy(buf + offset, & msgobsmsgobs_idxlock , 2);
   offset += 2;
         
@@ -10925,7 +10835,9 @@ static inline bool sbp_unpack_sbp_msg_obs_dep_a_t(const u8 *buf, size_t len, sbp
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->obs[msgobs_idx].L.i, buf + offset, 4);
-  msg->obs[msgobs_idx].L.i = le32toh( msg->obs[msgobs_idx].L.i );
+  u32 msgobsmsgobs_idxLi = *(const u32*)&msg->obs[msgobs_idx].L.i;
+  msgobsmsgobs_idxLi = le32toh( msgobsmsgobs_idxLi );
+  msg->obs[msgobs_idx].L.i = *(const s32*)&msgobsmsgobs_idxLi;
   offset += 4;
       
   if (offset + 1 > len) { return false; }
@@ -11163,14 +11075,12 @@ static inline bool sbp_pack_sbp_msg_obs_dep_b_t(u8 *buf, size_t len, const sbp_m
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgheaderttow = msg->header.t.tow;
-  msgheaderttow = htole32( msgheaderttow );
+  u32 msgheaderttow = htole32( msg->header.t.tow );
   memcpy(buf + offset, & msgheaderttow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgheadertwn = msg->header.t.wn;
-  msgheadertwn = htole16( msgheadertwn );
+  u16 msgheadertwn = htole16( msg->header.t.wn );
   memcpy(buf + offset, & msgheadertwn , 2);
   offset += 2;
         
@@ -11183,15 +11093,13 @@ static inline bool sbp_pack_sbp_msg_obs_dep_b_t(u8 *buf, size_t len, const sbp_m
 					
         
   if (offset + 4 > len) { return false; }
-  u32 msgobsmsgobs_idxP = msg->obs[msgobs_idx].P;
-  msgobsmsgobs_idxP = htole32( msgobsmsgobs_idxP );
+  u32 msgobsmsgobs_idxP = htole32( msg->obs[msgobs_idx].P );
   memcpy(buf + offset, & msgobsmsgobs_idxP , 4);
   offset += 4;
 				
         
   if (offset + 4 > len) { return false; }
-  s32 msgobsmsgobs_idxLi = msg->obs[msgobs_idx].L.i;
-  msgobsmsgobs_idxLi = htole32( msgobsmsgobs_idxLi );
+  u32 msgobsmsgobs_idxLi = htole32( *(const u32*)&msg->obs[msgobs_idx].L.i );
   memcpy(buf + offset, & msgobsmsgobs_idxLi , 4);
   offset += 4;
         
@@ -11206,15 +11114,13 @@ static inline bool sbp_pack_sbp_msg_obs_dep_b_t(u8 *buf, size_t len, const sbp_m
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgobsmsgobs_idxlock = msg->obs[msgobs_idx].lock;
-  msgobsmsgobs_idxlock = htole16( msgobsmsgobs_idxlock );
+  u16 msgobsmsgobs_idxlock = htole16( msg->obs[msgobs_idx].lock );
   memcpy(buf + offset, & msgobsmsgobs_idxlock , 2);
   offset += 2;
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgobsmsgobs_idxsidsat = msg->obs[msgobs_idx].sid.sat;
-  msgobsmsgobs_idxsidsat = htole16( msgobsmsgobs_idxsidsat );
+  u16 msgobsmsgobs_idxsidsat = htole16( msg->obs[msgobs_idx].sid.sat );
   memcpy(buf + offset, & msgobsmsgobs_idxsidsat , 2);
   offset += 2;
         
@@ -11270,7 +11176,9 @@ static inline bool sbp_unpack_sbp_msg_obs_dep_b_t(const u8 *buf, size_t len, sbp
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->obs[msgobs_idx].L.i, buf + offset, 4);
-  msg->obs[msgobs_idx].L.i = le32toh( msg->obs[msgobs_idx].L.i );
+  u32 msgobsmsgobs_idxLi = *(const u32*)&msg->obs[msgobs_idx].L.i;
+  msgobsmsgobs_idxLi = le32toh( msgobsmsgobs_idxLi );
+  msg->obs[msgobs_idx].L.i = *(const s32*)&msgobsmsgobs_idxLi;
   offset += 4;
       
   if (offset + 1 > len) { return false; }
@@ -11519,14 +11427,12 @@ static inline bool sbp_pack_sbp_msg_obs_dep_c_t(u8 *buf, size_t len, const sbp_m
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgheaderttow = msg->header.t.tow;
-  msgheaderttow = htole32( msgheaderttow );
+  u32 msgheaderttow = htole32( msg->header.t.tow );
   memcpy(buf + offset, & msgheaderttow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgheadertwn = msg->header.t.wn;
-  msgheadertwn = htole16( msgheadertwn );
+  u16 msgheadertwn = htole16( msg->header.t.wn );
   memcpy(buf + offset, & msgheadertwn , 2);
   offset += 2;
         
@@ -11539,15 +11445,13 @@ static inline bool sbp_pack_sbp_msg_obs_dep_c_t(u8 *buf, size_t len, const sbp_m
 					
         
   if (offset + 4 > len) { return false; }
-  u32 msgobsmsgobs_idxP = msg->obs[msgobs_idx].P;
-  msgobsmsgobs_idxP = htole32( msgobsmsgobs_idxP );
+  u32 msgobsmsgobs_idxP = htole32( msg->obs[msgobs_idx].P );
   memcpy(buf + offset, & msgobsmsgobs_idxP , 4);
   offset += 4;
 				
         
   if (offset + 4 > len) { return false; }
-  s32 msgobsmsgobs_idxLi = msg->obs[msgobs_idx].L.i;
-  msgobsmsgobs_idxLi = htole32( msgobsmsgobs_idxLi );
+  u32 msgobsmsgobs_idxLi = htole32( *(const u32*)&msg->obs[msgobs_idx].L.i );
   memcpy(buf + offset, & msgobsmsgobs_idxLi , 4);
   offset += 4;
         
@@ -11562,15 +11466,13 @@ static inline bool sbp_pack_sbp_msg_obs_dep_c_t(u8 *buf, size_t len, const sbp_m
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgobsmsgobs_idxlock = msg->obs[msgobs_idx].lock;
-  msgobsmsgobs_idxlock = htole16( msgobsmsgobs_idxlock );
+  u16 msgobsmsgobs_idxlock = htole16( msg->obs[msgobs_idx].lock );
   memcpy(buf + offset, & msgobsmsgobs_idxlock , 2);
   offset += 2;
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgobsmsgobs_idxsidsat = msg->obs[msgobs_idx].sid.sat;
-  msgobsmsgobs_idxsidsat = htole16( msgobsmsgobs_idxsidsat );
+  u16 msgobsmsgobs_idxsidsat = htole16( msg->obs[msgobs_idx].sid.sat );
   memcpy(buf + offset, & msgobsmsgobs_idxsidsat , 2);
   offset += 2;
         
@@ -11626,7 +11528,9 @@ static inline bool sbp_unpack_sbp_msg_obs_dep_c_t(const u8 *buf, size_t len, sbp
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->obs[msgobs_idx].L.i, buf + offset, 4);
-  msg->obs[msgobs_idx].L.i = le32toh( msg->obs[msgobs_idx].L.i );
+  u32 msgobsmsgobs_idxLi = *(const u32*)&msg->obs[msgobs_idx].L.i;
+  msgobsmsgobs_idxLi = le32toh( msgobsmsgobs_idxLi );
+  msg->obs[msgobs_idx].L.i = *(const s32*)&msgobsmsgobs_idxLi;
   offset += 4;
       
   if (offset + 1 > len) { return false; }
@@ -11755,14 +11659,12 @@ static inline bool sbp_pack_sbp_msg_iono_t(u8 *buf, size_t len, const sbp_msg_io
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgt_nmcttow = msg->t_nmct.tow;
-  msgt_nmcttow = htole32( msgt_nmcttow );
+  u32 msgt_nmcttow = htole32( msg->t_nmct.tow );
   memcpy(buf + offset, & msgt_nmcttow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgt_nmctwn = msg->t_nmct.wn;
-  msgt_nmctwn = htole16( msgt_nmctwn );
+  u16 msgt_nmctwn = htole16( msg->t_nmct.wn );
   memcpy(buf + offset, & msgt_nmctwn , 2);
   offset += 2;
         
@@ -11923,20 +11825,17 @@ static inline bool sbp_pack_sbp_msg_sv_configuration_gps_dep_t(u8 *buf, size_t l
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgt_nmcttow = msg->t_nmct.tow;
-  msgt_nmcttow = htole32( msgt_nmcttow );
+  u32 msgt_nmcttow = htole32( msg->t_nmct.tow );
   memcpy(buf + offset, & msgt_nmcttow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgt_nmctwn = msg->t_nmct.wn;
-  msgt_nmctwn = htole16( msgt_nmctwn );
+  u16 msgt_nmctwn = htole16( msg->t_nmct.wn );
   memcpy(buf + offset, & msgt_nmctwn , 2);
   offset += 2;
         
   if (offset + 4 > len) { return false; }
-  u32 msgl2c_mask = msg->l2c_mask;
-  msgl2c_mask = htole32( msgl2c_mask );
+  u32 msgl2c_mask = htole32( msg->l2c_mask );
   memcpy(buf + offset, & msgl2c_mask , 4);
   offset += 4;
   return true;
@@ -12152,105 +12051,88 @@ static inline bool sbp_pack_sbp_msg_gnss_capb_t(u8 *buf, size_t len, const sbp_m
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgt_nmcttow = msg->t_nmct.tow;
-  msgt_nmcttow = htole32( msgt_nmcttow );
+  u32 msgt_nmcttow = htole32( msg->t_nmct.tow );
   memcpy(buf + offset, & msgt_nmcttow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgt_nmctwn = msg->t_nmct.wn;
-  msgt_nmctwn = htole16( msgt_nmctwn );
+  u16 msgt_nmctwn = htole16( msg->t_nmct.wn );
   memcpy(buf + offset, & msgt_nmctwn , 2);
   offset += 2;
 				
         
   if (offset + 8 > len) { return false; }
-  u64 msggcgps_active = msg->gc.gps_active;
-  msggcgps_active = htole64( msggcgps_active );
+  u64 msggcgps_active = htole64( msg->gc.gps_active );
   memcpy(buf + offset, & msggcgps_active , 8);
   offset += 8;
         
   if (offset + 8 > len) { return false; }
-  u64 msggcgps_l2c = msg->gc.gps_l2c;
-  msggcgps_l2c = htole64( msggcgps_l2c );
+  u64 msggcgps_l2c = htole64( msg->gc.gps_l2c );
   memcpy(buf + offset, & msggcgps_l2c , 8);
   offset += 8;
         
   if (offset + 8 > len) { return false; }
-  u64 msggcgps_l5 = msg->gc.gps_l5;
-  msggcgps_l5 = htole64( msggcgps_l5 );
+  u64 msggcgps_l5 = htole64( msg->gc.gps_l5 );
   memcpy(buf + offset, & msggcgps_l5 , 8);
   offset += 8;
         
   if (offset + 4 > len) { return false; }
-  u32 msggcglo_active = msg->gc.glo_active;
-  msggcglo_active = htole32( msggcglo_active );
+  u32 msggcglo_active = htole32( msg->gc.glo_active );
   memcpy(buf + offset, & msggcglo_active , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msggcglo_l2of = msg->gc.glo_l2of;
-  msggcglo_l2of = htole32( msggcglo_l2of );
+  u32 msggcglo_l2of = htole32( msg->gc.glo_l2of );
   memcpy(buf + offset, & msggcglo_l2of , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  u32 msggcglo_l3 = msg->gc.glo_l3;
-  msggcglo_l3 = htole32( msggcglo_l3 );
+  u32 msggcglo_l3 = htole32( msg->gc.glo_l3 );
   memcpy(buf + offset, & msggcglo_l3 , 4);
   offset += 4;
         
   if (offset + 8 > len) { return false; }
-  u64 msggcsbas_active = msg->gc.sbas_active;
-  msggcsbas_active = htole64( msggcsbas_active );
+  u64 msggcsbas_active = htole64( msg->gc.sbas_active );
   memcpy(buf + offset, & msggcsbas_active , 8);
   offset += 8;
         
   if (offset + 8 > len) { return false; }
-  u64 msggcsbas_l5 = msg->gc.sbas_l5;
-  msggcsbas_l5 = htole64( msggcsbas_l5 );
+  u64 msggcsbas_l5 = htole64( msg->gc.sbas_l5 );
   memcpy(buf + offset, & msggcsbas_l5 , 8);
   offset += 8;
         
   if (offset + 8 > len) { return false; }
-  u64 msggcbds_active = msg->gc.bds_active;
-  msggcbds_active = htole64( msggcbds_active );
+  u64 msggcbds_active = htole64( msg->gc.bds_active );
   memcpy(buf + offset, & msggcbds_active , 8);
   offset += 8;
         
   if (offset + 8 > len) { return false; }
-  u64 msggcbds_d2nav = msg->gc.bds_d2nav;
-  msggcbds_d2nav = htole64( msggcbds_d2nav );
+  u64 msggcbds_d2nav = htole64( msg->gc.bds_d2nav );
   memcpy(buf + offset, & msggcbds_d2nav , 8);
   offset += 8;
         
   if (offset + 8 > len) { return false; }
-  u64 msggcbds_b2 = msg->gc.bds_b2;
-  msggcbds_b2 = htole64( msggcbds_b2 );
+  u64 msggcbds_b2 = htole64( msg->gc.bds_b2 );
   memcpy(buf + offset, & msggcbds_b2 , 8);
   offset += 8;
         
   if (offset + 8 > len) { return false; }
-  u64 msggcbds_b2a = msg->gc.bds_b2a;
-  msggcbds_b2a = htole64( msggcbds_b2a );
+  u64 msggcbds_b2a = htole64( msg->gc.bds_b2a );
   memcpy(buf + offset, & msggcbds_b2a , 8);
   offset += 8;
         
   if (offset + 4 > len) { return false; }
-  u32 msggcqzss_active = msg->gc.qzss_active;
-  msggcqzss_active = htole32( msggcqzss_active );
+  u32 msggcqzss_active = htole32( msg->gc.qzss_active );
   memcpy(buf + offset, & msggcqzss_active , 4);
   offset += 4;
         
   if (offset + 8 > len) { return false; }
-  u64 msggcgal_active = msg->gc.gal_active;
-  msggcgal_active = htole64( msggcgal_active );
+  u64 msggcgal_active = htole64( msg->gc.gal_active );
   memcpy(buf + offset, & msggcgal_active , 8);
   offset += 8;
         
   if (offset + 8 > len) { return false; }
-  u64 msggcgal_e5 = msg->gc.gal_e5;
-  msggcgal_e5 = htole64( msggcgal_e5 );
+  u64 msggcgal_e5 = htole64( msg->gc.gal_e5 );
   memcpy(buf + offset, & msggcgal_e5 , 8);
   offset += 8;
   return true;
@@ -12440,14 +12322,12 @@ static inline bool sbp_pack_sbp_msg_group_delay_dep_a_t(u8 *buf, size_t len, con
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgt_optow = msg->t_op.tow;
-  msgt_optow = htole32( msgt_optow );
+  u32 msgt_optow = htole32( msg->t_op.tow );
   memcpy(buf + offset, & msgt_optow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgt_opwn = msg->t_op.wn;
-  msgt_opwn = htole16( msgt_opwn );
+  u16 msgt_opwn = htole16( msg->t_op.wn );
   memcpy(buf + offset, & msgt_opwn , 2);
   offset += 2;
         
@@ -12462,20 +12342,17 @@ static inline bool sbp_pack_sbp_msg_group_delay_dep_a_t(u8 *buf, size_t len, con
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  s16 msgtgd = msg->tgd;
-  msgtgd = htole16( msgtgd );
+  u16 msgtgd = htole16( *(const u16*)&msg->tgd );
   memcpy(buf + offset, & msgtgd , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  s16 msgisc_l1ca = msg->isc_l1ca;
-  msgisc_l1ca = htole16( msgisc_l1ca );
+  u16 msgisc_l1ca = htole16( *(const u16*)&msg->isc_l1ca );
   memcpy(buf + offset, & msgisc_l1ca , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  s16 msgisc_l2c = msg->isc_l2c;
-  msgisc_l2c = htole16( msgisc_l2c );
+  u16 msgisc_l2c = htole16( *(const u16*)&msg->isc_l2c );
   memcpy(buf + offset, & msgisc_l2c , 2);
   offset += 2;
   return true;
@@ -12510,17 +12387,23 @@ static inline bool sbp_unpack_sbp_msg_group_delay_dep_a_t(const u8 *buf, size_t 
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->tgd, buf + offset, 2);
-  msg->tgd = le16toh( msg->tgd );
+  u16 msgtgd = *(const u16*)&msg->tgd;
+  msgtgd = le16toh( msgtgd );
+  msg->tgd = *(const s16*)&msgtgd;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->isc_l1ca, buf + offset, 2);
-  msg->isc_l1ca = le16toh( msg->isc_l1ca );
+  u16 msgisc_l1ca = *(const u16*)&msg->isc_l1ca;
+  msgisc_l1ca = le16toh( msgisc_l1ca );
+  msg->isc_l1ca = *(const s16*)&msgisc_l1ca;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->isc_l2c, buf + offset, 2);
-  msg->isc_l2c = le16toh( msg->isc_l2c );
+  u16 msgisc_l2c = *(const u16*)&msg->isc_l2c;
+  msgisc_l2c = le16toh( msgisc_l2c );
+  msg->isc_l2c = *(const s16*)&msgisc_l2c;
   offset += 2;
   return true;
 }
@@ -12661,21 +12544,18 @@ static inline bool sbp_pack_sbp_msg_group_delay_dep_b_t(u8 *buf, size_t len, con
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgt_optow = msg->t_op.tow;
-  msgt_optow = htole32( msgt_optow );
+  u32 msgt_optow = htole32( msg->t_op.tow );
   memcpy(buf + offset, & msgt_optow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgt_opwn = msg->t_op.wn;
-  msgt_opwn = htole16( msgt_opwn );
+  u16 msgt_opwn = htole16( msg->t_op.wn );
   memcpy(buf + offset, & msgt_opwn , 2);
   offset += 2;
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgsidsat = msg->sid.sat;
-  msgsidsat = htole16( msgsidsat );
+  u16 msgsidsat = htole16( msg->sid.sat );
   memcpy(buf + offset, & msgsidsat , 2);
   offset += 2;
         
@@ -12695,20 +12575,17 @@ static inline bool sbp_pack_sbp_msg_group_delay_dep_b_t(u8 *buf, size_t len, con
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  s16 msgtgd = msg->tgd;
-  msgtgd = htole16( msgtgd );
+  u16 msgtgd = htole16( *(const u16*)&msg->tgd );
   memcpy(buf + offset, & msgtgd , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  s16 msgisc_l1ca = msg->isc_l1ca;
-  msgisc_l1ca = htole16( msgisc_l1ca );
+  u16 msgisc_l1ca = htole16( *(const u16*)&msg->isc_l1ca );
   memcpy(buf + offset, & msgisc_l1ca , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  s16 msgisc_l2c = msg->isc_l2c;
-  msgisc_l2c = htole16( msgisc_l2c );
+  u16 msgisc_l2c = htole16( *(const u16*)&msg->isc_l2c );
   memcpy(buf + offset, & msgisc_l2c , 2);
   offset += 2;
   return true;
@@ -12753,17 +12630,23 @@ static inline bool sbp_unpack_sbp_msg_group_delay_dep_b_t(const u8 *buf, size_t 
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->tgd, buf + offset, 2);
-  msg->tgd = le16toh( msg->tgd );
+  u16 msgtgd = *(const u16*)&msg->tgd;
+  msgtgd = le16toh( msgtgd );
+  msg->tgd = *(const s16*)&msgtgd;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->isc_l1ca, buf + offset, 2);
-  msg->isc_l1ca = le16toh( msg->isc_l1ca );
+  u16 msgisc_l1ca = *(const u16*)&msg->isc_l1ca;
+  msgisc_l1ca = le16toh( msgisc_l1ca );
+  msg->isc_l1ca = *(const s16*)&msgisc_l1ca;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->isc_l2c, buf + offset, 2);
-  msg->isc_l2c = le16toh( msg->isc_l2c );
+  u16 msgisc_l2c = *(const u16*)&msg->isc_l2c;
+  msgisc_l2c = le16toh( msgisc_l2c );
+  msg->isc_l2c = *(const s16*)&msgisc_l2c;
   offset += 2;
   return true;
 }
@@ -12900,14 +12783,12 @@ static inline bool sbp_pack_sbp_msg_group_delay_t(u8 *buf, size_t len, const sbp
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgt_optow = msg->t_op.tow;
-  msgt_optow = htole32( msgt_optow );
+  u32 msgt_optow = htole32( msg->t_op.tow );
   memcpy(buf + offset, & msgt_optow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgt_opwn = msg->t_op.wn;
-  msgt_opwn = htole16( msgt_opwn );
+  u16 msgt_opwn = htole16( msg->t_op.wn );
   memcpy(buf + offset, & msgt_opwn , 2);
   offset += 2;
 				
@@ -12928,20 +12809,17 @@ static inline bool sbp_pack_sbp_msg_group_delay_t(u8 *buf, size_t len, const sbp
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  s16 msgtgd = msg->tgd;
-  msgtgd = htole16( msgtgd );
+  u16 msgtgd = htole16( *(const u16*)&msg->tgd );
   memcpy(buf + offset, & msgtgd , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  s16 msgisc_l1ca = msg->isc_l1ca;
-  msgisc_l1ca = htole16( msgisc_l1ca );
+  u16 msgisc_l1ca = htole16( *(const u16*)&msg->isc_l1ca );
   memcpy(buf + offset, & msgisc_l1ca , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  s16 msgisc_l2c = msg->isc_l2c;
-  msgisc_l2c = htole16( msgisc_l2c );
+  u16 msgisc_l2c = htole16( *(const u16*)&msg->isc_l2c );
   memcpy(buf + offset, & msgisc_l2c , 2);
   offset += 2;
   return true;
@@ -12981,17 +12859,23 @@ static inline bool sbp_unpack_sbp_msg_group_delay_t(const u8 *buf, size_t len, s
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->tgd, buf + offset, 2);
-  msg->tgd = le16toh( msg->tgd );
+  u16 msgtgd = *(const u16*)&msg->tgd;
+  msgtgd = le16toh( msgtgd );
+  msg->tgd = *(const s16*)&msgtgd;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->isc_l1ca, buf + offset, 2);
-  msg->isc_l1ca = le16toh( msg->isc_l1ca );
+  u16 msgisc_l1ca = *(const u16*)&msg->isc_l1ca;
+  msgisc_l1ca = le16toh( msgisc_l1ca );
+  msg->isc_l1ca = *(const s16*)&msgisc_l1ca;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->isc_l2c, buf + offset, 2);
-  msg->isc_l2c = le16toh( msg->isc_l2c );
+  u16 msgisc_l2c = *(const u16*)&msg->isc_l2c;
+  msgisc_l2c = le16toh( msgisc_l2c );
+  msg->isc_l2c = *(const s16*)&msgisc_l2c;
   offset += 2;
   return true;
 }
@@ -13241,8 +13125,7 @@ static inline bool sbp_pack_sbp_msg_almanac_gps_dep_t(u8 *buf, size_t len, const
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommonsidsat = msg->common.sid.sat;
-  msgcommonsidsat = htole16( msgcommonsidsat );
+  u16 msgcommonsidsat = htole16( msg->common.sid.sat );
   memcpy(buf + offset, & msgcommonsidsat , 2);
   offset += 2;
         
@@ -13258,14 +13141,12 @@ static inline bool sbp_pack_sbp_msg_almanac_gps_dep_t(u8 *buf, size_t len, const
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommontoatow = msg->common.toa.tow;
-  msgcommontoatow = htole32( msgcommontoatow );
+  u32 msgcommontoatow = htole32( msg->common.toa.tow );
   memcpy(buf + offset, & msgcommontoatow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommontoawn = msg->common.toa.wn;
-  msgcommontoawn = htole16( msgcommontoawn );
+  u16 msgcommontoawn = htole16( msg->common.toa.wn );
   memcpy(buf + offset, & msgcommontoawn , 2);
   offset += 2;
         
@@ -13275,8 +13156,7 @@ static inline bool sbp_pack_sbp_msg_almanac_gps_dep_t(u8 *buf, size_t len, const
   offset += 8;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommonfit_interval = msg->common.fit_interval;
-  msgcommonfit_interval = htole32( msgcommonfit_interval );
+  u32 msgcommonfit_interval = htole32( msg->common.fit_interval );
   memcpy(buf + offset, & msgcommonfit_interval , 4);
   offset += 4;
         
@@ -13678,14 +13558,12 @@ static inline bool sbp_pack_sbp_msg_almanac_gps_t(u8 *buf, size_t len, const sbp
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommontoatow = msg->common.toa.tow;
-  msgcommontoatow = htole32( msgcommontoatow );
+  u32 msgcommontoatow = htole32( msg->common.toa.tow );
   memcpy(buf + offset, & msgcommontoatow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommontoawn = msg->common.toa.wn;
-  msgcommontoawn = htole16( msgcommontoawn );
+  u16 msgcommontoawn = htole16( msg->common.toa.wn );
   memcpy(buf + offset, & msgcommontoawn , 2);
   offset += 2;
         
@@ -13695,8 +13573,7 @@ static inline bool sbp_pack_sbp_msg_almanac_gps_t(u8 *buf, size_t len, const sbp
   offset += 8;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommonfit_interval = msg->common.fit_interval;
-  msgcommonfit_interval = htole32( msgcommonfit_interval );
+  u32 msgcommonfit_interval = htole32( msg->common.fit_interval );
   memcpy(buf + offset, & msgcommonfit_interval , 4);
   offset += 4;
         
@@ -14071,8 +13948,7 @@ static inline bool sbp_pack_sbp_msg_almanac_glo_dep_t(u8 *buf, size_t len, const
 				
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommonsidsat = msg->common.sid.sat;
-  msgcommonsidsat = htole16( msgcommonsidsat );
+  u16 msgcommonsidsat = htole16( msg->common.sid.sat );
   memcpy(buf + offset, & msgcommonsidsat , 2);
   offset += 2;
         
@@ -14088,14 +13964,12 @@ static inline bool sbp_pack_sbp_msg_almanac_glo_dep_t(u8 *buf, size_t len, const
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommontoatow = msg->common.toa.tow;
-  msgcommontoatow = htole32( msgcommontoatow );
+  u32 msgcommontoatow = htole32( msg->common.toa.tow );
   memcpy(buf + offset, & msgcommontoatow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommontoawn = msg->common.toa.wn;
-  msgcommontoawn = htole16( msgcommontoawn );
+  u16 msgcommontoawn = htole16( msg->common.toa.wn );
   memcpy(buf + offset, & msgcommontoawn , 2);
   offset += 2;
         
@@ -14105,8 +13979,7 @@ static inline bool sbp_pack_sbp_msg_almanac_glo_dep_t(u8 *buf, size_t len, const
   offset += 8;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommonfit_interval = msg->common.fit_interval;
-  msgcommonfit_interval = htole32( msgcommonfit_interval );
+  u32 msgcommonfit_interval = htole32( msg->common.fit_interval );
   memcpy(buf + offset, & msgcommonfit_interval , 4);
   offset += 4;
         
@@ -14475,14 +14348,12 @@ static inline bool sbp_pack_sbp_msg_almanac_glo_t(u8 *buf, size_t len, const sbp
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommontoatow = msg->common.toa.tow;
-  msgcommontoatow = htole32( msgcommontoatow );
+  u32 msgcommontoatow = htole32( msg->common.toa.tow );
   memcpy(buf + offset, & msgcommontoatow , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgcommontoawn = msg->common.toa.wn;
-  msgcommontoawn = htole16( msgcommontoawn );
+  u16 msgcommontoawn = htole16( msg->common.toa.wn );
   memcpy(buf + offset, & msgcommontoawn , 2);
   offset += 2;
         
@@ -14492,8 +14363,7 @@ static inline bool sbp_pack_sbp_msg_almanac_glo_t(u8 *buf, size_t len, const sbp
   offset += 8;
         
   if (offset + 4 > len) { return false; }
-  u32 msgcommonfit_interval = msg->common.fit_interval;
-  msgcommonfit_interval = htole32( msgcommonfit_interval );
+  u32 msgcommonfit_interval = htole32( msg->common.fit_interval );
   memcpy(buf + offset, & msgcommonfit_interval , 4);
   offset += 4;
         
@@ -14693,26 +14563,22 @@ static inline bool sbp_pack_sbp_msg_glo_biases_t(u8 *buf, size_t len, const sbp_
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  s16 msgl1ca_bias = msg->l1ca_bias;
-  msgl1ca_bias = htole16( msgl1ca_bias );
+  u16 msgl1ca_bias = htole16( *(const u16*)&msg->l1ca_bias );
   memcpy(buf + offset, & msgl1ca_bias , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  s16 msgl1p_bias = msg->l1p_bias;
-  msgl1p_bias = htole16( msgl1p_bias );
+  u16 msgl1p_bias = htole16( *(const u16*)&msg->l1p_bias );
   memcpy(buf + offset, & msgl1p_bias , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  s16 msgl2ca_bias = msg->l2ca_bias;
-  msgl2ca_bias = htole16( msgl2ca_bias );
+  u16 msgl2ca_bias = htole16( *(const u16*)&msg->l2ca_bias );
   memcpy(buf + offset, & msgl2ca_bias , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  s16 msgl2p_bias = msg->l2p_bias;
-  msgl2p_bias = htole16( msgl2p_bias );
+  u16 msgl2p_bias = htole16( *(const u16*)&msg->l2p_bias );
   memcpy(buf + offset, & msgl2p_bias , 2);
   offset += 2;
   return true;
@@ -14732,22 +14598,30 @@ static inline bool sbp_unpack_sbp_msg_glo_biases_t(const u8 *buf, size_t len, sb
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->l1ca_bias, buf + offset, 2);
-  msg->l1ca_bias = le16toh( msg->l1ca_bias );
+  u16 msgl1ca_bias = *(const u16*)&msg->l1ca_bias;
+  msgl1ca_bias = le16toh( msgl1ca_bias );
+  msg->l1ca_bias = *(const s16*)&msgl1ca_bias;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->l1p_bias, buf + offset, 2);
-  msg->l1p_bias = le16toh( msg->l1p_bias );
+  u16 msgl1p_bias = *(const u16*)&msg->l1p_bias;
+  msgl1p_bias = le16toh( msgl1p_bias );
+  msg->l1p_bias = *(const s16*)&msgl1p_bias;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->l2ca_bias, buf + offset, 2);
-  msg->l2ca_bias = le16toh( msg->l2ca_bias );
+  u16 msgl2ca_bias = *(const u16*)&msg->l2ca_bias;
+  msgl2ca_bias = le16toh( msgl2ca_bias );
+  msg->l2ca_bias = *(const s16*)&msgl2ca_bias;
   offset += 2;
       
   if (offset + 2 > len) { return false; }
   memcpy(&msg->l2p_bias, buf + offset, 2);
-  msg->l2p_bias = le16toh( msg->l2p_bias );
+  u16 msgl2p_bias = *(const u16*)&msg->l2p_bias;
+  msgl2p_bias = le16toh( msgl2p_bias );
+  msg->l2p_bias = *(const s16*)&msgl2p_bias;
   offset += 2;
   return true;
 }
@@ -15236,20 +15110,17 @@ static inline bool sbp_pack_sbp_msg_osr_t(u8 *buf, size_t len, const sbp_msg_osr
 				
         
   if (offset + 4 > len) { return false; }
-  u32 msgheaderttow = msg->header.t.tow;
-  msgheaderttow = htole32( msgheaderttow );
+  u32 msgheaderttow = htole32( msg->header.t.tow );
   memcpy(buf + offset, & msgheaderttow , 4);
   offset += 4;
         
   if (offset + 4 > len) { return false; }
-  s32 msgheadertns_residual = msg->header.t.ns_residual;
-  msgheadertns_residual = htole32( msgheadertns_residual );
+  u32 msgheadertns_residual = htole32( *(const u32*)&msg->header.t.ns_residual );
   memcpy(buf + offset, & msgheadertns_residual , 4);
   offset += 4;
         
   if (offset + 2 > len) { return false; }
-  u16 msgheadertwn = msg->header.t.wn;
-  msgheadertwn = htole16( msgheadertwn );
+  u16 msgheadertwn = htole16( msg->header.t.wn );
   memcpy(buf + offset, & msgheadertwn , 2);
   offset += 2;
         
@@ -15262,15 +15133,13 @@ static inline bool sbp_pack_sbp_msg_osr_t(u8 *buf, size_t len, const sbp_msg_osr
 					
         
   if (offset + 4 > len) { return false; }
-  u32 msgobsmsgobs_idxP = msg->obs[msgobs_idx].P;
-  msgobsmsgobs_idxP = htole32( msgobsmsgobs_idxP );
+  u32 msgobsmsgobs_idxP = htole32( msg->obs[msgobs_idx].P );
   memcpy(buf + offset, & msgobsmsgobs_idxP , 4);
   offset += 4;
 				
         
   if (offset + 4 > len) { return false; }
-  s32 msgobsmsgobs_idxLi = msg->obs[msgobs_idx].L.i;
-  msgobsmsgobs_idxLi = htole32( msgobsmsgobs_idxLi );
+  u32 msgobsmsgobs_idxLi = htole32( *(const u32*)&msg->obs[msgobs_idx].L.i );
   memcpy(buf + offset, & msgobsmsgobs_idxLi , 4);
   offset += 4;
         
@@ -15301,20 +15170,17 @@ static inline bool sbp_pack_sbp_msg_osr_t(u8 *buf, size_t len, const sbp_msg_osr
   offset += 1;
         
   if (offset + 2 > len) { return false; }
-  u16 msgobsmsgobs_idxiono_std = msg->obs[msgobs_idx].iono_std;
-  msgobsmsgobs_idxiono_std = htole16( msgobsmsgobs_idxiono_std );
+  u16 msgobsmsgobs_idxiono_std = htole16( msg->obs[msgobs_idx].iono_std );
   memcpy(buf + offset, & msgobsmsgobs_idxiono_std , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgobsmsgobs_idxtropo_std = msg->obs[msgobs_idx].tropo_std;
-  msgobsmsgobs_idxtropo_std = htole16( msgobsmsgobs_idxtropo_std );
+  u16 msgobsmsgobs_idxtropo_std = htole16( msg->obs[msgobs_idx].tropo_std );
   memcpy(buf + offset, & msgobsmsgobs_idxtropo_std , 2);
   offset += 2;
         
   if (offset + 2 > len) { return false; }
-  u16 msgobsmsgobs_idxrange_std = msg->obs[msgobs_idx].range_std;
-  msgobsmsgobs_idxrange_std = htole16( msgobsmsgobs_idxrange_std );
+  u16 msgobsmsgobs_idxrange_std = htole16( msg->obs[msgobs_idx].range_std );
   memcpy(buf + offset, & msgobsmsgobs_idxrange_std , 2);
   offset += 2;
 			}
@@ -15338,7 +15204,9 @@ static inline bool sbp_unpack_sbp_msg_osr_t(const u8 *buf, size_t len, sbp_msg_o
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->header.t.ns_residual, buf + offset, 4);
-  msg->header.t.ns_residual = le32toh( msg->header.t.ns_residual );
+  u32 msgheadertns_residual = *(const u32*)&msg->header.t.ns_residual;
+  msgheadertns_residual = le32toh( msgheadertns_residual );
+  msg->header.t.ns_residual = *(const s32*)&msgheadertns_residual;
   offset += 4;
       
   if (offset + 2 > len) { return false; }
@@ -15365,7 +15233,9 @@ static inline bool sbp_unpack_sbp_msg_osr_t(const u8 *buf, size_t len, sbp_msg_o
       
   if (offset + 4 > len) { return false; }
   memcpy(&msg->obs[msgobs_idx].L.i, buf + offset, 4);
-  msg->obs[msgobs_idx].L.i = le32toh( msg->obs[msgobs_idx].L.i );
+  u32 msgobsmsgobs_idxLi = *(const u32*)&msg->obs[msgobs_idx].L.i;
+  msgobsmsgobs_idxLi = le32toh( msgobsmsgobs_idxLi );
+  msg->obs[msgobs_idx].L.i = *(const s32*)&msgobsmsgobs_idxLi;
   offset += 4;
       
   if (offset + 1 > len) { return false; }

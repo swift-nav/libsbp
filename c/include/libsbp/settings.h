@@ -339,8 +339,7 @@ static inline bool sbp_pack_sbp_msg_settings_read_by_index_req_t(u8 *buf, size_t
   
         
   if (offset + 2 > len) { return false; }
-  u16 msgindex = msg->index;
-  msgindex = htole16( msgindex );
+  u16 msgindex = htole16( msg->index );
   memcpy(buf + offset, & msgindex , 2);
   offset += 2;
   return true;
@@ -414,8 +413,7 @@ static inline bool sbp_pack_sbp_msg_settings_read_by_index_resp_t(u8 *buf, size_
   
         
   if (offset + 2 > len) { return false; }
-  u16 msgindex = msg->index;
-  msgindex = htole16( msgindex );
+  u16 msgindex = htole16( msg->index );
   memcpy(buf + offset, & msgindex , 2);
   offset += 2;
       if (offset + sbp_strlen( msg->setting, "3-4-section") > len) { return false; }

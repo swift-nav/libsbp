@@ -115,8 +115,7 @@ static inline bool sbp_pack_sbp_msg_bootloader_handshake_resp_t(u8 *buf, size_t 
   
         
   if (offset + 4 > len) { return false; }
-  u32 msgflags = msg->flags;
-  msgflags = htole32( msgflags );
+  u32 msgflags = htole32( msg->flags );
   memcpy(buf + offset, & msgflags , 4);
   offset += 4;
       if (offset + sbp_strlen( msg->version, "none") > len) { return false; }
