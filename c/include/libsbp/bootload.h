@@ -114,7 +114,7 @@ typedef struct
   /**
    * Bootloader version number
    */
-  char version[251];
+  char version[252];
 } sbp_msg_bootloader_handshake_resp_t;
 
 static inline size_t sbp_packed_size_sbp_msg_bootloader_handshake_resp_t(const sbp_msg_bootloader_handshake_resp_t *msg)

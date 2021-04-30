@@ -45,7 +45,7 @@ typedef struct
   /**
    * Human-readable string
    */
-  char text[254];
+  char text[255];
 } sbp_msg_log_t;
 
 static inline size_t sbp_packed_size_sbp_msg_log_t(const sbp_msg_log_t *msg)
@@ -148,7 +148,7 @@ typedef struct
   /**
    * variable length wrapped binary message
    */
-  char fwd_payload[253];
+  char fwd_payload[254];
 } sbp_msg_fwd_t;
 
 static inline size_t sbp_packed_size_sbp_msg_fwd_t(const sbp_msg_fwd_t *msg)
@@ -257,7 +257,7 @@ typedef struct
   /**
    * Human-readable string
    */
-  char text[255];
+  char text[256];
 } sbp_msg_print_dep_t;
 
 static inline size_t sbp_packed_size_sbp_msg_print_dep_t(const sbp_msg_print_dep_t *msg)

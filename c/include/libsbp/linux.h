@@ -38,7 +38,7 @@ typedef struct
   /**
    * the command line (as much as it fits in the remaining packet)
    */
-  char cmdline[236];
+  char cmdline[237];
 } sbp_msg_linux_cpu_state_dep_a_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_cpu_state_dep_a_t(const sbp_msg_linux_cpu_state_dep_a_t *msg)
@@ -217,7 +217,7 @@ typedef struct
   /**
    * the command line (as much as it fits in the remaining packet)
    */
-  char cmdline[236];
+  char cmdline[237];
 } sbp_msg_linux_mem_state_dep_a_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_mem_state_dep_a_t(const sbp_msg_linux_mem_state_dep_a_t *msg)
@@ -611,7 +611,7 @@ typedef struct
   /**
    * the command line of the process in question
    */
-  char cmdline[246];
+  char cmdline[247];
 } sbp_msg_linux_process_socket_counts_t;
 
 static inline size_t
@@ -825,7 +825,7 @@ typedef struct
   /**
    * the command line of the process in question
    */
-  char cmdline[180];
+  char cmdline[181];
 } sbp_msg_linux_process_socket_queues_t;
 
 static inline size_t
@@ -1245,7 +1245,7 @@ typedef struct
   /**
    * the command line of the process in question
    */
-  char cmdline[250];
+  char cmdline[251];
 } sbp_msg_linux_process_fd_count_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_process_fd_count_t(const sbp_msg_linux_process_fd_count_t *msg)
@@ -1516,7 +1516,7 @@ typedef struct
   /**
    * the command line (as much as it fits in the remaining packet)
    */
-  char cmdline[231];
+  char cmdline[232];
 } sbp_msg_linux_cpu_state_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_cpu_state_t(const sbp_msg_linux_cpu_state_t *msg)
@@ -1755,7 +1755,7 @@ typedef struct
   /**
    * the command line (as much as it fits in the remaining packet)
    */
-  char cmdline[231];
+  char cmdline[232];
 } sbp_msg_linux_mem_state_t;
 
 static inline size_t sbp_packed_size_sbp_msg_linux_mem_state_t(const sbp_msg_linux_mem_state_t *msg)

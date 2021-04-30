@@ -198,6 +198,8 @@ class FieldItem(object):
             self.termination = field.options['termination'].value
             self.basetype = BasetypeItem(msg, package_specs, 'char', packed_offset)
             self.max_items = 255 - packed_offset
+            if self.termination == "none":
+                self.max_items = self.max_items + 1
             self.packed_size = 1
             self.options = field.options
         elif type_id == "array" and 'size' in field.options:

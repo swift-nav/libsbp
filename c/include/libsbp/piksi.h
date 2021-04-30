@@ -3001,7 +3001,7 @@ typedef struct
   /**
    * Line of standard output or standard error
    */
-  char line[251];
+  char line[252];
 } sbp_msg_command_output_t;
 
 static inline size_t sbp_packed_size_sbp_msg_command_output_t(const sbp_msg_command_output_t *msg)

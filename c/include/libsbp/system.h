@@ -206,7 +206,7 @@ typedef struct
   /**
    * Corrections source string
    */
-  char source[251];
+  char source[252];
 } sbp_msg_dgnss_status_t;
 
 static inline size_t sbp_packed_size_sbp_msg_dgnss_status_t(const sbp_msg_dgnss_status_t *msg)
@@ -1029,7 +1029,7 @@ typedef struct
   /**
    * Comma separated list of values as defined by the index
    */
-  char telemetry[254];
+  char telemetry[255];
 } sbp_msg_csac_telemetry_t;
 
 static inline size_t sbp_packed_size_sbp_msg_csac_telemetry_t(const sbp_msg_csac_telemetry_t *msg)
@@ -1124,7 +1124,7 @@ typedef struct
   /**
    * Comma separated list of telemetry field values
    */
-  char telemetry_labels[254];
+  char telemetry_labels[255];
 } sbp_msg_csac_telemetry_labels_t;
 
 static inline size_t sbp_packed_size_sbp_msg_csac_telemetry_labels_t(const sbp_msg_csac_telemetry_labels_t *msg)
