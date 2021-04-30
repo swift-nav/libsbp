@@ -5,7 +5,10 @@
 pub mod codec;
 pub mod messages;
 pub(crate) mod parser;
+pub mod sbp_tools;
 pub mod serialize;
+#[cfg(feature = "swiftnav-rs")]
+pub mod time;
 
 use std::{fmt, result};
 
@@ -125,23 +128,6 @@ pub enum Error {
     IoError(#[from] std::io::Error),
 }
 
-#[cfg(feature = "swiftnav-rs")]
-#[derive(Debug, thiserror::Error)]
-pub enum GpsTimeError {
-    #[error(transparent)]
-    InvalidGpsTime(#[from] swiftnav_rs::time::InvalidGpsTime),
-
-    #[error("Failed to convert week number to i16")]
-    TryFromIntError(#[from] std::num::TryFromIntError),
-}
-
-#[cfg(feature = "swiftnav-rs")]
-impl From<std::convert::Infallible> for GpsTimeError {
-    fn from(_: std::convert::Infallible) -> Self {
-        unreachable!()
-    }
-}
-
 pub(crate) fn write_frame<M: SBPMessage>(
     msg: &M,
     frame: &mut Vec<u8>,
@@ -178,6 +164,21 @@ mod swiftnav_rs_conversions {
     use std::convert::{TryFrom, TryInto};
 
     use crate::messages;
+
+    #[derive(Debug, thiserror::Error)]
+    pub enum GpsTimeError {
+        #[error(transparent)]
+        InvalidGpsTime(#[from] swiftnav_rs::time::InvalidGpsTime),
+
+        #[error("Failed to convert week number to i16")]
+        TryFromIntError(#[from] std::num::TryFromIntError),
+    }
+
+    impl From<std::convert::Infallible> for GpsTimeError {
+        fn from(_: std::convert::Infallible) -> Self {
+            unreachable!()
+        }
+    }
 
     impl TryFrom<messages::gnss::GPSTime> for swiftnav_rs::time::GpsTime {
         type Error = swiftnav_rs::time::InvalidGpsTime;

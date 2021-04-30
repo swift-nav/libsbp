@@ -29,7 +29,10 @@ let wn = match i16::try_from(self.wn) {
     Ok(wn) => wn,
     Err(e) => return Some(Err(e.into())),
 };
-Some(swiftnav_rs::time::GpsTime::new(wn, tow_s).map_err(Into::into))
+let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
+    Ok(gps_time) => gps_time,
+    Err(e) => return Some(Err(e.into())),
+};
 """
 GPS_TIME_HEADER = """\
 let tow_s = (self.header.t.tow as f64) / 1000.0;
@@ -37,18 +40,20 @@ let wn = match i16::try_from(self.header.t.wn) {
     Ok(wn) => wn,
     Err(e) => return Some(Err(e.into())),
 };
-Some(swiftnav_rs::time::GpsTime::new(wn, tow_s).map_err(Into::into))
+let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
+    Ok(gps_time) => gps_time,
+    Err(e) => return Some(Err(e.into())),
+};
 """
 GPS_TIME_ONLY_TOW = """\
 let tow_s = (self.tow as f64) / 1000.0;
-Some(swiftnav_rs::time::GpsTime::new(0, tow_s).map_err(Into::into))
+let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+    Ok(gps_time) => gps_time.tow(),
+    Err(e) => return Some(Err(e.into())),
+};
 """
-GPS_TIME_IMPL = """\
-#[cfg(feature = "swiftnav-rs")]
-fn gps_time(&self) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {{
-    {}
-}}
-"""
+
+BASE_TIME_MSGS = ["MSG_OBS", "MSG_OSR", "MSG_SSR"]
 
 import re
 def camel_case(s):
@@ -129,29 +134,51 @@ def parse_type(field):
     return "%s::parse(_buf)" % field.type_id
 
 def gps_time(msg, all_messages):
-  def time_aware_header(type_id):
-    for m in all_messages:
-      if m.identifier == type_id:
-        return any([f.identifier == "t" for f in m.fields])
-    return False
+    def time_aware_header(type_id):
+        for m in all_messages:
+            if m.identifier == type_id:
+                return any([f.identifier == "t" for f in m.fields])
+        return False
 
-  has_tow = False
-  has_wn = False
+    def gen_body():
+        header = False
+        tow = False
+        wn = False
 
-  for f in msg.fields:
-    if f.identifier == "header" and time_aware_header(f.type_id):
-      return GPS_TIME_IMPL.format(GPS_TIME_HEADER)
-    elif f.identifier == "tow":
-      has_tow = True
-    elif f.identifier == "wn":
-      has_wn = True
+        for f in msg.fields:
+            if f.identifier == "header" and time_aware_header(f.type_id):
+                header = True
+            elif f.identifier == "tow":
+                tow = True
+            elif f.identifier == "wn":
+                wn = True
 
-  if has_tow and has_wn:
-    return GPS_TIME_IMPL.format(GPS_TIME)
-  elif has_tow:
-    return GPS_TIME_IMPL.format(GPS_TIME_ONLY_TOW)
-  else:
-    return ''
+        if header:
+            return GPS_TIME_HEADER
+        elif tow and wn:
+            return GPS_TIME
+        elif tow:
+            return GPS_TIME_ONLY_TOW
+        else:
+            return None
+
+    def gen_ret():
+        name = "Base" if msg.identifier in BASE_TIME_MSGS else "Rover"
+        return f"Some(Ok(crate::time::MessageTime::{name}(gps_time.into())))"
+
+    body = gen_body()
+    if body is None:
+        return ""
+
+    ret = gen_ret()
+
+    return f"""\
+  #[cfg(feature = "swiftnav-rs")]
+  fn gps_time(&self) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {{
+      {body}
+      {ret}
+  }}
+  """
 
 JENV.filters['camel_case'] = camel_case
 JENV.filters['commentify'] = commentify

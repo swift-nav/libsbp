@@ -246,7 +246,9 @@ pub trait SBPMessage: SbpSerialize {
     fn to_frame(&self) -> std::result::Result<Vec<u8>, crate::FramerError>;
     fn write_frame(&self, buf: &mut Vec<u8>) -> std::result::Result<(), crate::FramerError>;
     #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(&self) -> Option<std::result::Result<GpsTime, crate::GpsTimeError>> {
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
         None
     }
 }
@@ -2707,7 +2709,9 @@ impl crate::SBPMessage for SBP {
     }
 
     #[cfg(feature = "swiftnav-rs")]
-    fn gps_time(&self) -> Option<std::result::Result<GpsTime, crate::GpsTimeError>> {
+    fn gps_time(
+        &self,
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
         match self {
             SBP::MsgPrintDep(msg) => msg.gps_time(),
             SBP::MsgTrackingStateDetailedDep(msg) => msg.gps_time(),

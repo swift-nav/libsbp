@@ -328,7 +328,7 @@ test-haskell:
 
 test-rust:
 	$(call announce-begin,"Running Rust tests")
-	cargo test --verbose --all-targets
+	cargo test --verbose --all-features --all-targets
 	$(call announce-begin,"Building Rust examples")
 	cargo build --examples --verbose --all-features --all-targets
 	$(call announce-end,"Finished running Rust tests")

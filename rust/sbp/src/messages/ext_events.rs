@@ -94,13 +94,18 @@ impl super::SBPMessage for MsgExtEvent {
     #[cfg(feature = "swiftnav-rs")]
     fn gps_time(
         &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
         let wn = match i16::try_from(self.wn) {
             Ok(wn) => wn,
             Err(e) => return Some(Err(e.into())),
         };
-        Some(swiftnav_rs::time::GpsTime::new(wn, tow_s).map_err(Into::into))
+        let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
+            Ok(gps_time) => gps_time,
+            Err(e) => return Some(Err(e.into())),
+        };
+
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 

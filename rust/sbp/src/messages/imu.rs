@@ -183,9 +183,14 @@ impl super::SBPMessage for MsgImuRaw {
     #[cfg(feature = "swiftnav-rs")]
     fn gps_time(
         &self,
-    ) -> Option<std::result::Result<swiftnav_rs::time::GpsTime, crate::GpsTimeError>> {
+    ) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {
         let tow_s = (self.tow as f64) / 1000.0;
-        Some(swiftnav_rs::time::GpsTime::new(0, tow_s).map_err(Into::into))
+        let gps_time = match crate::time::GpsTime::new(0, tow_s) {
+            Ok(gps_time) => gps_time.tow(),
+            Err(e) => return Some(Err(e.into())),
+        };
+
+        Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
 
