@@ -27,17 +27,14 @@
 
 SBP_PACK_START
 
-
 #define SBP_LOG_LOGGING_LEVEL_MASK (0x7)
 #define SBP_LOG_LOGGING_LEVEL_SHIFT (0u)
-#define SBP_LOG_LOGGING_LEVEL_GET(flags) \
-                             (((flags) >> SBP_LOG_LOGGING_LEVEL_SHIFT) \
-                             & SBP_LOG_LOGGING_LEVEL_MASK)
+#define SBP_LOG_LOGGING_LEVEL_GET(flags) (((flags) >> SBP_LOG_LOGGING_LEVEL_SHIFT) & SBP_LOG_LOGGING_LEVEL_MASK)
 #define SBP_LOG_LOGGING_LEVEL_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_LOG_LOGGING_LEVEL_MASK)) \
-                             << (SBP_LOG_LOGGING_LEVEL_SHIFT)));} while(0)
-                             
+  do \
+  { \
+    ((flags) |= (((val) & (SBP_LOG_LOGGING_LEVEL_MASK)) << (SBP_LOG_LOGGING_LEVEL_SHIFT))); \
+  } while (0)
 
 #define SBP_LOG_LOGGING_LEVEL_EMERG (0)
 #define SBP_LOG_LOGGING_LEVEL_ALERT (1)
@@ -53,67 +50,67 @@ SBP_PACK_START
  * device containing errors, warnings and informational messages at
  * ERROR, WARNING, DEBUG, INFO logging levels.
  */
-#define SBP_MSG_LOG       0x0401
-typedef struct SBP_ATTR_PACKED {
-  
-  /** 
-   * Logging level 
-   */
-  u8 level;   
-  
-  /** 
-   * Human-readable string 
-   */
-  char text[0]; 
-  
-} msg_log_t;
+#define SBP_MSG_LOG 0x0401
+typedef struct SBP_ATTR_PACKED
+{
 
+  /**
+   * Logging level
+   */
+  u8 level;
+
+  /**
+   * Human-readable string
+   */
+  char text[0];
+
+} msg_log_t;
 
 /** Wrapper for FWD a separate stream of information over SBP
  *
  * This message provides the ability to forward messages over SBP.  This may take the form
- * of wrapping up SBP messages received by Piksi for logging purposes or wrapping 
+ * of wrapping up SBP messages received by Piksi for logging purposes or wrapping
  * another protocol with SBP.
- * 
+ *
  * The source identifier indicates from what interface a forwarded stream derived.
  * The protocol identifier identifies what the expected protocol the forwarded msg contains.
  * Protocol 0 represents SBP and the remaining values are implementation defined.
  */
-#define SBP_MSG_FWD       0x0402
-typedef struct SBP_ATTR_PACKED {
-  
-  /** 
-   * source identifier 
+#define SBP_MSG_FWD 0x0402
+typedef struct SBP_ATTR_PACKED
+{
+
+  /**
+   * source identifier
    */
-  u8 source;        
-  
-  /** 
-   * protocol identifier 
+  u8 source;
+
+  /**
+   * protocol identifier
    */
-  u8 protocol;      
-  
-  /** 
-   * variable length wrapped binary message 
+  u8 protocol;
+
+  /**
+   * variable length wrapped binary message
    */
   char fwd_payload[0];
-  
-} msg_fwd_t;
 
+} msg_fwd_t;
 
 /** Deprecated
  *
-* Deprecated.
+ * Deprecated.
  */
 #define SBP_MSG_PRINT_DEP 0x0010
-typedef struct SBP_ATTR_PACKED {
-  
-  /** 
-   * Human-readable string 
+typedef struct SBP_ATTR_PACKED
+{
+
+  /**
+   * Human-readable string
    */
   char text[0];
-  
-} msg_print_dep_t;
 
+} msg_print_dep_t;
 
 /** \} */
 

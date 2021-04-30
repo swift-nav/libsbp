@@ -19,16 +19,15 @@
 #include <libsbp/cpp/message_traits.h>
 #include <libsbp/cpp/state.h>
 
-namespace sbp {
+namespace sbp
+{
 
 /**
  * A convenience type alias for class member functions that accept SBP message
  * callbacks
  */
-template <typename ClassT, typename ArgT>
-using CallbackMemFn = void (ClassT::*)(uint16_t, uint8_t, const ArgT &);
-template <typename ClassT, typename ArgT>
-using CallbackUnpackedFn = void (ClassT::*)(uint16_t, const ArgT &);
+template <typename ClassT, typename ArgT> using CallbackMemFn = void (ClassT::*)(uint16_t, uint8_t, const ArgT &);
+template <typename ClassT, typename ArgT> using CallbackUnpackedFn = void (ClassT::*)(uint16_t, const ArgT &);
 
 /**
  * A helper function for calling a C++ object member function from a libsbp
@@ -49,17 +48,17 @@ using CallbackUnpackedFn = void (ClassT::*)(uint16_t, const ArgT &);
  * @param context Pointer to an instance of `ClassT` to call `func` on
  */
 template <typename MsgT, typename ClassT, CallbackMemFn<ClassT, MsgT> func>
-inline void sbp_cb_passthrough(uint16_t sender_id, uint8_t len, uint8_t msg[],
-                               void *context) {
+inline void sbp_cb_passthrough(uint16_t sender_id, uint8_t len, uint8_t msg[], void *context)
+{
   assert(nullptr != context);
 
   auto instance = static_cast<ClassT *>(context);
-  auto val = reinterpret_cast<MsgT *>(msg);  // NOLINT
+  auto val = reinterpret_cast<MsgT *>(msg); // NOLINT
   ((*instance).*(func))(sender_id, len, *val);
 }
 template <typename MsgT, typename ClassT, CallbackUnpackedFn<ClassT, MsgT> func>
-inline void sbp_unpacked_cb_passthrough(uint16_t sender_id,
-                                        const sbp_msg_t *msg, void *context) {
+inline void sbp_unpacked_cb_passthrough(uint16_t sender_id, const sbp_msg_t *msg, void *context)
+{
   assert(nullptr != context);
 
   auto instance = static_cast<ClassT *>(context);
@@ -67,7 +66,8 @@ inline void sbp_unpacked_cb_passthrough(uint16_t sender_id,
   ((*instance).*(func))(sender_id, *val);
 }
 
-namespace details {
+namespace details
+{
 
 /**
  * Recursive interface type for defining the interface functions for
@@ -81,73 +81,79 @@ namespace details {
  * @tparam MsgType The type of SBP message to define an interface for
  * @tparam OtherTypes Other types to recursively define interfaces for
  */
-template <typename MsgType, typename... OtherTypes>
-class CallbackInterface : CallbackInterface<OtherTypes...> {
- public:
+template <typename MsgType, typename... OtherTypes> class CallbackInterface : CallbackInterface<OtherTypes...>
+{
+public:
   CallbackInterface() = default;
   ~CallbackInterface() override = default;
 
   using CallbackInterface<OtherTypes...>::handle_sbp_msg;
-  virtual void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                              const MsgType &msg) {
+  virtual void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const MsgType &msg)
+  {
     (void)sender_id;
     (void)message_length;
     (void)msg;
   }
-  virtual void handle_sbp_msg(uint16_t sender_id, const MsgType &msg) {
+  virtual void handle_sbp_msg(uint16_t sender_id, const MsgType &msg)
+  {
     (void)sender_id;
     (void)msg;
   }
 
- protected:
-  void register_callback(sbp_state_t *state, sbp_msg_callbacks_node_t nodes[]) {
-    sbp_register_callback(
-        state, sbp::MessageTraits<MsgType>::id,
-        &sbp_cb_passthrough<MsgType, CallbackInterface,
-                            &CallbackInterface::handle_sbp_msg>,
-        this, &nodes[0]);
+protected:
+  void register_callback(sbp_state_t *state, sbp_msg_callbacks_node_t nodes[])
+  {
+    sbp_register_callback(state,
+                          sbp::MessageTraits<MsgType>::id,
+                          &sbp_cb_passthrough<MsgType, CallbackInterface, &CallbackInterface::handle_sbp_msg>,
+                          this,
+                          &nodes[0]);
     sbp_register_unpacked_callback(
-        state, sbp::MessageTraits<MsgType>::id,
-        &sbp_unpacked_cb_passthrough<MsgType, CallbackInterface,
-                            &CallbackInterface::handle_sbp_msg>,
-        this, &nodes[1]);
+        state,
+        sbp::MessageTraits<MsgType>::id,
+        &sbp_unpacked_cb_passthrough<MsgType, CallbackInterface, &CallbackInterface::handle_sbp_msg>,
+        this,
+        &nodes[1]);
     CallbackInterface<OtherTypes...>::register_callback(state, &nodes[2]);
   }
 };
 
-template <typename MsgType>
-class CallbackInterface<MsgType> {
- public:
+template <typename MsgType> class CallbackInterface<MsgType>
+{
+public:
   CallbackInterface() = default;
   virtual ~CallbackInterface() = default;
 
-  virtual void handle_sbp_msg(uint16_t sender_id, uint8_t message_length,
-                              const MsgType &msg) {
+  virtual void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const MsgType &msg)
+  {
     (void)sender_id;
     (void)message_length;
     (void)msg;
   }
-  virtual void handle_sbp_msg(uint16_t sender_id, const MsgType &msg) {
+  virtual void handle_sbp_msg(uint16_t sender_id, const MsgType &msg)
+  {
     (void)sender_id;
     (void)msg;
   }
 
- protected:
-  void register_callback(sbp_state_t *state, sbp_msg_callbacks_node_t nodes[]) {
-    sbp_register_callback(
-        state, sbp::MessageTraits<MsgType>::id,
-        &sbp_cb_passthrough<MsgType, CallbackInterface,
-                            &CallbackInterface::handle_sbp_msg>,
-        this, &nodes[0]);
+protected:
+  void register_callback(sbp_state_t *state, sbp_msg_callbacks_node_t nodes[])
+  {
+    sbp_register_callback(state,
+                          sbp::MessageTraits<MsgType>::id,
+                          &sbp_cb_passthrough<MsgType, CallbackInterface, &CallbackInterface::handle_sbp_msg>,
+                          this,
+                          &nodes[0]);
     sbp_register_unpacked_callback(
-        state, sbp::MessageTraits<MsgType>::id,
-        &sbp_unpacked_cb_passthrough<MsgType, CallbackInterface,
-                                     &CallbackInterface::handle_sbp_msg>,
-        this, &nodes[1]);
+        state,
+        sbp::MessageTraits<MsgType>::id,
+        &sbp_unpacked_cb_passthrough<MsgType, CallbackInterface, &CallbackInterface::handle_sbp_msg>,
+        this,
+        &nodes[1]);
   }
 };
 
-}  // namespace details
+} // namespace details
 
 /**
  * Base type for defining classes that handle SBP messages
@@ -189,24 +195,23 @@ class CallbackInterface<MsgType> {
  *
  * @tparam MsgTypes List of SBP message types to register callbacks for
  */
-template <typename... MsgTypes>
-class MessageHandler : public details::CallbackInterface<MsgTypes...> {
+template <typename... MsgTypes> class MessageHandler : public details::CallbackInterface<MsgTypes...>
+{
   static constexpr size_t kMsgCount = 2 * sizeof...(MsgTypes);
 
   State &state_;
   std::array<sbp_msg_callbacks_node_t, kMsgCount> callback_nodes_;
 
- public:
-  explicit MessageHandler(State *state)
-      : details::CallbackInterface<MsgTypes...>(),
-        state_(*state),
-        callback_nodes_() {
-    details::CallbackInterface<MsgTypes...>::register_callback(
-        state_.get_state(), callback_nodes_.data());
+public:
+  explicit MessageHandler(State *state) : details::CallbackInterface<MsgTypes...>(), state_(*state), callback_nodes_()
+  {
+    details::CallbackInterface<MsgTypes...>::register_callback(state_.get_state(), callback_nodes_.data());
   }
 
-  ~MessageHandler() override {
-    for (auto &node : callback_nodes_) {
+  ~MessageHandler() override
+  {
+    for (auto &node : callback_nodes_)
+    {
       sbp_remove_callback(state_.get_state(), &node);
     }
   }

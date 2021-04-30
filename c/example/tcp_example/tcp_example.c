@@ -1,8 +1,8 @@
-#include <stdio.h>
-#include <sys/socket.h>
 #include <arpa/inet.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/socket.h>
 #include <unistd.h>
 
 #include <libsbp/sbp.h>
@@ -13,14 +13,15 @@ char *tcp_ip_port = NULL;
 static sbp_msg_callbacks_node_t heartbeat_callback_node;
 int socket_desc = -1;
 
-void usage(char *prog_name) {
+void usage(char *prog_name)
+{
   fprintf(stderr, "usage: %s [-a address -p port]\n", prog_name);
 }
 
 void setup_socket()
 {
   struct sockaddr_in server;
-  socket_desc = socket(AF_INET , SOCK_STREAM , 0);
+  socket_desc = socket(AF_INET, SOCK_STREAM, 0);
   if (socket_desc == -1)
   {
     fprintf(stderr, "Could not create socket\n");
@@ -31,7 +32,7 @@ void setup_socket()
   server.sin_family = AF_INET;
   server.sin_port = htons(atoi(tcp_ip_port));
 
-  if (connect(socket_desc, (struct sockaddr *)&server , sizeof(server)) < 0)
+  if (connect(socket_desc, (struct sockaddr *)&server, sizeof(server)) < 0)
   {
     fprintf(stderr, "Connection error\n");
   }
@@ -63,16 +64,20 @@ int main(int argc, char **argv)
   int result = 0;
   sbp_state_t s;
 
-  if (argc <= 2) {
+  if (argc <= 2)
+  {
     usage(argv[0]);
     exit(EXIT_FAILURE);
   }
 
-  while ((opt = getopt(argc, argv, "a:p:")) != -1) {
-    switch (opt) {
+  while ((opt = getopt(argc, argv, "a:p:")) != -1)
+  {
+    switch (opt)
+    {
       case 'a':
         tcp_ip_addr = (char *)calloc(strlen(optarg) + 1, sizeof(char));
-        if (!tcp_ip_addr) {
+        if (!tcp_ip_addr)
+        {
           fprintf(stderr, "Cannot allocate memory!\n");
           exit(EXIT_FAILURE);
         }
@@ -80,7 +85,8 @@ int main(int argc, char **argv)
         break;
       case 'p':
         tcp_ip_port = (char *)calloc(strlen(optarg) + 1, sizeof(char));
-        if (!tcp_ip_port) {
+        if (!tcp_ip_port)
+        {
           fprintf(stderr, "Cannot allocate memory!\n");
           exit(EXIT_FAILURE);
         }
@@ -94,17 +100,18 @@ int main(int argc, char **argv)
     }
   }
 
-  if ((!tcp_ip_addr) || (!tcp_ip_port)) {
+  if ((!tcp_ip_addr) || (!tcp_ip_port))
+  {
     fprintf(stderr, "Please supply the address and port of the SBP data stream!\n");
     exit(EXIT_FAILURE);
   }
 
   setup_socket();
   sbp_state_init(&s);
-  sbp_register_callback(&s, SBP_MSG_HEARTBEAT, &heartbeat_callback, NULL,
-                        &heartbeat_callback_node);
+  sbp_register_callback(&s, SBP_MSG_HEARTBEAT, &heartbeat_callback, NULL, &heartbeat_callback_node);
 
-  while(1) {
+  while (1)
+  {
     sbp_process(&s, &socket_read);
   }
 

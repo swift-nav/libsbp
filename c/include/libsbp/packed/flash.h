@@ -20,7 +20,7 @@
  *  * Messages for reading/writing the device's onboard flash memory. Many
  * of these messages target specific flash memory peripherals used in
  * Swift Navigation devices: the STM32 flash and the M25Pxx FPGA
- * configuration flash from Piksi 2.3.1.  This module does not apply 
+ * configuration flash from Piksi 2.3.1.  This module does not apply
  * to Piksi Multi.
  * \{ */
 
@@ -31,17 +31,16 @@
 
 SBP_PACK_START
 
-
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_MASK (0x1)
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SHIFT (0u)
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_GET(flags) \
-                             (((flags) >> SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SHIFT) \
-                             & SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_MASK)
+  (((flags) >> SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SHIFT) & SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_MASK)
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_MASK)) \
-                             << (SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SHIFT)));} while(0)
-                             
+  do \
+  { \
+    ((flags) |= \
+     (((val) & (SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_MASK)) << (SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SHIFT))); \
+  } while (0)
 
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_FLASH_STM (0)
 #define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_FLASH_M25 (1)
@@ -54,43 +53,42 @@ SBP_PACK_START
  * is exceeded. Note that the sector-containing addresses must be
  * erased before addresses can be programmed.
  */
-#define SBP_MSG_FLASH_PROGRAM           0x00E6
-typedef struct SBP_ATTR_PACKED {
-  
-  /** 
-   * Target flags 
+#define SBP_MSG_FLASH_PROGRAM 0x00E6
+typedef struct SBP_ATTR_PACKED
+{
+
+  /**
+   * Target flags
    */
-  u8 target;       
-  
-  /** 
-   * Starting address offset to program [bytes] 
+  u8 target;
+
+  /**
+   * Starting address offset to program [bytes]
    */
   u8 addr_start[3];
-  
-  /** 
-    * Length of set of addresses to program, counting up from
- * starting address [bytes] 
-   */
-  u8 addr_len;     
-  
-  /** 
-   * Data to program addresses with, with length N=addr_len 
-   */
-  u8 data[0];      
-  
-} msg_flash_program_t;
 
+  /**
+   * Length of set of addresses to program, counting up from
+   * starting address [bytes]
+   */
+  u8 addr_len;
+
+  /**
+   * Data to program addresses with, with length N=addr_len
+   */
+  u8 data[0];
+
+} msg_flash_program_t;
 
 #define SBP_FLASH_DONE_RESPONSE_CODE_MASK (0x7)
 #define SBP_FLASH_DONE_RESPONSE_CODE_SHIFT (0u)
 #define SBP_FLASH_DONE_RESPONSE_CODE_GET(flags) \
-                             (((flags) >> SBP_FLASH_DONE_RESPONSE_CODE_SHIFT) \
-                             & SBP_FLASH_DONE_RESPONSE_CODE_MASK)
+  (((flags) >> SBP_FLASH_DONE_RESPONSE_CODE_SHIFT) & SBP_FLASH_DONE_RESPONSE_CODE_MASK)
 #define SBP_FLASH_DONE_RESPONSE_CODE_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_FLASH_DONE_RESPONSE_CODE_MASK)) \
-                             << (SBP_FLASH_DONE_RESPONSE_CODE_SHIFT)));} while(0)
-                             
+  do \
+  { \
+    ((flags) |= (((val) & (SBP_FLASH_DONE_RESPONSE_CODE_MASK)) << (SBP_FLASH_DONE_RESPONSE_CODE_SHIFT))); \
+  } while (0)
 
 #define SBP_FLASH_DONE_RESPONSE_CODE_FLASH_OK (0)
 #define SBP_FLASH_DONE_RESPONSE_CODE_FLASH_INVALID_FLASH (1)
@@ -105,27 +103,27 @@ typedef struct SBP_ATTR_PACKED {
  * and write messages, such as MSG_FLASH_READ_REQ, or
  * MSG_FLASH_PROGRAM, may return this message on failure.
  */
-#define SBP_MSG_FLASH_DONE              0x00E0
-typedef struct SBP_ATTR_PACKED {
-  
-  /** 
-   * Response flags 
-   */
-  u8 response;   
-  
-} msg_flash_done_t;
+#define SBP_MSG_FLASH_DONE 0x00E0
+typedef struct SBP_ATTR_PACKED
+{
 
+  /**
+   * Response flags
+   */
+  u8 response;
+
+} msg_flash_done_t;
 
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_MASK (0x1)
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SHIFT (0u)
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_GET(flags) \
-                             (((flags) >> SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SHIFT) \
-                             & SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_MASK)
+  (((flags) >> SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SHIFT) & SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_MASK)
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_MASK)) \
-                             << (SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SHIFT)));} while(0)
-                             
+  do \
+  { \
+    ((flags) |= \
+     (((val) & (SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_MASK)) << (SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SHIFT))); \
+  } while (0)
 
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_FLASH_STM (0)
 #define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_FLASH_M25 (1)
@@ -139,38 +137,38 @@ typedef struct SBP_ATTR_PACKED {
  * FLASH_INVALID_ADDR (3) if the address is outside of the allowed
  * range.
  */
-#define SBP_MSG_FLASH_READ_REQ          0x00E7
-typedef struct SBP_ATTR_PACKED {
-  
-  /** 
-   * Target flags 
+#define SBP_MSG_FLASH_READ_REQ 0x00E7
+typedef struct SBP_ATTR_PACKED
+{
+
+  /**
+   * Target flags
    */
-  u8 target;       
-  
-  /** 
-   * Starting address offset to read from [bytes] 
+  u8 target;
+
+  /**
+   * Starting address offset to read from [bytes]
    */
   u8 addr_start[3];
-  
-  /** 
-    * Length of set of addresses to read, counting up from
- * starting address [bytes] 
-   */
-  u8 addr_len;     
-  
-} msg_flash_read_req_t;
 
+  /**
+   * Length of set of addresses to read, counting up from
+   * starting address [bytes]
+   */
+  u8 addr_len;
+
+} msg_flash_read_req_t;
 
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_MASK (0x1)
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_SHIFT (0u)
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_GET(flags) \
-                             (((flags) >> SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_SHIFT) \
-                             & SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_MASK)
+  (((flags) >> SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_SHIFT) & SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_MASK)
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_MASK)) \
-                             << (SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_SHIFT)));} while(0)
-                             
+  do \
+  { \
+    ((flags) |= \
+     (((val) & (SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_MASK)) << (SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_SHIFT))); \
+  } while (0)
 
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_FLASH_STM (0)
 #define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_FLASH_M25 (1)
@@ -184,38 +182,38 @@ typedef struct SBP_ATTR_PACKED {
  * FLASH_INVALID_ADDR (3) if the address is outside of the allowed
  * range.
  */
-#define SBP_MSG_FLASH_READ_RESP         0x00E1
-typedef struct SBP_ATTR_PACKED {
-  
-  /** 
-   * Target flags 
+#define SBP_MSG_FLASH_READ_RESP 0x00E1
+typedef struct SBP_ATTR_PACKED
+{
+
+  /**
+   * Target flags
    */
-  u8 target;       
-  
-  /** 
-   * Starting address offset to read from [bytes] 
+  u8 target;
+
+  /**
+   * Starting address offset to read from [bytes]
    */
   u8 addr_start[3];
-  
-  /** 
-    * Length of set of addresses to read, counting up from
- * starting address [bytes] 
-   */
-  u8 addr_len;     
-  
-} msg_flash_read_resp_t;
 
+  /**
+   * Length of set of addresses to read, counting up from
+   * starting address [bytes]
+   */
+  u8 addr_len;
+
+} msg_flash_read_resp_t;
 
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_MASK (0x1)
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SHIFT (0u)
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_GET(flags) \
-                             (((flags) >> SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SHIFT) \
-                             & SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_MASK)
+  (((flags) >> SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SHIFT) & SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_MASK)
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SET(flags, val) \
-                             do {((flags) |= \
-                             (((val) & (SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_MASK)) \
-                             << (SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SHIFT)));} while(0)
-                             
+  do \
+  { \
+    ((flags) |= \
+     (((val) & (SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_MASK)) << (SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SHIFT))); \
+  } while (0)
 
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_FLASH_STM (0)
 #define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_FLASH_M25 (1)
@@ -227,38 +225,38 @@ typedef struct SBP_ATTR_PACKED {
  * on success or FLASH_INVALID_FLASH (1) if the flash specified is
  * invalid.
  */
-#define SBP_MSG_FLASH_ERASE             0x00E2
-typedef struct SBP_ATTR_PACKED {
-  
-  /** 
-   * Target flags 
-   */
-  u8 target;       
-  
-  /** 
-    * Flash sector number to erase (0-11 for the STM, 0-15 for
- * the M25) 
-   */
-  u32 sector_num;   
-  
-} msg_flash_erase_t;
+#define SBP_MSG_FLASH_ERASE 0x00E2
+typedef struct SBP_ATTR_PACKED
+{
 
+  /**
+   * Target flags
+   */
+  u8 target;
+
+  /**
+   * Flash sector number to erase (0-11 for the STM, 0-15 for
+   * the M25)
+   */
+  u32 sector_num;
+
+} msg_flash_erase_t;
 
 /** Lock sector of STM flash memory (host => device)
  *
  * The flash lock message locks a sector of the STM flash
  * memory. The device replies with a MSG_FLASH_DONE message.
  */
-#define SBP_MSG_STM_FLASH_LOCK_SECTOR   0x00E3
-typedef struct SBP_ATTR_PACKED {
-  
-  /** 
-   * Flash sector number to lock 
-   */
-  u32 sector;   
-  
-} msg_stm_flash_lock_sector_t;
+#define SBP_MSG_STM_FLASH_LOCK_SECTOR 0x00E3
+typedef struct SBP_ATTR_PACKED
+{
 
+  /**
+   * Flash sector number to lock
+   */
+  u32 sector;
+
+} msg_stm_flash_lock_sector_t;
 
 /** Unlock sector of STM flash memory (host => device)
  *
@@ -266,15 +264,15 @@ typedef struct SBP_ATTR_PACKED {
  * memory. The device replies with a MSG_FLASH_DONE message.
  */
 #define SBP_MSG_STM_FLASH_UNLOCK_SECTOR 0x00E4
-typedef struct SBP_ATTR_PACKED {
-  
-  /** 
-   * Flash sector number to unlock 
-   */
-  u32 sector;   
-  
-} msg_stm_flash_unlock_sector_t;
+typedef struct SBP_ATTR_PACKED
+{
 
+  /**
+   * Flash sector number to unlock
+   */
+  u32 sector;
+
+} msg_stm_flash_unlock_sector_t;
 
 /** Read device's hardcoded unique ID request (host => device)
 
@@ -284,8 +282,7 @@ typedef struct SBP_ATTR_PACKED {
  * responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
  * ID in the payload.
  */
-#define SBP_MSG_STM_UNIQUE_ID_REQ       0x00E8
-
+#define SBP_MSG_STM_UNIQUE_ID_REQ 0x00E8
 
 /** Read device's hardcoded unique ID response (host <= device)
 
@@ -295,32 +292,32 @@ typedef struct SBP_ATTR_PACKED {
  * responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
  * ID in the payload..
  */
-#define SBP_MSG_STM_UNIQUE_ID_RESP      0x00E5
-typedef struct SBP_ATTR_PACKED {
-  
-  /** 
-   * Device unique ID 
+#define SBP_MSG_STM_UNIQUE_ID_RESP 0x00E5
+typedef struct SBP_ATTR_PACKED
+{
+
+  /**
+   * Device unique ID
    */
   u8 stm_id[12];
-  
-} msg_stm_unique_id_resp_t;
 
+} msg_stm_unique_id_resp_t;
 
 /** Write M25 flash status register (host => device)
  *
  * The flash status message writes to the 8-bit M25 flash status
  * register. The device replies with a MSG_FLASH_DONE message.
  */
-#define SBP_MSG_M25_FLASH_WRITE_STATUS  0x00F3
-typedef struct SBP_ATTR_PACKED {
-  
-  /** 
-   * Byte to write to the M25 flash status register 
+#define SBP_MSG_M25_FLASH_WRITE_STATUS 0x00F3
+typedef struct SBP_ATTR_PACKED
+{
+
+  /**
+   * Byte to write to the M25 flash status register
    */
   u8 status[1];
-  
-} msg_m25_flash_write_status_t;
 
+} msg_m25_flash_write_status_t;
 
 /** \} */
 

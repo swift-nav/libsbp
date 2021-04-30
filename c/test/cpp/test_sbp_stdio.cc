@@ -12,34 +12,41 @@
 
 #include <gtest/gtest.h>
 
-#include <libsbp/cpp/sbp_stdio.h>
 #include <libsbp/cpp/message_handler.h>
+#include <libsbp/cpp/sbp_stdio.h>
 
-namespace {
+namespace
+{
 
-struct SbpHeaderParams {
+struct SbpHeaderParams
+{
   uint16_t sender_id;
   sbp_msg_obs_t msg;
 };
 
-class MsgObsHandler : private sbp::MessageHandler<sbp_msg_obs_t, msg_obs_t> {
- public:
-  explicit MsgObsHandler(sbp::State *state)
-      : sbp::MessageHandler<sbp_msg_obs_t, msg_obs_t>(state), state_(state) {}
+class MsgObsHandler : private sbp::MessageHandler<sbp_msg_obs_t, msg_obs_t>
+{
+public:
+  explicit MsgObsHandler(sbp::State *state) : sbp::MessageHandler<sbp_msg_obs_t, msg_obs_t>(state), state_(state)
+  {
+  }
 
-  void handle_sbp_msg(uint16_t sender_id, const sbp_msg_obs_t &msg) override {
+  void handle_sbp_msg(uint16_t sender_id, const sbp_msg_obs_t &msg) override
+  {
     header_params_.sender_id = sender_id;
     header_params_.msg = msg;
   }
 
-  void write_message() const {
+  void write_message() const
+  {
     sbp_msg_t msg;
     msg.type = SBP_MSG_OBS;
     msg.MSG_OBS = header_params_.msg;
     state_->send_message(header_params_.sender_id, msg);
   }
 
-  SbpHeaderParams get_header_params() {
+  SbpHeaderParams get_header_params()
+  {
     return header_params_;
   }
 
@@ -48,29 +55,34 @@ private:
   sbp::State *state_;
 };
 
-
-class SbpStdioTest : public ::testing::Test {
+class SbpStdioTest : public ::testing::Test
+{
 protected:
-  static int num_entries_in_file(const std::string &input_file) {
+  static int num_entries_in_file(const std::string &input_file)
+  {
     sbp::SbpFileReader reader = sbp::SbpFileReader(input_file.data());
     sbp::State state;
     state.set_reader(&reader);
     MsgObsHandler handler(&state);
 
     int count = 0;
-    while (true) {
+    while (true)
+    {
       s8 status = state.process();
-      if (status < SBP_OK) {
+      if (status < SBP_OK)
+      {
         break;
       }
-      if (status == SBP_OK_CALLBACK_EXECUTED) {
+      if (status == SBP_OK_CALLBACK_EXECUTED)
+      {
         count++;
       }
     }
     return count;
   }
 
-  static void write_to_file(const std::string &input_file, const std::string &output_file) {
+  static void write_to_file(const std::string &input_file, const std::string &output_file)
+  {
     sbp::SbpFileReader reader = sbp::SbpFileReader(input_file.data());
     sbp::SbpFileWriter writer = sbp::SbpFileWriter(output_file.data());
     sbp::State state;
@@ -78,12 +90,15 @@ protected:
     state.set_writer(&writer);
     MsgObsHandler handler(&state);
 
-    while (true) {
+    while (true)
+    {
       s8 status = state.process();
-      if (status < SBP_OK) {
+      if (status < SBP_OK)
+      {
         break;
       }
-      if (status == SBP_OK_CALLBACK_EXECUTED) {
+      if (status == SBP_OK_CALLBACK_EXECUTED)
+      {
         handler.write_message();
         handler.write_message();
         handler.write_message();
@@ -92,12 +107,13 @@ protected:
   }
 };
 
-
-TEST_F(SbpStdioTest, ReadsSbpFiles) {
+TEST_F(SbpStdioTest, ReadsSbpFiles)
+{
   EXPECT_EQ(num_entries_in_file("gnss_data.sbp"), 3);
 }
 
-TEST_F(SbpStdioTest, WritesToSbpFiles) {
+TEST_F(SbpStdioTest, WritesToSbpFiles)
+{
   write_to_file("gnss_data.sbp", "gnss_data_output.sbp");
   EXPECT_EQ(num_entries_in_file("gnss_data_output.sbp"), 9);
 }

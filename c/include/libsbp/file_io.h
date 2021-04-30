@@ -1,16 +1,16 @@
 #ifndef LIBSBP_FILE_IO_MESSAGES_H
 #define LIBSBP_FILE_IO_MESSAGES_H
 
-#include <stdbool.h>
-#include <stddef.h>
-#include <string.h>
-#include <stdint.h>
 #include <endian.h>
 #include <math.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <string.h>
 
 #include <libsbp/common.h>
-  /** Read file from the file system (host => device)
-   *
+/** Read file from the file system (host => device)
+ *
  * The file read message reads a certain length (up to 255 bytes)
  * from a given offset into a file, and returns the data in a
  * MSG_FILEIO_READ_RESP message where the message length field
@@ -19,243 +19,275 @@
  * If the message is invalid, a followup MSG_PRINT message will
  * print "Invalid fileio read message". A device will only respond
  * to this message when it is received from sender ID 0x42.
-   */
-#define SBP_MSG_FILEIO_READ_REQ      0x00A8
+ */
+#define SBP_MSG_FILEIO_READ_REQ 0x00A8
 
-typedef struct {
-  
+typedef struct
+{
+
   /**
-* Read sequence number
+   * Read sequence number
    */
-    u32
-  sequence
-  ;
+  u32 sequence;
   /**
-* File offset[bytes]
+   * File offset[bytes]
    */
-    u32
-  offset
-  ;
+  u32 offset;
   /**
-* Chunk size to read[bytes]
+   * Chunk size to read[bytes]
    */
-    u8
-  chunk_size
-  ;
+  u8 chunk_size;
   /**
-* Name of the file to read from
+   * Name of the file to read from
    */
-    char
-  filename
-    [246]
-  ;
+  char filename[246];
 } sbp_msg_fileio_read_req_t;
 
-static inline size_t sbp_packed_size_sbp_msg_fileio_read_req_t(const sbp_msg_fileio_read_req_t *msg) {                                
-	(void)msg;
-  return                                                          
-	0                                                                          
-	  +
-				sizeof( msg->sequence )                                                                          
-	  +
-				sizeof( msg->offset )                                                                          
-	  +
-				sizeof( msg->chunk_size )                                                                          
-	  +
-      sbp_strlen( msg->filename, "nul" );
+static inline size_t sbp_packed_size_sbp_msg_fileio_read_req_t(const sbp_msg_fileio_read_req_t *msg)
+{
+  (void)msg;
+  return 0 + sizeof(msg->sequence) + sizeof(msg->offset) + sizeof(msg->chunk_size) + sbp_strlen(msg->filename, "nul");
 }
 
-static inline bool sbp_pack_sbp_msg_fileio_read_req_t(u8 *buf, size_t len, const sbp_msg_fileio_read_req_t *msg) {
+static inline bool sbp_pack_sbp_msg_fileio_read_req_t(u8 *buf, size_t len, const sbp_msg_fileio_read_req_t *msg)
+{
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_msg_fileio_read_req_t(msg) > len) { return false; }
-  
-        
-  if (offset + 4 > len) { return false; }
-  u32 msgsequence = htole32( msg->sequence );
-  memcpy(buf + offset, & msgsequence , 4);
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_fileio_read_req_t(msg) > len)
+  {
+    return false;
+  }
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
+  u32 msgsequence = htole32(msg->sequence);
+  memcpy(buf + offset, &msgsequence, 4);
   offset += 4;
-        
-  if (offset + 4 > len) { return false; }
-  u32 msgoffset = htole32( msg->offset );
-  memcpy(buf + offset, & msgoffset , 4);
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
+  u32 msgoffset = htole32(msg->offset);
+  memcpy(buf + offset, &msgoffset, 4);
   offset += 4;
-        
-  if (offset + 1 > len) { return false; }
+
+  if (offset + 1 > len)
+  {
+    return false;
+  }
   u8 msgchunk_size = msg->chunk_size;
-  memcpy(buf + offset, & msgchunk_size , 1);
+  memcpy(buf + offset, &msgchunk_size, 1);
   offset += 1;
-      if (offset + sbp_strlen( msg->filename, "nul") > len) { return false; }
-      offset += sbp_pack_string( buf + offset, msg->filename, "nul");
+  if (offset + sbp_strlen(msg->filename, "nul") > len)
+  {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->filename, "nul");
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_fileio_read_req_t(const u8 *buf, size_t len, sbp_msg_fileio_read_req_t *msg) {
+static inline bool sbp_unpack_sbp_msg_fileio_read_req_t(const u8 *buf, size_t len, sbp_msg_fileio_read_req_t *msg)
+{
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  
-      
-  if (offset + 4 > len) { return false; }
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
   memcpy(&msg->sequence, buf + offset, 4);
-  msg->sequence = le32toh( msg->sequence );
+  msg->sequence = le32toh(msg->sequence);
   offset += 4;
-      
-  if (offset + 4 > len) { return false; }
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
   memcpy(&msg->offset, buf + offset, 4);
-  msg->offset = le32toh( msg->offset );
+  msg->offset = le32toh(msg->offset);
   offset += 4;
-      
-  if (offset + 1 > len) { return false; }
+
+  if (offset + 1 > len)
+  {
+    return false;
+  }
   memcpy(&msg->chunk_size, buf + offset, 1);
   offset += 1;
-    offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->filename, "nul");
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->filename, "nul");
   return true;
 }
 
 #ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
+static inline bool operator==(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b)
+{
   (void)a;
   (void)b;
-  
-        
-    if (a.sequence != b.sequence) { return false; }
-        
-    if (a.offset != b.offset) { return false; }
-        
-    if (a.chunk_size != b.chunk_size) { return false; }
-        if (sbp_strcmp(a.filename, b.filename, "nul") != 0) { return false; }
+
+  if (a.sequence != b.sequence)
+  {
+    return false;
+  }
+
+  if (a.offset != b.offset)
+  {
+    return false;
+  }
+
+  if (a.chunk_size != b.chunk_size)
+  {
+    return false;
+  }
+  if (sbp_strcmp(a.filename, b.filename, "nul") != 0)
+  {
+    return false;
+  }
 
   return true;
 }
 
-static inline bool operator!=(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
+static inline bool operator!=(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b)
+{
   return !(a == b);
 }
 #endif
-  /** File read from the file system (host <= device)
-   *
+/** File read from the file system (host <= device)
+ *
  * The file read message reads a certain length (up to 255 bytes)
  * from a given offset into a file, and returns the data in a
  * message where the message length field indicates how many bytes
  * were succesfully read. The sequence number in the response is
  * preserved from the request.
-   */
-#define SBP_MSG_FILEIO_READ_RESP     0x00A3
+ */
+#define SBP_MSG_FILEIO_READ_RESP 0x00A3
 
-typedef struct {
-  
+typedef struct
+{
+
   /**
-* Read sequence number
+   * Read sequence number
    */
-    u32
-  sequence
-  ;
+  u32 sequence;
   /**
-* Contents of read file
+   * Contents of read file
    */
-    u8
-  contents
-    [251]
-  ;
+  u8 contents[251];
   /**
    * Number of items in contents
    */
   u8 n_contents;
 } sbp_msg_fileio_read_resp_t;
 
-static inline size_t sbp_packed_size_sbp_msg_fileio_read_resp_t(const sbp_msg_fileio_read_resp_t *msg) {                                
-	(void)msg;
-  return                                                          
-	0                                                                          
-	  +
-				sizeof( msg->sequence )                                                                          
-	  +
-	    (
-			  msg->n_contents
-			*
-        sizeof( msg->contents[0] )
-			);
+static inline size_t sbp_packed_size_sbp_msg_fileio_read_resp_t(const sbp_msg_fileio_read_resp_t *msg)
+{
+  (void)msg;
+  return 0 + sizeof(msg->sequence) + (msg->n_contents * sizeof(msg->contents[0]));
 }
 
-static inline bool sbp_pack_sbp_msg_fileio_read_resp_t(u8 *buf, size_t len, const sbp_msg_fileio_read_resp_t *msg) {
+static inline bool sbp_pack_sbp_msg_fileio_read_resp_t(u8 *buf, size_t len, const sbp_msg_fileio_read_resp_t *msg)
+{
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_msg_fileio_read_resp_t(msg) > len) { return false; }
-  
-        
-  if (offset + 4 > len) { return false; }
-  u32 msgsequence = htole32( msg->sequence );
-  memcpy(buf + offset, & msgsequence , 4);
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_fileio_read_resp_t(msg) > len)
+  {
+    return false;
+  }
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
+  u32 msgsequence = htole32(msg->sequence);
+  memcpy(buf + offset, &msgsequence, 4);
   offset += 4;
-			for(size_t msgcontents_idx = 0; msgcontents_idx < (size_t)msg->n_contents; msgcontents_idx++)
-			{
-          
-  if (offset + 1 > len) { return false; }
-  u8 msgcontentsmsgcontents_idx = msg->contents[msgcontents_idx];
-  memcpy(buf + offset, & msgcontentsmsgcontents_idx , 1);
-  offset += 1;
-			}
+  for (size_t msgcontents_idx = 0; msgcontents_idx < (size_t)msg->n_contents; msgcontents_idx++)
+  {
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    u8 msgcontentsmsgcontents_idx = msg->contents[msgcontents_idx];
+    memcpy(buf + offset, &msgcontentsmsgcontents_idx, 1);
+    offset += 1;
+  }
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_fileio_read_resp_t(const u8 *buf, size_t len, sbp_msg_fileio_read_resp_t *msg) {
+static inline bool sbp_unpack_sbp_msg_fileio_read_resp_t(const u8 *buf, size_t len, sbp_msg_fileio_read_resp_t *msg)
+{
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  
-      
-  if (offset + 4 > len) { return false; }
-  memcpy(&msg->sequence, buf + offset, 4);
-  msg->sequence = le32toh( msg->sequence );
-  offset += 4;
-      msg->n_contents = (u8)((len - offset) / 1);
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
 
-	  for (size_t msgcontents_idx = 0; msgcontents_idx <
-				msg->n_contents;
-				msgcontents_idx++) 
-		{
-        
-  if (offset + 1 > len) { return false; }
-  memcpy(&msg->contents[msgcontents_idx], buf + offset, 1);
-  offset += 1;
-		}
+  if (offset + 4 > len)
+  {
+    return false;
+  }
+  memcpy(&msg->sequence, buf + offset, 4);
+  msg->sequence = le32toh(msg->sequence);
+  offset += 4;
+  msg->n_contents = (u8)((len - offset) / 1);
+
+  for (size_t msgcontents_idx = 0; msgcontents_idx < msg->n_contents; msgcontents_idx++)
+  {
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    memcpy(&msg->contents[msgcontents_idx], buf + offset, 1);
+    offset += 1;
+  }
   return true;
 }
 
 #ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
+static inline bool operator==(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b)
+{
   (void)a;
   (void)b;
-  
-        
-    if (a.sequence != b.sequence) { return false; }
-          if (a.n_contents != b.n_contents) { return false; }
-        for (size_t contents_idx = 0; contents_idx < (size_t)a.n_contents; contents_idx++)
-        {
-            
-    if (a.contents[contents_idx] != b.contents[contents_idx]) { return false; }
-        }
+
+  if (a.sequence != b.sequence)
+  {
+    return false;
+  }
+  if (a.n_contents != b.n_contents)
+  {
+    return false;
+  }
+  for (size_t contents_idx = 0; contents_idx < (size_t)a.n_contents; contents_idx++)
+  {
+
+    if (a.contents[contents_idx] != b.contents[contents_idx])
+    {
+      return false;
+    }
+  }
 
   return true;
 }
 
-static inline bool operator!=(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
+static inline bool operator!=(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b)
+{
   return !(a == b);
 }
 #endif
-  /** List files in a directory (host => device)
-   *
+/** List files in a directory (host => device)
+ *
  * The read directory message lists the files in a directory on the
  * device's onboard flash file system.  The offset parameter can be
  * used to skip the first n elements of the file list. Returns a
@@ -266,291 +298,330 @@ static inline bool operator!=(const sbp_msg_fileio_read_resp_t &a, const sbp_msg
  * MSG_PRINT message will print "Invalid fileio read message".
  * A device will only respond to this message when it is received
  * from sender ID 0x42.
-   */
-#define SBP_MSG_FILEIO_READ_DIR_REQ  0x00A9
+ */
+#define SBP_MSG_FILEIO_READ_DIR_REQ 0x00A9
 
-typedef struct {
-  
+typedef struct
+{
+
   /**
-* Read sequence number
+   * Read sequence number
    */
-    u32
-  sequence
-  ;
+  u32 sequence;
   /**
- * The offset to skip the first n elements of the file list
+   * The offset to skip the first n elements of the file list
    */
-    u32
-  offset
-  ;
+  u32 offset;
   /**
-* Name of the directory to list
+   * Name of the directory to list
    */
-    char
-  dirname
-    [247]
-  ;
+  char dirname[247];
 } sbp_msg_fileio_read_dir_req_t;
 
-static inline size_t sbp_packed_size_sbp_msg_fileio_read_dir_req_t(const sbp_msg_fileio_read_dir_req_t *msg) {                                
-	(void)msg;
-  return                                                          
-	0                                                                          
-	  +
-				sizeof( msg->sequence )                                                                          
-	  +
-				sizeof( msg->offset )                                                                          
-	  +
-      sbp_strlen( msg->dirname, "nul" );
+static inline size_t sbp_packed_size_sbp_msg_fileio_read_dir_req_t(const sbp_msg_fileio_read_dir_req_t *msg)
+{
+  (void)msg;
+  return 0 + sizeof(msg->sequence) + sizeof(msg->offset) + sbp_strlen(msg->dirname, "nul");
 }
 
-static inline bool sbp_pack_sbp_msg_fileio_read_dir_req_t(u8 *buf, size_t len, const sbp_msg_fileio_read_dir_req_t *msg) {
+static inline bool sbp_pack_sbp_msg_fileio_read_dir_req_t(u8 *buf, size_t len, const sbp_msg_fileio_read_dir_req_t *msg)
+{
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_msg_fileio_read_dir_req_t(msg) > len) { return false; }
-  
-        
-  if (offset + 4 > len) { return false; }
-  u32 msgsequence = htole32( msg->sequence );
-  memcpy(buf + offset, & msgsequence , 4);
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_fileio_read_dir_req_t(msg) > len)
+  {
+    return false;
+  }
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
+  u32 msgsequence = htole32(msg->sequence);
+  memcpy(buf + offset, &msgsequence, 4);
   offset += 4;
-        
-  if (offset + 4 > len) { return false; }
-  u32 msgoffset = htole32( msg->offset );
-  memcpy(buf + offset, & msgoffset , 4);
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
+  u32 msgoffset = htole32(msg->offset);
+  memcpy(buf + offset, &msgoffset, 4);
   offset += 4;
-      if (offset + sbp_strlen( msg->dirname, "nul") > len) { return false; }
-      offset += sbp_pack_string( buf + offset, msg->dirname, "nul");
+  if (offset + sbp_strlen(msg->dirname, "nul") > len)
+  {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->dirname, "nul");
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_fileio_read_dir_req_t(const u8 *buf, size_t len, sbp_msg_fileio_read_dir_req_t *msg) {
+static inline bool
+sbp_unpack_sbp_msg_fileio_read_dir_req_t(const u8 *buf, size_t len, sbp_msg_fileio_read_dir_req_t *msg)
+{
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  
-      
-  if (offset + 4 > len) { return false; }
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
   memcpy(&msg->sequence, buf + offset, 4);
-  msg->sequence = le32toh( msg->sequence );
+  msg->sequence = le32toh(msg->sequence);
   offset += 4;
-      
-  if (offset + 4 > len) { return false; }
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
   memcpy(&msg->offset, buf + offset, 4);
-  msg->offset = le32toh( msg->offset );
+  msg->offset = le32toh(msg->offset);
   offset += 4;
-    offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->dirname, "nul");
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->dirname, "nul");
   return true;
 }
 
 #ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
+static inline bool operator==(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b)
+{
   (void)a;
   (void)b;
-  
-        
-    if (a.sequence != b.sequence) { return false; }
-        
-    if (a.offset != b.offset) { return false; }
-        if (sbp_strcmp(a.dirname, b.dirname, "nul") != 0) { return false; }
+
+  if (a.sequence != b.sequence)
+  {
+    return false;
+  }
+
+  if (a.offset != b.offset)
+  {
+    return false;
+  }
+  if (sbp_strcmp(a.dirname, b.dirname, "nul") != 0)
+  {
+    return false;
+  }
 
   return true;
 }
 
-static inline bool operator!=(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
+static inline bool operator!=(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b)
+{
   return !(a == b);
 }
 #endif
-  /** Files listed in a directory (host <= device)
-   *
+/** Files listed in a directory (host <= device)
+ *
  * The read directory message lists the files in a directory on the
  * device's onboard flash file system. Message contains the directory
  * listings as a NULL delimited list. The listing is chunked over
  * multiple SBP packets and the end of the list is identified by an
  * entry containing just the character 0xFF. The sequence number in
  * the response is preserved from the request.
-   */
+ */
 #define SBP_MSG_FILEIO_READ_DIR_RESP 0x00AA
 
-typedef struct {
-  
+typedef struct
+{
+
   /**
-* Read sequence number
+   * Read sequence number
    */
-    u32
-  sequence
-  ;
+  u32 sequence;
   /**
-* Contents of read directory
+   * Contents of read directory
    */
-    u8
-  contents
-    [251]
-  ;
+  u8 contents[251];
   /**
    * Number of items in contents
    */
   u8 n_contents;
 } sbp_msg_fileio_read_dir_resp_t;
 
-static inline size_t sbp_packed_size_sbp_msg_fileio_read_dir_resp_t(const sbp_msg_fileio_read_dir_resp_t *msg) {                                
-	(void)msg;
-  return                                                          
-	0                                                                          
-	  +
-				sizeof( msg->sequence )                                                                          
-	  +
-	    (
-			  msg->n_contents
-			*
-        sizeof( msg->contents[0] )
-			);
+static inline size_t sbp_packed_size_sbp_msg_fileio_read_dir_resp_t(const sbp_msg_fileio_read_dir_resp_t *msg)
+{
+  (void)msg;
+  return 0 + sizeof(msg->sequence) + (msg->n_contents * sizeof(msg->contents[0]));
 }
 
-static inline bool sbp_pack_sbp_msg_fileio_read_dir_resp_t(u8 *buf, size_t len, const sbp_msg_fileio_read_dir_resp_t *msg) {
+static inline bool
+sbp_pack_sbp_msg_fileio_read_dir_resp_t(u8 *buf, size_t len, const sbp_msg_fileio_read_dir_resp_t *msg)
+{
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_msg_fileio_read_dir_resp_t(msg) > len) { return false; }
-  
-        
-  if (offset + 4 > len) { return false; }
-  u32 msgsequence = htole32( msg->sequence );
-  memcpy(buf + offset, & msgsequence , 4);
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_fileio_read_dir_resp_t(msg) > len)
+  {
+    return false;
+  }
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
+  u32 msgsequence = htole32(msg->sequence);
+  memcpy(buf + offset, &msgsequence, 4);
   offset += 4;
-			for(size_t msgcontents_idx = 0; msgcontents_idx < (size_t)msg->n_contents; msgcontents_idx++)
-			{
-          
-  if (offset + 1 > len) { return false; }
-  u8 msgcontentsmsgcontents_idx = msg->contents[msgcontents_idx];
-  memcpy(buf + offset, & msgcontentsmsgcontents_idx , 1);
-  offset += 1;
-			}
+  for (size_t msgcontents_idx = 0; msgcontents_idx < (size_t)msg->n_contents; msgcontents_idx++)
+  {
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    u8 msgcontentsmsgcontents_idx = msg->contents[msgcontents_idx];
+    memcpy(buf + offset, &msgcontentsmsgcontents_idx, 1);
+    offset += 1;
+  }
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_fileio_read_dir_resp_t(const u8 *buf, size_t len, sbp_msg_fileio_read_dir_resp_t *msg) {
+static inline bool
+sbp_unpack_sbp_msg_fileio_read_dir_resp_t(const u8 *buf, size_t len, sbp_msg_fileio_read_dir_resp_t *msg)
+{
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  
-      
-  if (offset + 4 > len) { return false; }
-  memcpy(&msg->sequence, buf + offset, 4);
-  msg->sequence = le32toh( msg->sequence );
-  offset += 4;
-      msg->n_contents = (u8)((len - offset) / 1);
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
 
-	  for (size_t msgcontents_idx = 0; msgcontents_idx <
-				msg->n_contents;
-				msgcontents_idx++) 
-		{
-        
-  if (offset + 1 > len) { return false; }
-  memcpy(&msg->contents[msgcontents_idx], buf + offset, 1);
-  offset += 1;
-		}
+  if (offset + 4 > len)
+  {
+    return false;
+  }
+  memcpy(&msg->sequence, buf + offset, 4);
+  msg->sequence = le32toh(msg->sequence);
+  offset += 4;
+  msg->n_contents = (u8)((len - offset) / 1);
+
+  for (size_t msgcontents_idx = 0; msgcontents_idx < msg->n_contents; msgcontents_idx++)
+  {
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    memcpy(&msg->contents[msgcontents_idx], buf + offset, 1);
+    offset += 1;
+  }
   return true;
 }
 
 #ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
+static inline bool operator==(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b)
+{
   (void)a;
   (void)b;
-  
-        
-    if (a.sequence != b.sequence) { return false; }
-          if (a.n_contents != b.n_contents) { return false; }
-        for (size_t contents_idx = 0; contents_idx < (size_t)a.n_contents; contents_idx++)
-        {
-            
-    if (a.contents[contents_idx] != b.contents[contents_idx]) { return false; }
-        }
+
+  if (a.sequence != b.sequence)
+  {
+    return false;
+  }
+  if (a.n_contents != b.n_contents)
+  {
+    return false;
+  }
+  for (size_t contents_idx = 0; contents_idx < (size_t)a.n_contents; contents_idx++)
+  {
+
+    if (a.contents[contents_idx] != b.contents[contents_idx])
+    {
+      return false;
+    }
+  }
 
   return true;
 }
 
-static inline bool operator!=(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
+static inline bool operator!=(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b)
+{
   return !(a == b);
 }
 #endif
-  /** Delete a file from the file system (host => device)
-   *
+/** Delete a file from the file system (host => device)
+ *
  * The file remove message deletes a file from the file system.
  * If the message is invalid, a followup MSG_PRINT message will
  * print "Invalid fileio remove message". A device will only
  * process this message when it is received from sender ID 0x42.
-   */
-#define SBP_MSG_FILEIO_REMOVE        0x00AC
+ */
+#define SBP_MSG_FILEIO_REMOVE 0x00AC
 
-typedef struct {
-  
+typedef struct
+{
+
   /**
-* Name of the file to delete
+   * Name of the file to delete
    */
-    char
-  filename
-    [255]
-  ;
+  char filename[255];
 } sbp_msg_fileio_remove_t;
 
-static inline size_t sbp_packed_size_sbp_msg_fileio_remove_t(const sbp_msg_fileio_remove_t *msg) {                                
-	(void)msg;
-  return                                                          
-	0                                                                          
-	  +
-      sbp_strlen( msg->filename, "nul" );
+static inline size_t sbp_packed_size_sbp_msg_fileio_remove_t(const sbp_msg_fileio_remove_t *msg)
+{
+  (void)msg;
+  return 0 + sbp_strlen(msg->filename, "nul");
 }
 
-static inline bool sbp_pack_sbp_msg_fileio_remove_t(u8 *buf, size_t len, const sbp_msg_fileio_remove_t *msg) {
+static inline bool sbp_pack_sbp_msg_fileio_remove_t(u8 *buf, size_t len, const sbp_msg_fileio_remove_t *msg)
+{
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_msg_fileio_remove_t(msg) > len) { return false; }
-  
-      if (offset + sbp_strlen( msg->filename, "nul") > len) { return false; }
-      offset += sbp_pack_string( buf + offset, msg->filename, "nul");
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_fileio_remove_t(msg) > len)
+  {
+    return false;
+  }
+
+  if (offset + sbp_strlen(msg->filename, "nul") > len)
+  {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->filename, "nul");
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_fileio_remove_t(const u8 *buf, size_t len, sbp_msg_fileio_remove_t *msg) {
+static inline bool sbp_unpack_sbp_msg_fileio_remove_t(const u8 *buf, size_t len, sbp_msg_fileio_remove_t *msg)
+{
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  
-    offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->filename, "nul");
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->filename, "nul");
   return true;
 }
 
 #ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
+static inline bool operator==(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b)
+{
   (void)a;
   (void)b;
-  
-        if (sbp_strcmp(a.filename, b.filename, "nul") != 0) { return false; }
+
+  if (sbp_strcmp(a.filename, b.filename, "nul") != 0)
+  {
+    return false;
+  }
 
   return true;
 }
 
-static inline bool operator!=(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
+static inline bool operator!=(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b)
+{
   return !(a == b);
 }
 #endif
-  /** Write to file (host => device)
-   *
+/** Write to file (host => device)
+ *
  * The file write message writes a certain length (up to 255 bytes)
  * of data to a file at a given offset. Returns a copy of the
  * original MSG_FILEIO_WRITE_RESP message to check integrity of
@@ -559,429 +630,491 @@ static inline bool operator!=(const sbp_msg_fileio_remove_t &a, const sbp_msg_fi
  * message will print "Invalid fileio write message". A device will
  * only  process this message when it is received from sender ID
  * 0x42.
-   */
-#define SBP_MSG_FILEIO_WRITE_REQ     0x00AD
+ */
+#define SBP_MSG_FILEIO_WRITE_REQ 0x00AD
 
-typedef struct {
-  
+typedef struct
+{
+
   /**
-* Write sequence number
+   * Write sequence number
    */
-    u32
-  sequence
-  ;
+  u32 sequence;
   /**
-* Offset into the file at which to start writing in bytes[bytes]
+   * Offset into the file at which to start writing in bytes[bytes]
    */
-    u32
-  offset
-  ;
+  u32 offset;
   /**
-* Name of the file to write to
+   * Name of the file to write to
    */
-    char
-  filename
-    [247]
-  ;
+  char filename[247];
   /**
-* Variable-length array of data to write
+   * Variable-length array of data to write
    */
-    u8
-  data
-    [246]
-  ;
+  u8 data[246];
   /**
    * Number of items in data
    */
   u8 n_data;
 } sbp_msg_fileio_write_req_t;
 
-static inline size_t sbp_packed_size_sbp_msg_fileio_write_req_t(const sbp_msg_fileio_write_req_t *msg) {                                
-	(void)msg;
-  return                                                          
-	0                                                                          
-	  +
-				sizeof( msg->sequence )                                                                          
-	  +
-				sizeof( msg->offset )                                                                          
-	  +
-      sbp_strlen( msg->filename, "nul" )                                                                          
-	  +
-	    (
-			  msg->n_data
-			*
-        sizeof( msg->data[0] )
-			);
+static inline size_t sbp_packed_size_sbp_msg_fileio_write_req_t(const sbp_msg_fileio_write_req_t *msg)
+{
+  (void)msg;
+  return 0 + sizeof(msg->sequence) + sizeof(msg->offset) + sbp_strlen(msg->filename, "nul") +
+         (msg->n_data * sizeof(msg->data[0]));
 }
 
-static inline bool sbp_pack_sbp_msg_fileio_write_req_t(u8 *buf, size_t len, const sbp_msg_fileio_write_req_t *msg) {
+static inline bool sbp_pack_sbp_msg_fileio_write_req_t(u8 *buf, size_t len, const sbp_msg_fileio_write_req_t *msg)
+{
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_msg_fileio_write_req_t(msg) > len) { return false; }
-  
-        
-  if (offset + 4 > len) { return false; }
-  u32 msgsequence = htole32( msg->sequence );
-  memcpy(buf + offset, & msgsequence , 4);
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_fileio_write_req_t(msg) > len)
+  {
+    return false;
+  }
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
+  u32 msgsequence = htole32(msg->sequence);
+  memcpy(buf + offset, &msgsequence, 4);
   offset += 4;
-        
-  if (offset + 4 > len) { return false; }
-  u32 msgoffset = htole32( msg->offset );
-  memcpy(buf + offset, & msgoffset , 4);
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
+  u32 msgoffset = htole32(msg->offset);
+  memcpy(buf + offset, &msgoffset, 4);
   offset += 4;
-      if (offset + sbp_strlen( msg->filename, "nul") > len) { return false; }
-      offset += sbp_pack_string( buf + offset, msg->filename, "nul");
-			for(size_t msgdata_idx = 0; msgdata_idx < (size_t)msg->n_data; msgdata_idx++)
-			{
-          
-  if (offset + 1 > len) { return false; }
-  u8 msgdatamsgdata_idx = msg->data[msgdata_idx];
-  memcpy(buf + offset, & msgdatamsgdata_idx , 1);
-  offset += 1;
-			}
+  if (offset + sbp_strlen(msg->filename, "nul") > len)
+  {
+    return false;
+  }
+  offset += sbp_pack_string(buf + offset, msg->filename, "nul");
+  for (size_t msgdata_idx = 0; msgdata_idx < (size_t)msg->n_data; msgdata_idx++)
+  {
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    u8 msgdatamsgdata_idx = msg->data[msgdata_idx];
+    memcpy(buf + offset, &msgdatamsgdata_idx, 1);
+    offset += 1;
+  }
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_fileio_write_req_t(const u8 *buf, size_t len, sbp_msg_fileio_write_req_t *msg) {
+static inline bool sbp_unpack_sbp_msg_fileio_write_req_t(const u8 *buf, size_t len, sbp_msg_fileio_write_req_t *msg)
+{
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  
-      
-  if (offset + 4 > len) { return false; }
-  memcpy(&msg->sequence, buf + offset, 4);
-  msg->sequence = le32toh( msg->sequence );
-  offset += 4;
-      
-  if (offset + 4 > len) { return false; }
-  memcpy(&msg->offset, buf + offset, 4);
-  msg->offset = le32toh( msg->offset );
-  offset += 4;
-    offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->filename, "nul");
-      msg->n_data = (u8)((len - offset) / 1);
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
 
-	  for (size_t msgdata_idx = 0; msgdata_idx <
-				msg->n_data;
-				msgdata_idx++) 
-		{
-        
-  if (offset + 1 > len) { return false; }
-  memcpy(&msg->data[msgdata_idx], buf + offset, 1);
-  offset += 1;
-		}
+  if (offset + 4 > len)
+  {
+    return false;
+  }
+  memcpy(&msg->sequence, buf + offset, 4);
+  msg->sequence = le32toh(msg->sequence);
+  offset += 4;
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
+  memcpy(&msg->offset, buf + offset, 4);
+  msg->offset = le32toh(msg->offset);
+  offset += 4;
+  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->filename, "nul");
+  msg->n_data = (u8)((len - offset) / 1);
+
+  for (size_t msgdata_idx = 0; msgdata_idx < msg->n_data; msgdata_idx++)
+  {
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    memcpy(&msg->data[msgdata_idx], buf + offset, 1);
+    offset += 1;
+  }
   return true;
 }
 
 #ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_fileio_write_req_t &a, const sbp_msg_fileio_write_req_t &b) {
+static inline bool operator==(const sbp_msg_fileio_write_req_t &a, const sbp_msg_fileio_write_req_t &b)
+{
   (void)a;
   (void)b;
-  
-        
-    if (a.sequence != b.sequence) { return false; }
-        
-    if (a.offset != b.offset) { return false; }
-        if (sbp_strcmp(a.filename, b.filename, "nul") != 0) { return false; }
-          if (a.n_data != b.n_data) { return false; }
-        for (size_t data_idx = 0; data_idx < (size_t)a.n_data; data_idx++)
-        {
-            
-    if (a.data[data_idx] != b.data[data_idx]) { return false; }
-        }
+
+  if (a.sequence != b.sequence)
+  {
+    return false;
+  }
+
+  if (a.offset != b.offset)
+  {
+    return false;
+  }
+  if (sbp_strcmp(a.filename, b.filename, "nul") != 0)
+  {
+    return false;
+  }
+  if (a.n_data != b.n_data)
+  {
+    return false;
+  }
+  for (size_t data_idx = 0; data_idx < (size_t)a.n_data; data_idx++)
+  {
+
+    if (a.data[data_idx] != b.data[data_idx])
+    {
+      return false;
+    }
+  }
 
   return true;
 }
 
-static inline bool operator!=(const sbp_msg_fileio_write_req_t &a, const sbp_msg_fileio_write_req_t &b) {
+static inline bool operator!=(const sbp_msg_fileio_write_req_t &a, const sbp_msg_fileio_write_req_t &b)
+{
   return !(a == b);
 }
 #endif
-  /** File written to (host <= device)
-   *
+/** File written to (host <= device)
+ *
  * The file write message writes a certain length (up to 255 bytes)
  * of data to a file at a given offset. The message is a copy of the
  * original MSG_FILEIO_WRITE_REQ message to check integrity of the
  * write. The sequence number in the response is preserved from the
  * request.
-   */
-#define SBP_MSG_FILEIO_WRITE_RESP    0x00AB
+ */
+#define SBP_MSG_FILEIO_WRITE_RESP 0x00AB
 
-typedef struct {
-  
+typedef struct
+{
+
   /**
-* Write sequence number
+   * Write sequence number
    */
-    u32
-  sequence
-  ;
+  u32 sequence;
 } sbp_msg_fileio_write_resp_t;
 
-static inline size_t sbp_packed_size_sbp_msg_fileio_write_resp_t(const sbp_msg_fileio_write_resp_t *msg) {                                
-	(void)msg;
-  return                                                          
-	0                                                                          
-	  +
-				sizeof( msg->sequence );
+static inline size_t sbp_packed_size_sbp_msg_fileio_write_resp_t(const sbp_msg_fileio_write_resp_t *msg)
+{
+  (void)msg;
+  return 0 + sizeof(msg->sequence);
 }
 
-static inline bool sbp_pack_sbp_msg_fileio_write_resp_t(u8 *buf, size_t len, const sbp_msg_fileio_write_resp_t *msg) {
+static inline bool sbp_pack_sbp_msg_fileio_write_resp_t(u8 *buf, size_t len, const sbp_msg_fileio_write_resp_t *msg)
+{
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_msg_fileio_write_resp_t(msg) > len) { return false; }
-  
-        
-  if (offset + 4 > len) { return false; }
-  u32 msgsequence = htole32( msg->sequence );
-  memcpy(buf + offset, & msgsequence , 4);
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_fileio_write_resp_t(msg) > len)
+  {
+    return false;
+  }
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
+  u32 msgsequence = htole32(msg->sequence);
+  memcpy(buf + offset, &msgsequence, 4);
   offset += 4;
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_fileio_write_resp_t(const u8 *buf, size_t len, sbp_msg_fileio_write_resp_t *msg) {
+static inline bool sbp_unpack_sbp_msg_fileio_write_resp_t(const u8 *buf, size_t len, sbp_msg_fileio_write_resp_t *msg)
+{
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  
-      
-  if (offset + 4 > len) { return false; }
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
   memcpy(&msg->sequence, buf + offset, 4);
-  msg->sequence = le32toh( msg->sequence );
+  msg->sequence = le32toh(msg->sequence);
   offset += 4;
   return true;
 }
 
 #ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_fileio_write_resp_t &a, const sbp_msg_fileio_write_resp_t &b) {
+static inline bool operator==(const sbp_msg_fileio_write_resp_t &a, const sbp_msg_fileio_write_resp_t &b)
+{
   (void)a;
   (void)b;
-  
-        
-    if (a.sequence != b.sequence) { return false; }
+
+  if (a.sequence != b.sequence)
+  {
+    return false;
+  }
 
   return true;
 }
 
-static inline bool operator!=(const sbp_msg_fileio_write_resp_t &a, const sbp_msg_fileio_write_resp_t &b) {
+static inline bool operator!=(const sbp_msg_fileio_write_resp_t &a, const sbp_msg_fileio_write_resp_t &b)
+{
   return !(a == b);
 }
 #endif
-  /** Request advice on the optimal configuration for FileIO.
-   *
- * Requests advice on the optimal configuration for a FileIO 
+/** Request advice on the optimal configuration for FileIO.
+ *
+ * Requests advice on the optimal configuration for a FileIO
  * transfer.  Newer version of FileIO can support greater
  * throughput by supporting a large window of FileIO data
  * that can be in-flight during read or write operations.
-   */
-#define SBP_MSG_FILEIO_CONFIG_REQ    0x1001
+ */
+#define SBP_MSG_FILEIO_CONFIG_REQ 0x1001
 
-typedef struct {
-  
+typedef struct
+{
+
   /**
-* Advice sequence number
+   * Advice sequence number
    */
-    u32
-  sequence
-  ;
+  u32 sequence;
 } sbp_msg_fileio_config_req_t;
 
-static inline size_t sbp_packed_size_sbp_msg_fileio_config_req_t(const sbp_msg_fileio_config_req_t *msg) {                                
-	(void)msg;
-  return                                                          
-	0                                                                          
-	  +
-				sizeof( msg->sequence );
+static inline size_t sbp_packed_size_sbp_msg_fileio_config_req_t(const sbp_msg_fileio_config_req_t *msg)
+{
+  (void)msg;
+  return 0 + sizeof(msg->sequence);
 }
 
-static inline bool sbp_pack_sbp_msg_fileio_config_req_t(u8 *buf, size_t len, const sbp_msg_fileio_config_req_t *msg) {
+static inline bool sbp_pack_sbp_msg_fileio_config_req_t(u8 *buf, size_t len, const sbp_msg_fileio_config_req_t *msg)
+{
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_msg_fileio_config_req_t(msg) > len) { return false; }
-  
-        
-  if (offset + 4 > len) { return false; }
-  u32 msgsequence = htole32( msg->sequence );
-  memcpy(buf + offset, & msgsequence , 4);
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_fileio_config_req_t(msg) > len)
+  {
+    return false;
+  }
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
+  u32 msgsequence = htole32(msg->sequence);
+  memcpy(buf + offset, &msgsequence, 4);
   offset += 4;
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_fileio_config_req_t(const u8 *buf, size_t len, sbp_msg_fileio_config_req_t *msg) {
+static inline bool sbp_unpack_sbp_msg_fileio_config_req_t(const u8 *buf, size_t len, sbp_msg_fileio_config_req_t *msg)
+{
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  
-      
-  if (offset + 4 > len) { return false; }
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
   memcpy(&msg->sequence, buf + offset, 4);
-  msg->sequence = le32toh( msg->sequence );
+  msg->sequence = le32toh(msg->sequence);
   offset += 4;
   return true;
 }
 
 #ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_fileio_config_req_t &a, const sbp_msg_fileio_config_req_t &b) {
+static inline bool operator==(const sbp_msg_fileio_config_req_t &a, const sbp_msg_fileio_config_req_t &b)
+{
   (void)a;
   (void)b;
-  
-        
-    if (a.sequence != b.sequence) { return false; }
+
+  if (a.sequence != b.sequence)
+  {
+    return false;
+  }
 
   return true;
 }
 
-static inline bool operator!=(const sbp_msg_fileio_config_req_t &a, const sbp_msg_fileio_config_req_t &b) {
+static inline bool operator!=(const sbp_msg_fileio_config_req_t &a, const sbp_msg_fileio_config_req_t &b)
+{
   return !(a == b);
 }
 #endif
-  /** Response with advice on the optimal configuration for FileIO.
+/** Response with advice on the optimal configuration for FileIO.
 
-   *
- * The advice on the optimal configuration for a FileIO
- * transfer.  Newer version of FileIO can support greater
- * throughput by supporting a large window of FileIO data
- * that can be in-flight during read or write operations.
-   */
-#define SBP_MSG_FILEIO_CONFIG_RESP   0x1002
+ *
+* The advice on the optimal configuration for a FileIO
+* transfer.  Newer version of FileIO can support greater
+* throughput by supporting a large window of FileIO data
+* that can be in-flight during read or write operations.
+ */
+#define SBP_MSG_FILEIO_CONFIG_RESP 0x1002
 
-typedef struct {
-  
+typedef struct
+{
+
   /**
-* Advice sequence number
+   * Advice sequence number
    */
-    u32
-  sequence
-  ;
+  u32 sequence;
   /**
-* The number of SBP packets in the data in-flight window
+   * The number of SBP packets in the data in-flight window
    */
-    u32
-  window_size
-  ;
+  u32 window_size;
   /**
-* The number of SBP packets sent in one PDU
+   * The number of SBP packets sent in one PDU
    */
-    u32
-  batch_size
-  ;
+  u32 batch_size;
   /**
-* The version of FileIO that is supported
+   * The version of FileIO that is supported
    */
-    u32
-  fileio_version
-  ;
+  u32 fileio_version;
 } sbp_msg_fileio_config_resp_t;
 
-static inline size_t sbp_packed_size_sbp_msg_fileio_config_resp_t(const sbp_msg_fileio_config_resp_t *msg) {                                
-	(void)msg;
-  return                                                          
-	0                                                                          
-	  +
-				sizeof( msg->sequence )                                                                          
-	  +
-				sizeof( msg->window_size )                                                                          
-	  +
-				sizeof( msg->batch_size )                                                                          
-	  +
-				sizeof( msg->fileio_version );
+static inline size_t sbp_packed_size_sbp_msg_fileio_config_resp_t(const sbp_msg_fileio_config_resp_t *msg)
+{
+  (void)msg;
+  return 0 + sizeof(msg->sequence) + sizeof(msg->window_size) + sizeof(msg->batch_size) + sizeof(msg->fileio_version);
 }
 
-static inline bool sbp_pack_sbp_msg_fileio_config_resp_t(u8 *buf, size_t len, const sbp_msg_fileio_config_resp_t *msg) {
+static inline bool sbp_pack_sbp_msg_fileio_config_resp_t(u8 *buf, size_t len, const sbp_msg_fileio_config_resp_t *msg)
+{
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  if ( sbp_packed_size_sbp_msg_fileio_config_resp_t(msg) > len) { return false; }
-  
-        
-  if (offset + 4 > len) { return false; }
-  u32 msgsequence = htole32( msg->sequence );
-  memcpy(buf + offset, & msgsequence , 4);
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+  if (sbp_packed_size_sbp_msg_fileio_config_resp_t(msg) > len)
+  {
+    return false;
+  }
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
+  u32 msgsequence = htole32(msg->sequence);
+  memcpy(buf + offset, &msgsequence, 4);
   offset += 4;
-        
-  if (offset + 4 > len) { return false; }
-  u32 msgwindow_size = htole32( msg->window_size );
-  memcpy(buf + offset, & msgwindow_size , 4);
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
+  u32 msgwindow_size = htole32(msg->window_size);
+  memcpy(buf + offset, &msgwindow_size, 4);
   offset += 4;
-        
-  if (offset + 4 > len) { return false; }
-  u32 msgbatch_size = htole32( msg->batch_size );
-  memcpy(buf + offset, & msgbatch_size , 4);
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
+  u32 msgbatch_size = htole32(msg->batch_size);
+  memcpy(buf + offset, &msgbatch_size, 4);
   offset += 4;
-        
-  if (offset + 4 > len) { return false; }
-  u32 msgfileio_version = htole32( msg->fileio_version );
-  memcpy(buf + offset, & msgfileio_version , 4);
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
+  u32 msgfileio_version = htole32(msg->fileio_version);
+  memcpy(buf + offset, &msgfileio_version, 4);
   offset += 4;
   return true;
 }
 
-static inline bool sbp_unpack_sbp_msg_fileio_config_resp_t(const u8 *buf, size_t len, sbp_msg_fileio_config_resp_t *msg) {
+static inline bool sbp_unpack_sbp_msg_fileio_config_resp_t(const u8 *buf, size_t len, sbp_msg_fileio_config_resp_t *msg)
+{
   size_t offset = 0;
-	(void)offset;
-	(void)buf;
-	(void)len;
-	(void)msg;
-  
-      
-  if (offset + 4 > len) { return false; }
+  (void)offset;
+  (void)buf;
+  (void)len;
+  (void)msg;
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
   memcpy(&msg->sequence, buf + offset, 4);
-  msg->sequence = le32toh( msg->sequence );
+  msg->sequence = le32toh(msg->sequence);
   offset += 4;
-      
-  if (offset + 4 > len) { return false; }
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
   memcpy(&msg->window_size, buf + offset, 4);
-  msg->window_size = le32toh( msg->window_size );
+  msg->window_size = le32toh(msg->window_size);
   offset += 4;
-      
-  if (offset + 4 > len) { return false; }
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
   memcpy(&msg->batch_size, buf + offset, 4);
-  msg->batch_size = le32toh( msg->batch_size );
+  msg->batch_size = le32toh(msg->batch_size);
   offset += 4;
-      
-  if (offset + 4 > len) { return false; }
+
+  if (offset + 4 > len)
+  {
+    return false;
+  }
   memcpy(&msg->fileio_version, buf + offset, 4);
-  msg->fileio_version = le32toh( msg->fileio_version );
+  msg->fileio_version = le32toh(msg->fileio_version);
   offset += 4;
   return true;
 }
 
 #ifdef __cplusplus
-static inline bool operator== ( const sbp_msg_fileio_config_resp_t &a, const sbp_msg_fileio_config_resp_t &b) {
+static inline bool operator==(const sbp_msg_fileio_config_resp_t &a, const sbp_msg_fileio_config_resp_t &b)
+{
   (void)a;
   (void)b;
-  
-        
-    if (a.sequence != b.sequence) { return false; }
-        
-    if (a.window_size != b.window_size) { return false; }
-        
-    if (a.batch_size != b.batch_size) { return false; }
-        
-    if (a.fileio_version != b.fileio_version) { return false; }
+
+  if (a.sequence != b.sequence)
+  {
+    return false;
+  }
+
+  if (a.window_size != b.window_size)
+  {
+    return false;
+  }
+
+  if (a.batch_size != b.batch_size)
+  {
+    return false;
+  }
+
+  if (a.fileio_version != b.fileio_version)
+  {
+    return false;
+  }
 
   return true;
 }
 
-static inline bool operator!=(const sbp_msg_fileio_config_resp_t &a, const sbp_msg_fileio_config_resp_t &b) {
+static inline bool operator!=(const sbp_msg_fileio_config_resp_t &a, const sbp_msg_fileio_config_resp_t &b)
+{
   return !(a == b);
 }
 #endif
-
 
 #endif /* LIBSBP_FILE_IO_MESSAGES_H */

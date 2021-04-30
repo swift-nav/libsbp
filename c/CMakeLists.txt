@@ -9,6 +9,8 @@ include(SwiftCmakeOptions)
 include(CompileOptions)
 include(LanguageStandards)
 include(ClangTidy)
+include(ClangFormat)
+swift_setup_clang_format()
 swift_create_project_options(
     HAS_TESTS
     HAS_DOCS
