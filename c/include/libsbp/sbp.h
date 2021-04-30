@@ -13,13 +13,13 @@
 #ifndef LIBSBP_SBP_H
 #define LIBSBP_SBP_H
 
+#include <libsbp/common.h>
+#include <libsbp/sbp_msg.h>
+
 #ifdef __cplusplus
 extern "C"
 {
 #endif
-
-#include <libsbp/common.h>
-#include <libsbp/sbp_msg.h>
 
 /** \addtogroup sbp
  * \{ */
