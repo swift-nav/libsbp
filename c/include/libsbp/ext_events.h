@@ -91,6 +91,7 @@ static inline bool sbp_pack_sbp_msg_ext_event_t(u8 *buf, size_t len, const sbp_m
   }
   u16 msgwn = htole16(msg->wn);
   memcpy(buf + offset, &msgwn, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 4 > len)
@@ -99,6 +100,7 @@ static inline bool sbp_pack_sbp_msg_ext_event_t(u8 *buf, size_t len, const sbp_m
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -107,6 +109,7 @@ static inline bool sbp_pack_sbp_msg_ext_event_t(u8 *buf, size_t len, const sbp_m
   }
   u32 msgns_residual = htole32(*(const u32 *)&msg->ns_residual);
   memcpy(buf + offset, &msgns_residual, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -115,6 +118,7 @@ static inline bool sbp_pack_sbp_msg_ext_event_t(u8 *buf, size_t len, const sbp_m
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -123,6 +127,7 @@ static inline bool sbp_pack_sbp_msg_ext_event_t(u8 *buf, size_t len, const sbp_m
   }
   u8 msgpin = msg->pin;
   memcpy(buf + offset, &msgpin, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -141,6 +146,7 @@ static inline bool sbp_unpack_sbp_msg_ext_event_t(const u8 *buf, size_t len, sbp
   }
   memcpy(&msg->wn, buf + offset, 2);
   msg->wn = le16toh(msg->wn);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 4 > len)
@@ -149,6 +155,7 @@ static inline bool sbp_unpack_sbp_msg_ext_event_t(const u8 *buf, size_t len, sbp
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -159,6 +166,7 @@ static inline bool sbp_unpack_sbp_msg_ext_event_t(const u8 *buf, size_t len, sbp
   u32 msgns_residual = *(const u32 *)&msg->ns_residual;
   msgns_residual = le32toh(msgns_residual);
   msg->ns_residual = *(const s32 *)&msgns_residual;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -166,6 +174,7 @@ static inline bool sbp_unpack_sbp_msg_ext_event_t(const u8 *buf, size_t len, sbp
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -173,6 +182,7 @@ static inline bool sbp_unpack_sbp_msg_ext_event_t(const u8 *buf, size_t len, sbp
     return false;
   }
   memcpy(&msg->pin, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }

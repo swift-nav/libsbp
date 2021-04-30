@@ -111,6 +111,7 @@ static inline bool sbp_pack_sbp_msg_settings_write_t(u8 *buf, size_t len, const 
   {
     return false;
   }
+  // NOLINTNEXTLINE
   offset += sbp_pack_string(buf + offset, msg->setting, "3-section");
   return true;
 }
@@ -123,6 +124,7 @@ static inline bool sbp_unpack_sbp_msg_settings_write_t(const u8 *buf, size_t len
   (void)len;
   (void)msg;
 
+  // NOLINTNEXTLINE
   offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "3-section");
   return true;
 }
@@ -214,11 +216,13 @@ static inline bool sbp_pack_sbp_msg_settings_write_resp_t(u8 *buf, size_t len, c
   }
   u8 msgstatus = msg->status;
   memcpy(buf + offset, &msgstatus, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   if (offset + sbp_strlen(msg->setting, "3-section") > len)
   {
     return false;
   }
+  // NOLINTNEXTLINE
   offset += sbp_pack_string(buf + offset, msg->setting, "3-section");
   return true;
 }
@@ -237,7 +241,9 @@ sbp_unpack_sbp_msg_settings_write_resp_t(const u8 *buf, size_t len, sbp_msg_sett
     return false;
   }
   memcpy(&msg->status, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
+  // NOLINTNEXTLINE
   offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "3-section");
   return true;
 }
@@ -310,6 +316,7 @@ static inline bool sbp_pack_sbp_msg_settings_read_req_t(u8 *buf, size_t len, con
   {
     return false;
   }
+  // NOLINTNEXTLINE
   offset += sbp_pack_string(buf + offset, msg->setting, "2-section");
   return true;
 }
@@ -322,6 +329,7 @@ static inline bool sbp_unpack_sbp_msg_settings_read_req_t(const u8 *buf, size_t 
   (void)len;
   (void)msg;
 
+  // NOLINTNEXTLINE
   offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "2-section");
   return true;
 }
@@ -390,6 +398,7 @@ static inline bool sbp_pack_sbp_msg_settings_read_resp_t(u8 *buf, size_t len, co
   {
     return false;
   }
+  // NOLINTNEXTLINE
   offset += sbp_pack_string(buf + offset, msg->setting, "3-section");
   return true;
 }
@@ -402,6 +411,7 @@ static inline bool sbp_unpack_sbp_msg_settings_read_resp_t(const u8 *buf, size_t
   (void)len;
   (void)msg;
 
+  // NOLINTNEXTLINE
   offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "3-section");
   return true;
 }
@@ -469,6 +479,7 @@ sbp_pack_sbp_msg_settings_read_by_index_req_t(u8 *buf, size_t len, const sbp_msg
   }
   u16 msgindex = htole16(msg->index);
   memcpy(buf + offset, &msgindex, 2);
+  // NOLINTNEXTLINE
   offset += 2;
   return true;
 }
@@ -488,6 +499,7 @@ sbp_unpack_sbp_msg_settings_read_by_index_req_t(const u8 *buf, size_t len, sbp_m
   }
   memcpy(&msg->index, buf + offset, 2);
   msg->index = le16toh(msg->index);
+  // NOLINTNEXTLINE
   offset += 2;
   return true;
 }
@@ -569,11 +581,13 @@ sbp_pack_sbp_msg_settings_read_by_index_resp_t(u8 *buf, size_t len, const sbp_ms
   }
   u16 msgindex = htole16(msg->index);
   memcpy(buf + offset, &msgindex, 2);
+  // NOLINTNEXTLINE
   offset += 2;
   if (offset + sbp_strlen(msg->setting, "3-4-section") > len)
   {
     return false;
   }
+  // NOLINTNEXTLINE
   offset += sbp_pack_string(buf + offset, msg->setting, "3-4-section");
   return true;
 }
@@ -593,7 +607,9 @@ sbp_unpack_sbp_msg_settings_read_by_index_resp_t(const u8 *buf, size_t len, sbp_
   }
   memcpy(&msg->index, buf + offset, 2);
   msg->index = le16toh(msg->index);
+  // NOLINTNEXTLINE
   offset += 2;
+  // NOLINTNEXTLINE
   offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "3-4-section");
   return true;
 }
@@ -725,6 +741,7 @@ static inline bool sbp_pack_sbp_msg_settings_register_t(u8 *buf, size_t len, con
   {
     return false;
   }
+  // NOLINTNEXTLINE
   offset += sbp_pack_string(buf + offset, msg->setting, "3-section");
   return true;
 }
@@ -737,6 +754,7 @@ static inline bool sbp_unpack_sbp_msg_settings_register_t(const u8 *buf, size_t 
   (void)len;
   (void)msg;
 
+  // NOLINTNEXTLINE
   offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "3-section");
   return true;
 }
@@ -827,11 +845,13 @@ sbp_pack_sbp_msg_settings_register_resp_t(u8 *buf, size_t len, const sbp_msg_set
   }
   u8 msgstatus = msg->status;
   memcpy(buf + offset, &msgstatus, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   if (offset + sbp_strlen(msg->setting, "3-section") > len)
   {
     return false;
   }
+  // NOLINTNEXTLINE
   offset += sbp_pack_string(buf + offset, msg->setting, "3-section");
   return true;
 }
@@ -850,7 +870,9 @@ sbp_unpack_sbp_msg_settings_register_resp_t(const u8 *buf, size_t len, sbp_msg_s
     return false;
   }
   memcpy(&msg->status, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
+  // NOLINTNEXTLINE
   offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "3-section");
   return true;
 }

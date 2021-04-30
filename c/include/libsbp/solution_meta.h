@@ -153,6 +153,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_dep_a_t(u8 *buf, size_t len, const
   }
   u16 msgpdop = htole16(msg->pdop);
   memcpy(buf + offset, &msgpdop, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -161,6 +162,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_dep_a_t(u8 *buf, size_t len, const
   }
   u16 msghdop = htole16(msg->hdop);
   memcpy(buf + offset, &msghdop, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -169,6 +171,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_dep_a_t(u8 *buf, size_t len, const
   }
   u16 msgvdop = htole16(msg->vdop);
   memcpy(buf + offset, &msgvdop, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -177,6 +180,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_dep_a_t(u8 *buf, size_t len, const
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -185,6 +189,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_dep_a_t(u8 *buf, size_t len, const
   }
   u16 msgage_corrections = htole16(msg->age_corrections);
   memcpy(buf + offset, &msgage_corrections, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -193,6 +198,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_dep_a_t(u8 *buf, size_t len, const
   }
   u8 msgalignment_status = msg->alignment_status;
   memcpy(buf + offset, &msgalignment_status, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 4 > len)
@@ -201,6 +207,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_dep_a_t(u8 *buf, size_t len, const
   }
   u32 msglast_used_gnss_pos_tow = htole32(msg->last_used_gnss_pos_tow);
   memcpy(buf + offset, &msglast_used_gnss_pos_tow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -209,6 +216,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_dep_a_t(u8 *buf, size_t len, const
   }
   u32 msglast_used_gnss_vel_tow = htole32(msg->last_used_gnss_vel_tow);
   memcpy(buf + offset, &msglast_used_gnss_vel_tow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
   for (size_t msgsol_in_idx = 0; msgsol_in_idx < (size_t)msg->n_sol_in; msgsol_in_idx++)
   {
@@ -219,6 +227,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_dep_a_t(u8 *buf, size_t len, const
     }
     u8 msgsol_inmsgsol_in_idxsensor_type = msg->sol_in[msgsol_in_idx].sensor_type;
     memcpy(buf + offset, &msgsol_inmsgsol_in_idxsensor_type, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -227,6 +236,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_dep_a_t(u8 *buf, size_t len, const
     }
     u8 msgsol_inmsgsol_in_idxflags = msg->sol_in[msgsol_in_idx].flags;
     memcpy(buf + offset, &msgsol_inmsgsol_in_idxflags, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -246,6 +256,7 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_dep_a_t(const u8 *buf, size_t le
   }
   memcpy(&msg->pdop, buf + offset, 2);
   msg->pdop = le16toh(msg->pdop);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -254,6 +265,7 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_dep_a_t(const u8 *buf, size_t le
   }
   memcpy(&msg->hdop, buf + offset, 2);
   msg->hdop = le16toh(msg->hdop);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -262,6 +274,7 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_dep_a_t(const u8 *buf, size_t le
   }
   memcpy(&msg->vdop, buf + offset, 2);
   msg->vdop = le16toh(msg->vdop);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -269,6 +282,7 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_dep_a_t(const u8 *buf, size_t le
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -277,6 +291,7 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_dep_a_t(const u8 *buf, size_t le
   }
   memcpy(&msg->age_corrections, buf + offset, 2);
   msg->age_corrections = le16toh(msg->age_corrections);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -284,6 +299,7 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_dep_a_t(const u8 *buf, size_t le
     return false;
   }
   memcpy(&msg->alignment_status, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 4 > len)
@@ -292,6 +308,7 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_dep_a_t(const u8 *buf, size_t le
   }
   memcpy(&msg->last_used_gnss_pos_tow, buf + offset, 4);
   msg->last_used_gnss_pos_tow = le32toh(msg->last_used_gnss_pos_tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -300,6 +317,7 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_dep_a_t(const u8 *buf, size_t le
   }
   memcpy(&msg->last_used_gnss_vel_tow, buf + offset, 4);
   msg->last_used_gnss_vel_tow = le32toh(msg->last_used_gnss_vel_tow);
+  // NOLINTNEXTLINE
   offset += 4;
   msg->n_sol_in = (u8)((len - offset) / 2);
 
@@ -311,6 +329,7 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_dep_a_t(const u8 *buf, size_t le
       return false;
     }
     memcpy(&msg->sol_in[msgsol_in_idx].sensor_type, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -318,6 +337,7 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_dep_a_t(const u8 *buf, size_t le
       return false;
     }
     memcpy(&msg->sol_in[msgsol_in_idx].flags, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -539,6 +559,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_t(u8 *buf, size_t len, const sbp_m
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -547,6 +568,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_t(u8 *buf, size_t len, const sbp_m
   }
   u16 msgpdop = htole16(msg->pdop);
   memcpy(buf + offset, &msgpdop, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -555,6 +577,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_t(u8 *buf, size_t len, const sbp_m
   }
   u16 msghdop = htole16(msg->hdop);
   memcpy(buf + offset, &msghdop, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -563,6 +586,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_t(u8 *buf, size_t len, const sbp_m
   }
   u16 msgvdop = htole16(msg->vdop);
   memcpy(buf + offset, &msgvdop, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -571,6 +595,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_t(u8 *buf, size_t len, const sbp_m
   }
   u16 msgage_corrections = htole16(msg->age_corrections);
   memcpy(buf + offset, &msgage_corrections, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 4 > len)
@@ -579,6 +604,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_t(u8 *buf, size_t len, const sbp_m
   }
   u32 msgage_gnss = htole32(msg->age_gnss);
   memcpy(buf + offset, &msgage_gnss, 4);
+  // NOLINTNEXTLINE
   offset += 4;
   for (size_t msgsol_in_idx = 0; msgsol_in_idx < (size_t)msg->n_sol_in; msgsol_in_idx++)
   {
@@ -589,6 +615,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_t(u8 *buf, size_t len, const sbp_m
     }
     u8 msgsol_inmsgsol_in_idxsensor_type = msg->sol_in[msgsol_in_idx].sensor_type;
     memcpy(buf + offset, &msgsol_inmsgsol_in_idxsensor_type, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -597,6 +624,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_t(u8 *buf, size_t len, const sbp_m
     }
     u8 msgsol_inmsgsol_in_idxflags = msg->sol_in[msgsol_in_idx].flags;
     memcpy(buf + offset, &msgsol_inmsgsol_in_idxflags, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -616,6 +644,7 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_t(const u8 *buf, size_t len, sbp
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -624,6 +653,7 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_t(const u8 *buf, size_t len, sbp
   }
   memcpy(&msg->pdop, buf + offset, 2);
   msg->pdop = le16toh(msg->pdop);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -632,6 +662,7 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_t(const u8 *buf, size_t len, sbp
   }
   memcpy(&msg->hdop, buf + offset, 2);
   msg->hdop = le16toh(msg->hdop);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -640,6 +671,7 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_t(const u8 *buf, size_t len, sbp
   }
   memcpy(&msg->vdop, buf + offset, 2);
   msg->vdop = le16toh(msg->vdop);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -648,6 +680,7 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_t(const u8 *buf, size_t len, sbp
   }
   memcpy(&msg->age_corrections, buf + offset, 2);
   msg->age_corrections = le16toh(msg->age_corrections);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 4 > len)
@@ -656,6 +689,7 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_t(const u8 *buf, size_t len, sbp
   }
   memcpy(&msg->age_gnss, buf + offset, 4);
   msg->age_gnss = le32toh(msg->age_gnss);
+  // NOLINTNEXTLINE
   offset += 4;
   msg->n_sol_in = (u8)((len - offset) / 2);
 
@@ -667,6 +701,7 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_t(const u8 *buf, size_t len, sbp
       return false;
     }
     memcpy(&msg->sol_in[msgsol_in_idx].sensor_type, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -674,6 +709,7 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_t(const u8 *buf, size_t len, sbp
       return false;
     }
     memcpy(&msg->sol_in[msgsol_in_idx].flags, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;

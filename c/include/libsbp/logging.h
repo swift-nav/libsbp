@@ -72,11 +72,13 @@ static inline bool sbp_pack_sbp_msg_log_t(u8 *buf, size_t len, const sbp_msg_log
   }
   u8 msglevel = msg->level;
   memcpy(buf + offset, &msglevel, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   if (offset + sbp_strlen(msg->text, "none") > len)
   {
     return false;
   }
+  // NOLINTNEXTLINE
   offset += sbp_pack_string(buf + offset, msg->text, "none");
   return true;
 }
@@ -94,7 +96,9 @@ static inline bool sbp_unpack_sbp_msg_log_t(const u8 *buf, size_t len, sbp_msg_l
     return false;
   }
   memcpy(&msg->level, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
+  // NOLINTNEXTLINE
   offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->text, "none");
   return true;
 }
@@ -175,6 +179,7 @@ static inline bool sbp_pack_sbp_msg_fwd_t(u8 *buf, size_t len, const sbp_msg_fwd
   }
   u8 msgsource = msg->source;
   memcpy(buf + offset, &msgsource, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -183,11 +188,13 @@ static inline bool sbp_pack_sbp_msg_fwd_t(u8 *buf, size_t len, const sbp_msg_fwd
   }
   u8 msgprotocol = msg->protocol;
   memcpy(buf + offset, &msgprotocol, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   if (offset + sbp_strlen(msg->fwd_payload, "none") > len)
   {
     return false;
   }
+  // NOLINTNEXTLINE
   offset += sbp_pack_string(buf + offset, msg->fwd_payload, "none");
   return true;
 }
@@ -205,6 +212,7 @@ static inline bool sbp_unpack_sbp_msg_fwd_t(const u8 *buf, size_t len, sbp_msg_f
     return false;
   }
   memcpy(&msg->source, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -212,7 +220,9 @@ static inline bool sbp_unpack_sbp_msg_fwd_t(const u8 *buf, size_t len, sbp_msg_f
     return false;
   }
   memcpy(&msg->protocol, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
+  // NOLINTNEXTLINE
   offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->fwd_payload, "none");
   return true;
 }
@@ -282,6 +292,7 @@ static inline bool sbp_pack_sbp_msg_print_dep_t(u8 *buf, size_t len, const sbp_m
   {
     return false;
   }
+  // NOLINTNEXTLINE
   offset += sbp_pack_string(buf + offset, msg->text, "none");
   return true;
 }
@@ -294,6 +305,7 @@ static inline bool sbp_unpack_sbp_msg_print_dep_t(const u8 *buf, size_t len, sbp
   (void)len;
   (void)msg;
 
+  // NOLINTNEXTLINE
   offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->text, "none");
   return true;
 }

@@ -107,6 +107,7 @@ static inline bool sbp_pack_sbp_msg_odometry_t(u8 *buf, size_t len, const sbp_ms
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -115,6 +116,7 @@ static inline bool sbp_pack_sbp_msg_odometry_t(u8 *buf, size_t len, const sbp_ms
   }
   u32 msgvelocity = htole32(*(const u32 *)&msg->velocity);
   memcpy(buf + offset, &msgvelocity, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -123,6 +125,7 @@ static inline bool sbp_pack_sbp_msg_odometry_t(u8 *buf, size_t len, const sbp_ms
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -141,6 +144,7 @@ static inline bool sbp_unpack_sbp_msg_odometry_t(const u8 *buf, size_t len, sbp_
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -151,6 +155,7 @@ static inline bool sbp_unpack_sbp_msg_odometry_t(const u8 *buf, size_t len, sbp_
   u32 msgvelocity = *(const u32 *)&msg->velocity;
   msgvelocity = le32toh(msgvelocity);
   msg->velocity = *(const s32 *)&msgvelocity;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -158,6 +163,7 @@ static inline bool sbp_unpack_sbp_msg_odometry_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -284,6 +290,7 @@ static inline bool sbp_pack_sbp_msg_wheeltick_t(u8 *buf, size_t len, const sbp_m
   }
   u64 msgtime = htole64(msg->time);
   memcpy(buf + offset, &msgtime, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 1 > len)
@@ -292,6 +299,7 @@ static inline bool sbp_pack_sbp_msg_wheeltick_t(u8 *buf, size_t len, const sbp_m
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -300,6 +308,7 @@ static inline bool sbp_pack_sbp_msg_wheeltick_t(u8 *buf, size_t len, const sbp_m
   }
   u8 msgsource = msg->source;
   memcpy(buf + offset, &msgsource, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 4 > len)
@@ -308,6 +317,7 @@ static inline bool sbp_pack_sbp_msg_wheeltick_t(u8 *buf, size_t len, const sbp_m
   }
   u32 msgticks = htole32(*(const u32 *)&msg->ticks);
   memcpy(buf + offset, &msgticks, 4);
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }
@@ -326,6 +336,7 @@ static inline bool sbp_unpack_sbp_msg_wheeltick_t(const u8 *buf, size_t len, sbp
   }
   memcpy(&msg->time, buf + offset, 8);
   msg->time = le64toh(msg->time);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 1 > len)
@@ -333,6 +344,7 @@ static inline bool sbp_unpack_sbp_msg_wheeltick_t(const u8 *buf, size_t len, sbp
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -340,6 +352,7 @@ static inline bool sbp_unpack_sbp_msg_wheeltick_t(const u8 *buf, size_t len, sbp
     return false;
   }
   memcpy(&msg->source, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 4 > len)
@@ -350,6 +363,7 @@ static inline bool sbp_unpack_sbp_msg_wheeltick_t(const u8 *buf, size_t len, sbp
   u32 msgticks = *(const u32 *)&msg->ticks;
   msgticks = le32toh(msgticks);
   msg->ticks = *(const s32 *)&msgticks;
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }

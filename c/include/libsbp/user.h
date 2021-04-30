@@ -56,6 +56,7 @@ static inline bool sbp_pack_sbp_msg_user_data_t(u8 *buf, size_t len, const sbp_m
     }
     u8 msgcontentsmsgcontents_idx = msg->contents[msgcontents_idx];
     memcpy(buf + offset, &msgcontentsmsgcontents_idx, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -79,6 +80,7 @@ static inline bool sbp_unpack_sbp_msg_user_data_t(const u8 *buf, size_t len, sbp
       return false;
     }
     memcpy(&msg->contents[msgcontents_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;

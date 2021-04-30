@@ -86,6 +86,7 @@ static inline bool sbp_pack_sbp_msg_gps_time_t(u8 *buf, size_t len, const sbp_ms
   }
   u16 msgwn = htole16(msg->wn);
   memcpy(buf + offset, &msgwn, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 4 > len)
@@ -94,6 +95,7 @@ static inline bool sbp_pack_sbp_msg_gps_time_t(u8 *buf, size_t len, const sbp_ms
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -102,6 +104,7 @@ static inline bool sbp_pack_sbp_msg_gps_time_t(u8 *buf, size_t len, const sbp_ms
   }
   u32 msgns_residual = htole32(*(const u32 *)&msg->ns_residual);
   memcpy(buf + offset, &msgns_residual, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -110,6 +113,7 @@ static inline bool sbp_pack_sbp_msg_gps_time_t(u8 *buf, size_t len, const sbp_ms
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -128,6 +132,7 @@ static inline bool sbp_unpack_sbp_msg_gps_time_t(const u8 *buf, size_t len, sbp_
   }
   memcpy(&msg->wn, buf + offset, 2);
   msg->wn = le16toh(msg->wn);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 4 > len)
@@ -136,6 +141,7 @@ static inline bool sbp_unpack_sbp_msg_gps_time_t(const u8 *buf, size_t len, sbp_
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -146,6 +152,7 @@ static inline bool sbp_unpack_sbp_msg_gps_time_t(const u8 *buf, size_t len, sbp_
   u32 msgns_residual = *(const u32 *)&msg->ns_residual;
   msgns_residual = le32toh(msgns_residual);
   msg->ns_residual = *(const s32 *)&msgns_residual;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -153,6 +160,7 @@ static inline bool sbp_unpack_sbp_msg_gps_time_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -269,6 +277,7 @@ static inline bool sbp_pack_sbp_msg_gps_time_gnss_t(u8 *buf, size_t len, const s
   }
   u16 msgwn = htole16(msg->wn);
   memcpy(buf + offset, &msgwn, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 4 > len)
@@ -277,6 +286,7 @@ static inline bool sbp_pack_sbp_msg_gps_time_gnss_t(u8 *buf, size_t len, const s
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -285,6 +295,7 @@ static inline bool sbp_pack_sbp_msg_gps_time_gnss_t(u8 *buf, size_t len, const s
   }
   u32 msgns_residual = htole32(*(const u32 *)&msg->ns_residual);
   memcpy(buf + offset, &msgns_residual, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -293,6 +304,7 @@ static inline bool sbp_pack_sbp_msg_gps_time_gnss_t(u8 *buf, size_t len, const s
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -311,6 +323,7 @@ static inline bool sbp_unpack_sbp_msg_gps_time_gnss_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->wn, buf + offset, 2);
   msg->wn = le16toh(msg->wn);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 4 > len)
@@ -319,6 +332,7 @@ static inline bool sbp_unpack_sbp_msg_gps_time_gnss_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -329,6 +343,7 @@ static inline bool sbp_unpack_sbp_msg_gps_time_gnss_t(const u8 *buf, size_t len,
   u32 msgns_residual = *(const u32 *)&msg->ns_residual;
   msgns_residual = le32toh(msgns_residual);
   msg->ns_residual = *(const s32 *)&msgns_residual;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -336,6 +351,7 @@ static inline bool sbp_unpack_sbp_msg_gps_time_gnss_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -474,6 +490,7 @@ static inline bool sbp_pack_sbp_msg_utc_time_t(u8 *buf, size_t len, const sbp_ms
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 4 > len)
@@ -482,6 +499,7 @@ static inline bool sbp_pack_sbp_msg_utc_time_t(u8 *buf, size_t len, const sbp_ms
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -490,6 +508,7 @@ static inline bool sbp_pack_sbp_msg_utc_time_t(u8 *buf, size_t len, const sbp_ms
   }
   u16 msgyear = htole16(msg->year);
   memcpy(buf + offset, &msgyear, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -498,6 +517,7 @@ static inline bool sbp_pack_sbp_msg_utc_time_t(u8 *buf, size_t len, const sbp_ms
   }
   u8 msgmonth = msg->month;
   memcpy(buf + offset, &msgmonth, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -506,6 +526,7 @@ static inline bool sbp_pack_sbp_msg_utc_time_t(u8 *buf, size_t len, const sbp_ms
   }
   u8 msgday = msg->day;
   memcpy(buf + offset, &msgday, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -514,6 +535,7 @@ static inline bool sbp_pack_sbp_msg_utc_time_t(u8 *buf, size_t len, const sbp_ms
   }
   u8 msghours = msg->hours;
   memcpy(buf + offset, &msghours, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -522,6 +544,7 @@ static inline bool sbp_pack_sbp_msg_utc_time_t(u8 *buf, size_t len, const sbp_ms
   }
   u8 msgminutes = msg->minutes;
   memcpy(buf + offset, &msgminutes, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -530,6 +553,7 @@ static inline bool sbp_pack_sbp_msg_utc_time_t(u8 *buf, size_t len, const sbp_ms
   }
   u8 msgseconds = msg->seconds;
   memcpy(buf + offset, &msgseconds, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 4 > len)
@@ -538,6 +562,7 @@ static inline bool sbp_pack_sbp_msg_utc_time_t(u8 *buf, size_t len, const sbp_ms
   }
   u32 msgns = htole32(msg->ns);
   memcpy(buf + offset, &msgns, 4);
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }
@@ -555,6 +580,7 @@ static inline bool sbp_unpack_sbp_msg_utc_time_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 4 > len)
@@ -563,6 +589,7 @@ static inline bool sbp_unpack_sbp_msg_utc_time_t(const u8 *buf, size_t len, sbp_
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -571,6 +598,7 @@ static inline bool sbp_unpack_sbp_msg_utc_time_t(const u8 *buf, size_t len, sbp_
   }
   memcpy(&msg->year, buf + offset, 2);
   msg->year = le16toh(msg->year);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -578,6 +606,7 @@ static inline bool sbp_unpack_sbp_msg_utc_time_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->month, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -585,6 +614,7 @@ static inline bool sbp_unpack_sbp_msg_utc_time_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->day, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -592,6 +622,7 @@ static inline bool sbp_unpack_sbp_msg_utc_time_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->hours, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -599,6 +630,7 @@ static inline bool sbp_unpack_sbp_msg_utc_time_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->minutes, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -606,6 +638,7 @@ static inline bool sbp_unpack_sbp_msg_utc_time_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->seconds, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 4 > len)
@@ -614,6 +647,7 @@ static inline bool sbp_unpack_sbp_msg_utc_time_t(const u8 *buf, size_t len, sbp_
   }
   memcpy(&msg->ns, buf + offset, 4);
   msg->ns = le32toh(msg->ns);
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }
@@ -778,6 +812,7 @@ static inline bool sbp_pack_sbp_msg_utc_time_gnss_t(u8 *buf, size_t len, const s
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 4 > len)
@@ -786,6 +821,7 @@ static inline bool sbp_pack_sbp_msg_utc_time_gnss_t(u8 *buf, size_t len, const s
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -794,6 +830,7 @@ static inline bool sbp_pack_sbp_msg_utc_time_gnss_t(u8 *buf, size_t len, const s
   }
   u16 msgyear = htole16(msg->year);
   memcpy(buf + offset, &msgyear, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -802,6 +839,7 @@ static inline bool sbp_pack_sbp_msg_utc_time_gnss_t(u8 *buf, size_t len, const s
   }
   u8 msgmonth = msg->month;
   memcpy(buf + offset, &msgmonth, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -810,6 +848,7 @@ static inline bool sbp_pack_sbp_msg_utc_time_gnss_t(u8 *buf, size_t len, const s
   }
   u8 msgday = msg->day;
   memcpy(buf + offset, &msgday, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -818,6 +857,7 @@ static inline bool sbp_pack_sbp_msg_utc_time_gnss_t(u8 *buf, size_t len, const s
   }
   u8 msghours = msg->hours;
   memcpy(buf + offset, &msghours, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -826,6 +866,7 @@ static inline bool sbp_pack_sbp_msg_utc_time_gnss_t(u8 *buf, size_t len, const s
   }
   u8 msgminutes = msg->minutes;
   memcpy(buf + offset, &msgminutes, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -834,6 +875,7 @@ static inline bool sbp_pack_sbp_msg_utc_time_gnss_t(u8 *buf, size_t len, const s
   }
   u8 msgseconds = msg->seconds;
   memcpy(buf + offset, &msgseconds, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 4 > len)
@@ -842,6 +884,7 @@ static inline bool sbp_pack_sbp_msg_utc_time_gnss_t(u8 *buf, size_t len, const s
   }
   u32 msgns = htole32(msg->ns);
   memcpy(buf + offset, &msgns, 4);
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }
@@ -859,6 +902,7 @@ static inline bool sbp_unpack_sbp_msg_utc_time_gnss_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 4 > len)
@@ -867,6 +911,7 @@ static inline bool sbp_unpack_sbp_msg_utc_time_gnss_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -875,6 +920,7 @@ static inline bool sbp_unpack_sbp_msg_utc_time_gnss_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->year, buf + offset, 2);
   msg->year = le16toh(msg->year);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -882,6 +928,7 @@ static inline bool sbp_unpack_sbp_msg_utc_time_gnss_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->month, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -889,6 +936,7 @@ static inline bool sbp_unpack_sbp_msg_utc_time_gnss_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->day, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -896,6 +944,7 @@ static inline bool sbp_unpack_sbp_msg_utc_time_gnss_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->hours, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -903,6 +952,7 @@ static inline bool sbp_unpack_sbp_msg_utc_time_gnss_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->minutes, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -910,6 +960,7 @@ static inline bool sbp_unpack_sbp_msg_utc_time_gnss_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->seconds, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 4 > len)
@@ -918,6 +969,7 @@ static inline bool sbp_unpack_sbp_msg_utc_time_gnss_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->ns, buf + offset, 4);
   msg->ns = le32toh(msg->ns);
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }
@@ -1074,6 +1126,7 @@ static inline bool sbp_pack_sbp_msg_dops_t(u8 *buf, size_t len, const sbp_msg_do
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -1082,6 +1135,7 @@ static inline bool sbp_pack_sbp_msg_dops_t(u8 *buf, size_t len, const sbp_msg_do
   }
   u16 msggdop = htole16(msg->gdop);
   memcpy(buf + offset, &msggdop, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -1090,6 +1144,7 @@ static inline bool sbp_pack_sbp_msg_dops_t(u8 *buf, size_t len, const sbp_msg_do
   }
   u16 msgpdop = htole16(msg->pdop);
   memcpy(buf + offset, &msgpdop, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -1098,6 +1153,7 @@ static inline bool sbp_pack_sbp_msg_dops_t(u8 *buf, size_t len, const sbp_msg_do
   }
   u16 msgtdop = htole16(msg->tdop);
   memcpy(buf + offset, &msgtdop, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -1106,6 +1162,7 @@ static inline bool sbp_pack_sbp_msg_dops_t(u8 *buf, size_t len, const sbp_msg_do
   }
   u16 msghdop = htole16(msg->hdop);
   memcpy(buf + offset, &msghdop, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -1114,6 +1171,7 @@ static inline bool sbp_pack_sbp_msg_dops_t(u8 *buf, size_t len, const sbp_msg_do
   }
   u16 msgvdop = htole16(msg->vdop);
   memcpy(buf + offset, &msgvdop, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -1122,6 +1180,7 @@ static inline bool sbp_pack_sbp_msg_dops_t(u8 *buf, size_t len, const sbp_msg_do
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -1140,6 +1199,7 @@ static inline bool sbp_unpack_sbp_msg_dops_t(const u8 *buf, size_t len, sbp_msg_
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -1148,6 +1208,7 @@ static inline bool sbp_unpack_sbp_msg_dops_t(const u8 *buf, size_t len, sbp_msg_
   }
   memcpy(&msg->gdop, buf + offset, 2);
   msg->gdop = le16toh(msg->gdop);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -1156,6 +1217,7 @@ static inline bool sbp_unpack_sbp_msg_dops_t(const u8 *buf, size_t len, sbp_msg_
   }
   memcpy(&msg->pdop, buf + offset, 2);
   msg->pdop = le16toh(msg->pdop);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -1164,6 +1226,7 @@ static inline bool sbp_unpack_sbp_msg_dops_t(const u8 *buf, size_t len, sbp_msg_
   }
   memcpy(&msg->tdop, buf + offset, 2);
   msg->tdop = le16toh(msg->tdop);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -1172,6 +1235,7 @@ static inline bool sbp_unpack_sbp_msg_dops_t(const u8 *buf, size_t len, sbp_msg_
   }
   memcpy(&msg->hdop, buf + offset, 2);
   msg->hdop = le16toh(msg->hdop);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -1180,6 +1244,7 @@ static inline bool sbp_unpack_sbp_msg_dops_t(const u8 *buf, size_t len, sbp_msg_
   }
   memcpy(&msg->vdop, buf + offset, 2);
   msg->vdop = le16toh(msg->vdop);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -1187,6 +1252,7 @@ static inline bool sbp_unpack_sbp_msg_dops_t(const u8 *buf, size_t len, sbp_msg_
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -1353,6 +1419,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_t(u8 *buf, size_t len, const sbp_ms
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -1361,6 +1428,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_t(u8 *buf, size_t len, const sbp_ms
   }
   double msgx = msg->x;
   memcpy(buf + offset, &msgx, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -1369,6 +1437,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_t(u8 *buf, size_t len, const sbp_ms
   }
   double msgy = msg->y;
   memcpy(buf + offset, &msgy, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -1377,6 +1446,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_t(u8 *buf, size_t len, const sbp_ms
   }
   double msgz = msg->z;
   memcpy(buf + offset, &msgz, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 2 > len)
@@ -1385,6 +1455,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_t(u8 *buf, size_t len, const sbp_ms
   }
   u16 msgaccuracy = htole16(msg->accuracy);
   memcpy(buf + offset, &msgaccuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -1393,6 +1464,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_t(u8 *buf, size_t len, const sbp_ms
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1401,6 +1473,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_t(u8 *buf, size_t len, const sbp_ms
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -1419,6 +1492,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_t(const u8 *buf, size_t len, sbp_
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -1426,6 +1500,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->x, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -1433,6 +1508,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->y, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -1440,6 +1516,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->z, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 2 > len)
@@ -1448,6 +1525,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_t(const u8 *buf, size_t len, sbp_
   }
   memcpy(&msg->accuracy, buf + offset, 2);
   msg->accuracy = le16toh(msg->accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -1455,6 +1533,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1462,6 +1541,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -1652,6 +1732,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -1660,6 +1741,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   double msgx = msg->x;
   memcpy(buf + offset, &msgx, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -1668,6 +1750,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   double msgy = msg->y;
   memcpy(buf + offset, &msgy, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -1676,6 +1759,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   double msgz = msg->z;
   memcpy(buf + offset, &msgz, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 4 > len)
@@ -1684,6 +1768,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   float msgcov_x_x = msg->cov_x_x;
   memcpy(buf + offset, &msgcov_x_x, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -1692,6 +1777,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   float msgcov_x_y = msg->cov_x_y;
   memcpy(buf + offset, &msgcov_x_y, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -1700,6 +1786,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   float msgcov_x_z = msg->cov_x_z;
   memcpy(buf + offset, &msgcov_x_z, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -1708,6 +1795,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   float msgcov_y_y = msg->cov_y_y;
   memcpy(buf + offset, &msgcov_y_y, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -1716,6 +1804,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   float msgcov_y_z = msg->cov_y_z;
   memcpy(buf + offset, &msgcov_y_z, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -1724,6 +1813,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   float msgcov_z_z = msg->cov_z_z;
   memcpy(buf + offset, &msgcov_z_z, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -1732,6 +1822,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1740,6 +1831,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -1758,6 +1850,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_t(const u8 *buf, size_t len, 
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -1765,6 +1858,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->x, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -1772,6 +1866,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->y, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -1779,6 +1874,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->z, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 4 > len)
@@ -1786,6 +1882,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->cov_x_x, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -1793,6 +1890,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->cov_x_y, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -1800,6 +1898,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->cov_x_z, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -1807,6 +1906,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->cov_y_y, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -1814,6 +1914,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->cov_y_z, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -1821,6 +1922,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->cov_z_z, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -1828,6 +1930,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1835,6 +1938,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -2031,6 +2135,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_t(u8 *buf, size_t len, const sbp_msg
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -2039,6 +2144,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_t(u8 *buf, size_t len, const sbp_msg
   }
   double msglat = msg->lat;
   memcpy(buf + offset, &msglat, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -2047,6 +2153,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_t(u8 *buf, size_t len, const sbp_msg
   }
   double msglon = msg->lon;
   memcpy(buf + offset, &msglon, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -2055,6 +2162,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_t(u8 *buf, size_t len, const sbp_msg
   }
   double msgheight = msg->height;
   memcpy(buf + offset, &msgheight, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 2 > len)
@@ -2063,6 +2171,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_t(u8 *buf, size_t len, const sbp_msg
   }
   u16 msgh_accuracy = htole16(msg->h_accuracy);
   memcpy(buf + offset, &msgh_accuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2071,6 +2180,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_t(u8 *buf, size_t len, const sbp_msg
   }
   u16 msgv_accuracy = htole16(msg->v_accuracy);
   memcpy(buf + offset, &msgv_accuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -2079,6 +2189,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_t(u8 *buf, size_t len, const sbp_msg
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -2087,6 +2198,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_t(u8 *buf, size_t len, const sbp_msg
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -2105,6 +2217,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_t(const u8 *buf, size_t len, sbp_m
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -2112,6 +2225,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_t(const u8 *buf, size_t len, sbp_m
     return false;
   }
   memcpy(&msg->lat, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -2119,6 +2233,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_t(const u8 *buf, size_t len, sbp_m
     return false;
   }
   memcpy(&msg->lon, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -2126,6 +2241,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_t(const u8 *buf, size_t len, sbp_m
     return false;
   }
   memcpy(&msg->height, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 2 > len)
@@ -2134,6 +2250,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_t(const u8 *buf, size_t len, sbp_m
   }
   memcpy(&msg->h_accuracy, buf + offset, 2);
   msg->h_accuracy = le16toh(msg->h_accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2142,6 +2259,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_t(const u8 *buf, size_t len, sbp_m
   }
   memcpy(&msg->v_accuracy, buf + offset, 2);
   msg->v_accuracy = le16toh(msg->v_accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -2149,6 +2267,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_t(const u8 *buf, size_t len, sbp_m
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -2156,6 +2275,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_t(const u8 *buf, size_t len, sbp_m
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -2350,6 +2470,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_t(u8 *buf, size_t len, const sbp
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -2358,6 +2479,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_t(u8 *buf, size_t len, const sbp
   }
   double msglat = msg->lat;
   memcpy(buf + offset, &msglat, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -2366,6 +2488,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_t(u8 *buf, size_t len, const sbp
   }
   double msglon = msg->lon;
   memcpy(buf + offset, &msglon, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -2374,6 +2497,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_t(u8 *buf, size_t len, const sbp
   }
   double msgheight = msg->height;
   memcpy(buf + offset, &msgheight, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 4 > len)
@@ -2382,6 +2506,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_t(u8 *buf, size_t len, const sbp
   }
   float msgcov_n_n = msg->cov_n_n;
   memcpy(buf + offset, &msgcov_n_n, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -2390,6 +2515,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_t(u8 *buf, size_t len, const sbp
   }
   float msgcov_n_e = msg->cov_n_e;
   memcpy(buf + offset, &msgcov_n_e, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -2398,6 +2524,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_t(u8 *buf, size_t len, const sbp
   }
   float msgcov_n_d = msg->cov_n_d;
   memcpy(buf + offset, &msgcov_n_d, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -2406,6 +2533,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_t(u8 *buf, size_t len, const sbp
   }
   float msgcov_e_e = msg->cov_e_e;
   memcpy(buf + offset, &msgcov_e_e, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -2414,6 +2542,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_t(u8 *buf, size_t len, const sbp
   }
   float msgcov_e_d = msg->cov_e_d;
   memcpy(buf + offset, &msgcov_e_d, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -2422,6 +2551,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_t(u8 *buf, size_t len, const sbp
   }
   float msgcov_d_d = msg->cov_d_d;
   memcpy(buf + offset, &msgcov_d_d, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -2430,6 +2560,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_t(u8 *buf, size_t len, const sbp
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -2438,6 +2569,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_t(u8 *buf, size_t len, const sbp
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -2456,6 +2588,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_t(const u8 *buf, size_t len, s
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -2463,6 +2596,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->lat, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -2470,6 +2604,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->lon, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -2477,6 +2612,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->height, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 4 > len)
@@ -2484,6 +2620,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->cov_n_n, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -2491,6 +2628,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->cov_n_e, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -2498,6 +2636,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->cov_n_d, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -2505,6 +2644,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->cov_e_e, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -2512,6 +2652,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->cov_e_d, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -2519,6 +2660,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->cov_d_d, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -2526,6 +2668,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -2533,6 +2676,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -2693,6 +2837,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ecef_t(u8 *buf, size_t len, const s
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -2701,6 +2846,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ecef_t(u8 *buf, size_t len, const s
   }
   u32 msgx = htole32(*(const u32 *)&msg->x);
   memcpy(buf + offset, &msgx, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -2709,6 +2855,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ecef_t(u8 *buf, size_t len, const s
   }
   u32 msgy = htole32(*(const u32 *)&msg->y);
   memcpy(buf + offset, &msgy, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -2717,6 +2864,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ecef_t(u8 *buf, size_t len, const s
   }
   u32 msgz = htole32(*(const u32 *)&msg->z);
   memcpy(buf + offset, &msgz, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -2725,6 +2873,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ecef_t(u8 *buf, size_t len, const s
   }
   u16 msgaccuracy = htole16(msg->accuracy);
   memcpy(buf + offset, &msgaccuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -2733,6 +2882,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ecef_t(u8 *buf, size_t len, const s
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -2741,6 +2891,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ecef_t(u8 *buf, size_t len, const s
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -2759,6 +2910,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ecef_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -2769,6 +2921,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ecef_t(const u8 *buf, size_t len,
   u32 msgx = *(const u32 *)&msg->x;
   msgx = le32toh(msgx);
   msg->x = *(const s32 *)&msgx;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -2779,6 +2932,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ecef_t(const u8 *buf, size_t len,
   u32 msgy = *(const u32 *)&msg->y;
   msgy = le32toh(msgy);
   msg->y = *(const s32 *)&msgy;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -2789,6 +2943,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ecef_t(const u8 *buf, size_t len,
   u32 msgz = *(const u32 *)&msg->z;
   msgz = le32toh(msgz);
   msg->z = *(const s32 *)&msgz;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -2797,6 +2952,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ecef_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->accuracy, buf + offset, 2);
   msg->accuracy = le16toh(msg->accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -2804,6 +2960,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ecef_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -2811,6 +2968,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ecef_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -2951,6 +3109,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ned_t(u8 *buf, size_t len, const sb
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -2959,6 +3118,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ned_t(u8 *buf, size_t len, const sb
   }
   u32 msgn = htole32(*(const u32 *)&msg->n);
   memcpy(buf + offset, &msgn, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -2967,6 +3127,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ned_t(u8 *buf, size_t len, const sb
   }
   u32 msge = htole32(*(const u32 *)&msg->e);
   memcpy(buf + offset, &msge, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -2975,6 +3136,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ned_t(u8 *buf, size_t len, const sb
   }
   u32 msgd = htole32(*(const u32 *)&msg->d);
   memcpy(buf + offset, &msgd, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -2983,6 +3145,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ned_t(u8 *buf, size_t len, const sb
   }
   u16 msgh_accuracy = htole16(msg->h_accuracy);
   memcpy(buf + offset, &msgh_accuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2991,6 +3154,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ned_t(u8 *buf, size_t len, const sb
   }
   u16 msgv_accuracy = htole16(msg->v_accuracy);
   memcpy(buf + offset, &msgv_accuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -2999,6 +3163,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ned_t(u8 *buf, size_t len, const sb
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3007,6 +3172,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ned_t(u8 *buf, size_t len, const sb
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -3025,6 +3191,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ned_t(const u8 *buf, size_t len, 
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3035,6 +3202,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ned_t(const u8 *buf, size_t len, 
   u32 msgn = *(const u32 *)&msg->n;
   msgn = le32toh(msgn);
   msg->n = *(const s32 *)&msgn;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3045,6 +3213,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ned_t(const u8 *buf, size_t len, 
   u32 msge = *(const u32 *)&msg->e;
   msge = le32toh(msge);
   msg->e = *(const s32 *)&msge;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3055,6 +3224,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ned_t(const u8 *buf, size_t len, 
   u32 msgd = *(const u32 *)&msg->d;
   msgd = le32toh(msgd);
   msg->d = *(const s32 *)&msgd;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -3063,6 +3233,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ned_t(const u8 *buf, size_t len, 
   }
   memcpy(&msg->h_accuracy, buf + offset, 2);
   msg->h_accuracy = le16toh(msg->h_accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -3071,6 +3242,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ned_t(const u8 *buf, size_t len, 
   }
   memcpy(&msg->v_accuracy, buf + offset, 2);
   msg->v_accuracy = le16toh(msg->v_accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -3078,6 +3250,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ned_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3085,6 +3258,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ned_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -3249,6 +3423,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_t(u8 *buf, size_t len, const sbp_ms
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3257,6 +3432,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_t(u8 *buf, size_t len, const sbp_ms
   }
   u32 msgx = htole32(*(const u32 *)&msg->x);
   memcpy(buf + offset, &msgx, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3265,6 +3441,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_t(u8 *buf, size_t len, const sbp_ms
   }
   u32 msgy = htole32(*(const u32 *)&msg->y);
   memcpy(buf + offset, &msgy, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3273,6 +3450,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_t(u8 *buf, size_t len, const sbp_ms
   }
   u32 msgz = htole32(*(const u32 *)&msg->z);
   memcpy(buf + offset, &msgz, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -3281,6 +3459,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_t(u8 *buf, size_t len, const sbp_ms
   }
   u16 msgaccuracy = htole16(msg->accuracy);
   memcpy(buf + offset, &msgaccuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -3289,6 +3468,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_t(u8 *buf, size_t len, const sbp_ms
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3297,6 +3477,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_t(u8 *buf, size_t len, const sbp_ms
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -3315,6 +3496,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_t(const u8 *buf, size_t len, sbp_
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3325,6 +3507,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_t(const u8 *buf, size_t len, sbp_
   u32 msgx = *(const u32 *)&msg->x;
   msgx = le32toh(msgx);
   msg->x = *(const s32 *)&msgx;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3335,6 +3518,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_t(const u8 *buf, size_t len, sbp_
   u32 msgy = *(const u32 *)&msg->y;
   msgy = le32toh(msgy);
   msg->y = *(const s32 *)&msgy;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3345,6 +3529,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_t(const u8 *buf, size_t len, sbp_
   u32 msgz = *(const u32 *)&msg->z;
   msgz = le32toh(msgz);
   msg->z = *(const s32 *)&msgz;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -3353,6 +3538,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_t(const u8 *buf, size_t len, sbp_
   }
   memcpy(&msg->accuracy, buf + offset, 2);
   msg->accuracy = le16toh(msg->accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -3360,6 +3546,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3367,6 +3554,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -3548,6 +3736,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3556,6 +3745,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   u32 msgx = htole32(*(const u32 *)&msg->x);
   memcpy(buf + offset, &msgx, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3564,6 +3754,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   u32 msgy = htole32(*(const u32 *)&msg->y);
   memcpy(buf + offset, &msgy, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3572,6 +3763,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   u32 msgz = htole32(*(const u32 *)&msg->z);
   memcpy(buf + offset, &msgz, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3580,6 +3772,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   float msgcov_x_x = msg->cov_x_x;
   memcpy(buf + offset, &msgcov_x_x, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3588,6 +3781,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   float msgcov_x_y = msg->cov_x_y;
   memcpy(buf + offset, &msgcov_x_y, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3596,6 +3790,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   float msgcov_x_z = msg->cov_x_z;
   memcpy(buf + offset, &msgcov_x_z, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3604,6 +3799,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   float msgcov_y_y = msg->cov_y_y;
   memcpy(buf + offset, &msgcov_y_y, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3612,6 +3808,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   float msgcov_y_z = msg->cov_y_z;
   memcpy(buf + offset, &msgcov_y_z, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3620,6 +3817,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   float msgcov_z_z = msg->cov_z_z;
   memcpy(buf + offset, &msgcov_z_z, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -3628,6 +3826,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3636,6 +3835,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_t(u8 *buf, size_t len, const sb
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -3654,6 +3854,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_t(const u8 *buf, size_t len, 
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3664,6 +3865,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_t(const u8 *buf, size_t len, 
   u32 msgx = *(const u32 *)&msg->x;
   msgx = le32toh(msgx);
   msg->x = *(const s32 *)&msgx;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3674,6 +3876,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_t(const u8 *buf, size_t len, 
   u32 msgy = *(const u32 *)&msg->y;
   msgy = le32toh(msgy);
   msg->y = *(const s32 *)&msgy;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3684,6 +3887,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_t(const u8 *buf, size_t len, 
   u32 msgz = *(const u32 *)&msg->z;
   msgz = le32toh(msgz);
   msg->z = *(const s32 *)&msgz;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3691,6 +3895,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->cov_x_x, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3698,6 +3903,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->cov_x_y, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3705,6 +3911,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->cov_x_z, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3712,6 +3919,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->cov_y_y, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3719,6 +3927,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->cov_y_z, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3726,6 +3935,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->cov_z_z, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -3733,6 +3943,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3740,6 +3951,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -3929,6 +4141,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_t(u8 *buf, size_t len, const sbp_msg
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3937,6 +4150,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_t(u8 *buf, size_t len, const sbp_msg
   }
   u32 msgn = htole32(*(const u32 *)&msg->n);
   memcpy(buf + offset, &msgn, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3945,6 +4159,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_t(u8 *buf, size_t len, const sbp_msg
   }
   u32 msge = htole32(*(const u32 *)&msg->e);
   memcpy(buf + offset, &msge, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3953,6 +4168,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_t(u8 *buf, size_t len, const sbp_msg
   }
   u32 msgd = htole32(*(const u32 *)&msg->d);
   memcpy(buf + offset, &msgd, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -3961,6 +4177,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_t(u8 *buf, size_t len, const sbp_msg
   }
   u16 msgh_accuracy = htole16(msg->h_accuracy);
   memcpy(buf + offset, &msgh_accuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -3969,6 +4186,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_t(u8 *buf, size_t len, const sbp_msg
   }
   u16 msgv_accuracy = htole16(msg->v_accuracy);
   memcpy(buf + offset, &msgv_accuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -3977,6 +4195,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_t(u8 *buf, size_t len, const sbp_msg
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3985,6 +4204,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_t(u8 *buf, size_t len, const sbp_msg
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -4003,6 +4223,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_t(const u8 *buf, size_t len, sbp_m
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4013,6 +4234,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_t(const u8 *buf, size_t len, sbp_m
   u32 msgn = *(const u32 *)&msg->n;
   msgn = le32toh(msgn);
   msg->n = *(const s32 *)&msgn;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4023,6 +4245,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_t(const u8 *buf, size_t len, sbp_m
   u32 msge = *(const u32 *)&msg->e;
   msge = le32toh(msge);
   msg->e = *(const s32 *)&msge;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4033,6 +4256,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_t(const u8 *buf, size_t len, sbp_m
   u32 msgd = *(const u32 *)&msg->d;
   msgd = le32toh(msgd);
   msg->d = *(const s32 *)&msgd;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -4041,6 +4265,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_t(const u8 *buf, size_t len, sbp_m
   }
   memcpy(&msg->h_accuracy, buf + offset, 2);
   msg->h_accuracy = le16toh(msg->h_accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -4049,6 +4274,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_t(const u8 *buf, size_t len, sbp_m
   }
   memcpy(&msg->v_accuracy, buf + offset, 2);
   msg->v_accuracy = le16toh(msg->v_accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -4056,6 +4282,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_t(const u8 *buf, size_t len, sbp_m
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -4063,6 +4290,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_t(const u8 *buf, size_t len, sbp_m
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -4252,6 +4480,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_t(u8 *buf, size_t len, const sbp
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4260,6 +4489,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_t(u8 *buf, size_t len, const sbp
   }
   u32 msgn = htole32(*(const u32 *)&msg->n);
   memcpy(buf + offset, &msgn, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4268,6 +4498,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_t(u8 *buf, size_t len, const sbp
   }
   u32 msge = htole32(*(const u32 *)&msg->e);
   memcpy(buf + offset, &msge, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4276,6 +4507,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_t(u8 *buf, size_t len, const sbp
   }
   u32 msgd = htole32(*(const u32 *)&msg->d);
   memcpy(buf + offset, &msgd, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4284,6 +4516,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_t(u8 *buf, size_t len, const sbp
   }
   float msgcov_n_n = msg->cov_n_n;
   memcpy(buf + offset, &msgcov_n_n, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4292,6 +4525,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_t(u8 *buf, size_t len, const sbp
   }
   float msgcov_n_e = msg->cov_n_e;
   memcpy(buf + offset, &msgcov_n_e, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4300,6 +4534,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_t(u8 *buf, size_t len, const sbp
   }
   float msgcov_n_d = msg->cov_n_d;
   memcpy(buf + offset, &msgcov_n_d, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4308,6 +4543,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_t(u8 *buf, size_t len, const sbp
   }
   float msgcov_e_e = msg->cov_e_e;
   memcpy(buf + offset, &msgcov_e_e, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4316,6 +4552,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_t(u8 *buf, size_t len, const sbp
   }
   float msgcov_e_d = msg->cov_e_d;
   memcpy(buf + offset, &msgcov_e_d, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4324,6 +4561,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_t(u8 *buf, size_t len, const sbp
   }
   float msgcov_d_d = msg->cov_d_d;
   memcpy(buf + offset, &msgcov_d_d, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -4332,6 +4570,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_t(u8 *buf, size_t len, const sbp
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -4340,6 +4579,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_t(u8 *buf, size_t len, const sbp
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -4358,6 +4598,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_t(const u8 *buf, size_t len, s
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4368,6 +4609,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_t(const u8 *buf, size_t len, s
   u32 msgn = *(const u32 *)&msg->n;
   msgn = le32toh(msgn);
   msg->n = *(const s32 *)&msgn;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4378,6 +4620,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_t(const u8 *buf, size_t len, s
   u32 msge = *(const u32 *)&msg->e;
   msge = le32toh(msge);
   msg->e = *(const s32 *)&msge;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4388,6 +4631,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_t(const u8 *buf, size_t len, s
   u32 msgd = *(const u32 *)&msg->d;
   msgd = le32toh(msgd);
   msg->d = *(const s32 *)&msgd;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4395,6 +4639,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->cov_n_n, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4402,6 +4647,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->cov_n_e, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4409,6 +4655,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->cov_n_d, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4416,6 +4663,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->cov_e_e, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4423,6 +4671,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->cov_e_d, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4430,6 +4679,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->cov_d_d, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -4437,6 +4687,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -4444,6 +4695,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -4609,6 +4861,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_gnss_t(u8 *buf, size_t len, const s
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -4617,6 +4870,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_gnss_t(u8 *buf, size_t len, const s
   }
   double msgx = msg->x;
   memcpy(buf + offset, &msgx, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -4625,6 +4879,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_gnss_t(u8 *buf, size_t len, const s
   }
   double msgy = msg->y;
   memcpy(buf + offset, &msgy, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -4633,6 +4888,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_gnss_t(u8 *buf, size_t len, const s
   }
   double msgz = msg->z;
   memcpy(buf + offset, &msgz, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 2 > len)
@@ -4641,6 +4897,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_gnss_t(u8 *buf, size_t len, const s
   }
   u16 msgaccuracy = htole16(msg->accuracy);
   memcpy(buf + offset, &msgaccuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -4649,6 +4906,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_gnss_t(u8 *buf, size_t len, const s
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -4657,6 +4915,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_gnss_t(u8 *buf, size_t len, const s
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -4675,6 +4934,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_gnss_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -4682,6 +4942,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_gnss_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->x, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -4689,6 +4950,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_gnss_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->y, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -4696,6 +4958,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_gnss_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->z, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 2 > len)
@@ -4704,6 +4967,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_gnss_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->accuracy, buf + offset, 2);
   msg->accuracy = le16toh(msg->accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -4711,6 +4975,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_gnss_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -4718,6 +4983,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_gnss_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -4881,6 +5147,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -4889,6 +5156,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   double msgx = msg->x;
   memcpy(buf + offset, &msgx, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -4897,6 +5165,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   double msgy = msg->y;
   memcpy(buf + offset, &msgy, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -4905,6 +5174,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   double msgz = msg->z;
   memcpy(buf + offset, &msgz, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 4 > len)
@@ -4913,6 +5183,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   float msgcov_x_x = msg->cov_x_x;
   memcpy(buf + offset, &msgcov_x_x, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4921,6 +5192,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   float msgcov_x_y = msg->cov_x_y;
   memcpy(buf + offset, &msgcov_x_y, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4929,6 +5201,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   float msgcov_x_z = msg->cov_x_z;
   memcpy(buf + offset, &msgcov_x_z, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4937,6 +5210,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   float msgcov_y_y = msg->cov_y_y;
   memcpy(buf + offset, &msgcov_y_y, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4945,6 +5219,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   float msgcov_y_z = msg->cov_y_z;
   memcpy(buf + offset, &msgcov_y_z, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -4953,6 +5228,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   float msgcov_z_z = msg->cov_z_z;
   memcpy(buf + offset, &msgcov_z_z, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -4961,6 +5237,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -4969,6 +5246,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -4987,6 +5265,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_gnss_t(const u8 *buf, size_t 
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -4994,6 +5273,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_gnss_t(const u8 *buf, size_t 
     return false;
   }
   memcpy(&msg->x, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -5001,6 +5281,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_gnss_t(const u8 *buf, size_t 
     return false;
   }
   memcpy(&msg->y, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -5008,6 +5289,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_gnss_t(const u8 *buf, size_t 
     return false;
   }
   memcpy(&msg->z, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 4 > len)
@@ -5015,6 +5297,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_gnss_t(const u8 *buf, size_t 
     return false;
   }
   memcpy(&msg->cov_x_x, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5022,6 +5305,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_gnss_t(const u8 *buf, size_t 
     return false;
   }
   memcpy(&msg->cov_x_y, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5029,6 +5313,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_gnss_t(const u8 *buf, size_t 
     return false;
   }
   memcpy(&msg->cov_x_z, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5036,6 +5321,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_gnss_t(const u8 *buf, size_t 
     return false;
   }
   memcpy(&msg->cov_y_y, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5043,6 +5329,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_gnss_t(const u8 *buf, size_t 
     return false;
   }
   memcpy(&msg->cov_y_z, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5050,6 +5337,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_gnss_t(const u8 *buf, size_t 
     return false;
   }
   memcpy(&msg->cov_z_z, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -5057,6 +5345,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_gnss_t(const u8 *buf, size_t 
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -5064,6 +5353,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_cov_gnss_t(const u8 *buf, size_t 
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -5233,6 +5523,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_gnss_t(u8 *buf, size_t len, const sb
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -5241,6 +5532,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_gnss_t(u8 *buf, size_t len, const sb
   }
   double msglat = msg->lat;
   memcpy(buf + offset, &msglat, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -5249,6 +5541,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_gnss_t(u8 *buf, size_t len, const sb
   }
   double msglon = msg->lon;
   memcpy(buf + offset, &msglon, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -5257,6 +5550,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_gnss_t(u8 *buf, size_t len, const sb
   }
   double msgheight = msg->height;
   memcpy(buf + offset, &msgheight, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 2 > len)
@@ -5265,6 +5559,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_gnss_t(u8 *buf, size_t len, const sb
   }
   u16 msgh_accuracy = htole16(msg->h_accuracy);
   memcpy(buf + offset, &msgh_accuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -5273,6 +5568,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_gnss_t(u8 *buf, size_t len, const sb
   }
   u16 msgv_accuracy = htole16(msg->v_accuracy);
   memcpy(buf + offset, &msgv_accuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -5281,6 +5577,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_gnss_t(u8 *buf, size_t len, const sb
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -5289,6 +5586,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_gnss_t(u8 *buf, size_t len, const sb
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -5307,6 +5605,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_gnss_t(const u8 *buf, size_t len, 
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -5314,6 +5613,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_gnss_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->lat, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -5321,6 +5621,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_gnss_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->lon, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -5328,6 +5629,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_gnss_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->height, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 2 > len)
@@ -5336,6 +5638,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_gnss_t(const u8 *buf, size_t len, 
   }
   memcpy(&msg->h_accuracy, buf + offset, 2);
   msg->h_accuracy = le16toh(msg->h_accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -5344,6 +5647,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_gnss_t(const u8 *buf, size_t len, 
   }
   memcpy(&msg->v_accuracy, buf + offset, 2);
   msg->v_accuracy = le16toh(msg->v_accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -5351,6 +5655,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_gnss_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -5358,6 +5663,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_gnss_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -5526,6 +5832,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_gnss_t(u8 *buf, size_t len, cons
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -5534,6 +5841,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_gnss_t(u8 *buf, size_t len, cons
   }
   double msglat = msg->lat;
   memcpy(buf + offset, &msglat, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -5542,6 +5850,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_gnss_t(u8 *buf, size_t len, cons
   }
   double msglon = msg->lon;
   memcpy(buf + offset, &msglon, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -5550,6 +5859,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_gnss_t(u8 *buf, size_t len, cons
   }
   double msgheight = msg->height;
   memcpy(buf + offset, &msgheight, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 4 > len)
@@ -5558,6 +5868,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_gnss_t(u8 *buf, size_t len, cons
   }
   float msgcov_n_n = msg->cov_n_n;
   memcpy(buf + offset, &msgcov_n_n, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5566,6 +5877,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_gnss_t(u8 *buf, size_t len, cons
   }
   float msgcov_n_e = msg->cov_n_e;
   memcpy(buf + offset, &msgcov_n_e, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5574,6 +5886,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_gnss_t(u8 *buf, size_t len, cons
   }
   float msgcov_n_d = msg->cov_n_d;
   memcpy(buf + offset, &msgcov_n_d, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5582,6 +5895,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_gnss_t(u8 *buf, size_t len, cons
   }
   float msgcov_e_e = msg->cov_e_e;
   memcpy(buf + offset, &msgcov_e_e, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5590,6 +5904,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_gnss_t(u8 *buf, size_t len, cons
   }
   float msgcov_e_d = msg->cov_e_d;
   memcpy(buf + offset, &msgcov_e_d, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5598,6 +5913,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_gnss_t(u8 *buf, size_t len, cons
   }
   float msgcov_d_d = msg->cov_d_d;
   memcpy(buf + offset, &msgcov_d_d, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -5606,6 +5922,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_gnss_t(u8 *buf, size_t len, cons
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -5614,6 +5931,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_cov_gnss_t(u8 *buf, size_t len, cons
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -5632,6 +5950,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_gnss_t(const u8 *buf, size_t l
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -5639,6 +5958,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_gnss_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->lat, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -5646,6 +5966,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_gnss_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->lon, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -5653,6 +5974,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_gnss_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->height, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 4 > len)
@@ -5660,6 +5982,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_gnss_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->cov_n_n, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5667,6 +5990,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_gnss_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->cov_n_e, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5674,6 +5998,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_gnss_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->cov_n_d, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5681,6 +6006,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_gnss_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->cov_e_e, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5688,6 +6014,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_gnss_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->cov_e_d, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5695,6 +6022,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_gnss_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->cov_d_d, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -5702,6 +6030,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_gnss_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -5709,6 +6038,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_cov_gnss_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -5867,6 +6197,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_gnss_t(u8 *buf, size_t len, const s
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5875,6 +6206,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_gnss_t(u8 *buf, size_t len, const s
   }
   u32 msgx = htole32(*(const u32 *)&msg->x);
   memcpy(buf + offset, &msgx, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5883,6 +6215,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_gnss_t(u8 *buf, size_t len, const s
   }
   u32 msgy = htole32(*(const u32 *)&msg->y);
   memcpy(buf + offset, &msgy, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5891,6 +6224,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_gnss_t(u8 *buf, size_t len, const s
   }
   u32 msgz = htole32(*(const u32 *)&msg->z);
   memcpy(buf + offset, &msgz, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -5899,6 +6233,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_gnss_t(u8 *buf, size_t len, const s
   }
   u16 msgaccuracy = htole16(msg->accuracy);
   memcpy(buf + offset, &msgaccuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -5907,6 +6242,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_gnss_t(u8 *buf, size_t len, const s
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -5915,6 +6251,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_gnss_t(u8 *buf, size_t len, const s
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -5933,6 +6270,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_gnss_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5943,6 +6281,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_gnss_t(const u8 *buf, size_t len,
   u32 msgx = *(const u32 *)&msg->x;
   msgx = le32toh(msgx);
   msg->x = *(const s32 *)&msgx;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5953,6 +6292,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_gnss_t(const u8 *buf, size_t len,
   u32 msgy = *(const u32 *)&msg->y;
   msgy = le32toh(msgy);
   msg->y = *(const s32 *)&msgy;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -5963,6 +6303,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_gnss_t(const u8 *buf, size_t len,
   u32 msgz = *(const u32 *)&msg->z;
   msgz = le32toh(msgz);
   msg->z = *(const s32 *)&msgz;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -5971,6 +6312,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_gnss_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->accuracy, buf + offset, 2);
   msg->accuracy = le16toh(msg->accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -5978,6 +6320,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_gnss_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -5985,6 +6328,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_gnss_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -6139,6 +6483,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6147,6 +6492,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   u32 msgx = htole32(*(const u32 *)&msg->x);
   memcpy(buf + offset, &msgx, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6155,6 +6501,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   u32 msgy = htole32(*(const u32 *)&msg->y);
   memcpy(buf + offset, &msgy, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6163,6 +6510,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   u32 msgz = htole32(*(const u32 *)&msg->z);
   memcpy(buf + offset, &msgz, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6171,6 +6519,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   float msgcov_x_x = msg->cov_x_x;
   memcpy(buf + offset, &msgcov_x_x, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6179,6 +6528,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   float msgcov_x_y = msg->cov_x_y;
   memcpy(buf + offset, &msgcov_x_y, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6187,6 +6537,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   float msgcov_x_z = msg->cov_x_z;
   memcpy(buf + offset, &msgcov_x_z, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6195,6 +6546,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   float msgcov_y_y = msg->cov_y_y;
   memcpy(buf + offset, &msgcov_y_y, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6203,6 +6555,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   float msgcov_y_z = msg->cov_y_z;
   memcpy(buf + offset, &msgcov_y_z, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6211,6 +6564,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   float msgcov_z_z = msg->cov_z_z;
   memcpy(buf + offset, &msgcov_z_z, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -6219,6 +6573,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -6227,6 +6582,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_cov_gnss_t(u8 *buf, size_t len, con
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -6245,6 +6601,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_gnss_t(const u8 *buf, size_t 
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6255,6 +6612,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_gnss_t(const u8 *buf, size_t 
   u32 msgx = *(const u32 *)&msg->x;
   msgx = le32toh(msgx);
   msg->x = *(const s32 *)&msgx;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6265,6 +6623,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_gnss_t(const u8 *buf, size_t 
   u32 msgy = *(const u32 *)&msg->y;
   msgy = le32toh(msgy);
   msg->y = *(const s32 *)&msgy;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6275,6 +6634,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_gnss_t(const u8 *buf, size_t 
   u32 msgz = *(const u32 *)&msg->z;
   msgz = le32toh(msgz);
   msg->z = *(const s32 *)&msgz;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6282,6 +6642,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_gnss_t(const u8 *buf, size_t 
     return false;
   }
   memcpy(&msg->cov_x_x, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6289,6 +6650,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_gnss_t(const u8 *buf, size_t 
     return false;
   }
   memcpy(&msg->cov_x_y, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6296,6 +6658,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_gnss_t(const u8 *buf, size_t 
     return false;
   }
   memcpy(&msg->cov_x_z, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6303,6 +6666,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_gnss_t(const u8 *buf, size_t 
     return false;
   }
   memcpy(&msg->cov_y_y, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6310,6 +6674,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_gnss_t(const u8 *buf, size_t 
     return false;
   }
   memcpy(&msg->cov_y_z, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6317,6 +6682,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_gnss_t(const u8 *buf, size_t 
     return false;
   }
   memcpy(&msg->cov_z_z, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -6324,6 +6690,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_gnss_t(const u8 *buf, size_t 
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -6331,6 +6698,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_cov_gnss_t(const u8 *buf, size_t 
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -6494,6 +6862,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_gnss_t(u8 *buf, size_t len, const sb
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6502,6 +6871,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_gnss_t(u8 *buf, size_t len, const sb
   }
   u32 msgn = htole32(*(const u32 *)&msg->n);
   memcpy(buf + offset, &msgn, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6510,6 +6880,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_gnss_t(u8 *buf, size_t len, const sb
   }
   u32 msge = htole32(*(const u32 *)&msg->e);
   memcpy(buf + offset, &msge, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6518,6 +6889,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_gnss_t(u8 *buf, size_t len, const sb
   }
   u32 msgd = htole32(*(const u32 *)&msg->d);
   memcpy(buf + offset, &msgd, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -6526,6 +6898,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_gnss_t(u8 *buf, size_t len, const sb
   }
   u16 msgh_accuracy = htole16(msg->h_accuracy);
   memcpy(buf + offset, &msgh_accuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -6534,6 +6907,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_gnss_t(u8 *buf, size_t len, const sb
   }
   u16 msgv_accuracy = htole16(msg->v_accuracy);
   memcpy(buf + offset, &msgv_accuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -6542,6 +6916,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_gnss_t(u8 *buf, size_t len, const sb
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -6550,6 +6925,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_gnss_t(u8 *buf, size_t len, const sb
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -6568,6 +6944,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_gnss_t(const u8 *buf, size_t len, 
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6578,6 +6955,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_gnss_t(const u8 *buf, size_t len, 
   u32 msgn = *(const u32 *)&msg->n;
   msgn = le32toh(msgn);
   msg->n = *(const s32 *)&msgn;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6588,6 +6966,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_gnss_t(const u8 *buf, size_t len, 
   u32 msge = *(const u32 *)&msg->e;
   msge = le32toh(msge);
   msg->e = *(const s32 *)&msge;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6598,6 +6977,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_gnss_t(const u8 *buf, size_t len, 
   u32 msgd = *(const u32 *)&msg->d;
   msgd = le32toh(msgd);
   msg->d = *(const s32 *)&msgd;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -6606,6 +6986,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_gnss_t(const u8 *buf, size_t len, 
   }
   memcpy(&msg->h_accuracy, buf + offset, 2);
   msg->h_accuracy = le16toh(msg->h_accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -6614,6 +6995,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_gnss_t(const u8 *buf, size_t len, 
   }
   memcpy(&msg->v_accuracy, buf + offset, 2);
   msg->v_accuracy = le16toh(msg->v_accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -6621,6 +7003,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_gnss_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -6628,6 +7011,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_gnss_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -6790,6 +7174,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_gnss_t(u8 *buf, size_t len, cons
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6798,6 +7183,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_gnss_t(u8 *buf, size_t len, cons
   }
   u32 msgn = htole32(*(const u32 *)&msg->n);
   memcpy(buf + offset, &msgn, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6806,6 +7192,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_gnss_t(u8 *buf, size_t len, cons
   }
   u32 msge = htole32(*(const u32 *)&msg->e);
   memcpy(buf + offset, &msge, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6814,6 +7201,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_gnss_t(u8 *buf, size_t len, cons
   }
   u32 msgd = htole32(*(const u32 *)&msg->d);
   memcpy(buf + offset, &msgd, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6822,6 +7210,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_gnss_t(u8 *buf, size_t len, cons
   }
   float msgcov_n_n = msg->cov_n_n;
   memcpy(buf + offset, &msgcov_n_n, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6830,6 +7219,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_gnss_t(u8 *buf, size_t len, cons
   }
   float msgcov_n_e = msg->cov_n_e;
   memcpy(buf + offset, &msgcov_n_e, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6838,6 +7228,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_gnss_t(u8 *buf, size_t len, cons
   }
   float msgcov_n_d = msg->cov_n_d;
   memcpy(buf + offset, &msgcov_n_d, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6846,6 +7237,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_gnss_t(u8 *buf, size_t len, cons
   }
   float msgcov_e_e = msg->cov_e_e;
   memcpy(buf + offset, &msgcov_e_e, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6854,6 +7246,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_gnss_t(u8 *buf, size_t len, cons
   }
   float msgcov_e_d = msg->cov_e_d;
   memcpy(buf + offset, &msgcov_e_d, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6862,6 +7255,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_gnss_t(u8 *buf, size_t len, cons
   }
   float msgcov_d_d = msg->cov_d_d;
   memcpy(buf + offset, &msgcov_d_d, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -6870,6 +7264,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_gnss_t(u8 *buf, size_t len, cons
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -6878,6 +7273,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_cov_gnss_t(u8 *buf, size_t len, cons
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -6896,6 +7292,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_gnss_t(const u8 *buf, size_t l
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6906,6 +7303,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_gnss_t(const u8 *buf, size_t l
   u32 msgn = *(const u32 *)&msg->n;
   msgn = le32toh(msgn);
   msg->n = *(const s32 *)&msgn;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6916,6 +7314,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_gnss_t(const u8 *buf, size_t l
   u32 msge = *(const u32 *)&msg->e;
   msge = le32toh(msge);
   msg->e = *(const s32 *)&msge;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6926,6 +7325,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_gnss_t(const u8 *buf, size_t l
   u32 msgd = *(const u32 *)&msg->d;
   msgd = le32toh(msgd);
   msg->d = *(const s32 *)&msgd;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6933,6 +7333,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_gnss_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->cov_n_n, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6940,6 +7341,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_gnss_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->cov_n_e, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6947,6 +7349,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_gnss_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->cov_n_d, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6954,6 +7357,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_gnss_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->cov_e_e, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6961,6 +7365,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_gnss_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->cov_e_d, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -6968,6 +7373,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_gnss_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->cov_d_d, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -6975,6 +7381,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_gnss_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -6982,6 +7389,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_cov_gnss_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -7179,6 +7587,7 @@ static inline bool sbp_pack_sbp_msg_vel_body_t(u8 *buf, size_t len, const sbp_ms
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7187,6 +7596,7 @@ static inline bool sbp_pack_sbp_msg_vel_body_t(u8 *buf, size_t len, const sbp_ms
   }
   u32 msgx = htole32(*(const u32 *)&msg->x);
   memcpy(buf + offset, &msgx, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7195,6 +7605,7 @@ static inline bool sbp_pack_sbp_msg_vel_body_t(u8 *buf, size_t len, const sbp_ms
   }
   u32 msgy = htole32(*(const u32 *)&msg->y);
   memcpy(buf + offset, &msgy, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7203,6 +7614,7 @@ static inline bool sbp_pack_sbp_msg_vel_body_t(u8 *buf, size_t len, const sbp_ms
   }
   u32 msgz = htole32(*(const u32 *)&msg->z);
   memcpy(buf + offset, &msgz, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7211,6 +7623,7 @@ static inline bool sbp_pack_sbp_msg_vel_body_t(u8 *buf, size_t len, const sbp_ms
   }
   float msgcov_x_x = msg->cov_x_x;
   memcpy(buf + offset, &msgcov_x_x, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7219,6 +7632,7 @@ static inline bool sbp_pack_sbp_msg_vel_body_t(u8 *buf, size_t len, const sbp_ms
   }
   float msgcov_x_y = msg->cov_x_y;
   memcpy(buf + offset, &msgcov_x_y, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7227,6 +7641,7 @@ static inline bool sbp_pack_sbp_msg_vel_body_t(u8 *buf, size_t len, const sbp_ms
   }
   float msgcov_x_z = msg->cov_x_z;
   memcpy(buf + offset, &msgcov_x_z, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7235,6 +7650,7 @@ static inline bool sbp_pack_sbp_msg_vel_body_t(u8 *buf, size_t len, const sbp_ms
   }
   float msgcov_y_y = msg->cov_y_y;
   memcpy(buf + offset, &msgcov_y_y, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7243,6 +7659,7 @@ static inline bool sbp_pack_sbp_msg_vel_body_t(u8 *buf, size_t len, const sbp_ms
   }
   float msgcov_y_z = msg->cov_y_z;
   memcpy(buf + offset, &msgcov_y_z, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7251,6 +7668,7 @@ static inline bool sbp_pack_sbp_msg_vel_body_t(u8 *buf, size_t len, const sbp_ms
   }
   float msgcov_z_z = msg->cov_z_z;
   memcpy(buf + offset, &msgcov_z_z, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -7259,6 +7677,7 @@ static inline bool sbp_pack_sbp_msg_vel_body_t(u8 *buf, size_t len, const sbp_ms
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -7267,6 +7686,7 @@ static inline bool sbp_pack_sbp_msg_vel_body_t(u8 *buf, size_t len, const sbp_ms
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -7285,6 +7705,7 @@ static inline bool sbp_unpack_sbp_msg_vel_body_t(const u8 *buf, size_t len, sbp_
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7295,6 +7716,7 @@ static inline bool sbp_unpack_sbp_msg_vel_body_t(const u8 *buf, size_t len, sbp_
   u32 msgx = *(const u32 *)&msg->x;
   msgx = le32toh(msgx);
   msg->x = *(const s32 *)&msgx;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7305,6 +7727,7 @@ static inline bool sbp_unpack_sbp_msg_vel_body_t(const u8 *buf, size_t len, sbp_
   u32 msgy = *(const u32 *)&msg->y;
   msgy = le32toh(msgy);
   msg->y = *(const s32 *)&msgy;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7315,6 +7738,7 @@ static inline bool sbp_unpack_sbp_msg_vel_body_t(const u8 *buf, size_t len, sbp_
   u32 msgz = *(const u32 *)&msg->z;
   msgz = le32toh(msgz);
   msg->z = *(const s32 *)&msgz;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7322,6 +7746,7 @@ static inline bool sbp_unpack_sbp_msg_vel_body_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->cov_x_x, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7329,6 +7754,7 @@ static inline bool sbp_unpack_sbp_msg_vel_body_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->cov_x_y, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7336,6 +7762,7 @@ static inline bool sbp_unpack_sbp_msg_vel_body_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->cov_x_z, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7343,6 +7770,7 @@ static inline bool sbp_unpack_sbp_msg_vel_body_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->cov_y_y, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7350,6 +7778,7 @@ static inline bool sbp_unpack_sbp_msg_vel_body_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->cov_y_z, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7357,6 +7786,7 @@ static inline bool sbp_unpack_sbp_msg_vel_body_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->cov_z_z, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -7364,6 +7794,7 @@ static inline bool sbp_unpack_sbp_msg_vel_body_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -7371,6 +7802,7 @@ static inline bool sbp_unpack_sbp_msg_vel_body_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -7493,6 +7925,7 @@ static inline bool sbp_pack_sbp_msg_age_corrections_t(u8 *buf, size_t len, const
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -7501,6 +7934,7 @@ static inline bool sbp_pack_sbp_msg_age_corrections_t(u8 *buf, size_t len, const
   }
   u16 msgage = htole16(msg->age);
   memcpy(buf + offset, &msgage, 2);
+  // NOLINTNEXTLINE
   offset += 2;
   return true;
 }
@@ -7519,6 +7953,7 @@ static inline bool sbp_unpack_sbp_msg_age_corrections_t(const u8 *buf, size_t le
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -7527,6 +7962,7 @@ static inline bool sbp_unpack_sbp_msg_age_corrections_t(const u8 *buf, size_t le
   }
   memcpy(&msg->age, buf + offset, 2);
   msg->age = le16toh(msg->age);
+  // NOLINTNEXTLINE
   offset += 2;
   return true;
 }
@@ -7619,6 +8055,7 @@ static inline bool sbp_pack_sbp_msg_gps_time_dep_a_t(u8 *buf, size_t len, const 
   }
   u16 msgwn = htole16(msg->wn);
   memcpy(buf + offset, &msgwn, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 4 > len)
@@ -7627,6 +8064,7 @@ static inline bool sbp_pack_sbp_msg_gps_time_dep_a_t(u8 *buf, size_t len, const 
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7635,6 +8073,7 @@ static inline bool sbp_pack_sbp_msg_gps_time_dep_a_t(u8 *buf, size_t len, const 
   }
   u32 msgns_residual = htole32(*(const u32 *)&msg->ns_residual);
   memcpy(buf + offset, &msgns_residual, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -7643,6 +8082,7 @@ static inline bool sbp_pack_sbp_msg_gps_time_dep_a_t(u8 *buf, size_t len, const 
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -7661,6 +8101,7 @@ static inline bool sbp_unpack_sbp_msg_gps_time_dep_a_t(const u8 *buf, size_t len
   }
   memcpy(&msg->wn, buf + offset, 2);
   msg->wn = le16toh(msg->wn);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 4 > len)
@@ -7669,6 +8110,7 @@ static inline bool sbp_unpack_sbp_msg_gps_time_dep_a_t(const u8 *buf, size_t len
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -7679,6 +8121,7 @@ static inline bool sbp_unpack_sbp_msg_gps_time_dep_a_t(const u8 *buf, size_t len
   u32 msgns_residual = *(const u32 *)&msg->ns_residual;
   msgns_residual = le32toh(msgns_residual);
   msg->ns_residual = *(const s32 *)&msgns_residual;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -7686,6 +8129,7 @@ static inline bool sbp_unpack_sbp_msg_gps_time_dep_a_t(const u8 *buf, size_t len
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -7786,6 +8230,7 @@ static inline bool sbp_pack_sbp_msg_dops_dep_a_t(u8 *buf, size_t len, const sbp_
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -7794,6 +8239,7 @@ static inline bool sbp_pack_sbp_msg_dops_dep_a_t(u8 *buf, size_t len, const sbp_
   }
   u16 msggdop = htole16(msg->gdop);
   memcpy(buf + offset, &msggdop, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -7802,6 +8248,7 @@ static inline bool sbp_pack_sbp_msg_dops_dep_a_t(u8 *buf, size_t len, const sbp_
   }
   u16 msgpdop = htole16(msg->pdop);
   memcpy(buf + offset, &msgpdop, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -7810,6 +8257,7 @@ static inline bool sbp_pack_sbp_msg_dops_dep_a_t(u8 *buf, size_t len, const sbp_
   }
   u16 msgtdop = htole16(msg->tdop);
   memcpy(buf + offset, &msgtdop, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -7818,6 +8266,7 @@ static inline bool sbp_pack_sbp_msg_dops_dep_a_t(u8 *buf, size_t len, const sbp_
   }
   u16 msghdop = htole16(msg->hdop);
   memcpy(buf + offset, &msghdop, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -7826,6 +8275,7 @@ static inline bool sbp_pack_sbp_msg_dops_dep_a_t(u8 *buf, size_t len, const sbp_
   }
   u16 msgvdop = htole16(msg->vdop);
   memcpy(buf + offset, &msgvdop, 2);
+  // NOLINTNEXTLINE
   offset += 2;
   return true;
 }
@@ -7844,6 +8294,7 @@ static inline bool sbp_unpack_sbp_msg_dops_dep_a_t(const u8 *buf, size_t len, sb
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -7852,6 +8303,7 @@ static inline bool sbp_unpack_sbp_msg_dops_dep_a_t(const u8 *buf, size_t len, sb
   }
   memcpy(&msg->gdop, buf + offset, 2);
   msg->gdop = le16toh(msg->gdop);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -7860,6 +8312,7 @@ static inline bool sbp_unpack_sbp_msg_dops_dep_a_t(const u8 *buf, size_t len, sb
   }
   memcpy(&msg->pdop, buf + offset, 2);
   msg->pdop = le16toh(msg->pdop);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -7868,6 +8321,7 @@ static inline bool sbp_unpack_sbp_msg_dops_dep_a_t(const u8 *buf, size_t len, sb
   }
   memcpy(&msg->tdop, buf + offset, 2);
   msg->tdop = le16toh(msg->tdop);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -7876,6 +8330,7 @@ static inline bool sbp_unpack_sbp_msg_dops_dep_a_t(const u8 *buf, size_t len, sb
   }
   memcpy(&msg->hdop, buf + offset, 2);
   msg->hdop = le16toh(msg->hdop);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -7884,6 +8339,7 @@ static inline bool sbp_unpack_sbp_msg_dops_dep_a_t(const u8 *buf, size_t len, sb
   }
   memcpy(&msg->vdop, buf + offset, 2);
   msg->vdop = le16toh(msg->vdop);
+  // NOLINTNEXTLINE
   offset += 2;
   return true;
 }
@@ -8044,6 +8500,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_dep_a_t(u8 *buf, size_t len, const 
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -8052,6 +8509,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_dep_a_t(u8 *buf, size_t len, const 
   }
   double msgx = msg->x;
   memcpy(buf + offset, &msgx, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -8060,6 +8518,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_dep_a_t(u8 *buf, size_t len, const 
   }
   double msgy = msg->y;
   memcpy(buf + offset, &msgy, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -8068,6 +8527,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_dep_a_t(u8 *buf, size_t len, const 
   }
   double msgz = msg->z;
   memcpy(buf + offset, &msgz, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 2 > len)
@@ -8076,6 +8536,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_dep_a_t(u8 *buf, size_t len, const 
   }
   u16 msgaccuracy = htole16(msg->accuracy);
   memcpy(buf + offset, &msgaccuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -8084,6 +8545,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_dep_a_t(u8 *buf, size_t len, const 
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -8092,6 +8554,7 @@ static inline bool sbp_pack_sbp_msg_pos_ecef_dep_a_t(u8 *buf, size_t len, const 
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -8110,6 +8573,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_dep_a_t(const u8 *buf, size_t len
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -8117,6 +8581,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_dep_a_t(const u8 *buf, size_t len
     return false;
   }
   memcpy(&msg->x, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -8124,6 +8589,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_dep_a_t(const u8 *buf, size_t len
     return false;
   }
   memcpy(&msg->y, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -8131,6 +8597,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_dep_a_t(const u8 *buf, size_t len
     return false;
   }
   memcpy(&msg->z, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 2 > len)
@@ -8139,6 +8606,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_dep_a_t(const u8 *buf, size_t len
   }
   memcpy(&msg->accuracy, buf + offset, 2);
   msg->accuracy = le16toh(msg->accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -8146,6 +8614,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_dep_a_t(const u8 *buf, size_t len
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -8153,6 +8622,7 @@ static inline bool sbp_unpack_sbp_msg_pos_ecef_dep_a_t(const u8 *buf, size_t len
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -8336,6 +8806,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_dep_a_t(u8 *buf, size_t len, const s
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -8344,6 +8815,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_dep_a_t(u8 *buf, size_t len, const s
   }
   double msglat = msg->lat;
   memcpy(buf + offset, &msglat, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -8352,6 +8824,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_dep_a_t(u8 *buf, size_t len, const s
   }
   double msglon = msg->lon;
   memcpy(buf + offset, &msglon, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -8360,6 +8833,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_dep_a_t(u8 *buf, size_t len, const s
   }
   double msgheight = msg->height;
   memcpy(buf + offset, &msgheight, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 2 > len)
@@ -8368,6 +8842,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_dep_a_t(u8 *buf, size_t len, const s
   }
   u16 msgh_accuracy = htole16(msg->h_accuracy);
   memcpy(buf + offset, &msgh_accuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -8376,6 +8851,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_dep_a_t(u8 *buf, size_t len, const s
   }
   u16 msgv_accuracy = htole16(msg->v_accuracy);
   memcpy(buf + offset, &msgv_accuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -8384,6 +8860,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_dep_a_t(u8 *buf, size_t len, const s
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -8392,6 +8869,7 @@ static inline bool sbp_pack_sbp_msg_pos_llh_dep_a_t(u8 *buf, size_t len, const s
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -8410,6 +8888,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_dep_a_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 8 > len)
@@ -8417,6 +8896,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_dep_a_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->lat, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -8424,6 +8904,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_dep_a_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->lon, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -8431,6 +8912,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_dep_a_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->height, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 2 > len)
@@ -8439,6 +8921,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_dep_a_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->h_accuracy, buf + offset, 2);
   msg->h_accuracy = le16toh(msg->h_accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -8447,6 +8930,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_dep_a_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->v_accuracy, buf + offset, 2);
   msg->v_accuracy = le16toh(msg->v_accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -8454,6 +8938,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_dep_a_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -8461,6 +8946,7 @@ static inline bool sbp_unpack_sbp_msg_pos_llh_dep_a_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -8628,6 +9114,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ecef_dep_a_t(u8 *buf, size_t len, c
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -8636,6 +9123,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ecef_dep_a_t(u8 *buf, size_t len, c
   }
   u32 msgx = htole32(*(const u32 *)&msg->x);
   memcpy(buf + offset, &msgx, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -8644,6 +9132,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ecef_dep_a_t(u8 *buf, size_t len, c
   }
   u32 msgy = htole32(*(const u32 *)&msg->y);
   memcpy(buf + offset, &msgy, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -8652,6 +9141,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ecef_dep_a_t(u8 *buf, size_t len, c
   }
   u32 msgz = htole32(*(const u32 *)&msg->z);
   memcpy(buf + offset, &msgz, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -8660,6 +9150,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ecef_dep_a_t(u8 *buf, size_t len, c
   }
   u16 msgaccuracy = htole16(msg->accuracy);
   memcpy(buf + offset, &msgaccuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -8668,6 +9159,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ecef_dep_a_t(u8 *buf, size_t len, c
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -8676,6 +9168,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ecef_dep_a_t(u8 *buf, size_t len, c
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -8695,6 +9188,7 @@ sbp_unpack_sbp_msg_baseline_ecef_dep_a_t(const u8 *buf, size_t len, sbp_msg_base
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -8705,6 +9199,7 @@ sbp_unpack_sbp_msg_baseline_ecef_dep_a_t(const u8 *buf, size_t len, sbp_msg_base
   u32 msgx = *(const u32 *)&msg->x;
   msgx = le32toh(msgx);
   msg->x = *(const s32 *)&msgx;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -8715,6 +9210,7 @@ sbp_unpack_sbp_msg_baseline_ecef_dep_a_t(const u8 *buf, size_t len, sbp_msg_base
   u32 msgy = *(const u32 *)&msg->y;
   msgy = le32toh(msgy);
   msg->y = *(const s32 *)&msgy;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -8725,6 +9221,7 @@ sbp_unpack_sbp_msg_baseline_ecef_dep_a_t(const u8 *buf, size_t len, sbp_msg_base
   u32 msgz = *(const u32 *)&msg->z;
   msgz = le32toh(msgz);
   msg->z = *(const s32 *)&msgz;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -8733,6 +9230,7 @@ sbp_unpack_sbp_msg_baseline_ecef_dep_a_t(const u8 *buf, size_t len, sbp_msg_base
   }
   memcpy(&msg->accuracy, buf + offset, 2);
   msg->accuracy = le16toh(msg->accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -8740,6 +9238,7 @@ sbp_unpack_sbp_msg_baseline_ecef_dep_a_t(const u8 *buf, size_t len, sbp_msg_base
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -8747,6 +9246,7 @@ sbp_unpack_sbp_msg_baseline_ecef_dep_a_t(const u8 *buf, size_t len, sbp_msg_base
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -8916,6 +9416,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ned_dep_a_t(u8 *buf, size_t len, co
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -8924,6 +9425,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ned_dep_a_t(u8 *buf, size_t len, co
   }
   u32 msgn = htole32(*(const u32 *)&msg->n);
   memcpy(buf + offset, &msgn, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -8932,6 +9434,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ned_dep_a_t(u8 *buf, size_t len, co
   }
   u32 msge = htole32(*(const u32 *)&msg->e);
   memcpy(buf + offset, &msge, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -8940,6 +9443,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ned_dep_a_t(u8 *buf, size_t len, co
   }
   u32 msgd = htole32(*(const u32 *)&msg->d);
   memcpy(buf + offset, &msgd, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -8948,6 +9452,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ned_dep_a_t(u8 *buf, size_t len, co
   }
   u16 msgh_accuracy = htole16(msg->h_accuracy);
   memcpy(buf + offset, &msgh_accuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -8956,6 +9461,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ned_dep_a_t(u8 *buf, size_t len, co
   }
   u16 msgv_accuracy = htole16(msg->v_accuracy);
   memcpy(buf + offset, &msgv_accuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -8964,6 +9470,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ned_dep_a_t(u8 *buf, size_t len, co
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -8972,6 +9479,7 @@ static inline bool sbp_pack_sbp_msg_baseline_ned_dep_a_t(u8 *buf, size_t len, co
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -8990,6 +9498,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ned_dep_a_t(const u8 *buf, size_t
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -9000,6 +9509,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ned_dep_a_t(const u8 *buf, size_t
   u32 msgn = *(const u32 *)&msg->n;
   msgn = le32toh(msgn);
   msg->n = *(const s32 *)&msgn;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -9010,6 +9520,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ned_dep_a_t(const u8 *buf, size_t
   u32 msge = *(const u32 *)&msg->e;
   msge = le32toh(msge);
   msg->e = *(const s32 *)&msge;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -9020,6 +9531,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ned_dep_a_t(const u8 *buf, size_t
   u32 msgd = *(const u32 *)&msg->d;
   msgd = le32toh(msgd);
   msg->d = *(const s32 *)&msgd;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -9028,6 +9540,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ned_dep_a_t(const u8 *buf, size_t
   }
   memcpy(&msg->h_accuracy, buf + offset, 2);
   msg->h_accuracy = le16toh(msg->h_accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -9036,6 +9549,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ned_dep_a_t(const u8 *buf, size_t
   }
   memcpy(&msg->v_accuracy, buf + offset, 2);
   msg->v_accuracy = le16toh(msg->v_accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -9043,6 +9557,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ned_dep_a_t(const u8 *buf, size_t
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -9050,6 +9565,7 @@ static inline bool sbp_unpack_sbp_msg_baseline_ned_dep_a_t(const u8 *buf, size_t
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -9175,6 +9691,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_dep_a_t(u8 *buf, size_t len, const 
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -9183,6 +9700,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_dep_a_t(u8 *buf, size_t len, const 
   }
   u32 msgx = htole32(*(const u32 *)&msg->x);
   memcpy(buf + offset, &msgx, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -9191,6 +9709,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_dep_a_t(u8 *buf, size_t len, const 
   }
   u32 msgy = htole32(*(const u32 *)&msg->y);
   memcpy(buf + offset, &msgy, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -9199,6 +9718,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_dep_a_t(u8 *buf, size_t len, const 
   }
   u32 msgz = htole32(*(const u32 *)&msg->z);
   memcpy(buf + offset, &msgz, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -9207,6 +9727,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_dep_a_t(u8 *buf, size_t len, const 
   }
   u16 msgaccuracy = htole16(msg->accuracy);
   memcpy(buf + offset, &msgaccuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -9215,6 +9736,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_dep_a_t(u8 *buf, size_t len, const 
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -9223,6 +9745,7 @@ static inline bool sbp_pack_sbp_msg_vel_ecef_dep_a_t(u8 *buf, size_t len, const 
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -9241,6 +9764,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_dep_a_t(const u8 *buf, size_t len
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -9251,6 +9775,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_dep_a_t(const u8 *buf, size_t len
   u32 msgx = *(const u32 *)&msg->x;
   msgx = le32toh(msgx);
   msg->x = *(const s32 *)&msgx;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -9261,6 +9786,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_dep_a_t(const u8 *buf, size_t len
   u32 msgy = *(const u32 *)&msg->y;
   msgy = le32toh(msgy);
   msg->y = *(const s32 *)&msgy;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -9271,6 +9797,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_dep_a_t(const u8 *buf, size_t len
   u32 msgz = *(const u32 *)&msg->z;
   msgz = le32toh(msgz);
   msg->z = *(const s32 *)&msgz;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -9279,6 +9806,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_dep_a_t(const u8 *buf, size_t len
   }
   memcpy(&msg->accuracy, buf + offset, 2);
   msg->accuracy = le16toh(msg->accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -9286,6 +9814,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_dep_a_t(const u8 *buf, size_t len
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -9293,6 +9822,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ecef_dep_a_t(const u8 *buf, size_t len
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -9419,6 +9949,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_dep_a_t(u8 *buf, size_t len, const s
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -9427,6 +9958,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_dep_a_t(u8 *buf, size_t len, const s
   }
   u32 msgn = htole32(*(const u32 *)&msg->n);
   memcpy(buf + offset, &msgn, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -9435,6 +9967,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_dep_a_t(u8 *buf, size_t len, const s
   }
   u32 msge = htole32(*(const u32 *)&msg->e);
   memcpy(buf + offset, &msge, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -9443,6 +9976,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_dep_a_t(u8 *buf, size_t len, const s
   }
   u32 msgd = htole32(*(const u32 *)&msg->d);
   memcpy(buf + offset, &msgd, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -9451,6 +9985,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_dep_a_t(u8 *buf, size_t len, const s
   }
   u16 msgh_accuracy = htole16(msg->h_accuracy);
   memcpy(buf + offset, &msgh_accuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -9459,6 +9994,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_dep_a_t(u8 *buf, size_t len, const s
   }
   u16 msgv_accuracy = htole16(msg->v_accuracy);
   memcpy(buf + offset, &msgv_accuracy, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -9467,6 +10003,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_dep_a_t(u8 *buf, size_t len, const s
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -9475,6 +10012,7 @@ static inline bool sbp_pack_sbp_msg_vel_ned_dep_a_t(u8 *buf, size_t len, const s
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -9493,6 +10031,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_dep_a_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -9503,6 +10042,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_dep_a_t(const u8 *buf, size_t len,
   u32 msgn = *(const u32 *)&msg->n;
   msgn = le32toh(msgn);
   msg->n = *(const s32 *)&msgn;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -9513,6 +10053,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_dep_a_t(const u8 *buf, size_t len,
   u32 msge = *(const u32 *)&msg->e;
   msge = le32toh(msge);
   msg->e = *(const s32 *)&msge;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -9523,6 +10064,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_dep_a_t(const u8 *buf, size_t len,
   u32 msgd = *(const u32 *)&msg->d;
   msgd = le32toh(msgd);
   msg->d = *(const s32 *)&msgd;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -9531,6 +10073,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_dep_a_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->h_accuracy, buf + offset, 2);
   msg->h_accuracy = le16toh(msg->h_accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -9539,6 +10082,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_dep_a_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->v_accuracy, buf + offset, 2);
   msg->v_accuracy = le16toh(msg->v_accuracy);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -9546,6 +10090,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_dep_a_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -9553,6 +10098,7 @@ static inline bool sbp_unpack_sbp_msg_vel_ned_dep_a_t(const u8 *buf, size_t len,
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -9706,6 +10252,7 @@ sbp_pack_sbp_msg_baseline_heading_dep_a_t(u8 *buf, size_t len, const sbp_msg_bas
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -9714,6 +10261,7 @@ sbp_pack_sbp_msg_baseline_heading_dep_a_t(u8 *buf, size_t len, const sbp_msg_bas
   }
   u32 msgheading = htole32(msg->heading);
   memcpy(buf + offset, &msgheading, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -9722,6 +10270,7 @@ sbp_pack_sbp_msg_baseline_heading_dep_a_t(u8 *buf, size_t len, const sbp_msg_bas
   }
   u8 msgn_sats = msg->n_sats;
   memcpy(buf + offset, &msgn_sats, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -9730,6 +10279,7 @@ sbp_pack_sbp_msg_baseline_heading_dep_a_t(u8 *buf, size_t len, const sbp_msg_bas
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -9749,6 +10299,7 @@ sbp_unpack_sbp_msg_baseline_heading_dep_a_t(const u8 *buf, size_t len, sbp_msg_b
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -9757,6 +10308,7 @@ sbp_unpack_sbp_msg_baseline_heading_dep_a_t(const u8 *buf, size_t len, sbp_msg_b
   }
   memcpy(&msg->heading, buf + offset, 4);
   msg->heading = le32toh(msg->heading);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -9764,6 +10316,7 @@ sbp_unpack_sbp_msg_baseline_heading_dep_a_t(const u8 *buf, size_t len, sbp_msg_b
     return false;
   }
   memcpy(&msg->n_sats, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -9771,6 +10324,7 @@ sbp_unpack_sbp_msg_baseline_heading_dep_a_t(const u8 *buf, size_t len, sbp_msg_b
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -9892,6 +10446,7 @@ static inline bool sbp_pack_sbp_msg_protection_level_t(u8 *buf, size_t len, cons
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -9900,6 +10455,7 @@ static inline bool sbp_pack_sbp_msg_protection_level_t(u8 *buf, size_t len, cons
   }
   u16 msgvpl = htole16(msg->vpl);
   memcpy(buf + offset, &msgvpl, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -9908,6 +10464,7 @@ static inline bool sbp_pack_sbp_msg_protection_level_t(u8 *buf, size_t len, cons
   }
   u16 msghpl = htole16(msg->hpl);
   memcpy(buf + offset, &msghpl, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 8 > len)
@@ -9916,6 +10473,7 @@ static inline bool sbp_pack_sbp_msg_protection_level_t(u8 *buf, size_t len, cons
   }
   double msglat = msg->lat;
   memcpy(buf + offset, &msglat, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -9924,6 +10482,7 @@ static inline bool sbp_pack_sbp_msg_protection_level_t(u8 *buf, size_t len, cons
   }
   double msglon = msg->lon;
   memcpy(buf + offset, &msglon, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -9932,6 +10491,7 @@ static inline bool sbp_pack_sbp_msg_protection_level_t(u8 *buf, size_t len, cons
   }
   double msgheight = msg->height;
   memcpy(buf + offset, &msgheight, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 1 > len)
@@ -9940,6 +10500,7 @@ static inline bool sbp_pack_sbp_msg_protection_level_t(u8 *buf, size_t len, cons
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -9958,6 +10519,7 @@ static inline bool sbp_unpack_sbp_msg_protection_level_t(const u8 *buf, size_t l
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -9966,6 +10528,7 @@ static inline bool sbp_unpack_sbp_msg_protection_level_t(const u8 *buf, size_t l
   }
   memcpy(&msg->vpl, buf + offset, 2);
   msg->vpl = le16toh(msg->vpl);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -9974,6 +10537,7 @@ static inline bool sbp_unpack_sbp_msg_protection_level_t(const u8 *buf, size_t l
   }
   memcpy(&msg->hpl, buf + offset, 2);
   msg->hpl = le16toh(msg->hpl);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 8 > len)
@@ -9981,6 +10545,7 @@ static inline bool sbp_unpack_sbp_msg_protection_level_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->lat, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -9988,6 +10553,7 @@ static inline bool sbp_unpack_sbp_msg_protection_level_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->lon, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 8 > len)
@@ -9995,6 +10561,7 @@ static inline bool sbp_unpack_sbp_msg_protection_level_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->height, buf + offset, 8);
+  // NOLINTNEXTLINE
   offset += 8;
 
   if (offset + 1 > len)
@@ -10002,6 +10569,7 @@ static inline bool sbp_unpack_sbp_msg_protection_level_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }

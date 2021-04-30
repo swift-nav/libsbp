@@ -67,6 +67,7 @@ static inline bool sbp_pack_sbp_msg_fileio_read_req_t(u8 *buf, size_t len, const
   }
   u32 msgsequence = htole32(msg->sequence);
   memcpy(buf + offset, &msgsequence, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -75,6 +76,7 @@ static inline bool sbp_pack_sbp_msg_fileio_read_req_t(u8 *buf, size_t len, const
   }
   u32 msgoffset = htole32(msg->offset);
   memcpy(buf + offset, &msgoffset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -83,11 +85,13 @@ static inline bool sbp_pack_sbp_msg_fileio_read_req_t(u8 *buf, size_t len, const
   }
   u8 msgchunk_size = msg->chunk_size;
   memcpy(buf + offset, &msgchunk_size, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   if (offset + sbp_strlen(msg->filename, "nul") > len)
   {
     return false;
   }
+  // NOLINTNEXTLINE
   offset += sbp_pack_string(buf + offset, msg->filename, "nul");
   return true;
 }
@@ -106,6 +110,7 @@ static inline bool sbp_unpack_sbp_msg_fileio_read_req_t(const u8 *buf, size_t le
   }
   memcpy(&msg->sequence, buf + offset, 4);
   msg->sequence = le32toh(msg->sequence);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -114,6 +119,7 @@ static inline bool sbp_unpack_sbp_msg_fileio_read_req_t(const u8 *buf, size_t le
   }
   memcpy(&msg->offset, buf + offset, 4);
   msg->offset = le32toh(msg->offset);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -121,7 +127,9 @@ static inline bool sbp_unpack_sbp_msg_fileio_read_req_t(const u8 *buf, size_t le
     return false;
   }
   memcpy(&msg->chunk_size, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
+  // NOLINTNEXTLINE
   offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->filename, "nul");
   return true;
 }
@@ -210,6 +218,7 @@ static inline bool sbp_pack_sbp_msg_fileio_read_resp_t(u8 *buf, size_t len, cons
   }
   u32 msgsequence = htole32(msg->sequence);
   memcpy(buf + offset, &msgsequence, 4);
+  // NOLINTNEXTLINE
   offset += 4;
   for (size_t msgcontents_idx = 0; msgcontents_idx < (size_t)msg->n_contents; msgcontents_idx++)
   {
@@ -220,6 +229,7 @@ static inline bool sbp_pack_sbp_msg_fileio_read_resp_t(u8 *buf, size_t len, cons
     }
     u8 msgcontentsmsgcontents_idx = msg->contents[msgcontents_idx];
     memcpy(buf + offset, &msgcontentsmsgcontents_idx, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -239,6 +249,7 @@ static inline bool sbp_unpack_sbp_msg_fileio_read_resp_t(const u8 *buf, size_t l
   }
   memcpy(&msg->sequence, buf + offset, 4);
   msg->sequence = le32toh(msg->sequence);
+  // NOLINTNEXTLINE
   offset += 4;
   msg->n_contents = (u8)((len - offset) / 1);
 
@@ -250,6 +261,7 @@ static inline bool sbp_unpack_sbp_msg_fileio_read_resp_t(const u8 *buf, size_t l
       return false;
     }
     memcpy(&msg->contents[msgcontents_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -342,6 +354,7 @@ static inline bool sbp_pack_sbp_msg_fileio_read_dir_req_t(u8 *buf, size_t len, c
   }
   u32 msgsequence = htole32(msg->sequence);
   memcpy(buf + offset, &msgsequence, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -350,11 +363,13 @@ static inline bool sbp_pack_sbp_msg_fileio_read_dir_req_t(u8 *buf, size_t len, c
   }
   u32 msgoffset = htole32(msg->offset);
   memcpy(buf + offset, &msgoffset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
   if (offset + sbp_strlen(msg->dirname, "nul") > len)
   {
     return false;
   }
+  // NOLINTNEXTLINE
   offset += sbp_pack_string(buf + offset, msg->dirname, "nul");
   return true;
 }
@@ -374,6 +389,7 @@ sbp_unpack_sbp_msg_fileio_read_dir_req_t(const u8 *buf, size_t len, sbp_msg_file
   }
   memcpy(&msg->sequence, buf + offset, 4);
   msg->sequence = le32toh(msg->sequence);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -382,7 +398,9 @@ sbp_unpack_sbp_msg_fileio_read_dir_req_t(const u8 *buf, size_t len, sbp_msg_file
   }
   memcpy(&msg->offset, buf + offset, 4);
   msg->offset = le32toh(msg->offset);
+  // NOLINTNEXTLINE
   offset += 4;
+  // NOLINTNEXTLINE
   offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->dirname, "nul");
   return true;
 }
@@ -468,6 +486,7 @@ sbp_pack_sbp_msg_fileio_read_dir_resp_t(u8 *buf, size_t len, const sbp_msg_filei
   }
   u32 msgsequence = htole32(msg->sequence);
   memcpy(buf + offset, &msgsequence, 4);
+  // NOLINTNEXTLINE
   offset += 4;
   for (size_t msgcontents_idx = 0; msgcontents_idx < (size_t)msg->n_contents; msgcontents_idx++)
   {
@@ -478,6 +497,7 @@ sbp_pack_sbp_msg_fileio_read_dir_resp_t(u8 *buf, size_t len, const sbp_msg_filei
     }
     u8 msgcontentsmsgcontents_idx = msg->contents[msgcontents_idx];
     memcpy(buf + offset, &msgcontentsmsgcontents_idx, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -498,6 +518,7 @@ sbp_unpack_sbp_msg_fileio_read_dir_resp_t(const u8 *buf, size_t len, sbp_msg_fil
   }
   memcpy(&msg->sequence, buf + offset, 4);
   msg->sequence = le32toh(msg->sequence);
+  // NOLINTNEXTLINE
   offset += 4;
   msg->n_contents = (u8)((len - offset) / 1);
 
@@ -509,6 +530,7 @@ sbp_unpack_sbp_msg_fileio_read_dir_resp_t(const u8 *buf, size_t len, sbp_msg_fil
       return false;
     }
     memcpy(&msg->contents[msgcontents_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -585,6 +607,7 @@ static inline bool sbp_pack_sbp_msg_fileio_remove_t(u8 *buf, size_t len, const s
   {
     return false;
   }
+  // NOLINTNEXTLINE
   offset += sbp_pack_string(buf + offset, msg->filename, "nul");
   return true;
 }
@@ -597,6 +620,7 @@ static inline bool sbp_unpack_sbp_msg_fileio_remove_t(const u8 *buf, size_t len,
   (void)len;
   (void)msg;
 
+  // NOLINTNEXTLINE
   offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->filename, "nul");
   return true;
 }
@@ -683,6 +707,7 @@ static inline bool sbp_pack_sbp_msg_fileio_write_req_t(u8 *buf, size_t len, cons
   }
   u32 msgsequence = htole32(msg->sequence);
   memcpy(buf + offset, &msgsequence, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -691,11 +716,13 @@ static inline bool sbp_pack_sbp_msg_fileio_write_req_t(u8 *buf, size_t len, cons
   }
   u32 msgoffset = htole32(msg->offset);
   memcpy(buf + offset, &msgoffset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
   if (offset + sbp_strlen(msg->filename, "nul") > len)
   {
     return false;
   }
+  // NOLINTNEXTLINE
   offset += sbp_pack_string(buf + offset, msg->filename, "nul");
   for (size_t msgdata_idx = 0; msgdata_idx < (size_t)msg->n_data; msgdata_idx++)
   {
@@ -706,6 +733,7 @@ static inline bool sbp_pack_sbp_msg_fileio_write_req_t(u8 *buf, size_t len, cons
     }
     u8 msgdatamsgdata_idx = msg->data[msgdata_idx];
     memcpy(buf + offset, &msgdatamsgdata_idx, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -725,6 +753,7 @@ static inline bool sbp_unpack_sbp_msg_fileio_write_req_t(const u8 *buf, size_t l
   }
   memcpy(&msg->sequence, buf + offset, 4);
   msg->sequence = le32toh(msg->sequence);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -733,7 +762,9 @@ static inline bool sbp_unpack_sbp_msg_fileio_write_req_t(const u8 *buf, size_t l
   }
   memcpy(&msg->offset, buf + offset, 4);
   msg->offset = le32toh(msg->offset);
+  // NOLINTNEXTLINE
   offset += 4;
+  // NOLINTNEXTLINE
   offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->filename, "nul");
   msg->n_data = (u8)((len - offset) / 1);
 
@@ -745,6 +776,7 @@ static inline bool sbp_unpack_sbp_msg_fileio_write_req_t(const u8 *buf, size_t l
       return false;
     }
     memcpy(&msg->data[msgdata_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -833,6 +865,7 @@ static inline bool sbp_pack_sbp_msg_fileio_write_resp_t(u8 *buf, size_t len, con
   }
   u32 msgsequence = htole32(msg->sequence);
   memcpy(buf + offset, &msgsequence, 4);
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }
@@ -851,6 +884,7 @@ static inline bool sbp_unpack_sbp_msg_fileio_write_resp_t(const u8 *buf, size_t 
   }
   memcpy(&msg->sequence, buf + offset, 4);
   msg->sequence = le32toh(msg->sequence);
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }
@@ -916,6 +950,7 @@ static inline bool sbp_pack_sbp_msg_fileio_config_req_t(u8 *buf, size_t len, con
   }
   u32 msgsequence = htole32(msg->sequence);
   memcpy(buf + offset, &msgsequence, 4);
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }
@@ -934,6 +969,7 @@ static inline bool sbp_unpack_sbp_msg_fileio_config_req_t(const u8 *buf, size_t 
   }
   memcpy(&msg->sequence, buf + offset, 4);
   msg->sequence = le32toh(msg->sequence);
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }
@@ -1012,6 +1048,7 @@ static inline bool sbp_pack_sbp_msg_fileio_config_resp_t(u8 *buf, size_t len, co
   }
   u32 msgsequence = htole32(msg->sequence);
   memcpy(buf + offset, &msgsequence, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -1020,6 +1057,7 @@ static inline bool sbp_pack_sbp_msg_fileio_config_resp_t(u8 *buf, size_t len, co
   }
   u32 msgwindow_size = htole32(msg->window_size);
   memcpy(buf + offset, &msgwindow_size, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -1028,6 +1066,7 @@ static inline bool sbp_pack_sbp_msg_fileio_config_resp_t(u8 *buf, size_t len, co
   }
   u32 msgbatch_size = htole32(msg->batch_size);
   memcpy(buf + offset, &msgbatch_size, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -1036,6 +1075,7 @@ static inline bool sbp_pack_sbp_msg_fileio_config_resp_t(u8 *buf, size_t len, co
   }
   u32 msgfileio_version = htole32(msg->fileio_version);
   memcpy(buf + offset, &msgfileio_version, 4);
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }
@@ -1054,6 +1094,7 @@ static inline bool sbp_unpack_sbp_msg_fileio_config_resp_t(const u8 *buf, size_t
   }
   memcpy(&msg->sequence, buf + offset, 4);
   msg->sequence = le32toh(msg->sequence);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -1062,6 +1103,7 @@ static inline bool sbp_unpack_sbp_msg_fileio_config_resp_t(const u8 *buf, size_t
   }
   memcpy(&msg->window_size, buf + offset, 4);
   msg->window_size = le32toh(msg->window_size);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -1070,6 +1112,7 @@ static inline bool sbp_unpack_sbp_msg_fileio_config_resp_t(const u8 *buf, size_t
   }
   memcpy(&msg->batch_size, buf + offset, 4);
   msg->batch_size = le32toh(msg->batch_size);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -1078,6 +1121,7 @@ static inline bool sbp_unpack_sbp_msg_fileio_config_resp_t(const u8 *buf, size_t
   }
   memcpy(&msg->fileio_version, buf + offset, 4);
   msg->fileio_version = le32toh(msg->fileio_version);
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }

@@ -100,6 +100,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_t(u8 *buf, size_t len, const sbp_
   }
   float msgcn0 = msg->cn0;
   memcpy(buf + offset, &msgcn0, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -108,6 +109,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_t(u8 *buf, size_t len, const sbp_
   }
   float msgcp = msg->cp;
   memcpy(buf + offset, &msgcp, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -116,6 +118,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_t(u8 *buf, size_t len, const sbp_
   }
   float msgcf = msg->cf;
   memcpy(buf + offset, &msgcf, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -124,6 +127,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_t(u8 *buf, size_t len, const sbp_
   }
   u8 msgsidsat = msg->sid.sat;
   memcpy(buf + offset, &msgsidsat, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -132,6 +136,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_t(u8 *buf, size_t len, const sbp_
   }
   u8 msgsidcode = msg->sid.code;
   memcpy(buf + offset, &msgsidcode, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -149,6 +154,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_t(const u8 *buf, size_t len, sb
     return false;
   }
   memcpy(&msg->cn0, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -156,6 +162,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_t(const u8 *buf, size_t len, sb
     return false;
   }
   memcpy(&msg->cp, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -163,6 +170,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_t(const u8 *buf, size_t len, sb
     return false;
   }
   memcpy(&msg->cf, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -170,6 +178,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_t(const u8 *buf, size_t len, sb
     return false;
   }
   memcpy(&msg->sid.sat, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -177,6 +186,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_t(const u8 *buf, size_t len, sb
     return false;
   }
   memcpy(&msg->sid.code, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -307,6 +317,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_c_t(u8 *buf, size_t len, cons
   }
   float msgcn0 = msg->cn0;
   memcpy(buf + offset, &msgcn0, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -315,6 +326,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_c_t(u8 *buf, size_t len, cons
   }
   float msgcp = msg->cp;
   memcpy(buf + offset, &msgcp, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -323,6 +335,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_c_t(u8 *buf, size_t len, cons
   }
   float msgcf = msg->cf;
   memcpy(buf + offset, &msgcf, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -331,6 +344,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_c_t(u8 *buf, size_t len, cons
   }
   u16 msgsidsat = htole16(msg->sid.sat);
   memcpy(buf + offset, &msgsidsat, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -339,6 +353,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_c_t(u8 *buf, size_t len, cons
   }
   u8 msgsidcode = msg->sid.code;
   memcpy(buf + offset, &msgsidcode, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -347,6 +362,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_c_t(u8 *buf, size_t len, cons
   }
   u8 msgsidreserved = msg->sid.reserved;
   memcpy(buf + offset, &msgsidreserved, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -364,6 +380,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_dep_c_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->cn0, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -371,6 +388,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_dep_c_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->cp, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -378,6 +396,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_dep_c_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->cf, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -386,6 +405,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_dep_c_t(const u8 *buf, size_t l
   }
   memcpy(&msg->sid.sat, buf + offset, 2);
   msg->sid.sat = le16toh(msg->sid.sat);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -393,6 +413,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_dep_c_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->sid.code, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -400,6 +421,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_dep_c_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->sid.reserved, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -536,6 +558,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_b_t(u8 *buf, size_t len, cons
   }
   float msgsnr = msg->snr;
   memcpy(buf + offset, &msgsnr, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -544,6 +567,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_b_t(u8 *buf, size_t len, cons
   }
   float msgcp = msg->cp;
   memcpy(buf + offset, &msgcp, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -552,6 +576,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_b_t(u8 *buf, size_t len, cons
   }
   float msgcf = msg->cf;
   memcpy(buf + offset, &msgcf, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -560,6 +585,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_b_t(u8 *buf, size_t len, cons
   }
   u16 msgsidsat = htole16(msg->sid.sat);
   memcpy(buf + offset, &msgsidsat, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -568,6 +594,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_b_t(u8 *buf, size_t len, cons
   }
   u8 msgsidcode = msg->sid.code;
   memcpy(buf + offset, &msgsidcode, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -576,6 +603,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_b_t(u8 *buf, size_t len, cons
   }
   u8 msgsidreserved = msg->sid.reserved;
   memcpy(buf + offset, &msgsidreserved, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -593,6 +621,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_dep_b_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->snr, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -600,6 +629,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_dep_b_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->cp, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -607,6 +637,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_dep_b_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->cf, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -615,6 +646,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_dep_b_t(const u8 *buf, size_t l
   }
   memcpy(&msg->sid.sat, buf + offset, 2);
   msg->sid.sat = le16toh(msg->sid.sat);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -622,6 +654,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_dep_b_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->sid.code, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -629,6 +662,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_dep_b_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->sid.reserved, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -730,6 +764,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_a_t(u8 *buf, size_t len, cons
   }
   float msgsnr = msg->snr;
   memcpy(buf + offset, &msgsnr, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -738,6 +773,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_a_t(u8 *buf, size_t len, cons
   }
   float msgcp = msg->cp;
   memcpy(buf + offset, &msgcp, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -746,6 +782,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_a_t(u8 *buf, size_t len, cons
   }
   float msgcf = msg->cf;
   memcpy(buf + offset, &msgcf, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -754,6 +791,7 @@ static inline bool sbp_pack_sbp_msg_acq_result_dep_a_t(u8 *buf, size_t len, cons
   }
   u8 msgprn = msg->prn;
   memcpy(buf + offset, &msgprn, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -771,6 +809,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_dep_a_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->snr, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -778,6 +817,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_dep_a_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->cp, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -785,6 +825,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_dep_a_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->cf, buf + offset, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -792,6 +833,7 @@ static inline bool sbp_unpack_sbp_msg_acq_result_dep_a_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->prn, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -971,6 +1013,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_t(u8 *buf, size_t len, const 
     }
     u8 msgacq_sv_profilemsgacq_sv_profile_idxjob_type = msg->acq_sv_profile[msgacq_sv_profile_idx].job_type;
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxjob_type, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -979,6 +1022,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_t(u8 *buf, size_t len, const 
     }
     u8 msgacq_sv_profilemsgacq_sv_profile_idxstatus = msg->acq_sv_profile[msgacq_sv_profile_idx].status;
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxstatus, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -987,6 +1031,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_t(u8 *buf, size_t len, const 
     }
     u16 msgacq_sv_profilemsgacq_sv_profile_idxcn0 = htole16(msg->acq_sv_profile[msgacq_sv_profile_idx].cn0);
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxcn0, 2);
+    // NOLINTNEXTLINE
     offset += 2;
 
     if (offset + 1 > len)
@@ -995,6 +1040,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_t(u8 *buf, size_t len, const 
     }
     u8 msgacq_sv_profilemsgacq_sv_profile_idxint_time = msg->acq_sv_profile[msgacq_sv_profile_idx].int_time;
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxint_time, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -1003,6 +1049,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_t(u8 *buf, size_t len, const 
     }
     u8 msgacq_sv_profilemsgacq_sv_profile_idxsidsat = msg->acq_sv_profile[msgacq_sv_profile_idx].sid.sat;
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxsidsat, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -1011,6 +1058,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_t(u8 *buf, size_t len, const 
     }
     u8 msgacq_sv_profilemsgacq_sv_profile_idxsidcode = msg->acq_sv_profile[msgacq_sv_profile_idx].sid.code;
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxsidcode, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -1019,6 +1067,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_t(u8 *buf, size_t len, const 
     }
     u16 msgacq_sv_profilemsgacq_sv_profile_idxbin_width = htole16(msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width);
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxbin_width, 2);
+    // NOLINTNEXTLINE
     offset += 2;
 
     if (offset + 4 > len)
@@ -1027,6 +1076,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_t(u8 *buf, size_t len, const 
     }
     u32 msgacq_sv_profilemsgacq_sv_profile_idxtimestamp = htole32(msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp);
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxtimestamp, 4);
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1036,6 +1086,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_t(u8 *buf, size_t len, const 
     u32 msgacq_sv_profilemsgacq_sv_profile_idxtime_spent =
         htole32(msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent);
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxtime_spent, 4);
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1045,6 +1096,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_t(u8 *buf, size_t len, const 
     u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_min =
         htole32(*(const u32 *)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min);
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxcf_min, 4);
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1054,6 +1106,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_t(u8 *buf, size_t len, const 
     u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_max =
         htole32(*(const u32 *)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max);
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxcf_max, 4);
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1063,6 +1116,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_t(u8 *buf, size_t len, const 
     u32 msgacq_sv_profilemsgacq_sv_profile_idxcf =
         htole32(*(const u32 *)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf);
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxcf, 4);
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1071,6 +1125,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_t(u8 *buf, size_t len, const 
     }
     u32 msgacq_sv_profilemsgacq_sv_profile_idxcp = htole32(msg->acq_sv_profile[msgacq_sv_profile_idx].cp);
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxcp, 4);
+    // NOLINTNEXTLINE
     offset += 4;
   }
   return true;
@@ -1094,6 +1149,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(const u8 *buf, size_t len
       return false;
     }
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].job_type, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -1101,6 +1157,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(const u8 *buf, size_t len
       return false;
     }
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].status, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -1109,6 +1166,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(const u8 *buf, size_t len
     }
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cn0, buf + offset, 2);
     msg->acq_sv_profile[msgacq_sv_profile_idx].cn0 = le16toh(msg->acq_sv_profile[msgacq_sv_profile_idx].cn0);
+    // NOLINTNEXTLINE
     offset += 2;
 
     if (offset + 1 > len)
@@ -1116,6 +1174,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(const u8 *buf, size_t len
       return false;
     }
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].int_time, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -1123,6 +1182,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(const u8 *buf, size_t len
       return false;
     }
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].sid.sat, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -1130,6 +1190,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(const u8 *buf, size_t len
       return false;
     }
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].sid.code, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -1139,6 +1200,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(const u8 *buf, size_t len
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width, buf + offset, 2);
     msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width =
         le16toh(msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width);
+    // NOLINTNEXTLINE
     offset += 2;
 
     if (offset + 4 > len)
@@ -1148,6 +1210,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(const u8 *buf, size_t len
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp, buf + offset, 4);
     msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp =
         le32toh(msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp);
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1157,6 +1220,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(const u8 *buf, size_t len
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent, buf + offset, 4);
     msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent =
         le32toh(msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent);
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1167,6 +1231,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(const u8 *buf, size_t len
     u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_min = *(const u32 *)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min;
     msgacq_sv_profilemsgacq_sv_profile_idxcf_min = le32toh(msgacq_sv_profilemsgacq_sv_profile_idxcf_min);
     msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min = *(const s32 *)&msgacq_sv_profilemsgacq_sv_profile_idxcf_min;
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1177,6 +1242,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(const u8 *buf, size_t len
     u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_max = *(const u32 *)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max;
     msgacq_sv_profilemsgacq_sv_profile_idxcf_max = le32toh(msgacq_sv_profilemsgacq_sv_profile_idxcf_max);
     msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max = *(const s32 *)&msgacq_sv_profilemsgacq_sv_profile_idxcf_max;
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1187,6 +1253,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(const u8 *buf, size_t len
     u32 msgacq_sv_profilemsgacq_sv_profile_idxcf = *(const u32 *)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf;
     msgacq_sv_profilemsgacq_sv_profile_idxcf = le32toh(msgacq_sv_profilemsgacq_sv_profile_idxcf);
     msg->acq_sv_profile[msgacq_sv_profile_idx].cf = *(const s32 *)&msgacq_sv_profilemsgacq_sv_profile_idxcf;
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1195,6 +1262,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(const u8 *buf, size_t len
     }
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cp, buf + offset, 4);
     msg->acq_sv_profile[msgacq_sv_profile_idx].cp = le32toh(msg->acq_sv_profile[msgacq_sv_profile_idx].cp);
+    // NOLINTNEXTLINE
     offset += 4;
   }
   return true;
@@ -1429,6 +1497,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, co
     }
     u8 msgacq_sv_profilemsgacq_sv_profile_idxjob_type = msg->acq_sv_profile[msgacq_sv_profile_idx].job_type;
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxjob_type, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -1437,6 +1506,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, co
     }
     u8 msgacq_sv_profilemsgacq_sv_profile_idxstatus = msg->acq_sv_profile[msgacq_sv_profile_idx].status;
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxstatus, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -1445,6 +1515,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, co
     }
     u16 msgacq_sv_profilemsgacq_sv_profile_idxcn0 = htole16(msg->acq_sv_profile[msgacq_sv_profile_idx].cn0);
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxcn0, 2);
+    // NOLINTNEXTLINE
     offset += 2;
 
     if (offset + 1 > len)
@@ -1453,6 +1524,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, co
     }
     u8 msgacq_sv_profilemsgacq_sv_profile_idxint_time = msg->acq_sv_profile[msgacq_sv_profile_idx].int_time;
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxint_time, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -1461,6 +1533,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, co
     }
     u16 msgacq_sv_profilemsgacq_sv_profile_idxsidsat = htole16(msg->acq_sv_profile[msgacq_sv_profile_idx].sid.sat);
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxsidsat, 2);
+    // NOLINTNEXTLINE
     offset += 2;
 
     if (offset + 1 > len)
@@ -1469,6 +1542,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, co
     }
     u8 msgacq_sv_profilemsgacq_sv_profile_idxsidcode = msg->acq_sv_profile[msgacq_sv_profile_idx].sid.code;
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxsidcode, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -1477,6 +1551,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, co
     }
     u8 msgacq_sv_profilemsgacq_sv_profile_idxsidreserved = msg->acq_sv_profile[msgacq_sv_profile_idx].sid.reserved;
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxsidreserved, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -1485,6 +1560,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, co
     }
     u16 msgacq_sv_profilemsgacq_sv_profile_idxbin_width = htole16(msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width);
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxbin_width, 2);
+    // NOLINTNEXTLINE
     offset += 2;
 
     if (offset + 4 > len)
@@ -1493,6 +1569,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, co
     }
     u32 msgacq_sv_profilemsgacq_sv_profile_idxtimestamp = htole32(msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp);
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxtimestamp, 4);
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1502,6 +1579,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, co
     u32 msgacq_sv_profilemsgacq_sv_profile_idxtime_spent =
         htole32(msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent);
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxtime_spent, 4);
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1511,6 +1589,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, co
     u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_min =
         htole32(*(const u32 *)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min);
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxcf_min, 4);
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1520,6 +1599,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, co
     u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_max =
         htole32(*(const u32 *)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max);
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxcf_max, 4);
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1529,6 +1609,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, co
     u32 msgacq_sv_profilemsgacq_sv_profile_idxcf =
         htole32(*(const u32 *)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf);
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxcf, 4);
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1537,6 +1618,7 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, co
     }
     u32 msgacq_sv_profilemsgacq_sv_profile_idxcp = htole32(msg->acq_sv_profile[msgacq_sv_profile_idx].cp);
     memcpy(buf + offset, &msgacq_sv_profilemsgacq_sv_profile_idxcp, 4);
+    // NOLINTNEXTLINE
     offset += 4;
   }
   return true;
@@ -1560,6 +1642,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const u8 *buf, size_t
       return false;
     }
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].job_type, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -1567,6 +1650,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const u8 *buf, size_t
       return false;
     }
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].status, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -1575,6 +1659,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const u8 *buf, size_t
     }
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cn0, buf + offset, 2);
     msg->acq_sv_profile[msgacq_sv_profile_idx].cn0 = le16toh(msg->acq_sv_profile[msgacq_sv_profile_idx].cn0);
+    // NOLINTNEXTLINE
     offset += 2;
 
     if (offset + 1 > len)
@@ -1582,6 +1667,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const u8 *buf, size_t
       return false;
     }
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].int_time, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -1590,6 +1676,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const u8 *buf, size_t
     }
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].sid.sat, buf + offset, 2);
     msg->acq_sv_profile[msgacq_sv_profile_idx].sid.sat = le16toh(msg->acq_sv_profile[msgacq_sv_profile_idx].sid.sat);
+    // NOLINTNEXTLINE
     offset += 2;
 
     if (offset + 1 > len)
@@ -1597,6 +1684,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const u8 *buf, size_t
       return false;
     }
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].sid.code, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -1604,6 +1692,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const u8 *buf, size_t
       return false;
     }
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].sid.reserved, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -1613,6 +1702,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const u8 *buf, size_t
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width, buf + offset, 2);
     msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width =
         le16toh(msg->acq_sv_profile[msgacq_sv_profile_idx].bin_width);
+    // NOLINTNEXTLINE
     offset += 2;
 
     if (offset + 4 > len)
@@ -1622,6 +1712,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const u8 *buf, size_t
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp, buf + offset, 4);
     msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp =
         le32toh(msg->acq_sv_profile[msgacq_sv_profile_idx].timestamp);
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1631,6 +1722,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const u8 *buf, size_t
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent, buf + offset, 4);
     msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent =
         le32toh(msg->acq_sv_profile[msgacq_sv_profile_idx].time_spent);
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1641,6 +1733,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const u8 *buf, size_t
     u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_min = *(const u32 *)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min;
     msgacq_sv_profilemsgacq_sv_profile_idxcf_min = le32toh(msgacq_sv_profilemsgacq_sv_profile_idxcf_min);
     msg->acq_sv_profile[msgacq_sv_profile_idx].cf_min = *(const s32 *)&msgacq_sv_profilemsgacq_sv_profile_idxcf_min;
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1651,6 +1744,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const u8 *buf, size_t
     u32 msgacq_sv_profilemsgacq_sv_profile_idxcf_max = *(const u32 *)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max;
     msgacq_sv_profilemsgacq_sv_profile_idxcf_max = le32toh(msgacq_sv_profilemsgacq_sv_profile_idxcf_max);
     msg->acq_sv_profile[msgacq_sv_profile_idx].cf_max = *(const s32 *)&msgacq_sv_profilemsgacq_sv_profile_idxcf_max;
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1661,6 +1755,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const u8 *buf, size_t
     u32 msgacq_sv_profilemsgacq_sv_profile_idxcf = *(const u32 *)&msg->acq_sv_profile[msgacq_sv_profile_idx].cf;
     msgacq_sv_profilemsgacq_sv_profile_idxcf = le32toh(msgacq_sv_profilemsgacq_sv_profile_idxcf);
     msg->acq_sv_profile[msgacq_sv_profile_idx].cf = *(const s32 *)&msgacq_sv_profilemsgacq_sv_profile_idxcf;
+    // NOLINTNEXTLINE
     offset += 4;
 
     if (offset + 4 > len)
@@ -1669,6 +1764,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const u8 *buf, size_t
     }
     memcpy(&msg->acq_sv_profile[msgacq_sv_profile_idx].cp, buf + offset, 4);
     msg->acq_sv_profile[msgacq_sv_profile_idx].cp = le32toh(msg->acq_sv_profile[msgacq_sv_profile_idx].cp);
+    // NOLINTNEXTLINE
     offset += 4;
   }
   return true;

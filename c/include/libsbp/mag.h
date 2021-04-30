@@ -65,6 +65,7 @@ static inline bool sbp_pack_sbp_msg_mag_raw_t(u8 *buf, size_t len, const sbp_msg
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -73,6 +74,7 @@ static inline bool sbp_pack_sbp_msg_mag_raw_t(u8 *buf, size_t len, const sbp_msg
   }
   u8 msgtow_f = msg->tow_f;
   memcpy(buf + offset, &msgtow_f, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -81,6 +83,7 @@ static inline bool sbp_pack_sbp_msg_mag_raw_t(u8 *buf, size_t len, const sbp_msg
   }
   u16 msgmag_x = htole16(*(const u16 *)&msg->mag_x);
   memcpy(buf + offset, &msgmag_x, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -89,6 +92,7 @@ static inline bool sbp_pack_sbp_msg_mag_raw_t(u8 *buf, size_t len, const sbp_msg
   }
   u16 msgmag_y = htole16(*(const u16 *)&msg->mag_y);
   memcpy(buf + offset, &msgmag_y, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -97,6 +101,7 @@ static inline bool sbp_pack_sbp_msg_mag_raw_t(u8 *buf, size_t len, const sbp_msg
   }
   u16 msgmag_z = htole16(*(const u16 *)&msg->mag_z);
   memcpy(buf + offset, &msgmag_z, 2);
+  // NOLINTNEXTLINE
   offset += 2;
   return true;
 }
@@ -115,6 +120,7 @@ static inline bool sbp_unpack_sbp_msg_mag_raw_t(const u8 *buf, size_t len, sbp_m
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -122,6 +128,7 @@ static inline bool sbp_unpack_sbp_msg_mag_raw_t(const u8 *buf, size_t len, sbp_m
     return false;
   }
   memcpy(&msg->tow_f, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -132,6 +139,7 @@ static inline bool sbp_unpack_sbp_msg_mag_raw_t(const u8 *buf, size_t len, sbp_m
   u16 msgmag_x = *(const u16 *)&msg->mag_x;
   msgmag_x = le16toh(msgmag_x);
   msg->mag_x = *(const s16 *)&msgmag_x;
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -142,6 +150,7 @@ static inline bool sbp_unpack_sbp_msg_mag_raw_t(const u8 *buf, size_t len, sbp_m
   u16 msgmag_y = *(const u16 *)&msg->mag_y;
   msgmag_y = le16toh(msgmag_y);
   msg->mag_y = *(const s16 *)&msgmag_y;
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -152,6 +161,7 @@ static inline bool sbp_unpack_sbp_msg_mag_raw_t(const u8 *buf, size_t len, sbp_m
   u16 msgmag_z = *(const u16 *)&msg->mag_z;
   msgmag_z = le16toh(msgmag_z);
   msg->mag_z = *(const s16 *)&msgmag_z;
+  // NOLINTNEXTLINE
   offset += 2;
   return true;
 }

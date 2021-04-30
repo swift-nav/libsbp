@@ -156,6 +156,7 @@ static inline bool sbp_pack_sbp_msg_ssr_orbit_clock_t(u8 *buf, size_t len, const
   }
   u32 msgtimetow = htole32(msg->time.tow);
   memcpy(buf + offset, &msgtimetow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -164,6 +165,7 @@ static inline bool sbp_pack_sbp_msg_ssr_orbit_clock_t(u8 *buf, size_t len, const
   }
   u16 msgtimewn = htole16(msg->time.wn);
   memcpy(buf + offset, &msgtimewn, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -172,6 +174,7 @@ static inline bool sbp_pack_sbp_msg_ssr_orbit_clock_t(u8 *buf, size_t len, const
   }
   u8 msgsidsat = msg->sid.sat;
   memcpy(buf + offset, &msgsidsat, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -180,6 +183,7 @@ static inline bool sbp_pack_sbp_msg_ssr_orbit_clock_t(u8 *buf, size_t len, const
   }
   u8 msgsidcode = msg->sid.code;
   memcpy(buf + offset, &msgsidcode, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -188,6 +192,7 @@ static inline bool sbp_pack_sbp_msg_ssr_orbit_clock_t(u8 *buf, size_t len, const
   }
   u8 msgupdate_interval = msg->update_interval;
   memcpy(buf + offset, &msgupdate_interval, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -196,6 +201,7 @@ static inline bool sbp_pack_sbp_msg_ssr_orbit_clock_t(u8 *buf, size_t len, const
   }
   u8 msgiod_ssr = msg->iod_ssr;
   memcpy(buf + offset, &msgiod_ssr, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 4 > len)
@@ -204,6 +210,7 @@ static inline bool sbp_pack_sbp_msg_ssr_orbit_clock_t(u8 *buf, size_t len, const
   }
   u32 msgiod = htole32(msg->iod);
   memcpy(buf + offset, &msgiod, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -212,6 +219,7 @@ static inline bool sbp_pack_sbp_msg_ssr_orbit_clock_t(u8 *buf, size_t len, const
   }
   u32 msgradial = htole32(*(const u32 *)&msg->radial);
   memcpy(buf + offset, &msgradial, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -220,6 +228,7 @@ static inline bool sbp_pack_sbp_msg_ssr_orbit_clock_t(u8 *buf, size_t len, const
   }
   u32 msgalong = htole32(*(const u32 *)&msg->along);
   memcpy(buf + offset, &msgalong, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -228,6 +237,7 @@ static inline bool sbp_pack_sbp_msg_ssr_orbit_clock_t(u8 *buf, size_t len, const
   }
   u32 msgcross = htole32(*(const u32 *)&msg->cross);
   memcpy(buf + offset, &msgcross, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -236,6 +246,7 @@ static inline bool sbp_pack_sbp_msg_ssr_orbit_clock_t(u8 *buf, size_t len, const
   }
   u32 msgdot_radial = htole32(*(const u32 *)&msg->dot_radial);
   memcpy(buf + offset, &msgdot_radial, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -244,6 +255,7 @@ static inline bool sbp_pack_sbp_msg_ssr_orbit_clock_t(u8 *buf, size_t len, const
   }
   u32 msgdot_along = htole32(*(const u32 *)&msg->dot_along);
   memcpy(buf + offset, &msgdot_along, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -252,6 +264,7 @@ static inline bool sbp_pack_sbp_msg_ssr_orbit_clock_t(u8 *buf, size_t len, const
   }
   u32 msgdot_cross = htole32(*(const u32 *)&msg->dot_cross);
   memcpy(buf + offset, &msgdot_cross, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -260,6 +273,7 @@ static inline bool sbp_pack_sbp_msg_ssr_orbit_clock_t(u8 *buf, size_t len, const
   }
   u32 msgc0 = htole32(*(const u32 *)&msg->c0);
   memcpy(buf + offset, &msgc0, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -268,6 +282,7 @@ static inline bool sbp_pack_sbp_msg_ssr_orbit_clock_t(u8 *buf, size_t len, const
   }
   u32 msgc1 = htole32(*(const u32 *)&msg->c1);
   memcpy(buf + offset, &msgc1, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -276,6 +291,7 @@ static inline bool sbp_pack_sbp_msg_ssr_orbit_clock_t(u8 *buf, size_t len, const
   }
   u32 msgc2 = htole32(*(const u32 *)&msg->c2);
   memcpy(buf + offset, &msgc2, 4);
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }
@@ -294,6 +310,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_orbit_clock_t(const u8 *buf, size_t le
   }
   memcpy(&msg->time.tow, buf + offset, 4);
   msg->time.tow = le32toh(msg->time.tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -302,6 +319,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_orbit_clock_t(const u8 *buf, size_t le
   }
   memcpy(&msg->time.wn, buf + offset, 2);
   msg->time.wn = le16toh(msg->time.wn);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -309,6 +327,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_orbit_clock_t(const u8 *buf, size_t le
     return false;
   }
   memcpy(&msg->sid.sat, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -316,6 +335,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_orbit_clock_t(const u8 *buf, size_t le
     return false;
   }
   memcpy(&msg->sid.code, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -323,6 +343,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_orbit_clock_t(const u8 *buf, size_t le
     return false;
   }
   memcpy(&msg->update_interval, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -330,6 +351,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_orbit_clock_t(const u8 *buf, size_t le
     return false;
   }
   memcpy(&msg->iod_ssr, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 4 > len)
@@ -338,6 +360,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_orbit_clock_t(const u8 *buf, size_t le
   }
   memcpy(&msg->iod, buf + offset, 4);
   msg->iod = le32toh(msg->iod);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -348,6 +371,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_orbit_clock_t(const u8 *buf, size_t le
   u32 msgradial = *(const u32 *)&msg->radial;
   msgradial = le32toh(msgradial);
   msg->radial = *(const s32 *)&msgradial;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -358,6 +382,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_orbit_clock_t(const u8 *buf, size_t le
   u32 msgalong = *(const u32 *)&msg->along;
   msgalong = le32toh(msgalong);
   msg->along = *(const s32 *)&msgalong;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -368,6 +393,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_orbit_clock_t(const u8 *buf, size_t le
   u32 msgcross = *(const u32 *)&msg->cross;
   msgcross = le32toh(msgcross);
   msg->cross = *(const s32 *)&msgcross;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -378,6 +404,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_orbit_clock_t(const u8 *buf, size_t le
   u32 msgdot_radial = *(const u32 *)&msg->dot_radial;
   msgdot_radial = le32toh(msgdot_radial);
   msg->dot_radial = *(const s32 *)&msgdot_radial;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -388,6 +415,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_orbit_clock_t(const u8 *buf, size_t le
   u32 msgdot_along = *(const u32 *)&msg->dot_along;
   msgdot_along = le32toh(msgdot_along);
   msg->dot_along = *(const s32 *)&msgdot_along;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -398,6 +426,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_orbit_clock_t(const u8 *buf, size_t le
   u32 msgdot_cross = *(const u32 *)&msg->dot_cross;
   msgdot_cross = le32toh(msgdot_cross);
   msg->dot_cross = *(const s32 *)&msgdot_cross;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -408,6 +437,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_orbit_clock_t(const u8 *buf, size_t le
   u32 msgc0 = *(const u32 *)&msg->c0;
   msgc0 = le32toh(msgc0);
   msg->c0 = *(const s32 *)&msgc0;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -418,6 +448,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_orbit_clock_t(const u8 *buf, size_t le
   u32 msgc1 = *(const u32 *)&msg->c1;
   msgc1 = le32toh(msgc1);
   msg->c1 = *(const s32 *)&msgc1;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -428,6 +459,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_orbit_clock_t(const u8 *buf, size_t le
   u32 msgc2 = *(const u32 *)&msg->c2;
   msgc2 = le32toh(msgc2);
   msg->c2 = *(const s32 *)&msgc2;
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }
@@ -652,6 +684,7 @@ static inline bool sbp_pack_sbp_msg_ssr_code_biases_t(u8 *buf, size_t len, const
   }
   u32 msgtimetow = htole32(msg->time.tow);
   memcpy(buf + offset, &msgtimetow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -660,6 +693,7 @@ static inline bool sbp_pack_sbp_msg_ssr_code_biases_t(u8 *buf, size_t len, const
   }
   u16 msgtimewn = htole16(msg->time.wn);
   memcpy(buf + offset, &msgtimewn, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -668,6 +702,7 @@ static inline bool sbp_pack_sbp_msg_ssr_code_biases_t(u8 *buf, size_t len, const
   }
   u8 msgsidsat = msg->sid.sat;
   memcpy(buf + offset, &msgsidsat, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -676,6 +711,7 @@ static inline bool sbp_pack_sbp_msg_ssr_code_biases_t(u8 *buf, size_t len, const
   }
   u8 msgsidcode = msg->sid.code;
   memcpy(buf + offset, &msgsidcode, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -684,6 +720,7 @@ static inline bool sbp_pack_sbp_msg_ssr_code_biases_t(u8 *buf, size_t len, const
   }
   u8 msgupdate_interval = msg->update_interval;
   memcpy(buf + offset, &msgupdate_interval, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -692,6 +729,7 @@ static inline bool sbp_pack_sbp_msg_ssr_code_biases_t(u8 *buf, size_t len, const
   }
   u8 msgiod_ssr = msg->iod_ssr;
   memcpy(buf + offset, &msgiod_ssr, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   for (size_t msgbiases_idx = 0; msgbiases_idx < (size_t)msg->n_biases; msgbiases_idx++)
   {
@@ -702,6 +740,7 @@ static inline bool sbp_pack_sbp_msg_ssr_code_biases_t(u8 *buf, size_t len, const
     }
     u8 msgbiasesmsgbiases_idxcode = msg->biases[msgbiases_idx].code;
     memcpy(buf + offset, &msgbiasesmsgbiases_idxcode, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -710,6 +749,7 @@ static inline bool sbp_pack_sbp_msg_ssr_code_biases_t(u8 *buf, size_t len, const
     }
     u16 msgbiasesmsgbiases_idxvalue = htole16(*(const u16 *)&msg->biases[msgbiases_idx].value);
     memcpy(buf + offset, &msgbiasesmsgbiases_idxvalue, 2);
+    // NOLINTNEXTLINE
     offset += 2;
   }
   return true;
@@ -729,6 +769,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_code_biases_t(const u8 *buf, size_t le
   }
   memcpy(&msg->time.tow, buf + offset, 4);
   msg->time.tow = le32toh(msg->time.tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -737,6 +778,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_code_biases_t(const u8 *buf, size_t le
   }
   memcpy(&msg->time.wn, buf + offset, 2);
   msg->time.wn = le16toh(msg->time.wn);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -744,6 +786,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_code_biases_t(const u8 *buf, size_t le
     return false;
   }
   memcpy(&msg->sid.sat, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -751,6 +794,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_code_biases_t(const u8 *buf, size_t le
     return false;
   }
   memcpy(&msg->sid.code, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -758,6 +802,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_code_biases_t(const u8 *buf, size_t le
     return false;
   }
   memcpy(&msg->update_interval, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -765,6 +810,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_code_biases_t(const u8 *buf, size_t le
     return false;
   }
   memcpy(&msg->iod_ssr, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   msg->n_biases = (u8)((len - offset) / 3);
 
@@ -776,6 +822,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_code_biases_t(const u8 *buf, size_t le
       return false;
     }
     memcpy(&msg->biases[msgbiases_idx].code, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -786,6 +833,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_code_biases_t(const u8 *buf, size_t le
     u16 msgbiasesmsgbiases_idxvalue = *(const u16 *)&msg->biases[msgbiases_idx].value;
     msgbiasesmsgbiases_idxvalue = le16toh(msgbiasesmsgbiases_idxvalue);
     msg->biases[msgbiases_idx].value = *(const s16 *)&msgbiasesmsgbiases_idxvalue;
+    // NOLINTNEXTLINE
     offset += 2;
   }
   return true;
@@ -1013,6 +1061,7 @@ static inline bool sbp_pack_sbp_msg_ssr_phase_biases_t(u8 *buf, size_t len, cons
   }
   u32 msgtimetow = htole32(msg->time.tow);
   memcpy(buf + offset, &msgtimetow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -1021,6 +1070,7 @@ static inline bool sbp_pack_sbp_msg_ssr_phase_biases_t(u8 *buf, size_t len, cons
   }
   u16 msgtimewn = htole16(msg->time.wn);
   memcpy(buf + offset, &msgtimewn, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -1029,6 +1079,7 @@ static inline bool sbp_pack_sbp_msg_ssr_phase_biases_t(u8 *buf, size_t len, cons
   }
   u8 msgsidsat = msg->sid.sat;
   memcpy(buf + offset, &msgsidsat, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1037,6 +1088,7 @@ static inline bool sbp_pack_sbp_msg_ssr_phase_biases_t(u8 *buf, size_t len, cons
   }
   u8 msgsidcode = msg->sid.code;
   memcpy(buf + offset, &msgsidcode, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1045,6 +1097,7 @@ static inline bool sbp_pack_sbp_msg_ssr_phase_biases_t(u8 *buf, size_t len, cons
   }
   u8 msgupdate_interval = msg->update_interval;
   memcpy(buf + offset, &msgupdate_interval, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1053,6 +1106,7 @@ static inline bool sbp_pack_sbp_msg_ssr_phase_biases_t(u8 *buf, size_t len, cons
   }
   u8 msgiod_ssr = msg->iod_ssr;
   memcpy(buf + offset, &msgiod_ssr, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1061,6 +1115,7 @@ static inline bool sbp_pack_sbp_msg_ssr_phase_biases_t(u8 *buf, size_t len, cons
   }
   u8 msgdispersive_bias = msg->dispersive_bias;
   memcpy(buf + offset, &msgdispersive_bias, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1069,6 +1124,7 @@ static inline bool sbp_pack_sbp_msg_ssr_phase_biases_t(u8 *buf, size_t len, cons
   }
   u8 msgmw_consistency = msg->mw_consistency;
   memcpy(buf + offset, &msgmw_consistency, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -1077,6 +1133,7 @@ static inline bool sbp_pack_sbp_msg_ssr_phase_biases_t(u8 *buf, size_t len, cons
   }
   u16 msgyaw = htole16(msg->yaw);
   memcpy(buf + offset, &msgyaw, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -1085,6 +1142,7 @@ static inline bool sbp_pack_sbp_msg_ssr_phase_biases_t(u8 *buf, size_t len, cons
   }
   s8 msgyaw_rate = msg->yaw_rate;
   memcpy(buf + offset, &msgyaw_rate, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   for (size_t msgbiases_idx = 0; msgbiases_idx < (size_t)msg->n_biases; msgbiases_idx++)
   {
@@ -1095,6 +1153,7 @@ static inline bool sbp_pack_sbp_msg_ssr_phase_biases_t(u8 *buf, size_t len, cons
     }
     u8 msgbiasesmsgbiases_idxcode = msg->biases[msgbiases_idx].code;
     memcpy(buf + offset, &msgbiasesmsgbiases_idxcode, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -1103,6 +1162,7 @@ static inline bool sbp_pack_sbp_msg_ssr_phase_biases_t(u8 *buf, size_t len, cons
     }
     u8 msgbiasesmsgbiases_idxinteger_indicator = msg->biases[msgbiases_idx].integer_indicator;
     memcpy(buf + offset, &msgbiasesmsgbiases_idxinteger_indicator, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -1111,6 +1171,7 @@ static inline bool sbp_pack_sbp_msg_ssr_phase_biases_t(u8 *buf, size_t len, cons
     }
     u8 msgbiasesmsgbiases_idxwidelane_integer_indicator = msg->biases[msgbiases_idx].widelane_integer_indicator;
     memcpy(buf + offset, &msgbiasesmsgbiases_idxwidelane_integer_indicator, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -1119,6 +1180,7 @@ static inline bool sbp_pack_sbp_msg_ssr_phase_biases_t(u8 *buf, size_t len, cons
     }
     u8 msgbiasesmsgbiases_idxdiscontinuity_counter = msg->biases[msgbiases_idx].discontinuity_counter;
     memcpy(buf + offset, &msgbiasesmsgbiases_idxdiscontinuity_counter, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 4 > len)
@@ -1127,6 +1189,7 @@ static inline bool sbp_pack_sbp_msg_ssr_phase_biases_t(u8 *buf, size_t len, cons
     }
     u32 msgbiasesmsgbiases_idxbias = htole32(*(const u32 *)&msg->biases[msgbiases_idx].bias);
     memcpy(buf + offset, &msgbiasesmsgbiases_idxbias, 4);
+    // NOLINTNEXTLINE
     offset += 4;
   }
   return true;
@@ -1146,6 +1209,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_phase_biases_t(const u8 *buf, size_t l
   }
   memcpy(&msg->time.tow, buf + offset, 4);
   msg->time.tow = le32toh(msg->time.tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -1154,6 +1218,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_phase_biases_t(const u8 *buf, size_t l
   }
   memcpy(&msg->time.wn, buf + offset, 2);
   msg->time.wn = le16toh(msg->time.wn);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -1161,6 +1226,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_phase_biases_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->sid.sat, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1168,6 +1234,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_phase_biases_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->sid.code, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1175,6 +1242,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_phase_biases_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->update_interval, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1182,6 +1250,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_phase_biases_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->iod_ssr, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1189,6 +1258,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_phase_biases_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->dispersive_bias, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1196,6 +1266,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_phase_biases_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->mw_consistency, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -1204,6 +1275,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_phase_biases_t(const u8 *buf, size_t l
   }
   memcpy(&msg->yaw, buf + offset, 2);
   msg->yaw = le16toh(msg->yaw);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -1211,6 +1283,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_phase_biases_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->yaw_rate, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   msg->n_biases = (u8)((len - offset) / 8);
 
@@ -1222,6 +1295,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_phase_biases_t(const u8 *buf, size_t l
       return false;
     }
     memcpy(&msg->biases[msgbiases_idx].code, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -1229,6 +1303,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_phase_biases_t(const u8 *buf, size_t l
       return false;
     }
     memcpy(&msg->biases[msgbiases_idx].integer_indicator, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -1236,6 +1311,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_phase_biases_t(const u8 *buf, size_t l
       return false;
     }
     memcpy(&msg->biases[msgbiases_idx].widelane_integer_indicator, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -1243,6 +1319,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_phase_biases_t(const u8 *buf, size_t l
       return false;
     }
     memcpy(&msg->biases[msgbiases_idx].discontinuity_counter, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 4 > len)
@@ -1253,6 +1330,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_phase_biases_t(const u8 *buf, size_t l
     u32 msgbiasesmsgbiases_idxbias = *(const u32 *)&msg->biases[msgbiases_idx].bias;
     msgbiasesmsgbiases_idxbias = le32toh(msgbiasesmsgbiases_idxbias);
     msg->biases[msgbiases_idx].bias = *(const s32 *)&msgbiasesmsgbiases_idxbias;
+    // NOLINTNEXTLINE
     offset += 4;
   }
   return true;
@@ -1483,6 +1561,7 @@ static inline bool sbp_pack_sbp_msg_ssr_stec_correction_t(u8 *buf, size_t len, c
   }
   u16 msgheadertile_set_id = htole16(msg->header.tile_set_id);
   memcpy(buf + offset, &msgheadertile_set_id, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -1491,6 +1570,7 @@ static inline bool sbp_pack_sbp_msg_ssr_stec_correction_t(u8 *buf, size_t len, c
   }
   u16 msgheadertile_id = htole16(msg->header.tile_id);
   memcpy(buf + offset, &msgheadertile_id, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 4 > len)
@@ -1499,6 +1579,7 @@ static inline bool sbp_pack_sbp_msg_ssr_stec_correction_t(u8 *buf, size_t len, c
   }
   u32 msgheadertimetow = htole32(msg->header.time.tow);
   memcpy(buf + offset, &msgheadertimetow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -1507,6 +1588,7 @@ static inline bool sbp_pack_sbp_msg_ssr_stec_correction_t(u8 *buf, size_t len, c
   }
   u16 msgheadertimewn = htole16(msg->header.time.wn);
   memcpy(buf + offset, &msgheadertimewn, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -1515,6 +1597,7 @@ static inline bool sbp_pack_sbp_msg_ssr_stec_correction_t(u8 *buf, size_t len, c
   }
   u8 msgheadernum_msgs = msg->header.num_msgs;
   memcpy(buf + offset, &msgheadernum_msgs, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1523,6 +1606,7 @@ static inline bool sbp_pack_sbp_msg_ssr_stec_correction_t(u8 *buf, size_t len, c
   }
   u8 msgheaderseq_num = msg->header.seq_num;
   memcpy(buf + offset, &msgheaderseq_num, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1531,6 +1615,7 @@ static inline bool sbp_pack_sbp_msg_ssr_stec_correction_t(u8 *buf, size_t len, c
   }
   u8 msgheaderupdate_interval = msg->header.update_interval;
   memcpy(buf + offset, &msgheaderupdate_interval, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1539,6 +1624,7 @@ static inline bool sbp_pack_sbp_msg_ssr_stec_correction_t(u8 *buf, size_t len, c
   }
   u8 msgheaderiod_atmo = msg->header.iod_atmo;
   memcpy(buf + offset, &msgheaderiod_atmo, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   for (size_t msgstec_sat_list_idx = 0; msgstec_sat_list_idx < (size_t)msg->n_stec_sat_list; msgstec_sat_list_idx++)
   {
@@ -1549,6 +1635,7 @@ static inline bool sbp_pack_sbp_msg_ssr_stec_correction_t(u8 *buf, size_t len, c
     }
     u8 msgstec_sat_listmsgstec_sat_list_idxsv_idsatId = msg->stec_sat_list[msgstec_sat_list_idx].sv_id.satId;
     memcpy(buf + offset, &msgstec_sat_listmsgstec_sat_list_idxsv_idsatId, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -1558,6 +1645,7 @@ static inline bool sbp_pack_sbp_msg_ssr_stec_correction_t(u8 *buf, size_t len, c
     u8 msgstec_sat_listmsgstec_sat_list_idxsv_idconstellation =
         msg->stec_sat_list[msgstec_sat_list_idx].sv_id.constellation;
     memcpy(buf + offset, &msgstec_sat_listmsgstec_sat_list_idxsv_idconstellation, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -1567,6 +1655,7 @@ static inline bool sbp_pack_sbp_msg_ssr_stec_correction_t(u8 *buf, size_t len, c
     u8 msgstec_sat_listmsgstec_sat_list_idxstec_quality_indicator =
         msg->stec_sat_list[msgstec_sat_list_idx].stec_quality_indicator;
     memcpy(buf + offset, &msgstec_sat_listmsgstec_sat_list_idxstec_quality_indicator, 1);
+    // NOLINTNEXTLINE
     offset += 1;
     for (size_t msgstec_sat_listmsgstec_sat_list_idxstec_coeff_idx = 0;
          msgstec_sat_listmsgstec_sat_list_idxstec_coeff_idx < 4;
@@ -1583,6 +1672,7 @@ static inline bool sbp_pack_sbp_msg_ssr_stec_correction_t(u8 *buf, size_t len, c
       memcpy(buf + offset,
              &msgstec_sat_listmsgstec_sat_list_idxstec_coeffmsgstec_sat_listmsgstec_sat_list_idxstec_coeff_idx,
              2);
+      // NOLINTNEXTLINE
       offset += 2;
     }
   }
@@ -1604,6 +1694,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_t(const u8 *buf, size_t len, sbp_msg_ssr_
   }
   memcpy(&msg->header.tile_set_id, buf + offset, 2);
   msg->header.tile_set_id = le16toh(msg->header.tile_set_id);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -1612,6 +1703,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_t(const u8 *buf, size_t len, sbp_msg_ssr_
   }
   memcpy(&msg->header.tile_id, buf + offset, 2);
   msg->header.tile_id = le16toh(msg->header.tile_id);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 4 > len)
@@ -1620,6 +1712,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_t(const u8 *buf, size_t len, sbp_msg_ssr_
   }
   memcpy(&msg->header.time.tow, buf + offset, 4);
   msg->header.time.tow = le32toh(msg->header.time.tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -1628,6 +1721,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_t(const u8 *buf, size_t len, sbp_msg_ssr_
   }
   memcpy(&msg->header.time.wn, buf + offset, 2);
   msg->header.time.wn = le16toh(msg->header.time.wn);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -1635,6 +1729,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_t(const u8 *buf, size_t len, sbp_msg_ssr_
     return false;
   }
   memcpy(&msg->header.num_msgs, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1642,6 +1737,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_t(const u8 *buf, size_t len, sbp_msg_ssr_
     return false;
   }
   memcpy(&msg->header.seq_num, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1649,6 +1745,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_t(const u8 *buf, size_t len, sbp_msg_ssr_
     return false;
   }
   memcpy(&msg->header.update_interval, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1656,6 +1753,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_t(const u8 *buf, size_t len, sbp_msg_ssr_
     return false;
   }
   memcpy(&msg->header.iod_atmo, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   msg->n_stec_sat_list = (u8)((len - offset) / 11);
 
@@ -1667,6 +1765,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_t(const u8 *buf, size_t len, sbp_msg_ssr_
       return false;
     }
     memcpy(&msg->stec_sat_list[msgstec_sat_list_idx].sv_id.satId, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -1674,6 +1773,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_t(const u8 *buf, size_t len, sbp_msg_ssr_
       return false;
     }
     memcpy(&msg->stec_sat_list[msgstec_sat_list_idx].sv_id.constellation, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -1681,6 +1781,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_t(const u8 *buf, size_t len, sbp_msg_ssr_
       return false;
     }
     memcpy(&msg->stec_sat_list[msgstec_sat_list_idx].stec_quality_indicator, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
     for (size_t msgstec_sat_listmsgstec_sat_list_idxstec_coeff_idx = 0;
          msgstec_sat_listmsgstec_sat_list_idxstec_coeff_idx < 4;
@@ -1701,6 +1802,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_t(const u8 *buf, size_t len, sbp_msg_ssr_
           le16toh(msgstec_sat_listmsgstec_sat_list_idxstec_coeffmsgstec_sat_listmsgstec_sat_list_idxstec_coeff_idx);
       msg->stec_sat_list[msgstec_sat_list_idx].stec_coeff[msgstec_sat_listmsgstec_sat_list_idxstec_coeff_idx] = *(
           const s16 *)&msgstec_sat_listmsgstec_sat_list_idxstec_coeffmsgstec_sat_listmsgstec_sat_list_idxstec_coeff_idx;
+      // NOLINTNEXTLINE
       offset += 2;
     }
   }
@@ -1965,6 +2067,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_t(u8 *buf, size_t len, const sbp_msg_ssr
   }
   u16 msgheadertile_set_id = htole16(msg->header.tile_set_id);
   memcpy(buf + offset, &msgheadertile_set_id, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -1973,6 +2076,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_t(u8 *buf, size_t len, const sbp_msg_ssr
   }
   u16 msgheadertile_id = htole16(msg->header.tile_id);
   memcpy(buf + offset, &msgheadertile_id, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 4 > len)
@@ -1981,6 +2085,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_t(u8 *buf, size_t len, const sbp_msg_ssr
   }
   u32 msgheadertimetow = htole32(msg->header.time.tow);
   memcpy(buf + offset, &msgheadertimetow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -1989,6 +2094,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_t(u8 *buf, size_t len, const sbp_msg_ssr
   }
   u16 msgheadertimewn = htole16(msg->header.time.wn);
   memcpy(buf + offset, &msgheadertimewn, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -1997,6 +2103,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_t(u8 *buf, size_t len, const sbp_msg_ssr
   }
   u16 msgheadernum_msgs = htole16(msg->header.num_msgs);
   memcpy(buf + offset, &msgheadernum_msgs, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2005,6 +2112,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_t(u8 *buf, size_t len, const sbp_msg_ssr
   }
   u16 msgheaderseq_num = htole16(msg->header.seq_num);
   memcpy(buf + offset, &msgheaderseq_num, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -2013,6 +2121,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_t(u8 *buf, size_t len, const sbp_msg_ssr
   }
   u8 msgheaderupdate_interval = msg->header.update_interval;
   memcpy(buf + offset, &msgheaderupdate_interval, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -2021,6 +2130,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_t(u8 *buf, size_t len, const sbp_msg_ssr
   }
   u8 msgheaderiod_atmo = msg->header.iod_atmo;
   memcpy(buf + offset, &msgheaderiod_atmo, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -2029,6 +2139,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_t(u8 *buf, size_t len, const sbp_msg_ssr
   }
   u8 msgheadertropo_quality_indicator = msg->header.tropo_quality_indicator;
   memcpy(buf + offset, &msgheadertropo_quality_indicator, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -2037,6 +2148,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_t(u8 *buf, size_t len, const sbp_msg_ssr
   }
   u16 msgelementindex = htole16(msg->element.index);
   memcpy(buf + offset, &msgelementindex, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2045,6 +2157,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_t(u8 *buf, size_t len, const sbp_msg_ssr
   }
   u16 msgelementtropo_delay_correctionhydro = htole16(*(const u16 *)&msg->element.tropo_delay_correction.hydro);
   memcpy(buf + offset, &msgelementtropo_delay_correctionhydro, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -2053,6 +2166,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_t(u8 *buf, size_t len, const sbp_msg_ssr
   }
   s8 msgelementtropo_delay_correctionwet = msg->element.tropo_delay_correction.wet;
   memcpy(buf + offset, &msgelementtropo_delay_correctionwet, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -2061,6 +2175,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_t(u8 *buf, size_t len, const sbp_msg_ssr
   }
   u8 msgelementtropo_delay_correctionstddev = msg->element.tropo_delay_correction.stddev;
   memcpy(buf + offset, &msgelementtropo_delay_correctionstddev, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   for (size_t msgelementstec_residuals_idx = 0; msgelementstec_residuals_idx < (size_t)msg->element.n_stec_residuals;
        msgelementstec_residuals_idx++)
@@ -2073,6 +2188,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_t(u8 *buf, size_t len, const sbp_msg_ssr
     u8 msgelementstec_residualsmsgelementstec_residuals_idxsv_idsatId =
         msg->element.stec_residuals[msgelementstec_residuals_idx].sv_id.satId;
     memcpy(buf + offset, &msgelementstec_residualsmsgelementstec_residuals_idxsv_idsatId, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -2082,6 +2198,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_t(u8 *buf, size_t len, const sbp_msg_ssr
     u8 msgelementstec_residualsmsgelementstec_residuals_idxsv_idconstellation =
         msg->element.stec_residuals[msgelementstec_residuals_idx].sv_id.constellation;
     memcpy(buf + offset, &msgelementstec_residualsmsgelementstec_residuals_idxsv_idconstellation, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -2091,6 +2208,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_t(u8 *buf, size_t len, const sbp_msg_ssr
     u16 msgelementstec_residualsmsgelementstec_residuals_idxresidual =
         htole16(*(const u16 *)&msg->element.stec_residuals[msgelementstec_residuals_idx].residual);
     memcpy(buf + offset, &msgelementstec_residualsmsgelementstec_residuals_idxresidual, 2);
+    // NOLINTNEXTLINE
     offset += 2;
 
     if (offset + 1 > len)
@@ -2100,6 +2218,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_t(u8 *buf, size_t len, const sbp_msg_ssr
     u8 msgelementstec_residualsmsgelementstec_residuals_idxstddev =
         msg->element.stec_residuals[msgelementstec_residuals_idx].stddev;
     memcpy(buf + offset, &msgelementstec_residualsmsgelementstec_residuals_idxstddev, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -2120,6 +2239,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_t(const u8 *buf, size_t len, sbp_msg_s
   }
   memcpy(&msg->header.tile_set_id, buf + offset, 2);
   msg->header.tile_set_id = le16toh(msg->header.tile_set_id);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2128,6 +2248,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_t(const u8 *buf, size_t len, sbp_msg_s
   }
   memcpy(&msg->header.tile_id, buf + offset, 2);
   msg->header.tile_id = le16toh(msg->header.tile_id);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 4 > len)
@@ -2136,6 +2257,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_t(const u8 *buf, size_t len, sbp_msg_s
   }
   memcpy(&msg->header.time.tow, buf + offset, 4);
   msg->header.time.tow = le32toh(msg->header.time.tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -2144,6 +2266,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_t(const u8 *buf, size_t len, sbp_msg_s
   }
   memcpy(&msg->header.time.wn, buf + offset, 2);
   msg->header.time.wn = le16toh(msg->header.time.wn);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2152,6 +2275,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_t(const u8 *buf, size_t len, sbp_msg_s
   }
   memcpy(&msg->header.num_msgs, buf + offset, 2);
   msg->header.num_msgs = le16toh(msg->header.num_msgs);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2160,6 +2284,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_t(const u8 *buf, size_t len, sbp_msg_s
   }
   memcpy(&msg->header.seq_num, buf + offset, 2);
   msg->header.seq_num = le16toh(msg->header.seq_num);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -2167,6 +2292,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_t(const u8 *buf, size_t len, sbp_msg_s
     return false;
   }
   memcpy(&msg->header.update_interval, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -2174,6 +2300,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_t(const u8 *buf, size_t len, sbp_msg_s
     return false;
   }
   memcpy(&msg->header.iod_atmo, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -2181,6 +2308,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_t(const u8 *buf, size_t len, sbp_msg_s
     return false;
   }
   memcpy(&msg->header.tropo_quality_indicator, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -2189,6 +2317,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_t(const u8 *buf, size_t len, sbp_msg_s
   }
   memcpy(&msg->element.index, buf + offset, 2);
   msg->element.index = le16toh(msg->element.index);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2199,6 +2328,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_t(const u8 *buf, size_t len, sbp_msg_s
   u16 msgelementtropo_delay_correctionhydro = *(const u16 *)&msg->element.tropo_delay_correction.hydro;
   msgelementtropo_delay_correctionhydro = le16toh(msgelementtropo_delay_correctionhydro);
   msg->element.tropo_delay_correction.hydro = *(const s16 *)&msgelementtropo_delay_correctionhydro;
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -2206,6 +2336,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_t(const u8 *buf, size_t len, sbp_msg_s
     return false;
   }
   memcpy(&msg->element.tropo_delay_correction.wet, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -2213,6 +2344,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_t(const u8 *buf, size_t len, sbp_msg_s
     return false;
   }
   memcpy(&msg->element.tropo_delay_correction.stddev, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   msg->element.n_stec_residuals = (u8)((len - offset) / 5);
 
@@ -2225,6 +2357,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_t(const u8 *buf, size_t len, sbp_msg_s
       return false;
     }
     memcpy(&msg->element.stec_residuals[msgelementstec_residuals_idx].sv_id.satId, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -2232,6 +2365,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_t(const u8 *buf, size_t len, sbp_msg_s
       return false;
     }
     memcpy(&msg->element.stec_residuals[msgelementstec_residuals_idx].sv_id.constellation, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -2245,6 +2379,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_t(const u8 *buf, size_t len, sbp_msg_s
         le16toh(msgelementstec_residualsmsgelementstec_residuals_idxresidual);
     msg->element.stec_residuals[msgelementstec_residuals_idx].residual =
         *(const s16 *)&msgelementstec_residualsmsgelementstec_residuals_idxresidual;
+    // NOLINTNEXTLINE
     offset += 2;
 
     if (offset + 1 > len)
@@ -2252,6 +2387,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_t(const u8 *buf, size_t len, sbp_msg_s
       return false;
     }
     memcpy(&msg->element.stec_residuals[msgelementstec_residuals_idx].stddev, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -2487,6 +2623,7 @@ static inline bool sbp_pack_sbp_msg_ssr_tile_definition_t(u8 *buf, size_t len, c
   }
   u16 msgtile_set_id = htole16(msg->tile_set_id);
   memcpy(buf + offset, &msgtile_set_id, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2495,6 +2632,7 @@ static inline bool sbp_pack_sbp_msg_ssr_tile_definition_t(u8 *buf, size_t len, c
   }
   u16 msgtile_id = htole16(msg->tile_id);
   memcpy(buf + offset, &msgtile_id, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2503,6 +2641,7 @@ static inline bool sbp_pack_sbp_msg_ssr_tile_definition_t(u8 *buf, size_t len, c
   }
   u16 msgcorner_nw_lat = htole16(*(const u16 *)&msg->corner_nw_lat);
   memcpy(buf + offset, &msgcorner_nw_lat, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2511,6 +2650,7 @@ static inline bool sbp_pack_sbp_msg_ssr_tile_definition_t(u8 *buf, size_t len, c
   }
   u16 msgcorner_nw_lon = htole16(*(const u16 *)&msg->corner_nw_lon);
   memcpy(buf + offset, &msgcorner_nw_lon, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2519,6 +2659,7 @@ static inline bool sbp_pack_sbp_msg_ssr_tile_definition_t(u8 *buf, size_t len, c
   }
   u16 msgspacing_lat = htole16(msg->spacing_lat);
   memcpy(buf + offset, &msgspacing_lat, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2527,6 +2668,7 @@ static inline bool sbp_pack_sbp_msg_ssr_tile_definition_t(u8 *buf, size_t len, c
   }
   u16 msgspacing_lon = htole16(msg->spacing_lon);
   memcpy(buf + offset, &msgspacing_lon, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2535,6 +2677,7 @@ static inline bool sbp_pack_sbp_msg_ssr_tile_definition_t(u8 *buf, size_t len, c
   }
   u16 msgrows = htole16(msg->rows);
   memcpy(buf + offset, &msgrows, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2543,6 +2686,7 @@ static inline bool sbp_pack_sbp_msg_ssr_tile_definition_t(u8 *buf, size_t len, c
   }
   u16 msgcols = htole16(msg->cols);
   memcpy(buf + offset, &msgcols, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 8 > len)
@@ -2551,6 +2695,7 @@ static inline bool sbp_pack_sbp_msg_ssr_tile_definition_t(u8 *buf, size_t len, c
   }
   u64 msgbitmask = htole64(msg->bitmask);
   memcpy(buf + offset, &msgbitmask, 8);
+  // NOLINTNEXTLINE
   offset += 8;
   return true;
 }
@@ -2570,6 +2715,7 @@ sbp_unpack_sbp_msg_ssr_tile_definition_t(const u8 *buf, size_t len, sbp_msg_ssr_
   }
   memcpy(&msg->tile_set_id, buf + offset, 2);
   msg->tile_set_id = le16toh(msg->tile_set_id);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2578,6 +2724,7 @@ sbp_unpack_sbp_msg_ssr_tile_definition_t(const u8 *buf, size_t len, sbp_msg_ssr_
   }
   memcpy(&msg->tile_id, buf + offset, 2);
   msg->tile_id = le16toh(msg->tile_id);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2588,6 +2735,7 @@ sbp_unpack_sbp_msg_ssr_tile_definition_t(const u8 *buf, size_t len, sbp_msg_ssr_
   u16 msgcorner_nw_lat = *(const u16 *)&msg->corner_nw_lat;
   msgcorner_nw_lat = le16toh(msgcorner_nw_lat);
   msg->corner_nw_lat = *(const s16 *)&msgcorner_nw_lat;
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2598,6 +2746,7 @@ sbp_unpack_sbp_msg_ssr_tile_definition_t(const u8 *buf, size_t len, sbp_msg_ssr_
   u16 msgcorner_nw_lon = *(const u16 *)&msg->corner_nw_lon;
   msgcorner_nw_lon = le16toh(msgcorner_nw_lon);
   msg->corner_nw_lon = *(const s16 *)&msgcorner_nw_lon;
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2606,6 +2755,7 @@ sbp_unpack_sbp_msg_ssr_tile_definition_t(const u8 *buf, size_t len, sbp_msg_ssr_
   }
   memcpy(&msg->spacing_lat, buf + offset, 2);
   msg->spacing_lat = le16toh(msg->spacing_lat);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2614,6 +2764,7 @@ sbp_unpack_sbp_msg_ssr_tile_definition_t(const u8 *buf, size_t len, sbp_msg_ssr_
   }
   memcpy(&msg->spacing_lon, buf + offset, 2);
   msg->spacing_lon = le16toh(msg->spacing_lon);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2622,6 +2773,7 @@ sbp_unpack_sbp_msg_ssr_tile_definition_t(const u8 *buf, size_t len, sbp_msg_ssr_
   }
   memcpy(&msg->rows, buf + offset, 2);
   msg->rows = le16toh(msg->rows);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -2630,6 +2782,7 @@ sbp_unpack_sbp_msg_ssr_tile_definition_t(const u8 *buf, size_t len, sbp_msg_ssr_
   }
   memcpy(&msg->cols, buf + offset, 2);
   msg->cols = le16toh(msg->cols);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 8 > len)
@@ -2638,6 +2791,7 @@ sbp_unpack_sbp_msg_ssr_tile_definition_t(const u8 *buf, size_t len, sbp_msg_ssr_
   }
   memcpy(&msg->bitmask, buf + offset, 8);
   msg->bitmask = le64toh(msg->bitmask);
+  // NOLINTNEXTLINE
   offset += 8;
   return true;
 }
@@ -2839,6 +2993,7 @@ static inline bool sbp_pack_sbp_msg_ssr_satellite_apc_t(u8 *buf, size_t len, con
     }
     u8 msgapcmsgapc_idxsidsat = msg->apc[msgapc_idx].sid.sat;
     memcpy(buf + offset, &msgapcmsgapc_idxsidsat, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -2847,6 +3002,7 @@ static inline bool sbp_pack_sbp_msg_ssr_satellite_apc_t(u8 *buf, size_t len, con
     }
     u8 msgapcmsgapc_idxsidcode = msg->apc[msgapc_idx].sid.code;
     memcpy(buf + offset, &msgapcmsgapc_idxsidcode, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -2855,6 +3011,7 @@ static inline bool sbp_pack_sbp_msg_ssr_satellite_apc_t(u8 *buf, size_t len, con
     }
     u8 msgapcmsgapc_idxsat_info = msg->apc[msgapc_idx].sat_info;
     memcpy(buf + offset, &msgapcmsgapc_idxsat_info, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -2863,6 +3020,7 @@ static inline bool sbp_pack_sbp_msg_ssr_satellite_apc_t(u8 *buf, size_t len, con
     }
     u16 msgapcmsgapc_idxsvn = htole16(msg->apc[msgapc_idx].svn);
     memcpy(buf + offset, &msgapcmsgapc_idxsvn, 2);
+    // NOLINTNEXTLINE
     offset += 2;
     for (size_t msgapcmsgapc_idxpco_idx = 0; msgapcmsgapc_idxpco_idx < 3; msgapcmsgapc_idxpco_idx++)
     {
@@ -2874,6 +3032,7 @@ static inline bool sbp_pack_sbp_msg_ssr_satellite_apc_t(u8 *buf, size_t len, con
       u16 msgapcmsgapc_idxpcomsgapcmsgapc_idxpco_idx =
           htole16(*(const u16 *)&msg->apc[msgapc_idx].pco[msgapcmsgapc_idxpco_idx]);
       memcpy(buf + offset, &msgapcmsgapc_idxpcomsgapcmsgapc_idxpco_idx, 2);
+      // NOLINTNEXTLINE
       offset += 2;
     }
     for (size_t msgapcmsgapc_idxpcv_idx = 0; msgapcmsgapc_idxpcv_idx < 21; msgapcmsgapc_idxpcv_idx++)
@@ -2885,6 +3044,7 @@ static inline bool sbp_pack_sbp_msg_ssr_satellite_apc_t(u8 *buf, size_t len, con
       }
       s8 msgapcmsgapc_idxpcvmsgapcmsgapc_idxpcv_idx = msg->apc[msgapc_idx].pcv[msgapcmsgapc_idxpcv_idx];
       memcpy(buf + offset, &msgapcmsgapc_idxpcvmsgapcmsgapc_idxpcv_idx, 1);
+      // NOLINTNEXTLINE
       offset += 1;
     }
   }
@@ -2909,6 +3069,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_satellite_apc_t(const u8 *buf, size_t 
       return false;
     }
     memcpy(&msg->apc[msgapc_idx].sid.sat, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -2916,6 +3077,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_satellite_apc_t(const u8 *buf, size_t 
       return false;
     }
     memcpy(&msg->apc[msgapc_idx].sid.code, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -2923,6 +3085,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_satellite_apc_t(const u8 *buf, size_t 
       return false;
     }
     memcpy(&msg->apc[msgapc_idx].sat_info, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -2931,6 +3094,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_satellite_apc_t(const u8 *buf, size_t 
     }
     memcpy(&msg->apc[msgapc_idx].svn, buf + offset, 2);
     msg->apc[msgapc_idx].svn = le16toh(msg->apc[msgapc_idx].svn);
+    // NOLINTNEXTLINE
     offset += 2;
     for (size_t msgapcmsgapc_idxpco_idx = 0; msgapcmsgapc_idxpco_idx < 3; msgapcmsgapc_idxpco_idx++)
     {
@@ -2943,6 +3107,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_satellite_apc_t(const u8 *buf, size_t 
       u16 msgapcmsgapc_idxpcomsgapcmsgapc_idxpco_idx = *(const u16 *)&msg->apc[msgapc_idx].pco[msgapcmsgapc_idxpco_idx];
       msgapcmsgapc_idxpcomsgapcmsgapc_idxpco_idx = le16toh(msgapcmsgapc_idxpcomsgapcmsgapc_idxpco_idx);
       msg->apc[msgapc_idx].pco[msgapcmsgapc_idxpco_idx] = *(const s16 *)&msgapcmsgapc_idxpcomsgapcmsgapc_idxpco_idx;
+      // NOLINTNEXTLINE
       offset += 2;
     }
     for (size_t msgapcmsgapc_idxpcv_idx = 0; msgapcmsgapc_idxpcv_idx < 21; msgapcmsgapc_idxpcv_idx++)
@@ -2953,6 +3118,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_satellite_apc_t(const u8 *buf, size_t 
         return false;
       }
       memcpy(&msg->apc[msgapc_idx].pcv[msgapcmsgapc_idxpcv_idx], buf + offset, 1);
+      // NOLINTNEXTLINE
       offset += 1;
     }
   }
@@ -3158,6 +3324,7 @@ sbp_pack_sbp_msg_ssr_orbit_clock_dep_a_t(u8 *buf, size_t len, const sbp_msg_ssr_
   }
   u32 msgtimetow = htole32(msg->time.tow);
   memcpy(buf + offset, &msgtimetow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -3166,6 +3333,7 @@ sbp_pack_sbp_msg_ssr_orbit_clock_dep_a_t(u8 *buf, size_t len, const sbp_msg_ssr_
   }
   u16 msgtimewn = htole16(msg->time.wn);
   memcpy(buf + offset, &msgtimewn, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -3174,6 +3342,7 @@ sbp_pack_sbp_msg_ssr_orbit_clock_dep_a_t(u8 *buf, size_t len, const sbp_msg_ssr_
   }
   u8 msgsidsat = msg->sid.sat;
   memcpy(buf + offset, &msgsidsat, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3182,6 +3351,7 @@ sbp_pack_sbp_msg_ssr_orbit_clock_dep_a_t(u8 *buf, size_t len, const sbp_msg_ssr_
   }
   u8 msgsidcode = msg->sid.code;
   memcpy(buf + offset, &msgsidcode, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3190,6 +3360,7 @@ sbp_pack_sbp_msg_ssr_orbit_clock_dep_a_t(u8 *buf, size_t len, const sbp_msg_ssr_
   }
   u8 msgupdate_interval = msg->update_interval;
   memcpy(buf + offset, &msgupdate_interval, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3198,6 +3369,7 @@ sbp_pack_sbp_msg_ssr_orbit_clock_dep_a_t(u8 *buf, size_t len, const sbp_msg_ssr_
   }
   u8 msgiod_ssr = msg->iod_ssr;
   memcpy(buf + offset, &msgiod_ssr, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3206,6 +3378,7 @@ sbp_pack_sbp_msg_ssr_orbit_clock_dep_a_t(u8 *buf, size_t len, const sbp_msg_ssr_
   }
   u8 msgiod = msg->iod;
   memcpy(buf + offset, &msgiod, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 4 > len)
@@ -3214,6 +3387,7 @@ sbp_pack_sbp_msg_ssr_orbit_clock_dep_a_t(u8 *buf, size_t len, const sbp_msg_ssr_
   }
   u32 msgradial = htole32(*(const u32 *)&msg->radial);
   memcpy(buf + offset, &msgradial, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3222,6 +3396,7 @@ sbp_pack_sbp_msg_ssr_orbit_clock_dep_a_t(u8 *buf, size_t len, const sbp_msg_ssr_
   }
   u32 msgalong = htole32(*(const u32 *)&msg->along);
   memcpy(buf + offset, &msgalong, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3230,6 +3405,7 @@ sbp_pack_sbp_msg_ssr_orbit_clock_dep_a_t(u8 *buf, size_t len, const sbp_msg_ssr_
   }
   u32 msgcross = htole32(*(const u32 *)&msg->cross);
   memcpy(buf + offset, &msgcross, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3238,6 +3414,7 @@ sbp_pack_sbp_msg_ssr_orbit_clock_dep_a_t(u8 *buf, size_t len, const sbp_msg_ssr_
   }
   u32 msgdot_radial = htole32(*(const u32 *)&msg->dot_radial);
   memcpy(buf + offset, &msgdot_radial, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3246,6 +3423,7 @@ sbp_pack_sbp_msg_ssr_orbit_clock_dep_a_t(u8 *buf, size_t len, const sbp_msg_ssr_
   }
   u32 msgdot_along = htole32(*(const u32 *)&msg->dot_along);
   memcpy(buf + offset, &msgdot_along, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3254,6 +3432,7 @@ sbp_pack_sbp_msg_ssr_orbit_clock_dep_a_t(u8 *buf, size_t len, const sbp_msg_ssr_
   }
   u32 msgdot_cross = htole32(*(const u32 *)&msg->dot_cross);
   memcpy(buf + offset, &msgdot_cross, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3262,6 +3441,7 @@ sbp_pack_sbp_msg_ssr_orbit_clock_dep_a_t(u8 *buf, size_t len, const sbp_msg_ssr_
   }
   u32 msgc0 = htole32(*(const u32 *)&msg->c0);
   memcpy(buf + offset, &msgc0, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3270,6 +3450,7 @@ sbp_pack_sbp_msg_ssr_orbit_clock_dep_a_t(u8 *buf, size_t len, const sbp_msg_ssr_
   }
   u32 msgc1 = htole32(*(const u32 *)&msg->c1);
   memcpy(buf + offset, &msgc1, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3278,6 +3459,7 @@ sbp_pack_sbp_msg_ssr_orbit_clock_dep_a_t(u8 *buf, size_t len, const sbp_msg_ssr_
   }
   u32 msgc2 = htole32(*(const u32 *)&msg->c2);
   memcpy(buf + offset, &msgc2, 4);
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }
@@ -3297,6 +3479,7 @@ sbp_unpack_sbp_msg_ssr_orbit_clock_dep_a_t(const u8 *buf, size_t len, sbp_msg_ss
   }
   memcpy(&msg->time.tow, buf + offset, 4);
   msg->time.tow = le32toh(msg->time.tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -3305,6 +3488,7 @@ sbp_unpack_sbp_msg_ssr_orbit_clock_dep_a_t(const u8 *buf, size_t len, sbp_msg_ss
   }
   memcpy(&msg->time.wn, buf + offset, 2);
   msg->time.wn = le16toh(msg->time.wn);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -3312,6 +3496,7 @@ sbp_unpack_sbp_msg_ssr_orbit_clock_dep_a_t(const u8 *buf, size_t len, sbp_msg_ss
     return false;
   }
   memcpy(&msg->sid.sat, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3319,6 +3504,7 @@ sbp_unpack_sbp_msg_ssr_orbit_clock_dep_a_t(const u8 *buf, size_t len, sbp_msg_ss
     return false;
   }
   memcpy(&msg->sid.code, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3326,6 +3512,7 @@ sbp_unpack_sbp_msg_ssr_orbit_clock_dep_a_t(const u8 *buf, size_t len, sbp_msg_ss
     return false;
   }
   memcpy(&msg->update_interval, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3333,6 +3520,7 @@ sbp_unpack_sbp_msg_ssr_orbit_clock_dep_a_t(const u8 *buf, size_t len, sbp_msg_ss
     return false;
   }
   memcpy(&msg->iod_ssr, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3340,6 +3528,7 @@ sbp_unpack_sbp_msg_ssr_orbit_clock_dep_a_t(const u8 *buf, size_t len, sbp_msg_ss
     return false;
   }
   memcpy(&msg->iod, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 4 > len)
@@ -3350,6 +3539,7 @@ sbp_unpack_sbp_msg_ssr_orbit_clock_dep_a_t(const u8 *buf, size_t len, sbp_msg_ss
   u32 msgradial = *(const u32 *)&msg->radial;
   msgradial = le32toh(msgradial);
   msg->radial = *(const s32 *)&msgradial;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3360,6 +3550,7 @@ sbp_unpack_sbp_msg_ssr_orbit_clock_dep_a_t(const u8 *buf, size_t len, sbp_msg_ss
   u32 msgalong = *(const u32 *)&msg->along;
   msgalong = le32toh(msgalong);
   msg->along = *(const s32 *)&msgalong;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3370,6 +3561,7 @@ sbp_unpack_sbp_msg_ssr_orbit_clock_dep_a_t(const u8 *buf, size_t len, sbp_msg_ss
   u32 msgcross = *(const u32 *)&msg->cross;
   msgcross = le32toh(msgcross);
   msg->cross = *(const s32 *)&msgcross;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3380,6 +3572,7 @@ sbp_unpack_sbp_msg_ssr_orbit_clock_dep_a_t(const u8 *buf, size_t len, sbp_msg_ss
   u32 msgdot_radial = *(const u32 *)&msg->dot_radial;
   msgdot_radial = le32toh(msgdot_radial);
   msg->dot_radial = *(const s32 *)&msgdot_radial;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3390,6 +3583,7 @@ sbp_unpack_sbp_msg_ssr_orbit_clock_dep_a_t(const u8 *buf, size_t len, sbp_msg_ss
   u32 msgdot_along = *(const u32 *)&msg->dot_along;
   msgdot_along = le32toh(msgdot_along);
   msg->dot_along = *(const s32 *)&msgdot_along;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3400,6 +3594,7 @@ sbp_unpack_sbp_msg_ssr_orbit_clock_dep_a_t(const u8 *buf, size_t len, sbp_msg_ss
   u32 msgdot_cross = *(const u32 *)&msg->dot_cross;
   msgdot_cross = le32toh(msgdot_cross);
   msg->dot_cross = *(const s32 *)&msgdot_cross;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3410,6 +3605,7 @@ sbp_unpack_sbp_msg_ssr_orbit_clock_dep_a_t(const u8 *buf, size_t len, sbp_msg_ss
   u32 msgc0 = *(const u32 *)&msg->c0;
   msgc0 = le32toh(msgc0);
   msg->c0 = *(const s32 *)&msgc0;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3420,6 +3616,7 @@ sbp_unpack_sbp_msg_ssr_orbit_clock_dep_a_t(const u8 *buf, size_t len, sbp_msg_ss
   u32 msgc1 = *(const u32 *)&msg->c1;
   msgc1 = le32toh(msgc1);
   msg->c1 = *(const s32 *)&msgc1;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -3430,6 +3627,7 @@ sbp_unpack_sbp_msg_ssr_orbit_clock_dep_a_t(const u8 *buf, size_t len, sbp_msg_ss
   u32 msgc2 = *(const u32 *)&msg->c2;
   msgc2 = le32toh(msgc2);
   msg->c2 = *(const s32 *)&msgc2;
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }
@@ -3640,6 +3838,7 @@ sbp_pack_sbp_msg_ssr_stec_correction_dep_a_t(u8 *buf, size_t len, const sbp_msg_
   }
   u32 msgheadertimetow = htole32(msg->header.time.tow);
   memcpy(buf + offset, &msgheadertimetow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -3648,6 +3847,7 @@ sbp_pack_sbp_msg_ssr_stec_correction_dep_a_t(u8 *buf, size_t len, const sbp_msg_
   }
   u16 msgheadertimewn = htole16(msg->header.time.wn);
   memcpy(buf + offset, &msgheadertimewn, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -3656,6 +3856,7 @@ sbp_pack_sbp_msg_ssr_stec_correction_dep_a_t(u8 *buf, size_t len, const sbp_msg_
   }
   u8 msgheadernum_msgs = msg->header.num_msgs;
   memcpy(buf + offset, &msgheadernum_msgs, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3664,6 +3865,7 @@ sbp_pack_sbp_msg_ssr_stec_correction_dep_a_t(u8 *buf, size_t len, const sbp_msg_
   }
   u8 msgheaderseq_num = msg->header.seq_num;
   memcpy(buf + offset, &msgheaderseq_num, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3672,6 +3874,7 @@ sbp_pack_sbp_msg_ssr_stec_correction_dep_a_t(u8 *buf, size_t len, const sbp_msg_
   }
   u8 msgheaderupdate_interval = msg->header.update_interval;
   memcpy(buf + offset, &msgheaderupdate_interval, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3680,6 +3883,7 @@ sbp_pack_sbp_msg_ssr_stec_correction_dep_a_t(u8 *buf, size_t len, const sbp_msg_
   }
   u8 msgheaderiod_atmo = msg->header.iod_atmo;
   memcpy(buf + offset, &msgheaderiod_atmo, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   for (size_t msgstec_sat_list_idx = 0; msgstec_sat_list_idx < (size_t)msg->n_stec_sat_list; msgstec_sat_list_idx++)
   {
@@ -3690,6 +3894,7 @@ sbp_pack_sbp_msg_ssr_stec_correction_dep_a_t(u8 *buf, size_t len, const sbp_msg_
     }
     u8 msgstec_sat_listmsgstec_sat_list_idxsv_idsatId = msg->stec_sat_list[msgstec_sat_list_idx].sv_id.satId;
     memcpy(buf + offset, &msgstec_sat_listmsgstec_sat_list_idxsv_idsatId, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -3699,6 +3904,7 @@ sbp_pack_sbp_msg_ssr_stec_correction_dep_a_t(u8 *buf, size_t len, const sbp_msg_
     u8 msgstec_sat_listmsgstec_sat_list_idxsv_idconstellation =
         msg->stec_sat_list[msgstec_sat_list_idx].sv_id.constellation;
     memcpy(buf + offset, &msgstec_sat_listmsgstec_sat_list_idxsv_idconstellation, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -3708,6 +3914,7 @@ sbp_pack_sbp_msg_ssr_stec_correction_dep_a_t(u8 *buf, size_t len, const sbp_msg_
     u8 msgstec_sat_listmsgstec_sat_list_idxstec_quality_indicator =
         msg->stec_sat_list[msgstec_sat_list_idx].stec_quality_indicator;
     memcpy(buf + offset, &msgstec_sat_listmsgstec_sat_list_idxstec_quality_indicator, 1);
+    // NOLINTNEXTLINE
     offset += 1;
     for (size_t msgstec_sat_listmsgstec_sat_list_idxstec_coeff_idx = 0;
          msgstec_sat_listmsgstec_sat_list_idxstec_coeff_idx < 4;
@@ -3724,6 +3931,7 @@ sbp_pack_sbp_msg_ssr_stec_correction_dep_a_t(u8 *buf, size_t len, const sbp_msg_
       memcpy(buf + offset,
              &msgstec_sat_listmsgstec_sat_list_idxstec_coeffmsgstec_sat_listmsgstec_sat_list_idxstec_coeff_idx,
              2);
+      // NOLINTNEXTLINE
       offset += 2;
     }
   }
@@ -3745,6 +3953,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_dep_a_t(const u8 *buf, size_t len, sbp_ms
   }
   memcpy(&msg->header.time.tow, buf + offset, 4);
   msg->header.time.tow = le32toh(msg->header.time.tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -3753,6 +3962,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_dep_a_t(const u8 *buf, size_t len, sbp_ms
   }
   memcpy(&msg->header.time.wn, buf + offset, 2);
   msg->header.time.wn = le16toh(msg->header.time.wn);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -3760,6 +3970,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_dep_a_t(const u8 *buf, size_t len, sbp_ms
     return false;
   }
   memcpy(&msg->header.num_msgs, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3767,6 +3978,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_dep_a_t(const u8 *buf, size_t len, sbp_ms
     return false;
   }
   memcpy(&msg->header.seq_num, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3774,6 +3986,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_dep_a_t(const u8 *buf, size_t len, sbp_ms
     return false;
   }
   memcpy(&msg->header.update_interval, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -3781,6 +3994,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_dep_a_t(const u8 *buf, size_t len, sbp_ms
     return false;
   }
   memcpy(&msg->header.iod_atmo, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   msg->n_stec_sat_list = (u8)((len - offset) / 11);
 
@@ -3792,6 +4006,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_dep_a_t(const u8 *buf, size_t len, sbp_ms
       return false;
     }
     memcpy(&msg->stec_sat_list[msgstec_sat_list_idx].sv_id.satId, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -3799,6 +4014,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_dep_a_t(const u8 *buf, size_t len, sbp_ms
       return false;
     }
     memcpy(&msg->stec_sat_list[msgstec_sat_list_idx].sv_id.constellation, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -3806,6 +4022,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_dep_a_t(const u8 *buf, size_t len, sbp_ms
       return false;
     }
     memcpy(&msg->stec_sat_list[msgstec_sat_list_idx].stec_quality_indicator, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
     for (size_t msgstec_sat_listmsgstec_sat_list_idxstec_coeff_idx = 0;
          msgstec_sat_listmsgstec_sat_list_idxstec_coeff_idx < 4;
@@ -3826,6 +4043,7 @@ sbp_unpack_sbp_msg_ssr_stec_correction_dep_a_t(const u8 *buf, size_t len, sbp_ms
           le16toh(msgstec_sat_listmsgstec_sat_list_idxstec_coeffmsgstec_sat_listmsgstec_sat_list_idxstec_coeff_idx);
       msg->stec_sat_list[msgstec_sat_list_idx].stec_coeff[msgstec_sat_listmsgstec_sat_list_idxstec_coeff_idx] = *(
           const s16 *)&msgstec_sat_listmsgstec_sat_list_idxstec_coeffmsgstec_sat_listmsgstec_sat_list_idxstec_coeff_idx;
+      // NOLINTNEXTLINE
       offset += 2;
     }
   }
@@ -4056,6 +4274,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(u8 *buf,
   }
   u32 msgheadertimetow = htole32(msg->header.time.tow);
   memcpy(buf + offset, &msgheadertimetow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -4064,6 +4283,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(u8 *buf,
   }
   u16 msgheadertimewn = htole16(msg->header.time.wn);
   memcpy(buf + offset, &msgheadertimewn, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -4072,6 +4292,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(u8 *buf,
   }
   u16 msgheadernum_msgs = htole16(msg->header.num_msgs);
   memcpy(buf + offset, &msgheadernum_msgs, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -4080,6 +4301,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(u8 *buf,
   }
   u16 msgheaderseq_num = htole16(msg->header.seq_num);
   memcpy(buf + offset, &msgheaderseq_num, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -4088,6 +4310,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(u8 *buf,
   }
   u8 msgheaderupdate_interval = msg->header.update_interval;
   memcpy(buf + offset, &msgheaderupdate_interval, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -4096,6 +4319,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(u8 *buf,
   }
   u8 msgheaderiod_atmo = msg->header.iod_atmo;
   memcpy(buf + offset, &msgheaderiod_atmo, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -4104,6 +4328,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(u8 *buf,
   }
   u8 msgheadertropo_quality_indicator = msg->header.tropo_quality_indicator;
   memcpy(buf + offset, &msgheadertropo_quality_indicator, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -4112,6 +4337,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(u8 *buf,
   }
   u16 msgelementindex = htole16(msg->element.index);
   memcpy(buf + offset, &msgelementindex, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -4120,6 +4346,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(u8 *buf,
   }
   u16 msgelementtropo_delay_correctionhydro = htole16(*(const u16 *)&msg->element.tropo_delay_correction.hydro);
   memcpy(buf + offset, &msgelementtropo_delay_correctionhydro, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -4128,6 +4355,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(u8 *buf,
   }
   s8 msgelementtropo_delay_correctionwet = msg->element.tropo_delay_correction.wet;
   memcpy(buf + offset, &msgelementtropo_delay_correctionwet, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   for (size_t msgelementstec_residuals_idx = 0; msgelementstec_residuals_idx < (size_t)msg->element.n_stec_residuals;
        msgelementstec_residuals_idx++)
@@ -4140,6 +4368,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(u8 *buf,
     u8 msgelementstec_residualsmsgelementstec_residuals_idxsv_idsatId =
         msg->element.stec_residuals[msgelementstec_residuals_idx].sv_id.satId;
     memcpy(buf + offset, &msgelementstec_residualsmsgelementstec_residuals_idxsv_idsatId, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -4149,6 +4378,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(u8 *buf,
     u8 msgelementstec_residualsmsgelementstec_residuals_idxsv_idconstellation =
         msg->element.stec_residuals[msgelementstec_residuals_idx].sv_id.constellation;
     memcpy(buf + offset, &msgelementstec_residualsmsgelementstec_residuals_idxsv_idconstellation, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -4158,6 +4388,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(u8 *buf,
     u16 msgelementstec_residualsmsgelementstec_residuals_idxresidual =
         htole16(*(const u16 *)&msg->element.stec_residuals[msgelementstec_residuals_idx].residual);
     memcpy(buf + offset, &msgelementstec_residualsmsgelementstec_residuals_idxresidual, 2);
+    // NOLINTNEXTLINE
     offset += 2;
   }
   return true;
@@ -4180,6 +4411,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const u8 *buf,
   }
   memcpy(&msg->header.time.tow, buf + offset, 4);
   msg->header.time.tow = le32toh(msg->header.time.tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -4188,6 +4420,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const u8 *buf,
   }
   memcpy(&msg->header.time.wn, buf + offset, 2);
   msg->header.time.wn = le16toh(msg->header.time.wn);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -4196,6 +4429,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const u8 *buf,
   }
   memcpy(&msg->header.num_msgs, buf + offset, 2);
   msg->header.num_msgs = le16toh(msg->header.num_msgs);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -4204,6 +4438,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const u8 *buf,
   }
   memcpy(&msg->header.seq_num, buf + offset, 2);
   msg->header.seq_num = le16toh(msg->header.seq_num);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -4211,6 +4446,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const u8 *buf,
     return false;
   }
   memcpy(&msg->header.update_interval, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -4218,6 +4454,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const u8 *buf,
     return false;
   }
   memcpy(&msg->header.iod_atmo, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -4225,6 +4462,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const u8 *buf,
     return false;
   }
   memcpy(&msg->header.tropo_quality_indicator, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -4233,6 +4471,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const u8 *buf,
   }
   memcpy(&msg->element.index, buf + offset, 2);
   msg->element.index = le16toh(msg->element.index);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -4243,6 +4482,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const u8 *buf,
   u16 msgelementtropo_delay_correctionhydro = *(const u16 *)&msg->element.tropo_delay_correction.hydro;
   msgelementtropo_delay_correctionhydro = le16toh(msgelementtropo_delay_correctionhydro);
   msg->element.tropo_delay_correction.hydro = *(const s16 *)&msgelementtropo_delay_correctionhydro;
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -4250,6 +4490,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const u8 *buf,
     return false;
   }
   memcpy(&msg->element.tropo_delay_correction.wet, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   msg->element.n_stec_residuals = (u8)((len - offset) / 4);
 
@@ -4262,6 +4503,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const u8 *buf,
       return false;
     }
     memcpy(&msg->element.stec_residuals[msgelementstec_residuals_idx].sv_id.satId, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -4269,6 +4511,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const u8 *buf,
       return false;
     }
     memcpy(&msg->element.stec_residuals[msgelementstec_residuals_idx].sv_id.constellation, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -4282,6 +4525,7 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const u8 *buf,
         le16toh(msgelementstec_residualsmsgelementstec_residuals_idxresidual);
     msg->element.stec_residuals[msgelementstec_residuals_idx].residual =
         *(const s16 *)&msgelementstec_residualsmsgelementstec_residuals_idxresidual;
+    // NOLINTNEXTLINE
     offset += 2;
   }
   return true;
@@ -4536,6 +4780,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(u8 *buf, size_t len, const sbp_m
   }
   u32 msgheadertimetow = htole32(msg->header.time.tow);
   memcpy(buf + offset, &msgheadertimetow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -4544,6 +4789,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(u8 *buf, size_t len, const sbp_m
   }
   u16 msgheadertimewn = htole16(msg->header.time.wn);
   memcpy(buf + offset, &msgheadertimewn, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -4552,6 +4798,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(u8 *buf, size_t len, const sbp_m
   }
   u16 msgheadernum_msgs = htole16(msg->header.num_msgs);
   memcpy(buf + offset, &msgheadernum_msgs, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -4560,6 +4807,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(u8 *buf, size_t len, const sbp_m
   }
   u16 msgheaderseq_num = htole16(msg->header.seq_num);
   memcpy(buf + offset, &msgheaderseq_num, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -4568,6 +4816,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(u8 *buf, size_t len, const sbp_m
   }
   u8 msgheaderupdate_interval = msg->header.update_interval;
   memcpy(buf + offset, &msgheaderupdate_interval, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -4576,6 +4825,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(u8 *buf, size_t len, const sbp_m
   }
   u8 msgheaderiod_atmo = msg->header.iod_atmo;
   memcpy(buf + offset, &msgheaderiod_atmo, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -4584,6 +4834,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(u8 *buf, size_t len, const sbp_m
   }
   u8 msgheadertropo_quality_indicator = msg->header.tropo_quality_indicator;
   memcpy(buf + offset, &msgheadertropo_quality_indicator, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -4592,6 +4843,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(u8 *buf, size_t len, const sbp_m
   }
   u16 msgelementindex = htole16(msg->element.index);
   memcpy(buf + offset, &msgelementindex, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -4600,6 +4852,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(u8 *buf, size_t len, const sbp_m
   }
   u16 msgelementtropo_delay_correctionhydro = htole16(*(const u16 *)&msg->element.tropo_delay_correction.hydro);
   memcpy(buf + offset, &msgelementtropo_delay_correctionhydro, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -4608,6 +4861,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(u8 *buf, size_t len, const sbp_m
   }
   s8 msgelementtropo_delay_correctionwet = msg->element.tropo_delay_correction.wet;
   memcpy(buf + offset, &msgelementtropo_delay_correctionwet, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -4616,6 +4870,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(u8 *buf, size_t len, const sbp_m
   }
   u8 msgelementtropo_delay_correctionstddev = msg->element.tropo_delay_correction.stddev;
   memcpy(buf + offset, &msgelementtropo_delay_correctionstddev, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   for (size_t msgelementstec_residuals_idx = 0; msgelementstec_residuals_idx < (size_t)msg->element.n_stec_residuals;
        msgelementstec_residuals_idx++)
@@ -4628,6 +4883,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(u8 *buf, size_t len, const sbp_m
     u8 msgelementstec_residualsmsgelementstec_residuals_idxsv_idsatId =
         msg->element.stec_residuals[msgelementstec_residuals_idx].sv_id.satId;
     memcpy(buf + offset, &msgelementstec_residualsmsgelementstec_residuals_idxsv_idsatId, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -4637,6 +4893,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(u8 *buf, size_t len, const sbp_m
     u8 msgelementstec_residualsmsgelementstec_residuals_idxsv_idconstellation =
         msg->element.stec_residuals[msgelementstec_residuals_idx].sv_id.constellation;
     memcpy(buf + offset, &msgelementstec_residualsmsgelementstec_residuals_idxsv_idconstellation, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -4646,6 +4903,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(u8 *buf, size_t len, const sbp_m
     u16 msgelementstec_residualsmsgelementstec_residuals_idxresidual =
         htole16(*(const u16 *)&msg->element.stec_residuals[msgelementstec_residuals_idx].residual);
     memcpy(buf + offset, &msgelementstec_residualsmsgelementstec_residuals_idxresidual, 2);
+    // NOLINTNEXTLINE
     offset += 2;
 
     if (offset + 1 > len)
@@ -4655,6 +4913,7 @@ sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(u8 *buf, size_t len, const sbp_m
     u8 msgelementstec_residualsmsgelementstec_residuals_idxstddev =
         msg->element.stec_residuals[msgelementstec_residuals_idx].stddev;
     memcpy(buf + offset, &msgelementstec_residualsmsgelementstec_residuals_idxstddev, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -4676,6 +4935,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(const u8 *b
   }
   memcpy(&msg->header.time.tow, buf + offset, 4);
   msg->header.time.tow = le32toh(msg->header.time.tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -4684,6 +4944,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(const u8 *b
   }
   memcpy(&msg->header.time.wn, buf + offset, 2);
   msg->header.time.wn = le16toh(msg->header.time.wn);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -4692,6 +4953,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(const u8 *b
   }
   memcpy(&msg->header.num_msgs, buf + offset, 2);
   msg->header.num_msgs = le16toh(msg->header.num_msgs);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -4700,6 +4962,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(const u8 *b
   }
   memcpy(&msg->header.seq_num, buf + offset, 2);
   msg->header.seq_num = le16toh(msg->header.seq_num);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -4707,6 +4970,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(const u8 *b
     return false;
   }
   memcpy(&msg->header.update_interval, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -4714,6 +4978,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(const u8 *b
     return false;
   }
   memcpy(&msg->header.iod_atmo, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -4721,6 +4986,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(const u8 *b
     return false;
   }
   memcpy(&msg->header.tropo_quality_indicator, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -4729,6 +4995,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(const u8 *b
   }
   memcpy(&msg->element.index, buf + offset, 2);
   msg->element.index = le16toh(msg->element.index);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -4739,6 +5006,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(const u8 *b
   u16 msgelementtropo_delay_correctionhydro = *(const u16 *)&msg->element.tropo_delay_correction.hydro;
   msgelementtropo_delay_correctionhydro = le16toh(msgelementtropo_delay_correctionhydro);
   msg->element.tropo_delay_correction.hydro = *(const s16 *)&msgelementtropo_delay_correctionhydro;
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -4746,6 +5014,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(const u8 *b
     return false;
   }
   memcpy(&msg->element.tropo_delay_correction.wet, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -4753,6 +5022,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(const u8 *b
     return false;
   }
   memcpy(&msg->element.tropo_delay_correction.stddev, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   msg->element.n_stec_residuals = (u8)((len - offset) / 5);
 
@@ -4765,6 +5035,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(const u8 *b
       return false;
     }
     memcpy(&msg->element.stec_residuals[msgelementstec_residuals_idx].sv_id.satId, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -4772,6 +5043,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(const u8 *b
       return false;
     }
     memcpy(&msg->element.stec_residuals[msgelementstec_residuals_idx].sv_id.constellation, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 2 > len)
@@ -4785,6 +5057,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(const u8 *b
         le16toh(msgelementstec_residualsmsgelementstec_residuals_idxresidual);
     msg->element.stec_residuals[msgelementstec_residuals_idx].residual =
         *(const s16 *)&msgelementstec_residualsmsgelementstec_residuals_idxresidual;
+    // NOLINTNEXTLINE
     offset += 2;
 
     if (offset + 1 > len)
@@ -4792,6 +5065,7 @@ static inline bool sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(const u8 *b
       return false;
     }
     memcpy(&msg->element.stec_residuals[msgelementstec_residuals_idx].stddev, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -4980,6 +5254,7 @@ sbp_pack_sbp_msg_ssr_grid_definition_dep_a_t(u8 *buf, size_t len, const sbp_msg_
   }
   u8 msgheaderregion_size_inverse = msg->header.region_size_inverse;
   memcpy(buf + offset, &msgheaderregion_size_inverse, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -4988,6 +5263,7 @@ sbp_pack_sbp_msg_ssr_grid_definition_dep_a_t(u8 *buf, size_t len, const sbp_msg_
   }
   u16 msgheaderarea_width = htole16(msg->header.area_width);
   memcpy(buf + offset, &msgheaderarea_width, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -4996,6 +5272,7 @@ sbp_pack_sbp_msg_ssr_grid_definition_dep_a_t(u8 *buf, size_t len, const sbp_msg_
   }
   u16 msgheaderlat_nw_corner_enc = htole16(msg->header.lat_nw_corner_enc);
   memcpy(buf + offset, &msgheaderlat_nw_corner_enc, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -5004,6 +5281,7 @@ sbp_pack_sbp_msg_ssr_grid_definition_dep_a_t(u8 *buf, size_t len, const sbp_msg_
   }
   u16 msgheaderlon_nw_corner_enc = htole16(msg->header.lon_nw_corner_enc);
   memcpy(buf + offset, &msgheaderlon_nw_corner_enc, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -5012,6 +5290,7 @@ sbp_pack_sbp_msg_ssr_grid_definition_dep_a_t(u8 *buf, size_t len, const sbp_msg_
   }
   u8 msgheadernum_msgs = msg->header.num_msgs;
   memcpy(buf + offset, &msgheadernum_msgs, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -5020,6 +5299,7 @@ sbp_pack_sbp_msg_ssr_grid_definition_dep_a_t(u8 *buf, size_t len, const sbp_msg_
   }
   u8 msgheaderseq_num = msg->header.seq_num;
   memcpy(buf + offset, &msgheaderseq_num, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   for (size_t msgrle_list_idx = 0; msgrle_list_idx < (size_t)msg->n_rle_list; msgrle_list_idx++)
   {
@@ -5030,6 +5310,7 @@ sbp_pack_sbp_msg_ssr_grid_definition_dep_a_t(u8 *buf, size_t len, const sbp_msg_
     }
     u8 msgrle_listmsgrle_list_idx = msg->rle_list[msgrle_list_idx];
     memcpy(buf + offset, &msgrle_listmsgrle_list_idx, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -5049,6 +5330,7 @@ sbp_unpack_sbp_msg_ssr_grid_definition_dep_a_t(const u8 *buf, size_t len, sbp_ms
     return false;
   }
   memcpy(&msg->header.region_size_inverse, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -5057,6 +5339,7 @@ sbp_unpack_sbp_msg_ssr_grid_definition_dep_a_t(const u8 *buf, size_t len, sbp_ms
   }
   memcpy(&msg->header.area_width, buf + offset, 2);
   msg->header.area_width = le16toh(msg->header.area_width);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -5065,6 +5348,7 @@ sbp_unpack_sbp_msg_ssr_grid_definition_dep_a_t(const u8 *buf, size_t len, sbp_ms
   }
   memcpy(&msg->header.lat_nw_corner_enc, buf + offset, 2);
   msg->header.lat_nw_corner_enc = le16toh(msg->header.lat_nw_corner_enc);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -5073,6 +5357,7 @@ sbp_unpack_sbp_msg_ssr_grid_definition_dep_a_t(const u8 *buf, size_t len, sbp_ms
   }
   memcpy(&msg->header.lon_nw_corner_enc, buf + offset, 2);
   msg->header.lon_nw_corner_enc = le16toh(msg->header.lon_nw_corner_enc);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -5080,6 +5365,7 @@ sbp_unpack_sbp_msg_ssr_grid_definition_dep_a_t(const u8 *buf, size_t len, sbp_ms
     return false;
   }
   memcpy(&msg->header.num_msgs, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -5087,6 +5373,7 @@ sbp_unpack_sbp_msg_ssr_grid_definition_dep_a_t(const u8 *buf, size_t len, sbp_ms
     return false;
   }
   memcpy(&msg->header.seq_num, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   msg->n_rle_list = (u8)((len - offset) / 1);
 
@@ -5098,6 +5385,7 @@ sbp_unpack_sbp_msg_ssr_grid_definition_dep_a_t(const u8 *buf, size_t len, sbp_ms
       return false;
     }
     memcpy(&msg->rle_list[msgrle_list_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;

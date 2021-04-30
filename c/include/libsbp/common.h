@@ -41,6 +41,7 @@ static inline size_t sbp_strlen_sections(const char *str, size_t n, bool optiona
     }
   }
   assert(0 && "Invalid string");
+  return 0;
 }
 
 static inline size_t sbp_strlen(const char *str, const char *termination)
@@ -81,6 +82,7 @@ static inline size_t sbp_strlen(const char *str, const char *termination)
     return sbp_strlen_sections(str, 4, true);
   }
   assert(0 && "Unknown termination");
+  return 0;
 }
 
 static inline int sbp_strcmp(const char *a, const char *b, const char *termination)
@@ -120,6 +122,7 @@ static inline size_t sbp_pack_string_sections(char *out, const char *str, size_t
     }
   }
   assert(0 && "Invalid string");
+  return 0;
 }
 
 static inline size_t sbp_pack_string(uint8_t *buf, const char *str, const char *termination)
@@ -132,7 +135,7 @@ static inline size_t sbp_pack_string(uint8_t *buf, const char *str, const char *
   }
   if (0 == strcmp(termination, "nul"))
   {
-    strcpy(out, str);
+    strncpy(out, str, 255);
     return strlen(str + 1);
   }
   if (0 == strcmp(termination, "2-nul"))
@@ -165,6 +168,7 @@ static inline size_t sbp_pack_string(uint8_t *buf, const char *str, const char *
     return sbp_pack_string_sections(out, str, 4, true);
   }
   assert(0 && "Unknown termination");
+  return 0;
 }
 
 static inline size_t sbp_unpack_string(const char *buf, size_t len, char *out, const char *termination)
@@ -177,7 +181,7 @@ static inline size_t sbp_unpack_string(const char *buf, size_t len, char *out, c
   }
   if (0 == strcmp(termination, "nul"))
   {
-    strcpy(out, buf);
+    strncpy(out, buf, 255);
     return strlen(out) + 1;
   }
   if (0 == strcmp(termination, "2-nul"))
@@ -210,6 +214,7 @@ static inline size_t sbp_unpack_string(const char *buf, size_t len, char *out, c
     return sbp_pack_string_sections(out, buf, 4, true);
   }
   assert(0 && "Unknown termination");
+  return 0;
 }
 
 /* Should match guard in libswiftnav/common.h */

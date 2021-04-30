@@ -142,11 +142,13 @@ sbp_pack_sbp_msg_bootloader_handshake_resp_t(u8 *buf, size_t len, const sbp_msg_
   }
   u32 msgflags = htole32(msg->flags);
   memcpy(buf + offset, &msgflags, 4);
+  // NOLINTNEXTLINE
   offset += 4;
   if (offset + sbp_strlen(msg->version, "none") > len)
   {
     return false;
   }
+  // NOLINTNEXTLINE
   offset += sbp_pack_string(buf + offset, msg->version, "none");
   return true;
 }
@@ -166,7 +168,9 @@ sbp_unpack_sbp_msg_bootloader_handshake_resp_t(const u8 *buf, size_t len, sbp_ms
   }
   memcpy(&msg->flags, buf + offset, 4);
   msg->flags = le32toh(msg->flags);
+  // NOLINTNEXTLINE
   offset += 4;
+  // NOLINTNEXTLINE
   offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->version, "none");
   return true;
 }
@@ -236,6 +240,7 @@ sbp_pack_sbp_msg_bootloader_jump_to_app_t(u8 *buf, size_t len, const sbp_msg_boo
   }
   u8 msgjump = msg->jump;
   memcpy(buf + offset, &msgjump, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -254,6 +259,7 @@ sbp_unpack_sbp_msg_bootloader_jump_to_app_t(const u8 *buf, size_t len, sbp_msg_b
     return false;
   }
   memcpy(&msg->jump, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -387,6 +393,7 @@ static inline bool sbp_pack_sbp_msg_nap_device_dna_resp_t(u8 *buf, size_t len, c
     }
     u8 msgdnamsgdna_idx = msg->dna[msgdna_idx];
     memcpy(buf + offset, &msgdnamsgdna_idx, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -409,6 +416,7 @@ sbp_unpack_sbp_msg_nap_device_dna_resp_t(const u8 *buf, size_t len, sbp_msg_nap_
       return false;
     }
     memcpy(&msg->dna[msgdna_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -485,6 +493,7 @@ sbp_pack_sbp_msg_bootloader_handshake_dep_a_t(u8 *buf, size_t len, const sbp_msg
     }
     u8 msghandshakemsghandshake_idx = msg->handshake[msghandshake_idx];
     memcpy(buf + offset, &msghandshakemsghandshake_idx, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -509,6 +518,7 @@ sbp_unpack_sbp_msg_bootloader_handshake_dep_a_t(const u8 *buf, size_t len, sbp_m
       return false;
     }
     memcpy(&msg->handshake[msghandshake_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;

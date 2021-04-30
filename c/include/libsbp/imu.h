@@ -111,6 +111,7 @@ static inline bool sbp_pack_sbp_msg_imu_raw_t(u8 *buf, size_t len, const sbp_msg
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -119,6 +120,7 @@ static inline bool sbp_pack_sbp_msg_imu_raw_t(u8 *buf, size_t len, const sbp_msg
   }
   u8 msgtow_f = msg->tow_f;
   memcpy(buf + offset, &msgtow_f, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -127,6 +129,7 @@ static inline bool sbp_pack_sbp_msg_imu_raw_t(u8 *buf, size_t len, const sbp_msg
   }
   u16 msgacc_x = htole16(*(const u16 *)&msg->acc_x);
   memcpy(buf + offset, &msgacc_x, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -135,6 +138,7 @@ static inline bool sbp_pack_sbp_msg_imu_raw_t(u8 *buf, size_t len, const sbp_msg
   }
   u16 msgacc_y = htole16(*(const u16 *)&msg->acc_y);
   memcpy(buf + offset, &msgacc_y, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -143,6 +147,7 @@ static inline bool sbp_pack_sbp_msg_imu_raw_t(u8 *buf, size_t len, const sbp_msg
   }
   u16 msgacc_z = htole16(*(const u16 *)&msg->acc_z);
   memcpy(buf + offset, &msgacc_z, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -151,6 +156,7 @@ static inline bool sbp_pack_sbp_msg_imu_raw_t(u8 *buf, size_t len, const sbp_msg
   }
   u16 msggyr_x = htole16(*(const u16 *)&msg->gyr_x);
   memcpy(buf + offset, &msggyr_x, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -159,6 +165,7 @@ static inline bool sbp_pack_sbp_msg_imu_raw_t(u8 *buf, size_t len, const sbp_msg
   }
   u16 msggyr_y = htole16(*(const u16 *)&msg->gyr_y);
   memcpy(buf + offset, &msggyr_y, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -167,6 +174,7 @@ static inline bool sbp_pack_sbp_msg_imu_raw_t(u8 *buf, size_t len, const sbp_msg
   }
   u16 msggyr_z = htole16(*(const u16 *)&msg->gyr_z);
   memcpy(buf + offset, &msggyr_z, 2);
+  // NOLINTNEXTLINE
   offset += 2;
   return true;
 }
@@ -185,6 +193,7 @@ static inline bool sbp_unpack_sbp_msg_imu_raw_t(const u8 *buf, size_t len, sbp_m
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -192,6 +201,7 @@ static inline bool sbp_unpack_sbp_msg_imu_raw_t(const u8 *buf, size_t len, sbp_m
     return false;
   }
   memcpy(&msg->tow_f, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -202,6 +212,7 @@ static inline bool sbp_unpack_sbp_msg_imu_raw_t(const u8 *buf, size_t len, sbp_m
   u16 msgacc_x = *(const u16 *)&msg->acc_x;
   msgacc_x = le16toh(msgacc_x);
   msg->acc_x = *(const s16 *)&msgacc_x;
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -212,6 +223,7 @@ static inline bool sbp_unpack_sbp_msg_imu_raw_t(const u8 *buf, size_t len, sbp_m
   u16 msgacc_y = *(const u16 *)&msg->acc_y;
   msgacc_y = le16toh(msgacc_y);
   msg->acc_y = *(const s16 *)&msgacc_y;
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -222,6 +234,7 @@ static inline bool sbp_unpack_sbp_msg_imu_raw_t(const u8 *buf, size_t len, sbp_m
   u16 msgacc_z = *(const u16 *)&msg->acc_z;
   msgacc_z = le16toh(msgacc_z);
   msg->acc_z = *(const s16 *)&msgacc_z;
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -232,6 +245,7 @@ static inline bool sbp_unpack_sbp_msg_imu_raw_t(const u8 *buf, size_t len, sbp_m
   u16 msggyr_x = *(const u16 *)&msg->gyr_x;
   msggyr_x = le16toh(msggyr_x);
   msg->gyr_x = *(const s16 *)&msggyr_x;
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -242,6 +256,7 @@ static inline bool sbp_unpack_sbp_msg_imu_raw_t(const u8 *buf, size_t len, sbp_m
   u16 msggyr_y = *(const u16 *)&msg->gyr_y;
   msggyr_y = le16toh(msggyr_y);
   msg->gyr_y = *(const s16 *)&msggyr_y;
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -252,6 +267,7 @@ static inline bool sbp_unpack_sbp_msg_imu_raw_t(const u8 *buf, size_t len, sbp_m
   u16 msggyr_z = *(const u16 *)&msg->gyr_z;
   msggyr_z = le16toh(msggyr_z);
   msg->gyr_z = *(const s16 *)&msggyr_z;
+  // NOLINTNEXTLINE
   offset += 2;
   return true;
 }
@@ -402,6 +418,7 @@ static inline bool sbp_pack_sbp_msg_imu_aux_t(u8 *buf, size_t len, const sbp_msg
   }
   u8 msgimu_type = msg->imu_type;
   memcpy(buf + offset, &msgimu_type, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -410,6 +427,7 @@ static inline bool sbp_pack_sbp_msg_imu_aux_t(u8 *buf, size_t len, const sbp_msg
   }
   u16 msgtemp = htole16(*(const u16 *)&msg->temp);
   memcpy(buf + offset, &msgtemp, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -418,6 +436,7 @@ static inline bool sbp_pack_sbp_msg_imu_aux_t(u8 *buf, size_t len, const sbp_msg
   }
   u8 msgimu_conf = msg->imu_conf;
   memcpy(buf + offset, &msgimu_conf, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -435,6 +454,7 @@ static inline bool sbp_unpack_sbp_msg_imu_aux_t(const u8 *buf, size_t len, sbp_m
     return false;
   }
   memcpy(&msg->imu_type, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -445,6 +465,7 @@ static inline bool sbp_unpack_sbp_msg_imu_aux_t(const u8 *buf, size_t len, sbp_m
   u16 msgtemp = *(const u16 *)&msg->temp;
   msgtemp = le16toh(msgtemp);
   msg->temp = *(const s16 *)&msgtemp;
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -452,6 +473,7 @@ static inline bool sbp_unpack_sbp_msg_imu_aux_t(const u8 *buf, size_t len, sbp_m
     return false;
   }
   memcpy(&msg->imu_conf, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }

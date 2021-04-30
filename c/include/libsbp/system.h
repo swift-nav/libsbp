@@ -85,6 +85,7 @@ static inline bool sbp_pack_sbp_msg_startup_t(u8 *buf, size_t len, const sbp_msg
   }
   u8 msgcause = msg->cause;
   memcpy(buf + offset, &msgcause, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -93,6 +94,7 @@ static inline bool sbp_pack_sbp_msg_startup_t(u8 *buf, size_t len, const sbp_msg
   }
   u8 msgstartup_type = msg->startup_type;
   memcpy(buf + offset, &msgstartup_type, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -101,6 +103,7 @@ static inline bool sbp_pack_sbp_msg_startup_t(u8 *buf, size_t len, const sbp_msg
   }
   u16 msgreserved = htole16(msg->reserved);
   memcpy(buf + offset, &msgreserved, 2);
+  // NOLINTNEXTLINE
   offset += 2;
   return true;
 }
@@ -118,6 +121,7 @@ static inline bool sbp_unpack_sbp_msg_startup_t(const u8 *buf, size_t len, sbp_m
     return false;
   }
   memcpy(&msg->cause, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -125,6 +129,7 @@ static inline bool sbp_unpack_sbp_msg_startup_t(const u8 *buf, size_t len, sbp_m
     return false;
   }
   memcpy(&msg->startup_type, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -133,6 +138,7 @@ static inline bool sbp_unpack_sbp_msg_startup_t(const u8 *buf, size_t len, sbp_m
   }
   memcpy(&msg->reserved, buf + offset, 2);
   msg->reserved = le16toh(msg->reserved);
+  // NOLINTNEXTLINE
   offset += 2;
   return true;
 }
@@ -233,6 +239,7 @@ static inline bool sbp_pack_sbp_msg_dgnss_status_t(u8 *buf, size_t len, const sb
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -241,6 +248,7 @@ static inline bool sbp_pack_sbp_msg_dgnss_status_t(u8 *buf, size_t len, const sb
   }
   u16 msglatency = htole16(msg->latency);
   memcpy(buf + offset, &msglatency, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -249,11 +257,13 @@ static inline bool sbp_pack_sbp_msg_dgnss_status_t(u8 *buf, size_t len, const sb
   }
   u8 msgnum_signals = msg->num_signals;
   memcpy(buf + offset, &msgnum_signals, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   if (offset + sbp_strlen(msg->source, "none") > len)
   {
     return false;
   }
+  // NOLINTNEXTLINE
   offset += sbp_pack_string(buf + offset, msg->source, "none");
   return true;
 }
@@ -271,6 +281,7 @@ static inline bool sbp_unpack_sbp_msg_dgnss_status_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 2 > len)
@@ -279,6 +290,7 @@ static inline bool sbp_unpack_sbp_msg_dgnss_status_t(const u8 *buf, size_t len, 
   }
   memcpy(&msg->latency, buf + offset, 2);
   msg->latency = le16toh(msg->latency);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -286,7 +298,9 @@ static inline bool sbp_unpack_sbp_msg_dgnss_status_t(const u8 *buf, size_t len, 
     return false;
   }
   memcpy(&msg->num_signals, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
+  // NOLINTNEXTLINE
   offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->source, "none");
   return true;
 }
@@ -459,6 +473,7 @@ static inline bool sbp_pack_sbp_msg_heartbeat_t(u8 *buf, size_t len, const sbp_m
   }
   u32 msgflags = htole32(msg->flags);
   memcpy(buf + offset, &msgflags, 4);
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }
@@ -477,6 +492,7 @@ static inline bool sbp_unpack_sbp_msg_heartbeat_t(const u8 *buf, size_t len, sbp
   }
   memcpy(&msg->flags, buf + offset, 4);
   msg->flags = le32toh(msg->flags);
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }
@@ -655,6 +671,7 @@ static inline bool sbp_pack_sbp_msg_status_report_t(u8 *buf, size_t len, const s
   }
   u16 msgreporting_system = htole16(msg->reporting_system);
   memcpy(buf + offset, &msgreporting_system, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -663,6 +680,7 @@ static inline bool sbp_pack_sbp_msg_status_report_t(u8 *buf, size_t len, const s
   }
   u16 msgsbp_version = htole16(msg->sbp_version);
   memcpy(buf + offset, &msgsbp_version, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 4 > len)
@@ -671,6 +689,7 @@ static inline bool sbp_pack_sbp_msg_status_report_t(u8 *buf, size_t len, const s
   }
   u32 msgsequence = htole32(msg->sequence);
   memcpy(buf + offset, &msgsequence, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -679,6 +698,7 @@ static inline bool sbp_pack_sbp_msg_status_report_t(u8 *buf, size_t len, const s
   }
   u32 msguptime = htole32(msg->uptime);
   memcpy(buf + offset, &msguptime, 4);
+  // NOLINTNEXTLINE
   offset += 4;
   for (size_t msgstatus_idx = 0; msgstatus_idx < (size_t)msg->n_status; msgstatus_idx++)
   {
@@ -689,6 +709,7 @@ static inline bool sbp_pack_sbp_msg_status_report_t(u8 *buf, size_t len, const s
     }
     u16 msgstatusmsgstatus_idxcomponent = htole16(msg->status[msgstatus_idx].component);
     memcpy(buf + offset, &msgstatusmsgstatus_idxcomponent, 2);
+    // NOLINTNEXTLINE
     offset += 2;
 
     if (offset + 1 > len)
@@ -697,6 +718,7 @@ static inline bool sbp_pack_sbp_msg_status_report_t(u8 *buf, size_t len, const s
     }
     u8 msgstatusmsgstatus_idxgeneric = msg->status[msgstatus_idx].generic;
     memcpy(buf + offset, &msgstatusmsgstatus_idxgeneric, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -705,6 +727,7 @@ static inline bool sbp_pack_sbp_msg_status_report_t(u8 *buf, size_t len, const s
     }
     u8 msgstatusmsgstatus_idxspecific = msg->status[msgstatus_idx].specific;
     memcpy(buf + offset, &msgstatusmsgstatus_idxspecific, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -724,6 +747,7 @@ static inline bool sbp_unpack_sbp_msg_status_report_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->reporting_system, buf + offset, 2);
   msg->reporting_system = le16toh(msg->reporting_system);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 2 > len)
@@ -732,6 +756,7 @@ static inline bool sbp_unpack_sbp_msg_status_report_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->sbp_version, buf + offset, 2);
   msg->sbp_version = le16toh(msg->sbp_version);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 4 > len)
@@ -740,6 +765,7 @@ static inline bool sbp_unpack_sbp_msg_status_report_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->sequence, buf + offset, 4);
   msg->sequence = le32toh(msg->sequence);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 4 > len)
@@ -748,6 +774,7 @@ static inline bool sbp_unpack_sbp_msg_status_report_t(const u8 *buf, size_t len,
   }
   memcpy(&msg->uptime, buf + offset, 4);
   msg->uptime = le32toh(msg->uptime);
+  // NOLINTNEXTLINE
   offset += 4;
   msg->n_status = (u8)((len - offset) / 4);
 
@@ -760,6 +787,7 @@ static inline bool sbp_unpack_sbp_msg_status_report_t(const u8 *buf, size_t len,
     }
     memcpy(&msg->status[msgstatus_idx].component, buf + offset, 2);
     msg->status[msgstatus_idx].component = le16toh(msg->status[msgstatus_idx].component);
+    // NOLINTNEXTLINE
     offset += 2;
 
     if (offset + 1 > len)
@@ -767,6 +795,7 @@ static inline bool sbp_unpack_sbp_msg_status_report_t(const u8 *buf, size_t len,
       return false;
     }
     memcpy(&msg->status[msgstatus_idx].generic, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
 
     if (offset + 1 > len)
@@ -774,6 +803,7 @@ static inline bool sbp_unpack_sbp_msg_status_report_t(const u8 *buf, size_t len,
       return false;
     }
     memcpy(&msg->status[msgstatus_idx].specific, buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -970,6 +1000,7 @@ static inline bool sbp_pack_sbp_msg_ins_status_t(u8 *buf, size_t len, const sbp_
   }
   u32 msgflags = htole32(msg->flags);
   memcpy(buf + offset, &msgflags, 4);
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }
@@ -988,6 +1019,7 @@ static inline bool sbp_unpack_sbp_msg_ins_status_t(const u8 *buf, size_t len, sb
   }
   memcpy(&msg->flags, buf + offset, 4);
   msg->flags = le32toh(msg->flags);
+  // NOLINTNEXTLINE
   offset += 4;
   return true;
 }
@@ -1056,11 +1088,13 @@ static inline bool sbp_pack_sbp_msg_csac_telemetry_t(u8 *buf, size_t len, const 
   }
   u8 msgid = msg->id;
   memcpy(buf + offset, &msgid, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   if (offset + sbp_strlen(msg->telemetry, "none") > len)
   {
     return false;
   }
+  // NOLINTNEXTLINE
   offset += sbp_pack_string(buf + offset, msg->telemetry, "none");
   return true;
 }
@@ -1078,7 +1112,9 @@ static inline bool sbp_unpack_sbp_msg_csac_telemetry_t(const u8 *buf, size_t len
     return false;
   }
   memcpy(&msg->id, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
+  // NOLINTNEXTLINE
   offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->telemetry, "none");
   return true;
 }
@@ -1152,11 +1188,13 @@ sbp_pack_sbp_msg_csac_telemetry_labels_t(u8 *buf, size_t len, const sbp_msg_csac
   }
   u8 msgid = msg->id;
   memcpy(buf + offset, &msgid, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   if (offset + sbp_strlen(msg->telemetry_labels, "none") > len)
   {
     return false;
   }
+  // NOLINTNEXTLINE
   offset += sbp_pack_string(buf + offset, msg->telemetry_labels, "none");
   return true;
 }
@@ -1175,7 +1213,9 @@ sbp_unpack_sbp_msg_csac_telemetry_labels_t(const u8 *buf, size_t len, sbp_msg_cs
     return false;
   }
   memcpy(&msg->id, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
+  // NOLINTNEXTLINE
   offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->telemetry_labels, "none");
   return true;
 }
@@ -1412,6 +1452,7 @@ static inline bool sbp_pack_sbp_msg_ins_updates_t(u8 *buf, size_t len, const sbp
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -1420,6 +1461,7 @@ static inline bool sbp_pack_sbp_msg_ins_updates_t(u8 *buf, size_t len, const sbp
   }
   u8 msggnsspos = msg->gnsspos;
   memcpy(buf + offset, &msggnsspos, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1428,6 +1470,7 @@ static inline bool sbp_pack_sbp_msg_ins_updates_t(u8 *buf, size_t len, const sbp
   }
   u8 msggnssvel = msg->gnssvel;
   memcpy(buf + offset, &msggnssvel, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1436,6 +1479,7 @@ static inline bool sbp_pack_sbp_msg_ins_updates_t(u8 *buf, size_t len, const sbp
   }
   u8 msgwheelticks = msg->wheelticks;
   memcpy(buf + offset, &msgwheelticks, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1444,6 +1488,7 @@ static inline bool sbp_pack_sbp_msg_ins_updates_t(u8 *buf, size_t len, const sbp
   }
   u8 msgspeed = msg->speed;
   memcpy(buf + offset, &msgspeed, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1452,6 +1497,7 @@ static inline bool sbp_pack_sbp_msg_ins_updates_t(u8 *buf, size_t len, const sbp
   }
   u8 msgnhc = msg->nhc;
   memcpy(buf + offset, &msgnhc, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1460,6 +1506,7 @@ static inline bool sbp_pack_sbp_msg_ins_updates_t(u8 *buf, size_t len, const sbp
   }
   u8 msgzerovel = msg->zerovel;
   memcpy(buf + offset, &msgzerovel, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -1478,6 +1525,7 @@ static inline bool sbp_unpack_sbp_msg_ins_updates_t(const u8 *buf, size_t len, s
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -1485,6 +1533,7 @@ static inline bool sbp_unpack_sbp_msg_ins_updates_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->gnsspos, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1492,6 +1541,7 @@ static inline bool sbp_unpack_sbp_msg_ins_updates_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->gnssvel, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1499,6 +1549,7 @@ static inline bool sbp_unpack_sbp_msg_ins_updates_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->wheelticks, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1506,6 +1557,7 @@ static inline bool sbp_unpack_sbp_msg_ins_updates_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->speed, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1513,6 +1565,7 @@ static inline bool sbp_unpack_sbp_msg_ins_updates_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->nhc, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1520,6 +1573,7 @@ static inline bool sbp_unpack_sbp_msg_ins_updates_t(const u8 *buf, size_t len, s
     return false;
   }
   memcpy(&msg->zerovel, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -1626,6 +1680,7 @@ static inline bool sbp_pack_sbp_msg_gnss_time_offset_t(u8 *buf, size_t len, cons
   }
   u16 msgweeks = htole16(*(const u16 *)&msg->weeks);
   memcpy(buf + offset, &msgweeks, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 4 > len)
@@ -1634,6 +1689,7 @@ static inline bool sbp_pack_sbp_msg_gnss_time_offset_t(u8 *buf, size_t len, cons
   }
   u32 msgmilliseconds = htole32(*(const u32 *)&msg->milliseconds);
   memcpy(buf + offset, &msgmilliseconds, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -1642,6 +1698,7 @@ static inline bool sbp_pack_sbp_msg_gnss_time_offset_t(u8 *buf, size_t len, cons
   }
   u16 msgmicroseconds = htole16(*(const u16 *)&msg->microseconds);
   memcpy(buf + offset, &msgmicroseconds, 2);
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -1650,6 +1707,7 @@ static inline bool sbp_pack_sbp_msg_gnss_time_offset_t(u8 *buf, size_t len, cons
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -1670,6 +1728,7 @@ static inline bool sbp_unpack_sbp_msg_gnss_time_offset_t(const u8 *buf, size_t l
   u16 msgweeks = *(const u16 *)&msg->weeks;
   msgweeks = le16toh(msgweeks);
   msg->weeks = *(const s16 *)&msgweeks;
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 4 > len)
@@ -1680,6 +1739,7 @@ static inline bool sbp_unpack_sbp_msg_gnss_time_offset_t(const u8 *buf, size_t l
   u32 msgmilliseconds = *(const u32 *)&msg->milliseconds;
   msgmilliseconds = le32toh(msgmilliseconds);
   msg->milliseconds = *(const s32 *)&msgmilliseconds;
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 2 > len)
@@ -1690,6 +1750,7 @@ static inline bool sbp_unpack_sbp_msg_gnss_time_offset_t(const u8 *buf, size_t l
   u16 msgmicroseconds = *(const u16 *)&msg->microseconds;
   msgmicroseconds = le16toh(msgmicroseconds);
   msg->microseconds = *(const s16 *)&msgmicroseconds;
+  // NOLINTNEXTLINE
   offset += 2;
 
   if (offset + 1 > len)
@@ -1697,6 +1758,7 @@ static inline bool sbp_unpack_sbp_msg_gnss_time_offset_t(const u8 *buf, size_t l
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   return true;
 }
@@ -1803,6 +1865,7 @@ static inline bool sbp_pack_sbp_msg_group_meta_t(u8 *buf, size_t len, const sbp_
   }
   u8 msggroup_id = msg->group_id;
   memcpy(buf + offset, &msggroup_id, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1811,6 +1874,7 @@ static inline bool sbp_pack_sbp_msg_group_meta_t(u8 *buf, size_t len, const sbp_
   }
   u8 msgflags = msg->flags;
   memcpy(buf + offset, &msgflags, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1819,6 +1883,7 @@ static inline bool sbp_pack_sbp_msg_group_meta_t(u8 *buf, size_t len, const sbp_
   }
   u8 msgn_group_msgs = msg->n_group_msgs;
   memcpy(buf + offset, &msgn_group_msgs, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   for (size_t msggroup_msgs_idx = 0; msggroup_msgs_idx < (size_t)msg->n_group_msgs; msggroup_msgs_idx++)
   {
@@ -1829,6 +1894,7 @@ static inline bool sbp_pack_sbp_msg_group_meta_t(u8 *buf, size_t len, const sbp_
     }
     u16 msggroup_msgsmsggroup_msgs_idx = htole16(msg->group_msgs[msggroup_msgs_idx]);
     memcpy(buf + offset, &msggroup_msgsmsggroup_msgs_idx, 2);
+    // NOLINTNEXTLINE
     offset += 2;
   }
   return true;
@@ -1847,6 +1913,7 @@ static inline bool sbp_unpack_sbp_msg_group_meta_t(const u8 *buf, size_t len, sb
     return false;
   }
   memcpy(&msg->group_id, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1854,6 +1921,7 @@ static inline bool sbp_unpack_sbp_msg_group_meta_t(const u8 *buf, size_t len, sb
     return false;
   }
   memcpy(&msg->flags, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -1861,6 +1929,7 @@ static inline bool sbp_unpack_sbp_msg_group_meta_t(const u8 *buf, size_t len, sb
     return false;
   }
   memcpy(&msg->n_group_msgs, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   for (size_t msggroup_msgs_idx = 0; msggroup_msgs_idx < msg->n_group_msgs; msggroup_msgs_idx++)
@@ -1872,6 +1941,7 @@ static inline bool sbp_unpack_sbp_msg_group_meta_t(const u8 *buf, size_t len, sb
     }
     memcpy(&msg->group_msgs[msggroup_msgs_idx], buf + offset, 2);
     msg->group_msgs[msggroup_msgs_idx] = le16toh(msg->group_msgs[msggroup_msgs_idx]);
+    // NOLINTNEXTLINE
     offset += 2;
   }
   return true;

@@ -97,6 +97,7 @@ static inline bool sbp_pack_sbp_msg_sbas_raw_t(u8 *buf, size_t len, const sbp_ms
   }
   u8 msgsidsat = msg->sid.sat;
   memcpy(buf + offset, &msgsidsat, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -105,6 +106,7 @@ static inline bool sbp_pack_sbp_msg_sbas_raw_t(u8 *buf, size_t len, const sbp_ms
   }
   u8 msgsidcode = msg->sid.code;
   memcpy(buf + offset, &msgsidcode, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 4 > len)
@@ -113,6 +115,7 @@ static inline bool sbp_pack_sbp_msg_sbas_raw_t(u8 *buf, size_t len, const sbp_ms
   }
   u32 msgtow = htole32(msg->tow);
   memcpy(buf + offset, &msgtow, 4);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -121,6 +124,7 @@ static inline bool sbp_pack_sbp_msg_sbas_raw_t(u8 *buf, size_t len, const sbp_ms
   }
   u8 msgmessage_type = msg->message_type;
   memcpy(buf + offset, &msgmessage_type, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   for (size_t msgdata_idx = 0; msgdata_idx < 27; msgdata_idx++)
   {
@@ -131,6 +135,7 @@ static inline bool sbp_pack_sbp_msg_sbas_raw_t(u8 *buf, size_t len, const sbp_ms
     }
     u8 msgdatamsgdata_idx = msg->data[msgdata_idx];
     memcpy(buf + offset, &msgdatamsgdata_idx, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;
@@ -149,6 +154,7 @@ static inline bool sbp_unpack_sbp_msg_sbas_raw_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->sid.sat, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 1 > len)
@@ -156,6 +162,7 @@ static inline bool sbp_unpack_sbp_msg_sbas_raw_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->sid.code, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
 
   if (offset + 4 > len)
@@ -164,6 +171,7 @@ static inline bool sbp_unpack_sbp_msg_sbas_raw_t(const u8 *buf, size_t len, sbp_
   }
   memcpy(&msg->tow, buf + offset, 4);
   msg->tow = le32toh(msg->tow);
+  // NOLINTNEXTLINE
   offset += 4;
 
   if (offset + 1 > len)
@@ -171,6 +179,7 @@ static inline bool sbp_unpack_sbp_msg_sbas_raw_t(const u8 *buf, size_t len, sbp_
     return false;
   }
   memcpy(&msg->message_type, buf + offset, 1);
+  // NOLINTNEXTLINE
   offset += 1;
   for (size_t msgdata_idx = 0; msgdata_idx < 27; msgdata_idx++)
   {
@@ -180,6 +189,7 @@ static inline bool sbp_unpack_sbp_msg_sbas_raw_t(const u8 *buf, size_t len, sbp_
       return false;
     }
     memcpy(&msg->data[msgdata_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
     offset += 1;
   }
   return true;

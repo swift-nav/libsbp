@@ -137,6 +137,7 @@ static inline size_t sbp_packed_size_(((m.name|convert_unpacked)))(const (((m.na
   (((field.basetype.name))) (((tmp_name))) = (((path)));
   ((*- endif *))
   memcpy(buf + offset, & (((tmp_name))) , (((field.basetype.packed_size))));
+  // NOLINTNEXTLINE
   offset += (((field.basetype.packed_size)));
 ((*- endmacro *))
 
@@ -153,9 +154,11 @@ static inline size_t sbp_packed_size_(((m.name|convert_unpacked)))(const (((m.na
 		((*- elif f.order == "fixed-string" *))
       if(offset + sizeof( (((path + f.name))) ) > len) { return false; }
 			memcpy(buf + offset, (((path + f.name))), sizeof( (((path + f.name)))));
+      // NOLINTNEXTLINE
 			offset += sizeof( (((path + f.name))));
 		((*- elif f.order == "variable-string" *))
       if (offset + sbp_strlen( (((path + f.name))), "(((f.termination)))") > len) { return false; }
+      // NOLINTNEXTLINE
       offset += sbp_pack_string( buf + offset, (((path + f.name))), "(((f.termination)))");
 		((*- elif f.order == "fixed-array" *))
 		  for(size_t (((loop_idx))) = 0; (((loop_idx))) < (((f.max_items))); (((loop_idx)))++)
@@ -214,6 +217,7 @@ static inline bool sbp_pack_(((m.name|convert_unpacked)))(u8 *buf, size_t len, c
   ((*- endif *))
   (((path))) = *(const (((field.basetype.name)))*)&(((tmp_name)));
   ((*- endif *))
+  // NOLINTNEXTLINE
   offset += (((field.basetype.packed_size)));
 ((*- endmacro *))
 
@@ -230,8 +234,10 @@ static inline bool sbp_pack_(((m.name|convert_unpacked)))(u8 *buf, size_t len, c
 	((*- elif f.order == "fixed-string" *))
     if (offset + sizeof( (((path + f.name))) ) > len) { return false; }
 		memcpy( (((path + f.name))), buf + offset, sizeof( (((path + f.name))) ) );
+    // NOLINTNEXTLINE
 		offset += sizeof( (((path + f.name))) );
 	((*- elif f.order == "variable-string" *))
+  // NOLINTNEXTLINE
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, (((path + f.name))), "(((f.termination)))");
 	((*- elif f.order == "fixed-array" *))
 		for (size_t (((loop_idx))) = 0; (((loop_idx))) < (((f.max_items))); (((loop_idx)))++)
