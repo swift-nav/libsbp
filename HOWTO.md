@@ -103,16 +103,20 @@ this process is performed using the above docker container.  You'll likely want
 to run the git commands outside of the container and the `make ...` commands
 inside the container (so you don't have to setup git inside the docker container).
 
-0. Branch and tag a new release. Tag the release version:
+1. It's easiest to do this on the master branch. Start by tagging the release version:
 
     ```shell
     # Produces most recent tag (e.g., v2.7.5)
     git describe --abbrev=0 --tags
     # Increment that value, create a new one (e.g, v2.7.6)
-    git tag -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
+    git tag -a <INCREMENTED_TAG> -m "Version <INCREMENTED_TAG> of libsbp."
     ```
 
-1. Make sure that the repo is reported as clean, e.g.
+    For library versions (i.e. `<INCREMENTED_TAG>`) we try to follow 
+    [SemVer](https://semver.org/).  For message versioning refer to this [document
+    on versioning](./VERSIONING.md).
+    
+2. Make sure that the repo is reported as clean, e.g.
 
     ```shell
     git describe --tags --dirty --always
@@ -128,13 +132,13 @@ inside the container (so you don't have to setup git inside the docker container
    running a release.  [Install Nixpkgs](https://nixos.org/nix/download.html)
    and then run `nix-shell` prior to running `make all`.
 
-2. Run make targets for each language and re-tag.  For python:
+3. Run make targets for each language and re-tag.  For python:
 
     ```shell
     make python
     git add python/sbp/RELEASE-VERSION
-    git commit -m 'INCREMENTED_TAG'
-    git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
+    git commit -m 'Release <INCREMENTED_TAG>'
+    git tag -f -a INCREMENTED_TAG -m "Version <INCREMENTED_TAG> of libsbp."
     ```
 
    For Java, jsonschema, and Protobuf (these should not require bumping the git tag,
@@ -149,11 +153,11 @@ inside the container (so you don't have to setup git inside the docker container
     ```shell
     make c haskell javascript rust
     git add c/include/libsbp/version.h haskell/sbp.cabal javascript/sbp/RELEASE-VERSION package.json package-lock.json rust/sbp/Cargo.toml
-    git commit -m 'INCREMENTED_TAG'
+    git commit --amend -a -m 'Release <INCREMENTED_TAG>'
     git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
     ```
 
-3. Finally, build the docs:
+4. Finally, build the docs:
 
     ```shell
     make docs
@@ -167,38 +171,45 @@ inside the container (so you don't have to setup git inside the docker container
 
     ```shell
     git add docs/sbp.pdf
-    git commit -m 'Update docs'
+    git commit --amend -a -m 'Release <INCREMENTED_TAG>'
     git tag -f -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
     ```
 
-4. Verify that package dependencies, their version numbers, and the
+5. Verify that package dependencies, their version numbers, and the
    libsbp version number in the C, Python, JavaScript, and LaTeX developer
    documentation are consistent.
 
-   - JavaScript: Manually update `package-lock.json`.
-
-   - Others: should be automatically extracted from git tag
-
-5. Update the CHANGELOG details with `make release`. Submit a pull request and
-   get it merged. This requires
-   [github-changelog-generator](https://github.com/skywinder/github-changelog-generator),
-   and a `CHANGELOG_GITHUB_TOKEN` in your `PATH` if you don't already have
-   them.
-
-6. After the release PR is merged, recreate the tag:
+6. Push the release to GitHub:
     ```shell
-    git checkout master
-    git pull
-    git tag -d INCREMENTED_TAG
-    git tag -a INCREMENTED_TAG -m "Version INCREMENTED_TAG of libsbp."
-    git push origin INCREMENTED_TAG
+    git push origin master <INCREMENTED_TAG>
     ```
+
+7. Update the CHANGELOG details with `make release`. Submit a pull request and
+   get it merged. This requires a GitHub token to be loaded into your environment
+   at `CHANGELOG_GITHUB_TOKEN`.  The Makefile will use docker to run the
+   tool that generates a `DRAFT_CHANGELOG.md`.
+
+   It's generally a good idea to scrub any internal ticket numbers from
+   `DRAFT_CHANGELOG.md` as they add uncessary noise for customers.
 
 7. Create a release on
    [GitHub](https://github.com/swift-nav/libsbp/releases) and add the
-   RELEASE_NOTES.md.
+   section for the new release from `DRAFT_CHANGELOG.md` to the release
+   notes.
 
-8. Distribute release packages.  You can attempt to run all releases
+8. Prep for the next development cycle.  Add the new release section from
+   `DRAFT_CHANGELOG.md` to `CHANGELOG.md` and re-run `make release`.
+
+    ```
+    vim/emacs/nano CHANGELOG.md  # add new change log entries
+    git add CHANGELOG.md
+    make all
+    git add python/sbp/RELEASE-VERSION c/include/libsbp/version.h haskell/sbp.cabal javascript/sbp/RELEASE-VERSION package.json package-lock.json rust/sbp/Cargo.toml docs/sbp.pdf
+    git commit -m 'update CHANGELOG.md, prep for next release'
+    git push origin master
+    ```
+
+9. Distribute release packages.  You can attempt to run all releases
    with `make dist` -- this will likely not work through... it is
    advisable to run each dist target separately.  In particular:
 
@@ -214,7 +225,7 @@ inside the container (so you don't have to setup git inside the docker container
    update all other supported languages when we make an official firmware
    release.
 
-9. Releases are not only never perfect, they never really end. Please
+10. Releases are not only never perfect, they never really end. Please
    pay special attention to any downstream projects or users that may
    have issues or regressions as a consequence of the release version.
 

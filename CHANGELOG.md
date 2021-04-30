@@ -1,5 +1,47 @@
 # Change Log
 
+## [v3.4.7](https://github.com/swift-nav/libsbp/tree/v3.4.7) (2021-04-30)
+
+[Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.6...v3.4.7)
+
+**Merged pull requests:**
+
+- Fix the bit field values in the SSR APC message [\#968](https://github.com/swift-nav/libsbp/pull/968) ([jbangelo](https://github.com/jbangelo))
+- Revert formatting changes [\#965](https://github.com/swift-nav/libsbp/pull/965) ([woodfell](https://github.com/woodfell))
+- Add more test specs [\#963](https://github.com/swift-nav/libsbp/pull/963) ([woodfell](https://github.com/woodfell))
+- Process solution\_meta in javascript bindings [\#962](https://github.com/swift-nav/libsbp/pull/962) ([woodfell](https://github.com/woodfell))
+- Don't cast function pointers to void\* [\#961](https://github.com/swift-nav/libsbp/pull/961) ([woodfell](https://github.com/woodfell))
+- SSR documentation clarification [\#960](https://github.com/swift-nav/libsbp/pull/960) ([scarcanague](https://github.com/scarcanague))
+- Auto submodule update: cmake - added RLM third party library \(\#81\) [\#958](https://github.com/swift-nav/libsbp/pull/958) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- New PL message draft [\#957](https://github.com/swift-nav/libsbp/pull/957) ([reimerix](https://github.com/reimerix))
+- Add clang-format to docker image [\#956](https://github.com/swift-nav/libsbp/pull/956) ([woodfell](https://github.com/woodfell))
+- Fix auto generated tests [\#955](https://github.com/swift-nav/libsbp/pull/955) ([woodfell](https://github.com/woodfell))
+- Turn on auto formatting [\#954](https://github.com/swift-nav/libsbp/pull/954) ([woodfell](https://github.com/woodfell))
+- gradle.build: Support Gradle 7 [\#953](https://github.com/swift-nav/libsbp/pull/953) ([jayvdb](https://github.com/jayvdb))
+- Clarify units used in MSG\_LINUX\_SYS\_STATE message [\#952](https://github.com/swift-nav/libsbp/pull/952) ([dgburr](https://github.com/dgburr))
+- Fix building of rust tools in Docker [\#951](https://github.com/swift-nav/libsbp/pull/951) ([dgburr](https://github.com/dgburr))
+- Default to unbuffered output [\#950](https://github.com/swift-nav/libsbp/pull/950) ([notoriaga](https://github.com/notoriaga))
+- python: add python 3.9 to tox [\#948](https://github.com/swift-nav/libsbp/pull/948) ([silverjam](https://github.com/silverjam))
+- cherry-pick release 3.4.6 release notes and versions [\#947](https://github.com/swift-nav/libsbp/pull/947) ([silverjam](https://github.com/silverjam))
+- generator: mark intermediate versions as alpha [\#946](https://github.com/swift-nav/libsbp/pull/946) ([silverjam](https://github.com/silverjam))
+- Auto submodule update: cmake - code coverage overhaul \(\#79\) [\#945](https://github.com/swift-nav/libsbp/pull/945) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- package.json: Unpin binary-parser [\#944](https://github.com/swift-nav/libsbp/pull/944) ([jayvdb](https://github.com/jayvdb))
+- Auto submodule update: cmake - Set default C11 \(\#78\) [\#943](https://github.com/swift-nav/libsbp/pull/943) ([swiftnav-svc-jenkins](https://github.com/swiftnav-svc-jenkins))
+- Bump y18n from 4.0.0 to 4.0.1 [\#942](https://github.com/swift-nav/libsbp/pull/942) ([dependabot[bot]](https://github.com/apps/dependabot))
+- use binascii instead of plain python [\#941](https://github.com/swift-nav/libsbp/pull/941) ([silverjam](https://github.com/silverjam))
+- Install tox with apt-get [\#940](https://github.com/swift-nav/libsbp/pull/940) ([notoriaga](https://github.com/notoriaga))
+- Specify unit of mem\_total in MSG\_LINUX\_SYS\_STATE [\#939](https://github.com/swift-nav/libsbp/pull/939) ([IsakTjernberg](https://github.com/IsakTjernberg))
+- Propagate parse errors [\#937](https://github.com/swift-nav/libsbp/pull/937) ([notoriaga](https://github.com/notoriaga))
+- Add option to disable input buffering [\#935](https://github.com/swift-nav/libsbp/pull/935) ([notoriaga](https://github.com/notoriaga))
+- python: fix call\_git\_describe in sbp.version [\#932](https://github.com/swift-nav/libsbp/pull/932) ([silverjam](https://github.com/silverjam))
+- \[INFRA-243\]: Run all Python tests without numpy [\#931](https://github.com/swift-nav/libsbp/pull/931) ([jayvdb](https://github.com/jayvdb))
+- Remove python-jit [\#930](https://github.com/swift-nav/libsbp/pull/930) ([jayvdb](https://github.com/jayvdb))
+- \[INFRA-389\]Add get\_message\_name function to SBPMessage .rs [\#925](https://github.com/swift-nav/libsbp/pull/925) ([john-michaelburke](https://github.com/john-michaelburke))
+- Add Satellite APC message [\#902](https://github.com/swift-nav/libsbp/pull/902) ([jbangelo](https://github.com/jbangelo))
+- Dzollo/ins status one page [\#888](https://github.com/swift-nav/libsbp/pull/888) ([denniszollo](https://github.com/denniszollo))
+- Dzollo/sender id notes [\#887](https://github.com/swift-nav/libsbp/pull/887) ([denniszollo](https://github.com/denniszollo))
+
+
 ## [v3.4.6](https://github.com/swift-nav/libsbp/tree/v3.4.6) (2021-04-02)
 
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v3.4.5...v3.4.6)
@@ -43,19 +85,19 @@
 
 **Merged pull requests:**
 
-- docker: update docs for most recent tag \[INFRA-333\] [\#891](https://github.com/swift-nav/libsbp/pull/891)
+- docker: update docs for most recent tag [\#891](https://github.com/swift-nav/libsbp/pull/891)
 - Bump ini from 1.3.5 to 1.3.7 [\#890](https://github.com/swift-nav/libsbp/pull/890)
 - Add environment markers to requirements.txt [\#889](https://github.com/swift-nav/libsbp/pull/889)
 - Add B2a to list of signals available in MSG\_OBS [\#886](https://github.com/swift-nav/libsbp/pull/886)
 - Clean up Rust parser implementation [\#883](https://github.com/swift-nav/libsbp/pull/883)
-- \[SEN-466\] new flags for fixed fuzed rate [\#880](https://github.com/swift-nav/libsbp/pull/880)
+- new flags for fixed fuzed rate [\#880](https://github.com/swift-nav/libsbp/pull/880)
 - Auto submodule update: cmake - Disable pal test libs by default \(\#70\) [\#879](https://github.com/swift-nav/libsbp/pull/879)
 - Bump check submodule [\#878](https://github.com/swift-nav/libsbp/pull/878)
 - Specify that 0xFFFF is used to indicate invalid PDOP/HDOP/VDOP [\#877](https://github.com/swift-nav/libsbp/pull/877)
 - Dzollo/vehicle metadata flags [\#876](https://github.com/swift-nav/libsbp/pull/876)
-- \[SEN-456\] Update documentation for week rollover on odometry message timestamps [\#875](https://github.com/swift-nav/libsbp/pull/875)
+- Update documentation for week rollover on odometry message timestamps [\#875](https://github.com/swift-nav/libsbp/pull/875)
 - Revert "odometry: add flags for fwd, park and reverse" [\#874](https://github.com/swift-nav/libsbp/pull/874)
-- update sol in default sensor type \[SEN-448\] [\#873](https://github.com/swift-nav/libsbp/pull/873)
+- update sol in default sensor type [\#873](https://github.com/swift-nav/libsbp/pull/873)
 - odometry: add flags for fwd, park and reverse [\#872](https://github.com/swift-nav/libsbp/pull/872)
 
 ## [v3.4.4](https://github.com/swift-nav/libsbp/tree/v3.4.4) (2020-10-12)
@@ -71,7 +113,7 @@
 - Guillaume/sen 444/change age gnss type in solnmeta [\#871](https://github.com/swift-nav/libsbp/pull/871)
 - Per graphic design rec., switch to Roboto [\#870](https://github.com/swift-nav/libsbp/pull/870)
 - Auto submodule update: cmake - Add possibility to log total memory from profiling tools into a file [\#865](https://github.com/swift-nav/libsbp/pull/865)
-- \[SR-146\] Updates to solution meta message [\#864](https://github.com/swift-nav/libsbp/pull/864)
+- Updates to solution meta message [\#864](https://github.com/swift-nav/libsbp/pull/864)
 - Auto submodule update: cmake - Starling third party fix \(\#65\) [\#861](https://github.com/swift-nav/libsbp/pull/861)
 - Fix example SBP message in SBP Specification [\#860](https://github.com/swift-nav/libsbp/pull/860)
 
@@ -82,7 +124,7 @@
 **Merged pull requests:**
 
 - rust: add explicit to\_string for SbpString [\#859](https://github.com/swift-nav/libsbp/pull/859)
-- fixup font issue \[INFRA-293\] [\#858](https://github.com/swift-nav/libsbp/pull/858)
+- fixup font issue [\#858](https://github.com/swift-nav/libsbp/pull/858)
 - Bump cmake \(back\) to most recent. [\#857](https://github.com/swift-nav/libsbp/pull/857)
 - Fix java examples so they at least compile [\#855](https://github.com/swift-nav/libsbp/pull/855)
 - Add Python 3.5/3.8 to libsbp builder, update ARM [\#854](https://github.com/swift-nav/libsbp/pull/854)
@@ -105,11 +147,11 @@
 **Merged pull requests:**
 
 - Auto submodule update: cmake - Change implementation of working directory [\#850](https://github.com/swift-nav/libsbp/pull/850)
-- use generic class if message is unknown, replace on unicode errors \[INFRA-282\] [\#849](https://github.com/swift-nav/libsbp/pull/849)
+- use generic class if message is unknown, replace on unicode errors [\#849](https://github.com/swift-nav/libsbp/pull/849)
 - Fix bugs in Java array decoding [\#848](https://github.com/swift-nav/libsbp/pull/848)
-- Improve SBP protocol PDF documentation \[INFRA-280\] [\#844](https://github.com/swift-nav/libsbp/pull/844)
-- \[SSR-117\] SSR Lat/Lon sign [\#842](https://github.com/swift-nav/libsbp/pull/842)
-- generate bitfield macros \[INFRA-265\] [\#841](https://github.com/swift-nav/libsbp/pull/841)
+- Improve SBP protocol PDF documentation [\#844](https://github.com/swift-nav/libsbp/pull/844)
+- SSR Lat/Lon sign [\#842](https://github.com/swift-nav/libsbp/pull/842)
+- generate bitfield macros [\#841](https://github.com/swift-nav/libsbp/pull/841)
 
 ## [v3.3.1](https://github.com/swift-nav/libsbp/tree/v3.3.1) (2020-08-28)
 
@@ -117,7 +159,7 @@
 
 **Merged pull requests:**
 
-- json2json: maintain fields other than "data" \[INFRA-266\] [\#843](https://github.com/swift-nav/libsbp/pull/843)
+- json2json: maintain fields other than "data" [\#843](https://github.com/swift-nav/libsbp/pull/843)
 
 ## [v3.3.0](https://github.com/swift-nav/libsbp/tree/v3.3.0) (2020-08-28)
 
@@ -126,18 +168,18 @@
 **Merged pull requests:**
 
 - Merge starling output changes to master [\#840](https://github.com/swift-nav/libsbp/pull/840)
-- \[SSR-17\] Update SSR Tile IDs [\#839](https://github.com/swift-nav/libsbp/pull/839)
+- Update SSR Tile IDs [\#839](https://github.com/swift-nav/libsbp/pull/839)
 - Guillaume/so 6/quick update group meta [\#836](https://github.com/swift-nav/libsbp/pull/836)
 - Update the docs and reorder bits for readability [\#835](https://github.com/swift-nav/libsbp/pull/835)
 - Update SSR atmo correction messages to allow multiple tiles. [\#834](https://github.com/swift-nav/libsbp/pull/834)
 - Make alignment status flags more sensible [\#833](https://github.com/swift-nav/libsbp/pull/833)
-- \[SO-6\] Add SOLN\_META message for Fuzed Wagon [\#832](https://github.com/swift-nav/libsbp/pull/832)
+- Add SOLN\_META message for Fuzed Wagon [\#832](https://github.com/swift-nav/libsbp/pull/832)
 - Update LICENSE to MIT [\#831](https://github.com/swift-nav/libsbp/pull/831)
-- \[HS-64\] Update docs and description for FastStart specs [\#829](https://github.com/swift-nav/libsbp/pull/829)
+- Update docs and description for FastStart specs [\#829](https://github.com/swift-nav/libsbp/pull/829)
 - Auto submodule update: cmake - Add additional profiling tools [\#827](https://github.com/swift-nav/libsbp/pull/827)
 - Dzollo/pyserial timeout remove [\#821](https://github.com/swift-nav/libsbp/pull/821)
 - Update README.md [\#820](https://github.com/swift-nav/libsbp/pull/820)
-- \[SSR-95\] Clarify the ephemeris IOD definitions [\#814](https://github.com/swift-nav/libsbp/pull/814)
+- Clarify the ephemeris IOD definitions [\#814](https://github.com/swift-nav/libsbp/pull/814)
 
 
 ## [v3.2.0](https://github.com/swift-nav/libsbp/tree/v3.2.0) (2020-07-23)
@@ -147,9 +189,9 @@
 **Merged pull requests:**
 
 - SBP 2 NMEA implementation [\#828](https://github.com/swift-nav/libsbp/pull/828)
-- \[HS-56\] Add time offset message [\#826](https://github.com/swift-nav/libsbp/pull/826)
+- Add time offset message [\#826](https://github.com/swift-nav/libsbp/pull/826)
 - python: remove generation of the sbp.jit \_payload\_size method [\#825](https://github.com/swift-nav/libsbp/pull/825)
-- \[SO-17\] Guillaume/so 7/add leader group message [\#824](https://github.com/swift-nav/libsbp/pull/824)
+- Guillaume/so 7/add leader group message [\#824](https://github.com/swift-nav/libsbp/pull/824)
 - Bump lodash from 4.17.15 to 4.17.19 [\#822](https://github.com/swift-nav/libsbp/pull/822)
 - bump cmake to master [\#819](https://github.com/swift-nav/libsbp/pull/819)
 
@@ -178,8 +220,8 @@
 
 **Merged pull requests:**
 
-- Explicitly flush stdout \[INFRA-196\] [\#809](https://github.com/swift-nav/libsbp/pull/809)
-- \[SEN-311\] Add INS update status message [\#808](https://github.com/swift-nav/libsbp/pull/808)
+- Explicitly flush stdout [\#809](https://github.com/swift-nav/libsbp/pull/809)
+- Add INS update status message [\#808](https://github.com/swift-nav/libsbp/pull/808)
 - Support building with ARMCC [\#807](https://github.com/swift-nav/libsbp/pull/807)
 
 ## [v3.0.1](https://github.com/swift-nav/libsbp/tree/v3.0.1) (2020-05-22)
@@ -198,13 +240,13 @@
 **Merged pull requests:**
 
 - Auto submodule update: cmake - Merge pull request \#57 from swift-nav/joint-work/valgrind-integration [\#806](https://github.com/swift-nav/libsbp/pull/806)
-- Handle invalid UTF-8 sequences \[INFRA-196\] [\#805](https://github.com/swift-nav/libsbp/pull/805)
+- Handle invalid UTF-8 sequences [\#805](https://github.com/swift-nav/libsbp/pull/805)
 - Public receive method in SBPFramer Java class [\#804](https://github.com/swift-nav/libsbp/pull/804)
 - rust: derive clone [\#803](https://github.com/swift-nav/libsbp/pull/803)
 - Auto submodule update: cmake - Add FindSwiftlets.cmake \(\#53\) [\#800](https://github.com/swift-nav/libsbp/pull/800)
 - Improve how the rust parser handles errors [\#798](https://github.com/swift-nav/libsbp/pull/798)
-- \[SEN-235\] Fix IMURAW docstring [\#797](https://github.com/swift-nav/libsbp/pull/797)
-- npm audit fix \[INFRA-184\] [\#796](https://github.com/swift-nav/libsbp/pull/796)
+- Fix IMURAW docstring [\#797](https://github.com/swift-nav/libsbp/pull/797)
+- npm audit fix [\#796](https://github.com/swift-nav/libsbp/pull/796)
 - Auto submodule update: cmake - Merge pull request \#51 from swift-nav/lkloh\_cmake [\#795](https://github.com/swift-nav/libsbp/pull/795)
 - Fix-up Python binding generation [\#794](https://github.com/swift-nav/libsbp/pull/794)
 
@@ -215,9 +257,9 @@
 **Merged pull requests:**
 
 - Fix JavaScript security warning [\#791](https://github.com/swift-nav/libsbp/pull/791)
-- rust: implement sbp2json, json2sbp, json2json \[INFRA-125\] [\#790](https://github.com/swift-nav/libsbp/pull/790)
+- rust: implement sbp2json, json2sbp, json2json [\#790](https://github.com/swift-nav/libsbp/pull/790)
 - INFRA-137: wrap integer gets in parens [\#789](https://github.com/swift-nav/libsbp/pull/789)
-- rust: nom parsing fix-up for eof error \[INFRA-125\] [\#788](https://github.com/swift-nav/libsbp/pull/788)
+- rust: nom parsing fix-up for eof error [\#788](https://github.com/swift-nav/libsbp/pull/788)
 
 ## [v2.7.7](https://github.com/swift-nav/libsbp/tree/v2.7.7) (2020-03-14)
 
@@ -225,7 +267,7 @@
 
 **Merged pull requests:**
 
-- rust: expose crc errors \[INFRA-125\] [\#786](https://github.com/swift-nav/libsbp/pull/786)
+- rust: expose crc errors [\#786](https://github.com/swift-nav/libsbp/pull/786)
 - File playback driver [\#782](https://github.com/swift-nav/libsbp/pull/782)
 
 ## [v2.7.6](https://github.com/swift-nav/libsbp/tree/v2.7.6) (2020-03-12)
@@ -235,8 +277,8 @@
 **Merged pull requests:**
 
 - Update haskell installation instructions [\#785](https://github.com/swift-nav/libsbp/pull/785)
-- \[INFRA-114\] Nojit fixes and unit testing [\#784](https://github.com/swift-nav/libsbp/pull/784)
-- Add IMU type code for ST ASM330LLH \[STEP-63\] [\#783](https://github.com/swift-nav/libsbp/pull/783)
+- Nojit fixes and unit testing [\#784](https://github.com/swift-nav/libsbp/pull/784)
+- Add IMU type code for ST ASM330LLH [\#783](https://github.com/swift-nav/libsbp/pull/783)
 
 ## [v2.7.5](https://github.com/swift-nav/libsbp/tree/v2.7.5) (2020-03-07)
 
@@ -255,7 +297,7 @@
 
 - Dzollo/expand sbp json payload [\#779](https://github.com/swift-nav/libsbp/pull/779)
 - Dzollo/sen 138/wheel odometry [\#778](https://github.com/swift-nav/libsbp/pull/778)
-- \[SEN-138\] Add message for accumulated wheeltick count [\#777](https://github.com/swift-nav/libsbp/pull/777)
+- Add message for accumulated wheeltick count [\#777](https://github.com/swift-nav/libsbp/pull/777)
 - Record total bytes read/written in python sbp driver [\#775](https://github.com/swift-nav/libsbp/pull/775)
 - tcp\_example error fix \(signed /unsigned mismatch\) [\#774](https://github.com/swift-nav/libsbp/pull/774)
 - Disallow copying of State [\#773](https://github.com/swift-nav/libsbp/pull/773)
@@ -268,12 +310,12 @@
 - Dzollo/star 748/position messages [\#766](https://github.com/swift-nav/libsbp/pull/766)
 - Added virtual destructor to sbp::State [\#765](https://github.com/swift-nav/libsbp/pull/765)
 - updated swift libraries with namespace [\#764](https://github.com/swift-nav/libsbp/pull/764)
-- Changes needed to libsbp for road runner \[INFRA-35\] [\#763](https://github.com/swift-nav/libsbp/pull/763)
+- Changes needed to libsbp for road runner [\#763](https://github.com/swift-nav/libsbp/pull/763)
 - Revert "Add stddev to SSR atmospheric messages.  \(\#759\)" [\#761](https://github.com/swift-nav/libsbp/pull/761)
 - Moved the rust example inside of the sbp crate [\#760](https://github.com/swift-nav/libsbp/pull/760)
 - Add variances to SSR atmospheric messages.  [\#759](https://github.com/swift-nav/libsbp/pull/759)
 - Example: rust message serialization plus trait to\_frame method [\#758](https://github.com/swift-nav/libsbp/pull/758)
-- \[TTI-16\] Add rust message serialization [\#755](https://github.com/swift-nav/libsbp/pull/755)
+- Add rust message serialization [\#755](https://github.com/swift-nav/libsbp/pull/755)
 
 ## [v2.7.3](https://github.com/swift-nav/libsbp/tree/v2.7.3) (2019-11-14)
 
@@ -286,7 +328,7 @@
 **Merged pull requests:**
 
 - Release 2.7.3 [\#757](https://github.com/swift-nav/libsbp/pull/757)
-- Allow max reconnects to be specified as a parameter \[ESD-1603\] \[TTI-2\] [\#756](https://github.com/swift-nav/libsbp/pull/756)
+- Allow max reconnects to be specified as a parameter [\#756](https://github.com/swift-nav/libsbp/pull/756)
 - Miscellaneous clean up of Rust bindings [\#754](https://github.com/swift-nav/libsbp/pull/754)
 - Get rust example building [\#753](https://github.com/swift-nav/libsbp/pull/753)
 - Cannot compare int and NoneType in python3 [\#752](https://github.com/swift-nav/libsbp/pull/752)
@@ -302,7 +344,7 @@
 - Use common test targets module [\#740](https://github.com/swift-nav/libsbp/pull/740)
 - Add C++ support [\#739](https://github.com/swift-nav/libsbp/pull/739)
 - Fix Rust generation to generate in the same order [\#738](https://github.com/swift-nav/libsbp/pull/738)
-- \[STAR-789\] Add proposed Protection Level message [\#737](https://github.com/swift-nav/libsbp/pull/737)
+- Add proposed Protection Level message [\#737](https://github.com/swift-nav/libsbp/pull/737)
 - Star 833 [\#736](https://github.com/swift-nav/libsbp/pull/736)
 - Generate JSON schema definitions for web clients [\#735](https://github.com/swift-nav/libsbp/pull/735)
 - Update libsbp ARM builders [\#733](https://github.com/swift-nav/libsbp/pull/733)
@@ -322,19 +364,19 @@
 **Merged pull requests:**
 
 - libsbp version 2.7.0 [\#730](https://github.com/swift-nav/libsbp/pull/730)
-- Replace ujson with rapidjson \[STA-1009\] [\#729](https://github.com/swift-nav/libsbp/pull/729)
+- Replace ujson with rapidjson [\#729](https://github.com/swift-nav/libsbp/pull/729)
 - Make a msg\_buff pointer for backwards compatibility [\#728](https://github.com/swift-nav/libsbp/pull/728)
 - Remove OWNERS.md file. [\#726](https://github.com/swift-nav/libsbp/pull/726)
 - Frame callback implementation & tests [\#725](https://github.com/swift-nav/libsbp/pull/725)
 - JSONLogIterator - Fix the iteration if the JSON is already unwrapped [\#724](https://github.com/swift-nav/libsbp/pull/724)
 - Dynamic import generator output modules [\#722](https://github.com/swift-nav/libsbp/pull/722)
 - Changing java CRC16 class modifiers to enable external access \(\#720\) [\#721](https://github.com/swift-nav/libsbp/pull/721)
-- ORI-594 Fix up SSR atmospherics documentation [\#719](https://github.com/swift-nav/libsbp/pull/719)
+- Fix up SSR atmospherics documentation [\#719](https://github.com/swift-nav/libsbp/pull/719)
 - Remove lodash from JavaScript deps [\#717](https://github.com/swift-nav/libsbp/pull/717)
 - Initial rust implementation [\#714](https://github.com/swift-nav/libsbp/pull/714)
 - Remove redundant field. [\#713](https://github.com/swift-nav/libsbp/pull/713)
 - Support running w/o Numba/Numpy installed [\#712](https://github.com/swift-nav/libsbp/pull/712)
-- Add code coverage \[ESD-1407\] [\#710](https://github.com/swift-nav/libsbp/pull/710)
+- Add code coverage [\#710](https://github.com/swift-nav/libsbp/pull/710)
 - Update requests to resolve security issue [\#708](https://github.com/swift-nav/libsbp/pull/708)
 
 ## [v2.6.5](https://github.com/swift-nav/libsbp/tree/v2.6.5) (2019-07-03)
@@ -357,7 +399,7 @@
 - Update README.md [\#707](https://github.com/swift-nav/libsbp/pull/707)
 - SSR STEC and gridded correction message refinements [\#704](https://github.com/swift-nav/libsbp/pull/704)
 - Change ssr\_update\_interval to u8. [\#703](https://github.com/swift-nav/libsbp/pull/703)
-- Purge llvmlite and numba dependencies from generated Python code \[ESD-1396\] [\#702](https://github.com/swift-nav/libsbp/pull/702)
+- Purge llvmlite and numba dependencies from generated Python code [\#702](https://github.com/swift-nav/libsbp/pull/702)
 - Don't use hardcoded include/link paths [\#701](https://github.com/swift-nav/libsbp/pull/701)
 
 ## [v2.6.3](https://github.com/swift-nav/libsbp/tree/v2.6.3) (2019-06-11)
@@ -366,8 +408,8 @@
 **Merged pull requests:**
 
 - Version 2.6.3 [\#700](https://github.com/swift-nav/libsbp/pull/700)
-- Move sbp2json to libsbp from piksi\_tools \[ESD-1374\] [\#699](https://github.com/swift-nav/libsbp/pull/699)
-- Deprecate MSG\_INIT\_BASE \[ESD-1286\] [\#698](https://github.com/swift-nav/libsbp/pull/698)
+- Move sbp2json to libsbp from piksi\_tools [\#699](https://github.com/swift-nav/libsbp/pull/699)
+- Deprecate MSG\_INIT\_BASE [\#698](https://github.com/swift-nav/libsbp/pull/698)
 
 ## [v2.6.2](https://github.com/swift-nav/libsbp/tree/v2.6.2) (2019-06-06)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.6.1...v2.6.2)
@@ -383,7 +425,7 @@
 
 - Version 2.6.1 [\#696](https://github.com/swift-nav/libsbp/pull/696)
 - Add QZSS eph [\#695](https://github.com/swift-nav/libsbp/pull/695)
-- Import standard cmake modules, standardise dependency resolution \[ESD-1246\] \[ESD-1247\] [\#692](https://github.com/swift-nav/libsbp/pull/692)
+- Import standard cmake modules, standardise dependency resolution [\#692](https://github.com/swift-nav/libsbp/pull/692)
 
 ## [v2.6.0](https://github.com/swift-nav/libsbp/tree/v2.6.0) (2019-06-05)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.5...v2.6.0)
@@ -391,8 +433,8 @@
 **Merged pull requests:**
 
 - libsbp release 2.6.0 [\#694](https://github.com/swift-nav/libsbp/pull/694)
-- Remove unused build\_test\_data.py \[ESD-1086\] [\#693](https://github.com/swift-nav/libsbp/pull/693)
-- Integrate numba into setuptools \[ESD-1156\] [\#687](https://github.com/swift-nav/libsbp/pull/687)
+- Remove unused build\_test\_data.py [\#693](https://github.com/swift-nav/libsbp/pull/693)
+- Integrate numba into setuptools [\#687](https://github.com/swift-nav/libsbp/pull/687)
 - Added three new messages for gridded atmospheric SSR corrections. [\#686](https://github.com/swift-nav/libsbp/pull/686)
 
 ## [v2.5.5](https://github.com/swift-nav/libsbp/tree/v2.5.5) (2019-05-16)
@@ -408,7 +450,7 @@
 - Use piksi\_tools master in benchmark [\#689](https://github.com/swift-nav/libsbp/pull/689)
 - Add source to gal eph [\#688](https://github.com/swift-nav/libsbp/pull/688)
 - Added additional checks for tools in the Makefile [\#684](https://github.com/swift-nav/libsbp/pull/684)
-- \[ESD-1238\] Do not call nullary constructors in Haskell ToJSON [\#680](https://github.com/swift-nav/libsbp/pull/680)
+- Do not call nullary constructors in Haskell ToJSON [\#680](https://github.com/swift-nav/libsbp/pull/680)
 
 ## [v2.5.3-4-g7e6afa39](https://github.com/swift-nav/libsbp/tree/v2.5.3-4-g7e6afa39) (2019-04-10)
 [Full Changelog](https://github.com/swift-nav/libsbp/compare/v2.5.4...v2.5.3-4-g7e6afa39)
@@ -435,7 +477,7 @@
 **Merged pull requests:**
 
 - Release version 2.5.2 [\#675](https://github.com/swift-nav/libsbp/pull/675)
-- Add base into\_buffer method for messages with no payload \[ESD-1154\] [\#674](https://github.com/swift-nav/libsbp/pull/674)
+- Add base into\_buffer method for messages with no payload [\#674](https://github.com/swift-nav/libsbp/pull/674)
 - py3 compat: use errno attribute for socket.error [\#673](https://github.com/swift-nav/libsbp/pull/673)
 
 ## [v2.5.1](https://github.com/swift-nav/libsbp/tree/v2.5.1) (2019-03-29)
