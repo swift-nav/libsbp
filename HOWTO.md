@@ -197,6 +197,13 @@ inside the container (so you don't have to setup git inside the docker container
    section for the new release from `DRAFT_CHANGELOG.md` to the release
    notes.
 
+   It's also nice to add a link to the protocol docs for that release
+   below the "Full Changelog" link, for example:
+
+   ```markdown
+   [Protocol Documentation](https://github.com/swift-nav/libsbp/blob/v3.4.6/docs/sbp.pdf)
+   ```
+
 8. Prep for the next development cycle.  Add the new release section from
    `DRAFT_CHANGELOG.md` to `CHANGELOG.md` and re-run `make release`.
 
@@ -205,7 +212,7 @@ inside the container (so you don't have to setup git inside the docker container
     git add CHANGELOG.md
     make all
     git add python/sbp/RELEASE-VERSION c/include/libsbp/version.h haskell/sbp.cabal javascript/sbp/RELEASE-VERSION package.json package-lock.json rust/sbp/Cargo.toml docs/sbp.pdf
-    git commit -m 'update CHANGELOG.md, prep for next release'
+    git commit -m 'update CHANGELOG.md, prep for next release #no_auto_pr'
     git push origin master
     ```
 
