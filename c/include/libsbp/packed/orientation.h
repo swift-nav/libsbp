@@ -50,8 +50,8 @@ SBP_PACK_START
  * preceding MSG_GPS_TIME with the matching time-of-week (tow). It is intended
  * that time-matched RTK mode is used when the base station is moving.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_BASELINE_HEADING 0x020F
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -97,8 +97,8 @@ typedef struct SBP_ATTR_PACKED {
  * be available in future INS versions of Swift Products and is not produced by Piksi Multi 
  * or Duro.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_ORIENT_QUAT      0x0220
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -174,8 +174,8 @@ typedef struct SBP_ATTR_PACKED {
  * to the vehicle body frame.  This message will only be available in future 
  * INS versions of Swift Products and is not produced by Piksi Multi or Duro.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_ORIENT_EULER     0x0221
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -245,8 +245,8 @@ typedef struct SBP_ATTR_PACKED {
  * This message will only be available in future INS versions of Swift Products 
  * and is not produced by Piksi Multi or Duro.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_ANGULAR_RATE     0x0222
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 

@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <endian.h>
+#include <math.h>
 
 #include <libsbp/common.h>
 #include <libsbp/gnss.h>
@@ -46,6 +47,20 @@ static inline bool sbp_unpack_sbp_msg_almanac_t(const u8 *buf, size_t len, sbp_m
   
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_almanac_t &a, const sbp_msg_almanac_t &b) {
+  (void)a;
+  (void)b;
+  
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_almanac_t &a, const sbp_msg_almanac_t &b) {
+  return !(a == b);
+}
+#endif
   /** Send GPS time from host (host => Piksi)
    *
  * This message sets up timing functionality using a coarse GPS
@@ -83,6 +98,20 @@ static inline bool sbp_unpack_sbp_msg_set_time_t(const u8 *buf, size_t len, sbp_
   
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_set_time_t &a, const sbp_msg_set_time_t &b) {
+  (void)a;
+  (void)b;
+  
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_set_time_t &a, const sbp_msg_set_time_t &b) {
+  return !(a == b);
+}
+#endif
   /** Reset the device (host => Piksi)
    *
  * This message from the host resets the Piksi back into the
@@ -151,6 +180,22 @@ static inline bool sbp_unpack_sbp_msg_reset_t(const u8 *buf, size_t len, sbp_msg
   offset += 4;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_reset_t &a, const sbp_msg_reset_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.flags != b.flags) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_reset_t &a, const sbp_msg_reset_t &b) {
+  return !(a == b);
+}
+#endif
   /** Reset the device (host => Piksi)
    *
  * This message from the host resets the Piksi back into the
@@ -188,6 +233,20 @@ static inline bool sbp_unpack_sbp_msg_reset_dep_t(const u8 *buf, size_t len, sbp
   
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_reset_dep_t &a, const sbp_msg_reset_dep_t &b) {
+  (void)a;
+  (void)b;
+  
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_reset_dep_t &a, const sbp_msg_reset_dep_t &b) {
+  return !(a == b);
+}
+#endif
   /** Legacy message for CW interference channel (Piksi => host)
    *
  * This is an unused legacy message for result reporting from the
@@ -226,6 +285,20 @@ static inline bool sbp_unpack_sbp_msg_cw_results_t(const u8 *buf, size_t len, sb
   
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_cw_results_t &a, const sbp_msg_cw_results_t &b) {
+  (void)a;
+  (void)b;
+  
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_cw_results_t &a, const sbp_msg_cw_results_t &b) {
+  return !(a == b);
+}
+#endif
   /** Legacy message for CW interference channel (host => Piksi)
    *
  * This is an unused legacy message from the host for starting
@@ -264,6 +337,20 @@ static inline bool sbp_unpack_sbp_msg_cw_start_t(const u8 *buf, size_t len, sbp_
   
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_cw_start_t &a, const sbp_msg_cw_start_t &b) {
+  (void)a;
+  (void)b;
+  
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_cw_start_t &a, const sbp_msg_cw_start_t &b) {
+  return !(a == b);
+}
+#endif
   /** Reset IAR filters (host => Piksi)
    *
  * This message resets either the DGNSS Kalman filters or Integer
@@ -332,6 +419,22 @@ static inline bool sbp_unpack_sbp_msg_reset_filters_t(const u8 *buf, size_t len,
   offset += 1;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_reset_filters_t &a, const sbp_msg_reset_filters_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.filter != b.filter) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_reset_filters_t &a, const sbp_msg_reset_filters_t &b) {
+  return !(a == b);
+}
+#endif
   /** Deprecated
    *
 * Deprecated
@@ -368,6 +471,20 @@ static inline bool sbp_unpack_sbp_msg_init_base_dep_t(const u8 *buf, size_t len,
   
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_init_base_dep_t &a, const sbp_msg_init_base_dep_t &b) {
+  (void)a;
+  (void)b;
+  
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_init_base_dep_t &a, const sbp_msg_init_base_dep_t &b) {
+  return !(a == b);
+}
+#endif
   /** State of an RTOS thread
    *
  * The thread usage message from the device reports real-time
@@ -469,6 +586,29 @@ static inline bool sbp_unpack_sbp_msg_thread_state_t(const u8 *buf, size_t len, 
   offset += 4;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_thread_state_t &a, const sbp_msg_thread_state_t &b) {
+  (void)a;
+  (void)b;
+  
+        for (size_t name_idx = 0; name_idx < 20; name_idx++)
+        {
+            
+    if (a.name[name_idx] != b.name[name_idx]) { return false; }
+        }
+        
+    if (a.cpu != b.cpu) { return false; }
+        
+    if (a.stack_free != b.stack_free) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_thread_state_t &a, const sbp_msg_thread_state_t &b) {
+  return !(a == b);
+}
+#endif
   /** State of the UART channels
    *
  * The UART message reports data latency and throughput of the UART
@@ -1061,6 +1201,77 @@ static inline bool sbp_unpack_sbp_msg_uart_state_t(const u8 *buf, size_t len, sb
   offset += 4;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_uart_state_t &a, const sbp_msg_uart_state_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+        
+    if (fabs( a.uart_a.tx_throughput - b.uart_a.tx_throughput ) > 0.001) { return false; }
+        
+    if (fabs( a.uart_a.rx_throughput - b.uart_a.rx_throughput ) > 0.001) { return false; }
+        
+    if (a.uart_a.crc_error_count != b.uart_a.crc_error_count) { return false; }
+        
+    if (a.uart_a.io_error_count != b.uart_a.io_error_count) { return false; }
+        
+    if (a.uart_a.tx_buffer_level != b.uart_a.tx_buffer_level) { return false; }
+        
+    if (a.uart_a.rx_buffer_level != b.uart_a.rx_buffer_level) { return false; }
+        
+        
+    if (fabs( a.uart_b.tx_throughput - b.uart_b.tx_throughput ) > 0.001) { return false; }
+        
+    if (fabs( a.uart_b.rx_throughput - b.uart_b.rx_throughput ) > 0.001) { return false; }
+        
+    if (a.uart_b.crc_error_count != b.uart_b.crc_error_count) { return false; }
+        
+    if (a.uart_b.io_error_count != b.uart_b.io_error_count) { return false; }
+        
+    if (a.uart_b.tx_buffer_level != b.uart_b.tx_buffer_level) { return false; }
+        
+    if (a.uart_b.rx_buffer_level != b.uart_b.rx_buffer_level) { return false; }
+        
+        
+    if (fabs( a.uart_ftdi.tx_throughput - b.uart_ftdi.tx_throughput ) > 0.001) { return false; }
+        
+    if (fabs( a.uart_ftdi.rx_throughput - b.uart_ftdi.rx_throughput ) > 0.001) { return false; }
+        
+    if (a.uart_ftdi.crc_error_count != b.uart_ftdi.crc_error_count) { return false; }
+        
+    if (a.uart_ftdi.io_error_count != b.uart_ftdi.io_error_count) { return false; }
+        
+    if (a.uart_ftdi.tx_buffer_level != b.uart_ftdi.tx_buffer_level) { return false; }
+        
+    if (a.uart_ftdi.rx_buffer_level != b.uart_ftdi.rx_buffer_level) { return false; }
+        
+        
+    if (a.latency.avg != b.latency.avg) { return false; }
+        
+    if (a.latency.lmin != b.latency.lmin) { return false; }
+        
+    if (a.latency.lmax != b.latency.lmax) { return false; }
+        
+    if (a.latency.current != b.latency.current) { return false; }
+        
+        
+    if (a.obs_period.avg != b.obs_period.avg) { return false; }
+        
+    if (a.obs_period.pmin != b.obs_period.pmin) { return false; }
+        
+    if (a.obs_period.pmax != b.obs_period.pmax) { return false; }
+        
+    if (a.obs_period.current != b.obs_period.current) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_uart_state_t &a, const sbp_msg_uart_state_t &b) {
+  return !(a == b);
+}
+#endif
   /** Deprecated
    *
 * Deprecated
@@ -1551,6 +1762,68 @@ static inline bool sbp_unpack_sbp_msg_uart_state_depa_t(const u8 *buf, size_t le
   offset += 4;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_uart_state_depa_t &a, const sbp_msg_uart_state_depa_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+        
+    if (fabs( a.uart_a.tx_throughput - b.uart_a.tx_throughput ) > 0.001) { return false; }
+        
+    if (fabs( a.uart_a.rx_throughput - b.uart_a.rx_throughput ) > 0.001) { return false; }
+        
+    if (a.uart_a.crc_error_count != b.uart_a.crc_error_count) { return false; }
+        
+    if (a.uart_a.io_error_count != b.uart_a.io_error_count) { return false; }
+        
+    if (a.uart_a.tx_buffer_level != b.uart_a.tx_buffer_level) { return false; }
+        
+    if (a.uart_a.rx_buffer_level != b.uart_a.rx_buffer_level) { return false; }
+        
+        
+    if (fabs( a.uart_b.tx_throughput - b.uart_b.tx_throughput ) > 0.001) { return false; }
+        
+    if (fabs( a.uart_b.rx_throughput - b.uart_b.rx_throughput ) > 0.001) { return false; }
+        
+    if (a.uart_b.crc_error_count != b.uart_b.crc_error_count) { return false; }
+        
+    if (a.uart_b.io_error_count != b.uart_b.io_error_count) { return false; }
+        
+    if (a.uart_b.tx_buffer_level != b.uart_b.tx_buffer_level) { return false; }
+        
+    if (a.uart_b.rx_buffer_level != b.uart_b.rx_buffer_level) { return false; }
+        
+        
+    if (fabs( a.uart_ftdi.tx_throughput - b.uart_ftdi.tx_throughput ) > 0.001) { return false; }
+        
+    if (fabs( a.uart_ftdi.rx_throughput - b.uart_ftdi.rx_throughput ) > 0.001) { return false; }
+        
+    if (a.uart_ftdi.crc_error_count != b.uart_ftdi.crc_error_count) { return false; }
+        
+    if (a.uart_ftdi.io_error_count != b.uart_ftdi.io_error_count) { return false; }
+        
+    if (a.uart_ftdi.tx_buffer_level != b.uart_ftdi.tx_buffer_level) { return false; }
+        
+    if (a.uart_ftdi.rx_buffer_level != b.uart_ftdi.rx_buffer_level) { return false; }
+        
+        
+    if (a.latency.avg != b.latency.avg) { return false; }
+        
+    if (a.latency.lmin != b.latency.lmin) { return false; }
+        
+    if (a.latency.lmax != b.latency.lmax) { return false; }
+        
+    if (a.latency.current != b.latency.current) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_uart_state_depa_t &a, const sbp_msg_uart_state_depa_t &b) {
+  return !(a == b);
+}
+#endif
   /** State of the Integer Ambiguity Resolution (IAR) process
    *
  * This message reports the state of the Integer Ambiguity
@@ -1608,6 +1881,22 @@ static inline bool sbp_unpack_sbp_msg_iar_state_t(const u8 *buf, size_t len, sbp
   offset += 4;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_iar_state_t &a, const sbp_msg_iar_state_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.num_hyps != b.num_hyps) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_iar_state_t &a, const sbp_msg_iar_state_t &b) {
+  return !(a == b);
+}
+#endif
   /** Mask a satellite from use in Piksi subsystems
    *
  * This message allows setting a mask to prevent a particular satellite
@@ -1761,6 +2050,27 @@ static inline bool sbp_unpack_sbp_msg_mask_satellite_t(const u8 *buf, size_t len
   offset += 1;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_mask_satellite_t &a, const sbp_msg_mask_satellite_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.mask != b.mask) { return false; }
+        
+        
+    if (a.sid.sat != b.sid.sat) { return false; }
+        
+    if (a.sid.code != b.sid.code) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_mask_satellite_t &a, const sbp_msg_mask_satellite_t &b) {
+  return !(a == b);
+}
+#endif
   /** Deprecated
    *
 * Deprecated.
@@ -1927,6 +2237,29 @@ static inline bool sbp_unpack_sbp_msg_mask_satellite_dep_t(const u8 *buf, size_t
   offset += 1;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_mask_satellite_dep_t &a, const sbp_msg_mask_satellite_dep_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.mask != b.mask) { return false; }
+        
+        
+    if (a.sid.sat != b.sid.sat) { return false; }
+        
+    if (a.sid.code != b.sid.code) { return false; }
+        
+    if (a.sid.reserved != b.sid.reserved) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_mask_satellite_dep_t &a, const sbp_msg_mask_satellite_dep_t &b) {
+  return !(a == b);
+}
+#endif
   /** Device temperature and voltage levels
    *
  * This message contains temperature and voltage level measurements from the
@@ -2065,6 +2398,30 @@ static inline bool sbp_unpack_sbp_msg_device_monitor_t(const u8 *buf, size_t len
   offset += 2;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_device_monitor_t &a, const sbp_msg_device_monitor_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.dev_vin != b.dev_vin) { return false; }
+        
+    if (a.cpu_vint != b.cpu_vint) { return false; }
+        
+    if (a.cpu_vaux != b.cpu_vaux) { return false; }
+        
+    if (a.cpu_temperature != b.cpu_temperature) { return false; }
+        
+    if (a.fe_temperature != b.fe_temperature) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_device_monitor_t &a, const sbp_msg_device_monitor_t &b) {
+  return !(a == b);
+}
+#endif
   /** Execute a command (host => device)
    *
  * Request the recipient to execute an command.
@@ -2133,6 +2490,23 @@ static inline bool sbp_unpack_sbp_msg_command_req_t(const u8 *buf, size_t len, s
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->command, "nul");
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_command_req_t &a, const sbp_msg_command_req_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.sequence != b.sequence) { return false; }
+        if (sbp_strcmp(a.command, b.command, "nul") != 0) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_command_req_t &a, const sbp_msg_command_req_t &b) {
+  return !(a == b);
+}
+#endif
   /** Exit code from executed command (device => host)
    *
  * The response to MSG_COMMAND_REQ with the return code of
@@ -2208,6 +2582,24 @@ static inline bool sbp_unpack_sbp_msg_command_resp_t(const u8 *buf, size_t len, 
   offset += 4;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_command_resp_t &a, const sbp_msg_command_resp_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.sequence != b.sequence) { return false; }
+        
+    if (a.code != b.code) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_command_resp_t &a, const sbp_msg_command_resp_t &b) {
+  return !(a == b);
+}
+#endif
   /** Command output
    *
  * Returns the standard output and standard error of the
@@ -2277,6 +2669,23 @@ static inline bool sbp_unpack_sbp_msg_command_output_t(const u8 *buf, size_t len
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->line, "none");
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_command_output_t &a, const sbp_msg_command_output_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.sequence != b.sequence) { return false; }
+        if (sbp_strcmp(a.line, b.line, "none") != 0) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_command_output_t &a, const sbp_msg_command_output_t &b) {
+  return !(a == b);
+}
+#endif
   /** Request state of Piksi network interfaces
    *
  * Request state of Piksi network interfaces.
@@ -2314,6 +2723,20 @@ static inline bool sbp_unpack_sbp_msg_network_state_req_t(const u8 *buf, size_t 
   
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_network_state_req_t &a, const sbp_msg_network_state_req_t &b) {
+  (void)a;
+  (void)b;
+  
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_network_state_req_t &a, const sbp_msg_network_state_req_t &b) {
+  return !(a == b);
+}
+#endif
   /** State of network interface
    *
  * The state of a network interface on the Piksi.
@@ -2694,6 +3117,45 @@ static inline bool sbp_unpack_sbp_msg_network_state_resp_t(const u8 *buf, size_t
   offset += 4;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_network_state_resp_t &a, const sbp_msg_network_state_resp_t &b) {
+  (void)a;
+  (void)b;
+  
+        for (size_t ipv4_address_idx = 0; ipv4_address_idx < 4; ipv4_address_idx++)
+        {
+            
+    if (a.ipv4_address[ipv4_address_idx] != b.ipv4_address[ipv4_address_idx]) { return false; }
+        }
+        
+    if (a.ipv4_mask_size != b.ipv4_mask_size) { return false; }
+        for (size_t ipv6_address_idx = 0; ipv6_address_idx < 16; ipv6_address_idx++)
+        {
+            
+    if (a.ipv6_address[ipv6_address_idx] != b.ipv6_address[ipv6_address_idx]) { return false; }
+        }
+        
+    if (a.ipv6_mask_size != b.ipv6_mask_size) { return false; }
+        
+    if (a.rx_bytes != b.rx_bytes) { return false; }
+        
+    if (a.tx_bytes != b.tx_bytes) { return false; }
+        for (size_t interface_name_idx = 0; interface_name_idx < 16; interface_name_idx++)
+        {
+            
+    if (a.interface_name[interface_name_idx] != b.interface_name[interface_name_idx]) { return false; }
+        }
+        
+    if (a.flags != b.flags) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_network_state_resp_t &a, const sbp_msg_network_state_resp_t &b) {
+  return !(a == b);
+}
+#endif
   /** Bandwidth usage reporting message
    *
  * The bandwidth usage, a list of usage by interface. 
@@ -2861,6 +3323,38 @@ static inline bool sbp_unpack_sbp_msg_network_bandwidth_usage_t(const u8 *buf, s
 		}
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_network_bandwidth_usage_t &a, const sbp_msg_network_bandwidth_usage_t &b) {
+  (void)a;
+  (void)b;
+  
+          if (a.n_interfaces != b.n_interfaces) { return false; }
+        for (size_t interfaces_idx = 0; interfaces_idx < (size_t)a.n_interfaces; interfaces_idx++)
+        {
+            
+        
+    if (a.interfaces[interfaces_idx].duration != b.interfaces[interfaces_idx].duration) { return false; }
+        
+    if (a.interfaces[interfaces_idx].total_bytes != b.interfaces[interfaces_idx].total_bytes) { return false; }
+        
+    if (a.interfaces[interfaces_idx].rx_bytes != b.interfaces[interfaces_idx].rx_bytes) { return false; }
+        
+    if (a.interfaces[interfaces_idx].tx_bytes != b.interfaces[interfaces_idx].tx_bytes) { return false; }
+        for (size_t interfacesinterfaces_idxinterface_name_idx = 0; interfacesinterfaces_idxinterface_name_idx < 16; interfacesinterfaces_idxinterface_name_idx++)
+        {
+            
+    if (a.interfaces[interfaces_idx].interface_name[interfacesinterfaces_idxinterface_name_idx] != b.interfaces[interfaces_idx].interface_name[interfacesinterfaces_idxinterface_name_idx]) { return false; }
+        }
+        }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_network_bandwidth_usage_t &a, const sbp_msg_network_bandwidth_usage_t &b) {
+  return !(a == b);
+}
+#endif
   /** Cell modem information update message
    *
  * If a cell modem is present on a piksi device, this message
@@ -2969,6 +3463,30 @@ static inline bool sbp_unpack_sbp_msg_cell_modem_status_t(const u8 *buf, size_t 
 		}
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_cell_modem_status_t &a, const sbp_msg_cell_modem_status_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.signal_strength != b.signal_strength) { return false; }
+        
+    if (fabs( a.signal_error_rate - b.signal_error_rate ) > 0.001) { return false; }
+          if (a.n_reserved != b.n_reserved) { return false; }
+        for (size_t reserved_idx = 0; reserved_idx < (size_t)a.n_reserved; reserved_idx++)
+        {
+            
+    if (a.reserved[reserved_idx] != b.reserved[reserved_idx]) { return false; }
+        }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_cell_modem_status_t &a, const sbp_msg_cell_modem_status_t &b) {
+  return !(a == b);
+}
+#endif
   /** Deprecated
    *
 * Deprecated.
@@ -3177,6 +3695,41 @@ static inline bool sbp_unpack_sbp_msg_specan_dep_t(const u8 *buf, size_t len, sb
 		}
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_specan_dep_t &a, const sbp_msg_specan_dep_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.channel_tag != b.channel_tag) { return false; }
+        
+        
+    if (a.t.tow != b.t.tow) { return false; }
+        
+    if (a.t.wn != b.t.wn) { return false; }
+        
+    if (fabs( a.freq_ref - b.freq_ref ) > 0.001) { return false; }
+        
+    if (fabs( a.freq_step - b.freq_step ) > 0.001) { return false; }
+        
+    if (fabs( a.amplitude_ref - b.amplitude_ref ) > 0.001) { return false; }
+        
+    if (fabs( a.amplitude_unit - b.amplitude_unit ) > 0.001) { return false; }
+          if (a.n_amplitude_value != b.n_amplitude_value) { return false; }
+        for (size_t amplitude_value_idx = 0; amplitude_value_idx < (size_t)a.n_amplitude_value; amplitude_value_idx++)
+        {
+            
+    if (a.amplitude_value[amplitude_value_idx] != b.amplitude_value[amplitude_value_idx]) { return false; }
+        }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_specan_dep_t &a, const sbp_msg_specan_dep_t &b) {
+  return !(a == b);
+}
+#endif
   /** Spectrum analyzer
    *
  * Spectrum analyzer packet.
@@ -3406,6 +3959,43 @@ static inline bool sbp_unpack_sbp_msg_specan_t(const u8 *buf, size_t len, sbp_ms
 		}
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_specan_t &a, const sbp_msg_specan_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.channel_tag != b.channel_tag) { return false; }
+        
+        
+    if (a.t.tow != b.t.tow) { return false; }
+        
+    if (a.t.ns_residual != b.t.ns_residual) { return false; }
+        
+    if (a.t.wn != b.t.wn) { return false; }
+        
+    if (fabs( a.freq_ref - b.freq_ref ) > 0.001) { return false; }
+        
+    if (fabs( a.freq_step - b.freq_step ) > 0.001) { return false; }
+        
+    if (fabs( a.amplitude_ref - b.amplitude_ref ) > 0.001) { return false; }
+        
+    if (fabs( a.amplitude_unit - b.amplitude_unit ) > 0.001) { return false; }
+          if (a.n_amplitude_value != b.n_amplitude_value) { return false; }
+        for (size_t amplitude_value_idx = 0; amplitude_value_idx < (size_t)a.n_amplitude_value; amplitude_value_idx++)
+        {
+            
+    if (a.amplitude_value[amplitude_value_idx] != b.amplitude_value[amplitude_value_idx]) { return false; }
+        }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_specan_t &a, const sbp_msg_specan_t &b) {
+  return !(a == b);
+}
+#endif
   /** RF AGC status
    *
  * This message describes the gain of each channel in the receiver frontend. Each 
@@ -3499,6 +4089,30 @@ static inline bool sbp_unpack_sbp_msg_front_end_gain_t(const u8 *buf, size_t len
 		}
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_front_end_gain_t &a, const sbp_msg_front_end_gain_t &b) {
+  (void)a;
+  (void)b;
+  
+        for (size_t rf_gain_idx = 0; rf_gain_idx < 8; rf_gain_idx++)
+        {
+            
+    if (a.rf_gain[rf_gain_idx] != b.rf_gain[rf_gain_idx]) { return false; }
+        }
+        for (size_t if_gain_idx = 0; if_gain_idx < 8; if_gain_idx++)
+        {
+            
+    if (a.if_gain[if_gain_idx] != b.if_gain[if_gain_idx]) { return false; }
+        }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_front_end_gain_t &a, const sbp_msg_front_end_gain_t &b) {
+  return !(a == b);
+}
+#endif
 
 
 #endif /* LIBSBP_PIKSI_MESSAGES_H */

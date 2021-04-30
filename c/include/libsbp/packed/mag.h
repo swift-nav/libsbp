@@ -32,8 +32,8 @@ SBP_PACK_START
  *
  * Raw data from the magnetometer.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_MAG_RAW 0x0902
+typedef struct SBP_ATTR_PACKED {
   
   /** 
     * Milliseconds since start of GPS week. If the high bit is set, the

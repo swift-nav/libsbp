@@ -105,8 +105,8 @@ typedef struct SBP_ATTR_PACKED {
  * This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
  * It focuses primarly, but not only, on GNSS metadata.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_SOLN_META_DEP_A 0xFF0F
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) [0.01] 
@@ -189,8 +189,8 @@ typedef struct SBP_ATTR_PACKED {
  * If it can, substract 'age gnss' from 'tow' in navigation messages to get TOM. Can be used before alignment is
  * complete in the Fusion Engine, when output solution is the last received valid GNSS solution and its tow is not a TOM.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_SOLN_META       0xFF0E
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS time of week rounded to the nearest millisecond [ms] 

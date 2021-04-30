@@ -46,8 +46,8 @@ SBP_PACK_START
  * print "Invalid fileio read message". A device will only respond
  * to this message when it is received from sender ID 0x42.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_FILEIO_READ_REQ      0x00A8
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Read sequence number 
@@ -80,8 +80,8 @@ typedef struct SBP_ATTR_PACKED {
  * were succesfully read. The sequence number in the response is
  * preserved from the request.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_FILEIO_READ_RESP     0x00A3
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Read sequence number 
@@ -109,8 +109,8 @@ typedef struct SBP_ATTR_PACKED {
  * A device will only respond to this message when it is received
  * from sender ID 0x42.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_FILEIO_READ_DIR_REQ  0x00A9
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Read sequence number 
@@ -139,8 +139,8 @@ typedef struct SBP_ATTR_PACKED {
  * entry containing just the character 0xFF. The sequence number in
  * the response is preserved from the request.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_FILEIO_READ_DIR_RESP 0x00AA
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Read sequence number 
@@ -162,8 +162,8 @@ typedef struct SBP_ATTR_PACKED {
  * print "Invalid fileio remove message". A device will only
  * process this message when it is received from sender ID 0x42.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_FILEIO_REMOVE        0x00AC
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Name of the file to delete 
@@ -184,8 +184,8 @@ typedef struct SBP_ATTR_PACKED {
  * only  process this message when it is received from sender ID
  * 0x42.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_FILEIO_WRITE_REQ     0x00AD
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Write sequence number 
@@ -218,8 +218,8 @@ typedef struct SBP_ATTR_PACKED {
  * write. The sequence number in the response is preserved from the
  * request.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_FILEIO_WRITE_RESP    0x00AB
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Write sequence number 
@@ -236,8 +236,8 @@ typedef struct SBP_ATTR_PACKED {
  * throughput by supporting a large window of FileIO data
  * that can be in-flight during read or write operations.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_FILEIO_CONFIG_REQ    0x1001
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Advice sequence number 
@@ -255,8 +255,8 @@ typedef struct SBP_ATTR_PACKED {
  * throughput by supporting a large window of FileIO data
  * that can be in-flight during read or write operations.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_FILEIO_CONFIG_RESP   0x1002
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Advice sequence number 

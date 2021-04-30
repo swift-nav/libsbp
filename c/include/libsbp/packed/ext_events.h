@@ -60,8 +60,8 @@ SBP_PACK_START
  * Reports detection of an external event, the GPS time it occurred,
  * which pin it was and whether it was rising or falling.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_EXT_EVENT 0x0101
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS week number [weeks] 

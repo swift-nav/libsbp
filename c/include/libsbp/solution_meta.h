@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <endian.h>
+#include <math.h>
 
 #include <libsbp/common.h>
   /** Deprecated
@@ -302,6 +303,45 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_dep_a_t(const u8 *buf, size_t le
 		}
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_soln_meta_dep_a_t &a, const sbp_msg_soln_meta_dep_a_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.pdop != b.pdop) { return false; }
+        
+    if (a.hdop != b.hdop) { return false; }
+        
+    if (a.vdop != b.vdop) { return false; }
+        
+    if (a.n_sats != b.n_sats) { return false; }
+        
+    if (a.age_corrections != b.age_corrections) { return false; }
+        
+    if (a.alignment_status != b.alignment_status) { return false; }
+        
+    if (a.last_used_gnss_pos_tow != b.last_used_gnss_pos_tow) { return false; }
+        
+    if (a.last_used_gnss_vel_tow != b.last_used_gnss_vel_tow) { return false; }
+          if (a.n_sol_in != b.n_sol_in) { return false; }
+        for (size_t sol_in_idx = 0; sol_in_idx < (size_t)a.n_sol_in; sol_in_idx++)
+        {
+            
+        
+    if (a.sol_in[sol_in_idx].sensor_type != b.sol_in[sol_in_idx].sensor_type) { return false; }
+        
+    if (a.sol_in[sol_in_idx].flags != b.sol_in[sol_in_idx].flags) { return false; }
+        }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_soln_meta_dep_a_t &a, const sbp_msg_soln_meta_dep_a_t &b) {
+  return !(a == b);
+}
+#endif
   /** Solution Sensors Metadata
    *
  * This message contains all metadata about the sensors received and/or used in computing the sensorfusion solution.
@@ -574,6 +614,41 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_t(const u8 *buf, size_t len, sbp
 		}
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_soln_meta_t &a, const sbp_msg_soln_meta_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.tow != b.tow) { return false; }
+        
+    if (a.pdop != b.pdop) { return false; }
+        
+    if (a.hdop != b.hdop) { return false; }
+        
+    if (a.vdop != b.vdop) { return false; }
+        
+    if (a.age_corrections != b.age_corrections) { return false; }
+        
+    if (a.age_gnss != b.age_gnss) { return false; }
+          if (a.n_sol_in != b.n_sol_in) { return false; }
+        for (size_t sol_in_idx = 0; sol_in_idx < (size_t)a.n_sol_in; sol_in_idx++)
+        {
+            
+        
+    if (a.sol_in[sol_in_idx].sensor_type != b.sol_in[sol_in_idx].sensor_type) { return false; }
+        
+    if (a.sol_in[sol_in_idx].flags != b.sol_in[sol_in_idx].flags) { return false; }
+        }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_soln_meta_t &a, const sbp_msg_soln_meta_t &b) {
+  return !(a == b);
+}
+#endif
 
 
 #endif /* LIBSBP_SOLUTION_META_MESSAGES_H */

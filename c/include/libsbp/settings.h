@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <endian.h>
+#include <math.h>
 
 #include <libsbp/common.h>
   /** Save settings to flash (host => device)
@@ -45,6 +46,20 @@ static inline bool sbp_unpack_sbp_msg_settings_save_t(const u8 *buf, size_t len,
   
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_settings_save_t &a, const sbp_msg_settings_save_t &b) {
+  (void)a;
+  (void)b;
+  
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_settings_save_t &a, const sbp_msg_settings_save_t &b) {
+  return !(a == b);
+}
+#endif
   /** Write device configuration settings (host => device)
    *
  * The setting message writes the device configuration for a particular
@@ -100,6 +115,21 @@ static inline bool sbp_unpack_sbp_msg_settings_write_t(const u8 *buf, size_t len
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "3-section");
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_settings_write_t &a, const sbp_msg_settings_write_t &b) {
+  (void)a;
+  (void)b;
+  
+        if (sbp_strcmp(a.setting, b.setting, "3-section") != 0) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_settings_write_t &a, const sbp_msg_settings_write_t &b) {
+  return !(a == b);
+}
+#endif
   /** Acknowledgement with status of MSG_SETTINGS_WRITE
    *
  * Return the status of a write request with the new value of the
@@ -190,6 +220,23 @@ static inline bool sbp_unpack_sbp_msg_settings_write_resp_t(const u8 *buf, size_
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "3-section");
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_settings_write_resp_t &a, const sbp_msg_settings_write_resp_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.status != b.status) { return false; }
+        if (sbp_strcmp(a.setting, b.setting, "3-section") != 0) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_settings_write_resp_t &a, const sbp_msg_settings_write_resp_t &b) {
+  return !(a == b);
+}
+#endif
   /** Read device configuration settings (host => device)
    *
  * The setting message that reads the device configuration. The string
@@ -246,6 +293,21 @@ static inline bool sbp_unpack_sbp_msg_settings_read_req_t(const u8 *buf, size_t 
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "2-section");
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_settings_read_req_t &a, const sbp_msg_settings_read_req_t &b) {
+  (void)a;
+  (void)b;
+  
+        if (sbp_strcmp(a.setting, b.setting, "2-section") != 0) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_settings_read_req_t &a, const sbp_msg_settings_read_req_t &b) {
+  return !(a == b);
+}
+#endif
   /** Read device configuration settings (host <= device)
    *
  * The setting message wich which the device responds after a
@@ -302,6 +364,21 @@ static inline bool sbp_unpack_sbp_msg_settings_read_resp_t(const u8 *buf, size_t
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "3-section");
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_settings_read_resp_t &a, const sbp_msg_settings_read_resp_t &b) {
+  (void)a;
+  (void)b;
+  
+        if (sbp_strcmp(a.setting, b.setting, "3-section") != 0) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_settings_read_resp_t &a, const sbp_msg_settings_read_resp_t &b) {
+  return !(a == b);
+}
+#endif
   /** Read setting by direct index (host => device)
    *
  * The settings message for iterating through the settings
@@ -359,6 +436,22 @@ static inline bool sbp_unpack_sbp_msg_settings_read_by_index_req_t(const u8 *buf
   offset += 2;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_settings_read_by_index_req_t &a, const sbp_msg_settings_read_by_index_req_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.index != b.index) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_settings_read_by_index_req_t &a, const sbp_msg_settings_read_by_index_req_t &b) {
+  return !(a == b);
+}
+#endif
   /** Read setting by direct index (host <= device)
    *
  * The settings message that reports the value of a setting at an index.
@@ -436,6 +529,23 @@ static inline bool sbp_unpack_sbp_msg_settings_read_by_index_resp_t(const u8 *bu
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "3-4-section");
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_settings_read_by_index_resp_t &a, const sbp_msg_settings_read_by_index_resp_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.index != b.index) { return false; }
+        if (sbp_strcmp(a.setting, b.setting, "3-4-section") != 0) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_settings_read_by_index_resp_t &a, const sbp_msg_settings_read_by_index_resp_t &b) {
+  return !(a == b);
+}
+#endif
   /** Finished reading settings (host <= device)
    *
  * The settings message for indicating end of the settings values.
@@ -472,6 +582,20 @@ static inline bool sbp_unpack_sbp_msg_settings_read_by_index_done_t(const u8 *bu
   
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_settings_read_by_index_done_t &a, const sbp_msg_settings_read_by_index_done_t &b) {
+  (void)a;
+  (void)b;
+  
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_settings_read_by_index_done_t &a, const sbp_msg_settings_read_by_index_done_t &b) {
+  return !(a == b);
+}
+#endif
   /** Register setting and default value (device => host)
    *
  * This message registers the presence and default value of a setting
@@ -523,6 +647,21 @@ static inline bool sbp_unpack_sbp_msg_settings_register_t(const u8 *buf, size_t 
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "3-section");
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_settings_register_t &a, const sbp_msg_settings_register_t &b) {
+  (void)a;
+  (void)b;
+  
+        if (sbp_strcmp(a.setting, b.setting, "3-section") != 0) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_settings_register_t &a, const sbp_msg_settings_register_t &b) {
+  return !(a == b);
+}
+#endif
   /** Register setting and default value (device <= host)
    *
  * This message responds to setting registration with the effective value.
@@ -608,6 +747,23 @@ static inline bool sbp_unpack_sbp_msg_settings_register_resp_t(const u8 *buf, si
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "3-section");
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_settings_register_resp_t &a, const sbp_msg_settings_register_resp_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.status != b.status) { return false; }
+        if (sbp_strcmp(a.setting, b.setting, "3-section") != 0) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_settings_register_resp_t &a, const sbp_msg_settings_register_resp_t &b) {
+  return !(a == b);
+}
+#endif
 
 
 #endif /* LIBSBP_SETTINGS_MESSAGES_H */

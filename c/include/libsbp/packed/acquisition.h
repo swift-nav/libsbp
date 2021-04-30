@@ -37,8 +37,8 @@ SBP_PACK_START
  * acquisition search space with the best carrier-to-noise (CN/0)
  * ratio.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_ACQ_RESULT         0x002F
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * CN/0 of best point [dB Hz] 
@@ -67,8 +67,8 @@ typedef struct SBP_ATTR_PACKED {
  *
 * Deprecated.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_ACQ_RESULT_DEP_C   0x001F
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * CN/0 of best point [dB Hz] 
@@ -97,8 +97,8 @@ typedef struct SBP_ATTR_PACKED {
  *
 * Deprecated.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_ACQ_RESULT_DEP_B   0x0014
+typedef struct SBP_ATTR_PACKED {
   
   /** 
     * SNR of best point. Currently in arbitrary SNR points, but will
@@ -128,8 +128,8 @@ typedef struct SBP_ATTR_PACKED {
  *
 * Deprecated.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_ACQ_RESULT_DEP_A   0x0015
+typedef struct SBP_ATTR_PACKED {
   
   /** 
     * SNR of best point. Currently dimensonless, but will have
@@ -301,8 +301,8 @@ typedef struct SBP_ATTR_PACKED {
  * The message describes all SV profiles during acquisition time.
  * The message is used to debug and measure the performance.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_ACQ_SV_PROFILE     0x002E
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * SV profiles during acquisition time 
@@ -316,8 +316,8 @@ typedef struct SBP_ATTR_PACKED {
  *
 * Deprecated.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_ACQ_SV_PROFILE_DEP 0x001E
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * SV profiles during acquisition time 

@@ -104,8 +104,8 @@ SBP_PACK_START
  * This message is sent out when an object is stored into NDB. If needed
  * message could also be sent out when fetching an object from NDB.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_NDB_EVENT 0x0400
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * HW time in milliseconds. [ms] 

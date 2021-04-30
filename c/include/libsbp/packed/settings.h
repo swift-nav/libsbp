@@ -58,10 +58,7 @@ SBP_PACK_START
  * The save settings message persists the device's current settings
  * configuration to its onboard flash memory file system.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_SETTINGS_SAVE               0x00A1
-  
-} msg_settings_save_t;
 
 
 /** Write device configuration settings (host => device)
@@ -74,8 +71,8 @@ typedef struct SBP_ATTR_PACKED {
  * An example string that could be sent to a device is
  * "solution\0soln_freq\010\0".
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_SETTINGS_WRITE              0x00A0
+typedef struct SBP_ATTR_PACKED {
   
   /** 
     * A NULL-terminated and NULL-delimited string with contents
@@ -114,8 +111,8 @@ typedef struct SBP_ATTR_PACKED {
  * are omitted. An example string that could be sent from device is
  * "solution\0soln_freq\010\0".
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_SETTINGS_WRITE_RESP         0x00AF
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Write status 
@@ -142,8 +139,8 @@ typedef struct SBP_ATTR_PACKED {
  * sender ID 0x42. A device should respond with a MSG_SETTINGS_READ_RESP
  * message (msg_id 0x00A5).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_SETTINGS_READ_REQ           0x00A4
+typedef struct SBP_ATTR_PACKED {
   
   /** 
     * A NULL-terminated and NULL-delimited string with contents
@@ -164,8 +161,8 @@ typedef struct SBP_ATTR_PACKED {
  * example string that could be sent from device is
  * "solution\0soln_freq\010\0".
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_SETTINGS_READ_RESP          0x00A5
+typedef struct SBP_ATTR_PACKED {
   
   /** 
     * A NULL-terminated and NULL-delimited string with contents
@@ -183,8 +180,8 @@ typedef struct SBP_ATTR_PACKED {
  * values. A device will respond to this message with a 
  * "MSG_SETTINGS_READ_BY_INDEX_RESP".
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_REQ  0x00A2
+typedef struct SBP_ATTR_PACKED {
   
   /** 
     * An index into the device settings, with values ranging from
@@ -208,8 +205,8 @@ typedef struct SBP_ATTR_PACKED {
  * "enum:value1,value2,value3". An example string that could be sent from
  * the device is "simulator\0enabled\0True\0enum:True,False\0"
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_RESP 0x00A7
+typedef struct SBP_ATTR_PACKED {
   
   /** 
     * An index into the device settings, with values ranging from
@@ -230,10 +227,7 @@ typedef struct SBP_ATTR_PACKED {
  *
  * The settings message for indicating end of the settings values.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_DONE 0x00A6
-  
-} msg_settings_read_by_index_done_t;
 
 
 /** Register setting and default value (device => host)
@@ -242,8 +236,8 @@ typedef struct SBP_ATTR_PACKED {
  * with a settings daemon.  The host should reply with MSG_SETTINGS_WRITE
  * for this setting to set the initial value.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_SETTINGS_REGISTER           0x00AE
+typedef struct SBP_ATTR_PACKED {
   
   /** 
     * A NULL-terminated and delimited string with contents
@@ -276,8 +270,8 @@ typedef struct SBP_ATTR_PACKED {
  * was already registered or is available in the permanent setting storage
  * and had a different value.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_SETTINGS_REGISTER_RESP      0x01AF
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Register status 

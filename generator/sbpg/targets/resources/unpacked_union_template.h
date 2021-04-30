@@ -54,5 +54,24 @@ static inline size_t sbp_packed_size(const sbp_msg_t *msg) {
   return 0;
 }
 
+#ifdef __cplusplus
+static inline bool operator==(const sbp_msg_t &a, const sbp_msg_t &b) {
+  if (a.type != b.type) { return false; }
+  switch(a.type) {
+    ((*- for m in msgs *))
+    case SBP_(((m.ljust(max_msgid_len)))):
+      return a.(((m))) == b.(((m)));
+    ((*- endfor *))
+    default:
+      break;
+  }
+  return false;
+}
+
+static inline bool operator!=(const sbp_msg_t &a, const sbp_msg_t &b) {
+  return !(a == b);
+}
+#endif
+
 #endif
 

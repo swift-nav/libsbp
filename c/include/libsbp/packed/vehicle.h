@@ -83,8 +83,8 @@ SBP_PACK_START
  * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise odometry measurements
  * with GNSS. Processor time shall roll over to zero after one week.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_ODOMETRY  0x0903
+typedef struct SBP_ATTR_PACKED {
   
   /** 
     * Time field representing either milliseconds in the GPS Week or local CPU
@@ -148,8 +148,8 @@ typedef struct SBP_ATTR_PACKED {
  * `MSG_GNSS_TIME_OFFSET` when a PVT fix becomes available to synchronise wheeltick measurements
  * with GNSS. Local CPU time shall roll over to zero after one week.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_WHEELTICK 0x0904
+typedef struct SBP_ATTR_PACKED {
   
   /** 
     * Time field representing either microseconds since the last PPS, microseconds in the GPS

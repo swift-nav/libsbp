@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <endian.h>
+#include <math.h>
 
 #include <libsbp/common.h>
 #include <libsbp/gnss.h>
@@ -180,6 +181,34 @@ static inline bool sbp_unpack_sbp_msg_sbas_raw_t(const u8 *buf, size_t len, sbp_
 		}
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_sbas_raw_t &a, const sbp_msg_sbas_raw_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+        
+    if (a.sid.sat != b.sid.sat) { return false; }
+        
+    if (a.sid.code != b.sid.code) { return false; }
+        
+    if (a.tow != b.tow) { return false; }
+        
+    if (a.message_type != b.message_type) { return false; }
+        for (size_t data_idx = 0; data_idx < 27; data_idx++)
+        {
+            
+    if (a.data[data_idx] != b.data[data_idx]) { return false; }
+        }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_sbas_raw_t &a, const sbp_msg_sbas_raw_t &b) {
+  return !(a == b);
+}
+#endif
 
 
 #endif /* LIBSBP_SBAS_MESSAGES_H */

@@ -63,8 +63,8 @@ SBP_PACK_START
  * the system has started and is now ready to respond to commands
  * or configuration requests.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_STARTUP               0xFF00
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Cause of startup 
@@ -104,8 +104,8 @@ typedef struct SBP_ATTR_PACKED {
  * corrections.  It is expected to be sent with each receipt of a complete
  * corrections packet.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_DGNSS_STATUS          0xFF02
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Status flags 
@@ -230,8 +230,8 @@ typedef struct SBP_ATTR_PACKED {
  * occurred in the system. To determine the source of the error,
  * the remaining error flags should be inspected.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_HEARTBEAT             0xFFFF
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Status flags 
@@ -347,8 +347,8 @@ typedef struct SBP_ATTR_PACKED {
  * dependent, but if the generic status code is initializing, it should
  * be ignored.  Refer to product documentation for details.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_STATUS_REPORT         0xFFFE
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Identity of reporting system 
@@ -483,8 +483,8 @@ typedef struct SBP_ATTR_PACKED {
  * The INS status message describes the state of the operation
  * and initialization of the inertial navigation system. 
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_INS_STATUS            0xFF03
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Status flags 
@@ -500,8 +500,8 @@ typedef struct SBP_ATTR_PACKED {
  * from a device. It is not produced or available on general Swift Products.
  * It is intended to be a low rate message for status purposes.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_CSAC_TELEMETRY        0xFF04
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Index representing the type of telemetry in use.  It is implemention defined. 
@@ -522,8 +522,8 @@ typedef struct SBP_ATTR_PACKED {
  * produced by MSG_CSAC_TELEMETRY. It should be provided by a device at a lower
  * rate than the MSG_CSAC_TELEMETRY.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_CSAC_TELEMETRY_LABELS 0xFF05
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Index representing the type of telemetry in use.  It is implemention defined. 
@@ -675,8 +675,8 @@ typedef struct SBP_ATTR_PACKED {
  * The INS update status message contains informations about executed and rejected INS updates.
  * This message is expected to be extended in the future as new types of measurements are being added.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_INS_UPDATES           0xFF06
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -722,8 +722,8 @@ typedef struct SBP_ATTR_PACKED {
  * tagged with a local timestamp (e.g. IMU or wheeltick messages) to GNSS time for the sender
  * producing this message.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_GNSS_TIME_OFFSET      0xFF07
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Weeks portion of the time offset [weeks] 
@@ -767,8 +767,8 @@ typedef struct SBP_ATTR_PACKED {
  * This leading message lists the time metadata of the Solution Group.
  * It also lists the atomic contents (i.e. types of messages included) of the Solution Group.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_GROUP_META            0xFF0A
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Id of the Msgs Group, 0 is Unknown, 1 is Bestpos, 2 is Gnss 

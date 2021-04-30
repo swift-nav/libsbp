@@ -237,8 +237,8 @@ SBP_PACK_START
  * The tracking message returns a set tracking channel parameters for a
  * single tracking channel useful for debugging issues.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_TRACKING_STATE_DETAILED_DEP_A 0x0021
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Receiver clock time. [ns] 
@@ -562,8 +562,8 @@ typedef struct SBP_ATTR_PACKED {
  *
 * Deprecated.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_TRACKING_STATE_DETAILED_DEP   0x0011
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Receiver clock time. [ns] 
@@ -711,8 +711,8 @@ typedef struct SBP_ATTR_PACKED {
  * channel states. It reports status and carrier-to-noise density
  * measurements for all tracked satellites.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_TRACKING_STATE                0x0041
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Signal tracking channel state 
@@ -751,8 +751,8 @@ typedef struct SBP_ATTR_PACKED {
  * channel states. It reports status and carrier-to-noise density
  * measurements for all tracked satellites.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_MEASUREMENT_STATE             0x0061
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * ME signal tracking channel state 
@@ -786,8 +786,8 @@ typedef struct SBP_ATTR_PACKED {
  * When enabled, a tracking channel can output the correlations at each
  * update interval.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_TRACKING_IQ                   0x002D
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Tracking channel of origin 
@@ -831,8 +831,8 @@ typedef struct SBP_ATTR_PACKED {
  * When enabled, a tracking channel can output the correlations at each
  * update interval.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_TRACKING_IQ_DEP_B             0x002C
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Tracking channel of origin 
@@ -856,8 +856,8 @@ typedef struct SBP_ATTR_PACKED {
  *
 * Deprecated.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_TRACKING_IQ_DEP_A             0x001C
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Tracking channel of origin 
@@ -918,8 +918,8 @@ typedef struct SBP_ATTR_PACKED {
  *
 * Deprecated.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_TRACKING_STATE_DEP_A          0x0016
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Satellite tracking channel state 
@@ -970,8 +970,8 @@ typedef struct SBP_ATTR_PACKED {
  *
 * Deprecated.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_TRACKING_STATE_DEP_B          0x0013
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Signal tracking channel state 

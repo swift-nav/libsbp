@@ -53,8 +53,8 @@ SBP_PACK_START
  * device containing errors, warnings and informational messages at
  * ERROR, WARNING, DEBUG, INFO logging levels.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_LOG       0x0401
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Logging level 
@@ -79,8 +79,8 @@ typedef struct SBP_ATTR_PACKED {
  * The protocol identifier identifies what the expected protocol the forwarded msg contains.
  * Protocol 0 represents SBP and the remaining values are implementation defined.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_FWD       0x0402
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * source identifier 
@@ -104,8 +104,8 @@ typedef struct SBP_ATTR_PACKED {
  *
 * Deprecated.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_PRINT_DEP 0x0010
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Human-readable string 

@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <endian.h>
+#include <math.h>
 
 #include <libsbp/common.h>
   /** Raw IMU data
@@ -233,6 +234,36 @@ static inline bool sbp_unpack_sbp_msg_imu_raw_t(const u8 *buf, size_t len, sbp_m
   offset += 2;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.tow != b.tow) { return false; }
+        
+    if (a.tow_f != b.tow_f) { return false; }
+        
+    if (a.acc_x != b.acc_x) { return false; }
+        
+    if (a.acc_y != b.acc_y) { return false; }
+        
+    if (a.acc_z != b.acc_z) { return false; }
+        
+    if (a.gyr_x != b.gyr_x) { return false; }
+        
+    if (a.gyr_y != b.gyr_y) { return false; }
+        
+    if (a.gyr_z != b.gyr_z) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_imu_raw_t &a, const sbp_msg_imu_raw_t &b) {
+  return !(a == b);
+}
+#endif
   /** Auxiliary IMU data
    *
  * Auxiliary data specific to a particular IMU. The `imu_type` field will
@@ -369,6 +400,26 @@ static inline bool sbp_unpack_sbp_msg_imu_aux_t(const u8 *buf, size_t len, sbp_m
   offset += 1;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_imu_aux_t &a, const sbp_msg_imu_aux_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.imu_type != b.imu_type) { return false; }
+        
+    if (a.temp != b.temp) { return false; }
+        
+    if (a.imu_conf != b.imu_conf) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_imu_aux_t &a, const sbp_msg_imu_aux_t &b) {
+  return !(a == b);
+}
+#endif
 
 
 #endif /* LIBSBP_IMU_MESSAGES_H */

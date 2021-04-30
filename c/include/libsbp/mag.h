@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <endian.h>
+#include <math.h>
 
 #include <libsbp/common.h>
   /** Raw magnetometer data
@@ -140,6 +141,30 @@ static inline bool sbp_unpack_sbp_msg_mag_raw_t(const u8 *buf, size_t len, sbp_m
   offset += 2;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_mag_raw_t &a, const sbp_msg_mag_raw_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.tow != b.tow) { return false; }
+        
+    if (a.tow_f != b.tow_f) { return false; }
+        
+    if (a.mag_x != b.mag_x) { return false; }
+        
+    if (a.mag_y != b.mag_y) { return false; }
+        
+    if (a.mag_z != b.mag_z) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_mag_raw_t &a, const sbp_msg_mag_raw_t &b) {
+  return !(a == b);
+}
+#endif
 
 
 #endif /* LIBSBP_MAG_MESSAGES_H */

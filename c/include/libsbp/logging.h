@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <endian.h>
+#include <math.h>
 
 #include <libsbp/common.h>
   /** Plaintext logging messages with levels
@@ -94,6 +95,23 @@ static inline bool sbp_unpack_sbp_msg_log_t(const u8 *buf, size_t len, sbp_msg_l
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->text, "none");
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_log_t &a, const sbp_msg_log_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.level != b.level) { return false; }
+        if (sbp_strcmp(a.text, b.text, "none") != 0) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_log_t &a, const sbp_msg_log_t &b) {
+  return !(a == b);
+}
+#endif
   /** Wrapper for FWD a separate stream of information over SBP
    *
  * This message provides the ability to forward messages over SBP.  This may take the form
@@ -182,6 +200,25 @@ static inline bool sbp_unpack_sbp_msg_fwd_t(const u8 *buf, size_t len, sbp_msg_f
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->fwd_payload, "none");
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_fwd_t &a, const sbp_msg_fwd_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.source != b.source) { return false; }
+        
+    if (a.protocol != b.protocol) { return false; }
+        if (sbp_strcmp(a.fwd_payload, b.fwd_payload, "none") != 0) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_fwd_t &a, const sbp_msg_fwd_t &b) {
+  return !(a == b);
+}
+#endif
   /** Deprecated
    *
 * Deprecated.
@@ -230,6 +267,21 @@ static inline bool sbp_unpack_sbp_msg_print_dep_t(const u8 *buf, size_t len, sbp
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->text, "none");
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_print_dep_t &a, const sbp_msg_print_dep_t &b) {
+  (void)a;
+  (void)b;
+  
+        if (sbp_strcmp(a.text, b.text, "none") != 0) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_print_dep_t &a, const sbp_msg_print_dep_t &b) {
+  return !(a == b);
+}
+#endif
 
 
 #endif /* LIBSBP_LOGGING_MESSAGES_H */

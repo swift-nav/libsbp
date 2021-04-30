@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <endian.h>
+#include <math.h>
 
 #include <libsbp/common.h>
   /** System start-up message
@@ -127,6 +128,26 @@ static inline bool sbp_unpack_sbp_msg_startup_t(const u8 *buf, size_t len, sbp_m
   offset += 2;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_startup_t &a, const sbp_msg_startup_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.cause != b.cause) { return false; }
+        
+    if (a.startup_type != b.startup_type) { return false; }
+        
+    if (a.reserved != b.reserved) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_startup_t &a, const sbp_msg_startup_t &b) {
+  return !(a == b);
+}
+#endif
   /** Status of received corrections
    *
  * This message provides information about the receipt of Differential
@@ -243,6 +264,27 @@ static inline bool sbp_unpack_sbp_msg_dgnss_status_t(const u8 *buf, size_t len, 
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->source, "none");
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_dgnss_status_t &a, const sbp_msg_dgnss_status_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.flags != b.flags) { return false; }
+        
+    if (a.latency != b.latency) { return false; }
+        
+    if (a.num_signals != b.num_signals) { return false; }
+        if (sbp_strcmp(a.source, b.source, "none") != 0) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_dgnss_status_t &a, const sbp_msg_dgnss_status_t &b) {
+  return !(a == b);
+}
+#endif
   /** System heartbeat message
    *
  * The heartbeat message is sent periodically to inform the host
@@ -393,6 +435,22 @@ static inline bool sbp_unpack_sbp_msg_heartbeat_t(const u8 *buf, size_t len, sbp
   offset += 4;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_heartbeat_t &a, const sbp_msg_heartbeat_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.flags != b.flags) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_heartbeat_t &a, const sbp_msg_heartbeat_t &b) {
+  return !(a == b);
+}
+#endif
   /** Status report message
    *
  * The status report is sent periodically to inform the host
@@ -663,6 +721,39 @@ static inline bool sbp_unpack_sbp_msg_status_report_t(const u8 *buf, size_t len,
 		}
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_status_report_t &a, const sbp_msg_status_report_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.reporting_system != b.reporting_system) { return false; }
+        
+    if (a.sbp_version != b.sbp_version) { return false; }
+        
+    if (a.sequence != b.sequence) { return false; }
+        
+    if (a.uptime != b.uptime) { return false; }
+          if (a.n_status != b.n_status) { return false; }
+        for (size_t status_idx = 0; status_idx < (size_t)a.n_status; status_idx++)
+        {
+            
+        
+    if (a.status[status_idx].component != b.status[status_idx].component) { return false; }
+        
+    if (a.status[status_idx].generic != b.status[status_idx].generic) { return false; }
+        
+    if (a.status[status_idx].specific != b.status[status_idx].specific) { return false; }
+        }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_status_report_t &a, const sbp_msg_status_report_t &b) {
+  return !(a == b);
+}
+#endif
   /** Inertial Navigation System status message
    *
  * The INS status message describes the state of the operation
@@ -818,6 +909,22 @@ static inline bool sbp_unpack_sbp_msg_ins_status_t(const u8 *buf, size_t len, sb
   offset += 4;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_ins_status_t &a, const sbp_msg_ins_status_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.flags != b.flags) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_ins_status_t &a, const sbp_msg_ins_status_t &b) {
+  return !(a == b);
+}
+#endif
   /** Experimental telemetry message
    *
  * The CSAC telemetry message has an implementation defined telemetry string
@@ -885,6 +992,23 @@ static inline bool sbp_unpack_sbp_msg_csac_telemetry_t(const u8 *buf, size_t len
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->telemetry, "none");
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_csac_telemetry_t &a, const sbp_msg_csac_telemetry_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.id != b.id) { return false; }
+        if (sbp_strcmp(a.telemetry, b.telemetry, "none") != 0) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_csac_telemetry_t &a, const sbp_msg_csac_telemetry_t &b) {
+  return !(a == b);
+}
+#endif
   /** Experimental telemetry message labels
    *
  * The CSAC telemetry message provides labels for each member of the string
@@ -952,6 +1076,23 @@ static inline bool sbp_unpack_sbp_msg_csac_telemetry_labels_t(const u8 *buf, siz
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->telemetry_labels, "none");
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_csac_telemetry_labels_t &a, const sbp_msg_csac_telemetry_labels_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.id != b.id) { return false; }
+        if (sbp_strcmp(a.telemetry_labels, b.telemetry_labels, "none") != 0) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_csac_telemetry_labels_t &a, const sbp_msg_csac_telemetry_labels_t &b) {
+  return !(a == b);
+}
+#endif
   /** Inertial Navigation System update status message
    *
  * The INS update status message contains informations about executed and rejected INS updates.
@@ -1241,6 +1382,34 @@ static inline bool sbp_unpack_sbp_msg_ins_updates_t(const u8 *buf, size_t len, s
   offset += 1;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_ins_updates_t &a, const sbp_msg_ins_updates_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.tow != b.tow) { return false; }
+        
+    if (a.gnsspos != b.gnsspos) { return false; }
+        
+    if (a.gnssvel != b.gnssvel) { return false; }
+        
+    if (a.wheelticks != b.wheelticks) { return false; }
+        
+    if (a.speed != b.speed) { return false; }
+        
+    if (a.nhc != b.nhc) { return false; }
+        
+    if (a.zerovel != b.zerovel) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_ins_updates_t &a, const sbp_msg_ins_updates_t &b) {
+  return !(a == b);
+}
+#endif
   /** Offset of the local time with respect to GNSS time
    *
  * The GNSS time offset message contains the information that is needed to translate messages
@@ -1356,6 +1525,28 @@ static inline bool sbp_unpack_sbp_msg_gnss_time_offset_t(const u8 *buf, size_t l
   offset += 1;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_gnss_time_offset_t &a, const sbp_msg_gnss_time_offset_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.weeks != b.weeks) { return false; }
+        
+    if (a.milliseconds != b.milliseconds) { return false; }
+        
+    if (a.microseconds != b.microseconds) { return false; }
+        
+    if (a.flags != b.flags) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_gnss_time_offset_t &a, const sbp_msg_gnss_time_offset_t &b) {
+  return !(a == b);
+}
+#endif
   /** Solution Group Metadata
    *
  * This leading message lists the time metadata of the Solution Group.
@@ -1491,6 +1682,32 @@ static inline bool sbp_unpack_sbp_msg_group_meta_t(const u8 *buf, size_t len, sb
 		}
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_group_meta_t &a, const sbp_msg_group_meta_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.group_id != b.group_id) { return false; }
+        
+    if (a.flags != b.flags) { return false; }
+        
+    if (a.n_group_msgs != b.n_group_msgs) { return false; }
+          if (a.n_group_msgs != b.n_group_msgs) { return false; }
+        for (size_t group_msgs_idx = 0; group_msgs_idx < (size_t)a.n_group_msgs; group_msgs_idx++)
+        {
+            
+    if (a.group_msgs[group_msgs_idx] != b.group_msgs[group_msgs_idx]) { return false; }
+        }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_group_meta_t &a, const sbp_msg_group_meta_t &b) {
+  return !(a == b);
+}
+#endif
 
 
 #endif /* LIBSBP_SYSTEM_MESSAGES_H */

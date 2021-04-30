@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <endian.h>
+#include <math.h>
 
 #include <libsbp/common.h>
   /** Program flash addresses
@@ -159,6 +160,35 @@ static inline bool sbp_unpack_sbp_msg_flash_program_t(const u8 *buf, size_t len,
 		}
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_flash_program_t &a, const sbp_msg_flash_program_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.target != b.target) { return false; }
+        for (size_t addr_start_idx = 0; addr_start_idx < 3; addr_start_idx++)
+        {
+            
+    if (a.addr_start[addr_start_idx] != b.addr_start[addr_start_idx]) { return false; }
+        }
+        
+    if (a.addr_len != b.addr_len) { return false; }
+          if (a.n_data != b.n_data) { return false; }
+        for (size_t data_idx = 0; data_idx < (size_t)a.n_data; data_idx++)
+        {
+            
+    if (a.data[data_idx] != b.data[data_idx]) { return false; }
+        }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_flash_program_t &a, const sbp_msg_flash_program_t &b) {
+  return !(a == b);
+}
+#endif
   /** Flash response message (host <= device).
    *
  * This message defines success or failure codes for a variety of
@@ -232,6 +262,22 @@ static inline bool sbp_unpack_sbp_msg_flash_done_t(const u8 *buf, size_t len, sb
   offset += 1;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_flash_done_t &a, const sbp_msg_flash_done_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.response != b.response) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_flash_done_t &a, const sbp_msg_flash_done_t &b) {
+  return !(a == b);
+}
+#endif
   /** Read STM or M25 flash address request (host => device).
    *
  * The flash read message reads a set of addresses of either the
@@ -348,6 +394,29 @@ static inline bool sbp_unpack_sbp_msg_flash_read_req_t(const u8 *buf, size_t len
   offset += 1;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_flash_read_req_t &a, const sbp_msg_flash_read_req_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.target != b.target) { return false; }
+        for (size_t addr_start_idx = 0; addr_start_idx < 3; addr_start_idx++)
+        {
+            
+    if (a.addr_start[addr_start_idx] != b.addr_start[addr_start_idx]) { return false; }
+        }
+        
+    if (a.addr_len != b.addr_len) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_flash_read_req_t &a, const sbp_msg_flash_read_req_t &b) {
+  return !(a == b);
+}
+#endif
   /** Read STM or M25 flash address response (host <= device).
    *
  * The flash read message reads a set of addresses of either the
@@ -464,6 +533,29 @@ static inline bool sbp_unpack_sbp_msg_flash_read_resp_t(const u8 *buf, size_t le
   offset += 1;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_flash_read_resp_t &a, const sbp_msg_flash_read_resp_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.target != b.target) { return false; }
+        for (size_t addr_start_idx = 0; addr_start_idx < 3; addr_start_idx++)
+        {
+            
+    if (a.addr_start[addr_start_idx] != b.addr_start[addr_start_idx]) { return false; }
+        }
+        
+    if (a.addr_len != b.addr_len) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_flash_read_resp_t &a, const sbp_msg_flash_read_resp_t &b) {
+  return !(a == b);
+}
+#endif
   /** Erase sector of device flash memory (host => device).
    *
  * The flash erase message from the host erases a sector of either
@@ -553,6 +645,24 @@ static inline bool sbp_unpack_sbp_msg_flash_erase_t(const u8 *buf, size_t len, s
   offset += 4;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_flash_erase_t &a, const sbp_msg_flash_erase_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.target != b.target) { return false; }
+        
+    if (a.sector_num != b.sector_num) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_flash_erase_t &a, const sbp_msg_flash_erase_t &b) {
+  return !(a == b);
+}
+#endif
   /** Lock sector of STM flash memory (host => device)
    *
  * The flash lock message locks a sector of the STM flash
@@ -608,6 +718,22 @@ static inline bool sbp_unpack_sbp_msg_stm_flash_lock_sector_t(const u8 *buf, siz
   offset += 4;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_stm_flash_lock_sector_t &a, const sbp_msg_stm_flash_lock_sector_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.sector != b.sector) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_stm_flash_lock_sector_t &a, const sbp_msg_stm_flash_lock_sector_t &b) {
+  return !(a == b);
+}
+#endif
   /** Unlock sector of STM flash memory (host => device)
    *
  * The flash unlock message unlocks a sector of the STM flash
@@ -663,6 +789,22 @@ static inline bool sbp_unpack_sbp_msg_stm_flash_unlock_sector_t(const u8 *buf, s
   offset += 4;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_stm_flash_unlock_sector_t &a, const sbp_msg_stm_flash_unlock_sector_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.sector != b.sector) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_stm_flash_unlock_sector_t &a, const sbp_msg_stm_flash_unlock_sector_t &b) {
+  return !(a == b);
+}
+#endif
   /** Read device's hardcoded unique ID request (host => device)
 
    *
@@ -703,6 +845,20 @@ static inline bool sbp_unpack_sbp_msg_stm_unique_id_req_t(const u8 *buf, size_t 
   
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_stm_unique_id_req_t &a, const sbp_msg_stm_unique_id_req_t &b) {
+  (void)a;
+  (void)b;
+  
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_stm_unique_id_req_t &a, const sbp_msg_stm_unique_id_req_t &b) {
+  return !(a == b);
+}
+#endif
   /** Read device's hardcoded unique ID response (host <= device)
 
    *
@@ -769,6 +925,25 @@ static inline bool sbp_unpack_sbp_msg_stm_unique_id_resp_t(const u8 *buf, size_t
 		}
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_stm_unique_id_resp_t &a, const sbp_msg_stm_unique_id_resp_t &b) {
+  (void)a;
+  (void)b;
+  
+        for (size_t stm_id_idx = 0; stm_id_idx < 12; stm_id_idx++)
+        {
+            
+    if (a.stm_id[stm_id_idx] != b.stm_id[stm_id_idx]) { return false; }
+        }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_stm_unique_id_resp_t &a, const sbp_msg_stm_unique_id_resp_t &b) {
+  return !(a == b);
+}
+#endif
   /** Write M25 flash status register (host => device)
    *
  * The flash status message writes to the 8-bit M25 flash status
@@ -832,6 +1007,25 @@ static inline bool sbp_unpack_sbp_msg_m25_flash_write_status_t(const u8 *buf, si
 		}
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_m25_flash_write_status_t &a, const sbp_msg_m25_flash_write_status_t &b) {
+  (void)a;
+  (void)b;
+  
+        for (size_t status_idx = 0; status_idx < 1; status_idx++)
+        {
+            
+    if (a.status[status_idx] != b.status[status_idx]) { return false; }
+        }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_m25_flash_write_status_t &a, const sbp_msg_m25_flash_write_status_t &b) {
+  return !(a == b);
+}
+#endif
 
 
 #endif /* LIBSBP_FLASH_MESSAGES_H */

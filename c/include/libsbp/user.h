@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <endian.h>
+#include <math.h>
 
 #include <libsbp/common.h>
   /** User data
@@ -81,6 +82,26 @@ static inline bool sbp_unpack_sbp_msg_user_data_t(const u8 *buf, size_t len, sbp
 		}
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_user_data_t &a, const sbp_msg_user_data_t &b) {
+  (void)a;
+  (void)b;
+  
+          if (a.n_contents != b.n_contents) { return false; }
+        for (size_t contents_idx = 0; contents_idx < (size_t)a.n_contents; contents_idx++)
+        {
+            
+    if (a.contents[contents_idx] != b.contents[contents_idx]) { return false; }
+        }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_user_data_t &a, const sbp_msg_user_data_t &b) {
+  return !(a == b);
+}
+#endif
 
 
 #endif /* LIBSBP_USER_MESSAGES_H */

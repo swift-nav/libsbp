@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <endian.h>
+#include <math.h>
 
 #include <libsbp/common.h>
   /** Heading relative to True North
@@ -132,6 +133,28 @@ static inline bool sbp_unpack_sbp_msg_baseline_heading_t(const u8 *buf, size_t l
   offset += 1;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_baseline_heading_t &a, const sbp_msg_baseline_heading_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.tow != b.tow) { return false; }
+        
+    if (a.heading != b.heading) { return false; }
+        
+    if (a.n_sats != b.n_sats) { return false; }
+        
+    if (a.flags != b.flags) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_baseline_heading_t &a, const sbp_msg_baseline_heading_t &b) {
+  return !(a == b);
+}
+#endif
   /** Quaternion 4 component vector
    *
  * This message reports the quaternion vector describing the vehicle body frame's orientation
@@ -368,6 +391,40 @@ static inline bool sbp_unpack_sbp_msg_orient_quat_t(const u8 *buf, size_t len, s
   offset += 1;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_orient_quat_t &a, const sbp_msg_orient_quat_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.tow != b.tow) { return false; }
+        
+    if (a.w != b.w) { return false; }
+        
+    if (a.x != b.x) { return false; }
+        
+    if (a.y != b.y) { return false; }
+        
+    if (a.z != b.z) { return false; }
+        
+    if (fabs( a.w_accuracy - b.w_accuracy ) > 0.001) { return false; }
+        
+    if (fabs( a.x_accuracy - b.x_accuracy ) > 0.001) { return false; }
+        
+    if (fabs( a.y_accuracy - b.y_accuracy ) > 0.001) { return false; }
+        
+    if (fabs( a.z_accuracy - b.z_accuracy ) > 0.001) { return false; }
+        
+    if (a.flags != b.flags) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_orient_quat_t &a, const sbp_msg_orient_quat_t &b) {
+  return !(a == b);
+}
+#endif
   /** Euler angles
    *
  * This message reports the yaw, pitch, and roll angles of the vehicle body frame.
@@ -567,6 +624,36 @@ static inline bool sbp_unpack_sbp_msg_orient_euler_t(const u8 *buf, size_t len, 
   offset += 1;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_orient_euler_t &a, const sbp_msg_orient_euler_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.tow != b.tow) { return false; }
+        
+    if (a.roll != b.roll) { return false; }
+        
+    if (a.pitch != b.pitch) { return false; }
+        
+    if (a.yaw != b.yaw) { return false; }
+        
+    if (fabs( a.roll_accuracy - b.roll_accuracy ) > 0.001) { return false; }
+        
+    if (fabs( a.pitch_accuracy - b.pitch_accuracy ) > 0.001) { return false; }
+        
+    if (fabs( a.yaw_accuracy - b.yaw_accuracy ) > 0.001) { return false; }
+        
+    if (a.flags != b.flags) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_orient_euler_t &a, const sbp_msg_orient_euler_t &b) {
+  return !(a == b);
+}
+#endif
   /** Vehicle Body Frame instantaneous angular rates
    *
  * This message reports the orientation rates in the vehicle body frame. 
@@ -719,6 +806,30 @@ static inline bool sbp_unpack_sbp_msg_angular_rate_t(const u8 *buf, size_t len, 
   offset += 1;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_angular_rate_t &a, const sbp_msg_angular_rate_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.tow != b.tow) { return false; }
+        
+    if (a.x != b.x) { return false; }
+        
+    if (a.y != b.y) { return false; }
+        
+    if (a.z != b.z) { return false; }
+        
+    if (a.flags != b.flags) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_angular_rate_t &a, const sbp_msg_angular_rate_t &b) {
+  return !(a == b);
+}
+#endif
 
 
 #endif /* LIBSBP_ORIENTATION_MESSAGES_H */

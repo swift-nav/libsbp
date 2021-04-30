@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <endian.h>
+#include <math.h>
 
 #include <libsbp/common.h>
   /** Read file from the file system (host => device)
@@ -116,6 +117,27 @@ static inline bool sbp_unpack_sbp_msg_fileio_read_req_t(const u8 *buf, size_t le
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->filename, "nul");
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.sequence != b.sequence) { return false; }
+        
+    if (a.offset != b.offset) { return false; }
+        
+    if (a.chunk_size != b.chunk_size) { return false; }
+        if (sbp_strcmp(a.filename, b.filename, "nul") != 0) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b) {
+  return !(a == b);
+}
+#endif
   /** File read from the file system (host <= device)
    *
  * The file read message reads a certain length (up to 255 bytes)
@@ -210,6 +232,28 @@ static inline bool sbp_unpack_sbp_msg_fileio_read_resp_t(const u8 *buf, size_t l
 		}
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.sequence != b.sequence) { return false; }
+          if (a.n_contents != b.n_contents) { return false; }
+        for (size_t contents_idx = 0; contents_idx < (size_t)a.n_contents; contents_idx++)
+        {
+            
+    if (a.contents[contents_idx] != b.contents[contents_idx]) { return false; }
+        }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b) {
+  return !(a == b);
+}
+#endif
   /** List files in a directory (host => device)
    *
  * The read directory message lists the files in a directory on the
@@ -303,6 +347,25 @@ static inline bool sbp_unpack_sbp_msg_fileio_read_dir_req_t(const u8 *buf, size_
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->dirname, "nul");
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.sequence != b.sequence) { return false; }
+        
+    if (a.offset != b.offset) { return false; }
+        if (sbp_strcmp(a.dirname, b.dirname, "nul") != 0) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b) {
+  return !(a == b);
+}
+#endif
   /** Files listed in a directory (host <= device)
    *
  * The read directory message lists the files in a directory on the
@@ -398,6 +461,28 @@ static inline bool sbp_unpack_sbp_msg_fileio_read_dir_resp_t(const u8 *buf, size
 		}
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.sequence != b.sequence) { return false; }
+          if (a.n_contents != b.n_contents) { return false; }
+        for (size_t contents_idx = 0; contents_idx < (size_t)a.n_contents; contents_idx++)
+        {
+            
+    if (a.contents[contents_idx] != b.contents[contents_idx]) { return false; }
+        }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b) {
+  return !(a == b);
+}
+#endif
   /** Delete a file from the file system (host => device)
    *
  * The file remove message deletes a file from the file system.
@@ -449,6 +534,21 @@ static inline bool sbp_unpack_sbp_msg_fileio_remove_t(const u8 *buf, size_t len,
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->filename, "nul");
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
+  (void)a;
+  (void)b;
+  
+        if (sbp_strcmp(a.filename, b.filename, "nul") != 0) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b) {
+  return !(a == b);
+}
+#endif
   /** Write to file (host => device)
    *
  * The file write message writes a certain length (up to 255 bytes)
@@ -576,6 +676,31 @@ static inline bool sbp_unpack_sbp_msg_fileio_write_req_t(const u8 *buf, size_t l
 		}
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_fileio_write_req_t &a, const sbp_msg_fileio_write_req_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.sequence != b.sequence) { return false; }
+        
+    if (a.offset != b.offset) { return false; }
+        if (sbp_strcmp(a.filename, b.filename, "nul") != 0) { return false; }
+          if (a.n_data != b.n_data) { return false; }
+        for (size_t data_idx = 0; data_idx < (size_t)a.n_data; data_idx++)
+        {
+            
+    if (a.data[data_idx] != b.data[data_idx]) { return false; }
+        }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_fileio_write_req_t &a, const sbp_msg_fileio_write_req_t &b) {
+  return !(a == b);
+}
+#endif
   /** File written to (host <= device)
    *
  * The file write message writes a certain length (up to 255 bytes)
@@ -634,6 +759,22 @@ static inline bool sbp_unpack_sbp_msg_fileio_write_resp_t(const u8 *buf, size_t 
   offset += 4;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_fileio_write_resp_t &a, const sbp_msg_fileio_write_resp_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.sequence != b.sequence) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_fileio_write_resp_t &a, const sbp_msg_fileio_write_resp_t &b) {
+  return !(a == b);
+}
+#endif
   /** Request advice on the optimal configuration for FileIO.
    *
  * Requests advice on the optimal configuration for a FileIO 
@@ -691,6 +832,22 @@ static inline bool sbp_unpack_sbp_msg_fileio_config_req_t(const u8 *buf, size_t 
   offset += 4;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_fileio_config_req_t &a, const sbp_msg_fileio_config_req_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.sequence != b.sequence) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_fileio_config_req_t &a, const sbp_msg_fileio_config_req_t &b) {
+  return !(a == b);
+}
+#endif
   /** Response with advice on the optimal configuration for FileIO.
 
    *
@@ -803,6 +960,28 @@ static inline bool sbp_unpack_sbp_msg_fileio_config_resp_t(const u8 *buf, size_t
   offset += 4;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_fileio_config_resp_t &a, const sbp_msg_fileio_config_resp_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.sequence != b.sequence) { return false; }
+        
+    if (a.window_size != b.window_size) { return false; }
+        
+    if (a.batch_size != b.batch_size) { return false; }
+        
+    if (a.fileio_version != b.fileio_version) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_fileio_config_resp_t &a, const sbp_msg_fileio_config_resp_t &b) {
+  return !(a == b);
+}
+#endif
 
 
 #endif /* LIBSBP_FILE_IO_MESSAGES_H */

@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <endian.h>
+#include <math.h>
 
 #include <libsbp/common.h>
   /** Reports timestamped external pin event
@@ -162,6 +163,30 @@ static inline bool sbp_unpack_sbp_msg_ext_event_t(const u8 *buf, size_t len, sbp
   offset += 1;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_ext_event_t &a, const sbp_msg_ext_event_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.wn != b.wn) { return false; }
+        
+    if (a.tow != b.tow) { return false; }
+        
+    if (a.ns_residual != b.ns_residual) { return false; }
+        
+    if (a.flags != b.flags) { return false; }
+        
+    if (a.pin != b.pin) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_ext_event_t &a, const sbp_msg_ext_event_t &b) {
+  return !(a == b);
+}
+#endif
 
 
 #endif /* LIBSBP_EXT_EVENTS_MESSAGES_H */

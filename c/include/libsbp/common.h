@@ -69,6 +69,16 @@ static inline size_t sbp_strlen(const char *str, const char *termination) {
   assert(0 && "Unknown termination");
 }
 
+static inline int sbp_strcmp(const char *a, const char *b, const char *termination) {
+  size_t len = sbp_strlen(a, termination);
+  for (size_t i = 0; i < len; i++)
+  {
+    if (a[i] < b[i]) { return -1; }
+    if (a[i] > b[i]) { return 1; }
+  }
+  return 0;
+}
+
 static inline size_t sbp_pack_string_sections(char *out, const char *str,
                                               size_t n,
                                               bool optional_final_section) {

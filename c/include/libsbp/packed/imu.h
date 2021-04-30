@@ -66,8 +66,8 @@ SBP_PACK_START
  * 
  * The time-tagging mode should not change throughout a run.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_IMU_RAW 0x0900
+typedef struct SBP_ATTR_PACKED {
   
   /** 
     * Milliseconds since reference epoch and time status. 
@@ -162,8 +162,8 @@ typedef struct SBP_ATTR_PACKED {
  * always be consistent but the rest of the payload is device specific and
  * depends on the value of `imu_type`.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_IMU_AUX 0x0901
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * IMU type 

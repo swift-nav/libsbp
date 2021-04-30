@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <endian.h>
+#include <math.h>
 
 #include <libsbp/common.h>
   /** Bootloading handshake request (host => device)
@@ -46,6 +47,20 @@ static inline bool sbp_unpack_sbp_msg_bootloader_handshake_req_t(const u8 *buf, 
   
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_bootloader_handshake_req_t &a, const sbp_msg_bootloader_handshake_req_t &b) {
+  (void)a;
+  (void)b;
+  
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_bootloader_handshake_req_t &a, const sbp_msg_bootloader_handshake_req_t &b) {
+  return !(a == b);
+}
+#endif
   /** Bootloading handshake response (host <= device)
    *
  * The handshake message response from the device establishes a
@@ -138,6 +153,23 @@ static inline bool sbp_unpack_sbp_msg_bootloader_handshake_resp_t(const u8 *buf,
     offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->version, "none");
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_bootloader_handshake_resp_t &a, const sbp_msg_bootloader_handshake_resp_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.flags != b.flags) { return false; }
+        if (sbp_strcmp(a.version, b.version, "none") != 0) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_bootloader_handshake_resp_t &a, const sbp_msg_bootloader_handshake_resp_t &b) {
+  return !(a == b);
+}
+#endif
   /** Bootloader jump to application (host => device)
    *
  * The host initiates the bootloader to jump to the application.
@@ -191,6 +223,22 @@ static inline bool sbp_unpack_sbp_msg_bootloader_jump_to_app_t(const u8 *buf, si
   offset += 1;
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_bootloader_jump_to_app_t &a, const sbp_msg_bootloader_jump_to_app_t &b) {
+  (void)a;
+  (void)b;
+  
+        
+    if (a.jump != b.jump) { return false; }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_bootloader_jump_to_app_t &a, const sbp_msg_bootloader_jump_to_app_t &b) {
+  return !(a == b);
+}
+#endif
   /** Read FPGA device ID over UART request (host => device)
    *
  * The device message from the host reads a unique device
@@ -232,6 +280,20 @@ static inline bool sbp_unpack_sbp_msg_nap_device_dna_req_t(const u8 *buf, size_t
   
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_nap_device_dna_req_t &a, const sbp_msg_nap_device_dna_req_t &b) {
+  (void)a;
+  (void)b;
+  
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_nap_device_dna_req_t &a, const sbp_msg_nap_device_dna_req_t &b) {
+  return !(a == b);
+}
+#endif
   /** Read FPGA device ID over UART response (host <= device)
    *
  * The device message from the host reads a unique device
@@ -300,6 +362,25 @@ static inline bool sbp_unpack_sbp_msg_nap_device_dna_resp_t(const u8 *buf, size_
 		}
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_nap_device_dna_resp_t &a, const sbp_msg_nap_device_dna_resp_t &b) {
+  (void)a;
+  (void)b;
+  
+        for (size_t dna_idx = 0; dna_idx < 8; dna_idx++)
+        {
+            
+    if (a.dna[dna_idx] != b.dna[dna_idx]) { return false; }
+        }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_nap_device_dna_resp_t &a, const sbp_msg_nap_device_dna_resp_t &b) {
+  return !(a == b);
+}
+#endif
   /** Deprecated
    *
 * Deprecated.
@@ -372,6 +453,26 @@ static inline bool sbp_unpack_sbp_msg_bootloader_handshake_dep_a_t(const u8 *buf
 		}
   return true;
 }
+
+#ifdef __cplusplus
+static inline bool operator== ( const sbp_msg_bootloader_handshake_dep_a_t &a, const sbp_msg_bootloader_handshake_dep_a_t &b) {
+  (void)a;
+  (void)b;
+  
+          if (a.n_handshake != b.n_handshake) { return false; }
+        for (size_t handshake_idx = 0; handshake_idx < (size_t)a.n_handshake; handshake_idx++)
+        {
+            
+    if (a.handshake[handshake_idx] != b.handshake[handshake_idx]) { return false; }
+        }
+
+  return true;
+}
+
+static inline bool operator!=(const sbp_msg_bootloader_handshake_dep_a_t &a, const sbp_msg_bootloader_handshake_dep_a_t &b) {
+  return !(a == b);
+}
+#endif
 
 
 #endif /* LIBSBP_BOOTLOAD_MESSAGES_H */

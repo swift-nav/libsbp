@@ -81,8 +81,8 @@ SBP_PACK_START
  * (but lacking the ns field) and indicates a more precise time of
  * these messages.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_GPS_TIME               0x0102
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS week number [weeks] 
@@ -138,8 +138,8 @@ typedef struct SBP_ATTR_PACKED {
  * (but lacking the ns field) and indicates a more precise time of
  * these messages.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_GPS_TIME_GNSS          0x0104
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS week number [weeks] 
@@ -198,8 +198,8 @@ typedef struct SBP_ATTR_PACKED {
  * This message reports the Universal Coordinated Time (UTC).  Note the flags
  * which indicate the source of the UTC offset value and source of the time fix.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_UTC_TIME               0x0103
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Indicates source and time validity 
@@ -282,8 +282,8 @@ typedef struct SBP_ATTR_PACKED {
  * This message reports the Universal Coordinated Time (UTC).  Note the flags
  * which indicate the source of the UTC offset value and source of the time fix.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_UTC_TIME_GNSS          0x0105
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * Indicates source and time validity 
@@ -369,8 +369,8 @@ typedef struct SBP_ATTR_PACKED {
  * precision.  The flags field indicated whether the DOP reported
  * corresponds to differential or SPP solution.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_DOPS                   0x0208
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -465,8 +465,8 @@ typedef struct SBP_ATTR_PACKED {
  * baseline vector. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_POS_ECEF               0x0209
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -562,8 +562,8 @@ typedef struct SBP_ATTR_PACKED {
  * baseline vector. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_POS_ECEF_COV           0x0214
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -683,8 +683,8 @@ typedef struct SBP_ATTR_PACKED {
  * GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_POS_LLH                0x020A
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -784,8 +784,8 @@ typedef struct SBP_ATTR_PACKED {
  * with that convention. Thus, covariances are reported against the "downward"
  * measurement and care should be taken with the sign convention.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_POS_LLH_COV            0x0211
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -873,8 +873,8 @@ typedef struct SBP_ATTR_PACKED {
  * full GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_BASELINE_ECEF          0x020B
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -938,8 +938,8 @@ typedef struct SBP_ATTR_PACKED {
  * base station position.  The full GPS time is given by the
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_BASELINE_NED           0x020C
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -1031,8 +1031,8 @@ typedef struct SBP_ATTR_PACKED {
  * (ECEF) coordinates. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_VEL_ECEF               0x020D
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -1119,8 +1119,8 @@ typedef struct SBP_ATTR_PACKED {
  * (ECEF) coordinates. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_VEL_ECEF_COV           0x0215
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -1233,8 +1233,8 @@ typedef struct SBP_ATTR_PACKED {
  * tangent plane centered at the current position. The full GPS time is
  * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_VEL_NED                0x020E
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -1329,8 +1329,8 @@ typedef struct SBP_ATTR_PACKED {
  * This message is similar to the MSG_VEL_NED, but it includes the upper triangular
  * portion of the 3x3 covariance matrix.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_VEL_NED_COV            0x0212
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -1423,8 +1423,8 @@ typedef struct SBP_ATTR_PACKED {
  * baseline vector. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_POS_ECEF_GNSS          0x0229
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -1493,8 +1493,8 @@ typedef struct SBP_ATTR_PACKED {
  * baseline vector. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_POS_ECEF_COV_GNSS      0x0234
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -1587,8 +1587,8 @@ typedef struct SBP_ATTR_PACKED {
  * GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_POS_LLH_GNSS           0x022A
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -1662,8 +1662,8 @@ typedef struct SBP_ATTR_PACKED {
  * with that convention. Thus, covariances are reported against the "downward"
  * measurement and care should be taken with the sign convention.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_POS_LLH_COV_GNSS       0x0231
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -1748,8 +1748,8 @@ typedef struct SBP_ATTR_PACKED {
  * (ECEF) coordinates. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_VEL_ECEF_GNSS          0x022D
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -1809,8 +1809,8 @@ typedef struct SBP_ATTR_PACKED {
  * (ECEF) coordinates. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_VEL_ECEF_COV_GNSS      0x0235
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -1896,8 +1896,8 @@ typedef struct SBP_ATTR_PACKED {
  * tangent plane centered at the current position. The full GPS time is
  * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_VEL_NED_GNSS           0x022E
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -1965,8 +1965,8 @@ typedef struct SBP_ATTR_PACKED {
  * This message is similar to the MSG_VEL_NED, but it includes the upper triangular
  * portion of the 3x3 covariance matrix.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_VEL_NED_COV_GNSS       0x0232
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -2070,8 +2070,8 @@ typedef struct SBP_ATTR_PACKED {
  * matching time-of-week (tow). This message is only produced by inertial versions of Swift
  * products and is not available from Piksi Multi or Duro.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_VEL_BODY               0x0213
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -2141,8 +2141,8 @@ typedef struct SBP_ATTR_PACKED {
  * This message reports the Age of the corrections used for the current
  * Differential solution
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_AGE_CORRECTIONS        0x0210
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -2173,8 +2173,8 @@ typedef struct SBP_ATTR_PACKED {
  * (but lacking the ns field) and indicates a more precise time of
  * these messages.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_GPS_TIME_DEP_A         0x0100
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS week number [weeks] 
@@ -2206,8 +2206,8 @@ typedef struct SBP_ATTR_PACKED {
  * navigation satellite geometry on positional measurement
  * precision.
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_DOPS_DEP_A             0x0206
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -2293,8 +2293,8 @@ typedef struct SBP_ATTR_PACKED {
  * baseline vector. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_POS_ECEF_DEP_A         0x0200
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -2399,8 +2399,8 @@ typedef struct SBP_ATTR_PACKED {
  * GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_POS_LLH_DEP_A          0x0201
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -2494,8 +2494,8 @@ typedef struct SBP_ATTR_PACKED {
  * full GPS time is given by the preceding MSG_GPS_TIME with the
  * matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_BASELINE_ECEF_DEP_A    0x0202
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -2583,8 +2583,8 @@ typedef struct SBP_ATTR_PACKED {
  * base station position.  The full GPS time is given by the
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_BASELINE_NED_DEP_A     0x0203
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -2637,8 +2637,8 @@ typedef struct SBP_ATTR_PACKED {
  * (ECEF) coordinates. The full GPS time is given by the preceding
  * MSG_GPS_TIME with the matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_VEL_ECEF_DEP_A         0x0204
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -2686,8 +2686,8 @@ typedef struct SBP_ATTR_PACKED {
  * tangent plane centered at the current position. The full GPS time is
  * given by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_VEL_NED_DEP_A          0x0205
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -2779,8 +2779,8 @@ typedef struct SBP_ATTR_PACKED {
  * to the rover relative to True North. The full GPS time is given by the
  * preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_BASELINE_HEADING_DEP_A 0x0207
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
@@ -2826,8 +2826,8 @@ typedef struct SBP_ATTR_PACKED {
  * associated with a given LLH position solution. The full GPS time is given
  * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
-typedef struct SBP_ATTR_PACKED {
 #define SBP_MSG_PROTECTION_LEVEL       0x0216
+typedef struct SBP_ATTR_PACKED {
   
   /** 
    * GPS Time of Week [ms] 
