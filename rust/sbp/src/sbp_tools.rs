@@ -1,10 +1,13 @@
+#[cfg(feature = "swiftnav-rs")]
 use swiftnav_rs::time::GpsTime;
 
+#[cfg(feature = "swiftnav-rs")]
 use crate::{
-    messages::{SBPMessage, SBP},
+    messages::SBPMessage,
     time::{MessageTime, RoverTime},
-    Result,
 };
+
+use crate::{messages::SBP, Result};
 
 pub trait SBPTools: Iterator {
     fn ignore_errors(self) -> HandleErrorsIter<Self, fn(&crate::Error) -> bool>
