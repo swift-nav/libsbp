@@ -152,13 +152,17 @@ typedef struct
   /**
    * variable length wrapped binary message
    */
-  char fwd_payload[254];
+  char fwd_payload[253];
+  /**
+   * Number of items in fwd_payload
+   */
+  u8 n_fwd_payload;
 } sbp_msg_fwd_t;
 
 static inline size_t sbp_packed_size_sbp_msg_fwd_t(const sbp_msg_fwd_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->source) + sizeof(msg->protocol) + sbp_strlen(msg->fwd_payload, "none");
+  return 0 + sizeof(msg->source) + sizeof(msg->protocol) + (msg->n_fwd_payload * sizeof(msg->fwd_payload[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_fwd_t(u8 *buf, size_t len, const sbp_msg_fwd_t *msg)
@@ -190,12 +194,18 @@ static inline bool sbp_pack_sbp_msg_fwd_t(u8 *buf, size_t len, const sbp_msg_fwd
   memcpy(buf + offset, &msgprotocol, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  if (offset + sbp_strlen(msg->fwd_payload, "none") > len)
+  for (size_t msgfwd_payload_idx = 0; msgfwd_payload_idx < (size_t)msg->n_fwd_payload; msgfwd_payload_idx++)
   {
-    return false;
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    char msgfwd_payloadmsgfwd_payload_idx = msg->fwd_payload[msgfwd_payload_idx];
+    memcpy(buf + offset, &msgfwd_payloadmsgfwd_payload_idx, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
   }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->fwd_payload, "none");
   return true;
 }
 
@@ -222,8 +232,19 @@ static inline bool sbp_unpack_sbp_msg_fwd_t(const u8 *buf, size_t len, sbp_msg_f
   memcpy(&msg->protocol, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->fwd_payload, "none");
+  msg->n_fwd_payload = (u8)((len - offset) / 1);
+
+  for (size_t msgfwd_payload_idx = 0; msgfwd_payload_idx < msg->n_fwd_payload; msgfwd_payload_idx++)
+  {
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    memcpy(&msg->fwd_payload[msgfwd_payload_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
+  }
   return true;
 }
 
@@ -242,9 +263,17 @@ static inline bool operator==(const sbp_msg_fwd_t &a, const sbp_msg_fwd_t &b)
   {
     return false;
   }
-  if (sbp_strcmp(a.fwd_payload, b.fwd_payload, "none") != 0)
+  if (a.n_fwd_payload != b.n_fwd_payload)
   {
     return false;
+  }
+  for (size_t fwd_payload_idx = 0; fwd_payload_idx < (size_t)a.n_fwd_payload; fwd_payload_idx++)
+  {
+
+    if (a.fwd_payload[fwd_payload_idx] != b.fwd_payload[fwd_payload_idx])
+    {
+      return false;
+    }
   }
 
   return true;
