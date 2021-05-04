@@ -86,7 +86,7 @@ extern "C"
                                        u16 frame_len,
                                        u8 frame[],
                                        void *context);
-  typedef void (*sbp_unpacked_callback_t)(u16 sender_id, const sbp_msg_t *msg, void *context);
+  typedef void (*sbp_unpacked_callback_t)(u16 sender_id, u16 msg_type, const sbp_msg_t *msg, void *context);
 
   typedef union
   {
@@ -198,6 +198,7 @@ extern "C"
                       s32 (*write)(u8 *buff, u32 n, void *context));
   s8 sbp_pack_and_send_message(sbp_state_t *s,
                                u16 sender_id,
+                               u16 msg_type,
                                const sbp_msg_t *msg,
                                s32 (*write)(u8 *buff, u32 n, void *context));
 

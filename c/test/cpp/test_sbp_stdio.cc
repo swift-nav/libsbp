@@ -24,10 +24,10 @@ struct SbpHeaderParams
   sbp_msg_obs_t msg;
 };
 
-class MsgObsHandler : private sbp::MessageHandler<sbp_msg_obs_t, msg_obs_t>
+class MsgObsHandler : private sbp::MessageHandler<sbp_msg_obs_t>
 {
 public:
-  explicit MsgObsHandler(sbp::State *state) : sbp::MessageHandler<sbp_msg_obs_t, msg_obs_t>(state), state_(state)
+  explicit MsgObsHandler(sbp::State *state) : sbp::MessageHandler<sbp_msg_obs_t>(state), state_(state)
   {
   }
 
@@ -40,9 +40,8 @@ public:
   void write_message() const
   {
     sbp_msg_t msg;
-    msg.type = SBP_MSG_OBS;
     msg.MSG_OBS = header_params_.msg;
-    state_->send_message(header_params_.sender_id, msg);
+    state_->send_message(header_params_.sender_id, SBP_MSG_OBS, msg);
   }
 
   SbpHeaderParams get_header_params()

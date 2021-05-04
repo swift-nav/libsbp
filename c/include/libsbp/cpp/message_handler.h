@@ -26,7 +26,6 @@ namespace sbp
  * A convenience type alias for class member functions that accept SBP message
  * callbacks
  */
-template <typename ClassT, typename ArgT> using CallbackMemFn = void (ClassT::*)(uint16_t, uint8_t, const ArgT &);
 template <typename ClassT, typename ArgT> using CallbackUnpackedFn = void (ClassT::*)(uint16_t, const ArgT &);
 
 /**
@@ -47,22 +46,14 @@ template <typename ClassT, typename ArgT> using CallbackUnpackedFn = void (Class
  * @param msg The raw message payload
  * @param context Pointer to an instance of `ClassT` to call `func` on
  */
-template <typename MsgT, typename ClassT, CallbackMemFn<ClassT, MsgT> func>
-inline void sbp_cb_passthrough(uint16_t sender_id, uint8_t len, uint8_t msg[], void *context)
-{
-  assert(nullptr != context);
-
-  auto instance = static_cast<ClassT *>(context);
-  auto val = reinterpret_cast<MsgT *>(msg); // NOLINT
-  ((*instance).*(func))(sender_id, len, *val);
-}
 template <typename MsgT, typename ClassT, CallbackUnpackedFn<ClassT, MsgT> func>
-inline void sbp_unpacked_cb_passthrough(uint16_t sender_id, const sbp_msg_t *msg, void *context)
+inline void sbp_unpacked_cb_passthrough(uint16_t sender_id, uint16_t msg_type, const sbp_msg_t *msg, void *context)
 {
+  (void)msg_type;
   assert(nullptr != context);
 
   auto instance = static_cast<ClassT *>(context);
-  auto val = reinterpret_cast<const MsgT *>(&msg->MSG_ACQ_RESULT);
+  auto val = reinterpret_cast<const MsgT *>(msg);
   ((*instance).*(func))(sender_id, *val);
 }
 
@@ -103,17 +94,12 @@ public:
 protected:
   void register_callback(sbp_state_t *state, sbp_msg_callbacks_node_t nodes[])
   {
-    sbp_register_callback(state,
-                          sbp::MessageTraits<MsgType>::id,
-                          &sbp_cb_passthrough<MsgType, CallbackInterface, &CallbackInterface::handle_sbp_msg>,
-                          this,
-                          &nodes[0]);
     sbp_register_unpacked_callback(
         state,
         sbp::MessageTraits<MsgType>::id,
         &sbp_unpacked_cb_passthrough<MsgType, CallbackInterface, &CallbackInterface::handle_sbp_msg>,
         this,
-        &nodes[1]);
+        &nodes[0]);
     CallbackInterface<OtherTypes...>::register_callback(state, &nodes[2]);
   }
 };
@@ -139,17 +125,12 @@ public:
 protected:
   void register_callback(sbp_state_t *state, sbp_msg_callbacks_node_t nodes[])
   {
-    sbp_register_callback(state,
-                          sbp::MessageTraits<MsgType>::id,
-                          &sbp_cb_passthrough<MsgType, CallbackInterface, &CallbackInterface::handle_sbp_msg>,
-                          this,
-                          &nodes[0]);
     sbp_register_unpacked_callback(
         state,
         sbp::MessageTraits<MsgType>::id,
         &sbp_unpacked_cb_passthrough<MsgType, CallbackInterface, &CallbackInterface::handle_sbp_msg>,
         this,
-        &nodes[1]);
+        &nodes[0]);
   }
 };
 
@@ -197,7 +178,7 @@ protected:
  */
 template <typename... MsgTypes> class MessageHandler : public details::CallbackInterface<MsgTypes...>
 {
-  static constexpr size_t kMsgCount = 2 * sizeof...(MsgTypes);
+  static constexpr size_t kMsgCount = sizeof...(MsgTypes);
 
   State &state_;
   std::array<sbp_msg_callbacks_node_t, kMsgCount> callback_nodes_;

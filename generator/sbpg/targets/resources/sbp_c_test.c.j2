@@ -41,6 +41,7 @@ static struct {
 static struct {
   u32 n_callbacks_logged;
   u16 sender_id;
+  u16 msg_type;
   sbp_msg_t msg;
   void *context;
 } last_unpacked;
@@ -105,10 +106,11 @@ static void frame_callback(u16 sender_id, u16 msg_type, u8 msg_len, u8 msg[], u1
   last_frame.context = context;
 }
 
-static void unpacked_callback(u16 sender_id, const sbp_msg_t *msg, void *context)
+static void unpacked_callback(u16 sender_id, u16 msg_type, const sbp_msg_t *msg, void *context)
 {
   last_unpacked.n_callbacks_logged++;
   last_unpacked.sender_id = sender_id;
+  last_unpacked.msg_type = msg_type;
   last_unpacked.msg = *msg;
   last_unpacked.context = context;
 }
@@ -212,7 +214,6 @@ START_TEST( test_(((s.suite_name))) )
     u8 test_msg_len = 0;
     sbp_msg_t test_unpacked_msg;
     memset(&test_unpacked_msg, 0, sizeof(test_unpacked_msg));
-    test_unpacked_msg.type = SBP_(((t.msg_type_name|convert_upper)));
     ((*- if t.fields *))
     (((t.msg_type_name|convert_packed)))* test_msg = ( (((t.msg_type_name|convert_packed)))* )test_msg_storage;
     test_msg_len = sizeof(*test_msg);
@@ -274,7 +275,7 @@ START_TEST( test_(((s.suite_name))) )
     dummy_reset();
     logging_reset();
 
-    sbp_pack_and_send_message(&sbp_state, (((t.raw_json_obj.sender))), &test_unpacked_msg, &dummy_write);
+    sbp_pack_and_send_message(&sbp_state, (((t.raw_json_obj.sender))), SBP_(((t.msg_type_name|convert_upper))), &test_unpacked_msg, &dummy_write);
 
     ck_assert_msg(test_msg_len == sizeof(encoded_frame) - 8,
         "Test message has not been generated correctly, or the encoded frame from the spec is badly defined. Check your test spec");
