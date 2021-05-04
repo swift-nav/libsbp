@@ -14,8 +14,8 @@
 // modify by hand!
 
 #include <check.h>
-#include <libsbp/packed/vehicle.h>
 #include <libsbp/sbp.h>
+#include <libsbp/unpacked/vehicle.h>
 #include <libsbp/vehicle.h>
 #include <stdio.h>  // for debugging
 #include <stdlib.h> // for malloc

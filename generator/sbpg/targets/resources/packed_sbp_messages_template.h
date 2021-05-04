@@ -26,7 +26,7 @@
 #include <libsbp/common.h>
 
 ((*- for i in include *))
-#include <libsbp/packed/(((i)))>
+#include <libsbp/(((i)))>
 ((*- endfor *))
 
 SBP_PACK_START

@@ -15,8 +15,8 @@
 
 #include <check.h>
 #include <libsbp/logging.h>
-#include <libsbp/packed/logging.h>
 #include <libsbp/sbp.h>
+#include <libsbp/unpacked/logging.h>
 #include <stdio.h>  // for debugging
 #include <stdlib.h> // for malloc
 

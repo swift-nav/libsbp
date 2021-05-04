@@ -1,15 +1,319 @@
-#ifndef LIBSBP_OBSERVATION_MESSAGES_H
-#define LIBSBP_OBSERVATION_MESSAGES_H
+/*
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: https://support.swiftnav.com
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
-#include <endian.h>
-#include <math.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <string.h>
+/*****************************************************************************
+ * Automatically generated from yaml/swiftnav/sbp/observation.yaml
+ * with generate.py. Please do not hand edit!
+ *****************************************************************************/
+
+/** \defgroup observation Observation
+ *
+ * * Satellite observation messages from the device. The SBP sender ID of 0 indicates remote observations from a GNSS
+ * base station, correction network, or Skylark, Swift's cloud GNSS correction product.
+ * \{ */
+
+#ifndef LIBSBP_PACKED_OBSERVATION_MESSAGES_H
+#define LIBSBP_PACKED_OBSERVATION_MESSAGES_H
 
 #include <libsbp/common.h>
 #include <libsbp/gnss.h>
+
+SBP_PACK_START
+
+/** Header for observation message.
+ *
+ * Header of a GNSS observation message.
+ */
+typedef struct SBP_ATTR_PACKED
+{
+
+  /**
+   * GNSS time of this observation
+   */
+  sbp_gps_time_t t;
+
+  /**
+   * Total number of observations. First nibble is the size
+   * of the sequence (n), second nibble is the zero-indexed
+   * counter (ith packet of n)
+   */
+  u8 n_obs;
+
+} observation_header_t;
+
+/** GNSS doppler measurement.
+ *
+ * Doppler measurement in Hz represented as a 24-bit
+ * fixed point number with Q16.8 layout, i.e. 16-bits of whole
+ * doppler and 8-bits of fractional doppler. This doppler is defined
+ * as positive for approaching satellites.
+ */
+typedef struct SBP_ATTR_PACKED
+{
+
+  /**
+   * Doppler whole Hz [Hz]
+   */
+  s16 i;
+
+  /**
+   * Doppler fractional part [Hz / 256]
+   */
+  u8 f;
+
+} doppler_t;
+
+#define SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_MASK (0x1)
+#define SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_SHIFT (7u)
+#define SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_GET(flags) \
+  (((flags) >> SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_SHIFT) & SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_MASK)
+#define SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= \
+     (((val) & (SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_MASK)) << (SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_SHIFT))); \
+  } while (0)
+
+#define SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_NO_EXCLUSION (0)
+#define SBP_PACKEDOBSCONTENT_RAIM_EXCLUSION_MEASUREMENT_WAS_EXCLUDED_BY_SPP_RAIM_USE_WITH_CARE (1)
+#define SBP_PACKEDOBSCONTENT_DOPPLER_VALID_MASK (0x1)
+#define SBP_PACKEDOBSCONTENT_DOPPLER_VALID_SHIFT (3u)
+#define SBP_PACKEDOBSCONTENT_DOPPLER_VALID_GET(flags) \
+  (((flags) >> SBP_PACKEDOBSCONTENT_DOPPLER_VALID_SHIFT) & SBP_PACKEDOBSCONTENT_DOPPLER_VALID_MASK)
+#define SBP_PACKEDOBSCONTENT_DOPPLER_VALID_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= (((val) & (SBP_PACKEDOBSCONTENT_DOPPLER_VALID_MASK)) << (SBP_PACKEDOBSCONTENT_DOPPLER_VALID_SHIFT))); \
+  } while (0)
+
+#define SBP_PACKEDOBSCONTENT_DOPPLER_VALID_INVALID_DOPPLER_MEASUREMENT (0)
+#define SBP_PACKEDOBSCONTENT_DOPPLER_VALID_VALID_DOPPLER_MEASUREMENT (1)
+#define SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_MASK (0x1)
+#define SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_SHIFT (2u)
+#define SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_GET(flags) \
+  (((flags) >> SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_SHIFT) & SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_MASK)
+#define SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= \
+     (((val) & (SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_MASK)) << (SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_SHIFT))); \
+  } while (0)
+
+#define SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_HALF_CYCLE_PHASE_AMBIGUITY_UNRESOLVED (0)
+#define SBP_PACKEDOBSCONTENT_HALFCYCLE_AMBIGUITY_HALF_CYCLE_PHASE_AMBIGUITY_RESOLVED (1)
+#define SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_MASK (0x1)
+#define SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_SHIFT (1u)
+#define SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_GET(flags) \
+  (((flags) >> SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_SHIFT) & SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_MASK)
+#define SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= \
+     (((val) & (SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_MASK)) << (SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_SHIFT))); \
+  } while (0)
+
+#define SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_INVALID_CARRIER_PHASE_MEASUREMENT (0)
+#define SBP_PACKEDOBSCONTENT_CARRIER_PHASE_VALID_VALID_CARRIER_PHASE_MEASUREMENT (1)
+#define SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_MASK (0x1)
+#define SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_SHIFT (0u)
+#define SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_GET(flags) \
+  (((flags) >> SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_SHIFT) & SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_MASK)
+#define SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= \
+     (((val) & (SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_MASK)) << (SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_SHIFT))); \
+  } while (0)
+
+#define SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_INVALID_PSEUDORANGE_MEASUREMENT (0)
+#define SBP_PACKEDOBSCONTENT_PSEUDORANGE_VALID_VALID_PSEUDORANGE_MEASUREMENT_AND_COARSE_TOW_DECODED (1)
+/** GNSS observations for a particular satellite signal.
+ *
+ * Pseudorange and carrier phase observation for a satellite being tracked.
+ * The observations are interoperable with 3rd party receivers and conform with
+ * typical RTCM 3.1 message GPS/GLO observations.
+ *
+ * Carrier phase observations are not guaranteed to be aligned to the RINEX 3
+ * or RTCM 3.3 MSM reference signal and no 1/4 cycle adjustments are currently
+ * peformed.
+ */
+typedef struct SBP_ATTR_PACKED
+{
+
+  /**
+   * Pseudorange observation [2 cm]
+   */
+  u32 P;
+
+  /**
+   * Carrier phase observation with typical sign convention. [cycles]
+   */
+  carrier_phase_t L;
+
+  /**
+   * Doppler observation with typical sign convention. [Hz]
+   */
+  doppler_t D;
+
+  /**
+   * Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4]
+   */
+  u8 cn0;
+
+  /**
+   * Lock timer. This value gives an indication of the time
+   * for which a signal has maintained continuous phase lock.
+   * Whenever a signal has lost and regained lock, this
+   * value is reset to zero. It is encoded according to DF402 from
+   * the RTCM 10403.2 Amendment 2 specification.  Valid values range
+   * from 0 to 15 and the most significant nibble is reserved for future use.
+   */
+  u8 lock;
+
+  /**
+   * Measurement status flags. A bit field of flags providing the
+   * status of this observation.  If this field is 0 it means only the Cn0
+   * estimate for the signal is valid.
+   */
+  u8 flags;
+
+  /**
+   * GNSS signal identifier (16 bit)
+   */
+  sbp_gnss_signal_t sid;
+
+} packed_obs_content_t;
+
+#define SBP_PACKEDOSRCONTENT_INVALID_PHASE_CORRECTIONS_MASK (0x1)
+#define SBP_PACKEDOSRCONTENT_INVALID_PHASE_CORRECTIONS_SHIFT (4u)
+#define SBP_PACKEDOSRCONTENT_INVALID_PHASE_CORRECTIONS_GET(flags) \
+  (((flags) >> SBP_PACKEDOSRCONTENT_INVALID_PHASE_CORRECTIONS_SHIFT) & \
+   SBP_PACKEDOSRCONTENT_INVALID_PHASE_CORRECTIONS_MASK)
+#define SBP_PACKEDOSRCONTENT_INVALID_PHASE_CORRECTIONS_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= (((val) & (SBP_PACKEDOSRCONTENT_INVALID_PHASE_CORRECTIONS_MASK)) \
+                 << (SBP_PACKEDOSRCONTENT_INVALID_PHASE_CORRECTIONS_SHIFT))); \
+  } while (0)
+
+#define SBP_PACKEDOSRCONTENT_INVALID_PHASE_CORRECTIONS_VALID_PHASE_CORRECTIONS (0)
+#define SBP_PACKEDOSRCONTENT_INVALID_PHASE_CORRECTIONS_DO_NOT_USE_PHASE_CORRECTIONS (1)
+#define SBP_PACKEDOSRCONTENT_INVALID_CODE_CORRECTIONS_MASK (0x1)
+#define SBP_PACKEDOSRCONTENT_INVALID_CODE_CORRECTIONS_SHIFT (3u)
+#define SBP_PACKEDOSRCONTENT_INVALID_CODE_CORRECTIONS_GET(flags) \
+  (((flags) >> SBP_PACKEDOSRCONTENT_INVALID_CODE_CORRECTIONS_SHIFT) & \
+   SBP_PACKEDOSRCONTENT_INVALID_CODE_CORRECTIONS_MASK)
+#define SBP_PACKEDOSRCONTENT_INVALID_CODE_CORRECTIONS_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= (((val) & (SBP_PACKEDOSRCONTENT_INVALID_CODE_CORRECTIONS_MASK)) \
+                 << (SBP_PACKEDOSRCONTENT_INVALID_CODE_CORRECTIONS_SHIFT))); \
+  } while (0)
+
+#define SBP_PACKEDOSRCONTENT_INVALID_CODE_CORRECTIONS_VALID_CODE_CORRECTIONS (0)
+#define SBP_PACKEDOSRCONTENT_INVALID_CODE_CORRECTIONS_DO_NOT_USE_CODE_CORRECTIONS (1)
+#define SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_MASK (0x1)
+#define SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_SHIFT (2u)
+#define SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_GET(flags) \
+  (((flags) >> SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_SHIFT) & SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_MASK)
+#define SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= \
+     (((val) & (SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_MASK)) << (SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_SHIFT))); \
+  } while (0)
+
+#define SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_FULL_FIXING_UNAVAILABLE (0)
+#define SBP_PACKEDOSRCONTENT_FULL_FIXING_FLAG_FULL_FIXING_AVAILABLE (1)
+#define SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_MASK (0x1)
+#define SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_SHIFT (1u)
+#define SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_GET(flags) \
+  (((flags) >> SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_SHIFT) & SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_MASK)
+#define SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= \
+     (((val) & (SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_MASK)) << (SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_SHIFT))); \
+  } while (0)
+
+#define SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_PARTIAL_FIXING_UNAVAILABLE (0)
+#define SBP_PACKEDOSRCONTENT_PARTIAL_FIXING_FLAG_PARTIAL_FIXING_AVAILABLE (1)
+#define SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_MASK (0x1)
+#define SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_SHIFT (0u)
+#define SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_GET(flags) \
+  (((flags) >> SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_SHIFT) & SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_MASK)
+#define SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= \
+     (((val) & (SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_MASK)) << (SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_SHIFT))); \
+  } while (0)
+
+#define SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_DO_NOT_USE_SIGNAL (0)
+#define SBP_PACKEDOSRCONTENT_CORRECTION_VALIDITY_VALID_SIGNAL (1)
+/** Network correction for a particular satellite signal.
+ *
+ * Pseudorange and carrier phase network corrections for a satellite signal.
+ */
+typedef struct SBP_ATTR_PACKED
+{
+
+  /**
+   * Pseudorange observation [2 cm]
+   */
+  u32 P;
+
+  /**
+   * Carrier phase observation with typical sign convention. [cycles]
+   */
+  carrier_phase_t L;
+
+  /**
+   * Lock timer. This value gives an indication of the time
+   * for which a signal has maintained continuous phase lock.
+   * Whenever a signal has lost and regained lock, this
+   * value is reset to zero. It is encoded according to DF402 from
+   * the RTCM 10403.2 Amendment 2 specification.  Valid values range
+   * from 0 to 15 and the most significant nibble is reserved for future use.
+   */
+  u8 lock;
+
+  /**
+   * Correction flags.
+   */
+  u8 flags;
+
+  /**
+   * GNSS signal identifier (16 bit)
+   */
+  sbp_gnss_signal_t sid;
+
+  /**
+   * Slant ionospheric correction standard deviation [5 mm]
+   */
+  u16 iono_std;
+
+  /**
+   * Slant tropospheric correction standard deviation [5 mm]
+   */
+  u16 tropo_std;
+
+  /**
+   * Orbit/clock/bias correction projected on range standard deviation [5 mm]
+   */
+  u16 range_std;
+
+} packed_osr_content_t;
+
 /** GPS satellite observations
  *
  * The GPS observations message reports all the raw pseudorange and
@@ -21,597 +325,22 @@
  * with typical RTCMv3 GNSS observations.
  */
 #define SBP_MSG_OBS 0x004A
-
-#define SBP_OBS_OBS_FLAGS_RAIM_EXCLUSION_MASK (0x1)
-#define SBP_OBS_OBS_FLAGS_RAIM_EXCLUSION_SHIFT (7u)
-#define SBP_OBS_OBS_FLAGS_RAIM_EXCLUSION_GET(flags) \
-  (((flags) >> SBP_OBS_OBS_FLAGS_RAIM_EXCLUSION_SHIFT) & SBP_OBS_OBS_FLAGS_RAIM_EXCLUSION_MASK)
-#define SBP_OBS_OBS_FLAGS_RAIM_EXCLUSION_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_OBS_OBS_FLAGS_RAIM_EXCLUSION_MASK)) << (SBP_OBS_OBS_FLAGS_RAIM_EXCLUSION_SHIFT))); \
-  } while (0)
-
-#define SBP_OBS_OBS_FLAGS_RAIM_EXCLUSION_NO_EXCLUSION (0)
-#define SBP_OBS_OBS_FLAGS_RAIM_EXCLUSION_MEASUREMENT_WAS_EXCLUDED_BY_SPP_RAIM_USE_WITH_CARE (1)
-#define SBP_OBS_OBS_FLAGS_DOPPLER_VALID_MASK (0x1)
-#define SBP_OBS_OBS_FLAGS_DOPPLER_VALID_SHIFT (3u)
-#define SBP_OBS_OBS_FLAGS_DOPPLER_VALID_GET(flags) \
-  (((flags) >> SBP_OBS_OBS_FLAGS_DOPPLER_VALID_SHIFT) & SBP_OBS_OBS_FLAGS_DOPPLER_VALID_MASK)
-#define SBP_OBS_OBS_FLAGS_DOPPLER_VALID_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_OBS_OBS_FLAGS_DOPPLER_VALID_MASK)) << (SBP_OBS_OBS_FLAGS_DOPPLER_VALID_SHIFT))); \
-  } while (0)
-
-#define SBP_OBS_OBS_FLAGS_DOPPLER_VALID_INVALID_DOPPLER_MEASUREMENT (0)
-#define SBP_OBS_OBS_FLAGS_DOPPLER_VALID_VALID_DOPPLER_MEASUREMENT (1)
-#define SBP_OBS_OBS_FLAGS_HALFCYCLE_AMBIGUITY_MASK (0x1)
-#define SBP_OBS_OBS_FLAGS_HALFCYCLE_AMBIGUITY_SHIFT (2u)
-#define SBP_OBS_OBS_FLAGS_HALFCYCLE_AMBIGUITY_GET(flags) \
-  (((flags) >> SBP_OBS_OBS_FLAGS_HALFCYCLE_AMBIGUITY_SHIFT) & SBP_OBS_OBS_FLAGS_HALFCYCLE_AMBIGUITY_MASK)
-#define SBP_OBS_OBS_FLAGS_HALFCYCLE_AMBIGUITY_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= \
-     (((val) & (SBP_OBS_OBS_FLAGS_HALFCYCLE_AMBIGUITY_MASK)) << (SBP_OBS_OBS_FLAGS_HALFCYCLE_AMBIGUITY_SHIFT))); \
-  } while (0)
-
-#define SBP_OBS_OBS_FLAGS_HALFCYCLE_AMBIGUITY_HALF_CYCLE_PHASE_AMBIGUITY_UNRESOLVED (0)
-#define SBP_OBS_OBS_FLAGS_HALFCYCLE_AMBIGUITY_HALF_CYCLE_PHASE_AMBIGUITY_RESOLVED (1)
-#define SBP_OBS_OBS_FLAGS_CARRIER_PHASE_VALID_MASK (0x1)
-#define SBP_OBS_OBS_FLAGS_CARRIER_PHASE_VALID_SHIFT (1u)
-#define SBP_OBS_OBS_FLAGS_CARRIER_PHASE_VALID_GET(flags) \
-  (((flags) >> SBP_OBS_OBS_FLAGS_CARRIER_PHASE_VALID_SHIFT) & SBP_OBS_OBS_FLAGS_CARRIER_PHASE_VALID_MASK)
-#define SBP_OBS_OBS_FLAGS_CARRIER_PHASE_VALID_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= \
-     (((val) & (SBP_OBS_OBS_FLAGS_CARRIER_PHASE_VALID_MASK)) << (SBP_OBS_OBS_FLAGS_CARRIER_PHASE_VALID_SHIFT))); \
-  } while (0)
-
-#define SBP_OBS_OBS_FLAGS_CARRIER_PHASE_VALID_INVALID_CARRIER_PHASE_MEASUREMENT (0)
-#define SBP_OBS_OBS_FLAGS_CARRIER_PHASE_VALID_VALID_CARRIER_PHASE_MEASUREMENT (1)
-#define SBP_OBS_OBS_FLAGS_PSEUDORANGE_VALID_MASK (0x1)
-#define SBP_OBS_OBS_FLAGS_PSEUDORANGE_VALID_SHIFT (0u)
-#define SBP_OBS_OBS_FLAGS_PSEUDORANGE_VALID_GET(flags) \
-  (((flags) >> SBP_OBS_OBS_FLAGS_PSEUDORANGE_VALID_SHIFT) & SBP_OBS_OBS_FLAGS_PSEUDORANGE_VALID_MASK)
-#define SBP_OBS_OBS_FLAGS_PSEUDORANGE_VALID_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= \
-     (((val) & (SBP_OBS_OBS_FLAGS_PSEUDORANGE_VALID_MASK)) << (SBP_OBS_OBS_FLAGS_PSEUDORANGE_VALID_SHIFT))); \
-  } while (0)
-
-#define SBP_OBS_OBS_FLAGS_PSEUDORANGE_VALID_INVALID_PSEUDORANGE_MEASUREMENT (0)
-#define SBP_OBS_OBS_FLAGS_PSEUDORANGE_VALID_VALID_PSEUDORANGE_MEASUREMENT_AND_COARSE_TOW_DECODED (1)
-
-#define SBP_OBS_OBS_SID_CODE__MASK (0xff)
-#define SBP_OBS_OBS_SID_CODE__SHIFT (0u)
-#define SBP_OBS_OBS_SID_CODE__GET(flags) (((flags) >> SBP_OBS_OBS_SID_CODE__SHIFT) & SBP_OBS_OBS_SID_CODE__MASK)
-#define SBP_OBS_OBS_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_OBS_OBS_SID_CODE__MASK)) << (SBP_OBS_OBS_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_OBS_OBS_SID_CODE__GPS_L1CA (0)
-#define SBP_OBS_OBS_SID_CODE__GPS_L2CM (1)
-#define SBP_OBS_OBS_SID_CODE__SBAS_L1CA (2)
-#define SBP_OBS_OBS_SID_CODE__GLO_L1CA (3)
-#define SBP_OBS_OBS_SID_CODE__GLO_L2CA (4)
-#define SBP_OBS_OBS_SID_CODE__GPS_L1P (5)
-#define SBP_OBS_OBS_SID_CODE__GPS_L2P (6)
-#define SBP_OBS_OBS_SID_CODE__BDS2_B1 (12)
-#define SBP_OBS_OBS_SID_CODE__BDS2_B2 (13)
-#define SBP_OBS_OBS_SID_CODE__GAL_E1B (14)
-#define SBP_OBS_OBS_SID_CODE__GAL_E7I (20)
-#define SBP_OBS_OBS_SID_CODE__BDS3_B2A (47)
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Header of a GPS observation message
    */
-  struct
-  {
+  observation_header_t header;
 
-    /**
-     * GNSS time of this observation
-     */
-    struct
-    {
-
-      /**
-       * Milliseconds since start of GPS week[ms]
-       */
-      u32 tow;
-      /**
-       * Nanosecond residual of millisecond-rounded TOW (ranges
-       * from -500000 to 500000)[ns]
-       */
-      s32 ns_residual;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } t;
-    /**
-     * Total number of observations. First nibble is the size
-     * of the sequence (n), second nibble is the zero-indexed
-     * counter (ith packet of n)
-     */
-    u8 n_obs;
-  } header;
   /**
    * Pseudorange and carrier phase observation for a
    * satellite being tracked.
    */
-  struct
-  {
+  packed_obs_content_t obs[0];
 
-    /**
-     * Pseudorange observation[2 cm]
-     */
-    u32 P;
-    /**
-     * Carrier phase observation with typical sign convention.[cycles]
-     */
-    struct
-    {
+} msg_obs_t;
 
-      /**
-       * Carrier phase whole cycles[cycles]
-       */
-      s32 i;
-      /**
-       * Carrier phase fractional part[cycles / 256]
-       */
-      u8 f;
-    } L;
-    /**
-     * Doppler observation with typical sign convention.[Hz]
-     */
-    struct
-    {
-
-      /**
-       * Doppler whole Hz[Hz]
-       */
-      s16 i;
-      /**
-       * Doppler fractional part[Hz / 256]
-       */
-      u8 f;
-    } D;
-    /**
-     * Carrier-to-Noise density.  Zero implies invalid cn0.[dB Hz / 4]
-     */
-    u8 cn0;
-    /**
-     * Lock timer. This value gives an indication of the time
-     * for which a signal has maintained continuous phase lock.
-     * Whenever a signal has lost and regained lock, this
-     * value is reset to zero. It is encoded according to DF402 from
-     * the RTCM 10403.2 Amendment 2 specification.  Valid values range
-     * from 0 to 15 and the most significant nibble is reserved for future use.
-     */
-    u8 lock;
-    /**
-     * Measurement status flags. A bit field of flags providing the
-     * status of this observation.  If this field is 0 it means only the Cn0
-     * estimate for the signal is valid.
-     */
-    u8 flags;
-    /**
-     * GNSS signal identifier (16 bit)
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier. This field for Glonass can
-       * either be (100+FCN) where FCN is in [-7,+6] or
-       * the Slot ID in [1,28]
-       */
-      u8 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-    } sid;
-  } obs[14];
-  /**
-   * Number of items in obs
-   */
-  u8 n_obs;
-} sbp_msg_obs_t;
-
-static inline size_t sbp_packed_size_sbp_msg_obs_t(const sbp_msg_obs_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->header.t.tow) + sizeof(msg->header.t.ns_residual) + sizeof(msg->header.t.wn)) +
-          sizeof(msg->header.n_obs)) +
-         (msg->n_obs * (0 + sizeof(msg->obs[0].P) + (0 + sizeof(msg->obs[0].L.i) + sizeof(msg->obs[0].L.f)) +
-                        (0 + sizeof(msg->obs[0].D.i) + sizeof(msg->obs[0].D.f)) + sizeof(msg->obs[0].cn0) +
-                        sizeof(msg->obs[0].lock) + sizeof(msg->obs[0].flags) +
-                        (0 + sizeof(msg->obs[0].sid.sat) + sizeof(msg->obs[0].sid.code))));
-}
-
-static inline bool sbp_pack_sbp_msg_obs_t(u8 *buf, size_t len, const sbp_msg_obs_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_obs_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgheaderttow = htole32(msg->header.t.tow);
-  memcpy(buf + offset, &msgheaderttow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgheadertns_residual = htole32(*(const u32 *)&msg->header.t.ns_residual);
-  memcpy(buf + offset, &msgheadertns_residual, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgheadertwn = htole16(msg->header.t.wn);
-  memcpy(buf + offset, &msgheadertwn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgheadern_obs = msg->header.n_obs;
-  memcpy(buf + offset, &msgheadern_obs, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  for (size_t msgobs_idx = 0; msgobs_idx < (size_t)msg->n_obs; msgobs_idx++)
-  {
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    u32 msgobsmsgobs_idxP = htole32(msg->obs[msgobs_idx].P);
-    memcpy(buf + offset, &msgobsmsgobs_idxP, 4);
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    u32 msgobsmsgobs_idxLi = htole32(*(const u32 *)&msg->obs[msgobs_idx].L.i);
-    memcpy(buf + offset, &msgobsmsgobs_idxLi, 4);
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxLf = msg->obs[msgobs_idx].L.f;
-    memcpy(buf + offset, &msgobsmsgobs_idxLf, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 2 > len)
-    {
-      return false;
-    }
-    u16 msgobsmsgobs_idxDi = htole16(*(const u16 *)&msg->obs[msgobs_idx].D.i);
-    memcpy(buf + offset, &msgobsmsgobs_idxDi, 2);
-    // NOLINTNEXTLINE
-    offset += 2;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxDf = msg->obs[msgobs_idx].D.f;
-    memcpy(buf + offset, &msgobsmsgobs_idxDf, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxcn0 = msg->obs[msgobs_idx].cn0;
-    memcpy(buf + offset, &msgobsmsgobs_idxcn0, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxlock = msg->obs[msgobs_idx].lock;
-    memcpy(buf + offset, &msgobsmsgobs_idxlock, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxflags = msg->obs[msgobs_idx].flags;
-    memcpy(buf + offset, &msgobsmsgobs_idxflags, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxsidsat = msg->obs[msgobs_idx].sid.sat;
-    memcpy(buf + offset, &msgobsmsgobs_idxsidsat, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxsidcode = msg->obs[msgobs_idx].sid.code;
-    memcpy(buf + offset, &msgobsmsgobs_idxsidcode, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_obs_t(const u8 *buf, size_t len, sbp_msg_obs_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->header.t.tow, buf + offset, 4);
-  msg->header.t.tow = le32toh(msg->header.t.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->header.t.ns_residual, buf + offset, 4);
-  u32 msgheadertns_residual = *(const u32 *)&msg->header.t.ns_residual;
-  msgheadertns_residual = le32toh(msgheadertns_residual);
-  msg->header.t.ns_residual = *(const s32 *)&msgheadertns_residual;
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->header.t.wn, buf + offset, 2);
-  msg->header.t.wn = le16toh(msg->header.t.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->header.n_obs, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  msg->n_obs = (u8)((len - offset) / 17);
-
-  for (size_t msgobs_idx = 0; msgobs_idx < msg->n_obs; msgobs_idx++)
-  {
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].P, buf + offset, 4);
-    msg->obs[msgobs_idx].P = le32toh(msg->obs[msgobs_idx].P);
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].L.i, buf + offset, 4);
-    u32 msgobsmsgobs_idxLi = *(const u32 *)&msg->obs[msgobs_idx].L.i;
-    msgobsmsgobs_idxLi = le32toh(msgobsmsgobs_idxLi);
-    msg->obs[msgobs_idx].L.i = *(const s32 *)&msgobsmsgobs_idxLi;
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].L.f, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 2 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].D.i, buf + offset, 2);
-    u16 msgobsmsgobs_idxDi = *(const u16 *)&msg->obs[msgobs_idx].D.i;
-    msgobsmsgobs_idxDi = le16toh(msgobsmsgobs_idxDi);
-    msg->obs[msgobs_idx].D.i = *(const s16 *)&msgobsmsgobs_idxDi;
-    // NOLINTNEXTLINE
-    offset += 2;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].D.f, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].cn0, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].lock, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].flags, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].sid.sat, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].sid.code, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_obs_t &a, const sbp_msg_obs_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.header.t.tow != b.header.t.tow)
-  {
-    return false;
-  }
-
-  if (a.header.t.ns_residual != b.header.t.ns_residual)
-  {
-    return false;
-  }
-
-  if (a.header.t.wn != b.header.t.wn)
-  {
-    return false;
-  }
-
-  if (a.header.n_obs != b.header.n_obs)
-  {
-    return false;
-  }
-  if (a.n_obs != b.n_obs)
-  {
-    return false;
-  }
-  for (size_t obs_idx = 0; obs_idx < (size_t)a.n_obs; obs_idx++)
-  {
-
-    if (a.obs[obs_idx].P != b.obs[obs_idx].P)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].L.i != b.obs[obs_idx].L.i)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].L.f != b.obs[obs_idx].L.f)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].D.i != b.obs[obs_idx].D.i)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].D.f != b.obs[obs_idx].D.f)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].cn0 != b.obs[obs_idx].cn0)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].lock != b.obs[obs_idx].lock)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].flags != b.obs[obs_idx].flags)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].sid.sat != b.obs[obs_idx].sid.sat)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].sid.code != b.obs[obs_idx].sid.code)
-    {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_obs_t &a, const sbp_msg_obs_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Base station position
  *
  * The base station position message is the position reported by
@@ -621,134 +350,26 @@ static inline bool operator!=(const sbp_msg_obs_t &a, const sbp_msg_obs_t &b)
  * error in the pseudo-absolute position output.
  */
 #define SBP_MSG_BASE_POS_LLH 0x0044
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
-   * Latitude[deg]
+   * Latitude [deg]
    */
   double lat;
+
   /**
-   * Longitude[deg]
+   * Longitude [deg]
    */
   double lon;
+
   /**
-   * Height[m]
+   * Height [m]
    */
   double height;
-} sbp_msg_base_pos_llh_t;
 
-static inline size_t sbp_packed_size_sbp_msg_base_pos_llh_t(const sbp_msg_base_pos_llh_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->lat) + sizeof(msg->lon) + sizeof(msg->height);
-}
+} msg_base_pos_llh_t;
 
-static inline bool sbp_pack_sbp_msg_base_pos_llh_t(u8 *buf, size_t len, const sbp_msg_base_pos_llh_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_base_pos_llh_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msglat = msg->lat;
-  memcpy(buf + offset, &msglat, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msglon = msg->lon;
-  memcpy(buf + offset, &msglon, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgheight = msg->height;
-  memcpy(buf + offset, &msgheight, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_base_pos_llh_t(const u8 *buf, size_t len, sbp_msg_base_pos_llh_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->lat, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->lon, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->height, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_base_pos_llh_t &a, const sbp_msg_base_pos_llh_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (fabs(a.lat - b.lat) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.lon - b.lon) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.height - b.height) > 0.001)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_base_pos_llh_t &a, const sbp_msg_base_pos_llh_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Base station position in ECEF
  *
  * The base station position message is the position reported by
@@ -759,134 +380,139 @@ static inline bool operator!=(const sbp_msg_base_pos_llh_t &a, const sbp_msg_bas
  * pseudo-absolute position output.
  */
 #define SBP_MSG_BASE_POS_ECEF 0x0048
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
-   * ECEF X coodinate[m]
+   * ECEF X coodinate [m]
    */
   double x;
+
   /**
-   * ECEF Y coordinate[m]
+   * ECEF Y coordinate [m]
    */
   double y;
+
   /**
-   * ECEF Z coordinate[m]
+   * ECEF Z coordinate [m]
    */
   double z;
-} sbp_msg_base_pos_ecef_t;
 
-static inline size_t sbp_packed_size_sbp_msg_base_pos_ecef_t(const sbp_msg_base_pos_ecef_t *msg)
+} msg_base_pos_ecef_t;
+
+typedef struct SBP_ATTR_PACKED
 {
-  (void)msg;
-  return 0 + sizeof(msg->x) + sizeof(msg->y) + sizeof(msg->z);
-}
 
-static inline bool sbp_pack_sbp_msg_base_pos_ecef_t(u8 *buf, size_t len, const sbp_msg_base_pos_ecef_t *msg)
+  /**
+   * GNSS signal identifier (16 bit)
+   */
+  sbp_gnss_signal_t sid;
+
+  /**
+   * Time of Ephemerides
+   */
+  gps_time_sec_t toe;
+
+  /**
+   * User Range Accuracy [m]
+   */
+  float ura;
+
+  /**
+   * Curve fit interval [s]
+   */
+  u32 fit_interval;
+
+  /**
+   * Status of ephemeris, 1 = valid, 0 = invalid
+   */
+  u8 valid;
+
+  /**
+   * Satellite health status.
+   * GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+   * SBAS: 0 = valid, non-zero = invalid
+   * GLO: 0 = valid, non-zero = invalid
+   */
+  u8 health_bits;
+
+} ephemeris_common_content_t;
+
+typedef struct SBP_ATTR_PACKED
 {
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_base_pos_ecef_t(msg) > len)
-  {
-    return false;
-  }
 
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgx = msg->x;
-  memcpy(buf + offset, &msgx, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
+  /**
+   * GNSS signal identifier (16 bit)
+   */
+  sbp_gnss_signal_t sid;
 
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgy = msg->y;
-  memcpy(buf + offset, &msgy, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
+  /**
+   * Time of Ephemerides
+   */
+  gps_time_sec_t toe;
 
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgz = msg->z;
-  memcpy(buf + offset, &msgz, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
+  /**
+   * User Range Accuracy [m]
+   */
+  double ura;
 
-static inline bool sbp_unpack_sbp_msg_base_pos_ecef_t(const u8 *buf, size_t len, sbp_msg_base_pos_ecef_t *msg)
+  /**
+   * Curve fit interval [s]
+   */
+  u32 fit_interval;
+
+  /**
+   * Status of ephemeris, 1 = valid, 0 = invalid
+   */
+  u8 valid;
+
+  /**
+   * Satellite health status.
+   * GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+   * Others: 0 = valid, non-zero = invalid
+   */
+  u8 health_bits;
+
+} ephemeris_common_content_dep_b_t;
+
+typedef struct SBP_ATTR_PACKED
 {
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
 
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->x, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
+  /**
+   * GNSS signal identifier
+   */
+  gnss_signal_dep_t sid;
 
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->y, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
+  /**
+   * Time of Ephemerides
+   */
+  gps_time_dep_t toe;
 
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->z, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
+  /**
+   * User Range Accuracy [m]
+   */
+  double ura;
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_base_pos_ecef_t &a, const sbp_msg_base_pos_ecef_t &b)
-{
-  (void)a;
-  (void)b;
+  /**
+   * Curve fit interval [s]
+   */
+  u32 fit_interval;
 
-  if (fabs(a.x - b.x) > 0.001)
-  {
-    return false;
-  }
+  /**
+   * Status of ephemeris, 1 = valid, 0 = invalid
+   */
+  u8 valid;
 
-  if (fabs(a.y - b.y) > 0.001)
-  {
-    return false;
-  }
+  /**
+   * Satellite health status.
+   * GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
+   * SBAS: 0 = valid, non-zero = invalid
+   * GLO: 0 = valid, non-zero = invalid
+   */
+  u8 health_bits;
 
-  if (fabs(a.z - b.z) > 0.001)
-  {
-    return false;
-  }
+} ephemeris_common_content_dep_a_t;
 
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_base_pos_ecef_t &a, const sbp_msg_base_pos_ecef_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Satellite broadcast ephemeris for GPS
  *
  * The ephemeris message returns a set of satellite orbit
@@ -896,1890 +522,252 @@ static inline bool operator!=(const sbp_msg_base_pos_ecef_t &a, const sbp_msg_ba
  * 20-III) for more details.
  */
 #define SBP_MSG_EPHEMERIS_GPS_DEP_E 0x0081
-
-#define SBP_EPHEMERIS_GPS_DEP_E_COMMON_SID_CODE__MASK (0xff)
-#define SBP_EPHEMERIS_GPS_DEP_E_COMMON_SID_CODE__SHIFT (0u)
-#define SBP_EPHEMERIS_GPS_DEP_E_COMMON_SID_CODE__GET(flags) \
-  (((flags) >> SBP_EPHEMERIS_GPS_DEP_E_COMMON_SID_CODE__SHIFT) & SBP_EPHEMERIS_GPS_DEP_E_COMMON_SID_CODE__MASK)
-#define SBP_EPHEMERIS_GPS_DEP_E_COMMON_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= \
-     (((val) & (SBP_EPHEMERIS_GPS_DEP_E_COMMON_SID_CODE__MASK)) << (SBP_EPHEMERIS_GPS_DEP_E_COMMON_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_EPHEMERIS_GPS_DEP_E_COMMON_SID_CODE__GPS_L1CA (0)
-#define SBP_EPHEMERIS_GPS_DEP_E_COMMON_SID_CODE__GPS_L2CM (1)
-#define SBP_EPHEMERIS_GPS_DEP_E_COMMON_SID_CODE__SBAS_L1CA (2)
-#define SBP_EPHEMERIS_GPS_DEP_E_COMMON_SID_CODE__GLO_L1CA (3)
-#define SBP_EPHEMERIS_GPS_DEP_E_COMMON_SID_CODE__GLO_L2CA (4)
-#define SBP_EPHEMERIS_GPS_DEP_E_COMMON_SID_CODE__GPS_L1P (5)
-#define SBP_EPHEMERIS_GPS_DEP_E_COMMON_SID_CODE__GPS_L2P (6)
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Values common for all ephemeris types
    */
-  struct
-  {
+  ephemeris_common_content_dep_a_t common;
 
-    /**
-     * GNSS signal identifier
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier.
-       *
-       * Note: unlike GnssSignal, GPS satellites are encoded as
-       * (PRN - 1). Other constellations do not have this offset.
-       */
-      u16 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-      /**
-       * Reserved
-       */
-      u8 reserved;
-    } sid;
-    /**
-     * Time of Ephemerides
-     */
-    struct
-    {
-
-      /**
-       * Milliseconds since start of GPS week[ms]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } toe;
-    /**
-     * User Range Accuracy[m]
-     */
-    double ura;
-    /**
-     * Curve fit interval[s]
-     */
-    u32 fit_interval;
-    /**
-     * Status of ephemeris, 1 = valid, 0 = invalid
-     */
-    u8 valid;
-    /**
-     * Satellite health status.
-     * GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-     * SBAS: 0 = valid, non-zero = invalid
-     * GLO: 0 = valid, non-zero = invalid
-     */
-    u8 health_bits;
-  } common;
   /**
-   * Group delay differential between L1 and L2[s]
+   * Group delay differential between L1 and L2 [s]
    */
   double tgd;
+
   /**
-   * Amplitude of the sine harmonic correction term to the orbit radius[m]
+   * Amplitude of the sine harmonic correction term to the orbit radius [m]
    */
   double c_rs;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the orbit radius[m]
+   * Amplitude of the cosine harmonic correction term to the orbit radius [m]
    */
   double c_rc;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the cosine harmonic correction term to the argument of latitude [rad]
    */
   double c_uc;
+
   /**
-   * Amplitude of the sine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the sine harmonic correction term to the argument of latitude [rad]
    */
   double c_us;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the cosine harmonic correction term to the angle of inclination [rad]
    */
   double c_ic;
+
   /**
-   * Amplitude of the sine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the sine harmonic correction term to the angle of inclination [rad]
    */
   double c_is;
+
   /**
-   * Mean motion difference[rad/s]
+   * Mean motion difference [rad/s]
    */
   double dn;
+
   /**
-   * Mean anomaly at reference time[rad]
+   * Mean anomaly at reference time [rad]
    */
   double m0;
+
   /**
    * Eccentricity of satellite orbit
    */
   double ecc;
+
   /**
-   * Square root of the semi-major axis of orbit[m^(1/2)]
+   * Square root of the semi-major axis of orbit [m^(1/2)]
    */
   double sqrta;
+
   /**
-   * Longitude of ascending node of orbit plane at weekly epoch[rad]
+   * Longitude of ascending node of orbit plane at weekly epoch [rad]
    */
   double omega0;
+
   /**
-   * Rate of right ascension[rad/s]
+   * Rate of right ascension [rad/s]
    */
   double omegadot;
+
   /**
-   * Argument of perigee[rad]
+   * Argument of perigee [rad]
    */
   double w;
+
   /**
-   * Inclination[rad]
+   * Inclination [rad]
    */
   double inc;
+
   /**
-   * Inclination first derivative[rad/s]
+   * Inclination first derivative [rad/s]
    */
   double inc_dot;
+
   /**
-   * Polynomial clock correction coefficient (clock bias)[s]
+   * Polynomial clock correction coefficient (clock bias) [s]
    */
   double af0;
+
   /**
-   * Polynomial clock correction coefficient (clock drift)[s/s]
+   * Polynomial clock correction coefficient (clock drift) [s/s]
    */
   double af1;
+
   /**
-   * Polynomial clock correction coefficient (rate of clock drift)[s/s^2]
+   * Polynomial clock correction coefficient (rate of clock drift) [s/s^2]
    */
   double af2;
+
   /**
    * Clock reference
    */
-  struct
-  {
+  gps_time_dep_t toc;
 
-    /**
-     * Milliseconds since start of GPS week[ms]
-     */
-    u32 tow;
-    /**
-     * GPS week number[week]
-     */
-    u16 wn;
-  } toc;
   /**
    * Issue of ephemeris data
    */
   u8 iode;
+
   /**
    * Issue of clock data
    */
   u16 iodc;
-} sbp_msg_ephemeris_gps_dep_e_t;
 
-static inline size_t sbp_packed_size_sbp_msg_ephemeris_gps_dep_e_t(const sbp_msg_ephemeris_gps_dep_e_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->common.sid.sat) + sizeof(msg->common.sid.code) + sizeof(msg->common.sid.reserved)) +
-          (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) + sizeof(msg->common.ura) +
-          sizeof(msg->common.fit_interval) + sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         sizeof(msg->tgd) + sizeof(msg->c_rs) + sizeof(msg->c_rc) + sizeof(msg->c_uc) + sizeof(msg->c_us) +
-         sizeof(msg->c_ic) + sizeof(msg->c_is) + sizeof(msg->dn) + sizeof(msg->m0) + sizeof(msg->ecc) +
-         sizeof(msg->sqrta) + sizeof(msg->omega0) + sizeof(msg->omegadot) + sizeof(msg->w) + sizeof(msg->inc) +
-         sizeof(msg->inc_dot) + sizeof(msg->af0) + sizeof(msg->af1) + sizeof(msg->af2) +
-         (0 + sizeof(msg->toc.tow) + sizeof(msg->toc.wn)) + sizeof(msg->iode) + sizeof(msg->iodc);
-}
+} msg_ephemeris_gps_dep_e_t;
 
-static inline bool sbp_pack_sbp_msg_ephemeris_gps_dep_e_t(u8 *buf, size_t len, const sbp_msg_ephemeris_gps_dep_e_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_ephemeris_gps_dep_e_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommonsidsat = htole16(msg->common.sid.sat);
-  memcpy(buf + offset, &msgcommonsidsat, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidcode = msg->common.sid.code;
-  memcpy(buf + offset, &msgcommonsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidreserved = msg->common.sid.reserved;
-  memcpy(buf + offset, &msgcommonsidreserved, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommontoetow = htole32(msg->common.toe.tow);
-  memcpy(buf + offset, &msgcommontoetow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommontoewn = htole16(msg->common.toe.wn);
-  memcpy(buf + offset, &msgcommontoewn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgcommonura = msg->common.ura;
-  memcpy(buf + offset, &msgcommonura, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommonfit_interval = htole32(msg->common.fit_interval);
-  memcpy(buf + offset, &msgcommonfit_interval, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonvalid = msg->common.valid;
-  memcpy(buf + offset, &msgcommonvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonhealth_bits = msg->common.health_bits;
-  memcpy(buf + offset, &msgcommonhealth_bits, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgtgd = msg->tgd;
-  memcpy(buf + offset, &msgtgd, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_rs = msg->c_rs;
-  memcpy(buf + offset, &msgc_rs, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_rc = msg->c_rc;
-  memcpy(buf + offset, &msgc_rc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_uc = msg->c_uc;
-  memcpy(buf + offset, &msgc_uc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_us = msg->c_us;
-  memcpy(buf + offset, &msgc_us, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_ic = msg->c_ic;
-  memcpy(buf + offset, &msgc_ic, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_is = msg->c_is;
-  memcpy(buf + offset, &msgc_is, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgdn = msg->dn;
-  memcpy(buf + offset, &msgdn, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgm0 = msg->m0;
-  memcpy(buf + offset, &msgm0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgecc = msg->ecc;
-  memcpy(buf + offset, &msgecc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgsqrta = msg->sqrta;
-  memcpy(buf + offset, &msgsqrta, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomega0 = msg->omega0;
-  memcpy(buf + offset, &msgomega0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomegadot = msg->omegadot;
-  memcpy(buf + offset, &msgomegadot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgw = msg->w;
-  memcpy(buf + offset, &msgw, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc = msg->inc;
-  memcpy(buf + offset, &msginc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc_dot = msg->inc_dot;
-  memcpy(buf + offset, &msginc_dot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf0 = msg->af0;
-  memcpy(buf + offset, &msgaf0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf1 = msg->af1;
-  memcpy(buf + offset, &msgaf1, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf2 = msg->af2;
-  memcpy(buf + offset, &msgaf2, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgtoctow = htole32(msg->toc.tow);
-  memcpy(buf + offset, &msgtoctow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgtocwn = htole16(msg->toc.wn);
-  memcpy(buf + offset, &msgtocwn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgiode = msg->iode;
-  memcpy(buf + offset, &msgiode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgiodc = htole16(msg->iodc);
-  memcpy(buf + offset, &msgiodc, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-static inline bool
-sbp_unpack_sbp_msg_ephemeris_gps_dep_e_t(const u8 *buf, size_t len, sbp_msg_ephemeris_gps_dep_e_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.sat, buf + offset, 2);
-  msg->common.sid.sat = le16toh(msg->common.sid.sat);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.reserved, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.tow, buf + offset, 4);
-  msg->common.toe.tow = le32toh(msg->common.toe.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.wn, buf + offset, 2);
-  msg->common.toe.wn = le16toh(msg->common.toe.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.ura, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.fit_interval, buf + offset, 4);
-  msg->common.fit_interval = le32toh(msg->common.fit_interval);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.health_bits, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->tgd, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rs, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_uc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_us, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_ic, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_is, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->dn, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->m0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->ecc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sqrta, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omega0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omegadot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->w, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc_dot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af1, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af2, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc.tow, buf + offset, 4);
-  msg->toc.tow = le32toh(msg->toc.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc.wn, buf + offset, 2);
-  msg->toc.wn = le16toh(msg->toc.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iode, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iodc, buf + offset, 2);
-  msg->iodc = le16toh(msg->iodc);
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ephemeris_gps_dep_e_t &a, const sbp_msg_ephemeris_gps_dep_e_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.common.sid.sat != b.common.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.common.sid.code != b.common.sid.code)
-  {
-    return false;
-  }
-
-  if (a.common.sid.reserved != b.common.sid.reserved)
-  {
-    return false;
-  }
-
-  if (a.common.toe.tow != b.common.toe.tow)
-  {
-    return false;
-  }
-
-  if (a.common.toe.wn != b.common.toe.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.common.ura - b.common.ura) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.common.fit_interval != b.common.fit_interval)
-  {
-    return false;
-  }
-
-  if (a.common.valid != b.common.valid)
-  {
-    return false;
-  }
-
-  if (a.common.health_bits != b.common.health_bits)
-  {
-    return false;
-  }
-
-  if (fabs(a.tgd - b.tgd) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rs - b.c_rs) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rc - b.c_rc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_uc - b.c_uc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_us - b.c_us) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_ic - b.c_ic) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_is - b.c_is) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.dn - b.dn) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.m0 - b.m0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.ecc - b.ecc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.sqrta - b.sqrta) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omega0 - b.omega0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omegadot - b.omegadot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.w - b.w) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc - b.inc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc_dot - b.inc_dot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af0 - b.af0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af1 - b.af1) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af2 - b.af2) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.toc.tow != b.toc.tow)
-  {
-    return false;
-  }
-
-  if (a.toc.wn != b.toc.wn)
-  {
-    return false;
-  }
-
-  if (a.iode != b.iode)
-  {
-    return false;
-  }
-
-  if (a.iodc != b.iodc)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_ephemeris_gps_dep_e_t &a, const sbp_msg_ephemeris_gps_dep_e_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Deprecated
  *
  * This observation message has been deprecated in favor of
  * ephemeris message using floats for size reduction.
  */
 #define SBP_MSG_EPHEMERIS_GPS_DEP_F 0x0086
-
-#define SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__MASK (0xff)
-#define SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__SHIFT (0u)
-#define SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__GET(flags) \
-  (((flags) >> SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__SHIFT) & SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__MASK)
-#define SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= \
-     (((val) & (SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__MASK)) << (SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__GPS_L1CA (0)
-#define SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__GPS_L2CM (1)
-#define SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__SBAS_L1CA (2)
-#define SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__GLO_L1CA (3)
-#define SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__GLO_L2CA (4)
-#define SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__GPS_L1P (5)
-#define SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__GPS_L2P (6)
-#define SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__BDS2_B1 (12)
-#define SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__BDS2_B2 (13)
-#define SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__GAL_E1B (14)
-#define SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__GAL_E7I (20)
-#define SBP_EPHEMERIS_GPS_DEP_F_COMMON_SID_CODE__BDS3_B2A (47)
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Values common for all ephemeris types
    */
-  struct
-  {
+  ephemeris_common_content_dep_b_t common;
 
-    /**
-     * GNSS signal identifier (16 bit)
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier. This field for Glonass can
-       * either be (100+FCN) where FCN is in [-7,+6] or
-       * the Slot ID in [1,28]
-       */
-      u8 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-    } sid;
-    /**
-     * Time of Ephemerides
-     */
-    struct
-    {
-
-      /**
-       * Seconds since start of GPS week[s]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } toe;
-    /**
-     * User Range Accuracy[m]
-     */
-    double ura;
-    /**
-     * Curve fit interval[s]
-     */
-    u32 fit_interval;
-    /**
-     * Status of ephemeris, 1 = valid, 0 = invalid
-     */
-    u8 valid;
-    /**
-     * Satellite health status.
-     * GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-     * Others: 0 = valid, non-zero = invalid
-     */
-    u8 health_bits;
-  } common;
   /**
-   * Group delay differential between L1 and L2[s]
+   * Group delay differential between L1 and L2 [s]
    */
   double tgd;
+
   /**
-   * Amplitude of the sine harmonic correction term to the orbit radius[m]
+   * Amplitude of the sine harmonic correction term to the orbit radius [m]
    */
   double c_rs;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the orbit radius[m]
+   * Amplitude of the cosine harmonic correction term to the orbit radius [m]
    */
   double c_rc;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the cosine harmonic correction term to the argument of latitude [rad]
    */
   double c_uc;
+
   /**
-   * Amplitude of the sine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the sine harmonic correction term to the argument of latitude [rad]
    */
   double c_us;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the cosine harmonic correction term to the angle of inclination [rad]
    */
   double c_ic;
+
   /**
-   * Amplitude of the sine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the sine harmonic correction term to the angle of inclination [rad]
    */
   double c_is;
+
   /**
-   * Mean motion difference[rad/s]
+   * Mean motion difference [rad/s]
    */
   double dn;
+
   /**
-   * Mean anomaly at reference time[rad]
+   * Mean anomaly at reference time [rad]
    */
   double m0;
+
   /**
    * Eccentricity of satellite orbit
    */
   double ecc;
+
   /**
-   * Square root of the semi-major axis of orbit[m^(1/2)]
+   * Square root of the semi-major axis of orbit [m^(1/2)]
    */
   double sqrta;
+
   /**
-   * Longitude of ascending node of orbit plane at weekly epoch[rad]
+   * Longitude of ascending node of orbit plane at weekly epoch [rad]
    */
   double omega0;
+
   /**
-   * Rate of right ascension[rad/s]
+   * Rate of right ascension [rad/s]
    */
   double omegadot;
+
   /**
-   * Argument of perigee[rad]
+   * Argument of perigee [rad]
    */
   double w;
+
   /**
-   * Inclination[rad]
+   * Inclination [rad]
    */
   double inc;
+
   /**
-   * Inclination first derivative[rad/s]
+   * Inclination first derivative [rad/s]
    */
   double inc_dot;
+
   /**
-   * Polynomial clock correction coefficient (clock bias)[s]
+   * Polynomial clock correction coefficient (clock bias) [s]
    */
   double af0;
+
   /**
-   * Polynomial clock correction coefficient (clock drift)[s/s]
+   * Polynomial clock correction coefficient (clock drift) [s/s]
    */
   double af1;
+
   /**
-   * Polynomial clock correction coefficient (rate of clock drift)[s/s^2]
+   * Polynomial clock correction coefficient (rate of clock drift) [s/s^2]
    */
   double af2;
+
   /**
    * Clock reference
    */
-  struct
-  {
+  gps_time_sec_t toc;
 
-    /**
-     * Seconds since start of GPS week[s]
-     */
-    u32 tow;
-    /**
-     * GPS week number[week]
-     */
-    u16 wn;
-  } toc;
   /**
    * Issue of ephemeris data
    */
   u8 iode;
+
   /**
    * Issue of clock data
    */
   u16 iodc;
-} sbp_msg_ephemeris_gps_dep_f_t;
 
-static inline size_t sbp_packed_size_sbp_msg_ephemeris_gps_dep_f_t(const sbp_msg_ephemeris_gps_dep_f_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->common.sid.sat) + sizeof(msg->common.sid.code)) +
-          (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) + sizeof(msg->common.ura) +
-          sizeof(msg->common.fit_interval) + sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         sizeof(msg->tgd) + sizeof(msg->c_rs) + sizeof(msg->c_rc) + sizeof(msg->c_uc) + sizeof(msg->c_us) +
-         sizeof(msg->c_ic) + sizeof(msg->c_is) + sizeof(msg->dn) + sizeof(msg->m0) + sizeof(msg->ecc) +
-         sizeof(msg->sqrta) + sizeof(msg->omega0) + sizeof(msg->omegadot) + sizeof(msg->w) + sizeof(msg->inc) +
-         sizeof(msg->inc_dot) + sizeof(msg->af0) + sizeof(msg->af1) + sizeof(msg->af2) +
-         (0 + sizeof(msg->toc.tow) + sizeof(msg->toc.wn)) + sizeof(msg->iode) + sizeof(msg->iodc);
-}
+} msg_ephemeris_gps_dep_f_t;
 
-static inline bool sbp_pack_sbp_msg_ephemeris_gps_dep_f_t(u8 *buf, size_t len, const sbp_msg_ephemeris_gps_dep_f_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_ephemeris_gps_dep_f_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidsat = msg->common.sid.sat;
-  memcpy(buf + offset, &msgcommonsidsat, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidcode = msg->common.sid.code;
-  memcpy(buf + offset, &msgcommonsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommontoetow = htole32(msg->common.toe.tow);
-  memcpy(buf + offset, &msgcommontoetow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommontoewn = htole16(msg->common.toe.wn);
-  memcpy(buf + offset, &msgcommontoewn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgcommonura = msg->common.ura;
-  memcpy(buf + offset, &msgcommonura, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommonfit_interval = htole32(msg->common.fit_interval);
-  memcpy(buf + offset, &msgcommonfit_interval, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonvalid = msg->common.valid;
-  memcpy(buf + offset, &msgcommonvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonhealth_bits = msg->common.health_bits;
-  memcpy(buf + offset, &msgcommonhealth_bits, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgtgd = msg->tgd;
-  memcpy(buf + offset, &msgtgd, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_rs = msg->c_rs;
-  memcpy(buf + offset, &msgc_rs, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_rc = msg->c_rc;
-  memcpy(buf + offset, &msgc_rc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_uc = msg->c_uc;
-  memcpy(buf + offset, &msgc_uc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_us = msg->c_us;
-  memcpy(buf + offset, &msgc_us, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_ic = msg->c_ic;
-  memcpy(buf + offset, &msgc_ic, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_is = msg->c_is;
-  memcpy(buf + offset, &msgc_is, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgdn = msg->dn;
-  memcpy(buf + offset, &msgdn, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgm0 = msg->m0;
-  memcpy(buf + offset, &msgm0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgecc = msg->ecc;
-  memcpy(buf + offset, &msgecc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgsqrta = msg->sqrta;
-  memcpy(buf + offset, &msgsqrta, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomega0 = msg->omega0;
-  memcpy(buf + offset, &msgomega0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomegadot = msg->omegadot;
-  memcpy(buf + offset, &msgomegadot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgw = msg->w;
-  memcpy(buf + offset, &msgw, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc = msg->inc;
-  memcpy(buf + offset, &msginc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc_dot = msg->inc_dot;
-  memcpy(buf + offset, &msginc_dot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf0 = msg->af0;
-  memcpy(buf + offset, &msgaf0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf1 = msg->af1;
-  memcpy(buf + offset, &msgaf1, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf2 = msg->af2;
-  memcpy(buf + offset, &msgaf2, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgtoctow = htole32(msg->toc.tow);
-  memcpy(buf + offset, &msgtoctow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgtocwn = htole16(msg->toc.wn);
-  memcpy(buf + offset, &msgtocwn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgiode = msg->iode;
-  memcpy(buf + offset, &msgiode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgiodc = htole16(msg->iodc);
-  memcpy(buf + offset, &msgiodc, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-static inline bool
-sbp_unpack_sbp_msg_ephemeris_gps_dep_f_t(const u8 *buf, size_t len, sbp_msg_ephemeris_gps_dep_f_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.sat, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.tow, buf + offset, 4);
-  msg->common.toe.tow = le32toh(msg->common.toe.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.wn, buf + offset, 2);
-  msg->common.toe.wn = le16toh(msg->common.toe.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.ura, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.fit_interval, buf + offset, 4);
-  msg->common.fit_interval = le32toh(msg->common.fit_interval);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.health_bits, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->tgd, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rs, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_uc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_us, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_ic, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_is, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->dn, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->m0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->ecc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sqrta, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omega0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omegadot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->w, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc_dot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af1, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af2, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc.tow, buf + offset, 4);
-  msg->toc.tow = le32toh(msg->toc.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc.wn, buf + offset, 2);
-  msg->toc.wn = le16toh(msg->toc.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iode, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iodc, buf + offset, 2);
-  msg->iodc = le16toh(msg->iodc);
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ephemeris_gps_dep_f_t &a, const sbp_msg_ephemeris_gps_dep_f_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.common.sid.sat != b.common.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.common.sid.code != b.common.sid.code)
-  {
-    return false;
-  }
-
-  if (a.common.toe.tow != b.common.toe.tow)
-  {
-    return false;
-  }
-
-  if (a.common.toe.wn != b.common.toe.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.common.ura - b.common.ura) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.common.fit_interval != b.common.fit_interval)
-  {
-    return false;
-  }
-
-  if (a.common.valid != b.common.valid)
-  {
-    return false;
-  }
-
-  if (a.common.health_bits != b.common.health_bits)
-  {
-    return false;
-  }
-
-  if (fabs(a.tgd - b.tgd) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rs - b.c_rs) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rc - b.c_rc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_uc - b.c_uc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_us - b.c_us) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_ic - b.c_ic) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_is - b.c_is) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.dn - b.dn) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.m0 - b.m0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.ecc - b.ecc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.sqrta - b.sqrta) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omega0 - b.omega0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omegadot - b.omegadot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.w - b.w) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc - b.inc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc_dot - b.inc_dot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af0 - b.af0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af1 - b.af1) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af2 - b.af2) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.toc.tow != b.toc.tow)
-  {
-    return false;
-  }
-
-  if (a.toc.wn != b.toc.wn)
-  {
-    return false;
-  }
-
-  if (a.iode != b.iode)
-  {
-    return false;
-  }
-
-  if (a.iodc != b.iodc)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_ephemeris_gps_dep_f_t &a, const sbp_msg_ephemeris_gps_dep_f_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Satellite broadcast ephemeris for GPS
  *
  * The ephemeris message returns a set of satellite orbit
@@ -2789,932 +777,126 @@ static inline bool operator!=(const sbp_msg_ephemeris_gps_dep_f_t &a, const sbp_
  * 20-III) for more details.
  */
 #define SBP_MSG_EPHEMERIS_GPS 0x008A
-
-#define SBP_EPHEMERIS_GPS_COMMON_SID_CODE__MASK (0xff)
-#define SBP_EPHEMERIS_GPS_COMMON_SID_CODE__SHIFT (0u)
-#define SBP_EPHEMERIS_GPS_COMMON_SID_CODE__GET(flags) \
-  (((flags) >> SBP_EPHEMERIS_GPS_COMMON_SID_CODE__SHIFT) & SBP_EPHEMERIS_GPS_COMMON_SID_CODE__MASK)
-#define SBP_EPHEMERIS_GPS_COMMON_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_EPHEMERIS_GPS_COMMON_SID_CODE__MASK)) << (SBP_EPHEMERIS_GPS_COMMON_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_EPHEMERIS_GPS_COMMON_SID_CODE__GPS_L1CA (0)
-#define SBP_EPHEMERIS_GPS_COMMON_SID_CODE__GPS_L2CM (1)
-#define SBP_EPHEMERIS_GPS_COMMON_SID_CODE__SBAS_L1CA (2)
-#define SBP_EPHEMERIS_GPS_COMMON_SID_CODE__GLO_L1CA (3)
-#define SBP_EPHEMERIS_GPS_COMMON_SID_CODE__GLO_L2CA (4)
-#define SBP_EPHEMERIS_GPS_COMMON_SID_CODE__GPS_L1P (5)
-#define SBP_EPHEMERIS_GPS_COMMON_SID_CODE__GPS_L2P (6)
-#define SBP_EPHEMERIS_GPS_COMMON_SID_CODE__BDS2_B1 (12)
-#define SBP_EPHEMERIS_GPS_COMMON_SID_CODE__BDS2_B2 (13)
-#define SBP_EPHEMERIS_GPS_COMMON_SID_CODE__GAL_E1B (14)
-#define SBP_EPHEMERIS_GPS_COMMON_SID_CODE__GAL_E7I (20)
-#define SBP_EPHEMERIS_GPS_COMMON_SID_CODE__BDS3_B2A (47)
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Values common for all ephemeris types
    */
-  struct
-  {
+  ephemeris_common_content_t common;
 
-    /**
-     * GNSS signal identifier (16 bit)
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier. This field for Glonass can
-       * either be (100+FCN) where FCN is in [-7,+6] or
-       * the Slot ID in [1,28]
-       */
-      u8 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-    } sid;
-    /**
-     * Time of Ephemerides
-     */
-    struct
-    {
-
-      /**
-       * Seconds since start of GPS week[s]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } toe;
-    /**
-     * User Range Accuracy[m]
-     */
-    float ura;
-    /**
-     * Curve fit interval[s]
-     */
-    u32 fit_interval;
-    /**
-     * Status of ephemeris, 1 = valid, 0 = invalid
-     */
-    u8 valid;
-    /**
-     * Satellite health status.
-     * GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-     * SBAS: 0 = valid, non-zero = invalid
-     * GLO: 0 = valid, non-zero = invalid
-     */
-    u8 health_bits;
-  } common;
   /**
-   * Group delay differential between L1 and L2[s]
+   * Group delay differential between L1 and L2 [s]
    */
   float tgd;
+
   /**
-   * Amplitude of the sine harmonic correction term to the orbit radius[m]
+   * Amplitude of the sine harmonic correction term to the orbit radius [m]
    */
   float c_rs;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the orbit radius[m]
+   * Amplitude of the cosine harmonic correction term to the orbit radius [m]
    */
   float c_rc;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the cosine harmonic correction term to the argument of latitude [rad]
    */
   float c_uc;
+
   /**
-   * Amplitude of the sine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the sine harmonic correction term to the argument of latitude [rad]
    */
   float c_us;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the cosine harmonic correction term to the angle of inclination [rad]
    */
   float c_ic;
+
   /**
-   * Amplitude of the sine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the sine harmonic correction term to the angle of inclination [rad]
    */
   float c_is;
+
   /**
-   * Mean motion difference[rad/s]
+   * Mean motion difference [rad/s]
    */
   double dn;
+
   /**
-   * Mean anomaly at reference time[rad]
+   * Mean anomaly at reference time [rad]
    */
   double m0;
+
   /**
    * Eccentricity of satellite orbit
    */
   double ecc;
+
   /**
-   * Square root of the semi-major axis of orbit[m^(1/2)]
+   * Square root of the semi-major axis of orbit [m^(1/2)]
    */
   double sqrta;
+
   /**
-   * Longitude of ascending node of orbit plane at weekly epoch[rad]
+   * Longitude of ascending node of orbit plane at weekly epoch [rad]
    */
   double omega0;
+
   /**
-   * Rate of right ascension[rad/s]
+   * Rate of right ascension [rad/s]
    */
   double omegadot;
+
   /**
-   * Argument of perigee[rad]
+   * Argument of perigee [rad]
    */
   double w;
+
   /**
-   * Inclination[rad]
+   * Inclination [rad]
    */
   double inc;
+
   /**
-   * Inclination first derivative[rad/s]
+   * Inclination first derivative [rad/s]
    */
   double inc_dot;
+
   /**
-   * Polynomial clock correction coefficient (clock bias)[s]
+   * Polynomial clock correction coefficient (clock bias) [s]
    */
   float af0;
+
   /**
-   * Polynomial clock correction coefficient (clock drift)[s/s]
+   * Polynomial clock correction coefficient (clock drift) [s/s]
    */
   float af1;
+
   /**
-   * Polynomial clock correction coefficient (rate of clock drift)[s/s^2]
+   * Polynomial clock correction coefficient (rate of clock drift) [s/s^2]
    */
   float af2;
+
   /**
    * Clock reference
    */
-  struct
-  {
+  gps_time_sec_t toc;
 
-    /**
-     * Seconds since start of GPS week[s]
-     */
-    u32 tow;
-    /**
-     * GPS week number[week]
-     */
-    u16 wn;
-  } toc;
   /**
    * Issue of ephemeris data
    */
   u8 iode;
+
   /**
    * Issue of clock data
    */
   u16 iodc;
-} sbp_msg_ephemeris_gps_t;
 
-static inline size_t sbp_packed_size_sbp_msg_ephemeris_gps_t(const sbp_msg_ephemeris_gps_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->common.sid.sat) + sizeof(msg->common.sid.code)) +
-          (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) + sizeof(msg->common.ura) +
-          sizeof(msg->common.fit_interval) + sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         sizeof(msg->tgd) + sizeof(msg->c_rs) + sizeof(msg->c_rc) + sizeof(msg->c_uc) + sizeof(msg->c_us) +
-         sizeof(msg->c_ic) + sizeof(msg->c_is) + sizeof(msg->dn) + sizeof(msg->m0) + sizeof(msg->ecc) +
-         sizeof(msg->sqrta) + sizeof(msg->omega0) + sizeof(msg->omegadot) + sizeof(msg->w) + sizeof(msg->inc) +
-         sizeof(msg->inc_dot) + sizeof(msg->af0) + sizeof(msg->af1) + sizeof(msg->af2) +
-         (0 + sizeof(msg->toc.tow) + sizeof(msg->toc.wn)) + sizeof(msg->iode) + sizeof(msg->iodc);
-}
+} msg_ephemeris_gps_t;
 
-static inline bool sbp_pack_sbp_msg_ephemeris_gps_t(u8 *buf, size_t len, const sbp_msg_ephemeris_gps_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_ephemeris_gps_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidsat = msg->common.sid.sat;
-  memcpy(buf + offset, &msgcommonsidsat, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidcode = msg->common.sid.code;
-  memcpy(buf + offset, &msgcommonsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommontoetow = htole32(msg->common.toe.tow);
-  memcpy(buf + offset, &msgcommontoetow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommontoewn = htole16(msg->common.toe.wn);
-  memcpy(buf + offset, &msgcommontoewn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgcommonura = msg->common.ura;
-  memcpy(buf + offset, &msgcommonura, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommonfit_interval = htole32(msg->common.fit_interval);
-  memcpy(buf + offset, &msgcommonfit_interval, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonvalid = msg->common.valid;
-  memcpy(buf + offset, &msgcommonvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonhealth_bits = msg->common.health_bits;
-  memcpy(buf + offset, &msgcommonhealth_bits, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgtgd = msg->tgd;
-  memcpy(buf + offset, &msgtgd, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_rs = msg->c_rs;
-  memcpy(buf + offset, &msgc_rs, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_rc = msg->c_rc;
-  memcpy(buf + offset, &msgc_rc, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_uc = msg->c_uc;
-  memcpy(buf + offset, &msgc_uc, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_us = msg->c_us;
-  memcpy(buf + offset, &msgc_us, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_ic = msg->c_ic;
-  memcpy(buf + offset, &msgc_ic, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_is = msg->c_is;
-  memcpy(buf + offset, &msgc_is, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgdn = msg->dn;
-  memcpy(buf + offset, &msgdn, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgm0 = msg->m0;
-  memcpy(buf + offset, &msgm0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgecc = msg->ecc;
-  memcpy(buf + offset, &msgecc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgsqrta = msg->sqrta;
-  memcpy(buf + offset, &msgsqrta, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomega0 = msg->omega0;
-  memcpy(buf + offset, &msgomega0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomegadot = msg->omegadot;
-  memcpy(buf + offset, &msgomegadot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgw = msg->w;
-  memcpy(buf + offset, &msgw, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc = msg->inc;
-  memcpy(buf + offset, &msginc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc_dot = msg->inc_dot;
-  memcpy(buf + offset, &msginc_dot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgaf0 = msg->af0;
-  memcpy(buf + offset, &msgaf0, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgaf1 = msg->af1;
-  memcpy(buf + offset, &msgaf1, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgaf2 = msg->af2;
-  memcpy(buf + offset, &msgaf2, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgtoctow = htole32(msg->toc.tow);
-  memcpy(buf + offset, &msgtoctow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgtocwn = htole16(msg->toc.wn);
-  memcpy(buf + offset, &msgtocwn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgiode = msg->iode;
-  memcpy(buf + offset, &msgiode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgiodc = htole16(msg->iodc);
-  memcpy(buf + offset, &msgiodc, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_ephemeris_gps_t(const u8 *buf, size_t len, sbp_msg_ephemeris_gps_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.sat, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.tow, buf + offset, 4);
-  msg->common.toe.tow = le32toh(msg->common.toe.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.wn, buf + offset, 2);
-  msg->common.toe.wn = le16toh(msg->common.toe.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.ura, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.fit_interval, buf + offset, 4);
-  msg->common.fit_interval = le32toh(msg->common.fit_interval);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.health_bits, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->tgd, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rs, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rc, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_uc, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_us, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_ic, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_is, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->dn, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->m0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->ecc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sqrta, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omega0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omegadot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->w, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc_dot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af0, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af1, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af2, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc.tow, buf + offset, 4);
-  msg->toc.tow = le32toh(msg->toc.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc.wn, buf + offset, 2);
-  msg->toc.wn = le16toh(msg->toc.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iode, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iodc, buf + offset, 2);
-  msg->iodc = le16toh(msg->iodc);
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ephemeris_gps_t &a, const sbp_msg_ephemeris_gps_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.common.sid.sat != b.common.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.common.sid.code != b.common.sid.code)
-  {
-    return false;
-  }
-
-  if (a.common.toe.tow != b.common.toe.tow)
-  {
-    return false;
-  }
-
-  if (a.common.toe.wn != b.common.toe.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.common.ura - b.common.ura) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.common.fit_interval != b.common.fit_interval)
-  {
-    return false;
-  }
-
-  if (a.common.valid != b.common.valid)
-  {
-    return false;
-  }
-
-  if (a.common.health_bits != b.common.health_bits)
-  {
-    return false;
-  }
-
-  if (fabs(a.tgd - b.tgd) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rs - b.c_rs) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rc - b.c_rc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_uc - b.c_uc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_us - b.c_us) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_ic - b.c_ic) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_is - b.c_is) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.dn - b.dn) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.m0 - b.m0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.ecc - b.ecc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.sqrta - b.sqrta) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omega0 - b.omega0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omegadot - b.omegadot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.w - b.w) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc - b.inc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc_dot - b.inc_dot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af0 - b.af0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af1 - b.af1) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af2 - b.af2) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.toc.tow != b.toc.tow)
-  {
-    return false;
-  }
-
-  if (a.toc.wn != b.toc.wn)
-  {
-    return false;
-  }
-
-  if (a.iode != b.iode)
-  {
-    return false;
-  }
-
-  if (a.iodc != b.iodc)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_ephemeris_gps_t &a, const sbp_msg_ephemeris_gps_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Satellite broadcast ephemeris for QZSS
  *
  * The ephemeris message returns a set of satellite orbit
@@ -3722,933 +904,126 @@ static inline bool operator!=(const sbp_msg_ephemeris_gps_t &a, const sbp_msg_ep
  * velocity, and clock offset.
  */
 #define SBP_MSG_EPHEMERIS_QZSS 0x008E
-
-#define SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__MASK (0xff)
-#define SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__SHIFT (0u)
-#define SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__GET(flags) \
-  (((flags) >> SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__SHIFT) & SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__MASK)
-#define SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= \
-     (((val) & (SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__MASK)) << (SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__GPS_L1CA (0)
-#define SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__GPS_L2CM (1)
-#define SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__SBAS_L1CA (2)
-#define SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__GLO_L1CA (3)
-#define SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__GLO_L2CA (4)
-#define SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__GPS_L1P (5)
-#define SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__GPS_L2P (6)
-#define SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__BDS2_B1 (12)
-#define SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__BDS2_B2 (13)
-#define SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__GAL_E1B (14)
-#define SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__GAL_E7I (20)
-#define SBP_EPHEMERIS_QZSS_COMMON_SID_CODE__BDS3_B2A (47)
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Values common for all ephemeris types
    */
-  struct
-  {
+  ephemeris_common_content_t common;
 
-    /**
-     * GNSS signal identifier (16 bit)
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier. This field for Glonass can
-       * either be (100+FCN) where FCN is in [-7,+6] or
-       * the Slot ID in [1,28]
-       */
-      u8 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-    } sid;
-    /**
-     * Time of Ephemerides
-     */
-    struct
-    {
-
-      /**
-       * Seconds since start of GPS week[s]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } toe;
-    /**
-     * User Range Accuracy[m]
-     */
-    float ura;
-    /**
-     * Curve fit interval[s]
-     */
-    u32 fit_interval;
-    /**
-     * Status of ephemeris, 1 = valid, 0 = invalid
-     */
-    u8 valid;
-    /**
-     * Satellite health status.
-     * GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-     * SBAS: 0 = valid, non-zero = invalid
-     * GLO: 0 = valid, non-zero = invalid
-     */
-    u8 health_bits;
-  } common;
   /**
-   * Group delay differential between L1 and L2[s]
+   * Group delay differential between L1 and L2 [s]
    */
   float tgd;
+
   /**
-   * Amplitude of the sine harmonic correction term to the orbit radius[m]
+   * Amplitude of the sine harmonic correction term to the orbit radius [m]
    */
   float c_rs;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the orbit radius[m]
+   * Amplitude of the cosine harmonic correction term to the orbit radius [m]
    */
   float c_rc;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the cosine harmonic correction term to the argument of latitude [rad]
    */
   float c_uc;
+
   /**
-   * Amplitude of the sine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the sine harmonic correction term to the argument of latitude [rad]
    */
   float c_us;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the cosine harmonic correction term to the angle of inclination [rad]
    */
   float c_ic;
+
   /**
-   * Amplitude of the sine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the sine harmonic correction term to the angle of inclination [rad]
    */
   float c_is;
+
   /**
-   * Mean motion difference[rad/s]
+   * Mean motion difference [rad/s]
    */
   double dn;
+
   /**
-   * Mean anomaly at reference time[rad]
+   * Mean anomaly at reference time [rad]
    */
   double m0;
+
   /**
    * Eccentricity of satellite orbit
    */
   double ecc;
+
   /**
-   * Square root of the semi-major axis of orbit[m^(1/2)]
+   * Square root of the semi-major axis of orbit [m^(1/2)]
    */
   double sqrta;
+
   /**
-   * Longitude of ascending node of orbit plane at weekly epoch[rad]
+   * Longitude of ascending node of orbit plane at weekly epoch [rad]
    */
   double omega0;
+
   /**
-   * Rate of right ascension[rad/s]
+   * Rate of right ascension [rad/s]
    */
   double omegadot;
+
   /**
-   * Argument of perigee[rad]
+   * Argument of perigee [rad]
    */
   double w;
+
   /**
-   * Inclination[rad]
+   * Inclination [rad]
    */
   double inc;
+
   /**
-   * Inclination first derivative[rad/s]
+   * Inclination first derivative [rad/s]
    */
   double inc_dot;
+
   /**
-   * Polynomial clock correction coefficient (clock bias)[s]
+   * Polynomial clock correction coefficient (clock bias) [s]
    */
   float af0;
+
   /**
-   * Polynomial clock correction coefficient (clock drift)[s/s]
+   * Polynomial clock correction coefficient (clock drift) [s/s]
    */
   float af1;
+
   /**
-   * Polynomial clock correction coefficient (rate of clock drift)[s/s^2]
+   * Polynomial clock correction coefficient (rate of clock drift) [s/s^2]
    */
   float af2;
+
   /**
    * Clock reference
    */
-  struct
-  {
+  gps_time_sec_t toc;
 
-    /**
-     * Seconds since start of GPS week[s]
-     */
-    u32 tow;
-    /**
-     * GPS week number[week]
-     */
-    u16 wn;
-  } toc;
   /**
    * Issue of ephemeris data
    */
   u8 iode;
+
   /**
    * Issue of clock data
    */
   u16 iodc;
-} sbp_msg_ephemeris_qzss_t;
 
-static inline size_t sbp_packed_size_sbp_msg_ephemeris_qzss_t(const sbp_msg_ephemeris_qzss_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->common.sid.sat) + sizeof(msg->common.sid.code)) +
-          (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) + sizeof(msg->common.ura) +
-          sizeof(msg->common.fit_interval) + sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         sizeof(msg->tgd) + sizeof(msg->c_rs) + sizeof(msg->c_rc) + sizeof(msg->c_uc) + sizeof(msg->c_us) +
-         sizeof(msg->c_ic) + sizeof(msg->c_is) + sizeof(msg->dn) + sizeof(msg->m0) + sizeof(msg->ecc) +
-         sizeof(msg->sqrta) + sizeof(msg->omega0) + sizeof(msg->omegadot) + sizeof(msg->w) + sizeof(msg->inc) +
-         sizeof(msg->inc_dot) + sizeof(msg->af0) + sizeof(msg->af1) + sizeof(msg->af2) +
-         (0 + sizeof(msg->toc.tow) + sizeof(msg->toc.wn)) + sizeof(msg->iode) + sizeof(msg->iodc);
-}
+} msg_ephemeris_qzss_t;
 
-static inline bool sbp_pack_sbp_msg_ephemeris_qzss_t(u8 *buf, size_t len, const sbp_msg_ephemeris_qzss_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_ephemeris_qzss_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidsat = msg->common.sid.sat;
-  memcpy(buf + offset, &msgcommonsidsat, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidcode = msg->common.sid.code;
-  memcpy(buf + offset, &msgcommonsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommontoetow = htole32(msg->common.toe.tow);
-  memcpy(buf + offset, &msgcommontoetow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommontoewn = htole16(msg->common.toe.wn);
-  memcpy(buf + offset, &msgcommontoewn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgcommonura = msg->common.ura;
-  memcpy(buf + offset, &msgcommonura, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommonfit_interval = htole32(msg->common.fit_interval);
-  memcpy(buf + offset, &msgcommonfit_interval, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonvalid = msg->common.valid;
-  memcpy(buf + offset, &msgcommonvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonhealth_bits = msg->common.health_bits;
-  memcpy(buf + offset, &msgcommonhealth_bits, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgtgd = msg->tgd;
-  memcpy(buf + offset, &msgtgd, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_rs = msg->c_rs;
-  memcpy(buf + offset, &msgc_rs, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_rc = msg->c_rc;
-  memcpy(buf + offset, &msgc_rc, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_uc = msg->c_uc;
-  memcpy(buf + offset, &msgc_uc, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_us = msg->c_us;
-  memcpy(buf + offset, &msgc_us, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_ic = msg->c_ic;
-  memcpy(buf + offset, &msgc_ic, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_is = msg->c_is;
-  memcpy(buf + offset, &msgc_is, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgdn = msg->dn;
-  memcpy(buf + offset, &msgdn, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgm0 = msg->m0;
-  memcpy(buf + offset, &msgm0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgecc = msg->ecc;
-  memcpy(buf + offset, &msgecc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgsqrta = msg->sqrta;
-  memcpy(buf + offset, &msgsqrta, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomega0 = msg->omega0;
-  memcpy(buf + offset, &msgomega0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomegadot = msg->omegadot;
-  memcpy(buf + offset, &msgomegadot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgw = msg->w;
-  memcpy(buf + offset, &msgw, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc = msg->inc;
-  memcpy(buf + offset, &msginc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc_dot = msg->inc_dot;
-  memcpy(buf + offset, &msginc_dot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgaf0 = msg->af0;
-  memcpy(buf + offset, &msgaf0, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgaf1 = msg->af1;
-  memcpy(buf + offset, &msgaf1, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgaf2 = msg->af2;
-  memcpy(buf + offset, &msgaf2, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgtoctow = htole32(msg->toc.tow);
-  memcpy(buf + offset, &msgtoctow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgtocwn = htole16(msg->toc.wn);
-  memcpy(buf + offset, &msgtocwn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgiode = msg->iode;
-  memcpy(buf + offset, &msgiode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgiodc = htole16(msg->iodc);
-  memcpy(buf + offset, &msgiodc, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_ephemeris_qzss_t(const u8 *buf, size_t len, sbp_msg_ephemeris_qzss_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.sat, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.tow, buf + offset, 4);
-  msg->common.toe.tow = le32toh(msg->common.toe.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.wn, buf + offset, 2);
-  msg->common.toe.wn = le16toh(msg->common.toe.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.ura, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.fit_interval, buf + offset, 4);
-  msg->common.fit_interval = le32toh(msg->common.fit_interval);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.health_bits, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->tgd, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rs, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rc, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_uc, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_us, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_ic, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_is, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->dn, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->m0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->ecc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sqrta, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omega0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omegadot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->w, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc_dot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af0, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af1, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af2, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc.tow, buf + offset, 4);
-  msg->toc.tow = le32toh(msg->toc.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc.wn, buf + offset, 2);
-  msg->toc.wn = le16toh(msg->toc.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iode, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iodc, buf + offset, 2);
-  msg->iodc = le16toh(msg->iodc);
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ephemeris_qzss_t &a, const sbp_msg_ephemeris_qzss_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.common.sid.sat != b.common.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.common.sid.code != b.common.sid.code)
-  {
-    return false;
-  }
-
-  if (a.common.toe.tow != b.common.toe.tow)
-  {
-    return false;
-  }
-
-  if (a.common.toe.wn != b.common.toe.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.common.ura - b.common.ura) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.common.fit_interval != b.common.fit_interval)
-  {
-    return false;
-  }
-
-  if (a.common.valid != b.common.valid)
-  {
-    return false;
-  }
-
-  if (a.common.health_bits != b.common.health_bits)
-  {
-    return false;
-  }
-
-  if (fabs(a.tgd - b.tgd) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rs - b.c_rs) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rc - b.c_rc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_uc - b.c_uc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_us - b.c_us) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_ic - b.c_ic) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_is - b.c_is) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.dn - b.dn) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.m0 - b.m0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.ecc - b.ecc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.sqrta - b.sqrta) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omega0 - b.omega0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omegadot - b.omegadot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.w - b.w) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc - b.inc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc_dot - b.inc_dot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af0 - b.af0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af1 - b.af1) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af2 - b.af2) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.toc.tow != b.toc.tow)
-  {
-    return false;
-  }
-
-  if (a.toc.wn != b.toc.wn)
-  {
-    return false;
-  }
-
-  if (a.iode != b.iode)
-  {
-    return false;
-  }
-
-  if (a.iodc != b.iodc)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_ephemeris_qzss_t &a, const sbp_msg_ephemeris_qzss_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Satellite broadcast ephemeris for BDS
  *
  * The ephemeris message returns a set of satellite orbit
@@ -4657,186 +1032,119 @@ static inline bool operator!=(const sbp_msg_ephemeris_qzss_t &a, const sbp_msg_e
  * Satellite System SIS-ICD Version 2.1, Table 5-9 for more details.
  */
 #define SBP_MSG_EPHEMERIS_BDS 0x0089
-
-#define SBP_EPHEMERIS_BDS_COMMON_SID_CODE__MASK (0xff)
-#define SBP_EPHEMERIS_BDS_COMMON_SID_CODE__SHIFT (0u)
-#define SBP_EPHEMERIS_BDS_COMMON_SID_CODE__GET(flags) \
-  (((flags) >> SBP_EPHEMERIS_BDS_COMMON_SID_CODE__SHIFT) & SBP_EPHEMERIS_BDS_COMMON_SID_CODE__MASK)
-#define SBP_EPHEMERIS_BDS_COMMON_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_EPHEMERIS_BDS_COMMON_SID_CODE__MASK)) << (SBP_EPHEMERIS_BDS_COMMON_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_EPHEMERIS_BDS_COMMON_SID_CODE__GPS_L1CA (0)
-#define SBP_EPHEMERIS_BDS_COMMON_SID_CODE__GPS_L2CM (1)
-#define SBP_EPHEMERIS_BDS_COMMON_SID_CODE__SBAS_L1CA (2)
-#define SBP_EPHEMERIS_BDS_COMMON_SID_CODE__GLO_L1CA (3)
-#define SBP_EPHEMERIS_BDS_COMMON_SID_CODE__GLO_L2CA (4)
-#define SBP_EPHEMERIS_BDS_COMMON_SID_CODE__GPS_L1P (5)
-#define SBP_EPHEMERIS_BDS_COMMON_SID_CODE__GPS_L2P (6)
-#define SBP_EPHEMERIS_BDS_COMMON_SID_CODE__BDS2_B1 (12)
-#define SBP_EPHEMERIS_BDS_COMMON_SID_CODE__BDS2_B2 (13)
-#define SBP_EPHEMERIS_BDS_COMMON_SID_CODE__GAL_E1B (14)
-#define SBP_EPHEMERIS_BDS_COMMON_SID_CODE__GAL_E7I (20)
-#define SBP_EPHEMERIS_BDS_COMMON_SID_CODE__BDS3_B2A (47)
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Values common for all ephemeris types
    */
-  struct
-  {
+  ephemeris_common_content_t common;
 
-    /**
-     * GNSS signal identifier (16 bit)
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier. This field for Glonass can
-       * either be (100+FCN) where FCN is in [-7,+6] or
-       * the Slot ID in [1,28]
-       */
-      u8 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-    } sid;
-    /**
-     * Time of Ephemerides
-     */
-    struct
-    {
-
-      /**
-       * Seconds since start of GPS week[s]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } toe;
-    /**
-     * User Range Accuracy[m]
-     */
-    float ura;
-    /**
-     * Curve fit interval[s]
-     */
-    u32 fit_interval;
-    /**
-     * Status of ephemeris, 1 = valid, 0 = invalid
-     */
-    u8 valid;
-    /**
-     * Satellite health status.
-     * GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-     * SBAS: 0 = valid, non-zero = invalid
-     * GLO: 0 = valid, non-zero = invalid
-     */
-    u8 health_bits;
-  } common;
   /**
-   * Group delay differential for B1[s]
+   * Group delay differential for B1 [s]
    */
   float tgd1;
+
   /**
-   * Group delay differential for B2[s]
+   * Group delay differential for B2 [s]
    */
   float tgd2;
+
   /**
-   * Amplitude of the sine harmonic correction term to the orbit radius[m]
+   * Amplitude of the sine harmonic correction term to the orbit radius [m]
    */
   float c_rs;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the orbit radius[m]
+   * Amplitude of the cosine harmonic correction term to the orbit radius [m]
    */
   float c_rc;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the cosine harmonic correction term to the argument of latitude [rad]
    */
   float c_uc;
+
   /**
-   * Amplitude of the sine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the sine harmonic correction term to the argument of latitude [rad]
    */
   float c_us;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the cosine harmonic correction term to the angle of inclination [rad]
    */
   float c_ic;
+
   /**
-   * Amplitude of the sine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the sine harmonic correction term to the angle of inclination [rad]
    */
   float c_is;
+
   /**
-   * Mean motion difference[rad/s]
+   * Mean motion difference [rad/s]
    */
   double dn;
+
   /**
-   * Mean anomaly at reference time[rad]
+   * Mean anomaly at reference time [rad]
    */
   double m0;
+
   /**
    * Eccentricity of satellite orbit
    */
   double ecc;
+
   /**
-   * Square root of the semi-major axis of orbit[m^(1/2)]
+   * Square root of the semi-major axis of orbit [m^(1/2)]
    */
   double sqrta;
+
   /**
-   * Longitude of ascending node of orbit plane at weekly epoch[rad]
+   * Longitude of ascending node of orbit plane at weekly epoch [rad]
    */
   double omega0;
+
   /**
-   * Rate of right ascension[rad/s]
+   * Rate of right ascension [rad/s]
    */
   double omegadot;
+
   /**
-   * Argument of perigee[rad]
+   * Argument of perigee [rad]
    */
   double w;
+
   /**
-   * Inclination[rad]
+   * Inclination [rad]
    */
   double inc;
+
   /**
-   * Inclination first derivative[rad/s]
+   * Inclination first derivative [rad/s]
    */
   double inc_dot;
+
   /**
-   * Polynomial clock correction coefficient (clock bias)[s]
+   * Polynomial clock correction coefficient (clock bias) [s]
    */
   double af0;
+
   /**
-   * Polynomial clock correction coefficient (clock drift)[s/s]
+   * Polynomial clock correction coefficient (clock drift) [s/s]
    */
   float af1;
+
   /**
-   * Polynomial clock correction coefficient (rate of clock drift)[s/s^2]
+   * Polynomial clock correction coefficient (rate of clock drift) [s/s^2]
    */
   float af2;
+
   /**
    * Clock reference
    */
-  struct
-  {
+  gps_time_sec_t toc;
 
-    /**
-     * Seconds since start of GPS week[s]
-     */
-    u32 tow;
-    /**
-     * GPS week number[week]
-     */
-    u16 wn;
-  } toc;
   /**
    * Issue of ephemeris data
    *
@@ -4844,6 +1152,7 @@ typedef struct
    * IODE = mod (t_oe / 720, 240)
    */
   u8 iode;
+
   /**
    * Issue of clock data
    *
@@ -4851,1731 +1160,140 @@ typedef struct
    * IODE = mod (t_oc / 720, 240)
    */
   u16 iodc;
-} sbp_msg_ephemeris_bds_t;
 
-static inline size_t sbp_packed_size_sbp_msg_ephemeris_bds_t(const sbp_msg_ephemeris_bds_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->common.sid.sat) + sizeof(msg->common.sid.code)) +
-          (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) + sizeof(msg->common.ura) +
-          sizeof(msg->common.fit_interval) + sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         sizeof(msg->tgd1) + sizeof(msg->tgd2) + sizeof(msg->c_rs) + sizeof(msg->c_rc) + sizeof(msg->c_uc) +
-         sizeof(msg->c_us) + sizeof(msg->c_ic) + sizeof(msg->c_is) + sizeof(msg->dn) + sizeof(msg->m0) +
-         sizeof(msg->ecc) + sizeof(msg->sqrta) + sizeof(msg->omega0) + sizeof(msg->omegadot) + sizeof(msg->w) +
-         sizeof(msg->inc) + sizeof(msg->inc_dot) + sizeof(msg->af0) + sizeof(msg->af1) + sizeof(msg->af2) +
-         (0 + sizeof(msg->toc.tow) + sizeof(msg->toc.wn)) + sizeof(msg->iode) + sizeof(msg->iodc);
-}
+} msg_ephemeris_bds_t;
 
-static inline bool sbp_pack_sbp_msg_ephemeris_bds_t(u8 *buf, size_t len, const sbp_msg_ephemeris_bds_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_ephemeris_bds_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidsat = msg->common.sid.sat;
-  memcpy(buf + offset, &msgcommonsidsat, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidcode = msg->common.sid.code;
-  memcpy(buf + offset, &msgcommonsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommontoetow = htole32(msg->common.toe.tow);
-  memcpy(buf + offset, &msgcommontoetow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommontoewn = htole16(msg->common.toe.wn);
-  memcpy(buf + offset, &msgcommontoewn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgcommonura = msg->common.ura;
-  memcpy(buf + offset, &msgcommonura, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommonfit_interval = htole32(msg->common.fit_interval);
-  memcpy(buf + offset, &msgcommonfit_interval, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonvalid = msg->common.valid;
-  memcpy(buf + offset, &msgcommonvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonhealth_bits = msg->common.health_bits;
-  memcpy(buf + offset, &msgcommonhealth_bits, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgtgd1 = msg->tgd1;
-  memcpy(buf + offset, &msgtgd1, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgtgd2 = msg->tgd2;
-  memcpy(buf + offset, &msgtgd2, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_rs = msg->c_rs;
-  memcpy(buf + offset, &msgc_rs, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_rc = msg->c_rc;
-  memcpy(buf + offset, &msgc_rc, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_uc = msg->c_uc;
-  memcpy(buf + offset, &msgc_uc, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_us = msg->c_us;
-  memcpy(buf + offset, &msgc_us, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_ic = msg->c_ic;
-  memcpy(buf + offset, &msgc_ic, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_is = msg->c_is;
-  memcpy(buf + offset, &msgc_is, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgdn = msg->dn;
-  memcpy(buf + offset, &msgdn, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgm0 = msg->m0;
-  memcpy(buf + offset, &msgm0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgecc = msg->ecc;
-  memcpy(buf + offset, &msgecc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgsqrta = msg->sqrta;
-  memcpy(buf + offset, &msgsqrta, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomega0 = msg->omega0;
-  memcpy(buf + offset, &msgomega0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomegadot = msg->omegadot;
-  memcpy(buf + offset, &msgomegadot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgw = msg->w;
-  memcpy(buf + offset, &msgw, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc = msg->inc;
-  memcpy(buf + offset, &msginc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc_dot = msg->inc_dot;
-  memcpy(buf + offset, &msginc_dot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf0 = msg->af0;
-  memcpy(buf + offset, &msgaf0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgaf1 = msg->af1;
-  memcpy(buf + offset, &msgaf1, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgaf2 = msg->af2;
-  memcpy(buf + offset, &msgaf2, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgtoctow = htole32(msg->toc.tow);
-  memcpy(buf + offset, &msgtoctow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgtocwn = htole16(msg->toc.wn);
-  memcpy(buf + offset, &msgtocwn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgiode = msg->iode;
-  memcpy(buf + offset, &msgiode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgiodc = htole16(msg->iodc);
-  memcpy(buf + offset, &msgiodc, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_ephemeris_bds_t(const u8 *buf, size_t len, sbp_msg_ephemeris_bds_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.sat, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.tow, buf + offset, 4);
-  msg->common.toe.tow = le32toh(msg->common.toe.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.wn, buf + offset, 2);
-  msg->common.toe.wn = le16toh(msg->common.toe.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.ura, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.fit_interval, buf + offset, 4);
-  msg->common.fit_interval = le32toh(msg->common.fit_interval);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.health_bits, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->tgd1, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->tgd2, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rs, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rc, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_uc, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_us, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_ic, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_is, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->dn, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->m0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->ecc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sqrta, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omega0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omegadot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->w, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc_dot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af1, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af2, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc.tow, buf + offset, 4);
-  msg->toc.tow = le32toh(msg->toc.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc.wn, buf + offset, 2);
-  msg->toc.wn = le16toh(msg->toc.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iode, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iodc, buf + offset, 2);
-  msg->iodc = le16toh(msg->iodc);
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ephemeris_bds_t &a, const sbp_msg_ephemeris_bds_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.common.sid.sat != b.common.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.common.sid.code != b.common.sid.code)
-  {
-    return false;
-  }
-
-  if (a.common.toe.tow != b.common.toe.tow)
-  {
-    return false;
-  }
-
-  if (a.common.toe.wn != b.common.toe.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.common.ura - b.common.ura) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.common.fit_interval != b.common.fit_interval)
-  {
-    return false;
-  }
-
-  if (a.common.valid != b.common.valid)
-  {
-    return false;
-  }
-
-  if (a.common.health_bits != b.common.health_bits)
-  {
-    return false;
-  }
-
-  if (fabs(a.tgd1 - b.tgd1) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.tgd2 - b.tgd2) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rs - b.c_rs) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rc - b.c_rc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_uc - b.c_uc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_us - b.c_us) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_ic - b.c_ic) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_is - b.c_is) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.dn - b.dn) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.m0 - b.m0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.ecc - b.ecc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.sqrta - b.sqrta) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omega0 - b.omega0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omegadot - b.omegadot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.w - b.w) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc - b.inc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc_dot - b.inc_dot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af0 - b.af0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af1 - b.af1) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af2 - b.af2) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.toc.tow != b.toc.tow)
-  {
-    return false;
-  }
-
-  if (a.toc.wn != b.toc.wn)
-  {
-    return false;
-  }
-
-  if (a.iode != b.iode)
-  {
-    return false;
-  }
-
-  if (a.iodc != b.iodc)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_ephemeris_bds_t &a, const sbp_msg_ephemeris_bds_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Deprecated
  *
  * This observation message has been deprecated in favor of
  * an ephemeris message with explicit source of NAV data.
  */
 #define SBP_MSG_EPHEMERIS_GAL_DEP_A 0x0095
-
-#define SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__MASK (0xff)
-#define SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__SHIFT (0u)
-#define SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__GET(flags) \
-  (((flags) >> SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__SHIFT) & SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__MASK)
-#define SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= \
-     (((val) & (SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__MASK)) << (SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__GPS_L1CA (0)
-#define SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__GPS_L2CM (1)
-#define SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__SBAS_L1CA (2)
-#define SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__GLO_L1CA (3)
-#define SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__GLO_L2CA (4)
-#define SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__GPS_L1P (5)
-#define SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__GPS_L2P (6)
-#define SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__BDS2_B1 (12)
-#define SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__BDS2_B2 (13)
-#define SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__GAL_E1B (14)
-#define SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__GAL_E7I (20)
-#define SBP_EPHEMERIS_GAL_DEP_A_COMMON_SID_CODE__BDS3_B2A (47)
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Values common for all ephemeris types
    */
-  struct
-  {
+  ephemeris_common_content_t common;
 
-    /**
-     * GNSS signal identifier (16 bit)
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier. This field for Glonass can
-       * either be (100+FCN) where FCN is in [-7,+6] or
-       * the Slot ID in [1,28]
-       */
-      u8 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-    } sid;
-    /**
-     * Time of Ephemerides
-     */
-    struct
-    {
-
-      /**
-       * Seconds since start of GPS week[s]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } toe;
-    /**
-     * User Range Accuracy[m]
-     */
-    float ura;
-    /**
-     * Curve fit interval[s]
-     */
-    u32 fit_interval;
-    /**
-     * Status of ephemeris, 1 = valid, 0 = invalid
-     */
-    u8 valid;
-    /**
-     * Satellite health status.
-     * GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-     * SBAS: 0 = valid, non-zero = invalid
-     * GLO: 0 = valid, non-zero = invalid
-     */
-    u8 health_bits;
-  } common;
   /**
-   * E1-E5a Broadcast Group Delay[s]
+   * E1-E5a Broadcast Group Delay [s]
    */
   float bgd_e1e5a;
+
   /**
-   * E1-E5b Broadcast Group Delay[s]
+   * E1-E5b Broadcast Group Delay [s]
    */
   float bgd_e1e5b;
+
   /**
-   * Amplitude of the sine harmonic correction term to the orbit radius[m]
+   * Amplitude of the sine harmonic correction term to the orbit radius [m]
    */
   float c_rs;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the orbit radius[m]
+   * Amplitude of the cosine harmonic correction term to the orbit radius [m]
    */
   float c_rc;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the cosine harmonic correction term to the argument of latitude [rad]
    */
   float c_uc;
+
   /**
-   * Amplitude of the sine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the sine harmonic correction term to the argument of latitude [rad]
    */
   float c_us;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the cosine harmonic correction term to the angle of inclination [rad]
    */
   float c_ic;
+
   /**
-   * Amplitude of the sine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the sine harmonic correction term to the angle of inclination [rad]
    */
   float c_is;
+
   /**
-   * Mean motion difference[rad/s]
+   * Mean motion difference [rad/s]
    */
   double dn;
+
   /**
-   * Mean anomaly at reference time[rad]
+   * Mean anomaly at reference time [rad]
    */
   double m0;
+
   /**
    * Eccentricity of satellite orbit
    */
   double ecc;
+
   /**
-   * Square root of the semi-major axis of orbit[m^(1/2)]
+   * Square root of the semi-major axis of orbit [m^(1/2)]
    */
   double sqrta;
+
   /**
-   * Longitude of ascending node of orbit plane at weekly epoch[rad]
+   * Longitude of ascending node of orbit plane at weekly epoch [rad]
    */
   double omega0;
+
   /**
-   * Rate of right ascension[rad/s]
+   * Rate of right ascension [rad/s]
    */
   double omegadot;
+
   /**
-   * Argument of perigee[rad]
+   * Argument of perigee [rad]
    */
   double w;
+
   /**
-   * Inclination[rad]
+   * Inclination [rad]
    */
   double inc;
+
   /**
-   * Inclination first derivative[rad/s]
+   * Inclination first derivative [rad/s]
    */
   double inc_dot;
+
   /**
-   * Polynomial clock correction coefficient (clock bias)[s]
+   * Polynomial clock correction coefficient (clock bias) [s]
    */
   double af0;
+
   /**
-   * Polynomial clock correction coefficient (clock drift)[s/s]
+   * Polynomial clock correction coefficient (clock drift) [s/s]
    */
   double af1;
+
   /**
-   * Polynomial clock correction coefficient (rate of clock drift)[s/s^2]
+   * Polynomial clock correction coefficient (rate of clock drift) [s/s^2]
    */
   float af2;
+
   /**
    * Clock reference
    */
-  struct
-  {
+  gps_time_sec_t toc;
 
-    /**
-     * Seconds since start of GPS week[s]
-     */
-    u32 tow;
-    /**
-     * GPS week number[week]
-     */
-    u16 wn;
-  } toc;
   /**
    * Issue of data (IODnav)
    */
   u16 iode;
+
   /**
    * Issue of data (IODnav). Always equal to iode
    */
   u16 iodc;
-} sbp_msg_ephemeris_gal_dep_a_t;
 
-static inline size_t sbp_packed_size_sbp_msg_ephemeris_gal_dep_a_t(const sbp_msg_ephemeris_gal_dep_a_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->common.sid.sat) + sizeof(msg->common.sid.code)) +
-          (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) + sizeof(msg->common.ura) +
-          sizeof(msg->common.fit_interval) + sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         sizeof(msg->bgd_e1e5a) + sizeof(msg->bgd_e1e5b) + sizeof(msg->c_rs) + sizeof(msg->c_rc) + sizeof(msg->c_uc) +
-         sizeof(msg->c_us) + sizeof(msg->c_ic) + sizeof(msg->c_is) + sizeof(msg->dn) + sizeof(msg->m0) +
-         sizeof(msg->ecc) + sizeof(msg->sqrta) + sizeof(msg->omega0) + sizeof(msg->omegadot) + sizeof(msg->w) +
-         sizeof(msg->inc) + sizeof(msg->inc_dot) + sizeof(msg->af0) + sizeof(msg->af1) + sizeof(msg->af2) +
-         (0 + sizeof(msg->toc.tow) + sizeof(msg->toc.wn)) + sizeof(msg->iode) + sizeof(msg->iodc);
-}
+} msg_ephemeris_gal_dep_a_t;
 
-static inline bool sbp_pack_sbp_msg_ephemeris_gal_dep_a_t(u8 *buf, size_t len, const sbp_msg_ephemeris_gal_dep_a_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_ephemeris_gal_dep_a_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidsat = msg->common.sid.sat;
-  memcpy(buf + offset, &msgcommonsidsat, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidcode = msg->common.sid.code;
-  memcpy(buf + offset, &msgcommonsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommontoetow = htole32(msg->common.toe.tow);
-  memcpy(buf + offset, &msgcommontoetow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommontoewn = htole16(msg->common.toe.wn);
-  memcpy(buf + offset, &msgcommontoewn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgcommonura = msg->common.ura;
-  memcpy(buf + offset, &msgcommonura, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommonfit_interval = htole32(msg->common.fit_interval);
-  memcpy(buf + offset, &msgcommonfit_interval, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonvalid = msg->common.valid;
-  memcpy(buf + offset, &msgcommonvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonhealth_bits = msg->common.health_bits;
-  memcpy(buf + offset, &msgcommonhealth_bits, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgbgd_e1e5a = msg->bgd_e1e5a;
-  memcpy(buf + offset, &msgbgd_e1e5a, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgbgd_e1e5b = msg->bgd_e1e5b;
-  memcpy(buf + offset, &msgbgd_e1e5b, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_rs = msg->c_rs;
-  memcpy(buf + offset, &msgc_rs, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_rc = msg->c_rc;
-  memcpy(buf + offset, &msgc_rc, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_uc = msg->c_uc;
-  memcpy(buf + offset, &msgc_uc, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_us = msg->c_us;
-  memcpy(buf + offset, &msgc_us, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_ic = msg->c_ic;
-  memcpy(buf + offset, &msgc_ic, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_is = msg->c_is;
-  memcpy(buf + offset, &msgc_is, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgdn = msg->dn;
-  memcpy(buf + offset, &msgdn, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgm0 = msg->m0;
-  memcpy(buf + offset, &msgm0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgecc = msg->ecc;
-  memcpy(buf + offset, &msgecc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgsqrta = msg->sqrta;
-  memcpy(buf + offset, &msgsqrta, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomega0 = msg->omega0;
-  memcpy(buf + offset, &msgomega0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomegadot = msg->omegadot;
-  memcpy(buf + offset, &msgomegadot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgw = msg->w;
-  memcpy(buf + offset, &msgw, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc = msg->inc;
-  memcpy(buf + offset, &msginc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc_dot = msg->inc_dot;
-  memcpy(buf + offset, &msginc_dot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf0 = msg->af0;
-  memcpy(buf + offset, &msgaf0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf1 = msg->af1;
-  memcpy(buf + offset, &msgaf1, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgaf2 = msg->af2;
-  memcpy(buf + offset, &msgaf2, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgtoctow = htole32(msg->toc.tow);
-  memcpy(buf + offset, &msgtoctow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgtocwn = htole16(msg->toc.wn);
-  memcpy(buf + offset, &msgtocwn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgiode = htole16(msg->iode);
-  memcpy(buf + offset, &msgiode, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgiodc = htole16(msg->iodc);
-  memcpy(buf + offset, &msgiodc, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-static inline bool
-sbp_unpack_sbp_msg_ephemeris_gal_dep_a_t(const u8 *buf, size_t len, sbp_msg_ephemeris_gal_dep_a_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.sat, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.tow, buf + offset, 4);
-  msg->common.toe.tow = le32toh(msg->common.toe.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.wn, buf + offset, 2);
-  msg->common.toe.wn = le16toh(msg->common.toe.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.ura, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.fit_interval, buf + offset, 4);
-  msg->common.fit_interval = le32toh(msg->common.fit_interval);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.health_bits, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->bgd_e1e5a, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->bgd_e1e5b, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rs, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rc, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_uc, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_us, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_ic, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_is, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->dn, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->m0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->ecc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sqrta, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omega0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omegadot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->w, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc_dot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af1, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af2, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc.tow, buf + offset, 4);
-  msg->toc.tow = le32toh(msg->toc.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc.wn, buf + offset, 2);
-  msg->toc.wn = le16toh(msg->toc.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iode, buf + offset, 2);
-  msg->iode = le16toh(msg->iode);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iodc, buf + offset, 2);
-  msg->iodc = le16toh(msg->iodc);
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ephemeris_gal_dep_a_t &a, const sbp_msg_ephemeris_gal_dep_a_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.common.sid.sat != b.common.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.common.sid.code != b.common.sid.code)
-  {
-    return false;
-  }
-
-  if (a.common.toe.tow != b.common.toe.tow)
-  {
-    return false;
-  }
-
-  if (a.common.toe.wn != b.common.toe.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.common.ura - b.common.ura) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.common.fit_interval != b.common.fit_interval)
-  {
-    return false;
-  }
-
-  if (a.common.valid != b.common.valid)
-  {
-    return false;
-  }
-
-  if (a.common.health_bits != b.common.health_bits)
-  {
-    return false;
-  }
-
-  if (fabs(a.bgd_e1e5a - b.bgd_e1e5a) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.bgd_e1e5b - b.bgd_e1e5b) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rs - b.c_rs) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rc - b.c_rc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_uc - b.c_uc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_us - b.c_us) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_ic - b.c_ic) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_is - b.c_is) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.dn - b.dn) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.m0 - b.m0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.ecc - b.ecc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.sqrta - b.sqrta) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omega0 - b.omega0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omegadot - b.omegadot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.w - b.w) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc - b.inc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc_dot - b.inc_dot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af0 - b.af0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af1 - b.af1) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af2 - b.af2) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.toc.tow != b.toc.tow)
-  {
-    return false;
-  }
-
-  if (a.toc.wn != b.toc.wn)
-  {
-    return false;
-  }
-
-  if (a.iode != b.iode)
-  {
-    return false;
-  }
-
-  if (a.iodc != b.iodc)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_ephemeris_gal_dep_a_t &a, const sbp_msg_ephemeris_gal_dep_a_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Satellite broadcast ephemeris for Galileo
  *
  * The ephemeris message returns a set of satellite orbit
@@ -6584,1484 +1302,172 @@ static inline bool operator!=(const sbp_msg_ephemeris_gal_dep_a_t &a, const sbp_
  * OS SIS ICD, Issue 1.3, December 2016 for more details.
  */
 #define SBP_MSG_EPHEMERIS_GAL 0x008D
-
-#define SBP_EPHEMERIS_GAL_COMMON_SID_CODE__MASK (0xff)
-#define SBP_EPHEMERIS_GAL_COMMON_SID_CODE__SHIFT (0u)
-#define SBP_EPHEMERIS_GAL_COMMON_SID_CODE__GET(flags) \
-  (((flags) >> SBP_EPHEMERIS_GAL_COMMON_SID_CODE__SHIFT) & SBP_EPHEMERIS_GAL_COMMON_SID_CODE__MASK)
-#define SBP_EPHEMERIS_GAL_COMMON_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_EPHEMERIS_GAL_COMMON_SID_CODE__MASK)) << (SBP_EPHEMERIS_GAL_COMMON_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_EPHEMERIS_GAL_COMMON_SID_CODE__GPS_L1CA (0)
-#define SBP_EPHEMERIS_GAL_COMMON_SID_CODE__GPS_L2CM (1)
-#define SBP_EPHEMERIS_GAL_COMMON_SID_CODE__SBAS_L1CA (2)
-#define SBP_EPHEMERIS_GAL_COMMON_SID_CODE__GLO_L1CA (3)
-#define SBP_EPHEMERIS_GAL_COMMON_SID_CODE__GLO_L2CA (4)
-#define SBP_EPHEMERIS_GAL_COMMON_SID_CODE__GPS_L1P (5)
-#define SBP_EPHEMERIS_GAL_COMMON_SID_CODE__GPS_L2P (6)
-#define SBP_EPHEMERIS_GAL_COMMON_SID_CODE__BDS2_B1 (12)
-#define SBP_EPHEMERIS_GAL_COMMON_SID_CODE__BDS2_B2 (13)
-#define SBP_EPHEMERIS_GAL_COMMON_SID_CODE__GAL_E1B (14)
-#define SBP_EPHEMERIS_GAL_COMMON_SID_CODE__GAL_E7I (20)
-#define SBP_EPHEMERIS_GAL_COMMON_SID_CODE__BDS3_B2A (47)
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Values common for all ephemeris types
    */
-  struct
-  {
+  ephemeris_common_content_t common;
 
-    /**
-     * GNSS signal identifier (16 bit)
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier. This field for Glonass can
-       * either be (100+FCN) where FCN is in [-7,+6] or
-       * the Slot ID in [1,28]
-       */
-      u8 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-    } sid;
-    /**
-     * Time of Ephemerides
-     */
-    struct
-    {
-
-      /**
-       * Seconds since start of GPS week[s]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } toe;
-    /**
-     * User Range Accuracy[m]
-     */
-    float ura;
-    /**
-     * Curve fit interval[s]
-     */
-    u32 fit_interval;
-    /**
-     * Status of ephemeris, 1 = valid, 0 = invalid
-     */
-    u8 valid;
-    /**
-     * Satellite health status.
-     * GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-     * SBAS: 0 = valid, non-zero = invalid
-     * GLO: 0 = valid, non-zero = invalid
-     */
-    u8 health_bits;
-  } common;
   /**
-   * E1-E5a Broadcast Group Delay[s]
+   * E1-E5a Broadcast Group Delay [s]
    */
   float bgd_e1e5a;
+
   /**
-   * E1-E5b Broadcast Group Delay[s]
+   * E1-E5b Broadcast Group Delay [s]
    */
   float bgd_e1e5b;
+
   /**
-   * Amplitude of the sine harmonic correction term to the orbit radius[m]
+   * Amplitude of the sine harmonic correction term to the orbit radius [m]
    */
   float c_rs;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the orbit radius[m]
+   * Amplitude of the cosine harmonic correction term to the orbit radius [m]
    */
   float c_rc;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the cosine harmonic correction term to the argument of latitude [rad]
    */
   float c_uc;
+
   /**
-   * Amplitude of the sine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the sine harmonic correction term to the argument of latitude [rad]
    */
   float c_us;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the cosine harmonic correction term to the angle of inclination [rad]
    */
   float c_ic;
+
   /**
-   * Amplitude of the sine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the sine harmonic correction term to the angle of inclination [rad]
    */
   float c_is;
+
   /**
-   * Mean motion difference[rad/s]
+   * Mean motion difference [rad/s]
    */
   double dn;
+
   /**
-   * Mean anomaly at reference time[rad]
+   * Mean anomaly at reference time [rad]
    */
   double m0;
+
   /**
    * Eccentricity of satellite orbit
    */
   double ecc;
+
   /**
-   * Square root of the semi-major axis of orbit[m^(1/2)]
+   * Square root of the semi-major axis of orbit [m^(1/2)]
    */
   double sqrta;
+
   /**
-   * Longitude of ascending node of orbit plane at weekly epoch[rad]
+   * Longitude of ascending node of orbit plane at weekly epoch [rad]
    */
   double omega0;
+
   /**
-   * Rate of right ascension[rad/s]
+   * Rate of right ascension [rad/s]
    */
   double omegadot;
+
   /**
-   * Argument of perigee[rad]
+   * Argument of perigee [rad]
    */
   double w;
+
   /**
-   * Inclination[rad]
+   * Inclination [rad]
    */
   double inc;
+
   /**
-   * Inclination first derivative[rad/s]
+   * Inclination first derivative [rad/s]
    */
   double inc_dot;
+
   /**
-   * Polynomial clock correction coefficient (clock bias)[s]
+   * Polynomial clock correction coefficient (clock bias) [s]
    */
   double af0;
+
   /**
-   * Polynomial clock correction coefficient (clock drift)[s/s]
+   * Polynomial clock correction coefficient (clock drift) [s/s]
    */
   double af1;
+
   /**
-   * Polynomial clock correction coefficient (rate of clock drift)[s/s^2]
+   * Polynomial clock correction coefficient (rate of clock drift) [s/s^2]
    */
   float af2;
+
   /**
    * Clock reference
    */
-  struct
-  {
+  gps_time_sec_t toc;
 
-    /**
-     * Seconds since start of GPS week[s]
-     */
-    u32 tow;
-    /**
-     * GPS week number[week]
-     */
-    u16 wn;
-  } toc;
   /**
    * Issue of data (IODnav)
    */
   u16 iode;
+
   /**
    * Issue of data (IODnav). Always equal to iode
    */
   u16 iodc;
+
   /**
    * 0=I/NAV, 1=F/NAV
    */
   u8 source;
-} sbp_msg_ephemeris_gal_t;
 
-static inline size_t sbp_packed_size_sbp_msg_ephemeris_gal_t(const sbp_msg_ephemeris_gal_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->common.sid.sat) + sizeof(msg->common.sid.code)) +
-          (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) + sizeof(msg->common.ura) +
-          sizeof(msg->common.fit_interval) + sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         sizeof(msg->bgd_e1e5a) + sizeof(msg->bgd_e1e5b) + sizeof(msg->c_rs) + sizeof(msg->c_rc) + sizeof(msg->c_uc) +
-         sizeof(msg->c_us) + sizeof(msg->c_ic) + sizeof(msg->c_is) + sizeof(msg->dn) + sizeof(msg->m0) +
-         sizeof(msg->ecc) + sizeof(msg->sqrta) + sizeof(msg->omega0) + sizeof(msg->omegadot) + sizeof(msg->w) +
-         sizeof(msg->inc) + sizeof(msg->inc_dot) + sizeof(msg->af0) + sizeof(msg->af1) + sizeof(msg->af2) +
-         (0 + sizeof(msg->toc.tow) + sizeof(msg->toc.wn)) + sizeof(msg->iode) + sizeof(msg->iodc) + sizeof(msg->source);
-}
+} msg_ephemeris_gal_t;
 
-static inline bool sbp_pack_sbp_msg_ephemeris_gal_t(u8 *buf, size_t len, const sbp_msg_ephemeris_gal_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_ephemeris_gal_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidsat = msg->common.sid.sat;
-  memcpy(buf + offset, &msgcommonsidsat, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidcode = msg->common.sid.code;
-  memcpy(buf + offset, &msgcommonsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommontoetow = htole32(msg->common.toe.tow);
-  memcpy(buf + offset, &msgcommontoetow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommontoewn = htole16(msg->common.toe.wn);
-  memcpy(buf + offset, &msgcommontoewn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgcommonura = msg->common.ura;
-  memcpy(buf + offset, &msgcommonura, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommonfit_interval = htole32(msg->common.fit_interval);
-  memcpy(buf + offset, &msgcommonfit_interval, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonvalid = msg->common.valid;
-  memcpy(buf + offset, &msgcommonvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonhealth_bits = msg->common.health_bits;
-  memcpy(buf + offset, &msgcommonhealth_bits, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgbgd_e1e5a = msg->bgd_e1e5a;
-  memcpy(buf + offset, &msgbgd_e1e5a, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgbgd_e1e5b = msg->bgd_e1e5b;
-  memcpy(buf + offset, &msgbgd_e1e5b, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_rs = msg->c_rs;
-  memcpy(buf + offset, &msgc_rs, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_rc = msg->c_rc;
-  memcpy(buf + offset, &msgc_rc, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_uc = msg->c_uc;
-  memcpy(buf + offset, &msgc_uc, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_us = msg->c_us;
-  memcpy(buf + offset, &msgc_us, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_ic = msg->c_ic;
-  memcpy(buf + offset, &msgc_ic, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgc_is = msg->c_is;
-  memcpy(buf + offset, &msgc_is, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgdn = msg->dn;
-  memcpy(buf + offset, &msgdn, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgm0 = msg->m0;
-  memcpy(buf + offset, &msgm0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgecc = msg->ecc;
-  memcpy(buf + offset, &msgecc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgsqrta = msg->sqrta;
-  memcpy(buf + offset, &msgsqrta, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomega0 = msg->omega0;
-  memcpy(buf + offset, &msgomega0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomegadot = msg->omegadot;
-  memcpy(buf + offset, &msgomegadot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgw = msg->w;
-  memcpy(buf + offset, &msgw, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc = msg->inc;
-  memcpy(buf + offset, &msginc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc_dot = msg->inc_dot;
-  memcpy(buf + offset, &msginc_dot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf0 = msg->af0;
-  memcpy(buf + offset, &msgaf0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf1 = msg->af1;
-  memcpy(buf + offset, &msgaf1, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgaf2 = msg->af2;
-  memcpy(buf + offset, &msgaf2, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgtoctow = htole32(msg->toc.tow);
-  memcpy(buf + offset, &msgtoctow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgtocwn = htole16(msg->toc.wn);
-  memcpy(buf + offset, &msgtocwn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgiode = htole16(msg->iode);
-  memcpy(buf + offset, &msgiode, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgiodc = htole16(msg->iodc);
-  memcpy(buf + offset, &msgiodc, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgsource = msg->source;
-  memcpy(buf + offset, &msgsource, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_ephemeris_gal_t(const u8 *buf, size_t len, sbp_msg_ephemeris_gal_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.sat, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.tow, buf + offset, 4);
-  msg->common.toe.tow = le32toh(msg->common.toe.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.wn, buf + offset, 2);
-  msg->common.toe.wn = le16toh(msg->common.toe.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.ura, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.fit_interval, buf + offset, 4);
-  msg->common.fit_interval = le32toh(msg->common.fit_interval);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.health_bits, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->bgd_e1e5a, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->bgd_e1e5b, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rs, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rc, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_uc, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_us, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_ic, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_is, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->dn, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->m0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->ecc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sqrta, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omega0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omegadot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->w, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc_dot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af1, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af2, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc.tow, buf + offset, 4);
-  msg->toc.tow = le32toh(msg->toc.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc.wn, buf + offset, 2);
-  msg->toc.wn = le16toh(msg->toc.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iode, buf + offset, 2);
-  msg->iode = le16toh(msg->iode);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iodc, buf + offset, 2);
-  msg->iodc = le16toh(msg->iodc);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->source, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ephemeris_gal_t &a, const sbp_msg_ephemeris_gal_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.common.sid.sat != b.common.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.common.sid.code != b.common.sid.code)
-  {
-    return false;
-  }
-
-  if (a.common.toe.tow != b.common.toe.tow)
-  {
-    return false;
-  }
-
-  if (a.common.toe.wn != b.common.toe.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.common.ura - b.common.ura) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.common.fit_interval != b.common.fit_interval)
-  {
-    return false;
-  }
-
-  if (a.common.valid != b.common.valid)
-  {
-    return false;
-  }
-
-  if (a.common.health_bits != b.common.health_bits)
-  {
-    return false;
-  }
-
-  if (fabs(a.bgd_e1e5a - b.bgd_e1e5a) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.bgd_e1e5b - b.bgd_e1e5b) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rs - b.c_rs) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rc - b.c_rc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_uc - b.c_uc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_us - b.c_us) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_ic - b.c_ic) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_is - b.c_is) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.dn - b.dn) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.m0 - b.m0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.ecc - b.ecc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.sqrta - b.sqrta) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omega0 - b.omega0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omegadot - b.omegadot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.w - b.w) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc - b.inc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc_dot - b.inc_dot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af0 - b.af0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af1 - b.af1) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af2 - b.af2) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.toc.tow != b.toc.tow)
-  {
-    return false;
-  }
-
-  if (a.toc.wn != b.toc.wn)
-  {
-    return false;
-  }
-
-  if (a.iode != b.iode)
-  {
-    return false;
-  }
-
-  if (a.iodc != b.iodc)
-  {
-    return false;
-  }
-
-  if (a.source != b.source)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_ephemeris_gal_t &a, const sbp_msg_ephemeris_gal_t &b)
-{
-  return !(a == b);
-}
-#endif
 #define SBP_MSG_EPHEMERIS_SBAS_DEP_A 0x0082
-
-#define SBP_EPHEMERIS_SBAS_DEP_A_COMMON_SID_CODE__MASK (0xff)
-#define SBP_EPHEMERIS_SBAS_DEP_A_COMMON_SID_CODE__SHIFT (0u)
-#define SBP_EPHEMERIS_SBAS_DEP_A_COMMON_SID_CODE__GET(flags) \
-  (((flags) >> SBP_EPHEMERIS_SBAS_DEP_A_COMMON_SID_CODE__SHIFT) & SBP_EPHEMERIS_SBAS_DEP_A_COMMON_SID_CODE__MASK)
-#define SBP_EPHEMERIS_SBAS_DEP_A_COMMON_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_EPHEMERIS_SBAS_DEP_A_COMMON_SID_CODE__MASK)) \
-                 << (SBP_EPHEMERIS_SBAS_DEP_A_COMMON_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_EPHEMERIS_SBAS_DEP_A_COMMON_SID_CODE__GPS_L1CA (0)
-#define SBP_EPHEMERIS_SBAS_DEP_A_COMMON_SID_CODE__GPS_L2CM (1)
-#define SBP_EPHEMERIS_SBAS_DEP_A_COMMON_SID_CODE__SBAS_L1CA (2)
-#define SBP_EPHEMERIS_SBAS_DEP_A_COMMON_SID_CODE__GLO_L1CA (3)
-#define SBP_EPHEMERIS_SBAS_DEP_A_COMMON_SID_CODE__GLO_L2CA (4)
-#define SBP_EPHEMERIS_SBAS_DEP_A_COMMON_SID_CODE__GPS_L1P (5)
-#define SBP_EPHEMERIS_SBAS_DEP_A_COMMON_SID_CODE__GPS_L2P (6)
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Values common for all ephemeris types
    */
-  struct
-  {
+  ephemeris_common_content_dep_a_t common;
 
-    /**
-     * GNSS signal identifier
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier.
-       *
-       * Note: unlike GnssSignal, GPS satellites are encoded as
-       * (PRN - 1). Other constellations do not have this offset.
-       */
-      u16 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-      /**
-       * Reserved
-       */
-      u8 reserved;
-    } sid;
-    /**
-     * Time of Ephemerides
-     */
-    struct
-    {
-
-      /**
-       * Milliseconds since start of GPS week[ms]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } toe;
-    /**
-     * User Range Accuracy[m]
-     */
-    double ura;
-    /**
-     * Curve fit interval[s]
-     */
-    u32 fit_interval;
-    /**
-     * Status of ephemeris, 1 = valid, 0 = invalid
-     */
-    u8 valid;
-    /**
-     * Satellite health status.
-     * GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-     * SBAS: 0 = valid, non-zero = invalid
-     * GLO: 0 = valid, non-zero = invalid
-     */
-    u8 health_bits;
-  } common;
   /**
-   * Position of the GEO at time toe[m]
+   * Position of the GEO at time toe [m]
    */
   double pos[3];
+
   /**
-   * Velocity of the GEO at time toe[m/s]
+   * Velocity of the GEO at time toe [m/s]
    */
   double vel[3];
+
   /**
-   * Acceleration of the GEO at time toe[m/s^2]
+   * Acceleration of the GEO at time toe [m/s^2]
    */
   double acc[3];
+
   /**
-   * Time offset of the GEO clock w.r.t. SBAS Network Time[s]
+   * Time offset of the GEO clock w.r.t. SBAS Network Time [s]
    */
   double a_gf0;
+
   /**
-   * Drift of the GEO clock w.r.t. SBAS Network Time[s/s]
+   * Drift of the GEO clock w.r.t. SBAS Network Time [s/s]
    */
   double a_gf1;
-} sbp_msg_ephemeris_sbas_dep_a_t;
 
-static inline size_t sbp_packed_size_sbp_msg_ephemeris_sbas_dep_a_t(const sbp_msg_ephemeris_sbas_dep_a_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->common.sid.sat) + sizeof(msg->common.sid.code) + sizeof(msg->common.sid.reserved)) +
-          (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) + sizeof(msg->common.ura) +
-          sizeof(msg->common.fit_interval) + sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         (3 * sizeof(msg->pos[0])) + (3 * sizeof(msg->vel[0])) + (3 * sizeof(msg->acc[0])) + sizeof(msg->a_gf0) +
-         sizeof(msg->a_gf1);
-}
+} msg_ephemeris_sbas_dep_a_t;
 
-static inline bool
-sbp_pack_sbp_msg_ephemeris_sbas_dep_a_t(u8 *buf, size_t len, const sbp_msg_ephemeris_sbas_dep_a_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_ephemeris_sbas_dep_a_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommonsidsat = htole16(msg->common.sid.sat);
-  memcpy(buf + offset, &msgcommonsidsat, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidcode = msg->common.sid.code;
-  memcpy(buf + offset, &msgcommonsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidreserved = msg->common.sid.reserved;
-  memcpy(buf + offset, &msgcommonsidreserved, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommontoetow = htole32(msg->common.toe.tow);
-  memcpy(buf + offset, &msgcommontoetow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommontoewn = htole16(msg->common.toe.wn);
-  memcpy(buf + offset, &msgcommontoewn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgcommonura = msg->common.ura;
-  memcpy(buf + offset, &msgcommonura, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommonfit_interval = htole32(msg->common.fit_interval);
-  memcpy(buf + offset, &msgcommonfit_interval, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonvalid = msg->common.valid;
-  memcpy(buf + offset, &msgcommonvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonhealth_bits = msg->common.health_bits;
-  memcpy(buf + offset, &msgcommonhealth_bits, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  for (size_t msgpos_idx = 0; msgpos_idx < 3; msgpos_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgposmsgpos_idx = msg->pos[msgpos_idx];
-    memcpy(buf + offset, &msgposmsgpos_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgvel_idx = 0; msgvel_idx < 3; msgvel_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgvelmsgvel_idx = msg->vel[msgvel_idx];
-    memcpy(buf + offset, &msgvelmsgvel_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgacc_idx = 0; msgacc_idx < 3; msgacc_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgaccmsgacc_idx = msg->acc[msgacc_idx];
-    memcpy(buf + offset, &msgaccmsgacc_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msga_gf0 = msg->a_gf0;
-  memcpy(buf + offset, &msga_gf0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msga_gf1 = msg->a_gf1;
-  memcpy(buf + offset, &msga_gf1, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
-
-static inline bool
-sbp_unpack_sbp_msg_ephemeris_sbas_dep_a_t(const u8 *buf, size_t len, sbp_msg_ephemeris_sbas_dep_a_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.sat, buf + offset, 2);
-  msg->common.sid.sat = le16toh(msg->common.sid.sat);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.reserved, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.tow, buf + offset, 4);
-  msg->common.toe.tow = le32toh(msg->common.toe.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.wn, buf + offset, 2);
-  msg->common.toe.wn = le16toh(msg->common.toe.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.ura, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.fit_interval, buf + offset, 4);
-  msg->common.fit_interval = le32toh(msg->common.fit_interval);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.health_bits, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  for (size_t msgpos_idx = 0; msgpos_idx < 3; msgpos_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->pos[msgpos_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgvel_idx = 0; msgvel_idx < 3; msgvel_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->vel[msgvel_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgacc_idx = 0; msgacc_idx < 3; msgacc_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->acc[msgacc_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->a_gf0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->a_gf1, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ephemeris_sbas_dep_a_t &a, const sbp_msg_ephemeris_sbas_dep_a_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.common.sid.sat != b.common.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.common.sid.code != b.common.sid.code)
-  {
-    return false;
-  }
-
-  if (a.common.sid.reserved != b.common.sid.reserved)
-  {
-    return false;
-  }
-
-  if (a.common.toe.tow != b.common.toe.tow)
-  {
-    return false;
-  }
-
-  if (a.common.toe.wn != b.common.toe.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.common.ura - b.common.ura) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.common.fit_interval != b.common.fit_interval)
-  {
-    return false;
-  }
-
-  if (a.common.valid != b.common.valid)
-  {
-    return false;
-  }
-
-  if (a.common.health_bits != b.common.health_bits)
-  {
-    return false;
-  }
-  for (size_t pos_idx = 0; pos_idx < 3; pos_idx++)
-  {
-
-    if (fabs(a.pos[pos_idx] - b.pos[pos_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-  for (size_t vel_idx = 0; vel_idx < 3; vel_idx++)
-  {
-
-    if (fabs(a.vel[vel_idx] - b.vel[vel_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-  for (size_t acc_idx = 0; acc_idx < 3; acc_idx++)
-  {
-
-    if (fabs(a.acc[acc_idx] - b.acc[acc_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-
-  if (fabs(a.a_gf0 - b.a_gf0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.a_gf1 - b.a_gf1) > 0.001)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_ephemeris_sbas_dep_a_t &a, const sbp_msg_ephemeris_sbas_dep_a_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Satellite broadcast ephemeris for GLO
  *
  * The ephemeris message returns a set of satellite orbit
@@ -8071,1457 +1477,118 @@ static inline bool operator!=(const sbp_msg_ephemeris_sbas_dep_a_t &a, const sbp
  * for more details.
  */
 #define SBP_MSG_EPHEMERIS_GLO_DEP_A 0x0083
-
-#define SBP_EPHEMERIS_GLO_DEP_A_COMMON_SID_CODE__MASK (0xff)
-#define SBP_EPHEMERIS_GLO_DEP_A_COMMON_SID_CODE__SHIFT (0u)
-#define SBP_EPHEMERIS_GLO_DEP_A_COMMON_SID_CODE__GET(flags) \
-  (((flags) >> SBP_EPHEMERIS_GLO_DEP_A_COMMON_SID_CODE__SHIFT) & SBP_EPHEMERIS_GLO_DEP_A_COMMON_SID_CODE__MASK)
-#define SBP_EPHEMERIS_GLO_DEP_A_COMMON_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= \
-     (((val) & (SBP_EPHEMERIS_GLO_DEP_A_COMMON_SID_CODE__MASK)) << (SBP_EPHEMERIS_GLO_DEP_A_COMMON_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_EPHEMERIS_GLO_DEP_A_COMMON_SID_CODE__GPS_L1CA (0)
-#define SBP_EPHEMERIS_GLO_DEP_A_COMMON_SID_CODE__GPS_L2CM (1)
-#define SBP_EPHEMERIS_GLO_DEP_A_COMMON_SID_CODE__SBAS_L1CA (2)
-#define SBP_EPHEMERIS_GLO_DEP_A_COMMON_SID_CODE__GLO_L1CA (3)
-#define SBP_EPHEMERIS_GLO_DEP_A_COMMON_SID_CODE__GLO_L2CA (4)
-#define SBP_EPHEMERIS_GLO_DEP_A_COMMON_SID_CODE__GPS_L1P (5)
-#define SBP_EPHEMERIS_GLO_DEP_A_COMMON_SID_CODE__GPS_L2P (6)
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Values common for all ephemeris types
    */
-  struct
-  {
+  ephemeris_common_content_dep_a_t common;
 
-    /**
-     * GNSS signal identifier
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier.
-       *
-       * Note: unlike GnssSignal, GPS satellites are encoded as
-       * (PRN - 1). Other constellations do not have this offset.
-       */
-      u16 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-      /**
-       * Reserved
-       */
-      u8 reserved;
-    } sid;
-    /**
-     * Time of Ephemerides
-     */
-    struct
-    {
-
-      /**
-       * Milliseconds since start of GPS week[ms]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } toe;
-    /**
-     * User Range Accuracy[m]
-     */
-    double ura;
-    /**
-     * Curve fit interval[s]
-     */
-    u32 fit_interval;
-    /**
-     * Status of ephemeris, 1 = valid, 0 = invalid
-     */
-    u8 valid;
-    /**
-     * Satellite health status.
-     * GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-     * SBAS: 0 = valid, non-zero = invalid
-     * GLO: 0 = valid, non-zero = invalid
-     */
-    u8 health_bits;
-  } common;
   /**
    * Relative deviation of predicted carrier frequency from nominal
    */
   double gamma;
+
   /**
-   * Correction to the SV time[s]
+   * Correction to the SV time [s]
    */
   double tau;
+
   /**
-   * Position of the SV at tb in PZ-90.02 coordinates system[m]
+   * Position of the SV at tb in PZ-90.02 coordinates system [m]
    */
   double pos[3];
+
   /**
-   * Velocity vector of the SV at tb in PZ-90.02 coordinates system[m/s]
+   * Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s]
    */
   double vel[3];
+
   /**
-   * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys[m/s^2]
+   * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2]
    */
   double acc[3];
-} sbp_msg_ephemeris_glo_dep_a_t;
 
-static inline size_t sbp_packed_size_sbp_msg_ephemeris_glo_dep_a_t(const sbp_msg_ephemeris_glo_dep_a_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->common.sid.sat) + sizeof(msg->common.sid.code) + sizeof(msg->common.sid.reserved)) +
-          (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) + sizeof(msg->common.ura) +
-          sizeof(msg->common.fit_interval) + sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         sizeof(msg->gamma) + sizeof(msg->tau) + (3 * sizeof(msg->pos[0])) + (3 * sizeof(msg->vel[0])) +
-         (3 * sizeof(msg->acc[0]));
-}
+} msg_ephemeris_glo_dep_a_t;
 
-static inline bool sbp_pack_sbp_msg_ephemeris_glo_dep_a_t(u8 *buf, size_t len, const sbp_msg_ephemeris_glo_dep_a_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_ephemeris_glo_dep_a_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommonsidsat = htole16(msg->common.sid.sat);
-  memcpy(buf + offset, &msgcommonsidsat, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidcode = msg->common.sid.code;
-  memcpy(buf + offset, &msgcommonsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidreserved = msg->common.sid.reserved;
-  memcpy(buf + offset, &msgcommonsidreserved, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommontoetow = htole32(msg->common.toe.tow);
-  memcpy(buf + offset, &msgcommontoetow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommontoewn = htole16(msg->common.toe.wn);
-  memcpy(buf + offset, &msgcommontoewn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgcommonura = msg->common.ura;
-  memcpy(buf + offset, &msgcommonura, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommonfit_interval = htole32(msg->common.fit_interval);
-  memcpy(buf + offset, &msgcommonfit_interval, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonvalid = msg->common.valid;
-  memcpy(buf + offset, &msgcommonvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonhealth_bits = msg->common.health_bits;
-  memcpy(buf + offset, &msgcommonhealth_bits, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msggamma = msg->gamma;
-  memcpy(buf + offset, &msggamma, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgtau = msg->tau;
-  memcpy(buf + offset, &msgtau, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  for (size_t msgpos_idx = 0; msgpos_idx < 3; msgpos_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgposmsgpos_idx = msg->pos[msgpos_idx];
-    memcpy(buf + offset, &msgposmsgpos_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgvel_idx = 0; msgvel_idx < 3; msgvel_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgvelmsgvel_idx = msg->vel[msgvel_idx];
-    memcpy(buf + offset, &msgvelmsgvel_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgacc_idx = 0; msgacc_idx < 3; msgacc_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgaccmsgacc_idx = msg->acc[msgacc_idx];
-    memcpy(buf + offset, &msgaccmsgacc_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  return true;
-}
-
-static inline bool
-sbp_unpack_sbp_msg_ephemeris_glo_dep_a_t(const u8 *buf, size_t len, sbp_msg_ephemeris_glo_dep_a_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.sat, buf + offset, 2);
-  msg->common.sid.sat = le16toh(msg->common.sid.sat);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.reserved, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.tow, buf + offset, 4);
-  msg->common.toe.tow = le32toh(msg->common.toe.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.wn, buf + offset, 2);
-  msg->common.toe.wn = le16toh(msg->common.toe.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.ura, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.fit_interval, buf + offset, 4);
-  msg->common.fit_interval = le32toh(msg->common.fit_interval);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.health_bits, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gamma, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->tau, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  for (size_t msgpos_idx = 0; msgpos_idx < 3; msgpos_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->pos[msgpos_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgvel_idx = 0; msgvel_idx < 3; msgvel_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->vel[msgvel_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgacc_idx = 0; msgacc_idx < 3; msgacc_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->acc[msgacc_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ephemeris_glo_dep_a_t &a, const sbp_msg_ephemeris_glo_dep_a_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.common.sid.sat != b.common.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.common.sid.code != b.common.sid.code)
-  {
-    return false;
-  }
-
-  if (a.common.sid.reserved != b.common.sid.reserved)
-  {
-    return false;
-  }
-
-  if (a.common.toe.tow != b.common.toe.tow)
-  {
-    return false;
-  }
-
-  if (a.common.toe.wn != b.common.toe.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.common.ura - b.common.ura) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.common.fit_interval != b.common.fit_interval)
-  {
-    return false;
-  }
-
-  if (a.common.valid != b.common.valid)
-  {
-    return false;
-  }
-
-  if (a.common.health_bits != b.common.health_bits)
-  {
-    return false;
-  }
-
-  if (fabs(a.gamma - b.gamma) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.tau - b.tau) > 0.001)
-  {
-    return false;
-  }
-  for (size_t pos_idx = 0; pos_idx < 3; pos_idx++)
-  {
-
-    if (fabs(a.pos[pos_idx] - b.pos[pos_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-  for (size_t vel_idx = 0; vel_idx < 3; vel_idx++)
-  {
-
-    if (fabs(a.vel[vel_idx] - b.vel[vel_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-  for (size_t acc_idx = 0; acc_idx < 3; acc_idx++)
-  {
-
-    if (fabs(a.acc[acc_idx] - b.acc[acc_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_ephemeris_glo_dep_a_t &a, const sbp_msg_ephemeris_glo_dep_a_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Deprecated
  *
  * This observation message has been deprecated in favor of
  * ephemeris message using floats for size reduction.
  */
 #define SBP_MSG_EPHEMERIS_SBAS_DEP_B 0x0084
-
-#define SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__MASK (0xff)
-#define SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__SHIFT (0u)
-#define SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__GET(flags) \
-  (((flags) >> SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__SHIFT) & SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__MASK)
-#define SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__MASK)) \
-                 << (SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__GPS_L1CA (0)
-#define SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__GPS_L2CM (1)
-#define SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__SBAS_L1CA (2)
-#define SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__GLO_L1CA (3)
-#define SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__GLO_L2CA (4)
-#define SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__GPS_L1P (5)
-#define SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__GPS_L2P (6)
-#define SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__BDS2_B1 (12)
-#define SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__BDS2_B2 (13)
-#define SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__GAL_E1B (14)
-#define SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__GAL_E7I (20)
-#define SBP_EPHEMERIS_SBAS_DEP_B_COMMON_SID_CODE__BDS3_B2A (47)
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Values common for all ephemeris types
    */
-  struct
-  {
+  ephemeris_common_content_dep_b_t common;
 
-    /**
-     * GNSS signal identifier (16 bit)
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier. This field for Glonass can
-       * either be (100+FCN) where FCN is in [-7,+6] or
-       * the Slot ID in [1,28]
-       */
-      u8 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-    } sid;
-    /**
-     * Time of Ephemerides
-     */
-    struct
-    {
-
-      /**
-       * Seconds since start of GPS week[s]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } toe;
-    /**
-     * User Range Accuracy[m]
-     */
-    double ura;
-    /**
-     * Curve fit interval[s]
-     */
-    u32 fit_interval;
-    /**
-     * Status of ephemeris, 1 = valid, 0 = invalid
-     */
-    u8 valid;
-    /**
-     * Satellite health status.
-     * GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-     * Others: 0 = valid, non-zero = invalid
-     */
-    u8 health_bits;
-  } common;
   /**
-   * Position of the GEO at time toe[m]
+   * Position of the GEO at time toe [m]
    */
   double pos[3];
+
   /**
-   * Velocity of the GEO at time toe[m/s]
+   * Velocity of the GEO at time toe [m/s]
    */
   double vel[3];
+
   /**
-   * Acceleration of the GEO at time toe[m/s^2]
+   * Acceleration of the GEO at time toe [m/s^2]
    */
   double acc[3];
+
   /**
-   * Time offset of the GEO clock w.r.t. SBAS Network Time[s]
+   * Time offset of the GEO clock w.r.t. SBAS Network Time [s]
    */
   double a_gf0;
+
   /**
-   * Drift of the GEO clock w.r.t. SBAS Network Time[s/s]
+   * Drift of the GEO clock w.r.t. SBAS Network Time [s/s]
    */
   double a_gf1;
-} sbp_msg_ephemeris_sbas_dep_b_t;
 
-static inline size_t sbp_packed_size_sbp_msg_ephemeris_sbas_dep_b_t(const sbp_msg_ephemeris_sbas_dep_b_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->common.sid.sat) + sizeof(msg->common.sid.code)) +
-          (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) + sizeof(msg->common.ura) +
-          sizeof(msg->common.fit_interval) + sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         (3 * sizeof(msg->pos[0])) + (3 * sizeof(msg->vel[0])) + (3 * sizeof(msg->acc[0])) + sizeof(msg->a_gf0) +
-         sizeof(msg->a_gf1);
-}
+} msg_ephemeris_sbas_dep_b_t;
 
-static inline bool
-sbp_pack_sbp_msg_ephemeris_sbas_dep_b_t(u8 *buf, size_t len, const sbp_msg_ephemeris_sbas_dep_b_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_ephemeris_sbas_dep_b_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidsat = msg->common.sid.sat;
-  memcpy(buf + offset, &msgcommonsidsat, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidcode = msg->common.sid.code;
-  memcpy(buf + offset, &msgcommonsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommontoetow = htole32(msg->common.toe.tow);
-  memcpy(buf + offset, &msgcommontoetow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommontoewn = htole16(msg->common.toe.wn);
-  memcpy(buf + offset, &msgcommontoewn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgcommonura = msg->common.ura;
-  memcpy(buf + offset, &msgcommonura, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommonfit_interval = htole32(msg->common.fit_interval);
-  memcpy(buf + offset, &msgcommonfit_interval, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonvalid = msg->common.valid;
-  memcpy(buf + offset, &msgcommonvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonhealth_bits = msg->common.health_bits;
-  memcpy(buf + offset, &msgcommonhealth_bits, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  for (size_t msgpos_idx = 0; msgpos_idx < 3; msgpos_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgposmsgpos_idx = msg->pos[msgpos_idx];
-    memcpy(buf + offset, &msgposmsgpos_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgvel_idx = 0; msgvel_idx < 3; msgvel_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgvelmsgvel_idx = msg->vel[msgvel_idx];
-    memcpy(buf + offset, &msgvelmsgvel_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgacc_idx = 0; msgacc_idx < 3; msgacc_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgaccmsgacc_idx = msg->acc[msgacc_idx];
-    memcpy(buf + offset, &msgaccmsgacc_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msga_gf0 = msg->a_gf0;
-  memcpy(buf + offset, &msga_gf0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msga_gf1 = msg->a_gf1;
-  memcpy(buf + offset, &msga_gf1, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
-
-static inline bool
-sbp_unpack_sbp_msg_ephemeris_sbas_dep_b_t(const u8 *buf, size_t len, sbp_msg_ephemeris_sbas_dep_b_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.sat, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.tow, buf + offset, 4);
-  msg->common.toe.tow = le32toh(msg->common.toe.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.wn, buf + offset, 2);
-  msg->common.toe.wn = le16toh(msg->common.toe.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.ura, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.fit_interval, buf + offset, 4);
-  msg->common.fit_interval = le32toh(msg->common.fit_interval);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.health_bits, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  for (size_t msgpos_idx = 0; msgpos_idx < 3; msgpos_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->pos[msgpos_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgvel_idx = 0; msgvel_idx < 3; msgvel_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->vel[msgvel_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgacc_idx = 0; msgacc_idx < 3; msgacc_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->acc[msgacc_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->a_gf0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->a_gf1, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ephemeris_sbas_dep_b_t &a, const sbp_msg_ephemeris_sbas_dep_b_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.common.sid.sat != b.common.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.common.sid.code != b.common.sid.code)
-  {
-    return false;
-  }
-
-  if (a.common.toe.tow != b.common.toe.tow)
-  {
-    return false;
-  }
-
-  if (a.common.toe.wn != b.common.toe.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.common.ura - b.common.ura) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.common.fit_interval != b.common.fit_interval)
-  {
-    return false;
-  }
-
-  if (a.common.valid != b.common.valid)
-  {
-    return false;
-  }
-
-  if (a.common.health_bits != b.common.health_bits)
-  {
-    return false;
-  }
-  for (size_t pos_idx = 0; pos_idx < 3; pos_idx++)
-  {
-
-    if (fabs(a.pos[pos_idx] - b.pos[pos_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-  for (size_t vel_idx = 0; vel_idx < 3; vel_idx++)
-  {
-
-    if (fabs(a.vel[vel_idx] - b.vel[vel_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-  for (size_t acc_idx = 0; acc_idx < 3; acc_idx++)
-  {
-
-    if (fabs(a.acc[acc_idx] - b.acc[acc_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-
-  if (fabs(a.a_gf0 - b.a_gf0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.a_gf1 - b.a_gf1) > 0.001)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_ephemeris_sbas_dep_b_t &a, const sbp_msg_ephemeris_sbas_dep_b_t &b)
-{
-  return !(a == b);
-}
-#endif
 #define SBP_MSG_EPHEMERIS_SBAS 0x008C
-
-#define SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__MASK (0xff)
-#define SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__SHIFT (0u)
-#define SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__GET(flags) \
-  (((flags) >> SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__SHIFT) & SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__MASK)
-#define SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= \
-     (((val) & (SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__MASK)) << (SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__GPS_L1CA (0)
-#define SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__GPS_L2CM (1)
-#define SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__SBAS_L1CA (2)
-#define SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__GLO_L1CA (3)
-#define SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__GLO_L2CA (4)
-#define SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__GPS_L1P (5)
-#define SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__GPS_L2P (6)
-#define SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__BDS2_B1 (12)
-#define SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__BDS2_B2 (13)
-#define SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__GAL_E1B (14)
-#define SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__GAL_E7I (20)
-#define SBP_EPHEMERIS_SBAS_COMMON_SID_CODE__BDS3_B2A (47)
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Values common for all ephemeris types
    */
-  struct
-  {
+  ephemeris_common_content_t common;
 
-    /**
-     * GNSS signal identifier (16 bit)
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier. This field for Glonass can
-       * either be (100+FCN) where FCN is in [-7,+6] or
-       * the Slot ID in [1,28]
-       */
-      u8 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-    } sid;
-    /**
-     * Time of Ephemerides
-     */
-    struct
-    {
-
-      /**
-       * Seconds since start of GPS week[s]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } toe;
-    /**
-     * User Range Accuracy[m]
-     */
-    float ura;
-    /**
-     * Curve fit interval[s]
-     */
-    u32 fit_interval;
-    /**
-     * Status of ephemeris, 1 = valid, 0 = invalid
-     */
-    u8 valid;
-    /**
-     * Satellite health status.
-     * GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-     * SBAS: 0 = valid, non-zero = invalid
-     * GLO: 0 = valid, non-zero = invalid
-     */
-    u8 health_bits;
-  } common;
   /**
-   * Position of the GEO at time toe[m]
+   * Position of the GEO at time toe [m]
    */
   double pos[3];
+
   /**
-   * Velocity of the GEO at time toe[m/s]
+   * Velocity of the GEO at time toe [m/s]
    */
   float vel[3];
+
   /**
-   * Acceleration of the GEO at time toe[m/s^2]
+   * Acceleration of the GEO at time toe [m/s^2]
    */
   float acc[3];
+
   /**
-   * Time offset of the GEO clock w.r.t. SBAS Network Time[s]
+   * Time offset of the GEO clock w.r.t. SBAS Network Time [s]
    */
   float a_gf0;
+
   /**
-   * Drift of the GEO clock w.r.t. SBAS Network Time[s/s]
+   * Drift of the GEO clock w.r.t. SBAS Network Time [s/s]
    */
   float a_gf1;
-} sbp_msg_ephemeris_sbas_t;
 
-static inline size_t sbp_packed_size_sbp_msg_ephemeris_sbas_t(const sbp_msg_ephemeris_sbas_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->common.sid.sat) + sizeof(msg->common.sid.code)) +
-          (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) + sizeof(msg->common.ura) +
-          sizeof(msg->common.fit_interval) + sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         (3 * sizeof(msg->pos[0])) + (3 * sizeof(msg->vel[0])) + (3 * sizeof(msg->acc[0])) + sizeof(msg->a_gf0) +
-         sizeof(msg->a_gf1);
-}
+} msg_ephemeris_sbas_t;
 
-static inline bool sbp_pack_sbp_msg_ephemeris_sbas_t(u8 *buf, size_t len, const sbp_msg_ephemeris_sbas_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_ephemeris_sbas_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidsat = msg->common.sid.sat;
-  memcpy(buf + offset, &msgcommonsidsat, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidcode = msg->common.sid.code;
-  memcpy(buf + offset, &msgcommonsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommontoetow = htole32(msg->common.toe.tow);
-  memcpy(buf + offset, &msgcommontoetow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommontoewn = htole16(msg->common.toe.wn);
-  memcpy(buf + offset, &msgcommontoewn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgcommonura = msg->common.ura;
-  memcpy(buf + offset, &msgcommonura, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommonfit_interval = htole32(msg->common.fit_interval);
-  memcpy(buf + offset, &msgcommonfit_interval, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonvalid = msg->common.valid;
-  memcpy(buf + offset, &msgcommonvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonhealth_bits = msg->common.health_bits;
-  memcpy(buf + offset, &msgcommonhealth_bits, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  for (size_t msgpos_idx = 0; msgpos_idx < 3; msgpos_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgposmsgpos_idx = msg->pos[msgpos_idx];
-    memcpy(buf + offset, &msgposmsgpos_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgvel_idx = 0; msgvel_idx < 3; msgvel_idx++)
-  {
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    float msgvelmsgvel_idx = msg->vel[msgvel_idx];
-    memcpy(buf + offset, &msgvelmsgvel_idx, 4);
-    // NOLINTNEXTLINE
-    offset += 4;
-  }
-  for (size_t msgacc_idx = 0; msgacc_idx < 3; msgacc_idx++)
-  {
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    float msgaccmsgacc_idx = msg->acc[msgacc_idx];
-    memcpy(buf + offset, &msgaccmsgacc_idx, 4);
-    // NOLINTNEXTLINE
-    offset += 4;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msga_gf0 = msg->a_gf0;
-  memcpy(buf + offset, &msga_gf0, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msga_gf1 = msg->a_gf1;
-  memcpy(buf + offset, &msga_gf1, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_ephemeris_sbas_t(const u8 *buf, size_t len, sbp_msg_ephemeris_sbas_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.sat, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.tow, buf + offset, 4);
-  msg->common.toe.tow = le32toh(msg->common.toe.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.wn, buf + offset, 2);
-  msg->common.toe.wn = le16toh(msg->common.toe.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.ura, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.fit_interval, buf + offset, 4);
-  msg->common.fit_interval = le32toh(msg->common.fit_interval);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.health_bits, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  for (size_t msgpos_idx = 0; msgpos_idx < 3; msgpos_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->pos[msgpos_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgvel_idx = 0; msgvel_idx < 3; msgvel_idx++)
-  {
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->vel[msgvel_idx], buf + offset, 4);
-    // NOLINTNEXTLINE
-    offset += 4;
-  }
-  for (size_t msgacc_idx = 0; msgacc_idx < 3; msgacc_idx++)
-  {
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->acc[msgacc_idx], buf + offset, 4);
-    // NOLINTNEXTLINE
-    offset += 4;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->a_gf0, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->a_gf1, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ephemeris_sbas_t &a, const sbp_msg_ephemeris_sbas_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.common.sid.sat != b.common.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.common.sid.code != b.common.sid.code)
-  {
-    return false;
-  }
-
-  if (a.common.toe.tow != b.common.toe.tow)
-  {
-    return false;
-  }
-
-  if (a.common.toe.wn != b.common.toe.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.common.ura - b.common.ura) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.common.fit_interval != b.common.fit_interval)
-  {
-    return false;
-  }
-
-  if (a.common.valid != b.common.valid)
-  {
-    return false;
-  }
-
-  if (a.common.health_bits != b.common.health_bits)
-  {
-    return false;
-  }
-  for (size_t pos_idx = 0; pos_idx < 3; pos_idx++)
-  {
-
-    if (fabs(a.pos[pos_idx] - b.pos[pos_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-  for (size_t vel_idx = 0; vel_idx < 3; vel_idx++)
-  {
-
-    if (fabs(a.vel[vel_idx] - b.vel[vel_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-  for (size_t acc_idx = 0; acc_idx < 3; acc_idx++)
-  {
-
-    if (fabs(a.acc[acc_idx] - b.acc[acc_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-
-  if (fabs(a.a_gf0 - b.a_gf0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.a_gf1 - b.a_gf1) > 0.001)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_ephemeris_sbas_t &a, const sbp_msg_ephemeris_sbas_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Satellite broadcast ephemeris for GLO
  *
  * The ephemeris message returns a set of satellite orbit
@@ -9531,479 +1598,41 @@ static inline bool operator!=(const sbp_msg_ephemeris_sbas_t &a, const sbp_msg_e
  * for more details.
  */
 #define SBP_MSG_EPHEMERIS_GLO_DEP_B 0x0085
-
-#define SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__MASK (0xff)
-#define SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__SHIFT (0u)
-#define SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__GET(flags) \
-  (((flags) >> SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__SHIFT) & SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__MASK)
-#define SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= \
-     (((val) & (SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__MASK)) << (SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__GPS_L1CA (0)
-#define SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__GPS_L2CM (1)
-#define SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__SBAS_L1CA (2)
-#define SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__GLO_L1CA (3)
-#define SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__GLO_L2CA (4)
-#define SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__GPS_L1P (5)
-#define SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__GPS_L2P (6)
-#define SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__BDS2_B1 (12)
-#define SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__BDS2_B2 (13)
-#define SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__GAL_E1B (14)
-#define SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__GAL_E7I (20)
-#define SBP_EPHEMERIS_GLO_DEP_B_COMMON_SID_CODE__BDS3_B2A (47)
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Values common for all ephemeris types
    */
-  struct
-  {
+  ephemeris_common_content_dep_b_t common;
 
-    /**
-     * GNSS signal identifier (16 bit)
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier. This field for Glonass can
-       * either be (100+FCN) where FCN is in [-7,+6] or
-       * the Slot ID in [1,28]
-       */
-      u8 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-    } sid;
-    /**
-     * Time of Ephemerides
-     */
-    struct
-    {
-
-      /**
-       * Seconds since start of GPS week[s]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } toe;
-    /**
-     * User Range Accuracy[m]
-     */
-    double ura;
-    /**
-     * Curve fit interval[s]
-     */
-    u32 fit_interval;
-    /**
-     * Status of ephemeris, 1 = valid, 0 = invalid
-     */
-    u8 valid;
-    /**
-     * Satellite health status.
-     * GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-     * Others: 0 = valid, non-zero = invalid
-     */
-    u8 health_bits;
-  } common;
   /**
    * Relative deviation of predicted carrier frequency from nominal
    */
   double gamma;
+
   /**
-   * Correction to the SV time[s]
+   * Correction to the SV time [s]
    */
   double tau;
+
   /**
-   * Position of the SV at tb in PZ-90.02 coordinates system[m]
+   * Position of the SV at tb in PZ-90.02 coordinates system [m]
    */
   double pos[3];
+
   /**
-   * Velocity vector of the SV at tb in PZ-90.02 coordinates system[m/s]
+   * Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s]
    */
   double vel[3];
+
   /**
-   * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys[m/s^2]
+   * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2]
    */
   double acc[3];
-} sbp_msg_ephemeris_glo_dep_b_t;
 
-static inline size_t sbp_packed_size_sbp_msg_ephemeris_glo_dep_b_t(const sbp_msg_ephemeris_glo_dep_b_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->common.sid.sat) + sizeof(msg->common.sid.code)) +
-          (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) + sizeof(msg->common.ura) +
-          sizeof(msg->common.fit_interval) + sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         sizeof(msg->gamma) + sizeof(msg->tau) + (3 * sizeof(msg->pos[0])) + (3 * sizeof(msg->vel[0])) +
-         (3 * sizeof(msg->acc[0]));
-}
+} msg_ephemeris_glo_dep_b_t;
 
-static inline bool sbp_pack_sbp_msg_ephemeris_glo_dep_b_t(u8 *buf, size_t len, const sbp_msg_ephemeris_glo_dep_b_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_ephemeris_glo_dep_b_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidsat = msg->common.sid.sat;
-  memcpy(buf + offset, &msgcommonsidsat, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidcode = msg->common.sid.code;
-  memcpy(buf + offset, &msgcommonsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommontoetow = htole32(msg->common.toe.tow);
-  memcpy(buf + offset, &msgcommontoetow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommontoewn = htole16(msg->common.toe.wn);
-  memcpy(buf + offset, &msgcommontoewn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgcommonura = msg->common.ura;
-  memcpy(buf + offset, &msgcommonura, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommonfit_interval = htole32(msg->common.fit_interval);
-  memcpy(buf + offset, &msgcommonfit_interval, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonvalid = msg->common.valid;
-  memcpy(buf + offset, &msgcommonvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonhealth_bits = msg->common.health_bits;
-  memcpy(buf + offset, &msgcommonhealth_bits, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msggamma = msg->gamma;
-  memcpy(buf + offset, &msggamma, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgtau = msg->tau;
-  memcpy(buf + offset, &msgtau, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  for (size_t msgpos_idx = 0; msgpos_idx < 3; msgpos_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgposmsgpos_idx = msg->pos[msgpos_idx];
-    memcpy(buf + offset, &msgposmsgpos_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgvel_idx = 0; msgvel_idx < 3; msgvel_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgvelmsgvel_idx = msg->vel[msgvel_idx];
-    memcpy(buf + offset, &msgvelmsgvel_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgacc_idx = 0; msgacc_idx < 3; msgacc_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgaccmsgacc_idx = msg->acc[msgacc_idx];
-    memcpy(buf + offset, &msgaccmsgacc_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  return true;
-}
-
-static inline bool
-sbp_unpack_sbp_msg_ephemeris_glo_dep_b_t(const u8 *buf, size_t len, sbp_msg_ephemeris_glo_dep_b_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.sat, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.tow, buf + offset, 4);
-  msg->common.toe.tow = le32toh(msg->common.toe.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.wn, buf + offset, 2);
-  msg->common.toe.wn = le16toh(msg->common.toe.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.ura, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.fit_interval, buf + offset, 4);
-  msg->common.fit_interval = le32toh(msg->common.fit_interval);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.health_bits, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gamma, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->tau, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  for (size_t msgpos_idx = 0; msgpos_idx < 3; msgpos_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->pos[msgpos_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgvel_idx = 0; msgvel_idx < 3; msgvel_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->vel[msgvel_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgacc_idx = 0; msgacc_idx < 3; msgacc_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->acc[msgacc_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ephemeris_glo_dep_b_t &a, const sbp_msg_ephemeris_glo_dep_b_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.common.sid.sat != b.common.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.common.sid.code != b.common.sid.code)
-  {
-    return false;
-  }
-
-  if (a.common.toe.tow != b.common.toe.tow)
-  {
-    return false;
-  }
-
-  if (a.common.toe.wn != b.common.toe.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.common.ura - b.common.ura) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.common.fit_interval != b.common.fit_interval)
-  {
-    return false;
-  }
-
-  if (a.common.valid != b.common.valid)
-  {
-    return false;
-  }
-
-  if (a.common.health_bits != b.common.health_bits)
-  {
-    return false;
-  }
-
-  if (fabs(a.gamma - b.gamma) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.tau - b.tau) > 0.001)
-  {
-    return false;
-  }
-  for (size_t pos_idx = 0; pos_idx < 3; pos_idx++)
-  {
-
-    if (fabs(a.pos[pos_idx] - b.pos[pos_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-  for (size_t vel_idx = 0; vel_idx < 3; vel_idx++)
-  {
-
-    if (fabs(a.vel[vel_idx] - b.vel[vel_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-  for (size_t acc_idx = 0; acc_idx < 3; acc_idx++)
-  {
-
-    if (fabs(a.acc[acc_idx] - b.acc[acc_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_ephemeris_glo_dep_b_t &a, const sbp_msg_ephemeris_glo_dep_b_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Satellite broadcast ephemeris for GLO
  *
  * The ephemeris message returns a set of satellite orbit
@@ -10013,1088 +1642,107 @@ static inline bool operator!=(const sbp_msg_ephemeris_glo_dep_b_t &a, const sbp_
  * for more details.
  */
 #define SBP_MSG_EPHEMERIS_GLO_DEP_C 0x0087
-
-#define SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__MASK (0xff)
-#define SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__SHIFT (0u)
-#define SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__GET(flags) \
-  (((flags) >> SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__SHIFT) & SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__MASK)
-#define SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= \
-     (((val) & (SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__MASK)) << (SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__GPS_L1CA (0)
-#define SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__GPS_L2CM (1)
-#define SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__SBAS_L1CA (2)
-#define SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__GLO_L1CA (3)
-#define SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__GLO_L2CA (4)
-#define SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__GPS_L1P (5)
-#define SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__GPS_L2P (6)
-#define SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__BDS2_B1 (12)
-#define SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__BDS2_B2 (13)
-#define SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__GAL_E1B (14)
-#define SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__GAL_E7I (20)
-#define SBP_EPHEMERIS_GLO_DEP_C_COMMON_SID_CODE__BDS3_B2A (47)
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Values common for all ephemeris types
    */
-  struct
-  {
+  ephemeris_common_content_dep_b_t common;
 
-    /**
-     * GNSS signal identifier (16 bit)
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier. This field for Glonass can
-       * either be (100+FCN) where FCN is in [-7,+6] or
-       * the Slot ID in [1,28]
-       */
-      u8 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-    } sid;
-    /**
-     * Time of Ephemerides
-     */
-    struct
-    {
-
-      /**
-       * Seconds since start of GPS week[s]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } toe;
-    /**
-     * User Range Accuracy[m]
-     */
-    double ura;
-    /**
-     * Curve fit interval[s]
-     */
-    u32 fit_interval;
-    /**
-     * Status of ephemeris, 1 = valid, 0 = invalid
-     */
-    u8 valid;
-    /**
-     * Satellite health status.
-     * GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-     * Others: 0 = valid, non-zero = invalid
-     */
-    u8 health_bits;
-  } common;
   /**
    * Relative deviation of predicted carrier frequency from nominal
    */
   double gamma;
+
   /**
-   * Correction to the SV time[s]
+   * Correction to the SV time [s]
    */
   double tau;
+
   /**
-   * Equipment delay between L1 and L2[s]
+   * Equipment delay between L1 and L2 [s]
    */
   double d_tau;
+
   /**
-   * Position of the SV at tb in PZ-90.02 coordinates system[m]
+   * Position of the SV at tb in PZ-90.02 coordinates system [m]
    */
   double pos[3];
+
   /**
-   * Velocity vector of the SV at tb in PZ-90.02 coordinates system[m/s]
+   * Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s]
    */
   double vel[3];
+
   /**
-   * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys[m/s^2]
+   * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2]
    */
   double acc[3];
+
   /**
    * Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
    */
   u8 fcn;
-} sbp_msg_ephemeris_glo_dep_c_t;
 
-static inline size_t sbp_packed_size_sbp_msg_ephemeris_glo_dep_c_t(const sbp_msg_ephemeris_glo_dep_c_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->common.sid.sat) + sizeof(msg->common.sid.code)) +
-          (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) + sizeof(msg->common.ura) +
-          sizeof(msg->common.fit_interval) + sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         sizeof(msg->gamma) + sizeof(msg->tau) + sizeof(msg->d_tau) + (3 * sizeof(msg->pos[0])) +
-         (3 * sizeof(msg->vel[0])) + (3 * sizeof(msg->acc[0])) + sizeof(msg->fcn);
-}
+} msg_ephemeris_glo_dep_c_t;
 
-static inline bool sbp_pack_sbp_msg_ephemeris_glo_dep_c_t(u8 *buf, size_t len, const sbp_msg_ephemeris_glo_dep_c_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_ephemeris_glo_dep_c_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidsat = msg->common.sid.sat;
-  memcpy(buf + offset, &msgcommonsidsat, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidcode = msg->common.sid.code;
-  memcpy(buf + offset, &msgcommonsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommontoetow = htole32(msg->common.toe.tow);
-  memcpy(buf + offset, &msgcommontoetow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommontoewn = htole16(msg->common.toe.wn);
-  memcpy(buf + offset, &msgcommontoewn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgcommonura = msg->common.ura;
-  memcpy(buf + offset, &msgcommonura, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommonfit_interval = htole32(msg->common.fit_interval);
-  memcpy(buf + offset, &msgcommonfit_interval, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonvalid = msg->common.valid;
-  memcpy(buf + offset, &msgcommonvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonhealth_bits = msg->common.health_bits;
-  memcpy(buf + offset, &msgcommonhealth_bits, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msggamma = msg->gamma;
-  memcpy(buf + offset, &msggamma, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgtau = msg->tau;
-  memcpy(buf + offset, &msgtau, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgd_tau = msg->d_tau;
-  memcpy(buf + offset, &msgd_tau, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  for (size_t msgpos_idx = 0; msgpos_idx < 3; msgpos_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgposmsgpos_idx = msg->pos[msgpos_idx];
-    memcpy(buf + offset, &msgposmsgpos_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgvel_idx = 0; msgvel_idx < 3; msgvel_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgvelmsgvel_idx = msg->vel[msgvel_idx];
-    memcpy(buf + offset, &msgvelmsgvel_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgacc_idx = 0; msgacc_idx < 3; msgacc_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgaccmsgacc_idx = msg->acc[msgacc_idx];
-    memcpy(buf + offset, &msgaccmsgacc_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgfcn = msg->fcn;
-  memcpy(buf + offset, &msgfcn, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  return true;
-}
-
-static inline bool
-sbp_unpack_sbp_msg_ephemeris_glo_dep_c_t(const u8 *buf, size_t len, sbp_msg_ephemeris_glo_dep_c_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.sat, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.tow, buf + offset, 4);
-  msg->common.toe.tow = le32toh(msg->common.toe.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.wn, buf + offset, 2);
-  msg->common.toe.wn = le16toh(msg->common.toe.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.ura, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.fit_interval, buf + offset, 4);
-  msg->common.fit_interval = le32toh(msg->common.fit_interval);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.health_bits, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gamma, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->tau, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->d_tau, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  for (size_t msgpos_idx = 0; msgpos_idx < 3; msgpos_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->pos[msgpos_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgvel_idx = 0; msgvel_idx < 3; msgvel_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->vel[msgvel_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgacc_idx = 0; msgacc_idx < 3; msgacc_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->acc[msgacc_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->fcn, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ephemeris_glo_dep_c_t &a, const sbp_msg_ephemeris_glo_dep_c_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.common.sid.sat != b.common.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.common.sid.code != b.common.sid.code)
-  {
-    return false;
-  }
-
-  if (a.common.toe.tow != b.common.toe.tow)
-  {
-    return false;
-  }
-
-  if (a.common.toe.wn != b.common.toe.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.common.ura - b.common.ura) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.common.fit_interval != b.common.fit_interval)
-  {
-    return false;
-  }
-
-  if (a.common.valid != b.common.valid)
-  {
-    return false;
-  }
-
-  if (a.common.health_bits != b.common.health_bits)
-  {
-    return false;
-  }
-
-  if (fabs(a.gamma - b.gamma) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.tau - b.tau) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.d_tau - b.d_tau) > 0.001)
-  {
-    return false;
-  }
-  for (size_t pos_idx = 0; pos_idx < 3; pos_idx++)
-  {
-
-    if (fabs(a.pos[pos_idx] - b.pos[pos_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-  for (size_t vel_idx = 0; vel_idx < 3; vel_idx++)
-  {
-
-    if (fabs(a.vel[vel_idx] - b.vel[vel_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-  for (size_t acc_idx = 0; acc_idx < 3; acc_idx++)
-  {
-
-    if (fabs(a.acc[acc_idx] - b.acc[acc_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-
-  if (a.fcn != b.fcn)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_ephemeris_glo_dep_c_t &a, const sbp_msg_ephemeris_glo_dep_c_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Deprecated
  *
  * This observation message has been deprecated in favor of
  * ephemeris message using floats for size reduction.
  */
 #define SBP_MSG_EPHEMERIS_GLO_DEP_D 0x0088
-
-#define SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__MASK (0xff)
-#define SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__SHIFT (0u)
-#define SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__GET(flags) \
-  (((flags) >> SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__SHIFT) & SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__MASK)
-#define SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= \
-     (((val) & (SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__MASK)) << (SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__GPS_L1CA (0)
-#define SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__GPS_L2CM (1)
-#define SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__SBAS_L1CA (2)
-#define SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__GLO_L1CA (3)
-#define SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__GLO_L2CA (4)
-#define SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__GPS_L1P (5)
-#define SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__GPS_L2P (6)
-#define SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__BDS2_B1 (12)
-#define SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__BDS2_B2 (13)
-#define SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__GAL_E1B (14)
-#define SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__GAL_E7I (20)
-#define SBP_EPHEMERIS_GLO_DEP_D_COMMON_SID_CODE__BDS3_B2A (47)
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Values common for all ephemeris types
    */
-  struct
-  {
+  ephemeris_common_content_dep_b_t common;
 
-    /**
-     * GNSS signal identifier (16 bit)
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier. This field for Glonass can
-       * either be (100+FCN) where FCN is in [-7,+6] or
-       * the Slot ID in [1,28]
-       */
-      u8 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-    } sid;
-    /**
-     * Time of Ephemerides
-     */
-    struct
-    {
-
-      /**
-       * Seconds since start of GPS week[s]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } toe;
-    /**
-     * User Range Accuracy[m]
-     */
-    double ura;
-    /**
-     * Curve fit interval[s]
-     */
-    u32 fit_interval;
-    /**
-     * Status of ephemeris, 1 = valid, 0 = invalid
-     */
-    u8 valid;
-    /**
-     * Satellite health status.
-     * GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-     * Others: 0 = valid, non-zero = invalid
-     */
-    u8 health_bits;
-  } common;
   /**
    * Relative deviation of predicted carrier frequency from nominal
    */
   double gamma;
+
   /**
-   * Correction to the SV time[s]
+   * Correction to the SV time [s]
    */
   double tau;
+
   /**
-   * Equipment delay between L1 and L2[s]
+   * Equipment delay between L1 and L2 [s]
    */
   double d_tau;
+
   /**
-   * Position of the SV at tb in PZ-90.02 coordinates system[m]
+   * Position of the SV at tb in PZ-90.02 coordinates system [m]
    */
   double pos[3];
+
   /**
-   * Velocity vector of the SV at tb in PZ-90.02 coordinates system[m/s]
+   * Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s]
    */
   double vel[3];
+
   /**
-   * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys[m/s^2]
+   * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2]
    */
   double acc[3];
+
   /**
    * Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
    */
   u8 fcn;
+
   /**
    * Issue of data. Equal to the 7 bits of the immediate data word t_b
    */
   u8 iod;
-} sbp_msg_ephemeris_glo_dep_d_t;
 
-static inline size_t sbp_packed_size_sbp_msg_ephemeris_glo_dep_d_t(const sbp_msg_ephemeris_glo_dep_d_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->common.sid.sat) + sizeof(msg->common.sid.code)) +
-          (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) + sizeof(msg->common.ura) +
-          sizeof(msg->common.fit_interval) + sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         sizeof(msg->gamma) + sizeof(msg->tau) + sizeof(msg->d_tau) + (3 * sizeof(msg->pos[0])) +
-         (3 * sizeof(msg->vel[0])) + (3 * sizeof(msg->acc[0])) + sizeof(msg->fcn) + sizeof(msg->iod);
-}
+} msg_ephemeris_glo_dep_d_t;
 
-static inline bool sbp_pack_sbp_msg_ephemeris_glo_dep_d_t(u8 *buf, size_t len, const sbp_msg_ephemeris_glo_dep_d_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_ephemeris_glo_dep_d_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidsat = msg->common.sid.sat;
-  memcpy(buf + offset, &msgcommonsidsat, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidcode = msg->common.sid.code;
-  memcpy(buf + offset, &msgcommonsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommontoetow = htole32(msg->common.toe.tow);
-  memcpy(buf + offset, &msgcommontoetow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommontoewn = htole16(msg->common.toe.wn);
-  memcpy(buf + offset, &msgcommontoewn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgcommonura = msg->common.ura;
-  memcpy(buf + offset, &msgcommonura, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommonfit_interval = htole32(msg->common.fit_interval);
-  memcpy(buf + offset, &msgcommonfit_interval, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonvalid = msg->common.valid;
-  memcpy(buf + offset, &msgcommonvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonhealth_bits = msg->common.health_bits;
-  memcpy(buf + offset, &msgcommonhealth_bits, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msggamma = msg->gamma;
-  memcpy(buf + offset, &msggamma, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgtau = msg->tau;
-  memcpy(buf + offset, &msgtau, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgd_tau = msg->d_tau;
-  memcpy(buf + offset, &msgd_tau, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  for (size_t msgpos_idx = 0; msgpos_idx < 3; msgpos_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgposmsgpos_idx = msg->pos[msgpos_idx];
-    memcpy(buf + offset, &msgposmsgpos_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgvel_idx = 0; msgvel_idx < 3; msgvel_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgvelmsgvel_idx = msg->vel[msgvel_idx];
-    memcpy(buf + offset, &msgvelmsgvel_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgacc_idx = 0; msgacc_idx < 3; msgacc_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgaccmsgacc_idx = msg->acc[msgacc_idx];
-    memcpy(buf + offset, &msgaccmsgacc_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgfcn = msg->fcn;
-  memcpy(buf + offset, &msgfcn, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgiod = msg->iod;
-  memcpy(buf + offset, &msgiod, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  return true;
-}
-
-static inline bool
-sbp_unpack_sbp_msg_ephemeris_glo_dep_d_t(const u8 *buf, size_t len, sbp_msg_ephemeris_glo_dep_d_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.sat, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.tow, buf + offset, 4);
-  msg->common.toe.tow = le32toh(msg->common.toe.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.wn, buf + offset, 2);
-  msg->common.toe.wn = le16toh(msg->common.toe.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.ura, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.fit_interval, buf + offset, 4);
-  msg->common.fit_interval = le32toh(msg->common.fit_interval);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.health_bits, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gamma, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->tau, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->d_tau, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  for (size_t msgpos_idx = 0; msgpos_idx < 3; msgpos_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->pos[msgpos_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgvel_idx = 0; msgvel_idx < 3; msgvel_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->vel[msgvel_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgacc_idx = 0; msgacc_idx < 3; msgacc_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->acc[msgacc_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->fcn, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iod, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ephemeris_glo_dep_d_t &a, const sbp_msg_ephemeris_glo_dep_d_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.common.sid.sat != b.common.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.common.sid.code != b.common.sid.code)
-  {
-    return false;
-  }
-
-  if (a.common.toe.tow != b.common.toe.tow)
-  {
-    return false;
-  }
-
-  if (a.common.toe.wn != b.common.toe.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.common.ura - b.common.ura) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.common.fit_interval != b.common.fit_interval)
-  {
-    return false;
-  }
-
-  if (a.common.valid != b.common.valid)
-  {
-    return false;
-  }
-
-  if (a.common.health_bits != b.common.health_bits)
-  {
-    return false;
-  }
-
-  if (fabs(a.gamma - b.gamma) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.tau - b.tau) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.d_tau - b.d_tau) > 0.001)
-  {
-    return false;
-  }
-  for (size_t pos_idx = 0; pos_idx < 3; pos_idx++)
-  {
-
-    if (fabs(a.pos[pos_idx] - b.pos[pos_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-  for (size_t vel_idx = 0; vel_idx < 3; vel_idx++)
-  {
-
-    if (fabs(a.vel[vel_idx] - b.vel[vel_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-  for (size_t acc_idx = 0; acc_idx < 3; acc_idx++)
-  {
-
-    if (fabs(a.acc[acc_idx] - b.acc[acc_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-
-  if (a.fcn != b.fcn)
-  {
-    return false;
-  }
-
-  if (a.iod != b.iod)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_ephemeris_glo_dep_d_t &a, const sbp_msg_ephemeris_glo_dep_d_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Satellite broadcast ephemeris for GLO
  *
  * The ephemeris message returns a set of satellite orbit
@@ -11104,556 +1752,56 @@ static inline bool operator!=(const sbp_msg_ephemeris_glo_dep_d_t &a, const sbp_
  * for more details.
  */
 #define SBP_MSG_EPHEMERIS_GLO 0x008B
-
-#define SBP_EPHEMERIS_GLO_COMMON_SID_CODE__MASK (0xff)
-#define SBP_EPHEMERIS_GLO_COMMON_SID_CODE__SHIFT (0u)
-#define SBP_EPHEMERIS_GLO_COMMON_SID_CODE__GET(flags) \
-  (((flags) >> SBP_EPHEMERIS_GLO_COMMON_SID_CODE__SHIFT) & SBP_EPHEMERIS_GLO_COMMON_SID_CODE__MASK)
-#define SBP_EPHEMERIS_GLO_COMMON_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_EPHEMERIS_GLO_COMMON_SID_CODE__MASK)) << (SBP_EPHEMERIS_GLO_COMMON_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_EPHEMERIS_GLO_COMMON_SID_CODE__GPS_L1CA (0)
-#define SBP_EPHEMERIS_GLO_COMMON_SID_CODE__GPS_L2CM (1)
-#define SBP_EPHEMERIS_GLO_COMMON_SID_CODE__SBAS_L1CA (2)
-#define SBP_EPHEMERIS_GLO_COMMON_SID_CODE__GLO_L1CA (3)
-#define SBP_EPHEMERIS_GLO_COMMON_SID_CODE__GLO_L2CA (4)
-#define SBP_EPHEMERIS_GLO_COMMON_SID_CODE__GPS_L1P (5)
-#define SBP_EPHEMERIS_GLO_COMMON_SID_CODE__GPS_L2P (6)
-#define SBP_EPHEMERIS_GLO_COMMON_SID_CODE__BDS2_B1 (12)
-#define SBP_EPHEMERIS_GLO_COMMON_SID_CODE__BDS2_B2 (13)
-#define SBP_EPHEMERIS_GLO_COMMON_SID_CODE__GAL_E1B (14)
-#define SBP_EPHEMERIS_GLO_COMMON_SID_CODE__GAL_E7I (20)
-#define SBP_EPHEMERIS_GLO_COMMON_SID_CODE__BDS3_B2A (47)
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Values common for all ephemeris types
    */
-  struct
-  {
+  ephemeris_common_content_t common;
 
-    /**
-     * GNSS signal identifier (16 bit)
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier. This field for Glonass can
-       * either be (100+FCN) where FCN is in [-7,+6] or
-       * the Slot ID in [1,28]
-       */
-      u8 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-    } sid;
-    /**
-     * Time of Ephemerides
-     */
-    struct
-    {
-
-      /**
-       * Seconds since start of GPS week[s]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } toe;
-    /**
-     * User Range Accuracy[m]
-     */
-    float ura;
-    /**
-     * Curve fit interval[s]
-     */
-    u32 fit_interval;
-    /**
-     * Status of ephemeris, 1 = valid, 0 = invalid
-     */
-    u8 valid;
-    /**
-     * Satellite health status.
-     * GPS: ICD-GPS-200, chapter 20.3.3.3.1.4
-     * SBAS: 0 = valid, non-zero = invalid
-     * GLO: 0 = valid, non-zero = invalid
-     */
-    u8 health_bits;
-  } common;
   /**
    * Relative deviation of predicted carrier frequency from nominal
    */
   float gamma;
+
   /**
-   * Correction to the SV time[s]
+   * Correction to the SV time [s]
    */
   float tau;
+
   /**
-   * Equipment delay between L1 and L2[s]
+   * Equipment delay between L1 and L2 [s]
    */
   float d_tau;
+
   /**
-   * Position of the SV at tb in PZ-90.02 coordinates system[m]
+   * Position of the SV at tb in PZ-90.02 coordinates system [m]
    */
   double pos[3];
+
   /**
-   * Velocity vector of the SV at tb in PZ-90.02 coordinates system[m/s]
+   * Velocity vector of the SV at tb in PZ-90.02 coordinates system [m/s]
    */
   double vel[3];
+
   /**
-   * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys[m/s^2]
+   * Acceleration vector of the SV at tb in PZ-90.02 coordinates sys [m/s^2]
    */
   float acc[3];
+
   /**
    * Frequency slot. FCN+8 (that is [1..14]). 0 or 0xFF for invalid
    */
   u8 fcn;
+
   /**
    * Issue of data. Equal to the 7 bits of the immediate data word t_b
    */
   u8 iod;
-} sbp_msg_ephemeris_glo_t;
 
-static inline size_t sbp_packed_size_sbp_msg_ephemeris_glo_t(const sbp_msg_ephemeris_glo_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->common.sid.sat) + sizeof(msg->common.sid.code)) +
-          (0 + sizeof(msg->common.toe.tow) + sizeof(msg->common.toe.wn)) + sizeof(msg->common.ura) +
-          sizeof(msg->common.fit_interval) + sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         sizeof(msg->gamma) + sizeof(msg->tau) + sizeof(msg->d_tau) + (3 * sizeof(msg->pos[0])) +
-         (3 * sizeof(msg->vel[0])) + (3 * sizeof(msg->acc[0])) + sizeof(msg->fcn) + sizeof(msg->iod);
-}
+} msg_ephemeris_glo_t;
 
-static inline bool sbp_pack_sbp_msg_ephemeris_glo_t(u8 *buf, size_t len, const sbp_msg_ephemeris_glo_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_ephemeris_glo_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidsat = msg->common.sid.sat;
-  memcpy(buf + offset, &msgcommonsidsat, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidcode = msg->common.sid.code;
-  memcpy(buf + offset, &msgcommonsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommontoetow = htole32(msg->common.toe.tow);
-  memcpy(buf + offset, &msgcommontoetow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommontoewn = htole16(msg->common.toe.wn);
-  memcpy(buf + offset, &msgcommontoewn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgcommonura = msg->common.ura;
-  memcpy(buf + offset, &msgcommonura, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommonfit_interval = htole32(msg->common.fit_interval);
-  memcpy(buf + offset, &msgcommonfit_interval, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonvalid = msg->common.valid;
-  memcpy(buf + offset, &msgcommonvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonhealth_bits = msg->common.health_bits;
-  memcpy(buf + offset, &msgcommonhealth_bits, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msggamma = msg->gamma;
-  memcpy(buf + offset, &msggamma, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgtau = msg->tau;
-  memcpy(buf + offset, &msgtau, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  float msgd_tau = msg->d_tau;
-  memcpy(buf + offset, &msgd_tau, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-  for (size_t msgpos_idx = 0; msgpos_idx < 3; msgpos_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgposmsgpos_idx = msg->pos[msgpos_idx];
-    memcpy(buf + offset, &msgposmsgpos_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgvel_idx = 0; msgvel_idx < 3; msgvel_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    double msgvelmsgvel_idx = msg->vel[msgvel_idx];
-    memcpy(buf + offset, &msgvelmsgvel_idx, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgacc_idx = 0; msgacc_idx < 3; msgacc_idx++)
-  {
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    float msgaccmsgacc_idx = msg->acc[msgacc_idx];
-    memcpy(buf + offset, &msgaccmsgacc_idx, 4);
-    // NOLINTNEXTLINE
-    offset += 4;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgfcn = msg->fcn;
-  memcpy(buf + offset, &msgfcn, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgiod = msg->iod;
-  memcpy(buf + offset, &msgiod, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_ephemeris_glo_t(const u8 *buf, size_t len, sbp_msg_ephemeris_glo_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.sat, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.tow, buf + offset, 4);
-  msg->common.toe.tow = le32toh(msg->common.toe.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toe.wn, buf + offset, 2);
-  msg->common.toe.wn = le16toh(msg->common.toe.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.ura, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.fit_interval, buf + offset, 4);
-  msg->common.fit_interval = le32toh(msg->common.fit_interval);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.health_bits, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gamma, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->tau, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->d_tau, buf + offset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-  for (size_t msgpos_idx = 0; msgpos_idx < 3; msgpos_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->pos[msgpos_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgvel_idx = 0; msgvel_idx < 3; msgvel_idx++)
-  {
-
-    if (offset + 8 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->vel[msgvel_idx], buf + offset, 8);
-    // NOLINTNEXTLINE
-    offset += 8;
-  }
-  for (size_t msgacc_idx = 0; msgacc_idx < 3; msgacc_idx++)
-  {
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->acc[msgacc_idx], buf + offset, 4);
-    // NOLINTNEXTLINE
-    offset += 4;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->fcn, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iod, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ephemeris_glo_t &a, const sbp_msg_ephemeris_glo_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.common.sid.sat != b.common.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.common.sid.code != b.common.sid.code)
-  {
-    return false;
-  }
-
-  if (a.common.toe.tow != b.common.toe.tow)
-  {
-    return false;
-  }
-
-  if (a.common.toe.wn != b.common.toe.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.common.ura - b.common.ura) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.common.fit_interval != b.common.fit_interval)
-  {
-    return false;
-  }
-
-  if (a.common.valid != b.common.valid)
-  {
-    return false;
-  }
-
-  if (a.common.health_bits != b.common.health_bits)
-  {
-    return false;
-  }
-
-  if (fabs(a.gamma - b.gamma) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.tau - b.tau) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.d_tau - b.d_tau) > 0.001)
-  {
-    return false;
-  }
-  for (size_t pos_idx = 0; pos_idx < 3; pos_idx++)
-  {
-
-    if (fabs(a.pos[pos_idx] - b.pos[pos_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-  for (size_t vel_idx = 0; vel_idx < 3; vel_idx++)
-  {
-
-    if (fabs(a.vel[vel_idx] - b.vel[vel_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-  for (size_t acc_idx = 0; acc_idx < 3; acc_idx++)
-  {
-
-    if (fabs(a.acc[acc_idx] - b.acc[acc_idx]) > 0.001)
-    {
-      return false;
-    }
-  }
-
-  if (a.fcn != b.fcn)
-  {
-    return false;
-  }
-
-  if (a.iod != b.iod)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_ephemeris_glo_t &a, const sbp_msg_ephemeris_glo_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Satellite broadcast ephemeris
  *
  * The ephemeris message returns a set of satellite orbit
@@ -11663,2402 +1811,441 @@ static inline bool operator!=(const sbp_msg_ephemeris_glo_t &a, const sbp_msg_ep
  * 20-III) for more details.
  */
 #define SBP_MSG_EPHEMERIS_DEP_D 0x0080
-
-#define SBP_EPHEMERIS_DEP_D_SID_CODE__MASK (0xff)
-#define SBP_EPHEMERIS_DEP_D_SID_CODE__SHIFT (0u)
-#define SBP_EPHEMERIS_DEP_D_SID_CODE__GET(flags) \
-  (((flags) >> SBP_EPHEMERIS_DEP_D_SID_CODE__SHIFT) & SBP_EPHEMERIS_DEP_D_SID_CODE__MASK)
-#define SBP_EPHEMERIS_DEP_D_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_EPHEMERIS_DEP_D_SID_CODE__MASK)) << (SBP_EPHEMERIS_DEP_D_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_EPHEMERIS_DEP_D_SID_CODE__GPS_L1CA (0)
-#define SBP_EPHEMERIS_DEP_D_SID_CODE__GPS_L2CM (1)
-#define SBP_EPHEMERIS_DEP_D_SID_CODE__SBAS_L1CA (2)
-#define SBP_EPHEMERIS_DEP_D_SID_CODE__GLO_L1CA (3)
-#define SBP_EPHEMERIS_DEP_D_SID_CODE__GLO_L2CA (4)
-#define SBP_EPHEMERIS_DEP_D_SID_CODE__GPS_L1P (5)
-#define SBP_EPHEMERIS_DEP_D_SID_CODE__GPS_L2P (6)
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
-   * Group delay differential between L1 and L2[s]
+   * Group delay differential between L1 and L2 [s]
    */
   double tgd;
+
   /**
-   * Amplitude of the sine harmonic correction term to the orbit radius[m]
+   * Amplitude of the sine harmonic correction term to the orbit radius [m]
    */
   double c_rs;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the orbit radius[m]
+   * Amplitude of the cosine harmonic correction term to the orbit radius [m]
    */
   double c_rc;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the cosine harmonic correction term to the argument of latitude [rad]
    */
   double c_uc;
+
   /**
-   * Amplitude of the sine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the sine harmonic correction term to the argument of latitude [rad]
    */
   double c_us;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the cosine harmonic correction term to the angle of inclination [rad]
    */
   double c_ic;
+
   /**
-   * Amplitude of the sine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the sine harmonic correction term to the angle of inclination [rad]
    */
   double c_is;
+
   /**
-   * Mean motion difference[rad/s]
+   * Mean motion difference [rad/s]
    */
   double dn;
+
   /**
-   * Mean anomaly at reference time[rad]
+   * Mean anomaly at reference time [rad]
    */
   double m0;
+
   /**
    * Eccentricity of satellite orbit
    */
   double ecc;
+
   /**
-   * Square root of the semi-major axis of orbit[m^(1/2)]
+   * Square root of the semi-major axis of orbit [m^(1/2)]
    */
   double sqrta;
+
   /**
-   * Longitude of ascending node of orbit plane at weekly epoch[rad]
+   * Longitude of ascending node of orbit plane at weekly epoch [rad]
    */
   double omega0;
+
   /**
-   * Rate of right ascension[rad/s]
+   * Rate of right ascension [rad/s]
    */
   double omegadot;
+
   /**
-   * Argument of perigee[rad]
+   * Argument of perigee [rad]
    */
   double w;
+
   /**
-   * Inclination[rad]
+   * Inclination [rad]
    */
   double inc;
+
   /**
-   * Inclination first derivative[rad/s]
+   * Inclination first derivative [rad/s]
    */
   double inc_dot;
+
   /**
-   * Polynomial clock correction coefficient (clock bias)[s]
+   * Polynomial clock correction coefficient (clock bias) [s]
    */
   double af0;
+
   /**
-   * Polynomial clock correction coefficient (clock drift)[s/s]
+   * Polynomial clock correction coefficient (clock drift) [s/s]
    */
   double af1;
+
   /**
-   * Polynomial clock correction coefficient (rate of clock drift)[s/s^2]
+   * Polynomial clock correction coefficient (rate of clock drift) [s/s^2]
    */
   double af2;
+
   /**
-   * Time of week[s]
+   * Time of week [s]
    */
   double toe_tow;
+
   /**
-   * Week number[week]
+   * Week number [week]
    */
   u16 toe_wn;
+
   /**
-   * Clock reference time of week[s]
+   * Clock reference time of week [s]
    */
   double toc_tow;
+
   /**
-   * Clock reference week number[week]
+   * Clock reference week number [week]
    */
   u16 toc_wn;
+
   /**
    * Is valid?
    */
   u8 valid;
+
   /**
    * Satellite is healthy?
    */
   u8 healthy;
+
   /**
    * GNSS signal identifier
    */
-  struct
-  {
+  gnss_signal_dep_t sid;
 
-    /**
-     * Constellation-specific satellite identifier.
-     *
-     * Note: unlike GnssSignal, GPS satellites are encoded as
-     * (PRN - 1). Other constellations do not have this offset.
-     */
-    u16 sat;
-    /**
-     * Signal constellation, band and code
-     */
-    u8 code;
-    /**
-     * Reserved
-     */
-    u8 reserved;
-  } sid;
   /**
    * Issue of ephemeris data
    */
   u8 iode;
+
   /**
    * Issue of clock data
    */
   u16 iodc;
+
   /**
    * Reserved field
    */
   u32 reserved;
-} sbp_msg_ephemeris_dep_d_t;
 
-static inline size_t sbp_packed_size_sbp_msg_ephemeris_dep_d_t(const sbp_msg_ephemeris_dep_d_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->tgd) + sizeof(msg->c_rs) + sizeof(msg->c_rc) + sizeof(msg->c_uc) + sizeof(msg->c_us) +
-         sizeof(msg->c_ic) + sizeof(msg->c_is) + sizeof(msg->dn) + sizeof(msg->m0) + sizeof(msg->ecc) +
-         sizeof(msg->sqrta) + sizeof(msg->omega0) + sizeof(msg->omegadot) + sizeof(msg->w) + sizeof(msg->inc) +
-         sizeof(msg->inc_dot) + sizeof(msg->af0) + sizeof(msg->af1) + sizeof(msg->af2) + sizeof(msg->toe_tow) +
-         sizeof(msg->toe_wn) + sizeof(msg->toc_tow) + sizeof(msg->toc_wn) + sizeof(msg->valid) + sizeof(msg->healthy) +
-         (0 + sizeof(msg->sid.sat) + sizeof(msg->sid.code) + sizeof(msg->sid.reserved)) + sizeof(msg->iode) +
-         sizeof(msg->iodc) + sizeof(msg->reserved);
-}
+} msg_ephemeris_dep_d_t;
 
-static inline bool sbp_pack_sbp_msg_ephemeris_dep_d_t(u8 *buf, size_t len, const sbp_msg_ephemeris_dep_d_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_ephemeris_dep_d_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgtgd = msg->tgd;
-  memcpy(buf + offset, &msgtgd, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_rs = msg->c_rs;
-  memcpy(buf + offset, &msgc_rs, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_rc = msg->c_rc;
-  memcpy(buf + offset, &msgc_rc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_uc = msg->c_uc;
-  memcpy(buf + offset, &msgc_uc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_us = msg->c_us;
-  memcpy(buf + offset, &msgc_us, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_ic = msg->c_ic;
-  memcpy(buf + offset, &msgc_ic, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_is = msg->c_is;
-  memcpy(buf + offset, &msgc_is, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgdn = msg->dn;
-  memcpy(buf + offset, &msgdn, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgm0 = msg->m0;
-  memcpy(buf + offset, &msgm0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgecc = msg->ecc;
-  memcpy(buf + offset, &msgecc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgsqrta = msg->sqrta;
-  memcpy(buf + offset, &msgsqrta, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomega0 = msg->omega0;
-  memcpy(buf + offset, &msgomega0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomegadot = msg->omegadot;
-  memcpy(buf + offset, &msgomegadot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgw = msg->w;
-  memcpy(buf + offset, &msgw, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc = msg->inc;
-  memcpy(buf + offset, &msginc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc_dot = msg->inc_dot;
-  memcpy(buf + offset, &msginc_dot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf0 = msg->af0;
-  memcpy(buf + offset, &msgaf0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf1 = msg->af1;
-  memcpy(buf + offset, &msgaf1, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf2 = msg->af2;
-  memcpy(buf + offset, &msgaf2, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgtoe_tow = msg->toe_tow;
-  memcpy(buf + offset, &msgtoe_tow, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgtoe_wn = htole16(msg->toe_wn);
-  memcpy(buf + offset, &msgtoe_wn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgtoc_tow = msg->toc_tow;
-  memcpy(buf + offset, &msgtoc_tow, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgtoc_wn = htole16(msg->toc_wn);
-  memcpy(buf + offset, &msgtoc_wn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgvalid = msg->valid;
-  memcpy(buf + offset, &msgvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msghealthy = msg->healthy;
-  memcpy(buf + offset, &msghealthy, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgsidsat = htole16(msg->sid.sat);
-  memcpy(buf + offset, &msgsidsat, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgsidcode = msg->sid.code;
-  memcpy(buf + offset, &msgsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgsidreserved = msg->sid.reserved;
-  memcpy(buf + offset, &msgsidreserved, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgiode = msg->iode;
-  memcpy(buf + offset, &msgiode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgiodc = htole16(msg->iodc);
-  memcpy(buf + offset, &msgiodc, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgreserved = htole32(msg->reserved);
-  memcpy(buf + offset, &msgreserved, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_ephemeris_dep_d_t(const u8 *buf, size_t len, sbp_msg_ephemeris_dep_d_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->tgd, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rs, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_uc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_us, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_ic, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_is, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->dn, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->m0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->ecc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sqrta, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omega0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omegadot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->w, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc_dot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af1, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af2, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toe_tow, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toe_wn, buf + offset, 2);
-  msg->toe_wn = le16toh(msg->toe_wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc_tow, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc_wn, buf + offset, 2);
-  msg->toc_wn = le16toh(msg->toc_wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->healthy, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sid.sat, buf + offset, 2);
-  msg->sid.sat = le16toh(msg->sid.sat);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sid.reserved, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iode, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iodc, buf + offset, 2);
-  msg->iodc = le16toh(msg->iodc);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->reserved, buf + offset, 4);
-  msg->reserved = le32toh(msg->reserved);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ephemeris_dep_d_t &a, const sbp_msg_ephemeris_dep_d_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (fabs(a.tgd - b.tgd) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rs - b.c_rs) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rc - b.c_rc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_uc - b.c_uc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_us - b.c_us) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_ic - b.c_ic) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_is - b.c_is) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.dn - b.dn) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.m0 - b.m0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.ecc - b.ecc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.sqrta - b.sqrta) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omega0 - b.omega0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omegadot - b.omegadot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.w - b.w) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc - b.inc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc_dot - b.inc_dot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af0 - b.af0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af1 - b.af1) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af2 - b.af2) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.toe_tow - b.toe_tow) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.toe_wn != b.toe_wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.toc_tow - b.toc_tow) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.toc_wn != b.toc_wn)
-  {
-    return false;
-  }
-
-  if (a.valid != b.valid)
-  {
-    return false;
-  }
-
-  if (a.healthy != b.healthy)
-  {
-    return false;
-  }
-
-  if (a.sid.sat != b.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.sid.code != b.sid.code)
-  {
-    return false;
-  }
-
-  if (a.sid.reserved != b.sid.reserved)
-  {
-    return false;
-  }
-
-  if (a.iode != b.iode)
-  {
-    return false;
-  }
-
-  if (a.iodc != b.iodc)
-  {
-    return false;
-  }
-
-  if (a.reserved != b.reserved)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_ephemeris_dep_d_t &a, const sbp_msg_ephemeris_dep_d_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Deprecated
  *
  * Deprecated.
  */
 #define SBP_MSG_EPHEMERIS_DEP_A 0x001A
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
-   * Group delay differential between L1 and L2[s]
+   * Group delay differential between L1 and L2 [s]
    */
   double tgd;
+
   /**
-   * Amplitude of the sine harmonic correction term to the orbit radius[m]
+   * Amplitude of the sine harmonic correction term to the orbit radius [m]
    */
   double c_rs;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the orbit radius[m]
+   * Amplitude of the cosine harmonic correction term to the orbit radius [m]
    */
   double c_rc;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the cosine harmonic correction term to the argument of latitude [rad]
    */
   double c_uc;
+
   /**
-   * Amplitude of the sine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the sine harmonic correction term to the argument of latitude [rad]
    */
   double c_us;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the cosine harmonic correction term to the angle of inclination [rad]
    */
   double c_ic;
+
   /**
-   * Amplitude of the sine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the sine harmonic correction term to the angle of inclination [rad]
    */
   double c_is;
+
   /**
-   * Mean motion difference[rad/s]
+   * Mean motion difference [rad/s]
    */
   double dn;
+
   /**
-   * Mean anomaly at reference time[rad]
+   * Mean anomaly at reference time [rad]
    */
   double m0;
+
   /**
    * Eccentricity of satellite orbit
    */
   double ecc;
+
   /**
-   * Square root of the semi-major axis of orbit[m^(1/2)]
+   * Square root of the semi-major axis of orbit [m^(1/2)]
    */
   double sqrta;
+
   /**
-   * Longitude of ascending node of orbit plane at weekly epoch[rad]
+   * Longitude of ascending node of orbit plane at weekly epoch [rad]
    */
   double omega0;
+
   /**
-   * Rate of right ascension[rad/s]
+   * Rate of right ascension [rad/s]
    */
   double omegadot;
+
   /**
-   * Argument of perigee[rad]
+   * Argument of perigee [rad]
    */
   double w;
+
   /**
-   * Inclination[rad]
+   * Inclination [rad]
    */
   double inc;
+
   /**
-   * Inclination first derivative[rad/s]
+   * Inclination first derivative [rad/s]
    */
   double inc_dot;
+
   /**
-   * Polynomial clock correction coefficient (clock bias)[s]
+   * Polynomial clock correction coefficient (clock bias) [s]
    */
   double af0;
+
   /**
-   * Polynomial clock correction coefficient (clock drift)[s/s]
+   * Polynomial clock correction coefficient (clock drift) [s/s]
    */
   double af1;
+
   /**
-   * Polynomial clock correction coefficient (rate of clock drift)[s/s^2]
+   * Polynomial clock correction coefficient (rate of clock drift) [s/s^2]
    */
   double af2;
+
   /**
-   * Time of week[s]
+   * Time of week [s]
    */
   double toe_tow;
+
   /**
-   * Week number[week]
+   * Week number [week]
    */
   u16 toe_wn;
+
   /**
-   * Clock reference time of week[s]
+   * Clock reference time of week [s]
    */
   double toc_tow;
+
   /**
-   * Clock reference week number[week]
+   * Clock reference week number [week]
    */
   u16 toc_wn;
+
   /**
    * Is valid?
    */
   u8 valid;
+
   /**
    * Satellite is healthy?
    */
   u8 healthy;
+
   /**
    * PRN being tracked
    */
   u8 prn;
-} sbp_msg_ephemeris_dep_a_t;
 
-static inline size_t sbp_packed_size_sbp_msg_ephemeris_dep_a_t(const sbp_msg_ephemeris_dep_a_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->tgd) + sizeof(msg->c_rs) + sizeof(msg->c_rc) + sizeof(msg->c_uc) + sizeof(msg->c_us) +
-         sizeof(msg->c_ic) + sizeof(msg->c_is) + sizeof(msg->dn) + sizeof(msg->m0) + sizeof(msg->ecc) +
-         sizeof(msg->sqrta) + sizeof(msg->omega0) + sizeof(msg->omegadot) + sizeof(msg->w) + sizeof(msg->inc) +
-         sizeof(msg->inc_dot) + sizeof(msg->af0) + sizeof(msg->af1) + sizeof(msg->af2) + sizeof(msg->toe_tow) +
-         sizeof(msg->toe_wn) + sizeof(msg->toc_tow) + sizeof(msg->toc_wn) + sizeof(msg->valid) + sizeof(msg->healthy) +
-         sizeof(msg->prn);
-}
+} msg_ephemeris_dep_a_t;
 
-static inline bool sbp_pack_sbp_msg_ephemeris_dep_a_t(u8 *buf, size_t len, const sbp_msg_ephemeris_dep_a_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_ephemeris_dep_a_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgtgd = msg->tgd;
-  memcpy(buf + offset, &msgtgd, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_rs = msg->c_rs;
-  memcpy(buf + offset, &msgc_rs, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_rc = msg->c_rc;
-  memcpy(buf + offset, &msgc_rc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_uc = msg->c_uc;
-  memcpy(buf + offset, &msgc_uc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_us = msg->c_us;
-  memcpy(buf + offset, &msgc_us, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_ic = msg->c_ic;
-  memcpy(buf + offset, &msgc_ic, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_is = msg->c_is;
-  memcpy(buf + offset, &msgc_is, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgdn = msg->dn;
-  memcpy(buf + offset, &msgdn, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgm0 = msg->m0;
-  memcpy(buf + offset, &msgm0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgecc = msg->ecc;
-  memcpy(buf + offset, &msgecc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgsqrta = msg->sqrta;
-  memcpy(buf + offset, &msgsqrta, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomega0 = msg->omega0;
-  memcpy(buf + offset, &msgomega0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomegadot = msg->omegadot;
-  memcpy(buf + offset, &msgomegadot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgw = msg->w;
-  memcpy(buf + offset, &msgw, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc = msg->inc;
-  memcpy(buf + offset, &msginc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc_dot = msg->inc_dot;
-  memcpy(buf + offset, &msginc_dot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf0 = msg->af0;
-  memcpy(buf + offset, &msgaf0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf1 = msg->af1;
-  memcpy(buf + offset, &msgaf1, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf2 = msg->af2;
-  memcpy(buf + offset, &msgaf2, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgtoe_tow = msg->toe_tow;
-  memcpy(buf + offset, &msgtoe_tow, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgtoe_wn = htole16(msg->toe_wn);
-  memcpy(buf + offset, &msgtoe_wn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgtoc_tow = msg->toc_tow;
-  memcpy(buf + offset, &msgtoc_tow, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgtoc_wn = htole16(msg->toc_wn);
-  memcpy(buf + offset, &msgtoc_wn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgvalid = msg->valid;
-  memcpy(buf + offset, &msgvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msghealthy = msg->healthy;
-  memcpy(buf + offset, &msghealthy, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgprn = msg->prn;
-  memcpy(buf + offset, &msgprn, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_ephemeris_dep_a_t(const u8 *buf, size_t len, sbp_msg_ephemeris_dep_a_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->tgd, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rs, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_uc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_us, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_ic, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_is, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->dn, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->m0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->ecc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sqrta, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omega0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omegadot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->w, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc_dot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af1, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af2, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toe_tow, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toe_wn, buf + offset, 2);
-  msg->toe_wn = le16toh(msg->toe_wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc_tow, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc_wn, buf + offset, 2);
-  msg->toc_wn = le16toh(msg->toc_wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->healthy, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->prn, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ephemeris_dep_a_t &a, const sbp_msg_ephemeris_dep_a_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (fabs(a.tgd - b.tgd) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rs - b.c_rs) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rc - b.c_rc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_uc - b.c_uc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_us - b.c_us) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_ic - b.c_ic) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_is - b.c_is) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.dn - b.dn) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.m0 - b.m0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.ecc - b.ecc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.sqrta - b.sqrta) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omega0 - b.omega0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omegadot - b.omegadot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.w - b.w) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc - b.inc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc_dot - b.inc_dot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af0 - b.af0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af1 - b.af1) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af2 - b.af2) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.toe_tow - b.toe_tow) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.toe_wn != b.toe_wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.toc_tow - b.toc_tow) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.toc_wn != b.toc_wn)
-  {
-    return false;
-  }
-
-  if (a.valid != b.valid)
-  {
-    return false;
-  }
-
-  if (a.healthy != b.healthy)
-  {
-    return false;
-  }
-
-  if (a.prn != b.prn)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_ephemeris_dep_a_t &a, const sbp_msg_ephemeris_dep_a_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Deprecated
  *
  * Deprecated.
  */
 #define SBP_MSG_EPHEMERIS_DEP_B 0x0046
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
-   * Group delay differential between L1 and L2[s]
+   * Group delay differential between L1 and L2 [s]
    */
   double tgd;
+
   /**
-   * Amplitude of the sine harmonic correction term to the orbit radius[m]
+   * Amplitude of the sine harmonic correction term to the orbit radius [m]
    */
   double c_rs;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the orbit radius[m]
+   * Amplitude of the cosine harmonic correction term to the orbit radius [m]
    */
   double c_rc;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the cosine harmonic correction term to the argument of latitude [rad]
    */
   double c_uc;
+
   /**
-   * Amplitude of the sine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the sine harmonic correction term to the argument of latitude [rad]
    */
   double c_us;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the cosine harmonic correction term to the angle of inclination [rad]
    */
   double c_ic;
+
   /**
-   * Amplitude of the sine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the sine harmonic correction term to the angle of inclination [rad]
    */
   double c_is;
+
   /**
-   * Mean motion difference[rad/s]
+   * Mean motion difference [rad/s]
    */
   double dn;
+
   /**
-   * Mean anomaly at reference time[rad]
+   * Mean anomaly at reference time [rad]
    */
   double m0;
+
   /**
    * Eccentricity of satellite orbit
    */
   double ecc;
+
   /**
-   * Square root of the semi-major axis of orbit[m^(1/2)]
+   * Square root of the semi-major axis of orbit [m^(1/2)]
    */
   double sqrta;
+
   /**
-   * Longitude of ascending node of orbit plane at weekly epoch[rad]
+   * Longitude of ascending node of orbit plane at weekly epoch [rad]
    */
   double omega0;
+
   /**
-   * Rate of right ascension[rad/s]
+   * Rate of right ascension [rad/s]
    */
   double omegadot;
+
   /**
-   * Argument of perigee[rad]
+   * Argument of perigee [rad]
    */
   double w;
+
   /**
-   * Inclination[rad]
+   * Inclination [rad]
    */
   double inc;
+
   /**
-   * Inclination first derivative[rad/s]
+   * Inclination first derivative [rad/s]
    */
   double inc_dot;
+
   /**
-   * Polynomial clock correction coefficient (clock bias)[s]
+   * Polynomial clock correction coefficient (clock bias) [s]
    */
   double af0;
+
   /**
-   * Polynomial clock correction coefficient (clock drift)[s/s]
+   * Polynomial clock correction coefficient (clock drift) [s/s]
    */
   double af1;
+
   /**
-   * Polynomial clock correction coefficient (rate of clock drift)[s/s^2]
+   * Polynomial clock correction coefficient (rate of clock drift) [s/s^2]
    */
   double af2;
+
   /**
-   * Time of week[s]
+   * Time of week [s]
    */
   double toe_tow;
+
   /**
-   * Week number[week]
+   * Week number [week]
    */
   u16 toe_wn;
+
   /**
-   * Clock reference time of week[s]
+   * Clock reference time of week [s]
    */
   double toc_tow;
+
   /**
-   * Clock reference week number[week]
+   * Clock reference week number [week]
    */
   u16 toc_wn;
+
   /**
    * Is valid?
    */
   u8 valid;
+
   /**
    * Satellite is healthy?
    */
   u8 healthy;
+
   /**
    * PRN being tracked
    */
   u8 prn;
+
   /**
    * Issue of ephemeris data
    */
   u8 iode;
-} sbp_msg_ephemeris_dep_b_t;
 
-static inline size_t sbp_packed_size_sbp_msg_ephemeris_dep_b_t(const sbp_msg_ephemeris_dep_b_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->tgd) + sizeof(msg->c_rs) + sizeof(msg->c_rc) + sizeof(msg->c_uc) + sizeof(msg->c_us) +
-         sizeof(msg->c_ic) + sizeof(msg->c_is) + sizeof(msg->dn) + sizeof(msg->m0) + sizeof(msg->ecc) +
-         sizeof(msg->sqrta) + sizeof(msg->omega0) + sizeof(msg->omegadot) + sizeof(msg->w) + sizeof(msg->inc) +
-         sizeof(msg->inc_dot) + sizeof(msg->af0) + sizeof(msg->af1) + sizeof(msg->af2) + sizeof(msg->toe_tow) +
-         sizeof(msg->toe_wn) + sizeof(msg->toc_tow) + sizeof(msg->toc_wn) + sizeof(msg->valid) + sizeof(msg->healthy) +
-         sizeof(msg->prn) + sizeof(msg->iode);
-}
+} msg_ephemeris_dep_b_t;
 
-static inline bool sbp_pack_sbp_msg_ephemeris_dep_b_t(u8 *buf, size_t len, const sbp_msg_ephemeris_dep_b_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_ephemeris_dep_b_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgtgd = msg->tgd;
-  memcpy(buf + offset, &msgtgd, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_rs = msg->c_rs;
-  memcpy(buf + offset, &msgc_rs, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_rc = msg->c_rc;
-  memcpy(buf + offset, &msgc_rc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_uc = msg->c_uc;
-  memcpy(buf + offset, &msgc_uc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_us = msg->c_us;
-  memcpy(buf + offset, &msgc_us, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_ic = msg->c_ic;
-  memcpy(buf + offset, &msgc_ic, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_is = msg->c_is;
-  memcpy(buf + offset, &msgc_is, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgdn = msg->dn;
-  memcpy(buf + offset, &msgdn, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgm0 = msg->m0;
-  memcpy(buf + offset, &msgm0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgecc = msg->ecc;
-  memcpy(buf + offset, &msgecc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgsqrta = msg->sqrta;
-  memcpy(buf + offset, &msgsqrta, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomega0 = msg->omega0;
-  memcpy(buf + offset, &msgomega0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomegadot = msg->omegadot;
-  memcpy(buf + offset, &msgomegadot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgw = msg->w;
-  memcpy(buf + offset, &msgw, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc = msg->inc;
-  memcpy(buf + offset, &msginc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc_dot = msg->inc_dot;
-  memcpy(buf + offset, &msginc_dot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf0 = msg->af0;
-  memcpy(buf + offset, &msgaf0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf1 = msg->af1;
-  memcpy(buf + offset, &msgaf1, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf2 = msg->af2;
-  memcpy(buf + offset, &msgaf2, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgtoe_tow = msg->toe_tow;
-  memcpy(buf + offset, &msgtoe_tow, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgtoe_wn = htole16(msg->toe_wn);
-  memcpy(buf + offset, &msgtoe_wn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgtoc_tow = msg->toc_tow;
-  memcpy(buf + offset, &msgtoc_tow, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgtoc_wn = htole16(msg->toc_wn);
-  memcpy(buf + offset, &msgtoc_wn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgvalid = msg->valid;
-  memcpy(buf + offset, &msgvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msghealthy = msg->healthy;
-  memcpy(buf + offset, &msghealthy, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgprn = msg->prn;
-  memcpy(buf + offset, &msgprn, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgiode = msg->iode;
-  memcpy(buf + offset, &msgiode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_ephemeris_dep_b_t(const u8 *buf, size_t len, sbp_msg_ephemeris_dep_b_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->tgd, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rs, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_uc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_us, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_ic, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_is, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->dn, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->m0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->ecc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sqrta, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omega0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omegadot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->w, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc_dot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af1, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af2, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toe_tow, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toe_wn, buf + offset, 2);
-  msg->toe_wn = le16toh(msg->toe_wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc_tow, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc_wn, buf + offset, 2);
-  msg->toc_wn = le16toh(msg->toc_wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->healthy, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->prn, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iode, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ephemeris_dep_b_t &a, const sbp_msg_ephemeris_dep_b_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (fabs(a.tgd - b.tgd) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rs - b.c_rs) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_rc - b.c_rc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_uc - b.c_uc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_us - b.c_us) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_ic - b.c_ic) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.c_is - b.c_is) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.dn - b.dn) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.m0 - b.m0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.ecc - b.ecc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.sqrta - b.sqrta) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omega0 - b.omega0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omegadot - b.omegadot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.w - b.w) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc - b.inc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc_dot - b.inc_dot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af0 - b.af0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af1 - b.af1) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af2 - b.af2) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.toe_tow - b.toe_tow) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.toe_wn != b.toe_wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.toc_tow - b.toc_tow) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.toc_wn != b.toc_wn)
-  {
-    return false;
-  }
-
-  if (a.valid != b.valid)
-  {
-    return false;
-  }
-
-  if (a.healthy != b.healthy)
-  {
-    return false;
-  }
-
-  if (a.prn != b.prn)
-  {
-    return false;
-  }
-
-  if (a.iode != b.iode)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_ephemeris_dep_b_t &a, const sbp_msg_ephemeris_dep_b_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Satellite broadcast ephemeris
  *
  * The ephemeris message returns a set of satellite orbit
@@ -14068,1250 +2255,332 @@ static inline bool operator!=(const sbp_msg_ephemeris_dep_b_t &a, const sbp_msg_
  * 20-III) for more details.
  */
 #define SBP_MSG_EPHEMERIS_DEP_C 0x0047
-
-#define SBP_EPHEMERIS_DEP_C_SID_CODE__MASK (0xff)
-#define SBP_EPHEMERIS_DEP_C_SID_CODE__SHIFT (0u)
-#define SBP_EPHEMERIS_DEP_C_SID_CODE__GET(flags) \
-  (((flags) >> SBP_EPHEMERIS_DEP_C_SID_CODE__SHIFT) & SBP_EPHEMERIS_DEP_C_SID_CODE__MASK)
-#define SBP_EPHEMERIS_DEP_C_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_EPHEMERIS_DEP_C_SID_CODE__MASK)) << (SBP_EPHEMERIS_DEP_C_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_EPHEMERIS_DEP_C_SID_CODE__GPS_L1CA (0)
-#define SBP_EPHEMERIS_DEP_C_SID_CODE__GPS_L2CM (1)
-#define SBP_EPHEMERIS_DEP_C_SID_CODE__SBAS_L1CA (2)
-#define SBP_EPHEMERIS_DEP_C_SID_CODE__GLO_L1CA (3)
-#define SBP_EPHEMERIS_DEP_C_SID_CODE__GLO_L2CA (4)
-#define SBP_EPHEMERIS_DEP_C_SID_CODE__GPS_L1P (5)
-#define SBP_EPHEMERIS_DEP_C_SID_CODE__GPS_L2P (6)
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
-   * Group delay differential between L1 and L2[s]
+   * Group delay differential between L1 and L2 [s]
    */
   double tgd;
+
   /**
-   * Amplitude of the sine harmonic correction term to the orbit radius[m]
+   * Amplitude of the sine harmonic correction term to the orbit radius [m]
    */
   double c_rs;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the orbit radius[m]
+   * Amplitude of the cosine harmonic correction term to the orbit radius [m]
    */
   double c_rc;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the cosine harmonic correction term to the argument of latitude [rad]
    */
   double c_uc;
+
   /**
-   * Amplitude of the sine harmonic correction term to the argument of latitude[rad]
+   * Amplitude of the sine harmonic correction term to the argument of latitude [rad]
    */
   double c_us;
+
   /**
-   * Amplitude of the cosine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the cosine harmonic correction term to the angle of inclination [rad]
    */
   double c_ic;
+
   /**
-   * Amplitude of the sine harmonic correction term to the angle of inclination[rad]
+   * Amplitude of the sine harmonic correction term to the angle of inclination [rad]
    */
   double c_is;
+
   /**
-   * Mean motion difference[rad/s]
+   * Mean motion difference [rad/s]
    */
   double dn;
+
   /**
-   * Mean anomaly at reference time[rad]
+   * Mean anomaly at reference time [rad]
    */
   double m0;
+
   /**
    * Eccentricity of satellite orbit
    */
   double ecc;
+
   /**
-   * Square root of the semi-major axis of orbit[m^(1/2)]
+   * Square root of the semi-major axis of orbit [m^(1/2)]
    */
   double sqrta;
+
   /**
-   * Longitude of ascending node of orbit plane at weekly epoch[rad]
+   * Longitude of ascending node of orbit plane at weekly epoch [rad]
    */
   double omega0;
+
   /**
-   * Rate of right ascension[rad/s]
+   * Rate of right ascension [rad/s]
    */
   double omegadot;
+
   /**
-   * Argument of perigee[rad]
+   * Argument of perigee [rad]
    */
   double w;
+
   /**
-   * Inclination[rad]
+   * Inclination [rad]
    */
   double inc;
+
   /**
-   * Inclination first derivative[rad/s]
+   * Inclination first derivative [rad/s]
    */
   double inc_dot;
+
   /**
-   * Polynomial clock correction coefficient (clock bias)[s]
+   * Polynomial clock correction coefficient (clock bias) [s]
    */
   double af0;
+
   /**
-   * Polynomial clock correction coefficient (clock drift)[s/s]
+   * Polynomial clock correction coefficient (clock drift) [s/s]
    */
   double af1;
+
   /**
-   * Polynomial clock correction coefficient (rate of clock drift)[s/s^2]
+   * Polynomial clock correction coefficient (rate of clock drift) [s/s^2]
    */
   double af2;
+
   /**
-   * Time of week[s]
+   * Time of week [s]
    */
   double toe_tow;
+
   /**
-   * Week number[week]
+   * Week number [week]
    */
   u16 toe_wn;
+
   /**
-   * Clock reference time of week[s]
+   * Clock reference time of week [s]
    */
   double toc_tow;
+
   /**
-   * Clock reference week number[week]
+   * Clock reference week number [week]
    */
   u16 toc_wn;
+
   /**
    * Is valid?
    */
   u8 valid;
+
   /**
    * Satellite is healthy?
    */
   u8 healthy;
+
   /**
    * GNSS signal identifier
    */
-  struct
-  {
+  gnss_signal_dep_t sid;
 
-    /**
-     * Constellation-specific satellite identifier.
-     *
-     * Note: unlike GnssSignal, GPS satellites are encoded as
-     * (PRN - 1). Other constellations do not have this offset.
-     */
-    u16 sat;
-    /**
-     * Signal constellation, band and code
-     */
-    u8 code;
-    /**
-     * Reserved
-     */
-    u8 reserved;
-  } sid;
   /**
    * Issue of ephemeris data
    */
   u8 iode;
+
   /**
    * Issue of clock data
    */
   u16 iodc;
+
   /**
    * Reserved field
    */
   u32 reserved;
-} sbp_msg_ephemeris_dep_c_t;
 
-static inline size_t sbp_packed_size_sbp_msg_ephemeris_dep_c_t(const sbp_msg_ephemeris_dep_c_t *msg)
+} msg_ephemeris_dep_c_t;
+
+/** Header for observation message.
+ *
+ * Header of a GPS observation message.
+ */
+typedef struct SBP_ATTR_PACKED
 {
-  (void)msg;
-  return 0 + sizeof(msg->tgd) + sizeof(msg->c_rs) + sizeof(msg->c_rc) + sizeof(msg->c_uc) + sizeof(msg->c_us) +
-         sizeof(msg->c_ic) + sizeof(msg->c_is) + sizeof(msg->dn) + sizeof(msg->m0) + sizeof(msg->ecc) +
-         sizeof(msg->sqrta) + sizeof(msg->omega0) + sizeof(msg->omegadot) + sizeof(msg->w) + sizeof(msg->inc) +
-         sizeof(msg->inc_dot) + sizeof(msg->af0) + sizeof(msg->af1) + sizeof(msg->af2) + sizeof(msg->toe_tow) +
-         sizeof(msg->toe_wn) + sizeof(msg->toc_tow) + sizeof(msg->toc_wn) + sizeof(msg->valid) + sizeof(msg->healthy) +
-         (0 + sizeof(msg->sid.sat) + sizeof(msg->sid.code) + sizeof(msg->sid.reserved)) + sizeof(msg->iode) +
-         sizeof(msg->iodc) + sizeof(msg->reserved);
-}
 
-static inline bool sbp_pack_sbp_msg_ephemeris_dep_c_t(u8 *buf, size_t len, const sbp_msg_ephemeris_dep_c_t *msg)
+  /**
+   * GPS time of this observation
+   */
+  gps_time_dep_t t;
+
+  /**
+   * Total number of observations. First nibble is the size
+   * of the sequence (n), second nibble is the zero-indexed
+   * counter (ith packet of n)
+   */
+  u8 n_obs;
+
+} observation_header_dep_t;
+
+/** GPS carrier phase measurement.
+ *
+ * Carrier phase measurement in cycles represented as a 40-bit
+ * fixed point number with Q32.8 layout, i.e. 32-bits of whole
+ * cycles and 8-bits of fractional cycles. This has the opposite
+ * sign convention than a typical GPS receiver and the phase has
+ * the opposite sign as the pseudorange.
+ */
+typedef struct SBP_ATTR_PACKED
 {
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_ephemeris_dep_c_t(msg) > len)
-  {
-    return false;
-  }
 
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgtgd = msg->tgd;
-  memcpy(buf + offset, &msgtgd, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
+  /**
+   * Carrier phase whole cycles [cycles]
+   */
+  s32 i;
 
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_rs = msg->c_rs;
-  memcpy(buf + offset, &msgc_rs, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
+  /**
+   * Carrier phase fractional part [cycles / 256]
+   */
+  u8 f;
 
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_rc = msg->c_rc;
-  memcpy(buf + offset, &msgc_rc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
+} carrier_phase_dep_a_t;
 
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_uc = msg->c_uc;
-  memcpy(buf + offset, &msgc_uc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_us = msg->c_us;
-  memcpy(buf + offset, &msgc_us, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_ic = msg->c_ic;
-  memcpy(buf + offset, &msgc_ic, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgc_is = msg->c_is;
-  memcpy(buf + offset, &msgc_is, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgdn = msg->dn;
-  memcpy(buf + offset, &msgdn, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgm0 = msg->m0;
-  memcpy(buf + offset, &msgm0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgecc = msg->ecc;
-  memcpy(buf + offset, &msgecc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgsqrta = msg->sqrta;
-  memcpy(buf + offset, &msgsqrta, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomega0 = msg->omega0;
-  memcpy(buf + offset, &msgomega0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomegadot = msg->omegadot;
-  memcpy(buf + offset, &msgomegadot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgw = msg->w;
-  memcpy(buf + offset, &msgw, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc = msg->inc;
-  memcpy(buf + offset, &msginc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc_dot = msg->inc_dot;
-  memcpy(buf + offset, &msginc_dot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf0 = msg->af0;
-  memcpy(buf + offset, &msgaf0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf1 = msg->af1;
-  memcpy(buf + offset, &msgaf1, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf2 = msg->af2;
-  memcpy(buf + offset, &msgaf2, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgtoe_tow = msg->toe_tow;
-  memcpy(buf + offset, &msgtoe_tow, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgtoe_wn = htole16(msg->toe_wn);
-  memcpy(buf + offset, &msgtoe_wn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgtoc_tow = msg->toc_tow;
-  memcpy(buf + offset, &msgtoc_tow, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgtoc_wn = htole16(msg->toc_wn);
-  memcpy(buf + offset, &msgtoc_wn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgvalid = msg->valid;
-  memcpy(buf + offset, &msgvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msghealthy = msg->healthy;
-  memcpy(buf + offset, &msghealthy, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgsidsat = htole16(msg->sid.sat);
-  memcpy(buf + offset, &msgsidsat, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgsidcode = msg->sid.code;
-  memcpy(buf + offset, &msgsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgsidreserved = msg->sid.reserved;
-  memcpy(buf + offset, &msgsidreserved, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgiode = msg->iode;
-  memcpy(buf + offset, &msgiode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgiodc = htole16(msg->iodc);
-  memcpy(buf + offset, &msgiodc, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgreserved = htole32(msg->reserved);
-  memcpy(buf + offset, &msgreserved, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_ephemeris_dep_c_t(const u8 *buf, size_t len, sbp_msg_ephemeris_dep_c_t *msg)
+/** Deprecated
+ *
+ * Deprecated.
+ */
+typedef struct SBP_ATTR_PACKED
 {
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
 
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->tgd, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
+  /**
+   * Pseudorange observation [cm]
+   */
+  u32 P;
 
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rs, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
+  /**
+   * Carrier phase observation with opposite sign from typical convention
+   */
+  carrier_phase_dep_a_t L;
 
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_rc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
+  /**
+   * Carrier-to-Noise density [dB Hz / 4]
+   */
+  u8 cn0;
 
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_uc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
+  /**
+   * Lock indicator. This value changes whenever a satellite
+   * signal has lost and regained lock, indicating that the
+   * carrier phase ambiguity may have changed.
+   */
+  u16 lock;
 
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_us, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
+  /**
+   * PRN-1 identifier of the satellite signal
+   */
+  u8 prn;
 
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_ic, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
+} packed_obs_content_dep_a_t;
 
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->c_is, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->dn, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->m0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->ecc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sqrta, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omega0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omegadot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->w, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc_dot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af1, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af2, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toe_tow, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toe_wn, buf + offset, 2);
-  msg->toe_wn = le16toh(msg->toe_wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc_tow, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->toc_wn, buf + offset, 2);
-  msg->toc_wn = le16toh(msg->toc_wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->healthy, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sid.sat, buf + offset, 2);
-  msg->sid.sat = le16toh(msg->sid.sat);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sid.reserved, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iode, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->iodc, buf + offset, 2);
-  msg->iodc = le16toh(msg->iodc);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->reserved, buf + offset, 4);
-  msg->reserved = le32toh(msg->reserved);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_ephemeris_dep_c_t &a, const sbp_msg_ephemeris_dep_c_t &b)
+/** GPS observations for a particular satellite signal.
+ *
+ * Pseudorange and carrier phase observation for a satellite being
+ * tracked.  Pseudoranges are referenced to a nominal pseudorange.
+ */
+typedef struct SBP_ATTR_PACKED
 {
-  (void)a;
-  (void)b;
 
-  if (fabs(a.tgd - b.tgd) > 0.001)
-  {
-    return false;
-  }
+  /**
+   * Pseudorange observation [cm]
+   */
+  u32 P;
 
-  if (fabs(a.c_rs - b.c_rs) > 0.001)
-  {
-    return false;
-  }
+  /**
+   * Carrier phase observation with opposite sign from typical convention.
+   */
+  carrier_phase_dep_a_t L;
 
-  if (fabs(a.c_rc - b.c_rc) > 0.001)
-  {
-    return false;
-  }
+  /**
+   * Carrier-to-Noise density [dB Hz / 4]
+   */
+  u8 cn0;
 
-  if (fabs(a.c_uc - b.c_uc) > 0.001)
-  {
-    return false;
-  }
+  /**
+   * Lock indicator. This value changes whenever a satellite
+   * signal has lost and regained lock, indicating that the
+   * carrier phase ambiguity may have changed.
+   */
+  u16 lock;
 
-  if (fabs(a.c_us - b.c_us) > 0.001)
-  {
-    return false;
-  }
+  /**
+   * GNSS signal identifier
+   */
+  gnss_signal_dep_t sid;
 
-  if (fabs(a.c_ic - b.c_ic) > 0.001)
-  {
-    return false;
-  }
+} packed_obs_content_dep_b_t;
 
-  if (fabs(a.c_is - b.c_is) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.dn - b.dn) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.m0 - b.m0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.ecc - b.ecc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.sqrta - b.sqrta) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omega0 - b.omega0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omegadot - b.omegadot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.w - b.w) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc - b.inc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc_dot - b.inc_dot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af0 - b.af0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af1 - b.af1) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af2 - b.af2) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.toe_tow - b.toe_tow) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.toe_wn != b.toe_wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.toc_tow - b.toc_tow) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.toc_wn != b.toc_wn)
-  {
-    return false;
-  }
-
-  if (a.valid != b.valid)
-  {
-    return false;
-  }
-
-  if (a.healthy != b.healthy)
-  {
-    return false;
-  }
-
-  if (a.sid.sat != b.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.sid.code != b.sid.code)
-  {
-    return false;
-  }
-
-  if (a.sid.reserved != b.sid.reserved)
-  {
-    return false;
-  }
-
-  if (a.iode != b.iode)
-  {
-    return false;
-  }
-
-  if (a.iodc != b.iodc)
-  {
-    return false;
-  }
-
-  if (a.reserved != b.reserved)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_ephemeris_dep_c_t &a, const sbp_msg_ephemeris_dep_c_t &b)
+/** GPS observations for a particular satellite signal.
+ *
+ * Pseudorange and carrier phase observation for a satellite being
+ * tracked. The observations are be interoperable with 3rd party
+ * receivers and conform with typical RTCMv3 GNSS observations.
+ */
+typedef struct SBP_ATTR_PACKED
 {
-  return !(a == b);
-}
-#endif
+
+  /**
+   * Pseudorange observation [2 cm]
+   */
+  u32 P;
+
+  /**
+   * Carrier phase observation with typical sign convention. [cycles]
+   */
+  carrier_phase_t L;
+
+  /**
+   * Carrier-to-Noise density [dB Hz / 4]
+   */
+  u8 cn0;
+
+  /**
+   * Lock indicator. This value changes whenever a satellite
+   * signal has lost and regained lock, indicating that the
+   * carrier phase ambiguity may have changed.
+   */
+  u16 lock;
+
+  /**
+   * GNSS signal identifier
+   */
+  gnss_signal_dep_t sid;
+
+} packed_obs_content_dep_c_t;
+
 /** Deprecated
  *
  * Deprecated.
  */
 #define SBP_MSG_OBS_DEP_A 0x0045
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Header of a GPS observation message
    */
-  struct
-  {
+  observation_header_dep_t header;
 
-    /**
-     * GPS time of this observation
-     */
-    struct
-    {
-
-      /**
-       * Milliseconds since start of GPS week[ms]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } t;
-    /**
-     * Total number of observations. First nibble is the size
-     * of the sequence (n), second nibble is the zero-indexed
-     * counter (ith packet of n)
-     */
-    u8 n_obs;
-  } header;
   /**
    * Pseudorange and carrier phase observation for a
    * satellite being tracked.
    */
-  struct
-  {
+  packed_obs_content_dep_a_t obs[0];
 
-    /**
-     * Pseudorange observation[cm]
-     */
-    u32 P;
-    /**
-     * Carrier phase observation with opposite sign from typical convention
-     */
-    struct
-    {
+} msg_obs_dep_a_t;
 
-      /**
-       * Carrier phase whole cycles[cycles]
-       */
-      s32 i;
-      /**
-       * Carrier phase fractional part[cycles / 256]
-       */
-      u8 f;
-    } L;
-    /**
-     * Carrier-to-Noise density[dB Hz / 4]
-     */
-    u8 cn0;
-    /**
-     * Lock indicator. This value changes whenever a satellite
-     * signal has lost and regained lock, indicating that the
-     * carrier phase ambiguity may have changed.
-     */
-    u16 lock;
-    /**
-     * PRN-1 identifier of the satellite signal
-     */
-    u8 prn;
-  } obs[19];
-  /**
-   * Number of items in obs
-   */
-  u8 n_obs;
-} sbp_msg_obs_dep_a_t;
-
-static inline size_t sbp_packed_size_sbp_msg_obs_dep_a_t(const sbp_msg_obs_dep_a_t *msg)
-{
-  (void)msg;
-  return 0 + (0 + (0 + sizeof(msg->header.t.tow) + sizeof(msg->header.t.wn)) + sizeof(msg->header.n_obs)) +
-         (msg->n_obs * (0 + sizeof(msg->obs[0].P) + (0 + sizeof(msg->obs[0].L.i) + sizeof(msg->obs[0].L.f)) +
-                        sizeof(msg->obs[0].cn0) + sizeof(msg->obs[0].lock) + sizeof(msg->obs[0].prn)));
-}
-
-static inline bool sbp_pack_sbp_msg_obs_dep_a_t(u8 *buf, size_t len, const sbp_msg_obs_dep_a_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_obs_dep_a_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgheaderttow = htole32(msg->header.t.tow);
-  memcpy(buf + offset, &msgheaderttow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgheadertwn = htole16(msg->header.t.wn);
-  memcpy(buf + offset, &msgheadertwn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgheadern_obs = msg->header.n_obs;
-  memcpy(buf + offset, &msgheadern_obs, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  for (size_t msgobs_idx = 0; msgobs_idx < (size_t)msg->n_obs; msgobs_idx++)
-  {
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    u32 msgobsmsgobs_idxP = htole32(msg->obs[msgobs_idx].P);
-    memcpy(buf + offset, &msgobsmsgobs_idxP, 4);
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    u32 msgobsmsgobs_idxLi = htole32(*(const u32 *)&msg->obs[msgobs_idx].L.i);
-    memcpy(buf + offset, &msgobsmsgobs_idxLi, 4);
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxLf = msg->obs[msgobs_idx].L.f;
-    memcpy(buf + offset, &msgobsmsgobs_idxLf, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxcn0 = msg->obs[msgobs_idx].cn0;
-    memcpy(buf + offset, &msgobsmsgobs_idxcn0, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 2 > len)
-    {
-      return false;
-    }
-    u16 msgobsmsgobs_idxlock = htole16(msg->obs[msgobs_idx].lock);
-    memcpy(buf + offset, &msgobsmsgobs_idxlock, 2);
-    // NOLINTNEXTLINE
-    offset += 2;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxprn = msg->obs[msgobs_idx].prn;
-    memcpy(buf + offset, &msgobsmsgobs_idxprn, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_obs_dep_a_t(const u8 *buf, size_t len, sbp_msg_obs_dep_a_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->header.t.tow, buf + offset, 4);
-  msg->header.t.tow = le32toh(msg->header.t.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->header.t.wn, buf + offset, 2);
-  msg->header.t.wn = le16toh(msg->header.t.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->header.n_obs, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  msg->n_obs = (u8)((len - offset) / 13);
-
-  for (size_t msgobs_idx = 0; msgobs_idx < msg->n_obs; msgobs_idx++)
-  {
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].P, buf + offset, 4);
-    msg->obs[msgobs_idx].P = le32toh(msg->obs[msgobs_idx].P);
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].L.i, buf + offset, 4);
-    u32 msgobsmsgobs_idxLi = *(const u32 *)&msg->obs[msgobs_idx].L.i;
-    msgobsmsgobs_idxLi = le32toh(msgobsmsgobs_idxLi);
-    msg->obs[msgobs_idx].L.i = *(const s32 *)&msgobsmsgobs_idxLi;
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].L.f, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].cn0, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 2 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].lock, buf + offset, 2);
-    msg->obs[msgobs_idx].lock = le16toh(msg->obs[msgobs_idx].lock);
-    // NOLINTNEXTLINE
-    offset += 2;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].prn, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_obs_dep_a_t &a, const sbp_msg_obs_dep_a_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.header.t.tow != b.header.t.tow)
-  {
-    return false;
-  }
-
-  if (a.header.t.wn != b.header.t.wn)
-  {
-    return false;
-  }
-
-  if (a.header.n_obs != b.header.n_obs)
-  {
-    return false;
-  }
-  if (a.n_obs != b.n_obs)
-  {
-    return false;
-  }
-  for (size_t obs_idx = 0; obs_idx < (size_t)a.n_obs; obs_idx++)
-  {
-
-    if (a.obs[obs_idx].P != b.obs[obs_idx].P)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].L.i != b.obs[obs_idx].L.i)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].L.f != b.obs[obs_idx].L.f)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].cn0 != b.obs[obs_idx].cn0)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].lock != b.obs[obs_idx].lock)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].prn != b.obs[obs_idx].prn)
-    {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_obs_dep_a_t &a, const sbp_msg_obs_dep_a_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Deprecated
  *
  * This observation message has been deprecated in favor of
@@ -15322,433 +2591,22 @@ static inline bool operator!=(const sbp_msg_obs_dep_a_t &a, const sbp_msg_obs_de
  * observations.
  */
 #define SBP_MSG_OBS_DEP_B 0x0043
-
-#define SBP_OBS_DEP_B_OBS_SID_CODE__MASK (0xff)
-#define SBP_OBS_DEP_B_OBS_SID_CODE__SHIFT (0u)
-#define SBP_OBS_DEP_B_OBS_SID_CODE__GET(flags) \
-  (((flags) >> SBP_OBS_DEP_B_OBS_SID_CODE__SHIFT) & SBP_OBS_DEP_B_OBS_SID_CODE__MASK)
-#define SBP_OBS_DEP_B_OBS_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_OBS_DEP_B_OBS_SID_CODE__MASK)) << (SBP_OBS_DEP_B_OBS_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_OBS_DEP_B_OBS_SID_CODE__GPS_L1CA (0)
-#define SBP_OBS_DEP_B_OBS_SID_CODE__GPS_L2CM (1)
-#define SBP_OBS_DEP_B_OBS_SID_CODE__SBAS_L1CA (2)
-#define SBP_OBS_DEP_B_OBS_SID_CODE__GLO_L1CA (3)
-#define SBP_OBS_DEP_B_OBS_SID_CODE__GLO_L2CA (4)
-#define SBP_OBS_DEP_B_OBS_SID_CODE__GPS_L1P (5)
-#define SBP_OBS_DEP_B_OBS_SID_CODE__GPS_L2P (6)
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Header of a GPS observation message
    */
-  struct
-  {
+  observation_header_dep_t header;
 
-    /**
-     * GPS time of this observation
-     */
-    struct
-    {
-
-      /**
-       * Milliseconds since start of GPS week[ms]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } t;
-    /**
-     * Total number of observations. First nibble is the size
-     * of the sequence (n), second nibble is the zero-indexed
-     * counter (ith packet of n)
-     */
-    u8 n_obs;
-  } header;
   /**
    * Pseudorange and carrier phase observation for a
    * satellite being tracked.
    */
-  struct
-  {
+  packed_obs_content_dep_b_t obs[0];
 
-    /**
-     * Pseudorange observation[cm]
-     */
-    u32 P;
-    /**
-     * Carrier phase observation with opposite sign from typical convention.
-     */
-    struct
-    {
+} msg_obs_dep_b_t;
 
-      /**
-       * Carrier phase whole cycles[cycles]
-       */
-      s32 i;
-      /**
-       * Carrier phase fractional part[cycles / 256]
-       */
-      u8 f;
-    } L;
-    /**
-     * Carrier-to-Noise density[dB Hz / 4]
-     */
-    u8 cn0;
-    /**
-     * Lock indicator. This value changes whenever a satellite
-     * signal has lost and regained lock, indicating that the
-     * carrier phase ambiguity may have changed.
-     */
-    u16 lock;
-    /**
-     * GNSS signal identifier
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier.
-       *
-       * Note: unlike GnssSignal, GPS satellites are encoded as
-       * (PRN - 1). Other constellations do not have this offset.
-       */
-      u16 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-      /**
-       * Reserved
-       */
-      u8 reserved;
-    } sid;
-  } obs[15];
-  /**
-   * Number of items in obs
-   */
-  u8 n_obs;
-} sbp_msg_obs_dep_b_t;
-
-static inline size_t sbp_packed_size_sbp_msg_obs_dep_b_t(const sbp_msg_obs_dep_b_t *msg)
-{
-  (void)msg;
-  return 0 + (0 + (0 + sizeof(msg->header.t.tow) + sizeof(msg->header.t.wn)) + sizeof(msg->header.n_obs)) +
-         (msg->n_obs *
-          (0 + sizeof(msg->obs[0].P) + (0 + sizeof(msg->obs[0].L.i) + sizeof(msg->obs[0].L.f)) +
-           sizeof(msg->obs[0].cn0) + sizeof(msg->obs[0].lock) +
-           (0 + sizeof(msg->obs[0].sid.sat) + sizeof(msg->obs[0].sid.code) + sizeof(msg->obs[0].sid.reserved))));
-}
-
-static inline bool sbp_pack_sbp_msg_obs_dep_b_t(u8 *buf, size_t len, const sbp_msg_obs_dep_b_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_obs_dep_b_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgheaderttow = htole32(msg->header.t.tow);
-  memcpy(buf + offset, &msgheaderttow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgheadertwn = htole16(msg->header.t.wn);
-  memcpy(buf + offset, &msgheadertwn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgheadern_obs = msg->header.n_obs;
-  memcpy(buf + offset, &msgheadern_obs, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  for (size_t msgobs_idx = 0; msgobs_idx < (size_t)msg->n_obs; msgobs_idx++)
-  {
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    u32 msgobsmsgobs_idxP = htole32(msg->obs[msgobs_idx].P);
-    memcpy(buf + offset, &msgobsmsgobs_idxP, 4);
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    u32 msgobsmsgobs_idxLi = htole32(*(const u32 *)&msg->obs[msgobs_idx].L.i);
-    memcpy(buf + offset, &msgobsmsgobs_idxLi, 4);
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxLf = msg->obs[msgobs_idx].L.f;
-    memcpy(buf + offset, &msgobsmsgobs_idxLf, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxcn0 = msg->obs[msgobs_idx].cn0;
-    memcpy(buf + offset, &msgobsmsgobs_idxcn0, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 2 > len)
-    {
-      return false;
-    }
-    u16 msgobsmsgobs_idxlock = htole16(msg->obs[msgobs_idx].lock);
-    memcpy(buf + offset, &msgobsmsgobs_idxlock, 2);
-    // NOLINTNEXTLINE
-    offset += 2;
-
-    if (offset + 2 > len)
-    {
-      return false;
-    }
-    u16 msgobsmsgobs_idxsidsat = htole16(msg->obs[msgobs_idx].sid.sat);
-    memcpy(buf + offset, &msgobsmsgobs_idxsidsat, 2);
-    // NOLINTNEXTLINE
-    offset += 2;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxsidcode = msg->obs[msgobs_idx].sid.code;
-    memcpy(buf + offset, &msgobsmsgobs_idxsidcode, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxsidreserved = msg->obs[msgobs_idx].sid.reserved;
-    memcpy(buf + offset, &msgobsmsgobs_idxsidreserved, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_obs_dep_b_t(const u8 *buf, size_t len, sbp_msg_obs_dep_b_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->header.t.tow, buf + offset, 4);
-  msg->header.t.tow = le32toh(msg->header.t.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->header.t.wn, buf + offset, 2);
-  msg->header.t.wn = le16toh(msg->header.t.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->header.n_obs, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  msg->n_obs = (u8)((len - offset) / 16);
-
-  for (size_t msgobs_idx = 0; msgobs_idx < msg->n_obs; msgobs_idx++)
-  {
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].P, buf + offset, 4);
-    msg->obs[msgobs_idx].P = le32toh(msg->obs[msgobs_idx].P);
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].L.i, buf + offset, 4);
-    u32 msgobsmsgobs_idxLi = *(const u32 *)&msg->obs[msgobs_idx].L.i;
-    msgobsmsgobs_idxLi = le32toh(msgobsmsgobs_idxLi);
-    msg->obs[msgobs_idx].L.i = *(const s32 *)&msgobsmsgobs_idxLi;
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].L.f, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].cn0, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 2 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].lock, buf + offset, 2);
-    msg->obs[msgobs_idx].lock = le16toh(msg->obs[msgobs_idx].lock);
-    // NOLINTNEXTLINE
-    offset += 2;
-
-    if (offset + 2 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].sid.sat, buf + offset, 2);
-    msg->obs[msgobs_idx].sid.sat = le16toh(msg->obs[msgobs_idx].sid.sat);
-    // NOLINTNEXTLINE
-    offset += 2;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].sid.code, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].sid.reserved, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_obs_dep_b_t &a, const sbp_msg_obs_dep_b_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.header.t.tow != b.header.t.tow)
-  {
-    return false;
-  }
-
-  if (a.header.t.wn != b.header.t.wn)
-  {
-    return false;
-  }
-
-  if (a.header.n_obs != b.header.n_obs)
-  {
-    return false;
-  }
-  if (a.n_obs != b.n_obs)
-  {
-    return false;
-  }
-  for (size_t obs_idx = 0; obs_idx < (size_t)a.n_obs; obs_idx++)
-  {
-
-    if (a.obs[obs_idx].P != b.obs[obs_idx].P)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].L.i != b.obs[obs_idx].L.i)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].L.f != b.obs[obs_idx].L.f)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].cn0 != b.obs[obs_idx].cn0)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].lock != b.obs[obs_idx].lock)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].sid.sat != b.obs[obs_idx].sid.sat)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].sid.code != b.obs[obs_idx].sid.code)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].sid.reserved != b.obs[obs_idx].sid.reserved)
-    {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_obs_dep_b_t &a, const sbp_msg_obs_dep_b_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Deprecated
  *
  * The GPS observations message reports all the raw pseudorange and
@@ -15760,433 +2618,22 @@ static inline bool operator!=(const sbp_msg_obs_dep_b_t &a, const sbp_msg_obs_de
  * with typical RTCMv3 GNSS observations.
  */
 #define SBP_MSG_OBS_DEP_C 0x0049
-
-#define SBP_OBS_DEP_C_OBS_SID_CODE__MASK (0xff)
-#define SBP_OBS_DEP_C_OBS_SID_CODE__SHIFT (0u)
-#define SBP_OBS_DEP_C_OBS_SID_CODE__GET(flags) \
-  (((flags) >> SBP_OBS_DEP_C_OBS_SID_CODE__SHIFT) & SBP_OBS_DEP_C_OBS_SID_CODE__MASK)
-#define SBP_OBS_DEP_C_OBS_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_OBS_DEP_C_OBS_SID_CODE__MASK)) << (SBP_OBS_DEP_C_OBS_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_OBS_DEP_C_OBS_SID_CODE__GPS_L1CA (0)
-#define SBP_OBS_DEP_C_OBS_SID_CODE__GPS_L2CM (1)
-#define SBP_OBS_DEP_C_OBS_SID_CODE__SBAS_L1CA (2)
-#define SBP_OBS_DEP_C_OBS_SID_CODE__GLO_L1CA (3)
-#define SBP_OBS_DEP_C_OBS_SID_CODE__GLO_L2CA (4)
-#define SBP_OBS_DEP_C_OBS_SID_CODE__GPS_L1P (5)
-#define SBP_OBS_DEP_C_OBS_SID_CODE__GPS_L2P (6)
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Header of a GPS observation message
    */
-  struct
-  {
+  observation_header_dep_t header;
 
-    /**
-     * GPS time of this observation
-     */
-    struct
-    {
-
-      /**
-       * Milliseconds since start of GPS week[ms]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } t;
-    /**
-     * Total number of observations. First nibble is the size
-     * of the sequence (n), second nibble is the zero-indexed
-     * counter (ith packet of n)
-     */
-    u8 n_obs;
-  } header;
   /**
    * Pseudorange and carrier phase observation for a
    * satellite being tracked.
    */
-  struct
-  {
+  packed_obs_content_dep_c_t obs[0];
 
-    /**
-     * Pseudorange observation[2 cm]
-     */
-    u32 P;
-    /**
-     * Carrier phase observation with typical sign convention.[cycles]
-     */
-    struct
-    {
+} msg_obs_dep_c_t;
 
-      /**
-       * Carrier phase whole cycles[cycles]
-       */
-      s32 i;
-      /**
-       * Carrier phase fractional part[cycles / 256]
-       */
-      u8 f;
-    } L;
-    /**
-     * Carrier-to-Noise density[dB Hz / 4]
-     */
-    u8 cn0;
-    /**
-     * Lock indicator. This value changes whenever a satellite
-     * signal has lost and regained lock, indicating that the
-     * carrier phase ambiguity may have changed.
-     */
-    u16 lock;
-    /**
-     * GNSS signal identifier
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier.
-       *
-       * Note: unlike GnssSignal, GPS satellites are encoded as
-       * (PRN - 1). Other constellations do not have this offset.
-       */
-      u16 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-      /**
-       * Reserved
-       */
-      u8 reserved;
-    } sid;
-  } obs[15];
-  /**
-   * Number of items in obs
-   */
-  u8 n_obs;
-} sbp_msg_obs_dep_c_t;
-
-static inline size_t sbp_packed_size_sbp_msg_obs_dep_c_t(const sbp_msg_obs_dep_c_t *msg)
-{
-  (void)msg;
-  return 0 + (0 + (0 + sizeof(msg->header.t.tow) + sizeof(msg->header.t.wn)) + sizeof(msg->header.n_obs)) +
-         (msg->n_obs *
-          (0 + sizeof(msg->obs[0].P) + (0 + sizeof(msg->obs[0].L.i) + sizeof(msg->obs[0].L.f)) +
-           sizeof(msg->obs[0].cn0) + sizeof(msg->obs[0].lock) +
-           (0 + sizeof(msg->obs[0].sid.sat) + sizeof(msg->obs[0].sid.code) + sizeof(msg->obs[0].sid.reserved))));
-}
-
-static inline bool sbp_pack_sbp_msg_obs_dep_c_t(u8 *buf, size_t len, const sbp_msg_obs_dep_c_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_obs_dep_c_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgheaderttow = htole32(msg->header.t.tow);
-  memcpy(buf + offset, &msgheaderttow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgheadertwn = htole16(msg->header.t.wn);
-  memcpy(buf + offset, &msgheadertwn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgheadern_obs = msg->header.n_obs;
-  memcpy(buf + offset, &msgheadern_obs, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  for (size_t msgobs_idx = 0; msgobs_idx < (size_t)msg->n_obs; msgobs_idx++)
-  {
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    u32 msgobsmsgobs_idxP = htole32(msg->obs[msgobs_idx].P);
-    memcpy(buf + offset, &msgobsmsgobs_idxP, 4);
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    u32 msgobsmsgobs_idxLi = htole32(*(const u32 *)&msg->obs[msgobs_idx].L.i);
-    memcpy(buf + offset, &msgobsmsgobs_idxLi, 4);
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxLf = msg->obs[msgobs_idx].L.f;
-    memcpy(buf + offset, &msgobsmsgobs_idxLf, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxcn0 = msg->obs[msgobs_idx].cn0;
-    memcpy(buf + offset, &msgobsmsgobs_idxcn0, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 2 > len)
-    {
-      return false;
-    }
-    u16 msgobsmsgobs_idxlock = htole16(msg->obs[msgobs_idx].lock);
-    memcpy(buf + offset, &msgobsmsgobs_idxlock, 2);
-    // NOLINTNEXTLINE
-    offset += 2;
-
-    if (offset + 2 > len)
-    {
-      return false;
-    }
-    u16 msgobsmsgobs_idxsidsat = htole16(msg->obs[msgobs_idx].sid.sat);
-    memcpy(buf + offset, &msgobsmsgobs_idxsidsat, 2);
-    // NOLINTNEXTLINE
-    offset += 2;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxsidcode = msg->obs[msgobs_idx].sid.code;
-    memcpy(buf + offset, &msgobsmsgobs_idxsidcode, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxsidreserved = msg->obs[msgobs_idx].sid.reserved;
-    memcpy(buf + offset, &msgobsmsgobs_idxsidreserved, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_obs_dep_c_t(const u8 *buf, size_t len, sbp_msg_obs_dep_c_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->header.t.tow, buf + offset, 4);
-  msg->header.t.tow = le32toh(msg->header.t.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->header.t.wn, buf + offset, 2);
-  msg->header.t.wn = le16toh(msg->header.t.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->header.n_obs, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  msg->n_obs = (u8)((len - offset) / 16);
-
-  for (size_t msgobs_idx = 0; msgobs_idx < msg->n_obs; msgobs_idx++)
-  {
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].P, buf + offset, 4);
-    msg->obs[msgobs_idx].P = le32toh(msg->obs[msgobs_idx].P);
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].L.i, buf + offset, 4);
-    u32 msgobsmsgobs_idxLi = *(const u32 *)&msg->obs[msgobs_idx].L.i;
-    msgobsmsgobs_idxLi = le32toh(msgobsmsgobs_idxLi);
-    msg->obs[msgobs_idx].L.i = *(const s32 *)&msgobsmsgobs_idxLi;
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].L.f, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].cn0, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 2 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].lock, buf + offset, 2);
-    msg->obs[msgobs_idx].lock = le16toh(msg->obs[msgobs_idx].lock);
-    // NOLINTNEXTLINE
-    offset += 2;
-
-    if (offset + 2 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].sid.sat, buf + offset, 2);
-    msg->obs[msgobs_idx].sid.sat = le16toh(msg->obs[msgobs_idx].sid.sat);
-    // NOLINTNEXTLINE
-    offset += 2;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].sid.code, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].sid.reserved, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_obs_dep_c_t &a, const sbp_msg_obs_dep_c_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.header.t.tow != b.header.t.tow)
-  {
-    return false;
-  }
-
-  if (a.header.t.wn != b.header.t.wn)
-  {
-    return false;
-  }
-
-  if (a.header.n_obs != b.header.n_obs)
-  {
-    return false;
-  }
-  if (a.n_obs != b.n_obs)
-  {
-    return false;
-  }
-  for (size_t obs_idx = 0; obs_idx < (size_t)a.n_obs; obs_idx++)
-  {
-
-    if (a.obs[obs_idx].P != b.obs[obs_idx].P)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].L.i != b.obs[obs_idx].L.i)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].L.f != b.obs[obs_idx].L.f)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].cn0 != b.obs[obs_idx].cn0)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].lock != b.obs[obs_idx].lock)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].sid.sat != b.obs[obs_idx].sid.sat)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].sid.code != b.obs[obs_idx].sid.code)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].sid.reserved != b.obs[obs_idx].sid.reserved)
-    {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_obs_dep_c_t &a, const sbp_msg_obs_dep_c_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Iono corrections
  *
  * The ionospheric parameters which allow the "L1 only" or "L2 only" user to
@@ -16194,1862 +2641,347 @@ static inline bool operator!=(const sbp_msg_obs_dep_c_t &a, const sbp_msg_obs_de
  * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.7) for more details.
  */
 #define SBP_MSG_IONO 0x0090
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Navigation Message Correction Table Valitidy Time
    */
-  struct
-  {
+  gps_time_sec_t t_nmct;
 
-    /**
-     * Seconds since start of GPS week[s]
-     */
-    u32 tow;
-    /**
-     * GPS week number[week]
-     */
-    u16 wn;
-  } t_nmct;
   double a0;
+
   double a1;
+
   double a2;
+
   double a3;
+
   double b0;
+
   double b1;
+
   double b2;
+
   double b3;
-} sbp_msg_iono_t;
 
-static inline size_t sbp_packed_size_sbp_msg_iono_t(const sbp_msg_iono_t *msg)
-{
-  (void)msg;
-  return 0 + (0 + sizeof(msg->t_nmct.tow) + sizeof(msg->t_nmct.wn)) + sizeof(msg->a0) + sizeof(msg->a1) +
-         sizeof(msg->a2) + sizeof(msg->a3) + sizeof(msg->b0) + sizeof(msg->b1) + sizeof(msg->b2) + sizeof(msg->b3);
-}
+} msg_iono_t;
 
-static inline bool sbp_pack_sbp_msg_iono_t(u8 *buf, size_t len, const sbp_msg_iono_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_iono_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgt_nmcttow = htole32(msg->t_nmct.tow);
-  memcpy(buf + offset, &msgt_nmcttow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgt_nmctwn = htole16(msg->t_nmct.wn);
-  memcpy(buf + offset, &msgt_nmctwn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msga0 = msg->a0;
-  memcpy(buf + offset, &msga0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msga1 = msg->a1;
-  memcpy(buf + offset, &msga1, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msga2 = msg->a2;
-  memcpy(buf + offset, &msga2, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msga3 = msg->a3;
-  memcpy(buf + offset, &msga3, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgb0 = msg->b0;
-  memcpy(buf + offset, &msgb0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgb1 = msg->b1;
-  memcpy(buf + offset, &msgb1, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgb2 = msg->b2;
-  memcpy(buf + offset, &msgb2, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgb3 = msg->b3;
-  memcpy(buf + offset, &msgb3, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_iono_t(const u8 *buf, size_t len, sbp_msg_iono_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->t_nmct.tow, buf + offset, 4);
-  msg->t_nmct.tow = le32toh(msg->t_nmct.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->t_nmct.wn, buf + offset, 2);
-  msg->t_nmct.wn = le16toh(msg->t_nmct.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->a0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->a1, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->a2, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->a3, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->b0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->b1, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->b2, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->b3, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_iono_t &a, const sbp_msg_iono_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.t_nmct.tow != b.t_nmct.tow)
-  {
-    return false;
-  }
-
-  if (a.t_nmct.wn != b.t_nmct.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.a0 - b.a0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.a1 - b.a1) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.a2 - b.a2) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.a3 - b.a3) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.b0 - b.b0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.b1 - b.b1) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.b2 - b.b2) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.b3 - b.b3) > 0.001)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_iono_t &a, const sbp_msg_iono_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** L2C capability mask
  *
  * Please see ICD-GPS-200 (Chapter 20.3.3.5.1.4) for more details.
  */
 #define SBP_MSG_SV_CONFIGURATION_GPS_DEP 0x0091
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Navigation Message Correction Table Valitidy Time
    */
-  struct
-  {
+  gps_time_sec_t t_nmct;
 
-    /**
-     * Seconds since start of GPS week[s]
-     */
-    u32 tow;
-    /**
-     * GPS week number[week]
-     */
-    u16 wn;
-  } t_nmct;
   /**
    * L2C capability mask, SV32 bit being MSB, SV1 bit being LSB
    */
   u32 l2c_mask;
-} sbp_msg_sv_configuration_gps_dep_t;
 
-static inline size_t sbp_packed_size_sbp_msg_sv_configuration_gps_dep_t(const sbp_msg_sv_configuration_gps_dep_t *msg)
+} msg_sv_configuration_gps_dep_t;
+
+typedef struct SBP_ATTR_PACKED
 {
-  (void)msg;
-  return 0 + (0 + sizeof(msg->t_nmct.tow) + sizeof(msg->t_nmct.wn)) + sizeof(msg->l2c_mask);
-}
 
-static inline bool
-sbp_pack_sbp_msg_sv_configuration_gps_dep_t(u8 *buf, size_t len, const sbp_msg_sv_configuration_gps_dep_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_sv_configuration_gps_dep_t(msg) > len)
-  {
-    return false;
-  }
+  /**
+   * GPS SV active mask
+   */
+  u64 gps_active;
 
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgt_nmcttow = htole32(msg->t_nmct.tow);
-  memcpy(buf + offset, &msgt_nmcttow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
+  /**
+   * GPS L2C active mask
+   */
+  u64 gps_l2c;
 
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgt_nmctwn = htole16(msg->t_nmct.wn);
-  memcpy(buf + offset, &msgt_nmctwn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
+  /**
+   * GPS L5 active mask
+   */
+  u64 gps_l5;
 
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgl2c_mask = htole32(msg->l2c_mask);
-  memcpy(buf + offset, &msgl2c_mask, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
+  /**
+   * GLO active mask
+   */
+  u32 glo_active;
 
-static inline bool
-sbp_unpack_sbp_msg_sv_configuration_gps_dep_t(const u8 *buf, size_t len, sbp_msg_sv_configuration_gps_dep_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
+  /**
+   * GLO L2OF active mask
+   */
+  u32 glo_l2of;
 
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->t_nmct.tow, buf + offset, 4);
-  msg->t_nmct.tow = le32toh(msg->t_nmct.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
+  /**
+   * GLO L3 active mask
+   */
+  u32 glo_l3;
 
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->t_nmct.wn, buf + offset, 2);
-  msg->t_nmct.wn = le16toh(msg->t_nmct.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
+  /**
+   * SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
+   * https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
+   */
+  u64 sbas_active;
 
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->l2c_mask, buf + offset, 4);
-  msg->l2c_mask = le32toh(msg->l2c_mask);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
+  /**
+   * SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
+   * https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
+   */
+  u64 sbas_l5;
 
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_sv_configuration_gps_dep_t &a, const sbp_msg_sv_configuration_gps_dep_t &b)
-{
-  (void)a;
-  (void)b;
+  /**
+   * BDS active mask
+   */
+  u64 bds_active;
 
-  if (a.t_nmct.tow != b.t_nmct.tow)
-  {
-    return false;
-  }
+  /**
+   * BDS D2NAV active mask
+   */
+  u64 bds_d2nav;
 
-  if (a.t_nmct.wn != b.t_nmct.wn)
-  {
-    return false;
-  }
+  /**
+   * BDS B2 active mask
+   */
+  u64 bds_b2;
 
-  if (a.l2c_mask != b.l2c_mask)
-  {
-    return false;
-  }
+  /**
+   * BDS B2A active mask
+   */
+  u64 bds_b2a;
 
-  return true;
-}
+  /**
+   * QZSS active mask
+   */
+  u32 qzss_active;
 
-static inline bool operator!=(const sbp_msg_sv_configuration_gps_dep_t &a, const sbp_msg_sv_configuration_gps_dep_t &b)
-{
-  return !(a == b);
-}
-#endif
+  /**
+   * GAL active mask
+   */
+  u64 gal_active;
+
+  /**
+   * GAL E5 active mask
+   */
+  u64 gal_e5;
+
+} gnss_capb_t;
+
 #define SBP_MSG_GNSS_CAPB 0x0096
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Navigation Message Correction Table Validity Time
    */
-  struct
-  {
+  gps_time_sec_t t_nmct;
 
-    /**
-     * Seconds since start of GPS week[s]
-     */
-    u32 tow;
-    /**
-     * GPS week number[week]
-     */
-    u16 wn;
-  } t_nmct;
   /**
    * GNSS capabilities masks
    */
-  struct
-  {
+  gnss_capb_t gc;
 
-    /**
-     * GPS SV active mask
-     */
-    u64 gps_active;
-    /**
-     * GPS L2C active mask
-     */
-    u64 gps_l2c;
-    /**
-     * GPS L5 active mask
-     */
-    u64 gps_l5;
-    /**
-     * GLO active mask
-     */
-    u32 glo_active;
-    /**
-     * GLO L2OF active mask
-     */
-    u32 glo_l2of;
-    /**
-     * GLO L3 active mask
-     */
-    u32 glo_l3;
-    /**
-     * SBAS active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
-     * https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
-     */
-    u64 sbas_active;
-    /**
-     * SBAS L5 active mask (PRNs 120..158, AN 7/62.2.2-18/18 Table B-23,
-     * https://www.caat.or.th/wp-content/uploads/2018/03/SL-2018.18.E-1.pdf)
-     */
-    u64 sbas_l5;
-    /**
-     * BDS active mask
-     */
-    u64 bds_active;
-    /**
-     * BDS D2NAV active mask
-     */
-    u64 bds_d2nav;
-    /**
-     * BDS B2 active mask
-     */
-    u64 bds_b2;
-    /**
-     * BDS B2A active mask
-     */
-    u64 bds_b2a;
-    /**
-     * QZSS active mask
-     */
-    u32 qzss_active;
-    /**
-     * GAL active mask
-     */
-    u64 gal_active;
-    /**
-     * GAL E5 active mask
-     */
-    u64 gal_e5;
-  } gc;
-} sbp_msg_gnss_capb_t;
+} msg_gnss_capb_t;
 
-static inline size_t sbp_packed_size_sbp_msg_gnss_capb_t(const sbp_msg_gnss_capb_t *msg)
-{
-  (void)msg;
-  return 0 + (0 + sizeof(msg->t_nmct.tow) + sizeof(msg->t_nmct.wn)) +
-         (0 + sizeof(msg->gc.gps_active) + sizeof(msg->gc.gps_l2c) + sizeof(msg->gc.gps_l5) +
-          sizeof(msg->gc.glo_active) + sizeof(msg->gc.glo_l2of) + sizeof(msg->gc.glo_l3) + sizeof(msg->gc.sbas_active) +
-          sizeof(msg->gc.sbas_l5) + sizeof(msg->gc.bds_active) + sizeof(msg->gc.bds_d2nav) + sizeof(msg->gc.bds_b2) +
-          sizeof(msg->gc.bds_b2a) + sizeof(msg->gc.qzss_active) + sizeof(msg->gc.gal_active) + sizeof(msg->gc.gal_e5));
-}
-
-static inline bool sbp_pack_sbp_msg_gnss_capb_t(u8 *buf, size_t len, const sbp_msg_gnss_capb_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_gnss_capb_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgt_nmcttow = htole32(msg->t_nmct.tow);
-  memcpy(buf + offset, &msgt_nmcttow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgt_nmctwn = htole16(msg->t_nmct.wn);
-  memcpy(buf + offset, &msgt_nmctwn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  u64 msggcgps_active = htole64(msg->gc.gps_active);
-  memcpy(buf + offset, &msggcgps_active, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  u64 msggcgps_l2c = htole64(msg->gc.gps_l2c);
-  memcpy(buf + offset, &msggcgps_l2c, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  u64 msggcgps_l5 = htole64(msg->gc.gps_l5);
-  memcpy(buf + offset, &msggcgps_l5, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msggcglo_active = htole32(msg->gc.glo_active);
-  memcpy(buf + offset, &msggcglo_active, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msggcglo_l2of = htole32(msg->gc.glo_l2of);
-  memcpy(buf + offset, &msggcglo_l2of, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msggcglo_l3 = htole32(msg->gc.glo_l3);
-  memcpy(buf + offset, &msggcglo_l3, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  u64 msggcsbas_active = htole64(msg->gc.sbas_active);
-  memcpy(buf + offset, &msggcsbas_active, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  u64 msggcsbas_l5 = htole64(msg->gc.sbas_l5);
-  memcpy(buf + offset, &msggcsbas_l5, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  u64 msggcbds_active = htole64(msg->gc.bds_active);
-  memcpy(buf + offset, &msggcbds_active, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  u64 msggcbds_d2nav = htole64(msg->gc.bds_d2nav);
-  memcpy(buf + offset, &msggcbds_d2nav, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  u64 msggcbds_b2 = htole64(msg->gc.bds_b2);
-  memcpy(buf + offset, &msggcbds_b2, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  u64 msggcbds_b2a = htole64(msg->gc.bds_b2a);
-  memcpy(buf + offset, &msggcbds_b2a, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msggcqzss_active = htole32(msg->gc.qzss_active);
-  memcpy(buf + offset, &msggcqzss_active, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  u64 msggcgal_active = htole64(msg->gc.gal_active);
-  memcpy(buf + offset, &msggcgal_active, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  u64 msggcgal_e5 = htole64(msg->gc.gal_e5);
-  memcpy(buf + offset, &msggcgal_e5, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_gnss_capb_t(const u8 *buf, size_t len, sbp_msg_gnss_capb_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->t_nmct.tow, buf + offset, 4);
-  msg->t_nmct.tow = le32toh(msg->t_nmct.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->t_nmct.wn, buf + offset, 2);
-  msg->t_nmct.wn = le16toh(msg->t_nmct.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gc.gps_active, buf + offset, 8);
-  msg->gc.gps_active = le64toh(msg->gc.gps_active);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gc.gps_l2c, buf + offset, 8);
-  msg->gc.gps_l2c = le64toh(msg->gc.gps_l2c);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gc.gps_l5, buf + offset, 8);
-  msg->gc.gps_l5 = le64toh(msg->gc.gps_l5);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gc.glo_active, buf + offset, 4);
-  msg->gc.glo_active = le32toh(msg->gc.glo_active);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gc.glo_l2of, buf + offset, 4);
-  msg->gc.glo_l2of = le32toh(msg->gc.glo_l2of);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gc.glo_l3, buf + offset, 4);
-  msg->gc.glo_l3 = le32toh(msg->gc.glo_l3);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gc.sbas_active, buf + offset, 8);
-  msg->gc.sbas_active = le64toh(msg->gc.sbas_active);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gc.sbas_l5, buf + offset, 8);
-  msg->gc.sbas_l5 = le64toh(msg->gc.sbas_l5);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gc.bds_active, buf + offset, 8);
-  msg->gc.bds_active = le64toh(msg->gc.bds_active);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gc.bds_d2nav, buf + offset, 8);
-  msg->gc.bds_d2nav = le64toh(msg->gc.bds_d2nav);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gc.bds_b2, buf + offset, 8);
-  msg->gc.bds_b2 = le64toh(msg->gc.bds_b2);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gc.bds_b2a, buf + offset, 8);
-  msg->gc.bds_b2a = le64toh(msg->gc.bds_b2a);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gc.qzss_active, buf + offset, 4);
-  msg->gc.qzss_active = le32toh(msg->gc.qzss_active);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gc.gal_active, buf + offset, 8);
-  msg->gc.gal_active = le64toh(msg->gc.gal_active);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->gc.gal_e5, buf + offset, 8);
-  msg->gc.gal_e5 = le64toh(msg->gc.gal_e5);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_gnss_capb_t &a, const sbp_msg_gnss_capb_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.t_nmct.tow != b.t_nmct.tow)
-  {
-    return false;
-  }
-
-  if (a.t_nmct.wn != b.t_nmct.wn)
-  {
-    return false;
-  }
-
-  if (a.gc.gps_active != b.gc.gps_active)
-  {
-    return false;
-  }
-
-  if (a.gc.gps_l2c != b.gc.gps_l2c)
-  {
-    return false;
-  }
-
-  if (a.gc.gps_l5 != b.gc.gps_l5)
-  {
-    return false;
-  }
-
-  if (a.gc.glo_active != b.gc.glo_active)
-  {
-    return false;
-  }
-
-  if (a.gc.glo_l2of != b.gc.glo_l2of)
-  {
-    return false;
-  }
-
-  if (a.gc.glo_l3 != b.gc.glo_l3)
-  {
-    return false;
-  }
-
-  if (a.gc.sbas_active != b.gc.sbas_active)
-  {
-    return false;
-  }
-
-  if (a.gc.sbas_l5 != b.gc.sbas_l5)
-  {
-    return false;
-  }
-
-  if (a.gc.bds_active != b.gc.bds_active)
-  {
-    return false;
-  }
-
-  if (a.gc.bds_d2nav != b.gc.bds_d2nav)
-  {
-    return false;
-  }
-
-  if (a.gc.bds_b2 != b.gc.bds_b2)
-  {
-    return false;
-  }
-
-  if (a.gc.bds_b2a != b.gc.bds_b2a)
-  {
-    return false;
-  }
-
-  if (a.gc.qzss_active != b.gc.qzss_active)
-  {
-    return false;
-  }
-
-  if (a.gc.gal_active != b.gc.gal_active)
-  {
-    return false;
-  }
-
-  if (a.gc.gal_e5 != b.gc.gal_e5)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_gnss_capb_t &a, const sbp_msg_gnss_capb_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Group Delay
  *
  * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
  */
 #define SBP_MSG_GROUP_DELAY_DEP_A 0x0092
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Data Predict Time of Week
    */
-  struct
-  {
+  gps_time_dep_t t_op;
 
-    /**
-     * Milliseconds since start of GPS week[ms]
-     */
-    u32 tow;
-    /**
-     * GPS week number[week]
-     */
-    u16 wn;
-  } t_op;
   /**
    * Satellite number
    */
   u8 prn;
+
   /**
    * bit-field indicating validity of the values,
    * LSB indicating tgd validity etc.
    * 1 = value is valid, 0 = value is not valid.
    */
   u8 valid;
+
   s16 tgd;
+
   s16 isc_l1ca;
+
   s16 isc_l2c;
-} sbp_msg_group_delay_dep_a_t;
 
-static inline size_t sbp_packed_size_sbp_msg_group_delay_dep_a_t(const sbp_msg_group_delay_dep_a_t *msg)
-{
-  (void)msg;
-  return 0 + (0 + sizeof(msg->t_op.tow) + sizeof(msg->t_op.wn)) + sizeof(msg->prn) + sizeof(msg->valid) +
-         sizeof(msg->tgd) + sizeof(msg->isc_l1ca) + sizeof(msg->isc_l2c);
-}
+} msg_group_delay_dep_a_t;
 
-static inline bool sbp_pack_sbp_msg_group_delay_dep_a_t(u8 *buf, size_t len, const sbp_msg_group_delay_dep_a_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_group_delay_dep_a_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgt_optow = htole32(msg->t_op.tow);
-  memcpy(buf + offset, &msgt_optow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgt_opwn = htole16(msg->t_op.wn);
-  memcpy(buf + offset, &msgt_opwn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgprn = msg->prn;
-  memcpy(buf + offset, &msgprn, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgvalid = msg->valid;
-  memcpy(buf + offset, &msgvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgtgd = htole16(*(const u16 *)&msg->tgd);
-  memcpy(buf + offset, &msgtgd, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgisc_l1ca = htole16(*(const u16 *)&msg->isc_l1ca);
-  memcpy(buf + offset, &msgisc_l1ca, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgisc_l2c = htole16(*(const u16 *)&msg->isc_l2c);
-  memcpy(buf + offset, &msgisc_l2c, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_group_delay_dep_a_t(const u8 *buf, size_t len, sbp_msg_group_delay_dep_a_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->t_op.tow, buf + offset, 4);
-  msg->t_op.tow = le32toh(msg->t_op.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->t_op.wn, buf + offset, 2);
-  msg->t_op.wn = le16toh(msg->t_op.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->prn, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->tgd, buf + offset, 2);
-  u16 msgtgd = *(const u16 *)&msg->tgd;
-  msgtgd = le16toh(msgtgd);
-  msg->tgd = *(const s16 *)&msgtgd;
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->isc_l1ca, buf + offset, 2);
-  u16 msgisc_l1ca = *(const u16 *)&msg->isc_l1ca;
-  msgisc_l1ca = le16toh(msgisc_l1ca);
-  msg->isc_l1ca = *(const s16 *)&msgisc_l1ca;
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->isc_l2c, buf + offset, 2);
-  u16 msgisc_l2c = *(const u16 *)&msg->isc_l2c;
-  msgisc_l2c = le16toh(msgisc_l2c);
-  msg->isc_l2c = *(const s16 *)&msgisc_l2c;
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_group_delay_dep_a_t &a, const sbp_msg_group_delay_dep_a_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.t_op.tow != b.t_op.tow)
-  {
-    return false;
-  }
-
-  if (a.t_op.wn != b.t_op.wn)
-  {
-    return false;
-  }
-
-  if (a.prn != b.prn)
-  {
-    return false;
-  }
-
-  if (a.valid != b.valid)
-  {
-    return false;
-  }
-
-  if (a.tgd != b.tgd)
-  {
-    return false;
-  }
-
-  if (a.isc_l1ca != b.isc_l1ca)
-  {
-    return false;
-  }
-
-  if (a.isc_l2c != b.isc_l2c)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_group_delay_dep_a_t &a, const sbp_msg_group_delay_dep_a_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Group Delay
  *
  * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
  */
 #define SBP_MSG_GROUP_DELAY_DEP_B 0x0093
-
-#define SBP_GROUP_DELAY_DEP_B_SID_CODE__MASK (0xff)
-#define SBP_GROUP_DELAY_DEP_B_SID_CODE__SHIFT (0u)
-#define SBP_GROUP_DELAY_DEP_B_SID_CODE__GET(flags) \
-  (((flags) >> SBP_GROUP_DELAY_DEP_B_SID_CODE__SHIFT) & SBP_GROUP_DELAY_DEP_B_SID_CODE__MASK)
-#define SBP_GROUP_DELAY_DEP_B_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_GROUP_DELAY_DEP_B_SID_CODE__MASK)) << (SBP_GROUP_DELAY_DEP_B_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_GROUP_DELAY_DEP_B_SID_CODE__GPS_L1CA (0)
-#define SBP_GROUP_DELAY_DEP_B_SID_CODE__GPS_L2CM (1)
-#define SBP_GROUP_DELAY_DEP_B_SID_CODE__SBAS_L1CA (2)
-#define SBP_GROUP_DELAY_DEP_B_SID_CODE__GLO_L1CA (3)
-#define SBP_GROUP_DELAY_DEP_B_SID_CODE__GLO_L2CA (4)
-#define SBP_GROUP_DELAY_DEP_B_SID_CODE__GPS_L1P (5)
-#define SBP_GROUP_DELAY_DEP_B_SID_CODE__GPS_L2P (6)
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Data Predict Time of Week
    */
-  struct
-  {
+  gps_time_sec_t t_op;
 
-    /**
-     * Seconds since start of GPS week[s]
-     */
-    u32 tow;
-    /**
-     * GPS week number[week]
-     */
-    u16 wn;
-  } t_op;
   /**
    * GNSS signal identifier
    */
-  struct
-  {
+  gnss_signal_dep_t sid;
 
-    /**
-     * Constellation-specific satellite identifier.
-     *
-     * Note: unlike GnssSignal, GPS satellites are encoded as
-     * (PRN - 1). Other constellations do not have this offset.
-     */
-    u16 sat;
-    /**
-     * Signal constellation, band and code
-     */
-    u8 code;
-    /**
-     * Reserved
-     */
-    u8 reserved;
-  } sid;
   /**
    * bit-field indicating validity of the values,
    * LSB indicating tgd validity etc.
    * 1 = value is valid, 0 = value is not valid.
    */
   u8 valid;
+
   s16 tgd;
+
   s16 isc_l1ca;
+
   s16 isc_l2c;
-} sbp_msg_group_delay_dep_b_t;
 
-static inline size_t sbp_packed_size_sbp_msg_group_delay_dep_b_t(const sbp_msg_group_delay_dep_b_t *msg)
-{
-  (void)msg;
-  return 0 + (0 + sizeof(msg->t_op.tow) + sizeof(msg->t_op.wn)) +
-         (0 + sizeof(msg->sid.sat) + sizeof(msg->sid.code) + sizeof(msg->sid.reserved)) + sizeof(msg->valid) +
-         sizeof(msg->tgd) + sizeof(msg->isc_l1ca) + sizeof(msg->isc_l2c);
-}
+} msg_group_delay_dep_b_t;
 
-static inline bool sbp_pack_sbp_msg_group_delay_dep_b_t(u8 *buf, size_t len, const sbp_msg_group_delay_dep_b_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_group_delay_dep_b_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgt_optow = htole32(msg->t_op.tow);
-  memcpy(buf + offset, &msgt_optow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgt_opwn = htole16(msg->t_op.wn);
-  memcpy(buf + offset, &msgt_opwn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgsidsat = htole16(msg->sid.sat);
-  memcpy(buf + offset, &msgsidsat, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgsidcode = msg->sid.code;
-  memcpy(buf + offset, &msgsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgsidreserved = msg->sid.reserved;
-  memcpy(buf + offset, &msgsidreserved, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgvalid = msg->valid;
-  memcpy(buf + offset, &msgvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgtgd = htole16(*(const u16 *)&msg->tgd);
-  memcpy(buf + offset, &msgtgd, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgisc_l1ca = htole16(*(const u16 *)&msg->isc_l1ca);
-  memcpy(buf + offset, &msgisc_l1ca, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgisc_l2c = htole16(*(const u16 *)&msg->isc_l2c);
-  memcpy(buf + offset, &msgisc_l2c, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_group_delay_dep_b_t(const u8 *buf, size_t len, sbp_msg_group_delay_dep_b_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->t_op.tow, buf + offset, 4);
-  msg->t_op.tow = le32toh(msg->t_op.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->t_op.wn, buf + offset, 2);
-  msg->t_op.wn = le16toh(msg->t_op.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sid.sat, buf + offset, 2);
-  msg->sid.sat = le16toh(msg->sid.sat);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sid.reserved, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->tgd, buf + offset, 2);
-  u16 msgtgd = *(const u16 *)&msg->tgd;
-  msgtgd = le16toh(msgtgd);
-  msg->tgd = *(const s16 *)&msgtgd;
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->isc_l1ca, buf + offset, 2);
-  u16 msgisc_l1ca = *(const u16 *)&msg->isc_l1ca;
-  msgisc_l1ca = le16toh(msgisc_l1ca);
-  msg->isc_l1ca = *(const s16 *)&msgisc_l1ca;
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->isc_l2c, buf + offset, 2);
-  u16 msgisc_l2c = *(const u16 *)&msg->isc_l2c;
-  msgisc_l2c = le16toh(msgisc_l2c);
-  msg->isc_l2c = *(const s16 *)&msgisc_l2c;
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_group_delay_dep_b_t &a, const sbp_msg_group_delay_dep_b_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.t_op.tow != b.t_op.tow)
-  {
-    return false;
-  }
-
-  if (a.t_op.wn != b.t_op.wn)
-  {
-    return false;
-  }
-
-  if (a.sid.sat != b.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.sid.code != b.sid.code)
-  {
-    return false;
-  }
-
-  if (a.sid.reserved != b.sid.reserved)
-  {
-    return false;
-  }
-
-  if (a.valid != b.valid)
-  {
-    return false;
-  }
-
-  if (a.tgd != b.tgd)
-  {
-    return false;
-  }
-
-  if (a.isc_l1ca != b.isc_l1ca)
-  {
-    return false;
-  }
-
-  if (a.isc_l2c != b.isc_l2c)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_group_delay_dep_b_t &a, const sbp_msg_group_delay_dep_b_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Group Delay
  *
  * Please see ICD-GPS-200 (30.3.3.3.1.1) for more details.
  */
 #define SBP_MSG_GROUP_DELAY 0x0094
-
-#define SBP_GROUP_DELAY_SID_CODE__MASK (0xff)
-#define SBP_GROUP_DELAY_SID_CODE__SHIFT (0u)
-#define SBP_GROUP_DELAY_SID_CODE__GET(flags) \
-  (((flags) >> SBP_GROUP_DELAY_SID_CODE__SHIFT) & SBP_GROUP_DELAY_SID_CODE__MASK)
-#define SBP_GROUP_DELAY_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_GROUP_DELAY_SID_CODE__MASK)) << (SBP_GROUP_DELAY_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_GROUP_DELAY_SID_CODE__GPS_L1CA (0)
-#define SBP_GROUP_DELAY_SID_CODE__GPS_L2CM (1)
-#define SBP_GROUP_DELAY_SID_CODE__SBAS_L1CA (2)
-#define SBP_GROUP_DELAY_SID_CODE__GLO_L1CA (3)
-#define SBP_GROUP_DELAY_SID_CODE__GLO_L2CA (4)
-#define SBP_GROUP_DELAY_SID_CODE__GPS_L1P (5)
-#define SBP_GROUP_DELAY_SID_CODE__GPS_L2P (6)
-#define SBP_GROUP_DELAY_SID_CODE__BDS2_B1 (12)
-#define SBP_GROUP_DELAY_SID_CODE__BDS2_B2 (13)
-#define SBP_GROUP_DELAY_SID_CODE__GAL_E1B (14)
-#define SBP_GROUP_DELAY_SID_CODE__GAL_E7I (20)
-#define SBP_GROUP_DELAY_SID_CODE__BDS3_B2A (47)
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Data Predict Time of Week
    */
-  struct
-  {
+  gps_time_sec_t t_op;
 
-    /**
-     * Seconds since start of GPS week[s]
-     */
-    u32 tow;
-    /**
-     * GPS week number[week]
-     */
-    u16 wn;
-  } t_op;
   /**
    * GNSS signal identifier
    */
-  struct
-  {
+  sbp_gnss_signal_t sid;
 
-    /**
-     * Constellation-specific satellite identifier. This field for Glonass can
-     * either be (100+FCN) where FCN is in [-7,+6] or
-     * the Slot ID in [1,28]
-     */
-    u8 sat;
-    /**
-     * Signal constellation, band and code
-     */
-    u8 code;
-  } sid;
   /**
    * bit-field indicating validity of the values,
    * LSB indicating tgd validity etc.
    * 1 = value is valid, 0 = value is not valid.
    */
   u8 valid;
+
   s16 tgd;
+
   s16 isc_l1ca;
+
   s16 isc_l2c;
-} sbp_msg_group_delay_t;
 
-static inline size_t sbp_packed_size_sbp_msg_group_delay_t(const sbp_msg_group_delay_t *msg)
+} msg_group_delay_t;
+
+typedef struct SBP_ATTR_PACKED
 {
-  (void)msg;
-  return 0 + (0 + sizeof(msg->t_op.tow) + sizeof(msg->t_op.wn)) + (0 + sizeof(msg->sid.sat) + sizeof(msg->sid.code)) +
-         sizeof(msg->valid) + sizeof(msg->tgd) + sizeof(msg->isc_l1ca) + sizeof(msg->isc_l2c);
-}
 
-static inline bool sbp_pack_sbp_msg_group_delay_t(u8 *buf, size_t len, const sbp_msg_group_delay_t *msg)
+  /**
+   * GNSS signal identifier
+   */
+  sbp_gnss_signal_t sid;
+
+  /**
+   * Reference time of almanac
+   */
+  gps_time_sec_t toa;
+
+  /**
+   * User Range Accuracy [m]
+   */
+  double ura;
+
+  /**
+   * Curve fit interval [s]
+   */
+  u32 fit_interval;
+
+  /**
+   * Status of almanac, 1 = valid, 0 = invalid
+   */
+  u8 valid;
+
+  /**
+   * Satellite health status for GPS:
+   *   - bits 5-7: NAV data health status. See IS-GPS-200H
+   *     Table 20-VII: NAV Data Health Indications.
+   *   - bits 0-4: Signal health status. See IS-GPS-200H
+   *     Table 20-VIII. Codes for Health of SV Signal
+   *     Components.
+   * Satellite health status for GLO:
+   *   See GLO ICD 5.1 table 5.1 for details
+   *   - bit 0: C(n), "unhealthy" flag that is transmitted within
+   *     non-immediate data and indicates overall constellation status
+   *     at the moment of almanac uploading.
+   *     '0' indicates malfunction of n-satellite.
+   *     '1' indicates that n-satellite is operational.
+   *   - bit 1: Bn(ln), '0' indicates the satellite is operational
+   *     and suitable for navigation.
+   */
+  u8 health_bits;
+
+} almanac_common_content_t;
+
+typedef struct SBP_ATTR_PACKED
 {
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_group_delay_t(msg) > len)
-  {
-    return false;
-  }
 
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgt_optow = htole32(msg->t_op.tow);
-  memcpy(buf + offset, &msgt_optow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
+  /**
+   * GNSS signal identifier
+   */
+  gnss_signal_dep_t sid;
 
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgt_opwn = htole16(msg->t_op.wn);
-  memcpy(buf + offset, &msgt_opwn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
+  /**
+   * Reference time of almanac
+   */
+  gps_time_sec_t toa;
 
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgsidsat = msg->sid.sat;
-  memcpy(buf + offset, &msgsidsat, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
+  /**
+   * User Range Accuracy [m]
+   */
+  double ura;
 
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgsidcode = msg->sid.code;
-  memcpy(buf + offset, &msgsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
+  /**
+   * Curve fit interval [s]
+   */
+  u32 fit_interval;
 
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgvalid = msg->valid;
-  memcpy(buf + offset, &msgvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
+  /**
+   * Status of almanac, 1 = valid, 0 = invalid
+   */
+  u8 valid;
 
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgtgd = htole16(*(const u16 *)&msg->tgd);
-  memcpy(buf + offset, &msgtgd, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
+  /**
+   * Satellite health status for GPS:
+   *   - bits 5-7: NAV data health status. See IS-GPS-200H
+   *     Table 20-VII: NAV Data Health Indications.
+   *   - bits 0-4: Signal health status. See IS-GPS-200H
+   *     Table 20-VIII. Codes for Health of SV Signal
+   *     Components.
+   * Satellite health status for GLO:
+   *   See GLO ICD 5.1 table 5.1 for details
+   *   - bit 0: C(n), "unhealthy" flag that is transmitted within
+   *     non-immediate data and indicates overall constellation status
+   *     at the moment of almanac uploading.
+   *     '0' indicates malfunction of n-satellite.
+   *     '1' indicates that n-satellite is operational.
+   *   - bit 1: Bn(ln), '0' indicates the satellite is operational
+   *     and suitable for navigation.
+   */
+  u8 health_bits;
 
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgisc_l1ca = htole16(*(const u16 *)&msg->isc_l1ca);
-  memcpy(buf + offset, &msgisc_l1ca, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
+} almanac_common_content_dep_t;
 
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgisc_l2c = htole16(*(const u16 *)&msg->isc_l2c);
-  memcpy(buf + offset, &msgisc_l2c, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_group_delay_t(const u8 *buf, size_t len, sbp_msg_group_delay_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->t_op.tow, buf + offset, 4);
-  msg->t_op.tow = le32toh(msg->t_op.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->t_op.wn, buf + offset, 2);
-  msg->t_op.wn = le16toh(msg->t_op.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sid.sat, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->tgd, buf + offset, 2);
-  u16 msgtgd = *(const u16 *)&msg->tgd;
-  msgtgd = le16toh(msgtgd);
-  msg->tgd = *(const s16 *)&msgtgd;
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->isc_l1ca, buf + offset, 2);
-  u16 msgisc_l1ca = *(const u16 *)&msg->isc_l1ca;
-  msgisc_l1ca = le16toh(msgisc_l1ca);
-  msg->isc_l1ca = *(const s16 *)&msgisc_l1ca;
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->isc_l2c, buf + offset, 2);
-  u16 msgisc_l2c = *(const u16 *)&msg->isc_l2c;
-  msgisc_l2c = le16toh(msgisc_l2c);
-  msg->isc_l2c = *(const s16 *)&msgisc_l2c;
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_group_delay_t &a, const sbp_msg_group_delay_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.t_op.tow != b.t_op.tow)
-  {
-    return false;
-  }
-
-  if (a.t_op.wn != b.t_op.wn)
-  {
-    return false;
-  }
-
-  if (a.sid.sat != b.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.sid.code != b.sid.code)
-  {
-    return false;
-  }
-
-  if (a.valid != b.valid)
-  {
-    return false;
-  }
-
-  if (a.tgd != b.tgd)
-  {
-    return false;
-  }
-
-  if (a.isc_l1ca != b.isc_l1ca)
-  {
-    return false;
-  }
-
-  if (a.isc_l2c != b.isc_l2c)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_group_delay_t &a, const sbp_msg_group_delay_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Satellite broadcast ephemeris for GPS
  *
  * The almanac message returns a set of satellite orbit parameters. Almanac
@@ -18058,590 +2990,61 @@ static inline bool operator!=(const sbp_msg_group_delay_t &a, const sbp_msg_grou
  * (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
  */
 #define SBP_MSG_ALMANAC_GPS_DEP 0x0070
-
-#define SBP_ALMANAC_GPS_DEP_COMMON_SID_CODE__MASK (0xff)
-#define SBP_ALMANAC_GPS_DEP_COMMON_SID_CODE__SHIFT (0u)
-#define SBP_ALMANAC_GPS_DEP_COMMON_SID_CODE__GET(flags) \
-  (((flags) >> SBP_ALMANAC_GPS_DEP_COMMON_SID_CODE__SHIFT) & SBP_ALMANAC_GPS_DEP_COMMON_SID_CODE__MASK)
-#define SBP_ALMANAC_GPS_DEP_COMMON_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= \
-     (((val) & (SBP_ALMANAC_GPS_DEP_COMMON_SID_CODE__MASK)) << (SBP_ALMANAC_GPS_DEP_COMMON_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_ALMANAC_GPS_DEP_COMMON_SID_CODE__GPS_L1CA (0)
-#define SBP_ALMANAC_GPS_DEP_COMMON_SID_CODE__GPS_L2CM (1)
-#define SBP_ALMANAC_GPS_DEP_COMMON_SID_CODE__SBAS_L1CA (2)
-#define SBP_ALMANAC_GPS_DEP_COMMON_SID_CODE__GLO_L1CA (3)
-#define SBP_ALMANAC_GPS_DEP_COMMON_SID_CODE__GLO_L2CA (4)
-#define SBP_ALMANAC_GPS_DEP_COMMON_SID_CODE__GPS_L1P (5)
-#define SBP_ALMANAC_GPS_DEP_COMMON_SID_CODE__GPS_L2P (6)
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Values common for all almanac types
    */
-  struct
-  {
+  almanac_common_content_dep_t common;
 
-    /**
-     * GNSS signal identifier
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier.
-       *
-       * Note: unlike GnssSignal, GPS satellites are encoded as
-       * (PRN - 1). Other constellations do not have this offset.
-       */
-      u16 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-      /**
-       * Reserved
-       */
-      u8 reserved;
-    } sid;
-    /**
-     * Reference time of almanac
-     */
-    struct
-    {
-
-      /**
-       * Seconds since start of GPS week[s]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } toa;
-    /**
-     * User Range Accuracy[m]
-     */
-    double ura;
-    /**
-     * Curve fit interval[s]
-     */
-    u32 fit_interval;
-    /**
-     * Status of almanac, 1 = valid, 0 = invalid
-     */
-    u8 valid;
-    /**
-     * Satellite health status for GPS:
-     *   - bits 5-7: NAV data health status. See IS-GPS-200H
-     *     Table 20-VII: NAV Data Health Indications.
-     *   - bits 0-4: Signal health status. See IS-GPS-200H
-     *     Table 20-VIII. Codes for Health of SV Signal
-     *     Components.
-     * Satellite health status for GLO:
-     *   See GLO ICD 5.1 table 5.1 for details
-     *   - bit 0: C(n), "unhealthy" flag that is transmitted within
-     *     non-immediate data and indicates overall constellation status
-     *     at the moment of almanac uploading.
-     *     '0' indicates malfunction of n-satellite.
-     *     '1' indicates that n-satellite is operational.
-     *   - bit 1: Bn(ln), '0' indicates the satellite is operational
-     *     and suitable for navigation.
-     */
-    u8 health_bits;
-  } common;
   /**
-   * Mean anomaly at reference time[rad]
+   * Mean anomaly at reference time [rad]
    */
   double m0;
+
   /**
    * Eccentricity of satellite orbit
    */
   double ecc;
+
   /**
-   * Square root of the semi-major axis of orbit[m^(1/2)]
+   * Square root of the semi-major axis of orbit [m^(1/2)]
    */
   double sqrta;
+
   /**
-   * Longitude of ascending node of orbit plane at weekly epoch[rad]
+   * Longitude of ascending node of orbit plane at weekly epoch [rad]
    */
   double omega0;
+
   /**
-   * Rate of right ascension[rad/s]
+   * Rate of right ascension [rad/s]
    */
   double omegadot;
+
   /**
-   * Argument of perigee[rad]
+   * Argument of perigee [rad]
    */
   double w;
+
   /**
-   * Inclination[rad]
+   * Inclination [rad]
    */
   double inc;
+
   /**
-   * Polynomial clock correction coefficient (clock bias)[s]
+   * Polynomial clock correction coefficient (clock bias) [s]
    */
   double af0;
+
   /**
-   * Polynomial clock correction coefficient (clock drift)[s/s]
+   * Polynomial clock correction coefficient (clock drift) [s/s]
    */
   double af1;
-} sbp_msg_almanac_gps_dep_t;
 
-static inline size_t sbp_packed_size_sbp_msg_almanac_gps_dep_t(const sbp_msg_almanac_gps_dep_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->common.sid.sat) + sizeof(msg->common.sid.code) + sizeof(msg->common.sid.reserved)) +
-          (0 + sizeof(msg->common.toa.tow) + sizeof(msg->common.toa.wn)) + sizeof(msg->common.ura) +
-          sizeof(msg->common.fit_interval) + sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         sizeof(msg->m0) + sizeof(msg->ecc) + sizeof(msg->sqrta) + sizeof(msg->omega0) + sizeof(msg->omegadot) +
-         sizeof(msg->w) + sizeof(msg->inc) + sizeof(msg->af0) + sizeof(msg->af1);
-}
+} msg_almanac_gps_dep_t;
 
-static inline bool sbp_pack_sbp_msg_almanac_gps_dep_t(u8 *buf, size_t len, const sbp_msg_almanac_gps_dep_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_almanac_gps_dep_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommonsidsat = htole16(msg->common.sid.sat);
-  memcpy(buf + offset, &msgcommonsidsat, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidcode = msg->common.sid.code;
-  memcpy(buf + offset, &msgcommonsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidreserved = msg->common.sid.reserved;
-  memcpy(buf + offset, &msgcommonsidreserved, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommontoatow = htole32(msg->common.toa.tow);
-  memcpy(buf + offset, &msgcommontoatow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommontoawn = htole16(msg->common.toa.wn);
-  memcpy(buf + offset, &msgcommontoawn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgcommonura = msg->common.ura;
-  memcpy(buf + offset, &msgcommonura, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommonfit_interval = htole32(msg->common.fit_interval);
-  memcpy(buf + offset, &msgcommonfit_interval, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonvalid = msg->common.valid;
-  memcpy(buf + offset, &msgcommonvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonhealth_bits = msg->common.health_bits;
-  memcpy(buf + offset, &msgcommonhealth_bits, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgm0 = msg->m0;
-  memcpy(buf + offset, &msgm0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgecc = msg->ecc;
-  memcpy(buf + offset, &msgecc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgsqrta = msg->sqrta;
-  memcpy(buf + offset, &msgsqrta, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomega0 = msg->omega0;
-  memcpy(buf + offset, &msgomega0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomegadot = msg->omegadot;
-  memcpy(buf + offset, &msgomegadot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgw = msg->w;
-  memcpy(buf + offset, &msgw, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc = msg->inc;
-  memcpy(buf + offset, &msginc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf0 = msg->af0;
-  memcpy(buf + offset, &msgaf0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf1 = msg->af1;
-  memcpy(buf + offset, &msgaf1, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_almanac_gps_dep_t(const u8 *buf, size_t len, sbp_msg_almanac_gps_dep_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.sat, buf + offset, 2);
-  msg->common.sid.sat = le16toh(msg->common.sid.sat);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.reserved, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toa.tow, buf + offset, 4);
-  msg->common.toa.tow = le32toh(msg->common.toa.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toa.wn, buf + offset, 2);
-  msg->common.toa.wn = le16toh(msg->common.toa.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.ura, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.fit_interval, buf + offset, 4);
-  msg->common.fit_interval = le32toh(msg->common.fit_interval);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.health_bits, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->m0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->ecc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sqrta, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omega0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omegadot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->w, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af1, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_almanac_gps_dep_t &a, const sbp_msg_almanac_gps_dep_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.common.sid.sat != b.common.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.common.sid.code != b.common.sid.code)
-  {
-    return false;
-  }
-
-  if (a.common.sid.reserved != b.common.sid.reserved)
-  {
-    return false;
-  }
-
-  if (a.common.toa.tow != b.common.toa.tow)
-  {
-    return false;
-  }
-
-  if (a.common.toa.wn != b.common.toa.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.common.ura - b.common.ura) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.common.fit_interval != b.common.fit_interval)
-  {
-    return false;
-  }
-
-  if (a.common.valid != b.common.valid)
-  {
-    return false;
-  }
-
-  if (a.common.health_bits != b.common.health_bits)
-  {
-    return false;
-  }
-
-  if (fabs(a.m0 - b.m0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.ecc - b.ecc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.sqrta - b.sqrta) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omega0 - b.omega0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omegadot - b.omegadot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.w - b.w) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc - b.inc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af0 - b.af0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af1 - b.af1) > 0.001)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_almanac_gps_dep_t &a, const sbp_msg_almanac_gps_dep_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Satellite broadcast ephemeris for GPS
  *
  * The almanac message returns a set of satellite orbit parameters. Almanac
@@ -18650,566 +3053,61 @@ static inline bool operator!=(const sbp_msg_almanac_gps_dep_t &a, const sbp_msg_
  * (ICD-GPS-200, Chapter 20.3.3.5.1.2 Almanac Data) for more details.
  */
 #define SBP_MSG_ALMANAC_GPS 0x0072
-
-#define SBP_ALMANAC_GPS_COMMON_SID_CODE__MASK (0xff)
-#define SBP_ALMANAC_GPS_COMMON_SID_CODE__SHIFT (0u)
-#define SBP_ALMANAC_GPS_COMMON_SID_CODE__GET(flags) \
-  (((flags) >> SBP_ALMANAC_GPS_COMMON_SID_CODE__SHIFT) & SBP_ALMANAC_GPS_COMMON_SID_CODE__MASK)
-#define SBP_ALMANAC_GPS_COMMON_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_ALMANAC_GPS_COMMON_SID_CODE__MASK)) << (SBP_ALMANAC_GPS_COMMON_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_ALMANAC_GPS_COMMON_SID_CODE__GPS_L1CA (0)
-#define SBP_ALMANAC_GPS_COMMON_SID_CODE__GPS_L2CM (1)
-#define SBP_ALMANAC_GPS_COMMON_SID_CODE__SBAS_L1CA (2)
-#define SBP_ALMANAC_GPS_COMMON_SID_CODE__GLO_L1CA (3)
-#define SBP_ALMANAC_GPS_COMMON_SID_CODE__GLO_L2CA (4)
-#define SBP_ALMANAC_GPS_COMMON_SID_CODE__GPS_L1P (5)
-#define SBP_ALMANAC_GPS_COMMON_SID_CODE__GPS_L2P (6)
-#define SBP_ALMANAC_GPS_COMMON_SID_CODE__BDS2_B1 (12)
-#define SBP_ALMANAC_GPS_COMMON_SID_CODE__BDS2_B2 (13)
-#define SBP_ALMANAC_GPS_COMMON_SID_CODE__GAL_E1B (14)
-#define SBP_ALMANAC_GPS_COMMON_SID_CODE__GAL_E7I (20)
-#define SBP_ALMANAC_GPS_COMMON_SID_CODE__BDS3_B2A (47)
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Values common for all almanac types
    */
-  struct
-  {
+  almanac_common_content_t common;
 
-    /**
-     * GNSS signal identifier
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier. This field for Glonass can
-       * either be (100+FCN) where FCN is in [-7,+6] or
-       * the Slot ID in [1,28]
-       */
-      u8 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-    } sid;
-    /**
-     * Reference time of almanac
-     */
-    struct
-    {
-
-      /**
-       * Seconds since start of GPS week[s]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } toa;
-    /**
-     * User Range Accuracy[m]
-     */
-    double ura;
-    /**
-     * Curve fit interval[s]
-     */
-    u32 fit_interval;
-    /**
-     * Status of almanac, 1 = valid, 0 = invalid
-     */
-    u8 valid;
-    /**
-     * Satellite health status for GPS:
-     *   - bits 5-7: NAV data health status. See IS-GPS-200H
-     *     Table 20-VII: NAV Data Health Indications.
-     *   - bits 0-4: Signal health status. See IS-GPS-200H
-     *     Table 20-VIII. Codes for Health of SV Signal
-     *     Components.
-     * Satellite health status for GLO:
-     *   See GLO ICD 5.1 table 5.1 for details
-     *   - bit 0: C(n), "unhealthy" flag that is transmitted within
-     *     non-immediate data and indicates overall constellation status
-     *     at the moment of almanac uploading.
-     *     '0' indicates malfunction of n-satellite.
-     *     '1' indicates that n-satellite is operational.
-     *   - bit 1: Bn(ln), '0' indicates the satellite is operational
-     *     and suitable for navigation.
-     */
-    u8 health_bits;
-  } common;
   /**
-   * Mean anomaly at reference time[rad]
+   * Mean anomaly at reference time [rad]
    */
   double m0;
+
   /**
    * Eccentricity of satellite orbit
    */
   double ecc;
+
   /**
-   * Square root of the semi-major axis of orbit[m^(1/2)]
+   * Square root of the semi-major axis of orbit [m^(1/2)]
    */
   double sqrta;
+
   /**
-   * Longitude of ascending node of orbit plane at weekly epoch[rad]
+   * Longitude of ascending node of orbit plane at weekly epoch [rad]
    */
   double omega0;
+
   /**
-   * Rate of right ascension[rad/s]
+   * Rate of right ascension [rad/s]
    */
   double omegadot;
+
   /**
-   * Argument of perigee[rad]
+   * Argument of perigee [rad]
    */
   double w;
+
   /**
-   * Inclination[rad]
+   * Inclination [rad]
    */
   double inc;
+
   /**
-   * Polynomial clock correction coefficient (clock bias)[s]
+   * Polynomial clock correction coefficient (clock bias) [s]
    */
   double af0;
+
   /**
-   * Polynomial clock correction coefficient (clock drift)[s/s]
+   * Polynomial clock correction coefficient (clock drift) [s/s]
    */
   double af1;
-} sbp_msg_almanac_gps_t;
 
-static inline size_t sbp_packed_size_sbp_msg_almanac_gps_t(const sbp_msg_almanac_gps_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->common.sid.sat) + sizeof(msg->common.sid.code)) +
-          (0 + sizeof(msg->common.toa.tow) + sizeof(msg->common.toa.wn)) + sizeof(msg->common.ura) +
-          sizeof(msg->common.fit_interval) + sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         sizeof(msg->m0) + sizeof(msg->ecc) + sizeof(msg->sqrta) + sizeof(msg->omega0) + sizeof(msg->omegadot) +
-         sizeof(msg->w) + sizeof(msg->inc) + sizeof(msg->af0) + sizeof(msg->af1);
-}
+} msg_almanac_gps_t;
 
-static inline bool sbp_pack_sbp_msg_almanac_gps_t(u8 *buf, size_t len, const sbp_msg_almanac_gps_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_almanac_gps_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidsat = msg->common.sid.sat;
-  memcpy(buf + offset, &msgcommonsidsat, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidcode = msg->common.sid.code;
-  memcpy(buf + offset, &msgcommonsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommontoatow = htole32(msg->common.toa.tow);
-  memcpy(buf + offset, &msgcommontoatow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommontoawn = htole16(msg->common.toa.wn);
-  memcpy(buf + offset, &msgcommontoawn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgcommonura = msg->common.ura;
-  memcpy(buf + offset, &msgcommonura, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommonfit_interval = htole32(msg->common.fit_interval);
-  memcpy(buf + offset, &msgcommonfit_interval, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonvalid = msg->common.valid;
-  memcpy(buf + offset, &msgcommonvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonhealth_bits = msg->common.health_bits;
-  memcpy(buf + offset, &msgcommonhealth_bits, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgm0 = msg->m0;
-  memcpy(buf + offset, &msgm0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgecc = msg->ecc;
-  memcpy(buf + offset, &msgecc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgsqrta = msg->sqrta;
-  memcpy(buf + offset, &msgsqrta, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomega0 = msg->omega0;
-  memcpy(buf + offset, &msgomega0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomegadot = msg->omegadot;
-  memcpy(buf + offset, &msgomegadot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgw = msg->w;
-  memcpy(buf + offset, &msgw, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msginc = msg->inc;
-  memcpy(buf + offset, &msginc, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf0 = msg->af0;
-  memcpy(buf + offset, &msgaf0, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgaf1 = msg->af1;
-  memcpy(buf + offset, &msgaf1, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_almanac_gps_t(const u8 *buf, size_t len, sbp_msg_almanac_gps_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.sat, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toa.tow, buf + offset, 4);
-  msg->common.toa.tow = le32toh(msg->common.toa.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toa.wn, buf + offset, 2);
-  msg->common.toa.wn = le16toh(msg->common.toa.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.ura, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.fit_interval, buf + offset, 4);
-  msg->common.fit_interval = le32toh(msg->common.fit_interval);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.health_bits, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->m0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->ecc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sqrta, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omega0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omegadot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->w, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->inc, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af0, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->af1, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_almanac_gps_t &a, const sbp_msg_almanac_gps_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.common.sid.sat != b.common.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.common.sid.code != b.common.sid.code)
-  {
-    return false;
-  }
-
-  if (a.common.toa.tow != b.common.toa.tow)
-  {
-    return false;
-  }
-
-  if (a.common.toa.wn != b.common.toa.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.common.ura - b.common.ura) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.common.fit_interval != b.common.fit_interval)
-  {
-    return false;
-  }
-
-  if (a.common.valid != b.common.valid)
-  {
-    return false;
-  }
-
-  if (a.common.health_bits != b.common.health_bits)
-  {
-    return false;
-  }
-
-  if (fabs(a.m0 - b.m0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.ecc - b.ecc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.sqrta - b.sqrta) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omega0 - b.omega0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omegadot - b.omegadot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.w - b.w) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.inc - b.inc) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af0 - b.af0) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.af1 - b.af1) > 0.001)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_almanac_gps_t &a, const sbp_msg_almanac_gps_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Satellite broadcast ephemeris for GLO
  *
  * The almanac message returns a set of satellite orbit parameters. Almanac
@@ -19218,539 +3116,52 @@ static inline bool operator!=(const sbp_msg_almanac_gps_t &a, const sbp_msg_alma
  * almanac" for details.
  */
 #define SBP_MSG_ALMANAC_GLO_DEP 0x0071
-
-#define SBP_ALMANAC_GLO_DEP_COMMON_SID_CODE__MASK (0xff)
-#define SBP_ALMANAC_GLO_DEP_COMMON_SID_CODE__SHIFT (0u)
-#define SBP_ALMANAC_GLO_DEP_COMMON_SID_CODE__GET(flags) \
-  (((flags) >> SBP_ALMANAC_GLO_DEP_COMMON_SID_CODE__SHIFT) & SBP_ALMANAC_GLO_DEP_COMMON_SID_CODE__MASK)
-#define SBP_ALMANAC_GLO_DEP_COMMON_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= \
-     (((val) & (SBP_ALMANAC_GLO_DEP_COMMON_SID_CODE__MASK)) << (SBP_ALMANAC_GLO_DEP_COMMON_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_ALMANAC_GLO_DEP_COMMON_SID_CODE__GPS_L1CA (0)
-#define SBP_ALMANAC_GLO_DEP_COMMON_SID_CODE__GPS_L2CM (1)
-#define SBP_ALMANAC_GLO_DEP_COMMON_SID_CODE__SBAS_L1CA (2)
-#define SBP_ALMANAC_GLO_DEP_COMMON_SID_CODE__GLO_L1CA (3)
-#define SBP_ALMANAC_GLO_DEP_COMMON_SID_CODE__GLO_L2CA (4)
-#define SBP_ALMANAC_GLO_DEP_COMMON_SID_CODE__GPS_L1P (5)
-#define SBP_ALMANAC_GLO_DEP_COMMON_SID_CODE__GPS_L2P (6)
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Values common for all almanac types
    */
-  struct
-  {
+  almanac_common_content_dep_t common;
 
-    /**
-     * GNSS signal identifier
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier.
-       *
-       * Note: unlike GnssSignal, GPS satellites are encoded as
-       * (PRN - 1). Other constellations do not have this offset.
-       */
-      u16 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-      /**
-       * Reserved
-       */
-      u8 reserved;
-    } sid;
-    /**
-     * Reference time of almanac
-     */
-    struct
-    {
-
-      /**
-       * Seconds since start of GPS week[s]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } toa;
-    /**
-     * User Range Accuracy[m]
-     */
-    double ura;
-    /**
-     * Curve fit interval[s]
-     */
-    u32 fit_interval;
-    /**
-     * Status of almanac, 1 = valid, 0 = invalid
-     */
-    u8 valid;
-    /**
-     * Satellite health status for GPS:
-     *   - bits 5-7: NAV data health status. See IS-GPS-200H
-     *     Table 20-VII: NAV Data Health Indications.
-     *   - bits 0-4: Signal health status. See IS-GPS-200H
-     *     Table 20-VIII. Codes for Health of SV Signal
-     *     Components.
-     * Satellite health status for GLO:
-     *   See GLO ICD 5.1 table 5.1 for details
-     *   - bit 0: C(n), "unhealthy" flag that is transmitted within
-     *     non-immediate data and indicates overall constellation status
-     *     at the moment of almanac uploading.
-     *     '0' indicates malfunction of n-satellite.
-     *     '1' indicates that n-satellite is operational.
-     *   - bit 1: Bn(ln), '0' indicates the satellite is operational
-     *     and suitable for navigation.
-     */
-    u8 health_bits;
-  } common;
   /**
    * Longitude of the first ascending node of the orbit in PZ-90.02
-   * coordinate system[rad]
+   * coordinate system [rad]
    */
   double lambda_na;
+
   /**
-   * Time of the first ascending node passage[s]
+   * Time of the first ascending node passage [s]
    */
   double t_lambda_na;
+
   /**
-   * Value of inclination at instant of t_lambda[rad]
+   * Value of inclination at instant of t_lambda [rad]
    */
   double i;
+
   /**
-   * Value of Draconian period at instant of t_lambda[s/orbital period]
+   * Value of Draconian period at instant of t_lambda [s/orbital period]
    */
   double t;
+
   /**
-   * Rate of change of the Draconian period[s/(orbital period^2)]
+   * Rate of change of the Draconian period [s/(orbital period^2)]
    */
   double t_dot;
+
   /**
    * Eccentricity at instant of t_lambda
    */
   double epsilon;
+
   /**
-   * Argument of perigee at instant of t_lambda[rad]
+   * Argument of perigee at instant of t_lambda [rad]
    */
   double omega;
-} sbp_msg_almanac_glo_dep_t;
 
-static inline size_t sbp_packed_size_sbp_msg_almanac_glo_dep_t(const sbp_msg_almanac_glo_dep_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->common.sid.sat) + sizeof(msg->common.sid.code) + sizeof(msg->common.sid.reserved)) +
-          (0 + sizeof(msg->common.toa.tow) + sizeof(msg->common.toa.wn)) + sizeof(msg->common.ura) +
-          sizeof(msg->common.fit_interval) + sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         sizeof(msg->lambda_na) + sizeof(msg->t_lambda_na) + sizeof(msg->i) + sizeof(msg->t) + sizeof(msg->t_dot) +
-         sizeof(msg->epsilon) + sizeof(msg->omega);
-}
+} msg_almanac_glo_dep_t;
 
-static inline bool sbp_pack_sbp_msg_almanac_glo_dep_t(u8 *buf, size_t len, const sbp_msg_almanac_glo_dep_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_almanac_glo_dep_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommonsidsat = htole16(msg->common.sid.sat);
-  memcpy(buf + offset, &msgcommonsidsat, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidcode = msg->common.sid.code;
-  memcpy(buf + offset, &msgcommonsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidreserved = msg->common.sid.reserved;
-  memcpy(buf + offset, &msgcommonsidreserved, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommontoatow = htole32(msg->common.toa.tow);
-  memcpy(buf + offset, &msgcommontoatow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommontoawn = htole16(msg->common.toa.wn);
-  memcpy(buf + offset, &msgcommontoawn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgcommonura = msg->common.ura;
-  memcpy(buf + offset, &msgcommonura, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommonfit_interval = htole32(msg->common.fit_interval);
-  memcpy(buf + offset, &msgcommonfit_interval, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonvalid = msg->common.valid;
-  memcpy(buf + offset, &msgcommonvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonhealth_bits = msg->common.health_bits;
-  memcpy(buf + offset, &msgcommonhealth_bits, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msglambda_na = msg->lambda_na;
-  memcpy(buf + offset, &msglambda_na, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgt_lambda_na = msg->t_lambda_na;
-  memcpy(buf + offset, &msgt_lambda_na, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgi = msg->i;
-  memcpy(buf + offset, &msgi, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgt = msg->t;
-  memcpy(buf + offset, &msgt, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgt_dot = msg->t_dot;
-  memcpy(buf + offset, &msgt_dot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgepsilon = msg->epsilon;
-  memcpy(buf + offset, &msgepsilon, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomega = msg->omega;
-  memcpy(buf + offset, &msgomega, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_almanac_glo_dep_t(const u8 *buf, size_t len, sbp_msg_almanac_glo_dep_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.sat, buf + offset, 2);
-  msg->common.sid.sat = le16toh(msg->common.sid.sat);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.reserved, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toa.tow, buf + offset, 4);
-  msg->common.toa.tow = le32toh(msg->common.toa.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toa.wn, buf + offset, 2);
-  msg->common.toa.wn = le16toh(msg->common.toa.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.ura, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.fit_interval, buf + offset, 4);
-  msg->common.fit_interval = le32toh(msg->common.fit_interval);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.health_bits, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->lambda_na, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->t_lambda_na, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->i, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->t, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->t_dot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->epsilon, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omega, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_almanac_glo_dep_t &a, const sbp_msg_almanac_glo_dep_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.common.sid.sat != b.common.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.common.sid.code != b.common.sid.code)
-  {
-    return false;
-  }
-
-  if (a.common.sid.reserved != b.common.sid.reserved)
-  {
-    return false;
-  }
-
-  if (a.common.toa.tow != b.common.toa.tow)
-  {
-    return false;
-  }
-
-  if (a.common.toa.wn != b.common.toa.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.common.ura - b.common.ura) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.common.fit_interval != b.common.fit_interval)
-  {
-    return false;
-  }
-
-  if (a.common.valid != b.common.valid)
-  {
-    return false;
-  }
-
-  if (a.common.health_bits != b.common.health_bits)
-  {
-    return false;
-  }
-
-  if (fabs(a.lambda_na - b.lambda_na) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.t_lambda_na - b.t_lambda_na) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.i - b.i) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.t - b.t) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.t_dot - b.t_dot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.epsilon - b.epsilon) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omega - b.omega) > 0.001)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_almanac_glo_dep_t &a, const sbp_msg_almanac_glo_dep_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Satellite broadcast ephemeris for GLO
  *
  * The almanac message returns a set of satellite orbit parameters. Almanac
@@ -19759,515 +3170,52 @@ static inline bool operator!=(const sbp_msg_almanac_glo_dep_t &a, const sbp_msg_
  * almanac" for details.
  */
 #define SBP_MSG_ALMANAC_GLO 0x0073
-
-#define SBP_ALMANAC_GLO_COMMON_SID_CODE__MASK (0xff)
-#define SBP_ALMANAC_GLO_COMMON_SID_CODE__SHIFT (0u)
-#define SBP_ALMANAC_GLO_COMMON_SID_CODE__GET(flags) \
-  (((flags) >> SBP_ALMANAC_GLO_COMMON_SID_CODE__SHIFT) & SBP_ALMANAC_GLO_COMMON_SID_CODE__MASK)
-#define SBP_ALMANAC_GLO_COMMON_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_ALMANAC_GLO_COMMON_SID_CODE__MASK)) << (SBP_ALMANAC_GLO_COMMON_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_ALMANAC_GLO_COMMON_SID_CODE__GPS_L1CA (0)
-#define SBP_ALMANAC_GLO_COMMON_SID_CODE__GPS_L2CM (1)
-#define SBP_ALMANAC_GLO_COMMON_SID_CODE__SBAS_L1CA (2)
-#define SBP_ALMANAC_GLO_COMMON_SID_CODE__GLO_L1CA (3)
-#define SBP_ALMANAC_GLO_COMMON_SID_CODE__GLO_L2CA (4)
-#define SBP_ALMANAC_GLO_COMMON_SID_CODE__GPS_L1P (5)
-#define SBP_ALMANAC_GLO_COMMON_SID_CODE__GPS_L2P (6)
-#define SBP_ALMANAC_GLO_COMMON_SID_CODE__BDS2_B1 (12)
-#define SBP_ALMANAC_GLO_COMMON_SID_CODE__BDS2_B2 (13)
-#define SBP_ALMANAC_GLO_COMMON_SID_CODE__GAL_E1B (14)
-#define SBP_ALMANAC_GLO_COMMON_SID_CODE__GAL_E7I (20)
-#define SBP_ALMANAC_GLO_COMMON_SID_CODE__BDS3_B2A (47)
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Values common for all almanac types
    */
-  struct
-  {
+  almanac_common_content_t common;
 
-    /**
-     * GNSS signal identifier
-     */
-    struct
-    {
-
-      /**
-       * Constellation-specific satellite identifier. This field for Glonass can
-       * either be (100+FCN) where FCN is in [-7,+6] or
-       * the Slot ID in [1,28]
-       */
-      u8 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-    } sid;
-    /**
-     * Reference time of almanac
-     */
-    struct
-    {
-
-      /**
-       * Seconds since start of GPS week[s]
-       */
-      u32 tow;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } toa;
-    /**
-     * User Range Accuracy[m]
-     */
-    double ura;
-    /**
-     * Curve fit interval[s]
-     */
-    u32 fit_interval;
-    /**
-     * Status of almanac, 1 = valid, 0 = invalid
-     */
-    u8 valid;
-    /**
-     * Satellite health status for GPS:
-     *   - bits 5-7: NAV data health status. See IS-GPS-200H
-     *     Table 20-VII: NAV Data Health Indications.
-     *   - bits 0-4: Signal health status. See IS-GPS-200H
-     *     Table 20-VIII. Codes for Health of SV Signal
-     *     Components.
-     * Satellite health status for GLO:
-     *   See GLO ICD 5.1 table 5.1 for details
-     *   - bit 0: C(n), "unhealthy" flag that is transmitted within
-     *     non-immediate data and indicates overall constellation status
-     *     at the moment of almanac uploading.
-     *     '0' indicates malfunction of n-satellite.
-     *     '1' indicates that n-satellite is operational.
-     *   - bit 1: Bn(ln), '0' indicates the satellite is operational
-     *     and suitable for navigation.
-     */
-    u8 health_bits;
-  } common;
   /**
    * Longitude of the first ascending node of the orbit in PZ-90.02
-   * coordinate system[rad]
+   * coordinate system [rad]
    */
   double lambda_na;
+
   /**
-   * Time of the first ascending node passage[s]
+   * Time of the first ascending node passage [s]
    */
   double t_lambda_na;
+
   /**
-   * Value of inclination at instant of t_lambda[rad]
+   * Value of inclination at instant of t_lambda [rad]
    */
   double i;
+
   /**
-   * Value of Draconian period at instant of t_lambda[s/orbital period]
+   * Value of Draconian period at instant of t_lambda [s/orbital period]
    */
   double t;
+
   /**
-   * Rate of change of the Draconian period[s/(orbital period^2)]
+   * Rate of change of the Draconian period [s/(orbital period^2)]
    */
   double t_dot;
+
   /**
    * Eccentricity at instant of t_lambda
    */
   double epsilon;
+
   /**
-   * Argument of perigee at instant of t_lambda[rad]
+   * Argument of perigee at instant of t_lambda [rad]
    */
   double omega;
-} sbp_msg_almanac_glo_t;
 
-static inline size_t sbp_packed_size_sbp_msg_almanac_glo_t(const sbp_msg_almanac_glo_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->common.sid.sat) + sizeof(msg->common.sid.code)) +
-          (0 + sizeof(msg->common.toa.tow) + sizeof(msg->common.toa.wn)) + sizeof(msg->common.ura) +
-          sizeof(msg->common.fit_interval) + sizeof(msg->common.valid) + sizeof(msg->common.health_bits)) +
-         sizeof(msg->lambda_na) + sizeof(msg->t_lambda_na) + sizeof(msg->i) + sizeof(msg->t) + sizeof(msg->t_dot) +
-         sizeof(msg->epsilon) + sizeof(msg->omega);
-}
+} msg_almanac_glo_t;
 
-static inline bool sbp_pack_sbp_msg_almanac_glo_t(u8 *buf, size_t len, const sbp_msg_almanac_glo_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_almanac_glo_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidsat = msg->common.sid.sat;
-  memcpy(buf + offset, &msgcommonsidsat, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonsidcode = msg->common.sid.code;
-  memcpy(buf + offset, &msgcommonsidcode, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommontoatow = htole32(msg->common.toa.tow);
-  memcpy(buf + offset, &msgcommontoatow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgcommontoawn = htole16(msg->common.toa.wn);
-  memcpy(buf + offset, &msgcommontoawn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgcommonura = msg->common.ura;
-  memcpy(buf + offset, &msgcommonura, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgcommonfit_interval = htole32(msg->common.fit_interval);
-  memcpy(buf + offset, &msgcommonfit_interval, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonvalid = msg->common.valid;
-  memcpy(buf + offset, &msgcommonvalid, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgcommonhealth_bits = msg->common.health_bits;
-  memcpy(buf + offset, &msgcommonhealth_bits, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msglambda_na = msg->lambda_na;
-  memcpy(buf + offset, &msglambda_na, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgt_lambda_na = msg->t_lambda_na;
-  memcpy(buf + offset, &msgt_lambda_na, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgi = msg->i;
-  memcpy(buf + offset, &msgi, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgt = msg->t;
-  memcpy(buf + offset, &msgt, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgt_dot = msg->t_dot;
-  memcpy(buf + offset, &msgt_dot, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgepsilon = msg->epsilon;
-  memcpy(buf + offset, &msgepsilon, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  double msgomega = msg->omega;
-  memcpy(buf + offset, &msgomega, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_almanac_glo_t(const u8 *buf, size_t len, sbp_msg_almanac_glo_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.sat, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.sid.code, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toa.tow, buf + offset, 4);
-  msg->common.toa.tow = le32toh(msg->common.toa.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.toa.wn, buf + offset, 2);
-  msg->common.toa.wn = le16toh(msg->common.toa.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.ura, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.fit_interval, buf + offset, 4);
-  msg->common.fit_interval = le32toh(msg->common.fit_interval);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.valid, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->common.health_bits, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->lambda_na, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->t_lambda_na, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->i, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->t, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->t_dot, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->epsilon, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-
-  if (offset + 8 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->omega, buf + offset, 8);
-  // NOLINTNEXTLINE
-  offset += 8;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_almanac_glo_t &a, const sbp_msg_almanac_glo_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.common.sid.sat != b.common.sid.sat)
-  {
-    return false;
-  }
-
-  if (a.common.sid.code != b.common.sid.code)
-  {
-    return false;
-  }
-
-  if (a.common.toa.tow != b.common.toa.tow)
-  {
-    return false;
-  }
-
-  if (a.common.toa.wn != b.common.toa.wn)
-  {
-    return false;
-  }
-
-  if (fabs(a.common.ura - b.common.ura) > 0.001)
-  {
-    return false;
-  }
-
-  if (a.common.fit_interval != b.common.fit_interval)
-  {
-    return false;
-  }
-
-  if (a.common.valid != b.common.valid)
-  {
-    return false;
-  }
-
-  if (a.common.health_bits != b.common.health_bits)
-  {
-    return false;
-  }
-
-  if (fabs(a.lambda_na - b.lambda_na) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.t_lambda_na - b.t_lambda_na) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.i - b.i) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.t - b.t) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.t_dot - b.t_dot) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.epsilon - b.epsilon) > 0.001)
-  {
-    return false;
-  }
-
-  if (fabs(a.omega - b.omega) > 0.001)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_almanac_glo_t &a, const sbp_msg_almanac_glo_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** GLONASS L1/L2 Code-Phase biases
  *
  * The GLONASS L1/L2 Code-Phase biases allows to perform
@@ -20276,1007 +3224,99 @@ static inline bool operator!=(const sbp_msg_almanac_glo_t &a, const sbp_msg_alma
  * manufacturers)
  */
 #define SBP_MSG_GLO_BIASES 0x0075
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
-   * GLONASS FDMA signals mask[boolean]
+   * GLONASS FDMA signals mask [boolean]
    */
   u8 mask;
+
   /**
-   * GLONASS L1 C/A Code-Phase Bias[m * 0.02]
+   * GLONASS L1 C/A Code-Phase Bias [m * 0.02]
    */
   s16 l1ca_bias;
+
   /**
-   * GLONASS L1 P Code-Phase Bias[m * 0.02]
+   * GLONASS L1 P Code-Phase Bias [m * 0.02]
    */
   s16 l1p_bias;
+
   /**
-   * GLONASS L2 C/A Code-Phase Bias[m * 0.02]
+   * GLONASS L2 C/A Code-Phase Bias [m * 0.02]
    */
   s16 l2ca_bias;
+
   /**
-   * GLONASS L2 P Code-Phase Bias[m * 0.02]
+   * GLONASS L2 P Code-Phase Bias [m * 0.02]
    */
   s16 l2p_bias;
-} sbp_msg_glo_biases_t;
 
-static inline size_t sbp_packed_size_sbp_msg_glo_biases_t(const sbp_msg_glo_biases_t *msg)
+} msg_glo_biases_t;
+
+/** Satellite azimuth and elevation.
+ *
+ * Satellite azimuth and elevation.
+ */
+typedef struct SBP_ATTR_PACKED
 {
-  (void)msg;
-  return 0 + sizeof(msg->mask) + sizeof(msg->l1ca_bias) + sizeof(msg->l1p_bias) + sizeof(msg->l2ca_bias) +
-         sizeof(msg->l2p_bias);
-}
 
-static inline bool sbp_pack_sbp_msg_glo_biases_t(u8 *buf, size_t len, const sbp_msg_glo_biases_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_glo_biases_t(msg) > len)
-  {
-    return false;
-  }
+  /**
+   * GNSS signal identifier
+   */
+  sbp_gnss_signal_t sid;
 
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgmask = msg->mask;
-  memcpy(buf + offset, &msgmask, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
+  /**
+   * Azimuth angle (range 0..179) [deg * 2]
+   */
+  u8 az;
 
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgl1ca_bias = htole16(*(const u16 *)&msg->l1ca_bias);
-  memcpy(buf + offset, &msgl1ca_bias, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
+  /**
+   * Elevation angle (range -90..90) [deg]
+   */
+  s8 el;
 
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgl1p_bias = htole16(*(const u16 *)&msg->l1p_bias);
-  memcpy(buf + offset, &msgl1p_bias, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
+} sv_az_el_t;
 
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgl2ca_bias = htole16(*(const u16 *)&msg->l2ca_bias);
-  memcpy(buf + offset, &msgl2ca_bias, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgl2p_bias = htole16(*(const u16 *)&msg->l2p_bias);
-  memcpy(buf + offset, &msgl2p_bias, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_glo_biases_t(const u8 *buf, size_t len, sbp_msg_glo_biases_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->mask, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->l1ca_bias, buf + offset, 2);
-  u16 msgl1ca_bias = *(const u16 *)&msg->l1ca_bias;
-  msgl1ca_bias = le16toh(msgl1ca_bias);
-  msg->l1ca_bias = *(const s16 *)&msgl1ca_bias;
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->l1p_bias, buf + offset, 2);
-  u16 msgl1p_bias = *(const u16 *)&msg->l1p_bias;
-  msgl1p_bias = le16toh(msgl1p_bias);
-  msg->l1p_bias = *(const s16 *)&msgl1p_bias;
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->l2ca_bias, buf + offset, 2);
-  u16 msgl2ca_bias = *(const u16 *)&msg->l2ca_bias;
-  msgl2ca_bias = le16toh(msgl2ca_bias);
-  msg->l2ca_bias = *(const s16 *)&msgl2ca_bias;
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->l2p_bias, buf + offset, 2);
-  u16 msgl2p_bias = *(const u16 *)&msg->l2p_bias;
-  msgl2p_bias = le16toh(msgl2p_bias);
-  msg->l2p_bias = *(const s16 *)&msgl2p_bias;
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_glo_biases_t &a, const sbp_msg_glo_biases_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.mask != b.mask)
-  {
-    return false;
-  }
-
-  if (a.l1ca_bias != b.l1ca_bias)
-  {
-    return false;
-  }
-
-  if (a.l1p_bias != b.l1p_bias)
-  {
-    return false;
-  }
-
-  if (a.l2ca_bias != b.l2ca_bias)
-  {
-    return false;
-  }
-
-  if (a.l2p_bias != b.l2p_bias)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_glo_biases_t &a, const sbp_msg_glo_biases_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Satellite azimuths and elevations
  *
  * Azimuth and elevation angles of all the visible satellites
  * that the device does have ephemeris or almanac for.
  */
 #define SBP_MSG_SV_AZ_EL 0x0097
-
-#define SBP_SV_AZ_EL_AZEL_SID_CODE__MASK (0xff)
-#define SBP_SV_AZ_EL_AZEL_SID_CODE__SHIFT (0u)
-#define SBP_SV_AZ_EL_AZEL_SID_CODE__GET(flags) \
-  (((flags) >> SBP_SV_AZ_EL_AZEL_SID_CODE__SHIFT) & SBP_SV_AZ_EL_AZEL_SID_CODE__MASK)
-#define SBP_SV_AZ_EL_AZEL_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_SV_AZ_EL_AZEL_SID_CODE__MASK)) << (SBP_SV_AZ_EL_AZEL_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_SV_AZ_EL_AZEL_SID_CODE__GPS_L1CA (0)
-#define SBP_SV_AZ_EL_AZEL_SID_CODE__GPS_L2CM (1)
-#define SBP_SV_AZ_EL_AZEL_SID_CODE__SBAS_L1CA (2)
-#define SBP_SV_AZ_EL_AZEL_SID_CODE__GLO_L1CA (3)
-#define SBP_SV_AZ_EL_AZEL_SID_CODE__GLO_L2CA (4)
-#define SBP_SV_AZ_EL_AZEL_SID_CODE__GPS_L1P (5)
-#define SBP_SV_AZ_EL_AZEL_SID_CODE__GPS_L2P (6)
-#define SBP_SV_AZ_EL_AZEL_SID_CODE__BDS2_B1 (12)
-#define SBP_SV_AZ_EL_AZEL_SID_CODE__BDS2_B2 (13)
-#define SBP_SV_AZ_EL_AZEL_SID_CODE__GAL_E1B (14)
-#define SBP_SV_AZ_EL_AZEL_SID_CODE__GAL_E7I (20)
-#define SBP_SV_AZ_EL_AZEL_SID_CODE__BDS3_B2A (47)
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Azimuth and elevation per satellite
    */
-  struct
-  {
+  sv_az_el_t azel[0];
 
-    /**
-     * GNSS signal identifier
-     */
-    struct
-    {
+} msg_sv_az_el_t;
 
-      /**
-       * Constellation-specific satellite identifier. This field for Glonass can
-       * either be (100+FCN) where FCN is in [-7,+6] or
-       * the Slot ID in [1,28]
-       */
-      u8 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-    } sid;
-    /**
-     * Azimuth angle (range 0..179)[deg * 2]
-     */
-    u8 az;
-    /**
-     * Elevation angle (range -90..90)[deg]
-     */
-    s8 el;
-  } azel[63];
-  /**
-   * Number of items in azel
-   */
-  u8 n_azel;
-} sbp_msg_sv_az_el_t;
-
-static inline size_t sbp_packed_size_sbp_msg_sv_az_el_t(const sbp_msg_sv_az_el_t *msg)
-{
-  (void)msg;
-  return 0 + (msg->n_azel * (0 + (0 + sizeof(msg->azel[0].sid.sat) + sizeof(msg->azel[0].sid.code)) +
-                             sizeof(msg->azel[0].az) + sizeof(msg->azel[0].el)));
-}
-
-static inline bool sbp_pack_sbp_msg_sv_az_el_t(u8 *buf, size_t len, const sbp_msg_sv_az_el_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_sv_az_el_t(msg) > len)
-  {
-    return false;
-  }
-
-  for (size_t msgazel_idx = 0; msgazel_idx < (size_t)msg->n_azel; msgazel_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgazelmsgazel_idxsidsat = msg->azel[msgazel_idx].sid.sat;
-    memcpy(buf + offset, &msgazelmsgazel_idxsidsat, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgazelmsgazel_idxsidcode = msg->azel[msgazel_idx].sid.code;
-    memcpy(buf + offset, &msgazelmsgazel_idxsidcode, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgazelmsgazel_idxaz = msg->azel[msgazel_idx].az;
-    memcpy(buf + offset, &msgazelmsgazel_idxaz, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    s8 msgazelmsgazel_idxel = msg->azel[msgazel_idx].el;
-    memcpy(buf + offset, &msgazelmsgazel_idxel, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_sv_az_el_t(const u8 *buf, size_t len, sbp_msg_sv_az_el_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  msg->n_azel = (u8)((len - offset) / 4);
-
-  for (size_t msgazel_idx = 0; msgazel_idx < msg->n_azel; msgazel_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->azel[msgazel_idx].sid.sat, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->azel[msgazel_idx].sid.code, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->azel[msgazel_idx].az, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->azel[msgazel_idx].el, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_sv_az_el_t &a, const sbp_msg_sv_az_el_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.n_azel != b.n_azel)
-  {
-    return false;
-  }
-  for (size_t azel_idx = 0; azel_idx < (size_t)a.n_azel; azel_idx++)
-  {
-
-    if (a.azel[azel_idx].sid.sat != b.azel[azel_idx].sid.sat)
-    {
-      return false;
-    }
-
-    if (a.azel[azel_idx].sid.code != b.azel[azel_idx].sid.code)
-    {
-      return false;
-    }
-
-    if (a.azel[azel_idx].az != b.azel[azel_idx].az)
-    {
-      return false;
-    }
-
-    if (a.azel[azel_idx].el != b.azel[azel_idx].el)
-    {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_sv_az_el_t &a, const sbp_msg_sv_az_el_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** OSR corrections
  *
  * The OSR message contains network corrections in an observation-like format
  */
 #define SBP_MSG_OSR 0x0640
-
-#define SBP_OSR_OBS_FLAGS_INVALID_PHASE_CORRECTIONS_MASK (0x1)
-#define SBP_OSR_OBS_FLAGS_INVALID_PHASE_CORRECTIONS_SHIFT (4u)
-#define SBP_OSR_OBS_FLAGS_INVALID_PHASE_CORRECTIONS_GET(flags) \
-  (((flags) >> SBP_OSR_OBS_FLAGS_INVALID_PHASE_CORRECTIONS_SHIFT) & SBP_OSR_OBS_FLAGS_INVALID_PHASE_CORRECTIONS_MASK)
-#define SBP_OSR_OBS_FLAGS_INVALID_PHASE_CORRECTIONS_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_OSR_OBS_FLAGS_INVALID_PHASE_CORRECTIONS_MASK)) \
-                 << (SBP_OSR_OBS_FLAGS_INVALID_PHASE_CORRECTIONS_SHIFT))); \
-  } while (0)
-
-#define SBP_OSR_OBS_FLAGS_INVALID_PHASE_CORRECTIONS_VALID_PHASE_CORRECTIONS (0)
-#define SBP_OSR_OBS_FLAGS_INVALID_PHASE_CORRECTIONS_DO_NOT_USE_PHASE_CORRECTIONS (1)
-#define SBP_OSR_OBS_FLAGS_INVALID_CODE_CORRECTIONS_MASK (0x1)
-#define SBP_OSR_OBS_FLAGS_INVALID_CODE_CORRECTIONS_SHIFT (3u)
-#define SBP_OSR_OBS_FLAGS_INVALID_CODE_CORRECTIONS_GET(flags) \
-  (((flags) >> SBP_OSR_OBS_FLAGS_INVALID_CODE_CORRECTIONS_SHIFT) & SBP_OSR_OBS_FLAGS_INVALID_CODE_CORRECTIONS_MASK)
-#define SBP_OSR_OBS_FLAGS_INVALID_CODE_CORRECTIONS_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_OSR_OBS_FLAGS_INVALID_CODE_CORRECTIONS_MASK)) \
-                 << (SBP_OSR_OBS_FLAGS_INVALID_CODE_CORRECTIONS_SHIFT))); \
-  } while (0)
-
-#define SBP_OSR_OBS_FLAGS_INVALID_CODE_CORRECTIONS_VALID_CODE_CORRECTIONS (0)
-#define SBP_OSR_OBS_FLAGS_INVALID_CODE_CORRECTIONS_DO_NOT_USE_CODE_CORRECTIONS (1)
-#define SBP_OSR_OBS_FLAGS_FULL_FIXING_FLAG_MASK (0x1)
-#define SBP_OSR_OBS_FLAGS_FULL_FIXING_FLAG_SHIFT (2u)
-#define SBP_OSR_OBS_FLAGS_FULL_FIXING_FLAG_GET(flags) \
-  (((flags) >> SBP_OSR_OBS_FLAGS_FULL_FIXING_FLAG_SHIFT) & SBP_OSR_OBS_FLAGS_FULL_FIXING_FLAG_MASK)
-#define SBP_OSR_OBS_FLAGS_FULL_FIXING_FLAG_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_OSR_OBS_FLAGS_FULL_FIXING_FLAG_MASK)) << (SBP_OSR_OBS_FLAGS_FULL_FIXING_FLAG_SHIFT))); \
-  } while (0)
-
-#define SBP_OSR_OBS_FLAGS_FULL_FIXING_FLAG_FULL_FIXING_UNAVAILABLE (0)
-#define SBP_OSR_OBS_FLAGS_FULL_FIXING_FLAG_FULL_FIXING_AVAILABLE (1)
-#define SBP_OSR_OBS_FLAGS_PARTIAL_FIXING_FLAG_MASK (0x1)
-#define SBP_OSR_OBS_FLAGS_PARTIAL_FIXING_FLAG_SHIFT (1u)
-#define SBP_OSR_OBS_FLAGS_PARTIAL_FIXING_FLAG_GET(flags) \
-  (((flags) >> SBP_OSR_OBS_FLAGS_PARTIAL_FIXING_FLAG_SHIFT) & SBP_OSR_OBS_FLAGS_PARTIAL_FIXING_FLAG_MASK)
-#define SBP_OSR_OBS_FLAGS_PARTIAL_FIXING_FLAG_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= \
-     (((val) & (SBP_OSR_OBS_FLAGS_PARTIAL_FIXING_FLAG_MASK)) << (SBP_OSR_OBS_FLAGS_PARTIAL_FIXING_FLAG_SHIFT))); \
-  } while (0)
-
-#define SBP_OSR_OBS_FLAGS_PARTIAL_FIXING_FLAG_PARTIAL_FIXING_UNAVAILABLE (0)
-#define SBP_OSR_OBS_FLAGS_PARTIAL_FIXING_FLAG_PARTIAL_FIXING_AVAILABLE (1)
-#define SBP_OSR_OBS_FLAGS_CORRECTION_VALIDITY_MASK (0x1)
-#define SBP_OSR_OBS_FLAGS_CORRECTION_VALIDITY_SHIFT (0u)
-#define SBP_OSR_OBS_FLAGS_CORRECTION_VALIDITY_GET(flags) \
-  (((flags) >> SBP_OSR_OBS_FLAGS_CORRECTION_VALIDITY_SHIFT) & SBP_OSR_OBS_FLAGS_CORRECTION_VALIDITY_MASK)
-#define SBP_OSR_OBS_FLAGS_CORRECTION_VALIDITY_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= \
-     (((val) & (SBP_OSR_OBS_FLAGS_CORRECTION_VALIDITY_MASK)) << (SBP_OSR_OBS_FLAGS_CORRECTION_VALIDITY_SHIFT))); \
-  } while (0)
-
-#define SBP_OSR_OBS_FLAGS_CORRECTION_VALIDITY_DO_NOT_USE_SIGNAL (0)
-#define SBP_OSR_OBS_FLAGS_CORRECTION_VALIDITY_VALID_SIGNAL (1)
-
-#define SBP_OSR_OBS_SID_CODE__MASK (0xff)
-#define SBP_OSR_OBS_SID_CODE__SHIFT (0u)
-#define SBP_OSR_OBS_SID_CODE__GET(flags) (((flags) >> SBP_OSR_OBS_SID_CODE__SHIFT) & SBP_OSR_OBS_SID_CODE__MASK)
-#define SBP_OSR_OBS_SID_CODE__SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_OSR_OBS_SID_CODE__MASK)) << (SBP_OSR_OBS_SID_CODE__SHIFT))); \
-  } while (0)
-
-#define SBP_OSR_OBS_SID_CODE__GPS_L1CA (0)
-#define SBP_OSR_OBS_SID_CODE__GPS_L2CM (1)
-#define SBP_OSR_OBS_SID_CODE__SBAS_L1CA (2)
-#define SBP_OSR_OBS_SID_CODE__GLO_L1CA (3)
-#define SBP_OSR_OBS_SID_CODE__GLO_L2CA (4)
-#define SBP_OSR_OBS_SID_CODE__GPS_L1P (5)
-#define SBP_OSR_OBS_SID_CODE__GPS_L2P (6)
-#define SBP_OSR_OBS_SID_CODE__BDS2_B1 (12)
-#define SBP_OSR_OBS_SID_CODE__BDS2_B2 (13)
-#define SBP_OSR_OBS_SID_CODE__GAL_E1B (14)
-#define SBP_OSR_OBS_SID_CODE__GAL_E7I (20)
-#define SBP_OSR_OBS_SID_CODE__BDS3_B2A (47)
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Header of a GPS observation message
    */
-  struct
-  {
+  observation_header_t header;
 
-    /**
-     * GNSS time of this observation
-     */
-    struct
-    {
-
-      /**
-       * Milliseconds since start of GPS week[ms]
-       */
-      u32 tow;
-      /**
-       * Nanosecond residual of millisecond-rounded TOW (ranges
-       * from -500000 to 500000)[ns]
-       */
-      s32 ns_residual;
-      /**
-       * GPS week number[week]
-       */
-      u16 wn;
-    } t;
-    /**
-     * Total number of observations. First nibble is the size
-     * of the sequence (n), second nibble is the zero-indexed
-     * counter (ith packet of n)
-     */
-    u8 n_obs;
-  } header;
   /**
    * Network correction for a
    * satellite signal.
    */
-  struct
-  {
+  packed_osr_content_t obs[0];
 
-    /**
-     * Pseudorange observation[2 cm]
-     */
-    u32 P;
-    /**
-     * Carrier phase observation with typical sign convention.[cycles]
-     */
-    struct
-    {
+} msg_osr_t;
 
-      /**
-       * Carrier phase whole cycles[cycles]
-       */
-      s32 i;
-      /**
-       * Carrier phase fractional part[cycles / 256]
-       */
-      u8 f;
-    } L;
-    /**
-     * Lock timer. This value gives an indication of the time
-     * for which a signal has maintained continuous phase lock.
-     * Whenever a signal has lost and regained lock, this
-     * value is reset to zero. It is encoded according to DF402 from
-     * the RTCM 10403.2 Amendment 2 specification.  Valid values range
-     * from 0 to 15 and the most significant nibble is reserved for future use.
-     */
-    u8 lock;
-    /**
-     * Correction flags.
-     */
-    u8 flags;
-    /**
-     * GNSS signal identifier (16 bit)
-     */
-    struct
-    {
+/** \} */
 
-      /**
-       * Constellation-specific satellite identifier. This field for Glonass can
-       * either be (100+FCN) where FCN is in [-7,+6] or
-       * the Slot ID in [1,28]
-       */
-      u8 sat;
-      /**
-       * Signal constellation, band and code
-       */
-      u8 code;
-    } sid;
-    /**
-     * Slant ionospheric correction standard deviation[5 mm]
-     */
-    u16 iono_std;
-    /**
-     * Slant tropospheric correction standard deviation[5 mm]
-     */
-    u16 tropo_std;
-    /**
-     * Orbit/clock/bias correction projected on range standard deviation[5 mm]
-     */
-    u16 range_std;
-  } obs[12];
-  /**
-   * Number of items in obs
-   */
-  u8 n_obs;
-} sbp_msg_osr_t;
-
-static inline size_t sbp_packed_size_sbp_msg_osr_t(const sbp_msg_osr_t *msg)
-{
-  (void)msg;
-  return 0 +
-         (0 + (0 + sizeof(msg->header.t.tow) + sizeof(msg->header.t.ns_residual) + sizeof(msg->header.t.wn)) +
-          sizeof(msg->header.n_obs)) +
-         (msg->n_obs * (0 + sizeof(msg->obs[0].P) + (0 + sizeof(msg->obs[0].L.i) + sizeof(msg->obs[0].L.f)) +
-                        sizeof(msg->obs[0].lock) + sizeof(msg->obs[0].flags) +
-                        (0 + sizeof(msg->obs[0].sid.sat) + sizeof(msg->obs[0].sid.code)) +
-                        sizeof(msg->obs[0].iono_std) + sizeof(msg->obs[0].tropo_std) + sizeof(msg->obs[0].range_std)));
-}
-
-static inline bool sbp_pack_sbp_msg_osr_t(u8 *buf, size_t len, const sbp_msg_osr_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_osr_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgheaderttow = htole32(msg->header.t.tow);
-  memcpy(buf + offset, &msgheaderttow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgheadertns_residual = htole32(*(const u32 *)&msg->header.t.ns_residual);
-  memcpy(buf + offset, &msgheadertns_residual, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgheadertwn = htole16(msg->header.t.wn);
-  memcpy(buf + offset, &msgheadertwn, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgheadern_obs = msg->header.n_obs;
-  memcpy(buf + offset, &msgheadern_obs, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  for (size_t msgobs_idx = 0; msgobs_idx < (size_t)msg->n_obs; msgobs_idx++)
-  {
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    u32 msgobsmsgobs_idxP = htole32(msg->obs[msgobs_idx].P);
-    memcpy(buf + offset, &msgobsmsgobs_idxP, 4);
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    u32 msgobsmsgobs_idxLi = htole32(*(const u32 *)&msg->obs[msgobs_idx].L.i);
-    memcpy(buf + offset, &msgobsmsgobs_idxLi, 4);
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxLf = msg->obs[msgobs_idx].L.f;
-    memcpy(buf + offset, &msgobsmsgobs_idxLf, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxlock = msg->obs[msgobs_idx].lock;
-    memcpy(buf + offset, &msgobsmsgobs_idxlock, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxflags = msg->obs[msgobs_idx].flags;
-    memcpy(buf + offset, &msgobsmsgobs_idxflags, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxsidsat = msg->obs[msgobs_idx].sid.sat;
-    memcpy(buf + offset, &msgobsmsgobs_idxsidsat, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgobsmsgobs_idxsidcode = msg->obs[msgobs_idx].sid.code;
-    memcpy(buf + offset, &msgobsmsgobs_idxsidcode, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 2 > len)
-    {
-      return false;
-    }
-    u16 msgobsmsgobs_idxiono_std = htole16(msg->obs[msgobs_idx].iono_std);
-    memcpy(buf + offset, &msgobsmsgobs_idxiono_std, 2);
-    // NOLINTNEXTLINE
-    offset += 2;
-
-    if (offset + 2 > len)
-    {
-      return false;
-    }
-    u16 msgobsmsgobs_idxtropo_std = htole16(msg->obs[msgobs_idx].tropo_std);
-    memcpy(buf + offset, &msgobsmsgobs_idxtropo_std, 2);
-    // NOLINTNEXTLINE
-    offset += 2;
-
-    if (offset + 2 > len)
-    {
-      return false;
-    }
-    u16 msgobsmsgobs_idxrange_std = htole16(msg->obs[msgobs_idx].range_std);
-    memcpy(buf + offset, &msgobsmsgobs_idxrange_std, 2);
-    // NOLINTNEXTLINE
-    offset += 2;
-  }
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_osr_t(const u8 *buf, size_t len, sbp_msg_osr_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->header.t.tow, buf + offset, 4);
-  msg->header.t.tow = le32toh(msg->header.t.tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->header.t.ns_residual, buf + offset, 4);
-  u32 msgheadertns_residual = *(const u32 *)&msg->header.t.ns_residual;
-  msgheadertns_residual = le32toh(msgheadertns_residual);
-  msg->header.t.ns_residual = *(const s32 *)&msgheadertns_residual;
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->header.t.wn, buf + offset, 2);
-  msg->header.t.wn = le16toh(msg->header.t.wn);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->header.n_obs, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  msg->n_obs = (u8)((len - offset) / 19);
-
-  for (size_t msgobs_idx = 0; msgobs_idx < msg->n_obs; msgobs_idx++)
-  {
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].P, buf + offset, 4);
-    msg->obs[msgobs_idx].P = le32toh(msg->obs[msgobs_idx].P);
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 4 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].L.i, buf + offset, 4);
-    u32 msgobsmsgobs_idxLi = *(const u32 *)&msg->obs[msgobs_idx].L.i;
-    msgobsmsgobs_idxLi = le32toh(msgobsmsgobs_idxLi);
-    msg->obs[msgobs_idx].L.i = *(const s32 *)&msgobsmsgobs_idxLi;
-    // NOLINTNEXTLINE
-    offset += 4;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].L.f, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].lock, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].flags, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].sid.sat, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].sid.code, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 2 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].iono_std, buf + offset, 2);
-    msg->obs[msgobs_idx].iono_std = le16toh(msg->obs[msgobs_idx].iono_std);
-    // NOLINTNEXTLINE
-    offset += 2;
-
-    if (offset + 2 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].tropo_std, buf + offset, 2);
-    msg->obs[msgobs_idx].tropo_std = le16toh(msg->obs[msgobs_idx].tropo_std);
-    // NOLINTNEXTLINE
-    offset += 2;
-
-    if (offset + 2 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->obs[msgobs_idx].range_std, buf + offset, 2);
-    msg->obs[msgobs_idx].range_std = le16toh(msg->obs[msgobs_idx].range_std);
-    // NOLINTNEXTLINE
-    offset += 2;
-  }
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_osr_t &a, const sbp_msg_osr_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.header.t.tow != b.header.t.tow)
-  {
-    return false;
-  }
-
-  if (a.header.t.ns_residual != b.header.t.ns_residual)
-  {
-    return false;
-  }
-
-  if (a.header.t.wn != b.header.t.wn)
-  {
-    return false;
-  }
-
-  if (a.header.n_obs != b.header.n_obs)
-  {
-    return false;
-  }
-  if (a.n_obs != b.n_obs)
-  {
-    return false;
-  }
-  for (size_t obs_idx = 0; obs_idx < (size_t)a.n_obs; obs_idx++)
-  {
-
-    if (a.obs[obs_idx].P != b.obs[obs_idx].P)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].L.i != b.obs[obs_idx].L.i)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].L.f != b.obs[obs_idx].L.f)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].lock != b.obs[obs_idx].lock)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].flags != b.obs[obs_idx].flags)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].sid.sat != b.obs[obs_idx].sid.sat)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].sid.code != b.obs[obs_idx].sid.code)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].iono_std != b.obs[obs_idx].iono_std)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].tropo_std != b.obs[obs_idx].tropo_std)
-    {
-      return false;
-    }
-
-    if (a.obs[obs_idx].range_std != b.obs[obs_idx].range_std)
-    {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_osr_t &a, const sbp_msg_osr_t &b)
-{
-  return !(a == b);
-}
-#endif
+SBP_PACK_END
 
 #endif /* LIBSBP_OBSERVATION_MESSAGES_H */

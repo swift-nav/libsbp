@@ -1,14 +1,58 @@
-#ifndef LIBSBP_SETTINGS_MESSAGES_H
-#define LIBSBP_SETTINGS_MESSAGES_H
+/*
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: https://support.swiftnav.com
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
-#include <endian.h>
-#include <math.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <string.h>
+/*****************************************************************************
+ * Automatically generated from yaml/swiftnav/sbp/settings.yaml
+ * with generate.py. Please do not hand edit!
+ *****************************************************************************/
+
+/** \defgroup settings Settings
+ *
+ *  *
+ * Messages for reading, writing, and discovering device settings. Settings
+ * with a "string" field have multiple values in this field delimited with a
+ * null character (the c style null terminator).  For instance, when querying
+ * the 'firmware_version' setting in the 'system_info' section, the following
+ * array of characters needs to be sent for the string field in
+ * MSG_SETTINGS_READ: "system_info\0firmware_version\0", where the delimiting
+ * null characters are specified with the escape sequence '\0' and all
+ * quotation marks should be omitted.
+ *
+ *
+ * In the message descriptions below, the generic strings SECTION_SETTING and
+ * SETTING are used to refer to the two strings that comprise the identifier
+ * of an individual setting.In firmware_version example above, SECTION_SETTING
+ * is the 'system_info', and the SETTING portion is 'firmware_version'.
+ *
+ * See the "Software Settings Manual" on support.swiftnav.com for detailed
+ * documentation about all settings and sections available for each Swift
+ * firmware version. Settings manuals are available for each firmware version
+ * at the following link: [Piksi Multi
+ * Specifications](https://support.swiftnav.com/customer/en/portal/articles/2628580-piksi-multi-specifications#settings).
+ * The latest settings document is also available at the following link:
+ * [Latest settings document](http://swiftnav.com/latest/piksi-multi-settings) .
+ * See lastly [settings.py](https://github.com/swift-nav/piksi_tools/blob/master/piksi_tools/settings.py) ,
+ * the open source python command line utility for reading, writing, and
+ * saving settings in the piksi_tools repository on github as a helpful
+ * reference and example.
+ * \{ */
+
+#ifndef LIBSBP_PACKED_SETTINGS_MESSAGES_H
+#define LIBSBP_PACKED_SETTINGS_MESSAGES_H
 
 #include <libsbp/common.h>
+
+SBP_PACK_START
+
 /** Save settings to flash (host => device)
  *
  * The save settings message persists the device's current settings
@@ -16,57 +60,6 @@
  */
 #define SBP_MSG_SETTINGS_SAVE 0x00A1
 
-typedef struct
-{
-  char dummy_to_avoid_empty_struct___do_not_use;
-} sbp_msg_settings_save_t;
-
-static inline size_t sbp_packed_size_sbp_msg_settings_save_t(const sbp_msg_settings_save_t *msg)
-{
-  (void)msg;
-  return 0;
-}
-
-static inline bool sbp_pack_sbp_msg_settings_save_t(u8 *buf, size_t len, const sbp_msg_settings_save_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_settings_save_t(msg) > len)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_settings_save_t(const u8 *buf, size_t len, sbp_msg_settings_save_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_settings_save_t &a, const sbp_msg_settings_save_t &b)
-{
-  (void)a;
-  (void)b;
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_settings_save_t &a, const sbp_msg_settings_save_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Write device configuration settings (host => device)
  *
  * The setting message writes the device configuration for a particular
@@ -78,76 +71,35 @@ static inline bool operator!=(const sbp_msg_settings_save_t &a, const sbp_msg_se
  * "solution\0soln_freq\010\0".
  */
 #define SBP_MSG_SETTINGS_WRITE 0x00A0
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * A NULL-terminated and NULL-delimited string with contents
    * "SECTION_SETTING\0SETTING\0VALUE\0"
    */
-  char setting[255];
-} sbp_msg_settings_write_t;
+  char setting[0];
 
-static inline size_t sbp_packed_size_sbp_msg_settings_write_t(const sbp_msg_settings_write_t *msg)
-{
-  (void)msg;
-  return 0 + sbp_strlen(msg->setting, "3-section");
-}
+} msg_settings_write_t;
 
-static inline bool sbp_pack_sbp_msg_settings_write_t(u8 *buf, size_t len, const sbp_msg_settings_write_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_settings_write_t(msg) > len)
-  {
-    return false;
-  }
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK (0x3)
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT (0u)
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_GET(flags) \
+  (((flags) >> SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT) & SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK)
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= \
+     (((val) & (SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_MASK)) << (SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_SHIFT))); \
+  } while (0)
 
-  if (offset + sbp_strlen(msg->setting, "3-section") > len)
-  {
-    return false;
-  }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->setting, "3-section");
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_settings_write_t(const u8 *buf, size_t len, sbp_msg_settings_write_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "3-section");
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_settings_write_t &a, const sbp_msg_settings_write_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (sbp_strcmp(a.setting, b.setting, "3-section") != 0)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_settings_write_t &a, const sbp_msg_settings_write_t &b)
-{
-  return !(a == b);
-}
-#endif
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_ACCEPTED_VALUE_UPDATED (0)
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_VALUE_UNPARSABLE_OR_OUT_OF_RANGE (1)
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_REQUESTED_SETTING_DOES_NOT_EXIST (2)
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_SETTING_NAME_COULD_NOT_BE_PARSED (3)
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_SETTING_IS_READ_ONLY (4)
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_MODIFICATION_IS_TEMPORARILY_DISABLED (5)
+#define SBP_SETTINGS_WRITE_RESP_WRITE_STATUS_REJECTED_UNSPECIFIED_ERROR (6)
 /** Acknowledgement with status of MSG_SETTINGS_WRITE
  *
  * Return the status of a write request with the new value of the
@@ -159,118 +111,22 @@ static inline bool operator!=(const sbp_msg_settings_write_t &a, const sbp_msg_s
  * "solution\0soln_freq\010\0".
  */
 #define SBP_MSG_SETTINGS_WRITE_RESP 0x00AF
-
-#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_MASK (0x3)
-#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_SHIFT (0u)
-#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_GET(flags) \
-  (((flags) >> SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_SHIFT) & SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_MASK)
-#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_MASK)) \
-                 << (SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_SHIFT))); \
-  } while (0)
-
-#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_ACCEPTED_VALUE_UPDATED (0)
-#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_REJECTED_VALUE_UNPARSABLE_OR_OUT_OF_RANGE (1)
-#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_REJECTED_REQUESTED_SETTING_DOES_NOT_EXIST (2)
-#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_REJECTED_SETTING_NAME_COULD_NOT_BE_PARSED (3)
-#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_REJECTED_SETTING_IS_READ_ONLY (4)
-#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_REJECTED_MODIFICATION_IS_TEMPORARILY_DISABLED (5)
-#define SBP_SETTINGS_WRITE_RESP_STATUS_WRITE_STATUS_REJECTED_UNSPECIFIED_ERROR (6)
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Write status
    */
   u8 status;
+
   /**
    * A NULL-terminated and delimited string with contents
    * "SECTION_SETTING\0SETTING\0VALUE\0"
    */
-  char setting[254];
-} sbp_msg_settings_write_resp_t;
+  char setting[0];
 
-static inline size_t sbp_packed_size_sbp_msg_settings_write_resp_t(const sbp_msg_settings_write_resp_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->status) + sbp_strlen(msg->setting, "3-section");
-}
+} msg_settings_write_resp_t;
 
-static inline bool sbp_pack_sbp_msg_settings_write_resp_t(u8 *buf, size_t len, const sbp_msg_settings_write_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_settings_write_resp_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgstatus = msg->status;
-  memcpy(buf + offset, &msgstatus, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  if (offset + sbp_strlen(msg->setting, "3-section") > len)
-  {
-    return false;
-  }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->setting, "3-section");
-  return true;
-}
-
-static inline bool
-sbp_unpack_sbp_msg_settings_write_resp_t(const u8 *buf, size_t len, sbp_msg_settings_write_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->status, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "3-section");
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_settings_write_resp_t &a, const sbp_msg_settings_write_resp_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.status != b.status)
-  {
-    return false;
-  }
-  if (sbp_strcmp(a.setting, b.setting, "3-section") != 0)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_settings_write_resp_t &a, const sbp_msg_settings_write_resp_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Read device configuration settings (host => device)
  *
  * The setting message that reads the device configuration. The string
@@ -283,76 +139,17 @@ static inline bool operator!=(const sbp_msg_settings_write_resp_t &a, const sbp_
  * message (msg_id 0x00A5).
  */
 #define SBP_MSG_SETTINGS_READ_REQ 0x00A4
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * A NULL-terminated and NULL-delimited string with contents
    * "SECTION_SETTING\0SETTING\0"
    */
-  char setting[255];
-} sbp_msg_settings_read_req_t;
+  char setting[0];
 
-static inline size_t sbp_packed_size_sbp_msg_settings_read_req_t(const sbp_msg_settings_read_req_t *msg)
-{
-  (void)msg;
-  return 0 + sbp_strlen(msg->setting, "2-section");
-}
+} msg_settings_read_req_t;
 
-static inline bool sbp_pack_sbp_msg_settings_read_req_t(u8 *buf, size_t len, const sbp_msg_settings_read_req_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_settings_read_req_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + sbp_strlen(msg->setting, "2-section") > len)
-  {
-    return false;
-  }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->setting, "2-section");
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_settings_read_req_t(const u8 *buf, size_t len, sbp_msg_settings_read_req_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "2-section");
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_settings_read_req_t &a, const sbp_msg_settings_read_req_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (sbp_strcmp(a.setting, b.setting, "2-section") != 0)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_settings_read_req_t &a, const sbp_msg_settings_read_req_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Read device configuration settings (host <= device)
  *
  * The setting message wich which the device responds after a
@@ -364,8 +161,7 @@ static inline bool operator!=(const sbp_msg_settings_read_req_t &a, const sbp_ms
  * "solution\0soln_freq\010\0".
  */
 #define SBP_MSG_SETTINGS_READ_RESP 0x00A5
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
@@ -373,68 +169,10 @@ typedef struct
    * "SECTION_SETTING\0SETTING\0VALUE\0"
    *
    */
-  char setting[255];
-} sbp_msg_settings_read_resp_t;
+  char setting[0];
 
-static inline size_t sbp_packed_size_sbp_msg_settings_read_resp_t(const sbp_msg_settings_read_resp_t *msg)
-{
-  (void)msg;
-  return 0 + sbp_strlen(msg->setting, "3-section");
-}
+} msg_settings_read_resp_t;
 
-static inline bool sbp_pack_sbp_msg_settings_read_resp_t(u8 *buf, size_t len, const sbp_msg_settings_read_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_settings_read_resp_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + sbp_strlen(msg->setting, "3-section") > len)
-  {
-    return false;
-  }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->setting, "3-section");
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_settings_read_resp_t(const u8 *buf, size_t len, sbp_msg_settings_read_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "3-section");
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_settings_read_resp_t &a, const sbp_msg_settings_read_resp_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (sbp_strcmp(a.setting, b.setting, "3-section") != 0)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_settings_read_resp_t &a, const sbp_msg_settings_read_resp_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Read setting by direct index (host => device)
  *
  * The settings message for iterating through the settings
@@ -442,8 +180,7 @@ static inline bool operator!=(const sbp_msg_settings_read_resp_t &a, const sbp_m
  * "MSG_SETTINGS_READ_BY_INDEX_RESP".
  */
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_REQ 0x00A2
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
@@ -451,80 +188,9 @@ typedef struct
    * 0 to length(settings)
    */
   u16 index;
-} sbp_msg_settings_read_by_index_req_t;
 
-static inline size_t
-sbp_packed_size_sbp_msg_settings_read_by_index_req_t(const sbp_msg_settings_read_by_index_req_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->index);
-}
+} msg_settings_read_by_index_req_t;
 
-static inline bool
-sbp_pack_sbp_msg_settings_read_by_index_req_t(u8 *buf, size_t len, const sbp_msg_settings_read_by_index_req_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_settings_read_by_index_req_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgindex = htole16(msg->index);
-  memcpy(buf + offset, &msgindex, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-static inline bool
-sbp_unpack_sbp_msg_settings_read_by_index_req_t(const u8 *buf, size_t len, sbp_msg_settings_read_by_index_req_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->index, buf + offset, 2);
-  msg->index = le16toh(msg->index);
-  // NOLINTNEXTLINE
-  offset += 2;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_settings_read_by_index_req_t &a,
-                              const sbp_msg_settings_read_by_index_req_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.index != b.index)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_settings_read_by_index_req_t &a,
-                              const sbp_msg_settings_read_by_index_req_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Read setting by direct index (host <= device)
  *
  * The settings message that reports the value of a setting at an index.
@@ -539,8 +205,7 @@ static inline bool operator!=(const sbp_msg_settings_read_by_index_req_t &a,
  * the device is "simulator\0enabled\0True\0enum:True,False\0"
  */
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_RESP 0x00A7
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
@@ -548,159 +213,21 @@ typedef struct
    * 0 to length(settings)
    */
   u16 index;
+
   /**
    * A NULL-terminated and delimited string with contents
    * "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
    */
-  char setting[253];
-} sbp_msg_settings_read_by_index_resp_t;
+  char setting[0];
 
-static inline size_t
-sbp_packed_size_sbp_msg_settings_read_by_index_resp_t(const sbp_msg_settings_read_by_index_resp_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->index) + sbp_strlen(msg->setting, "3-4-section");
-}
+} msg_settings_read_by_index_resp_t;
 
-static inline bool
-sbp_pack_sbp_msg_settings_read_by_index_resp_t(u8 *buf, size_t len, const sbp_msg_settings_read_by_index_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_settings_read_by_index_resp_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgindex = htole16(msg->index);
-  memcpy(buf + offset, &msgindex, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-  if (offset + sbp_strlen(msg->setting, "3-4-section") > len)
-  {
-    return false;
-  }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->setting, "3-4-section");
-  return true;
-}
-
-static inline bool
-sbp_unpack_sbp_msg_settings_read_by_index_resp_t(const u8 *buf, size_t len, sbp_msg_settings_read_by_index_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->index, buf + offset, 2);
-  msg->index = le16toh(msg->index);
-  // NOLINTNEXTLINE
-  offset += 2;
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "3-4-section");
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_settings_read_by_index_resp_t &a,
-                              const sbp_msg_settings_read_by_index_resp_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.index != b.index)
-  {
-    return false;
-  }
-  if (sbp_strcmp(a.setting, b.setting, "3-4-section") != 0)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_settings_read_by_index_resp_t &a,
-                              const sbp_msg_settings_read_by_index_resp_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Finished reading settings (host <= device)
  *
  * The settings message for indicating end of the settings values.
  */
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_DONE 0x00A6
 
-typedef struct
-{
-  char dummy_to_avoid_empty_struct___do_not_use;
-} sbp_msg_settings_read_by_index_done_t;
-
-static inline size_t
-sbp_packed_size_sbp_msg_settings_read_by_index_done_t(const sbp_msg_settings_read_by_index_done_t *msg)
-{
-  (void)msg;
-  return 0;
-}
-
-static inline bool
-sbp_pack_sbp_msg_settings_read_by_index_done_t(u8 *buf, size_t len, const sbp_msg_settings_read_by_index_done_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_settings_read_by_index_done_t(msg) > len)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool
-sbp_unpack_sbp_msg_settings_read_by_index_done_t(const u8 *buf, size_t len, sbp_msg_settings_read_by_index_done_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_settings_read_by_index_done_t &a,
-                              const sbp_msg_settings_read_by_index_done_t &b)
-{
-  (void)a;
-  (void)b;
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_settings_read_by_index_done_t &a,
-                              const sbp_msg_settings_read_by_index_done_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Register setting and default value (device => host)
  *
  * This message registers the presence and default value of a setting
@@ -708,76 +235,33 @@ static inline bool operator!=(const sbp_msg_settings_read_by_index_done_t &a,
  * for this setting to set the initial value.
  */
 #define SBP_MSG_SETTINGS_REGISTER 0x00AE
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * A NULL-terminated and delimited string with contents
    * "SECTION_SETTING\0SETTING\0VALUE".
    */
-  char setting[255];
-} sbp_msg_settings_register_t;
+  char setting[0];
 
-static inline size_t sbp_packed_size_sbp_msg_settings_register_t(const sbp_msg_settings_register_t *msg)
-{
-  (void)msg;
-  return 0 + sbp_strlen(msg->setting, "3-section");
-}
+} msg_settings_register_t;
 
-static inline bool sbp_pack_sbp_msg_settings_register_t(u8 *buf, size_t len, const sbp_msg_settings_register_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_settings_register_t(msg) > len)
-  {
-    return false;
-  }
+#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK (0x3)
+#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT (0u)
+#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_GET(flags) \
+  (((flags) >> SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT) & SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK)
+#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= (((val) & (SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_MASK)) \
+                 << (SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_SHIFT))); \
+  } while (0)
 
-  if (offset + sbp_strlen(msg->setting, "3-section") > len)
-  {
-    return false;
-  }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->setting, "3-section");
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_settings_register_t(const u8 *buf, size_t len, sbp_msg_settings_register_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "3-section");
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_settings_register_t &a, const sbp_msg_settings_register_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (sbp_strcmp(a.setting, b.setting, "3-section") != 0)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_settings_register_t &a, const sbp_msg_settings_register_t &b)
-{
-  return !(a == b);
-}
-#endif
+#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_ACCEPTED_REQUESTED_DEFAULT_VALUE_RETURNED (0)
+#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_ACCEPTED_SETTING_FOUND_IN_PERMANENT_STORAGE_VALUE_FROM_STORAGE_RETURNED \
+  (1)
+#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_REJECTED_SETTING_ALREADY_REGISTERED_VALUE_FROM_MEMORY_RETURNED (2)
+#define SBP_SETTINGS_REGISTER_RESP_REGISTER_STATUS_REJECTED_MALFORMED_MESSAGE (3)
 /** Register setting and default value (device <= host)
  *
  * This message responds to setting registration with the effective value.
@@ -786,119 +270,25 @@ static inline bool operator!=(const sbp_msg_settings_register_t &a, const sbp_ms
  * and had a different value.
  */
 #define SBP_MSG_SETTINGS_REGISTER_RESP 0x01AF
-
-#define SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_MASK (0x3)
-#define SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_SHIFT (0u)
-#define SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_GET(flags) \
-  (((flags) >> SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_SHIFT) & \
-   SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_MASK)
-#define SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_MASK)) \
-                 << (SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_SHIFT))); \
-  } while (0)
-
-#define SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_ACCEPTED_REQUESTED_DEFAULT_VALUE_RETURNED (0)
-#define SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_ACCEPTED_SETTING_FOUND_IN_PERMANENT_STORAGE_VALUE_FROM_STORAGE_RETURNED \
-  (1)
-#define SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_REJECTED_SETTING_ALREADY_REGISTERED_VALUE_FROM_MEMORY_RETURNED \
-  (2)
-#define SBP_SETTINGS_REGISTER_RESP_STATUS_REGISTER_STATUS_REJECTED_MALFORMED_MESSAGE (3)
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Register status
    */
   u8 status;
+
   /**
    * A NULL-terminated and delimited string with contents
    * "SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined
    * according to the status field.
    */
-  char setting[254];
-} sbp_msg_settings_register_resp_t;
+  char setting[0];
 
-static inline size_t sbp_packed_size_sbp_msg_settings_register_resp_t(const sbp_msg_settings_register_resp_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->status) + sbp_strlen(msg->setting, "3-section");
-}
+} msg_settings_register_resp_t;
 
-static inline bool
-sbp_pack_sbp_msg_settings_register_resp_t(u8 *buf, size_t len, const sbp_msg_settings_register_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_settings_register_resp_t(msg) > len)
-  {
-    return false;
-  }
+/** \} */
 
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgstatus = msg->status;
-  memcpy(buf + offset, &msgstatus, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  if (offset + sbp_strlen(msg->setting, "3-section") > len)
-  {
-    return false;
-  }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->setting, "3-section");
-  return true;
-}
-
-static inline bool
-sbp_unpack_sbp_msg_settings_register_resp_t(const u8 *buf, size_t len, sbp_msg_settings_register_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->status, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->setting, "3-section");
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_settings_register_resp_t &a, const sbp_msg_settings_register_resp_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.status != b.status)
-  {
-    return false;
-  }
-  if (sbp_strcmp(a.setting, b.setting, "3-section") != 0)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_settings_register_resp_t &a, const sbp_msg_settings_register_resp_t &b)
-{
-  return !(a == b);
-}
-#endif
+SBP_PACK_END
 
 #endif /* LIBSBP_SETTINGS_MESSAGES_H */

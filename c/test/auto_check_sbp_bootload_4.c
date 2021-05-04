@@ -15,8 +15,8 @@
 
 #include <check.h>
 #include <libsbp/bootload.h>
-#include <libsbp/packed/bootload.h>
 #include <libsbp/sbp.h>
+#include <libsbp/unpacked/bootload.h>
 #include <stdio.h>  // for debugging
 #include <stdlib.h> // for malloc
 

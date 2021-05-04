@@ -14,9 +14,9 @@
 // modify by hand!
 
 #include <check.h>
-#include <libsbp/packed/sbas.h>
 #include <libsbp/sbas.h>
 #include <libsbp/sbp.h>
+#include <libsbp/unpacked/sbas.h>
 #include <stdio.h>  // for debugging
 #include <stdlib.h> // for malloc
 

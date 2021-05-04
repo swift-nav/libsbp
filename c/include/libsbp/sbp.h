@@ -14,7 +14,7 @@
 #define LIBSBP_SBP_H
 
 #include <libsbp/common.h>
-#include <libsbp/sbp_msg.h>
+#include <libsbp/unpacked/sbp_msg.h>
 
 #ifdef __cplusplus
 extern "C"

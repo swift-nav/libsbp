@@ -15,8 +15,8 @@
 
 #include <check.h>
 #include <libsbp/imu.h>
-#include <libsbp/packed/imu.h>
 #include <libsbp/sbp.h>
+#include <libsbp/unpacked/imu.h>
 #include <stdio.h>  // for debugging
 #include <stdlib.h> // for malloc
 

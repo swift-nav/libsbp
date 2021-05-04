@@ -1,14 +1,39 @@
-#ifndef LIBSBP_FILE_IO_MESSAGES_H
-#define LIBSBP_FILE_IO_MESSAGES_H
+/*
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: https://support.swiftnav.com
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
-#include <endian.h>
-#include <math.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <string.h>
+/*****************************************************************************
+ * Automatically generated from yaml/swiftnav/sbp/file_io.yaml
+ * with generate.py. Please do not hand edit!
+ *****************************************************************************/
+
+/** \defgroup file_io File_io
+ *
+ *  * Messages for using device's onboard flash filesystem
+ * functionality. This allows data to be stored persistently in the
+ * device's program flash with wear-levelling using a simple filesystem
+ * interface. The file system interface (CFS) defines an abstract API
+ * for reading directories and for reading and writing files.
+ *
+ * Note that some of these messages share the same message type ID for both the
+ * host request and the device response.
+ * \{ */
+
+#ifndef LIBSBP_PACKED_FILE_IO_MESSAGES_H
+#define LIBSBP_PACKED_FILE_IO_MESSAGES_H
 
 #include <libsbp/common.h>
+
+SBP_PACK_START
+
 /** Read file from the file system (host => device)
  *
  * The file read message reads a certain length (up to 255 bytes)
@@ -21,152 +46,31 @@
  * to this message when it is received from sender ID 0x42.
  */
 #define SBP_MSG_FILEIO_READ_REQ 0x00A8
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Read sequence number
    */
   u32 sequence;
+
   /**
-   * File offset[bytes]
+   * File offset [bytes]
    */
   u32 offset;
+
   /**
-   * Chunk size to read[bytes]
+   * Chunk size to read [bytes]
    */
   u8 chunk_size;
+
   /**
    * Name of the file to read from
    */
-  char filename[246];
-} sbp_msg_fileio_read_req_t;
+  char filename[0];
 
-static inline size_t sbp_packed_size_sbp_msg_fileio_read_req_t(const sbp_msg_fileio_read_req_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->sequence) + sizeof(msg->offset) + sizeof(msg->chunk_size) + sbp_strlen(msg->filename, "nul");
-}
+} msg_fileio_read_req_t;
 
-static inline bool sbp_pack_sbp_msg_fileio_read_req_t(u8 *buf, size_t len, const sbp_msg_fileio_read_req_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_fileio_read_req_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgsequence = htole32(msg->sequence);
-  memcpy(buf + offset, &msgsequence, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgoffset = htole32(msg->offset);
-  memcpy(buf + offset, &msgoffset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgchunk_size = msg->chunk_size;
-  memcpy(buf + offset, &msgchunk_size, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  if (offset + sbp_strlen(msg->filename, "nul") > len)
-  {
-    return false;
-  }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->filename, "nul");
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_fileio_read_req_t(const u8 *buf, size_t len, sbp_msg_fileio_read_req_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sequence, buf + offset, 4);
-  msg->sequence = le32toh(msg->sequence);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->offset, buf + offset, 4);
-  msg->offset = le32toh(msg->offset);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->chunk_size, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->filename, "nul");
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.sequence != b.sequence)
-  {
-    return false;
-  }
-
-  if (a.offset != b.offset)
-  {
-    return false;
-  }
-
-  if (a.chunk_size != b.chunk_size)
-  {
-    return false;
-  }
-  if (sbp_strcmp(a.filename, b.filename, "nul") != 0)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_fileio_read_req_t &a, const sbp_msg_fileio_read_req_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** File read from the file system (host <= device)
  *
  * The file read message reads a certain length (up to 255 bytes)
@@ -176,128 +80,21 @@ static inline bool operator!=(const sbp_msg_fileio_read_req_t &a, const sbp_msg_
  * preserved from the request.
  */
 #define SBP_MSG_FILEIO_READ_RESP 0x00A3
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Read sequence number
    */
   u32 sequence;
+
   /**
    * Contents of read file
    */
-  u8 contents[251];
-  /**
-   * Number of items in contents
-   */
-  u8 n_contents;
-} sbp_msg_fileio_read_resp_t;
+  u8 contents[0];
 
-static inline size_t sbp_packed_size_sbp_msg_fileio_read_resp_t(const sbp_msg_fileio_read_resp_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->sequence) + (msg->n_contents * sizeof(msg->contents[0]));
-}
+} msg_fileio_read_resp_t;
 
-static inline bool sbp_pack_sbp_msg_fileio_read_resp_t(u8 *buf, size_t len, const sbp_msg_fileio_read_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_fileio_read_resp_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgsequence = htole32(msg->sequence);
-  memcpy(buf + offset, &msgsequence, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-  for (size_t msgcontents_idx = 0; msgcontents_idx < (size_t)msg->n_contents; msgcontents_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgcontentsmsgcontents_idx = msg->contents[msgcontents_idx];
-    memcpy(buf + offset, &msgcontentsmsgcontents_idx, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_fileio_read_resp_t(const u8 *buf, size_t len, sbp_msg_fileio_read_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sequence, buf + offset, 4);
-  msg->sequence = le32toh(msg->sequence);
-  // NOLINTNEXTLINE
-  offset += 4;
-  msg->n_contents = (u8)((len - offset) / 1);
-
-  for (size_t msgcontents_idx = 0; msgcontents_idx < msg->n_contents; msgcontents_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->contents[msgcontents_idx], buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.sequence != b.sequence)
-  {
-    return false;
-  }
-  if (a.n_contents != b.n_contents)
-  {
-    return false;
-  }
-  for (size_t contents_idx = 0; contents_idx < (size_t)a.n_contents; contents_idx++)
-  {
-
-    if (a.contents[contents_idx] != b.contents[contents_idx])
-    {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_fileio_read_resp_t &a, const sbp_msg_fileio_read_resp_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** List files in a directory (host => device)
  *
  * The read directory message lists the files in a directory on the
@@ -312,127 +109,26 @@ static inline bool operator!=(const sbp_msg_fileio_read_resp_t &a, const sbp_msg
  * from sender ID 0x42.
  */
 #define SBP_MSG_FILEIO_READ_DIR_REQ 0x00A9
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Read sequence number
    */
   u32 sequence;
+
   /**
    * The offset to skip the first n elements of the file list
    */
   u32 offset;
+
   /**
    * Name of the directory to list
    */
-  char dirname[247];
-} sbp_msg_fileio_read_dir_req_t;
+  char dirname[0];
 
-static inline size_t sbp_packed_size_sbp_msg_fileio_read_dir_req_t(const sbp_msg_fileio_read_dir_req_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->sequence) + sizeof(msg->offset) + sbp_strlen(msg->dirname, "nul");
-}
+} msg_fileio_read_dir_req_t;
 
-static inline bool sbp_pack_sbp_msg_fileio_read_dir_req_t(u8 *buf, size_t len, const sbp_msg_fileio_read_dir_req_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_fileio_read_dir_req_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgsequence = htole32(msg->sequence);
-  memcpy(buf + offset, &msgsequence, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgoffset = htole32(msg->offset);
-  memcpy(buf + offset, &msgoffset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-  if (offset + sbp_strlen(msg->dirname, "nul") > len)
-  {
-    return false;
-  }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->dirname, "nul");
-  return true;
-}
-
-static inline bool
-sbp_unpack_sbp_msg_fileio_read_dir_req_t(const u8 *buf, size_t len, sbp_msg_fileio_read_dir_req_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sequence, buf + offset, 4);
-  msg->sequence = le32toh(msg->sequence);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->offset, buf + offset, 4);
-  msg->offset = le32toh(msg->offset);
-  // NOLINTNEXTLINE
-  offset += 4;
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->dirname, "nul");
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.sequence != b.sequence)
-  {
-    return false;
-  }
-
-  if (a.offset != b.offset)
-  {
-    return false;
-  }
-  if (sbp_strcmp(a.dirname, b.dirname, "nul") != 0)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_fileio_read_dir_req_t &a, const sbp_msg_fileio_read_dir_req_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Files listed in a directory (host <= device)
  *
  * The read directory message lists the files in a directory on the
@@ -443,130 +139,21 @@ static inline bool operator!=(const sbp_msg_fileio_read_dir_req_t &a, const sbp_
  * the response is preserved from the request.
  */
 #define SBP_MSG_FILEIO_READ_DIR_RESP 0x00AA
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Read sequence number
    */
   u32 sequence;
+
   /**
    * Contents of read directory
    */
-  u8 contents[251];
-  /**
-   * Number of items in contents
-   */
-  u8 n_contents;
-} sbp_msg_fileio_read_dir_resp_t;
+  u8 contents[0];
 
-static inline size_t sbp_packed_size_sbp_msg_fileio_read_dir_resp_t(const sbp_msg_fileio_read_dir_resp_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->sequence) + (msg->n_contents * sizeof(msg->contents[0]));
-}
+} msg_fileio_read_dir_resp_t;
 
-static inline bool
-sbp_pack_sbp_msg_fileio_read_dir_resp_t(u8 *buf, size_t len, const sbp_msg_fileio_read_dir_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_fileio_read_dir_resp_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgsequence = htole32(msg->sequence);
-  memcpy(buf + offset, &msgsequence, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-  for (size_t msgcontents_idx = 0; msgcontents_idx < (size_t)msg->n_contents; msgcontents_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgcontentsmsgcontents_idx = msg->contents[msgcontents_idx];
-    memcpy(buf + offset, &msgcontentsmsgcontents_idx, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-static inline bool
-sbp_unpack_sbp_msg_fileio_read_dir_resp_t(const u8 *buf, size_t len, sbp_msg_fileio_read_dir_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sequence, buf + offset, 4);
-  msg->sequence = le32toh(msg->sequence);
-  // NOLINTNEXTLINE
-  offset += 4;
-  msg->n_contents = (u8)((len - offset) / 1);
-
-  for (size_t msgcontents_idx = 0; msgcontents_idx < msg->n_contents; msgcontents_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->contents[msgcontents_idx], buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.sequence != b.sequence)
-  {
-    return false;
-  }
-  if (a.n_contents != b.n_contents)
-  {
-    return false;
-  }
-  for (size_t contents_idx = 0; contents_idx < (size_t)a.n_contents; contents_idx++)
-  {
-
-    if (a.contents[contents_idx] != b.contents[contents_idx])
-    {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_fileio_read_dir_resp_t &a, const sbp_msg_fileio_read_dir_resp_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Delete a file from the file system (host => device)
  *
  * The file remove message deletes a file from the file system.
@@ -575,75 +162,16 @@ static inline bool operator!=(const sbp_msg_fileio_read_dir_resp_t &a, const sbp
  * process this message when it is received from sender ID 0x42.
  */
 #define SBP_MSG_FILEIO_REMOVE 0x00AC
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Name of the file to delete
    */
-  char filename[255];
-} sbp_msg_fileio_remove_t;
+  char filename[0];
 
-static inline size_t sbp_packed_size_sbp_msg_fileio_remove_t(const sbp_msg_fileio_remove_t *msg)
-{
-  (void)msg;
-  return 0 + sbp_strlen(msg->filename, "nul");
-}
+} msg_fileio_remove_t;
 
-static inline bool sbp_pack_sbp_msg_fileio_remove_t(u8 *buf, size_t len, const sbp_msg_fileio_remove_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_fileio_remove_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + sbp_strlen(msg->filename, "nul") > len)
-  {
-    return false;
-  }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->filename, "nul");
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_fileio_remove_t(const u8 *buf, size_t len, sbp_msg_fileio_remove_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->filename, "nul");
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (sbp_strcmp(a.filename, b.filename, "nul") != 0)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_fileio_remove_t &a, const sbp_msg_fileio_remove_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Write to file (host => device)
  *
  * The file write message writes a certain length (up to 255 bytes)
@@ -656,172 +184,31 @@ static inline bool operator!=(const sbp_msg_fileio_remove_t &a, const sbp_msg_fi
  * 0x42.
  */
 #define SBP_MSG_FILEIO_WRITE_REQ 0x00AD
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Write sequence number
    */
   u32 sequence;
+
   /**
-   * Offset into the file at which to start writing in bytes[bytes]
+   * Offset into the file at which to start writing in bytes [bytes]
    */
   u32 offset;
+
   /**
    * Name of the file to write to
    */
-  char filename[247];
+  char filename[0];
+
   /**
    * Variable-length array of data to write
    */
-  u8 data[246];
-  /**
-   * Number of items in data
-   */
-  u8 n_data;
-} sbp_msg_fileio_write_req_t;
+  u8 data[0];
 
-static inline size_t sbp_packed_size_sbp_msg_fileio_write_req_t(const sbp_msg_fileio_write_req_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->sequence) + sizeof(msg->offset) + sbp_strlen(msg->filename, "nul") +
-         (msg->n_data * sizeof(msg->data[0]));
-}
+} msg_fileio_write_req_t;
 
-static inline bool sbp_pack_sbp_msg_fileio_write_req_t(u8 *buf, size_t len, const sbp_msg_fileio_write_req_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_fileio_write_req_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgsequence = htole32(msg->sequence);
-  memcpy(buf + offset, &msgsequence, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgoffset = htole32(msg->offset);
-  memcpy(buf + offset, &msgoffset, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-  if (offset + sbp_strlen(msg->filename, "nul") > len)
-  {
-    return false;
-  }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->filename, "nul");
-  for (size_t msgdata_idx = 0; msgdata_idx < (size_t)msg->n_data; msgdata_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgdatamsgdata_idx = msg->data[msgdata_idx];
-    memcpy(buf + offset, &msgdatamsgdata_idx, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_fileio_write_req_t(const u8 *buf, size_t len, sbp_msg_fileio_write_req_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sequence, buf + offset, 4);
-  msg->sequence = le32toh(msg->sequence);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->offset, buf + offset, 4);
-  msg->offset = le32toh(msg->offset);
-  // NOLINTNEXTLINE
-  offset += 4;
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->filename, "nul");
-  msg->n_data = (u8)((len - offset) / 1);
-
-  for (size_t msgdata_idx = 0; msgdata_idx < msg->n_data; msgdata_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->data[msgdata_idx], buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_fileio_write_req_t &a, const sbp_msg_fileio_write_req_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.sequence != b.sequence)
-  {
-    return false;
-  }
-
-  if (a.offset != b.offset)
-  {
-    return false;
-  }
-  if (sbp_strcmp(a.filename, b.filename, "nul") != 0)
-  {
-    return false;
-  }
-  if (a.n_data != b.n_data)
-  {
-    return false;
-  }
-  for (size_t data_idx = 0; data_idx < (size_t)a.n_data; data_idx++)
-  {
-
-    if (a.data[data_idx] != b.data[data_idx])
-    {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_fileio_write_req_t &a, const sbp_msg_fileio_write_req_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** File written to (host <= device)
  *
  * The file write message writes a certain length (up to 255 bytes)
@@ -831,83 +218,16 @@ static inline bool operator!=(const sbp_msg_fileio_write_req_t &a, const sbp_msg
  * request.
  */
 #define SBP_MSG_FILEIO_WRITE_RESP 0x00AB
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Write sequence number
    */
   u32 sequence;
-} sbp_msg_fileio_write_resp_t;
 
-static inline size_t sbp_packed_size_sbp_msg_fileio_write_resp_t(const sbp_msg_fileio_write_resp_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->sequence);
-}
+} msg_fileio_write_resp_t;
 
-static inline bool sbp_pack_sbp_msg_fileio_write_resp_t(u8 *buf, size_t len, const sbp_msg_fileio_write_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_fileio_write_resp_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgsequence = htole32(msg->sequence);
-  memcpy(buf + offset, &msgsequence, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_fileio_write_resp_t(const u8 *buf, size_t len, sbp_msg_fileio_write_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sequence, buf + offset, 4);
-  msg->sequence = le32toh(msg->sequence);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_fileio_write_resp_t &a, const sbp_msg_fileio_write_resp_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.sequence != b.sequence)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_fileio_write_resp_t &a, const sbp_msg_fileio_write_resp_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Request advice on the optimal configuration for FileIO.
  *
  * Requests advice on the optimal configuration for a FileIO
@@ -916,249 +236,52 @@ static inline bool operator!=(const sbp_msg_fileio_write_resp_t &a, const sbp_ms
  * that can be in-flight during read or write operations.
  */
 #define SBP_MSG_FILEIO_CONFIG_REQ 0x1001
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Advice sequence number
    */
   u32 sequence;
-} sbp_msg_fileio_config_req_t;
 
-static inline size_t sbp_packed_size_sbp_msg_fileio_config_req_t(const sbp_msg_fileio_config_req_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->sequence);
-}
+} msg_fileio_config_req_t;
 
-static inline bool sbp_pack_sbp_msg_fileio_config_req_t(u8 *buf, size_t len, const sbp_msg_fileio_config_req_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_fileio_config_req_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgsequence = htole32(msg->sequence);
-  memcpy(buf + offset, &msgsequence, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_fileio_config_req_t(const u8 *buf, size_t len, sbp_msg_fileio_config_req_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sequence, buf + offset, 4);
-  msg->sequence = le32toh(msg->sequence);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_fileio_config_req_t &a, const sbp_msg_fileio_config_req_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.sequence != b.sequence)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_fileio_config_req_t &a, const sbp_msg_fileio_config_req_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Response with advice on the optimal configuration for FileIO.
 
  *
-* The advice on the optimal configuration for a FileIO
-* transfer.  Newer version of FileIO can support greater
-* throughput by supporting a large window of FileIO data
-* that can be in-flight during read or write operations.
+ * The advice on the optimal configuration for a FileIO
+ * transfer.  Newer version of FileIO can support greater
+ * throughput by supporting a large window of FileIO data
+ * that can be in-flight during read or write operations.
  */
 #define SBP_MSG_FILEIO_CONFIG_RESP 0x1002
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Advice sequence number
    */
   u32 sequence;
+
   /**
    * The number of SBP packets in the data in-flight window
    */
   u32 window_size;
+
   /**
    * The number of SBP packets sent in one PDU
    */
   u32 batch_size;
+
   /**
    * The version of FileIO that is supported
    */
   u32 fileio_version;
-} sbp_msg_fileio_config_resp_t;
 
-static inline size_t sbp_packed_size_sbp_msg_fileio_config_resp_t(const sbp_msg_fileio_config_resp_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->sequence) + sizeof(msg->window_size) + sizeof(msg->batch_size) + sizeof(msg->fileio_version);
-}
+} msg_fileio_config_resp_t;
 
-static inline bool sbp_pack_sbp_msg_fileio_config_resp_t(u8 *buf, size_t len, const sbp_msg_fileio_config_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_fileio_config_resp_t(msg) > len)
-  {
-    return false;
-  }
+/** \} */
 
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgsequence = htole32(msg->sequence);
-  memcpy(buf + offset, &msgsequence, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgwindow_size = htole32(msg->window_size);
-  memcpy(buf + offset, &msgwindow_size, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgbatch_size = htole32(msg->batch_size);
-  memcpy(buf + offset, &msgbatch_size, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgfileio_version = htole32(msg->fileio_version);
-  memcpy(buf + offset, &msgfileio_version, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_fileio_config_resp_t(const u8 *buf, size_t len, sbp_msg_fileio_config_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sequence, buf + offset, 4);
-  msg->sequence = le32toh(msg->sequence);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->window_size, buf + offset, 4);
-  msg->window_size = le32toh(msg->window_size);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->batch_size, buf + offset, 4);
-  msg->batch_size = le32toh(msg->batch_size);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->fileio_version, buf + offset, 4);
-  msg->fileio_version = le32toh(msg->fileio_version);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_fileio_config_resp_t &a, const sbp_msg_fileio_config_resp_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.sequence != b.sequence)
-  {
-    return false;
-  }
-
-  if (a.window_size != b.window_size)
-  {
-    return false;
-  }
-
-  if (a.batch_size != b.batch_size)
-  {
-    return false;
-  }
-
-  if (a.fileio_version != b.fileio_version)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_fileio_config_resp_t &a, const sbp_msg_fileio_config_resp_t &b)
-{
-  return !(a == b);
-}
-#endif
+SBP_PACK_END
 
 #endif /* LIBSBP_FILE_IO_MESSAGES_H */

@@ -15,8 +15,8 @@
 
 #include <check.h>
 #include <libsbp/observation.h>
-#include <libsbp/packed/observation.h>
 #include <libsbp/sbp.h>
+#include <libsbp/unpacked/observation.h>
 #include <stdio.h>  // for debugging
 #include <stdlib.h> // for malloc
 

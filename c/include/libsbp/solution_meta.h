@@ -1,419 +1,184 @@
-#ifndef LIBSBP_SOLUTION_META_MESSAGES_H
-#define LIBSBP_SOLUTION_META_MESSAGES_H
+/*
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: https://support.swiftnav.com
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
-#include <endian.h>
-#include <math.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <string.h>
+/*****************************************************************************
+ * Automatically generated from yaml/swiftnav/sbp/solution_meta.yaml
+ * with generate.py. Please do not hand edit!
+ *****************************************************************************/
+
+/** \defgroup solution_meta Solution_meta
+ *
+ * * Standardized Metadata messages for Fuzed Solution from Swift Navigation devices.
+ * \{ */
+
+#ifndef LIBSBP_PACKED_SOLUTION_META_MESSAGES_H
+#define LIBSBP_PACKED_SOLUTION_META_MESSAGES_H
 
 #include <libsbp/common.h>
+
+SBP_PACK_START
+
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_MASK (0x3)
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_SHIFT (3u)
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_GET(flags) \
+  (((flags) >> SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_SHIFT) & SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_MASK)
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= (((val) & (SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_MASK)) << (SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_SHIFT))); \
+  } while (0)
+
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_UNKNOWN (0)
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_RECEIVED_AND_USED (1)
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_USAGE_RECEIVED_BUT_NOT_USED (2)
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_MASK (0x7)
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_SHIFT (0u)
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_GET(flags) \
+  (((flags) >> SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_SHIFT) & SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_MASK)
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= (((val) & (SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_MASK)) << (SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_SHIFT))); \
+  } while (0)
+
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_INVALID (0)
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_GNSS_POSITION (1)
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_GNSS_VELOCITY_DISPLACEMENT (2)
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_GNSS_VELOCITY_DOPPLER (3)
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_ODOMETRY_TICKS (4)
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_ODOMETRY_SPEED (5)
+#define SBP_SOLUTIONINPUTTYPE_SENSOR_TYPE_IMU_SENSOR (6)
+/** Flags for a given solution input type.
+ *
+ * Metadata describing which sensors were involved in the solution.
+ * The structure is fixed no matter what the actual sensor type is.
+ * The sensor_type field tells you which sensor we are talking about. It also tells you
+ * whether the sensor data was actually used or not.
+ * The flags field, always a u8, contains the sensor-specific data.
+ * The content of flags, for each sensor type, is described in the relevant structures in this section.
+ */
+typedef struct SBP_ATTR_PACKED
+{
+
+  /**
+   * The type of sensor
+   */
+  u8 sensor_type;
+
+  /**
+   * Refer to each InputType description [(XX)InputType]
+   */
+  u8 flags;
+
+} solution_input_type_t;
+
+#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_MASK (0x7)
+#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SHIFT (0u)
+#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_GET(flags) \
+  (((flags) >> SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SHIFT) & SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_MASK)
+#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= \
+     (((val) & (SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_MASK)) << (SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SHIFT))); \
+  } while (0)
+
+#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_UNKNOWN_REASON_OR_ALREADY_ALIGNED (0)
+#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SEED_VALUES_LOADED_AND_ALIGNMENT_IN_PROGRESS (1)
+#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_NO_SEED_VALUES_AND_ALIGNMENT_IN_PROGRESS (2)
+#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_SEED_VALUES_LOADED_BUT_NO_GNSS_MEASUREMENTS (3)
+#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_NO_SEED_VALUES_NOR_GNSS_MEASUREMENTS (4)
 /** Deprecated
  *
  * This message contains all metadata about the sensors received and/or used in computing the Fuzed Solution.
  * It focuses primarly, but not only, on GNSS metadata.
  */
 #define SBP_MSG_SOLN_META_DEP_A 0xFF0F
-
-#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_ALIGNMENT_STATUS_MASK (0x7)
-#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_ALIGNMENT_STATUS_SHIFT (0u)
-#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_ALIGNMENT_STATUS_GET(flags) \
-  (((flags) >> SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_ALIGNMENT_STATUS_SHIFT) & \
-   SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_ALIGNMENT_STATUS_MASK)
-#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_ALIGNMENT_STATUS_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_ALIGNMENT_STATUS_MASK)) \
-                 << (SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_ALIGNMENT_STATUS_SHIFT))); \
-  } while (0)
-
-#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_ALIGNMENT_STATUS_UNKNOWN_REASON_OR_ALREADY_ALIGNED (0)
-#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_ALIGNMENT_STATUS_SEED_VALUES_LOADED_AND_ALIGNMENT_IN_PROGRESS (1)
-#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_ALIGNMENT_STATUS_NO_SEED_VALUES_AND_ALIGNMENT_IN_PROGRESS (2)
-#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_ALIGNMENT_STATUS_SEED_VALUES_LOADED_BUT_NO_GNSS_MEASUREMENTS (3)
-#define SBP_SOLN_META_DEP_A_ALIGNMENT_STATUS_ALIGNMENT_STATUS_NO_SEED_VALUES_NOR_GNSS_MEASUREMENTS (4)
-
-#define SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_MASK (0x3)
-#define SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_SHIFT (3u)
-#define SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_GET(flags) \
-  (((flags) >> SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_SHIFT) & \
-   SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_MASK)
-#define SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_MASK)) \
-                 << (SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_SHIFT))); \
-  } while (0)
-
-#define SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_UNKNOWN (0)
-#define SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_RECEIVED_AND_USED (1)
-#define SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_RECEIVED_BUT_NOT_USED (2)
-#define SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_MASK (0x7)
-#define SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_SHIFT (0u)
-#define SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_GET(flags) \
-  (((flags) >> SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_SHIFT) & \
-   SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_MASK)
-#define SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_MASK)) \
-                 << (SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_SHIFT))); \
-  } while (0)
-
-#define SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_INVALID (0)
-#define SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_GNSS_POSITION (1)
-#define SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_GNSS_VELOCITY_DISPLACEMENT (2)
-#define SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_GNSS_VELOCITY_DOPPLER (3)
-#define SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_ODOMETRY_TICKS (4)
-#define SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_ODOMETRY_SPEED (5)
-#define SBP_SOLN_META_DEP_A_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_IMU_SENSOR (6)
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
-   * Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)[0.01]
+   * Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) [0.01]
    */
   u16 pdop;
+
   /**
-   * Horizontal Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)[0.01]
+   * Horizontal Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) [0.01]
    */
   u16 hdop;
+
   /**
-   * Vertical Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)[0.01]
+   * Vertical Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) [0.01]
    */
   u16 vdop;
+
   /**
    * Number of satellites as per last available solution from PVT engine
    */
   u8 n_sats;
+
   /**
-   * Age of corrections as per last available AGE_CORRECTIONS from PVT engine (0xFFFF indicates invalid)[deciseconds]
+   * Age of corrections as per last available AGE_CORRECTIONS from PVT engine (0xFFFF indicates invalid) [deciseconds]
    */
   u16 age_corrections;
+
   /**
    * State of alignment and the status and receipt of the alignment inputs
    */
   u8 alignment_status;
+
   /**
-   * Tow of last-used GNSS position measurement[ms]
+   * Tow of last-used GNSS position measurement [ms]
    */
   u32 last_used_gnss_pos_tow;
+
   /**
-   * Tow of last-used GNSS velocity measurement[ms]
+   * Tow of last-used GNSS velocity measurement [ms]
    */
   u32 last_used_gnss_vel_tow;
+
   /**
    * Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents
    * a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer
    * to each (XX)InputType descriptor in the present doc.
    */
-  struct
-  {
+  solution_input_type_t sol_in[0];
 
-    /**
-     * The type of sensor
-     */
-    u8 sensor_type;
-    /**
-     * Refer to each InputType description[(XX)InputType]
-     */
-    u8 flags;
-  } sol_in[118];
-  /**
-   * Number of items in sol_in
-   */
-  u8 n_sol_in;
-} sbp_msg_soln_meta_dep_a_t;
+} msg_soln_meta_dep_a_t;
 
-static inline size_t sbp_packed_size_sbp_msg_soln_meta_dep_a_t(const sbp_msg_soln_meta_dep_a_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->pdop) + sizeof(msg->hdop) + sizeof(msg->vdop) + sizeof(msg->n_sats) +
-         sizeof(msg->age_corrections) + sizeof(msg->alignment_status) + sizeof(msg->last_used_gnss_pos_tow) +
-         sizeof(msg->last_used_gnss_vel_tow) +
-         (msg->n_sol_in * (0 + sizeof(msg->sol_in[0].sensor_type) + sizeof(msg->sol_in[0].flags)));
-}
+#define SBP_SOLN_META_TIME_STATUS_MASK (0x3)
+#define SBP_SOLN_META_TIME_STATUS_SHIFT (30u)
+#define SBP_SOLN_META_TIME_STATUS_GET(flags) \
+  (((flags) >> SBP_SOLN_META_TIME_STATUS_SHIFT) & SBP_SOLN_META_TIME_STATUS_MASK)
+#define SBP_SOLN_META_TIME_STATUS_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= (((val) & (SBP_SOLN_META_TIME_STATUS_MASK)) << (SBP_SOLN_META_TIME_STATUS_SHIFT))); \
+  } while (0)
 
-static inline bool sbp_pack_sbp_msg_soln_meta_dep_a_t(u8 *buf, size_t len, const sbp_msg_soln_meta_dep_a_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_soln_meta_dep_a_t(msg) > len)
-  {
-    return false;
-  }
+#define SBP_SOLN_META_TIME_STATUS_AGE_CAN_NOT_BE_USED_TO_RETRIEVE_TOM (0)
+#define SBP_SOLN_META_TIME_STATUS_AGE_CAN_BE_USED_TO_RETRIEVE_TOM (1)
+#define SBP_SOLN_META_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_MASK (0x3fffffff)
+#define SBP_SOLN_META_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_SHIFT (0u)
+#define SBP_SOLN_META_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_GET(flags) \
+  (((flags) >> SBP_SOLN_META_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_SHIFT) & \
+   SBP_SOLN_META_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_MASK)
+#define SBP_SOLN_META_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= (((val) & (SBP_SOLN_META_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_MASK)) \
+                 << (SBP_SOLN_META_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_SHIFT))); \
+  } while (0)
 
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgpdop = htole16(msg->pdop);
-  memcpy(buf + offset, &msgpdop, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msghdop = htole16(msg->hdop);
-  memcpy(buf + offset, &msghdop, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgvdop = htole16(msg->vdop);
-  memcpy(buf + offset, &msgvdop, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgn_sats = msg->n_sats;
-  memcpy(buf + offset, &msgn_sats, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgage_corrections = htole16(msg->age_corrections);
-  memcpy(buf + offset, &msgage_corrections, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgalignment_status = msg->alignment_status;
-  memcpy(buf + offset, &msgalignment_status, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msglast_used_gnss_pos_tow = htole32(msg->last_used_gnss_pos_tow);
-  memcpy(buf + offset, &msglast_used_gnss_pos_tow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msglast_used_gnss_vel_tow = htole32(msg->last_used_gnss_vel_tow);
-  memcpy(buf + offset, &msglast_used_gnss_vel_tow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-  for (size_t msgsol_in_idx = 0; msgsol_in_idx < (size_t)msg->n_sol_in; msgsol_in_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgsol_inmsgsol_in_idxsensor_type = msg->sol_in[msgsol_in_idx].sensor_type;
-    memcpy(buf + offset, &msgsol_inmsgsol_in_idxsensor_type, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgsol_inmsgsol_in_idxflags = msg->sol_in[msgsol_in_idx].flags;
-    memcpy(buf + offset, &msgsol_inmsgsol_in_idxflags, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_soln_meta_dep_a_t(const u8 *buf, size_t len, sbp_msg_soln_meta_dep_a_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->pdop, buf + offset, 2);
-  msg->pdop = le16toh(msg->pdop);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->hdop, buf + offset, 2);
-  msg->hdop = le16toh(msg->hdop);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->vdop, buf + offset, 2);
-  msg->vdop = le16toh(msg->vdop);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->n_sats, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->age_corrections, buf + offset, 2);
-  msg->age_corrections = le16toh(msg->age_corrections);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->alignment_status, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->last_used_gnss_pos_tow, buf + offset, 4);
-  msg->last_used_gnss_pos_tow = le32toh(msg->last_used_gnss_pos_tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->last_used_gnss_vel_tow, buf + offset, 4);
-  msg->last_used_gnss_vel_tow = le32toh(msg->last_used_gnss_vel_tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-  msg->n_sol_in = (u8)((len - offset) / 2);
-
-  for (size_t msgsol_in_idx = 0; msgsol_in_idx < msg->n_sol_in; msgsol_in_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->sol_in[msgsol_in_idx].sensor_type, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->sol_in[msgsol_in_idx].flags, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_soln_meta_dep_a_t &a, const sbp_msg_soln_meta_dep_a_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.pdop != b.pdop)
-  {
-    return false;
-  }
-
-  if (a.hdop != b.hdop)
-  {
-    return false;
-  }
-
-  if (a.vdop != b.vdop)
-  {
-    return false;
-  }
-
-  if (a.n_sats != b.n_sats)
-  {
-    return false;
-  }
-
-  if (a.age_corrections != b.age_corrections)
-  {
-    return false;
-  }
-
-  if (a.alignment_status != b.alignment_status)
-  {
-    return false;
-  }
-
-  if (a.last_used_gnss_pos_tow != b.last_used_gnss_pos_tow)
-  {
-    return false;
-  }
-
-  if (a.last_used_gnss_vel_tow != b.last_used_gnss_vel_tow)
-  {
-    return false;
-  }
-  if (a.n_sol_in != b.n_sol_in)
-  {
-    return false;
-  }
-  for (size_t sol_in_idx = 0; sol_in_idx < (size_t)a.n_sol_in; sol_in_idx++)
-  {
-
-    if (a.sol_in[sol_in_idx].sensor_type != b.sol_in[sol_in_idx].sensor_type)
-    {
-      return false;
-    }
-
-    if (a.sol_in[sol_in_idx].flags != b.sol_in[sol_in_idx].flags)
-    {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_soln_meta_dep_a_t &a, const sbp_msg_soln_meta_dep_a_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Solution Sensors Metadata
  *
  * This message contains all metadata about the sensors received and/or used in computing the sensorfusion solution.
@@ -425,356 +190,187 @@ static inline bool operator!=(const sbp_msg_soln_meta_dep_a_t &a, const sbp_msg_
  * TOM.
  */
 #define SBP_MSG_SOLN_META 0xFF0E
-
-#define SBP_SOLN_META_AGE_GNSS_TIME_STATUS_MASK (0x3)
-#define SBP_SOLN_META_AGE_GNSS_TIME_STATUS_SHIFT (30u)
-#define SBP_SOLN_META_AGE_GNSS_TIME_STATUS_GET(flags) \
-  (((flags) >> SBP_SOLN_META_AGE_GNSS_TIME_STATUS_SHIFT) & SBP_SOLN_META_AGE_GNSS_TIME_STATUS_MASK)
-#define SBP_SOLN_META_AGE_GNSS_TIME_STATUS_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_SOLN_META_AGE_GNSS_TIME_STATUS_MASK)) << (SBP_SOLN_META_AGE_GNSS_TIME_STATUS_SHIFT))); \
-  } while (0)
-
-#define SBP_SOLN_META_AGE_GNSS_TIME_STATUS_AGE_CAN_NOT_BE_USED_TO_RETRIEVE_TOM (0)
-#define SBP_SOLN_META_AGE_GNSS_TIME_STATUS_AGE_CAN_BE_USED_TO_RETRIEVE_TOM (1)
-#define SBP_SOLN_META_AGE_GNSS_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_MASK (0x3fffffff)
-#define SBP_SOLN_META_AGE_GNSS_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_SHIFT (0u)
-#define SBP_SOLN_META_AGE_GNSS_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_GET(flags) \
-  (((flags) >> SBP_SOLN_META_AGE_GNSS_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_SHIFT) & \
-   SBP_SOLN_META_AGE_GNSS_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_MASK)
-#define SBP_SOLN_META_AGE_GNSS_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_SOLN_META_AGE_GNSS_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_MASK)) \
-                 << (SBP_SOLN_META_AGE_GNSS_AGE_OF_THE_LAST_RECEIVED_VALID_GNSS_SOLUTION_SHIFT))); \
-  } while (0)
-
-#define SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_MASK (0x3)
-#define SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_SHIFT (3u)
-#define SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_GET(flags) \
-  (((flags) >> SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_SHIFT) & \
-   SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_MASK)
-#define SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_MASK)) \
-                 << (SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_SHIFT))); \
-  } while (0)
-
-#define SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_UNKNOWN (0)
-#define SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_RECEIVED_AND_USED (1)
-#define SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_USAGE_RECEIVED_BUT_NOT_USED (2)
-#define SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_MASK (0x7)
-#define SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_SHIFT (0u)
-#define SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_GET(flags) \
-  (((flags) >> SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_SHIFT) & SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_MASK)
-#define SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_MASK)) \
-                 << (SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_SHIFT))); \
-  } while (0)
-
-#define SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_INVALID (0)
-#define SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_GNSS_POSITION (1)
-#define SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_GNSS_VELOCITY_DISPLACEMENT (2)
-#define SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_GNSS_VELOCITY_DOPPLER (3)
-#define SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_ODOMETRY_TICKS (4)
-#define SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_ODOMETRY_SPEED (5)
-#define SBP_SOLN_META_SOL_IN_SENSOR_TYPE_SENSOR_TYPE_IMU_SENSOR (6)
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
-   * GPS time of week rounded to the nearest millisecond[ms]
+   * GPS time of week rounded to the nearest millisecond [ms]
    */
   u32 tow;
+
   /**
-   * Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)[0.01]
+   * Position Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) [0.01]
    */
   u16 pdop;
+
   /**
-   * Horizontal Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)[0.01]
+   * Horizontal Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) [0.01]
    */
   u16 hdop;
+
   /**
-   * Vertical Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid)[0.01]
+   * Vertical Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) [0.01]
    */
   u16 vdop;
+
   /**
-   * Age of corrections as per last available AGE_CORRECTIONS from PVT engine (0xFFFF indicates invalid)[deciseconds]
+   * Age of corrections as per last available AGE_CORRECTIONS from PVT engine (0xFFFF indicates invalid) [deciseconds]
    */
   u16 age_corrections;
+
   /**
-   * Age and Time Status of the last received valid GNSS solution.[ms]
+   * Age and Time Status of the last received valid GNSS solution. [ms]
    */
   u32 age_gnss;
+
   /**
    * Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents
    * a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer
    * to each (XX)InputType descriptor in the present doc.
    */
-  struct
-  {
+  solution_input_type_t sol_in[0];
 
-    /**
-     * The type of sensor
-     */
-    u8 sensor_type;
-    /**
-     * Refer to each InputType description[(XX)InputType]
-     */
-    u8 flags;
-  } sol_in[119];
+} msg_soln_meta_t;
+
+#define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_MASK (0x3)
+#define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_SHIFT (0u)
+#define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_GET(flags) \
+  (((flags) >> SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_SHIFT) & SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_MASK)
+#define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= (((val) & (SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_MASK)) \
+                 << (SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_SHIFT))); \
+  } while (0)
+
+#define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_GNSS_POSITION (0)
+#define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_GNSS_VELOCITY_DOPPLER (1)
+#define SBP_GNSSINPUTTYPE_TYPE_OF_GNSS_MEASUREMENT_GNSS_VELOCITY_DISPLACEMENT (2)
+/** Instruments the physical type of GNSS sensor input to the fuzed solution.
+ *
+ * Metadata around the GNSS sensors involved in the fuzed solution.
+ * Accessible through sol_in[N].flags in a MSG_SOLN_META.
+ */
+typedef struct SBP_ATTR_PACKED
+{
+
   /**
-   * Number of items in sol_in
+   * flags that store all relevant info specific to this sensor type.
    */
-  u8 n_sol_in;
-} sbp_msg_soln_meta_t;
+  u8 flags;
 
-static inline size_t sbp_packed_size_sbp_msg_soln_meta_t(const sbp_msg_soln_meta_t *msg)
+} gnss_input_type_t;
+
+#define SBP_IMUINPUTTYPE_TIME_STATUS_MASK (0x3)
+#define SBP_IMUINPUTTYPE_TIME_STATUS_SHIFT (4u)
+#define SBP_IMUINPUTTYPE_TIME_STATUS_GET(flags) \
+  (((flags) >> SBP_IMUINPUTTYPE_TIME_STATUS_SHIFT) & SBP_IMUINPUTTYPE_TIME_STATUS_MASK)
+#define SBP_IMUINPUTTYPE_TIME_STATUS_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= (((val) & (SBP_IMUINPUTTYPE_TIME_STATUS_MASK)) << (SBP_IMUINPUTTYPE_TIME_STATUS_SHIFT))); \
+  } while (0)
+
+#define SBP_IMUINPUTTYPE_TIME_STATUS_REFERENCE_EPOCH_IS_START_OF_CURRENT_GPS_WEEK (0)
+#define SBP_IMUINPUTTYPE_TIME_STATUS_REFERENCE_EPOCH_IS_TIME_OF_SYSTEM_STARTUP (1)
+#define SBP_IMUINPUTTYPE_TIME_STATUS_REFERENCE_EPOCH_IS_UNKNOWN (2)
+#define SBP_IMUINPUTTYPE_TIME_STATUS_REFERENCE_EPOCH_IS_LAST_PPS (3)
+#define SBP_IMUINPUTTYPE_IMU_GRADE_MASK (0x3)
+#define SBP_IMUINPUTTYPE_IMU_GRADE_SHIFT (2u)
+#define SBP_IMUINPUTTYPE_IMU_GRADE_GET(flags) \
+  (((flags) >> SBP_IMUINPUTTYPE_IMU_GRADE_SHIFT) & SBP_IMUINPUTTYPE_IMU_GRADE_MASK)
+#define SBP_IMUINPUTTYPE_IMU_GRADE_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= (((val) & (SBP_IMUINPUTTYPE_IMU_GRADE_MASK)) << (SBP_IMUINPUTTYPE_IMU_GRADE_SHIFT))); \
+  } while (0)
+
+#define SBP_IMUINPUTTYPE_IMU_GRADE_CONSUMER_GRADE (0)
+#define SBP_IMUINPUTTYPE_IMU_GRADE_TACTICAL_GRADE (1)
+#define SBP_IMUINPUTTYPE_IMU_GRADE_INTERMEDIATE_GRADE (2)
+#define SBP_IMUINPUTTYPE_IMU_GRADE_SUPERIOR_GRADE (3)
+#define SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_MASK (0x3)
+#define SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_SHIFT (0u)
+#define SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_GET(flags) \
+  (((flags) >> SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_SHIFT) & SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_MASK)
+#define SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= (((val) & (SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_MASK)) << (SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_SHIFT))); \
+  } while (0)
+
+#define SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_6_AXIS_MEMS (0)
+#define SBP_IMUINPUTTYPE_IMU_ARCHITECTURE_OTHER_TYPE (1)
+/** Provides detail about the IMU sensor, its timestamping mode, and its quality for input to the fuzed solution.
+ *
+ * Metadata around the IMU sensors involved in the fuzed solution.
+ * Accessible through sol_in[N].flags in a MSG_SOLN_META.
+ */
+typedef struct SBP_ATTR_PACKED
 {
-  (void)msg;
-  return 0 + sizeof(msg->tow) + sizeof(msg->pdop) + sizeof(msg->hdop) + sizeof(msg->vdop) +
-         sizeof(msg->age_corrections) + sizeof(msg->age_gnss) +
-         (msg->n_sol_in * (0 + sizeof(msg->sol_in[0].sensor_type) + sizeof(msg->sol_in[0].flags)));
-}
 
-static inline bool sbp_pack_sbp_msg_soln_meta_t(u8 *buf, size_t len, const sbp_msg_soln_meta_t *msg)
+  /**
+   * Instrument time, grade, and architecture for a sensor.
+   */
+  u8 flags;
+
+} imu_input_type_t;
+
+#define SBP_ODOINPUTTYPE_RATE_MASK (0x3)
+#define SBP_ODOINPUTTYPE_RATE_SHIFT (4u)
+#define SBP_ODOINPUTTYPE_RATE_GET(flags) (((flags) >> SBP_ODOINPUTTYPE_RATE_SHIFT) & SBP_ODOINPUTTYPE_RATE_MASK)
+#define SBP_ODOINPUTTYPE_RATE_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= (((val) & (SBP_ODOINPUTTYPE_RATE_MASK)) << (SBP_ODOINPUTTYPE_RATE_SHIFT))); \
+  } while (0)
+
+#define SBP_ODOINPUTTYPE_RATE_FIXED_INCOMING_RATE (0)
+#define SBP_ODOINPUTTYPE_RATE_TRIGGERED_BY_MINIMUM_DISTANCE_OR_SPEED (1)
+#define SBP_ODOINPUTTYPE_ODOMETER_GRADE_MASK (0x3)
+#define SBP_ODOINPUTTYPE_ODOMETER_GRADE_SHIFT (2u)
+#define SBP_ODOINPUTTYPE_ODOMETER_GRADE_GET(flags) \
+  (((flags) >> SBP_ODOINPUTTYPE_ODOMETER_GRADE_SHIFT) & SBP_ODOINPUTTYPE_ODOMETER_GRADE_MASK)
+#define SBP_ODOINPUTTYPE_ODOMETER_GRADE_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= (((val) & (SBP_ODOINPUTTYPE_ODOMETER_GRADE_MASK)) << (SBP_ODOINPUTTYPE_ODOMETER_GRADE_SHIFT))); \
+  } while (0)
+
+#define SBP_ODOINPUTTYPE_ODOMETER_GRADE_LOW_GRADE (0)
+#define SBP_ODOINPUTTYPE_ODOMETER_GRADE_MEDIUM_GRADE (1)
+#define SBP_ODOINPUTTYPE_ODOMETER_GRADE_SUPERIOR_GRADE (2)
+#define SBP_ODOINPUTTYPE_ODOMETER_CLASS_MASK (0x3)
+#define SBP_ODOINPUTTYPE_ODOMETER_CLASS_SHIFT (0u)
+#define SBP_ODOINPUTTYPE_ODOMETER_CLASS_GET(flags) \
+  (((flags) >> SBP_ODOINPUTTYPE_ODOMETER_CLASS_SHIFT) & SBP_ODOINPUTTYPE_ODOMETER_CLASS_MASK)
+#define SBP_ODOINPUTTYPE_ODOMETER_CLASS_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= (((val) & (SBP_ODOINPUTTYPE_ODOMETER_CLASS_MASK)) << (SBP_ODOINPUTTYPE_ODOMETER_CLASS_SHIFT))); \
+  } while (0)
+
+#define SBP_ODOINPUTTYPE_ODOMETER_CLASS_SINGLE_OR_AVERAGED_TICKS (0)
+#define SBP_ODOINPUTTYPE_ODOMETER_CLASS_SINGLE_OR_AVERAGED_SPEED (1)
+#define SBP_ODOINPUTTYPE_ODOMETER_CLASS_MULTI_DIMENSIONAL_TICKS (2)
+#define SBP_ODOINPUTTYPE_ODOMETER_CLASS_MULTI_DIMENSIONAL_SPEED (3)
+/** Provides detail about the Odometry sensor, its timestamping mode, and its quality for input to the fuzed solution.
+ *
+ * Metadata around the Odometry sensors involved in the fuzed solution.
+ * Accessible through sol_in[N].flags in a MSG_SOLN_META.
+ */
+typedef struct SBP_ATTR_PACKED
 {
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_soln_meta_t(msg) > len)
-  {
-    return false;
-  }
 
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgtow = htole32(msg->tow);
-  memcpy(buf + offset, &msgtow, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
+  /**
+   * Instrument ODO rate, grade, and quality.
+   */
+  u8 flags;
 
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgpdop = htole16(msg->pdop);
-  memcpy(buf + offset, &msgpdop, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
+} odo_input_type_t;
 
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msghdop = htole16(msg->hdop);
-  memcpy(buf + offset, &msghdop, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
+/** \} */
 
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgvdop = htole16(msg->vdop);
-  memcpy(buf + offset, &msgvdop, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  u16 msgage_corrections = htole16(msg->age_corrections);
-  memcpy(buf + offset, &msgage_corrections, 2);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgage_gnss = htole32(msg->age_gnss);
-  memcpy(buf + offset, &msgage_gnss, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-  for (size_t msgsol_in_idx = 0; msgsol_in_idx < (size_t)msg->n_sol_in; msgsol_in_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgsol_inmsgsol_in_idxsensor_type = msg->sol_in[msgsol_in_idx].sensor_type;
-    memcpy(buf + offset, &msgsol_inmsgsol_in_idxsensor_type, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgsol_inmsgsol_in_idxflags = msg->sol_in[msgsol_in_idx].flags;
-    memcpy(buf + offset, &msgsol_inmsgsol_in_idxflags, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_soln_meta_t(const u8 *buf, size_t len, sbp_msg_soln_meta_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->tow, buf + offset, 4);
-  msg->tow = le32toh(msg->tow);
-  // NOLINTNEXTLINE
-  offset += 4;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->pdop, buf + offset, 2);
-  msg->pdop = le16toh(msg->pdop);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->hdop, buf + offset, 2);
-  msg->hdop = le16toh(msg->hdop);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->vdop, buf + offset, 2);
-  msg->vdop = le16toh(msg->vdop);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 2 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->age_corrections, buf + offset, 2);
-  msg->age_corrections = le16toh(msg->age_corrections);
-  // NOLINTNEXTLINE
-  offset += 2;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->age_gnss, buf + offset, 4);
-  msg->age_gnss = le32toh(msg->age_gnss);
-  // NOLINTNEXTLINE
-  offset += 4;
-  msg->n_sol_in = (u8)((len - offset) / 2);
-
-  for (size_t msgsol_in_idx = 0; msgsol_in_idx < msg->n_sol_in; msgsol_in_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->sol_in[msgsol_in_idx].sensor_type, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->sol_in[msgsol_in_idx].flags, buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_soln_meta_t &a, const sbp_msg_soln_meta_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.tow != b.tow)
-  {
-    return false;
-  }
-
-  if (a.pdop != b.pdop)
-  {
-    return false;
-  }
-
-  if (a.hdop != b.hdop)
-  {
-    return false;
-  }
-
-  if (a.vdop != b.vdop)
-  {
-    return false;
-  }
-
-  if (a.age_corrections != b.age_corrections)
-  {
-    return false;
-  }
-
-  if (a.age_gnss != b.age_gnss)
-  {
-    return false;
-  }
-  if (a.n_sol_in != b.n_sol_in)
-  {
-    return false;
-  }
-  for (size_t sol_in_idx = 0; sol_in_idx < (size_t)a.n_sol_in; sol_in_idx++)
-  {
-
-    if (a.sol_in[sol_in_idx].sensor_type != b.sol_in[sol_in_idx].sensor_type)
-    {
-      return false;
-    }
-
-    if (a.sol_in[sol_in_idx].flags != b.sol_in[sol_in_idx].flags)
-    {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_soln_meta_t &a, const sbp_msg_soln_meta_t &b)
-{
-  return !(a == b);
-}
-#endif
+SBP_PACK_END
 
 #endif /* LIBSBP_SOLUTION_META_MESSAGES_H */

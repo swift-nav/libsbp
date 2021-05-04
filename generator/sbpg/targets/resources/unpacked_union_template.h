@@ -6,7 +6,7 @@
 #include <stdint.h>
 
 ((*- for i in include *))
-#include <libsbp/(((i)))>
+#include <libsbp/unpacked/(((i)))>
 ((*- endfor *))
 
 typedef struct {

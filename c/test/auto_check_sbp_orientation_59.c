@@ -15,8 +15,8 @@
 
 #include <check.h>
 #include <libsbp/orientation.h>
-#include <libsbp/packed/orientation.h>
 #include <libsbp/sbp.h>
+#include <libsbp/unpacked/orientation.h>
 #include <stdio.h>  // for debugging
 #include <stdlib.h> // for malloc
 

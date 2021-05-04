@@ -1,14 +1,49 @@
-#ifndef LIBSBP_FLASH_MESSAGES_H
-#define LIBSBP_FLASH_MESSAGES_H
+/*
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: https://support.swiftnav.com
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
-#include <endian.h>
-#include <math.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <string.h>
+/*****************************************************************************
+ * Automatically generated from yaml/swiftnav/sbp/flash.yaml
+ * with generate.py. Please do not hand edit!
+ *****************************************************************************/
+
+/** \defgroup flash Flash
+ *
+ *  * Messages for reading/writing the device's onboard flash memory. Many
+ * of these messages target specific flash memory peripherals used in
+ * Swift Navigation devices: the STM32 flash and the M25Pxx FPGA
+ * configuration flash from Piksi 2.3.1.  This module does not apply
+ * to Piksi Multi.
+ * \{ */
+
+#ifndef LIBSBP_PACKED_FLASH_MESSAGES_H
+#define LIBSBP_PACKED_FLASH_MESSAGES_H
 
 #include <libsbp/common.h>
+
+SBP_PACK_START
+
+#define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_MASK (0x1)
+#define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SHIFT (0u)
+#define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_GET(flags) \
+  (((flags) >> SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SHIFT) & SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_MASK)
+#define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= \
+     (((val) & (SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_MASK)) << (SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_SHIFT))); \
+  } while (0)
+
+#define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_FLASH_STM (0)
+#define SBP_FLASH_PROGRAM_FLASH_TARGET_TO_READ_FLASH_M25 (1)
 /** Program flash addresses
  *
  * The flash program message programs a set of addresses of either
@@ -19,204 +54,48 @@
  * erased before addresses can be programmed.
  */
 #define SBP_MSG_FLASH_PROGRAM 0x00E6
-
-#define SBP_FLASH_PROGRAM_TARGET_FLASH_TARGET_TO_READ_MASK (0x1)
-#define SBP_FLASH_PROGRAM_TARGET_FLASH_TARGET_TO_READ_SHIFT (0u)
-#define SBP_FLASH_PROGRAM_TARGET_FLASH_TARGET_TO_READ_GET(flags) \
-  (((flags) >> SBP_FLASH_PROGRAM_TARGET_FLASH_TARGET_TO_READ_SHIFT) & \
-   SBP_FLASH_PROGRAM_TARGET_FLASH_TARGET_TO_READ_MASK)
-#define SBP_FLASH_PROGRAM_TARGET_FLASH_TARGET_TO_READ_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_FLASH_PROGRAM_TARGET_FLASH_TARGET_TO_READ_MASK)) \
-                 << (SBP_FLASH_PROGRAM_TARGET_FLASH_TARGET_TO_READ_SHIFT))); \
-  } while (0)
-
-#define SBP_FLASH_PROGRAM_TARGET_FLASH_TARGET_TO_READ_FLASH_STM (0)
-#define SBP_FLASH_PROGRAM_TARGET_FLASH_TARGET_TO_READ_FLASH_M25 (1)
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Target flags
    */
   u8 target;
+
   /**
-   * Starting address offset to program[bytes]
+   * Starting address offset to program [bytes]
    */
   u8 addr_start[3];
+
   /**
    * Length of set of addresses to program, counting up from
-   * starting address[bytes]
+   * starting address [bytes]
    */
   u8 addr_len;
+
   /**
    * Data to program addresses with, with length N=addr_len
    */
-  u8 data[250];
-  /**
-   * Number of items in data
-   */
-  u8 n_data;
-} sbp_msg_flash_program_t;
+  u8 data[0];
 
-static inline size_t sbp_packed_size_sbp_msg_flash_program_t(const sbp_msg_flash_program_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->target) + (3 * sizeof(msg->addr_start[0])) + sizeof(msg->addr_len) +
-         (msg->n_data * sizeof(msg->data[0]));
-}
+} msg_flash_program_t;
 
-static inline bool sbp_pack_sbp_msg_flash_program_t(u8 *buf, size_t len, const sbp_msg_flash_program_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_flash_program_t(msg) > len)
-  {
-    return false;
-  }
+#define SBP_FLASH_DONE_RESPONSE_CODE_MASK (0x7)
+#define SBP_FLASH_DONE_RESPONSE_CODE_SHIFT (0u)
+#define SBP_FLASH_DONE_RESPONSE_CODE_GET(flags) \
+  (((flags) >> SBP_FLASH_DONE_RESPONSE_CODE_SHIFT) & SBP_FLASH_DONE_RESPONSE_CODE_MASK)
+#define SBP_FLASH_DONE_RESPONSE_CODE_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= (((val) & (SBP_FLASH_DONE_RESPONSE_CODE_MASK)) << (SBP_FLASH_DONE_RESPONSE_CODE_SHIFT))); \
+  } while (0)
 
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgtarget = msg->target;
-  memcpy(buf + offset, &msgtarget, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  for (size_t msgaddr_start_idx = 0; msgaddr_start_idx < 3; msgaddr_start_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgaddr_startmsgaddr_start_idx = msg->addr_start[msgaddr_start_idx];
-    memcpy(buf + offset, &msgaddr_startmsgaddr_start_idx, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgaddr_len = msg->addr_len;
-  memcpy(buf + offset, &msgaddr_len, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  for (size_t msgdata_idx = 0; msgdata_idx < (size_t)msg->n_data; msgdata_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgdatamsgdata_idx = msg->data[msgdata_idx];
-    memcpy(buf + offset, &msgdatamsgdata_idx, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_flash_program_t(const u8 *buf, size_t len, sbp_msg_flash_program_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->target, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  for (size_t msgaddr_start_idx = 0; msgaddr_start_idx < 3; msgaddr_start_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->addr_start[msgaddr_start_idx], buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->addr_len, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  msg->n_data = (u8)((len - offset) / 1);
-
-  for (size_t msgdata_idx = 0; msgdata_idx < msg->n_data; msgdata_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->data[msgdata_idx], buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_flash_program_t &a, const sbp_msg_flash_program_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.target != b.target)
-  {
-    return false;
-  }
-  for (size_t addr_start_idx = 0; addr_start_idx < 3; addr_start_idx++)
-  {
-
-    if (a.addr_start[addr_start_idx] != b.addr_start[addr_start_idx])
-    {
-      return false;
-    }
-  }
-
-  if (a.addr_len != b.addr_len)
-  {
-    return false;
-  }
-  if (a.n_data != b.n_data)
-  {
-    return false;
-  }
-  for (size_t data_idx = 0; data_idx < (size_t)a.n_data; data_idx++)
-  {
-
-    if (a.data[data_idx] != b.data[data_idx])
-    {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_flash_program_t &a, const sbp_msg_flash_program_t &b)
-{
-  return !(a == b);
-}
-#endif
+#define SBP_FLASH_DONE_RESPONSE_CODE_FLASH_OK (0)
+#define SBP_FLASH_DONE_RESPONSE_CODE_FLASH_INVALID_FLASH (1)
+#define SBP_FLASH_DONE_RESPONSE_CODE_FLASH_INVALID_LEN (2)
+#define SBP_FLASH_DONE_RESPONSE_CODE_FLASH_INVALID_ADDR (3)
+#define SBP_FLASH_DONE_RESPONSE_CODE_FLASH_INVALID_RANGE (4)
+#define SBP_FLASH_DONE_RESPONSE_CODE_FLASH_INVALID_SECTOR (5)
 /** Flash response message (host <= device).
  *
  * This message defines success or failure codes for a variety of
@@ -225,99 +104,29 @@ static inline bool operator!=(const sbp_msg_flash_program_t &a, const sbp_msg_fl
  * MSG_FLASH_PROGRAM, may return this message on failure.
  */
 #define SBP_MSG_FLASH_DONE 0x00E0
-
-#define SBP_FLASH_DONE_RESPONSE_RESPONSE_CODE_MASK (0x7)
-#define SBP_FLASH_DONE_RESPONSE_RESPONSE_CODE_SHIFT (0u)
-#define SBP_FLASH_DONE_RESPONSE_RESPONSE_CODE_GET(flags) \
-  (((flags) >> SBP_FLASH_DONE_RESPONSE_RESPONSE_CODE_SHIFT) & SBP_FLASH_DONE_RESPONSE_RESPONSE_CODE_MASK)
-#define SBP_FLASH_DONE_RESPONSE_RESPONSE_CODE_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= \
-     (((val) & (SBP_FLASH_DONE_RESPONSE_RESPONSE_CODE_MASK)) << (SBP_FLASH_DONE_RESPONSE_RESPONSE_CODE_SHIFT))); \
-  } while (0)
-
-#define SBP_FLASH_DONE_RESPONSE_RESPONSE_CODE_FLASH_OK (0)
-#define SBP_FLASH_DONE_RESPONSE_RESPONSE_CODE_FLASH_INVALID_FLASH (1)
-#define SBP_FLASH_DONE_RESPONSE_RESPONSE_CODE_FLASH_INVALID_LEN (2)
-#define SBP_FLASH_DONE_RESPONSE_RESPONSE_CODE_FLASH_INVALID_ADDR (3)
-#define SBP_FLASH_DONE_RESPONSE_RESPONSE_CODE_FLASH_INVALID_RANGE (4)
-#define SBP_FLASH_DONE_RESPONSE_RESPONSE_CODE_FLASH_INVALID_SECTOR (5)
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Response flags
    */
   u8 response;
-} sbp_msg_flash_done_t;
 
-static inline size_t sbp_packed_size_sbp_msg_flash_done_t(const sbp_msg_flash_done_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->response);
-}
+} msg_flash_done_t;
 
-static inline bool sbp_pack_sbp_msg_flash_done_t(u8 *buf, size_t len, const sbp_msg_flash_done_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_flash_done_t(msg) > len)
-  {
-    return false;
-  }
+#define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_MASK (0x1)
+#define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SHIFT (0u)
+#define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_GET(flags) \
+  (((flags) >> SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SHIFT) & SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_MASK)
+#define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= \
+     (((val) & (SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_MASK)) << (SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_SHIFT))); \
+  } while (0)
 
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgresponse = msg->response;
-  memcpy(buf + offset, &msgresponse, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_flash_done_t(const u8 *buf, size_t len, sbp_msg_flash_done_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->response, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_flash_done_t &a, const sbp_msg_flash_done_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.response != b.response)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_flash_done_t &a, const sbp_msg_flash_done_t &b)
-{
-  return !(a == b);
-}
-#endif
+#define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_FLASH_STM (0)
+#define SBP_FLASH_READ_REQ_FLASH_TARGET_TO_READ_FLASH_M25 (1)
 /** Read STM or M25 flash address request (host => device).
  *
  * The flash read message reads a set of addresses of either the
@@ -329,158 +138,40 @@ static inline bool operator!=(const sbp_msg_flash_done_t &a, const sbp_msg_flash
  * range.
  */
 #define SBP_MSG_FLASH_READ_REQ 0x00E7
-
-#define SBP_FLASH_READ_REQ_TARGET_FLASH_TARGET_TO_READ_MASK (0x1)
-#define SBP_FLASH_READ_REQ_TARGET_FLASH_TARGET_TO_READ_SHIFT (0u)
-#define SBP_FLASH_READ_REQ_TARGET_FLASH_TARGET_TO_READ_GET(flags) \
-  (((flags) >> SBP_FLASH_READ_REQ_TARGET_FLASH_TARGET_TO_READ_SHIFT) & \
-   SBP_FLASH_READ_REQ_TARGET_FLASH_TARGET_TO_READ_MASK)
-#define SBP_FLASH_READ_REQ_TARGET_FLASH_TARGET_TO_READ_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_FLASH_READ_REQ_TARGET_FLASH_TARGET_TO_READ_MASK)) \
-                 << (SBP_FLASH_READ_REQ_TARGET_FLASH_TARGET_TO_READ_SHIFT))); \
-  } while (0)
-
-#define SBP_FLASH_READ_REQ_TARGET_FLASH_TARGET_TO_READ_FLASH_STM (0)
-#define SBP_FLASH_READ_REQ_TARGET_FLASH_TARGET_TO_READ_FLASH_M25 (1)
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Target flags
    */
   u8 target;
+
   /**
-   * Starting address offset to read from[bytes]
+   * Starting address offset to read from [bytes]
    */
   u8 addr_start[3];
+
   /**
    * Length of set of addresses to read, counting up from
-   * starting address[bytes]
+   * starting address [bytes]
    */
   u8 addr_len;
-} sbp_msg_flash_read_req_t;
 
-static inline size_t sbp_packed_size_sbp_msg_flash_read_req_t(const sbp_msg_flash_read_req_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->target) + (3 * sizeof(msg->addr_start[0])) + sizeof(msg->addr_len);
-}
+} msg_flash_read_req_t;
 
-static inline bool sbp_pack_sbp_msg_flash_read_req_t(u8 *buf, size_t len, const sbp_msg_flash_read_req_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_flash_read_req_t(msg) > len)
-  {
-    return false;
-  }
+#define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_MASK (0x1)
+#define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_SHIFT (0u)
+#define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_GET(flags) \
+  (((flags) >> SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_SHIFT) & SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_MASK)
+#define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= \
+     (((val) & (SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_MASK)) << (SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_SHIFT))); \
+  } while (0)
 
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgtarget = msg->target;
-  memcpy(buf + offset, &msgtarget, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  for (size_t msgaddr_start_idx = 0; msgaddr_start_idx < 3; msgaddr_start_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgaddr_startmsgaddr_start_idx = msg->addr_start[msgaddr_start_idx];
-    memcpy(buf + offset, &msgaddr_startmsgaddr_start_idx, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgaddr_len = msg->addr_len;
-  memcpy(buf + offset, &msgaddr_len, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_flash_read_req_t(const u8 *buf, size_t len, sbp_msg_flash_read_req_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->target, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  for (size_t msgaddr_start_idx = 0; msgaddr_start_idx < 3; msgaddr_start_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->addr_start[msgaddr_start_idx], buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->addr_len, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_flash_read_req_t &a, const sbp_msg_flash_read_req_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.target != b.target)
-  {
-    return false;
-  }
-  for (size_t addr_start_idx = 0; addr_start_idx < 3; addr_start_idx++)
-  {
-
-    if (a.addr_start[addr_start_idx] != b.addr_start[addr_start_idx])
-    {
-      return false;
-    }
-  }
-
-  if (a.addr_len != b.addr_len)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_flash_read_req_t &a, const sbp_msg_flash_read_req_t &b)
-{
-  return !(a == b);
-}
-#endif
+#define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_FLASH_STM (0)
+#define SBP_FLASH_READ_RESP_FLASH_TARGET_TO_READ_FLASH_M25 (1)
 /** Read STM or M25 flash address response (host <= device).
  *
  * The flash read message reads a set of addresses of either the
@@ -492,158 +183,40 @@ static inline bool operator!=(const sbp_msg_flash_read_req_t &a, const sbp_msg_f
  * range.
  */
 #define SBP_MSG_FLASH_READ_RESP 0x00E1
-
-#define SBP_FLASH_READ_RESP_TARGET_FLASH_TARGET_TO_READ_MASK (0x1)
-#define SBP_FLASH_READ_RESP_TARGET_FLASH_TARGET_TO_READ_SHIFT (0u)
-#define SBP_FLASH_READ_RESP_TARGET_FLASH_TARGET_TO_READ_GET(flags) \
-  (((flags) >> SBP_FLASH_READ_RESP_TARGET_FLASH_TARGET_TO_READ_SHIFT) & \
-   SBP_FLASH_READ_RESP_TARGET_FLASH_TARGET_TO_READ_MASK)
-#define SBP_FLASH_READ_RESP_TARGET_FLASH_TARGET_TO_READ_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_FLASH_READ_RESP_TARGET_FLASH_TARGET_TO_READ_MASK)) \
-                 << (SBP_FLASH_READ_RESP_TARGET_FLASH_TARGET_TO_READ_SHIFT))); \
-  } while (0)
-
-#define SBP_FLASH_READ_RESP_TARGET_FLASH_TARGET_TO_READ_FLASH_STM (0)
-#define SBP_FLASH_READ_RESP_TARGET_FLASH_TARGET_TO_READ_FLASH_M25 (1)
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Target flags
    */
   u8 target;
+
   /**
-   * Starting address offset to read from[bytes]
+   * Starting address offset to read from [bytes]
    */
   u8 addr_start[3];
+
   /**
    * Length of set of addresses to read, counting up from
-   * starting address[bytes]
+   * starting address [bytes]
    */
   u8 addr_len;
-} sbp_msg_flash_read_resp_t;
 
-static inline size_t sbp_packed_size_sbp_msg_flash_read_resp_t(const sbp_msg_flash_read_resp_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->target) + (3 * sizeof(msg->addr_start[0])) + sizeof(msg->addr_len);
-}
+} msg_flash_read_resp_t;
 
-static inline bool sbp_pack_sbp_msg_flash_read_resp_t(u8 *buf, size_t len, const sbp_msg_flash_read_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_flash_read_resp_t(msg) > len)
-  {
-    return false;
-  }
+#define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_MASK (0x1)
+#define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SHIFT (0u)
+#define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_GET(flags) \
+  (((flags) >> SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SHIFT) & SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_MASK)
+#define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= \
+     (((val) & (SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_MASK)) << (SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_SHIFT))); \
+  } while (0)
 
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgtarget = msg->target;
-  memcpy(buf + offset, &msgtarget, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  for (size_t msgaddr_start_idx = 0; msgaddr_start_idx < 3; msgaddr_start_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgaddr_startmsgaddr_start_idx = msg->addr_start[msgaddr_start_idx];
-    memcpy(buf + offset, &msgaddr_startmsgaddr_start_idx, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgaddr_len = msg->addr_len;
-  memcpy(buf + offset, &msgaddr_len, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_flash_read_resp_t(const u8 *buf, size_t len, sbp_msg_flash_read_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->target, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  for (size_t msgaddr_start_idx = 0; msgaddr_start_idx < 3; msgaddr_start_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->addr_start[msgaddr_start_idx], buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->addr_len, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_flash_read_resp_t &a, const sbp_msg_flash_read_resp_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.target != b.target)
-  {
-    return false;
-  }
-  for (size_t addr_start_idx = 0; addr_start_idx < 3; addr_start_idx++)
-  {
-
-    if (a.addr_start[addr_start_idx] != b.addr_start[addr_start_idx])
-    {
-      return false;
-    }
-  }
-
-  if (a.addr_len != b.addr_len)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_flash_read_resp_t &a, const sbp_msg_flash_read_resp_t &b)
-{
-  return !(a == b);
-}
-#endif
+#define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_FLASH_STM (0)
+#define SBP_FLASH_ERASE_FLASH_TARGET_TO_READ_FLASH_M25 (1)
 /** Erase sector of device flash memory (host => device).
  *
  * The flash erase message from the host erases a sector of either
@@ -653,546 +226,101 @@ static inline bool operator!=(const sbp_msg_flash_read_resp_t &a, const sbp_msg_
  * invalid.
  */
 #define SBP_MSG_FLASH_ERASE 0x00E2
-
-#define SBP_FLASH_ERASE_TARGET_FLASH_TARGET_TO_READ_MASK (0x1)
-#define SBP_FLASH_ERASE_TARGET_FLASH_TARGET_TO_READ_SHIFT (0u)
-#define SBP_FLASH_ERASE_TARGET_FLASH_TARGET_TO_READ_GET(flags) \
-  (((flags) >> SBP_FLASH_ERASE_TARGET_FLASH_TARGET_TO_READ_SHIFT) & SBP_FLASH_ERASE_TARGET_FLASH_TARGET_TO_READ_MASK)
-#define SBP_FLASH_ERASE_TARGET_FLASH_TARGET_TO_READ_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_FLASH_ERASE_TARGET_FLASH_TARGET_TO_READ_MASK)) \
-                 << (SBP_FLASH_ERASE_TARGET_FLASH_TARGET_TO_READ_SHIFT))); \
-  } while (0)
-
-#define SBP_FLASH_ERASE_TARGET_FLASH_TARGET_TO_READ_FLASH_STM (0)
-#define SBP_FLASH_ERASE_TARGET_FLASH_TARGET_TO_READ_FLASH_M25 (1)
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Target flags
    */
   u8 target;
+
   /**
    * Flash sector number to erase (0-11 for the STM, 0-15 for
    * the M25)
    */
   u32 sector_num;
-} sbp_msg_flash_erase_t;
 
-static inline size_t sbp_packed_size_sbp_msg_flash_erase_t(const sbp_msg_flash_erase_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->target) + sizeof(msg->sector_num);
-}
+} msg_flash_erase_t;
 
-static inline bool sbp_pack_sbp_msg_flash_erase_t(u8 *buf, size_t len, const sbp_msg_flash_erase_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_flash_erase_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgtarget = msg->target;
-  memcpy(buf + offset, &msgtarget, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgsector_num = htole32(msg->sector_num);
-  memcpy(buf + offset, &msgsector_num, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_flash_erase_t(const u8 *buf, size_t len, sbp_msg_flash_erase_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->target, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sector_num, buf + offset, 4);
-  msg->sector_num = le32toh(msg->sector_num);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_flash_erase_t &a, const sbp_msg_flash_erase_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.target != b.target)
-  {
-    return false;
-  }
-
-  if (a.sector_num != b.sector_num)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_flash_erase_t &a, const sbp_msg_flash_erase_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Lock sector of STM flash memory (host => device)
  *
  * The flash lock message locks a sector of the STM flash
  * memory. The device replies with a MSG_FLASH_DONE message.
  */
 #define SBP_MSG_STM_FLASH_LOCK_SECTOR 0x00E3
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Flash sector number to lock
    */
   u32 sector;
-} sbp_msg_stm_flash_lock_sector_t;
 
-static inline size_t sbp_packed_size_sbp_msg_stm_flash_lock_sector_t(const sbp_msg_stm_flash_lock_sector_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->sector);
-}
+} msg_stm_flash_lock_sector_t;
 
-static inline bool
-sbp_pack_sbp_msg_stm_flash_lock_sector_t(u8 *buf, size_t len, const sbp_msg_stm_flash_lock_sector_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_stm_flash_lock_sector_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgsector = htole32(msg->sector);
-  memcpy(buf + offset, &msgsector, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
-
-static inline bool
-sbp_unpack_sbp_msg_stm_flash_lock_sector_t(const u8 *buf, size_t len, sbp_msg_stm_flash_lock_sector_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sector, buf + offset, 4);
-  msg->sector = le32toh(msg->sector);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_stm_flash_lock_sector_t &a, const sbp_msg_stm_flash_lock_sector_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.sector != b.sector)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_stm_flash_lock_sector_t &a, const sbp_msg_stm_flash_lock_sector_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Unlock sector of STM flash memory (host => device)
  *
  * The flash unlock message unlocks a sector of the STM flash
  * memory. The device replies with a MSG_FLASH_DONE message.
  */
 #define SBP_MSG_STM_FLASH_UNLOCK_SECTOR 0x00E4
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Flash sector number to unlock
    */
   u32 sector;
-} sbp_msg_stm_flash_unlock_sector_t;
 
-static inline size_t sbp_packed_size_sbp_msg_stm_flash_unlock_sector_t(const sbp_msg_stm_flash_unlock_sector_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->sector);
-}
+} msg_stm_flash_unlock_sector_t;
 
-static inline bool
-sbp_pack_sbp_msg_stm_flash_unlock_sector_t(u8 *buf, size_t len, const sbp_msg_stm_flash_unlock_sector_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_stm_flash_unlock_sector_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  u32 msgsector = htole32(msg->sector);
-  memcpy(buf + offset, &msgsector, 4);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
-
-static inline bool
-sbp_unpack_sbp_msg_stm_flash_unlock_sector_t(const u8 *buf, size_t len, sbp_msg_stm_flash_unlock_sector_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 4 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->sector, buf + offset, 4);
-  msg->sector = le32toh(msg->sector);
-  // NOLINTNEXTLINE
-  offset += 4;
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_stm_flash_unlock_sector_t &a, const sbp_msg_stm_flash_unlock_sector_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.sector != b.sector)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_stm_flash_unlock_sector_t &a, const sbp_msg_stm_flash_unlock_sector_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Read device's hardcoded unique ID request (host => device)
 
  *
-* This message reads the device's hardcoded unique ID. The host
-* requests the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device
-* responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
-* ID in the payload.
+ * This message reads the device's hardcoded unique ID. The host
+ * requests the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device
+ * responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
+ * ID in the payload.
  */
 #define SBP_MSG_STM_UNIQUE_ID_REQ 0x00E8
 
-typedef struct
-{
-  char dummy_to_avoid_empty_struct___do_not_use;
-} sbp_msg_stm_unique_id_req_t;
-
-static inline size_t sbp_packed_size_sbp_msg_stm_unique_id_req_t(const sbp_msg_stm_unique_id_req_t *msg)
-{
-  (void)msg;
-  return 0;
-}
-
-static inline bool sbp_pack_sbp_msg_stm_unique_id_req_t(u8 *buf, size_t len, const sbp_msg_stm_unique_id_req_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_stm_unique_id_req_t(msg) > len)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_stm_unique_id_req_t(const u8 *buf, size_t len, sbp_msg_stm_unique_id_req_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_stm_unique_id_req_t &a, const sbp_msg_stm_unique_id_req_t &b)
-{
-  (void)a;
-  (void)b;
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_stm_unique_id_req_t &a, const sbp_msg_stm_unique_id_req_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Read device's hardcoded unique ID response (host <= device)
 
  *
-* This message reads the device's hardcoded unique ID. The host
-* requests the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device
-* responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
-* ID in the payload..
+ * This message reads the device's hardcoded unique ID. The host
+ * requests the ID by sending a MSG_STM_UNIQUE_ID_REQ. The device
+ * responds with a MSG_STM_UNIQUE_ID_RESP with the 12-byte unique
+ * ID in the payload..
  */
 #define SBP_MSG_STM_UNIQUE_ID_RESP 0x00E5
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Device unique ID
    */
   u8 stm_id[12];
-} sbp_msg_stm_unique_id_resp_t;
 
-static inline size_t sbp_packed_size_sbp_msg_stm_unique_id_resp_t(const sbp_msg_stm_unique_id_resp_t *msg)
-{
-  (void)msg;
-  return 0 + (12 * sizeof(msg->stm_id[0]));
-}
+} msg_stm_unique_id_resp_t;
 
-static inline bool sbp_pack_sbp_msg_stm_unique_id_resp_t(u8 *buf, size_t len, const sbp_msg_stm_unique_id_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_stm_unique_id_resp_t(msg) > len)
-  {
-    return false;
-  }
-
-  for (size_t msgstm_id_idx = 0; msgstm_id_idx < 12; msgstm_id_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgstm_idmsgstm_id_idx = msg->stm_id[msgstm_id_idx];
-    memcpy(buf + offset, &msgstm_idmsgstm_id_idx, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_stm_unique_id_resp_t(const u8 *buf, size_t len, sbp_msg_stm_unique_id_resp_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  for (size_t msgstm_id_idx = 0; msgstm_id_idx < 12; msgstm_id_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->stm_id[msgstm_id_idx], buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_stm_unique_id_resp_t &a, const sbp_msg_stm_unique_id_resp_t &b)
-{
-  (void)a;
-  (void)b;
-
-  for (size_t stm_id_idx = 0; stm_id_idx < 12; stm_id_idx++)
-  {
-
-    if (a.stm_id[stm_id_idx] != b.stm_id[stm_id_idx])
-    {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_stm_unique_id_resp_t &a, const sbp_msg_stm_unique_id_resp_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Write M25 flash status register (host => device)
  *
  * The flash status message writes to the 8-bit M25 flash status
  * register. The device replies with a MSG_FLASH_DONE message.
  */
 #define SBP_MSG_M25_FLASH_WRITE_STATUS 0x00F3
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Byte to write to the M25 flash status register
    */
   u8 status[1];
-} sbp_msg_m25_flash_write_status_t;
 
-static inline size_t sbp_packed_size_sbp_msg_m25_flash_write_status_t(const sbp_msg_m25_flash_write_status_t *msg)
-{
-  (void)msg;
-  return 0 + (1 * sizeof(msg->status[0]));
-}
+} msg_m25_flash_write_status_t;
 
-static inline bool
-sbp_pack_sbp_msg_m25_flash_write_status_t(u8 *buf, size_t len, const sbp_msg_m25_flash_write_status_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_m25_flash_write_status_t(msg) > len)
-  {
-    return false;
-  }
+/** \} */
 
-  for (size_t msgstatus_idx = 0; msgstatus_idx < 1; msgstatus_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgstatusmsgstatus_idx = msg->status[msgstatus_idx];
-    memcpy(buf + offset, &msgstatusmsgstatus_idx, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-static inline bool
-sbp_unpack_sbp_msg_m25_flash_write_status_t(const u8 *buf, size_t len, sbp_msg_m25_flash_write_status_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  for (size_t msgstatus_idx = 0; msgstatus_idx < 1; msgstatus_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->status[msgstatus_idx], buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_m25_flash_write_status_t &a, const sbp_msg_m25_flash_write_status_t &b)
-{
-  (void)a;
-  (void)b;
-
-  for (size_t status_idx = 0; status_idx < 1; status_idx++)
-  {
-
-    if (a.status[status_idx] != b.status[status_idx])
-    {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_m25_flash_write_status_t &a, const sbp_msg_m25_flash_write_status_t &b)
-{
-  return !(a == b);
-}
-#endif
+SBP_PACK_END
 
 #endif /* LIBSBP_FLASH_MESSAGES_H */

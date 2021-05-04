@@ -15,7 +15,7 @@
 
 ((*- for i in includes *))
 #include <libsbp/(((i))).h>
-#include <libsbp/packed/(((i))).h>
+#include <libsbp/unpacked/(((i))).h>
 ((*- endfor *))
 
 namespace sbp {

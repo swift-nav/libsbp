@@ -15,8 +15,8 @@
 
 #include <check.h>
 #include <libsbp/navigation.h>
-#include <libsbp/packed/navigation.h>
 #include <libsbp/sbp.h>
+#include <libsbp/unpacked/navigation.h>
 #include <stdio.h>  // for debugging
 #include <stdlib.h> // for malloc
 

@@ -14,7 +14,7 @@
 #define SBP_CPP_STATE_H
 
 #include <libsbp/sbp.h>
-#include <libsbp/sbp_msg.h>
+#include <libsbp/unpacked/sbp_msg.h>
 
 namespace sbp
 {

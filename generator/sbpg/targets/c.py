@@ -23,6 +23,8 @@ UNPACKED_HEADER_TEMPLATE_NAME = "unpacked_sbp_messages_template.h"
 UNPACKED_UNION_TEMPLATE_NAME = "unpacked_union_template.h"
 VERSION_TEMPLATE_NAME = "sbp_version_template.h"
 MESSAGE_TRAITS_TEMPLATE_NAME = "sbp_message_traits_template.h"
+PACKERS_TEMPLATE_NAME = "packers_sbp_messages_template.h"
+OPERATORS_TEMPLATE_NAME = "operators_sbp_messages_template.h"
 
 PRIMITIVE_TYPES = set(['u8', 'u16', 'u32', 'u64', 's8', 's16', 's32',
                       's64', 'float', 'double', 'char'])
@@ -163,6 +165,7 @@ class BasetypeItem(object):
             self.fields = []
             self.packed_size = 0
             self.is_primitive = False
+            self.generate_as_nested = False
             for package in package_specs:
                 for definition in package.definitions:
                     if definition.identifier == type_id:
@@ -171,6 +174,8 @@ class BasetypeItem(object):
                             packed_offset += new_field.packed_size
                             self.packed_size += new_field.packed_size
                             self.fields.append(new_field)
+                            if new_field.generate_as_nested:
+                                self.generate_as_nested = True
                         return
             print("Can't find basetype %s" % type_id)
             raise "assert"
@@ -187,6 +192,7 @@ class FieldItem(object):
         self.packed_size = 0
         self.units = field.units
         self.desc = field.desc
+        self.generate_as_nested = False
         if type_id == "string" and 'size' in field.options:
             self.order = "fixed-array"
             self.basetype = BasetypeItem(msg, package_specs, 'char', packed_offset)
@@ -202,6 +208,7 @@ class FieldItem(object):
                 self.max_items = self.max_items + 1
             self.packed_size = 1
             self.options = field.options
+            self.generate_as_nested = True
         elif type_id == "array" and 'size' in field.options:
             self.order = "fixed-array"
             self.basetype = BasetypeItem(msg, package_specs, field.options['fill'].value, packed_offset)
@@ -216,6 +223,7 @@ class FieldItem(object):
             self.options = field.options
             if 'count' in field.options:
                 self.count = field.options['count'].value
+            self.generate_as_nested = True
         else:
             self.order = "single"
             self.basetype = BasetypeItem(msg, package_specs, type_id, packed_offset)
@@ -234,6 +242,8 @@ class MsgItem(object):
         self.desc = msg.desc
         self.short_desc = msg.short_desc
         self.fields = []
+        self.generate_as_nested = False
+        self.is_real_message = msg.is_real_message
         packed_offset = 0
         print("Creating message %s" % self.name)
         for f in msg.fields:
@@ -254,7 +264,7 @@ def render_packed_headers(output_dir, package_spec):
   Render and output to a directory given a package specification.
   """
   path, name = package_spec.filepath
-  destination_filename = "%s/packed/%s.h" % (output_dir, name)
+  destination_filename = "%s/%s.h" % (output_dir, name)
   py_template = JENV.get_template(PACKED_HEADER_TEMPLATE_NAME)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(msgs=package_spec.definitions,
@@ -281,11 +291,12 @@ def render_unpacked_headers(include_dir, package_specs):
             continue                                                                                          
         all_packages.append(name)                                                                             
         for m in package_spec.definitions:                                                                    
-            if m.is_real_message:                                                                             
-                new_msg = MsgItem(m, package_specs)                                                           
+            new_msg = MsgItem(m, package_specs)                                                           
+            if m.is_real_message:
                 all_msgs.append(new_msg.name)                                                                 
+            if not new_msg.generate_as_nested:
                 msgs.append(new_msg)                                                                          
-        destination_filename = "%s/%s.h" % (include_dir, name)
+        destination_filename = "%s/unpacked/%s.h" % (include_dir, name)
         py_template = JENV.get_template(UNPACKED_HEADER_TEMPLATE_NAME)
         with open(destination_filename, 'w') as f:
             f.write(py_template.render(msgs = msgs,
@@ -293,7 +304,23 @@ def render_unpacked_headers(include_dir, package_specs):
                 filepath="/".join(package_spec.filepath) + ".yaml",
                 max_msgid_len=package_spec.max_msgid_len,
                 include=extensions(package_spec.includes)))
-    destination_filename = "%s/sbp_msg.h" % (include_dir)
+        destination_filename = "%s/unpacked/%s_packers.h" % (include_dir, name)
+        py_template = JENV.get_template(PACKERS_TEMPLATE_NAME)
+        with open(destination_filename, 'w') as f:
+            f.write(py_template.render(msgs = msgs,
+                pkg_name = name,
+                filepath="/".join(package_spec.filepath) + ".yaml",
+                max_msgid_len=package_spec.max_msgid_len,
+                include=extensions(package_spec.includes)))
+        destination_filename = "%s/unpacked/%s_operators.h" % (include_dir, name)
+        py_template = JENV.get_template(OPERATORS_TEMPLATE_NAME)
+        with open(destination_filename, 'w') as f:
+            f.write(py_template.render(msgs = msgs,
+                pkg_name = name,
+                filepath="/".join(package_spec.filepath) + ".yaml",
+                max_msgid_len=package_spec.max_msgid_len,
+                include=extensions(package_spec.includes)))
+    destination_filename = "%s/unpacked/sbp_msg.h" % (include_dir)
     py_template = JENV.get_template(UNPACKED_UNION_TEMPLATE_NAME)
     with open(destination_filename, 'w') as f:
         f.write(py_template.render(msgs = all_msgs,

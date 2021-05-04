@@ -1,14 +1,49 @@
-#ifndef LIBSBP_LOGGING_MESSAGES_H
-#define LIBSBP_LOGGING_MESSAGES_H
+/*
+ * Copyright (C) 2015-2018 Swift Navigation Inc.
+ * Contact: https://support.swiftnav.com
+ *
+ * This source is subject to the license found in the file 'LICENSE' which must
+ * be be distributed together with this source. All other rights reserved.
+ *
+ * THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+ * EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
-#include <endian.h>
-#include <math.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <string.h>
+/*****************************************************************************
+ * Automatically generated from yaml/swiftnav/sbp/logging.yaml
+ * with generate.py. Please do not hand edit!
+ *****************************************************************************/
+
+/** \defgroup logging Logging
+ *
+ *  * Logging and debugging messages from the device.
+ * \{ */
+
+#ifndef LIBSBP_PACKED_LOGGING_MESSAGES_H
+#define LIBSBP_PACKED_LOGGING_MESSAGES_H
 
 #include <libsbp/common.h>
+
+SBP_PACK_START
+
+#define SBP_LOG_LOGGING_LEVEL_MASK (0x7)
+#define SBP_LOG_LOGGING_LEVEL_SHIFT (0u)
+#define SBP_LOG_LOGGING_LEVEL_GET(flags) (((flags) >> SBP_LOG_LOGGING_LEVEL_SHIFT) & SBP_LOG_LOGGING_LEVEL_MASK)
+#define SBP_LOG_LOGGING_LEVEL_SET(flags, val) \
+  do \
+  { \
+    ((flags) |= (((val) & (SBP_LOG_LOGGING_LEVEL_MASK)) << (SBP_LOG_LOGGING_LEVEL_SHIFT))); \
+  } while (0)
+
+#define SBP_LOG_LOGGING_LEVEL_EMERG (0)
+#define SBP_LOG_LOGGING_LEVEL_ALERT (1)
+#define SBP_LOG_LOGGING_LEVEL_CRIT (2)
+#define SBP_LOG_LOGGING_LEVEL_ERROR (3)
+#define SBP_LOG_LOGGING_LEVEL_WARN (4)
+#define SBP_LOG_LOGGING_LEVEL_NOTICE (5)
+#define SBP_LOG_LOGGING_LEVEL_INFO (6)
+#define SBP_LOG_LOGGING_LEVEL_DEBUG (7)
 /** Plaintext logging messages with levels
  *
  * This message contains a human-readable payload string from the
@@ -16,116 +51,21 @@
  * ERROR, WARNING, DEBUG, INFO logging levels.
  */
 #define SBP_MSG_LOG 0x0401
-
-#define SBP_LOG_LEVEL_LOGGING_LEVEL_MASK (0x7)
-#define SBP_LOG_LEVEL_LOGGING_LEVEL_SHIFT (0u)
-#define SBP_LOG_LEVEL_LOGGING_LEVEL_GET(flags) \
-  (((flags) >> SBP_LOG_LEVEL_LOGGING_LEVEL_SHIFT) & SBP_LOG_LEVEL_LOGGING_LEVEL_MASK)
-#define SBP_LOG_LEVEL_LOGGING_LEVEL_SET(flags, val) \
-  do \
-  { \
-    ((flags) |= (((val) & (SBP_LOG_LEVEL_LOGGING_LEVEL_MASK)) << (SBP_LOG_LEVEL_LOGGING_LEVEL_SHIFT))); \
-  } while (0)
-
-#define SBP_LOG_LEVEL_LOGGING_LEVEL_EMERG (0)
-#define SBP_LOG_LEVEL_LOGGING_LEVEL_ALERT (1)
-#define SBP_LOG_LEVEL_LOGGING_LEVEL_CRIT (2)
-#define SBP_LOG_LEVEL_LOGGING_LEVEL_ERROR (3)
-#define SBP_LOG_LEVEL_LOGGING_LEVEL_WARN (4)
-#define SBP_LOG_LEVEL_LOGGING_LEVEL_NOTICE (5)
-#define SBP_LOG_LEVEL_LOGGING_LEVEL_INFO (6)
-#define SBP_LOG_LEVEL_LOGGING_LEVEL_DEBUG (7)
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Logging level
    */
   u8 level;
+
   /**
    * Human-readable string
    */
-  char text[255];
-} sbp_msg_log_t;
+  char text[0];
 
-static inline size_t sbp_packed_size_sbp_msg_log_t(const sbp_msg_log_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->level) + sbp_strlen(msg->text, "none");
-}
+} msg_log_t;
 
-static inline bool sbp_pack_sbp_msg_log_t(u8 *buf, size_t len, const sbp_msg_log_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_log_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msglevel = msg->level;
-  memcpy(buf + offset, &msglevel, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  if (offset + sbp_strlen(msg->text, "none") > len)
-  {
-    return false;
-  }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->text, "none");
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_log_t(const u8 *buf, size_t len, sbp_msg_log_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->level, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->text, "none");
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_log_t &a, const sbp_msg_log_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.level != b.level)
-  {
-    return false;
-  }
-  if (sbp_strcmp(a.text, b.text, "none") != 0)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_log_t &a, const sbp_msg_log_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Wrapper for FWD a separate stream of information over SBP
  *
  * This message provides the ability to forward messages over SBP.  This may take the form
@@ -137,226 +77,43 @@ static inline bool operator!=(const sbp_msg_log_t &a, const sbp_msg_log_t &b)
  * Protocol 0 represents SBP and the remaining values are implementation defined.
  */
 #define SBP_MSG_FWD 0x0402
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * source identifier
    */
   u8 source;
+
   /**
    * protocol identifier
    */
   u8 protocol;
+
   /**
    * variable length wrapped binary message
    */
-  char fwd_payload[253];
-  /**
-   * Number of items in fwd_payload
-   */
-  u8 n_fwd_payload;
-} sbp_msg_fwd_t;
+  char fwd_payload[0];
 
-static inline size_t sbp_packed_size_sbp_msg_fwd_t(const sbp_msg_fwd_t *msg)
-{
-  (void)msg;
-  return 0 + sizeof(msg->source) + sizeof(msg->protocol) + (msg->n_fwd_payload * sizeof(msg->fwd_payload[0]));
-}
+} msg_fwd_t;
 
-static inline bool sbp_pack_sbp_msg_fwd_t(u8 *buf, size_t len, const sbp_msg_fwd_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_fwd_t(msg) > len)
-  {
-    return false;
-  }
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgsource = msg->source;
-  memcpy(buf + offset, &msgsource, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  u8 msgprotocol = msg->protocol;
-  memcpy(buf + offset, &msgprotocol, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  for (size_t msgfwd_payload_idx = 0; msgfwd_payload_idx < (size_t)msg->n_fwd_payload; msgfwd_payload_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    char msgfwd_payloadmsgfwd_payload_idx = msg->fwd_payload[msgfwd_payload_idx];
-    memcpy(buf + offset, &msgfwd_payloadmsgfwd_payload_idx, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_fwd_t(const u8 *buf, size_t len, sbp_msg_fwd_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->source, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-
-  if (offset + 1 > len)
-  {
-    return false;
-  }
-  memcpy(&msg->protocol, buf + offset, 1);
-  // NOLINTNEXTLINE
-  offset += 1;
-  msg->n_fwd_payload = (u8)((len - offset) / 1);
-
-  for (size_t msgfwd_payload_idx = 0; msgfwd_payload_idx < msg->n_fwd_payload; msgfwd_payload_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->fwd_payload[msgfwd_payload_idx], buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_fwd_t &a, const sbp_msg_fwd_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (a.source != b.source)
-  {
-    return false;
-  }
-
-  if (a.protocol != b.protocol)
-  {
-    return false;
-  }
-  if (a.n_fwd_payload != b.n_fwd_payload)
-  {
-    return false;
-  }
-  for (size_t fwd_payload_idx = 0; fwd_payload_idx < (size_t)a.n_fwd_payload; fwd_payload_idx++)
-  {
-
-    if (a.fwd_payload[fwd_payload_idx] != b.fwd_payload[fwd_payload_idx])
-    {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_fwd_t &a, const sbp_msg_fwd_t &b)
-{
-  return !(a == b);
-}
-#endif
 /** Deprecated
  *
  * Deprecated.
  */
 #define SBP_MSG_PRINT_DEP 0x0010
-
-typedef struct
+typedef struct SBP_ATTR_PACKED
 {
 
   /**
    * Human-readable string
    */
-  char text[256];
-} sbp_msg_print_dep_t;
+  char text[0];
 
-static inline size_t sbp_packed_size_sbp_msg_print_dep_t(const sbp_msg_print_dep_t *msg)
-{
-  (void)msg;
-  return 0 + sbp_strlen(msg->text, "none");
-}
+} msg_print_dep_t;
 
-static inline bool sbp_pack_sbp_msg_print_dep_t(u8 *buf, size_t len, const sbp_msg_print_dep_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-  if (sbp_packed_size_sbp_msg_print_dep_t(msg) > len)
-  {
-    return false;
-  }
+/** \} */
 
-  if (offset + sbp_strlen(msg->text, "none") > len)
-  {
-    return false;
-  }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->text, "none");
-  return true;
-}
-
-static inline bool sbp_unpack_sbp_msg_print_dep_t(const u8 *buf, size_t len, sbp_msg_print_dep_t *msg)
-{
-  size_t offset = 0;
-  (void)offset;
-  (void)buf;
-  (void)len;
-  (void)msg;
-
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->text, "none");
-  return true;
-}
-
-#ifdef __cplusplus
-static inline bool operator==(const sbp_msg_print_dep_t &a, const sbp_msg_print_dep_t &b)
-{
-  (void)a;
-  (void)b;
-
-  if (sbp_strcmp(a.text, b.text, "none") != 0)
-  {
-    return false;
-  }
-
-  return true;
-}
-
-static inline bool operator!=(const sbp_msg_print_dep_t &a, const sbp_msg_print_dep_t &b)
-{
-  return !(a == b);
-}
-#endif
+SBP_PACK_END
 
 #endif /* LIBSBP_LOGGING_MESSAGES_H */

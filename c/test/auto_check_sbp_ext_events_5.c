@@ -15,8 +15,8 @@
 
 #include <check.h>
 #include <libsbp/ext_events.h>
-#include <libsbp/packed/ext_events.h>
 #include <libsbp/sbp.h>
+#include <libsbp/unpacked/ext_events.h>
 #include <stdio.h>  // for debugging
 #include <stdlib.h> // for malloc
 

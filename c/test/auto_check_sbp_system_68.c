@@ -14,9 +14,9 @@
 // modify by hand!
 
 #include <check.h>
-#include <libsbp/packed/system.h>
 #include <libsbp/sbp.h>
 #include <libsbp/system.h>
+#include <libsbp/unpacked/system.h>
 #include <stdio.h>  // for debugging
 #include <stdlib.h> // for malloc
 

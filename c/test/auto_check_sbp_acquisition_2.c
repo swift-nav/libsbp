@@ -15,8 +15,8 @@
 
 #include <check.h>
 #include <libsbp/acquisition.h>
-#include <libsbp/packed/acquisition.h>
 #include <libsbp/sbp.h>
+#include <libsbp/unpacked/acquisition.h>
 #include <stdio.h>  // for debugging
 #include <stdlib.h> // for malloc
 
