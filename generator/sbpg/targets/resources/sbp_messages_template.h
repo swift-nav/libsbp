@@ -67,3 +67,4 @@ typedef struct SBP_ATTR_PACKED {
 SBP_PACK_END
 
 #endif /* LIBSBP_(((pkg_name|upper)))_MESSAGES_H */
+

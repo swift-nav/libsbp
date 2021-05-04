@@ -49,3 +49,4 @@ struct MessageTraits<(((m.identifier|convert_packed)))> {
 } // namespace sbp
 
 #endif //SBP_CPP_MESSAGE_TRAITS_H
+

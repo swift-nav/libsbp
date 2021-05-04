@@ -83,3 +83,4 @@ static inline bool operator!=(const (((m.name|convert_unpacked))) &a, const (((m
 ((*- endfor *))
 
 #endif
+

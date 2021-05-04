@@ -83,3 +83,4 @@ typedef struct {
 #include <libsbp/unpacked/(((pkg_name)))_packers.h>
 
 #endif /* LIBSBP_(((pkg_name|upper)))_MESSAGES_H */
+
