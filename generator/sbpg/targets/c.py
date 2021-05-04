@@ -200,14 +200,13 @@ class FieldItem(object):
             self.packed_size = field.options['size'].value
             self.options = field.options
         elif type_id == "string":
-            self.order = "variable-string"
-            self.termination = field.options['termination'].value
+            self.order = "variable-array"
             self.basetype = BasetypeItem(msg, package_specs, 'char', packed_offset)
-            self.max_items = 255 - packed_offset
-            if self.termination == "none":
-                self.max_items = self.max_items + 1
-            self.packed_size = 1
+            self.max_items = int((255 - packed_offset) / self.basetype.packed_size)
+            self.packed_size = 0
             self.options = field.options
+            if 'count' in field.options:
+                self.count = field.options['count'].value
             self.generate_as_nested = True
         elif type_id == "array" and 'size' in field.options:
             self.order = "fixed-array"

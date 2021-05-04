@@ -35,8 +35,6 @@
       ((*- endif *))
       ((*- elif f.order == "fixed-string" *))
         if (strncmp(a.(((path))), b.(((path))), sizeof(a.(((path))))) != 0) { return false; }
-      ((*- elif f.order == "variable-string" *))
-        if (sbp_strcmp(a.(((path + f.name))), b.(((path + f.name))), "(((f.termination)))") != 0) { return false; }
       ((*- elif f.order == "fixed-array" *))
         for (size_t (((loop_idx))) = 0; (((loop_idx))) < (((f.max_items))); (((loop_idx)))++)
         {

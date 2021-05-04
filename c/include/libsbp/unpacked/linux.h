@@ -38,7 +38,11 @@ typedef struct
   /**
    * the command line (as much as it fits in the remaining packet)
    */
-  char cmdline[237];
+  char cmdline[236];
+  /**
+   * Number of items in cmdline
+   */
+  u8 n_cmdline;
 } sbp_msg_linux_cpu_state_dep_a_t;
 /** List memory state on the system. DEPRECATED.
  *
@@ -69,7 +73,11 @@ typedef struct
   /**
    * the command line (as much as it fits in the remaining packet)
    */
-  char cmdline[237];
+  char cmdline[236];
+  /**
+   * Number of items in cmdline
+   */
+  u8 n_cmdline;
 } sbp_msg_linux_mem_state_dep_a_t;
 /** CPU, Memory and Process Starts/Stops. DEPRECATED.
  *
@@ -143,7 +151,11 @@ typedef struct
   /**
    * the command line of the process in question
    */
-  char cmdline[247];
+  char cmdline[246];
+  /**
+   * Number of items in cmdline
+   */
+  u8 n_cmdline;
 } sbp_msg_linux_process_socket_counts_t;
 /** A list of processes with deep socket queues
  *
@@ -192,7 +204,11 @@ typedef struct
   /**
    * the command line of the process in question
    */
-  char cmdline[181];
+  char cmdline[180];
+  /**
+   * Number of items in cmdline
+   */
+  u8 n_cmdline;
 } sbp_msg_linux_process_socket_queues_t;
 /** Summary of socket usage across the system
  *
@@ -246,7 +262,11 @@ typedef struct
   /**
    * the command line of the process in question
    */
-  char cmdline[251];
+  char cmdline[250];
+  /**
+   * Number of items in cmdline
+   */
+  u8 n_cmdline;
 } sbp_msg_linux_process_fd_count_t;
 /** Summary of open file descriptors on the system
  *
@@ -269,6 +289,10 @@ typedef struct
    * of the list being 2 NULL terminators in a row.
    */
   char most_opened[251];
+  /**
+   * Number of items in most_opened
+   */
+  u8 n_most_opened;
 } sbp_msg_linux_process_fd_summary_t;
 /** List CPU state on the system
  *
@@ -320,7 +344,11 @@ typedef struct
   /**
    * the command line (as much as it fits in the remaining packet)
    */
-  char cmdline[232];
+  char cmdline[231];
+  /**
+   * Number of items in cmdline
+   */
+  u8 n_cmdline;
 } sbp_msg_linux_cpu_state_t;
 /** List memory state on the system
  *
@@ -372,7 +400,11 @@ typedef struct
   /**
    * the command line (as much as it fits in the remaining packet)
    */
-  char cmdline[232];
+  char cmdline[231];
+  /**
+   * Number of items in cmdline
+   */
+  u8 n_cmdline;
 } sbp_msg_linux_mem_state_t;
 /** CPU, Memory and Process Starts/Stops.
  *

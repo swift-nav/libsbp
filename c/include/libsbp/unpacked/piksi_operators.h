@@ -677,9 +677,17 @@ static inline bool operator==(const sbp_msg_command_req_t &a, const sbp_msg_comm
   {
     return false;
   }
-  if (sbp_strcmp(a.command, b.command, "nul") != 0)
+  if (a.n_command != b.n_command)
   {
     return false;
+  }
+  for (size_t command_idx = 0; command_idx < (size_t)a.n_command; command_idx++)
+  {
+
+    if (a.command[command_idx] != b.command[command_idx])
+    {
+      return false;
+    }
   }
 
   return true;
@@ -724,9 +732,17 @@ static inline bool operator==(const sbp_msg_command_output_t &a, const sbp_msg_c
   {
     return false;
   }
-  if (sbp_strcmp(a.line, b.line, "none") != 0)
+  if (a.n_line != b.n_line)
   {
     return false;
+  }
+  for (size_t line_idx = 0; line_idx < (size_t)a.n_line; line_idx++)
+  {
+
+    if (a.line[line_idx] != b.line[line_idx])
+    {
+      return false;
+    }
   }
 
   return true;

@@ -519,6 +519,10 @@ typedef struct
    * Command line to execute
    */
   char command[251];
+  /**
+   * Number of items in command
+   */
+  u8 n_command;
 } sbp_msg_command_req_t;
 /** Exit code from executed command (device => host)
  *
@@ -558,7 +562,11 @@ typedef struct
   /**
    * Line of standard output or standard error
    */
-  char line[252];
+  char line[251];
+  /**
+   * Number of items in line
+   */
+  u8 n_line;
 } sbp_msg_command_output_t;
 /** Request state of Piksi network interfaces
  *

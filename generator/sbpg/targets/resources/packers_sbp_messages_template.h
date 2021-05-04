@@ -24,8 +24,6 @@
 	  +
     ((*- if f.order == "fixed-string" *))                                                                     
       (((f.max_items)))                                                                                       
-		((*- elif f.order == "variable-string" *))
-      sbp_strlen( (((path)))(((f.name))), "(((f.termination)))" )
 	  ((*- elif f.order == "single" *))
 		  ((*- if f.basetype.is_primitive *))
 				sizeof( ((( path + f.name ))) )
@@ -102,10 +100,6 @@ static inline size_t sbp_packed_size_(((m.name|convert_unpacked)))(const (((m.na
 			memcpy(buf + offset, (((path + f.name))), sizeof( (((path + f.name)))));
       // NOLINTNEXTLINE
 			offset += sizeof( (((path + f.name))));
-		((*- elif f.order == "variable-string" *))
-      if (offset + sbp_strlen( (((path + f.name))), "(((f.termination)))") > len) { return false; }
-      // NOLINTNEXTLINE
-      offset += sbp_pack_string( buf + offset, (((path + f.name))), "(((f.termination)))");
 		((*- elif f.order == "fixed-array" *))
 		  for(size_t (((loop_idx))) = 0; (((loop_idx))) < (((f.max_items))); (((loop_idx)))++)
 			{
@@ -182,9 +176,6 @@ static inline bool sbp_pack_(((m.name|convert_unpacked)))(u8 *buf, size_t len, c
 		memcpy( (((path + f.name))), buf + offset, sizeof( (((path + f.name))) ) );
     // NOLINTNEXTLINE
 		offset += sizeof( (((path + f.name))) );
-	((*- elif f.order == "variable-string" *))
-  // NOLINTNEXTLINE
-    offset += sbp_unpack_string((const char *)buf + offset, len - offset, (((path + f.name))), "(((f.termination)))");
 	((*- elif f.order == "fixed-array" *))
 		for (size_t (((loop_idx))) = 0; (((loop_idx))) < (((f.max_items))); (((loop_idx)))++)
 		{

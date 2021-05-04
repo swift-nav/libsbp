@@ -20,9 +20,17 @@ static inline bool operator==(const sbp_msg_log_t &a, const sbp_msg_log_t &b)
   {
     return false;
   }
-  if (sbp_strcmp(a.text, b.text, "none") != 0)
+  if (a.n_text != b.n_text)
   {
     return false;
+  }
+  for (size_t text_idx = 0; text_idx < (size_t)a.n_text; text_idx++)
+  {
+
+    if (a.text[text_idx] != b.text[text_idx])
+    {
+      return false;
+    }
   }
 
   return true;
@@ -75,9 +83,17 @@ static inline bool operator==(const sbp_msg_print_dep_t &a, const sbp_msg_print_
   (void)a;
   (void)b;
 
-  if (sbp_strcmp(a.text, b.text, "none") != 0)
+  if (a.n_text != b.n_text)
   {
     return false;
+  }
+  for (size_t text_idx = 0; text_idx < (size_t)a.n_text; text_idx++)
+  {
+
+    if (a.text[text_idx] != b.text[text_idx])
+    {
+      return false;
+    }
   }
 
   return true;

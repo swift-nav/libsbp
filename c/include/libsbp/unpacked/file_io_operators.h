@@ -30,9 +30,17 @@ static inline bool operator==(const sbp_msg_fileio_read_req_t &a, const sbp_msg_
   {
     return false;
   }
-  if (sbp_strcmp(a.filename, b.filename, "nul") != 0)
+  if (a.n_filename != b.n_filename)
   {
     return false;
+  }
+  for (size_t filename_idx = 0; filename_idx < (size_t)a.n_filename; filename_idx++)
+  {
+
+    if (a.filename[filename_idx] != b.filename[filename_idx])
+    {
+      return false;
+    }
   }
 
   return true;
@@ -89,9 +97,17 @@ static inline bool operator==(const sbp_msg_fileio_read_dir_req_t &a, const sbp_
   {
     return false;
   }
-  if (sbp_strcmp(a.dirname, b.dirname, "nul") != 0)
+  if (a.n_dirname != b.n_dirname)
   {
     return false;
+  }
+  for (size_t dirname_idx = 0; dirname_idx < (size_t)a.n_dirname; dirname_idx++)
+  {
+
+    if (a.dirname[dirname_idx] != b.dirname[dirname_idx])
+    {
+      return false;
+    }
   }
 
   return true;
@@ -139,9 +155,17 @@ static inline bool operator==(const sbp_msg_fileio_remove_t &a, const sbp_msg_fi
   (void)a;
   (void)b;
 
-  if (sbp_strcmp(a.filename, b.filename, "nul") != 0)
+  if (a.n_filename != b.n_filename)
   {
     return false;
+  }
+  for (size_t filename_idx = 0; filename_idx < (size_t)a.n_filename; filename_idx++)
+  {
+
+    if (a.filename[filename_idx] != b.filename[filename_idx])
+    {
+      return false;
+    }
   }
 
   return true;
@@ -167,9 +191,17 @@ static inline bool operator==(const sbp_msg_fileio_write_req_t &a, const sbp_msg
   {
     return false;
   }
-  if (sbp_strcmp(a.filename, b.filename, "nul") != 0)
+  if (a.n_filename != b.n_filename)
   {
     return false;
+  }
+  for (size_t filename_idx = 0; filename_idx < (size_t)a.n_filename; filename_idx++)
+  {
+
+    if (a.filename[filename_idx] != b.filename[filename_idx])
+    {
+      return false;
+    }
   }
   if (a.n_data != b.n_data)
   {

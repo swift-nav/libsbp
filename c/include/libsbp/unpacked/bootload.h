@@ -65,7 +65,11 @@ typedef struct
   /**
    * Bootloader version number
    */
-  char version[252];
+  char version[251];
+  /**
+   * Number of items in version
+   */
+  u8 n_version;
 } sbp_msg_bootloader_handshake_resp_t;
 /** Bootloader jump to application (host => device)
  *

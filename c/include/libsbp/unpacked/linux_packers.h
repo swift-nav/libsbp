@@ -15,7 +15,7 @@ static inline size_t sbp_packed_size_sbp_msg_linux_cpu_state_dep_a_t(const sbp_m
 {
   (void)msg;
   return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->pcpu) + (15 * sizeof(msg->tname[0])) +
-         sbp_strlen(msg->cmdline, "none");
+         (msg->n_cmdline * sizeof(msg->cmdline[0]));
 }
 
 static inline bool
@@ -69,12 +69,18 @@ sbp_pack_sbp_msg_linux_cpu_state_dep_a_t(u8 *buf, size_t len, const sbp_msg_linu
     // NOLINTNEXTLINE
     offset += 1;
   }
-  if (offset + sbp_strlen(msg->cmdline, "none") > len)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->n_cmdline; msgcmdline_idx++)
   {
-    return false;
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    char msgcmdlinemsgcmdline_idx = msg->cmdline[msgcmdline_idx];
+    memcpy(buf + offset, &msgcmdlinemsgcmdline_idx, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
   }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->cmdline, "none");
   return true;
 }
 
@@ -122,8 +128,19 @@ sbp_unpack_sbp_msg_linux_cpu_state_dep_a_t(const u8 *buf, size_t len, sbp_msg_li
     // NOLINTNEXTLINE
     offset += 1;
   }
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->cmdline, "none");
+  msg->n_cmdline = (u8)((len - offset) / 1);
+
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->n_cmdline; msgcmdline_idx++)
+  {
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    memcpy(&msg->cmdline[msgcmdline_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
+  }
   return true;
 }
 
@@ -131,7 +148,7 @@ static inline size_t sbp_packed_size_sbp_msg_linux_mem_state_dep_a_t(const sbp_m
 {
   (void)msg;
   return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->pmem) + (15 * sizeof(msg->tname[0])) +
-         sbp_strlen(msg->cmdline, "none");
+         (msg->n_cmdline * sizeof(msg->cmdline[0]));
 }
 
 static inline bool
@@ -185,12 +202,18 @@ sbp_pack_sbp_msg_linux_mem_state_dep_a_t(u8 *buf, size_t len, const sbp_msg_linu
     // NOLINTNEXTLINE
     offset += 1;
   }
-  if (offset + sbp_strlen(msg->cmdline, "none") > len)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->n_cmdline; msgcmdline_idx++)
   {
-    return false;
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    char msgcmdlinemsgcmdline_idx = msg->cmdline[msgcmdline_idx];
+    memcpy(buf + offset, &msgcmdlinemsgcmdline_idx, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
   }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->cmdline, "none");
   return true;
 }
 
@@ -238,8 +261,19 @@ sbp_unpack_sbp_msg_linux_mem_state_dep_a_t(const u8 *buf, size_t len, sbp_msg_li
     // NOLINTNEXTLINE
     offset += 1;
   }
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->cmdline, "none");
+  msg->n_cmdline = (u8)((len - offset) / 1);
+
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->n_cmdline; msgcmdline_idx++)
+  {
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    memcpy(&msg->cmdline[msgcmdline_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
+  }
   return true;
 }
 
@@ -387,7 +421,7 @@ sbp_packed_size_sbp_msg_linux_process_socket_counts_t(const sbp_msg_linux_proces
 {
   (void)msg;
   return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->socket_count) + sizeof(msg->socket_types) +
-         sizeof(msg->socket_states) + sbp_strlen(msg->cmdline, "none");
+         sizeof(msg->socket_states) + (msg->n_cmdline * sizeof(msg->cmdline[0]));
 }
 
 static inline bool
@@ -447,12 +481,18 @@ sbp_pack_sbp_msg_linux_process_socket_counts_t(u8 *buf, size_t len, const sbp_ms
   memcpy(buf + offset, &msgsocket_states, 2);
   // NOLINTNEXTLINE
   offset += 2;
-  if (offset + sbp_strlen(msg->cmdline, "none") > len)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->n_cmdline; msgcmdline_idx++)
   {
-    return false;
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    char msgcmdlinemsgcmdline_idx = msg->cmdline[msgcmdline_idx];
+    memcpy(buf + offset, &msgcmdlinemsgcmdline_idx, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
   }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->cmdline, "none");
   return true;
 }
 
@@ -508,8 +548,19 @@ sbp_unpack_sbp_msg_linux_process_socket_counts_t(const u8 *buf, size_t len, sbp_
   msg->socket_states = le16toh(msg->socket_states);
   // NOLINTNEXTLINE
   offset += 2;
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->cmdline, "none");
+  msg->n_cmdline = (u8)((len - offset) / 1);
+
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->n_cmdline; msgcmdline_idx++)
+  {
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    memcpy(&msg->cmdline[msgcmdline_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
+  }
   return true;
 }
 
@@ -519,7 +570,7 @@ sbp_packed_size_sbp_msg_linux_process_socket_queues_t(const sbp_msg_linux_proces
   (void)msg;
   return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->recv_queued) + sizeof(msg->send_queued) +
          sizeof(msg->socket_types) + sizeof(msg->socket_states) + (64 * sizeof(msg->address_of_largest[0])) +
-         sbp_strlen(msg->cmdline, "none");
+         (msg->n_cmdline * sizeof(msg->cmdline[0]));
 }
 
 static inline bool
@@ -600,12 +651,18 @@ sbp_pack_sbp_msg_linux_process_socket_queues_t(u8 *buf, size_t len, const sbp_ms
     // NOLINTNEXTLINE
     offset += 1;
   }
-  if (offset + sbp_strlen(msg->cmdline, "none") > len)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->n_cmdline; msgcmdline_idx++)
   {
-    return false;
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    char msgcmdlinemsgcmdline_idx = msg->cmdline[msgcmdline_idx];
+    memcpy(buf + offset, &msgcmdlinemsgcmdline_idx, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
   }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->cmdline, "none");
   return true;
 }
 
@@ -681,8 +738,19 @@ sbp_unpack_sbp_msg_linux_process_socket_queues_t(const u8 *buf, size_t len, sbp_
     // NOLINTNEXTLINE
     offset += 1;
   }
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->cmdline, "none");
+  msg->n_cmdline = (u8)((len - offset) / 1);
+
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->n_cmdline; msgcmdline_idx++)
+  {
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    memcpy(&msg->cmdline[msgcmdline_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
+  }
   return true;
 }
 
@@ -806,7 +874,7 @@ static inline bool sbp_unpack_sbp_msg_linux_socket_usage_t(const u8 *buf, size_t
 static inline size_t sbp_packed_size_sbp_msg_linux_process_fd_count_t(const sbp_msg_linux_process_fd_count_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->fd_count) + sbp_strlen(msg->cmdline, "none");
+  return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->fd_count) + (msg->n_cmdline * sizeof(msg->cmdline[0]));
 }
 
 static inline bool
@@ -848,12 +916,18 @@ sbp_pack_sbp_msg_linux_process_fd_count_t(u8 *buf, size_t len, const sbp_msg_lin
   memcpy(buf + offset, &msgfd_count, 2);
   // NOLINTNEXTLINE
   offset += 2;
-  if (offset + sbp_strlen(msg->cmdline, "none") > len)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->n_cmdline; msgcmdline_idx++)
   {
-    return false;
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    char msgcmdlinemsgcmdline_idx = msg->cmdline[msgcmdline_idx];
+    memcpy(buf + offset, &msgcmdlinemsgcmdline_idx, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
   }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->cmdline, "none");
   return true;
 }
 
@@ -891,15 +965,26 @@ sbp_unpack_sbp_msg_linux_process_fd_count_t(const u8 *buf, size_t len, sbp_msg_l
   msg->fd_count = le16toh(msg->fd_count);
   // NOLINTNEXTLINE
   offset += 2;
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->cmdline, "none");
+  msg->n_cmdline = (u8)((len - offset) / 1);
+
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->n_cmdline; msgcmdline_idx++)
+  {
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    memcpy(&msg->cmdline[msgcmdline_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
+  }
   return true;
 }
 
 static inline size_t sbp_packed_size_sbp_msg_linux_process_fd_summary_t(const sbp_msg_linux_process_fd_summary_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->sys_fd_count) + sbp_strlen(msg->most_opened, "2-nul");
+  return 0 + sizeof(msg->sys_fd_count) + (msg->n_most_opened * sizeof(msg->most_opened[0]));
 }
 
 static inline bool
@@ -923,12 +1008,18 @@ sbp_pack_sbp_msg_linux_process_fd_summary_t(u8 *buf, size_t len, const sbp_msg_l
   memcpy(buf + offset, &msgsys_fd_count, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  if (offset + sbp_strlen(msg->most_opened, "2-nul") > len)
+  for (size_t msgmost_opened_idx = 0; msgmost_opened_idx < (size_t)msg->n_most_opened; msgmost_opened_idx++)
   {
-    return false;
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    char msgmost_openedmsgmost_opened_idx = msg->most_opened[msgmost_opened_idx];
+    memcpy(buf + offset, &msgmost_openedmsgmost_opened_idx, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
   }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->most_opened, "2-nul");
   return true;
 }
 
@@ -949,8 +1040,19 @@ sbp_unpack_sbp_msg_linux_process_fd_summary_t(const u8 *buf, size_t len, sbp_msg
   msg->sys_fd_count = le32toh(msg->sys_fd_count);
   // NOLINTNEXTLINE
   offset += 4;
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->most_opened, "2-nul");
+  msg->n_most_opened = (u8)((len - offset) / 1);
+
+  for (size_t msgmost_opened_idx = 0; msgmost_opened_idx < msg->n_most_opened; msgmost_opened_idx++)
+  {
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    memcpy(&msg->most_opened[msgmost_opened_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
+  }
   return true;
 }
 
@@ -958,7 +1060,7 @@ static inline size_t sbp_packed_size_sbp_msg_linux_cpu_state_t(const sbp_msg_lin
 {
   (void)msg;
   return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->pcpu) + sizeof(msg->time) + sizeof(msg->flags) +
-         (15 * sizeof(msg->tname[0])) + sbp_strlen(msg->cmdline, "none");
+         (15 * sizeof(msg->tname[0])) + (msg->n_cmdline * sizeof(msg->cmdline[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_linux_cpu_state_t(u8 *buf, size_t len, const sbp_msg_linux_cpu_state_t *msg)
@@ -1029,12 +1131,18 @@ static inline bool sbp_pack_sbp_msg_linux_cpu_state_t(u8 *buf, size_t len, const
     // NOLINTNEXTLINE
     offset += 1;
   }
-  if (offset + sbp_strlen(msg->cmdline, "none") > len)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->n_cmdline; msgcmdline_idx++)
   {
-    return false;
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    char msgcmdlinemsgcmdline_idx = msg->cmdline[msgcmdline_idx];
+    memcpy(buf + offset, &msgcmdlinemsgcmdline_idx, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
   }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->cmdline, "none");
   return true;
 }
 
@@ -1098,8 +1206,19 @@ static inline bool sbp_unpack_sbp_msg_linux_cpu_state_t(const u8 *buf, size_t le
     // NOLINTNEXTLINE
     offset += 1;
   }
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->cmdline, "none");
+  msg->n_cmdline = (u8)((len - offset) / 1);
+
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->n_cmdline; msgcmdline_idx++)
+  {
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    memcpy(&msg->cmdline[msgcmdline_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
+  }
   return true;
 }
 
@@ -1107,7 +1226,7 @@ static inline size_t sbp_packed_size_sbp_msg_linux_mem_state_t(const sbp_msg_lin
 {
   (void)msg;
   return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->pmem) + sizeof(msg->time) + sizeof(msg->flags) +
-         (15 * sizeof(msg->tname[0])) + sbp_strlen(msg->cmdline, "none");
+         (15 * sizeof(msg->tname[0])) + (msg->n_cmdline * sizeof(msg->cmdline[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_linux_mem_state_t(u8 *buf, size_t len, const sbp_msg_linux_mem_state_t *msg)
@@ -1178,12 +1297,18 @@ static inline bool sbp_pack_sbp_msg_linux_mem_state_t(u8 *buf, size_t len, const
     // NOLINTNEXTLINE
     offset += 1;
   }
-  if (offset + sbp_strlen(msg->cmdline, "none") > len)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->n_cmdline; msgcmdline_idx++)
   {
-    return false;
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    char msgcmdlinemsgcmdline_idx = msg->cmdline[msgcmdline_idx];
+    memcpy(buf + offset, &msgcmdlinemsgcmdline_idx, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
   }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->cmdline, "none");
   return true;
 }
 
@@ -1247,8 +1372,19 @@ static inline bool sbp_unpack_sbp_msg_linux_mem_state_t(const u8 *buf, size_t le
     // NOLINTNEXTLINE
     offset += 1;
   }
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->cmdline, "none");
+  msg->n_cmdline = (u8)((len - offset) / 1);
+
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->n_cmdline; msgcmdline_idx++)
+  {
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    memcpy(&msg->cmdline[msgcmdline_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
+  }
   return true;
 }
 

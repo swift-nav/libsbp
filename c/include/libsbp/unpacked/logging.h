@@ -45,7 +45,11 @@ typedef struct
   /**
    * Human-readable string
    */
-  char text[255];
+  char text[254];
+  /**
+   * Number of items in text
+   */
+  u8 n_text;
 } sbp_msg_log_t;
 /** Wrapper for FWD a separate stream of information over SBP
  *
@@ -91,7 +95,11 @@ typedef struct
   /**
    * Human-readable string
    */
-  char text[256];
+  char text[255];
+  /**
+   * Number of items in text
+   */
+  u8 n_text;
 } sbp_msg_print_dep_t;
 
 #include <libsbp/unpacked/logging_operators.h>

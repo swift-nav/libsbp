@@ -14,7 +14,7 @@
 static inline size_t sbp_packed_size_sbp_msg_log_t(const sbp_msg_log_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->level) + sbp_strlen(msg->text, "none");
+  return 0 + sizeof(msg->level) + (msg->n_text * sizeof(msg->text[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_log_t(u8 *buf, size_t len, const sbp_msg_log_t *msg)
@@ -37,12 +37,18 @@ static inline bool sbp_pack_sbp_msg_log_t(u8 *buf, size_t len, const sbp_msg_log
   memcpy(buf + offset, &msglevel, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  if (offset + sbp_strlen(msg->text, "none") > len)
+  for (size_t msgtext_idx = 0; msgtext_idx < (size_t)msg->n_text; msgtext_idx++)
   {
-    return false;
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    char msgtextmsgtext_idx = msg->text[msgtext_idx];
+    memcpy(buf + offset, &msgtextmsgtext_idx, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
   }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->text, "none");
   return true;
 }
 
@@ -61,8 +67,19 @@ static inline bool sbp_unpack_sbp_msg_log_t(const u8 *buf, size_t len, sbp_msg_l
   memcpy(&msg->level, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->text, "none");
+  msg->n_text = (u8)((len - offset) / 1);
+
+  for (size_t msgtext_idx = 0; msgtext_idx < msg->n_text; msgtext_idx++)
+  {
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    memcpy(&msg->text[msgtext_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
+  }
   return true;
 }
 
@@ -158,7 +175,7 @@ static inline bool sbp_unpack_sbp_msg_fwd_t(const u8 *buf, size_t len, sbp_msg_f
 static inline size_t sbp_packed_size_sbp_msg_print_dep_t(const sbp_msg_print_dep_t *msg)
 {
   (void)msg;
-  return 0 + sbp_strlen(msg->text, "none");
+  return 0 + (msg->n_text * sizeof(msg->text[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_print_dep_t(u8 *buf, size_t len, const sbp_msg_print_dep_t *msg)
@@ -173,12 +190,18 @@ static inline bool sbp_pack_sbp_msg_print_dep_t(u8 *buf, size_t len, const sbp_m
     return false;
   }
 
-  if (offset + sbp_strlen(msg->text, "none") > len)
+  for (size_t msgtext_idx = 0; msgtext_idx < (size_t)msg->n_text; msgtext_idx++)
   {
-    return false;
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    char msgtextmsgtext_idx = msg->text[msgtext_idx];
+    memcpy(buf + offset, &msgtextmsgtext_idx, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
   }
-  // NOLINTNEXTLINE
-  offset += sbp_pack_string(buf + offset, msg->text, "none");
   return true;
 }
 
@@ -190,8 +213,19 @@ static inline bool sbp_unpack_sbp_msg_print_dep_t(const u8 *buf, size_t len, sbp
   (void)len;
   (void)msg;
 
-  // NOLINTNEXTLINE
-  offset += sbp_unpack_string((const char *)buf + offset, len - offset, msg->text, "none");
+  msg->n_text = (u8)((len - offset) / 1);
+
+  for (size_t msgtext_idx = 0; msgtext_idx < msg->n_text; msgtext_idx++)
+  {
+
+    if (offset + 1 > len)
+    {
+      return false;
+    }
+    memcpy(&msg->text[msgtext_idx], buf + offset, 1);
+    // NOLINTNEXTLINE
+    offset += 1;
+  }
   return true;
 }
 

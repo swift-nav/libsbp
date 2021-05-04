@@ -35,9 +35,17 @@ static inline bool operator==(const sbp_msg_bootloader_handshake_resp_t &a,
   {
     return false;
   }
-  if (sbp_strcmp(a.version, b.version, "none") != 0)
+  if (a.n_version != b.n_version)
   {
     return false;
+  }
+  for (size_t version_idx = 0; version_idx < (size_t)a.n_version; version_idx++)
+  {
+
+    if (a.version[version_idx] != b.version[version_idx])
+    {
+      return false;
+    }
   }
 
   return true;

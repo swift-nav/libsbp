@@ -41,6 +41,10 @@ typedef struct
    * Name of the file to read from
    */
   char filename[246];
+  /**
+   * Number of items in filename
+   */
+  u8 n_filename;
 } sbp_msg_fileio_read_req_t;
 /** File read from the file system (host <= device)
  *
@@ -98,6 +102,10 @@ typedef struct
    * Name of the directory to list
    */
   char dirname[247];
+  /**
+   * Number of items in dirname
+   */
+  u8 n_dirname;
 } sbp_msg_fileio_read_dir_req_t;
 /** Files listed in a directory (host <= device)
  *
@@ -142,6 +150,10 @@ typedef struct
    * Name of the file to delete
    */
   char filename[255];
+  /**
+   * Number of items in filename
+   */
+  u8 n_filename;
 } sbp_msg_fileio_remove_t;
 /** Write to file (host => device)
  *
@@ -172,9 +184,13 @@ typedef struct
    */
   char filename[247];
   /**
+   * Number of items in filename
+   */
+  u8 n_filename;
+  /**
    * Variable-length array of data to write
    */
-  u8 data[246];
+  u8 data[247];
   /**
    * Number of items in data
    */
