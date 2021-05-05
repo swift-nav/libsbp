@@ -668,29 +668,28 @@ s8 sbp_process_unpacked(sbp_state_t *s, u16 sender_id, u16 msg_type, const sbp_m
 
   for (node = s->sbp_msg_callbacks_head; node; node = node->next)
   {
-    if (
-        ((node->msg_type == msg_type) || (node->msg_type == SBP_MSG_ALL)))
+    if (((node->msg_type == msg_type) || (node->msg_type == SBP_MSG_ALL)))
     {
-      switch(node->cb_type)
+      switch (node->cb_type)
       {
         case SBP_FRAME_CALLBACK:
-          {
-            node->cb.frame(sender_id, msg_type, frame[5], frame + 6, (uint16_t)(8u + frame[5]), frame, node->context);
-            ret = SBP_OK_CALLBACK_EXECUTED;
-          }
-          break;
+        {
+          node->cb.frame(sender_id, msg_type, frame[5], frame + 6, (uint16_t)(8u + frame[5]), frame, node->context);
+          ret = SBP_OK_CALLBACK_EXECUTED;
+        }
+        break;
         case SBP_PAYLOAD_CALLBACK:
-          {
-            node->cb.msg(sender_id, frame[5], frame + 6, node->context);
-            ret = SBP_OK_CALLBACK_EXECUTED;
-          }
-          break;
+        {
+          node->cb.msg(sender_id, frame[5], frame + 6, node->context);
+          ret = SBP_OK_CALLBACK_EXECUTED;
+        }
+        break;
         case SBP_UNPACKED_CALLBACK:
-          {
-            node->cb.unpacked(sender_id, msg_type, msg, node->context);
-            ret = SBP_OK_CALLBACK_EXECUTED;
-          }
-          break;
+        {
+          node->cb.unpacked(sender_id, msg_type, msg, node->context);
+          ret = SBP_OK_CALLBACK_EXECUTED;
+        }
+        break;
         case SBP_CALLBACK_TYPE_COUNT:
         default:
           break;
