@@ -312,7 +312,9 @@ typedef struct SBP_ATTR_PACKED {
   u16 sbp_version;         /**< SBP protocol version */
   u32 sequence;            /**< Increments on each status report sent */
   u32 uptime;              /**< Number of seconds since system start-up */
+#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
   sub_system_report_t status[0];           /**< Reported status of individual subsystems */
+#endif
 } msg_status_report_t;
 
 
