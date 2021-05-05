@@ -13,7 +13,6 @@ from ..table import dispatch
 
 import struct
 import datetime
-import time
 import uuid
 import six
 import warnings

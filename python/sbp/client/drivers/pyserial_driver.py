@@ -115,5 +115,5 @@ class PySerialDriver(BaseDriver):
         try:
             self.flush()
             self.close()
-        except (OSError, SerialError, serial.SerialException) as e:
+        except (OSError, SerialError, serial.SerialException):
             pass

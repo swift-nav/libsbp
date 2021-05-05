@@ -8,7 +8,6 @@
 # EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-import pytest
 
 import io
 import itertools
@@ -16,7 +15,7 @@ import time
 import threading
 import gc
 
-from sbp.client import *
+from sbp.client import Framer, Handler
 from sbp.msg import SBP
 from sbp.logging import MsgLog
 

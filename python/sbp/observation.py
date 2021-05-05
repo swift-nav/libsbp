@@ -20,7 +20,7 @@ import construct
 
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
-from sbp.gnss import *
+from sbp.gnss import CarrierPhase, GnssSignal, GnssSignalDep, GPSTime, GPSTime, GPSTimeDep, GPSTimeSec, SvId  # noqa
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/observation.yaml with generate.py.
 # Please do not hand edit!

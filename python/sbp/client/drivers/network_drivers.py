@@ -11,7 +11,6 @@
 
 """
 
-import sys
 import errno
 import socket
 import threading

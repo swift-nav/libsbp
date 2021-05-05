@@ -19,6 +19,11 @@ import weakref
 import six
 from six.moves.queue import Queue
 
+try:
+    from typing import Optional  # noqa
+except ImportError:
+    pass
+
 
 class Handler(object):
     """
@@ -227,7 +232,6 @@ class Handler(object):
             self._receive_thread.join(0.1)
         except Exception as exc:
             warnings.warn("Handler stop error: %s" % (exc,))
-            pass
 
     def join(self, timeout=None):
         self._receive_thread.join(timeout)

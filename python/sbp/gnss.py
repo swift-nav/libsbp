@@ -14,12 +14,9 @@
 Various structs shared between modules
 """
 
-import json
-
 import construct
 
-from sbp.msg import SBP, SENDER_ID
-from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+from sbp.utils import fmt_repr
 
 # Automatically generated from piksi/yaml/swiftnav/sbp/gnss.yaml with generate.py.
 # Please do not hand edit!

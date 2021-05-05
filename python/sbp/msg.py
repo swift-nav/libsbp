@@ -20,7 +20,6 @@ except ImportError:
 
 from sbp.constants import SENDER_ID as _SENDER_ID
 from sbp.constants import SBP_PREAMBLE as _SBP_PREAMBLE
-from sbp.constants import crc16_tab
 
 
 SENDER_ID = _SENDER_ID

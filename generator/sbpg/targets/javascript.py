@@ -16,7 +16,7 @@ files.
 
 """
 
-from sbpg.targets.templating import JENV
+from sbpg.targets.templating import INCLUDE_MAP, JENV, is_list
 from sbpg.utils import comment_links
 import copy
 import textwrap
@@ -168,11 +168,9 @@ def star_wordwrap(s):
 def star_wordwrap_indent(s):
   return "\n *   ".join(textwrap.wrap(' '.join(s.split('\n')), 80))
 
-def islist(x):
-  return isinstance(x, list)
 
 JENV.tests['builtinType'] = builtin_type
-JENV.tests['list'] = islist
+JENV.tests['list'] = is_list
 
 JENV.filters['js_classnameify'] = js_classnameify
 JENV.filters['writeBuffer'] = write_buffer
@@ -195,9 +193,8 @@ def render_source(output_dir, package_spec, jenv=JENV):
   destination_filename = "%s/%s.js" % (directory, name)
   py_template = jenv.get_template(TEMPLATE_NAME)
   module_path = ".".join(package_spec.identifier.split(".")[1:-1])
-  includeMap = {'gnss': ['GnssSignal', 'GnssSignalDep', 'GPSTime', 'CarrierPhase', 'GPSTime', 'GPSTimeSec', 'GPSTimeDep', 'SvId'] }
   includes = [".".join(i.split(".")[:-1]) for i in package_spec.includes]
-  includes = [(i, includeMap.get(i)) for i in includes if i != "types"]
+  includes = [(i, INCLUDE_MAP.get(i)) for i in includes if i != "types"]
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(msgs=package_spec.definitions,
                                filepath="/".join(package_spec.filepath) + ".yaml",

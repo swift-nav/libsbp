@@ -14,15 +14,25 @@
 (((description|comment_links)))
 """
 
+((* if msgs|has_real_message -*))
 import json
 
 import construct
 
 from sbp.msg import SBP, SENDER_ID
 from sbp.utils import fmt_repr, exclude_fields, walk_json_dict, containerize
+((*- else -*))
+import construct
 
-((*- for i in include *))
-from (((module_path))).(((i))) import *
+from sbp.utils import fmt_repr
+((*- endif -*))
+
+((*- for (file, ident) in include *))
+  ((*- if ident is list *))
+from (((module_path))).(((file))) import ((* for name in ident -*))((( name )))((*- if not loop.last *)), ((* endif -*))((*- endfor *))  # noqa
+  ((*- else *))
+from (((module_path))).(((file))) import *
+  ((*- endif *))
 ((*- endfor *))
 
 # Automatically generated from piksi/yaml/(((filepath))) with generate.py.

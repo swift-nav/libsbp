@@ -16,8 +16,8 @@ from collections import defaultdict
 from sbp.client.drivers.network_drivers import TCPDriver
 from sbp.client import Handler, Framer
 from sbp.gnss import GPSTimeSec
-from sbp.piksi import SBP_MSG_SPECAN_DEP, MsgSpecanDep
-from sbp.piksi import SBP_MSG_SPECAN, MsgSpecan
+from sbp.piksi import SBP_MSG_SPECAN_DEP
+from sbp.piksi import SBP_MSG_SPECAN
 import numpy as np
 
 class GPSTimeSecCmp(GPSTimeSec):

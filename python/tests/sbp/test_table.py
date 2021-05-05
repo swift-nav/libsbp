@@ -10,7 +10,6 @@
 
 from sbp.msg import SBP
 from sbp.table import _SBP_TABLE, dispatch
-from sbp.table import InvalidSBPMessageType
 from sbp import acquisition as acq
 from sbp import bootload as boot
 from sbp import file_io as file_io
@@ -34,9 +33,6 @@ from sbp import sbas as sbas
 from sbp import ssr as ssr
 from sbp import solution_meta as solmeta
 
-import pytest
-import sbp.acquisition as acq
-import sbp.logging as log
 import warnings
 
 def test_table_count():

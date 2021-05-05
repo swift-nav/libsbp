@@ -1,6 +1,7 @@
-pytest~=3.1.2
-pytest-cov~=2.5.1
-cov-core~=1.15.0
-coverage~=4.4.1
+pytest
+pytest-cov
+pytest-flakes
+coverage
 tox
 pyyaml
+numpy

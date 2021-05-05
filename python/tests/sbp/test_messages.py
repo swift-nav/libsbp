@@ -47,14 +47,13 @@ def test_message_case_count():
     test_count = len(CASES)
     missing_messages = total_messages - test_count
 
-    assert test_count > 0, "No message definitions found in %s" % ROOTDIR
+    assert test_count > 0, "No message definitions found in %s" % ROOTPATH
     assert test_count <= total_messages, "Found tests for nonexistent messages"
 
     # TODO: ideally we need tests for every message type
     assert (
         missing_messages <= EXPECTED_MISSING_MESSAGES
     ), "Missing tests for %d out of %d messages" % (missing_messages, total_messages)
-
 
 @pytest.mark.parametrize("case", CASES)
 def test_message(case):

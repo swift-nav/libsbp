@@ -10,11 +10,7 @@
 
 from logging.handlers import TimedRotatingFileHandler
 from sbp.client.loggers.json_logger import JSONLogger
-from sbp.table import dispatch
-import six
 import logging
-import threading
-import time
 
 
 class RotatingFileLogger(JSONLogger):

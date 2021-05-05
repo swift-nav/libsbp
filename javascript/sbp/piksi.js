@@ -23,13 +23,13 @@ var SBP = require('./sbp');
 var Parser = require('./parser');
 var Int64 = require('node-int64');
 var UInt64 = require('cuint').UINT64;
+var CarrierPhase = require("./gnss").CarrierPhase;
 var GnssSignal = require("./gnss").GnssSignal;
 var GnssSignalDep = require("./gnss").GnssSignalDep;
 var GPSTime = require("./gnss").GPSTime;
-var CarrierPhase = require("./gnss").CarrierPhase;
 var GPSTime = require("./gnss").GPSTime;
-var GPSTimeSec = require("./gnss").GPSTimeSec;
 var GPSTimeDep = require("./gnss").GPSTimeDep;
+var GPSTimeSec = require("./gnss").GPSTimeSec;
 var SvId = require("./gnss").SvId;
 
 /**

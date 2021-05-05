@@ -16,7 +16,7 @@ files.
 
 """
 
-from sbpg.targets.templating import JENV, ACRONYMS
+from sbpg.targets.templating import ACRONYMS, INCLUDE_MAP, JENV, is_list
 from sbpg.utils import comment_links
 from sbpg import ReleaseVersion
 import copy
@@ -97,10 +97,21 @@ def classnameify(s):
   """
   return ''.join(w if w in ACRONYMS else w.title() for w in s.split('_'))
 
+
+def has_real_message(l):
+  """
+  Determine if module has any real messages.
+  """
+  return any(m.static and m.is_real_message for m in l)
+
+
+JENV.filters['has_real_message'] = has_real_message
 JENV.filters['construct_py'] = construct_format
 JENV.filters['classnameify'] = classnameify
 JENV.filters['pydoc'] = pydoc_format
 JENV.filters['comment_links'] = comment_links
+
+JENV.tests['list'] = is_list
 
 
 def render_source(output_dir, package_spec, jenv=JENV):
@@ -113,7 +124,7 @@ def render_source(output_dir, package_spec, jenv=JENV):
   py_template = jenv.get_template(TEMPLATE_NAME)
   module_path = ".".join(package_spec.identifier.split(".")[1:-1])
   includes = [".".join(i.split(".")[:-1]) for i in package_spec.includes]
-  includes = [i for i in includes if i != "types"]
+  includes = [(i, INCLUDE_MAP.get(i)) for i in includes if i != "types"]
   print(destination_filename, includes)
   with open(destination_filename, 'w') as f:
     f.write(py_template.render(msgs=package_spec.definitions,

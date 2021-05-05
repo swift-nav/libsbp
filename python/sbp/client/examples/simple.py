@@ -15,8 +15,7 @@ printing them out.
 
 from sbp.client.drivers.pyserial_driver import PySerialDriver
 from sbp.client import Handler, Framer
-from sbp.client.loggers.json_logger import JSONLogger
-from sbp.navigation import SBP_MSG_BASELINE_NED, MsgBaselineNED
+from sbp.navigation import SBP_MSG_BASELINE_NED
 import argparse
 
 

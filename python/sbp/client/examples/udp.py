@@ -16,7 +16,6 @@ from sbp.client.drivers.pyserial_driver import PySerialDriver
 from sbp.client import Handler, Framer
 from sbp.client.loggers.udp_logger import UdpLogger
 
-import struct
 import time
 
 DEFAULT_SERIAL_PORT = "/dev/ttyUSB0"

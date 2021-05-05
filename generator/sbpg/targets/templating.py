@@ -26,3 +26,10 @@ JENV = jinja2.Environment(block_start_string = '((*',
                           )
 
 ACRONYMS = ['GPS', 'ECEF', 'LLH', 'NED', 'IO']
+INCLUDE_MAP = {
+    "gnss": ["CarrierPhase", "GnssSignal", "GnssSignalDep", "GPSTime", "GPSTime", "GPSTimeDep", "GPSTimeSec", "SvId"],
+}
+
+
+def is_list(x):
+    return isinstance(x, list)
