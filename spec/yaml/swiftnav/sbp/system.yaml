@@ -398,19 +398,29 @@ definitions:
     id: 0xFF08
     short_desc: Local time at detection of PPS pulse
     desc: |
-        The PPS time message contains the value of the CPU local time in
-        microseconds at the moment a pulse is detected on the PPS input.
-        This is to be used for syncronisation of sensor data sampled with
-        a local timestamp (e.g. IMU or wheeltick messages) where GNSS time
-        is unknown to the sender.
+      The PPS time message contains the value of the sender’s local time in
+      microseconds at the moment a pulse is detected on the PPS input.
+      This is to be used for syncronisation of sensor data sampled with a local
+      timestamp (e.g. IMU or wheeltick messages) where GNSS time is unknown
+      to the sender.
     fields:
         - time:
             type: u64
-            units: us
-            desc: CPU local time in microseconds
-        - reserved:
+            units: microseconds
+            desc: local time in microseconds
+        - flags:
             type: u8
-            desc: Reserved, set to zero
+            desc: Status flags
+            fields:
+              - 0-1:
+                  desc: Time uncertainty
+                  values:
+                    - 0: Unknown
+                    - 1: +/- 10 milliseconds
+                    - 2: +/- 10 microseconds
+                    - 3: < 1 microseconds
+              - 2-7:
+                    desc: Reserved, set to zero
 
  - MSG_GROUP_META:
      id: 0xFF0A  # 65290
