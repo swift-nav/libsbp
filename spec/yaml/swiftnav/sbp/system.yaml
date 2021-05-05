@@ -392,7 +392,7 @@ definitions:
     id: 0xFF08
     short_desc: Local time at detection of PPS pulse
     desc: |
-      The PPS time message contains the value of the sender’s local time in
+      The PPS time message contains the value of the sender's local time in
       microseconds at the moment a pulse is detected on the PPS input.
       This is to be used for syncronisation of sensor data sampled with a local
       timestamp (e.g. IMU or wheeltick messages) where GNSS time is unknown
