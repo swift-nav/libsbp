@@ -217,6 +217,7 @@ use self::system::MsgGroupMeta;
 use self::system::MsgHeartbeat;
 use self::system::MsgInsStatus;
 use self::system::MsgInsUpdates;
+use self::system::MsgPpsTime;
 use self::system::MsgStartup;
 use self::system::MsgStatusReport;
 use self::tracking::MsgMeasurementState;
@@ -442,6 +443,7 @@ pub enum SBP {
     MsgCsacTelemetryLabels(MsgCsacTelemetryLabels),
     MsgInsUpdates(MsgInsUpdates),
     MsgGnssTimeOffset(MsgGnssTimeOffset),
+    MsgPpsTime(MsgPpsTime),
     MsgGroupMeta(MsgGroupMeta),
     MsgSolnMeta(MsgSolnMeta),
     MsgSolnMetaDepA(MsgSolnMetaDepA),
@@ -1428,6 +1430,11 @@ impl SBP {
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgGnssTimeOffset(msg))
             }
+            65288 => {
+                let mut msg = MsgPpsTime::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgPpsTime(msg))
+            }
             65290 => {
                 let mut msg = MsgGroupMeta::parse(payload)?;
                 msg.set_sender_id(sender_id);
@@ -1660,6 +1667,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgCsacTelemetryLabels(msg) => msg.get_message_name(),
             SBP::MsgInsUpdates(msg) => msg.get_message_name(),
             SBP::MsgGnssTimeOffset(msg) => msg.get_message_name(),
+            SBP::MsgPpsTime(msg) => msg.get_message_name(),
             SBP::MsgGroupMeta(msg) => msg.get_message_name(),
             SBP::MsgSolnMeta(msg) => msg.get_message_name(),
             SBP::MsgSolnMetaDepA(msg) => msg.get_message_name(),
@@ -1866,6 +1874,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgCsacTelemetryLabels(msg) => msg.get_message_type(),
             SBP::MsgInsUpdates(msg) => msg.get_message_type(),
             SBP::MsgGnssTimeOffset(msg) => msg.get_message_type(),
+            SBP::MsgPpsTime(msg) => msg.get_message_type(),
             SBP::MsgGroupMeta(msg) => msg.get_message_type(),
             SBP::MsgSolnMeta(msg) => msg.get_message_type(),
             SBP::MsgSolnMetaDepA(msg) => msg.get_message_type(),
@@ -2072,6 +2081,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgCsacTelemetryLabels(msg) => msg.get_sender_id(),
             SBP::MsgInsUpdates(msg) => msg.get_sender_id(),
             SBP::MsgGnssTimeOffset(msg) => msg.get_sender_id(),
+            SBP::MsgPpsTime(msg) => msg.get_sender_id(),
             SBP::MsgGroupMeta(msg) => msg.get_sender_id(),
             SBP::MsgSolnMeta(msg) => msg.get_sender_id(),
             SBP::MsgSolnMetaDepA(msg) => msg.get_sender_id(),
@@ -2278,6 +2288,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgCsacTelemetryLabels(msg) => msg.set_sender_id(new_id),
             SBP::MsgInsUpdates(msg) => msg.set_sender_id(new_id),
             SBP::MsgGnssTimeOffset(msg) => msg.set_sender_id(new_id),
+            SBP::MsgPpsTime(msg) => msg.set_sender_id(new_id),
             SBP::MsgGroupMeta(msg) => msg.set_sender_id(new_id),
             SBP::MsgSolnMeta(msg) => msg.set_sender_id(new_id),
             SBP::MsgSolnMetaDepA(msg) => msg.set_sender_id(new_id),
@@ -2484,6 +2495,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgCsacTelemetryLabels(msg) => msg.to_frame(),
             SBP::MsgInsUpdates(msg) => msg.to_frame(),
             SBP::MsgGnssTimeOffset(msg) => msg.to_frame(),
+            SBP::MsgPpsTime(msg) => msg.to_frame(),
             SBP::MsgGroupMeta(msg) => msg.to_frame(),
             SBP::MsgSolnMeta(msg) => msg.to_frame(),
             SBP::MsgSolnMetaDepA(msg) => msg.to_frame(),
@@ -2690,6 +2702,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgCsacTelemetryLabels(msg) => msg.write_frame(buf),
             SBP::MsgInsUpdates(msg) => msg.write_frame(buf),
             SBP::MsgGnssTimeOffset(msg) => msg.write_frame(buf),
+            SBP::MsgPpsTime(msg) => msg.write_frame(buf),
             SBP::MsgGroupMeta(msg) => msg.write_frame(buf),
             SBP::MsgSolnMeta(msg) => msg.write_frame(buf),
             SBP::MsgSolnMetaDepA(msg) => msg.write_frame(buf),
@@ -2898,6 +2911,7 @@ impl crate::SbpSerialize for SBP {
             SBP::MsgCsacTelemetryLabels(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgInsUpdates(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgGnssTimeOffset(msg) => msg.append_to_sbp_buffer(buf),
+            SBP::MsgPpsTime(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgGroupMeta(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgSolnMeta(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgSolnMetaDepA(msg) => msg.append_to_sbp_buffer(buf),
@@ -3104,6 +3118,7 @@ impl crate::SbpSerialize for SBP {
             SBP::MsgCsacTelemetryLabels(msg) => msg.sbp_size(),
             SBP::MsgInsUpdates(msg) => msg.sbp_size(),
             SBP::MsgGnssTimeOffset(msg) => msg.sbp_size(),
+            SBP::MsgPpsTime(msg) => msg.sbp_size(),
             SBP::MsgGroupMeta(msg) => msg.sbp_size(),
             SBP::MsgSolnMeta(msg) => msg.sbp_size(),
             SBP::MsgSolnMetaDepA(msg) => msg.sbp_size(),
@@ -4086,6 +4101,11 @@ impl From<MsgInsUpdates> for SBP {
 impl From<MsgGnssTimeOffset> for SBP {
     fn from(msg: MsgGnssTimeOffset) -> Self {
         SBP::MsgGnssTimeOffset(msg)
+    }
+}
+impl From<MsgPpsTime> for SBP {
+    fn from(msg: MsgPpsTime) -> Self {
+        SBP::MsgPpsTime(msg)
     }
 }
 impl From<MsgGroupMeta> for SBP {

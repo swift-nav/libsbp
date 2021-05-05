@@ -620,6 +620,48 @@ typedef struct SBP_ATTR_PACKED {
 } msg_gnss_time_offset_t;
 
 
+/** Local time at detection of PPS pulse
+ *
+ * The PPS time message contains the value of the sender's local time in
+ * microseconds at the moment a pulse is detected on the PPS input.
+ * This is to be used for syncronisation of sensor data sampled with a local
+ * timestamp (e.g. IMU or wheeltick messages) where GNSS time is unknown
+ * to the sender.
+ */
+#define SBP_MSG_PPS_TIME              0xFF08
+#define SBP_PPS_TIME_RESERVED_SET_TO_ZERO_MASK (0x3f)
+#define SBP_PPS_TIME_RESERVED_SET_TO_ZERO_SHIFT (2u)
+#define SBP_PPS_TIME_RESERVED_SET_TO_ZERO_GET(flags) \
+                             (((flags) >> SBP_PPS_TIME_RESERVED_SET_TO_ZERO_SHIFT) \
+                             & SBP_PPS_TIME_RESERVED_SET_TO_ZERO_MASK)
+#define SBP_PPS_TIME_RESERVED_SET_TO_ZERO_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_PPS_TIME_RESERVED_SET_TO_ZERO_MASK)) \
+                             << (SBP_PPS_TIME_RESERVED_SET_TO_ZERO_SHIFT)));} while(0)
+                             
+
+#define SBP_PPS_TIME_TIME_UNCERTAINTY_MASK (0x3)
+#define SBP_PPS_TIME_TIME_UNCERTAINTY_SHIFT (0u)
+#define SBP_PPS_TIME_TIME_UNCERTAINTY_GET(flags) \
+                             (((flags) >> SBP_PPS_TIME_TIME_UNCERTAINTY_SHIFT) \
+                             & SBP_PPS_TIME_TIME_UNCERTAINTY_MASK)
+#define SBP_PPS_TIME_TIME_UNCERTAINTY_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_PPS_TIME_TIME_UNCERTAINTY_MASK)) \
+                             << (SBP_PPS_TIME_TIME_UNCERTAINTY_SHIFT)));} while(0)
+                             
+
+#define SBP_PPS_TIME_TIME_UNCERTAINTY_UNKNOWN (0)
+#define SBP_PPS_TIME_TIME_UNCERTAINTY__10_MILLISECONDS (1)
+#define SBP_PPS_TIME_TIME_UNCERTAINTY__10_MICROSECONDS (2)
+#define SBP_PPS_TIME_TIME_UNCERTAINTY__1_MICROSECONDS (3)
+
+typedef struct SBP_ATTR_PACKED {
+  u64 time;     /**< local time in microseconds [microseconds] */
+  u8 flags;    /**< Status flags */
+} msg_pps_time_t;
+
+
 /** Solution Group Metadata
  *
  * This leading message lists the time metadata of the Solution Group.

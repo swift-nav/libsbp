@@ -377,6 +377,36 @@ $(makeSBP 'msgGnssTimeOffset ''MsgGnssTimeOffset)
 $(makeJSON "_msgGnssTimeOffset_" ''MsgGnssTimeOffset)
 $(makeLenses ''MsgGnssTimeOffset)
 
+msgPpsTime :: Word16
+msgPpsTime = 0xFF08
+
+-- | SBP class for message MSG_PPS_TIME (0xFF08).
+--
+-- The PPS time message contains the value of the sender's local time in
+-- microseconds at the moment a pulse is detected on the PPS input. This is to
+-- be used for syncronisation of sensor data sampled with a local timestamp
+-- (e.g. IMU or wheeltick messages) where GNSS time is unknown to the sender.
+data MsgPpsTime = MsgPpsTime
+  { _msgPpsTime_time :: !Word64
+    -- ^ local time in microseconds
+  , _msgPpsTime_flags :: !Word8
+    -- ^ Status flags
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgPpsTime where
+  get = do
+    _msgPpsTime_time <- getWord64le
+    _msgPpsTime_flags <- getWord8
+    pure MsgPpsTime {..}
+
+  put MsgPpsTime {..} = do
+    putWord64le _msgPpsTime_time
+    putWord8 _msgPpsTime_flags
+
+$(makeSBP 'msgPpsTime ''MsgPpsTime)
+$(makeJSON "_msgPpsTime_" ''MsgPpsTime)
+$(makeLenses ''MsgPpsTime)
+
 msgGroupMeta :: Word16
 msgGroupMeta = 0xFF0A
 

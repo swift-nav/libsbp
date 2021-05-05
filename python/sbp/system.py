@@ -1012,6 +1012,105 @@ producing this message.
     d.update(j)
     return d
     
+SBP_MSG_PPS_TIME = 0xFF08
+class MsgPpsTime(SBP):
+  """SBP class for message MSG_PPS_TIME (0xFF08).
+
+  You can have MSG_PPS_TIME inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  The PPS time message contains the value of the sender's local time in
+microseconds at the moment a pulse is detected on the PPS input.
+This is to be used for syncronisation of sensor data sampled with a local
+timestamp (e.g. IMU or wheeltick messages) where GNSS time is unknown
+to the sender.
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  time : int
+    local time in microseconds
+  flags : int
+    Status flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'time' / construct.Int64ul,
+                   'flags' / construct.Int8ul,)
+  __slots__ = [
+               'time',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
+      super( MsgPpsTime,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgPpsTime, self).__init__()
+      self.msg_type = SBP_MSG_PPS_TIME
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.time = kwargs.pop('time')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgPpsTime.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgPpsTime(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgPpsTime._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgPpsTime._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgPpsTime._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgPpsTime, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
 SBP_MSG_GROUP_META = 0xFF0A
 class MsgGroupMeta(SBP):
   """SBP class for message MSG_GROUP_META (0xFF0A).
@@ -1131,5 +1230,6 @@ msg_classes = {
   0xFF05: MsgCsacTelemetryLabels,
   0xFF06: MsgInsUpdates,
   0xFF07: MsgGnssTimeOffset,
+  0xFF08: MsgPpsTime,
   0xFF0A: MsgGroupMeta,
 }

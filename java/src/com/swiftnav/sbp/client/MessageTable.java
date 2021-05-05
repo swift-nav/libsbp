@@ -202,6 +202,7 @@ import com.swiftnav.sbp.system.MsgCsacTelemetry;
 import com.swiftnav.sbp.system.MsgCsacTelemetryLabels;
 import com.swiftnav.sbp.system.MsgInsUpdates;
 import com.swiftnav.sbp.system.MsgGnssTimeOffset;
+import com.swiftnav.sbp.system.MsgPpsTime;
 import com.swiftnav.sbp.system.MsgGroupMeta;
 import com.swiftnav.sbp.tracking.MsgTrackingStateDetailedDepA;
 import com.swiftnav.sbp.tracking.MsgTrackingStateDetailedDep;
@@ -593,6 +594,8 @@ final class MessageTable {
                 return new MsgInsUpdates(msg);
             case MsgGnssTimeOffset.TYPE:
                 return new MsgGnssTimeOffset(msg);
+            case MsgPpsTime.TYPE:
+                return new MsgPpsTime(msg);
             case MsgGroupMeta.TYPE:
                 return new MsgGroupMeta(msg);
             case MsgTrackingStateDetailedDepA.TYPE:
