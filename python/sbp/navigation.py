@@ -4525,11 +4525,11 @@ preceding MSG_GPS_TIME with the matching time-of-week (tow).
     d.update(j)
     return d
     
-SBP_MSG_PROTECTION_LEVEL = 0x0216
-class MsgProtectionLevel(SBP):
-  """SBP class for message MSG_PROTECTION_LEVEL (0x0216).
+SBP_MSG_PROTECTION_LEVEL_DEP_A = 0x0216
+class MsgProtectionLevelDepA(SBP):
+  """SBP class for message MSG_PROTECTION_LEVEL_DEP_A (0x0216).
 
-  You can have MSG_PROTECTION_LEVEL inherit its fields directly
+  You can have MSG_PROTECTION_LEVEL_DEP_A inherit its fields directly
   from an inherited SBP object, or construct it inline using a dict
   of its fields.
 
@@ -4581,6 +4581,188 @@ by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
 
   def __init__(self, sbp=None, **kwargs):
     if sbp:
+      super( MsgProtectionLevelDepA,
+             self).__init__(sbp.msg_type, sbp.sender, sbp.length,
+                            sbp.payload, sbp.crc)
+      self.from_binary(sbp.payload)
+    else:
+      super( MsgProtectionLevelDepA, self).__init__()
+      self.msg_type = SBP_MSG_PROTECTION_LEVEL_DEP_A
+      self.sender = kwargs.pop('sender', SENDER_ID)
+      self.tow = kwargs.pop('tow')
+      self.vpl = kwargs.pop('vpl')
+      self.hpl = kwargs.pop('hpl')
+      self.lat = kwargs.pop('lat')
+      self.lon = kwargs.pop('lon')
+      self.height = kwargs.pop('height')
+      self.flags = kwargs.pop('flags')
+
+  def __repr__(self):
+    return fmt_repr(self)
+
+  @staticmethod
+  def from_json(s):
+    """Given a JSON-encoded string s, build a message object.
+
+    """
+    d = json.loads(s)
+    return MsgProtectionLevelDepA.from_json_dict(d)
+
+  @staticmethod
+  def from_json_dict(d):
+    sbp = SBP.from_json_dict(d)
+    return MsgProtectionLevelDepA(sbp, **d)
+
+ 
+  def from_binary(self, d):
+    """Given a binary payload d, update the appropriate payload fields of
+    the message.
+
+    """
+    p = MsgProtectionLevelDepA._parser.parse(d)
+    for n in self.__class__.__slots__:
+      setattr(self, n, getattr(p, n))
+
+  def to_binary(self):
+    """Produce a framed/packed SBP message.
+
+    """
+    c = containerize(exclude_fields(self))
+    self.payload = MsgProtectionLevelDepA._parser.build(c)
+    return self.pack()
+
+  def into_buffer(self, buf, offset):
+    """Produce a framed/packed SBP message into the provided buffer and offset.
+
+    """
+    self.payload = containerize(exclude_fields(self))
+    self.parser = MsgProtectionLevelDepA._parser
+    self.stream_payload.reset(buf, offset)
+    return self.pack_into(buf, offset, self._build_payload)
+
+  def to_json_dict(self):
+    self.to_binary()
+    d = super( MsgProtectionLevelDepA, self).to_json_dict()
+    j = walk_json_dict(exclude_fields(self))
+    d.update(j)
+    return d
+    
+SBP_MSG_PROTECTION_LEVEL = 0x0217
+class MsgProtectionLevel(SBP):
+  """SBP class for message MSG_PROTECTION_LEVEL (0x0217).
+
+  You can have MSG_PROTECTION_LEVEL inherit its fields directly
+  from an inherited SBP object, or construct it inline using a dict
+  of its fields.
+
+  
+  This message reports the protection levels associated to the given 
+state estimate. The full GPS time is given by the preceding MSG_GPS_TIME 
+with the matching time-of-week (tow).
+
+
+  Parameters
+  ----------
+  sbp : SBP
+    SBP parent object to inherit from.
+  tow : int
+    GPS Time of Week
+  wn : int
+    GPS week number
+  hpl : int
+    Horizontal protection level
+  vpl : int
+    Vertical protection level
+  atpl : int
+    Along-track position error protection level
+  ctpl : int
+    Cross-track position error protection level
+  hvpl : int
+    Protection level for the error vector between estimated and 
+true along/cross track velocity vector
+
+  vvpl : int
+    Protection level for the velocity in vehicle upright direction 
+(different from vertical direction if on a slope)
+
+  hopl : int
+    Heading orientation protection level
+  popl : int
+    Pitch orientation protection level
+  ropl : int
+    Roll orientation protection level
+  lat : double
+    Latitude
+  lon : double
+    Longitude
+  height : double
+    Height
+  v_x : int
+    Velocity in vehicle x direction
+  v_y : int
+    Velocity in vehicle y direction
+  v_z : int
+    Velocity in vehicle z direction
+  roll : int
+    Roll angle
+  pitch : int
+    Pitch angle
+  heading : int
+    Heading angle
+  flags : int
+    Status flags
+  sender : int
+    Optional sender ID, defaults to SENDER_ID (see sbp/msg.py).
+
+  """
+  _parser = construct.Struct(
+                   'tow' / construct.Int32ul,
+                   'wn' / construct.Int16sl,
+                   'hpl' / construct.Int16ul,
+                   'vpl' / construct.Int16ul,
+                   'atpl' / construct.Int16ul,
+                   'ctpl' / construct.Int16ul,
+                   'hvpl' / construct.Int16ul,
+                   'vvpl' / construct.Int16ul,
+                   'hopl' / construct.Int16ul,
+                   'popl' / construct.Int16ul,
+                   'ropl' / construct.Int16ul,
+                   'lat' / construct.Float64l,
+                   'lon' / construct.Float64l,
+                   'height' / construct.Float64l,
+                   'v_x' / construct.Int32sl,
+                   'v_y' / construct.Int32sl,
+                   'v_z' / construct.Int32sl,
+                   'roll' / construct.Int32sl,
+                   'pitch' / construct.Int32sl,
+                   'heading' / construct.Int32sl,
+                   'flags' / construct.Int32ul,)
+  __slots__ = [
+               'tow',
+               'wn',
+               'hpl',
+               'vpl',
+               'atpl',
+               'ctpl',
+               'hvpl',
+               'vvpl',
+               'hopl',
+               'popl',
+               'ropl',
+               'lat',
+               'lon',
+               'height',
+               'v_x',
+               'v_y',
+               'v_z',
+               'roll',
+               'pitch',
+               'heading',
+               'flags',
+              ]
+
+  def __init__(self, sbp=None, **kwargs):
+    if sbp:
       super( MsgProtectionLevel,
              self).__init__(sbp.msg_type, sbp.sender, sbp.length,
                             sbp.payload, sbp.crc)
@@ -4590,11 +4772,25 @@ by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
       self.msg_type = SBP_MSG_PROTECTION_LEVEL
       self.sender = kwargs.pop('sender', SENDER_ID)
       self.tow = kwargs.pop('tow')
-      self.vpl = kwargs.pop('vpl')
+      self.wn = kwargs.pop('wn')
       self.hpl = kwargs.pop('hpl')
+      self.vpl = kwargs.pop('vpl')
+      self.atpl = kwargs.pop('atpl')
+      self.ctpl = kwargs.pop('ctpl')
+      self.hvpl = kwargs.pop('hvpl')
+      self.vvpl = kwargs.pop('vvpl')
+      self.hopl = kwargs.pop('hopl')
+      self.popl = kwargs.pop('popl')
+      self.ropl = kwargs.pop('ropl')
       self.lat = kwargs.pop('lat')
       self.lon = kwargs.pop('lon')
       self.height = kwargs.pop('height')
+      self.v_x = kwargs.pop('v_x')
+      self.v_y = kwargs.pop('v_y')
+      self.v_z = kwargs.pop('v_z')
+      self.roll = kwargs.pop('roll')
+      self.pitch = kwargs.pop('pitch')
+      self.heading = kwargs.pop('heading')
       self.flags = kwargs.pop('flags')
 
   def __repr__(self):
@@ -4683,5 +4879,6 @@ msg_classes = {
   0x0204: MsgVelECEFDepA,
   0x0205: MsgVelNEDDepA,
   0x0207: MsgBaselineHeadingDepA,
-  0x0216: MsgProtectionLevel,
+  0x0216: MsgProtectionLevelDepA,
+  0x0217: MsgProtectionLevel,
 }

@@ -189,6 +189,7 @@ data SBPMsg =
    | SBPMsgPosLlhGnss MsgPosLlhGnss Msg
    | SBPMsgPrintDep MsgPrintDep Msg
    | SBPMsgProtectionLevel MsgProtectionLevel Msg
+   | SBPMsgProtectionLevelDepA MsgProtectionLevelDepA Msg
    | SBPMsgReset MsgReset Msg
    | SBPMsgResetDep MsgResetDep Msg
    | SBPMsgResetFilters MsgResetFilters Msg
@@ -216,6 +217,7 @@ data SBPMsg =
    | SBPMsgSsrOrbitClock MsgSsrOrbitClock Msg
    | SBPMsgSsrOrbitClockDepA MsgSsrOrbitClockDepA Msg
    | SBPMsgSsrPhaseBiases MsgSsrPhaseBiases Msg
+   | SBPMsgSsrSatelliteApc MsgSsrSatelliteApc Msg
    | SBPMsgSsrStecCorrection MsgSsrStecCorrection Msg
    | SBPMsgSsrStecCorrectionDepA MsgSsrStecCorrectionDepA Msg
    | SBPMsgSsrTileDefinition MsgSsrTileDefinition Msg
@@ -400,6 +402,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgPosLlhGnss = SBPMsgPosLlhGnss (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgPrintDep = SBPMsgPrintDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgProtectionLevel = SBPMsgProtectionLevel (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgProtectionLevelDepA = SBPMsgProtectionLevelDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgReset = SBPMsgReset (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgResetDep = SBPMsgResetDep (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgResetFilters = SBPMsgResetFilters (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -427,6 +430,7 @@ instance Binary SBPMsg where
           | _msgSBPType == msgSsrOrbitClock = SBPMsgSsrOrbitClock (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrOrbitClockDepA = SBPMsgSsrOrbitClockDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrPhaseBiases = SBPMsgSsrPhaseBiases (decode (fromStrict (unBytes _msgSBPPayload))) m
+          | _msgSBPType == msgSsrSatelliteApc = SBPMsgSsrSatelliteApc (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrStecCorrection = SBPMsgSsrStecCorrection (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrStecCorrectionDepA = SBPMsgSsrStecCorrectionDepA (decode (fromStrict (unBytes _msgSBPPayload))) m
           | _msgSBPType == msgSsrTileDefinition = SBPMsgSsrTileDefinition (decode (fromStrict (unBytes _msgSBPPayload))) m
@@ -603,6 +607,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgPosLlhGnss _ m) = put m
       encoder (SBPMsgPrintDep _ m) = put m
       encoder (SBPMsgProtectionLevel _ m) = put m
+      encoder (SBPMsgProtectionLevelDepA _ m) = put m
       encoder (SBPMsgReset _ m) = put m
       encoder (SBPMsgResetDep _ m) = put m
       encoder (SBPMsgResetFilters _ m) = put m
@@ -630,6 +635,7 @@ instance Binary SBPMsg where
       encoder (SBPMsgSsrOrbitClock _ m) = put m
       encoder (SBPMsgSsrOrbitClockDepA _ m) = put m
       encoder (SBPMsgSsrPhaseBiases _ m) = put m
+      encoder (SBPMsgSsrSatelliteApc _ m) = put m
       encoder (SBPMsgSsrStecCorrection _ m) = put m
       encoder (SBPMsgSsrStecCorrectionDepA _ m) = put m
       encoder (SBPMsgSsrTileDefinition _ m) = put m
@@ -810,6 +816,7 @@ instance FromJSON SBPMsg where
         | msgType == msgPosLlhGnss = SBPMsgPosLlhGnss <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgPrintDep = SBPMsgPrintDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgProtectionLevel = SBPMsgProtectionLevel <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgProtectionLevelDepA = SBPMsgProtectionLevelDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgReset = SBPMsgReset <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgResetDep = SBPMsgResetDep <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgResetFilters = SBPMsgResetFilters <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -837,6 +844,7 @@ instance FromJSON SBPMsg where
         | msgType == msgSsrOrbitClock = SBPMsgSsrOrbitClock <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrOrbitClockDepA = SBPMsgSsrOrbitClockDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrPhaseBiases = SBPMsgSsrPhaseBiases <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
+        | msgType == msgSsrSatelliteApc = SBPMsgSsrSatelliteApc <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrStecCorrection = SBPMsgSsrStecCorrection <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrStecCorrectionDepA = SBPMsgSsrStecCorrectionDepA <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
         | msgType == msgSsrTileDefinition = SBPMsgSsrTileDefinition <$> pure (decode (fromStrict (unBytes payload))) <*> parseJSON obj
@@ -1018,6 +1026,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgPosLlhGnss n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgPrintDep n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgProtectionLevel n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgProtectionLevelDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgReset n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgResetDep _ m) = toJSON m
   toJSON (SBPMsgResetFilters n m) = toJSON n <<>> toJSON m
@@ -1045,6 +1054,7 @@ instance ToJSON SBPMsg where
   toJSON (SBPMsgSsrOrbitClock n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrOrbitClockDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrPhaseBiases n m) = toJSON n <<>> toJSON m
+  toJSON (SBPMsgSsrSatelliteApc n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrStecCorrection n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrStecCorrectionDepA n m) = toJSON n <<>> toJSON m
   toJSON (SBPMsgSsrTileDefinition n m) = toJSON n <<>> toJSON m
@@ -1220,6 +1230,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgPosLlhGnss n m) = SBPMsgPosLlhGnss n <$> f m
   msg f (SBPMsgPrintDep n m) = SBPMsgPrintDep n <$> f m
   msg f (SBPMsgProtectionLevel n m) = SBPMsgProtectionLevel n <$> f m
+  msg f (SBPMsgProtectionLevelDepA n m) = SBPMsgProtectionLevelDepA n <$> f m
   msg f (SBPMsgReset n m) = SBPMsgReset n <$> f m
   msg f (SBPMsgResetDep n m) = SBPMsgResetDep n <$> f m
   msg f (SBPMsgResetFilters n m) = SBPMsgResetFilters n <$> f m
@@ -1247,6 +1258,7 @@ instance HasMsg SBPMsg where
   msg f (SBPMsgSsrOrbitClock n m) = SBPMsgSsrOrbitClock n <$> f m
   msg f (SBPMsgSsrOrbitClockDepA n m) = SBPMsgSsrOrbitClockDepA n <$> f m
   msg f (SBPMsgSsrPhaseBiases n m) = SBPMsgSsrPhaseBiases n <$> f m
+  msg f (SBPMsgSsrSatelliteApc n m) = SBPMsgSsrSatelliteApc n <$> f m
   msg f (SBPMsgSsrStecCorrection n m) = SBPMsgSsrStecCorrection n <$> f m
   msg f (SBPMsgSsrStecCorrectionDepA n m) = SBPMsgSsrStecCorrectionDepA n <$> f m
   msg f (SBPMsgSsrTileDefinition n m) = SBPMsgSsrTileDefinition n <$> f m

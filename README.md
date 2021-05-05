@@ -1,7 +1,5 @@
 ## Specification and Bindings for Swift Binary Protocol
 
-[![Build status][1]][2]
-
 <!-- toc -->
 
 - [Installing sbp2json, json2sbp, json2json and related tools](#installing-sbp2json-json2sbp-json2json-and-related-tools)
@@ -97,8 +95,8 @@ The tool can then be invoked as follows:
 python3 -m sbp2json <sbp.bin
 ```
 
-On select platforms this Python tool is accelerated with native code and has
-performance on par with the Haskell and Rust variants.
+The performance of the Python version is significantly slower than Rust and Haskell,
+but works on all platforms that Python itself supports.
 
 ## Building / installing
 
@@ -112,7 +110,7 @@ Start [Docker desktop](https://docs.docker.com/docker-for-mac/).
 The quickest method to get going is to just pull a prebuilt copy from DockerHub
 (no guarantees on freshness) by running the following on your command line:
 
-``docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2020.12.11``
+``docker run --rm -v $PWD:/mnt/workspace -i -t swiftnav/libsbp-build:2021.04.22``
 
 This will mount your local copy of the libsbp repository onto the image.
 
@@ -125,7 +123,7 @@ if you are facing issues with compilation and the tags are out of date as well.
 
 #### Creating your own image
 
-Otherwise, `Dockerfile-build` will create a docker image that contains all the
+Otherwise, the `Dockerfile` will create a docker image that contains all the
 necessary dependencies to build libsbp.  You can make a local image fresh from
 this file by running `docker build` as such:
 
@@ -135,7 +133,7 @@ This dummy directory is to prevent docker from sucking up the whole
 repo into the local context (which is then immediately discarded
 anyway).  Next create the docker image:
 
-`docker build -f ../Dockerfile-build -t libsbp-build .`
+`docker build -f ../Dockerfile -t libsbp-build .`
 
 You can then make this image operate on your local workspace like this:
 
@@ -254,6 +252,3 @@ HOWTO for instructions on updating these schemas.
 Copyright © 2020 Swift Navigation
 
 Distributed under MIT.
-
-[1]: https://travis-ci.org/swift-nav/libsbp.svg?branch=master
-[2]: https://travis-ci.org/swift-nav/libsbp

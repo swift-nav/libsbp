@@ -102,6 +102,7 @@ use self::navigation::MsgPosLLHCovGnss;
 use self::navigation::MsgPosLLHDepA;
 use self::navigation::MsgPosLLHGnss;
 use self::navigation::MsgProtectionLevel;
+use self::navigation::MsgProtectionLevelDepA;
 use self::navigation::MsgUtcTime;
 use self::navigation::MsgUtcTimeGnss;
 use self::navigation::MsgVelBody;
@@ -204,6 +205,7 @@ use self::ssr::MsgSsrGriddedCorrectionNoStdDepA;
 use self::ssr::MsgSsrOrbitClock;
 use self::ssr::MsgSsrOrbitClockDepA;
 use self::ssr::MsgSsrPhaseBiases;
+use self::ssr::MsgSsrSatelliteApc;
 use self::ssr::MsgSsrStecCorrection;
 use self::ssr::MsgSsrStecCorrectionDepA;
 use self::ssr::MsgSsrTileDefinition;
@@ -384,6 +386,7 @@ pub enum SBP {
     MsgVelBody(MsgVelBody),
     MsgPosECEFCov(MsgPosECEFCov),
     MsgVelECEFCov(MsgVelECEFCov),
+    MsgProtectionLevelDepA(MsgProtectionLevelDepA),
     MsgProtectionLevel(MsgProtectionLevel),
     MsgOrientQuat(MsgOrientQuat),
     MsgOrientEuler(MsgOrientEuler),
@@ -410,6 +413,7 @@ pub enum SBP {
     MsgSsrGriddedCorrectionDepA(MsgSsrGriddedCorrectionDepA),
     MsgSsrStecCorrection(MsgSsrStecCorrection),
     MsgSsrGriddedCorrection(MsgSsrGriddedCorrection),
+    MsgSsrSatelliteApc(MsgSsrSatelliteApc),
     MsgOsr(MsgOsr),
     MsgUserData(MsgUserData),
     MsgImuRaw(MsgImuRaw),
@@ -1145,6 +1149,11 @@ impl SBP {
                 Ok(SBP::MsgVelECEFCov(msg))
             }
             534 => {
+                let mut msg = MsgProtectionLevelDepA::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgProtectionLevelDepA(msg))
+            }
+            535 => {
                 let mut msg = MsgProtectionLevel::parse(payload)?;
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgProtectionLevel(msg))
@@ -1273,6 +1282,11 @@ impl SBP {
                 let mut msg = MsgSsrGriddedCorrection::parse(payload)?;
                 msg.set_sender_id(sender_id);
                 Ok(SBP::MsgSsrGriddedCorrection(msg))
+            }
+            1540 => {
+                let mut msg = MsgSsrSatelliteApc::parse(payload)?;
+                msg.set_sender_id(sender_id);
+                Ok(SBP::MsgSsrSatelliteApc(msg))
             }
             1600 => {
                 let mut msg = MsgOsr::parse(payload)?;
@@ -1590,6 +1604,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgVelBody(msg) => msg.get_message_name(),
             SBP::MsgPosECEFCov(msg) => msg.get_message_name(),
             SBP::MsgVelECEFCov(msg) => msg.get_message_name(),
+            SBP::MsgProtectionLevelDepA(msg) => msg.get_message_name(),
             SBP::MsgProtectionLevel(msg) => msg.get_message_name(),
             SBP::MsgOrientQuat(msg) => msg.get_message_name(),
             SBP::MsgOrientEuler(msg) => msg.get_message_name(),
@@ -1616,6 +1631,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgSsrGriddedCorrectionDepA(msg) => msg.get_message_name(),
             SBP::MsgSsrStecCorrection(msg) => msg.get_message_name(),
             SBP::MsgSsrGriddedCorrection(msg) => msg.get_message_name(),
+            SBP::MsgSsrSatelliteApc(msg) => msg.get_message_name(),
             SBP::MsgOsr(msg) => msg.get_message_name(),
             SBP::MsgUserData(msg) => msg.get_message_name(),
             SBP::MsgImuRaw(msg) => msg.get_message_name(),
@@ -1794,6 +1810,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgVelBody(msg) => msg.get_message_type(),
             SBP::MsgPosECEFCov(msg) => msg.get_message_type(),
             SBP::MsgVelECEFCov(msg) => msg.get_message_type(),
+            SBP::MsgProtectionLevelDepA(msg) => msg.get_message_type(),
             SBP::MsgProtectionLevel(msg) => msg.get_message_type(),
             SBP::MsgOrientQuat(msg) => msg.get_message_type(),
             SBP::MsgOrientEuler(msg) => msg.get_message_type(),
@@ -1820,6 +1837,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgSsrGriddedCorrectionDepA(msg) => msg.get_message_type(),
             SBP::MsgSsrStecCorrection(msg) => msg.get_message_type(),
             SBP::MsgSsrGriddedCorrection(msg) => msg.get_message_type(),
+            SBP::MsgSsrSatelliteApc(msg) => msg.get_message_type(),
             SBP::MsgOsr(msg) => msg.get_message_type(),
             SBP::MsgUserData(msg) => msg.get_message_type(),
             SBP::MsgImuRaw(msg) => msg.get_message_type(),
@@ -1998,6 +2016,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgVelBody(msg) => msg.get_sender_id(),
             SBP::MsgPosECEFCov(msg) => msg.get_sender_id(),
             SBP::MsgVelECEFCov(msg) => msg.get_sender_id(),
+            SBP::MsgProtectionLevelDepA(msg) => msg.get_sender_id(),
             SBP::MsgProtectionLevel(msg) => msg.get_sender_id(),
             SBP::MsgOrientQuat(msg) => msg.get_sender_id(),
             SBP::MsgOrientEuler(msg) => msg.get_sender_id(),
@@ -2024,6 +2043,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgSsrGriddedCorrectionDepA(msg) => msg.get_sender_id(),
             SBP::MsgSsrStecCorrection(msg) => msg.get_sender_id(),
             SBP::MsgSsrGriddedCorrection(msg) => msg.get_sender_id(),
+            SBP::MsgSsrSatelliteApc(msg) => msg.get_sender_id(),
             SBP::MsgOsr(msg) => msg.get_sender_id(),
             SBP::MsgUserData(msg) => msg.get_sender_id(),
             SBP::MsgImuRaw(msg) => msg.get_sender_id(),
@@ -2202,6 +2222,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgVelBody(msg) => msg.set_sender_id(new_id),
             SBP::MsgPosECEFCov(msg) => msg.set_sender_id(new_id),
             SBP::MsgVelECEFCov(msg) => msg.set_sender_id(new_id),
+            SBP::MsgProtectionLevelDepA(msg) => msg.set_sender_id(new_id),
             SBP::MsgProtectionLevel(msg) => msg.set_sender_id(new_id),
             SBP::MsgOrientQuat(msg) => msg.set_sender_id(new_id),
             SBP::MsgOrientEuler(msg) => msg.set_sender_id(new_id),
@@ -2228,6 +2249,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgSsrGriddedCorrectionDepA(msg) => msg.set_sender_id(new_id),
             SBP::MsgSsrStecCorrection(msg) => msg.set_sender_id(new_id),
             SBP::MsgSsrGriddedCorrection(msg) => msg.set_sender_id(new_id),
+            SBP::MsgSsrSatelliteApc(msg) => msg.set_sender_id(new_id),
             SBP::MsgOsr(msg) => msg.set_sender_id(new_id),
             SBP::MsgUserData(msg) => msg.set_sender_id(new_id),
             SBP::MsgImuRaw(msg) => msg.set_sender_id(new_id),
@@ -2406,6 +2428,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgVelBody(msg) => msg.to_frame(),
             SBP::MsgPosECEFCov(msg) => msg.to_frame(),
             SBP::MsgVelECEFCov(msg) => msg.to_frame(),
+            SBP::MsgProtectionLevelDepA(msg) => msg.to_frame(),
             SBP::MsgProtectionLevel(msg) => msg.to_frame(),
             SBP::MsgOrientQuat(msg) => msg.to_frame(),
             SBP::MsgOrientEuler(msg) => msg.to_frame(),
@@ -2432,6 +2455,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgSsrGriddedCorrectionDepA(msg) => msg.to_frame(),
             SBP::MsgSsrStecCorrection(msg) => msg.to_frame(),
             SBP::MsgSsrGriddedCorrection(msg) => msg.to_frame(),
+            SBP::MsgSsrSatelliteApc(msg) => msg.to_frame(),
             SBP::MsgOsr(msg) => msg.to_frame(),
             SBP::MsgUserData(msg) => msg.to_frame(),
             SBP::MsgImuRaw(msg) => msg.to_frame(),
@@ -2610,6 +2634,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgVelBody(msg) => msg.write_frame(buf),
             SBP::MsgPosECEFCov(msg) => msg.write_frame(buf),
             SBP::MsgVelECEFCov(msg) => msg.write_frame(buf),
+            SBP::MsgProtectionLevelDepA(msg) => msg.write_frame(buf),
             SBP::MsgProtectionLevel(msg) => msg.write_frame(buf),
             SBP::MsgOrientQuat(msg) => msg.write_frame(buf),
             SBP::MsgOrientEuler(msg) => msg.write_frame(buf),
@@ -2636,6 +2661,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgSsrGriddedCorrectionDepA(msg) => msg.write_frame(buf),
             SBP::MsgSsrStecCorrection(msg) => msg.write_frame(buf),
             SBP::MsgSsrGriddedCorrection(msg) => msg.write_frame(buf),
+            SBP::MsgSsrSatelliteApc(msg) => msg.write_frame(buf),
             SBP::MsgOsr(msg) => msg.write_frame(buf),
             SBP::MsgUserData(msg) => msg.write_frame(buf),
             SBP::MsgImuRaw(msg) => msg.write_frame(buf),
@@ -2816,6 +2842,7 @@ impl crate::SbpSerialize for SBP {
             SBP::MsgVelBody(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgPosECEFCov(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgVelECEFCov(msg) => msg.append_to_sbp_buffer(buf),
+            SBP::MsgProtectionLevelDepA(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgProtectionLevel(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgOrientQuat(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgOrientEuler(msg) => msg.append_to_sbp_buffer(buf),
@@ -2842,6 +2869,7 @@ impl crate::SbpSerialize for SBP {
             SBP::MsgSsrGriddedCorrectionDepA(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgSsrStecCorrection(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgSsrGriddedCorrection(msg) => msg.append_to_sbp_buffer(buf),
+            SBP::MsgSsrSatelliteApc(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgOsr(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgUserData(msg) => msg.append_to_sbp_buffer(buf),
             SBP::MsgImuRaw(msg) => msg.append_to_sbp_buffer(buf),
@@ -3020,6 +3048,7 @@ impl crate::SbpSerialize for SBP {
             SBP::MsgVelBody(msg) => msg.sbp_size(),
             SBP::MsgPosECEFCov(msg) => msg.sbp_size(),
             SBP::MsgVelECEFCov(msg) => msg.sbp_size(),
+            SBP::MsgProtectionLevelDepA(msg) => msg.sbp_size(),
             SBP::MsgProtectionLevel(msg) => msg.sbp_size(),
             SBP::MsgOrientQuat(msg) => msg.sbp_size(),
             SBP::MsgOrientEuler(msg) => msg.sbp_size(),
@@ -3046,6 +3075,7 @@ impl crate::SbpSerialize for SBP {
             SBP::MsgSsrGriddedCorrectionDepA(msg) => msg.sbp_size(),
             SBP::MsgSsrStecCorrection(msg) => msg.sbp_size(),
             SBP::MsgSsrGriddedCorrection(msg) => msg.sbp_size(),
+            SBP::MsgSsrSatelliteApc(msg) => msg.sbp_size(),
             SBP::MsgOsr(msg) => msg.sbp_size(),
             SBP::MsgUserData(msg) => msg.sbp_size(),
             SBP::MsgImuRaw(msg) => msg.sbp_size(),
@@ -3778,6 +3808,11 @@ impl From<MsgVelECEFCov> for SBP {
         SBP::MsgVelECEFCov(msg)
     }
 }
+impl From<MsgProtectionLevelDepA> for SBP {
+    fn from(msg: MsgProtectionLevelDepA) -> Self {
+        SBP::MsgProtectionLevelDepA(msg)
+    }
+}
 impl From<MsgProtectionLevel> for SBP {
     fn from(msg: MsgProtectionLevel) -> Self {
         SBP::MsgProtectionLevel(msg)
@@ -3906,6 +3941,11 @@ impl From<MsgSsrStecCorrection> for SBP {
 impl From<MsgSsrGriddedCorrection> for SBP {
     fn from(msg: MsgSsrGriddedCorrection) -> Self {
         SBP::MsgSsrGriddedCorrection(msg)
+    }
+}
+impl From<MsgSsrSatelliteApc> for SBP {
+    fn from(msg: MsgSsrSatelliteApc) -> Self {
+        SBP::MsgSsrSatelliteApc(msg)
     }
 }
 impl From<MsgOsr> for SBP {

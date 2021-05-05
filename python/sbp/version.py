@@ -39,7 +39,6 @@ from subprocess import Popen, PIPE
 
 
 def call_git_describe():
-    return "v3.4.5-16-g380f9601"
     try:
         p = Popen(['git', 'describe', '--tags', '--dirty', '--always'],
                   stdout=PIPE, stderr=PIPE)

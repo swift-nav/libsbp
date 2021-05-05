@@ -1,7 +1,9 @@
 use std::io;
 
-use sbp::codec::{converters::sbp2json, CompactFormatter, HaskellishFloatFormatter};
+use sbp::codec::json::{CompactFormatter, HaskellishFloatFormatter};
 use structopt::StructOpt;
+
+use converters::sbp2json;
 
 #[cfg(all(not(windows), not(target_env = "musl")))]
 #[global_allocator]
@@ -20,12 +22,16 @@ static ALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
 #[structopt(name = "sbp2json", verbatim_doc_comment)]
 pub struct Options {
     /// Try to be compatible with the float formatting of the Haskell version of sbp2json
-    #[structopt(long = "float-compat")]
+    #[structopt(long)]
     float_compat: bool,
 
     /// Print debugging messages to standard error
     #[structopt(short = "d", long)]
     debug: bool,
+
+    /// Buffer output before flushing
+    #[structopt(short, long)]
+    buffered: bool,
 }
 
 fn main() -> sbp::Result<()> {
@@ -41,8 +47,8 @@ fn main() -> sbp::Result<()> {
     let stdout = io::stdout();
 
     if options.float_compat {
-        sbp2json(stdin, stdout, HaskellishFloatFormatter {})
+        sbp2json(stdin, stdout, HaskellishFloatFormatter {}, options.buffered)
     } else {
-        sbp2json(stdin, stdout, CompactFormatter {})
+        sbp2json(stdin, stdout, CompactFormatter {}, options.buffered)
     }
 }

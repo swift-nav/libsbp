@@ -19,6 +19,8 @@ import os
 import pprint
 import sbpg.specs.yaml2 as yaml
 
+from sbpg import ReleaseVersion
+
 def get_args():
   parser = argparse.ArgumentParser(description='Swift Navigation SBP generator.')
   parser.add_argument('-i',
@@ -34,9 +36,6 @@ def get_args():
   parser.add_argument('--python',
                       action="store_true",
                       help='Target language: Python.')
-  parser.add_argument('--python_jit',
-                      action="store_true",
-                      help='Target language: Python (JIT).')
   parser.add_argument('--javascript',
                       action="store_true",
                       help='Target language: JavaScript.')
@@ -79,12 +78,28 @@ def get_args():
   return parser
 
 
+def parse_release_version(release: str) -> ReleaseVersion:
+  major, minor, patch = release.split('.')[:3]
+  major = major.lstrip('v')
+  if '-' in patch:
+    patch = patch.split('-')[0]
+    patch_pre = '{}-alpha'.format(int(patch.split('-')[0]) + 1)
+    full_version = "{}.{}.{}".format(major, minor, patch_pre)
+  else:
+    patch_pre = patch
+    full_version = "{}.{}.{}".format(major, minor, patch)
+  return ReleaseVersion(major=major,
+                        minor=minor,
+                        patch=patch,
+                        patch_pre=patch_pre,
+                        full_version=full_version)
+
 def main():
   try:
     # Parse and validate arguments.
     args = get_args().parse_args()
     verbose = args.verbose
-    assert args.jsonschema or args.python_jit or args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.protobuf or args.java or args.rust or args.test_rust, \
+    assert args.jsonschema or args.python or args.javascript or args.c or args.test_c or args.haskell or args.latex or args.protobuf or args.java or args.rust or args.test_rust, \
         "Please specify a target language."
     input_file = os.path.abspath(args.input_file[0])
     assert len(args.input_file) == 1
@@ -104,7 +119,7 @@ def main():
 
     # Sort the files - we need them to be in a stable order for some test generation
     file_index_items = sorted(file_index.items(), key=lambda f: f[0])
-
+    release = parse_release_version(args.release[0])
     if verbose:
       print("Reading files...")
       pprint.pprint(list(file_index.keys()))
@@ -112,7 +127,7 @@ def main():
     if args.latex:
       import sbpg.targets.latex as tex
       parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
-      tex.render_source(output_dir, parsed, args.release[0])
+      tex.render_source(output_dir, parsed, release)
     else:
       spec_no = 0
       all_specs = []
@@ -128,11 +143,10 @@ def main():
         if args.python:
           import sbpg.targets.python as py
           py.render_source(output_dir, parsed)
-        if args.python_jit:
-          import sbpg.targets.pythonNG as py_jit
-          py_jit.render_source(output_dir, parsed)
         elif args.javascript:
           import sbpg.targets.javascript as js
+          with open(os.path.join(output_dir, "RELEASE-VERSION"), 'w') as ver_file:
+              ver_file.write(release.full_version)
           js.render_source(output_dir, parsed)
         elif args.c:
           import sbpg.targets.c as c
@@ -159,14 +173,14 @@ def main():
           import sbpg.targets.jsonschema as jsonschema
           jsonschema.render_source(output_dir, parsed)
       if args.c:
-        c.render_version(output_dir, args.release[0])
+        c.render_version(output_dir, release)
         parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
         c.render_traits(output_dir, parsed)
       elif args.python:
-        py.render_version(output_dir, args.release[0])
+        py.render_version(output_dir, release)
       elif args.haskell:
         parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
-        hs.render_cabal(output_dir, parsed, args.release[0])
+        hs.render_cabal(output_dir, parsed, release)
         hs.render_sbp(output_dir, parsed)
       elif args.java:
         parsed = [yaml.parse_spec(spec) for _, spec in file_index_items]
@@ -174,8 +188,8 @@ def main():
       elif args.rust:
         parsed = [yaml.parse_spec(spec) for spec in file_index.values()]
         rs.render_mod(output_dir, parsed)
-        rs.render_sbp_cargo_toml(output_dir, args.release[0])
-        rs.render_sbp2json_cargo_toml(output_dir, args.release[0])
+        rs.render_sbp_cargo_toml(output_dir, release)
+        rs.render_sbp2json_cargo_toml(output_dir, release)
       elif args.test_c:
         test_c.render_check_suites(output_dir, all_specs)
         test_c.render_check_main(output_dir, all_specs)

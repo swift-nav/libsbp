@@ -957,7 +957,7 @@ consumers of CPU on the system, including a timestamp.
   pid : int
     the PID of the process
   pcpu : int
-    percent of cpu used, expressed as a fraction of 256
+    percent of CPU used, expressed as a fraction of 256
   time : int
     timestamp of message, refer to flags field for how to interpret
   flags : int
@@ -1194,11 +1194,11 @@ class MsgLinuxSysState(SBP):
   sbp : SBP
     SBP parent object to inherit from.
   mem_total : int
-    total system memory
+    total system memory, in MiB
   pcpu : int
-    percent of total cpu currently utilized
+    percent of CPU used, expressed as a fraction of 256
   pmem : int
-    percent of total memory currently utilized
+    percent of memory used, expressed as a fraction of 256
   procs_starting : int
     number of processes that started during collection phase
   procs_stopping : int

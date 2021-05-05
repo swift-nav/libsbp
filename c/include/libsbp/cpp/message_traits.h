@@ -823,8 +823,14 @@ struct MessageTraits<msg_vel_ecef_cov_t> {
 
 
 template<>
-struct MessageTraits<msg_protection_level_t> {
+struct MessageTraits<msg_protection_level_dep_a_t> {
   static constexpr u16 id = 534;
+};
+
+
+template<>
+struct MessageTraits<msg_protection_level_t> {
+  static constexpr u16 id = 535;
 };
 
 
@@ -975,6 +981,12 @@ struct MessageTraits<msg_ssr_stec_correction_t> {
 template<>
 struct MessageTraits<msg_ssr_gridded_correction_t> {
   static constexpr u16 id = 1532;
+};
+
+
+template<>
+struct MessageTraits<msg_ssr_satellite_apc_t> {
+  static constexpr u16 id = 1540;
 };
 
 

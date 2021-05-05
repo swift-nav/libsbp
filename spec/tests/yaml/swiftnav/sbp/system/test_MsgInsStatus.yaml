@@ -1,0 +1,21 @@
+---
+description: Unit tests for swiftnav.sbp.system MsgInsStatus
+generated_on: 2020-04-23 00:00:00.00 # manually generated
+package: sbp.system
+tests:
+
+- msg:
+    fields:
+      flags: 536870921
+    module: sbp.system
+    name: MsgInsStatus
+  msg_type: '0xff03'
+  raw_json: '{"flags":536870921,"preamble":85,"msg_type":65283,"sender":789,"payload":"CQAAIA==","crc":26404,"length":4}'
+  raw_packet: VQP/FQMECQAAICRn
+  sbp:
+    crc: '0x6724'
+    length: 4
+    payload: CQAAIA==
+    msg_type: '0xff03'
+    preamble: '0x55'
+    sender: '0x315'

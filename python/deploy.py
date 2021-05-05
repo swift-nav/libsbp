@@ -8,7 +8,10 @@ import platform
 import tempfile
 import subprocess
 
-ALL_PY_VERSIONS = ["3.6", "3.7", "3.8"]
+if platform.machine().startswith("arm"):
+    ALL_PY_VERSIONS = ["3.7", "3.8"]
+else:
+    ALL_PY_VERSIONS = ["3.6", "3.7", "3.8"]
 
 SKIP_PY_VERS = os.environ.get("SKIP_PY_VERS", "").split(",") 
 
@@ -92,7 +95,7 @@ def build_wheel_native(conda_dir, deploy_dir, py_version):
 
     subprocess.check_call([
         python, "-m",
-        "pip", "install", "twine", "numpy~=1.19", "numba==0.47", "llvmlite==0.31", "cython", "wheel", "setuptools"
+        "pip", "install", "twine", "cython", "wheel", "setuptools"
     ])
 
     print(">>> Installing setup deps in Python {} environment...".format(py_version))
@@ -189,12 +192,13 @@ def run_bdist(conda_dir,
 
     print(">>> Found wheel (of {} matches): {}".format(len(wheels), wheel))
 
-    if platform.system() == "Linux" and platform.machine().startswith("x86"):
-        print(">>> Running 'auditwheel' against wheel: {}".format(wheel))
-        subprocess.check_call([
-            "python3", "-m",
-            "auditwheel", "repair", "-w", "dist", wheel
-        ])
+    if os.environ.get('LIBSBP_BUILD_ANY', None) is None:
+        if platform.system() == "Linux" and platform.machine().startswith("x86"):
+            print(">>> Running 'auditwheel' against wheel: {}".format(wheel))
+            subprocess.check_call([
+                "python3", "-m",
+                "auditwheel", "repair", "-w", "dist", wheel
+            ])
 
     print(">>> Copying wheel {} to {}".format(wheel, old_cwd))
     shutil.copy(wheel, old_cwd)
@@ -227,9 +231,10 @@ def build_wheel_conda(conda_dir, deploy_dir, py_version):
         "conda", "run", "-p", conda_dir] + DASHDASH + [
         "python", "-m", "pip", "install", "--upgrade", "pip"
     ])
+
     subprocess.check_call([
         "conda", "run", "-p", conda_dir] + DASHDASH + [
-        "python", "-m", "pip", "install", "twine", "numpy~=1.19", "numba==0.47", "llvmlite==0.31"
+        "python", "-m", "pip", "install", "twine"
     ])
 
     if platform.system() == "Linux" and platform.machine().startswith("x86"):
@@ -267,7 +272,7 @@ def build_native_on_arm(py_version):
 
 def build_wheel(conda_dir, deploy_dir, py_version):
     if py_version not in ALL_PY_VERSIONS:
-        raise RuntimeError(f"Unsupported Python version: {py_version}, must be one of {ALL_PY_VERSIONS!r}")
+        raise RuntimeError("Unsupported Python version: {py_version}, must be one of {!}".format(py_version, repr(ALL_PY_VERSIONS)))
     if build_native_on_arm(py_version):
         build_wheel_native(conda_dir, deploy_dir, py_version)
     else:

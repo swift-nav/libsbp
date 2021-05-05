@@ -56,6 +56,3 @@ default-features = false
 
 [dev-dependencies]
 serialport = "2.1.0"
-
-[badges]
-travis-ci = { repository = "swift-nav/libsbp" }

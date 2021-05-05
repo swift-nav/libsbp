@@ -229,12 +229,6 @@ definitions:
                   values:
                       - 0: Smoothpose Loosely Coupled
                       - 1: Starling
-                      - 2: Reserved
-                      - 3: Reserved
-                      - 4: Reserved
-                      - 5: Reserved
-                      - 6: Reserved
-                      - 7: Reserved
               - 14-28:
                   desc: Reserved
               - 11-13:

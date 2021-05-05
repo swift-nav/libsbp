@@ -1721,7 +1721,41 @@ typedef struct SBP_ATTR_PACKED {
  * associated with a given LLH position solution. The full GPS time is given
  * by the preceding MSG_GPS_TIME with the matching time-of-week (tow).
  */
-#define SBP_MSG_PROTECTION_LEVEL       0x0216
+#define SBP_MSG_PROTECTION_LEVEL_DEP_A 0x0216
+#define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK (0x7)
+#define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT (0u)
+#define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_GET(flags) \
+                             (((flags) >> SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT) \
+                             & SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK)
+#define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK)) \
+                             << (SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT)));} while(0)
+                             
+
+#define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_SAFE_STATE_PROTECTION_LEVEL_SHALL_NOT_BE_USED_FOR_SAFETY_CRITICAL_APPLICATION (0)
+#define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_TIR_LEVEL_1 (1)
+#define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_TIR_LEVEL_2 (2)
+#define SBP_PROTECTION_LEVEL_DEP_A_TARGET_INTEGRITY_RISK_TIR_LEVEL_TIR_LEVEL_3 (3)
+
+typedef struct SBP_ATTR_PACKED {
+  u32 tow;       /**< GPS Time of Week [ms] */
+  u16 vpl;       /**< Vertical protection level [cm] */
+  u16 hpl;       /**< Horizontal protection level [cm] */
+  double lat;       /**< Latitude [deg] */
+  double lon;       /**< Longitude [deg] */
+  double height;    /**< Height [m] */
+  u8 flags;     /**< Status flags */
+} msg_protection_level_dep_a_t;
+
+
+/** Computed state and Protection Levels
+ *
+ * This message reports the protection levels associated to the given 
+ * state estimate. The full GPS time is given by the preceding MSG_GPS_TIME 
+ * with the matching time-of-week (tow).
+ */
+#define SBP_MSG_PROTECTION_LEVEL       0x0217
 #define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_MASK (0x7)
 #define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT (0u)
 #define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_GET(flags) \
@@ -1733,19 +1767,198 @@ typedef struct SBP_ATTR_PACKED {
                              << (SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_SHIFT)));} while(0)
                              
 
-#define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_SAFE_STATE_PROTECTION_LEVEL_SHALL_NOT_BE_USED_FOR_SAFETY_CRITICAL_APPLICATION (0)
-#define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_TIR_LEVEL_1 (1)
-#define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_TIR_LEVEL_2 (2)
-#define SBP_PROTECTION_LEVEL_TARGET_INTEGRITY_RISK_TIR_LEVEL_TIR_LEVEL_3 (3)
+#define SBP_PROTECTION_LEVEL_FIX_MODE_MASK (0x7)
+#define SBP_PROTECTION_LEVEL_FIX_MODE_SHIFT (15u)
+#define SBP_PROTECTION_LEVEL_FIX_MODE_GET(flags) \
+                             (((flags) >> SBP_PROTECTION_LEVEL_FIX_MODE_SHIFT) \
+                             & SBP_PROTECTION_LEVEL_FIX_MODE_MASK)
+#define SBP_PROTECTION_LEVEL_FIX_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_PROTECTION_LEVEL_FIX_MODE_MASK)) \
+                             << (SBP_PROTECTION_LEVEL_FIX_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_PROTECTION_LEVEL_FIX_MODE_INVALID (0)
+#define SBP_PROTECTION_LEVEL_FIX_MODE_SINGLE_POINT_POSITION (1)
+#define SBP_PROTECTION_LEVEL_FIX_MODE_DIFFERENTIAL_GNSS (2)
+#define SBP_PROTECTION_LEVEL_FIX_MODE_FLOAT_RTK (3)
+#define SBP_PROTECTION_LEVEL_FIX_MODE_FIXED_RTK (4)
+#define SBP_PROTECTION_LEVEL_FIX_MODE_DEAD_RECKONING (5)
+#define SBP_PROTECTION_LEVEL_FIX_MODE_SBAS_POSITION (6)
+#define SBP_PROTECTION_LEVEL_INERTIAL_NAVIGATION_MODE_MASK (0x3)
+#define SBP_PROTECTION_LEVEL_INERTIAL_NAVIGATION_MODE_SHIFT (18u)
+#define SBP_PROTECTION_LEVEL_INERTIAL_NAVIGATION_MODE_GET(flags) \
+                             (((flags) >> SBP_PROTECTION_LEVEL_INERTIAL_NAVIGATION_MODE_SHIFT) \
+                             & SBP_PROTECTION_LEVEL_INERTIAL_NAVIGATION_MODE_MASK)
+#define SBP_PROTECTION_LEVEL_INERTIAL_NAVIGATION_MODE_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_PROTECTION_LEVEL_INERTIAL_NAVIGATION_MODE_MASK)) \
+                             << (SBP_PROTECTION_LEVEL_INERTIAL_NAVIGATION_MODE_SHIFT)));} while(0)
+                             
+
+#define SBP_PROTECTION_LEVEL_INERTIAL_NAVIGATION_MODE_NONE (0)
+#define SBP_PROTECTION_LEVEL_INERTIAL_NAVIGATION_MODE_INS_USED (1)
+#define SBP_PROTECTION_LEVEL_TIME_STATUS_MASK (0x1)
+#define SBP_PROTECTION_LEVEL_TIME_STATUS_SHIFT (20u)
+#define SBP_PROTECTION_LEVEL_TIME_STATUS_GET(flags) \
+                             (((flags) >> SBP_PROTECTION_LEVEL_TIME_STATUS_SHIFT) \
+                             & SBP_PROTECTION_LEVEL_TIME_STATUS_MASK)
+#define SBP_PROTECTION_LEVEL_TIME_STATUS_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_PROTECTION_LEVEL_TIME_STATUS_MASK)) \
+                             << (SBP_PROTECTION_LEVEL_TIME_STATUS_SHIFT)));} while(0)
+                             
+
+#define SBP_PROTECTION_LEVEL_TIME_STATUS_GNSS_TIME_OF_VALIDITY (0)
+#define SBP_PROTECTION_LEVEL_TIME_STATUS_OTHER (1)
+#define SBP_PROTECTION_LEVEL_VELOCITY_VALID_MASK (0x1)
+#define SBP_PROTECTION_LEVEL_VELOCITY_VALID_SHIFT (21u)
+#define SBP_PROTECTION_LEVEL_VELOCITY_VALID_GET(flags) \
+                             (((flags) >> SBP_PROTECTION_LEVEL_VELOCITY_VALID_SHIFT) \
+                             & SBP_PROTECTION_LEVEL_VELOCITY_VALID_MASK)
+#define SBP_PROTECTION_LEVEL_VELOCITY_VALID_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_PROTECTION_LEVEL_VELOCITY_VALID_MASK)) \
+                             << (SBP_PROTECTION_LEVEL_VELOCITY_VALID_SHIFT)));} while(0)
+                             
+
+#define SBP_PROTECTION_LEVEL_ATTITUDE_VALID_MASK (0x1)
+#define SBP_PROTECTION_LEVEL_ATTITUDE_VALID_SHIFT (22u)
+#define SBP_PROTECTION_LEVEL_ATTITUDE_VALID_GET(flags) \
+                             (((flags) >> SBP_PROTECTION_LEVEL_ATTITUDE_VALID_SHIFT) \
+                             & SBP_PROTECTION_LEVEL_ATTITUDE_VALID_MASK)
+#define SBP_PROTECTION_LEVEL_ATTITUDE_VALID_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_PROTECTION_LEVEL_ATTITUDE_VALID_MASK)) \
+                             << (SBP_PROTECTION_LEVEL_ATTITUDE_VALID_SHIFT)));} while(0)
+                             
+
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_HPL_MASK (0x1)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_HPL_SHIFT (23u)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_HPL_GET(flags) \
+                             (((flags) >> SBP_PROTECTION_LEVEL_SAFE_STATE_HPL_SHIFT) \
+                             & SBP_PROTECTION_LEVEL_SAFE_STATE_HPL_MASK)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_HPL_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_PROTECTION_LEVEL_SAFE_STATE_HPL_MASK)) \
+                             << (SBP_PROTECTION_LEVEL_SAFE_STATE_HPL_SHIFT)));} while(0)
+                             
+
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_VPL_MASK (0x1)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_VPL_SHIFT (24u)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_VPL_GET(flags) \
+                             (((flags) >> SBP_PROTECTION_LEVEL_SAFE_STATE_VPL_SHIFT) \
+                             & SBP_PROTECTION_LEVEL_SAFE_STATE_VPL_MASK)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_VPL_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_PROTECTION_LEVEL_SAFE_STATE_VPL_MASK)) \
+                             << (SBP_PROTECTION_LEVEL_SAFE_STATE_VPL_SHIFT)));} while(0)
+                             
+
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_ATPL_MASK (0x1)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_ATPL_SHIFT (25u)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_ATPL_GET(flags) \
+                             (((flags) >> SBP_PROTECTION_LEVEL_SAFE_STATE_ATPL_SHIFT) \
+                             & SBP_PROTECTION_LEVEL_SAFE_STATE_ATPL_MASK)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_ATPL_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_PROTECTION_LEVEL_SAFE_STATE_ATPL_MASK)) \
+                             << (SBP_PROTECTION_LEVEL_SAFE_STATE_ATPL_SHIFT)));} while(0)
+                             
+
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_CTPL_MASK (0x1)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_CTPL_SHIFT (26u)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_CTPL_GET(flags) \
+                             (((flags) >> SBP_PROTECTION_LEVEL_SAFE_STATE_CTPL_SHIFT) \
+                             & SBP_PROTECTION_LEVEL_SAFE_STATE_CTPL_MASK)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_CTPL_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_PROTECTION_LEVEL_SAFE_STATE_CTPL_MASK)) \
+                             << (SBP_PROTECTION_LEVEL_SAFE_STATE_CTPL_SHIFT)));} while(0)
+                             
+
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_HVPL_MASK (0x1)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_HVPL_SHIFT (27u)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_HVPL_GET(flags) \
+                             (((flags) >> SBP_PROTECTION_LEVEL_SAFE_STATE_HVPL_SHIFT) \
+                             & SBP_PROTECTION_LEVEL_SAFE_STATE_HVPL_MASK)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_HVPL_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_PROTECTION_LEVEL_SAFE_STATE_HVPL_MASK)) \
+                             << (SBP_PROTECTION_LEVEL_SAFE_STATE_HVPL_SHIFT)));} while(0)
+                             
+
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_VVPL_MASK (0x1)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_VVPL_SHIFT (28u)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_VVPL_GET(flags) \
+                             (((flags) >> SBP_PROTECTION_LEVEL_SAFE_STATE_VVPL_SHIFT) \
+                             & SBP_PROTECTION_LEVEL_SAFE_STATE_VVPL_MASK)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_VVPL_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_PROTECTION_LEVEL_SAFE_STATE_VVPL_MASK)) \
+                             << (SBP_PROTECTION_LEVEL_SAFE_STATE_VVPL_SHIFT)));} while(0)
+                             
+
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_HOPL_MASK (0x1)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_HOPL_SHIFT (29u)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_HOPL_GET(flags) \
+                             (((flags) >> SBP_PROTECTION_LEVEL_SAFE_STATE_HOPL_SHIFT) \
+                             & SBP_PROTECTION_LEVEL_SAFE_STATE_HOPL_MASK)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_HOPL_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_PROTECTION_LEVEL_SAFE_STATE_HOPL_MASK)) \
+                             << (SBP_PROTECTION_LEVEL_SAFE_STATE_HOPL_SHIFT)));} while(0)
+                             
+
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_POPL_MASK (0x1)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_POPL_SHIFT (30u)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_POPL_GET(flags) \
+                             (((flags) >> SBP_PROTECTION_LEVEL_SAFE_STATE_POPL_SHIFT) \
+                             & SBP_PROTECTION_LEVEL_SAFE_STATE_POPL_MASK)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_POPL_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_PROTECTION_LEVEL_SAFE_STATE_POPL_MASK)) \
+                             << (SBP_PROTECTION_LEVEL_SAFE_STATE_POPL_SHIFT)));} while(0)
+                             
+
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_ROPL_MASK (0x1)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_ROPL_SHIFT (31u)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_ROPL_GET(flags) \
+                             (((flags) >> SBP_PROTECTION_LEVEL_SAFE_STATE_ROPL_SHIFT) \
+                             & SBP_PROTECTION_LEVEL_SAFE_STATE_ROPL_MASK)
+#define SBP_PROTECTION_LEVEL_SAFE_STATE_ROPL_SET(flags, val) \
+                             do {((flags) |= \
+                             (((val) & (SBP_PROTECTION_LEVEL_SAFE_STATE_ROPL_MASK)) \
+                             << (SBP_PROTECTION_LEVEL_SAFE_STATE_ROPL_SHIFT)));} while(0)
+                             
+
 
 typedef struct SBP_ATTR_PACKED {
-  u32 tow;       /**< GPS Time of Week [ms] */
-  u16 vpl;       /**< Vertical protection level [cm] */
-  u16 hpl;       /**< Horizontal protection level [cm] */
-  double lat;       /**< Latitude [deg] */
-  double lon;       /**< Longitude [deg] */
-  double height;    /**< Height [m] */
-  u8 flags;     /**< Status flags */
+  u32 tow;        /**< GPS Time of Week [ms] */
+  s16 wn;         /**< GPS week number [weeks] */
+  u16 hpl;        /**< Horizontal protection level [cm] */
+  u16 vpl;        /**< Vertical protection level [cm] */
+  u16 atpl;       /**< Along-track position error protection level [cm] */
+  u16 ctpl;       /**< Cross-track position error protection level [cm] */
+  u16 hvpl;       /**< Protection level for the error vector between estimated and 
+true along/cross track velocity vector
+ [mm/s] */
+  u16 vvpl;       /**< Protection level for the velocity in vehicle upright direction 
+(different from vertical direction if on a slope)
+ [mm/s] */
+  u16 hopl;       /**< Heading orientation protection level [mdeg] */
+  u16 popl;       /**< Pitch orientation protection level [mdeg] */
+  u16 ropl;       /**< Roll orientation protection level [mdeg] */
+  double lat;        /**< Latitude [deg] */
+  double lon;        /**< Longitude [deg] */
+  double height;     /**< Height [m] */
+  s32 v_x;        /**< Velocity in vehicle x direction [mm/s] */
+  s32 v_y;        /**< Velocity in vehicle y direction [mm/s] */
+  s32 v_z;        /**< Velocity in vehicle z direction [mm/s] */
+  s32 roll;       /**< Roll angle [udeg] */
+  s32 pitch;      /**< Pitch angle [udeg] */
+  s32 heading;    /**< Heading angle [udeg] */
+  u32 flags;      /**< Status flags */
 } msg_protection_level_t;
 
 

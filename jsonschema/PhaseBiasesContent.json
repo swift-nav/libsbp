@@ -13,7 +13,7 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "$id": "#PhaseBiasesContent",
   "title":"PhaseBiasesContent",
-  "description":"Phase biases are to be added to carrier phase measurements.,\nThe corrections conform with typical RTCMv3 MT1059 and 1065.\n",
+  "description":"Phase biases are to be added to carrier phase measurements.\n",
   "type": "object",
   "properties": {
     "code": {"type": "integer"},

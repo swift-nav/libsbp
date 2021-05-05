@@ -98,6 +98,7 @@ import com.swiftnav.sbp.navigation.MsgBaselineNEDDepA;
 import com.swiftnav.sbp.navigation.MsgVelECEFDepA;
 import com.swiftnav.sbp.navigation.MsgVelNEDDepA;
 import com.swiftnav.sbp.navigation.MsgBaselineHeadingDepA;
+import com.swiftnav.sbp.navigation.MsgProtectionLevelDepA;
 import com.swiftnav.sbp.navigation.MsgProtectionLevel;
 import com.swiftnav.sbp.ndb.MsgNdbEvent;
 import com.swiftnav.sbp.observation.MsgObs;
@@ -186,6 +187,7 @@ import com.swiftnav.sbp.ssr.MsgSsrPhaseBiases;
 import com.swiftnav.sbp.ssr.MsgSsrStecCorrection;
 import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrection;
 import com.swiftnav.sbp.ssr.MsgSsrTileDefinition;
+import com.swiftnav.sbp.ssr.MsgSsrSatelliteApc;
 import com.swiftnav.sbp.ssr.MsgSsrOrbitClockDepA;
 import com.swiftnav.sbp.ssr.MsgSsrStecCorrectionDepA;
 import com.swiftnav.sbp.ssr.MsgSsrGriddedCorrectionNoStdDepA;
@@ -383,6 +385,8 @@ final class MessageTable {
                 return new MsgVelNEDDepA(msg);
             case MsgBaselineHeadingDepA.TYPE:
                 return new MsgBaselineHeadingDepA(msg);
+            case MsgProtectionLevelDepA.TYPE:
+                return new MsgProtectionLevelDepA(msg);
             case MsgProtectionLevel.TYPE:
                 return new MsgProtectionLevel(msg);
             case MsgNdbEvent.TYPE:
@@ -559,6 +563,8 @@ final class MessageTable {
                 return new MsgSsrGriddedCorrection(msg);
             case MsgSsrTileDefinition.TYPE:
                 return new MsgSsrTileDefinition(msg);
+            case MsgSsrSatelliteApc.TYPE:
+                return new MsgSsrSatelliteApc(msg);
             case MsgSsrOrbitClockDepA.TYPE:
                 return new MsgSsrOrbitClockDepA(msg);
             case MsgSsrStecCorrectionDepA.TYPE:

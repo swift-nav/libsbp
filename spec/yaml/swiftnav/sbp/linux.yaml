@@ -256,7 +256,7 @@ definitions:
            desc: the PID of the process
        - pcpu:
            type: u8
-           desc: percent of cpu used, expressed as a fraction of 256
+           desc: percent of CPU used, expressed as a fraction of 256
        - time:
            type: u32
            desc: timestamp of message, refer to flags field for how to interpret
@@ -324,13 +324,13 @@ definitions:
      fields:
        - mem_total:
            type: u16
-           desc: total system memory
+           desc: total system memory, in MiB
        - pcpu:
            type: u8
-           desc: percent of total cpu currently utilized
+           desc: percent of CPU used, expressed as a fraction of 256
        - pmem:
            type: u8
-           desc: percent of total memory currently utilized
+           desc: percent of memory used, expressed as a fraction of 256
        - procs_starting:
            type: u16
            desc: number of processes that started during collection phase

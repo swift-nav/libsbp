@@ -7,7 +7,7 @@
 
 [package]
 name = "sbp2json"
-version = "3.4.5"
+version = "3.4.8-alpha"
 authors = ["Swift Navigation <dev@swiftnav.com>"]
 edition = "2018"
 
@@ -16,8 +16,10 @@ path = "../sbp"
 features = ["json"]
 
 [dependencies]
+dencode = "0.1"
+env_logger = "0.8"
+serde_json = "1.0"
 structopt = "0.3"
-env_logger = "0.8.2"
 
 [target.'cfg(all(not(windows), not(target_env = "musl")))'.dependencies]
 jemallocator = "0.3"
@@ -32,6 +34,10 @@ assert-json-diff = "1.1.0"
 [profile.release]
 lto = true
 codegen-units = 1
+
+[lib]
+name = "converters"
+path = "src/lib.rs"
 
 [[bin]]
 name = "sbp2json"

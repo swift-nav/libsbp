@@ -379,7 +379,7 @@ data MsgLinuxCpuState = MsgLinuxCpuState
   , _msgLinuxCpuState_pid   :: !Word16
     -- ^ the PID of the process
   , _msgLinuxCpuState_pcpu  :: !Word8
-    -- ^ percent of cpu used, expressed as a fraction of 256
+    -- ^ percent of CPU used, expressed as a fraction of 256
   , _msgLinuxCpuState_time  :: !Word32
     -- ^ timestamp of message, refer to flags field for how to interpret
   , _msgLinuxCpuState_flags :: !Word8
@@ -471,11 +471,11 @@ msgLinuxSysState = 0x7F0A
 -- timestamp.
 data MsgLinuxSysState = MsgLinuxSysState
   { _msgLinuxSysState_mem_total    :: !Word16
-    -- ^ total system memory
+    -- ^ total system memory, in MiB
   , _msgLinuxSysState_pcpu         :: !Word8
-    -- ^ percent of total cpu currently utilized
+    -- ^ percent of CPU used, expressed as a fraction of 256
   , _msgLinuxSysState_pmem         :: !Word8
-    -- ^ percent of total memory currently utilized
+    -- ^ percent of memory used, expressed as a fraction of 256
   , _msgLinuxSysState_procs_starting :: !Word16
     -- ^ number of processes that started during collection phase
   , _msgLinuxSysState_procs_stopping :: !Word16

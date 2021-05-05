@@ -34,11 +34,11 @@ var SvId = require("./gnss").SvId;
 /**
  * SBP class for message fragment CodeBiasesContent
  *
- * Code biases are to be added to pseudorange. The corrections conform with typical
- * RTCMv3 MT1059 and 1065.
+ * Code biases are to be added to pseudorange. The corrections conform with RTCMv3
+ * MT 1059 / 1065.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
+ * @field code number (unsigned 8-bit int, 1 byte) Signal encoded following RTCM specifications (DF380, DF381, DF382 and DF467).
  * @field value number (signed 16-bit int, 2 bytes) Code bias value
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -64,11 +64,10 @@ CodeBiasesContent.prototype.fieldSpec.push(['value', 'writeInt16LE', 2]);
 /**
  * SBP class for message fragment PhaseBiasesContent
  *
- * Phase biases are to be added to carrier phase measurements. The corrections
- * conform with typical RTCMv3 MT1059 and 1065.
+ * Phase biases are to be added to carrier phase measurements.
  *
  * Fields in the SBP payload (`sbp.payload`):
- * @field code number (unsigned 8-bit int, 1 byte) Signal constellation, band and code
+ * @field code number (unsigned 8-bit int, 1 byte) Signal encoded following RTCM specifications (DF380, DF381, DF382 and DF467)
  * @field integer_indicator number (unsigned 8-bit int, 1 byte) Indicator for integer property
  * @field widelane_integer_indicator number (unsigned 8-bit int, 1 byte) Indicator for two groups of Wide-Lane(s) integer property
  * @field discontinuity_counter number (unsigned 8-bit int, 1 byte) Signal phase discontinuity counter. Increased for every discontinuity in phase.
@@ -162,7 +161,7 @@ STECHeader.prototype.fieldSpec.push(['iod_atmo', 'writeUInt8', 1]);
  * @field update_interval number (unsigned 8-bit int, 1 byte) Update interval between consecutive corrections. Encoded following RTCM DF391
  *   specification.
  * @field iod_atmo number (unsigned 8-bit int, 1 byte) IOD of the SSR atmospheric correction
- * @field tropo_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the troposphere data. Encoded following RTCM DF389 specifcation in
+ * @field tropo_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the troposphere data. Encoded following RTCM DF389 specification in
  *   units of m.
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -204,8 +203,8 @@ GriddedCorrectionHeader.prototype.fieldSpec.push(['tropo_quality_indicator', 'wr
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field sv_id SvId Unique space vehicle identifier
- * @field stec_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the STEC data. Encoded following RTCM DF389 specifcation but in units
- *   of TECU instead of m.
+ * @field stec_quality_indicator number (unsigned 8-bit int, 1 byte) Quality of the STEC data. Encoded following RTCM DF389 specification but in
+ *   units of TECU instead of m.
  * @field stec_coeff array Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
  *
  * @param sbp An SBP object with a payload to be decoded.
@@ -423,8 +422,8 @@ GridElement.prototype.fieldSpec.push(['stec_residuals', 'array', STECResidual.pr
  * SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DD).
  *
  * The precise orbit and clock correction message is to be applied as a delta
- * correction to broadcast ephemeris and is typically an equivalent to the 1060 and
- * 1066 RTCM message types
+ * correction to broadcast ephemeris and is an equivalent to the 1060 /1066 RTCM
+ * message types
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field time GPSTimeSec GNSS reference time of the correction
@@ -493,8 +492,8 @@ MsgSsrOrbitClock.prototype.fieldSpec.push(['c2', 'writeInt32LE', 4]);
  * SBP class for message MSG_SSR_CODE_BIASES (0x05E1).
  *
  * The precise code biases message is to be added to the pseudorange of the
- * corresponding signal to get corrected pseudorange. It is typically an equivalent
- * to the 1059 and 1065 RTCM message types
+ * corresponding signal to get corrected pseudorange. It is an equivalent to the
+ * 1059 / 1065 RTCM message types
  *
  * Fields in the SBP payload (`sbp.payload`):
  * @field time GPSTimeSec GNSS reference time of the correction
@@ -725,6 +724,74 @@ MsgSsrTileDefinition.prototype.fieldSpec.push(['spacing_lon', 'writeUInt16LE', 2
 MsgSsrTileDefinition.prototype.fieldSpec.push(['rows', 'writeUInt16LE', 2]);
 MsgSsrTileDefinition.prototype.fieldSpec.push(['cols', 'writeUInt16LE', 2]);
 MsgSsrTileDefinition.prototype.fieldSpec.push(['bitmask', 'writeUInt64LE', 8]);
+
+/**
+ * SBP class for message fragment SatelliteAPC
+ *
+ * Contains phase center offset and elevation variation corrections for one signal
+ * on a satellite.
+ *
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field sid GnssSignal GNSS signal identifier (16 bit)
+ * @field sat_info number (unsigned 8-bit int, 1 byte) Additional satellite information
+ * @field svn number (unsigned 16-bit int, 2 bytes) Satellite Code, as defined by IGS. Typically the space vehicle number.
+ * @field pco array Mean phase center offset, X Y and Z axises. See IGS ANTEX file format
+ *   description for coordinate system definition.
+ * @field pcv array Elevation dependent phase center variations. First element is 0 degrees
+ *   separation from the Z axis, subsequent elements represent elevation variations
+ *   in 1 degree increments.
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var SatelliteAPC = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "SatelliteAPC";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+SatelliteAPC.prototype = Object.create(SBP.prototype);
+SatelliteAPC.prototype.messageType = "SatelliteAPC";
+SatelliteAPC.prototype.constructor = SatelliteAPC;
+SatelliteAPC.prototype.parser = new Parser()
+  .endianess('little')
+  .nest('sid', { type: GnssSignal.prototype.parser })
+  .uint8('sat_info')
+  .uint16('svn')
+  .array('pco', { length: 3, type: 'int16le' })
+  .array('pcv', { length: 21, type: 'int8' });
+SatelliteAPC.prototype.fieldSpec = [];
+SatelliteAPC.prototype.fieldSpec.push(['sid', GnssSignal.prototype.fieldSpec]);
+SatelliteAPC.prototype.fieldSpec.push(['sat_info', 'writeUInt8', 1]);
+SatelliteAPC.prototype.fieldSpec.push(['svn', 'writeUInt16LE', 2]);
+SatelliteAPC.prototype.fieldSpec.push(['pco', 'array', 'writeInt16LE', function () { return 2; }, 3]);
+SatelliteAPC.prototype.fieldSpec.push(['pcv', 'array', 'writeInt8', function () { return 1; }, 21]);
+
+/**
+ * SBP class for message MSG_SSR_SATELLITE_APC (0x0604).
+ *
+ 
+ * Fields in the SBP payload (`sbp.payload`):
+ * @field apc array Satellite antenna phase center corrections
+ *
+ * @param sbp An SBP object with a payload to be decoded.
+ */
+var MsgSsrSatelliteApc = function (sbp, fields) {
+  SBP.call(this, sbp);
+  this.messageType = "MSG_SSR_SATELLITE_APC";
+  this.fields = (fields || this.parser.parse(sbp.payload));
+
+  return this;
+};
+MsgSsrSatelliteApc.prototype = Object.create(SBP.prototype);
+MsgSsrSatelliteApc.prototype.messageType = "MSG_SSR_SATELLITE_APC";
+MsgSsrSatelliteApc.prototype.msg_type = 0x0604;
+MsgSsrSatelliteApc.prototype.constructor = MsgSsrSatelliteApc;
+MsgSsrSatelliteApc.prototype.parser = new Parser()
+  .endianess('little')
+  .array('apc', { type: SatelliteAPC.prototype.parser, readUntil: 'eof' });
+MsgSsrSatelliteApc.prototype.fieldSpec = [];
+MsgSsrSatelliteApc.prototype.fieldSpec.push(['apc', 'array', SatelliteAPC.prototype.fieldSpec, function () { return this.fields.array.length; }, null]);
 
 /**
  * SBP class for message MSG_SSR_ORBIT_CLOCK_DEP_A (0x05DC).
@@ -1064,6 +1131,9 @@ module.exports = {
   MsgSsrGriddedCorrection: MsgSsrGriddedCorrection,
   0x05F6: MsgSsrTileDefinition,
   MsgSsrTileDefinition: MsgSsrTileDefinition,
+  SatelliteAPC: SatelliteAPC,
+  0x0604: MsgSsrSatelliteApc,
+  MsgSsrSatelliteApc: MsgSsrSatelliteApc,
   0x05DC: MsgSsrOrbitClockDepA,
   MsgSsrOrbitClockDepA: MsgSsrOrbitClockDepA,
   STECHeaderDepA: STECHeaderDepA,

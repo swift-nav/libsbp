@@ -20,11 +20,13 @@ definitions:
      short_desc: SSR code biases corrections for a particular satellite.
      desc: |
       Code biases are to be added to pseudorange.
-      The corrections conform with typical RTCMv3 MT1059 and 1065.
+      The corrections conform with RTCMv3 MT 1059 / 1065.
      fields:
      - code:
             type: u8
-            desc: Signal constellation, band and code
+            desc: |
+                Signal encoded following RTCM specifications
+                (DF380, DF381, DF382 and DF467).
      - value:
             type: s16
             units: 0.01 m
@@ -34,11 +36,12 @@ definitions:
      short_desc: SSR phase biases corrections for a particular satellite.
      desc: |
       Phase biases are to be added to carrier phase measurements.
-      The corrections conform with typical RTCMv3 MT1059 and 1065.
      fields:
      - code:
             type: u8
-            desc: Signal constellation, band and code
+            desc: |
+                Signal encoded following RTCM specifications
+                (DF380, DF381, DF382 and DF467)
      - integer_indicator:
             type: u8
             desc: Indicator for integer property
@@ -122,7 +125,7 @@ definitions:
         type: u8
         desc: |
           Quality of the troposphere data. Encoded following RTCM DF389
-          specifcation in units of m.
+          specification in units of m.
 
  - STECSatElement:
     desc: STEC polynomial for the given satellite.
@@ -133,7 +136,7 @@ definitions:
     - stec_quality_indicator:
         type: u8
         desc: |
-          Quality of the STEC data. Encoded following RTCM DF389 specifcation
+          Quality of the STEC data. Encoded following RTCM DF389 specification
           but in units of TECU instead of m.
     - stec_coeff:
         type: array
@@ -246,8 +249,8 @@ definitions:
     desc: |
       The precise orbit and clock correction message is
       to be applied as a delta correction to broadcast
-      ephemeris and is typically an equivalent to the 1060
-      and 1066 RTCM message types
+      ephemeris and is an equivalent to the 1060 /1066
+      RTCM message types
     fields:
         - time:
             type: GPSTimeSec
@@ -312,8 +315,8 @@ definitions:
     desc: |
       The precise code biases message is to be added
       to the pseudorange of the corresponding signal
-      to get corrected pseudorange. It is typically
-      an equivalent to the 1059 and 1065 RTCM message types
+      to get corrected pseudorange. It is an
+      equivalent to the 1059 / 1065 RTCM message types
     fields:
         - time:
             type: GPSTimeSec
@@ -516,6 +519,74 @@ definitions:
 
               See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but
               note the definition of the bits is inverted.
+
+ - SatelliteAPC:
+     short_desc: Antenna phase center correction.
+     desc: |
+       Contains phase center offset and elevation variation corrections for one
+       signal on a satellite.
+     fields:
+       - sid:
+           type: GnssSignal
+           desc: GNSS signal identifier (16 bit)
+       - sat_info:
+           type: u8
+           desc: Additional satellite information
+           fields:
+             - 5-7:
+                 desc: Reserved
+             - 0-4:
+                 desc: Satellite Type
+                 values:
+                   - 0: Unknown Type
+                   - 1: GPS I
+                   - 2: GPS II
+                   - 3: GPS IIA
+                   - 4: GPS IIR
+                   - 5: GPS IIF
+                   - 6: GPS III
+                   - 7: GLONASS
+                   - 8: GLONASS M
+                   - 9: GLONASS K1
+                   - 10: GALILEO
+                   - 11: BEIDOU 2G
+                   - 12: BEIDOU 2I
+                   - 13: BEIDOU 2M
+                   - 14: BEIDOU 3M, SECM
+                   - 15: BEIDOU 3G, SECM
+                   - 16: BEIDOU 3M, CAST
+                   - 17: BEIDOU 3G, CAST
+                   - 18: BEIDOU 3I, CAST
+                   - 19: QZSS
+       - svn:
+           type: u16
+           desc: Satellite Code, as defined by IGS. Typically the space vehicle number.
+       - pco:
+           type: array
+           size: 3
+           fill: s16
+           units: 1 mm
+           desc: |
+             Mean phase center offset, X Y and Z axises. See IGS ANTEX file
+             format description for coordinate system definition.
+       - pcv:
+           type: array
+           size: 21
+           fill: s8
+           units: 1 mm
+           desc: |
+             Elevation dependent phase center variations. First element is 0
+             degrees separation from the Z axis, subsequent elements represent
+             elevation variations in 1 degree increments.
+
+ - MSG_SSR_SATELLITE_APC:
+     id: 0x0604
+     short_desc: Satellite antenna phase center corrections
+     fields:
+       - apc:
+           type: array
+           fill: SatelliteAPC
+           desc: Satellite antenna phase center corrections
 
  - MSG_SSR_ORBIT_CLOCK_DEP_A:
     id: 0x05DC

@@ -1,7 +1,8 @@
 use std::io;
 
-use sbp::codec::converters::json2sbp;
 use structopt::StructOpt;
+
+use converters::json2sbp;
 
 #[cfg(all(not(windows), not(target_env = "musl")))]
 #[global_allocator]
@@ -18,6 +19,10 @@ struct Options {
     /// Print debugging messages to standard error
     #[structopt(long)]
     debug: bool,
+
+    /// Buffer output before flushing
+    #[structopt(short, long)]
+    buffered: bool,
 }
 
 fn main() -> sbp::Result<()> {
@@ -32,5 +37,5 @@ fn main() -> sbp::Result<()> {
     let stdin = io::stdin();
     let stdout = io::stdout();
 
-    json2sbp(stdin, stdout)
+    json2sbp(stdin, stdout, options.buffered)
 }

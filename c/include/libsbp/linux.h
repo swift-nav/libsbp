@@ -200,7 +200,7 @@ of the list being 2 NULL terminators in a row.
 typedef struct SBP_ATTR_PACKED {
   u8 index;      /**< sequence of this status message, values from 0-9 */
   u16 pid;        /**< the PID of the process */
-  u8 pcpu;       /**< percent of cpu used, expressed as a fraction of 256 */
+  u8 pcpu;       /**< percent of CPU used, expressed as a fraction of 256 */
   u32 time;       /**< timestamp of message, refer to flags field for how to interpret */
   u8 flags;      /**< flags */
   char tname[15];  /**< fixed length string representing the thread name */
@@ -259,9 +259,9 @@ typedef struct SBP_ATTR_PACKED {
 #define SBP_LINUX_SYS_STATE_TIMESTAMP_TYPE_GPS_TOW_IN_MILLISECONDS (1)
 
 typedef struct SBP_ATTR_PACKED {
-  u16 mem_total;         /**< total system memory */
-  u8 pcpu;              /**< percent of total cpu currently utilized */
-  u8 pmem;              /**< percent of total memory currently utilized */
+  u16 mem_total;         /**< total system memory, in MiB */
+  u8 pcpu;              /**< percent of CPU used, expressed as a fraction of 256 */
+  u8 pmem;              /**< percent of memory used, expressed as a fraction of 256 */
   u16 procs_starting;    /**< number of processes that started during collection phase */
   u16 procs_stopping;    /**< number of processes that stopped during collection phase */
   u16 pid_count;         /**< the count of processes on the system */

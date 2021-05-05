@@ -17,6 +17,7 @@ tests:
        flags: 0
        e: 1
        cov_d_d: 1.0
+       d: 1
     module: sbp.navigation
     name: MsgVelNEDCov
   msg_type: '0x212'

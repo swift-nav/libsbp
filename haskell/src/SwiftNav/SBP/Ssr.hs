@@ -39,10 +39,11 @@ import SwiftNav.SBP.Gnss
 -- | CodeBiasesContent.
 --
 -- Code biases are to be added to pseudorange. The corrections conform with
--- typical RTCMv3 MT1059 and 1065.
+-- RTCMv3 MT 1059 / 1065.
 data CodeBiasesContent = CodeBiasesContent
   { _codeBiasesContent_code :: !Word8
-    -- ^ Signal constellation, band and code
+    -- ^ Signal encoded following RTCM specifications (DF380, DF381, DF382 and
+    -- DF467).
   , _codeBiasesContent_value :: !Int16
     -- ^ Code bias value
   } deriving ( Show, Read, Eq )
@@ -62,11 +63,11 @@ $(makeLenses ''CodeBiasesContent)
 
 -- | PhaseBiasesContent.
 --
--- Phase biases are to be added to carrier phase measurements. The corrections
--- conform with typical RTCMv3 MT1059 and 1065.
+-- Phase biases are to be added to carrier phase measurements.
 data PhaseBiasesContent = PhaseBiasesContent
   { _phaseBiasesContent_code                     :: !Word8
-    -- ^ Signal constellation, band and code
+    -- ^ Signal encoded following RTCM specifications (DF380, DF381, DF382 and
+    -- DF467)
   , _phaseBiasesContent_integer_indicator        :: !Word8
     -- ^ Indicator for integer property
   , _phaseBiasesContent_widelane_integer_indicator :: !Word8
@@ -165,7 +166,7 @@ data GriddedCorrectionHeader = GriddedCorrectionHeader
     -- ^ IOD of the SSR atmospheric correction
   , _griddedCorrectionHeader_tropo_quality_indicator :: !Word8
     -- ^ Quality of the troposphere data. Encoded following RTCM DF389
-    -- specifcation in units of m.
+    -- specification in units of m.
   } deriving ( Show, Read, Eq )
 
 instance Binary GriddedCorrectionHeader where
@@ -200,7 +201,7 @@ data STECSatElement = STECSatElement
   { _sTECSatElement_sv_id                :: !SvId
     -- ^ Unique space vehicle identifier
   , _sTECSatElement_stec_quality_indicator :: !Word8
-    -- ^ Quality of the STEC data. Encoded following RTCM DF389 specifcation but
+    -- ^ Quality of the STEC data. Encoded following RTCM DF389 specification but
     -- in units of TECU instead of m.
   , _sTECSatElement_stec_coeff           :: ![Int16]
     -- ^ Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
@@ -384,8 +385,8 @@ msgSsrOrbitClock = 0x05DD
 -- | SBP class for message MSG_SSR_ORBIT_CLOCK (0x05DD).
 --
 -- The precise orbit and clock correction message is to be applied as a delta
--- correction to broadcast ephemeris and is typically an equivalent to the 1060
--- and 1066 RTCM message types
+-- correction to broadcast ephemeris and is an equivalent to the 1060 /1066
+-- RTCM message types
 data MsgSsrOrbitClock = MsgSsrOrbitClock
   { _msgSsrOrbitClock_time          :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
@@ -463,8 +464,8 @@ msgSsrCodeBiases = 0x05E1
 -- | SBP class for message MSG_SSR_CODE_BIASES (0x05E1).
 --
 -- The precise code biases message is to be added to the pseudorange of the
--- corresponding signal to get corrected pseudorange. It is typically an
--- equivalent to the 1059 and 1065 RTCM message types
+-- corresponding signal to get corrected pseudorange. It is an equivalent to
+-- the 1059 / 1065 RTCM message types
 data MsgSsrCodeBiases = MsgSsrCodeBiases
   { _msgSsrCodeBiases_time          :: !GpsTimeSec
     -- ^ GNSS reference time of the correction
@@ -698,6 +699,65 @@ instance Binary MsgSsrTileDefinition where
 $(makeSBP 'msgSsrTileDefinition ''MsgSsrTileDefinition)
 $(makeJSON "_msgSsrTileDefinition_" ''MsgSsrTileDefinition)
 $(makeLenses ''MsgSsrTileDefinition)
+
+-- | SatelliteAPC.
+--
+-- Contains phase center offset and elevation variation corrections for one
+-- signal on a satellite.
+data SatelliteAPC = SatelliteAPC
+  { _satelliteAPC_sid    :: !GnssSignal
+    -- ^ GNSS signal identifier (16 bit)
+  , _satelliteAPC_sat_info :: !Word8
+    -- ^ Additional satellite information
+  , _satelliteAPC_svn    :: !Word16
+    -- ^ Satellite Code, as defined by IGS. Typically the space vehicle number.
+  , _satelliteAPC_pco    :: ![Int16]
+    -- ^ Mean phase center offset, X Y and Z axises. See IGS ANTEX file format
+    -- description for coordinate system definition.
+  , _satelliteAPC_pcv    :: ![Int8]
+    -- ^ Elevation dependent phase center variations. First element is 0 degrees
+    -- separation from the Z axis, subsequent elements represent elevation
+    -- variations in 1 degree increments.
+  } deriving ( Show, Read, Eq )
+
+instance Binary SatelliteAPC where
+  get = do
+    _satelliteAPC_sid <- get
+    _satelliteAPC_sat_info <- getWord8
+    _satelliteAPC_svn <- getWord16le
+    _satelliteAPC_pco <- replicateM 3 (fromIntegral <$> getWord16le)
+    _satelliteAPC_pcv <- replicateM 21 (fromIntegral <$> getWord8)
+    pure SatelliteAPC {..}
+
+  put SatelliteAPC {..} = do
+    put _satelliteAPC_sid
+    putWord8 _satelliteAPC_sat_info
+    putWord16le _satelliteAPC_svn
+    mapM_ (putWord16le . fromIntegral) _satelliteAPC_pco
+    mapM_ (putWord8 . fromIntegral) _satelliteAPC_pcv
+
+$(makeJSON "_satelliteAPC_" ''SatelliteAPC)
+$(makeLenses ''SatelliteAPC)
+
+msgSsrSatelliteApc :: Word16
+msgSsrSatelliteApc = 0x0604
+
+data MsgSsrSatelliteApc = MsgSsrSatelliteApc
+  { _msgSsrSatelliteApc_apc :: ![SatelliteAPC]
+    -- ^ Satellite antenna phase center corrections
+  } deriving ( Show, Read, Eq )
+
+instance Binary MsgSsrSatelliteApc where
+  get = do
+    _msgSsrSatelliteApc_apc <- whileM (not <$> isEmpty) get
+    pure MsgSsrSatelliteApc {..}
+
+  put MsgSsrSatelliteApc {..} = do
+    mapM_ put _msgSsrSatelliteApc_apc
+
+$(makeSBP 'msgSsrSatelliteApc ''MsgSsrSatelliteApc)
+$(makeJSON "_msgSsrSatelliteApc_" ''MsgSsrSatelliteApc)
+$(makeLenses ''MsgSsrSatelliteApc)
 
 msgSsrOrbitClockDepA :: Word16
 msgSsrOrbitClockDepA = 0x05DC

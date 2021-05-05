@@ -24,7 +24,7 @@ import "gnss.proto";
 /** SSR code biases corrections for a particular satellite.
  *
  * Code biases are to be added to pseudorange.
- * The corrections conform with typical RTCMv3 MT1059 and 1065.
+ * The corrections conform with RTCMv3 MT 1059 / 1065.
  */
 message CodeBiasesContent {
     uint32 code = 1;
@@ -34,7 +34,6 @@ message CodeBiasesContent {
 /** SSR phase biases corrections for a particular satellite.
  *
  * Phase biases are to be added to carrier phase measurements.
- * The corrections conform with typical RTCMv3 MT1059 and 1065.
  */
 message PhaseBiasesContent {
     uint32 code = 1;
@@ -153,8 +152,8 @@ message GridElement {
  *
  * The precise orbit and clock correction message is
  * to be applied as a delta correction to broadcast
- * ephemeris and is typically an equivalent to the 1060
- * and 1066 RTCM message types
+ * ephemeris and is an equivalent to the 1060 /1066
+ * RTCM message types
  */
 message MsgSsrOrbitClock {
     gnss.GpsTimeSec time = 1;
@@ -177,8 +176,8 @@ message MsgSsrOrbitClock {
  *
  * The precise code biases message is to be added
  * to the pseudorange of the corresponding signal
- * to get corrected pseudorange. It is typically
- * an equivalent to the 1059 and 1065 RTCM message types
+ * to get corrected pseudorange. It is an
+ * equivalent to the 1059 / 1065 RTCM message types
  */
 message MsgSsrCodeBiases {
     gnss.GpsTimeSec time = 1;
@@ -255,4 +254,25 @@ message MsgSsrTileDefinition {
     uint32 rows = 7;
     uint32 cols = 8;
     uint64 bitmask = 9;
+}
+
+/** Antenna phase center correction.
+ *
+ * Contains phase center offset and elevation variation corrections for one
+ * signal on a satellite.
+ */
+message SatelliteAPC {
+    gnss.GnssSignal sid = 1;
+    uint32 sat_info = 2;
+    uint32 svn = 3;
+    repeated sint32 pco = 4;
+    repeated sint32 pcv = 5;
+}
+
+/** Satellite antenna phase center corrections
+ *
+None
+ */
+message MsgSsrSatelliteApc {
+    repeated SatelliteAPC apc = 1;
 }

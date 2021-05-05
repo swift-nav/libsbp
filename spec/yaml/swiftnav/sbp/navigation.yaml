@@ -2009,7 +2009,7 @@ definitions:
                         - 0: Float RTK
                         - 1: Fixed RTK
 
- - MSG_PROTECTION_LEVEL:
+ - MSG_PROTECTION_LEVEL_DEP_A:
     public: false
     id: 0x0216
     short_desc: Computed Position and Protection Level
@@ -2056,3 +2056,146 @@ definitions:
                 - 3-7:
                     desc: Reserved
 
+ - MSG_PROTECTION_LEVEL:
+    public: false
+    id: 0x0217
+    short_desc: Computed state and Protection Levels
+    desc: |
+      This message reports the protection levels associated to the given 
+      state estimate. The full GPS time is given by the preceding MSG_GPS_TIME 
+      with the matching time-of-week (tow).
+    fields:
+          - tow:
+              type: u32
+              units: ms
+              desc: GPS Time of Week
+          - wn:
+              type: s16
+              units: weeks
+              desc: GPS week number
+          - hpl:
+              type: u16
+              units: cm
+              desc: Horizontal protection level
+          - vpl:
+              type: u16
+              units: cm
+              desc: Vertical protection level
+          - atpl:
+              type: u16
+              units: cm
+              desc: Along-track position error protection level
+          - ctpl:
+              type: u16
+              units: cm
+              desc: Cross-track position error protection level
+          - hvpl:
+              type: u16
+              units: mm/s
+              desc: | 
+                Protection level for the error vector between estimated and 
+                true along/cross track velocity vector
+          - vvpl:
+              type: u16
+              units: mm/s
+              desc: |
+                Protection level for the velocity in vehicle upright direction 
+                (different from vertical direction if on a slope)
+          - hopl:
+              type: u16
+              units: mdeg
+              desc: Heading orientation protection level
+          - popl:
+              type: u16
+              units: mdeg
+              desc: Pitch orientation protection level
+          - ropl:
+              type: u16
+              units: mdeg
+              desc: Roll orientation protection level
+          - lat:
+              type: double
+              units: deg
+              desc: Latitude
+          - lon:
+              type: double
+              units: deg
+              desc: Longitude
+          - height:
+              type: double
+              units: m
+              desc: Height
+          - v_x:
+              type: s32
+              units: mm/s
+              desc: Velocity in vehicle x direction
+          - v_y:
+              type: s32
+              units: mm/s
+              desc: Velocity in vehicle y direction
+          - v_z:
+              type: s32
+              units: mm/s
+              desc: Velocity in vehicle z direction
+          - roll:
+              type: s32
+              units: udeg
+              desc: Roll angle
+          - pitch:
+              type: s32
+              units: udeg
+              desc: Pitch angle
+          - heading:
+              type: s32
+              units: udeg
+              desc: Heading angle    
+          - flags:
+              type: u32
+              desc: Status flags
+              fields:
+                - 0-2:
+                    desc: Target Integrity Risk (TIR) Level
+                - 3-14:
+                    desc: Reserved
+                - 15-17:
+                    desc: Fix mode
+                    values:
+                      - 0: Invalid
+                      - 1: Single Point Position (SPP)
+                      - 2: Differential GNSS (DGNSS)
+                      - 3: Float RTK
+                      - 4: Fixed RTK
+                      - 5: Dead Reckoning
+                      - 6: SBAS Position
+                - 18-19:
+                    desc: Inertial Navigation Mode
+                    values:
+                      - 0: None
+                      - 1: INS used
+                - 20:
+                    desc: Time status
+                    values:
+                      - 0: GNSS time of validity
+                      - 1: Other
+                - 21:
+                    desc: Velocity valid
+                - 22:
+                    desc: Attitude valid
+                - 23:
+                    desc: Safe state HPL
+                - 24:
+                    desc: Safe state VPL
+                - 25:
+                    desc: Safe state ATPL
+                - 26:
+                    desc: Safe state CTPL   
+                - 27:
+                    desc: Safe state HVPL   
+                - 28:
+                    desc: Safe state VVPL   
+                - 29:
+                    desc: Safe state HOPL
+                - 30:
+                    desc: Safe state POPL
+                - 31:
+                    desc: Safe state ROPL
