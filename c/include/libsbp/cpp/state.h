@@ -109,6 +109,11 @@ public:
     // NOLINTNEXTLINE
     return sbp_process_payload(&state_, sender_id, msg_type, msg_length, const_cast<u8 *>(payload));
   }
+
+  s8 process_unpacked(u16 sender_id, u16 msg_type, const sbp_msg_t &msg)
+  {
+    return sbp_process_unpacked(&state_, sender_id, msg_type, &msg);
+  }
 };
 
 } // namespace sbp

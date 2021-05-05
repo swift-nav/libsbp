@@ -182,6 +182,7 @@ extern "C"
   void sbp_state_set_io_context(sbp_state_t *s, void *context);
   s8 sbp_process(sbp_state_t *s, s32 (*read)(u8 *buff, u32 n, void *context));
   s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len, u8 payload[]);
+  s8 sbp_process_unpacked(sbp_state_t *s, u16 sender_id, u16 msg_type, const sbp_msg_t *msg);
   s8 sbp_process_frame(sbp_state_t *s,
                        u16 sender_id,
                        u16 msg_type,

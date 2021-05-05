@@ -79,17 +79,7 @@ public:
   ~CallbackInterface() override = default;
 
   using CallbackInterface<OtherTypes...>::handle_sbp_msg;
-  virtual void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const MsgType &msg)
-  {
-    (void)sender_id;
-    (void)message_length;
-    (void)msg;
-  }
-  virtual void handle_sbp_msg(uint16_t sender_id, const MsgType &msg)
-  {
-    (void)sender_id;
-    (void)msg;
-  }
+  virtual void handle_sbp_msg(uint16_t sender_id, const MsgType &msg) = 0;
 
 protected:
   void register_callback(sbp_state_t *state, sbp_msg_callbacks_node_t nodes[])
@@ -100,7 +90,7 @@ protected:
         &sbp_unpacked_cb_passthrough<MsgType, CallbackInterface, &CallbackInterface::handle_sbp_msg>,
         this,
         &nodes[0]);
-    CallbackInterface<OtherTypes...>::register_callback(state, &nodes[2]);
+    CallbackInterface<OtherTypes...>::register_callback(state, &nodes[1]);
   }
 };
 
@@ -110,17 +100,7 @@ public:
   CallbackInterface() = default;
   virtual ~CallbackInterface() = default;
 
-  virtual void handle_sbp_msg(uint16_t sender_id, uint8_t message_length, const MsgType &msg)
-  {
-    (void)sender_id;
-    (void)message_length;
-    (void)msg;
-  }
-  virtual void handle_sbp_msg(uint16_t sender_id, const MsgType &msg)
-  {
-    (void)sender_id;
-    (void)msg;
-  }
+  virtual void handle_sbp_msg(uint16_t sender_id, const MsgType &msg) = 0;
 
 protected:
   void register_callback(sbp_state_t *state, sbp_msg_callbacks_node_t nodes[])

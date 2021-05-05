@@ -650,6 +650,56 @@ s8 sbp_process_payload(sbp_state_t *s, u16 sender_id, u16 msg_type, u8 msg_len, 
   return sbp_process_frame(s, sender_id, msg_type, msg_len, payload, 0, 0, SBP_CALLBACK_FLAG(SBP_PAYLOAD_CALLBACK));
 }
 
+s8 sbp_process_unpacked(sbp_state_t *s, u16 sender_id, u16 msg_type, const sbp_msg_t *msg)
+{
+  s8 ret = SBP_OK_CALLBACK_UNDEFINED;
+  sbp_msg_callbacks_node_t *node;
+  uint8_t frame[SBP_MAX_FRAME_LEN];
+  frame[0] = SBP_PREAMBLE;
+  frame[1] = (uint8_t)(msg_type & 0xff);
+  frame[2] = (uint8_t)((msg_type >> 8) & 0xff);
+  frame[3] = (uint8_t)(sender_id & 0xff);
+  frame[4] = (uint8_t)((sender_id >> 8) & 0xff);
+  frame[5] = (uint8_t)sbp_packed_size(msg_type, msg);
+  sbp_pack_msg(frame + 6, SBP_MAX_PAYLOAD_LEN, msg_type, msg);
+  uint16_t crc = crc16_ccitt(frame + 1, 5u + frame[5], 0);
+  frame[6 + frame[5]] = (uint8_t)(crc & 0xff);
+  frame[7 + frame[5]] = (uint8_t)((crc >> 8) & 0xff);
+
+  for (node = s->sbp_msg_callbacks_head; node; node = node->next)
+  {
+    if (
+        ((node->msg_type == msg_type) || (node->msg_type == SBP_MSG_ALL)))
+    {
+      switch(node->cb_type)
+      {
+        case SBP_FRAME_CALLBACK:
+          {
+            node->cb.frame(sender_id, msg_type, frame[5], frame + 6, (uint16_t)(8u + frame[5]), frame, node->context);
+            ret = SBP_OK_CALLBACK_EXECUTED;
+          }
+          break;
+        case SBP_PAYLOAD_CALLBACK:
+          {
+            node->cb.msg(sender_id, frame[5], frame + 6, node->context);
+            ret = SBP_OK_CALLBACK_EXECUTED;
+          }
+          break;
+        case SBP_UNPACKED_CALLBACK:
+          {
+            node->cb.unpacked(sender_id, msg_type, msg, node->context);
+            ret = SBP_OK_CALLBACK_EXECUTED;
+          }
+          break;
+        case SBP_CALLBACK_TYPE_COUNT:
+        default:
+          break;
+      }
+    }
+  }
+  return ret;
+}
+
 /** Directly process an SBP frame.
  * Use this function to directly process the entire SBP frame after
  * it is succesfully deframed and the CRC has passed. It will fire any
