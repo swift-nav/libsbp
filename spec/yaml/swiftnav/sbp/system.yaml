@@ -406,6 +406,8 @@ definitions:
             type: u8
             desc: Status flags
             fields:
+              - 2-7:
+                    desc: Reserved, set to zero
               - 0-1:
                   desc: Time uncertainty
                   values:
@@ -413,8 +415,6 @@ definitions:
                     - 1: +/- 10 milliseconds
                     - 2: +/- 10 microseconds
                     - 3: < 1 microseconds
-              - 2-7:
-                    desc: Reserved, set to zero
 
  - MSG_GROUP_META:
      id: 0xFF0A  # 65290
