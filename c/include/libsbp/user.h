@@ -34,7 +34,7 @@ SBP_PACK_START
  * maximum length of 255 bytes per message.
  */
 #define SBP_MSG_USER_DATA 0x0800
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
 
 typedef struct SBP_ATTR_PACKED {
   u8 contents[0]; /**< User data payload */

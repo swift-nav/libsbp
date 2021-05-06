@@ -548,7 +548,7 @@ typedef struct SBP_ATTR_PACKED {
  * measurements for all tracked satellites.
  */
 #define SBP_MSG_TRACKING_STATE                0x0041
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
 
 typedef struct SBP_ATTR_PACKED {
   tracking_channel_state_t states[0]; /**< Signal tracking channel state */
@@ -578,7 +578,7 @@ typedef struct SBP_ATTR_PACKED {
  * measurements for all tracked satellites.
  */
 #define SBP_MSG_MEASUREMENT_STATE             0x0061
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
 
 typedef struct SBP_ATTR_PACKED {
   measurement_state_t states[0]; /**< ME signal tracking channel state */
@@ -666,7 +666,7 @@ typedef struct SBP_ATTR_PACKED {
 * Deprecated.
  */
 #define SBP_MSG_TRACKING_STATE_DEP_A          0x0016
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
 
 typedef struct SBP_ATTR_PACKED {
   tracking_channel_state_dep_a_t states[0]; /**< Satellite tracking channel state */
@@ -691,7 +691,7 @@ typedef struct SBP_ATTR_PACKED {
 * Deprecated.
  */
 #define SBP_MSG_TRACKING_STATE_DEP_B          0x0013
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
 
 typedef struct SBP_ATTR_PACKED {
   tracking_channel_state_dep_b_t states[0]; /**< Signal tracking channel state */

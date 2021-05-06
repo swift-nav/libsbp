@@ -46,5 +46,6 @@ swift_set_compile_options(test-libsbp
   ADD
     -Wformat=0
 )
+target_compile_definitions(test-libsbp PRIVATE SBP_ENABLE_VARIABLE_SIZED_ARRAYS)
 
 add_subdirectory(cpp)

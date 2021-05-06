@@ -57,7 +57,7 @@ SBP_PACK_START
 
 typedef struct SBP_ATTR_PACKED {
   u8 level;    /**< Logging level */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   char text[0];  /**< Human-readable string */
 #endif
 } msg_log_t;
@@ -78,7 +78,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u8 source;         /**< source identifier */
   u8 protocol;       /**< protocol identifier */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   char fwd_payload[0]; /**< variable length wrapped binary message */
 #endif
 } msg_fwd_t;
@@ -89,7 +89,7 @@ typedef struct SBP_ATTR_PACKED {
 * Deprecated.
  */
 #define SBP_MSG_PRINT_DEP 0x0010
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
 
 typedef struct SBP_ATTR_PACKED {
   char text[0]; /**< Human-readable string */

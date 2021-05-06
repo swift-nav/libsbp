@@ -179,7 +179,7 @@ stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
 typedef struct SBP_ATTR_PACKED {
   u16 index;                     /**< Index of the grid point */
   tropospheric_delay_correction_no_std_t tropo_delay_correction;    /**< Wet and hydrostatic vertical delays */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   stec_residual_no_std_t stec_residuals[0];         /**< STEC residuals for each satellite */
 #endif
 } grid_element_no_std_t;
@@ -194,7 +194,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u16 index;                     /**< Index of the grid point */
   tropospheric_delay_correction_t tropo_delay_correction;    /**< Wet and hydrostatic vertical delays (mean, stddev) */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   stec_residual_t stec_residuals[0];         /**< STEC residuals for each satellite (mean, stddev) */
 #endif
 } grid_element_t;
@@ -251,7 +251,7 @@ following RTCM DF391 specification.
 SSR is used to indicate a change in the SSR
 generating configuration
  */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   code_biases_content_t biases[0];          /**< Code biases for the different satellite signals */
 #endif
 } msg_ssr_code_biases_t;
@@ -284,7 +284,7 @@ generating configuration
  */
   u16 yaw;                /**< Satellite yaw angle [1 / 256 semi-circle] */
   s8 yaw_rate;           /**< Satellite yaw angle rate [1 / 8192 semi-circle / s] */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   phase_biases_content_t biases[0];          /**< Phase biases corrections for a
 satellite being tracked.
  */
@@ -305,7 +305,7 @@ satellite being tracked.
 
 typedef struct SBP_ATTR_PACKED {
   stec_header_t header;           /**< Header of a STEC polynomial coeffcient message. */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   stec_sat_element_t stec_sat_list[0]; /**< Array of STEC polynomial coeffcients for each space vehicle. */
 #endif
 } msg_ssr_stec_correction_t;
@@ -489,7 +489,7 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   stec_header_dep_a_t header;           /**< Header of a STEC message */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   stec_sat_element_t stec_sat_list[0]; /**< Array of STEC information for each space vehicle */
 #endif
 } msg_ssr_stec_correction_dep_a_t;
@@ -517,7 +517,7 @@ and standard deviation)
 
 typedef struct SBP_ATTR_PACKED {
   grid_definition_header_dep_a_t header;      /**< Header of a Gridded Correction message */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   u8 rle_list[0]; /**< Run Length Encode list of quadrants that contain valid data.
 The spec describes the encoding scheme in detail, but
 essentially the index of the quadrants that contain transitions between

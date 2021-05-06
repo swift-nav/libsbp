@@ -32,7 +32,7 @@ struct MessageTraits;
 ((*- if m.fields *))
 ((*- if m.fields|first == m.fields|last *))
 ((*- if (m.fields|first)|field_is_variable_sized *))
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
 ((*- endif *))
 ((*- endif *))
 template<>

@@ -126,7 +126,7 @@ from 0 to 15 and the most significant nibble is reserved for future use.
 
 typedef struct SBP_ATTR_PACKED {
   observation_header_t header;    /**< Header of a GPS observation message */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   packed_obs_content_t obs[0];    /**< Pseudorange and carrier phase observation for a
 satellite being tracked.
  */
@@ -870,7 +870,7 @@ carrier phase ambiguity may have changed.
 
 typedef struct SBP_ATTR_PACKED {
   observation_header_dep_t header;    /**< Header of a GPS observation message */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   packed_obs_content_dep_a_t obs[0];    /**< Pseudorange and carrier phase observation for a
 satellite being tracked.
  */
@@ -891,7 +891,7 @@ satellite being tracked.
 
 typedef struct SBP_ATTR_PACKED {
   observation_header_dep_t header;    /**< Header of a GPS observation message */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   packed_obs_content_dep_b_t obs[0];    /**< Pseudorange and carrier phase observation for a
 satellite being tracked.
  */
@@ -913,7 +913,7 @@ satellite being tracked.
 
 typedef struct SBP_ATTR_PACKED {
   observation_header_dep_t header;    /**< Header of a GPS observation message */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   packed_obs_content_dep_c_t obs[0];    /**< Pseudorange and carrier phase observation for a
 satellite being tracked.
  */
@@ -1223,7 +1223,7 @@ typedef struct SBP_ATTR_PACKED {
  * that the device does have ephemeris or almanac for.
  */
 #define SBP_MSG_SV_AZ_EL                 0x0097
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
 
 typedef struct SBP_ATTR_PACKED {
   sv_az_el_t azel[0]; /**< Azimuth and elevation per satellite */
@@ -1239,7 +1239,7 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   observation_header_t header;    /**< Header of a GPS observation message */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   packed_osr_content_t obs[0];    /**< Network correction for a
 satellite signal.
  */

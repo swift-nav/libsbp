@@ -76,7 +76,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 alignment_status;          /**< State of alignment and the status and receipt of the alignment inputs */
   u32 last_used_gnss_pos_tow;    /**< Tow of last-used GNSS position measurement [ms] */
   u32 last_used_gnss_vel_tow;    /**< Tow of last-used GNSS velocity measurement [ms] */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   solution_input_type_t sol_in[0];                 /**< Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc. */
 #endif
 } msg_soln_meta_dep_a_t;
@@ -124,7 +124,7 @@ typedef struct SBP_ATTR_PACKED {
   u16 vdop;               /**< Vertical Dilution of Precision as per last available DOPS from PVT engine (0xFFFF indicates invalid) [0.01] */
   u16 age_corrections;    /**< Age of corrections as per last available AGE_CORRECTIONS from PVT engine (0xFFFF indicates invalid) [deciseconds] */
   u32 age_gnss;           /**< Age and Time Status of the last received valid GNSS solution. [ms] */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   solution_input_type_t sol_in[0];          /**< Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc. */
 #endif
 } msg_soln_meta_t;

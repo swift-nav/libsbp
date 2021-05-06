@@ -62,7 +62,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 addr_len;      /**< Length of set of addresses to program, counting up from
 starting address
  [bytes] */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   u8 data[0];       /**< Data to program addresses with, with length N=addr_len */
 #endif
 } msg_flash_program_t;

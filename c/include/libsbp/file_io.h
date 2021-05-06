@@ -52,7 +52,7 @@ typedef struct SBP_ATTR_PACKED {
   u32 sequence;      /**< Read sequence number */
   u32 offset;        /**< File offset [bytes] */
   u8 chunk_size;    /**< Chunk size to read [bytes] */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   char filename[0];   /**< Name of the file to read from */
 #endif
 } msg_fileio_read_req_t;
@@ -70,7 +70,7 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Read sequence number */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   u8 contents[0]; /**< Contents of read file */
 #endif
 } msg_fileio_read_resp_t;
@@ -95,7 +95,7 @@ typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Read sequence number */
   u32 offset;      /**< The offset to skip the first n elements of the file list
  */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   char dirname[0];  /**< Name of the directory to list */
 #endif
 } msg_fileio_read_dir_req_t;
@@ -114,7 +114,7 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Read sequence number */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   u8 contents[0]; /**< Contents of read directory */
 #endif
 } msg_fileio_read_dir_resp_t;
@@ -128,7 +128,7 @@ typedef struct SBP_ATTR_PACKED {
  * process this message when it is received from sender ID 0x42.
  */
 #define SBP_MSG_FILEIO_REMOVE        0x00AC
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
 
 typedef struct SBP_ATTR_PACKED {
   char filename[0]; /**< Name of the file to delete */
@@ -152,10 +152,10 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Write sequence number */
   u32 offset;      /**< Offset into the file at which to start writing in bytes [bytes] */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   char filename[0]; /**< Name of the file to write to */
 #endif
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   u8 data[0];     /**< Variable-length array of data to write */
 #endif
 } msg_fileio_write_req_t;

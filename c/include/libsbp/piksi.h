@@ -359,7 +359,7 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Sequence number */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   char command[0];  /**< Command line to execute */
 #endif
 } msg_command_req_t;
@@ -389,7 +389,7 @@ typedef struct SBP_ATTR_PACKED {
 
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Sequence number */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   char line[0];     /**< Line of standard output or standard error */
 #endif
 } msg_command_output_t;
@@ -623,7 +623,7 @@ typedef struct SBP_ATTR_PACKED {
  * The bandwidth usage, a list of usage by interface. 
  */
 #define SBP_MSG_NETWORK_BANDWIDTH_USAGE 0x00BD
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
 
 typedef struct SBP_ATTR_PACKED {
   network_usage_t interfaces[0]; /**< Usage measurement array */
@@ -642,7 +642,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   s8 signal_strength;      /**< Received cell signal strength in dBm, zero translates to unknown [dBm] */
   float signal_error_rate;    /**< BER as reported by the modem, zero translates to unknown */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   u8 reserved[0];          /**< Unspecified data TBD for this schema */
 #endif
 } msg_cell_modem_status_t;
@@ -665,7 +665,7 @@ typedef struct SBP_ATTR_PACKED {
  [dB] */
   float amplitude_unit;     /**< Amplitude unit value of points in this packet
  [dB] */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   u8 amplitude_value[0]; /**< Amplitude values (in the above units) of points in this packet
  */
 #endif
@@ -689,7 +689,7 @@ typedef struct SBP_ATTR_PACKED {
  [dB] */
   float amplitude_unit;     /**< Amplitude unit value of points in this packet
  [dB] */
-#ifndef SBP_DISABLE_VARIABLE_SIZED_ARRAYS
+#ifdef SBP_ENABLE_VARIABLE_SIZED_ARRAYS
   u8 amplitude_value[0]; /**< Amplitude values (in the above units) of points in this packet
  */
 #endif
