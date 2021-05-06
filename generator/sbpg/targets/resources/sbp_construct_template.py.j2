@@ -90,10 +90,6 @@ class ((( m.identifier )))(object):
     p = ((( m.identifier )))._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return ((( m.identifier ))).build(d)
   ((*- endif *))
     ((* endif *))
   ((*- endif *))

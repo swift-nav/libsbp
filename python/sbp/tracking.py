@@ -69,10 +69,6 @@ measured signal power.
     p = TrackingChannelState._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return TrackingChannelState.build(d)
     
 class MeasurementState(object):
   """MeasurementState.
@@ -114,10 +110,6 @@ the Slot ID (from 1 to 28)
     p = MeasurementState._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return MeasurementState.build(d)
     
 class TrackingChannelCorrelation(object):
   """TrackingChannelCorrelation.
@@ -155,10 +147,6 @@ class TrackingChannelCorrelation(object):
     p = TrackingChannelCorrelation._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return TrackingChannelCorrelation.build(d)
     
 class TrackingChannelCorrelationDep(object):
   """TrackingChannelCorrelationDep.
@@ -196,10 +184,6 @@ class TrackingChannelCorrelationDep(object):
     p = TrackingChannelCorrelationDep._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return TrackingChannelCorrelationDep.build(d)
     
 class TrackingChannelStateDepA(object):
   """TrackingChannelStateDepA.
@@ -241,10 +225,6 @@ class TrackingChannelStateDepA(object):
     p = TrackingChannelStateDepA._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return TrackingChannelStateDepA.build(d)
     
 class TrackingChannelStateDepB(object):
   """TrackingChannelStateDepB.
@@ -286,10 +266,6 @@ class TrackingChannelStateDepB(object):
     p = TrackingChannelStateDepB._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return TrackingChannelStateDepB.build(d)
     
 SBP_MSG_TRACKING_STATE_DETAILED_DEP_A = 0x0021
 class MsgTrackingStateDetailedDepA(SBP):

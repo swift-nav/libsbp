@@ -114,10 +114,6 @@ The message is used to debug and measure the performance.
     p = AcqSvProfile._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return AcqSvProfile.build(d)
     
 class AcqSvProfileDep(object):
   """AcqSvProfileDep.
@@ -204,10 +200,6 @@ class AcqSvProfileDep(object):
     p = AcqSvProfileDep._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return AcqSvProfileDep.build(d)
     
 SBP_MSG_ACQ_RESULT = 0x002F
 class MsgAcqResult(SBP):

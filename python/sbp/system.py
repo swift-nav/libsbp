@@ -67,10 +67,6 @@ state is reported as initializing, the specific state should be ignored.
     p = SubSystemReport._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return SubSystemReport.build(d)
     
 SBP_MSG_STARTUP = 0xFF00
 class MsgStartup(SBP):

@@ -61,10 +61,6 @@ the Slot ID in [1,28]
     p = GnssSignal._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GnssSignal.build(d)
     
 class SvId(object):
   """SvId.
@@ -103,10 +99,6 @@ a space vehicle
     p = SvId._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return SvId.build(d)
     
 class GnssSignalDep(object):
   """GnssSignalDep.
@@ -152,10 +144,6 @@ Note: unlike GnssSignal, GPS satellites are encoded as
     p = GnssSignalDep._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GnssSignalDep.build(d)
     
 class GPSTimeDep(object):
   """GPSTimeDep.
@@ -195,10 +183,6 @@ transition.
     p = GPSTimeDep._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GPSTimeDep.build(d)
     
 class GPSTimeSec(object):
   """GPSTimeSec.
@@ -238,10 +222,6 @@ transition.
     p = GPSTimeSec._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GPSTimeSec.build(d)
     
 class GPSTime(object):
   """GPSTime.
@@ -289,10 +269,6 @@ from -500000 to 500000)
     p = GPSTime._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GPSTime.build(d)
     
 class CarrierPhase(object):
   """CarrierPhase.
@@ -333,10 +309,6 @@ same sign as the pseudorange.
     p = CarrierPhase._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return CarrierPhase.build(d)
     
 
 msg_classes = {

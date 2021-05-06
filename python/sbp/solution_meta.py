@@ -66,10 +66,6 @@ The content of flags, for each sensor type, is described in the relevant structu
     p = SolutionInputType._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return SolutionInputType.build(d)
     
 class GNSSInputType(object):
   """GNSSInputType.
@@ -103,10 +99,6 @@ Accessible through sol_in[N].flags in a MSG_SOLN_META.
     p = GNSSInputType._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return GNSSInputType.build(d)
     
 class IMUInputType(object):
   """IMUInputType.
@@ -140,10 +132,6 @@ Accessible through sol_in[N].flags in a MSG_SOLN_META.
     p = IMUInputType._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return IMUInputType.build(d)
     
 class OdoInputType(object):
   """OdoInputType.
@@ -177,10 +165,6 @@ Accessible through sol_in[N].flags in a MSG_SOLN_META.
     p = OdoInputType._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return OdoInputType.build(d)
     
 SBP_MSG_SOLN_META_DEP_A = 0xFF0F
 class MsgSolnMetaDepA(SBP):

@@ -91,10 +91,6 @@ be normalized.
     p = UARTChannel._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return UARTChannel.build(d)
     
 class Period(object):
   """Period.
@@ -147,10 +143,6 @@ can cause momentary RTK solution outages.
     p = Period._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return Period.build(d)
     
 class Latency(object):
   """Latency.
@@ -202,10 +194,6 @@ communication latency in the system.
     p = Latency._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return Latency.build(d)
     
 class NetworkUsage(object):
   """NetworkUsage.
@@ -263,10 +251,6 @@ though may not necessarily be populated with a value.
     p = NetworkUsage._parser.parse(d)
     for n in self.__class__.__slots__:
       setattr(self, n, getattr(p, n))
-
-  def to_binary(self):
-    d = dict([(k, getattr(obj, k)) for k in self.__slots__])
-    return NetworkUsage.build(d)
     
 SBP_MSG_ALMANAC = 0x0069
 class MsgAlmanac(SBP):
