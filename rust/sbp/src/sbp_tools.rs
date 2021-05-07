@@ -10,27 +10,27 @@ use crate::{
 use crate::messages::SBP;
 
 pub trait SBPTools: Iterator {
-    fn ignore_errors(self) -> HandleErrorsIter<Self, fn(&crate::Error) -> bool>
+    fn ignore_errors(self) -> HandleErrorsIter<Self, fn(&crate::Error) -> ControlFlow>
     where
         Self: Iterator<Item = crate::Result<SBP>> + Sized,
     {
-        HandleErrorsIter::new(self, |_| true)
+        HandleErrorsIter::new(self, |_| ControlFlow::Continue)
     }
 
-    fn log_errors(self) -> HandleErrorsIter<Self, fn(&crate::Error) -> bool>
+    fn log_errors(self) -> HandleErrorsIter<Self, fn(&crate::Error) -> ControlFlow>
     where
         Self: Iterator<Item = crate::Result<SBP>> + Sized,
     {
         HandleErrorsIter::new(self, |e| {
             log::warn!("{}", e);
-            true
+            ControlFlow::Continue
         })
     }
 
     fn handle_errors<F>(self, on_err: F) -> HandleErrorsIter<Self, F>
     where
         Self: Iterator<Item = crate::Result<SBP>> + Sized,
-        F: FnMut(&crate::Error) -> bool,
+        F: FnMut(&crate::Error) -> ControlFlow,
     {
         HandleErrorsIter::new(self, on_err)
     }
@@ -45,6 +45,13 @@ pub trait SBPTools: Iterator {
 }
 
 impl<I> SBPTools for I where I: Iterator + Sized {}
+
+// A less general https://doc.rust-lang.org/std/ops/enum.ControlFlow.html
+// could be replaced by that once it's stable
+pub enum ControlFlow {
+    Continue,
+    Break,
+}
 
 pub struct HandleErrorsIter<I, F>
 where
@@ -75,7 +82,7 @@ where
 impl<I, F> Iterator for HandleErrorsIter<I, F>
 where
     I: Iterator<Item = crate::Result<SBP>>,
-    F: FnMut(&crate::Error) -> bool,
+    F: FnMut(&crate::Error) -> ControlFlow,
 {
     type Item = SBP;
 
@@ -83,12 +90,11 @@ where
         match self.messages.next()? {
             Ok(msg) => Some(msg),
             Err(e) => {
-                let should_continue = (self.on_err)(&e);
+                let flow = (self.on_err)(&e);
                 self.err = Err(e);
-                if should_continue {
-                    self.next()
-                } else {
-                    None
+                match flow {
+                    ControlFlow::Continue => self.next(),
+                    ControlFlow::Break => None,
                 }
             }
         }
@@ -211,7 +217,7 @@ mod tests {
         let messages = iter_messages(data.clone())
             .handle_errors(|_| {
                 errors += 1;
-                true
+                ControlFlow::Continue
             })
             .count();
         assert_eq!(messages, 2);
@@ -236,7 +242,7 @@ mod tests {
 
         let mut messages = iter_messages(data).handle_errors(|_| {
             err_count += 1;
-            false
+            ControlFlow::Break
         });
 
         while let Some(_) = messages.next() {
