@@ -13,7 +13,7 @@
 Generator for rust target.
 """
 
-from sbpg.targets.templating import *
+from sbpg.targets.templating import JENV, ACRONYMS
 from sbpg.utils import markdown_links
 from sbpg import ReleaseVersion
 
@@ -54,6 +54,7 @@ let gps_time = match crate::time::GpsTime::new(0, tow_s) {
 """
 
 BASE_TIME_MSGS = ["MSG_OBS", "MSG_OSR", "MSG_SSR"]
+SKIP_GPS_TIME_MSGS = ["MSG_IMU_RAW"]
 
 import re
 def camel_case(s):
@@ -149,6 +150,7 @@ def gps_time(msg, all_messages):
             if f.identifier == "header" and time_aware_header(f.type_id):
                 header = True
             elif f.identifier == "tow":
+                assert f.units == "ms"
                 tow = True
             elif f.identifier == "wn":
                 wn = True
@@ -165,6 +167,9 @@ def gps_time(msg, all_messages):
     def gen_ret():
         name = "Base" if msg.identifier in BASE_TIME_MSGS else "Rover"
         return f"Some(Ok(crate::time::MessageTime::{name}(gps_time.into())))"
+
+    if msg.identifier in SKIP_GPS_TIME_MSGS:
+        return ""
 
     body = gen_body()
     if body is None:
@@ -191,7 +196,7 @@ def render_source(output_dir, package_spec):
   """
   Render and output to a directory given a package specification.
   """
-  path, name = package_spec.filepath
+  _, name = package_spec.filepath
   destination_filename = "%s/sbp/src/messages/%s.rs" % (output_dir, name)
   py_template = JENV.get_template(MESSAGES_TEMPLATE_NAME)
   includes = [x.rsplit('.', 1)[0] for x in package_spec.includes]

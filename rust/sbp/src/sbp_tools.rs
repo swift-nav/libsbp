@@ -4,7 +4,7 @@ use swiftnav_rs::time::GpsTime;
 #[cfg(feature = "swiftnav-rs")]
 use crate::{
     messages::SBPMessage,
-    time::{MessageTime, RoverTime},
+    time::{GpsTimeError, MessageTime, RoverTime},
 };
 
 use crate::messages::SBP;
@@ -154,7 +154,7 @@ impl<I> Iterator for RoverTimeIter<I>
 where
     I: Iterator<Item = SBP>,
 {
-    type Item = (SBP, Option<Result<GpsTime, crate::time::GpsTimeError>>);
+    type Item = (SBP, Option<Result<GpsTime, GpsTimeError>>);
 
     fn next(&mut self) -> Option<Self::Item> {
         let msg = self.messages.next()?;
