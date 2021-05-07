@@ -22,9 +22,6 @@ use self::(((p.identifier|mod_name)))::(((m.identifier|camel_case)));
 ((*- endfor *))
 use self::unknown::Unknown;
 
-#[cfg(feature = "swiftnav-rs")]
-pub use swiftnav_rs::time::GpsTime;
-
 use crate::serialize::SbpSerialize;
 
 pub trait SBPMessage: SbpSerialize {

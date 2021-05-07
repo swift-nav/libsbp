@@ -233,9 +233,6 @@ use self::user::MsgUserData;
 use self::vehicle::MsgOdometry;
 use self::vehicle::MsgWheeltick;
 
-#[cfg(feature = "swiftnav-rs")]
-pub use swiftnav_rs::time::GpsTime;
-
 use crate::serialize::SbpSerialize;
 
 pub trait SBPMessage: SbpSerialize {
