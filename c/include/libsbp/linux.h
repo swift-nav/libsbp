@@ -44,7 +44,9 @@ typedef struct SBP_ATTR_PACKED {
   char cmdline[0]; /**< the command line (as much as it fits in the remaining packet) */
 #endif
 } msg_linux_cpu_state_dep_a_t;
-
+#define MSG_LINUX_CPU_STATE_DEP_A_T_GET_CMDLINE_PTR(msg) (( char *)(msg+1))
+#define MSG_LINUX_CPU_STATE_DEP_A_T_GET_CMDLINE_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** List memory state on the system. DEPRECATED.
  *
@@ -62,7 +64,9 @@ typedef struct SBP_ATTR_PACKED {
   char cmdline[0]; /**< the command line (as much as it fits in the remaining packet) */
 #endif
 } msg_linux_mem_state_dep_a_t;
-
+#define MSG_LINUX_MEM_STATE_DEP_A_T_GET_CMDLINE_PTR(msg) (( char *)(msg+1))
+#define MSG_LINUX_MEM_STATE_DEP_A_T_GET_CMDLINE_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** CPU, Memory and Process Starts/Stops. DEPRECATED.
  *
@@ -78,7 +82,7 @@ typedef struct SBP_ATTR_PACKED {
   u16 procs_stopping;    /**< number of processes that stopped during collection phase */
   u16 pid_count;         /**< the count of processes on the system */
 } msg_linux_sys_state_dep_a_t;
-
+ 
 
 /** A list of processes with high socket counts
  *
@@ -104,7 +108,9 @@ typedef struct SBP_ATTR_PACKED {
   char cmdline[0];       /**< the command line of the process in question */
 #endif
 } msg_linux_process_socket_counts_t;
-
+#define MSG_LINUX_PROCESS_SOCKET_COUNTS_T_GET_CMDLINE_PTR(msg) (( char *)(msg+1))
+#define MSG_LINUX_PROCESS_SOCKET_COUNTS_T_GET_CMDLINE_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** A list of processes with deep socket queues
  *
@@ -134,7 +140,9 @@ of the connection.
   char cmdline[0];            /**< the command line of the process in question */
 #endif
 } msg_linux_process_socket_queues_t;
-
+#define MSG_LINUX_PROCESS_SOCKET_QUEUES_T_GET_CMDLINE_PTR(msg) (( char *)(msg+1))
+#define MSG_LINUX_PROCESS_SOCKET_QUEUES_T_GET_CMDLINE_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** Summary of socket usage across the system
  *
@@ -152,7 +160,7 @@ the first entry corresponds to the first enabled bit in `types_reported`.
 the first entry corresponds to the first enabled bit in `types_reported`.
  */
 } msg_linux_socket_usage_t;
-
+ 
 
 /** Summary of processes with large amounts of open file descriptors
  *
@@ -168,7 +176,9 @@ typedef struct SBP_ATTR_PACKED {
   char cmdline[0];  /**< the command line of the process in question */
 #endif
 } msg_linux_process_fd_count_t;
-
+#define MSG_LINUX_PROCESS_FD_COUNT_T_GET_CMDLINE_PTR(msg) (( char *)(msg+1))
+#define MSG_LINUX_PROCESS_FD_COUNT_T_GET_CMDLINE_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** Summary of open file descriptors on the system
  *
@@ -187,7 +197,9 @@ of the list being 2 NULL terminators in a row.
  */
 #endif
 } msg_linux_process_fd_summary_t;
-
+#define MSG_LINUX_PROCESS_FD_SUMMARY_T_GET_MOST_OPENED_PTR(msg) (( char *)(msg+1))
+#define MSG_LINUX_PROCESS_FD_SUMMARY_T_GET_MOST_OPENED_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** List CPU state on the system
  *
@@ -220,7 +232,9 @@ typedef struct SBP_ATTR_PACKED {
   char cmdline[0]; /**< the command line (as much as it fits in the remaining packet) */
 #endif
 } msg_linux_cpu_state_t;
-
+#define MSG_LINUX_CPU_STATE_T_GET_CMDLINE_PTR(msg) (( char *)(msg+1))
+#define MSG_LINUX_CPU_STATE_T_GET_CMDLINE_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** List memory state on the system
  *
@@ -253,7 +267,9 @@ typedef struct SBP_ATTR_PACKED {
   char cmdline[0]; /**< the command line (as much as it fits in the remaining packet) */
 #endif
 } msg_linux_mem_state_t;
-
+#define MSG_LINUX_MEM_STATE_T_GET_CMDLINE_PTR(msg) (( char *)(msg+1))
+#define MSG_LINUX_MEM_STATE_T_GET_CMDLINE_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** CPU, Memory and Process Starts/Stops.
  *
@@ -284,7 +300,7 @@ typedef struct SBP_ATTR_PACKED {
   u32 time;              /**< timestamp of message, refer to flags field for how to interpret */
   u8 flags;             /**< flags */
 } msg_linux_sys_state_t;
-
+ 
 
 /** \} */
 

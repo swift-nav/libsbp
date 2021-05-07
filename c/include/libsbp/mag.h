@@ -44,7 +44,7 @@ time is unknown or invalid.
   s16 mag_y;    /**< Magnetic field in the body frame Y axis [microteslas] */
   s16 mag_z;    /**< Magnetic field in the body frame Z axis [microteslas] */
 } msg_mag_raw_t;
-
+ 
 
 /** \} */
 

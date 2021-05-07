@@ -277,7 +277,7 @@ signal is in continuous track.
   u8 pset_flags;      /**< Parameters sets flags. */
   u8 misc_flags;      /**< Miscellaneous flags. */
 } msg_tracking_state_detailed_dep_a_t;
-
+ 
 
 /** Deprecated
  *
@@ -526,7 +526,7 @@ signal is in continuous track.
   u8 pset_flags;      /**< Parameters sets flags. */
   u8 misc_flags;      /**< Miscellaneous flags. */
 } msg_tracking_state_detailed_dep_t;
-
+ 
 
 /** Signal tracking channel state
  *
@@ -539,7 +539,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 fcn;    /**< Frequency channel number (GLONASS only) */
   u8 cn0;    /**< Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4] */
 } tracking_channel_state_t;
-
+ 
 
 /** Signal tracking channel states
  *
@@ -554,7 +554,7 @@ typedef struct SBP_ATTR_PACKED {
   tracking_channel_state_t states[0]; /**< Signal tracking channel state */
 } msg_tracking_state_t;
 #endif
-
+ 
 
 /** Measurement Engine signal tracking channel state
  *
@@ -569,7 +569,7 @@ typedef struct SBP_ATTR_PACKED {
   sbp_gnss_signal_t mesid;    /**< Measurement Engine GNSS signal being tracked (carries either Glonass FCN or SLOT) */
   u8 cn0;      /**< Carrier-to-Noise density.  Zero implies invalid cn0. [dB Hz / 4] */
 } measurement_state_t;
-
+ 
 
 /** Measurement Engine signal tracking channel states
  *
@@ -584,7 +584,7 @@ typedef struct SBP_ATTR_PACKED {
   measurement_state_t states[0]; /**< ME signal tracking channel state */
 } msg_measurement_state_t;
 #endif
-
+ 
 
 /** Complex correlation structure
  *
@@ -595,7 +595,7 @@ typedef struct SBP_ATTR_PACKED {
   s16 I;    /**< In-phase correlation */
   s16 Q;    /**< Quadrature correlation */
 } tracking_channel_correlation_t;
-
+ 
 
 /** Tracking channel correlations
  *
@@ -609,7 +609,7 @@ typedef struct SBP_ATTR_PACKED {
   sbp_gnss_signal_t sid;        /**< GNSS signal identifier */
   tracking_channel_correlation_t corrs[3];   /**< Early, Prompt and Late correlations */
 } msg_tracking_iq_t;
-
+ 
 
 /** Complex correlation structure
  *
@@ -620,7 +620,7 @@ typedef struct SBP_ATTR_PACKED {
   s32 I;    /**< In-phase correlation */
   s32 Q;    /**< Quadrature correlation */
 } tracking_channel_correlation_dep_t;
-
+ 
 
 /** Tracking channel correlations
  *
@@ -634,7 +634,7 @@ typedef struct SBP_ATTR_PACKED {
   sbp_gnss_signal_t sid;        /**< GNSS signal identifier */
   tracking_channel_correlation_dep_t corrs[3];   /**< Early, Prompt and Late correlations */
 } msg_tracking_iq_dep_b_t;
-
+ 
 
 /** Deprecated
  *
@@ -647,7 +647,7 @@ typedef struct SBP_ATTR_PACKED {
   gnss_signal_dep_t sid;        /**< GNSS signal identifier */
   tracking_channel_correlation_dep_t corrs[3];   /**< Early, Prompt and Late correlations */
 } msg_tracking_iq_dep_a_t;
-
+ 
 
 /** Deprecated
  *
@@ -659,7 +659,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 prn;      /**< PRN-1 being tracked */
   float cn0;      /**< Carrier-to-noise density [dB Hz] */
 } tracking_channel_state_dep_a_t;
-
+ 
 
 /** Deprecated
  *
@@ -672,7 +672,7 @@ typedef struct SBP_ATTR_PACKED {
   tracking_channel_state_dep_a_t states[0]; /**< Satellite tracking channel state */
 } msg_tracking_state_dep_a_t;
 #endif
-
+ 
 
 /** Deprecated.
  *
@@ -684,7 +684,7 @@ typedef struct SBP_ATTR_PACKED {
   gnss_signal_dep_t sid;      /**< GNSS signal being tracked */
   float cn0;      /**< Carrier-to-noise density [dB Hz] */
 } tracking_channel_state_dep_b_t;
-
+ 
 
 /** Deprecated.
  *
@@ -697,7 +697,7 @@ typedef struct SBP_ATTR_PACKED {
   tracking_channel_state_dep_b_t states[0]; /**< Signal tracking channel state */
 } msg_tracking_state_dep_b_t;
 #endif
-
+ 
 
 /** \} */
 

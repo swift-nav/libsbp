@@ -40,7 +40,7 @@ the Slot ID in [1,28]
  */
   u8 code;    /**< Signal constellation, band and code */
 } sbp_gnss_signal_t;
-
+ 
 
 /** Space vehicle identifier
  *
@@ -52,7 +52,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 satId;            /**< ID of the space vehicle within its constellation */
   u8 constellation;    /**< Constellation ID to which the SV belongs */
 } sv_id_t;
-
+ 
 
 /** Deprecated
  *
@@ -68,7 +68,7 @@ Note: unlike GnssSignal, GPS satellites are encoded as
   u8 code;        /**< Signal constellation, band and code */
   u8 reserved;    /**< Reserved */
 } gnss_signal_dep_t;
-
+ 
 
 /** Millisecond-accurate GPS time
  *
@@ -81,7 +81,7 @@ typedef struct SBP_ATTR_PACKED {
   u32 tow;    /**< Milliseconds since start of GPS week [ms] */
   u16 wn;     /**< GPS week number [week] */
 } gps_time_dep_t;
-
+ 
 
 /** Whole second accurate GPS time
  *
@@ -94,7 +94,7 @@ typedef struct SBP_ATTR_PACKED {
   u32 tow;    /**< Seconds since start of GPS week [s] */
   u16 wn;     /**< GPS week number [week] */
 } gps_time_sec_t;
-
+ 
 
 /** Nanosecond-accurate receiver clock time
  *
@@ -111,7 +111,7 @@ from -500000 to 500000)
  [ns] */
   u16 wn;             /**< GPS week number [week] */
 } sbp_gps_time_t;
-
+ 
 
 /** GNSS carrier phase measurement.
  *
@@ -125,7 +125,7 @@ typedef struct SBP_ATTR_PACKED {
   s32 i;    /**< Carrier phase whole cycles [cycles] */
   u8 f;    /**< Carrier phase fractional part [cycles / 256] */
 } carrier_phase_t;
-
+ 
 
 /** \} */
 

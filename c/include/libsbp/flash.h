@@ -66,7 +66,9 @@ starting address
   u8 data[0];       /**< Data to program addresses with, with length N=addr_len */
 #endif
 } msg_flash_program_t;
-
+#define MSG_FLASH_PROGRAM_T_GET_DATA_PTR(msg) (( u8 *)(msg+1))
+#define MSG_FLASH_PROGRAM_T_GET_DATA_CPTR(msg) ((const u8 *)(msg+1))
+ 
 
 /** Flash response message (host <= device).
  *
@@ -97,7 +99,7 @@ starting address
 typedef struct SBP_ATTR_PACKED {
   u8 response;    /**< Response flags */
 } msg_flash_done_t;
-
+ 
 
 /** Read STM or M25 flash address request (host => device).
  *
@@ -131,7 +133,7 @@ typedef struct SBP_ATTR_PACKED {
 starting address
  [bytes] */
 } msg_flash_read_req_t;
-
+ 
 
 /** Read STM or M25 flash address response (host <= device).
  *
@@ -165,7 +167,7 @@ typedef struct SBP_ATTR_PACKED {
 starting address
  [bytes] */
 } msg_flash_read_resp_t;
-
+ 
 
 /** Erase sector of device flash memory (host => device).
  *
@@ -196,7 +198,7 @@ typedef struct SBP_ATTR_PACKED {
 the M25)
  */
 } msg_flash_erase_t;
-
+ 
 
 /** Lock sector of STM flash memory (host => device)
  *
@@ -208,7 +210,7 @@ the M25)
 typedef struct SBP_ATTR_PACKED {
   u32 sector;    /**< Flash sector number to lock */
 } msg_stm_flash_lock_sector_t;
-
+ 
 
 /** Unlock sector of STM flash memory (host => device)
  *
@@ -220,7 +222,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u32 sector;    /**< Flash sector number to unlock */
 } msg_stm_flash_unlock_sector_t;
-
+ 
 
 /** Read device's hardcoded unique ID request (host => device)
 
@@ -231,7 +233,7 @@ typedef struct SBP_ATTR_PACKED {
  * ID in the payload.
  */
 #define SBP_MSG_STM_UNIQUE_ID_REQ       0x00E8
-
+ 
 
 /** Read device's hardcoded unique ID response (host <= device)
 
@@ -246,7 +248,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u8 stm_id[12]; /**< Device unique ID */
 } msg_stm_unique_id_resp_t;
-
+ 
 
 /** Write M25 flash status register (host => device)
  *
@@ -258,7 +260,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u8 status[1]; /**< Byte to write to the M25 flash status register */
 } msg_m25_flash_write_status_t;
-
+ 
 
 /** \} */
 

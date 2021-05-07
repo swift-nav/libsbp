@@ -94,7 +94,7 @@ for the exact source of this timestamp.
  [mm/s] */
   u8 flags;       /**< Status flags */
 } msg_odometry_t;
-
+ 
 
 /** Accumulated wheeltick count message
  *
@@ -154,7 +154,7 @@ incrementing if travelling into one direction and decrementing when travelling i
 opposite direction.
  [arbitrary distance units] */
 } msg_wheeltick_t;
-
+ 
 
 /** \} */
 

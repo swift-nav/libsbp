@@ -59,6 +59,18 @@ def field_is_variable_sized(field):
   else:
     return False
 
+def get_fill_type(field):
+  """Gets the fill type for an array converted to the proper C type name
+  """
+  name = field.type_id
+  if name == "string":
+      return "char"
+  elif name == "array":
+    if field.options['fill'].value in CONSTRUCT_CODE:
+        return field.options['fill'].value
+    return convert(field.options['fill'].value)
+  return "invalid field"
+
 def convert(value):
   """Converts to a C language appropriate identifier format.
 
@@ -143,6 +155,7 @@ JENV.filters['mk_id'] = mk_id
 JENV.filters['mk_size'] = mk_size
 JENV.filters['convert'] = convert
 JENV.filters['create_bitfield_macros'] = create_bitfield_macros
+JENV.filters['get_fill_type'] = get_fill_type
 
 def render_source(output_dir, package_spec):
   """

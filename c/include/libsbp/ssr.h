@@ -39,7 +39,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 code;     /**< Signal constellation, band and code */
   s16 value;    /**< Code bias value [0.01 m] */
 } code_biases_content_t;
-
+ 
 
 /** SSR phase biases corrections for a particular satellite.
  *
@@ -56,7 +56,7 @@ Increased for every discontinuity in phase.
  */
   s32 bias;                          /**< Phase bias for specified signal [0.1 mm] */
 } phase_biases_content_t;
-
+ 
 
 /** Header for the MSG_SSR_STEC_CORRECTION message.
  *
@@ -77,7 +77,7 @@ following RTCM DF391 specification.
   u8 iod_atmo;           /**< IOD of the SSR atmospheric correction
  */
 } stec_header_t;
-
+ 
 
 /** Header for the MSG_SSR_GRIDDED_CORRECTION message.
  *
@@ -101,7 +101,7 @@ following RTCM DF391 specification.
 specifcation in units of m.
  */
 } gridded_correction_header_t;
-
+ 
 
 /** None
  *
@@ -116,7 +116,7 @@ but in units of TECU instead of m.
   s16 stec_coeff[4];             /**< Coefficents of the STEC polynomial in the order of C00, C01, C10, C11
  [C00 = 0.05 TECU, C01/C10 = 0.02 TECU/deg, C11 0.02 TECU/deg^2] */
 } stec_sat_element_t;
-
+ 
 
 /** None
  *
@@ -127,7 +127,7 @@ typedef struct SBP_ATTR_PACKED {
   s16 hydro;    /**< Hydrostatic vertical delay [4 mm (add 2.3 m to get actual vertical hydro delay)] */
   s8 wet;      /**< Wet vertical delay [4 mm (add 0.252 m to get actual vertical wet delay)] */
 } tropospheric_delay_correction_no_std_t;
-
+ 
 
 /** None
  *
@@ -142,7 +142,7 @@ typedef struct SBP_ATTR_PACKED {
 stddev <= (3^class * (1 + value/16) - 1) mm
 ] */
 } tropospheric_delay_correction_t;
-
+ 
 
 /** None
  *
@@ -153,7 +153,7 @@ typedef struct SBP_ATTR_PACKED {
   sv_id_t sv_id;       /**< space vehicle identifier */
   s16 residual;    /**< STEC residual [0.04 TECU] */
 } stec_residual_no_std_t;
-
+ 
 
 /** None
  *
@@ -168,7 +168,7 @@ typedef struct SBP_ATTR_PACKED {
 stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
 ] */
 } stec_residual_t;
-
+ 
 
 /** Correction data for a single grid point.
  *
@@ -183,7 +183,9 @@ typedef struct SBP_ATTR_PACKED {
   stec_residual_no_std_t stec_residuals[0];         /**< STEC residuals for each satellite */
 #endif
 } grid_element_no_std_t;
-
+#define GRID_ELEMENT_NO_STD_T_GET_STEC_RESIDUALS_PTR(msg) (( stec_residual_no_std_t *)(msg+1))
+#define GRID_ELEMENT_NO_STD_T_GET_STEC_RESIDUALS_CPTR(msg) ((const stec_residual_no_std_t *)(msg+1))
+ 
 
 /** Correction data for a single grid point.
  *
@@ -198,7 +200,9 @@ typedef struct SBP_ATTR_PACKED {
   stec_residual_t stec_residuals[0];         /**< STEC residuals for each satellite (mean, stddev) */
 #endif
 } grid_element_t;
-
+#define GRID_ELEMENT_T_GET_STEC_RESIDUALS_PTR(msg) (( stec_residual_t *)(msg+1))
+#define GRID_ELEMENT_T_GET_STEC_RESIDUALS_CPTR(msg) ((const stec_residual_t *)(msg+1))
+ 
 
 /** Precise orbit and clock correction
  *
@@ -230,7 +234,7 @@ generating configuration
   s32 c1;                 /**< C1 polynomial coefficient for correction of broadcast satellite clock [0.001 mm/s] */
   s32 c2;                 /**< C2 polynomial coefficient for correction of broadcast satellite clock [0.00002 mm/s^-2] */
 } msg_ssr_orbit_clock_t;
-
+ 
 
 /** Precise code biases correction
  *
@@ -255,7 +259,9 @@ generating configuration
   code_biases_content_t biases[0];          /**< Code biases for the different satellite signals */
 #endif
 } msg_ssr_code_biases_t;
-
+#define MSG_SSR_CODE_BIASES_T_GET_BIASES_PTR(msg) (( code_biases_content_t *)(msg+1))
+#define MSG_SSR_CODE_BIASES_T_GET_BIASES_CPTR(msg) ((const code_biases_content_t *)(msg+1))
+ 
 
 /** Precise phase biases correction
  *
@@ -290,7 +296,9 @@ satellite being tracked.
  */
 #endif
 } msg_ssr_phase_biases_t;
-
+#define MSG_SSR_PHASE_BIASES_T_GET_BIASES_PTR(msg) (( phase_biases_content_t *)(msg+1))
+#define MSG_SSR_PHASE_BIASES_T_GET_BIASES_CPTR(msg) ((const phase_biases_content_t *)(msg+1))
+ 
 
 /** STEC correction polynomial coeffcients.
  *
@@ -309,7 +317,9 @@ typedef struct SBP_ATTR_PACKED {
   stec_sat_element_t stec_sat_list[0]; /**< Array of STEC polynomial coeffcients for each space vehicle. */
 #endif
 } msg_ssr_stec_correction_t;
-
+#define MSG_SSR_STEC_CORRECTION_T_GET_STEC_SAT_LIST_PTR(msg) (( stec_sat_element_t *)(msg+1))
+#define MSG_SSR_STEC_CORRECTION_T_GET_STEC_SAT_LIST_CPTR(msg) ((const stec_sat_element_t *)(msg+1))
+ 
 
 /** Gridded troposphere and STEC correction residuals.
  *
@@ -324,7 +334,7 @@ typedef struct SBP_ATTR_PACKED {
   grid_element_t element;    /**< Tropo and STEC residuals for the given grid point.
  */
 } msg_ssr_gridded_correction_t;
-
+ 
 
 /** Definition of a SSR atmospheric correction tile.
 
@@ -397,7 +407,7 @@ See GNSS-SSR-ArrayOfCorrectionPoints field bitmaskOfGrids but
 note the definition of the bits is inverted.
  */
 } msg_ssr_tile_definition_t;
-
+ 
 
 #define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A               0x05DC
 
@@ -422,7 +432,7 @@ generating configuration
   s32 c1;                 /**< C1 polynomial coefficient for correction of broadcast satellite clock [0.001 mm/s] */
   s32 c2;                 /**< C2 polynomial coefficient for correction of broadcast satellite clock [0.00002 mm/s^-2] */
 } msg_ssr_orbit_clock_dep_a_t;
-
+ 
 
 /** Header for MSG_SSR_STEC_CORRECTION_DEP message
  *
@@ -441,7 +451,7 @@ following RTCM DF391 specification.
   u8 iod_atmo;           /**< IOD of the SSR atmospheric correction
  */
 } stec_header_dep_a_t;
-
+ 
 
 /** Header for MSG_SSR_GRIDDED_CORRECTION_DEP
  *
@@ -463,7 +473,7 @@ following RTCM DF391 specification.
 specifcation in units of m.
  */
 } gridded_correction_header_dep_a_t;
-
+ 
 
 /** Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
  *
@@ -483,7 +493,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 num_msgs;               /**< Number of messages in the dataset */
   u8 seq_num;                /**< Postion of this message in the dataset */
 } grid_definition_header_dep_a_t;
-
+ 
 
 #define SBP_MSG_SSR_STEC_CORRECTION_DEP_A           0x05EB
 
@@ -493,7 +503,9 @@ typedef struct SBP_ATTR_PACKED {
   stec_sat_element_t stec_sat_list[0]; /**< Array of STEC information for each space vehicle */
 #endif
 } msg_ssr_stec_correction_dep_a_t;
-
+#define MSG_SSR_STEC_CORRECTION_DEP_A_T_GET_STEC_SAT_LIST_PTR(msg) (( stec_sat_element_t *)(msg+1))
+#define MSG_SSR_STEC_CORRECTION_DEP_A_T_GET_STEC_SAT_LIST_CPTR(msg) ((const stec_sat_element_t *)(msg+1))
+ 
 
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A 0x05F0
 
@@ -501,7 +513,7 @@ typedef struct SBP_ATTR_PACKED {
   gridded_correction_header_dep_a_t header;     /**< Header of a Gridded Correction message */
   grid_element_no_std_t element;    /**< Tropo and STEC residuals for the given grid point */
 } msg_ssr_gridded_correction_no_std_dep_a_t;
-
+ 
 
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A        0x05FA
 
@@ -511,7 +523,7 @@ typedef struct SBP_ATTR_PACKED {
 and standard deviation)
  */
 } msg_ssr_gridded_correction_dep_a_t;
-
+ 
 
 #define SBP_MSG_SSR_GRID_DEFINITION_DEP_A           0x05F5
 
@@ -525,7 +537,9 @@ valid and invalid (and vice versa) are encoded as u8 integers.
  */
 #endif
 } msg_ssr_grid_definition_dep_a_t;
-
+#define MSG_SSR_GRID_DEFINITION_DEP_A_T_GET_RLE_LIST_PTR(msg) (( u8 *)(msg+1))
+#define MSG_SSR_GRID_DEFINITION_DEP_A_T_GET_RLE_LIST_CPTR(msg) ((const u8 *)(msg+1))
+ 
 
 /** \} */
 

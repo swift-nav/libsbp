@@ -71,7 +71,7 @@ from -500000 to 500000)
   u8 flags;          /**< Flags */
   u8 pin;            /**< Pin number.  0..9 = DEBUG0..9. */
 } msg_ext_event_t;
-
+ 
 
 /** \} */
 

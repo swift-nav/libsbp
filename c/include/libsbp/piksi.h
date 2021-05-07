@@ -37,7 +37,7 @@ SBP_PACK_START
  * alamanac onto the Piksi's flash memory from the host.
  */
 #define SBP_MSG_ALMANAC                 0x0069
-
+ 
 
 /** Send GPS time from host (host => Piksi)
  *
@@ -45,7 +45,7 @@ SBP_PACK_START
  * time estimate sent by the host.
  */
 #define SBP_MSG_SET_TIME                0x0068
-
+ 
 
 /** Reset the device (host => Piksi)
  *
@@ -70,7 +70,7 @@ SBP_PACK_START
 typedef struct SBP_ATTR_PACKED {
   u32 flags;    /**< Reset flags */
 } msg_reset_t;
-
+ 
 
 /** Reset the device (host => Piksi)
  *
@@ -78,7 +78,7 @@ typedef struct SBP_ATTR_PACKED {
  * bootloader.
  */
 #define SBP_MSG_RESET_DEP               0x00B2
-
+ 
 
 /** Legacy message for CW interference channel (Piksi => host)
  *
@@ -87,7 +87,7 @@ typedef struct SBP_ATTR_PACKED {
  * removed in a future release.
  */
 #define SBP_MSG_CW_RESULTS              0x00C0
-
+ 
 
 /** Legacy message for CW interference channel (host => Piksi)
  *
@@ -96,7 +96,7 @@ typedef struct SBP_ATTR_PACKED {
  * be removed in a future release.
  */
 #define SBP_MSG_CW_START                0x00C1
-
+ 
 
 /** Reset IAR filters (host => Piksi)
  *
@@ -122,14 +122,14 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u8 filter;    /**< Filter flags */
 } msg_reset_filters_t;
-
+ 
 
 /** Deprecated
  *
 * Deprecated
  */
 #define SBP_MSG_INIT_BASE_DEP           0x0023
-
+ 
 
 /** State of an RTOS thread
  *
@@ -146,7 +146,7 @@ typedef struct SBP_ATTR_PACKED {
  */
   u32 stack_free;    /**< Free stack space for this thread [bytes] */
 } msg_thread_state_t;
-
+ 
 
 /** State of the UART channel
  *
@@ -167,7 +167,7 @@ typedef struct SBP_ATTR_PACKED {
 0 to 255)
  */
 } uart_channel_t;
-
+ 
 
 /** base station observation message receipt period
  *
@@ -185,7 +185,7 @@ typedef struct SBP_ATTR_PACKED {
   s32 pmax;       /**< Maximum period [ms] */
   s32 current;    /**< Smoothed estimate of the current period [ms] */
 } period_t;
-
+ 
 
 /** Receiver-to-base station latency
  *
@@ -202,7 +202,7 @@ typedef struct SBP_ATTR_PACKED {
   s32 lmax;       /**< Maximum latency [ms] */
   s32 current;    /**< Smoothed estimate of the current latency [ms] */
 } latency_t;
-
+ 
 
 /** State of the UART channels
  *
@@ -225,7 +225,7 @@ typedef struct SBP_ATTR_PACKED {
   latency_t latency;       /**< UART communication latency */
   period_t obs_period;    /**< Observation receipt period */
 } msg_uart_state_t;
-
+ 
 
 /** Deprecated
  *
@@ -239,7 +239,7 @@ typedef struct SBP_ATTR_PACKED {
   uart_channel_t uart_ftdi;    /**< State of UART FTDI (USB logger) */
   latency_t latency;      /**< UART communication latency */
 } msg_uart_state_depa_t;
-
+ 
 
 /** State of the Integer Ambiguity Resolution (IAR) process
  *
@@ -253,7 +253,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u32 num_hyps;    /**< Number of integer ambiguity hypotheses remaining */
 } msg_iar_state_t;
-
+ 
 
 /** Mask a satellite from use in Piksi subsystems
  *
@@ -292,7 +292,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 mask;    /**< Mask of systems that should ignore this satellite. */
   sbp_gnss_signal_t sid;     /**< GNSS signal for which the mask is applied */
 } msg_mask_satellite_t;
-
+ 
 
 /** Deprecated
  *
@@ -330,7 +330,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 mask;    /**< Mask of systems that should ignore this satellite. */
   gnss_signal_dep_t sid;     /**< GNSS signal for which the mask is applied */
 } msg_mask_satellite_dep_t;
-
+ 
 
 /** Device temperature and voltage levels
  *
@@ -347,7 +347,7 @@ typedef struct SBP_ATTR_PACKED {
   s16 cpu_temperature;    /**< Processor temperature [degrees C / 100] */
   s16 fe_temperature;     /**< Frontend temperature (if available) [degrees C / 100] */
 } msg_device_monitor_t;
-
+ 
 
 /** Execute a command (host => device)
  *
@@ -363,7 +363,9 @@ typedef struct SBP_ATTR_PACKED {
   char command[0];  /**< Command line to execute */
 #endif
 } msg_command_req_t;
-
+#define MSG_COMMAND_REQ_T_GET_COMMAND_PTR(msg) (( char *)(msg+1))
+#define MSG_COMMAND_REQ_T_GET_COMMAND_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** Exit code from executed command (device => host)
  *
@@ -376,7 +378,7 @@ typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Sequence number */
   s32 code;        /**< Exit code */
 } msg_command_resp_t;
-
+ 
 
 /** Command output
  *
@@ -393,7 +395,9 @@ typedef struct SBP_ATTR_PACKED {
   char line[0];     /**< Line of standard output or standard error */
 #endif
 } msg_command_output_t;
-
+#define MSG_COMMAND_OUTPUT_T_GET_LINE_PTR(msg) (( char *)(msg+1))
+#define MSG_COMMAND_OUTPUT_T_GET_LINE_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** Request state of Piksi network interfaces
  *
@@ -401,7 +405,7 @@ typedef struct SBP_ATTR_PACKED {
  * Output will be sent in MSG_NETWORK_STATE_RESP messages
  */
 #define SBP_MSG_NETWORK_STATE_REQ       0x00BA
-
+ 
 
 /** State of network interface
  *
@@ -597,7 +601,7 @@ typedef struct SBP_ATTR_PACKED {
   char interface_name[16]; /**< Interface Name */
   u32 flags;             /**< Interface flags from SIOCGIFFLAGS */
 } msg_network_state_resp_t;
-
+ 
 
 /** Bandwidth usage measurement for a single interface.
  *
@@ -616,7 +620,7 @@ typedef struct SBP_ATTR_PACKED {
   u32 tx_bytes;          /**< Number of bytes received within period */
   char interface_name[16]; /**< Interface Name */
 } network_usage_t;
-
+ 
 
 /** Bandwidth usage reporting message
  *
@@ -629,7 +633,7 @@ typedef struct SBP_ATTR_PACKED {
   network_usage_t interfaces[0]; /**< Usage measurement array */
 } msg_network_bandwidth_usage_t;
 #endif
-
+ 
 
 /** Cell modem information update message
  *
@@ -646,7 +650,9 @@ typedef struct SBP_ATTR_PACKED {
   u8 reserved[0];          /**< Unspecified data TBD for this schema */
 #endif
 } msg_cell_modem_status_t;
-
+#define MSG_CELL_MODEM_STATUS_T_GET_RESERVED_PTR(msg) (( u8 *)(msg+1))
+#define MSG_CELL_MODEM_STATUS_T_GET_RESERVED_CPTR(msg) ((const u8 *)(msg+1))
+ 
 
 /** Deprecated
  *
@@ -670,7 +676,9 @@ typedef struct SBP_ATTR_PACKED {
  */
 #endif
 } msg_specan_dep_t;
-
+#define MSG_SPECAN_DEP_T_GET_AMPLITUDE_VALUE_PTR(msg) (( u8 *)(msg+1))
+#define MSG_SPECAN_DEP_T_GET_AMPLITUDE_VALUE_CPTR(msg) ((const u8 *)(msg+1))
+ 
 
 /** Spectrum analyzer
  *
@@ -694,7 +702,9 @@ typedef struct SBP_ATTR_PACKED {
  */
 #endif
 } msg_specan_t;
-
+#define MSG_SPECAN_T_GET_AMPLITUDE_VALUE_PTR(msg) (( u8 *)(msg+1))
+#define MSG_SPECAN_T_GET_AMPLITUDE_VALUE_CPTR(msg) ((const u8 *)(msg+1))
+ 
 
 /** RF AGC status
  *
@@ -711,7 +721,7 @@ typedef struct SBP_ATTR_PACKED {
   s8 rf_gain[8]; /**< RF gain for each frontend channel [percent] */
   s8 if_gain[8]; /**< Intermediate frequency gain for each frontend channel [percent] */
 } msg_front_end_gain_t;
-
+ 
 
 /** \} */
 

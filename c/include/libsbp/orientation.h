@@ -58,7 +58,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;     /**< Number of satellites used in solution */
   u8 flags;      /**< Status flags */
 } msg_baseline_heading_t;
-
+ 
 
 /** Quaternion 4 component vector
  *
@@ -95,7 +95,7 @@ typedef struct SBP_ATTR_PACKED {
   float z_accuracy;    /**< Estimated standard deviation of z [N/A] */
   u8 flags;         /**< Status flags */
 } msg_orient_quat_t;
-
+ 
 
 /** Euler angles
  *
@@ -130,7 +130,7 @@ typedef struct SBP_ATTR_PACKED {
   float yaw_accuracy;      /**< Estimated standard deviation of yaw [degrees] */
   u8 flags;             /**< Status flags */
 } msg_orient_euler_t;
-
+ 
 
 /** Vehicle Body Frame instantaneous angular rates
  *
@@ -166,7 +166,7 @@ typedef struct SBP_ATTR_PACKED {
   s32 z;        /**< angular rate about z axis [microdegrees/s] */
   u8 flags;    /**< Status flags */
 } msg_angular_rate_t;
-
+ 
 
 /** \} */
 

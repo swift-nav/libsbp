@@ -80,7 +80,7 @@ typedef struct SBP_ATTR_PACKED {
   s16 gyr_y;    /**< Angular rate around IMU frame Y axis */
   s16 gyr_z;    /**< Angular rate around IMU frame Z axis */
 } msg_imu_raw_t;
-
+ 
 
 /** Auxiliary IMU data
  *
@@ -139,7 +139,7 @@ typedef struct SBP_ATTR_PACKED {
   s16 temp;        /**< Raw IMU temperature */
   u8 imu_conf;    /**< IMU configuration */
 } msg_imu_aux_t;
-
+ 
 
 /** \} */
 

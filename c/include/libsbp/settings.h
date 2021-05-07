@@ -59,7 +59,7 @@ SBP_PACK_START
  * configuration to its onboard flash memory file system.
  */
 #define SBP_MSG_SETTINGS_SAVE               0x00A1
-
+ 
 
 /** Write device configuration settings (host => device)
  *
@@ -80,7 +80,7 @@ typedef struct SBP_ATTR_PACKED {
  */
 } msg_settings_write_t;
 #endif
-
+ 
 
 /** Acknowledgement with status of MSG_SETTINGS_WRITE
  *
@@ -120,7 +120,9 @@ typedef struct SBP_ATTR_PACKED {
  */
 #endif
 } msg_settings_write_resp_t;
-
+#define MSG_SETTINGS_WRITE_RESP_T_GET_SETTING_PTR(msg) (( char *)(msg+1))
+#define MSG_SETTINGS_WRITE_RESP_T_GET_SETTING_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** Read device configuration settings (host => device)
  *
@@ -142,7 +144,7 @@ typedef struct SBP_ATTR_PACKED {
  */
 } msg_settings_read_req_t;
 #endif
-
+ 
 
 /** Read device configuration settings (host <= device)
  *
@@ -164,7 +166,7 @@ typedef struct SBP_ATTR_PACKED {
  */
 } msg_settings_read_resp_t;
 #endif
-
+ 
 
 /** Read setting by direct index (host => device)
  *
@@ -179,7 +181,7 @@ typedef struct SBP_ATTR_PACKED {
 0 to length(settings)
  */
 } msg_settings_read_by_index_req_t;
-
+ 
 
 /** Read setting by direct index (host <= device)
  *
@@ -206,14 +208,16 @@ typedef struct SBP_ATTR_PACKED {
  */
 #endif
 } msg_settings_read_by_index_resp_t;
-
+#define MSG_SETTINGS_READ_BY_INDEX_RESP_T_GET_SETTING_PTR(msg) (( char *)(msg+1))
+#define MSG_SETTINGS_READ_BY_INDEX_RESP_T_GET_SETTING_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** Finished reading settings (host <= device)
  *
  * The settings message for indicating end of the settings values.
  */
 #define SBP_MSG_SETTINGS_READ_BY_INDEX_DONE 0x00A6
-
+ 
 
 /** Register setting and default value (device => host)
  *
@@ -230,7 +234,7 @@ typedef struct SBP_ATTR_PACKED {
  */
 } msg_settings_register_t;
 #endif
-
+ 
 
 /** Register setting and default value (device <= host)
  *
@@ -265,7 +269,9 @@ according to the status field.
  */
 #endif
 } msg_settings_register_resp_t;
-
+#define MSG_SETTINGS_REGISTER_RESP_T_GET_SETTING_PTR(msg) (( char *)(msg+1))
+#define MSG_SETTINGS_REGISTER_RESP_T_GET_SETTING_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** \} */
 

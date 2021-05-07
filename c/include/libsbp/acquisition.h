@@ -45,7 +45,7 @@ typedef struct SBP_ATTR_PACKED {
   float cf;     /**< Carrier frequency of best point [hz] */
   sbp_gnss_signal_t sid;    /**< GNSS signal for which acquisition was attempted */
 } msg_acq_result_t;
-
+ 
 
 /** Deprecated
  *
@@ -59,7 +59,7 @@ typedef struct SBP_ATTR_PACKED {
   float cf;     /**< Carrier frequency of best point [hz] */
   gnss_signal_dep_t sid;    /**< GNSS signal for which acquisition was attempted */
 } msg_acq_result_dep_c_t;
-
+ 
 
 /** Deprecated
  *
@@ -75,7 +75,7 @@ be in units of dB Hz in a later revision of this message.
   float cf;     /**< Carrier frequency of best point [hz] */
   gnss_signal_dep_t sid;    /**< GNSS signal for which acquisition was attempted */
 } msg_acq_result_dep_b_t;
-
+ 
 
 /** Deprecated
  *
@@ -93,7 +93,7 @@ units of dB Hz in the revision of this message.
 acquisition was attempted
  */
 } msg_acq_result_dep_a_t;
-
+ 
 
 /** Acq perfomance measurement and debug
  *
@@ -116,7 +116,7 @@ typedef struct SBP_ATTR_PACKED {
   s32 cf;            /**< Doppler value of detected peak. Only valid if status is '1' [Hz] */
   u32 cp;            /**< Codephase of detected peak. Only valid if status is '1' [chips*10] */
 } acq_sv_profile_t;
-
+ 
 
 /** Deprecated
  *
@@ -137,7 +137,7 @@ typedef struct SBP_ATTR_PACKED {
   s32 cf;            /**< Doppler value of detected peak. Only valid if status is '1' [Hz] */
   u32 cp;            /**< Codephase of detected peak. Only valid if status is '1' [chips*10] */
 } acq_sv_profile_dep_t;
-
+ 
 
 /** Acquisition perfomance measurement and debug
  *
@@ -151,7 +151,7 @@ typedef struct SBP_ATTR_PACKED {
   acq_sv_profile_t acq_sv_profile[0]; /**< SV profiles during acquisition time */
 } msg_acq_sv_profile_t;
 #endif
-
+ 
 
 /** Deprecated.
  *
@@ -164,7 +164,7 @@ typedef struct SBP_ATTR_PACKED {
   acq_sv_profile_dep_t acq_sv_profile[0]; /**< SV profiles during acquisition time */
 } msg_acq_sv_profile_dep_t;
 #endif
-
+ 
 
 /** \} */
 

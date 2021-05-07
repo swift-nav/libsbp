@@ -127,7 +127,7 @@ number, valid only if data_source is NDB_DS_SBP. Reserved in case
 of other data_source.
  */
 } msg_ndb_event_t;
-
+ 
 
 /** \} */
 

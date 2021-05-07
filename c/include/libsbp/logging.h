@@ -61,7 +61,9 @@ typedef struct SBP_ATTR_PACKED {
   char text[0];  /**< Human-readable string */
 #endif
 } msg_log_t;
-
+#define MSG_LOG_T_GET_TEXT_PTR(msg) (( char *)(msg+1))
+#define MSG_LOG_T_GET_TEXT_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** Wrapper for FWD a separate stream of information over SBP
  *
@@ -82,7 +84,9 @@ typedef struct SBP_ATTR_PACKED {
   char fwd_payload[0]; /**< variable length wrapped binary message */
 #endif
 } msg_fwd_t;
-
+#define MSG_FWD_T_GET_FWD_PAYLOAD_PTR(msg) (( char *)(msg+1))
+#define MSG_FWD_T_GET_FWD_PAYLOAD_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** Deprecated
  *
@@ -95,7 +99,7 @@ typedef struct SBP_ATTR_PACKED {
   char text[0]; /**< Human-readable string */
 } msg_print_dep_t;
 #endif
-
+ 
 
 /** \} */
 

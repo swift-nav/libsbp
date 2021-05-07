@@ -42,7 +42,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 sensor_type;    /**< The type of sensor */
   u8 flags;          /**< Refer to each InputType description [(XX)InputType] */
 } solution_input_type_t;
-
+ 
 
 /** Deprecated
  *
@@ -80,7 +80,9 @@ typedef struct SBP_ATTR_PACKED {
   solution_input_type_t sol_in[0];                 /**< Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc. */
 #endif
 } msg_soln_meta_dep_a_t;
-
+#define MSG_SOLN_META_DEP_A_T_GET_SOL_IN_PTR(msg) (( solution_input_type_t *)(msg+1))
+#define MSG_SOLN_META_DEP_A_T_GET_SOL_IN_CPTR(msg) ((const solution_input_type_t *)(msg+1))
+ 
 
 /** Solution Sensors Metadata
  *
@@ -128,7 +130,9 @@ typedef struct SBP_ATTR_PACKED {
   solution_input_type_t sol_in[0];          /**< Array of Metadata describing the sensors potentially involved in the solution. Each element in the array represents a single sensor type and consists of flags containing (meta)data pertaining to that specific single sensor. Refer to each (XX)InputType descriptor in the present doc. */
 #endif
 } msg_soln_meta_t;
-
+#define MSG_SOLN_META_T_GET_SOL_IN_PTR(msg) (( solution_input_type_t *)(msg+1))
+#define MSG_SOLN_META_T_GET_SOL_IN_CPTR(msg) ((const solution_input_type_t *)(msg+1))
+ 
 
 /** Instruments the physical type of GNSS sensor input to the fuzed solution.
  *
@@ -153,7 +157,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u8 flags;    /**< flags that store all relevant info specific to this sensor type. */
 } gnss_input_type_t;
-
+ 
 
 /** Provides detail about the IMU sensor, its timestamping mode, and its quality for input to the fuzed solution.
  *
@@ -207,7 +211,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u8 flags;    /**< Instrument time, grade, and architecture for a sensor. */
 } imu_input_type_t;
-
+ 
 
 /** Provides detail about the Odometry sensor, its timestamping mode, and its quality for input to the fuzed solution.
  *
@@ -260,7 +264,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u8 flags;    /**< Instrument ODO rate, grade, and quality. */
 } odo_input_type_t;
-
+ 
 
 /** \} */
 

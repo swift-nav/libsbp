@@ -56,7 +56,9 @@ typedef struct SBP_ATTR_PACKED {
   char filename[0];   /**< Name of the file to read from */
 #endif
 } msg_fileio_read_req_t;
-
+#define MSG_FILEIO_READ_REQ_T_GET_FILENAME_PTR(msg) (( char *)(msg+1))
+#define MSG_FILEIO_READ_REQ_T_GET_FILENAME_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** File read from the file system (host <= device)
  *
@@ -74,7 +76,9 @@ typedef struct SBP_ATTR_PACKED {
   u8 contents[0]; /**< Contents of read file */
 #endif
 } msg_fileio_read_resp_t;
-
+#define MSG_FILEIO_READ_RESP_T_GET_CONTENTS_PTR(msg) (( u8 *)(msg+1))
+#define MSG_FILEIO_READ_RESP_T_GET_CONTENTS_CPTR(msg) ((const u8 *)(msg+1))
+ 
 
 /** List files in a directory (host => device)
  *
@@ -99,7 +103,9 @@ typedef struct SBP_ATTR_PACKED {
   char dirname[0];  /**< Name of the directory to list */
 #endif
 } msg_fileio_read_dir_req_t;
-
+#define MSG_FILEIO_READ_DIR_REQ_T_GET_DIRNAME_PTR(msg) (( char *)(msg+1))
+#define MSG_FILEIO_READ_DIR_REQ_T_GET_DIRNAME_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** Files listed in a directory (host <= device)
  *
@@ -118,7 +124,9 @@ typedef struct SBP_ATTR_PACKED {
   u8 contents[0]; /**< Contents of read directory */
 #endif
 } msg_fileio_read_dir_resp_t;
-
+#define MSG_FILEIO_READ_DIR_RESP_T_GET_CONTENTS_PTR(msg) (( u8 *)(msg+1))
+#define MSG_FILEIO_READ_DIR_RESP_T_GET_CONTENTS_CPTR(msg) ((const u8 *)(msg+1))
+ 
 
 /** Delete a file from the file system (host => device)
  *
@@ -134,7 +142,7 @@ typedef struct SBP_ATTR_PACKED {
   char filename[0]; /**< Name of the file to delete */
 } msg_fileio_remove_t;
 #endif
-
+ 
 
 /** Write to file (host => device)
  *
@@ -159,7 +167,11 @@ typedef struct SBP_ATTR_PACKED {
   u8 data[0];     /**< Variable-length array of data to write */
 #endif
 } msg_fileio_write_req_t;
-
+#define MSG_FILEIO_WRITE_REQ_T_GET_FILENAME_PTR(msg) (( char *)(msg+1))
+#define MSG_FILEIO_WRITE_REQ_T_GET_FILENAME_CPTR(msg) ((const char *)(msg+1))
+#define MSG_FILEIO_WRITE_REQ_T_GET_DATA_PTR(msg) (( u8 *)(msg+1))
+#define MSG_FILEIO_WRITE_REQ_T_GET_DATA_CPTR(msg) ((const u8 *)(msg+1))
+ 
 
 /** File written to (host <= device)
  *
@@ -174,7 +186,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Write sequence number */
 } msg_fileio_write_resp_t;
-
+ 
 
 /** Request advice on the optimal configuration for FileIO.
  *
@@ -188,7 +200,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u32 sequence;    /**< Advice sequence number */
 } msg_fileio_config_req_t;
-
+ 
 
 /** Response with advice on the optimal configuration for FileIO.
 
@@ -206,7 +218,7 @@ typedef struct SBP_ATTR_PACKED {
   u32 batch_size;        /**< The number of SBP packets sent in one PDU */
   u32 fileio_version;    /**< The version of FileIO that is supported */
 } msg_fileio_config_resp_t;
-
+ 
 
 /** \} */
 

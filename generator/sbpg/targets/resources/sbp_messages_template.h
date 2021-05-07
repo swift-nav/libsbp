@@ -82,6 +82,15 @@ typedef struct SBP_ATTR_PACKED {
 ((*- endif *))
 ((*- endif *))
 
+((*- for f in m.fields *))
+((*- if m.fields|first != m.fields|last *))
+((*- if f|field_is_variable_sized *))
+#define (((m.identifier|convert|upper)))_GET_(((f.identifier|upper)))_PTR(msg) (( (((f|get_fill_type))) *)(msg+1))
+#define (((m.identifier|convert|upper)))_GET_(((f.identifier|upper)))_CPTR(msg) ((const (((f|get_fill_type))) *)(msg+1))
+((*- endif *))
+((*- endif *))
+((*- endfor *))
+ 
 ((* endfor *))
 /** \} */
 

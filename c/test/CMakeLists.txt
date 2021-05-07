@@ -38,6 +38,7 @@ swift_add_test(test-libsbp
   )
 swift_set_compile_options(test-libsbp 
   REMOVE 
+    -Wcast-align
     -Wconversion 
     -Wpointer-arith
     -Wformat

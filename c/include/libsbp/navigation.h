@@ -91,7 +91,7 @@ from -500000 to 500000)
  [ns] */
   u8 flags;          /**< Status flags (reserved) */
 } msg_gps_time_t;
-
+ 
 
 /** GPS Time
  *
@@ -133,7 +133,7 @@ from -500000 to 500000)
  [ns] */
   u8 flags;          /**< Status flags (reserved) */
 } msg_gps_time_gnss_t;
-
+ 
 
 /** UTC Time
  *
@@ -181,7 +181,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 seconds;    /**< seconds of minute (range 0-60) rounded down [seconds] */
   u32 ns;         /**< nanoseconds of second (range 0-999999999) [nanoseconds] */
 } msg_utc_time_t;
-
+ 
 
 /** UTC Time
  *
@@ -229,7 +229,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 seconds;    /**< seconds of minute (range 0-60) rounded down [seconds] */
   u32 ns;         /**< nanoseconds of second (range 0-999999999) [nanoseconds] */
 } msg_utc_time_gnss_t;
-
+ 
 
 /** Dilution of Precision
  *
@@ -278,7 +278,7 @@ typedef struct SBP_ATTR_PACKED {
   u16 vdop;     /**< Vertical Dilution of Precision [0.01] */
   u8 flags;    /**< Indicates the position solution with which the DOPS message corresponds */
 } msg_dops_t;
-
+ 
 
 /** Single-point position in ECEF
  *
@@ -346,7 +346,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags */
 } msg_pos_ecef_t;
-
+ 
 
 /** Single-point position in ECEF
  *
@@ -420,7 +420,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;     /**< Number of satellites used in solution */
   u8 flags;      /**< Status flags */
 } msg_pos_ecef_cov_t;
-
+ 
 
 /** Geodetic Position
  *
@@ -489,7 +489,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;        /**< Number of satellites used in solution. */
   u8 flags;         /**< Status flags */
 } msg_pos_llh_t;
-
+ 
 
 /** Geodetic Position
  *
@@ -562,7 +562,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;     /**< Number of satellites used in solution. */
   u8 flags;      /**< Status flags */
 } msg_pos_llh_cov_t;
-
+ 
 
 /** Baseline Position in ECEF
  *
@@ -598,7 +598,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags */
 } msg_baseline_ecef_t;
-
+ 
 
 /** Baseline in NED
  *
@@ -636,7 +636,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;        /**< Number of satellites used in solution */
   u8 flags;         /**< Status flags */
 } msg_baseline_ned_t;
-
+ 
 
 /** Velocity in ECEF
  *
@@ -697,7 +697,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags */
 } msg_vel_ecef_t;
-
+ 
 
 /** Velocity in ECEF
  *
@@ -762,7 +762,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;     /**< Number of satellites used in solution */
   u8 flags;      /**< Status flags */
 } msg_vel_ecef_cov_t;
-
+ 
 
 /** Velocity in NED
  *
@@ -826,7 +826,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;        /**< Number of satellites used in solution */
   u8 flags;         /**< Status flags */
 } msg_vel_ned_t;
-
+ 
 
 /** Velocity in NED
  *
@@ -894,7 +894,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;     /**< Number of satellites used in solution */
   u8 flags;      /**< Status flags */
 } msg_vel_ned_cov_t;
-
+ 
 
 /** GNSS-only Position in ECEF
  *
@@ -935,7 +935,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags */
 } msg_pos_ecef_gnss_t;
-
+ 
 
 /** GNSS-only Position in ECEF
  *
@@ -982,7 +982,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;     /**< Number of satellites used in solution */
   u8 flags;      /**< Status flags */
 } msg_pos_ecef_cov_gnss_t;
-
+ 
 
 /** GNSS-only Geodetic Position
  *
@@ -1024,7 +1024,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;        /**< Number of satellites used in solution. */
   u8 flags;         /**< Status flags */
 } msg_pos_llh_gnss_t;
-
+ 
 
 /** GNSS-only Geodetic Position
  *
@@ -1071,7 +1071,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;     /**< Number of satellites used in solution. */
   u8 flags;      /**< Status flags */
 } msg_pos_llh_cov_gnss_t;
-
+ 
 
 /** GNSS-only Velocity in ECEF
  *
@@ -1105,7 +1105,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags */
 } msg_vel_ecef_gnss_t;
-
+ 
 
 /** GNSS-only Velocity in ECEF
  *
@@ -1143,7 +1143,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;     /**< Number of satellites used in solution */
   u8 flags;      /**< Status flags */
 } msg_vel_ecef_cov_gnss_t;
-
+ 
 
 /** GNSS-only Velocity in NED
  *
@@ -1180,7 +1180,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;        /**< Number of satellites used in solution */
   u8 flags;         /**< Status flags */
 } msg_vel_ned_gnss_t;
-
+ 
 
 /** GNSS-only Velocity in NED
  *
@@ -1221,7 +1221,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;     /**< Number of satellites used in solution */
   u8 flags;      /**< Status flags */
 } msg_vel_ned_cov_gnss_t;
-
+ 
 
 /** Velocity in User Frame
  *
@@ -1278,7 +1278,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;     /**< Number of satellites used in solution */
   u8 flags;      /**< Status flags */
 } msg_vel_body_t;
-
+ 
 
 /** Age of corrections
  *
@@ -1291,7 +1291,7 @@ typedef struct SBP_ATTR_PACKED {
   u32 tow;    /**< GPS Time of Week [ms] */
   u16 age;    /**< Age of the corrections (0xFFFF indicates invalid) [deciseconds] */
 } msg_age_corrections_t;
-
+ 
 
 /** GPS Time (v1.0)
  *
@@ -1319,7 +1319,7 @@ from -500000 to 500000)
  [ns] */
   u8 flags;          /**< Status flags (reserved) */
 } msg_gps_time_dep_a_t;
-
+ 
 
 /** Dilution of Precision
  *
@@ -1337,7 +1337,7 @@ typedef struct SBP_ATTR_PACKED {
   u16 hdop;    /**< Horizontal Dilution of Precision [0.01] */
   u16 vdop;    /**< Vertical Dilution of Precision [0.01] */
 } msg_dops_dep_a_t;
-
+ 
 
 /** Single-point position in ECEF
  *
@@ -1403,7 +1403,7 @@ to 0.
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags */
 } msg_pos_ecef_dep_a_t;
-
+ 
 
 /** Geodetic Position
  *
@@ -1485,7 +1485,7 @@ implemented). Defaults to 0.
   u8 n_sats;        /**< Number of satellites used in solution. */
   u8 flags;         /**< Status flags */
 } msg_pos_llh_dep_a_t;
-
+ 
 
 /** Baseline Position in ECEF
  *
@@ -1546,7 +1546,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags */
 } msg_baseline_ecef_dep_a_t;
-
+ 
 
 /** Baseline in NED
  *
@@ -1612,7 +1612,7 @@ implemented). Defaults to 0.
   u8 n_sats;        /**< Number of satellites used in solution */
   u8 flags;         /**< Status flags */
 } msg_baseline_ned_dep_a_t;
-
+ 
 
 /** Velocity in ECEF
  *
@@ -1633,7 +1633,7 @@ to 0.
   u8 n_sats;      /**< Number of satellites used in solution */
   u8 flags;       /**< Status flags (reserved) */
 } msg_vel_ecef_dep_a_t;
-
+ 
 
 /** Velocity in NED
  *
@@ -1658,7 +1658,7 @@ implemented). Defaults to 0.
   u8 n_sats;        /**< Number of satellites used in solution */
   u8 flags;         /**< Status flags (reserved) */
 } msg_vel_ned_dep_a_t;
-
+ 
 
 /** Heading relative to True North
  *
@@ -1713,7 +1713,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 n_sats;     /**< Number of satellites used in solution */
   u8 flags;      /**< Status flags */
 } msg_baseline_heading_dep_a_t;
-
+ 
 
 /** Computed Position and Protection Level
  *
@@ -1747,7 +1747,7 @@ typedef struct SBP_ATTR_PACKED {
   double height;    /**< Height [m] */
   u8 flags;     /**< Status flags */
 } msg_protection_level_t;
-
+ 
 
 /** \} */
 

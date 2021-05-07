@@ -70,7 +70,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 startup_type;    /**< Startup type */
   u16 reserved;        /**< Reserved */
 } msg_startup_t;
-
+ 
 
 /** Status of received corrections
  *
@@ -102,7 +102,9 @@ typedef struct SBP_ATTR_PACKED {
   char source[0];      /**< Corrections source string */
 #endif
 } msg_dgnss_status_t;
-
+#define MSG_DGNSS_STATUS_T_GET_SOURCE_PTR(msg) (( char *)(msg+1))
+#define MSG_DGNSS_STATUS_T_GET_SOURCE_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** System heartbeat message
  *
@@ -209,7 +211,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u32 flags;    /**< Status flags */
 } msg_heartbeat_t;
-
+ 
 
 /** Sub-system Status report
  *
@@ -256,7 +258,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 generic;      /**< Generic form status report */
   u8 specific;     /**< Subsystem specific status code */
 } sub_system_report_t;
-
+ 
 
 /** Status report message
  *
@@ -316,7 +318,9 @@ typedef struct SBP_ATTR_PACKED {
   sub_system_report_t status[0];           /**< Reported status of individual subsystems */
 #endif
 } msg_status_report_t;
-
+#define MSG_STATUS_REPORT_T_GET_STATUS_PTR(msg) (( sub_system_report_t *)(msg+1))
+#define MSG_STATUS_REPORT_T_GET_STATUS_CPTR(msg) ((const sub_system_report_t *)(msg+1))
+ 
 
 /** Inertial Navigation System status message
  *
@@ -428,7 +432,7 @@ typedef struct SBP_ATTR_PACKED {
 typedef struct SBP_ATTR_PACKED {
   u32 flags;    /**< Status flags */
 } msg_ins_status_t;
-
+ 
 
 /** Experimental telemetry message
  *
@@ -444,7 +448,9 @@ typedef struct SBP_ATTR_PACKED {
   char telemetry[0]; /**< Comma separated list of values as defined by the index */
 #endif
 } msg_csac_telemetry_t;
-
+#define MSG_CSAC_TELEMETRY_T_GET_TELEMETRY_PTR(msg) (( char *)(msg+1))
+#define MSG_CSAC_TELEMETRY_T_GET_TELEMETRY_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** Experimental telemetry message labels
  *
@@ -460,7 +466,9 @@ typedef struct SBP_ATTR_PACKED {
   char telemetry_labels[0]; /**< Comma separated list of telemetry field values */
 #endif
 } msg_csac_telemetry_labels_t;
-
+#define MSG_CSAC_TELEMETRY_LABELS_T_GET_TELEMETRY_LABELS_PTR(msg) (( char *)(msg+1))
+#define MSG_CSAC_TELEMETRY_LABELS_T_GET_TELEMETRY_LABELS_CPTR(msg) ((const char *)(msg+1))
+ 
 
 /** Inertial Navigation System update status message
  *
@@ -610,7 +618,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 nhc;           /**< NHC update status flags */
   u8 zerovel;       /**< Zero velocity update status flags */
 } msg_ins_updates_t;
-
+ 
 
 /** Offset of the local time with respect to GNSS time
  *
@@ -626,7 +634,7 @@ typedef struct SBP_ATTR_PACKED {
   s16 microseconds;    /**< Microseconds portion of the time offset [microseconds] */
   u8 flags;           /**< Status flags (reserved) */
 } msg_gnss_time_offset_t;
-
+ 
 
 /** Solution Group Metadata
  *
@@ -659,7 +667,9 @@ including GROUP_META itself
  */
 #endif
 } msg_group_meta_t;
-
+#define MSG_GROUP_META_T_GET_GROUP_MSGS_PTR(msg) (( u16 *)(msg+1))
+#define MSG_GROUP_META_T_GET_GROUP_MSGS_CPTR(msg) ((const u16 *)(msg+1))
+ 
 
 /** \} */
 

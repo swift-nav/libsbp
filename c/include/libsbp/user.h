@@ -40,7 +40,7 @@ typedef struct SBP_ATTR_PACKED {
   u8 contents[0]; /**< User data payload */
 } msg_user_data_t;
 #endif
-
+ 
 
 /** \} */
 
