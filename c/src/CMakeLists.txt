@@ -1,6 +1,7 @@
 set(libsbp_SRCS
   edc.c
   sbp.c
+  string.c
   )
 
 add_library(sbp ${libsbp_SRCS})

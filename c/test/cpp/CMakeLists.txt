@@ -2,7 +2,7 @@ swift_add_test(test-libsbp-cpp
     UNIT_TEST
     POST_BUILD
     SRCS
-        test_sbp_stdio.cc
+    #test_sbp_stdio.cc
         test_string.cc
     INCLUDE
         ${PROJECT_SOURCE_DIR}/include/libsbp
