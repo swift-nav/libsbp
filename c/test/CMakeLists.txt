@@ -49,3 +49,6 @@ swift_set_compile_options(test-libsbp
 )
 
 add_subdirectory(cpp)
+
+add_executable(test-string test_string.c)
+target_link_libraries(test-string sbp)
