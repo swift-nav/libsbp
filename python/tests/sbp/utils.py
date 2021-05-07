@@ -13,11 +13,14 @@
 Utilities for running YAML-defined unit tests.
 """
 
+import base64
+import os.path
+import json
+
+import yaml
+
 from sbp.msg import SBP
 from sbp.table import dispatch, _SBP_TABLE
-import base64
-import json
-import yaml
 
 def _encoded_string(s):
   """Encode the string-like argument as bytes if suitable"""
@@ -138,7 +141,7 @@ def _assert_sane_package(pkg_name, pkg):
   """
   assert len(pkg['tests']) > 0, "Package has no tests!"
 
-def assert_package(test_filename, pkg_name):
+def load_test_package(test_filename):
   """
   Runs unit tests for message bindings by reading a YAML unit test
   specification, parsing a raw packet for each test, and then
@@ -153,9 +156,17 @@ def assert_package(test_filename, pkg_name):
     Name of package to test
 
   """
+  pkg_name = os.path.basename(test_filename)
   with open(test_filename, 'r') as f:
     pkg = yaml.load(f.read(), Loader=yaml.FullLoader)
-    _assert_sane_package(pkg_name, pkg)
+    try:
+      _assert_sane_package(pkg_name, pkg)
+    except Exception as e:
+      raise RuntimeError("Loading {} failed: {}".format(test_filename, e))
+    return pkg
+
+def assert_package(test_filename):
+    pkg = load_test_package(test_filename)
     for test_case in pkg['tests']:
       sbp = SBP.unpack(base64.standard_b64decode(test_case['raw_packet']))
       _assert_sbp(sbp, test_case['sbp'])

@@ -46,11 +46,15 @@ process. This is likely to change in the future.
    struct. GCC won't compile this.
 
 4. (Optional) Add a [`test`](spec/tests/yaml/swiftnav/sbp) case and
-   update the appropriate language libaries. Run `make test`.
+   update the appropriate language libaries. If a test case is not
+   added, increment `EXPECTED_MISSING_MESSAGES` in
+   `python/tests/sbp/test_messages.py`.
 
-5. Submit a pull request.
+5. Run `make test`.
 
-6. If Swift's internal test tooling needs to be updated to use your
+6. Submit a pull request.
+
+7. If Swift's internal test tooling needs to be updated to use your
    new message, deploy the updated Python client first, and then the C
    client. We haven't quite decided on the details of this process.
 

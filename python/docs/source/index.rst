@@ -43,7 +43,7 @@ Testing
 
 To run the tests and check for coverage::
 
-  $  py.test -v --cov sbp tests/
+  $  py.test -v --cov --cov-report=term-missing sbp tests/
 
 API Reference
 -------------
