@@ -17,14 +17,20 @@ pub trait SBPTools: Iterator {
         HandleErrorsIter::new(self, |_| ControlFlow::Continue)
     }
 
-    fn log_errors(self) -> HandleErrorsIter<Self, fn(&crate::Error) -> ControlFlow>
+    fn log_errors(
+        self,
+        level: log::Level,
+    ) -> HandleErrorsIter<Self, Box<dyn Fn(&crate::Error) -> ControlFlow>>
     where
         Self: Iterator<Item = crate::Result<SBP>> + Sized,
     {
-        HandleErrorsIter::new(self, |e| {
-            log::warn!("{}", e);
-            ControlFlow::Continue
-        })
+        HandleErrorsIter::new(
+            self,
+            Box::new(move |e| {
+                log::log!(level, "{}", e);
+                ControlFlow::Continue
+            }),
+        )
     }
 
     fn handle_errors<F>(self, on_err: F) -> HandleErrorsIter<Self, F>
