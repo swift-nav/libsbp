@@ -7,19 +7,19 @@ use crate::{
     time::{MessageTime, RoverTime},
 };
 
-use crate::{messages::SBP, Result};
+use crate::messages::SBP;
 
 pub trait SBPTools: Iterator {
     fn ignore_errors(self) -> HandleErrorsIter<Self, fn(&crate::Error) -> bool>
     where
-        Self: Iterator<Item = Result<SBP>> + Sized,
+        Self: Iterator<Item = crate::Result<SBP>> + Sized,
     {
         HandleErrorsIter::new(self, |_| true)
     }
 
     fn log_errors(self) -> HandleErrorsIter<Self, fn(&crate::Error) -> bool>
     where
-        Self: Iterator<Item = Result<SBP>> + Sized,
+        Self: Iterator<Item = crate::Result<SBP>> + Sized,
     {
         HandleErrorsIter::new(self, |e| {
             log::warn!("{}", e);
@@ -29,7 +29,7 @@ pub trait SBPTools: Iterator {
 
     fn handle_errors<F>(self, on_err: F) -> HandleErrorsIter<Self, F>
     where
-        Self: Iterator<Item = Result<SBP>> + Sized,
+        Self: Iterator<Item = crate::Result<SBP>> + Sized,
         F: FnMut(&crate::Error) -> bool,
     {
         HandleErrorsIter::new(self, on_err)
@@ -52,12 +52,12 @@ where
 {
     messages: I,
     on_err: F,
-    err: Result<()>,
+    err: crate::Result<()>,
 }
 
 impl<I, F> HandleErrorsIter<I, F>
 where
-    I: Iterator<Item = Result<SBP>>,
+    I: Iterator<Item = crate::Result<SBP>>,
 {
     fn new(messages: I, on_err: F) -> HandleErrorsIter<I, F> {
         Self {
@@ -67,14 +67,14 @@ where
         }
     }
 
-    pub fn check_error(&mut self) -> Result<()> {
+    pub fn check_error(&mut self) -> crate::Result<()> {
         std::mem::replace(&mut self.err, Ok(()))
     }
 }
 
 impl<I, F> Iterator for HandleErrorsIter<I, F>
 where
-    I: Iterator<Item = Result<SBP>>,
+    I: Iterator<Item = crate::Result<SBP>>,
     F: FnMut(&crate::Error) -> bool,
 {
     type Item = SBP;
@@ -127,6 +127,7 @@ where
                         self.clock = Some(time);
                         Some(time)
                     } else {
+                        // no previous time to use wn from
                         None
                     }
                 }
@@ -141,20 +142,17 @@ impl<I> Iterator for RoverTimeIter<I>
 where
     I: Iterator<Item = SBP>,
 {
-    type Item = (SBP, Option<GpsTime>);
+    type Item = (SBP, Option<Result<GpsTime, crate::time::GpsTimeError>>);
 
     fn next(&mut self) -> Option<Self::Item> {
         let msg = self.messages.next()?;
 
         match msg.gps_time() {
             Some(Ok(time)) => match self.update(time) {
-                Some(gps_time) => Some((msg, Some(gps_time))),
+                Some(gps_time) => Some((msg, Some(Ok(gps_time)))),
                 None => Some((msg, None)),
             },
-            Some(Err(e)) => {
-                log::warn!("invalid gps_time: {}", e);
-                Some((msg, None))
-            }
+            Some(Err(e)) => Some((msg, Some(Err(e)))),
             None => Some((msg, None)),
         }
     }
@@ -185,17 +183,17 @@ mod tests {
 
         let mut with_time = iter_messages(data).ignore_errors().with_rover_time();
 
-        let gps_time = with_time.next().map(|(_, t)| t).flatten().unwrap();
+        let gps_time = with_time.next().map(|(_, t)| t).flatten().unwrap().unwrap();
         assert_eq!(gps_time.wn(), 1787);
         assert_eq!(gps_time.tow(), 2567.8);
 
         assert!(with_time.next().map(|(_, t)| t).flatten().is_none());
 
-        let gps_time = with_time.next().map(|(_, t)| t).flatten().unwrap();
+        let gps_time = with_time.next().map(|(_, t)| t).flatten().unwrap().unwrap();
         assert_eq!(gps_time.wn(), 1787);
         assert_eq!(gps_time.tow(), 2567.9);
 
-        let gps_time = with_time.next().map(|(_, t)| t).flatten().unwrap();
+        let gps_time = with_time.next().map(|(_, t)| t).flatten().unwrap().unwrap();
         assert_eq!(gps_time.wn(), 1787);
         assert_eq!(gps_time.tow(), 2568.);
     }
