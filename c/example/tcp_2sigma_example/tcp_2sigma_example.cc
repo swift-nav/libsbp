@@ -87,7 +87,7 @@ int open_socket(const char* host, int port) {
 bool get_ellipse_parameters(const Eigen::Matrix2d& covmat, double& half_major_axis, double& half_minor_axis, double& angle) {
     std::vector<std::tuple<double, Eigen::Vector2d>> eigen_vectors_and_values;
 
-	// compute eigenvalues and eigenvectors
+    // compute eigenvalues and eigenvectors
     Eigen::SelfAdjointEigenSolver<Eigen::Matrix2d> eigensolver(covmat);
     if(eigensolver.info() != Eigen::Success) {
         return false;
@@ -107,20 +107,20 @@ bool get_ellipse_parameters(const Eigen::Matrix2d& covmat, double& half_major_ax
             return std::get<double>(b) < std::get<double>(a);
     });
 
-	// calculate the angle between the largest eigenvector and the x-axis
+    // calculate the angle between the largest eigenvector and the x-axis
     Eigen::Vector2d largest_eigenvector = std::get<Eigen::Vector2d>(eigen_vectors_and_values[0]);
-	angle = atan2(largest_eigenvector[1], largest_eigenvector[0]);
+    angle = atan2(largest_eigenvector[1], largest_eigenvector[0]);
 
-	// shift the angle to the [0, 2pi] interval instead of [-pi, pi]
-	if(angle < 0) angle += 2 * M_PI;
+    // shift the angle to the [0, 2pi] interval instead of [-pi, pi]
+    if(angle < 0) angle += 2 * M_PI;
 
-	// convert to degrees instead of radians
-	angle = 180. * angle / M_PI;
+    // convert to degrees instead of radians
+    angle = 180. * angle / M_PI;
 
-	// calculate the length of the minor and major axes
+    // calculate the length of the minor and major axes
     const double chi_squared = 2.4477; // 95% confidence level
-	half_major_axis = chi_squared * sqrt(std::get<double>(eigen_vectors_and_values[0]));
-	half_minor_axis = chi_squared * sqrt(std::get<double>(eigen_vectors_and_values[1]));
+    half_major_axis = chi_squared * sqrt(std::get<double>(eigen_vectors_and_values[0]));
+    half_minor_axis = chi_squared * sqrt(std::get<double>(eigen_vectors_and_values[1]));
 
     return true;
 }
@@ -128,21 +128,21 @@ bool get_ellipse_parameters(const Eigen::Matrix2d& covmat, double& half_major_ax
 
 #if SHOW_PLOT
 void plot_ellipse(const double& half_major_axis, const double& half_minor_axis, const double& angle) {
-	// the mean is nominally at the origin (i.e. reported lat/lon) but
+    // the mean is nominally at the origin (i.e. reported lat/lon) but
     // for graphing purposes we shift it to the middle of our plot window
-	cv::Point2f mean(SIZE_PIXELS/2, SIZE_PIXELS/2);
+    cv::Point2f mean(SIZE_PIXELS/2, SIZE_PIXELS/2);
 
     // scale factor from metres to pixels
     double scale = SIZE_PIXELS / SIZE_METRES;
 
     // negative angle because OpenCV defines the angle clockwise instead of
     // anti-clockwise
-	cv::RotatedRect ellipse(mean, cv::Size2f(half_major_axis * scale, half_minor_axis * scale), -angle);
+    cv::RotatedRect ellipse(mean, cv::Size2f(half_major_axis * scale, half_minor_axis * scale), -angle);
 
-	//Show the result
-	cv::Mat visualizeimage(SIZE_PIXELS, SIZE_PIXELS, CV_8UC1, cv::Scalar::all(0));
-	cv::ellipse(visualizeimage, ellipse, cv::Scalar::all(255), 2);
-	cv::imshow("2 Sigma Ellipse", visualizeimage);
+    //Show the result
+    cv::Mat visualizeimage(SIZE_PIXELS, SIZE_PIXELS, CV_8UC1, cv::Scalar::all(0));
+    cv::ellipse(visualizeimage, ellipse, cv::Scalar::all(255), 2);
+    cv::imshow("2 Sigma Ellipse", visualizeimage);
 }
 #endif /* SHOW_PLOT */
 
