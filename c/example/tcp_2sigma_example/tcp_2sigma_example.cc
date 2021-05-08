@@ -104,7 +104,7 @@ bool get_ellipse_parameters(const double& chi_squared, const Eigen::Matrix2d& co
         eigen_vectors_and_values.push_back(vec_and_val);
     }
 
-    // sort eigen_vectors_and_values in descending order
+    // sort eigen_vectors_and_values in descending order of eigenvalue
     std::sort(eigen_vectors_and_values.begin(), eigen_vectors_and_values.end(),
         [&](const std::tuple<double, Eigen::Vector2d>& a, const std::tuple<double, Eigen::Vector2d>& b) -> bool{
             return std::get<double>(b) < std::get<double>(a);
@@ -117,7 +117,7 @@ bool get_ellipse_parameters(const double& chi_squared, const Eigen::Matrix2d& co
     // shift the angle to the [0, 2pi] interval instead of [-pi, pi]
     if(angle < 0) angle += 2 * M_PI;
 
-    // convert to degrees instead of radians
+    // convert to degrees
     angle = 180. * angle / M_PI;
 
     // calculate the length of the minor and major axes
