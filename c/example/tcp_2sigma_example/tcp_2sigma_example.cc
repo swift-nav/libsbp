@@ -79,12 +79,15 @@ int open_socket(const char* host, int port) {
 
 /*
  * Calculate the half major axis length, half minor axis length and rotation
- * angle for an error ellipse corresponding to the 95% confidence interval of
- * 'covmat'.
+ * angle for an error ellipse corresponding to the confidence interval
+ * 'chi_squared' with the covariance matrix 'covmat'.
+ *
+ * Assumes normal distribution.
+ *
  * See https://www.visiondummy.com/2014/04/draw-error-ellipse-representing-covariance-matrix/
  * for an explanation of the algorithm.
  */
-bool get_ellipse_parameters(const Eigen::Matrix2d& covmat, double& half_major_axis, double& half_minor_axis, double& angle) {
+bool get_ellipse_parameters(const double& chi_squared, const Eigen::Matrix2d& covmat, double& half_major_axis, double& half_minor_axis, double& angle) {
     std::vector<std::tuple<double, Eigen::Vector2d>> eigen_vectors_and_values;
 
     // compute eigenvalues and eigenvectors
@@ -118,7 +121,6 @@ bool get_ellipse_parameters(const Eigen::Matrix2d& covmat, double& half_major_ax
     angle = 180. * angle / M_PI;
 
     // calculate the length of the minor and major axes
-    const double chi_squared = 2.4477; // 95% confidence level
     half_major_axis = chi_squared * sqrt(std::get<double>(eigen_vectors_and_values[0]));
     half_minor_axis = chi_squared * sqrt(std::get<double>(eigen_vectors_and_values[1]));
 
@@ -170,9 +172,19 @@ void pos_llh_cov_callback(u16 /*sender_id*/, u8 /*len*/, u8 msg[], void* /*conte
          * the 95% confidence interval
          */
         double half_major_axis, half_minor_axis, angle;
-        if(get_ellipse_parameters(covmat, half_major_axis, half_minor_axis, angle)) {
+
+        /*
+         * From https://people.richland.edu/james/lecture/m170/tbl-chi.html
+         * 95% confidence interval => area to the right = 0.05, 2 degrees of freedom =>
+         * sqrt(5.991) = 2.4477
+         *
+         * For 99% confidence interval this would be sqrt(9.210) = 3.0348
+         */
+        const double chi_squared = 2.4477;
+
+        if(get_ellipse_parameters(chi_squared, covmat, half_major_axis, half_minor_axis, angle)) {
             double area = M_PI * half_major_axis * half_minor_axis;
-            printf("\tEllipse parameters: %g/%g/%g -> area %.3f m^2\n", half_major_axis, half_minor_axis, angle, area);
+            printf("\tEllipse parameters: half major axis %g m, half minor axis %g m, angle %g deg -> area %.3f m^2\n", half_major_axis, half_minor_axis, angle, area);
 
 #if SHOW_PLOT
             plot_ellipse(half_major_axis, half_minor_axis, angle);
