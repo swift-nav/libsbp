@@ -44,7 +44,7 @@ definitions:
                         - 7: DEBUG
       - text:
           type: string
-          termination: none
+          encoding: unterminated
           desc: Human-readable string
 
  - MSG_FWD:
@@ -68,6 +68,7 @@ definitions:
       - fwd_payload:
           type: array
           fill: char
+          encoding: unterminated
           desc: variable length wrapped binary message     
 
  - MSG_PRINT_DEP:
@@ -80,6 +81,6 @@ definitions:
     fields:
       - text:
           type: string
-          termination: none
+          encoding: unterminated
           desc: Human-readable string
 

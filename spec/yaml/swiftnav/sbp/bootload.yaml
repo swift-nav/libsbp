@@ -53,7 +53,7 @@ definitions:
                 desc: SBP minor protocol version number
       - version:
           type: string
-          termination: none
+          encoding: unterminated
           desc: Bootloader version number
 
  - MSG_BOOTLOADER_JUMP_TO_APP:
@@ -110,5 +110,6 @@ definitions:
     fields:
       - handshake:
           type: array
+          encoding: unterminated
           fill: u8
           desc: Version number string (not NULL terminated)

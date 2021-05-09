@@ -112,7 +112,7 @@ definitions:
     fields:
         - name:
             type: string
-            termination: nul
+            encoding: null-terminated
             size: 20
             desc: Thread name (NULL terminated)
         - cpu:
@@ -368,7 +368,7 @@ definitions:
           desc: Sequence number
       - command:
           type: string
-          termination: nul
+          encoding: null-terminated
           desc: Command line to execute
 
  - MSG_COMMAND_RESP:
@@ -399,7 +399,7 @@ definitions:
           desc: Sequence number
       - line:
           type: string
-          termination: none
+          encoding: unterminated
           desc: Line of standard output or standard error
 
  - MSG_NETWORK_STATE_REQ:

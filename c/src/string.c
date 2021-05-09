@@ -17,8 +17,8 @@ static void analyse(const sbp_string_t string, const sbp_string_format_t *format
   {
     state->n_sections = 1;
     state->section_offsets[0] = 0;
-    state->section_lengths[0] = (uint8_t)strnlen(string, format->max_encoded_len + 1u);
-    state->packed_len = state->section_lengths[0];
+    state->section_lengths[0] = (uint8_t)strnlen(string, sizeof(sbp_string_t));
+    state->packed_len = (uint8_t)(state->section_lengths[0]);
     state->valid = state->packed_len <= format->max_encoded_len;
     return;
   }
@@ -188,7 +188,7 @@ bool sbp_string_set_section(sbp_string_t string, const sbp_string_format_t *form
   if (!state.valid) { return false; }
   size_t str_len = strlen(str);
   size_t copy_len = str_len + 1;
-  if (state.packed_len + copy_len > format->max_encoded_len) { return false; }
+  if ((size_t)state.packed_len - (size_t)state.section_lengths[section] + str_len > format->max_encoded_len) { return false; }
   sbp_string_t tmp;
   memset(tmp, 0, sizeof(sbp_string_t));
 
@@ -256,8 +256,15 @@ uint8_t sbp_string_pack(const sbp_string_t string, const sbp_string_format_t *fo
 
 uint8_t sbp_string_unpack(sbp_string_t string, const sbp_string_format_t *format, const uint8_t *buf, uint8_t buf_len)
 {
+  if (buf_len == 0) {
+    sbp_string_init(string, format);
+    return 0;
+  }
   struct string_state state;
   sbp_string_format_t packed_format = *format;
+  if (format->encoding == SBP_STRING_UNTERMINATED) {
+    packed_format.max_encoded_len = (uint8_t)(sizeof(sbp_string_t) - 1);
+  }
   if (buf_len < packed_format.max_encoded_len)
   {
     packed_format.max_encoded_len = buf_len;
@@ -267,8 +274,13 @@ uint8_t sbp_string_unpack(sbp_string_t string, const sbp_string_format_t *format
   {
     return 0;
   }
+  uint8_t copy_len = state.packed_len;
+  if (copy_len > format->max_encoded_len) {
+    copy_len = format->max_encoded_len;
+  }
   memcpy(string, buf, state.packed_len);
-  return state.packed_len;
+  memset(string + copy_len, 0, sizeof(sbp_string_t) - copy_len);
+  return copy_len;
 }
 
 uint8_t sbp_string_count_sections(const sbp_string_t string, const sbp_string_format_t *format)
