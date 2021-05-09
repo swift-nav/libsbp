@@ -82,7 +82,8 @@ def _assert_msg(msg, test_case):
     Unit test case for this message.
 
   """
-  assert msg.__class__.__name__ == test_case['name']
+  assert msg.__class__.__name__ == test_case['name'], (
+    "test case name {} loaded class name {}".format(test_case['name'], msg.__class__.__name__))
   if test_case['fields']:
     for field_name, field_value in test_case['fields'].items():
       assert field_eq(getattr(msg, field_name), _encoded_string(field_value)), \
