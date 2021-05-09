@@ -1087,8 +1087,8 @@ static inline bool sbp_unpack_sbp_tracking_channel_state_t(const u8 *buf, size_t
 static inline size_t sbp_packed_size_sbp_msg_tracking_state_t(const sbp_msg_tracking_state_t *msg)
 {
   (void)msg;
-  return 0 + (msg->n_states * (0 + (0 + sizeof(msg->states[0].sid.sat) + sizeof(msg->states[0].sid.code)) +
-                               sizeof(msg->states[0].fcn) + sizeof(msg->states[0].cn0)));
+  return 0 + (msg->states_count * (0 + (0 + sizeof(msg->states[0].sid.sat) + sizeof(msg->states[0].sid.code)) +
+                                   sizeof(msg->states[0].fcn) + sizeof(msg->states[0].cn0)));
 }
 
 static inline bool sbp_pack_sbp_msg_tracking_state_t(u8 *buf, size_t len, const sbp_msg_tracking_state_t *msg)
@@ -1103,7 +1103,7 @@ static inline bool sbp_pack_sbp_msg_tracking_state_t(u8 *buf, size_t len, const 
     return false;
   }
 
-  for (size_t msgstates_idx = 0; msgstates_idx < (size_t)msg->n_states; msgstates_idx++)
+  for (size_t msgstates_idx = 0; msgstates_idx < (size_t)msg->states_count; msgstates_idx++)
   {
 
     if (offset + 1 > len)
@@ -1153,9 +1153,9 @@ static inline bool sbp_unpack_sbp_msg_tracking_state_t(const u8 *buf, size_t len
   (void)len;
   (void)msg;
 
-  msg->n_states = (u8)((len - offset) / 4);
+  msg->states_count = (u8)((len - offset) / 4);
 
-  for (size_t msgstates_idx = 0; msgstates_idx < msg->n_states; msgstates_idx++)
+  for (size_t msgstates_idx = 0; msgstates_idx < msg->states_count; msgstates_idx++)
   {
 
     if (offset + 1 > len)
@@ -1277,8 +1277,8 @@ static inline bool sbp_unpack_sbp_measurement_state_t(const u8 *buf, size_t len,
 static inline size_t sbp_packed_size_sbp_msg_measurement_state_t(const sbp_msg_measurement_state_t *msg)
 {
   (void)msg;
-  return 0 + (msg->n_states * (0 + (0 + sizeof(msg->states[0].mesid.sat) + sizeof(msg->states[0].mesid.code)) +
-                               sizeof(msg->states[0].cn0)));
+  return 0 + (msg->states_count * (0 + (0 + sizeof(msg->states[0].mesid.sat) + sizeof(msg->states[0].mesid.code)) +
+                                   sizeof(msg->states[0].cn0)));
 }
 
 static inline bool sbp_pack_sbp_msg_measurement_state_t(u8 *buf, size_t len, const sbp_msg_measurement_state_t *msg)
@@ -1293,7 +1293,7 @@ static inline bool sbp_pack_sbp_msg_measurement_state_t(u8 *buf, size_t len, con
     return false;
   }
 
-  for (size_t msgstates_idx = 0; msgstates_idx < (size_t)msg->n_states; msgstates_idx++)
+  for (size_t msgstates_idx = 0; msgstates_idx < (size_t)msg->states_count; msgstates_idx++)
   {
 
     if (offset + 1 > len)
@@ -1334,9 +1334,9 @@ static inline bool sbp_unpack_sbp_msg_measurement_state_t(const u8 *buf, size_t 
   (void)len;
   (void)msg;
 
-  msg->n_states = (u8)((len - offset) / 3);
+  msg->states_count = (u8)((len - offset) / 3);
 
-  for (size_t msgstates_idx = 0; msgstates_idx < msg->n_states; msgstates_idx++)
+  for (size_t msgstates_idx = 0; msgstates_idx < msg->states_count; msgstates_idx++)
   {
 
     if (offset + 1 > len)
@@ -2000,8 +2000,8 @@ sbp_unpack_sbp_tracking_channel_state_dep_a_t(const u8 *buf, size_t len, sbp_tra
 static inline size_t sbp_packed_size_sbp_msg_tracking_state_dep_a_t(const sbp_msg_tracking_state_dep_a_t *msg)
 {
   (void)msg;
-  return 0 +
-         (msg->n_states * (0 + sizeof(msg->states[0].state) + sizeof(msg->states[0].prn) + sizeof(msg->states[0].cn0)));
+  return 0 + (msg->states_count *
+              (0 + sizeof(msg->states[0].state) + sizeof(msg->states[0].prn) + sizeof(msg->states[0].cn0)));
 }
 
 static inline bool
@@ -2017,7 +2017,7 @@ sbp_pack_sbp_msg_tracking_state_dep_a_t(u8 *buf, size_t len, const sbp_msg_track
     return false;
   }
 
-  for (size_t msgstates_idx = 0; msgstates_idx < (size_t)msg->n_states; msgstates_idx++)
+  for (size_t msgstates_idx = 0; msgstates_idx < (size_t)msg->states_count; msgstates_idx++)
   {
 
     if (offset + 1 > len)
@@ -2059,9 +2059,9 @@ sbp_unpack_sbp_msg_tracking_state_dep_a_t(const u8 *buf, size_t len, sbp_msg_tra
   (void)len;
   (void)msg;
 
-  msg->n_states = (u8)((len - offset) / 6);
+  msg->states_count = (u8)((len - offset) / 6);
 
-  for (size_t msgstates_idx = 0; msgstates_idx < msg->n_states; msgstates_idx++)
+  for (size_t msgstates_idx = 0; msgstates_idx < msg->states_count; msgstates_idx++)
   {
 
     if (offset + 1 > len)
@@ -2213,10 +2213,10 @@ sbp_unpack_sbp_tracking_channel_state_dep_b_t(const u8 *buf, size_t len, sbp_tra
 static inline size_t sbp_packed_size_sbp_msg_tracking_state_dep_b_t(const sbp_msg_tracking_state_dep_b_t *msg)
 {
   (void)msg;
-  return 0 + (msg->n_states * (0 + sizeof(msg->states[0].state) +
-                               (0 + sizeof(msg->states[0].sid.sat) + sizeof(msg->states[0].sid.code) +
-                                sizeof(msg->states[0].sid.reserved)) +
-                               sizeof(msg->states[0].cn0)));
+  return 0 + (msg->states_count * (0 + sizeof(msg->states[0].state) +
+                                   (0 + sizeof(msg->states[0].sid.sat) + sizeof(msg->states[0].sid.code) +
+                                    sizeof(msg->states[0].sid.reserved)) +
+                                   sizeof(msg->states[0].cn0)));
 }
 
 static inline bool
@@ -2232,7 +2232,7 @@ sbp_pack_sbp_msg_tracking_state_dep_b_t(u8 *buf, size_t len, const sbp_msg_track
     return false;
   }
 
-  for (size_t msgstates_idx = 0; msgstates_idx < (size_t)msg->n_states; msgstates_idx++)
+  for (size_t msgstates_idx = 0; msgstates_idx < (size_t)msg->states_count; msgstates_idx++)
   {
 
     if (offset + 1 > len)
@@ -2292,9 +2292,9 @@ sbp_unpack_sbp_msg_tracking_state_dep_b_t(const u8 *buf, size_t len, sbp_msg_tra
   (void)len;
   (void)msg;
 
-  msg->n_states = (u8)((len - offset) / 9);
+  msg->states_count = (u8)((len - offset) / 9);
 
-  for (size_t msgstates_idx = 0; msgstates_idx < msg->n_states; msgstates_idx++)
+  for (size_t msgstates_idx = 0; msgstates_idx < msg->states_count; msgstates_idx++)
   {
 
     if (offset + 1 > len)

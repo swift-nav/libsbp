@@ -15,7 +15,7 @@ static inline size_t sbp_packed_size_sbp_msg_flash_program_t(const sbp_msg_flash
 {
   (void)msg;
   return 0 + sizeof(msg->target) + (3 * sizeof(msg->addr_start[0])) + sizeof(msg->addr_len) +
-         (msg->n_data * sizeof(msg->data[0]));
+         (msg->addr_len * sizeof(msg->data[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_flash_program_t(u8 *buf, size_t len, const sbp_msg_flash_program_t *msg)
@@ -59,7 +59,7 @@ static inline bool sbp_pack_sbp_msg_flash_program_t(u8 *buf, size_t len, const s
   memcpy(buf + offset, &msgaddr_len, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgdata_idx = 0; msgdata_idx < (size_t)msg->n_data; msgdata_idx++)
+  for (size_t msgdata_idx = 0; msgdata_idx < (size_t)msg->addr_len; msgdata_idx++)
   {
 
     if (offset + 1 > len)
@@ -108,9 +108,8 @@ static inline bool sbp_unpack_sbp_msg_flash_program_t(const u8 *buf, size_t len,
   memcpy(&msg->addr_len, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_data = (u8)((len - offset) / 1);
 
-  for (size_t msgdata_idx = 0; msgdata_idx < msg->n_data; msgdata_idx++)
+  for (size_t msgdata_idx = 0; msgdata_idx < msg->addr_len; msgdata_idx++)
   {
 
     if (offset + 1 > len)

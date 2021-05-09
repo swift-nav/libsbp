@@ -168,7 +168,7 @@ typedef struct
   /**
    * Number of items in sol_in
    */
-  u8 n_sol_in;
+  u8 sol_in_count;
 } sbp_msg_soln_meta_dep_a_t;
 /** Solution Sensors Metadata
  *
@@ -275,7 +275,7 @@ typedef struct
   /**
    * Number of items in sol_in
    */
-  u8 n_sol_in;
+  u8 sol_in_count;
 } sbp_msg_soln_meta_t;
 /** Instruments the physical type of GNSS sensor input to the fuzed solution.
  *

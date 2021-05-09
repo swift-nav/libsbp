@@ -333,11 +333,11 @@ static inline bool operator==(const sbp_msg_tracking_state_t &a, const sbp_msg_t
   (void)a;
   (void)b;
 
-  if (a.n_states != b.n_states)
+  if (a.states_count != b.states_count)
   {
     return false;
   }
-  for (size_t states_idx = 0; states_idx < (size_t)a.n_states; states_idx++)
+  for (size_t states_idx = 0; states_idx < (size_t)a.states_count; states_idx++)
   {
 
     if (a.states[states_idx].sid.sat != b.states[states_idx].sid.sat)
@@ -404,11 +404,11 @@ static inline bool operator==(const sbp_msg_measurement_state_t &a, const sbp_ms
   (void)a;
   (void)b;
 
-  if (a.n_states != b.n_states)
+  if (a.states_count != b.states_count)
   {
     return false;
   }
-  for (size_t states_idx = 0; states_idx < (size_t)a.n_states; states_idx++)
+  for (size_t states_idx = 0; states_idx < (size_t)a.states_count; states_idx++)
   {
 
     if (a.states[states_idx].mesid.sat != b.states[states_idx].mesid.sat)
@@ -651,11 +651,11 @@ static inline bool operator==(const sbp_msg_tracking_state_dep_a_t &a, const sbp
   (void)a;
   (void)b;
 
-  if (a.n_states != b.n_states)
+  if (a.states_count != b.states_count)
   {
     return false;
   }
-  for (size_t states_idx = 0; states_idx < (size_t)a.n_states; states_idx++)
+  for (size_t states_idx = 0; states_idx < (size_t)a.states_count; states_idx++)
   {
 
     if (a.states[states_idx].state != b.states[states_idx].state)
@@ -727,11 +727,11 @@ static inline bool operator==(const sbp_msg_tracking_state_dep_b_t &a, const sbp
   (void)a;
   (void)b;
 
-  if (a.n_states != b.n_states)
+  if (a.states_count != b.states_count)
   {
     return false;
   }
-  for (size_t states_idx = 0; states_idx < (size_t)a.n_states; states_idx++)
+  for (size_t states_idx = 0; states_idx < (size_t)a.states_count; states_idx++)
   {
 
     if (a.states[states_idx].state != b.states[states_idx].state)

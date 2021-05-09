@@ -777,7 +777,7 @@ typedef struct
   /**
    * Number of items in states
    */
-  u8 n_states;
+  u8 states_count;
 } sbp_msg_tracking_state_t;
 /** Measurement Engine signal tracking channel state
  *
@@ -863,7 +863,7 @@ typedef struct
   /**
    * Number of items in states
    */
-  u8 n_states;
+  u8 states_count;
 } sbp_msg_measurement_state_t;
 /** Complex correlation structure
  *
@@ -1096,7 +1096,7 @@ typedef struct
   /**
    * Number of items in states
    */
-  u8 n_states;
+  u8 states_count;
 } sbp_msg_tracking_state_dep_a_t;
 /** Deprecated.
  *
@@ -1201,7 +1201,7 @@ typedef struct
   /**
    * Number of items in states
    */
-  u8 n_states;
+  u8 states_count;
 } sbp_msg_tracking_state_dep_b_t;
 
 #include <libsbp/unpacked/tracking_operators.h>

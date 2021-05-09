@@ -274,7 +274,7 @@ typedef struct
   /**
    * Number of items in stec_residuals
    */
-  u8 n_stec_residuals;
+  u8 stec_residuals_count;
 } sbp_grid_element_no_std_t;
 /** Correction data for a single grid point.
  *
@@ -300,7 +300,7 @@ typedef struct
   /**
    * Number of items in stec_residuals
    */
-  u8 n_stec_residuals;
+  u8 stec_residuals_count;
 } sbp_grid_element_t;
 /** Precise orbit and clock correction
  *
@@ -457,7 +457,7 @@ typedef struct
   /**
    * Number of items in biases
    */
-  u8 n_biases;
+  u8 biases_count;
 } sbp_msg_ssr_code_biases_t;
 /** Precise phase biases correction
  *
@@ -539,7 +539,7 @@ typedef struct
   /**
    * Number of items in biases
    */
-  u8 n_biases;
+  u8 biases_count;
 } sbp_msg_ssr_phase_biases_t;
 /** STEC correction polynomial coeffcients.
  *
@@ -566,7 +566,7 @@ typedef struct
   /**
    * Number of items in stec_sat_list
    */
-  u8 n_stec_sat_list;
+  u8 stec_sat_list_count;
 } sbp_msg_ssr_stec_correction_t;
 /** Gridded troposphere and STEC correction residuals.
  *
@@ -604,7 +604,7 @@ typedef struct
     /**
      * Number of items in stec_residuals
      */
-    u8 n_stec_residuals;
+    u8 stec_residuals_count;
   } element;
 } sbp_msg_ssr_gridded_correction_t;
 /** Definition of a SSR atmospheric correction tile.
@@ -852,7 +852,7 @@ typedef struct
   /**
    * Number of items in apc
    */
-  u8 n_apc;
+  u8 apc_count;
 } sbp_msg_ssr_satellite_apc_t;
 #define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A 0x05DC
 
@@ -1063,7 +1063,7 @@ typedef struct
   /**
    * Number of items in stec_sat_list
    */
-  u8 n_stec_sat_list;
+  u8 stec_sat_list_count;
 } sbp_msg_ssr_stec_correction_dep_a_t;
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A 0x05F0
 
@@ -1095,7 +1095,7 @@ typedef struct
     /**
      * Number of items in stec_residuals
      */
-    u8 n_stec_residuals;
+    u8 stec_residuals_count;
   } element;
 } sbp_msg_ssr_gridded_correction_no_std_dep_a_t;
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A 0x05FA
@@ -1129,7 +1129,7 @@ typedef struct
     /**
      * Number of items in stec_residuals
      */
-    u8 n_stec_residuals;
+    u8 stec_residuals_count;
   } element;
 } sbp_msg_ssr_gridded_correction_dep_a_t;
 #define SBP_MSG_SSR_GRID_DEFINITION_DEP_A 0x05F5
@@ -1151,7 +1151,7 @@ typedef struct
   /**
    * Number of items in rle_list
    */
-  u8 n_rle_list;
+  u8 rle_list_count;
 } sbp_msg_ssr_grid_definition_dep_a_t;
 
 #include <libsbp/unpacked/ssr_operators.h>

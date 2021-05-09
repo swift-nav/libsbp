@@ -40,10 +40,10 @@
 		)
 		((*- else *))
 	    (
-	    ((*- if f.count *))
-	      (((path)))(((f.count)))
+	    ((*- if f.size_fn *))
+	      (((path)))(((f.size_fn)))
 	    ((*- else *))
-			  (((path)))n_(((f.name)))
+			  (((path)))(((f.name)))_count
 			((*- endif *))
 			*
 		  ((*- if f.basetype.is_primitive *))
@@ -110,7 +110,7 @@ static inline size_t sbp_packed_size_(((m.name|convert_unpacked)))(const (((m.na
 				((*- endif *))
 			}
 		((*- elif f.order == "variable-array" *))
-			for(size_t (((loop_idx))) = 0; (((loop_idx))) < (size_t)((*- if f.count *))(((path + f.count)))((*- else *))(((path + "n_" + f.name )))((*- endif *)); (((loop_idx)))++)
+			for(size_t (((loop_idx))) = 0; (((loop_idx))) < (size_t)((*- if f.size_fn *))(((path + f.size_fn)))((*- else *))(((path  + f.name + "_count" )))((*- endif *)); (((loop_idx)))++)
 			{
 				((*- if f.basetype.is_primitive *))
           (((pack_primitive(f, path + f.name + "[" + loop_idx + "]"))))
@@ -186,15 +186,15 @@ static inline bool sbp_pack_(((m.name|convert_unpacked)))(u8 *buf, size_t len, c
 			((*- endif *))
 		}
   ((*- elif f.order == "variable-array" *))
-    ((*- if not f.count *))
-      (((path + "n_" + f.name))) = (u8)((len - offset) / (((f.basetype.packed_size))));
+    ((*- if not f.size_fn *))
+      (((path + f.name + "_count"))) = (u8)((len - offset) / (((f.basetype.packed_size))));
     ((*- endif *))
 
 	  for (size_t (((loop_idx))) = 0; (((loop_idx))) < 
-				((*- if f.count *))
-				(((path + f.count)))
+				((*- if f.size_fn *))
+				(((path + f.size_fn)))
 				((*- else *))
-				(((path + "n_" + f.name)))
+				(((path + f.name + "_count")))
 				((*- endif *));
 				(((loop_idx)))++) 
 		{

@@ -341,11 +341,11 @@ static inline bool operator==(const sbp_msg_acq_sv_profile_t &a, const sbp_msg_a
   (void)a;
   (void)b;
 
-  if (a.n_acq_sv_profile != b.n_acq_sv_profile)
+  if (a.acq_sv_profile_count != b.acq_sv_profile_count)
   {
     return false;
   }
-  for (size_t acq_sv_profile_idx = 0; acq_sv_profile_idx < (size_t)a.n_acq_sv_profile; acq_sv_profile_idx++)
+  for (size_t acq_sv_profile_idx = 0; acq_sv_profile_idx < (size_t)a.acq_sv_profile_count; acq_sv_profile_idx++)
   {
 
     if (a.acq_sv_profile[acq_sv_profile_idx].job_type != b.acq_sv_profile[acq_sv_profile_idx].job_type)
@@ -428,11 +428,11 @@ static inline bool operator==(const sbp_msg_acq_sv_profile_dep_t &a, const sbp_m
   (void)a;
   (void)b;
 
-  if (a.n_acq_sv_profile != b.n_acq_sv_profile)
+  if (a.acq_sv_profile_count != b.acq_sv_profile_count)
   {
     return false;
   }
-  for (size_t acq_sv_profile_idx = 0; acq_sv_profile_idx < (size_t)a.n_acq_sv_profile; acq_sv_profile_idx++)
+  for (size_t acq_sv_profile_idx = 0; acq_sv_profile_idx < (size_t)a.acq_sv_profile_count; acq_sv_profile_idx++)
   {
 
     if (a.acq_sv_profile[acq_sv_profile_idx].job_type != b.acq_sv_profile[acq_sv_profile_idx].job_type)

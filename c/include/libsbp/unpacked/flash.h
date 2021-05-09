@@ -54,10 +54,6 @@ typedef struct
    * Data to program addresses with, with length N=addr_len
    */
   u8 data[250];
-  /**
-   * Number of items in data
-   */
-  u8 n_data;
 } sbp_msg_flash_program_t;
 /** Flash response message (host <= device).
  *

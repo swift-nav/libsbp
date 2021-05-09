@@ -69,7 +69,7 @@ typedef struct
   /**
    * Number of items in version
    */
-  u8 n_version;
+  u8 version_count;
 } sbp_msg_bootloader_handshake_resp_t;
 /** Bootloader jump to application (host => device)
  *
@@ -136,7 +136,7 @@ typedef struct
   /**
    * Number of items in handshake
    */
-  u8 n_handshake;
+  u8 handshake_count;
 } sbp_msg_bootloader_handshake_dep_a_t;
 
 #include <libsbp/unpacked/bootload_operators.h>

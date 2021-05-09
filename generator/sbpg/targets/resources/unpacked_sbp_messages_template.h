@@ -38,11 +38,11 @@
   ((*- endif *))
   ;
  
-  ((*- if f.order == "variable-array" and not f.count *))
+  ((*- if f.order == "variable-array" and not f.size_fn *))
   /**
    * Number of items in (((f.name)))
    */
-  u8 n_(((f.name)));
+  u8 (((f.name)))_count;
   ((*- endif *))
 
  ((*- endfor *))

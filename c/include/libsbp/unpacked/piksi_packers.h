@@ -2055,7 +2055,7 @@ static inline bool sbp_unpack_sbp_msg_device_monitor_t(const u8 *buf, size_t len
 static inline size_t sbp_packed_size_sbp_msg_command_req_t(const sbp_msg_command_req_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->sequence) + (msg->n_command * sizeof(msg->command[0]));
+  return 0 + sizeof(msg->sequence) + (msg->command_count * sizeof(msg->command[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_command_req_t(u8 *buf, size_t len, const sbp_msg_command_req_t *msg)
@@ -2078,7 +2078,7 @@ static inline bool sbp_pack_sbp_msg_command_req_t(u8 *buf, size_t len, const sbp
   memcpy(buf + offset, &msgsequence, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  for (size_t msgcommand_idx = 0; msgcommand_idx < (size_t)msg->n_command; msgcommand_idx++)
+  for (size_t msgcommand_idx = 0; msgcommand_idx < (size_t)msg->command_count; msgcommand_idx++)
   {
 
     if (offset + 1 > len)
@@ -2109,9 +2109,9 @@ static inline bool sbp_unpack_sbp_msg_command_req_t(const u8 *buf, size_t len, s
   msg->sequence = le32toh(msg->sequence);
   // NOLINTNEXTLINE
   offset += 4;
-  msg->n_command = (u8)((len - offset) / 1);
+  msg->command_count = (u8)((len - offset) / 1);
 
-  for (size_t msgcommand_idx = 0; msgcommand_idx < msg->n_command; msgcommand_idx++)
+  for (size_t msgcommand_idx = 0; msgcommand_idx < msg->command_count; msgcommand_idx++)
   {
 
     if (offset + 1 > len)
@@ -2196,7 +2196,7 @@ static inline bool sbp_unpack_sbp_msg_command_resp_t(const u8 *buf, size_t len, 
 static inline size_t sbp_packed_size_sbp_msg_command_output_t(const sbp_msg_command_output_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->sequence) + (msg->n_line * sizeof(msg->line[0]));
+  return 0 + sizeof(msg->sequence) + (msg->line_count * sizeof(msg->line[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_command_output_t(u8 *buf, size_t len, const sbp_msg_command_output_t *msg)
@@ -2219,7 +2219,7 @@ static inline bool sbp_pack_sbp_msg_command_output_t(u8 *buf, size_t len, const 
   memcpy(buf + offset, &msgsequence, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  for (size_t msgline_idx = 0; msgline_idx < (size_t)msg->n_line; msgline_idx++)
+  for (size_t msgline_idx = 0; msgline_idx < (size_t)msg->line_count; msgline_idx++)
   {
 
     if (offset + 1 > len)
@@ -2250,9 +2250,9 @@ static inline bool sbp_unpack_sbp_msg_command_output_t(const u8 *buf, size_t len
   msg->sequence = le32toh(msg->sequence);
   // NOLINTNEXTLINE
   offset += 4;
-  msg->n_line = (u8)((len - offset) / 1);
+  msg->line_count = (u8)((len - offset) / 1);
 
-  for (size_t msgline_idx = 0; msgline_idx < msg->n_line; msgline_idx++)
+  for (size_t msgline_idx = 0; msgline_idx < msg->line_count; msgline_idx++)
   {
 
     if (offset + 1 > len)
@@ -2618,7 +2618,8 @@ static inline bool sbp_unpack_sbp_network_usage_t(const u8 *buf, size_t len, sbp
 static inline size_t sbp_packed_size_sbp_msg_network_bandwidth_usage_t(const sbp_msg_network_bandwidth_usage_t *msg)
 {
   (void)msg;
-  return 0 + (msg->n_interfaces * (0 + sizeof(msg->interfaces[0].duration) + sizeof(msg->interfaces[0].total_bytes) +
+  return 0 +
+         (msg->interfaces_count * (0 + sizeof(msg->interfaces[0].duration) + sizeof(msg->interfaces[0].total_bytes) +
                                    sizeof(msg->interfaces[0].rx_bytes) + sizeof(msg->interfaces[0].tx_bytes) +
                                    (16 * sizeof(msg->interfaces[0].interface_name[0]))));
 }
@@ -2636,7 +2637,7 @@ sbp_pack_sbp_msg_network_bandwidth_usage_t(u8 *buf, size_t len, const sbp_msg_ne
     return false;
   }
 
-  for (size_t msginterfaces_idx = 0; msginterfaces_idx < (size_t)msg->n_interfaces; msginterfaces_idx++)
+  for (size_t msginterfaces_idx = 0; msginterfaces_idx < (size_t)msg->interfaces_count; msginterfaces_idx++)
   {
 
     if (offset + 8 > len)
@@ -2704,9 +2705,9 @@ sbp_unpack_sbp_msg_network_bandwidth_usage_t(const u8 *buf, size_t len, sbp_msg_
   (void)len;
   (void)msg;
 
-  msg->n_interfaces = (u8)((len - offset) / 40);
+  msg->interfaces_count = (u8)((len - offset) / 40);
 
-  for (size_t msginterfaces_idx = 0; msginterfaces_idx < msg->n_interfaces; msginterfaces_idx++)
+  for (size_t msginterfaces_idx = 0; msginterfaces_idx < msg->interfaces_count; msginterfaces_idx++)
   {
 
     if (offset + 8 > len)
@@ -2767,7 +2768,7 @@ static inline size_t sbp_packed_size_sbp_msg_cell_modem_status_t(const sbp_msg_c
 {
   (void)msg;
   return 0 + sizeof(msg->signal_strength) + sizeof(msg->signal_error_rate) +
-         (msg->n_reserved * sizeof(msg->reserved[0]));
+         (msg->reserved_count * sizeof(msg->reserved[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_cell_modem_status_t(u8 *buf, size_t len, const sbp_msg_cell_modem_status_t *msg)
@@ -2799,7 +2800,7 @@ static inline bool sbp_pack_sbp_msg_cell_modem_status_t(u8 *buf, size_t len, con
   memcpy(buf + offset, &msgsignal_error_rate, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  for (size_t msgreserved_idx = 0; msgreserved_idx < (size_t)msg->n_reserved; msgreserved_idx++)
+  for (size_t msgreserved_idx = 0; msgreserved_idx < (size_t)msg->reserved_count; msgreserved_idx++)
   {
 
     if (offset + 1 > len)
@@ -2837,9 +2838,9 @@ static inline bool sbp_unpack_sbp_msg_cell_modem_status_t(const u8 *buf, size_t 
   memcpy(&msg->signal_error_rate, buf + offset, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  msg->n_reserved = (u8)((len - offset) / 1);
+  msg->reserved_count = (u8)((len - offset) / 1);
 
-  for (size_t msgreserved_idx = 0; msgreserved_idx < msg->n_reserved; msgreserved_idx++)
+  for (size_t msgreserved_idx = 0; msgreserved_idx < msg->reserved_count; msgreserved_idx++)
   {
 
     if (offset + 1 > len)
@@ -2858,7 +2859,7 @@ static inline size_t sbp_packed_size_sbp_msg_specan_dep_t(const sbp_msg_specan_d
   (void)msg;
   return 0 + sizeof(msg->channel_tag) + (0 + sizeof(msg->t.tow) + sizeof(msg->t.wn)) + sizeof(msg->freq_ref) +
          sizeof(msg->freq_step) + sizeof(msg->amplitude_ref) + sizeof(msg->amplitude_unit) +
-         (msg->n_amplitude_value * sizeof(msg->amplitude_value[0]));
+         (msg->amplitude_value_count * sizeof(msg->amplitude_value[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_specan_dep_t(u8 *buf, size_t len, const sbp_msg_specan_dep_t *msg)
@@ -2935,7 +2936,7 @@ static inline bool sbp_pack_sbp_msg_specan_dep_t(u8 *buf, size_t len, const sbp_
   memcpy(buf + offset, &msgamplitude_unit, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  for (size_t msgamplitude_value_idx = 0; msgamplitude_value_idx < (size_t)msg->n_amplitude_value;
+  for (size_t msgamplitude_value_idx = 0; msgamplitude_value_idx < (size_t)msg->amplitude_value_count;
        msgamplitude_value_idx++)
   {
 
@@ -3017,9 +3018,9 @@ static inline bool sbp_unpack_sbp_msg_specan_dep_t(const u8 *buf, size_t len, sb
   memcpy(&msg->amplitude_unit, buf + offset, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  msg->n_amplitude_value = (u8)((len - offset) / 1);
+  msg->amplitude_value_count = (u8)((len - offset) / 1);
 
-  for (size_t msgamplitude_value_idx = 0; msgamplitude_value_idx < msg->n_amplitude_value; msgamplitude_value_idx++)
+  for (size_t msgamplitude_value_idx = 0; msgamplitude_value_idx < msg->amplitude_value_count; msgamplitude_value_idx++)
   {
 
     if (offset + 1 > len)
@@ -3038,7 +3039,7 @@ static inline size_t sbp_packed_size_sbp_msg_specan_t(const sbp_msg_specan_t *ms
   (void)msg;
   return 0 + sizeof(msg->channel_tag) + (0 + sizeof(msg->t.tow) + sizeof(msg->t.ns_residual) + sizeof(msg->t.wn)) +
          sizeof(msg->freq_ref) + sizeof(msg->freq_step) + sizeof(msg->amplitude_ref) + sizeof(msg->amplitude_unit) +
-         (msg->n_amplitude_value * sizeof(msg->amplitude_value[0]));
+         (msg->amplitude_value_count * sizeof(msg->amplitude_value[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_specan_t(u8 *buf, size_t len, const sbp_msg_specan_t *msg)
@@ -3124,7 +3125,7 @@ static inline bool sbp_pack_sbp_msg_specan_t(u8 *buf, size_t len, const sbp_msg_
   memcpy(buf + offset, &msgamplitude_unit, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  for (size_t msgamplitude_value_idx = 0; msgamplitude_value_idx < (size_t)msg->n_amplitude_value;
+  for (size_t msgamplitude_value_idx = 0; msgamplitude_value_idx < (size_t)msg->amplitude_value_count;
        msgamplitude_value_idx++)
   {
 
@@ -3217,9 +3218,9 @@ static inline bool sbp_unpack_sbp_msg_specan_t(const u8 *buf, size_t len, sbp_ms
   memcpy(&msg->amplitude_unit, buf + offset, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  msg->n_amplitude_value = (u8)((len - offset) / 1);
+  msg->amplitude_value_count = (u8)((len - offset) / 1);
 
-  for (size_t msgamplitude_value_idx = 0; msgamplitude_value_idx < msg->n_amplitude_value; msgamplitude_value_idx++)
+  for (size_t msgamplitude_value_idx = 0; msgamplitude_value_idx < msg->amplitude_value_count; msgamplitude_value_idx++)
   {
 
     if (offset + 1 > len)

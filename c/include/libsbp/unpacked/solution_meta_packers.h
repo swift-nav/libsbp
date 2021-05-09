@@ -81,7 +81,7 @@ static inline size_t sbp_packed_size_sbp_msg_soln_meta_dep_a_t(const sbp_msg_sol
   return 0 + sizeof(msg->pdop) + sizeof(msg->hdop) + sizeof(msg->vdop) + sizeof(msg->n_sats) +
          sizeof(msg->age_corrections) + sizeof(msg->alignment_status) + sizeof(msg->last_used_gnss_pos_tow) +
          sizeof(msg->last_used_gnss_vel_tow) +
-         (msg->n_sol_in * (0 + sizeof(msg->sol_in[0].sensor_type) + sizeof(msg->sol_in[0].flags)));
+         (msg->sol_in_count * (0 + sizeof(msg->sol_in[0].sensor_type) + sizeof(msg->sol_in[0].flags)));
 }
 
 static inline bool sbp_pack_sbp_msg_soln_meta_dep_a_t(u8 *buf, size_t len, const sbp_msg_soln_meta_dep_a_t *msg)
@@ -167,7 +167,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_dep_a_t(u8 *buf, size_t len, const
   memcpy(buf + offset, &msglast_used_gnss_vel_tow, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  for (size_t msgsol_in_idx = 0; msgsol_in_idx < (size_t)msg->n_sol_in; msgsol_in_idx++)
+  for (size_t msgsol_in_idx = 0; msgsol_in_idx < (size_t)msg->sol_in_count; msgsol_in_idx++)
   {
 
     if (offset + 1 > len)
@@ -268,9 +268,9 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_dep_a_t(const u8 *buf, size_t le
   msg->last_used_gnss_vel_tow = le32toh(msg->last_used_gnss_vel_tow);
   // NOLINTNEXTLINE
   offset += 4;
-  msg->n_sol_in = (u8)((len - offset) / 2);
+  msg->sol_in_count = (u8)((len - offset) / 2);
 
-  for (size_t msgsol_in_idx = 0; msgsol_in_idx < msg->n_sol_in; msgsol_in_idx++)
+  for (size_t msgsol_in_idx = 0; msgsol_in_idx < msg->sol_in_count; msgsol_in_idx++)
   {
 
     if (offset + 1 > len)
@@ -297,7 +297,7 @@ static inline size_t sbp_packed_size_sbp_msg_soln_meta_t(const sbp_msg_soln_meta
   (void)msg;
   return 0 + sizeof(msg->tow) + sizeof(msg->pdop) + sizeof(msg->hdop) + sizeof(msg->vdop) +
          sizeof(msg->age_corrections) + sizeof(msg->age_gnss) +
-         (msg->n_sol_in * (0 + sizeof(msg->sol_in[0].sensor_type) + sizeof(msg->sol_in[0].flags)));
+         (msg->sol_in_count * (0 + sizeof(msg->sol_in[0].sensor_type) + sizeof(msg->sol_in[0].flags)));
 }
 
 static inline bool sbp_pack_sbp_msg_soln_meta_t(u8 *buf, size_t len, const sbp_msg_soln_meta_t *msg)
@@ -365,7 +365,7 @@ static inline bool sbp_pack_sbp_msg_soln_meta_t(u8 *buf, size_t len, const sbp_m
   memcpy(buf + offset, &msgage_gnss, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  for (size_t msgsol_in_idx = 0; msgsol_in_idx < (size_t)msg->n_sol_in; msgsol_in_idx++)
+  for (size_t msgsol_in_idx = 0; msgsol_in_idx < (size_t)msg->sol_in_count; msgsol_in_idx++)
   {
 
     if (offset + 1 > len)
@@ -450,9 +450,9 @@ static inline bool sbp_unpack_sbp_msg_soln_meta_t(const u8 *buf, size_t len, sbp
   msg->age_gnss = le32toh(msg->age_gnss);
   // NOLINTNEXTLINE
   offset += 4;
-  msg->n_sol_in = (u8)((len - offset) / 2);
+  msg->sol_in_count = (u8)((len - offset) / 2);
 
-  for (size_t msgsol_in_idx = 0; msgsol_in_idx < msg->n_sol_in; msgsol_in_idx++)
+  for (size_t msgsol_in_idx = 0; msgsol_in_idx < msg->sol_in_count; msgsol_in_idx++)
   {
 
     if (offset + 1 > len)

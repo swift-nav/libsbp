@@ -1049,7 +1049,7 @@ static inline bool sbp_unpack_sbp_acq_sv_profile_dep_t(const u8 *buf, size_t len
 static inline size_t sbp_packed_size_sbp_msg_acq_sv_profile_t(const sbp_msg_acq_sv_profile_t *msg)
 {
   (void)msg;
-  return 0 + (msg->n_acq_sv_profile *
+  return 0 + (msg->acq_sv_profile_count *
               (0 + sizeof(msg->acq_sv_profile[0].job_type) + sizeof(msg->acq_sv_profile[0].status) +
                sizeof(msg->acq_sv_profile[0].cn0) + sizeof(msg->acq_sv_profile[0].int_time) +
                (0 + sizeof(msg->acq_sv_profile[0].sid.sat) + sizeof(msg->acq_sv_profile[0].sid.code)) +
@@ -1071,7 +1071,8 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_t(u8 *buf, size_t len, const 
     return false;
   }
 
-  for (size_t msgacq_sv_profile_idx = 0; msgacq_sv_profile_idx < (size_t)msg->n_acq_sv_profile; msgacq_sv_profile_idx++)
+  for (size_t msgacq_sv_profile_idx = 0; msgacq_sv_profile_idx < (size_t)msg->acq_sv_profile_count;
+       msgacq_sv_profile_idx++)
   {
 
     if (offset + 1 > len)
@@ -1206,9 +1207,9 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(const u8 *buf, size_t len
   (void)len;
   (void)msg;
 
-  msg->n_acq_sv_profile = (u8)((len - offset) / 33);
+  msg->acq_sv_profile_count = (u8)((len - offset) / 33);
 
-  for (size_t msgacq_sv_profile_idx = 0; msgacq_sv_profile_idx < msg->n_acq_sv_profile; msgacq_sv_profile_idx++)
+  for (size_t msgacq_sv_profile_idx = 0; msgacq_sv_profile_idx < msg->acq_sv_profile_count; msgacq_sv_profile_idx++)
   {
 
     if (offset + 1 > len)
@@ -1338,7 +1339,7 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_t(const u8 *buf, size_t len
 static inline size_t sbp_packed_size_sbp_msg_acq_sv_profile_dep_t(const sbp_msg_acq_sv_profile_dep_t *msg)
 {
   (void)msg;
-  return 0 + (msg->n_acq_sv_profile *
+  return 0 + (msg->acq_sv_profile_count *
               (0 + sizeof(msg->acq_sv_profile[0].job_type) + sizeof(msg->acq_sv_profile[0].status) +
                sizeof(msg->acq_sv_profile[0].cn0) + sizeof(msg->acq_sv_profile[0].int_time) +
                (0 + sizeof(msg->acq_sv_profile[0].sid.sat) + sizeof(msg->acq_sv_profile[0].sid.code) +
@@ -1361,7 +1362,8 @@ static inline bool sbp_pack_sbp_msg_acq_sv_profile_dep_t(u8 *buf, size_t len, co
     return false;
   }
 
-  for (size_t msgacq_sv_profile_idx = 0; msgacq_sv_profile_idx < (size_t)msg->n_acq_sv_profile; msgacq_sv_profile_idx++)
+  for (size_t msgacq_sv_profile_idx = 0; msgacq_sv_profile_idx < (size_t)msg->acq_sv_profile_count;
+       msgacq_sv_profile_idx++)
   {
 
     if (offset + 1 > len)
@@ -1505,9 +1507,9 @@ static inline bool sbp_unpack_sbp_msg_acq_sv_profile_dep_t(const u8 *buf, size_t
   (void)len;
   (void)msg;
 
-  msg->n_acq_sv_profile = (u8)((len - offset) / 35);
+  msg->acq_sv_profile_count = (u8)((len - offset) / 35);
 
-  for (size_t msgacq_sv_profile_idx = 0; msgacq_sv_profile_idx < msg->n_acq_sv_profile; msgacq_sv_profile_idx++)
+  for (size_t msgacq_sv_profile_idx = 0; msgacq_sv_profile_idx < msg->acq_sv_profile_count; msgacq_sv_profile_idx++)
   {
 
     if (offset + 1 > len)

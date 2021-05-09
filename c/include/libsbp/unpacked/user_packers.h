@@ -14,7 +14,7 @@
 static inline size_t sbp_packed_size_sbp_msg_user_data_t(const sbp_msg_user_data_t *msg)
 {
   (void)msg;
-  return 0 + (msg->n_contents * sizeof(msg->contents[0]));
+  return 0 + (msg->contents_count * sizeof(msg->contents[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_user_data_t(u8 *buf, size_t len, const sbp_msg_user_data_t *msg)
@@ -29,7 +29,7 @@ static inline bool sbp_pack_sbp_msg_user_data_t(u8 *buf, size_t len, const sbp_m
     return false;
   }
 
-  for (size_t msgcontents_idx = 0; msgcontents_idx < (size_t)msg->n_contents; msgcontents_idx++)
+  for (size_t msgcontents_idx = 0; msgcontents_idx < (size_t)msg->contents_count; msgcontents_idx++)
   {
 
     if (offset + 1 > len)
@@ -52,9 +52,9 @@ static inline bool sbp_unpack_sbp_msg_user_data_t(const u8 *buf, size_t len, sbp
   (void)len;
   (void)msg;
 
-  msg->n_contents = (u8)((len - offset) / 1);
+  msg->contents_count = (u8)((len - offset) / 1);
 
-  for (size_t msgcontents_idx = 0; msgcontents_idx < msg->n_contents; msgcontents_idx++)
+  for (size_t msgcontents_idx = 0; msgcontents_idx < msg->contents_count; msgcontents_idx++)
   {
 
     if (offset + 1 > len)

@@ -522,7 +522,7 @@ typedef struct
   /**
    * Number of items in command
    */
-  u8 n_command;
+  u8 command_count;
 } sbp_msg_command_req_t;
 /** Exit code from executed command (device => host)
  *
@@ -566,7 +566,7 @@ typedef struct
   /**
    * Number of items in line
    */
-  u8 n_line;
+  u8 line_count;
 } sbp_msg_command_output_t;
 /** Request state of Piksi network interfaces
  *
@@ -865,7 +865,7 @@ typedef struct
   /**
    * Number of items in interfaces
    */
-  u8 n_interfaces;
+  u8 interfaces_count;
 } sbp_msg_network_bandwidth_usage_t;
 /** Cell modem information update message
  *
@@ -893,7 +893,7 @@ typedef struct
   /**
    * Number of items in reserved
    */
-  u8 n_reserved;
+  u8 reserved_count;
 } sbp_msg_cell_modem_status_t;
 /** Deprecated
  *
@@ -935,7 +935,7 @@ typedef struct
   /**
    * Number of items in amplitude_value
    */
-  u8 n_amplitude_value;
+  u8 amplitude_value_count;
 } sbp_msg_specan_dep_t;
 /** Spectrum analyzer
  *
@@ -977,7 +977,7 @@ typedef struct
   /**
    * Number of items in amplitude_value
    */
-  u8 n_amplitude_value;
+  u8 amplitude_value_count;
 } sbp_msg_specan_t;
 /** RF AGC status
  *

@@ -43,7 +43,7 @@ typedef struct
   /**
    * Number of items in setting
    */
-  u8 n_setting;
+  u8 setting_count;
 } sbp_msg_settings_write_t;
 /** Acknowledgement with status of MSG_SETTINGS_WRITE
  *
@@ -90,7 +90,7 @@ typedef struct
   /**
    * Number of items in setting
    */
-  u8 n_setting;
+  u8 setting_count;
 } sbp_msg_settings_write_resp_t;
 /** Read device configuration settings (host => device)
  *
@@ -116,7 +116,7 @@ typedef struct
   /**
    * Number of items in setting
    */
-  u8 n_setting;
+  u8 setting_count;
 } sbp_msg_settings_read_req_t;
 /** Read device configuration settings (host <= device)
  *
@@ -142,7 +142,7 @@ typedef struct
   /**
    * Number of items in setting
    */
-  u8 n_setting;
+  u8 setting_count;
 } sbp_msg_settings_read_resp_t;
 /** Read setting by direct index (host => device)
  *
@@ -192,7 +192,7 @@ typedef struct
   /**
    * Number of items in setting
    */
-  u8 n_setting;
+  u8 setting_count;
 } sbp_msg_settings_read_by_index_resp_t;
 /** Finished reading settings (host <= device)
  *
@@ -223,7 +223,7 @@ typedef struct
   /**
    * Number of items in setting
    */
-  u8 n_setting;
+  u8 setting_count;
 } sbp_msg_settings_register_t;
 /** Register setting and default value (device <= host)
  *
@@ -268,7 +268,7 @@ typedef struct
   /**
    * Number of items in setting
    */
-  u8 n_setting;
+  u8 setting_count;
 } sbp_msg_settings_register_resp_t;
 
 #include <libsbp/unpacked/settings_operators.h>

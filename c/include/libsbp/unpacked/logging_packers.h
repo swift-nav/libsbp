@@ -14,7 +14,7 @@
 static inline size_t sbp_packed_size_sbp_msg_log_t(const sbp_msg_log_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->level) + (msg->n_text * sizeof(msg->text[0]));
+  return 0 + sizeof(msg->level) + (msg->text_count * sizeof(msg->text[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_log_t(u8 *buf, size_t len, const sbp_msg_log_t *msg)
@@ -37,7 +37,7 @@ static inline bool sbp_pack_sbp_msg_log_t(u8 *buf, size_t len, const sbp_msg_log
   memcpy(buf + offset, &msglevel, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgtext_idx = 0; msgtext_idx < (size_t)msg->n_text; msgtext_idx++)
+  for (size_t msgtext_idx = 0; msgtext_idx < (size_t)msg->text_count; msgtext_idx++)
   {
 
     if (offset + 1 > len)
@@ -67,9 +67,9 @@ static inline bool sbp_unpack_sbp_msg_log_t(const u8 *buf, size_t len, sbp_msg_l
   memcpy(&msg->level, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_text = (u8)((len - offset) / 1);
+  msg->text_count = (u8)((len - offset) / 1);
 
-  for (size_t msgtext_idx = 0; msgtext_idx < msg->n_text; msgtext_idx++)
+  for (size_t msgtext_idx = 0; msgtext_idx < msg->text_count; msgtext_idx++)
   {
 
     if (offset + 1 > len)
@@ -86,7 +86,7 @@ static inline bool sbp_unpack_sbp_msg_log_t(const u8 *buf, size_t len, sbp_msg_l
 static inline size_t sbp_packed_size_sbp_msg_fwd_t(const sbp_msg_fwd_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->source) + sizeof(msg->protocol) + (msg->n_fwd_payload * sizeof(msg->fwd_payload[0]));
+  return 0 + sizeof(msg->source) + sizeof(msg->protocol) + (msg->fwd_payload_count * sizeof(msg->fwd_payload[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_fwd_t(u8 *buf, size_t len, const sbp_msg_fwd_t *msg)
@@ -118,7 +118,7 @@ static inline bool sbp_pack_sbp_msg_fwd_t(u8 *buf, size_t len, const sbp_msg_fwd
   memcpy(buf + offset, &msgprotocol, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgfwd_payload_idx = 0; msgfwd_payload_idx < (size_t)msg->n_fwd_payload; msgfwd_payload_idx++)
+  for (size_t msgfwd_payload_idx = 0; msgfwd_payload_idx < (size_t)msg->fwd_payload_count; msgfwd_payload_idx++)
   {
 
     if (offset + 1 > len)
@@ -156,9 +156,9 @@ static inline bool sbp_unpack_sbp_msg_fwd_t(const u8 *buf, size_t len, sbp_msg_f
   memcpy(&msg->protocol, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_fwd_payload = (u8)((len - offset) / 1);
+  msg->fwd_payload_count = (u8)((len - offset) / 1);
 
-  for (size_t msgfwd_payload_idx = 0; msgfwd_payload_idx < msg->n_fwd_payload; msgfwd_payload_idx++)
+  for (size_t msgfwd_payload_idx = 0; msgfwd_payload_idx < msg->fwd_payload_count; msgfwd_payload_idx++)
   {
 
     if (offset + 1 > len)
@@ -175,7 +175,7 @@ static inline bool sbp_unpack_sbp_msg_fwd_t(const u8 *buf, size_t len, sbp_msg_f
 static inline size_t sbp_packed_size_sbp_msg_print_dep_t(const sbp_msg_print_dep_t *msg)
 {
   (void)msg;
-  return 0 + (msg->n_text * sizeof(msg->text[0]));
+  return 0 + (msg->text_count * sizeof(msg->text[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_print_dep_t(u8 *buf, size_t len, const sbp_msg_print_dep_t *msg)
@@ -190,7 +190,7 @@ static inline bool sbp_pack_sbp_msg_print_dep_t(u8 *buf, size_t len, const sbp_m
     return false;
   }
 
-  for (size_t msgtext_idx = 0; msgtext_idx < (size_t)msg->n_text; msgtext_idx++)
+  for (size_t msgtext_idx = 0; msgtext_idx < (size_t)msg->text_count; msgtext_idx++)
   {
 
     if (offset + 1 > len)
@@ -213,9 +213,9 @@ static inline bool sbp_unpack_sbp_msg_print_dep_t(const u8 *buf, size_t len, sbp
   (void)len;
   (void)msg;
 
-  msg->n_text = (u8)((len - offset) / 1);
+  msg->text_count = (u8)((len - offset) / 1);
 
-  for (size_t msgtext_idx = 0; msgtext_idx < msg->n_text; msgtext_idx++)
+  for (size_t msgtext_idx = 0; msgtext_idx < msg->text_count; msgtext_idx++)
   {
 
     if (offset + 1 > len)

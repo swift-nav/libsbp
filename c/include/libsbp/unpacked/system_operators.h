@@ -59,11 +59,11 @@ static inline bool operator==(const sbp_msg_dgnss_status_t &a, const sbp_msg_dgn
   {
     return false;
   }
-  if (a.n_source != b.n_source)
+  if (a.source_count != b.source_count)
   {
     return false;
   }
-  for (size_t source_idx = 0; source_idx < (size_t)a.n_source; source_idx++)
+  for (size_t source_idx = 0; source_idx < (size_t)a.source_count; source_idx++)
   {
 
     if (a.source[source_idx] != b.source[source_idx])
@@ -153,11 +153,11 @@ static inline bool operator==(const sbp_msg_status_report_t &a, const sbp_msg_st
   {
     return false;
   }
-  if (a.n_status != b.n_status)
+  if (a.status_count != b.status_count)
   {
     return false;
   }
-  for (size_t status_idx = 0; status_idx < (size_t)a.n_status; status_idx++)
+  for (size_t status_idx = 0; status_idx < (size_t)a.status_count; status_idx++)
   {
 
     if (a.status[status_idx].component != b.status[status_idx].component)
@@ -213,11 +213,11 @@ static inline bool operator==(const sbp_msg_csac_telemetry_t &a, const sbp_msg_c
   {
     return false;
   }
-  if (a.n_telemetry != b.n_telemetry)
+  if (a.telemetry_count != b.telemetry_count)
   {
     return false;
   }
-  for (size_t telemetry_idx = 0; telemetry_idx < (size_t)a.n_telemetry; telemetry_idx++)
+  for (size_t telemetry_idx = 0; telemetry_idx < (size_t)a.telemetry_count; telemetry_idx++)
   {
 
     if (a.telemetry[telemetry_idx] != b.telemetry[telemetry_idx])
@@ -244,11 +244,11 @@ static inline bool operator==(const sbp_msg_csac_telemetry_labels_t &a, const sb
   {
     return false;
   }
-  if (a.n_telemetry_labels != b.n_telemetry_labels)
+  if (a.telemetry_labels_count != b.telemetry_labels_count)
   {
     return false;
   }
-  for (size_t telemetry_labels_idx = 0; telemetry_labels_idx < (size_t)a.n_telemetry_labels; telemetry_labels_idx++)
+  for (size_t telemetry_labels_idx = 0; telemetry_labels_idx < (size_t)a.telemetry_labels_count; telemetry_labels_idx++)
   {
 
     if (a.telemetry_labels[telemetry_labels_idx] != b.telemetry_labels[telemetry_labels_idx])

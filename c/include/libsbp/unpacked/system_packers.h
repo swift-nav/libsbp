@@ -97,7 +97,7 @@ static inline size_t sbp_packed_size_sbp_msg_dgnss_status_t(const sbp_msg_dgnss_
 {
   (void)msg;
   return 0 + sizeof(msg->flags) + sizeof(msg->latency) + sizeof(msg->num_signals) +
-         (msg->n_source * sizeof(msg->source[0]));
+         (msg->source_count * sizeof(msg->source[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_dgnss_status_t(u8 *buf, size_t len, const sbp_msg_dgnss_status_t *msg)
@@ -138,7 +138,7 @@ static inline bool sbp_pack_sbp_msg_dgnss_status_t(u8 *buf, size_t len, const sb
   memcpy(buf + offset, &msgnum_signals, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgsource_idx = 0; msgsource_idx < (size_t)msg->n_source; msgsource_idx++)
+  for (size_t msgsource_idx = 0; msgsource_idx < (size_t)msg->source_count; msgsource_idx++)
   {
 
     if (offset + 1 > len)
@@ -185,9 +185,9 @@ static inline bool sbp_unpack_sbp_msg_dgnss_status_t(const u8 *buf, size_t len, 
   memcpy(&msg->num_signals, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_source = (u8)((len - offset) / 1);
+  msg->source_count = (u8)((len - offset) / 1);
 
-  for (size_t msgsource_idx = 0; msgsource_idx < msg->n_source; msgsource_idx++)
+  for (size_t msgsource_idx = 0; msgsource_idx < msg->source_count; msgsource_idx++)
   {
 
     if (offset + 1 > len)
@@ -335,7 +335,7 @@ static inline size_t sbp_packed_size_sbp_msg_status_report_t(const sbp_msg_statu
 {
   (void)msg;
   return 0 + sizeof(msg->reporting_system) + sizeof(msg->sbp_version) + sizeof(msg->sequence) + sizeof(msg->uptime) +
-         (msg->n_status *
+         (msg->status_count *
           (0 + sizeof(msg->status[0].component) + sizeof(msg->status[0].generic) + sizeof(msg->status[0].specific)));
 }
 
@@ -386,7 +386,7 @@ static inline bool sbp_pack_sbp_msg_status_report_t(u8 *buf, size_t len, const s
   memcpy(buf + offset, &msguptime, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  for (size_t msgstatus_idx = 0; msgstatus_idx < (size_t)msg->n_status; msgstatus_idx++)
+  for (size_t msgstatus_idx = 0; msgstatus_idx < (size_t)msg->status_count; msgstatus_idx++)
   {
 
     if (offset + 2 > len)
@@ -462,9 +462,9 @@ static inline bool sbp_unpack_sbp_msg_status_report_t(const u8 *buf, size_t len,
   msg->uptime = le32toh(msg->uptime);
   // NOLINTNEXTLINE
   offset += 4;
-  msg->n_status = (u8)((len - offset) / 4);
+  msg->status_count = (u8)((len - offset) / 4);
 
-  for (size_t msgstatus_idx = 0; msgstatus_idx < msg->n_status; msgstatus_idx++)
+  for (size_t msgstatus_idx = 0; msgstatus_idx < msg->status_count; msgstatus_idx++)
   {
 
     if (offset + 2 > len)
@@ -546,7 +546,7 @@ static inline bool sbp_unpack_sbp_msg_ins_status_t(const u8 *buf, size_t len, sb
 static inline size_t sbp_packed_size_sbp_msg_csac_telemetry_t(const sbp_msg_csac_telemetry_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->id) + (msg->n_telemetry * sizeof(msg->telemetry[0]));
+  return 0 + sizeof(msg->id) + (msg->telemetry_count * sizeof(msg->telemetry[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_csac_telemetry_t(u8 *buf, size_t len, const sbp_msg_csac_telemetry_t *msg)
@@ -569,7 +569,7 @@ static inline bool sbp_pack_sbp_msg_csac_telemetry_t(u8 *buf, size_t len, const 
   memcpy(buf + offset, &msgid, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgtelemetry_idx = 0; msgtelemetry_idx < (size_t)msg->n_telemetry; msgtelemetry_idx++)
+  for (size_t msgtelemetry_idx = 0; msgtelemetry_idx < (size_t)msg->telemetry_count; msgtelemetry_idx++)
   {
 
     if (offset + 1 > len)
@@ -599,9 +599,9 @@ static inline bool sbp_unpack_sbp_msg_csac_telemetry_t(const u8 *buf, size_t len
   memcpy(&msg->id, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_telemetry = (u8)((len - offset) / 1);
+  msg->telemetry_count = (u8)((len - offset) / 1);
 
-  for (size_t msgtelemetry_idx = 0; msgtelemetry_idx < msg->n_telemetry; msgtelemetry_idx++)
+  for (size_t msgtelemetry_idx = 0; msgtelemetry_idx < msg->telemetry_count; msgtelemetry_idx++)
   {
 
     if (offset + 1 > len)
@@ -618,7 +618,7 @@ static inline bool sbp_unpack_sbp_msg_csac_telemetry_t(const u8 *buf, size_t len
 static inline size_t sbp_packed_size_sbp_msg_csac_telemetry_labels_t(const sbp_msg_csac_telemetry_labels_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->id) + (msg->n_telemetry_labels * sizeof(msg->telemetry_labels[0]));
+  return 0 + sizeof(msg->id) + (msg->telemetry_labels_count * sizeof(msg->telemetry_labels[0]));
 }
 
 static inline bool
@@ -642,7 +642,7 @@ sbp_pack_sbp_msg_csac_telemetry_labels_t(u8 *buf, size_t len, const sbp_msg_csac
   memcpy(buf + offset, &msgid, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgtelemetry_labels_idx = 0; msgtelemetry_labels_idx < (size_t)msg->n_telemetry_labels;
+  for (size_t msgtelemetry_labels_idx = 0; msgtelemetry_labels_idx < (size_t)msg->telemetry_labels_count;
        msgtelemetry_labels_idx++)
   {
 
@@ -674,9 +674,10 @@ sbp_unpack_sbp_msg_csac_telemetry_labels_t(const u8 *buf, size_t len, sbp_msg_cs
   memcpy(&msg->id, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_telemetry_labels = (u8)((len - offset) / 1);
+  msg->telemetry_labels_count = (u8)((len - offset) / 1);
 
-  for (size_t msgtelemetry_labels_idx = 0; msgtelemetry_labels_idx < msg->n_telemetry_labels; msgtelemetry_labels_idx++)
+  for (size_t msgtelemetry_labels_idx = 0; msgtelemetry_labels_idx < msg->telemetry_labels_count;
+       msgtelemetry_labels_idx++)
   {
 
     if (offset + 1 > len)

@@ -1021,7 +1021,7 @@ static inline size_t sbp_packed_size_sbp_grid_element_no_std_t(const sbp_grid_el
   (void)msg;
   return 0 + sizeof(msg->index) +
          (0 + sizeof(msg->tropo_delay_correction.hydro) + sizeof(msg->tropo_delay_correction.wet)) +
-         (msg->n_stec_residuals *
+         (msg->stec_residuals_count *
           (0 + (0 + sizeof(msg->stec_residuals[0].sv_id.satId) + sizeof(msg->stec_residuals[0].sv_id.constellation)) +
            sizeof(msg->stec_residuals[0].residual)));
 }
@@ -1064,7 +1064,8 @@ static inline bool sbp_pack_sbp_grid_element_no_std_t(u8 *buf, size_t len, const
   memcpy(buf + offset, &msgtropo_delay_correctionwet, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgstec_residuals_idx = 0; msgstec_residuals_idx < (size_t)msg->n_stec_residuals; msgstec_residuals_idx++)
+  for (size_t msgstec_residuals_idx = 0; msgstec_residuals_idx < (size_t)msg->stec_residuals_count;
+       msgstec_residuals_idx++)
   {
 
     if (offset + 1 > len)
@@ -1134,9 +1135,9 @@ static inline bool sbp_unpack_sbp_grid_element_no_std_t(const u8 *buf, size_t le
   memcpy(&msg->tropo_delay_correction.wet, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_stec_residuals = (u8)((len - offset) / 4);
+  msg->stec_residuals_count = (u8)((len - offset) / 4);
 
-  for (size_t msgstec_residuals_idx = 0; msgstec_residuals_idx < msg->n_stec_residuals; msgstec_residuals_idx++)
+  for (size_t msgstec_residuals_idx = 0; msgstec_residuals_idx < msg->stec_residuals_count; msgstec_residuals_idx++)
   {
 
     if (offset + 1 > len)
@@ -1176,7 +1177,7 @@ static inline size_t sbp_packed_size_sbp_grid_element_t(const sbp_grid_element_t
   return 0 + sizeof(msg->index) +
          (0 + sizeof(msg->tropo_delay_correction.hydro) + sizeof(msg->tropo_delay_correction.wet) +
           sizeof(msg->tropo_delay_correction.stddev)) +
-         (msg->n_stec_residuals *
+         (msg->stec_residuals_count *
           (0 + (0 + sizeof(msg->stec_residuals[0].sv_id.satId) + sizeof(msg->stec_residuals[0].sv_id.constellation)) +
            sizeof(msg->stec_residuals[0].residual) + sizeof(msg->stec_residuals[0].stddev)));
 }
@@ -1228,7 +1229,8 @@ static inline bool sbp_pack_sbp_grid_element_t(u8 *buf, size_t len, const sbp_gr
   memcpy(buf + offset, &msgtropo_delay_correctionstddev, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgstec_residuals_idx = 0; msgstec_residuals_idx < (size_t)msg->n_stec_residuals; msgstec_residuals_idx++)
+  for (size_t msgstec_residuals_idx = 0; msgstec_residuals_idx < (size_t)msg->stec_residuals_count;
+       msgstec_residuals_idx++)
   {
 
     if (offset + 1 > len)
@@ -1315,9 +1317,9 @@ static inline bool sbp_unpack_sbp_grid_element_t(const u8 *buf, size_t len, sbp_
   memcpy(&msg->tropo_delay_correction.stddev, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_stec_residuals = (u8)((len - offset) / 5);
+  msg->stec_residuals_count = (u8)((len - offset) / 5);
 
-  for (size_t msgstec_residuals_idx = 0; msgstec_residuals_idx < msg->n_stec_residuals; msgstec_residuals_idx++)
+  for (size_t msgstec_residuals_idx = 0; msgstec_residuals_idx < msg->stec_residuals_count; msgstec_residuals_idx++)
   {
 
     if (offset + 1 > len)
@@ -1699,7 +1701,7 @@ static inline size_t sbp_packed_size_sbp_msg_ssr_code_biases_t(const sbp_msg_ssr
   (void)msg;
   return 0 + (0 + sizeof(msg->time.tow) + sizeof(msg->time.wn)) + (0 + sizeof(msg->sid.sat) + sizeof(msg->sid.code)) +
          sizeof(msg->update_interval) + sizeof(msg->iod_ssr) +
-         (msg->n_biases * (0 + sizeof(msg->biases[0].code) + sizeof(msg->biases[0].value)));
+         (msg->biases_count * (0 + sizeof(msg->biases[0].code) + sizeof(msg->biases[0].value)));
 }
 
 static inline bool sbp_pack_sbp_msg_ssr_code_biases_t(u8 *buf, size_t len, const sbp_msg_ssr_code_biases_t *msg)
@@ -1767,7 +1769,7 @@ static inline bool sbp_pack_sbp_msg_ssr_code_biases_t(u8 *buf, size_t len, const
   memcpy(buf + offset, &msgiod_ssr, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgbiases_idx = 0; msgbiases_idx < (size_t)msg->n_biases; msgbiases_idx++)
+  for (size_t msgbiases_idx = 0; msgbiases_idx < (size_t)msg->biases_count; msgbiases_idx++)
   {
 
     if (offset + 1 > len)
@@ -1848,9 +1850,9 @@ static inline bool sbp_unpack_sbp_msg_ssr_code_biases_t(const u8 *buf, size_t le
   memcpy(&msg->iod_ssr, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_biases = (u8)((len - offset) / 3);
+  msg->biases_count = (u8)((len - offset) / 3);
 
-  for (size_t msgbiases_idx = 0; msgbiases_idx < msg->n_biases; msgbiases_idx++)
+  for (size_t msgbiases_idx = 0; msgbiases_idx < msg->biases_count; msgbiases_idx++)
   {
 
     if (offset + 1 > len)
@@ -1881,9 +1883,9 @@ static inline size_t sbp_packed_size_sbp_msg_ssr_phase_biases_t(const sbp_msg_ss
   return 0 + (0 + sizeof(msg->time.tow) + sizeof(msg->time.wn)) + (0 + sizeof(msg->sid.sat) + sizeof(msg->sid.code)) +
          sizeof(msg->update_interval) + sizeof(msg->iod_ssr) + sizeof(msg->dispersive_bias) +
          sizeof(msg->mw_consistency) + sizeof(msg->yaw) + sizeof(msg->yaw_rate) +
-         (msg->n_biases * (0 + sizeof(msg->biases[0].code) + sizeof(msg->biases[0].integer_indicator) +
-                           sizeof(msg->biases[0].widelane_integer_indicator) +
-                           sizeof(msg->biases[0].discontinuity_counter) + sizeof(msg->biases[0].bias)));
+         (msg->biases_count * (0 + sizeof(msg->biases[0].code) + sizeof(msg->biases[0].integer_indicator) +
+                               sizeof(msg->biases[0].widelane_integer_indicator) +
+                               sizeof(msg->biases[0].discontinuity_counter) + sizeof(msg->biases[0].bias)));
 }
 
 static inline bool sbp_pack_sbp_msg_ssr_phase_biases_t(u8 *buf, size_t len, const sbp_msg_ssr_phase_biases_t *msg)
@@ -1987,7 +1989,7 @@ static inline bool sbp_pack_sbp_msg_ssr_phase_biases_t(u8 *buf, size_t len, cons
   memcpy(buf + offset, &msgyaw_rate, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgbiases_idx = 0; msgbiases_idx < (size_t)msg->n_biases; msgbiases_idx++)
+  for (size_t msgbiases_idx = 0; msgbiases_idx < (size_t)msg->biases_count; msgbiases_idx++)
   {
 
     if (offset + 1 > len)
@@ -2128,9 +2130,9 @@ static inline bool sbp_unpack_sbp_msg_ssr_phase_biases_t(const u8 *buf, size_t l
   memcpy(&msg->yaw_rate, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_biases = (u8)((len - offset) / 8);
+  msg->biases_count = (u8)((len - offset) / 8);
 
-  for (size_t msgbiases_idx = 0; msgbiases_idx < msg->n_biases; msgbiases_idx++)
+  for (size_t msgbiases_idx = 0; msgbiases_idx < msg->biases_count; msgbiases_idx++)
   {
 
     if (offset + 1 > len)
@@ -2186,7 +2188,7 @@ static inline size_t sbp_packed_size_sbp_msg_ssr_stec_correction_t(const sbp_msg
          (0 + sizeof(msg->header.tile_set_id) + sizeof(msg->header.tile_id) +
           (0 + sizeof(msg->header.time.tow) + sizeof(msg->header.time.wn)) + sizeof(msg->header.num_msgs) +
           sizeof(msg->header.seq_num) + sizeof(msg->header.update_interval) + sizeof(msg->header.iod_atmo)) +
-         (msg->n_stec_sat_list *
+         (msg->stec_sat_list_count *
           (0 + (0 + sizeof(msg->stec_sat_list[0].sv_id.satId) + sizeof(msg->stec_sat_list[0].sv_id.constellation)) +
            sizeof(msg->stec_sat_list[0].stec_quality_indicator) + (4 * sizeof(msg->stec_sat_list[0].stec_coeff[0]))));
 }
@@ -2274,7 +2276,7 @@ static inline bool sbp_pack_sbp_msg_ssr_stec_correction_t(u8 *buf, size_t len, c
   memcpy(buf + offset, &msgheaderiod_atmo, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgstec_sat_list_idx = 0; msgstec_sat_list_idx < (size_t)msg->n_stec_sat_list; msgstec_sat_list_idx++)
+  for (size_t msgstec_sat_list_idx = 0; msgstec_sat_list_idx < (size_t)msg->stec_sat_list_count; msgstec_sat_list_idx++)
   {
 
     if (offset + 1 > len)
@@ -2403,9 +2405,9 @@ sbp_unpack_sbp_msg_ssr_stec_correction_t(const u8 *buf, size_t len, sbp_msg_ssr_
   memcpy(&msg->header.iod_atmo, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_stec_sat_list = (u8)((len - offset) / 11);
+  msg->stec_sat_list_count = (u8)((len - offset) / 11);
 
-  for (size_t msgstec_sat_list_idx = 0; msgstec_sat_list_idx < msg->n_stec_sat_list; msgstec_sat_list_idx++)
+  for (size_t msgstec_sat_list_idx = 0; msgstec_sat_list_idx < msg->stec_sat_list_count; msgstec_sat_list_idx++)
   {
 
     if (offset + 1 > len)
@@ -2468,7 +2470,7 @@ static inline size_t sbp_packed_size_sbp_msg_ssr_gridded_correction_t(const sbp_
          (0 + sizeof(msg->element.index) +
           (0 + sizeof(msg->element.tropo_delay_correction.hydro) + sizeof(msg->element.tropo_delay_correction.wet) +
            sizeof(msg->element.tropo_delay_correction.stddev)) +
-          (msg->element.n_stec_residuals *
+          (msg->element.stec_residuals_count *
            (0 +
             (0 + sizeof(msg->element.stec_residuals[0].sv_id.satId) +
              sizeof(msg->element.stec_residuals[0].sv_id.constellation)) +
@@ -2604,7 +2606,8 @@ sbp_pack_sbp_msg_ssr_gridded_correction_t(u8 *buf, size_t len, const sbp_msg_ssr
   memcpy(buf + offset, &msgelementtropo_delay_correctionstddev, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgelementstec_residuals_idx = 0; msgelementstec_residuals_idx < (size_t)msg->element.n_stec_residuals;
+  for (size_t msgelementstec_residuals_idx = 0;
+       msgelementstec_residuals_idx < (size_t)msg->element.stec_residuals_count;
        msgelementstec_residuals_idx++)
   {
 
@@ -2773,9 +2776,9 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_t(const u8 *buf, size_t len, sbp_msg_s
   memcpy(&msg->element.tropo_delay_correction.stddev, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->element.n_stec_residuals = (u8)((len - offset) / 5);
+  msg->element.stec_residuals_count = (u8)((len - offset) / 5);
 
-  for (size_t msgelementstec_residuals_idx = 0; msgelementstec_residuals_idx < msg->element.n_stec_residuals;
+  for (size_t msgelementstec_residuals_idx = 0; msgelementstec_residuals_idx < msg->element.stec_residuals_count;
        msgelementstec_residuals_idx++)
   {
 
@@ -3171,7 +3174,7 @@ static inline bool sbp_unpack_sbp_satellite_apc_t(const u8 *buf, size_t len, sbp
 static inline size_t sbp_packed_size_sbp_msg_ssr_satellite_apc_t(const sbp_msg_ssr_satellite_apc_t *msg)
 {
   (void)msg;
-  return 0 + (msg->n_apc *
+  return 0 + (msg->apc_count *
               (0 + (0 + sizeof(msg->apc[0].sid.sat) + sizeof(msg->apc[0].sid.code)) + sizeof(msg->apc[0].sat_info) +
                sizeof(msg->apc[0].svn) + (3 * sizeof(msg->apc[0].pco[0])) + (21 * sizeof(msg->apc[0].pcv[0]))));
 }
@@ -3188,7 +3191,7 @@ static inline bool sbp_pack_sbp_msg_ssr_satellite_apc_t(u8 *buf, size_t len, con
     return false;
   }
 
-  for (size_t msgapc_idx = 0; msgapc_idx < (size_t)msg->n_apc; msgapc_idx++)
+  for (size_t msgapc_idx = 0; msgapc_idx < (size_t)msg->apc_count; msgapc_idx++)
   {
 
     if (offset + 1 > len)
@@ -3263,9 +3266,9 @@ static inline bool sbp_unpack_sbp_msg_ssr_satellite_apc_t(const u8 *buf, size_t 
   (void)len;
   (void)msg;
 
-  msg->n_apc = (u8)((len - offset) / 32);
+  msg->apc_count = (u8)((len - offset) / 32);
 
-  for (size_t msgapc_idx = 0; msgapc_idx < msg->n_apc; msgapc_idx++)
+  for (size_t msgapc_idx = 0; msgapc_idx < msg->apc_count; msgapc_idx++)
   {
 
     if (offset + 1 > len)
@@ -4101,7 +4104,7 @@ static inline size_t sbp_packed_size_sbp_msg_ssr_stec_correction_dep_a_t(const s
   return 0 +
          (0 + (0 + sizeof(msg->header.time.tow) + sizeof(msg->header.time.wn)) + sizeof(msg->header.num_msgs) +
           sizeof(msg->header.seq_num) + sizeof(msg->header.update_interval) + sizeof(msg->header.iod_atmo)) +
-         (msg->n_stec_sat_list *
+         (msg->stec_sat_list_count *
           (0 + (0 + sizeof(msg->stec_sat_list[0].sv_id.satId) + sizeof(msg->stec_sat_list[0].sv_id.constellation)) +
            sizeof(msg->stec_sat_list[0].stec_quality_indicator) + (4 * sizeof(msg->stec_sat_list[0].stec_coeff[0]))));
 }
@@ -4172,7 +4175,7 @@ sbp_pack_sbp_msg_ssr_stec_correction_dep_a_t(u8 *buf, size_t len, const sbp_msg_
   memcpy(buf + offset, &msgheaderiod_atmo, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgstec_sat_list_idx = 0; msgstec_sat_list_idx < (size_t)msg->n_stec_sat_list; msgstec_sat_list_idx++)
+  for (size_t msgstec_sat_list_idx = 0; msgstec_sat_list_idx < (size_t)msg->stec_sat_list_count; msgstec_sat_list_idx++)
   {
 
     if (offset + 1 > len)
@@ -4283,9 +4286,9 @@ sbp_unpack_sbp_msg_ssr_stec_correction_dep_a_t(const u8 *buf, size_t len, sbp_ms
   memcpy(&msg->header.iod_atmo, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_stec_sat_list = (u8)((len - offset) / 11);
+  msg->stec_sat_list_count = (u8)((len - offset) / 11);
 
-  for (size_t msgstec_sat_list_idx = 0; msgstec_sat_list_idx < msg->n_stec_sat_list; msgstec_sat_list_idx++)
+  for (size_t msgstec_sat_list_idx = 0; msgstec_sat_list_idx < msg->stec_sat_list_count; msgstec_sat_list_idx++)
   {
 
     if (offset + 1 > len)
@@ -4347,10 +4350,10 @@ sbp_packed_size_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const sbp_msg_ssr_
           sizeof(msg->header.tropo_quality_indicator)) +
          (0 + sizeof(msg->element.index) +
           (0 + sizeof(msg->element.tropo_delay_correction.hydro) + sizeof(msg->element.tropo_delay_correction.wet)) +
-          (msg->element.n_stec_residuals * (0 +
-                                            (0 + sizeof(msg->element.stec_residuals[0].sv_id.satId) +
-                                             sizeof(msg->element.stec_residuals[0].sv_id.constellation)) +
-                                            sizeof(msg->element.stec_residuals[0].residual))));
+          (msg->element.stec_residuals_count * (0 +
+                                                (0 + sizeof(msg->element.stec_residuals[0].sv_id.satId) +
+                                                 sizeof(msg->element.stec_residuals[0].sv_id.constellation)) +
+                                                sizeof(msg->element.stec_residuals[0].residual))));
 }
 
 static inline bool
@@ -4457,7 +4460,8 @@ sbp_pack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(u8 *buf,
   memcpy(buf + offset, &msgelementtropo_delay_correctionwet, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgelementstec_residuals_idx = 0; msgelementstec_residuals_idx < (size_t)msg->element.n_stec_residuals;
+  for (size_t msgelementstec_residuals_idx = 0;
+       msgelementstec_residuals_idx < (size_t)msg->element.stec_residuals_count;
        msgelementstec_residuals_idx++)
   {
 
@@ -4592,9 +4596,9 @@ sbp_unpack_sbp_msg_ssr_gridded_correction_no_std_dep_a_t(const u8 *buf,
   memcpy(&msg->element.tropo_delay_correction.wet, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->element.n_stec_residuals = (u8)((len - offset) / 4);
+  msg->element.stec_residuals_count = (u8)((len - offset) / 4);
 
-  for (size_t msgelementstec_residuals_idx = 0; msgelementstec_residuals_idx < msg->element.n_stec_residuals;
+  for (size_t msgelementstec_residuals_idx = 0; msgelementstec_residuals_idx < msg->element.stec_residuals_count;
        msgelementstec_residuals_idx++)
   {
 
@@ -4642,7 +4646,7 @@ sbp_packed_size_sbp_msg_ssr_gridded_correction_dep_a_t(const sbp_msg_ssr_gridded
          (0 + sizeof(msg->element.index) +
           (0 + sizeof(msg->element.tropo_delay_correction.hydro) + sizeof(msg->element.tropo_delay_correction.wet) +
            sizeof(msg->element.tropo_delay_correction.stddev)) +
-          (msg->element.n_stec_residuals *
+          (msg->element.stec_residuals_count *
            (0 +
             (0 + sizeof(msg->element.stec_residuals[0].sv_id.satId) +
              sizeof(msg->element.stec_residuals[0].sv_id.constellation)) +
@@ -4760,7 +4764,8 @@ sbp_pack_sbp_msg_ssr_gridded_correction_dep_a_t(u8 *buf, size_t len, const sbp_m
   memcpy(buf + offset, &msgelementtropo_delay_correctionstddev, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgelementstec_residuals_idx = 0; msgelementstec_residuals_idx < (size_t)msg->element.n_stec_residuals;
+  for (size_t msgelementstec_residuals_idx = 0;
+       msgelementstec_residuals_idx < (size_t)msg->element.stec_residuals_count;
        msgelementstec_residuals_idx++)
   {
 
@@ -4912,9 +4917,9 @@ static inline bool sbp_unpack_sbp_msg_ssr_gridded_correction_dep_a_t(const u8 *b
   memcpy(&msg->element.tropo_delay_correction.stddev, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->element.n_stec_residuals = (u8)((len - offset) / 5);
+  msg->element.stec_residuals_count = (u8)((len - offset) / 5);
 
-  for (size_t msgelementstec_residuals_idx = 0; msgelementstec_residuals_idx < msg->element.n_stec_residuals;
+  for (size_t msgelementstec_residuals_idx = 0; msgelementstec_residuals_idx < msg->element.stec_residuals_count;
        msgelementstec_residuals_idx++)
   {
 
@@ -4966,7 +4971,7 @@ static inline size_t sbp_packed_size_sbp_msg_ssr_grid_definition_dep_a_t(const s
          (0 + sizeof(msg->header.region_size_inverse) + sizeof(msg->header.area_width) +
           sizeof(msg->header.lat_nw_corner_enc) + sizeof(msg->header.lon_nw_corner_enc) + sizeof(msg->header.num_msgs) +
           sizeof(msg->header.seq_num)) +
-         (msg->n_rle_list * sizeof(msg->rle_list[0]));
+         (msg->rle_list_count * sizeof(msg->rle_list[0]));
 }
 
 static inline bool
@@ -5035,7 +5040,7 @@ sbp_pack_sbp_msg_ssr_grid_definition_dep_a_t(u8 *buf, size_t len, const sbp_msg_
   memcpy(buf + offset, &msgheaderseq_num, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgrle_list_idx = 0; msgrle_list_idx < (size_t)msg->n_rle_list; msgrle_list_idx++)
+  for (size_t msgrle_list_idx = 0; msgrle_list_idx < (size_t)msg->rle_list_count; msgrle_list_idx++)
   {
 
     if (offset + 1 > len)
@@ -5109,9 +5114,9 @@ sbp_unpack_sbp_msg_ssr_grid_definition_dep_a_t(const u8 *buf, size_t len, sbp_ms
   memcpy(&msg->header.seq_num, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_rle_list = (u8)((len - offset) / 1);
+  msg->rle_list_count = (u8)((len - offset) / 1);
 
-  for (size_t msgrle_list_idx = 0; msgrle_list_idx < msg->n_rle_list; msgrle_list_idx++)
+  for (size_t msgrle_list_idx = 0; msgrle_list_idx < msg->rle_list_count; msgrle_list_idx++)
   {
 
     if (offset + 1 > len)

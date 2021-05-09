@@ -439,7 +439,7 @@ typedef struct
   /**
    * Number of items in obs
    */
-  u8 n_obs;
+  u8 obs_count;
 } sbp_msg_obs_t;
 /** Base station position
  *
@@ -2782,7 +2782,7 @@ typedef struct
   /**
    * Number of items in obs
    */
-  u8 n_obs;
+  u8 obs_count;
 } sbp_msg_obs_dep_a_t;
 /** Deprecated
  *
@@ -2827,7 +2827,7 @@ typedef struct
   /**
    * Number of items in obs
    */
-  u8 n_obs;
+  u8 obs_count;
 } sbp_msg_obs_dep_b_t;
 /** Deprecated
  *
@@ -2873,7 +2873,7 @@ typedef struct
   /**
    * Number of items in obs
    */
-  u8 n_obs;
+  u8 obs_count;
 } sbp_msg_obs_dep_c_t;
 /** Iono corrections
  *
@@ -3642,7 +3642,7 @@ typedef struct
   /**
    * Number of items in azel
    */
-  u8 n_azel;
+  u8 azel_count;
 } sbp_msg_sv_az_el_t;
 /** OSR corrections
  *
@@ -3751,7 +3751,7 @@ typedef struct
   /**
    * Number of items in obs
    */
-  u8 n_obs;
+  u8 obs_count;
 } sbp_msg_osr_t;
 
 #include <libsbp/unpacked/observation_operators.h>

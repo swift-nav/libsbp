@@ -104,7 +104,7 @@ typedef struct
   /**
    * Number of items in source
    */
-  u8 n_source;
+  u8 source_count;
 } sbp_msg_dgnss_status_t;
 /** System heartbeat message
  *
@@ -383,7 +383,7 @@ typedef struct
   /**
    * Number of items in status
    */
-  u8 n_status;
+  u8 status_count;
 } sbp_msg_status_report_t;
 /** Inertial Navigation System status message
  *
@@ -517,7 +517,7 @@ typedef struct
   /**
    * Number of items in telemetry
    */
-  u8 n_telemetry;
+  u8 telemetry_count;
 } sbp_msg_csac_telemetry_t;
 /** Experimental telemetry message labels
  *
@@ -541,7 +541,7 @@ typedef struct
   /**
    * Number of items in telemetry_labels
    */
-  u8 n_telemetry_labels;
+  u8 telemetry_labels_count;
 } sbp_msg_csac_telemetry_labels_t;
 /** Inertial Navigation System update status message
  *

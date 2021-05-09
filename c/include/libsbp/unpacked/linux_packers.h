@@ -15,7 +15,7 @@ static inline size_t sbp_packed_size_sbp_msg_linux_cpu_state_dep_a_t(const sbp_m
 {
   (void)msg;
   return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->pcpu) + (15 * sizeof(msg->tname[0])) +
-         (msg->n_cmdline * sizeof(msg->cmdline[0]));
+         (msg->cmdline_count * sizeof(msg->cmdline[0]));
 }
 
 static inline bool
@@ -69,7 +69,7 @@ sbp_pack_sbp_msg_linux_cpu_state_dep_a_t(u8 *buf, size_t len, const sbp_msg_linu
     // NOLINTNEXTLINE
     offset += 1;
   }
-  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->n_cmdline; msgcmdline_idx++)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->cmdline_count; msgcmdline_idx++)
   {
 
     if (offset + 1 > len)
@@ -128,9 +128,9 @@ sbp_unpack_sbp_msg_linux_cpu_state_dep_a_t(const u8 *buf, size_t len, sbp_msg_li
     // NOLINTNEXTLINE
     offset += 1;
   }
-  msg->n_cmdline = (u8)((len - offset) / 1);
+  msg->cmdline_count = (u8)((len - offset) / 1);
 
-  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->n_cmdline; msgcmdline_idx++)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->cmdline_count; msgcmdline_idx++)
   {
 
     if (offset + 1 > len)
@@ -148,7 +148,7 @@ static inline size_t sbp_packed_size_sbp_msg_linux_mem_state_dep_a_t(const sbp_m
 {
   (void)msg;
   return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->pmem) + (15 * sizeof(msg->tname[0])) +
-         (msg->n_cmdline * sizeof(msg->cmdline[0]));
+         (msg->cmdline_count * sizeof(msg->cmdline[0]));
 }
 
 static inline bool
@@ -202,7 +202,7 @@ sbp_pack_sbp_msg_linux_mem_state_dep_a_t(u8 *buf, size_t len, const sbp_msg_linu
     // NOLINTNEXTLINE
     offset += 1;
   }
-  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->n_cmdline; msgcmdline_idx++)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->cmdline_count; msgcmdline_idx++)
   {
 
     if (offset + 1 > len)
@@ -261,9 +261,9 @@ sbp_unpack_sbp_msg_linux_mem_state_dep_a_t(const u8 *buf, size_t len, sbp_msg_li
     // NOLINTNEXTLINE
     offset += 1;
   }
-  msg->n_cmdline = (u8)((len - offset) / 1);
+  msg->cmdline_count = (u8)((len - offset) / 1);
 
-  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->n_cmdline; msgcmdline_idx++)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->cmdline_count; msgcmdline_idx++)
   {
 
     if (offset + 1 > len)
@@ -421,7 +421,7 @@ sbp_packed_size_sbp_msg_linux_process_socket_counts_t(const sbp_msg_linux_proces
 {
   (void)msg;
   return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->socket_count) + sizeof(msg->socket_types) +
-         sizeof(msg->socket_states) + (msg->n_cmdline * sizeof(msg->cmdline[0]));
+         sizeof(msg->socket_states) + (msg->cmdline_count * sizeof(msg->cmdline[0]));
 }
 
 static inline bool
@@ -481,7 +481,7 @@ sbp_pack_sbp_msg_linux_process_socket_counts_t(u8 *buf, size_t len, const sbp_ms
   memcpy(buf + offset, &msgsocket_states, 2);
   // NOLINTNEXTLINE
   offset += 2;
-  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->n_cmdline; msgcmdline_idx++)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->cmdline_count; msgcmdline_idx++)
   {
 
     if (offset + 1 > len)
@@ -548,9 +548,9 @@ sbp_unpack_sbp_msg_linux_process_socket_counts_t(const u8 *buf, size_t len, sbp_
   msg->socket_states = le16toh(msg->socket_states);
   // NOLINTNEXTLINE
   offset += 2;
-  msg->n_cmdline = (u8)((len - offset) / 1);
+  msg->cmdline_count = (u8)((len - offset) / 1);
 
-  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->n_cmdline; msgcmdline_idx++)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->cmdline_count; msgcmdline_idx++)
   {
 
     if (offset + 1 > len)
@@ -570,7 +570,7 @@ sbp_packed_size_sbp_msg_linux_process_socket_queues_t(const sbp_msg_linux_proces
   (void)msg;
   return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->recv_queued) + sizeof(msg->send_queued) +
          sizeof(msg->socket_types) + sizeof(msg->socket_states) + (64 * sizeof(msg->address_of_largest[0])) +
-         (msg->n_cmdline * sizeof(msg->cmdline[0]));
+         (msg->cmdline_count * sizeof(msg->cmdline[0]));
 }
 
 static inline bool
@@ -651,7 +651,7 @@ sbp_pack_sbp_msg_linux_process_socket_queues_t(u8 *buf, size_t len, const sbp_ms
     // NOLINTNEXTLINE
     offset += 1;
   }
-  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->n_cmdline; msgcmdline_idx++)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->cmdline_count; msgcmdline_idx++)
   {
 
     if (offset + 1 > len)
@@ -738,9 +738,9 @@ sbp_unpack_sbp_msg_linux_process_socket_queues_t(const u8 *buf, size_t len, sbp_
     // NOLINTNEXTLINE
     offset += 1;
   }
-  msg->n_cmdline = (u8)((len - offset) / 1);
+  msg->cmdline_count = (u8)((len - offset) / 1);
 
-  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->n_cmdline; msgcmdline_idx++)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->cmdline_count; msgcmdline_idx++)
   {
 
     if (offset + 1 > len)
@@ -874,7 +874,8 @@ static inline bool sbp_unpack_sbp_msg_linux_socket_usage_t(const u8 *buf, size_t
 static inline size_t sbp_packed_size_sbp_msg_linux_process_fd_count_t(const sbp_msg_linux_process_fd_count_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->fd_count) + (msg->n_cmdline * sizeof(msg->cmdline[0]));
+  return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->fd_count) +
+         (msg->cmdline_count * sizeof(msg->cmdline[0]));
 }
 
 static inline bool
@@ -916,7 +917,7 @@ sbp_pack_sbp_msg_linux_process_fd_count_t(u8 *buf, size_t len, const sbp_msg_lin
   memcpy(buf + offset, &msgfd_count, 2);
   // NOLINTNEXTLINE
   offset += 2;
-  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->n_cmdline; msgcmdline_idx++)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->cmdline_count; msgcmdline_idx++)
   {
 
     if (offset + 1 > len)
@@ -965,9 +966,9 @@ sbp_unpack_sbp_msg_linux_process_fd_count_t(const u8 *buf, size_t len, sbp_msg_l
   msg->fd_count = le16toh(msg->fd_count);
   // NOLINTNEXTLINE
   offset += 2;
-  msg->n_cmdline = (u8)((len - offset) / 1);
+  msg->cmdline_count = (u8)((len - offset) / 1);
 
-  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->n_cmdline; msgcmdline_idx++)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->cmdline_count; msgcmdline_idx++)
   {
 
     if (offset + 1 > len)
@@ -984,7 +985,7 @@ sbp_unpack_sbp_msg_linux_process_fd_count_t(const u8 *buf, size_t len, sbp_msg_l
 static inline size_t sbp_packed_size_sbp_msg_linux_process_fd_summary_t(const sbp_msg_linux_process_fd_summary_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->sys_fd_count) + (msg->n_most_opened * sizeof(msg->most_opened[0]));
+  return 0 + sizeof(msg->sys_fd_count) + (msg->most_opened_count * sizeof(msg->most_opened[0]));
 }
 
 static inline bool
@@ -1008,7 +1009,7 @@ sbp_pack_sbp_msg_linux_process_fd_summary_t(u8 *buf, size_t len, const sbp_msg_l
   memcpy(buf + offset, &msgsys_fd_count, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  for (size_t msgmost_opened_idx = 0; msgmost_opened_idx < (size_t)msg->n_most_opened; msgmost_opened_idx++)
+  for (size_t msgmost_opened_idx = 0; msgmost_opened_idx < (size_t)msg->most_opened_count; msgmost_opened_idx++)
   {
 
     if (offset + 1 > len)
@@ -1040,9 +1041,9 @@ sbp_unpack_sbp_msg_linux_process_fd_summary_t(const u8 *buf, size_t len, sbp_msg
   msg->sys_fd_count = le32toh(msg->sys_fd_count);
   // NOLINTNEXTLINE
   offset += 4;
-  msg->n_most_opened = (u8)((len - offset) / 1);
+  msg->most_opened_count = (u8)((len - offset) / 1);
 
-  for (size_t msgmost_opened_idx = 0; msgmost_opened_idx < msg->n_most_opened; msgmost_opened_idx++)
+  for (size_t msgmost_opened_idx = 0; msgmost_opened_idx < msg->most_opened_count; msgmost_opened_idx++)
   {
 
     if (offset + 1 > len)
@@ -1060,7 +1061,7 @@ static inline size_t sbp_packed_size_sbp_msg_linux_cpu_state_t(const sbp_msg_lin
 {
   (void)msg;
   return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->pcpu) + sizeof(msg->time) + sizeof(msg->flags) +
-         (15 * sizeof(msg->tname[0])) + (msg->n_cmdline * sizeof(msg->cmdline[0]));
+         (15 * sizeof(msg->tname[0])) + (msg->cmdline_count * sizeof(msg->cmdline[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_linux_cpu_state_t(u8 *buf, size_t len, const sbp_msg_linux_cpu_state_t *msg)
@@ -1131,7 +1132,7 @@ static inline bool sbp_pack_sbp_msg_linux_cpu_state_t(u8 *buf, size_t len, const
     // NOLINTNEXTLINE
     offset += 1;
   }
-  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->n_cmdline; msgcmdline_idx++)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->cmdline_count; msgcmdline_idx++)
   {
 
     if (offset + 1 > len)
@@ -1206,9 +1207,9 @@ static inline bool sbp_unpack_sbp_msg_linux_cpu_state_t(const u8 *buf, size_t le
     // NOLINTNEXTLINE
     offset += 1;
   }
-  msg->n_cmdline = (u8)((len - offset) / 1);
+  msg->cmdline_count = (u8)((len - offset) / 1);
 
-  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->n_cmdline; msgcmdline_idx++)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->cmdline_count; msgcmdline_idx++)
   {
 
     if (offset + 1 > len)
@@ -1226,7 +1227,7 @@ static inline size_t sbp_packed_size_sbp_msg_linux_mem_state_t(const sbp_msg_lin
 {
   (void)msg;
   return 0 + sizeof(msg->index) + sizeof(msg->pid) + sizeof(msg->pmem) + sizeof(msg->time) + sizeof(msg->flags) +
-         (15 * sizeof(msg->tname[0])) + (msg->n_cmdline * sizeof(msg->cmdline[0]));
+         (15 * sizeof(msg->tname[0])) + (msg->cmdline_count * sizeof(msg->cmdline[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_linux_mem_state_t(u8 *buf, size_t len, const sbp_msg_linux_mem_state_t *msg)
@@ -1297,7 +1298,7 @@ static inline bool sbp_pack_sbp_msg_linux_mem_state_t(u8 *buf, size_t len, const
     // NOLINTNEXTLINE
     offset += 1;
   }
-  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->n_cmdline; msgcmdline_idx++)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < (size_t)msg->cmdline_count; msgcmdline_idx++)
   {
 
     if (offset + 1 > len)
@@ -1372,9 +1373,9 @@ static inline bool sbp_unpack_sbp_msg_linux_mem_state_t(const u8 *buf, size_t le
     // NOLINTNEXTLINE
     offset += 1;
   }
-  msg->n_cmdline = (u8)((len - offset) / 1);
+  msg->cmdline_count = (u8)((len - offset) / 1);
 
-  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->n_cmdline; msgcmdline_idx++)
+  for (size_t msgcmdline_idx = 0; msgcmdline_idx < msg->cmdline_count; msgcmdline_idx++)
   {
 
     if (offset + 1 > len)

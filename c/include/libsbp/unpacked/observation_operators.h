@@ -222,11 +222,11 @@ static inline bool operator==(const sbp_msg_obs_t &a, const sbp_msg_obs_t &b)
   {
     return false;
   }
-  if (a.n_obs != b.n_obs)
+  if (a.obs_count != b.obs_count)
   {
     return false;
   }
-  for (size_t obs_idx = 0; obs_idx < (size_t)a.n_obs; obs_idx++)
+  for (size_t obs_idx = 0; obs_idx < (size_t)a.obs_count; obs_idx++)
   {
 
     if (a.obs[obs_idx].P != b.obs[obs_idx].P)
@@ -3335,11 +3335,11 @@ static inline bool operator==(const sbp_msg_obs_dep_a_t &a, const sbp_msg_obs_de
   {
     return false;
   }
-  if (a.n_obs != b.n_obs)
+  if (a.obs_count != b.obs_count)
   {
     return false;
   }
-  for (size_t obs_idx = 0; obs_idx < (size_t)a.n_obs; obs_idx++)
+  for (size_t obs_idx = 0; obs_idx < (size_t)a.obs_count; obs_idx++)
   {
 
     if (a.obs[obs_idx].P != b.obs[obs_idx].P)
@@ -3401,11 +3401,11 @@ static inline bool operator==(const sbp_msg_obs_dep_b_t &a, const sbp_msg_obs_de
   {
     return false;
   }
-  if (a.n_obs != b.n_obs)
+  if (a.obs_count != b.obs_count)
   {
     return false;
   }
-  for (size_t obs_idx = 0; obs_idx < (size_t)a.n_obs; obs_idx++)
+  for (size_t obs_idx = 0; obs_idx < (size_t)a.obs_count; obs_idx++)
   {
 
     if (a.obs[obs_idx].P != b.obs[obs_idx].P)
@@ -3477,11 +3477,11 @@ static inline bool operator==(const sbp_msg_obs_dep_c_t &a, const sbp_msg_obs_de
   {
     return false;
   }
-  if (a.n_obs != b.n_obs)
+  if (a.obs_count != b.obs_count)
   {
     return false;
   }
-  for (size_t obs_idx = 0; obs_idx < (size_t)a.n_obs; obs_idx++)
+  for (size_t obs_idx = 0; obs_idx < (size_t)a.obs_count; obs_idx++)
   {
 
     if (a.obs[obs_idx].P != b.obs[obs_idx].P)
@@ -4554,11 +4554,11 @@ static inline bool operator==(const sbp_msg_sv_az_el_t &a, const sbp_msg_sv_az_e
   (void)a;
   (void)b;
 
-  if (a.n_azel != b.n_azel)
+  if (a.azel_count != b.azel_count)
   {
     return false;
   }
-  for (size_t azel_idx = 0; azel_idx < (size_t)a.n_azel; azel_idx++)
+  for (size_t azel_idx = 0; azel_idx < (size_t)a.azel_count; azel_idx++)
   {
 
     if (a.azel[azel_idx].sid.sat != b.azel[azel_idx].sid.sat)
@@ -4615,11 +4615,11 @@ static inline bool operator==(const sbp_msg_osr_t &a, const sbp_msg_osr_t &b)
   {
     return false;
   }
-  if (a.n_obs != b.n_obs)
+  if (a.obs_count != b.obs_count)
   {
     return false;
   }
-  for (size_t obs_idx = 0; obs_idx < (size_t)a.n_obs; obs_idx++)
+  for (size_t obs_idx = 0; obs_idx < (size_t)a.obs_count; obs_idx++)
   {
 
     if (a.obs[obs_idx].P != b.obs[obs_idx].P)

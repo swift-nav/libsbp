@@ -79,11 +79,11 @@ static inline bool operator==(const sbp_msg_soln_meta_dep_a_t &a, const sbp_msg_
   {
     return false;
   }
-  if (a.n_sol_in != b.n_sol_in)
+  if (a.sol_in_count != b.sol_in_count)
   {
     return false;
   }
-  for (size_t sol_in_idx = 0; sol_in_idx < (size_t)a.n_sol_in; sol_in_idx++)
+  for (size_t sol_in_idx = 0; sol_in_idx < (size_t)a.sol_in_count; sol_in_idx++)
   {
 
     if (a.sol_in[sol_in_idx].sensor_type != b.sol_in[sol_in_idx].sensor_type)
@@ -140,11 +140,11 @@ static inline bool operator==(const sbp_msg_soln_meta_t &a, const sbp_msg_soln_m
   {
     return false;
   }
-  if (a.n_sol_in != b.n_sol_in)
+  if (a.sol_in_count != b.sol_in_count)
   {
     return false;
   }
-  for (size_t sol_in_idx = 0; sol_in_idx < (size_t)a.n_sol_in; sol_in_idx++)
+  for (size_t sol_in_idx = 0; sol_in_idx < (size_t)a.sol_in_count; sol_in_idx++)
   {
 
     if (a.sol_in[sol_in_idx].sensor_type != b.sol_in[sol_in_idx].sensor_type)

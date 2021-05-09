@@ -45,12 +45,12 @@
           ((*- endif *))
         }
       ((*- elif f.order == "variable-array" *))
-        ((*- if f.count *))
-          if (a.(((path + f.count))) != b.(((path + f.count)))) { return false; }
+        ((*- if f.size_fn *))
+          if (a.(((path + f.size_fn))) != b.(((path + f.size_fn)))) { return false; }
         ((*- else *))
-          if (a.(((path + "n_" + f.name))) != b.(((path + "n_" + f.name)))) { return false; }
+          if (a.(((path + f.name + "_count"))) != b.(((path + f.name + "_count")))) { return false; }
         ((*- endif *))
-        for (size_t (((loop_idx))) = 0; (((loop_idx))) < (size_t)a.((*- if f.count *))(((path + f.count)))((*- else *))(((path + "n_" + f.name)))((*- endif *)); (((loop_idx)))++)
+        for (size_t (((loop_idx))) = 0; (((loop_idx))) < (size_t)a.((*- if f.size_fn *))(((path + f.size_fn)))((*- else *))(((path + f.name + "_count")))((*- endif *)); (((loop_idx)))++)
         {
           ((*- if f.basetype.is_primitive *))
             (((compare_primitive(f, path + f.name + "[" + loop_idx + "]"))))

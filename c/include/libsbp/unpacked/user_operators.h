@@ -16,11 +16,11 @@ static inline bool operator==(const sbp_msg_user_data_t &a, const sbp_msg_user_d
   (void)a;
   (void)b;
 
-  if (a.n_contents != b.n_contents)
+  if (a.contents_count != b.contents_count)
   {
     return false;
   }
-  for (size_t contents_idx = 0; contents_idx < (size_t)a.n_contents; contents_idx++)
+  for (size_t contents_idx = 0; contents_idx < (size_t)a.contents_count; contents_idx++)
   {
 
     if (a.contents[contents_idx] != b.contents[contents_idx])

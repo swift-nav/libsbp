@@ -38,11 +38,11 @@ static inline bool operator==(const sbp_msg_linux_cpu_state_dep_a_t &a, const sb
       return false;
     }
   }
-  if (a.n_cmdline != b.n_cmdline)
+  if (a.cmdline_count != b.cmdline_count)
   {
     return false;
   }
-  for (size_t cmdline_idx = 0; cmdline_idx < (size_t)a.n_cmdline; cmdline_idx++)
+  for (size_t cmdline_idx = 0; cmdline_idx < (size_t)a.cmdline_count; cmdline_idx++)
   {
 
     if (a.cmdline[cmdline_idx] != b.cmdline[cmdline_idx])
@@ -87,11 +87,11 @@ static inline bool operator==(const sbp_msg_linux_mem_state_dep_a_t &a, const sb
       return false;
     }
   }
-  if (a.n_cmdline != b.n_cmdline)
+  if (a.cmdline_count != b.cmdline_count)
   {
     return false;
   }
-  for (size_t cmdline_idx = 0; cmdline_idx < (size_t)a.n_cmdline; cmdline_idx++)
+  for (size_t cmdline_idx = 0; cmdline_idx < (size_t)a.cmdline_count; cmdline_idx++)
   {
 
     if (a.cmdline[cmdline_idx] != b.cmdline[cmdline_idx])
@@ -183,11 +183,11 @@ static inline bool operator==(const sbp_msg_linux_process_socket_counts_t &a,
   {
     return false;
   }
-  if (a.n_cmdline != b.n_cmdline)
+  if (a.cmdline_count != b.cmdline_count)
   {
     return false;
   }
-  for (size_t cmdline_idx = 0; cmdline_idx < (size_t)a.n_cmdline; cmdline_idx++)
+  for (size_t cmdline_idx = 0; cmdline_idx < (size_t)a.cmdline_count; cmdline_idx++)
   {
 
     if (a.cmdline[cmdline_idx] != b.cmdline[cmdline_idx])
@@ -249,11 +249,11 @@ static inline bool operator==(const sbp_msg_linux_process_socket_queues_t &a,
       return false;
     }
   }
-  if (a.n_cmdline != b.n_cmdline)
+  if (a.cmdline_count != b.cmdline_count)
   {
     return false;
   }
-  for (size_t cmdline_idx = 0; cmdline_idx < (size_t)a.n_cmdline; cmdline_idx++)
+  for (size_t cmdline_idx = 0; cmdline_idx < (size_t)a.cmdline_count; cmdline_idx++)
   {
 
     if (a.cmdline[cmdline_idx] != b.cmdline[cmdline_idx])
@@ -331,11 +331,11 @@ static inline bool operator==(const sbp_msg_linux_process_fd_count_t &a, const s
   {
     return false;
   }
-  if (a.n_cmdline != b.n_cmdline)
+  if (a.cmdline_count != b.cmdline_count)
   {
     return false;
   }
-  for (size_t cmdline_idx = 0; cmdline_idx < (size_t)a.n_cmdline; cmdline_idx++)
+  for (size_t cmdline_idx = 0; cmdline_idx < (size_t)a.cmdline_count; cmdline_idx++)
   {
 
     if (a.cmdline[cmdline_idx] != b.cmdline[cmdline_idx])
@@ -362,11 +362,11 @@ static inline bool operator==(const sbp_msg_linux_process_fd_summary_t &a, const
   {
     return false;
   }
-  if (a.n_most_opened != b.n_most_opened)
+  if (a.most_opened_count != b.most_opened_count)
   {
     return false;
   }
-  for (size_t most_opened_idx = 0; most_opened_idx < (size_t)a.n_most_opened; most_opened_idx++)
+  for (size_t most_opened_idx = 0; most_opened_idx < (size_t)a.most_opened_count; most_opened_idx++)
   {
 
     if (a.most_opened[most_opened_idx] != b.most_opened[most_opened_idx])
@@ -421,11 +421,11 @@ static inline bool operator==(const sbp_msg_linux_cpu_state_t &a, const sbp_msg_
       return false;
     }
   }
-  if (a.n_cmdline != b.n_cmdline)
+  if (a.cmdline_count != b.cmdline_count)
   {
     return false;
   }
-  for (size_t cmdline_idx = 0; cmdline_idx < (size_t)a.n_cmdline; cmdline_idx++)
+  for (size_t cmdline_idx = 0; cmdline_idx < (size_t)a.cmdline_count; cmdline_idx++)
   {
 
     if (a.cmdline[cmdline_idx] != b.cmdline[cmdline_idx])
@@ -480,11 +480,11 @@ static inline bool operator==(const sbp_msg_linux_mem_state_t &a, const sbp_msg_
       return false;
     }
   }
-  if (a.n_cmdline != b.n_cmdline)
+  if (a.cmdline_count != b.cmdline_count)
   {
     return false;
   }
-  for (size_t cmdline_idx = 0; cmdline_idx < (size_t)a.n_cmdline; cmdline_idx++)
+  for (size_t cmdline_idx = 0; cmdline_idx < (size_t)a.cmdline_count; cmdline_idx++)
   {
 
     if (a.cmdline[cmdline_idx] != b.cmdline[cmdline_idx])

@@ -48,7 +48,7 @@ sbp_unpack_sbp_msg_bootloader_handshake_req_t(const u8 *buf, size_t len, sbp_msg
 static inline size_t sbp_packed_size_sbp_msg_bootloader_handshake_resp_t(const sbp_msg_bootloader_handshake_resp_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->flags) + (msg->n_version * sizeof(msg->version[0]));
+  return 0 + sizeof(msg->flags) + (msg->version_count * sizeof(msg->version[0]));
 }
 
 static inline bool
@@ -72,7 +72,7 @@ sbp_pack_sbp_msg_bootloader_handshake_resp_t(u8 *buf, size_t len, const sbp_msg_
   memcpy(buf + offset, &msgflags, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  for (size_t msgversion_idx = 0; msgversion_idx < (size_t)msg->n_version; msgversion_idx++)
+  for (size_t msgversion_idx = 0; msgversion_idx < (size_t)msg->version_count; msgversion_idx++)
   {
 
     if (offset + 1 > len)
@@ -104,9 +104,9 @@ sbp_unpack_sbp_msg_bootloader_handshake_resp_t(const u8 *buf, size_t len, sbp_ms
   msg->flags = le32toh(msg->flags);
   // NOLINTNEXTLINE
   offset += 4;
-  msg->n_version = (u8)((len - offset) / 1);
+  msg->version_count = (u8)((len - offset) / 1);
 
-  for (size_t msgversion_idx = 0; msgversion_idx < msg->n_version; msgversion_idx++)
+  for (size_t msgversion_idx = 0; msgversion_idx < msg->version_count; msgversion_idx++)
   {
 
     if (offset + 1 > len)
@@ -261,7 +261,7 @@ static inline size_t
 sbp_packed_size_sbp_msg_bootloader_handshake_dep_a_t(const sbp_msg_bootloader_handshake_dep_a_t *msg)
 {
   (void)msg;
-  return 0 + (msg->n_handshake * sizeof(msg->handshake[0]));
+  return 0 + (msg->handshake_count * sizeof(msg->handshake[0]));
 }
 
 static inline bool
@@ -277,7 +277,7 @@ sbp_pack_sbp_msg_bootloader_handshake_dep_a_t(u8 *buf, size_t len, const sbp_msg
     return false;
   }
 
-  for (size_t msghandshake_idx = 0; msghandshake_idx < (size_t)msg->n_handshake; msghandshake_idx++)
+  for (size_t msghandshake_idx = 0; msghandshake_idx < (size_t)msg->handshake_count; msghandshake_idx++)
   {
 
     if (offset + 1 > len)
@@ -301,9 +301,9 @@ sbp_unpack_sbp_msg_bootloader_handshake_dep_a_t(const u8 *buf, size_t len, sbp_m
   (void)len;
   (void)msg;
 
-  msg->n_handshake = (u8)((len - offset) / 1);
+  msg->handshake_count = (u8)((len - offset) / 1);
 
-  for (size_t msghandshake_idx = 0; msghandshake_idx < msg->n_handshake; msghandshake_idx++)
+  for (size_t msghandshake_idx = 0; msghandshake_idx < msg->handshake_count; msghandshake_idx++)
   {
 
     if (offset + 1 > len)

@@ -44,7 +44,7 @@ typedef struct
   /**
    * Number of items in filename
    */
-  u8 n_filename;
+  u8 filename_count;
 } sbp_msg_fileio_read_req_t;
 /** File read from the file system (host <= device)
  *
@@ -70,7 +70,7 @@ typedef struct
   /**
    * Number of items in contents
    */
-  u8 n_contents;
+  u8 contents_count;
 } sbp_msg_fileio_read_resp_t;
 /** List files in a directory (host => device)
  *
@@ -105,7 +105,7 @@ typedef struct
   /**
    * Number of items in dirname
    */
-  u8 n_dirname;
+  u8 dirname_count;
 } sbp_msg_fileio_read_dir_req_t;
 /** Files listed in a directory (host <= device)
  *
@@ -132,7 +132,7 @@ typedef struct
   /**
    * Number of items in contents
    */
-  u8 n_contents;
+  u8 contents_count;
 } sbp_msg_fileio_read_dir_resp_t;
 /** Delete a file from the file system (host => device)
  *
@@ -153,7 +153,7 @@ typedef struct
   /**
    * Number of items in filename
    */
-  u8 n_filename;
+  u8 filename_count;
 } sbp_msg_fileio_remove_t;
 /** Write to file (host => device)
  *
@@ -186,7 +186,7 @@ typedef struct
   /**
    * Number of items in filename
    */
-  u8 n_filename;
+  u8 filename_count;
   /**
    * Variable-length array of data to write
    */
@@ -194,7 +194,7 @@ typedef struct
   /**
    * Number of items in data
    */
-  u8 n_data;
+  u8 data_count;
 } sbp_msg_fileio_write_req_t;
 /** File written to (host <= device)
  *

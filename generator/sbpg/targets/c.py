@@ -205,8 +205,8 @@ class FieldItem(object):
             self.max_items = int((255 - packed_offset) / self.basetype.packed_size)
             self.packed_size = 0
             self.options = field.options
-            if 'count' in field.options:
-                self.count = field.options['count'].value
+            if 'size_fn' in field.options:
+                self.size_fn = field.options['size_fn'].value
             self.generate_as_nested = True
         elif type_id == "array" and 'size' in field.options:
             self.order = "fixed-array"
@@ -220,8 +220,8 @@ class FieldItem(object):
             self.max_items = int((255 - packed_offset) / self.basetype.packed_size)
             self.packed_size = 0
             self.options = field.options
-            if 'count' in field.options:
-                self.count = field.options['count'].value
+            if 'size_fn' in field.options:
+                self.size_fn = field.options['size_fn'].value
             self.generate_as_nested = True
         else:
             self.order = "single"

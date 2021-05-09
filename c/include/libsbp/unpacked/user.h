@@ -26,7 +26,7 @@ typedef struct
   /**
    * Number of items in contents
    */
-  u8 n_contents;
+  u8 contents_count;
 } sbp_msg_user_data_t;
 
 #include <libsbp/unpacked/user_operators.h>

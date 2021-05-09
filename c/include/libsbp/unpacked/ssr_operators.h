@@ -364,11 +364,11 @@ static inline bool operator==(const sbp_grid_element_no_std_t &a, const sbp_grid
   {
     return false;
   }
-  if (a.n_stec_residuals != b.n_stec_residuals)
+  if (a.stec_residuals_count != b.stec_residuals_count)
   {
     return false;
   }
-  for (size_t stec_residuals_idx = 0; stec_residuals_idx < (size_t)a.n_stec_residuals; stec_residuals_idx++)
+  for (size_t stec_residuals_idx = 0; stec_residuals_idx < (size_t)a.stec_residuals_count; stec_residuals_idx++)
   {
 
     if (a.stec_residuals[stec_residuals_idx].sv_id.satId != b.stec_residuals[stec_residuals_idx].sv_id.satId)
@@ -421,11 +421,11 @@ static inline bool operator==(const sbp_grid_element_t &a, const sbp_grid_elemen
   {
     return false;
   }
-  if (a.n_stec_residuals != b.n_stec_residuals)
+  if (a.stec_residuals_count != b.stec_residuals_count)
   {
     return false;
   }
-  for (size_t stec_residuals_idx = 0; stec_residuals_idx < (size_t)a.n_stec_residuals; stec_residuals_idx++)
+  for (size_t stec_residuals_idx = 0; stec_residuals_idx < (size_t)a.stec_residuals_count; stec_residuals_idx++)
   {
 
     if (a.stec_residuals[stec_residuals_idx].sv_id.satId != b.stec_residuals[stec_residuals_idx].sv_id.satId)
@@ -587,11 +587,11 @@ static inline bool operator==(const sbp_msg_ssr_code_biases_t &a, const sbp_msg_
   {
     return false;
   }
-  if (a.n_biases != b.n_biases)
+  if (a.biases_count != b.biases_count)
   {
     return false;
   }
-  for (size_t biases_idx = 0; biases_idx < (size_t)a.n_biases; biases_idx++)
+  for (size_t biases_idx = 0; biases_idx < (size_t)a.biases_count; biases_idx++)
   {
 
     if (a.biases[biases_idx].code != b.biases[biases_idx].code)
@@ -668,11 +668,11 @@ static inline bool operator==(const sbp_msg_ssr_phase_biases_t &a, const sbp_msg
   {
     return false;
   }
-  if (a.n_biases != b.n_biases)
+  if (a.biases_count != b.biases_count)
   {
     return false;
   }
-  for (size_t biases_idx = 0; biases_idx < (size_t)a.n_biases; biases_idx++)
+  for (size_t biases_idx = 0; biases_idx < (size_t)a.biases_count; biases_idx++)
   {
 
     if (a.biases[biases_idx].code != b.biases[biases_idx].code)
@@ -754,11 +754,11 @@ static inline bool operator==(const sbp_msg_ssr_stec_correction_t &a, const sbp_
   {
     return false;
   }
-  if (a.n_stec_sat_list != b.n_stec_sat_list)
+  if (a.stec_sat_list_count != b.stec_sat_list_count)
   {
     return false;
   }
-  for (size_t stec_sat_list_idx = 0; stec_sat_list_idx < (size_t)a.n_stec_sat_list; stec_sat_list_idx++)
+  for (size_t stec_sat_list_idx = 0; stec_sat_list_idx < (size_t)a.stec_sat_list_count; stec_sat_list_idx++)
   {
 
     if (a.stec_sat_list[stec_sat_list_idx].sv_id.satId != b.stec_sat_list[stec_sat_list_idx].sv_id.satId)
@@ -867,11 +867,11 @@ static inline bool operator==(const sbp_msg_ssr_gridded_correction_t &a, const s
   {
     return false;
   }
-  if (a.element.n_stec_residuals != b.element.n_stec_residuals)
+  if (a.element.stec_residuals_count != b.element.stec_residuals_count)
   {
     return false;
   }
-  for (size_t elementstec_residuals_idx = 0; elementstec_residuals_idx < (size_t)a.element.n_stec_residuals;
+  for (size_t elementstec_residuals_idx = 0; elementstec_residuals_idx < (size_t)a.element.stec_residuals_count;
        elementstec_residuals_idx++)
   {
 
@@ -1023,11 +1023,11 @@ static inline bool operator==(const sbp_msg_ssr_satellite_apc_t &a, const sbp_ms
   (void)a;
   (void)b;
 
-  if (a.n_apc != b.n_apc)
+  if (a.apc_count != b.apc_count)
   {
     return false;
   }
-  for (size_t apc_idx = 0; apc_idx < (size_t)a.n_apc; apc_idx++)
+  for (size_t apc_idx = 0; apc_idx < (size_t)a.apc_count; apc_idx++)
   {
 
     if (a.apc[apc_idx].sid.sat != b.apc[apc_idx].sid.sat)
@@ -1344,11 +1344,11 @@ static inline bool operator==(const sbp_msg_ssr_stec_correction_dep_a_t &a,
   {
     return false;
   }
-  if (a.n_stec_sat_list != b.n_stec_sat_list)
+  if (a.stec_sat_list_count != b.stec_sat_list_count)
   {
     return false;
   }
-  for (size_t stec_sat_list_idx = 0; stec_sat_list_idx < (size_t)a.n_stec_sat_list; stec_sat_list_idx++)
+  for (size_t stec_sat_list_idx = 0; stec_sat_list_idx < (size_t)a.stec_sat_list_count; stec_sat_list_idx++)
   {
 
     if (a.stec_sat_list[stec_sat_list_idx].sv_id.satId != b.stec_sat_list[stec_sat_list_idx].sv_id.satId)
@@ -1444,11 +1444,11 @@ static inline bool operator==(const sbp_msg_ssr_gridded_correction_no_std_dep_a_
   {
     return false;
   }
-  if (a.element.n_stec_residuals != b.element.n_stec_residuals)
+  if (a.element.stec_residuals_count != b.element.stec_residuals_count)
   {
     return false;
   }
-  for (size_t elementstec_residuals_idx = 0; elementstec_residuals_idx < (size_t)a.element.n_stec_residuals;
+  for (size_t elementstec_residuals_idx = 0; elementstec_residuals_idx < (size_t)a.element.stec_residuals_count;
        elementstec_residuals_idx++)
   {
 
@@ -1541,11 +1541,11 @@ static inline bool operator==(const sbp_msg_ssr_gridded_correction_dep_a_t &a,
   {
     return false;
   }
-  if (a.element.n_stec_residuals != b.element.n_stec_residuals)
+  if (a.element.stec_residuals_count != b.element.stec_residuals_count)
   {
     return false;
   }
-  for (size_t elementstec_residuals_idx = 0; elementstec_residuals_idx < (size_t)a.element.n_stec_residuals;
+  for (size_t elementstec_residuals_idx = 0; elementstec_residuals_idx < (size_t)a.element.stec_residuals_count;
        elementstec_residuals_idx++)
   {
 
@@ -1619,11 +1619,11 @@ static inline bool operator==(const sbp_msg_ssr_grid_definition_dep_a_t &a,
   {
     return false;
   }
-  if (a.n_rle_list != b.n_rle_list)
+  if (a.rle_list_count != b.rle_list_count)
   {
     return false;
   }
-  for (size_t rle_list_idx = 0; rle_list_idx < (size_t)a.n_rle_list; rle_list_idx++)
+  for (size_t rle_list_idx = 0; rle_list_idx < (size_t)a.rle_list_count; rle_list_idx++)
   {
 
     if (a.rle_list[rle_list_idx] != b.rle_list[rle_list_idx])

@@ -35,11 +35,11 @@ static inline bool operator==(const sbp_msg_bootloader_handshake_resp_t &a,
   {
     return false;
   }
-  if (a.n_version != b.n_version)
+  if (a.version_count != b.version_count)
   {
     return false;
   }
-  for (size_t version_idx = 0; version_idx < (size_t)a.n_version; version_idx++)
+  for (size_t version_idx = 0; version_idx < (size_t)a.version_count; version_idx++)
   {
 
     if (a.version[version_idx] != b.version[version_idx])
@@ -120,11 +120,11 @@ static inline bool operator==(const sbp_msg_bootloader_handshake_dep_a_t &a,
   (void)a;
   (void)b;
 
-  if (a.n_handshake != b.n_handshake)
+  if (a.handshake_count != b.handshake_count)
   {
     return false;
   }
-  for (size_t handshake_idx = 0; handshake_idx < (size_t)a.n_handshake; handshake_idx++)
+  for (size_t handshake_idx = 0; handshake_idx < (size_t)a.handshake_count; handshake_idx++)
   {
 
     if (a.handshake[handshake_idx] != b.handshake[handshake_idx])

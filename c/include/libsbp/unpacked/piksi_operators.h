@@ -677,11 +677,11 @@ static inline bool operator==(const sbp_msg_command_req_t &a, const sbp_msg_comm
   {
     return false;
   }
-  if (a.n_command != b.n_command)
+  if (a.command_count != b.command_count)
   {
     return false;
   }
-  for (size_t command_idx = 0; command_idx < (size_t)a.n_command; command_idx++)
+  for (size_t command_idx = 0; command_idx < (size_t)a.command_count; command_idx++)
   {
 
     if (a.command[command_idx] != b.command[command_idx])
@@ -732,11 +732,11 @@ static inline bool operator==(const sbp_msg_command_output_t &a, const sbp_msg_c
   {
     return false;
   }
-  if (a.n_line != b.n_line)
+  if (a.line_count != b.line_count)
   {
     return false;
   }
-  for (size_t line_idx = 0; line_idx < (size_t)a.n_line; line_idx++)
+  for (size_t line_idx = 0; line_idx < (size_t)a.line_count; line_idx++)
   {
 
     if (a.line[line_idx] != b.line[line_idx])
@@ -879,11 +879,11 @@ static inline bool operator==(const sbp_msg_network_bandwidth_usage_t &a, const 
   (void)a;
   (void)b;
 
-  if (a.n_interfaces != b.n_interfaces)
+  if (a.interfaces_count != b.interfaces_count)
   {
     return false;
   }
-  for (size_t interfaces_idx = 0; interfaces_idx < (size_t)a.n_interfaces; interfaces_idx++)
+  for (size_t interfaces_idx = 0; interfaces_idx < (size_t)a.interfaces_count; interfaces_idx++)
   {
 
     if (a.interfaces[interfaces_idx].duration != b.interfaces[interfaces_idx].duration)
@@ -940,11 +940,11 @@ static inline bool operator==(const sbp_msg_cell_modem_status_t &a, const sbp_ms
   {
     return false;
   }
-  if (a.n_reserved != b.n_reserved)
+  if (a.reserved_count != b.reserved_count)
   {
     return false;
   }
-  for (size_t reserved_idx = 0; reserved_idx < (size_t)a.n_reserved; reserved_idx++)
+  for (size_t reserved_idx = 0; reserved_idx < (size_t)a.reserved_count; reserved_idx++)
   {
 
     if (a.reserved[reserved_idx] != b.reserved[reserved_idx])
@@ -1001,11 +1001,11 @@ static inline bool operator==(const sbp_msg_specan_dep_t &a, const sbp_msg_speca
   {
     return false;
   }
-  if (a.n_amplitude_value != b.n_amplitude_value)
+  if (a.amplitude_value_count != b.amplitude_value_count)
   {
     return false;
   }
-  for (size_t amplitude_value_idx = 0; amplitude_value_idx < (size_t)a.n_amplitude_value; amplitude_value_idx++)
+  for (size_t amplitude_value_idx = 0; amplitude_value_idx < (size_t)a.amplitude_value_count; amplitude_value_idx++)
   {
 
     if (a.amplitude_value[amplitude_value_idx] != b.amplitude_value[amplitude_value_idx])
@@ -1067,11 +1067,11 @@ static inline bool operator==(const sbp_msg_specan_t &a, const sbp_msg_specan_t 
   {
     return false;
   }
-  if (a.n_amplitude_value != b.n_amplitude_value)
+  if (a.amplitude_value_count != b.amplitude_value_count)
   {
     return false;
   }
-  for (size_t amplitude_value_idx = 0; amplitude_value_idx < (size_t)a.n_amplitude_value; amplitude_value_idx++)
+  for (size_t amplitude_value_idx = 0; amplitude_value_idx < (size_t)a.amplitude_value_count; amplitude_value_idx++)
   {
 
     if (a.amplitude_value[amplitude_value_idx] != b.amplitude_value[amplitude_value_idx])

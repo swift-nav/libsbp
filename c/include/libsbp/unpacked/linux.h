@@ -42,7 +42,7 @@ typedef struct
   /**
    * Number of items in cmdline
    */
-  u8 n_cmdline;
+  u8 cmdline_count;
 } sbp_msg_linux_cpu_state_dep_a_t;
 /** List memory state on the system. DEPRECATED.
  *
@@ -77,7 +77,7 @@ typedef struct
   /**
    * Number of items in cmdline
    */
-  u8 n_cmdline;
+  u8 cmdline_count;
 } sbp_msg_linux_mem_state_dep_a_t;
 /** CPU, Memory and Process Starts/Stops. DEPRECATED.
  *
@@ -155,7 +155,7 @@ typedef struct
   /**
    * Number of items in cmdline
    */
-  u8 n_cmdline;
+  u8 cmdline_count;
 } sbp_msg_linux_process_socket_counts_t;
 /** A list of processes with deep socket queues
  *
@@ -208,7 +208,7 @@ typedef struct
   /**
    * Number of items in cmdline
    */
-  u8 n_cmdline;
+  u8 cmdline_count;
 } sbp_msg_linux_process_socket_queues_t;
 /** Summary of socket usage across the system
  *
@@ -266,7 +266,7 @@ typedef struct
   /**
    * Number of items in cmdline
    */
-  u8 n_cmdline;
+  u8 cmdline_count;
 } sbp_msg_linux_process_fd_count_t;
 /** Summary of open file descriptors on the system
  *
@@ -292,7 +292,7 @@ typedef struct
   /**
    * Number of items in most_opened
    */
-  u8 n_most_opened;
+  u8 most_opened_count;
 } sbp_msg_linux_process_fd_summary_t;
 /** List CPU state on the system
  *
@@ -348,7 +348,7 @@ typedef struct
   /**
    * Number of items in cmdline
    */
-  u8 n_cmdline;
+  u8 cmdline_count;
 } sbp_msg_linux_cpu_state_t;
 /** List memory state on the system
  *
@@ -404,7 +404,7 @@ typedef struct
   /**
    * Number of items in cmdline
    */
-  u8 n_cmdline;
+  u8 cmdline_count;
 } sbp_msg_linux_mem_state_t;
 /** CPU, Memory and Process Starts/Stops.
  *

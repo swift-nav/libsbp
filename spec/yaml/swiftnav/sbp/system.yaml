@@ -421,7 +421,7 @@ definitions:
        - group_msgs:
            type: array
            fill: u16
-           count: n_group_msgs
+           size_fn: n_group_msgs
            desc: |
              An inorder list of message types included in the Solution Group,
              including GROUP_META itself

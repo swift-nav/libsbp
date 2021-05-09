@@ -605,10 +605,10 @@ static inline size_t sbp_packed_size_sbp_msg_obs_t(const sbp_msg_obs_t *msg)
   return 0 +
          (0 + (0 + sizeof(msg->header.t.tow) + sizeof(msg->header.t.ns_residual) + sizeof(msg->header.t.wn)) +
           sizeof(msg->header.n_obs)) +
-         (msg->n_obs * (0 + sizeof(msg->obs[0].P) + (0 + sizeof(msg->obs[0].L.i) + sizeof(msg->obs[0].L.f)) +
-                        (0 + sizeof(msg->obs[0].D.i) + sizeof(msg->obs[0].D.f)) + sizeof(msg->obs[0].cn0) +
-                        sizeof(msg->obs[0].lock) + sizeof(msg->obs[0].flags) +
-                        (0 + sizeof(msg->obs[0].sid.sat) + sizeof(msg->obs[0].sid.code))));
+         (msg->obs_count * (0 + sizeof(msg->obs[0].P) + (0 + sizeof(msg->obs[0].L.i) + sizeof(msg->obs[0].L.f)) +
+                            (0 + sizeof(msg->obs[0].D.i) + sizeof(msg->obs[0].D.f)) + sizeof(msg->obs[0].cn0) +
+                            sizeof(msg->obs[0].lock) + sizeof(msg->obs[0].flags) +
+                            (0 + sizeof(msg->obs[0].sid.sat) + sizeof(msg->obs[0].sid.code))));
 }
 
 static inline bool sbp_pack_sbp_msg_obs_t(u8 *buf, size_t len, const sbp_msg_obs_t *msg)
@@ -658,7 +658,7 @@ static inline bool sbp_pack_sbp_msg_obs_t(u8 *buf, size_t len, const sbp_msg_obs
   memcpy(buf + offset, &msgheadern_obs, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgobs_idx = 0; msgobs_idx < (size_t)msg->n_obs; msgobs_idx++)
+  for (size_t msgobs_idx = 0; msgobs_idx < (size_t)msg->obs_count; msgobs_idx++)
   {
 
     if (offset + 4 > len)
@@ -798,9 +798,9 @@ static inline bool sbp_unpack_sbp_msg_obs_t(const u8 *buf, size_t len, sbp_msg_o
   memcpy(&msg->header.n_obs, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_obs = (u8)((len - offset) / 17);
+  msg->obs_count = (u8)((len - offset) / 17);
 
-  for (size_t msgobs_idx = 0; msgobs_idx < msg->n_obs; msgobs_idx++)
+  for (size_t msgobs_idx = 0; msgobs_idx < msg->obs_count; msgobs_idx++)
   {
 
     if (offset + 4 > len)
@@ -10831,8 +10831,8 @@ static inline size_t sbp_packed_size_sbp_msg_obs_dep_a_t(const sbp_msg_obs_dep_a
 {
   (void)msg;
   return 0 + (0 + (0 + sizeof(msg->header.t.tow) + sizeof(msg->header.t.wn)) + sizeof(msg->header.n_obs)) +
-         (msg->n_obs * (0 + sizeof(msg->obs[0].P) + (0 + sizeof(msg->obs[0].L.i) + sizeof(msg->obs[0].L.f)) +
-                        sizeof(msg->obs[0].cn0) + sizeof(msg->obs[0].lock) + sizeof(msg->obs[0].prn)));
+         (msg->obs_count * (0 + sizeof(msg->obs[0].P) + (0 + sizeof(msg->obs[0].L.i) + sizeof(msg->obs[0].L.f)) +
+                            sizeof(msg->obs[0].cn0) + sizeof(msg->obs[0].lock) + sizeof(msg->obs[0].prn)));
 }
 
 static inline bool sbp_pack_sbp_msg_obs_dep_a_t(u8 *buf, size_t len, const sbp_msg_obs_dep_a_t *msg)
@@ -10873,7 +10873,7 @@ static inline bool sbp_pack_sbp_msg_obs_dep_a_t(u8 *buf, size_t len, const sbp_m
   memcpy(buf + offset, &msgheadern_obs, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgobs_idx = 0; msgobs_idx < (size_t)msg->n_obs; msgobs_idx++)
+  for (size_t msgobs_idx = 0; msgobs_idx < (size_t)msg->obs_count; msgobs_idx++)
   {
 
     if (offset + 4 > len)
@@ -10966,9 +10966,9 @@ static inline bool sbp_unpack_sbp_msg_obs_dep_a_t(const u8 *buf, size_t len, sbp
   memcpy(&msg->header.n_obs, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_obs = (u8)((len - offset) / 13);
+  msg->obs_count = (u8)((len - offset) / 13);
 
-  for (size_t msgobs_idx = 0; msgobs_idx < msg->n_obs; msgobs_idx++)
+  for (size_t msgobs_idx = 0; msgobs_idx < msg->obs_count; msgobs_idx++)
   {
 
     if (offset + 4 > len)
@@ -11031,7 +11031,7 @@ static inline size_t sbp_packed_size_sbp_msg_obs_dep_b_t(const sbp_msg_obs_dep_b
 {
   (void)msg;
   return 0 + (0 + (0 + sizeof(msg->header.t.tow) + sizeof(msg->header.t.wn)) + sizeof(msg->header.n_obs)) +
-         (msg->n_obs *
+         (msg->obs_count *
           (0 + sizeof(msg->obs[0].P) + (0 + sizeof(msg->obs[0].L.i) + sizeof(msg->obs[0].L.f)) +
            sizeof(msg->obs[0].cn0) + sizeof(msg->obs[0].lock) +
            (0 + sizeof(msg->obs[0].sid.sat) + sizeof(msg->obs[0].sid.code) + sizeof(msg->obs[0].sid.reserved))));
@@ -11075,7 +11075,7 @@ static inline bool sbp_pack_sbp_msg_obs_dep_b_t(u8 *buf, size_t len, const sbp_m
   memcpy(buf + offset, &msgheadern_obs, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgobs_idx = 0; msgobs_idx < (size_t)msg->n_obs; msgobs_idx++)
+  for (size_t msgobs_idx = 0; msgobs_idx < (size_t)msg->obs_count; msgobs_idx++)
   {
 
     if (offset + 4 > len)
@@ -11186,9 +11186,9 @@ static inline bool sbp_unpack_sbp_msg_obs_dep_b_t(const u8 *buf, size_t len, sbp
   memcpy(&msg->header.n_obs, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_obs = (u8)((len - offset) / 16);
+  msg->obs_count = (u8)((len - offset) / 16);
 
-  for (size_t msgobs_idx = 0; msgobs_idx < msg->n_obs; msgobs_idx++)
+  for (size_t msgobs_idx = 0; msgobs_idx < msg->obs_count; msgobs_idx++)
   {
 
     if (offset + 4 > len)
@@ -11268,7 +11268,7 @@ static inline size_t sbp_packed_size_sbp_msg_obs_dep_c_t(const sbp_msg_obs_dep_c
 {
   (void)msg;
   return 0 + (0 + (0 + sizeof(msg->header.t.tow) + sizeof(msg->header.t.wn)) + sizeof(msg->header.n_obs)) +
-         (msg->n_obs *
+         (msg->obs_count *
           (0 + sizeof(msg->obs[0].P) + (0 + sizeof(msg->obs[0].L.i) + sizeof(msg->obs[0].L.f)) +
            sizeof(msg->obs[0].cn0) + sizeof(msg->obs[0].lock) +
            (0 + sizeof(msg->obs[0].sid.sat) + sizeof(msg->obs[0].sid.code) + sizeof(msg->obs[0].sid.reserved))));
@@ -11312,7 +11312,7 @@ static inline bool sbp_pack_sbp_msg_obs_dep_c_t(u8 *buf, size_t len, const sbp_m
   memcpy(buf + offset, &msgheadern_obs, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgobs_idx = 0; msgobs_idx < (size_t)msg->n_obs; msgobs_idx++)
+  for (size_t msgobs_idx = 0; msgobs_idx < (size_t)msg->obs_count; msgobs_idx++)
   {
 
     if (offset + 4 > len)
@@ -11423,9 +11423,9 @@ static inline bool sbp_unpack_sbp_msg_obs_dep_c_t(const u8 *buf, size_t len, sbp
   memcpy(&msg->header.n_obs, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_obs = (u8)((len - offset) / 16);
+  msg->obs_count = (u8)((len - offset) / 16);
 
-  for (size_t msgobs_idx = 0; msgobs_idx < msg->n_obs; msgobs_idx++)
+  for (size_t msgobs_idx = 0; msgobs_idx < msg->obs_count; msgobs_idx++)
   {
 
     if (offset + 4 > len)
@@ -14835,8 +14835,8 @@ static inline bool sbp_unpack_sbp_sv_az_el_t(const u8 *buf, size_t len, sbp_sv_a
 static inline size_t sbp_packed_size_sbp_msg_sv_az_el_t(const sbp_msg_sv_az_el_t *msg)
 {
   (void)msg;
-  return 0 + (msg->n_azel * (0 + (0 + sizeof(msg->azel[0].sid.sat) + sizeof(msg->azel[0].sid.code)) +
-                             sizeof(msg->azel[0].az) + sizeof(msg->azel[0].el)));
+  return 0 + (msg->azel_count * (0 + (0 + sizeof(msg->azel[0].sid.sat) + sizeof(msg->azel[0].sid.code)) +
+                                 sizeof(msg->azel[0].az) + sizeof(msg->azel[0].el)));
 }
 
 static inline bool sbp_pack_sbp_msg_sv_az_el_t(u8 *buf, size_t len, const sbp_msg_sv_az_el_t *msg)
@@ -14851,7 +14851,7 @@ static inline bool sbp_pack_sbp_msg_sv_az_el_t(u8 *buf, size_t len, const sbp_ms
     return false;
   }
 
-  for (size_t msgazel_idx = 0; msgazel_idx < (size_t)msg->n_azel; msgazel_idx++)
+  for (size_t msgazel_idx = 0; msgazel_idx < (size_t)msg->azel_count; msgazel_idx++)
   {
 
     if (offset + 1 > len)
@@ -14901,9 +14901,9 @@ static inline bool sbp_unpack_sbp_msg_sv_az_el_t(const u8 *buf, size_t len, sbp_
   (void)len;
   (void)msg;
 
-  msg->n_azel = (u8)((len - offset) / 4);
+  msg->azel_count = (u8)((len - offset) / 4);
 
-  for (size_t msgazel_idx = 0; msgazel_idx < msg->n_azel; msgazel_idx++)
+  for (size_t msgazel_idx = 0; msgazel_idx < msg->azel_count; msgazel_idx++)
   {
 
     if (offset + 1 > len)
@@ -14947,10 +14947,11 @@ static inline size_t sbp_packed_size_sbp_msg_osr_t(const sbp_msg_osr_t *msg)
   return 0 +
          (0 + (0 + sizeof(msg->header.t.tow) + sizeof(msg->header.t.ns_residual) + sizeof(msg->header.t.wn)) +
           sizeof(msg->header.n_obs)) +
-         (msg->n_obs * (0 + sizeof(msg->obs[0].P) + (0 + sizeof(msg->obs[0].L.i) + sizeof(msg->obs[0].L.f)) +
-                        sizeof(msg->obs[0].lock) + sizeof(msg->obs[0].flags) +
-                        (0 + sizeof(msg->obs[0].sid.sat) + sizeof(msg->obs[0].sid.code)) +
-                        sizeof(msg->obs[0].iono_std) + sizeof(msg->obs[0].tropo_std) + sizeof(msg->obs[0].range_std)));
+         (msg->obs_count *
+          (0 + sizeof(msg->obs[0].P) + (0 + sizeof(msg->obs[0].L.i) + sizeof(msg->obs[0].L.f)) +
+           sizeof(msg->obs[0].lock) + sizeof(msg->obs[0].flags) +
+           (0 + sizeof(msg->obs[0].sid.sat) + sizeof(msg->obs[0].sid.code)) + sizeof(msg->obs[0].iono_std) +
+           sizeof(msg->obs[0].tropo_std) + sizeof(msg->obs[0].range_std)));
 }
 
 static inline bool sbp_pack_sbp_msg_osr_t(u8 *buf, size_t len, const sbp_msg_osr_t *msg)
@@ -15000,7 +15001,7 @@ static inline bool sbp_pack_sbp_msg_osr_t(u8 *buf, size_t len, const sbp_msg_osr
   memcpy(buf + offset, &msgheadern_obs, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgobs_idx = 0; msgobs_idx < (size_t)msg->n_obs; msgobs_idx++)
+  for (size_t msgobs_idx = 0; msgobs_idx < (size_t)msg->obs_count; msgobs_idx++)
   {
 
     if (offset + 4 > len)
@@ -15140,9 +15141,9 @@ static inline bool sbp_unpack_sbp_msg_osr_t(const u8 *buf, size_t len, sbp_msg_o
   memcpy(&msg->header.n_obs, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_obs = (u8)((len - offset) / 19);
+  msg->obs_count = (u8)((len - offset) / 19);
 
-  for (size_t msgobs_idx = 0; msgobs_idx < msg->n_obs; msgobs_idx++)
+  for (size_t msgobs_idx = 0; msgobs_idx < msg->obs_count; msgobs_idx++)
   {
 
     if (offset + 4 > len)

@@ -20,11 +20,11 @@ static inline bool operator==(const sbp_msg_log_t &a, const sbp_msg_log_t &b)
   {
     return false;
   }
-  if (a.n_text != b.n_text)
+  if (a.text_count != b.text_count)
   {
     return false;
   }
-  for (size_t text_idx = 0; text_idx < (size_t)a.n_text; text_idx++)
+  for (size_t text_idx = 0; text_idx < (size_t)a.text_count; text_idx++)
   {
 
     if (a.text[text_idx] != b.text[text_idx])
@@ -56,11 +56,11 @@ static inline bool operator==(const sbp_msg_fwd_t &a, const sbp_msg_fwd_t &b)
   {
     return false;
   }
-  if (a.n_fwd_payload != b.n_fwd_payload)
+  if (a.fwd_payload_count != b.fwd_payload_count)
   {
     return false;
   }
-  for (size_t fwd_payload_idx = 0; fwd_payload_idx < (size_t)a.n_fwd_payload; fwd_payload_idx++)
+  for (size_t fwd_payload_idx = 0; fwd_payload_idx < (size_t)a.fwd_payload_count; fwd_payload_idx++)
   {
 
     if (a.fwd_payload[fwd_payload_idx] != b.fwd_payload[fwd_payload_idx])
@@ -83,11 +83,11 @@ static inline bool operator==(const sbp_msg_print_dep_t &a, const sbp_msg_print_
   (void)a;
   (void)b;
 
-  if (a.n_text != b.n_text)
+  if (a.text_count != b.text_count)
   {
     return false;
   }
-  for (size_t text_idx = 0; text_idx < (size_t)a.n_text; text_idx++)
+  for (size_t text_idx = 0; text_idx < (size_t)a.text_count; text_idx++)
   {
 
     if (a.text[text_idx] != b.text[text_idx])

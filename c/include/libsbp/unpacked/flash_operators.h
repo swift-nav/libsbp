@@ -33,11 +33,11 @@ static inline bool operator==(const sbp_msg_flash_program_t &a, const sbp_msg_fl
   {
     return false;
   }
-  if (a.n_data != b.n_data)
+  if (a.addr_len != b.addr_len)
   {
     return false;
   }
-  for (size_t data_idx = 0; data_idx < (size_t)a.n_data; data_idx++)
+  for (size_t data_idx = 0; data_idx < (size_t)a.addr_len; data_idx++)
   {
 
     if (a.data[data_idx] != b.data[data_idx])

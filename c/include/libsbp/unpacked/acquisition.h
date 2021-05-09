@@ -372,7 +372,7 @@ typedef struct
   /**
    * Number of items in acq_sv_profile
    */
-  u8 n_acq_sv_profile;
+  u8 acq_sv_profile_count;
 } sbp_msg_acq_sv_profile_t;
 /** Deprecated.
  *
@@ -409,7 +409,7 @@ typedef struct
   /**
    * Number of items in acq_sv_profile
    */
-  u8 n_acq_sv_profile;
+  u8 acq_sv_profile_count;
 } sbp_msg_acq_sv_profile_dep_t;
 
 #include <libsbp/unpacked/acquisition_operators.h>

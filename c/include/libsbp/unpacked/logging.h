@@ -49,7 +49,7 @@ typedef struct
   /**
    * Number of items in text
    */
-  u8 n_text;
+  u8 text_count;
 } sbp_msg_log_t;
 /** Wrapper for FWD a separate stream of information over SBP
  *
@@ -81,7 +81,7 @@ typedef struct
   /**
    * Number of items in fwd_payload
    */
-  u8 n_fwd_payload;
+  u8 fwd_payload_count;
 } sbp_msg_fwd_t;
 /** Deprecated
  *
@@ -99,7 +99,7 @@ typedef struct
   /**
    * Number of items in text
    */
-  u8 n_text;
+  u8 text_count;
 } sbp_msg_print_dep_t;
 
 #include <libsbp/unpacked/logging_operators.h>

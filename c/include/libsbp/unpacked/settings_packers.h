@@ -46,7 +46,7 @@ static inline bool sbp_unpack_sbp_msg_settings_save_t(const u8 *buf, size_t len,
 static inline size_t sbp_packed_size_sbp_msg_settings_write_t(const sbp_msg_settings_write_t *msg)
 {
   (void)msg;
-  return 0 + (msg->n_setting * sizeof(msg->setting[0]));
+  return 0 + (msg->setting_count * sizeof(msg->setting[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_settings_write_t(u8 *buf, size_t len, const sbp_msg_settings_write_t *msg)
@@ -61,7 +61,7 @@ static inline bool sbp_pack_sbp_msg_settings_write_t(u8 *buf, size_t len, const 
     return false;
   }
 
-  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->n_setting; msgsetting_idx++)
+  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->setting_count; msgsetting_idx++)
   {
 
     if (offset + 1 > len)
@@ -84,9 +84,9 @@ static inline bool sbp_unpack_sbp_msg_settings_write_t(const u8 *buf, size_t len
   (void)len;
   (void)msg;
 
-  msg->n_setting = (u8)((len - offset) / 1);
+  msg->setting_count = (u8)((len - offset) / 1);
 
-  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->n_setting; msgsetting_idx++)
+  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->setting_count; msgsetting_idx++)
   {
 
     if (offset + 1 > len)
@@ -103,7 +103,7 @@ static inline bool sbp_unpack_sbp_msg_settings_write_t(const u8 *buf, size_t len
 static inline size_t sbp_packed_size_sbp_msg_settings_write_resp_t(const sbp_msg_settings_write_resp_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->status) + (msg->n_setting * sizeof(msg->setting[0]));
+  return 0 + sizeof(msg->status) + (msg->setting_count * sizeof(msg->setting[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_settings_write_resp_t(u8 *buf, size_t len, const sbp_msg_settings_write_resp_t *msg)
@@ -126,7 +126,7 @@ static inline bool sbp_pack_sbp_msg_settings_write_resp_t(u8 *buf, size_t len, c
   memcpy(buf + offset, &msgstatus, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->n_setting; msgsetting_idx++)
+  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->setting_count; msgsetting_idx++)
   {
 
     if (offset + 1 > len)
@@ -157,9 +157,9 @@ sbp_unpack_sbp_msg_settings_write_resp_t(const u8 *buf, size_t len, sbp_msg_sett
   memcpy(&msg->status, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_setting = (u8)((len - offset) / 1);
+  msg->setting_count = (u8)((len - offset) / 1);
 
-  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->n_setting; msgsetting_idx++)
+  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->setting_count; msgsetting_idx++)
   {
 
     if (offset + 1 > len)
@@ -176,7 +176,7 @@ sbp_unpack_sbp_msg_settings_write_resp_t(const u8 *buf, size_t len, sbp_msg_sett
 static inline size_t sbp_packed_size_sbp_msg_settings_read_req_t(const sbp_msg_settings_read_req_t *msg)
 {
   (void)msg;
-  return 0 + (msg->n_setting * sizeof(msg->setting[0]));
+  return 0 + (msg->setting_count * sizeof(msg->setting[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_settings_read_req_t(u8 *buf, size_t len, const sbp_msg_settings_read_req_t *msg)
@@ -191,7 +191,7 @@ static inline bool sbp_pack_sbp_msg_settings_read_req_t(u8 *buf, size_t len, con
     return false;
   }
 
-  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->n_setting; msgsetting_idx++)
+  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->setting_count; msgsetting_idx++)
   {
 
     if (offset + 1 > len)
@@ -214,9 +214,9 @@ static inline bool sbp_unpack_sbp_msg_settings_read_req_t(const u8 *buf, size_t 
   (void)len;
   (void)msg;
 
-  msg->n_setting = (u8)((len - offset) / 1);
+  msg->setting_count = (u8)((len - offset) / 1);
 
-  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->n_setting; msgsetting_idx++)
+  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->setting_count; msgsetting_idx++)
   {
 
     if (offset + 1 > len)
@@ -233,7 +233,7 @@ static inline bool sbp_unpack_sbp_msg_settings_read_req_t(const u8 *buf, size_t 
 static inline size_t sbp_packed_size_sbp_msg_settings_read_resp_t(const sbp_msg_settings_read_resp_t *msg)
 {
   (void)msg;
-  return 0 + (msg->n_setting * sizeof(msg->setting[0]));
+  return 0 + (msg->setting_count * sizeof(msg->setting[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_settings_read_resp_t(u8 *buf, size_t len, const sbp_msg_settings_read_resp_t *msg)
@@ -248,7 +248,7 @@ static inline bool sbp_pack_sbp_msg_settings_read_resp_t(u8 *buf, size_t len, co
     return false;
   }
 
-  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->n_setting; msgsetting_idx++)
+  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->setting_count; msgsetting_idx++)
   {
 
     if (offset + 1 > len)
@@ -271,9 +271,9 @@ static inline bool sbp_unpack_sbp_msg_settings_read_resp_t(const u8 *buf, size_t
   (void)len;
   (void)msg;
 
-  msg->n_setting = (u8)((len - offset) / 1);
+  msg->setting_count = (u8)((len - offset) / 1);
 
-  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->n_setting; msgsetting_idx++)
+  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->setting_count; msgsetting_idx++)
   {
 
     if (offset + 1 > len)
@@ -342,7 +342,7 @@ static inline size_t
 sbp_packed_size_sbp_msg_settings_read_by_index_resp_t(const sbp_msg_settings_read_by_index_resp_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->index) + (msg->n_setting * sizeof(msg->setting[0]));
+  return 0 + sizeof(msg->index) + (msg->setting_count * sizeof(msg->setting[0]));
 }
 
 static inline bool
@@ -366,7 +366,7 @@ sbp_pack_sbp_msg_settings_read_by_index_resp_t(u8 *buf, size_t len, const sbp_ms
   memcpy(buf + offset, &msgindex, 2);
   // NOLINTNEXTLINE
   offset += 2;
-  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->n_setting; msgsetting_idx++)
+  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->setting_count; msgsetting_idx++)
   {
 
     if (offset + 1 > len)
@@ -398,9 +398,9 @@ sbp_unpack_sbp_msg_settings_read_by_index_resp_t(const u8 *buf, size_t len, sbp_
   msg->index = le16toh(msg->index);
   // NOLINTNEXTLINE
   offset += 2;
-  msg->n_setting = (u8)((len - offset) / 1);
+  msg->setting_count = (u8)((len - offset) / 1);
 
-  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->n_setting; msgsetting_idx++)
+  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->setting_count; msgsetting_idx++)
   {
 
     if (offset + 1 > len)
@@ -452,7 +452,7 @@ sbp_unpack_sbp_msg_settings_read_by_index_done_t(const u8 *buf, size_t len, sbp_
 static inline size_t sbp_packed_size_sbp_msg_settings_register_t(const sbp_msg_settings_register_t *msg)
 {
   (void)msg;
-  return 0 + (msg->n_setting * sizeof(msg->setting[0]));
+  return 0 + (msg->setting_count * sizeof(msg->setting[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_settings_register_t(u8 *buf, size_t len, const sbp_msg_settings_register_t *msg)
@@ -467,7 +467,7 @@ static inline bool sbp_pack_sbp_msg_settings_register_t(u8 *buf, size_t len, con
     return false;
   }
 
-  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->n_setting; msgsetting_idx++)
+  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->setting_count; msgsetting_idx++)
   {
 
     if (offset + 1 > len)
@@ -490,9 +490,9 @@ static inline bool sbp_unpack_sbp_msg_settings_register_t(const u8 *buf, size_t 
   (void)len;
   (void)msg;
 
-  msg->n_setting = (u8)((len - offset) / 1);
+  msg->setting_count = (u8)((len - offset) / 1);
 
-  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->n_setting; msgsetting_idx++)
+  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->setting_count; msgsetting_idx++)
   {
 
     if (offset + 1 > len)
@@ -509,7 +509,7 @@ static inline bool sbp_unpack_sbp_msg_settings_register_t(const u8 *buf, size_t 
 static inline size_t sbp_packed_size_sbp_msg_settings_register_resp_t(const sbp_msg_settings_register_resp_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->status) + (msg->n_setting * sizeof(msg->setting[0]));
+  return 0 + sizeof(msg->status) + (msg->setting_count * sizeof(msg->setting[0]));
 }
 
 static inline bool
@@ -533,7 +533,7 @@ sbp_pack_sbp_msg_settings_register_resp_t(u8 *buf, size_t len, const sbp_msg_set
   memcpy(buf + offset, &msgstatus, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->n_setting; msgsetting_idx++)
+  for (size_t msgsetting_idx = 0; msgsetting_idx < (size_t)msg->setting_count; msgsetting_idx++)
   {
 
     if (offset + 1 > len)
@@ -564,9 +564,9 @@ sbp_unpack_sbp_msg_settings_register_resp_t(const u8 *buf, size_t len, sbp_msg_s
   memcpy(&msg->status, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->n_setting = (u8)((len - offset) / 1);
+  msg->setting_count = (u8)((len - offset) / 1);
 
-  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->n_setting; msgsetting_idx++)
+  for (size_t msgsetting_idx = 0; msgsetting_idx < msg->setting_count; msgsetting_idx++)
   {
 
     if (offset + 1 > len)
