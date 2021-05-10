@@ -628,7 +628,6 @@ impl super::SBPMessage for MsgInsUpdates {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }

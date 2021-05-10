@@ -112,7 +112,6 @@ impl super::SBPMessage for MsgAgeCorrections {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -213,7 +212,6 @@ impl super::SBPMessage for MsgBaselineECEF {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -324,7 +322,6 @@ impl super::SBPMessage for MsgBaselineECEFDepA {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -424,7 +421,6 @@ impl super::SBPMessage for MsgBaselineHeadingDepA {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -533,7 +529,6 @@ impl super::SBPMessage for MsgBaselineNED {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -650,7 +645,6 @@ impl super::SBPMessage for MsgBaselineNEDDepA {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -762,7 +756,6 @@ impl super::SBPMessage for MsgDops {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -868,7 +861,6 @@ impl super::SBPMessage for MsgDopsDepA {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -981,7 +973,6 @@ impl super::SBPMessage for MsgGPSTime {
             Ok(gps_time) => gps_time,
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -1090,7 +1081,6 @@ impl super::SBPMessage for MsgGPSTimeDepA {
             Ok(gps_time) => gps_time,
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -1199,7 +1189,6 @@ impl super::SBPMessage for MsgGPSTimeGnss {
             Ok(gps_time) => gps_time,
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -1307,7 +1296,6 @@ impl super::SBPMessage for MsgPosECEF {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -1437,7 +1425,6 @@ impl super::SBPMessage for MsgPosECEFCov {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -1577,7 +1564,6 @@ impl super::SBPMessage for MsgPosECEFCovGnss {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -1701,7 +1687,6 @@ impl super::SBPMessage for MsgPosECEFDepA {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -1815,7 +1800,6 @@ impl super::SBPMessage for MsgPosECEFGnss {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -1932,7 +1916,6 @@ impl super::SBPMessage for MsgPosLLH {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -2063,7 +2046,6 @@ impl super::SBPMessage for MsgPosLLHCov {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -2202,7 +2184,6 @@ impl super::SBPMessage for MsgPosLLHCovGnss {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -2329,7 +2310,6 @@ impl super::SBPMessage for MsgPosLLHDepA {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -2448,7 +2428,6 @@ impl super::SBPMessage for MsgPosLLHGnss {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -2607,7 +2586,6 @@ impl super::SBPMessage for MsgProtectionLevel {
             Ok(gps_time) => gps_time,
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -2744,7 +2722,6 @@ impl super::SBPMessage for MsgProtectionLevelDepA {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -2858,7 +2835,6 @@ impl super::SBPMessage for MsgUtcTime {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -2976,7 +2952,6 @@ impl super::SBPMessage for MsgUtcTimeGnss {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -3109,7 +3084,6 @@ impl super::SBPMessage for MsgVelBody {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -3228,7 +3202,6 @@ impl super::SBPMessage for MsgVelECEF {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -3352,7 +3325,6 @@ impl super::SBPMessage for MsgVelECEFCov {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -3486,7 +3458,6 @@ impl super::SBPMessage for MsgVelECEFCovGnss {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -3605,7 +3576,6 @@ impl super::SBPMessage for MsgVelECEFDepA {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -3714,7 +3684,6 @@ impl super::SBPMessage for MsgVelECEFGnss {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -3827,7 +3796,6 @@ impl super::SBPMessage for MsgVelNED {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -3956,7 +3924,6 @@ impl super::SBPMessage for MsgVelNEDCov {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -4093,7 +4060,6 @@ impl super::SBPMessage for MsgVelNEDCovGnss {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -4216,7 +4182,6 @@ impl super::SBPMessage for MsgVelNEDDepA {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -4331,7 +4296,6 @@ impl super::SBPMessage for MsgVelNEDGnss {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }

@@ -23,7 +23,7 @@ SBP2JSON_CARGO_TEMPLATE = "sbp2json-cargo.toml"
 MESSAGES_TEMPLATE_NAME = "sbp_messages_template.rs"
 MESSAGES_MOD_TEMPLATE_NAME = "sbp_messages_mod.rs"
 
-GPS_TIME = """\
+GPS_TIME = """
 let tow_s = (self.tow as f64) / 1000.0;
 let wn = match i16::try_from(self.wn) {
     Ok(wn) => wn,
@@ -33,8 +33,8 @@ let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
     Ok(gps_time) => gps_time,
     Err(e) => return Some(Err(e.into())),
 };
-"""
-GPS_TIME_HEADER = """\
+""".strip()
+GPS_TIME_HEADER = """
 let tow_s = (self.header.t.tow as f64) / 1000.0;
 let wn = match i16::try_from(self.header.t.wn) {
     Ok(wn) => wn,
@@ -44,14 +44,14 @@ let gps_time = match crate::time::GpsTime::new(wn, tow_s) {
     Ok(gps_time) => gps_time,
     Err(e) => return Some(Err(e.into())),
 };
-"""
-GPS_TIME_ONLY_TOW = """\
+""".strip()
+GPS_TIME_ONLY_TOW = """
 let tow_s = (self.tow as f64) / 1000.0;
 let gps_time = match crate::time::GpsTime::new(0, tow_s) {
     Ok(gps_time) => gps_time.tow(),
     Err(e) => return Some(Err(e.into())),
 };
-"""
+""".strip()
 
 BASE_TIME_MSGS = ["MSG_OBS", "MSG_OSR", "MSG_SSR"]
 SKIP_GPS_TIME_MSGS = ["MSG_IMU_RAW"]

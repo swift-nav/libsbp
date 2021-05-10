@@ -104,7 +104,6 @@ impl super::SBPMessage for MsgAngularRate {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -201,7 +200,6 @@ impl super::SBPMessage for MsgBaselineHeading {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -309,7 +307,6 @@ impl super::SBPMessage for MsgOrientEuler {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
@@ -431,7 +428,6 @@ impl super::SBPMessage for MsgOrientQuat {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }

@@ -99,7 +99,6 @@ impl super::SBPMessage for MsgOdometry {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }

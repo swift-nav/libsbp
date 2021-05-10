@@ -218,7 +218,6 @@ impl super::SBPMessage for MsgSolnMeta {
             Ok(gps_time) => gps_time.tow(),
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }

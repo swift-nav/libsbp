@@ -104,7 +104,6 @@ impl super::SBPMessage for MsgExtEvent {
             Ok(gps_time) => gps_time,
             Err(e) => return Some(Err(e.into())),
         };
-
         Some(Ok(crate::time::MessageTime::Rover(gps_time.into())))
     }
 }
