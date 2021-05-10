@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include <libsbp/common.h>
+#include <libsbp/string2.h>
 /** Heading relative to True North
  *
  * This message reports the baseline heading pointing from the base station
@@ -53,6 +54,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_baseline_heading_t;
+
+#if 0
+#endif
 /** Quaternion 4 component vector
  *
  * This message reports the quaternion vector describing the vehicle body frame's orientation
@@ -120,6 +124,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_orient_quat_t;
+
+#if 0
+#endif
 /** Euler angles
  *
  * This message reports the yaw, pitch, and roll angles of the vehicle body frame.
@@ -179,6 +186,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_orient_euler_t;
+
+#if 0
+#endif
 /** Vehicle Body Frame instantaneous angular rates
  *
  * This message reports the orientation rates in the vehicle body frame.
@@ -230,6 +240,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_angular_rate_t;
+
+#if 0
+#endif
 
 #include <libsbp/unpacked/orientation_operators.h>
 #include <libsbp/unpacked/orientation_packers.h>

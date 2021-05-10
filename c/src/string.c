@@ -104,7 +104,7 @@ static void analyse(const sbp_string_t string, const sbp_string_format_t *format
     size_t offset = 0;
     while (offset < format->max_encoded_len)
     {
-      if (string[offset] == format->terminator)
+      if (string[offset] == (char)format->terminator)
       {
         state->valid = true;
         state->packed_len = (uint8_t)(offset + 1);
@@ -180,24 +180,41 @@ bool sbp_string_set(sbp_string_t string, const sbp_string_format_t *format, cons
   return false;
 }
 
-bool sbp_string_set_section(sbp_string_t string, const sbp_string_format_t *format, uint8_t section, const char *str) {
-  if (format->encoding != SBP_STRING_MULTIPART) { return false; }
-  if (section >= format->max_sections) { return false; }
+bool sbp_string_set_section(sbp_string_t string, const sbp_string_format_t *format, uint8_t section, const char *str)
+{
+  if (format->encoding != SBP_STRING_MULTIPART)
+  {
+    return false;
+  }
+  if (section >= format->max_sections)
+  {
+    return false;
+  }
   struct string_state state;
   analyse(string, format, &state);
-  if (!state.valid) { return false; }
+  if (!state.valid)
+  {
+    return false;
+  }
   size_t str_len = strlen(str);
   size_t copy_len = str_len + 1;
-  if ((size_t)state.packed_len - (size_t)state.section_lengths[section] + str_len > format->max_encoded_len) { return false; }
+  if ((size_t)state.packed_len - (size_t)state.section_lengths[section] + str_len > format->max_encoded_len)
+  {
+    return false;
+  }
   sbp_string_t tmp;
   memset(tmp, 0, sizeof(sbp_string_t));
 
   size_t offset = 0;
-  for (uint8_t i = 0; i < format->max_sections; i++) {
-    if (i == section) {
+  for (uint8_t i = 0; i < format->max_sections; i++)
+  {
+    if (i == section)
+    {
       memcpy(tmp + offset, str, copy_len);
       offset += copy_len;
-    } else {
+    }
+    else
+    {
       memcpy(tmp + offset, string + state.section_offsets[i], state.section_lengths[i]);
       offset += (uint8_t)(state.section_lengths[i] + 1u);
     }
@@ -208,18 +225,25 @@ bool sbp_string_set_section(sbp_string_t string, const sbp_string_format_t *form
 
 bool sbp_string_append_section(sbp_string_t string, const sbp_string_format_t *format, const char *str)
 {
-  if (format->encoding != SBP_STRING_SEQUENCE) { return false; }
+  if (format->encoding != SBP_STRING_SEQUENCE)
+  {
+    return false;
+  }
   struct string_state state;
   analyse(string, format, &state);
-  if (!state.valid) {
+  if (!state.valid)
+  {
     sbp_string_init(string, format);
     analyse(string, format, &state);
   }
   size_t str_len = strlen(str);
   size_t copy_len = str_len + 1;
-  if (state.packed_len + copy_len > format->max_encoded_len) { return false; }
+  if (state.packed_len + copy_len > format->max_encoded_len)
+  {
+    return false;
+  }
   memcpy(string + state.packed_len - 1, str, copy_len);
-  string[state.packed_len + copy_len] = format->terminator;
+  string[state.packed_len + copy_len] = (char)format->terminator;
   return true;
 }
 
@@ -256,13 +280,15 @@ uint8_t sbp_string_pack(const sbp_string_t string, const sbp_string_format_t *fo
 
 uint8_t sbp_string_unpack(sbp_string_t string, const sbp_string_format_t *format, const uint8_t *buf, uint8_t buf_len)
 {
-  if (buf_len == 0) {
+  if (buf_len == 0)
+  {
     sbp_string_init(string, format);
     return 0;
   }
   struct string_state state;
   sbp_string_format_t packed_format = *format;
-  if (format->encoding == SBP_STRING_UNTERMINATED) {
+  if (format->encoding == SBP_STRING_UNTERMINATED)
+  {
     packed_format.max_encoded_len = (uint8_t)(sizeof(sbp_string_t) - 1);
   }
   if (buf_len < packed_format.max_encoded_len)
@@ -275,7 +301,8 @@ uint8_t sbp_string_unpack(sbp_string_t string, const sbp_string_format_t *format
     return 0;
   }
   uint8_t copy_len = state.packed_len;
-  if (copy_len > format->max_encoded_len) {
+  if (copy_len > format->max_encoded_len)
+  {
     copy_len = format->max_encoded_len;
   }
   memcpy(string, buf, state.packed_len);
@@ -304,6 +331,6 @@ void sbp_string_init(sbp_string_t string, const sbp_string_format_t *format)
   memset(string, 0, sizeof(sbp_string_t));
   if (format->encoding == SBP_STRING_SEQUENCE)
   {
-    string[0] = format->terminator;
+    string[0] = (char)format->terminator;
   }
 }

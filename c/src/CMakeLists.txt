@@ -1,7 +1,10 @@
 set(libsbp_SRCS
   edc.c
   sbp.c
-  string.c
+  unterminated_string.c
+  null_terminated_string.c
+  multipart_string.c
+  sequence_string.c
   )
 
 add_library(sbp ${libsbp_SRCS})

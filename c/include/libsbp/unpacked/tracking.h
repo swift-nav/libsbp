@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include <libsbp/common.h>
+#include <libsbp/string2.h>
 #include <libsbp/unpacked/gnss.h>
 /** Detailed signal tracking channel states. DEPRECATED.
  *
@@ -354,6 +355,18 @@ typedef struct
    */
   u8 misc_flags;
 } sbp_msg_tracking_state_detailed_dep_a_t;
+
+#if 0
+
+#if 0
+#endif
+
+#if 0
+#endif
+
+#if 0
+#endif
+#endif
 /** Deprecated
  *
  * Deprecated.
@@ -692,6 +705,18 @@ typedef struct
    */
   u8 misc_flags;
 } sbp_msg_tracking_state_detailed_dep_t;
+
+#if 0
+
+#if 0
+#endif
+
+#if 0
+#endif
+
+#if 0
+#endif
+#endif
 /** Signal tracking channel state
  *
  * Tracking channel state for a specific satellite signal and
@@ -736,6 +761,12 @@ typedef struct
    */
   u8 cn0;
 } sbp_tracking_channel_state_t;
+
+#if 0
+
+#if 0
+#endif
+#endif
 /** Signal tracking channel states
  *
  * The tracking message returns a variable-length array of tracking
@@ -779,6 +810,15 @@ typedef struct
    */
   u8 states_count;
 } sbp_msg_tracking_state_t;
+
+#if 0
+
+#if 0
+
+#if 0
+#endif
+#endif
+#endif
 /** Measurement Engine signal tracking channel state
  *
  * Measurement Engine tracking channel state for a specific satellite signal
@@ -822,6 +862,12 @@ typedef struct
    */
   u8 cn0;
 } sbp_measurement_state_t;
+
+#if 0
+
+#if 0
+#endif
+#endif
 /** Measurement Engine signal tracking channel states
  *
  * The tracking message returns a variable-length array of tracking
@@ -865,6 +911,15 @@ typedef struct
    */
   u8 states_count;
 } sbp_msg_measurement_state_t;
+
+#if 0
+
+#if 0
+
+#if 0
+#endif
+#endif
+#endif
 /** Complex correlation structure
  *
  * Structure containing in-phase and quadrature correlation components.
@@ -882,6 +937,9 @@ typedef struct
    */
   s16 Q;
 } sbp_tracking_channel_correlation_t;
+
+#if 0
+#endif
 /** Tracking channel correlations
  *
  * When enabled, a tracking channel can output the correlations at each
@@ -928,6 +986,15 @@ typedef struct
    */
   sbp_tracking_channel_correlation_t corrs[3];
 } sbp_msg_tracking_iq_t;
+
+#if 0
+
+#if 0
+#endif
+
+#if 0
+#endif
+#endif
 /** Complex correlation structure
  *
  * Structure containing in-phase and quadrature correlation components.
@@ -945,6 +1012,9 @@ typedef struct
    */
   s32 Q;
 } sbp_tracking_channel_correlation_dep_t;
+
+#if 0
+#endif
 /** Tracking channel correlations
  *
  * When enabled, a tracking channel can output the correlations at each
@@ -991,6 +1061,15 @@ typedef struct
    */
   sbp_tracking_channel_correlation_dep_t corrs[3];
 } sbp_msg_tracking_iq_dep_b_t;
+
+#if 0
+
+#if 0
+#endif
+
+#if 0
+#endif
+#endif
 /** Deprecated
  *
  * Deprecated.
@@ -1031,6 +1110,15 @@ typedef struct
    */
   sbp_tracking_channel_correlation_dep_t corrs[3];
 } sbp_msg_tracking_iq_dep_a_t;
+
+#if 0
+
+#if 0
+#endif
+
+#if 0
+#endif
+#endif
 /** Deprecated
  *
  * Deprecated.
@@ -1066,6 +1154,9 @@ typedef struct
    */
   float cn0;
 } sbp_tracking_channel_state_dep_a_t;
+
+#if 0
+#endif
 /** Deprecated
  *
  * Deprecated.
@@ -1098,6 +1189,12 @@ typedef struct
    */
   u8 states_count;
 } sbp_msg_tracking_state_dep_a_t;
+
+#if 0
+
+#if 0
+#endif
+#endif
 /** Deprecated.
  *
  * Deprecated.
@@ -1152,6 +1249,12 @@ typedef struct
    */
   float cn0;
 } sbp_tracking_channel_state_dep_b_t;
+
+#if 0
+
+#if 0
+#endif
+#endif
 /** Deprecated.
  *
  * Deprecated.
@@ -1203,6 +1306,15 @@ typedef struct
    */
   u8 states_count;
 } sbp_msg_tracking_state_dep_b_t;
+
+#if 0
+
+#if 0
+
+#if 0
+#endif
+#endif
+#endif
 
 #include <libsbp/unpacked/tracking_operators.h>
 #include <libsbp/unpacked/tracking_packers.h>

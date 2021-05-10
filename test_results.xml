@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="http://check.sourceforge.net/xml/check_unittest.xslt"?>
+<testsuites xmlns="http://check.sourceforge.net/ns">
+  <datetime>2021-05-10 12:25:20</datetime>
+  <suite>
+    <title>Error Detection and Correction</title>
+    <test result="success">
+      <path>/storage/matt/sbp-rework/starling/third_party/libsbp/c/test</path>
+      <fn>check_edc.c:31</fn>
+      <id>test_crc16_ccitt</id>
+      <iteration>0</iteration>
+      <duration>0.000014</duration>
+      <description>CRC</description>
+      <message>Passed</message>
+    </test>
+  </suite>
+  <suite>
+    <title>SBP</title>
+    <test result="success">
+      <path>/storage/matt/sbp-rework/starling/third_party/libsbp/c/test</path>
+      <fn>check_sbp.c:795</fn>
+      <id>test_msg_buff_backwards_compatibility</id>
+      <iteration>0</iteration>
+      <duration>0.000023</duration>
+      <description>Core</description>
+      <message>Passed</message>
+    </test>
+    <test result="success">
+      <path>/storage/matt/sbp-rework/starling/third_party/libsbp/c/test</path>
+      <fn>check_sbp.c:686</fn>
+      <id>test_callbacks</id>
+      <iteration>0</iteration>
+      <duration>0.000027</duration>
+      <description>Core</description>
+      <message>Passed</message>
+    </test>
+    <test result="success">
+      <path>/storage/matt/sbp-rework/starling/third_party/libsbp/c/test</path>
+      <fn>check_sbp.c:606</fn>
+      <id>test_sbp_send_message</id>
+      <iteration>0</iteration>
+      <duration>0.000013</duration>
+      <description>Core</description>
+      <message>Passed</message>
+    </test>
+    <test result="success">
+      <path>/storage/matt/sbp-rework/starling/third_party/libsbp/c/test</path>
+      <fn>check_sbp.c:366</fn>
+      <id>test_sbp_process</id>
+      <iteration>0</iteration>
+      <duration>0.000115</duration>
+      <description>Core</description>
+      <message>Passed</message>
+    </test>
+    <test result="success">
+      <path>/storage/matt/sbp-rework/starling/third_party/libsbp/c/test</path>
+      <fn>check_sbp.c:488</fn>
+      <id>test_sbp_frame</id>
+      <iteration>0</iteration>
+      <duration>0.000078</duration>
+      <description>Core</description>
+      <message>Passed</message>
+    </test>
+    <test result="success">
+      <path>/storage/matt/sbp-rework/starling/third_party/libsbp/c/test</path>
+      <fn>check_sbp.c:767</fn>
+      <id>test_frame_callbacks</id>
+      <iteration>0</iteration>
+      <duration>0.000027</duration>
+      <description>Core</description>
+      <message>Passed</message>
+    </test>
+    <test result="success">
+      <path>/storage/matt/sbp-rework/starling/third_party/libsbp/c/test</path>
+      <fn>check_sbp.c:521</fn>
+      <id>test_sbp_all_msg</id>
+      <iteration>0</iteration>
+      <duration>0.000027</duration>
+      <description>Core</description>
+      <message>Passed</message>
+    </test>
+    <test result="success">
+      <path>/storage/matt/sbp-rework/starling/third_party/libsbp/c/test</path>
+      <fn>check_sbp.c:570</fn>
+      <id>test_sbp_big_msg</id>
+      <iteration>0</iteration>
+      <duration>0.000026</duration>
+      <description>Core</description>
+      <message>Passed</message>
+    </test>
+  </suite>
+  <suite>
+    <title>SBP_Bitfields</title>
+    <test result="success">
+      <path>/storage/matt/sbp-rework/starling/third_party/libsbp/c/test</path>
+      <fn>check_bitfield_macros.c:41</fn>
+      <id>test_nav_bitfields</id>
+      <iteration>0</iteration>
+      <duration>0.000017</duration>
+      <description>Core2</description>
+      <message>Passed</message>
+    </test>
+    <test result="success">
+      <path>/storage/matt/sbp-rework/starling/third_party/libsbp/c/test</path>
+      <fn>check_bitfield_macros.c:51</fn>
+      <id>test_imu_bitfields</id>
+      <iteration>0</iteration>
+      <duration>0.000009</duration>
+      <description>Core2</description>
+      <message>Passed</message>
+    </test>
+    <test result="success">
+      <path>/storage/matt/sbp-rework/starling/third_party/libsbp/c/test</path>
+      <fn>check_bitfield_macros.c:64</fn>
+      <id>test_ins_status_bitfields</id>
+      <iteration>0</iteration>
+      <duration>0.000009</duration>
+      <description>Core2</description>
+      <message>Passed</message>
+    </test>
+  </suite>
+  <suite>
+    <title>SBP generated test suite: auto_check_sbp_acquisition_1</title>
+    <test result="success">
+      <path>/storage/matt/sbp-rework/starling/third_party/libsbp/c/test</path>
+      <fn>auto_check_sbp_acquisition_1.c:1097</fn>
+      <id>test_auto_check_sbp_acquisition_1</id>
+      <iteration>0</iteration>
+      <duration>0.000477</duration>
+      <description>Automated_Suite_auto_check_sbp_acquisition_1</description>
+      <message>Passed</message>
+    </test>
+  </suite>
+  <suite>
+    <title>SBP generated test suite: auto_check_sbp_acquisition_2</title>
+    <test result="success">
+      <path>/storage/matt/sbp-rework/starling/third_party/libsbp/c/test</path>
+      <fn>auto_check_sbp_acquisition_2.c:1093</fn>
+      <id>test_auto_check_sbp_acquisition_2</id>
+      <iteration>0</iteration>
+      <duration>0.000499</duration>
+      <description>Automated_Suite_auto_check_sbp_acquisition_2</description>
+      <message>Passed</message>
+    </test>
+  </suite>
+  <suite>
+    <title>SBP generated test suite: auto_check_sbp_acquisition_3</title>
+    <test result="success">
+      <path>/storage/matt/sbp-rework/starling/third_party/libsbp/c/test</path>
+      <fn>auto_check_sbp_acquisition_3.c:1103</fn>
+      <id>test_auto_check_sbp_acquisition_3</id>
+      <iteration>0</iteration>
+      <duration>0.000452</duration>
+      <description>Automated_Suite_auto_check_sbp_acquisition_3</description>
+      <message>Passed</message>
+    </test>
+  </suite>
+  <suite>
+    <title>SBP generated test suite: auto_check_sbp_bootload_4</title>

@@ -9,8 +9,9 @@
 #include <string.h>
 
 #include <libsbp/common.h>
-#include <libsbp/unpacked/gnss.h>
-#include <libsbp/unpacked/piksi.h>
+#include <libsbp/string2.h>
+//#include <libsbp/unpacked/piksi.h>
+//#include <libsbp/unpacked/gnss.h>
 
 static inline size_t sbp_packed_size_sbp_msg_almanac_t(const sbp_msg_almanac_t *msg)
 {
@@ -2055,7 +2056,7 @@ static inline bool sbp_unpack_sbp_msg_device_monitor_t(const u8 *buf, size_t len
 static inline size_t sbp_packed_size_sbp_msg_command_req_t(const sbp_msg_command_req_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->sequence) + (msg->command_count * sizeof(msg->command[0]));
+  return 0 + sizeof(msg->sequence) + 0 /*sbp_msg_command_req_t_command_packed_len( msg->command )*/;
 }
 
 static inline bool sbp_pack_sbp_msg_command_req_t(u8 *buf, size_t len, const sbp_msg_command_req_t *msg)
@@ -2078,18 +2079,7 @@ static inline bool sbp_pack_sbp_msg_command_req_t(u8 *buf, size_t len, const sbp
   memcpy(buf + offset, &msgsequence, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  for (size_t msgcommand_idx = 0; msgcommand_idx < (size_t)msg->command_count; msgcommand_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    char msgcommandmsgcommand_idx = msg->command[msgcommand_idx];
-    memcpy(buf + offset, &msgcommandmsgcommand_idx, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
+  // offset += sbp_msg_command_req_t_command_pack( msg->command, buf + offset, (uint8_t)(len - offset ));
   return true;
 }
 
@@ -2109,19 +2099,7 @@ static inline bool sbp_unpack_sbp_msg_command_req_t(const u8 *buf, size_t len, s
   msg->sequence = le32toh(msg->sequence);
   // NOLINTNEXTLINE
   offset += 4;
-  msg->command_count = (u8)((len - offset) / 1);
-
-  for (size_t msgcommand_idx = 0; msgcommand_idx < msg->command_count; msgcommand_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->command[msgcommand_idx], buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
+  // offset += sbp_msg_command_req_t_command_unpack( msg->command, buf + offset, (uint8_t)(len - offset ));
   return true;
 }
 
@@ -2196,7 +2174,7 @@ static inline bool sbp_unpack_sbp_msg_command_resp_t(const u8 *buf, size_t len, 
 static inline size_t sbp_packed_size_sbp_msg_command_output_t(const sbp_msg_command_output_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->sequence) + (msg->line_count * sizeof(msg->line[0]));
+  return 0 + sizeof(msg->sequence) + 0 /*sbp_msg_command_output_t_line_packed_len( msg->line )*/;
 }
 
 static inline bool sbp_pack_sbp_msg_command_output_t(u8 *buf, size_t len, const sbp_msg_command_output_t *msg)
@@ -2219,18 +2197,7 @@ static inline bool sbp_pack_sbp_msg_command_output_t(u8 *buf, size_t len, const 
   memcpy(buf + offset, &msgsequence, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  for (size_t msgline_idx = 0; msgline_idx < (size_t)msg->line_count; msgline_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    char msglinemsgline_idx = msg->line[msgline_idx];
-    memcpy(buf + offset, &msglinemsgline_idx, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
+  // offset += sbp_msg_command_output_t_line_pack( msg->line, buf + offset, (uint8_t)(len - offset ));
   return true;
 }
 
@@ -2250,19 +2217,7 @@ static inline bool sbp_unpack_sbp_msg_command_output_t(const u8 *buf, size_t len
   msg->sequence = le32toh(msg->sequence);
   // NOLINTNEXTLINE
   offset += 4;
-  msg->line_count = (u8)((len - offset) / 1);
-
-  for (size_t msgline_idx = 0; msgline_idx < msg->line_count; msgline_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->line[msgline_idx], buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
+  // offset += sbp_msg_command_output_t_line_unpack( msg->line, buf + offset, (uint8_t)(len - offset ));
   return true;
 }
 

@@ -9,13 +9,14 @@
 #include <string.h>
 
 #include <libsbp/common.h>
-#include <libsbp/unpacked/file_io.h>
+#include <libsbp/string2.h>
+//#include <libsbp/unpacked/file_io.h>
 
 static inline size_t sbp_packed_size_sbp_msg_fileio_read_req_t(const sbp_msg_fileio_read_req_t *msg)
 {
   (void)msg;
   return 0 + sizeof(msg->sequence) + sizeof(msg->offset) + sizeof(msg->chunk_size) +
-         (msg->filename_count * sizeof(msg->filename[0]));
+         0 /*sbp_msg_fileio_read_req_t_filename_packed_len( msg->filename )*/;
 }
 
 static inline bool sbp_pack_sbp_msg_fileio_read_req_t(u8 *buf, size_t len, const sbp_msg_fileio_read_req_t *msg)
@@ -56,18 +57,7 @@ static inline bool sbp_pack_sbp_msg_fileio_read_req_t(u8 *buf, size_t len, const
   memcpy(buf + offset, &msgchunk_size, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  for (size_t msgfilename_idx = 0; msgfilename_idx < (size_t)msg->filename_count; msgfilename_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    char msgfilenamemsgfilename_idx = msg->filename[msgfilename_idx];
-    memcpy(buf + offset, &msgfilenamemsgfilename_idx, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
+  // offset += sbp_msg_fileio_read_req_t_filename_pack( msg->filename, buf + offset, (uint8_t)(len - offset ));
   return true;
 }
 
@@ -104,19 +94,7 @@ static inline bool sbp_unpack_sbp_msg_fileio_read_req_t(const u8 *buf, size_t le
   memcpy(&msg->chunk_size, buf + offset, 1);
   // NOLINTNEXTLINE
   offset += 1;
-  msg->filename_count = (u8)((len - offset) / 1);
-
-  for (size_t msgfilename_idx = 0; msgfilename_idx < msg->filename_count; msgfilename_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->filename[msgfilename_idx], buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
+  // offset += sbp_msg_fileio_read_req_t_filename_unpack( msg->filename, buf + offset, (uint8_t)(len - offset ));
   return true;
 }
 
@@ -196,7 +174,8 @@ static inline bool sbp_unpack_sbp_msg_fileio_read_resp_t(const u8 *buf, size_t l
 static inline size_t sbp_packed_size_sbp_msg_fileio_read_dir_req_t(const sbp_msg_fileio_read_dir_req_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->sequence) + sizeof(msg->offset) + (msg->dirname_count * sizeof(msg->dirname[0]));
+  return 0 + sizeof(msg->sequence) + sizeof(msg->offset) +
+         0 /*sbp_msg_fileio_read_dir_req_t_dirname_packed_len( msg->dirname )*/;
 }
 
 static inline bool sbp_pack_sbp_msg_fileio_read_dir_req_t(u8 *buf, size_t len, const sbp_msg_fileio_read_dir_req_t *msg)
@@ -228,18 +207,7 @@ static inline bool sbp_pack_sbp_msg_fileio_read_dir_req_t(u8 *buf, size_t len, c
   memcpy(buf + offset, &msgoffset, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  for (size_t msgdirname_idx = 0; msgdirname_idx < (size_t)msg->dirname_count; msgdirname_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    char msgdirnamemsgdirname_idx = msg->dirname[msgdirname_idx];
-    memcpy(buf + offset, &msgdirnamemsgdirname_idx, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
+  // offset += sbp_msg_fileio_read_dir_req_t_dirname_pack( msg->dirname, buf + offset, (uint8_t)(len - offset ));
   return true;
 }
 
@@ -269,26 +237,14 @@ sbp_unpack_sbp_msg_fileio_read_dir_req_t(const u8 *buf, size_t len, sbp_msg_file
   msg->offset = le32toh(msg->offset);
   // NOLINTNEXTLINE
   offset += 4;
-  msg->dirname_count = (u8)((len - offset) / 1);
-
-  for (size_t msgdirname_idx = 0; msgdirname_idx < msg->dirname_count; msgdirname_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->dirname[msgdirname_idx], buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
+  // offset += sbp_msg_fileio_read_dir_req_t_dirname_unpack( msg->dirname, buf + offset, (uint8_t)(len - offset ));
   return true;
 }
 
 static inline size_t sbp_packed_size_sbp_msg_fileio_read_dir_resp_t(const sbp_msg_fileio_read_dir_resp_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->sequence) + (msg->contents_count * sizeof(msg->contents[0]));
+  return 0 + sizeof(msg->sequence) + 0 /*sbp_msg_fileio_read_dir_resp_t_contents_packed_len( msg->contents )*/;
 }
 
 static inline bool
@@ -312,18 +268,7 @@ sbp_pack_sbp_msg_fileio_read_dir_resp_t(u8 *buf, size_t len, const sbp_msg_filei
   memcpy(buf + offset, &msgsequence, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  for (size_t msgcontents_idx = 0; msgcontents_idx < (size_t)msg->contents_count; msgcontents_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    u8 msgcontentsmsgcontents_idx = msg->contents[msgcontents_idx];
-    memcpy(buf + offset, &msgcontentsmsgcontents_idx, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
+  // offset += sbp_msg_fileio_read_dir_resp_t_contents_pack( msg->contents, buf + offset, (uint8_t)(len - offset ));
   return true;
 }
 
@@ -344,26 +289,14 @@ sbp_unpack_sbp_msg_fileio_read_dir_resp_t(const u8 *buf, size_t len, sbp_msg_fil
   msg->sequence = le32toh(msg->sequence);
   // NOLINTNEXTLINE
   offset += 4;
-  msg->contents_count = (u8)((len - offset) / 1);
-
-  for (size_t msgcontents_idx = 0; msgcontents_idx < msg->contents_count; msgcontents_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->contents[msgcontents_idx], buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
+  // offset += sbp_msg_fileio_read_dir_resp_t_contents_unpack( msg->contents, buf + offset, (uint8_t)(len - offset ));
   return true;
 }
 
 static inline size_t sbp_packed_size_sbp_msg_fileio_remove_t(const sbp_msg_fileio_remove_t *msg)
 {
   (void)msg;
-  return 0 + (msg->filename_count * sizeof(msg->filename[0]));
+  return 0 + 0 /*sbp_msg_fileio_remove_t_filename_packed_len( msg->filename )*/;
 }
 
 static inline bool sbp_pack_sbp_msg_fileio_remove_t(u8 *buf, size_t len, const sbp_msg_fileio_remove_t *msg)
@@ -378,18 +311,7 @@ static inline bool sbp_pack_sbp_msg_fileio_remove_t(u8 *buf, size_t len, const s
     return false;
   }
 
-  for (size_t msgfilename_idx = 0; msgfilename_idx < (size_t)msg->filename_count; msgfilename_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    char msgfilenamemsgfilename_idx = msg->filename[msgfilename_idx];
-    memcpy(buf + offset, &msgfilenamemsgfilename_idx, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
+  // offset += sbp_msg_fileio_remove_t_filename_pack( msg->filename, buf + offset, (uint8_t)(len - offset ));
   return true;
 }
 
@@ -401,27 +323,16 @@ static inline bool sbp_unpack_sbp_msg_fileio_remove_t(const u8 *buf, size_t len,
   (void)len;
   (void)msg;
 
-  msg->filename_count = (u8)((len - offset) / 1);
-
-  for (size_t msgfilename_idx = 0; msgfilename_idx < msg->filename_count; msgfilename_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->filename[msgfilename_idx], buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
+  // offset += sbp_msg_fileio_remove_t_filename_unpack( msg->filename, buf + offset, (uint8_t)(len - offset ));
   return true;
 }
 
 static inline size_t sbp_packed_size_sbp_msg_fileio_write_req_t(const sbp_msg_fileio_write_req_t *msg)
 {
   (void)msg;
-  return 0 + sizeof(msg->sequence) + sizeof(msg->offset) + (msg->filename_count * sizeof(msg->filename[0])) +
-         (msg->data_count * sizeof(msg->data[0]));
+  return 0 + sizeof(msg->sequence) + sizeof(msg->offset) +
+         0 /*sbp_msg_fileio_write_req_t_filename_packed_len( msg->filename )*/
+         + (msg->data_count * sizeof(msg->data[0]));
 }
 
 static inline bool sbp_pack_sbp_msg_fileio_write_req_t(u8 *buf, size_t len, const sbp_msg_fileio_write_req_t *msg)
@@ -453,18 +364,7 @@ static inline bool sbp_pack_sbp_msg_fileio_write_req_t(u8 *buf, size_t len, cons
   memcpy(buf + offset, &msgoffset, 4);
   // NOLINTNEXTLINE
   offset += 4;
-  for (size_t msgfilename_idx = 0; msgfilename_idx < (size_t)msg->filename_count; msgfilename_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    char msgfilenamemsgfilename_idx = msg->filename[msgfilename_idx];
-    memcpy(buf + offset, &msgfilenamemsgfilename_idx, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
+  // offset += sbp_msg_fileio_write_req_t_filename_pack( msg->filename, buf + offset, (uint8_t)(len - offset ));
   for (size_t msgdata_idx = 0; msgdata_idx < (size_t)msg->data_count; msgdata_idx++)
   {
 
@@ -505,19 +405,7 @@ static inline bool sbp_unpack_sbp_msg_fileio_write_req_t(const u8 *buf, size_t l
   msg->offset = le32toh(msg->offset);
   // NOLINTNEXTLINE
   offset += 4;
-  msg->filename_count = (u8)((len - offset) / 1);
-
-  for (size_t msgfilename_idx = 0; msgfilename_idx < msg->filename_count; msgfilename_idx++)
-  {
-
-    if (offset + 1 > len)
-    {
-      return false;
-    }
-    memcpy(&msg->filename[msgfilename_idx], buf + offset, 1);
-    // NOLINTNEXTLINE
-    offset += 1;
-  }
+  // offset += sbp_msg_fileio_write_req_t_filename_unpack( msg->filename, buf + offset, (uint8_t)(len - offset ));
   msg->data_count = (u8)((len - offset) / 1);
 
   for (size_t msgdata_idx = 0; msgdata_idx < msg->data_count; msgdata_idx++)

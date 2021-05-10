@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include <libsbp/common.h>
+#include <libsbp/string2.h>
 /** User data
  *
  * This message can contain any application specific user data up to a
@@ -28,6 +29,9 @@ typedef struct
    */
   u8 contents_count;
 } sbp_msg_user_data_t;
+
+#if 0
+#endif
 
 #include <libsbp/unpacked/user_operators.h>
 #include <libsbp/unpacked/user_packers.h>

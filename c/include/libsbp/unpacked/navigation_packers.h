@@ -9,7 +9,8 @@
 #include <string.h>
 
 #include <libsbp/common.h>
-#include <libsbp/unpacked/navigation.h>
+#include <libsbp/string2.h>
+//#include <libsbp/unpacked/navigation.h>
 
 static inline size_t sbp_packed_size_sbp_msg_gps_time_t(const sbp_msg_gps_time_t *msg)
 {

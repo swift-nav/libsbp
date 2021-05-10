@@ -9,7 +9,8 @@
 #include <string.h>
 
 #include <libsbp/common.h>
-#include <libsbp/unpacked/ext_events.h>
+#include <libsbp/string2.h>
+//#include <libsbp/unpacked/ext_events.h>
 
 static inline size_t sbp_packed_size_sbp_msg_ext_event_t(const sbp_msg_ext_event_t *msg)
 {

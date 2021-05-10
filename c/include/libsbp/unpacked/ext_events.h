@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include <libsbp/common.h>
+#include <libsbp/string2.h>
 /** Reports timestamped external pin event
  *
  * Reports detection of an external event, the GPS time it occurred,
@@ -66,6 +67,9 @@ typedef struct
    */
   u8 pin;
 } sbp_msg_ext_event_t;
+
+#if 0
+#endif
 
 #include <libsbp/unpacked/ext_events_operators.h>
 #include <libsbp/unpacked/ext_events_packers.h>

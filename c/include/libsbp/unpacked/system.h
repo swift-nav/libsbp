@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include <libsbp/common.h>
+#include <libsbp/string2.h>
 /** System start-up message
  *
  * The system start-up message is sent once on system
@@ -60,6 +61,9 @@ typedef struct
    */
   u16 reserved;
 } sbp_msg_startup_t;
+
+#if 0
+#endif
 /** Status of received corrections
  *
  * This message provides information about the receipt of Differential
@@ -100,12 +104,25 @@ typedef struct
   /**
    * Corrections source string
    */
-  char source[251];
-  /**
-   * Number of items in source
-   */
-  u8 source_count;
+  sbp_unterminated_string_t source;
 } sbp_msg_dgnss_status_t;
+
+#if 0
+  static const sbp_unterminated_string_format_t sbp_msg_dgnss_status_t_source_format = {
+    /* .encoding = */ SBP_STRING_UNTERMINATED,
+    /* .min_sections = */0u,
+    /* .max_sections = */0u,
+    /* .terminator = */0u,
+    /* .max_encoded_len = */ 251u
+  };
+  static inline void sbp_msg_dgnss_status_t_source_init(sbp_unterminated_string_t s) { sbp_unterminated_string_init(s, &sbp_msg_dgnss_status_t_source_format); }
+  static inline uint8_t sbp_msg_dgnss_status_t_source_packed_len(const sbp_unterminated_string_t s) { return sbp_unterminated_string_packed_len(s, &sbp_msg_dgnss_status_t_source_format); }
+  static inline uint8_t sbp_msg_dgnss_status_t_source_pack(const sbp_unterminated_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_pack(s, &sbp_msg_dgnss_status_t_source_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_dgnss_status_t_source_unpack(sbp_unterminated_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_unpack(s, &sbp_msg_dgnss_status_t_source_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_dgnss_status_t_source_space_remaining(const sbp_unterminated_string_t s) { return sbp_unterminated_string_space_remaining(s, &sbp_msg_dgnss_status_t_source_format); }
+  static inline const char *sbp_msg_dgnss_status_t_source_get(sbp_unterminated_string_t s) { return sbp_unterminated_string_get_section(s, &sbp_msg_dgnss_status_t_source_format, 0); }
+  static inline bool sbp_msg_dgnss_status_t_source_set(sbp_unterminated_string_t s, const char *new_str) { return sbp_unterminated_string_set(s, &sbp_msg_dgnss_status_t_source_format, new_str); }
+#endif
 /** System heartbeat message
  *
  * The heartbeat message is sent periodically to inform the host
@@ -216,6 +233,9 @@ typedef struct
    */
   u32 flags;
 } sbp_msg_heartbeat_t;
+
+#if 0
+#endif
 /** Sub-system Status report
  *
  * Report the general and specific state of a sub-system.  If the generic
@@ -272,6 +292,9 @@ typedef struct
    */
   u8 specific;
 } sbp_sub_system_report_t;
+
+#if 0
+#endif
 /** Status report message
  *
  * The status report is sent periodically to inform the host
@@ -385,6 +408,12 @@ typedef struct
    */
   u8 status_count;
 } sbp_msg_status_report_t;
+
+#if 0
+
+#if 0
+#endif
+#endif
 /** Inertial Navigation System status message
  *
  * The INS status message describes the state of the operation
@@ -495,6 +524,9 @@ typedef struct
    */
   u32 flags;
 } sbp_msg_ins_status_t;
+
+#if 0
+#endif
 /** Experimental telemetry message
  *
  * The CSAC telemetry message has an implementation defined telemetry string
@@ -513,12 +545,25 @@ typedef struct
   /**
    * Comma separated list of values as defined by the index
    */
-  char telemetry[254];
-  /**
-   * Number of items in telemetry
-   */
-  u8 telemetry_count;
+  sbp_unterminated_string_t telemetry;
 } sbp_msg_csac_telemetry_t;
+
+#if 0
+  static const sbp_unterminated_string_format_t sbp_msg_csac_telemetry_t_telemetry_format = {
+    /* .encoding = */ SBP_STRING_UNTERMINATED,
+    /* .min_sections = */0u,
+    /* .max_sections = */0u,
+    /* .terminator = */0u,
+    /* .max_encoded_len = */ 254u
+  };
+  static inline void sbp_msg_csac_telemetry_t_telemetry_init(sbp_unterminated_string_t s) { sbp_unterminated_string_init(s, &sbp_msg_csac_telemetry_t_telemetry_format); }
+  static inline uint8_t sbp_msg_csac_telemetry_t_telemetry_packed_len(const sbp_unterminated_string_t s) { return sbp_unterminated_string_packed_len(s, &sbp_msg_csac_telemetry_t_telemetry_format); }
+  static inline uint8_t sbp_msg_csac_telemetry_t_telemetry_pack(const sbp_unterminated_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_pack(s, &sbp_msg_csac_telemetry_t_telemetry_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_csac_telemetry_t_telemetry_unpack(sbp_unterminated_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_unpack(s, &sbp_msg_csac_telemetry_t_telemetry_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_csac_telemetry_t_telemetry_space_remaining(const sbp_unterminated_string_t s) { return sbp_unterminated_string_space_remaining(s, &sbp_msg_csac_telemetry_t_telemetry_format); }
+  static inline const char *sbp_msg_csac_telemetry_t_telemetry_get(sbp_unterminated_string_t s) { return sbp_unterminated_string_get_section(s, &sbp_msg_csac_telemetry_t_telemetry_format, 0); }
+  static inline bool sbp_msg_csac_telemetry_t_telemetry_set(sbp_unterminated_string_t s, const char *new_str) { return sbp_unterminated_string_set(s, &sbp_msg_csac_telemetry_t_telemetry_format, new_str); }
+#endif
 /** Experimental telemetry message labels
  *
  * The CSAC telemetry message provides labels for each member of the string
@@ -537,12 +582,25 @@ typedef struct
   /**
    * Comma separated list of telemetry field values
    */
-  char telemetry_labels[254];
-  /**
-   * Number of items in telemetry_labels
-   */
-  u8 telemetry_labels_count;
+  sbp_unterminated_string_t telemetry_labels;
 } sbp_msg_csac_telemetry_labels_t;
+
+#if 0
+  static const sbp_unterminated_string_format_t sbp_msg_csac_telemetry_labels_t_telemetry_labels_format = {
+    /* .encoding = */ SBP_STRING_UNTERMINATED,
+    /* .min_sections = */0u,
+    /* .max_sections = */0u,
+    /* .terminator = */0u,
+    /* .max_encoded_len = */ 254u
+  };
+  static inline void sbp_msg_csac_telemetry_labels_t_telemetry_labels_init(sbp_unterminated_string_t s) { sbp_unterminated_string_init(s, &sbp_msg_csac_telemetry_labels_t_telemetry_labels_format); }
+  static inline uint8_t sbp_msg_csac_telemetry_labels_t_telemetry_labels_packed_len(const sbp_unterminated_string_t s) { return sbp_unterminated_string_packed_len(s, &sbp_msg_csac_telemetry_labels_t_telemetry_labels_format); }
+  static inline uint8_t sbp_msg_csac_telemetry_labels_t_telemetry_labels_pack(const sbp_unterminated_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_pack(s, &sbp_msg_csac_telemetry_labels_t_telemetry_labels_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_csac_telemetry_labels_t_telemetry_labels_unpack(sbp_unterminated_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_unpack(s, &sbp_msg_csac_telemetry_labels_t_telemetry_labels_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_csac_telemetry_labels_t_telemetry_labels_space_remaining(const sbp_unterminated_string_t s) { return sbp_unterminated_string_space_remaining(s, &sbp_msg_csac_telemetry_labels_t_telemetry_labels_format); }
+  static inline const char *sbp_msg_csac_telemetry_labels_t_telemetry_labels_get(sbp_unterminated_string_t s) { return sbp_unterminated_string_get_section(s, &sbp_msg_csac_telemetry_labels_t_telemetry_labels_format, 0); }
+  static inline bool sbp_msg_csac_telemetry_labels_t_telemetry_labels_set(sbp_unterminated_string_t s, const char *new_str) { return sbp_unterminated_string_set(s, &sbp_msg_csac_telemetry_labels_t_telemetry_labels_format, new_str); }
+#endif
 /** Inertial Navigation System update status message
  *
  * The INS update status message contains informations about executed and rejected INS updates.
@@ -726,6 +784,9 @@ typedef struct
    */
   u8 zerovel;
 } sbp_msg_ins_updates_t;
+
+#if 0
+#endif
 /** Offset of the local time with respect to GNSS time
  *
  * The GNSS time offset message contains the information that is needed to translate messages
@@ -754,6 +815,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_gnss_time_offset_t;
+
+#if 0
+#endif
 /** Solution Group Metadata
  *
  * This leading message lists the time metadata of the Solution Group.
@@ -796,6 +860,9 @@ typedef struct
    */
   u16 group_msgs[126];
 } sbp_msg_group_meta_t;
+
+#if 0
+#endif
 
 #include <libsbp/unpacked/system_operators.h>
 #include <libsbp/unpacked/system_packers.h>

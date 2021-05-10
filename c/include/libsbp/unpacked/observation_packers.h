@@ -9,8 +9,9 @@
 #include <string.h>
 
 #include <libsbp/common.h>
-#include <libsbp/unpacked/gnss.h>
-#include <libsbp/unpacked/observation.h>
+#include <libsbp/string2.h>
+//#include <libsbp/unpacked/observation.h>
+//#include <libsbp/unpacked/gnss.h>
 
 static inline size_t sbp_packed_size_sbp_observation_header_t(const sbp_observation_header_t *msg)
 {

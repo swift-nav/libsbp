@@ -9,8 +9,9 @@
 #include <string.h>
 
 #include <libsbp/common.h>
-#include <libsbp/unpacked/gnss.h>
-#include <libsbp/unpacked/ndb.h>
+#include <libsbp/string2.h>
+//#include <libsbp/unpacked/ndb.h>
+//#include <libsbp/unpacked/gnss.h>
 
 static inline size_t sbp_packed_size_sbp_msg_ndb_event_t(const sbp_msg_ndb_event_t *msg)
 {

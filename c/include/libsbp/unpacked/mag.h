@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include <libsbp/common.h>
+#include <libsbp/string2.h>
 /** Raw magnetometer data
  *
  * Raw data from the magnetometer.
@@ -40,6 +41,9 @@ typedef struct
    */
   s16 mag_z;
 } sbp_msg_mag_raw_t;
+
+#if 0
+#endif
 
 #include <libsbp/unpacked/mag_operators.h>
 #include <libsbp/unpacked/mag_packers.h>

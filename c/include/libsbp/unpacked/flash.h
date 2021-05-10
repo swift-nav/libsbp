@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include <libsbp/common.h>
+#include <libsbp/string2.h>
 /** Program flash addresses
  *
  * The flash program message programs a set of addresses of either
@@ -55,6 +56,9 @@ typedef struct
    */
   u8 data[250];
 } sbp_msg_flash_program_t;
+
+#if 0
+#endif
 /** Flash response message (host <= device).
  *
  * This message defines success or failure codes for a variety of
@@ -89,6 +93,9 @@ typedef struct
    */
   u8 response;
 } sbp_msg_flash_done_t;
+
+#if 0
+#endif
 /** Read STM or M25 flash address request (host => device).
  *
  * The flash read message reads a set of addresses of either the
@@ -132,6 +139,9 @@ typedef struct
    */
   u8 addr_len;
 } sbp_msg_flash_read_req_t;
+
+#if 0
+#endif
 /** Read STM or M25 flash address response (host <= device).
  *
  * The flash read message reads a set of addresses of either the
@@ -175,6 +185,9 @@ typedef struct
    */
   u8 addr_len;
 } sbp_msg_flash_read_resp_t;
+
+#if 0
+#endif
 /** Erase sector of device flash memory (host => device).
  *
  * The flash erase message from the host erases a sector of either
@@ -211,6 +224,9 @@ typedef struct
    */
   u32 sector_num;
 } sbp_msg_flash_erase_t;
+
+#if 0
+#endif
 /** Lock sector of STM flash memory (host => device)
  *
  * The flash lock message locks a sector of the STM flash
@@ -226,6 +242,9 @@ typedef struct
    */
   u32 sector;
 } sbp_msg_stm_flash_lock_sector_t;
+
+#if 0
+#endif
 /** Unlock sector of STM flash memory (host => device)
  *
  * The flash unlock message unlocks a sector of the STM flash
@@ -241,6 +260,9 @@ typedef struct
    */
   u32 sector;
 } sbp_msg_stm_flash_unlock_sector_t;
+
+#if 0
+#endif
 /** Read device's hardcoded unique ID request (host => device)
 
  *
@@ -255,6 +277,9 @@ typedef struct
 {
   char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_stm_unique_id_req_t;
+
+#if 0
+#endif
 /** Read device's hardcoded unique ID response (host <= device)
 
  *
@@ -273,6 +298,9 @@ typedef struct
    */
   u8 stm_id[12];
 } sbp_msg_stm_unique_id_resp_t;
+
+#if 0
+#endif
 /** Write M25 flash status register (host => device)
  *
  * The flash status message writes to the 8-bit M25 flash status
@@ -288,6 +316,9 @@ typedef struct
    */
   u8 status[1];
 } sbp_msg_m25_flash_write_status_t;
+
+#if 0
+#endif
 
 #include <libsbp/unpacked/flash_operators.h>
 #include <libsbp/unpacked/flash_packers.h>

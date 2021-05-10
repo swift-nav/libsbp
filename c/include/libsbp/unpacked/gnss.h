@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include <libsbp/common.h>
+#include <libsbp/string2.h>
 /** Represents all the relevant information about the signal
  *
  * Signal identifier containing constellation, band, and satellite identifier
@@ -49,6 +50,9 @@ typedef struct
    */
   u8 code;
 } sbp_sbp_gnss_signal_t;
+
+#if 0
+#endif
 /** Space vehicle identifier
  *
  * A (Constellation ID, satellite ID) tuple that uniquely identifies
@@ -67,6 +71,9 @@ typedef struct
    */
   u8 constellation;
 } sbp_sv_id_t;
+
+#if 0
+#endif
 /** Deprecated
  *
  * Deprecated.
@@ -107,6 +114,9 @@ typedef struct
    */
   u8 reserved;
 } sbp_gnss_signal_dep_t;
+
+#if 0
+#endif
 /** Millisecond-accurate GPS time
  *
  * A wire-appropriate GPS time, defined as the number of
@@ -126,6 +136,9 @@ typedef struct
    */
   u16 wn;
 } sbp_gps_time_dep_t;
+
+#if 0
+#endif
 /** Whole second accurate GPS time
  *
  * A GPS time, defined as the number of
@@ -145,6 +158,9 @@ typedef struct
    */
   u16 wn;
 } sbp_gps_time_sec_t;
+
+#if 0
+#endif
 /** Nanosecond-accurate receiver clock time
  *
  * A wire-appropriate receiver clock time, defined as the time
@@ -170,6 +186,9 @@ typedef struct
    */
   u16 wn;
 } sbp_sbp_gps_time_t;
+
+#if 0
+#endif
 /** GNSS carrier phase measurement.
  *
  * Carrier phase measurement in cycles represented as a 40-bit
@@ -190,6 +209,9 @@ typedef struct
    */
   u8 f;
 } sbp_carrier_phase_t;
+
+#if 0
+#endif
 
 #include <libsbp/unpacked/gnss_operators.h>
 #include <libsbp/unpacked/gnss_packers.h>

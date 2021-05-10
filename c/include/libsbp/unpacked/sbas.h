@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include <libsbp/common.h>
+#include <libsbp/string2.h>
 #include <libsbp/unpacked/gnss.h>
 /** Raw SBAS data
  *
@@ -58,6 +59,12 @@ typedef struct
    */
   u8 data[27];
 } sbp_msg_sbas_raw_t;
+
+#if 0
+
+#if 0
+#endif
+#endif
 
 #include <libsbp/unpacked/sbas_operators.h>
 #include <libsbp/unpacked/sbas_packers.h>

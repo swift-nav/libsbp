@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include <libsbp/common.h>
+#include <libsbp/string2.h>
 /** GPS Time
  *
  * This message reports the GPS time, representing the time since
@@ -61,6 +62,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_gps_time_t;
+
+#if 0
+#endif
 /** GPS Time
  *
  * This message reports the GPS time, representing the time since
@@ -114,6 +118,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_gps_time_gnss_t;
+
+#if 0
+#endif
 /** UTC Time
  *
  * This message reports the Universal Coordinated Time (UTC).  Note the flags
@@ -188,6 +195,9 @@ typedef struct
    */
   u32 ns;
 } sbp_msg_utc_time_t;
+
+#if 0
+#endif
 /** UTC Time
  *
  * This message reports the Universal Coordinated Time (UTC).  Note the flags
@@ -263,6 +273,9 @@ typedef struct
    */
   u32 ns;
 } sbp_msg_utc_time_gnss_t;
+
+#if 0
+#endif
 /** Dilution of Precision
  *
  * This dilution of precision (DOP) message describes the effect of
@@ -330,6 +343,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_dops_t;
+
+#if 0
+#endif
 /** Single-point position in ECEF
  *
  * The position solution message reports absolute Earth Centered
@@ -417,6 +433,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_pos_ecef_t;
+
+#if 0
+#endif
 /** Single-point position in ECEF
  *
  * The position solution message reports absolute Earth Centered
@@ -527,6 +546,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_pos_ecef_cov_t;
+
+#if 0
+#endif
 /** Geodetic Position
  *
  * This position solution message reports the absolute geodetic
@@ -619,6 +641,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_pos_llh_t;
+
+#if 0
+#endif
 /** Geodetic Position
  *
  * This position solution message reports the absolute geodetic
@@ -728,6 +753,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_pos_llh_cov_t;
+
+#if 0
+#endif
 /** Baseline Position in ECEF
  *
  * This message reports the baseline solution in Earth Centered
@@ -784,6 +812,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_baseline_ecef_t;
+
+#if 0
+#endif
 /** Baseline in NED
  *
  * This message reports the baseline solution in North East Down
@@ -845,6 +876,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_baseline_ned_t;
+
+#if 0
+#endif
 /** Velocity in ECEF
  *
  * This message reports the velocity in Earth Centered Earth Fixed
@@ -925,6 +959,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_vel_ecef_t;
+
+#if 0
+#endif
 /** Velocity in ECEF
  *
  * This message reports the velocity in Earth Centered Earth Fixed
@@ -1026,6 +1063,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_vel_ecef_cov_t;
+
+#if 0
+#endif
 /** Velocity in NED
  *
  * This message reports the velocity in local North East Down (NED)
@@ -1111,6 +1151,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_vel_ned_t;
+
+#if 0
+#endif
 /** Velocity in NED
  *
  * This message reports the velocity in local North East Down (NED)
@@ -1215,6 +1258,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_vel_ned_cov_t;
+
+#if 0
+#endif
 /** GNSS-only Position in ECEF
  *
  * The position solution message reports absolute Earth Centered
@@ -1276,6 +1322,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_pos_ecef_gnss_t;
+
+#if 0
+#endif
 /** GNSS-only Position in ECEF
  *
  * The position solution message reports absolute Earth Centered
@@ -1359,6 +1408,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_pos_ecef_cov_gnss_t;
+
+#if 0
+#endif
 /** GNSS-only Geodetic Position
  *
  * This position solution message reports the absolute geodetic
@@ -1424,6 +1476,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_pos_llh_gnss_t;
+
+#if 0
+#endif
 /** GNSS-only Geodetic Position
  *
  * This position solution message reports the absolute geodetic
@@ -1507,6 +1562,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_pos_llh_cov_gnss_t;
+
+#if 0
+#endif
 /** GNSS-only Velocity in ECEF
  *
  * This message reports the velocity in Earth Centered Earth Fixed
@@ -1561,6 +1619,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_vel_ecef_gnss_t;
+
+#if 0
+#endif
 /** GNSS-only Velocity in ECEF
  *
  * This message reports the velocity in Earth Centered Earth Fixed
@@ -1635,6 +1696,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_vel_ecef_cov_gnss_t;
+
+#if 0
+#endif
 /** GNSS-only Velocity in NED
  *
  * This message reports the velocity in local North East Down (NED)
@@ -1694,6 +1758,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_vel_ned_gnss_t;
+
+#if 0
+#endif
 /** GNSS-only Velocity in NED
  *
  * This message reports the velocity in local North East Down (NED)
@@ -1771,6 +1838,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_vel_ned_cov_gnss_t;
+
+#if 0
+#endif
 /** Velocity in User Frame
  *
  * This message reports the velocity in the Vehicle Body Frame. By convention,
@@ -1863,6 +1933,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_vel_body_t;
+
+#if 0
+#endif
 /** Age of corrections
  *
  * This message reports the Age of the corrections used for the current
@@ -1882,6 +1955,9 @@ typedef struct
    */
   u16 age;
 } sbp_msg_age_corrections_t;
+
+#if 0
+#endif
 /** GPS Time (v1.0)
  *
  * This message reports the GPS time, representing the time since
@@ -1921,6 +1997,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_gps_time_dep_a_t;
+
+#if 0
+#endif
 /** Dilution of Precision
  *
  * This dilution of precision (DOP) message describes the effect of
@@ -1957,6 +2036,9 @@ typedef struct
    */
   u16 vdop;
 } sbp_msg_dops_dep_a_t;
+
+#if 0
+#endif
 /** Single-point position in ECEF
  *
  * The position solution message reports absolute Earth Centered
@@ -2043,6 +2125,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_pos_ecef_dep_a_t;
+
+#if 0
+#endif
 /** Geodetic Position
  *
  * This position solution message reports the absolute geodetic
@@ -2147,6 +2232,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_pos_llh_dep_a_t;
+
+#if 0
+#endif
 /** Baseline Position in ECEF
  *
  * This message reports the baseline solution in Earth Centered
@@ -2230,6 +2318,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_baseline_ecef_dep_a_t;
+
+#if 0
+#endif
 /** Baseline in NED
  *
  * This message reports the baseline solution in North East Down
@@ -2320,6 +2411,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_baseline_ned_dep_a_t;
+
+#if 0
+#endif
 /** Velocity in ECEF
  *
  * This message reports the velocity in Earth Centered Earth Fixed
@@ -2361,6 +2455,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_vel_ecef_dep_a_t;
+
+#if 0
+#endif
 /** Velocity in NED
  *
  * This message reports the velocity in local North East Down (NED)
@@ -2408,6 +2505,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_vel_ned_dep_a_t;
+
+#if 0
+#endif
 /** Heading relative to True North
  *
  * This message reports the baseline heading pointing from the base station
@@ -2477,6 +2577,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_baseline_heading_dep_a_t;
+
+#if 0
+#endif
 /** Computed Position and Protection Level
  *
  * This message reports the local vertical and horizontal protection levels
@@ -2534,6 +2637,9 @@ typedef struct
    */
   u8 flags;
 } sbp_msg_protection_level_t;
+
+#if 0
+#endif
 
 #include <libsbp/unpacked/navigation_operators.h>
 #include <libsbp/unpacked/navigation_packers.h>

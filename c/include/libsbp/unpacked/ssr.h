@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include <libsbp/common.h>
+#include <libsbp/string2.h>
 #include <libsbp/unpacked/gnss.h>
 /** SSR code biases corrections for a particular satellite.
  *
@@ -29,6 +30,9 @@ typedef struct
    */
   s16 value;
 } sbp_code_biases_content_t;
+
+#if 0
+#endif
 /** SSR phase biases corrections for a particular satellite.
  *
  * Phase biases are to be added to carrier phase measurements.
@@ -60,6 +64,9 @@ typedef struct
    */
   s32 bias;
 } sbp_phase_biases_content_t;
+
+#if 0
+#endif
 /** Header for the MSG_SSR_STEC_CORRECTION message.
  *
  * A full set of STEC information will likely span multiple SBP
@@ -100,6 +107,12 @@ typedef struct
    */
   u8 iod_atmo;
 } sbp_stec_header_t;
+
+#if 0
+
+#if 0
+#endif
+#endif
 /** Header for the MSG_SSR_GRIDDED_CORRECTION message.
  *
  * The LPP message contains nested variable length arrays
@@ -145,6 +158,12 @@ typedef struct
    */
   u8 tropo_quality_indicator;
 } sbp_gridded_correction_header_t;
+
+#if 0
+
+#if 0
+#endif
+#endif
 /** None
  *
  * STEC polynomial for the given satellite.
@@ -168,6 +187,12 @@ typedef struct
    */
   s16 stec_coeff[4];
 } sbp_stec_sat_element_t;
+
+#if 0
+
+#if 0
+#endif
+#endif
 /** None
  *
  * Troposphere vertical delays at the grid point.
@@ -185,6 +210,9 @@ typedef struct
    */
   s8 wet;
 } sbp_tropospheric_delay_correction_no_std_t;
+
+#if 0
+#endif
 /** None
  *
  * Troposphere vertical delays (mean and standard deviation) at the grid
@@ -209,6 +237,9 @@ stddev <= (3^class * (1 + value/16) - 1) mm
    */
   u8 stddev;
 } sbp_tropospheric_delay_correction_t;
+
+#if 0
+#endif
 /** None
  *
  * STEC residual for the given satellite at the grid point.
@@ -226,6 +257,12 @@ typedef struct
    */
   s16 residual;
 } sbp_stec_residual_no_std_t;
+
+#if 0
+
+#if 0
+#endif
+#endif
 /** None
  *
  * STEC residual (mean and standard deviation) for the given satellite
@@ -250,6 +287,12 @@ stddev <= (3^class * (1 + value/16) - 1) * 10 TECU
    */
   u8 stddev;
 } sbp_stec_residual_t;
+
+#if 0
+
+#if 0
+#endif
+#endif
 /** Correction data for a single grid point.
  *
  * Contains one tropo delay, plus STEC residuals for each satellite at the
@@ -276,6 +319,18 @@ typedef struct
    */
   u8 stec_residuals_count;
 } sbp_grid_element_no_std_t;
+
+#if 0
+
+#if 0
+#endif
+
+#if 0
+
+#if 0
+#endif
+#endif
+#endif
 /** Correction data for a single grid point.
  *
  * Contains one tropo delay (mean and stddev), plus STEC residuals (mean and
@@ -302,6 +357,18 @@ typedef struct
    */
   u8 stec_residuals_count;
 } sbp_grid_element_t;
+
+#if 0
+
+#if 0
+#endif
+
+#if 0
+
+#if 0
+#endif
+#endif
+#endif
 /** Precise orbit and clock correction
  *
  * The precise orbit and clock correction message is
@@ -396,6 +463,15 @@ typedef struct
    */
   s32 c2;
 } sbp_msg_ssr_orbit_clock_t;
+
+#if 0
+
+#if 0
+#endif
+
+#if 0
+#endif
+#endif
 /** Precise code biases correction
  *
  * The precise code biases message is to be added
@@ -459,6 +535,18 @@ typedef struct
    */
   u8 biases_count;
 } sbp_msg_ssr_code_biases_t;
+
+#if 0
+
+#if 0
+#endif
+
+#if 0
+#endif
+
+#if 0
+#endif
+#endif
 /** Precise phase biases correction
  *
  * The precise phase biases message contains the biases
@@ -541,6 +629,18 @@ typedef struct
    */
   u8 biases_count;
 } sbp_msg_ssr_phase_biases_t;
+
+#if 0
+
+#if 0
+#endif
+
+#if 0
+#endif
+
+#if 0
+#endif
+#endif
 /** STEC correction polynomial coeffcients.
  *
  * The Slant Total Electron Content per space vehicle, given as polynomial
@@ -568,6 +668,21 @@ typedef struct
    */
   u8 stec_sat_list_count;
 } sbp_msg_ssr_stec_correction_t;
+
+#if 0
+
+#if 0
+
+#if 0
+#endif
+#endif
+
+#if 0
+
+#if 0
+#endif
+#endif
+#endif
 /** Gridded troposphere and STEC correction residuals.
  *
  * STEC residuals are per space vehicle, troposphere is not.
@@ -607,6 +722,27 @@ typedef struct
     u8 stec_residuals_count;
   } element;
 } sbp_msg_ssr_gridded_correction_t;
+
+#if 0
+
+#if 0
+
+#if 0
+#endif
+#endif
+
+#if 0
+
+#if 0
+#endif
+
+#if 0
+
+#if 0
+#endif
+#endif
+#endif
+#endif
 /** Definition of a SSR atmospheric correction tile.
 
  *
@@ -699,6 +835,9 @@ typedef struct
    */
   u64 bitmask;
 } sbp_msg_ssr_tile_definition_t;
+
+#if 0
+#endif
 /** Antenna phase center correction.
  *
  * Contains phase center offset and elevation variation corrections for one
@@ -785,6 +924,12 @@ typedef struct
    */
   s8 pcv[21];
 } sbp_satellite_apc_t;
+
+#if 0
+
+#if 0
+#endif
+#endif
 #define SBP_MSG_SSR_SATELLITE_APC 0x0604
 
 #define SBP_SSR_SATELLITE_APC_APC_SID_CODE__MASK (0xff)
@@ -854,6 +999,15 @@ typedef struct
    */
   u8 apc_count;
 } sbp_msg_ssr_satellite_apc_t;
+
+#if 0
+
+#if 0
+
+#if 0
+#endif
+#endif
+#endif
 #define SBP_MSG_SSR_ORBIT_CLOCK_DEP_A 0x05DC
 
 #define SBP_SSR_ORBIT_CLOCK_DEP_A_SID_CODE__MASK (0xff)
@@ -942,6 +1096,15 @@ typedef struct
    */
   s32 c2;
 } sbp_msg_ssr_orbit_clock_dep_a_t;
+
+#if 0
+
+#if 0
+#endif
+
+#if 0
+#endif
+#endif
 /** Header for MSG_SSR_STEC_CORRECTION_DEP message
  *
  * A full set of STEC information will likely span multiple SBP
@@ -974,6 +1137,12 @@ typedef struct
    */
   u8 iod_atmo;
 } sbp_stec_header_dep_a_t;
+
+#if 0
+
+#if 0
+#endif
+#endif
 /** Header for MSG_SSR_GRIDDED_CORRECTION_DEP
  *
  * The 3GPP message contains nested variable length arrays
@@ -1011,6 +1180,12 @@ typedef struct
    */
   u8 tropo_quality_indicator;
 } sbp_gridded_correction_header_dep_a_t;
+
+#if 0
+
+#if 0
+#endif
+#endif
 /** Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
  *
  * Defines the grid for MSG_SSR_GRIDDED_CORRECTION messages.
@@ -1047,6 +1222,9 @@ typedef struct
    */
   u8 seq_num;
 } sbp_grid_definition_header_dep_a_t;
+
+#if 0
+#endif
 #define SBP_MSG_SSR_STEC_CORRECTION_DEP_A 0x05EB
 
 typedef struct
@@ -1065,6 +1243,21 @@ typedef struct
    */
   u8 stec_sat_list_count;
 } sbp_msg_ssr_stec_correction_dep_a_t;
+
+#if 0
+
+#if 0
+
+#if 0
+#endif
+#endif
+
+#if 0
+
+#if 0
+#endif
+#endif
+#endif
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_NO_STD_DEP_A 0x05F0
 
 typedef struct
@@ -1098,6 +1291,27 @@ typedef struct
     u8 stec_residuals_count;
   } element;
 } sbp_msg_ssr_gridded_correction_no_std_dep_a_t;
+
+#if 0
+
+#if 0
+
+#if 0
+#endif
+#endif
+
+#if 0
+
+#if 0
+#endif
+
+#if 0
+
+#if 0
+#endif
+#endif
+#endif
+#endif
 #define SBP_MSG_SSR_GRIDDED_CORRECTION_DEP_A 0x05FA
 
 typedef struct
@@ -1132,6 +1346,27 @@ typedef struct
     u8 stec_residuals_count;
   } element;
 } sbp_msg_ssr_gridded_correction_dep_a_t;
+
+#if 0
+
+#if 0
+
+#if 0
+#endif
+#endif
+
+#if 0
+
+#if 0
+#endif
+
+#if 0
+
+#if 0
+#endif
+#endif
+#endif
+#endif
 #define SBP_MSG_SSR_GRID_DEFINITION_DEP_A 0x05F5
 
 typedef struct
@@ -1153,6 +1388,12 @@ typedef struct
    */
   u8 rle_list_count;
 } sbp_msg_ssr_grid_definition_dep_a_t;
+
+#if 0
+
+#if 0
+#endif
+#endif
 
 #include <libsbp/unpacked/ssr_operators.h>
 #include <libsbp/unpacked/ssr_packers.h>

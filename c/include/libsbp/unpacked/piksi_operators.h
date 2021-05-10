@@ -677,18 +677,6 @@ static inline bool operator==(const sbp_msg_command_req_t &a, const sbp_msg_comm
   {
     return false;
   }
-  if (a.command_count != b.command_count)
-  {
-    return false;
-  }
-  for (size_t command_idx = 0; command_idx < (size_t)a.command_count; command_idx++)
-  {
-
-    if (a.command[command_idx] != b.command[command_idx])
-    {
-      return false;
-    }
-  }
 
   return true;
 }
@@ -731,18 +719,6 @@ static inline bool operator==(const sbp_msg_command_output_t &a, const sbp_msg_c
   if (a.sequence != b.sequence)
   {
     return false;
-  }
-  if (a.line_count != b.line_count)
-  {
-    return false;
-  }
-  for (size_t line_idx = 0; line_idx < (size_t)a.line_count; line_idx++)
-  {
-
-    if (a.line[line_idx] != b.line[line_idx])
-    {
-      return false;
-    }
   }
 
   return true;

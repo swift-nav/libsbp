@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
+#include <libsbp/sbp.h>
+#include <libsbp/string2.h>
 #include <memory.h>
 #include <string.h>
-#include <libsbp/string2.h>
-#include <libsbp/sbp.h>
 
 #if 0
 TEST(TestString, Unterminated) {
@@ -147,7 +147,8 @@ TEST(TestString, Sequence) {
 }
 #endif
 
-TEST(TestString, UnterminatedAnalysis) {
+TEST(TestString, UnterminatedAnalysis)
+{
   sbp_string_t string;
   sbp_string_format_t format;
 
@@ -170,8 +171,8 @@ TEST(TestString, UnterminatedAnalysis) {
   EXPECT_EQ(sbp_string_packed_len(string, &format), 5);
   EXPECT_NE(sbp_string_get_section(string, &format, 0), nullptr);
   EXPECT_STREQ(sbp_string_get_section(string, &format, 0), "short");
-  
-  // A string exactly as long as the maximum encoded size 
+
+  // A string exactly as long as the maximum encoded size
   strcpy(string, "exactly 16 bytes");
   EXPECT_TRUE(sbp_string_valid(string, &format));
   EXPECT_EQ(sbp_string_count_sections(string, &format), 1);
@@ -189,7 +190,8 @@ TEST(TestString, UnterminatedAnalysis) {
   EXPECT_EQ(sbp_string_get_section(string, &format, 0), nullptr);
 }
 
-TEST(TestString, NullTerminatedAnalysis) {
+TEST(TestString, NullTerminatedAnalysis)
+{
   sbp_string_t string;
   sbp_string_format_t format;
 
@@ -212,8 +214,8 @@ TEST(TestString, NullTerminatedAnalysis) {
   EXPECT_EQ(sbp_string_packed_len(string, &format), 6);
   EXPECT_NE(sbp_string_get_section(string, &format, 0), nullptr);
   EXPECT_STREQ(sbp_string_get_section(string, &format, 0), "short");
-  
-  // A string exactly as long as the maximum encoded size 
+
+  // A string exactly as long as the maximum encoded size
   strcpy(string, "exactly 16 bytes");
   EXPECT_TRUE(sbp_string_valid(string, &format));
   EXPECT_EQ(sbp_string_count_sections(string, &format), 1);
@@ -231,7 +233,8 @@ TEST(TestString, NullTerminatedAnalysis) {
   EXPECT_EQ(sbp_string_get_section(string, &format, 0), nullptr);
 }
 
-TEST(TestString, MultiPartAnalysis_2_2) {
+TEST(TestString, MultiPartAnalysis_2_2)
+{
   sbp_string_t string;
   sbp_string_format_t format;
 
@@ -252,7 +255,7 @@ TEST(TestString, MultiPartAnalysis_2_2) {
   EXPECT_EQ(sbp_string_packed_len(string, &format), 2);
 
   // Has a first section and a zero length second section
-  memcpy(string, "section\0\0",  9);
+  memcpy(string, "section\0\0", 9);
   EXPECT_TRUE(sbp_string_valid(string, &format));
   EXPECT_EQ(sbp_string_count_sections(string, &format), 2);
   EXPECT_EQ(sbp_string_section_len(string, &format, 0), 7);
@@ -307,7 +310,8 @@ TEST(TestString, MultiPartAnalysis_2_2) {
   EXPECT_EQ(sbp_string_get_section(string, &format, 0), nullptr);
 }
 
-TEST(TestString, MultiPartAnalysis_2_3) {
+TEST(TestString, MultiPartAnalysis_2_3)
+{
   sbp_string_t string;
   sbp_string_format_t format;
 
@@ -328,7 +332,7 @@ TEST(TestString, MultiPartAnalysis_2_3) {
   EXPECT_EQ(sbp_string_packed_len(string, &format), 2);
 
   // Has a first section and a zero length second section. Optional 3rd part is not reported
-  memcpy(string, "section\0\0\0",  10);
+  memcpy(string, "section\0\0\0", 10);
   EXPECT_TRUE(sbp_string_valid(string, &format));
   EXPECT_EQ(sbp_string_count_sections(string, &format), 2);
   EXPECT_EQ(sbp_string_section_len(string, &format, 0), 7);
@@ -402,7 +406,8 @@ TEST(TestString, MultiPartAnalysis_2_3) {
   EXPECT_EQ(sbp_string_packed_len(string, &format), 28);
 }
 
-TEST(TestString, DoubleNullSequenceAnalysis) {
+TEST(TestString, DoubleNullSequenceAnalysis)
+{
   sbp_string_t string;
   sbp_string_format_t format;
 
@@ -437,7 +442,8 @@ TEST(TestString, DoubleNullSequenceAnalysis) {
   EXPECT_EQ(sbp_string_packed_len(string, &format), 0);
 }
 
-TEST(TestString, FFSequenceAnalysis) {
+TEST(TestString, FFSequenceAnalysis)
+{
   sbp_string_t string;
   sbp_string_format_t format;
 
@@ -455,7 +461,8 @@ TEST(TestString, FFSequenceAnalysis) {
   EXPECT_EQ(sbp_string_packed_len(string, &format), 5);
 }
 
-TEST(TestString, UnterminatedSet) {
+TEST(TestString, UnterminatedSet)
+{
   sbp_string_t string;
   sbp_string_format_t format;
   memset(string, 'a', sizeof(sbp_string_t));
@@ -478,7 +485,8 @@ TEST(TestString, UnterminatedSet) {
   EXPECT_STREQ(sbp_string_get_section(string, &format, 0), "hi");
 }
 
-TEST(TestString, NullTerminatedSet) {
+TEST(TestString, NullTerminatedSet)
+{
   sbp_string_t string;
   sbp_string_format_t format;
   memset(string, 'a', sizeof(sbp_string_t));
@@ -501,7 +509,8 @@ TEST(TestString, NullTerminatedSet) {
   EXPECT_STREQ(sbp_string_get_section(string, &format, 0), "hi");
 }
 
-TEST(TestString, MultipartAppend_2_2) {
+TEST(TestString, MultipartAppend_2_2)
+{
   sbp_string_t string;
   sbp_string_format_t format;
   memset(string, 0, sizeof(sbp_string_t));
@@ -539,7 +548,8 @@ TEST(TestString, MultipartAppend_2_2) {
   EXPECT_STREQ(sbp_string_get_section(string, &format, 1), "setting");
 }
 
-TEST(TestString, MultipartAppend_2_3) {
+TEST(TestString, MultipartAppend_2_3)
+{
   sbp_string_t string;
   sbp_string_format_t format;
   memset(string, 0, sizeof(sbp_string_t));

@@ -199,12 +199,18 @@ class FieldItem(object):
             self.max_items = field.options['size'].value
             self.packed_size = field.options['size'].value
             self.options = field.options
-        elif type_id == "string":
-            self.order = "variable-array"
+        elif type_id == "string" or field.options.get('encoding', None):
+            self.order = "packed-string"
             self.basetype = BasetypeItem(msg, package_specs, 'char', packed_offset)
             self.max_items = int((255 - packed_offset) / self.basetype.packed_size)
             self.packed_size = 0
             self.options = field.options
+            self.encoding = field.options['encoding'].value
+            if self.encoding == "multipart":
+                self.max_sections = field.options['max-sections'].value
+                self.min_sections = field.options['min-sections'].value
+            elif self.encoding == "sequence":
+                self.terminator = field.options['terminator'].value
             if 'size_fn' in field.options:
                 self.size_fn = field.options['size_fn'].value
             self.generate_as_nested = True

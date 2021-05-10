@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include <libsbp/common.h>
+#include <libsbp/string2.h>
 /** Raw IMU data
  *
  * Raw data from the Inertial Measurement Unit, containing accelerometer and
@@ -85,6 +86,9 @@ typedef struct
    */
   s16 gyr_z;
 } sbp_msg_imu_raw_t;
+
+#if 0
+#endif
 /** Auxiliary IMU data
  *
  * Auxiliary data specific to a particular IMU. The `imu_type` field will
@@ -152,6 +156,9 @@ typedef struct
    */
   u8 imu_conf;
 } sbp_msg_imu_aux_t;
+
+#if 0
+#endif
 
 #include <libsbp/unpacked/imu_operators.h>
 #include <libsbp/unpacked/imu_packers.h>

@@ -9,33 +9,36 @@
 #include <math.h>
 
 #include <libsbp/common.h>
-#include <libsbp/unpacked/(((pkg_name))).h>
+#include <libsbp/string2.h>
+//#include <libsbp/unpacked/(((pkg_name))).h>
 
 ((*- for i in include *))
-#include <libsbp/unpacked/(((i)))>
+//#include <libsbp/unpacked/(((i)))>
 ((*- endfor *))
 
 ((*- for m in msgs *))
                                                                                                               
-((*- macro substruct_packed_size(substruct, path) *))                                                         
+((*- macro substruct_packed_size(substruct, path, string_path) *))                                                         
 	0
   ((*- with *))                                                                                               
   ((*- for f in substruct.fields *))                                                                          
 	  +
-    ((*- if f.order == "fixed-string" *))                                                                     
+    ((*- if f.order == "packed-string" *))
+    0 /*(((string_path + f.name)))_packed_len( (((path + f.name))) )*/
+    ((*- elif f.order == "fixed-string" *))                                                                     
       (((f.max_items)))                                                                                       
 	  ((*- elif f.order == "single" *))
 		  ((*- if f.basetype.is_primitive *))
 				sizeof( ((( path + f.name ))) )
 			((*- else *))
-				( ((( substruct_packed_size(f.basetype, path + f.name + ".") ))) )
+				( ((( substruct_packed_size(f.basetype, path + f.name + ".", path + f.name + "_") ))) )
 			((*- endif *))
 		((*- elif f.order == "fixed-array" *))
 		  ( (((f.max_items))) * 
 		  ((*- if f.basetype.is_primitive *))
         sizeof( ((( path + f.name )))[0] )
 			((*- else *))
-				( ((( substruct_packed_size(f.basetype, path + f.name + "[0].") ))) )
+				( ((( substruct_packed_size(f.basetype, path + f.name + "[0].", path + f.name + "_") ))) )
 			((*- endif *))
 		)
 		((*- else *))
@@ -49,7 +52,7 @@
 		  ((*- if f.basetype.is_primitive *))
         sizeof( (((path + f.name)))[0] )
 			((*- else *))
-				( ((( substruct_packed_size(f.basetype, path + f.name + "[0].") ))) )
+				( ((( substruct_packed_size(f.basetype, path + f.name + "[0].", path + f.name + "_") ))) )
 			((*- endif *))
 			)
 	  ((*- endif *))
@@ -59,7 +62,7 @@
 
 static inline size_t sbp_packed_size_(((m.name|convert_unpacked)))(const (((m.name|convert_unpacked))) *msg) {                                
 	(void)msg;
-  return (((substruct_packed_size(m, "msg->") )));
+  return (((substruct_packed_size(m, "msg->", (((m.name|convert_unpacked))) + "_") )));
 }                                                                                                             
                                                                                                               
 ((*- macro pack_primitive(field, path) *))
@@ -85,15 +88,17 @@ static inline size_t sbp_packed_size_(((m.name|convert_unpacked)))(const (((m.na
   offset += (((field.basetype.packed_size)));
 ((*- endmacro *))
 
-((*- macro pack_substruct(substruct, path) *))
+((*- macro pack_substruct(substruct, path, string_path) *))
 	((*- for f in substruct.fields *))
 	  ((*- with *))
 	  ((*- set loop_idx = (path + f.name + "_idx")|sanitise_path *))
-	  ((*- if f.order == "single" *))
+    ((*- if f.order == "packed-string" *))
+      //offset += (((string_path + f.name)))_pack( (((path + f.name))), buf + offset, (uint8_t)(len - offset ));
+	  ((*- elif f.order == "single" *))
 		  ((*- if f.basetype.is_primitive *))
         (((pack_primitive(f, path + f.name))))
 			((*- else *))
-				(((pack_substruct(f.basetype, path + f.name + "."))))
+				(((pack_substruct(f.basetype, path + f.name + ".", path + f.name + "_"))))
 			((*- endif *))
 		((*- elif f.order == "fixed-string" *))
       if(offset + sizeof( (((path + f.name))) ) > len) { return false; }
@@ -106,7 +111,7 @@ static inline size_t sbp_packed_size_(((m.name|convert_unpacked)))(const (((m.na
 				((*- if f.basetype.is_primitive *))
         (((pack_primitive(f, path + f.name + "[" + loop_idx + "]"))))
 				((*- else *))
-				(((pack_substruct(f.basetype, path + f.name + "[" + loop_idx + "]."))))
+				(((pack_substruct(f.basetype, path + f.name + "[" + loop_idx + "].", path + f.name + "_"))))
 				((*- endif *))
 			}
 		((*- elif f.order == "variable-array" *))
@@ -115,7 +120,7 @@ static inline size_t sbp_packed_size_(((m.name|convert_unpacked)))(const (((m.na
 				((*- if f.basetype.is_primitive *))
           (((pack_primitive(f, path + f.name + "[" + loop_idx + "]"))))
 				((*- else *))
-					(((pack_substruct(f.basetype, path + f.name + "[" + loop_idx + "]."))))
+					(((pack_substruct(f.basetype, path + f.name + "[" + loop_idx + "].", path + f.name + "_"))))
 				((*- endif *))
 			}
 		((*- endif *))
@@ -130,7 +135,7 @@ static inline bool sbp_pack_(((m.name|convert_unpacked)))(u8 *buf, size_t len, c
 	(void)len;
 	(void)msg;
   if ( sbp_packed_size_(((m.name|convert_unpacked)))(msg) > len) { return false; }
-  (((pack_substruct(m, "msg->"))))
+  (((pack_substruct(m, "msg->", (((m.name|convert_unpacked))) + "_"))))
   return true;
 }
 
@@ -161,15 +166,17 @@ static inline bool sbp_pack_(((m.name|convert_unpacked)))(u8 *buf, size_t len, c
   offset += (((field.basetype.packed_size)));
 ((*- endmacro *))
 
-((*- macro unpack_substruct(substruct, path) *))
+((*- macro unpack_substruct(substruct, path, string_path) *))
 ((*- for f in substruct.fields *))
 	((*- with *))
 	((*- set loop_idx = (path + f.name + "_idx")|sanitise_path *))
-	((*- if f.order == "single" *))
+  ((*- if f.order == "packed-string" *))
+  //offset += (((string_path + f.name)))_unpack( (((path + f.name))), buf + offset, (uint8_t)(len - offset ));
+	((*- elif f.order == "single" *))
 		((*- if f.basetype.is_primitive *))
       (((unpack_primitive(f, path + f.name))))
 		((*- else *))
-			(((unpack_substruct(f.basetype, path + f.name + "."))))
+			(((unpack_substruct(f.basetype, path + f.name + ".", path + f.name + "_"))))
 		((*- endif *))
 	((*- elif f.order == "fixed-string" *))
     if (offset + sizeof( (((path + f.name))) ) > len) { return false; }
@@ -182,7 +189,7 @@ static inline bool sbp_pack_(((m.name|convert_unpacked)))(u8 *buf, size_t len, c
 			((*- if f.basetype.is_primitive *))
         (((unpack_primitive(f, path + f.name + "[" + loop_idx + "]"))))
 			((*- else *))
-				(((unpack_substruct(f.basetype, path + f.name + "[" + loop_idx + "]."))))
+				(((unpack_substruct(f.basetype, path + f.name + "[" + loop_idx + "].", path + f.name + "_"))))
 			((*- endif *))
 		}
   ((*- elif f.order == "variable-array" *))
@@ -201,7 +208,7 @@ static inline bool sbp_pack_(((m.name|convert_unpacked)))(u8 *buf, size_t len, c
 			((*- if f.basetype.is_primitive *))
         (((unpack_primitive(f, path + f.name + "[" + loop_idx + "]"))))
 			((*- else *))
-				(((unpack_substruct(f.basetype, path + f.name + "[" + loop_idx + "]."))))
+				(((unpack_substruct(f.basetype, path + f.name + "[" + loop_idx + "].", path + f.name + "_"))))
 			((*- endif *))
 		}
 	((*- endif *))
@@ -215,7 +222,7 @@ static inline bool sbp_unpack_(((m.name|convert_unpacked)))(const u8 *buf, size_
 	(void)buf;
 	(void)len;
 	(void)msg;
-  (((unpack_substruct(m, "msg->"))))
+  (((unpack_substruct(m, "msg->", (((m.name|convert_unpacked))) + "_"))))
   return true;
 }
  

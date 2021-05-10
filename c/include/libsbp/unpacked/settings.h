@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include <libsbp/common.h>
+#include <libsbp/string2.h>
 /** Save settings to flash (host => device)
  *
  * The save settings message persists the device's current settings
@@ -20,6 +21,9 @@ typedef struct
 {
   char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_settings_save_t;
+
+#if 0
+#endif
 /** Write device configuration settings (host => device)
  *
  * The setting message writes the device configuration for a particular
@@ -39,12 +43,26 @@ typedef struct
    * A NULL-terminated and NULL-delimited string with contents
    * "SECTION_SETTING\0SETTING\0VALUE\0"
    */
-  char setting[255];
-  /**
-   * Number of items in setting
-   */
-  u8 setting_count;
+  sbp_multipart_string_t setting;
 } sbp_msg_settings_write_t;
+
+#if 0
+  static const sbp_multipart_string_format_t sbp_msg_settings_write_t_setting_format = {
+    /* .encoding = */ SBP_STRING_MULTIPART,
+    /* .min_sections = */3u,
+    /* .max_sections = */3u,
+    /* .terminator = */0u,
+    /* .max_encoded_len = */ 255u
+  };
+  static inline void sbp_msg_settings_write_t_setting_init(sbp_multipart_string_t s) { sbp_multipart_string_init(s, &sbp_msg_settings_write_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_write_t_setting_packed_len(const sbp_multipart_string_t s) { return sbp_multipart_string_packed_len(s, &sbp_msg_settings_write_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_write_t_setting_pack(const sbp_multipart_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_multipart_string_pack(s, &sbp_msg_settings_write_t_setting_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_settings_write_t_setting_unpack(sbp_multipart_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_multipart_string_unpack(s, &sbp_msg_settings_write_t_setting_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_settings_write_t_setting_space_remaining(const sbp_multipart_string_t s) { return sbp_multipart_string_space_remaining(s, &sbp_msg_settings_write_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_write_t_setting_count_sections(const sbp_multipart_string_t s) { return sbp_multipart_string_count_sections(s, &sbp_msg_settings_write_t_setting_format); }
+  static inline const char *sbp_msg_settings_write_t_setting_get_section(const sbp_multipart_string_t s, uint8_t section) { return sbp_multipart_string_get_section(s, &sbp_msg_settings_write_t_setting_format, section); }
+  static inline bool sbp_msg_settings_write_t_setting_set_section(sbp_multipart_string_t s, uint8_t section, const char *new_str) { return sbp_multipart_string_set_section(s, &sbp_msg_settings_write_t_setting_format, section, new_str); }
+#endif
 /** Acknowledgement with status of MSG_SETTINGS_WRITE
  *
  * Return the status of a write request with the new value of the
@@ -86,12 +104,26 @@ typedef struct
    * A NULL-terminated and delimited string with contents
    * "SECTION_SETTING\0SETTING\0VALUE\0"
    */
-  char setting[254];
-  /**
-   * Number of items in setting
-   */
-  u8 setting_count;
+  sbp_multipart_string_t setting;
 } sbp_msg_settings_write_resp_t;
+
+#if 0
+  static const sbp_multipart_string_format_t sbp_msg_settings_write_resp_t_setting_format = {
+    /* .encoding = */ SBP_STRING_MULTIPART,
+    /* .min_sections = */3u,
+    /* .max_sections = */3u,
+    /* .terminator = */0u,
+    /* .max_encoded_len = */ 254u
+  };
+  static inline void sbp_msg_settings_write_resp_t_setting_init(sbp_multipart_string_t s) { sbp_multipart_string_init(s, &sbp_msg_settings_write_resp_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_write_resp_t_setting_packed_len(const sbp_multipart_string_t s) { return sbp_multipart_string_packed_len(s, &sbp_msg_settings_write_resp_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_write_resp_t_setting_pack(const sbp_multipart_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_multipart_string_pack(s, &sbp_msg_settings_write_resp_t_setting_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_settings_write_resp_t_setting_unpack(sbp_multipart_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_multipart_string_unpack(s, &sbp_msg_settings_write_resp_t_setting_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_settings_write_resp_t_setting_space_remaining(const sbp_multipart_string_t s) { return sbp_multipart_string_space_remaining(s, &sbp_msg_settings_write_resp_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_write_resp_t_setting_count_sections(const sbp_multipart_string_t s) { return sbp_multipart_string_count_sections(s, &sbp_msg_settings_write_resp_t_setting_format); }
+  static inline const char *sbp_msg_settings_write_resp_t_setting_get_section(const sbp_multipart_string_t s, uint8_t section) { return sbp_multipart_string_get_section(s, &sbp_msg_settings_write_resp_t_setting_format, section); }
+  static inline bool sbp_msg_settings_write_resp_t_setting_set_section(sbp_multipart_string_t s, uint8_t section, const char *new_str) { return sbp_multipart_string_set_section(s, &sbp_msg_settings_write_resp_t_setting_format, section, new_str); }
+#endif
 /** Read device configuration settings (host => device)
  *
  * The setting message that reads the device configuration. The string
@@ -112,12 +144,26 @@ typedef struct
    * A NULL-terminated and NULL-delimited string with contents
    * "SECTION_SETTING\0SETTING\0"
    */
-  char setting[255];
-  /**
-   * Number of items in setting
-   */
-  u8 setting_count;
+  sbp_multipart_string_t setting;
 } sbp_msg_settings_read_req_t;
+
+#if 0
+  static const sbp_multipart_string_format_t sbp_msg_settings_read_req_t_setting_format = {
+    /* .encoding = */ SBP_STRING_MULTIPART,
+    /* .min_sections = */2u,
+    /* .max_sections = */2u,
+    /* .terminator = */0u,
+    /* .max_encoded_len = */ 255u
+  };
+  static inline void sbp_msg_settings_read_req_t_setting_init(sbp_multipart_string_t s) { sbp_multipart_string_init(s, &sbp_msg_settings_read_req_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_read_req_t_setting_packed_len(const sbp_multipart_string_t s) { return sbp_multipart_string_packed_len(s, &sbp_msg_settings_read_req_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_read_req_t_setting_pack(const sbp_multipart_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_multipart_string_pack(s, &sbp_msg_settings_read_req_t_setting_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_settings_read_req_t_setting_unpack(sbp_multipart_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_multipart_string_unpack(s, &sbp_msg_settings_read_req_t_setting_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_settings_read_req_t_setting_space_remaining(const sbp_multipart_string_t s) { return sbp_multipart_string_space_remaining(s, &sbp_msg_settings_read_req_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_read_req_t_setting_count_sections(const sbp_multipart_string_t s) { return sbp_multipart_string_count_sections(s, &sbp_msg_settings_read_req_t_setting_format); }
+  static inline const char *sbp_msg_settings_read_req_t_setting_get_section(const sbp_multipart_string_t s, uint8_t section) { return sbp_multipart_string_get_section(s, &sbp_msg_settings_read_req_t_setting_format, section); }
+  static inline bool sbp_msg_settings_read_req_t_setting_set_section(sbp_multipart_string_t s, uint8_t section, const char *new_str) { return sbp_multipart_string_set_section(s, &sbp_msg_settings_read_req_t_setting_format, section, new_str); }
+#endif
 /** Read device configuration settings (host <= device)
  *
  * The setting message wich which the device responds after a
@@ -138,12 +184,26 @@ typedef struct
    * "SECTION_SETTING\0SETTING\0VALUE\0"
    *
    */
-  char setting[255];
-  /**
-   * Number of items in setting
-   */
-  u8 setting_count;
+  sbp_multipart_string_t setting;
 } sbp_msg_settings_read_resp_t;
+
+#if 0
+  static const sbp_multipart_string_format_t sbp_msg_settings_read_resp_t_setting_format = {
+    /* .encoding = */ SBP_STRING_MULTIPART,
+    /* .min_sections = */3u,
+    /* .max_sections = */3u,
+    /* .terminator = */0u,
+    /* .max_encoded_len = */ 255u
+  };
+  static inline void sbp_msg_settings_read_resp_t_setting_init(sbp_multipart_string_t s) { sbp_multipart_string_init(s, &sbp_msg_settings_read_resp_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_read_resp_t_setting_packed_len(const sbp_multipart_string_t s) { return sbp_multipart_string_packed_len(s, &sbp_msg_settings_read_resp_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_read_resp_t_setting_pack(const sbp_multipart_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_multipart_string_pack(s, &sbp_msg_settings_read_resp_t_setting_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_settings_read_resp_t_setting_unpack(sbp_multipart_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_multipart_string_unpack(s, &sbp_msg_settings_read_resp_t_setting_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_settings_read_resp_t_setting_space_remaining(const sbp_multipart_string_t s) { return sbp_multipart_string_space_remaining(s, &sbp_msg_settings_read_resp_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_read_resp_t_setting_count_sections(const sbp_multipart_string_t s) { return sbp_multipart_string_count_sections(s, &sbp_msg_settings_read_resp_t_setting_format); }
+  static inline const char *sbp_msg_settings_read_resp_t_setting_get_section(const sbp_multipart_string_t s, uint8_t section) { return sbp_multipart_string_get_section(s, &sbp_msg_settings_read_resp_t_setting_format, section); }
+  static inline bool sbp_msg_settings_read_resp_t_setting_set_section(sbp_multipart_string_t s, uint8_t section, const char *new_str) { return sbp_multipart_string_set_section(s, &sbp_msg_settings_read_resp_t_setting_format, section, new_str); }
+#endif
 /** Read setting by direct index (host => device)
  *
  * The settings message for iterating through the settings
@@ -161,6 +221,9 @@ typedef struct
    */
   u16 index;
 } sbp_msg_settings_read_by_index_req_t;
+
+#if 0
+#endif
 /** Read setting by direct index (host <= device)
  *
  * The settings message that reports the value of a setting at an index.
@@ -188,12 +251,26 @@ typedef struct
    * A NULL-terminated and delimited string with contents
    * "SECTION_SETTING\0SETTING\0VALUE\0FORMAT_TYPE\0"
    */
-  char setting[253];
-  /**
-   * Number of items in setting
-   */
-  u8 setting_count;
+  sbp_multipart_string_t setting;
 } sbp_msg_settings_read_by_index_resp_t;
+
+#if 0
+  static const sbp_multipart_string_format_t sbp_msg_settings_read_by_index_resp_t_setting_format = {
+    /* .encoding = */ SBP_STRING_MULTIPART,
+    /* .min_sections = */3u,
+    /* .max_sections = */4u,
+    /* .terminator = */0u,
+    /* .max_encoded_len = */ 253u
+  };
+  static inline void sbp_msg_settings_read_by_index_resp_t_setting_init(sbp_multipart_string_t s) { sbp_multipart_string_init(s, &sbp_msg_settings_read_by_index_resp_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_read_by_index_resp_t_setting_packed_len(const sbp_multipart_string_t s) { return sbp_multipart_string_packed_len(s, &sbp_msg_settings_read_by_index_resp_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_read_by_index_resp_t_setting_pack(const sbp_multipart_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_multipart_string_pack(s, &sbp_msg_settings_read_by_index_resp_t_setting_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_settings_read_by_index_resp_t_setting_unpack(sbp_multipart_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_multipart_string_unpack(s, &sbp_msg_settings_read_by_index_resp_t_setting_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_settings_read_by_index_resp_t_setting_space_remaining(const sbp_multipart_string_t s) { return sbp_multipart_string_space_remaining(s, &sbp_msg_settings_read_by_index_resp_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_read_by_index_resp_t_setting_count_sections(const sbp_multipart_string_t s) { return sbp_multipart_string_count_sections(s, &sbp_msg_settings_read_by_index_resp_t_setting_format); }
+  static inline const char *sbp_msg_settings_read_by_index_resp_t_setting_get_section(const sbp_multipart_string_t s, uint8_t section) { return sbp_multipart_string_get_section(s, &sbp_msg_settings_read_by_index_resp_t_setting_format, section); }
+  static inline bool sbp_msg_settings_read_by_index_resp_t_setting_set_section(sbp_multipart_string_t s, uint8_t section, const char *new_str) { return sbp_multipart_string_set_section(s, &sbp_msg_settings_read_by_index_resp_t_setting_format, section, new_str); }
+#endif
 /** Finished reading settings (host <= device)
  *
  * The settings message for indicating end of the settings values.
@@ -204,6 +281,9 @@ typedef struct
 {
   char dummy_to_avoid_empty_struct___do_not_use;
 } sbp_msg_settings_read_by_index_done_t;
+
+#if 0
+#endif
 /** Register setting and default value (device => host)
  *
  * This message registers the presence and default value of a setting
@@ -219,12 +299,26 @@ typedef struct
    * A NULL-terminated and delimited string with contents
    * "SECTION_SETTING\0SETTING\0VALUE".
    */
-  char setting[255];
-  /**
-   * Number of items in setting
-   */
-  u8 setting_count;
+  sbp_multipart_string_t setting;
 } sbp_msg_settings_register_t;
+
+#if 0
+  static const sbp_multipart_string_format_t sbp_msg_settings_register_t_setting_format = {
+    /* .encoding = */ SBP_STRING_MULTIPART,
+    /* .min_sections = */3u,
+    /* .max_sections = */3u,
+    /* .terminator = */0u,
+    /* .max_encoded_len = */ 255u
+  };
+  static inline void sbp_msg_settings_register_t_setting_init(sbp_multipart_string_t s) { sbp_multipart_string_init(s, &sbp_msg_settings_register_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_register_t_setting_packed_len(const sbp_multipart_string_t s) { return sbp_multipart_string_packed_len(s, &sbp_msg_settings_register_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_register_t_setting_pack(const sbp_multipart_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_multipart_string_pack(s, &sbp_msg_settings_register_t_setting_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_settings_register_t_setting_unpack(sbp_multipart_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_multipart_string_unpack(s, &sbp_msg_settings_register_t_setting_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_settings_register_t_setting_space_remaining(const sbp_multipart_string_t s) { return sbp_multipart_string_space_remaining(s, &sbp_msg_settings_register_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_register_t_setting_count_sections(const sbp_multipart_string_t s) { return sbp_multipart_string_count_sections(s, &sbp_msg_settings_register_t_setting_format); }
+  static inline const char *sbp_msg_settings_register_t_setting_get_section(const sbp_multipart_string_t s, uint8_t section) { return sbp_multipart_string_get_section(s, &sbp_msg_settings_register_t_setting_format, section); }
+  static inline bool sbp_msg_settings_register_t_setting_set_section(sbp_multipart_string_t s, uint8_t section, const char *new_str) { return sbp_multipart_string_set_section(s, &sbp_msg_settings_register_t_setting_format, section, new_str); }
+#endif
 /** Register setting and default value (device <= host)
  *
  * This message responds to setting registration with the effective value.
@@ -264,12 +358,26 @@ typedef struct
    * "SECTION_SETTING\0SETTING\0VALUE". The meaning of value is defined
    * according to the status field.
    */
-  char setting[254];
-  /**
-   * Number of items in setting
-   */
-  u8 setting_count;
+  sbp_multipart_string_t setting;
 } sbp_msg_settings_register_resp_t;
+
+#if 0
+  static const sbp_multipart_string_format_t sbp_msg_settings_register_resp_t_setting_format = {
+    /* .encoding = */ SBP_STRING_MULTIPART,
+    /* .min_sections = */3u,
+    /* .max_sections = */3u,
+    /* .terminator = */0u,
+    /* .max_encoded_len = */ 254u
+  };
+  static inline void sbp_msg_settings_register_resp_t_setting_init(sbp_multipart_string_t s) { sbp_multipart_string_init(s, &sbp_msg_settings_register_resp_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_register_resp_t_setting_packed_len(const sbp_multipart_string_t s) { return sbp_multipart_string_packed_len(s, &sbp_msg_settings_register_resp_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_register_resp_t_setting_pack(const sbp_multipart_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_multipart_string_pack(s, &sbp_msg_settings_register_resp_t_setting_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_settings_register_resp_t_setting_unpack(sbp_multipart_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_multipart_string_unpack(s, &sbp_msg_settings_register_resp_t_setting_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_settings_register_resp_t_setting_space_remaining(const sbp_multipart_string_t s) { return sbp_multipart_string_space_remaining(s, &sbp_msg_settings_register_resp_t_setting_format); }
+  static inline uint8_t sbp_msg_settings_register_resp_t_setting_count_sections(const sbp_multipart_string_t s) { return sbp_multipart_string_count_sections(s, &sbp_msg_settings_register_resp_t_setting_format); }
+  static inline const char *sbp_msg_settings_register_resp_t_setting_get_section(const sbp_multipart_string_t s, uint8_t section) { return sbp_multipart_string_get_section(s, &sbp_msg_settings_register_resp_t_setting_format, section); }
+  static inline bool sbp_msg_settings_register_resp_t_setting_set_section(sbp_multipart_string_t s, uint8_t section, const char *new_str) { return sbp_multipart_string_set_section(s, &sbp_msg_settings_register_resp_t_setting_format, section, new_str); }
+#endif
 
 #include <libsbp/unpacked/settings_operators.h>
 #include <libsbp/unpacked/settings_packers.h>

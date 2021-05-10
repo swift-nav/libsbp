@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include <libsbp/common.h>
+#include <libsbp/string2.h>
 /** Plaintext logging messages with levels
  *
  * This message contains a human-readable payload string from the
@@ -45,12 +46,25 @@ typedef struct
   /**
    * Human-readable string
    */
-  char text[254];
-  /**
-   * Number of items in text
-   */
-  u8 text_count;
+  sbp_unterminated_string_t text;
 } sbp_msg_log_t;
+
+#if 0
+  static const sbp_unterminated_string_format_t sbp_msg_log_t_text_format = {
+    /* .encoding = */ SBP_STRING_UNTERMINATED,
+    /* .min_sections = */0u,
+    /* .max_sections = */0u,
+    /* .terminator = */0u,
+    /* .max_encoded_len = */ 254u
+  };
+  static inline void sbp_msg_log_t_text_init(sbp_unterminated_string_t s) { sbp_unterminated_string_init(s, &sbp_msg_log_t_text_format); }
+  static inline uint8_t sbp_msg_log_t_text_packed_len(const sbp_unterminated_string_t s) { return sbp_unterminated_string_packed_len(s, &sbp_msg_log_t_text_format); }
+  static inline uint8_t sbp_msg_log_t_text_pack(const sbp_unterminated_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_pack(s, &sbp_msg_log_t_text_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_log_t_text_unpack(sbp_unterminated_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_unpack(s, &sbp_msg_log_t_text_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_log_t_text_space_remaining(const sbp_unterminated_string_t s) { return sbp_unterminated_string_space_remaining(s, &sbp_msg_log_t_text_format); }
+  static inline const char *sbp_msg_log_t_text_get(sbp_unterminated_string_t s) { return sbp_unterminated_string_get_section(s, &sbp_msg_log_t_text_format, 0); }
+  static inline bool sbp_msg_log_t_text_set(sbp_unterminated_string_t s, const char *new_str) { return sbp_unterminated_string_set(s, &sbp_msg_log_t_text_format, new_str); }
+#endif
 /** Wrapper for FWD a separate stream of information over SBP
  *
  * This message provides the ability to forward messages over SBP.  This may take the form
@@ -77,12 +91,25 @@ typedef struct
   /**
    * variable length wrapped binary message
    */
-  char fwd_payload[253];
-  /**
-   * Number of items in fwd_payload
-   */
-  u8 fwd_payload_count;
+  sbp_unterminated_string_t fwd_payload;
 } sbp_msg_fwd_t;
+
+#if 0
+  static const sbp_unterminated_string_format_t sbp_msg_fwd_t_fwd_payload_format = {
+    /* .encoding = */ SBP_STRING_UNTERMINATED,
+    /* .min_sections = */0u,
+    /* .max_sections = */0u,
+    /* .terminator = */0u,
+    /* .max_encoded_len = */ 253u
+  };
+  static inline void sbp_msg_fwd_t_fwd_payload_init(sbp_unterminated_string_t s) { sbp_unterminated_string_init(s, &sbp_msg_fwd_t_fwd_payload_format); }
+  static inline uint8_t sbp_msg_fwd_t_fwd_payload_packed_len(const sbp_unterminated_string_t s) { return sbp_unterminated_string_packed_len(s, &sbp_msg_fwd_t_fwd_payload_format); }
+  static inline uint8_t sbp_msg_fwd_t_fwd_payload_pack(const sbp_unterminated_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_pack(s, &sbp_msg_fwd_t_fwd_payload_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_fwd_t_fwd_payload_unpack(sbp_unterminated_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_unpack(s, &sbp_msg_fwd_t_fwd_payload_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_fwd_t_fwd_payload_space_remaining(const sbp_unterminated_string_t s) { return sbp_unterminated_string_space_remaining(s, &sbp_msg_fwd_t_fwd_payload_format); }
+  static inline const char *sbp_msg_fwd_t_fwd_payload_get(sbp_unterminated_string_t s) { return sbp_unterminated_string_get_section(s, &sbp_msg_fwd_t_fwd_payload_format, 0); }
+  static inline bool sbp_msg_fwd_t_fwd_payload_set(sbp_unterminated_string_t s, const char *new_str) { return sbp_unterminated_string_set(s, &sbp_msg_fwd_t_fwd_payload_format, new_str); }
+#endif
 /** Deprecated
  *
  * Deprecated.
@@ -95,12 +122,25 @@ typedef struct
   /**
    * Human-readable string
    */
-  char text[255];
-  /**
-   * Number of items in text
-   */
-  u8 text_count;
+  sbp_unterminated_string_t text;
 } sbp_msg_print_dep_t;
+
+#if 0
+  static const sbp_unterminated_string_format_t sbp_msg_print_dep_t_text_format = {
+    /* .encoding = */ SBP_STRING_UNTERMINATED,
+    /* .min_sections = */0u,
+    /* .max_sections = */0u,
+    /* .terminator = */0u,
+    /* .max_encoded_len = */ 255u
+  };
+  static inline void sbp_msg_print_dep_t_text_init(sbp_unterminated_string_t s) { sbp_unterminated_string_init(s, &sbp_msg_print_dep_t_text_format); }
+  static inline uint8_t sbp_msg_print_dep_t_text_packed_len(const sbp_unterminated_string_t s) { return sbp_unterminated_string_packed_len(s, &sbp_msg_print_dep_t_text_format); }
+  static inline uint8_t sbp_msg_print_dep_t_text_pack(const sbp_unterminated_string_t s, uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_pack(s, &sbp_msg_print_dep_t_text_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_print_dep_t_text_unpack(sbp_unterminated_string_t s, const uint8_t *buf, uint8_t buf_len) { return sbp_unterminated_string_unpack(s, &sbp_msg_print_dep_t_text_format, buf, buf_len); }
+  static inline uint8_t sbp_msg_print_dep_t_text_space_remaining(const sbp_unterminated_string_t s) { return sbp_unterminated_string_space_remaining(s, &sbp_msg_print_dep_t_text_format); }
+  static inline const char *sbp_msg_print_dep_t_text_get(sbp_unterminated_string_t s) { return sbp_unterminated_string_get_section(s, &sbp_msg_print_dep_t_text_format, 0); }
+  static inline bool sbp_msg_print_dep_t_text_set(sbp_unterminated_string_t s, const char *new_str) { return sbp_unterminated_string_set(s, &sbp_msg_print_dep_t_text_format, new_str); }
+#endif
 
 #include <libsbp/unpacked/logging_operators.h>
 #include <libsbp/unpacked/logging_packers.h>

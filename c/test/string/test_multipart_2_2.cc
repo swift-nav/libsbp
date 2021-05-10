@@ -1,25 +1,28 @@
 #include <gtest/gtest.h>
 #include <libsbp/sbp.h>
+#include <libsbp/string2.h>
 #include <memory.h>
 #include <string.h>
-#include <libsbp/string2.h>
 
-class TestStringMultipart_2_2 : public ::testing::Test {
-  public:
-    TestStringMultipart_2_2() : ::testing::Test() {
-      format_.encoding = SBP_STRING_MULTIPART;
-      format_.min_sections = 2;
-      format_.max_sections = 2;
-      format_.max_encoded_len = 15;
-      sbp_string_init(string_, &format_);
-    }
+class TestStringMultipart_2_2 : public ::testing::Test
+{
+public:
+  TestStringMultipart_2_2() : ::testing::Test()
+  {
+    format_.encoding = SBP_STRING_MULTIPART;
+    format_.min_sections = 2;
+    format_.max_sections = 2;
+    format_.max_encoded_len = 15;
+    sbp_string_init(string_, &format_);
+  }
 
-  protected:
-    sbp_string_t string_;
-    sbp_string_format_t format_;
+protected:
+  sbp_string_t string_;
+  sbp_string_format_t format_;
 };
 
-TEST_F(TestStringMultipart_2_2, EmptyState) {
+TEST_F(TestStringMultipart_2_2, EmptyState)
+{
   EXPECT_TRUE(sbp_string_valid(string_, &format_));
   EXPECT_EQ(sbp_string_packed_len(string_, &format_), 2);
   EXPECT_EQ(sbp_string_count_sections(string_, &format_), 2);
@@ -31,7 +34,8 @@ TEST_F(TestStringMultipart_2_2, EmptyState) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 0);
 }
 
-TEST_F(TestStringMultipart_2_2, OnlySectionOne) {
+TEST_F(TestStringMultipart_2_2, OnlySectionOne)
+{
   memcpy(string_, "one\0\0", 5);
   EXPECT_TRUE(sbp_string_valid(string_, &format_));
   EXPECT_EQ(sbp_string_packed_len(string_, &format_), 5);
@@ -44,7 +48,8 @@ TEST_F(TestStringMultipart_2_2, OnlySectionOne) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 0);
 }
 
-TEST_F(TestStringMultipart_2_2, OnlySectionTwo) {
+TEST_F(TestStringMultipart_2_2, OnlySectionTwo)
+{
   memcpy(string_, "\0two\0", 5);
   EXPECT_TRUE(sbp_string_valid(string_, &format_));
   EXPECT_EQ(sbp_string_packed_len(string_, &format_), 5);
@@ -57,7 +62,8 @@ TEST_F(TestStringMultipart_2_2, OnlySectionTwo) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 3);
 }
 
-TEST_F(TestStringMultipart_2_2, BothSectionsShort) {
+TEST_F(TestStringMultipart_2_2, BothSectionsShort)
+{
   memcpy(string_, "one\0two\0", 8);
   EXPECT_TRUE(sbp_string_valid(string_, &format_));
   EXPECT_EQ(sbp_string_packed_len(string_, &format_), 8);
@@ -70,7 +76,8 @@ TEST_F(TestStringMultipart_2_2, BothSectionsShort) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 3);
 }
 
-TEST_F(TestStringMultipart_2_2, BothSectionsMaxLen) {
+TEST_F(TestStringMultipart_2_2, BothSectionsMaxLen)
+{
   memcpy(string_, "maximum\0length\0", 15);
   EXPECT_TRUE(sbp_string_valid(string_, &format_));
   EXPECT_EQ(sbp_string_packed_len(string_, &format_), 15);
@@ -83,7 +90,8 @@ TEST_F(TestStringMultipart_2_2, BothSectionsMaxLen) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 6);
 }
 
-TEST_F(TestStringMultipart_2_2, SectionOneExceedsMaxLen) {
+TEST_F(TestStringMultipart_2_2, SectionOneExceedsMaxLen)
+{
   memcpy(string_, "longer than the maximum\0length\0", 31);
   EXPECT_FALSE(sbp_string_valid(string_, &format_));
   EXPECT_EQ(sbp_string_packed_len(string_, &format_), 0);
@@ -94,7 +102,8 @@ TEST_F(TestStringMultipart_2_2, SectionOneExceedsMaxLen) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 0);
 }
 
-TEST_F(TestStringMultipart_2_2, SectionTwoExceedsMaxLen) {
+TEST_F(TestStringMultipart_2_2, SectionTwoExceedsMaxLen)
+{
   memcpy(string_, "maximum\0length exceeded by the second section\0", 46);
   EXPECT_FALSE(sbp_string_valid(string_, &format_));
   EXPECT_EQ(sbp_string_packed_len(string_, &format_), 0);
@@ -105,7 +114,8 @@ TEST_F(TestStringMultipart_2_2, SectionTwoExceedsMaxLen) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 0);
 }
 
-TEST_F(TestStringMultipart_2_2, SetOneShortFromEmpty) {
+TEST_F(TestStringMultipart_2_2, SetOneShortFromEmpty)
+{
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 0, "one"));
   EXPECT_TRUE(sbp_string_valid(string_, &format_));
   EXPECT_EQ(sbp_string_packed_len(string_, &format_), 5);
@@ -118,7 +128,8 @@ TEST_F(TestStringMultipart_2_2, SetOneShortFromEmpty) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 0);
 }
 
-TEST_F(TestStringMultipart_2_2, SetTwoShortFromEmpty) {
+TEST_F(TestStringMultipart_2_2, SetTwoShortFromEmpty)
+{
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 1, "two"));
   EXPECT_TRUE(sbp_string_valid(string_, &format_));
   EXPECT_EQ(sbp_string_packed_len(string_, &format_), 5);
@@ -131,7 +142,8 @@ TEST_F(TestStringMultipart_2_2, SetTwoShortFromEmpty) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 3);
 }
 
-TEST_F(TestStringMultipart_2_2, SetBothShortFromEmpty) {
+TEST_F(TestStringMultipart_2_2, SetBothShortFromEmpty)
+{
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 0, "one"));
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 1, "two"));
   EXPECT_TRUE(sbp_string_valid(string_, &format_));
@@ -145,7 +157,8 @@ TEST_F(TestStringMultipart_2_2, SetBothShortFromEmpty) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 3);
 }
 
-TEST_F(TestStringMultipart_2_2, OverwriteOneSameLength) {
+TEST_F(TestStringMultipart_2_2, OverwriteOneSameLength)
+{
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 0, "one"));
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 1, "two"));
   EXPECT_TRUE(sbp_string_valid(string_, &format_));
@@ -170,7 +183,8 @@ TEST_F(TestStringMultipart_2_2, OverwriteOneSameLength) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 3);
 }
 
-TEST_F(TestStringMultipart_2_2, OverwriteTwoSameLength) {
+TEST_F(TestStringMultipart_2_2, OverwriteTwoSameLength)
+{
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 0, "one"));
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 1, "two"));
   EXPECT_TRUE(sbp_string_valid(string_, &format_));
@@ -195,7 +209,8 @@ TEST_F(TestStringMultipart_2_2, OverwriteTwoSameLength) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 3);
 }
 
-TEST_F(TestStringMultipart_2_2, OverwriteOneLonger) {
+TEST_F(TestStringMultipart_2_2, OverwriteOneLonger)
+{
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 0, "one"));
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 1, "two"));
   EXPECT_TRUE(sbp_string_valid(string_, &format_));
@@ -220,7 +235,8 @@ TEST_F(TestStringMultipart_2_2, OverwriteOneLonger) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 3);
 }
 
-TEST_F(TestStringMultipart_2_2, OverwriteTwoLonger) {
+TEST_F(TestStringMultipart_2_2, OverwriteTwoLonger)
+{
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 0, "one"));
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 1, "two"));
   EXPECT_TRUE(sbp_string_valid(string_, &format_));
@@ -245,7 +261,8 @@ TEST_F(TestStringMultipart_2_2, OverwriteTwoLonger) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 5);
 }
 
-TEST_F(TestStringMultipart_2_2, OverwriteBothToMaxLen) {
+TEST_F(TestStringMultipart_2_2, OverwriteBothToMaxLen)
+{
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 0, "one"));
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 1, "two"));
   EXPECT_TRUE(sbp_string_valid(string_, &format_));
@@ -271,7 +288,8 @@ TEST_F(TestStringMultipart_2_2, OverwriteBothToMaxLen) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 6);
 }
 
-TEST_F(TestStringMultipart_2_2, OverwriteOneWouldExceedMaxLen) {
+TEST_F(TestStringMultipart_2_2, OverwriteOneWouldExceedMaxLen)
+{
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 0, "maximum"));
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 1, "length"));
   EXPECT_TRUE(sbp_string_valid(string_, &format_));
@@ -296,7 +314,8 @@ TEST_F(TestStringMultipart_2_2, OverwriteOneWouldExceedMaxLen) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 6);
 }
 
-TEST_F(TestStringMultipart_2_2, OverwriteTwoWouldExceedMaxLen) {
+TEST_F(TestStringMultipart_2_2, OverwriteTwoWouldExceedMaxLen)
+{
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 0, "maximum"));
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 1, "length"));
   EXPECT_TRUE(sbp_string_valid(string_, &format_));
@@ -321,7 +340,8 @@ TEST_F(TestStringMultipart_2_2, OverwriteTwoWouldExceedMaxLen) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 6);
 }
 
-TEST_F(TestStringMultipart_2_2, PackShort) {
+TEST_F(TestStringMultipart_2_2, PackShort)
+{
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 0, "one"));
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 1, "two"));
   EXPECT_TRUE(sbp_string_valid(string_, &format_));
@@ -354,7 +374,8 @@ TEST_F(TestStringMultipart_2_2, PackShort) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 3);
 }
 
-TEST_F(TestStringMultipart_2_2, PackMaxLen) {
+TEST_F(TestStringMultipart_2_2, PackMaxLen)
+{
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 0, "maximum"));
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 1, "length"));
   EXPECT_TRUE(sbp_string_valid(string_, &format_));
@@ -387,7 +408,8 @@ TEST_F(TestStringMultipart_2_2, PackMaxLen) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 6);
 }
 
-TEST_F(TestStringMultipart_2_2, PackToTooSmallBuf) {
+TEST_F(TestStringMultipart_2_2, PackToTooSmallBuf)
+{
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 0, "maximum"));
   EXPECT_TRUE(sbp_string_set_section(string_, &format_, 1, "length"));
   EXPECT_TRUE(sbp_string_valid(string_, &format_));
@@ -419,6 +441,6 @@ TEST_F(TestStringMultipart_2_2, PackToTooSmallBuf) {
   EXPECT_EQ(sbp_string_section_len(string_, &format_, 1), 6);
 }
 
-TEST_F(TestStringMultipart_2_2, UnpackShort) {
-
+TEST_F(TestStringMultipart_2_2, UnpackShort)
+{
 }

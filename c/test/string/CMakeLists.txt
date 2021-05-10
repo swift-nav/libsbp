@@ -4,10 +4,10 @@ swift_add_test(test-libsbp-string
   SRCS
     test_unterminated.cc
     test_null_terminated.cc
-    test_multipart_2_2.cc
-    test_multipart_3_4.cc
-    test_sequence_double_null.cc
-    test_sequence_ff.cc
+    #test_multipart_2_2.cc
+    #test_multipart_3_4.cc
+    #test_sequence_double_null.cc
+    #test_sequence_ff.cc
   LINK
     sbp
     gtest_main

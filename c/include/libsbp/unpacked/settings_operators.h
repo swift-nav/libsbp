@@ -30,19 +30,6 @@ static inline bool operator==(const sbp_msg_settings_write_t &a, const sbp_msg_s
   (void)a;
   (void)b;
 
-  if (a.setting_count != b.setting_count)
-  {
-    return false;
-  }
-  for (size_t setting_idx = 0; setting_idx < (size_t)a.setting_count; setting_idx++)
-  {
-
-    if (a.setting[setting_idx] != b.setting[setting_idx])
-    {
-      return false;
-    }
-  }
-
   return true;
 }
 
@@ -61,18 +48,6 @@ static inline bool operator==(const sbp_msg_settings_write_resp_t &a, const sbp_
   {
     return false;
   }
-  if (a.setting_count != b.setting_count)
-  {
-    return false;
-  }
-  for (size_t setting_idx = 0; setting_idx < (size_t)a.setting_count; setting_idx++)
-  {
-
-    if (a.setting[setting_idx] != b.setting[setting_idx])
-    {
-      return false;
-    }
-  }
 
   return true;
 }
@@ -88,19 +63,6 @@ static inline bool operator==(const sbp_msg_settings_read_req_t &a, const sbp_ms
   (void)a;
   (void)b;
 
-  if (a.setting_count != b.setting_count)
-  {
-    return false;
-  }
-  for (size_t setting_idx = 0; setting_idx < (size_t)a.setting_count; setting_idx++)
-  {
-
-    if (a.setting[setting_idx] != b.setting[setting_idx])
-    {
-      return false;
-    }
-  }
-
   return true;
 }
 
@@ -114,19 +76,6 @@ static inline bool operator==(const sbp_msg_settings_read_resp_t &a, const sbp_m
 {
   (void)a;
   (void)b;
-
-  if (a.setting_count != b.setting_count)
-  {
-    return false;
-  }
-  for (size_t setting_idx = 0; setting_idx < (size_t)a.setting_count; setting_idx++)
-  {
-
-    if (a.setting[setting_idx] != b.setting[setting_idx])
-    {
-      return false;
-    }
-  }
 
   return true;
 }
@@ -168,18 +117,6 @@ static inline bool operator==(const sbp_msg_settings_read_by_index_resp_t &a,
   {
     return false;
   }
-  if (a.setting_count != b.setting_count)
-  {
-    return false;
-  }
-  for (size_t setting_idx = 0; setting_idx < (size_t)a.setting_count; setting_idx++)
-  {
-
-    if (a.setting[setting_idx] != b.setting[setting_idx])
-    {
-      return false;
-    }
-  }
 
   return true;
 }
@@ -212,19 +149,6 @@ static inline bool operator==(const sbp_msg_settings_register_t &a, const sbp_ms
   (void)a;
   (void)b;
 
-  if (a.setting_count != b.setting_count)
-  {
-    return false;
-  }
-  for (size_t setting_idx = 0; setting_idx < (size_t)a.setting_count; setting_idx++)
-  {
-
-    if (a.setting[setting_idx] != b.setting[setting_idx])
-    {
-      return false;
-    }
-  }
-
   return true;
 }
 
@@ -242,18 +166,6 @@ static inline bool operator==(const sbp_msg_settings_register_resp_t &a, const s
   if (a.status != b.status)
   {
     return false;
-  }
-  if (a.setting_count != b.setting_count)
-  {
-    return false;
-  }
-  for (size_t setting_idx = 0; setting_idx < (size_t)a.setting_count; setting_idx++)
-  {
-
-    if (a.setting[setting_idx] != b.setting[setting_idx])
-    {
-      return false;
-    }
   }
 
   return true;

@@ -9,7 +9,8 @@
 #include <string.h>
 
 #include <libsbp/common.h>
-#include <libsbp/unpacked/vehicle.h>
+#include <libsbp/string2.h>
+//#include <libsbp/unpacked/vehicle.h>
 
 static inline size_t sbp_packed_size_sbp_msg_odometry_t(const sbp_msg_odometry_t *msg)
 {
