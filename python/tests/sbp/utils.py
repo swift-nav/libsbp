@@ -66,8 +66,9 @@ def field_eq(p, e):
     return all(field_eq(p[i], j) for (i, j) in iter(e.items()))
   elif isinstance(e, list):
     return all(field_eq(p[i], j) for (i, j) in enumerate(e))
-  else:
-    return p == e
+  elif isinstance(e, str) and isinstance(p, bytes) and p.endswith(b'\x00'):
+    e = e.encode('ascii')
+  return p == e
 
 def _assert_msg(msg, test_case):
   """

@@ -30,6 +30,16 @@ function walkYAML (dir) {
   return results;
 }
 
+function fieldEq(p, e) {
+  if (typeof p == 'object' && typeof e == 'object') {
+    for (const property in p) {
+      fieldEq(p[property], e[property]);
+    }
+  } else {
+    assert.equal(p, e);
+  }
+}
+
 module.exports = {
   getYamlTests: function () {
     return walkYAML(path.resolve(__dirname, '../../spec/tests/yaml'));
@@ -55,7 +65,7 @@ module.exports = {
       } else if (msg[k] instanceof UInt64) {
         assert.equal(msg[k].toString(), ''+v);
       } else {
-        assert.deepEqual(v, msg[k]);
+        fieldEq(v, msg[k]);
       }
     }
   }
