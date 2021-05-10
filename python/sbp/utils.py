@@ -55,6 +55,12 @@ def containerize(coll):
   coll : dict
 
   """
+  # If the caller has used intantiated a message class using classes
+  # representing the inner components of messages, they should have
+  # a _parser and not a to_binary.
+  if hasattr(coll, "_parser") and not hasattr(coll, "to_binary"):
+    coll = dict([(k, getattr(coll, k)) for k in coll.__slots__])
+
   if isinstance(coll, Container):
     [setattr(coll, k, containerize(v)) for (k, v) in coll.items()]
     return coll
