@@ -177,13 +177,13 @@ def gps_time(msg, all_messages):
 
     ret = gen_ret()
 
-    return f"""\
+    return f"""
   #[cfg(feature = "swiftnav-rs")]
   fn gps_time(&self) -> Option<std::result::Result<crate::time::MessageTime, crate::time::GpsTimeError>> {{
       {body}
       {ret}
   }}
-  """
+  """.strip()
 
 JENV.filters['camel_case'] = camel_case
 JENV.filters['commentify'] = commentify
