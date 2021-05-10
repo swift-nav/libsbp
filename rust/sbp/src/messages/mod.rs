@@ -2918,6 +2918,7 @@ impl crate::SBPMessage for SBP {
             SBP::MsgCsacTelemetryLabels(msg) => msg.gps_time(),
             SBP::MsgInsUpdates(msg) => msg.gps_time(),
             SBP::MsgGnssTimeOffset(msg) => msg.gps_time(),
+            SBP::MsgPpsTime(msg) => msg.gps_time(),
             SBP::MsgGroupMeta(msg) => msg.gps_time(),
             SBP::MsgSolnMeta(msg) => msg.gps_time(),
             SBP::MsgSolnMetaDepA(msg) => msg.gps_time(),
