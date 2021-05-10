@@ -409,7 +409,7 @@ release:
 	$(call announce-begin,"Run release boilerplate")
 	docker run -it --rm -v $(PWD):/usr/local/src/your-app ferrarimarco/github-changelog-generator \
 	  --max-issues $(CHANGELOG_MAX_ISSUES) \
-	  -t $(CHANGELOG_GITHUB_TOKEN)$ \
+	  -t $(CHANGELOG_GITHUB_TOKEN) \
 	  --user swift-nav --project libsbp \
 	  -o DRAFT_CHANGELOG.md \
 	  swift-nav/libsbp

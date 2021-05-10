@@ -533,7 +533,7 @@ definitions:
            type: u8
            desc: Additional satellite information
            fields:
-             - 3-7:
+             - 5-7:
                  desc: Reserved
              - 0-4:
                  desc: Satellite Type

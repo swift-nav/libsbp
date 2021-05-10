@@ -29,9 +29,9 @@ See the minimal [JavaScript map console](https://github.com/JoshuaGross/piksi-co
 
 ## JSON schema definitions
 
-Some web clients process SBP that's been converted to JSON (via the sbp2json
+Some web clients process SBP that's been converted to JSON (via the `sbp2json`
 tool).  To aide in building various web clients, we generate JSON schema
-definitions to parse the output of sbp2json. This allows web clients to
+definitions to parse the output of `sbp2json`. This allows web clients to
 dispatch on the msg_type field in a JSON dictionary and build a fully native
 object using the JSON fields that are present.
 
@@ -51,4 +51,4 @@ if (json['msg_type'] === 529) {
 
 The value of this is more fully realized when using a typed language like
 TypeScript or Elm.  Fully native objects allow TypeScript and Elm to
-type check interactions with the output from sbp2json.
+type check interactions with the output from `sbp2json`.
