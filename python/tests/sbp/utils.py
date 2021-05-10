@@ -16,6 +16,7 @@ Utilities for running YAML-defined unit tests.
 import base64
 import os.path
 import json
+import unittest
 
 import yaml
 
@@ -25,6 +26,22 @@ from sbp.table import dispatch, _SBP_TABLE
 def _encoded_string(s):
   """Encode the string-like argument as bytes if suitable"""
   return s.encode('ascii') if hasattr(s, 'encode') else s
+
+def _assert_unsorted_equal(a, b):
+  """
+  Perform unittest.TestCase.assertCountEqual.
+  """
+  # pytest does not have a similar feature
+  # https://github.com/pytest-dev/pytest/issues/5548
+  # This is intentionally inside the function so that it is not collected as a test class
+  class UnitTestCase(unittest.TestCase):
+    def runTest(self):
+      pass
+    if not hasattr(unittest.TestCase, "assertCountEqual"):
+      def assertCountEqual(self, *args, **kw):
+        return self.assertItemsEqual(*args, **kw)
+  case = UnitTestCase()
+  case.assertCountEqual(a, b)
 
 def _assert_sbp(sbp, test_case):
   """
@@ -44,6 +61,18 @@ def _assert_sbp(sbp, test_case):
   assert sbp.length == test_case['length'], "Invalid length."
   assert base64.standard_b64encode(sbp.payload) == _encoded_string(test_case['payload']), \
     "Invalid payload."
+
+def deep_encode(e, encoding='ascii'):
+  """
+  Encodes all strings using encoding, default ascii.
+  """
+  if isinstance(e, dict):
+    return dict((i, deep_encode(j, encoding)) for (i, j) in e.items())
+  elif isinstance(e, list):
+    return [deep_encode(i, encoding) for i in e]
+  elif isinstance(e, str):
+    e = e.encode(encoding)
+  return e
 
 def field_eq(p, e):
   """
@@ -127,6 +156,15 @@ def _assert_materialization(msg, sbp, raw_json):
   live_msg = _SBP_TABLE[sbp.msg_type](sbp, **fields)
   assert isinstance(live_msg.to_json_dict(), dict)
   assert live_msg.to_json_dict() == json.loads(raw_json)
+
+  fields = deep_encode(fields)
+  live_msg = _SBP_TABLE[sbp.msg_type](sbp=None, **fields)
+  assert isinstance(live_msg.to_json_dict(), dict)
+  assert sorted(live_msg.to_json_dict().keys()) == sorted(live_msg.to_json_dict().keys())
+  _assert_unsorted_equal(live_msg.to_json_dict(), live_msg.to_json_dict())
+
+  assert msg['module']
+  assert msg['name']
 
 def _assert_sane_package(pkg_name, pkg):
   """

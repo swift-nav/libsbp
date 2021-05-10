@@ -217,6 +217,7 @@ tests:
           tow: 434293400
           ns_residual: 0
           wn: 2154
+      obs: []
     module: sbp.observation
     name: MsgObs
   msg_type: '0x4a'
