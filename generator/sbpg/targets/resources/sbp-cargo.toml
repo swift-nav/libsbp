@@ -35,7 +35,7 @@ thiserror = "1.0"
 
 [dependencies.swiftnav-rs]
 git = "https://github.com/swift-nav/swiftnav-rs"
-branch = "v0.5.0"
+tag = "v0.5.0"
 optional = true
 
 [dependencies.serde]
